@@ -26,7 +26,7 @@ export function Partners() {
   const t = useTranslations("Partners");
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center bg-black py-20 lg:py-0">
+    <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center bg-transparent py-20 lg:py-0">
       {/* Purple Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] xl:w-[800px] h-[250px] md:h-[500px] bg-[#4e39ec]/20 rounded-full blur-[80px] md:blur-[100px] xl:blur-[120px] mix-blend-screen pointer-events-none" />
       

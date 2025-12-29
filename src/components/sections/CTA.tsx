@@ -34,7 +34,7 @@ export function CTA() {
   const isActive = !isDesktop || currentIndex === 11;
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center bg-black overflow-hidden px-6 py-20 lg:py-0">
+    <section className="relative min-h-screen lg:h-screen w-full flex items-center justify-center bg-transparent overflow-hidden px-6 py-20 lg:py-0">
       {/* Layered Background Effects */}
       
       {/* Deep purple base gradient */}

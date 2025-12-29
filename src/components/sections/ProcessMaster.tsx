@@ -51,7 +51,7 @@ export function ProcessMaster() {
   // Mobile Layout: Vertical Timeline
   if (!isDesktop) {
     return (
-      <section className="relative w-full bg-black py-20 px-6">
+      <section className="relative w-full bg-transparent py-20 px-6">
         {/* Section Header */}
         <div className="max-w-[1400px] mx-auto mb-12 text-center">
           <h2 className="text-4xl sm:text-5xl font-normal tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
@@ -103,7 +103,7 @@ export function ProcessMaster() {
 
   // Desktop Layout: Pinned with Z-Space Animation
   return (
-    <section className="relative h-screen w-full bg-black overflow-hidden">
+    <section className="relative h-screen w-full bg-transparent overflow-hidden">
       {PROCESS_STEPS.map((step, index) => {
         const stepNumber = index + 1; // 1, 2, 3
         const state = getStepState(stepNumber, activeStep);
