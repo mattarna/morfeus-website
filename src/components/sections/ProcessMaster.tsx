@@ -103,7 +103,7 @@ export function ProcessMaster() {
 
   // Desktop Layout: Pinned with Z-Space Animation
   return (
-    <section className="relative h-screen w-full bg-transparent overflow-hidden">
+    <section className="relative h-screen w-full bg-black overflow-hidden">
       {PROCESS_STEPS.map((step, index) => {
         const stepNumber = index + 1; // 1, 2, 3
         const state = getStepState(stepNumber, activeStep);
