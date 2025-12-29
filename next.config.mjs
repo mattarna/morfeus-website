@@ -21,10 +21,10 @@ const nextConfig = {
     ],
     
     // Device sizes for responsive images
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    deviceSizes: [320, 420, 640, 750, 828, 1080, 1200, 1920],
     
     // Icon sizes for smaller images
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    imageSizes: [16, 24, 32, 48, 64, 96, 128, 256],
     
     // Minimize layout shift with long cache
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days cache

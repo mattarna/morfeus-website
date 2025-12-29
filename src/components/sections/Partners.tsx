@@ -71,6 +71,7 @@ function PartnerColumn({ partners }: { partners: readonly typeof PARTNERS[number
               src={partner.image}
               alt={partner.name}
               fill
+              sizes="(max-width: 768px) 28px, 32px"
               className="object-contain filter brightness-100 grayscale-[0.4] group-hover:grayscale-0 transition-all duration-300"
             />
           </div>

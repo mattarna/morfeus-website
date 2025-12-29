@@ -73,6 +73,7 @@ export function ProcessMaster() {
                   src={step.image}
                   alt={step.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                   className="object-cover opacity-60 mix-blend-screen"
                 />
               </div>
@@ -230,6 +231,7 @@ function ProcessStep({
           src={image} 
           alt={title}
           fill
+          sizes="100vw"
           className="object-cover mix-blend-screen opacity-90"
           priority={state === "active"}
         />
