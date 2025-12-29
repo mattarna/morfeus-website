@@ -27,8 +27,13 @@ export const metadata: Metadata = {
   },
   description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
