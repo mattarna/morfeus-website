@@ -25,7 +25,18 @@ export const metadata: Metadata = {
     default: "Morfeus – AI-Native Organization Design",
     template: `%s | Morfeus`,
   },
-  description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
+  description: "Integriamo l'Intelligenza Artificiale nel DNA delle organizzazioni. Ripensiamo strutture, processi e decisioni per l'era AI-Native.",
+  keywords: ["AI Organization Design", "Intelligenza Artificiale Aziendale", "Automazione Processi", "Digital Transformation", "Morfeus Hub"],
+  authors: [{ name: "Morfeus Team" }],
+  creator: "Morfeus",
+  publisher: "Morfeus",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/en",
+      "it-IT": "/it",
+    },
+  },
   openGraph: {
     title: "Morfeus – AI-Native Organization Design",
     description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
