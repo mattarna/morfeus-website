@@ -112,17 +112,17 @@ export function CookieConsent() {
         
         <div className="p-6 sm:p-8">
           {/* Header */}
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#4D39EB]/20 flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5 text-[#4D39EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 mb-6">
+            <div className="w-12 h-12 rounded-xl bg-[#4D39EB]/20 flex items-center justify-center flex-shrink-0">
+              <svg className="w-6 h-6 text-[#4D39EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-1">
+              <h3 className="text-lg font-semibold text-white mb-2">
                 We value your privacy
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-400 leading-relaxed px-2 sm:px-0">
                 We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
                 By clicking &quot;Accept All&quot;, you consent to our use of cookies.
               </p>
@@ -182,42 +182,44 @@ export function CookieConsent() {
           )}
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-3">
             {showDetails ? (
-              <>
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleSavePreferences}
-                  className="flex-1 h-12 bg-[#4D39EB] text-white text-sm font-semibold rounded-xl hover:bg-[#5d4af7] transition-colors"
+                  className="w-full sm:flex-1 h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all active:scale-[0.98]"
                 >
                   Save Preferences
                 </button>
                 <button
                   onClick={() => setShowDetails(false)}
-                  className="flex-1 h-12 bg-white/5 border border-white/10 text-white text-sm font-medium rounded-xl hover:bg-white/10 transition-colors"
+                  className="w-full sm:flex-1 h-14 bg-white/5 border border-white/10 text-white text-[15px] font-medium rounded-xl hover:bg-white/10 transition-all"
                 >
                   Back
                 </button>
-              </>
+              </div>
             ) : (
               <>
                 <button
                   onClick={handleAcceptAll}
-                  className="flex-1 h-12 bg-[#4D39EB] text-white text-sm font-semibold rounded-xl hover:bg-[#5d4af7] transition-colors"
+                  className="w-full h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all active:scale-[0.98] shadow-lg shadow-[#4D39EB]/20"
                 >
                   Accept All
                 </button>
-                <button
-                  onClick={handleRejectAll}
-                  className="flex-1 h-12 bg-white/5 border border-white/10 text-white text-sm font-medium rounded-xl hover:bg-white/10 transition-colors"
-                >
-                  Reject All
-                </button>
-                <button
-                  onClick={() => setShowDetails(true)}
-                  className="flex-1 h-12 bg-transparent border border-white/10 text-slate-400 text-sm font-medium rounded-xl hover:text-white hover:border-white/20 transition-colors"
-                >
-                  Customize
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={handleRejectAll}
+                    className="w-full sm:flex-1 h-14 bg-white/5 border border-white/10 text-white text-[15px] font-medium rounded-xl hover:bg-white/10 transition-all"
+                  >
+                    Reject All
+                  </button>
+                  <button
+                    onClick={() => setShowDetails(true)}
+                    className="w-full sm:flex-1 h-14 bg-transparent border border-white/10 text-slate-400 text-[15px] font-medium rounded-xl hover:text-white hover:border-white/20 transition-all"
+                  >
+                    Customize
+                  </button>
+                </div>
               </>
             )}
           </div>
