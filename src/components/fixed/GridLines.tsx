@@ -27,7 +27,7 @@ export function GridLines() {
       }}
     >
       {[...Array(5)].map((_, i) => (
-        <div key={i} className="w-[1.5px] h-full bg-white/[0.08]" />
+        <div key={i} className="w-[1px] md:w-[1.5px] h-full bg-white/[0.04] md:bg-white/[0.08]" />
       ))}
     </div>
   );
