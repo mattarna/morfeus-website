@@ -25,6 +25,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { CookieConsent } from "@/components/CookieConsent";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useLocale } from "next-intl";
+import { useEffect, useRef } from "react";
 
 /**
  * Home Page
@@ -52,7 +53,36 @@ import { useLocale } from "next-intl";
 export default function Home() {
   const isContactFormOpen = useScrollStore((state) => state.isContactFormOpen);
   const setIsContactFormOpen = useScrollStore((state) => state.setIsContactFormOpen);
+  const setIndex = useScrollStore((state) => state.setIndex);
   const locale = useLocale();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  // Mobile Scroll Detection: Update currentIndex when sections enter viewport
+  useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const indexStr = id.replace("section-", "");
+            const index = parseInt(indexStr);
+            if (!isNaN(index)) {
+              setIndex(index);
+            }
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const sections = document.querySelectorAll("[id^='section-']");
+    sections.forEach((section) => observerRef.current?.observe(section));
+
+    return () => observerRef.current?.disconnect();
+  }, [setIndex]);
 
   return (
     <main className="relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden">
