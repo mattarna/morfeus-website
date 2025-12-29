@@ -12,8 +12,9 @@ import { useScrollStore } from "@/app/store/useScrollStore";
 export function GridLines() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   
-  // Hide lines from index 4 (Process/Method) to 10 (FAQ)
-  const isHiddenRange = currentIndex >= 4 && currentIndex <= 10;
+  // Hide lines from index 4 (Process/Method) to 9 (Case Study)
+  // They will be visible again in FAQ (10), CTA (11) and Footer (12)
+  const isHiddenRange = currentIndex >= 4 && currentIndex <= 9;
 
   return (
     <div
