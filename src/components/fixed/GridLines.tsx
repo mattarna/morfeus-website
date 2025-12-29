@@ -10,7 +10,7 @@
 export function GridLines() {
   return (
     <div
-      className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1300vh] z-10 pointer-events-none px-6 md:px-10 flex justify-between"
+      className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1300vh] z-0 pointer-events-none px-6 md:px-10 flex justify-between"
       style={{
         maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
         WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
