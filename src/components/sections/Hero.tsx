@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
@@ -13,6 +14,30 @@ import { useTranslations } from "next-intl";
 export function Hero() {
   const setIndex = useScrollStore((state) => state.setIndex);
   const t = useTranslations("Hero");
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkViewport = () => setIsDesktop(window.innerWidth >= 1024);
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
+
+  const handleCtaClick = (e: React.MouseEvent, index: number) => {
+    if (isDesktop) {
+      e.preventDefault();
+      setIndex(index);
+    } else {
+      // On mobile, we use a more robust scroll method to account for the fixed header
+      const element = document.getElementById(`section-${index}`);
+      if (element) {
+        e.preventDefault();
+        const yOffset = -70; // Header height offset
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <section className="relative min-h-screen lg:h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent py-20 lg:py-0">
@@ -52,19 +77,21 @@ export function Hero() {
 
         {/* CTAs */}
         <div className="mt-10 md:mt-14 flex flex-col sm:flex-row items-center gap-6 z-10">
-          <button 
-            onClick={() => setIndex(11)}
-            className="group h-12 px-8 bg-white text-black text-[15px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:w-auto focus:outline-none focus:ring-0"
+          <a 
+            href="#section-11"
+            onClick={(e) => handleCtaClick(e, 11)}
+            className="group h-12 px-8 bg-white text-black text-[15px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_primary")}
             <Icon icon="lucide:arrow-right" width={18} className="transition-transform group-hover:translate-x-0.5" />
-          </button>
-          <button 
-            onClick={() => setIndex(1)}
-            className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-none focus:ring-0"
+          </a>
+          <a 
+            href="#section-1"
+            onClick={(e) => handleCtaClick(e, 1)}
+            className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_secondary")}
-          </button>
+          </a>
         </div>
       </div>
     </section>

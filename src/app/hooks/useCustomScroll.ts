@@ -16,10 +16,12 @@ import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 export function useCustomScroll(): void {
   const isScrollingRef = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartRef = useRef<number | null>(null);
 
   useEffect(() => {
     const SCROLL_COOLDOWN_MS = 1000;
     const SCROLL_THRESHOLD = 40;
+    const TOUCH_THRESHOLD = 50;
     const DESKTOP_BREAKPOINT = 1024;
     const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
@@ -42,10 +44,7 @@ export function useCustomScroll(): void {
     const handleWheel = (e: WheelEvent) => {
       if (isMobile()) return;
       
-      // If contact form is open, allow native scroll inside it and don't trigger site scroll
-      if (useScrollStore.getState().isContactFormOpen) {
-        return;
-      }
+      if (useScrollStore.getState().isContactFormOpen) return;
       
       e.preventDefault();
 
@@ -61,6 +60,34 @@ export function useCustomScroll(): void {
       } else if (direction === -1 && currentIndex > 0) {
         prev();
         triggerScrollCooldown();
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (isMobile()) return;
+      touchStartRef.current = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isMobile() || touchStartRef.current === null || isScrollingRef.current) return;
+      if (useScrollStore.getState().isContactFormOpen) return;
+
+      const touchEnd = e.touches[0].clientY;
+      const deltaY = touchStartRef.current - touchEnd;
+
+      if (Math.abs(deltaY) > TOUCH_THRESHOLD) {
+        e.preventDefault();
+        const { currentIndex, next, prev } = useScrollStore.getState();
+        const direction = deltaY > 0 ? 1 : -1;
+
+        if (direction === 1 && currentIndex < MAX_INDEX) {
+          next();
+          triggerScrollCooldown();
+        } else if (direction === -1 && currentIndex > 0) {
+          prev();
+          triggerScrollCooldown();
+        }
+        touchStartRef.current = null;
       }
     };
 
@@ -106,10 +133,14 @@ export function useCustomScroll(): void {
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }

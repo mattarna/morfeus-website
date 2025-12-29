@@ -49,6 +49,11 @@ const nextConfig = {
   // Optimize fonts
   optimizeFonts: true,
 
+  // Optimize package imports
+  experimental: {
+    optimizePackageImports: ['@iconify/react', 'lucide-react', 'framer-motion'],
+  },
+
   // ============================================
   // SECURITY HEADERS
   // ============================================

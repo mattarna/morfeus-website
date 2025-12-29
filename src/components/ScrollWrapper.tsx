@@ -30,12 +30,14 @@ const TRANSITION_EASING = "cubic-bezier(0.645, 0.045, 0.355, 1.000)";
 export function ScrollWrapper({ children }: ScrollWrapperProps) {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   
   // Initialize custom scroll handling (only active on desktop)
   useCustomScroll();
 
   // Track viewport size for responsive behavior
   useEffect(() => {
+    setIsMounted(true);
     const checkViewport = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
     checkViewport();
     window.addEventListener("resize", checkViewport);
@@ -44,6 +46,8 @@ export function ScrollWrapper({ children }: ScrollWrapperProps) {
 
   // Disable native scroll on desktop only
   useEffect(() => {
+    if (!isMounted) return;
+
     if (isDesktop) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
@@ -51,26 +55,37 @@ export function ScrollWrapper({ children }: ScrollWrapperProps) {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isDesktop]);
+  }, [isDesktop, isMounted]);
 
   const translateY = getTranslateVh(currentIndex);
 
-  // Mobile: normal document flow with relative positioning
+  // If not mounted or not desktop, render simple relative container
+  // This prevents flickering and unnecessary transforms on mobile
+  if (!isMounted || !isDesktop) {
+    return (
+      <div 
+        style={{ 
+          position: "relative", 
+          width: "100%",
+          minHeight: "100vh"
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
+
   // Desktop: absolute positioning with translateY transforms
   return (
     <div
       style={{
-        position: isDesktop ? "absolute" : "relative",
-        top: isDesktop ? 0 : undefined,
-        left: isDesktop ? 0 : undefined,
+        position: "absolute",
+        top: 0,
+        left: 0,
         width: "100%",
-        transform: isDesktop ? `translateY(-${translateY}vh)` : "none",
-        transition: isDesktop ? `transform ${TRANSITION_DURATION} ${TRANSITION_EASING}` : "none",
-        willChange: isDesktop ? "transform" : "auto",
+        transform: `translateY(-${translateY}vh)`,
+        transition: `transform ${TRANSITION_DURATION} ${TRANSITION_EASING}`,
+        willChange: "transform",
       }}
     >
       {children}

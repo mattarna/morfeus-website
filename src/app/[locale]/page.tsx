@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollWrapper } from "@/components/ScrollWrapper";
+import dynamic from "next/dynamic";
 
 // Fixed UI Components (always visible, positioned fixed)
 import { Background } from "@/components/fixed/Background";
@@ -9,20 +10,25 @@ import { TimelineNav } from "@/components/fixed/TimelineNav";
 import { SystemStatus } from "@/components/fixed/SystemStatus";
 import { GridLines } from "@/components/fixed/GridLines";
 
-// Section Components (scroll through these)
+// Section Components - Core (Immediately visible)
 import { Hero } from "@/components/sections/Hero";
 import { Manifesto } from "@/components/sections/Manifesto";
-import { Partners } from "@/components/sections/Partners";
-import { Services } from "@/components/sections/Services";
-import { ProcessHeadline } from "@/components/sections/ProcessHeadline";
-import { ProcessMaster } from "@/components/sections/ProcessMaster";
-import { ROISystem } from "@/components/sections/ROISystem";
-import { CaseStudy } from "@/components/sections/CaseStudy";
-import { FAQ } from "@/components/sections/FAQ";
-import { CTA } from "@/components/sections/CTA";
-import { Footer } from "@/components/sections/Footer";
-import { ContactForm } from "@/components/ContactForm";
-import { CookieConsent } from "@/components/CookieConsent";
+
+// Section Components - Lazy Loaded (Below the fold)
+const Partners = dynamic(() => import("@/components/sections/Partners").then(m => m.Partners));
+const Services = dynamic(() => import("@/components/sections/Services").then(m => m.Services));
+const ProcessHeadline = dynamic(() => import("@/components/sections/ProcessHeadline").then(m => m.ProcessHeadline));
+const ProcessMaster = dynamic(() => import("@/components/sections/ProcessMaster").then(m => m.ProcessMaster));
+const ROISystem = dynamic(() => import("@/components/sections/ROISystem").then(m => m.ROISystem));
+const CaseStudy = dynamic(() => import("@/components/sections/CaseStudy").then(m => m.CaseStudy));
+const FAQ = dynamic(() => import("@/components/sections/FAQ").then(m => m.FAQ));
+const CTA = dynamic(() => import("@/components/sections/CTA").then(m => m.CTA));
+const Footer = dynamic(() => import("@/components/sections/Footer").then(m => m.Footer));
+
+// Overlay Components
+const ContactForm = dynamic(() => import("@/components/ContactForm").then(m => m.ContactForm));
+const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m => m.CookieConsent));
+
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useLocale } from "next-intl";
 import { useEffect, useRef } from "react";
@@ -85,7 +91,10 @@ export default function Home() {
   }, [setIndex]);
 
   return (
-    <main className="relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden">
+    <main 
+      className="relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden"
+      style={{ touchAction: "pan-y" }}
+    >
       {/* ========================================
           LAYER 1: Fixed UI Components
           These stay in place while content scrolls

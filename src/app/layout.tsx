@@ -76,14 +76,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* DNS Prefetch for external resources */}
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        
-        {/* Preconnect for critical third-party origins */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
       <body className={`${outfit.variable} font-outfit antialiased bg-black text-slate-300`}>
         {children}
       </body>

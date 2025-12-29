@@ -22,6 +22,15 @@ export function Header() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen && !isDesktop) {
+      document.body.style.overflow = "hidden";
+    } else if (!isDesktop) {
+      document.body.style.overflow = "";
+    }
+  }, [isMenuOpen, isDesktop]);
+
   useEffect(() => {
     const checkViewport = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
     checkViewport();
