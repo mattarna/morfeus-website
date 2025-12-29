@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     template: `%s | Morfeus`,
   },
   description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
