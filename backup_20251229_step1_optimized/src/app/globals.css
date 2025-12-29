@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   CSS Variables
+   ================================ */
+:root {
+  --background: #000000;
+  --foreground: #cbd5e1;
+  --accent: #4D39EB;
+  --accent-light: #A78BFA;
+}
+
+/* ================================
+   Base Styles
+   ================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus,
+*:focus-visible,
+*:focus-within {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+button,
+a,
+[role="button"] {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus, 
+button:active,
+button:focus-visible,
+a:focus,
+a:active,
+a:focus-visible {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================================
+   Selection
+   ================================ */
+::selection {
+  background: rgba(77, 57, 235, 0.3);
+  color: white;
+}
+
+/* ================================
+   Scrollbar (for mobile fallback)
+   ================================ */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* ================================
+   Utility Classes
+   ================================ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .bg-gradient-radial {
+    background-image: radial-gradient(var(--tw-gradient-stops));
+  }
+}
+
+/* ================================
+   Remove ALL Focus Rings/Outlines
+   ================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"],
+  a {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  button:focus,
+  button:focus-visible,
+  button:active,
+  a:focus,
+  a:focus-visible,
+  a:active {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: none !important;
+    --tw-ring-offset-shadow: none !important;
+  }
+}
+
+/* ================================
+   Animations
+   ================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
