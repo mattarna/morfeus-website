@@ -26,6 +26,27 @@ export const metadata: Metadata = {
     template: `%s | Morfeus`,
   },
   description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
+  openGraph: {
+    title: "Morfeus – AI-Native Organization Design",
+    description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
+    url: "https://morfeushub.com",
+    siteName: "Morfeus",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 800,
+        height: 800,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Morfeus – AI-Native Organization Design",
+    description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
+    images: ["/twitter-image.png"],
+  },
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png" },
