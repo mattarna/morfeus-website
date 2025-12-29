@@ -78,8 +78,8 @@ export function FAQ() {
   };
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full bg-transparent overflow-hidden flex flex-col justify-center px-6 py-20 lg:py-0">
-      <div className={`max-w-[1400px] mx-auto w-full transition-all duration-1000 ${
+    <section className="relative z-0 min-h-screen lg:h-screen w-full bg-black overflow-hidden flex flex-col justify-center px-6 py-20 lg:py-0">
+      <div className={`relative z-10 max-w-[1400px] mx-auto w-full transition-all duration-1000 ${
         isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}>
         {/* Headline */}

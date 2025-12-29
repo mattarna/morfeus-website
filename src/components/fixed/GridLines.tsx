@@ -17,7 +17,7 @@ export function GridLines() {
 
   return (
     <div
-      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1300vh] z-[5] pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
+      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1300vh] z-[2] pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
         isHiddenRange ? "opacity-0" : "opacity-100"
       }`}
       style={{

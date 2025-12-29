@@ -104,9 +104,9 @@ export function ROISystem() {
   // Mobile Layout: Vertical Stack with Accordion
   if (!isDesktop) {
     return (
-      <section className="relative w-full bg-transparent py-20 px-6">
+      <section className="relative z-0 w-full bg-black py-20 px-6">
         {/* Header */}
-        <div className="max-w-[1400px] mx-auto text-center mb-10">
+        <div className="relative z-10 max-w-[1400px] mx-auto text-center mb-10">
           <h3 className="uppercase text-[10px] text-slate-500 tracking-[0.3em] font-medium mb-4">
             {t("label")}
           </h3>
@@ -198,7 +198,7 @@ export function ROISystem() {
 
   // Desktop Layout: Interactive Horizontal Timeline
   return (
-    <section className="relative h-screen w-full flex flex-col bg-transparent overflow-hidden">
+    <section className="relative z-0 h-screen w-full flex flex-col bg-black overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Center vertical line */}

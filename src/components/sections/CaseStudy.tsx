@@ -104,9 +104,9 @@ export function CaseStudy() {
   // Mobile Layout: Stacked cards
   if (!isDesktop) {
     return (
-      <section className="relative w-full bg-transparent py-20 px-6">
+      <section className="relative z-0 w-full bg-black py-20 px-6">
         {/* Section Header */}
-        <div className="max-w-[1400px] mx-auto mb-10">
+        <div className="relative z-10 max-w-[1400px] mx-auto mb-10">
           <h2 className="text-[10px] uppercase tracking-[0.25em] text-[#4D39EB] font-semibold">
             {t("label")}
           </h2>
@@ -173,7 +173,7 @@ export function CaseStudy() {
 
   // Desktop Layout: Interactive
   return (
-    <section className="relative h-screen w-full bg-transparent overflow-hidden">
+    <section className="relative z-0 h-screen w-full bg-black overflow-hidden">
       {/* Background Images with Crossfade */}
       <div className="absolute inset-0 z-0">
         {caseStudies.map((cs, index) => (

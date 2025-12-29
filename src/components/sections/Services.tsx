@@ -34,8 +34,8 @@ export function Services() {
   ];
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full flex items-center bg-transparent xl:px-[280px] py-20 lg:py-0">
-      <div className="w-full flex flex-col justify-center px-6 md:px-12 xl:px-0 max-w-[1920px]">
+    <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center bg-black xl:px-[280px] py-20 lg:py-0">
+      <div className="relative z-10 w-full flex flex-col justify-center px-6 md:px-12 xl:px-0 max-w-[1920px]">
         {/* Header */}
         <div className="flex flex-col xl:flex-row xl:items-end mb-8 sm:mb-12 gap-4 sm:gap-8 justify-between">
           <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white uppercase leading-[1.1]">
