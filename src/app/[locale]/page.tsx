@@ -31,7 +31,9 @@ const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m 
 
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useLocale } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
+
+const DESKTOP_BREAKPOINT = 1024;
 
 /**
  * Home Page
@@ -62,33 +64,64 @@ export default function Home() {
   const setIndex = useScrollStore((state) => state.setIndex);
   const locale = useLocale();
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const lastIndexRef = useRef<number>(-1);
+
+  // Debounced setIndex to prevent rapid re-renders
+  const updateIndex = useCallback((index: number) => {
+    if (lastIndexRef.current !== index) {
+      lastIndexRef.current = index;
+      setIndex(index);
+    }
+  }, [setIndex]);
 
   // Mobile Scroll Detection: Update currentIndex when sections enter viewport
   useEffect(() => {
-    const isMobile = window.innerWidth < 1024;
-    if (!isMobile) return;
+    // Check if mobile using same logic as ScrollWrapper
+    const checkIsMobile = () => {
+      if (window.innerWidth < DESKTOP_BREAKPOINT) return true;
+      if (window.matchMedia('(pointer: coarse)').matches && 
+          window.matchMedia('(hover: none)').matches) {
+        return true;
+      }
+      return false;
+    };
 
+    if (!checkIsMobile()) return;
+
+    // Use a higher threshold to reduce callbacks
     observerRef.current = new IntersectionObserver(
       (entries) => {
+        // Find the entry with the highest intersection ratio
+        let maxRatio = 0;
+        let mostVisibleIndex = -1;
+        
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+            maxRatio = entry.intersectionRatio;
             const id = entry.target.id;
             const indexStr = id.replace("section-", "");
             const index = parseInt(indexStr);
             if (!isNaN(index)) {
-              setIndex(index);
+              mostVisibleIndex = index;
             }
           }
         });
+        
+        if (mostVisibleIndex !== -1) {
+          updateIndex(mostVisibleIndex);
+        }
       },
-      { threshold: 0.3 }
+      { 
+        threshold: [0.3, 0.5, 0.7],  // Multiple thresholds for smoother detection
+        rootMargin: "-10% 0px -10% 0px"  // Shrink the detection area slightly
+      }
     );
 
     const sections = document.querySelectorAll("[id^='section-']");
     sections.forEach((section) => observerRef.current?.observe(section));
 
     return () => observerRef.current?.disconnect();
-  }, [setIndex]);
+  }, [updateIndex]);
 
   return (
     <main 

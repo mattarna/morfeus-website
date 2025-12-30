@@ -14,17 +14,35 @@ const TRANSITION_DURATION = "1000ms";
 const TRANSITION_EASING = "cubic-bezier(0.645, 0.045, 0.355, 1.000)";
 
 /**
+ * Detect if device is truly mobile (touch-primary, no hover)
+ */
+function checkIsMobileDevice(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  // Check viewport width
+  if (window.innerWidth < DESKTOP_BREAKPOINT) return true;
+  
+  // Check if touch is primary input (catches tablets)
+  if (window.matchMedia('(pointer: coarse)').matches && 
+      window.matchMedia('(hover: none)').matches) {
+    return true;
+  }
+  
+  return false;
+}
+
+/**
  * ScrollWrapper - Core scrolling container
  * 
- * Desktop Mode (>= 1024px):
+ * Desktop Mode (>= 1024px, non-touch):
  * - Position: absolute, top: 0, left: 0
  * - Uses translateY to move through sections
  * - 1000ms transition with easeInOutCubic timing
  * - Disables native scroll
  * 
- * Mobile Mode (< 1024px):
+ * Mobile Mode (< 1024px OR touch-primary device):
  * - Position: relative (normal document flow)
- * - Native scroll enabled
+ * - Native scroll enabled - NO INTERFERENCE
  * - No translateY transforms
  */
 export function ScrollWrapper({ children }: ScrollWrapperProps) {
@@ -38,7 +56,12 @@ export function ScrollWrapper({ children }: ScrollWrapperProps) {
   // Track viewport size for responsive behavior
   useEffect(() => {
     setIsMounted(true);
-    const checkViewport = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
+    
+    const checkViewport = () => {
+      const isMobile = checkIsMobileDevice();
+      setIsDesktop(!isMobile);
+    };
+    
     checkViewport();
     window.addEventListener("resize", checkViewport);
     return () => window.removeEventListener("resize", checkViewport);
@@ -52,15 +75,21 @@ export function ScrollWrapper({ children }: ScrollWrapperProps) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     } else {
+      // CRITICAL: Ensure scroll is ALWAYS enabled on mobile
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     }
+    
+    // Cleanup: always restore scroll on unmount
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, [isDesktop, isMounted]);
 
   const translateY = getTranslateVh(currentIndex);
 
-  // If not mounted or not desktop, render simple relative container
-  // This prevents flickering and unnecessary transforms on mobile
+  // Mobile: Simple relative container with NO interference
   if (!isMounted || !isDesktop) {
     return (
       <div 
