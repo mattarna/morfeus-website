@@ -615,7 +615,7 @@ function Step1({
             >
               {COUNTRY_CODES.map((cc) => (
                 <option key={`${cc.code}-${cc.country}`} value={`${cc.code}|${cc.country}`} className="bg-[#0a0a12]">
-                  {cc.flag} {cc.country} {cc.code}
+                  {cc.country} {cc.code}
                 </option>
               ))}
             </select>
