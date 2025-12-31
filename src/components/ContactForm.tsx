@@ -207,7 +207,10 @@ const TRANSLATIONS = {
 
 export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
+  const [formData, setFormData] = useState<FormData>({
+    ...INITIAL_FORM_DATA,
+    phonePrefix: locale === 'it' ? '+39' : '+1', // Default based on locale
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -228,12 +231,15 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
     if (!isOpen) {
       setTimeout(() => {
         setCurrentStep(1);
-        setFormData(INITIAL_FORM_DATA);
+        setFormData({
+          ...INITIAL_FORM_DATA,
+          phonePrefix: locale === 'it' ? '+39' : '+1',
+        });
         setIsSuccess(false);
         setErrors({});
       }, 500);
     }
-  }, [isOpen]);
+  }, [isOpen, locale]);
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -592,11 +598,11 @@ function Step1({
           {t.phone} *
         </label>
         <div className="flex gap-2">
-          <div className="relative w-[110px] flex-shrink-0">
+          <div className="relative w-[130px] flex-shrink-0">
             <select
               value={formData.phonePrefix}
               onChange={(e) => updateField("phonePrefix", e.target.value)}
-              className="w-full h-12 px-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
+              className="w-full h-12 px-3 pl-10 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
             >
               {COUNTRY_CODES.map((cc) => (
                 <option key={cc.code} value={cc.code} className="bg-[#0a0a12]">
@@ -604,6 +610,12 @@ function Step1({
                 </option>
               ))}
             </select>
+            {/* Flag Icon */}
+            <img 
+              src={`https://flagcdn.com/w20/${COUNTRY_CODES.find(c => c.code === formData.phonePrefix)?.country.toLowerCase() || 'it'}.png`}
+              alt=""
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-auto rounded-sm pointer-events-none"
+            />
             <Icon
               icon="solar:alt-arrow-down-linear"
               width={14}
