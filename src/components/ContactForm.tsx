@@ -14,6 +14,7 @@ interface FormData {
   fullName: string;
   email: string;
   phonePrefix: string;
+  phoneCountry: string;
   phone: string;
   company: string;
   role: string;
@@ -32,6 +33,7 @@ const INITIAL_FORM_DATA: FormData = {
   fullName: "",
   email: "",
   phonePrefix: "+39",
+  phoneCountry: "IT",
   phone: "",
   company: "",
   role: "",
@@ -45,51 +47,52 @@ const INITIAL_FORM_DATA: FormData = {
 };
 
 const COUNTRY_CODES = [
-  { code: "+39", country: "IT", flag: "🇮🇹" },
-  { code: "+1", country: "US", flag: "🇺🇸" },
-  { code: "+44", country: "UK", flag: "🇬🇧" },
-  { code: "+49", country: "DE", flag: "🇩🇪" },
-  { code: "+33", country: "FR", flag: "🇫🇷" },
-  { code: "+34", country: "ES", flag: "🇪🇸" },
-  { code: "+41", country: "CH", flag: "🇨🇭" },
-  { code: "+43", country: "AT", flag: "🇦🇹" },
-  { code: "+31", country: "NL", flag: "🇳🇱" },
-  { code: "+32", country: "BE", flag: "🇧🇪" },
-  { code: "+351", country: "PT", flag: "🇵🇹" },
-  { code: "+48", country: "PL", flag: "🇵🇱" },
-  { code: "+46", country: "SE", flag: "🇸🇪" },
-  { code: "+47", country: "NO", flag: "🇳🇴" },
-  { code: "+45", country: "DK", flag: "🇩🇰" },
-  { code: "+358", country: "FI", flag: "🇫🇮" },
-  { code: "+353", country: "IE", flag: "🇮🇪" },
-  { code: "+30", country: "GR", flag: "🇬🇷" },
-  { code: "+420", country: "CZ", flag: "🇨🇿" },
-  { code: "+36", country: "HU", flag: "🇭🇺" },
-  { code: "+40", country: "RO", flag: "🇷🇴" },
-  { code: "+385", country: "HR", flag: "🇭🇷" },
-  { code: "+386", country: "SI", flag: "🇸🇮" },
-  { code: "+971", country: "AE", flag: "🇦🇪" },
-  { code: "+966", country: "SA", flag: "🇸🇦" },
-  { code: "+91", country: "IN", flag: "🇮🇳" },
-  { code: "+86", country: "CN", flag: "🇨🇳" },
-  { code: "+81", country: "JP", flag: "🇯🇵" },
-  { code: "+82", country: "KR", flag: "🇰🇷" },
-  { code: "+65", country: "SG", flag: "🇸🇬" },
-  { code: "+61", country: "AU", flag: "🇦🇺" },
-  { code: "+64", country: "NZ", flag: "🇳🇿" },
-  { code: "+55", country: "BR", flag: "🇧🇷" },
-  { code: "+52", country: "MX", flag: "🇲🇽" },
-  { code: "+54", country: "AR", flag: "🇦🇷" },
-  { code: "+57", country: "CO", flag: "🇨🇴" },
-  { code: "+56", country: "CL", flag: "🇨🇱" },
-  { code: "+27", country: "ZA", flag: "🇿🇦" },
-  { code: "+20", country: "EG", flag: "🇪🇬" },
-  { code: "+234", country: "NG", flag: "🇳🇬" },
-  { code: "+7", country: "RU", flag: "🇷🇺" },
-  { code: "+380", country: "UA", flag: "🇺🇦" },
-  { code: "+90", country: "TR", flag: "🇹🇷" },
-  { code: "+972", country: "IL", flag: "🇮🇱" },
-];
+  { code: "+54", country: "AR", flag: "🇦🇷", name: "Argentina" },
+  { code: "+43", country: "AT", flag: "🇦🇹", name: "Austria" },
+  { code: "+61", country: "AU", flag: "🇦🇺", name: "Australia" },
+  { code: "+32", country: "BE", flag: "🇧🇪", name: "Belgium" },
+  { code: "+55", country: "BR", flag: "🇧🇷", name: "Brazil" },
+  { code: "+1", country: "CA", flag: "🇨🇦", name: "Canada" },
+  { code: "+41", country: "CH", flag: "🇨🇭", name: "Switzerland" },
+  { code: "+56", country: "CL", flag: "🇨🇱", name: "Chile" },
+  { code: "+86", country: "CN", flag: "🇨🇳", name: "China" },
+  { code: "+57", country: "CO", flag: "🇨🇴", name: "Colombia" },
+  { code: "+420", country: "CZ", flag: "🇨🇿", name: "Czech Republic" },
+  { code: "+49", country: "DE", flag: "🇩🇪", name: "Germany" },
+  { code: "+45", country: "DK", flag: "🇩🇰", name: "Denmark" },
+  { code: "+20", country: "EG", flag: "🇪🇬", name: "Egypt" },
+  { code: "+34", country: "ES", flag: "🇪🇸", name: "Spain" },
+  { code: "+358", country: "FI", flag: "🇫🇮", name: "Finland" },
+  { code: "+33", country: "FR", flag: "🇫🇷", name: "France" },
+  { code: "+44", country: "GB", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+30", country: "GR", flag: "🇬🇷", name: "Greece" },
+  { code: "+385", country: "HR", flag: "🇭🇷", name: "Croatia" },
+  { code: "+36", country: "HU", flag: "🇭🇺", name: "Hungary" },
+  { code: "+353", country: "IE", flag: "🇮🇪", name: "Ireland" },
+  { code: "+972", country: "IL", flag: "🇮🇱", name: "Israel" },
+  { code: "+91", country: "IN", flag: "🇮🇳", name: "India" },
+  { code: "+39", country: "IT", flag: "🇮🇹", name: "Italy" },
+  { code: "+81", country: "JP", flag: "🇯🇵", name: "Japan" },
+  { code: "+82", country: "KR", flag: "🇰🇷", name: "South Korea" },
+  { code: "+52", country: "MX", flag: "🇲🇽", name: "Mexico" },
+  { code: "+234", country: "NG", flag: "🇳🇬", name: "Nigeria" },
+  { code: "+31", country: "NL", flag: "🇳🇱", name: "Netherlands" },
+  { code: "+47", country: "NO", flag: "🇳🇴", name: "Norway" },
+  { code: "+64", country: "NZ", flag: "🇳🇿", name: "New Zealand" },
+  { code: "+48", country: "PL", flag: "🇵🇱", name: "Poland" },
+  { code: "+351", country: "PT", flag: "🇵🇹", name: "Portugal" },
+  { code: "+40", country: "RO", flag: "🇷🇴", name: "Romania" },
+  { code: "+7", country: "RU", flag: "🇷🇺", name: "Russia" },
+  { code: "+966", country: "SA", flag: "🇸🇦", name: "Saudi Arabia" },
+  { code: "+46", country: "SE", flag: "🇸🇪", name: "Sweden" },
+  { code: "+65", country: "SG", flag: "🇸🇬", name: "Singapore" },
+  { code: "+386", country: "SI", flag: "🇸🇮", name: "Slovenia" },
+  { code: "+90", country: "TR", flag: "🇹🇷", name: "Turkey" },
+  { code: "+380", country: "UA", flag: "🇺🇦", name: "Ukraine" },
+  { code: "+971", country: "AE", flag: "🇦🇪", name: "United Arab Emirates" },
+  { code: "+1", country: "US", flag: "🇺🇸", name: "United States" },
+  { code: "+27", country: "ZA", flag: "🇿🇦", name: "South Africa" },
+].sort((a, b) => a.name.localeCompare(b.name));
 
 const ROLES = [
   { en: "CEO / Founder", it: "CEO / Founder" },
@@ -209,7 +212,8 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     ...INITIAL_FORM_DATA,
-    phonePrefix: locale === 'it' ? '+39' : '+1', // Default based on locale
+    phonePrefix: locale === 'it' ? '+39' : '+1',
+    phoneCountry: locale === 'it' ? 'IT' : 'US',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -234,6 +238,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
         setFormData({
           ...INITIAL_FORM_DATA,
           phonePrefix: locale === 'it' ? '+39' : '+1',
+          phoneCountry: locale === 'it' ? 'IT' : 'US',
         });
         setIsSuccess(false);
         setErrors({});
@@ -600,19 +605,23 @@ function Step1({
         <div className="flex gap-2">
           <div className="relative w-[130px] flex-shrink-0">
             <select
-              value={formData.phonePrefix}
-              onChange={(e) => updateField("phonePrefix", e.target.value)}
+              value={`${formData.phonePrefix}|${formData.phoneCountry}`}
+              onChange={(e) => {
+                const [prefix, country] = e.target.value.split('|');
+                updateField("phonePrefix", prefix);
+                updateField("phoneCountry", country);
+              }}
               className="w-full h-12 px-3 pl-10 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
             >
               {COUNTRY_CODES.map((cc) => (
-                <option key={cc.code} value={cc.code} className="bg-[#0a0a12]">
-                  {cc.flag} {cc.code}
+                <option key={`${cc.code}-${cc.country}`} value={`${cc.code}|${cc.country}`} className="bg-[#0a0a12]">
+                  {cc.flag} {cc.name} ({cc.code})
                 </option>
               ))}
             </select>
             {/* Flag Icon */}
             <img 
-              src={`https://flagcdn.com/w20/${COUNTRY_CODES.find(c => c.code === formData.phonePrefix)?.country.toLowerCase() || 'it'}.png`}
+              src={`https://flagcdn.com/w20/${formData.phoneCountry.toLowerCase()}.png`}
               alt=""
               className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-auto rounded-sm pointer-events-none"
             />
