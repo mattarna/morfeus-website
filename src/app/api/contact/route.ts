@@ -79,41 +79,65 @@ Language: ${data.locale?.toUpperCase()}
           : `Request Received - Welcome to Morfeus, ${clientFirstName}`;
 
         const clientHtmlContent = `
-          <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000; color: #fff; padding: 40px; border: 1px solid #333;">
-            <div style="text-align: center; margin-bottom: 40px;">
-              <h1 style="color: #a855f7; font-size: 28px; letter-spacing: 2px; text-transform: uppercase;">MORFEUS</h1>
-              <div style="height: 1px; background: linear-gradient(90deg, transparent, #a855f7, transparent); margin-top: 10px;"></div>
+          <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #050505; color: #ffffff; padding: 0; border: 1px solid #1a1a1a;">
+            <!-- Header with Logo -->
+            <div style="padding: 40px 20px; text-align: center; background-color: #000000;">
+              <img src="https://www.morfeushub.com/icon.png" alt="Morfeus Logo" style="width: 80px; height: 80px; margin-bottom: 20px;">
+              <h1 style="color: #ffffff; font-size: 24px; letter-spacing: 4px; text-transform: uppercase; margin: 0; font-weight: 300;">MORFEUS</h1>
+              <div style="height: 1px; width: 60px; background-color: #a855f7; margin: 20px auto;"></div>
             </div>
             
-            <p style="font-size: 16px; line-height: 1.6; color: #ccc;">
-              ${data.locale === 'it' 
-                ? `Ciao <strong>${clientFirstName}</strong>,` 
-                : `Hello <strong>${clientFirstName}</strong>,`}
-            </p>
-            
-            <p style="font-size: 18px; line-height: 1.6;">
-              ${data.locale === 'it'
-                ? "Abbiamo ricevuto la tua richiesta di trasformazione. Il nostro team sta già analizzando la tua sfida per capire come l'AI può accelerare il tuo business."
-                : "We have received your transformation request. Our team is already analyzing your challenge to understand how AI can accelerate your business."}
-            </p>
-
-            <div style="background-color: #111; padding: 20px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #a855f7;">
-              <p style="margin: 0; color: #999; font-size: 14px; text-transform: uppercase;">${data.locale === 'it' ? "Cosa succede ora?" : "What happens next?"}</p>
-              <p style="margin: 10px 0 0 0; color: #fff; line-height: 1.5;">
+            <!-- Main Content -->
+            <div style="padding: 40px 30px;">
+              <p style="font-size: 16px; line-height: 1.6; color: #a0a0a0; margin-bottom: 30px;">
+                ${data.locale === 'it' 
+                  ? `Gentile <strong>${clientFirstName}</strong>,` 
+                  : `Dear <strong>${clientFirstName}</strong>,`}
+              </p>
+              
+              <h2 style="font-size: 22px; line-height: 1.4; color: #ffffff; font-weight: 400; margin-bottom: 20px;">
                 ${data.locale === 'it'
-                  ? "Entro 24/48 ore verrai ricontattato da uno dei nostri esperti per fissare un breve incontro conoscitivo."
-                  : "Within 24/48 hours, one of our experts will contact you to schedule a brief introductory meeting."}
+                  ? "La tua richiesta di trasformazione è stata presa in carico."
+                  : "Your transformation request has been successfully received."}
+              </h2>
+
+              <p style="font-size: 16px; line-height: 1.8; color: #d1d1d1; margin-bottom: 30px;">
+                ${data.locale === 'it'
+                  ? "In Morfeus, crediamo che l'intelligenza artificiale non sia solo uno strumento, ma un moltiplicatore di potenziale umano. Il nostro team sta già analizzando i dettagli della tua sfida per delineare il percorso più efficace verso i tuoi obiettivi."
+                  : "At Morfeus, we believe AI is not just a tool, but a multiplier of human potential. Our team is already analyzing your challenge details to outline the most effective path toward your goals."}
+              </p>
+
+              <!-- Next Steps Box -->
+              <div style="background-color: #0a0a0a; padding: 25px; border: 1px solid #1a1a1a; border-radius: 4px; margin: 40px 0;">
+                <p style="margin: 0 0 15px 0; color: #a855f7; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">
+                  ${data.locale === 'it' ? "Prossimi Passaggi" : "What to expect"}
+                </p>
+                <p style="margin: 0; color: #ffffff; line-height: 1.6; font-size: 15px;">
+                  ${data.locale === 'it'
+                    ? "Entro le prossime 24/48 ore, un nostro Solution Architect ti contatterà personalmente per approfondire la tua visione e discutere le prime opportunità d'azione."
+                    : "Within the next 24/48 hours, one of our Solution Architects will contact you personally to explore your vision and discuss the first opportunities for action."}
+                </p>
+              </div>
+
+              <p style="font-size: 16px; line-height: 1.8; color: #d1d1d1;">
+                ${data.locale === 'it'
+                  ? "Siamo pronti ad andare oltre. Benvenuto a bordo."
+                  : "We are ready to go beyond. Welcome aboard."}
+              </p>
+
+              <p style="margin-top: 50px; font-size: 14px; color: #a855f7; font-weight: 500; letter-spacing: 1px;">
+                Team Morfeus Hub
               </p>
             </div>
 
-            <p style="font-size: 14px; color: #666; font-style: italic; margin-top: 40px; text-align: center;">
-              ${data.locale === 'it'
-                ? "Preparati a ridefinire i tuoi limiti."
-                : "Get ready to redefine your limits."}
-            </p>
-
-            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #222;">
-              <p style="font-size: 12px; color: #444; margin: 0;">&copy; 2025 MORFEUS HUB. All rights reserved.</p>
+            <!-- Footer -->
+            <div style="padding: 30px; background-color: #000000; text-align: center; border-top: 1px solid #1a1a1a;">
+              <p style="font-size: 11px; color: #444444; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
+                Artificial Intelligence • Strategic Transformation • Human Potential
+              </p>
+              <div style="margin-top: 20px;">
+                <a href="https://www.morfeushub.com" style="color: #666666; text-decoration: none; font-size: 11px;">www.morfeushub.com</a>
+              </div>
             </div>
           </div>
         `;
