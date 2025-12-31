@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollWrapper } from "@/components/ScrollWrapper";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import dynamic from "next/dynamic";
 
 // Fixed UI Components (always visible, positioned fixed)
@@ -31,7 +32,7 @@ const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m 
 
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useLocale } from "next-intl";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 const DESKTOP_BREAKPOINT = 1024;
 
@@ -65,6 +66,30 @@ export default function Home() {
   const locale = useLocale();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const lastIndexRef = useRef<number>(-1);
+  
+  // Loading state - check sessionStorage to avoid showing on every navigation
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('morfeus_loaded');
+    }
+    return true;
+  });
+  const [contentVisible, setContentVisible] = useState(false);
+
+  // Handle loading complete
+  const handleLoadingComplete = useCallback(() => {
+    setIsLoading(false);
+    sessionStorage.setItem('morfeus_loaded', 'true');
+    // Trigger content entrance animation
+    setTimeout(() => setContentVisible(true), 100);
+  }, []);
+
+  // If already loaded (from sessionStorage), show content immediately
+  useEffect(() => {
+    if (!isLoading) {
+      setContentVisible(true);
+    }
+  }, [isLoading]);
 
   // Debounced setIndex to prevent rapid re-renders
   const updateIndex = useCallback((index: number) => {
@@ -124,10 +149,16 @@ export default function Home() {
   }, [updateIndex]);
 
   return (
-    <main 
-      className="relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden"
-      style={{ touchAction: "pan-y" }}
-    >
+    <>
+      {/* Loading Screen */}
+      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      
+      <main 
+        className={`relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden transition-all duration-1000 ease-out ${
+          contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+        style={{ touchAction: "pan-y" }}
+      >
       {/* ========================================
           LAYER 1: Fixed UI Components
           These stay in place while content scrolls
@@ -188,5 +219,6 @@ export default function Home() {
         <div id="section-12"><Footer /></div>
       </ScrollWrapper>
     </main>
+    </>
   );
 }
