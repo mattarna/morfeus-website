@@ -42,16 +42,14 @@ Language: ${data.locale?.toUpperCase()}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     `.trim();
 
-    // Log for debugging (visible in Vercel logs)
-    console.log("Form submission process started...");
-    console.log("Slack Webhook URL configured:", !!process.env.SLACK_WEBHOOK_URL);
-    console.log("Brevo API Key configured:", !!process.env.BREVO_API_KEY);
+    // Log for debugging
+    const brevoKey = process.env.BREVO_API_KEY_V2 || process.env.BREVO_API_KEY;
+    console.log("Form submission started. Key detected:", !!brevoKey);
 
     // 1. Send Email to Team via Brevo
-    const brevoKey = process.env.BREVO_API_KEY_V2 || process.env.BREVO_API_KEY;
     if (brevoKey) {
       try {
-        console.log("Attempting to send email via Brevo...");
+        console.log("Attempting to send emails via Brevo...");
         
         // --- 1a. Notification to Morfeus Team ---
         const teamResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -62,7 +60,7 @@ Language: ${data.locale?.toUpperCase()}
             'content-type': 'application/json',
           },
           body: JSON.stringify({
-            sender: { name: "Morfeus Website", email: "noreply@morfeushub.com" },
+            sender: { name: "Morfeus Website", email: "hello@morfeushub.com" },
             to: (process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com")
               .split(',')
               .map(email => ({ email: email.trim() })),
