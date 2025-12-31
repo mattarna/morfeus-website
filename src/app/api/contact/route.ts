@@ -47,12 +47,14 @@ Language: ${data.locale?.toUpperCase()}
     console.log("Slack Webhook URL configured:", !!process.env.SLACK_WEBHOOK_URL);
     console.log("Brevo API Key configured:", !!process.env.BREVO_API_KEY);
 
-    // 1. Send Email via Brevo
+    // 1. Send Email to Team via Brevo
     const brevoKey = process.env.BREVO_API_KEY_V2 || process.env.BREVO_API_KEY;
     if (brevoKey) {
       try {
         console.log("Attempting to send email via Brevo...");
-        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+        
+        // --- 1a. Notification to Morfeus Team ---
+        const teamResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
@@ -60,8 +62,7 @@ Language: ${data.locale?.toUpperCase()}
             'content-type': 'application/json',
           },
           body: JSON.stringify({
-            // Name matched to your Brevo screenshot exactly
-            sender: { name: "Morfeus", email: "noreply@morfeushub.com" },
+            sender: { name: "Morfeus Website", email: "noreply@morfeushub.com" },
             to: (process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com")
               .split(',')
               .map(email => ({ email: email.trim() })),
@@ -71,9 +72,70 @@ Language: ${data.locale?.toUpperCase()}
           }),
         });
 
-        const responseData = await brevoResponse.text();
-        if (!brevoResponse.ok) {
-          console.error("Brevo error status:", brevoResponse.status);
+        // --- 1b. Confirmation to the Client ---
+        const clientFirstName = data.fullName.split(' ')[0];
+        const clientSubject = data.locale === 'it' 
+          ? `Richiesta ricevuta - Benvenuto in Morfeus, ${clientFirstName}`
+          : `Request Received - Welcome to Morfeus, ${clientFirstName}`;
+
+        const clientHtmlContent = `
+          <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #000; color: #fff; padding: 40px; border: 1px solid #333;">
+            <div style="text-align: center; margin-bottom: 40px;">
+              <h1 style="color: #a855f7; font-size: 28px; letter-spacing: 2px; text-transform: uppercase;">MORFEUS</h1>
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, #a855f7, transparent); margin-top: 10px;"></div>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.6; color: #ccc;">
+              ${data.locale === 'it' 
+                ? `Ciao <strong>${clientFirstName}</strong>,` 
+                : `Hello <strong>${clientFirstName}</strong>,`}
+            </p>
+            
+            <p style="font-size: 18px; line-height: 1.6;">
+              ${data.locale === 'it'
+                ? "Abbiamo ricevuto la tua richiesta di trasformazione. Il nostro team sta già analizzando la tua sfida per capire come l'AI può accelerare il tuo business."
+                : "We have received your transformation request. Our team is already analyzing your challenge to understand how AI can accelerate your business."}
+            </p>
+
+            <div style="background-color: #111; padding: 20px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #a855f7;">
+              <p style="margin: 0; color: #999; font-size: 14px; text-transform: uppercase;">${data.locale === 'it' ? "Cosa succede ora?" : "What happens next?"}</p>
+              <p style="margin: 10px 0 0 0; color: #fff; line-height: 1.5;">
+                ${data.locale === 'it'
+                  ? "Entro 24/48 ore verrai ricontattato da uno dei nostri esperti per fissare un breve incontro conoscitivo."
+                  : "Within 24/48 hours, one of our experts will contact you to schedule a brief introductory meeting."}
+              </p>
+            </div>
+
+            <p style="font-size: 14px; color: #666; font-style: italic; margin-top: 40px; text-align: center;">
+              ${data.locale === 'it'
+                ? "Preparati a ridefinire i tuoi limiti."
+                : "Get ready to redefine your limits."}
+            </p>
+
+            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #222;">
+              <p style="font-size: 12px; color: #444; margin: 0;">&copy; 2025 MORFEUS HUB. All rights reserved.</p>
+            </div>
+          </div>
+        `;
+
+        await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': brevoKey,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: "Morfeus Hub", email: "hello@morfeushub.com" },
+            to: [{ email: data.email, name: data.fullName }],
+            subject: clientSubject,
+            htmlContent: clientHtmlContent
+          }),
+        });
+
+        const responseData = await teamResponse.text();
+        if (!teamResponse.ok) {
+          console.error("Brevo error status:", teamResponse.status);
           console.error("Brevo error body:", responseData);
         } else {
           console.log("Brevo success response:", responseData);
