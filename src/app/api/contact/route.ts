@@ -93,7 +93,28 @@ Language: ${data.locale?.toUpperCase()}
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            text: `🚀 *New Contact Form Submission*\n\n*From:* ${data.fullName} (${data.company})\n*Email:* ${data.email}\n*Challenge:* ${data.challenge}\n\n_Check email for full details._`,
+            text: `🚀 *New Contact Form Submission*
+
+*📋 Contact Information*
+• *Name:* ${data.fullName}
+• *Email:* ${data.email}
+• *Company:* ${data.company}
+• *Role:* ${data.role}
+
+*🎯 Interest & Context*
+• *Services:* ${data.services.join(", ")}
+• *AI Maturity:* ${data.aiMaturity}
+• *Team Size:* ${data.teamSize}
+
+*📝 Project Details*
+• *Challenge:* ${data.challenge}
+• *Timeline:* ${data.timeline}
+• *Budget:* ${data.budget || "Not specified"}
+
+*Notes:* ${data.notes || "None"}
+
+──────────────────────────
+*Language:* ${data.locale?.toUpperCase()} | *Time:* ${data.submittedAt}`,
           }),
         });
       } catch (error) {
