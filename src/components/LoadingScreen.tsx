@@ -10,16 +10,16 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [phase, setPhase] = useState<"scanning" | "revealing" | "done">("scanning");
 
   useEffect(() => {
-    // Phase 1: Scanning animation (1.2s)
+    // Phase 1: Scanning animation (1.5s)
     const scanTimer = setTimeout(() => {
       setPhase("revealing");
-    }, 1200);
+    }, 1500);
 
     // Phase 2: Revealing animation (0.8s)
     const revealTimer = setTimeout(() => {
       setPhase("done");
       onComplete();
-    }, 2000);
+    }, 2300);
 
     return () => {
       clearTimeout(scanTimer);
@@ -52,41 +52,40 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
       />
 
       {/* Logo Container */}
-      <div className={`relative flex flex-col items-center ${phase === "scanning" ? "animate-glitch" : ""}`}>
+      <div className={`relative flex flex-col items-center ${phase === "scanning" ? "animate-breathe" : ""}`}>
         {/* Logo Image */}
         <div className="relative">
           <img 
             src="/icon.png" 
             alt="Morfeus" 
-            className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32"
+            className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 animate-glow"
           />
           
           {/* Purple Glow behind logo */}
           <div 
-            className="absolute inset-0 blur-2xl opacity-60 -z-10 scale-150"
+            className="absolute inset-0 blur-3xl opacity-40 -z-10 scale-[2] animate-pulse-slow"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(77,57,235,0.5) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at center, rgba(77,57,235,0.6) 0%, transparent 70%)",
             }}
           />
         </div>
 
         {/* MORFEUS Text */}
         <h1 
-          className="text-2xl md:text-3xl lg:text-4xl font-light tracking-[0.3em] md:tracking-[0.4em] text-white mt-6 md:mt-8"
+          className="text-2xl md:text-3xl lg:text-4xl font-light tracking-[0.3em] md:tracking-[0.4em] text-white mt-6 md:mt-8 opacity-80"
           style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
         >
           MORFEUS
         </h1>
 
         {/* Loading indicator */}
-        <p className="text-center text-[10px] md:text-xs tracking-[0.5em] text-white/40 mt-4 md:mt-6 uppercase">
-          Loading
-          <span className="inline-flex ml-1">
-            <span className="animate-pulse">.</span>
-            <span className="animate-pulse" style={{ animationDelay: "0.2s" }}>.</span>
-            <span className="animate-pulse" style={{ animationDelay: "0.4s" }}>.</span>
-          </span>
-        </p>
+        <div className="flex items-center gap-2 mt-6 md:mt-8">
+          <div className="flex gap-1">
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#4D39EB] animate-dot-1"></span>
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#4D39EB] animate-dot-2"></span>
+            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#4D39EB] animate-dot-3"></span>
+          </div>
+        </div>
       </div>
 
       {/* Corner Accents */}
@@ -114,31 +113,76 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           }
         }
 
-        @keyframes glitch {
+        @keyframes breathe {
           0%, 100% {
-            transform: translate(0);
+            transform: scale(1);
             opacity: 1;
           }
-          20% {
-            transform: translate(-2px, 1px);
+          50% {
+            transform: scale(1.02);
+            opacity: 0.95;
           }
-          40% {
-            transform: translate(2px, -1px);
+        }
+
+        @keyframes glow {
+          0%, 100% {
+            filter: brightness(1) drop-shadow(0 0 20px rgba(77,57,235,0.3));
           }
-          60% {
-            transform: translate(-1px, 2px);
+          50% {
+            filter: brightness(1.1) drop-shadow(0 0 30px rgba(77,57,235,0.5));
           }
-          80% {
-            transform: translate(1px, -2px);
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.4;
+            transform: scale(2);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(2.2);
+          }
+        }
+
+        @keyframes dot-bounce {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1);
           }
         }
 
         .animate-scan {
-          animation: scan 1.2s ease-in-out forwards;
+          animation: scan 1.5s ease-in-out forwards;
         }
 
-        .animate-glitch {
-          animation: glitch 0.3s ease-in-out infinite;
+        .animate-breathe {
+          animation: breathe 3s ease-in-out infinite;
+        }
+
+        .animate-glow {
+          animation: glow 3s ease-in-out infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+
+        .animate-dot-1 {
+          animation: dot-bounce 1.4s ease-in-out infinite;
+        }
+
+        .animate-dot-2 {
+          animation: dot-bounce 1.4s ease-in-out infinite;
+          animation-delay: 0.2s;
+        }
+
+        .animate-dot-3 {
+          animation: dot-bounce 1.4s ease-in-out infinite;
+          animation-delay: 0.4s;
         }
       `}</style>
     </div>
