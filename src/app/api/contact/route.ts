@@ -77,9 +77,11 @@ Language: ${data.locale?.toUpperCase()}
           }),
         });
 
+        const responseBody = await brevoResponse.text();
         if (!brevoResponse.ok) {
-          const errorData = await brevoResponse.json();
-          console.error("Brevo API error:", errorData);
+          console.error("Brevo API error:", brevoResponse.status, responseBody);
+        } else {
+          console.log("Brevo email sent successfully:", responseBody);
         }
       } catch (error) {
         console.error("Failed to send email via Brevo:", error);
