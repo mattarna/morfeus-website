@@ -92,7 +92,7 @@ const COUNTRY_CODES = [
   { code: "+971", country: "AE", flag: "🇦🇪", name: "United Arab Emirates" },
   { code: "+1", country: "US", flag: "🇺🇸", name: "United States" },
   { code: "+27", country: "ZA", flag: "🇿🇦", name: "South Africa" },
-].sort((a, b) => a.name.localeCompare(b.name));
+].sort((a, b) => a.country.localeCompare(b.country));
 
 const ROLES = [
   { en: "CEO / Founder", it: "CEO / Founder" },
@@ -603,7 +603,7 @@ function Step1({
           {t.phone} *
         </label>
         <div className="flex gap-2">
-          <div className="relative w-[130px] flex-shrink-0">
+          <div className="relative w-[120px] flex-shrink-0">
             <select
               value={`${formData.phonePrefix}|${formData.phoneCountry}`}
               onChange={(e) => {
@@ -615,7 +615,7 @@ function Step1({
             >
               {COUNTRY_CODES.map((cc) => (
                 <option key={`${cc.code}-${cc.country}`} value={`${cc.code}|${cc.country}`} className="bg-[#0a0a12]">
-                  {cc.flag} {cc.name} ({cc.code})
+                  {cc.flag} {cc.country} {cc.code}
                 </option>
               ))}
             </select>
