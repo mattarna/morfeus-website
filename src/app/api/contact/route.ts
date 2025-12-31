@@ -56,45 +56,56 @@ Language: ${data.locale?.toUpperCase()}
     console.log(emailBody);
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
-    // OPTION 1: Using Resend (recommended for production)
-    // Uncomment and configure with your Resend API key
-    /*
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    
-    await resend.emails.send({
-      from: 'Morfeus Website <noreply@morfeushub.com>',
-      to: ['hello@morfeushub.com', 'simone@morfeushub.com'],
-      subject: emailSubject,
-      text: emailBody,
-      replyTo: data.email,
-    });
-    */
+    // 1. Send Email via Brevo
+    if (process.env.BREVO_API_KEY) {
+      try {
+        const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': process.env.BREVO_API_KEY,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: "Morfeus Website", email: "noreply@morfeushub.com" },
+            to: (process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com")
+              .split(',')
+              .map(email => ({ email: email.trim() })),
+            subject: emailSubject,
+            textContent: emailBody,
+            replyTo: { email: data.email, name: data.fullName }
+          }),
+        });
 
-    // OPTION 2: Using Formspree (simple, no-code solution)
-    // Uncomment and replace YOUR_FORM_ID with your Formspree form ID
-    /*
-    const formspreeResponse = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        _subject: emailSubject,
-        ...data,
-      }),
-    });
-    
-    if (!formspreeResponse.ok) {
-      throw new Error('Formspree submission failed');
+        if (!brevoResponse.ok) {
+          const errorData = await brevoResponse.json();
+          console.error("Brevo API error:", errorData);
+        }
+      } catch (error) {
+        console.error("Failed to send email via Brevo:", error);
+      }
     }
-    */
 
-    // For demo purposes, we return success
-    // The frontend will handle the fallback mailto if needed
+    // 2. Send Notification to Slack
+    if (process.env.SLACK_WEBHOOK_URL) {
+      try {
+        await fetch(process.env.SLACK_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: `🚀 *New Contact Form Submission*\n\n*From:* ${data.fullName} (${data.company})\n*Email:* ${data.email}\n*Challenge:* ${data.challenge}\n\n_Check email for full details._`,
+          }),
+        });
+      } catch (error) {
+        console.error("Failed to send Slack notification:", error);
+      }
+    }
+
     return NextResponse.json({ 
       success: true, 
       message: "Form submitted successfully",
-      // Include mailto as fallback data
       mailto: {
-        to: "hello@morfeushub.com,simone@morfeushub.com",
+        to: process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com",
         subject: emailSubject,
         body: emailBody,
       }
