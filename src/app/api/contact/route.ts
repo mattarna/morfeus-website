@@ -42,23 +42,15 @@ Language: ${data.locale?.toUpperCase()}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     `.trim();
 
-    // For now, we'll use a mailto fallback approach
-    // In production, you'd integrate with:
-    // - Resend (resend.com) - Modern email API
-    // - SendGrid - Enterprise email
-    // - Nodemailer with SMTP
-    // - Formspree/Getform - Simple form backend
-
-    // Log the submission (useful for debugging)
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("📧 NEW CONTACT FORM SUBMISSION");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log(emailBody);
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    // Log for debugging (visible in Vercel logs)
+    console.log("Form submission process started...");
+    console.log("Slack Webhook URL configured:", !!process.env.SLACK_WEBHOOK_URL);
+    console.log("Brevo API Key configured:", !!process.env.BREVO_API_KEY);
 
     // 1. Send Email via Brevo
     if (process.env.BREVO_API_KEY) {
       try {
+        console.log("Attempting to send email via Brevo...");
         const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
@@ -67,7 +59,8 @@ Language: ${data.locale?.toUpperCase()}
             'content-type': 'application/json',
           },
           body: JSON.stringify({
-            sender: { name: "Morfeus Website", email: "noreply@morfeushub.com" },
+            // Name matched to your Brevo screenshot exactly
+            sender: { name: "Morfeus", email: "noreply@morfeushub.com" },
             to: (process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com")
               .split(',')
               .map(email => ({ email: email.trim() })),
@@ -77,21 +70,23 @@ Language: ${data.locale?.toUpperCase()}
           }),
         });
 
-        const responseBody = await brevoResponse.text();
+        const responseData = await brevoResponse.text();
         if (!brevoResponse.ok) {
-          console.error("Brevo API error:", brevoResponse.status, responseBody);
+          console.error("Brevo error status:", brevoResponse.status);
+          console.error("Brevo error body:", responseData);
         } else {
-          console.log("Brevo email sent successfully:", responseBody);
+          console.log("Brevo success response:", responseData);
         }
       } catch (error) {
-        console.error("Failed to send email via Brevo:", error);
+        console.error("Brevo fetch failed completely:", error);
       }
     }
 
     // 2. Send Notification to Slack
     if (process.env.SLACK_WEBHOOK_URL) {
       try {
-        await fetch(process.env.SLACK_WEBHOOK_URL, {
+        console.log("Attempting to send Slack notification...");
+        const slackResponse = await fetch(process.env.SLACK_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -119,28 +114,28 @@ Language: ${data.locale?.toUpperCase()}
 *Language:* ${data.locale?.toUpperCase()} | *Time:* ${data.submittedAt}`,
           }),
         });
+        
+        if (!slackResponse.ok) {
+          const slackError = await slackResponse.text();
+          console.error("Slack error:", slackResponse.status, slackError);
+        } else {
+          console.log("Slack notification sent successfully");
+        }
       } catch (error) {
-        console.error("Failed to send Slack notification:", error);
+        console.error("Slack fetch failed completely:", error);
       }
     }
 
     return NextResponse.json({ 
       success: true, 
-      message: "Form submitted successfully",
-      mailto: {
-        to: process.env.CONTACT_EMAIL_TO || "hello@morfeushub.com,simone@morfeushub.com",
-        subject: emailSubject,
-        body: emailBody,
-      }
+      message: "Form submitted successfully"
     });
 
   } catch (error) {
-    console.error("Contact form error:", error);
+    console.error("Global form error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to submit form" },
       { status: 500 }
     );
   }
 }
-
-
