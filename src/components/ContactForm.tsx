@@ -13,6 +13,8 @@ interface FormData {
   // Step 1
   fullName: string;
   email: string;
+  phonePrefix: string;
+  phone: string;
   company: string;
   role: string;
   // Step 2
@@ -29,6 +31,8 @@ interface FormData {
 const INITIAL_FORM_DATA: FormData = {
   fullName: "",
   email: "",
+  phonePrefix: "+39",
+  phone: "",
   company: "",
   role: "",
   services: [],
@@ -39,6 +43,53 @@ const INITIAL_FORM_DATA: FormData = {
   budget: "",
   notes: "",
 };
+
+const COUNTRY_CODES = [
+  { code: "+39", country: "IT", flag: "🇮🇹" },
+  { code: "+1", country: "US", flag: "🇺🇸" },
+  { code: "+44", country: "UK", flag: "🇬🇧" },
+  { code: "+49", country: "DE", flag: "🇩🇪" },
+  { code: "+33", country: "FR", flag: "🇫🇷" },
+  { code: "+34", country: "ES", flag: "🇪🇸" },
+  { code: "+41", country: "CH", flag: "🇨🇭" },
+  { code: "+43", country: "AT", flag: "🇦🇹" },
+  { code: "+31", country: "NL", flag: "🇳🇱" },
+  { code: "+32", country: "BE", flag: "🇧🇪" },
+  { code: "+351", country: "PT", flag: "🇵🇹" },
+  { code: "+48", country: "PL", flag: "🇵🇱" },
+  { code: "+46", country: "SE", flag: "🇸🇪" },
+  { code: "+47", country: "NO", flag: "🇳🇴" },
+  { code: "+45", country: "DK", flag: "🇩🇰" },
+  { code: "+358", country: "FI", flag: "🇫🇮" },
+  { code: "+353", country: "IE", flag: "🇮🇪" },
+  { code: "+30", country: "GR", flag: "🇬🇷" },
+  { code: "+420", country: "CZ", flag: "🇨🇿" },
+  { code: "+36", country: "HU", flag: "🇭🇺" },
+  { code: "+40", country: "RO", flag: "🇷🇴" },
+  { code: "+385", country: "HR", flag: "🇭🇷" },
+  { code: "+386", country: "SI", flag: "🇸🇮" },
+  { code: "+971", country: "AE", flag: "🇦🇪" },
+  { code: "+966", country: "SA", flag: "🇸🇦" },
+  { code: "+91", country: "IN", flag: "🇮🇳" },
+  { code: "+86", country: "CN", flag: "🇨🇳" },
+  { code: "+81", country: "JP", flag: "🇯🇵" },
+  { code: "+82", country: "KR", flag: "🇰🇷" },
+  { code: "+65", country: "SG", flag: "🇸🇬" },
+  { code: "+61", country: "AU", flag: "🇦🇺" },
+  { code: "+64", country: "NZ", flag: "🇳🇿" },
+  { code: "+55", country: "BR", flag: "🇧🇷" },
+  { code: "+52", country: "MX", flag: "🇲🇽" },
+  { code: "+54", country: "AR", flag: "🇦🇷" },
+  { code: "+57", country: "CO", flag: "🇨🇴" },
+  { code: "+56", country: "CL", flag: "🇨🇱" },
+  { code: "+27", country: "ZA", flag: "🇿🇦" },
+  { code: "+20", country: "EG", flag: "🇪🇬" },
+  { code: "+234", country: "NG", flag: "🇳🇬" },
+  { code: "+7", country: "RU", flag: "🇷🇺" },
+  { code: "+380", country: "UA", flag: "🇺🇦" },
+  { code: "+90", country: "TR", flag: "🇹🇷" },
+  { code: "+972", country: "IL", flag: "🇮🇱" },
+];
 
 const ROLES = [
   { en: "CEO / Founder", it: "CEO / Founder" },
@@ -94,6 +145,8 @@ const TRANSLATIONS = {
     step3Title: "Your Project",
     fullName: "Full Name",
     email: "Business Email",
+    phone: "Phone Number",
+    phonePlaceholder: "Phone number",
     company: "Company Name",
     role: "Your Role",
     selectRole: "Select your role...",
@@ -124,6 +177,8 @@ const TRANSLATIONS = {
     step3Title: "Il Tuo Progetto",
     fullName: "Nome Completo",
     email: "Email Aziendale",
+    phone: "Numero di Telefono",
+    phonePlaceholder: "Numero di telefono",
     company: "Nome Azienda",
     role: "Il Tuo Ruolo",
     selectRole: "Seleziona il tuo ruolo...",
@@ -223,6 +278,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
     if (step === 1) {
       if (!formData.fullName.trim()) newErrors.fullName = "Required";
       if (!formData.email.trim() || !formData.email.includes("@")) newErrors.email = "Required";
+      if (!formData.phone.trim()) newErrors.phone = "Required";
       if (!formData.company.trim()) newErrors.company = "Required";
       if (!formData.role) newErrors.role = "Required";
     } else if (step === 2) {
@@ -528,6 +584,42 @@ function Step1({
           } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
           placeholder="john@company.com"
         />
+      </div>
+
+      {/* Phone with Country Code */}
+      <div>
+        <label className="block text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-2">
+          {t.phone} *
+        </label>
+        <div className="flex gap-2">
+          <div className="relative w-[110px] flex-shrink-0">
+            <select
+              value={formData.phonePrefix}
+              onChange={(e) => updateField("phonePrefix", e.target.value)}
+              className="w-full h-12 px-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
+            >
+              {COUNTRY_CODES.map((cc) => (
+                <option key={cc.code} value={cc.code} className="bg-[#0a0a12]">
+                  {cc.flag} {cc.code}
+                </option>
+              ))}
+            </select>
+            <Icon
+              icon="solar:alt-arrow-down-linear"
+              width={14}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+            />
+          </div>
+          <input
+            type="tel"
+            value={formData.phone}
+            onChange={(e) => updateField("phone", e.target.value.replace(/[^0-9]/g, ''))}
+            className={`flex-1 h-12 px-4 rounded-xl bg-white/5 border ${
+              errors.phone ? "border-red-500/50" : "border-white/10"
+            } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
+            placeholder={t.phonePlaceholder}
+          />
+        </div>
       </div>
 
       <div>

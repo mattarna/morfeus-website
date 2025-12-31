@@ -16,6 +16,7 @@ NEW MORFEUS CONSULTATION REQUEST
 ─────────────────────────────────────────
 Name:      ${data.fullName}
 Email:     ${data.email}
+Phone:     ${data.phonePrefix} ${data.phone}
 Company:   ${data.company}
 Role:      ${data.role}
 
@@ -164,6 +165,7 @@ Language: ${data.locale?.toUpperCase()}
 *📋 Contact Information*
 • *Name:* ${data.fullName}
 • *Email:* ${data.email}
+• *Phone:* ${data.phonePrefix} ${data.phone}
 • *Company:* ${data.company}
 • *Role:* ${data.role}
 
