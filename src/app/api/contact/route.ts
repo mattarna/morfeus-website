@@ -48,14 +48,15 @@ Language: ${data.locale?.toUpperCase()}
     console.log("Brevo API Key configured:", !!process.env.BREVO_API_KEY);
 
     // 1. Send Email via Brevo
-    if (process.env.BREVO_API_KEY) {
+    const brevoKey = process.env.BREVO_API_KEY_V2 || process.env.BREVO_API_KEY;
+    if (brevoKey) {
       try {
         console.log("Attempting to send email via Brevo...");
         const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers: {
             'accept': 'application/json',
-            'api-key': process.env.BREVO_API_KEY,
+            'api-key': brevoKey,
             'content-type': 'application/json',
           },
           body: JSON.stringify({
