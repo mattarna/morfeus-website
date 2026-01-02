@@ -68,28 +68,30 @@ export default function Home() {
   const lastIndexRef = useRef<number>(-1);
   
   // Loading state - check sessionStorage to avoid showing on every navigation
-  const [isLoading, setIsLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('morfeus_loaded');
-    }
-    return true;
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
+
+  // Handle initialization and sessionStorage
+  useEffect(() => {
+    const hasLoadedBefore = sessionStorage.getItem('morfeus_loaded');
+    if (hasLoadedBefore) {
+      setIsLoading(false);
+      setContentVisible(true);
+    }
+  }, []);
 
   // Handle loading complete
   const handleLoadingComplete = useCallback(() => {
     setIsLoading(false);
-    sessionStorage.setItem('morfeus_loaded', 'true');
+    try {
+      sessionStorage.setItem('morfeus_loaded', 'true');
+    } catch (e) {
+      // Handle cases where sessionStorage is disabled (e.g. private mode)
+      console.warn("sessionStorage not available:", e);
+    }
     // Trigger content entrance animation
     setTimeout(() => setContentVisible(true), 100);
   }, []);
-
-  // If already loaded (from sessionStorage), show content immediately
-  useEffect(() => {
-    if (!isLoading) {
-      setContentVisible(true);
-    }
-  }, [isLoading]);
 
   // Debounced setIndex to prevent rapid re-renders
   const updateIndex = useCallback((index: number) => {
@@ -153,16 +155,8 @@ export default function Home() {
       {/* Loading Screen */}
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       
-      <main 
-        className={`relative min-h-screen w-full bg-black text-white overflow-x-hidden lg:overflow-hidden transition-all duration-1000 ease-out ${
-          contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        }`}
-        style={{ touchAction: "pan-y" }}
-      >
-      {/* ========================================
-          LAYER 1: Fixed UI Components
-          These stay in place while content scrolls
-          ======================================== */}
+      {/* Fixed UI Components (always visible, positioned fixed) 
+          Moved outside <main> to avoid transform/containing block issues on mobile */}
       <Background />
       <Header />
       <TimelineNav />
@@ -177,13 +171,18 @@ export default function Home() {
       {/* Cookie Consent Banner (GDPR) */}
       <CookieConsent />
       
-      {/* ========================================
-          LAYER 2: Scrollable Content
-          Uses translateY to move through sections
-          ======================================== */}
-      <ScrollWrapper>
-        {/* Decorative grid lines (inside wrapper to scroll with content) */}
-        <GridLines />
+      <main 
+        className={`relative min-h-screen w-full text-white transition-all duration-1000 ease-out ${
+          contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
+        {/* ========================================
+            LAYER 2: Scrollable Content
+            Uses translateY to move through sections
+            ======================================== */}
+        <ScrollWrapper>
+          {/* Decorative grid lines (inside wrapper to scroll with content) */}
+          <GridLines />
         
         {/* Index 0: Hero */}
         <div id="section-0"><Hero /></div>

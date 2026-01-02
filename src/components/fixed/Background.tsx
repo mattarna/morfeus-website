@@ -23,16 +23,23 @@ export function Background() {
       />
       
       <div 
-        className="fixed inset-0 z-0 pointer-events-none"
+        className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden"
         style={{
-          maskImage: "linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)",
+          height: '100dvh',
+          width: '100vw',
+          maskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 70%, transparent 100%)",
         }}
       >
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
           <div 
             data-us-project="ILgOO23w4wEyPQOKyLO4" 
-            className="absolute inset-0"
+            className="absolute inset-0 w-full h-full scale-[1.02] md:scale-100" // Slight overscale on mobile to prevent white edges
+            style={{ 
+              width: '100%', 
+              height: '100%',
+              transformOrigin: 'center center'
+            }}
           />
         </div>
       </div>

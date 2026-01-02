@@ -98,15 +98,15 @@ export function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-end justify-center p-4 sm:p-6 pointer-events-none">
+    <div className="fixed inset-0 z-[1000] flex items-end justify-center p-4 sm:p-6 pointer-events-none">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto"
+        className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto"
         onClick={() => {}} // Prevent closing by clicking backdrop (GDPR requires explicit choice)
       />
       
       {/* Banner */}
-      <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/10 rounded-2xl shadow-2xl pointer-events-auto overflow-hidden">
+      <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden animate-fadeIn">
         {/* Gradient accent */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#4D39EB] to-transparent" />
         

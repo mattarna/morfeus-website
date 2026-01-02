@@ -74,16 +74,22 @@ export function ScrollWrapper({ children }: ScrollWrapperProps) {
     if (isDesktop) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
     } else {
       // CRITICAL: Ensure scroll is ALWAYS enabled on mobile
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
     }
     
     // Cleanup: always restore scroll on unmount
     return () => {
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
     };
   }, [isDesktop, isMounted]);
 
