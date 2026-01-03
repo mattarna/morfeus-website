@@ -2,18 +2,15 @@
 
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { NAV_POINTS } from "@/app/lib/scrollConfig";
+import { useTranslations } from "next-intl";
 
 /**
  * TimelineNav - Left sidebar navigation
- * 
- * Fixed position, visible only on desktop (xl+)
- * Shows navigation dots with labels
- * Highlights active section based on currentIndex
- * Hides when on CTA or Footer sections (index >= 11)
  */
 export function TimelineNav() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   const setIndex = useScrollStore((state) => state.setIndex);
+  const t = useTranslations("Nav");
 
   const isActive = (navIndex: number) => {
     const point = NAV_POINTS[navIndex];
@@ -60,7 +57,7 @@ export function TimelineNav() {
 
               {/* Label */}
               <span className="text-xs font-medium text-slate-300 group-hover:text-white tracking-wide whitespace-nowrap transition-colors">
-                {point.label}
+                {t(point.label)}
               </span>
             </button>
           );

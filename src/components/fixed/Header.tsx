@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { NAV_POINTS } from "@/app/lib/scrollConfig";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 const DESKTOP_BREAKPOINT = 1024;
@@ -17,6 +17,7 @@ export function Header() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   const setIndex = useScrollStore((state) => state.setIndex);
   const locale = useLocale();
+  const t = useTranslations("Header");
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -118,8 +119,8 @@ export function Header() {
                   : "bg-[#4e39ec] border border-white/10 text-white py-2 px-5 text-[10px] font-bold shadow-[0_0_15px_-5px_rgba(78,57,234,0.4)]"
               }`}
             >
-              <span className="hidden sm:inline">Book a call</span>
-              <span className="sm:hidden">Book</span>
+              <span className="hidden sm:inline">{t("book")}</span>
+              <span className="sm:hidden">{t("book_mobile")}</span>
               <Icon
                 icon="solar:arrow-right-up-linear"
                 width={isDesktop ? 18 : 16}
@@ -131,7 +132,7 @@ export function Header() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden flex items-center justify-center px-4 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white transition-all focus:outline-none focus:ring-0"
             >
-              {isMenuOpen ? "Close" : "Menu"}
+              {isMenuOpen ? t("close") : t("menu")}
             </button>
           </div>
         </div>
@@ -156,12 +157,15 @@ function MobileMenu({
   currentLocale,
   otherLocale,
 }: { 
-  isOpen: boolean;
-  currentIndex: number;
+  isOpen: boolean; 
+  currentIndex: number; 
   onNavClick: (index: number) => void;
   currentLocale: string;
   otherLocale: string;
 }) {
+  const t = useTranslations("Nav");
+  const h = useTranslations("Header");
+
   return (
     <div 
       className={`fixed inset-0 z-[90] bg-black md:hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -202,7 +206,7 @@ function MobileMenu({
                 }`}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                {point.label}
+                {t(point.label)}
                 {isBook && (
                   <Icon icon="solar:arrow-right-up-linear" width={16} className="ml-1" />
                 )}
@@ -230,7 +234,7 @@ function MobileMenu({
           <div className="pt-4 border-t border-white/5 flex flex-col gap-3">
             <div className="flex justify-between items-center">
               <div className="flex flex-col gap-0.5">
-                <p className="text-[9px] uppercase tracking-widest text-slate-600 font-bold">Contact</p>
+                <p className="text-[9px] uppercase tracking-widest text-slate-600 font-bold">{h("contact")}</p>
                 <a 
                   href="mailto:info@morfeushub.com" 
                   className="text-white text-sm font-light hover:text-[#4D39EB] transition-colors"
