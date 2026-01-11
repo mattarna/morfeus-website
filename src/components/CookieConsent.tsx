@@ -25,7 +25,7 @@ const CONSENT_EXPIRY_DAYS = 365;
 
 declare global {
   interface Window {
-    dataLayer: any[];
+    dataLayer: Record<string, any>[];
     gtag: (...args: any[]) => void;
   }
 }
