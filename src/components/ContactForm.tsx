@@ -219,9 +219,20 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const hasStartedForm = useRef(false);
 
   const t = TRANSLATIONS[locale as keyof typeof TRANSLATIONS] || TRANSLATIONS.en;
   const lang = (locale === "it" ? "it" : "en") as "en" | "it";
+
+  // DataLayer Helper
+  const pushToDataLayer = (eventName: string, params: Record<string, any> = {}) => {
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: eventName,
+        ...params,
+      });
+    }
+  };
 
   // Reset scroll on step change
   useEffect(() => {
@@ -242,6 +253,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
         });
         setIsSuccess(false);
         setErrors({});
+        hasStartedForm.current = false;
       }, 500);
     }
   }, [isOpen, locale]);
@@ -270,11 +282,19 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
   }, [isOpen, onClose]);
 
   const updateField = (field: keyof FormData, value: string | string[]) => {
+    if (!hasStartedForm.current) {
+      hasStartedForm.current = true;
+      pushToDataLayer("form_start");
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
   const toggleService = (serviceId: string) => {
+    if (!hasStartedForm.current) {
+      hasStartedForm.current = true;
+      pushToDataLayer("form_start");
+    }
     const current = formData.services;
     if (current.includes(serviceId)) {
       updateField("services", current.filter((s) => s !== serviceId));
@@ -307,7 +327,9 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
-      setCurrentStep((prev) => Math.min(prev + 1, 3));
+      const nextStep = Math.min(currentStep + 1, 3);
+      pushToDataLayer("form_step", { step_number: currentStep });
+      setCurrentStep(nextStep);
     }
   };
 
@@ -332,6 +354,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
       });
 
       if (response.ok) {
+        pushToDataLayer("form_complete");
         setIsSuccess(true);
         setTimeout(() => {
           onClose();
@@ -341,6 +364,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      pushToDataLayer("form_error", { error_message: "Network or Server error" });
       // Fallback: open email client
       const subject = encodeURIComponent(`New Request from ${formData.fullName} - ${formData.company}`);
       const body = encodeURIComponent(

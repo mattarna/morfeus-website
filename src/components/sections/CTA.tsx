@@ -33,6 +33,17 @@ export function CTA() {
   // On mobile: always visible. On desktop: only when at index 11
   const isActive = !isDesktop || currentIndex === 11;
 
+  const trackCta = (text: string, location: string, type: string = "internal_link") => {
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: "cta_click",
+        cta_text: text,
+        cta_location: location,
+        cta_type: type,
+      });
+    }
+  };
+
   return (
     <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center justify-center bg-black overflow-hidden px-6 py-20 lg:py-0">
       {/* Layered Background Effects */}
@@ -95,6 +106,7 @@ export function CTA() {
             href="https://calendar.app.google/25SgJzTo2SCJk2dF7" 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={() => trackCta(t("primary"), "cta_section", "external_link")}
             className="group h-14 px-10 bg-white text-black text-[15px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] min-w-[220px] outline-none focus:outline-none"
           >
             {t("primary")}
@@ -107,7 +119,10 @@ export function CTA() {
 
           {/* Secondary CTA - Opens Global Contact Form */}
           <button 
-            onClick={() => setIsFormOpen(true)}
+            onClick={() => {
+              trackCta(t("secondary"), "cta_section", "open_form");
+              setIsFormOpen(true);
+            }}
             className="group h-14 px-10 bg-white/5 border border-white/10 backdrop-blur-md text-white text-[15px] font-medium rounded-full hover:bg-white/10 transition-all flex items-center justify-center gap-2 min-w-[220px] outline-none focus:outline-none"
           >
             {t("secondary")}

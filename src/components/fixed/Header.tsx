@@ -63,6 +63,17 @@ export function Header() {
   // Determine the target locale
   const otherLocale = locale === "en" ? "it" : "en";
 
+  const trackCta = (text: string, location: string, type: string = "internal_link") => {
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: "cta_click",
+        cta_text: text,
+        cta_location: location,
+        cta_type: type,
+      });
+    }
+  };
+
   return (
     <>
       <header 
@@ -77,6 +88,7 @@ export function Header() {
           <div className="flex items-center gap-4 pointer-events-auto">
             <button 
               onClick={() => {
+                trackCta("Logo Home", "navbar", "logo_click");
                 if (isDesktop) {
                   setIndex(0);
                 } else {
@@ -99,6 +111,14 @@ export function Header() {
             {/* Language Toggle - Desktop - Simple HTML Link */}
             <a 
               href={`/${otherLocale}`}
+              onClick={() => {
+                if (typeof window !== "undefined" && window.dataLayer) {
+                  window.dataLayer.push({
+                    event: "language_change",
+                    language_to: otherLocale
+                  });
+                }
+              }}
               className="hidden md:flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-[10px] font-semibold uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-all focus:outline-none focus:ring-0"
             >
               <span className={locale === 'en' ? 'text-white' : 'text-white/40'}>EN</span>
@@ -113,6 +133,7 @@ export function Header() {
               href="https://calendar.app.google/25SgJzTo2SCJk2dF7"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackCta("Book a call", "navbar", "external_link")}
               className={`group flex items-center gap-2 rounded-full backdrop-blur-md uppercase tracking-widest transition-all focus:outline-none focus:ring-0 ${
                 isDesktop 
                   ? "bg-white/5 border border-white/10 text-white py-3 px-8 text-xs font-semibold hover:bg-white/10" 
@@ -142,7 +163,11 @@ export function Header() {
       <MobileMenu 
         isOpen={isMenuOpen}
         currentIndex={currentIndex}
-        onNavClick={handleNavClick}
+        onNavClick={(idx) => {
+          const point = NAV_POINTS.find(p => p.index === idx);
+          if (point) trackCta(point.label, "mobile_menu", "internal_link");
+          handleNavClick(idx);
+        }}
         currentLocale={locale}
         otherLocale={otherLocale}
       />

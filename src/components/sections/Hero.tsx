@@ -23,7 +23,19 @@ export function Hero() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  const handleCtaClick = (e: React.MouseEvent, index: number) => {
+  const trackCta = (text: string, location: string, type: string = "internal_link") => {
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: "cta_click",
+        cta_text: text,
+        cta_location: location,
+        cta_type: type,
+      });
+    }
+  };
+
+  const handleCtaClick = (e: React.MouseEvent, index: number, text: string) => {
+    trackCta(text, "hero", "internal_link");
     if (isDesktop) {
       e.preventDefault();
       setIndex(index);
@@ -79,7 +91,7 @@ export function Hero() {
         <div className="mt-10 md:mt-14 flex flex-col sm:flex-row items-center gap-6 z-10">
           <a 
             href="#section-11"
-            onClick={(e) => handleCtaClick(e, 11)}
+            onClick={(e) => handleCtaClick(e, 11, t("cta_primary"))}
             className="group h-12 px-8 bg-white text-black text-[15px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_primary")}
@@ -87,7 +99,7 @@ export function Hero() {
           </a>
           <a 
             href="#section-1"
-            onClick={(e) => handleCtaClick(e, 1)}
+            onClick={(e) => handleCtaClick(e, 1, t("cta_secondary"))}
             className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_secondary")}

@@ -73,8 +73,15 @@ export function FAQ() {
 
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const toggleItem = (id: string) => {
-    setOpenId(openId === id ? null : id);
+  const toggleItem = (id: string, question: string) => {
+    const isOpening = openId !== id;
+    if (isOpening && typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: "faq_open",
+        question_text: question,
+      });
+    }
+    setOpenId(isOpening ? id : null);
   };
 
   return (
@@ -104,7 +111,7 @@ export function FAQ() {
               }`}
             >
               <button
-                onClick={() => toggleItem(item.id)}
+                onClick={() => toggleItem(item.id, item.question)}
                 className="w-full flex items-center justify-between p-6 md:p-8 text-left outline-none select-none focus:outline-none focus:ring-0 active:outline-none"
               >
                 <span className="text-lg md:text-xl font-normal text-white/90 group-hover:text-white transition-colors tracking-tight">

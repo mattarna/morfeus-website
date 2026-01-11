@@ -23,6 +23,13 @@ interface CookiePreferences {
 const COOKIE_CONSENT_KEY = "morfeus_cookie_consent";
 const CONSENT_EXPIRY_DAYS = 365;
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export function CookieConsent() {
   const locale = useLocale();
   const [isVisible, setIsVisible] = useState(false);
@@ -45,6 +52,8 @@ export function CookieConsent() {
         // If consent is still valid, don't show banner
         if (Date.now() < expiryTime) {
           setIsVisible(false);
+          // Still push to dataLayer for tags that need it on every page load
+          updateDataLayer(parsed);
           return;
         }
       } catch {
@@ -57,18 +66,46 @@ export function CookieConsent() {
     return () => clearTimeout(timer);
   }, []);
 
+  const updateDataLayer = (prefs: CookiePreferences) => {
+    if (typeof window === "undefined") return;
+
+    const consentUpdate = {
+      analytics_storage: prefs.analytics ? "granted" : "denied",
+      ad_storage: prefs.marketing ? "granted" : "denied",
+      ad_user_data: prefs.marketing ? "granted" : "denied",
+      ad_personalization: prefs.marketing ? "granted" : "denied",
+    };
+
+    // Update Google Consent Mode
+    if (typeof window.gtag === "function") {
+      window.gtag("consent", "update", consentUpdate);
+    }
+
+    // Push custom event for GTM triggers
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "cookie_consent_update",
+      consent_preferences: {
+        analytics: prefs.analytics,
+        marketing: prefs.marketing,
+        necessary: prefs.necessary,
+      },
+      ...consentUpdate,
+    });
+  };
+
   const saveConsent = (prefs: CookiePreferences) => {
     const toSave = { ...prefs, timestamp: Date.now() };
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(toSave));
     setIsVisible(false);
     
-    // Here you would initialize analytics based on consent
+    // Update DataLayer and Consent Mode
+    updateDataLayer(toSave);
+    
     if (prefs.analytics) {
-      // Initialize Google Analytics, etc.
       console.log("[Cookie Consent] Analytics enabled");
     }
     if (prefs.marketing) {
-      // Initialize marketing pixels
       console.log("[Cookie Consent] Marketing enabled");
     }
   };
