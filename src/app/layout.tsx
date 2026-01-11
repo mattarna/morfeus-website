@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -96,9 +95,7 @@ export default function RootLayout({
           }}
         />
         {/* Google Tag Manager */}
-        <Script
-          id="gtm-script"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
