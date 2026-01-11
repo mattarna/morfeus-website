@@ -60,6 +60,7 @@ const DESKTOP_BREAKPOINT = 1024;
  * - Indices 5-7 are "pinned" (Process section)
  */
 export default function Home() {
+  const currentIndex = useScrollStore((state) => state.currentIndex);
   const isContactFormOpen = useScrollStore((state) => state.isContactFormOpen);
   const setIsContactFormOpen = useScrollStore((state) => state.setIsContactFormOpen);
   const setIndex = useScrollStore((state) => state.setIndex);
