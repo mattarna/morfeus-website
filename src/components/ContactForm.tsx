@@ -225,7 +225,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
   const lang = (locale === "it" ? "it" : "en") as "en" | "it";
 
   // DataLayer Helper
-  const pushToDataLayer = (eventName: string, params: Record<string, any> = {}) => {
+  const pushToDataLayer = (eventName: string, params: Record<string, string | number | boolean | string[]> = {}) => {
     if (typeof window !== "undefined" && window.dataLayer) {
       window.dataLayer.push({
         event: eventName,

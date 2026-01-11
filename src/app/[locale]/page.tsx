@@ -123,6 +123,7 @@ export default function Home() {
       
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
   // Mobile Scroll Detection: Update currentIndex when sections enter viewport
