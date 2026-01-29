@@ -17,7 +17,7 @@ const DESKTOP_BREAKPOINT = 1024;
  * - Navigation, Social, Info, and Branding/Contact columns
  */
 
-export function Footer() {
+export function Footer({ forceActive = false }: { forceActive?: boolean }) {
   const t = useTranslations("Footer");
   const locale = useLocale();
   const currentIndex = useScrollStore((state) => state.currentIndex);
@@ -31,8 +31,8 @@ export function Footer() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 12
-  const isActive = !isDesktop || currentIndex === 12;
+  // On mobile: always visible. On desktop: only when at index 12 or forceActive is true
+  const isActive = !isDesktop || currentIndex === 12 || forceActive;
   
   const currentYear = new Date().getFullYear();
 

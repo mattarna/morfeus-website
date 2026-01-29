@@ -45,7 +45,9 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isScrolled = isDesktop ? currentIndex > 0 : hasScrolled;
+  const isScrolled = isDesktop 
+    ? (currentIndex > 0 || hasScrolled) 
+    : hasScrolled;
 
   const handleNavClick = (index: number) => {
     if (isDesktop) {

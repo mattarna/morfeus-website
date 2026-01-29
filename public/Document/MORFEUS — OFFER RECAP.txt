@@ -1,0 +1,309 @@
+﻿MORFEUS — OFFER DOCUMENT (v1)
+One-liner (chiara, premium, no-AI-first)
+Morfeus installa e mantiene il tuo Control System (dati → decisioni → automazioni) così puoi scalare senza perdere controllo su margini e cash flow—con canone fisso e delivery continua.
+One liner
+* State the problem
+   * Spesso, aziende e manager sprecano profitto, risorse e dipendenti perché non hanno gli strumenti giusti, come una casalinga che lava ancora i panni a mano
+* Position the product as the solution
+   * Io sono una AI Agency, ti ottimizzo tutti i processi, ti ricavo tutti i dati che ti mancano per prendere le migliori decisioni per la tua azienda e raddoppio la produttività del tuo personale
+* State the positive result
+   * In questo modo potrai moltiplicare i margini e strappare quote di mercato ai tuoi competitor
+
+
+________________
+
+
+Hormozi-style statement
+Aiutiamo aziende tra 5 e 100M (e 2–5M con tier entry) a costruire un ecosistema di sistemi e automazioni che aumenta controllo e impatto economico in 45 giorni (per i deliverable “Large”) senza assumere un team interno e senza bloccare l’operatività.
+________________
+
+
+1) Per chi è (ICP)
+Target primario: aziende 5–100M fatturato
+Target entry: aziende 2–5M (scope più stretto)
+Condizioni per lavorare bene (obbligatorie):
+* 1 Sponsor exec (CEO/COO/CFO) che decide
+
+* 1 Owner operativo (referente quotidiano)
+
+* Accessi ai sistemi concordati + tempi di feedback rispettati
+
+* Ticketing come unica fonte verità
+
+________________
+
+
+2) Cosa vendiamo (posizionamento)
+Non vendiamo “AI”. Vendiamo:
+   * Soluzioni in produzione
+
+   * Prevedibilità di delivery
+
+   * Compounding (stacking di sistemi che si appoggiano uno sull’altro)
+
+L’AI/agent è leva (velocità e costo), non la promessa.
+________________
+
+
+3) Come funziona (il modello operativo)
+3.1 Ticketing & canali
+      * Chat: Slack/Teams (canale dedicato)
+
+      * Ticketing: obbligatorio (tool TBD)
+
+      * Regola: niente richieste “in DM” senza ticket
+
+3.2 Backlog policy
+         * Un backlog unico, priorità decise nel ritmo del tier
+
+         * Ogni ticket deve avere: obiettivo, owner, dati/integrazioni coinvolte, criterio di accettazione
+
+3.3 WIP cap (inviolabile)
+            * Tier 1: WIP 1
+
+            * Tier 2: WIP 2
+
+            * Tier 3: WIP 3
+
+Se il cliente vuole più lavoro contemporaneo: o si chiude prima, oppure si sale di tier.
+________________
+
+
+4) Delivery currency: Slot + Taglie (S/M/L) definitive
+4.1 Unità: Slot
+1 slot = lavoro completo “end-to-end” per un pezzo di delivery: design breve + build + QA + deploy + doc/handover minimo.
+4.2 Taglie
+SMALL (S) = 1 slot
+Quando è S (deve rispettare TUTTO):
+               * max 1–2 integrazioni (API già note e documentate)
+
+               * max 1 workflow lineare (no branching complesso)
+
+               * max 1 step “AI/agent” semplice (es. classificazione, estrazione) con prompt controllato
+
+               * no UI dedicata (al massimo form/field esistenti)
+
+               * rischio basso: no impatto su billing/core money flow
+
+               * test: smoke test + logging base
+
+Esempi S:
+                  * sync bidirezionale semplice tra CRM e sheet/DB
+
+                  * bot che genera summary e aggiorna record
+
+                  * automazione di routing lead + notifiche
+
+MEDIUM (M) = 2 slot
+Quando è M (basta 1 di questi):
+                     * 3–4 integrazioni oppure 2 integrazioni ma con mapping dati non banale
+
+                     * workflow con branching (if/else), retry, idempotenza
+
+                     * agent con tool (es. ricerca knowledge base, chiamate API multiple) + guardrail base
+
+                     * include minima UI interna (es. dashboard light / pagina admin / approvazioni)
+
+                     * include requisiti “non funzionali” base: rate limits, error handling strutturato, audit trail
+
+                     * test: happy path + 3–5 edge cases
+
+Esempi M:
+                        * agent di triage ticket con escalation e SLA
+
+                        * orchestrazione multi-step (CRM → ERP → ticketing) con controlli
+
+                        * dashboard KPI “decision-grade” v1 se i dati sono accessibili
+
+LARGE (L) = 4 slot
+Quando è L (basta 1 di questi):
+                           * 5+ integrazioni o sistemi enterprise (ERP/legacy) con vincoli
+
+                           * componente dati/visibilità serio (model, quality checks, alerting)
+
+                           * UI interna più completa (ruoli, approvazioni, audit)
+
+                           * agent “multi-tool” con policy, rate limit, fallback, logging avanzato
+
+                           * impatto su processi critici (fatturazione, ordini, margini, cash collection) → richiede gating/release safe
+
+                           * test: suite più robusta + staging + feature flags (quando serve)
+
+Esempi L:
+                              * control surface completa + alerting + pipeline
+
+                              * agent operativo che esegue azioni su sistemi core con approval flow
+
+                              * refactor parziale di un processo end-to-end (senza replatform totale)
+
+XL = Custom/Enterprise
+Migrazioni importanti, rewrites, ERP deep, compliance pesante, multi-country: custom scope.
+________________
+
+
+5) SLA / tempi (promessa al cliente)
+Lead time massimo (dalla Ready Date):
+                                 * S: 5–10 giorni lavorativi
+
+                                 * M: 10–20 giorni lavorativi
+
+                                 * L: fino a 45 giorni lavorativi
+
+                                 * XL: concordato
+
+Questo è ciò che il cliente può aspettarsi in modo prevedibile. Internamente potete consegnare prima: il delta è il vostro buffer.
+________________
+
+
+6) Ready Date (come lo vuoi tu)
+I 30 giorni della finestra way-out partono quando iniziamo davvero a lavorare:
+la Ready Date è il momento in cui abbiamo ricevuto i materiali/accessi e il lavoro parte.
+Ready Date scatta quando:
+                                    1. accessi funzionanti ai sistemi concordati + ambienti (repo, credenziali, permessi)
+
+                                    2. owner operativo + sponsor exec confermati
+
+                                    3. ticketing attivo + backlog iniziale creato
+
+                                    4. Pilot Build scelto e approvato con criteri di accettazione
+
+________________
+
+
+7) Contratto: annual lock + way-out “data-driven”
+7.1 Struttura
+                                       * Firmate contratto annuale (12 mesi).
+
+                                       * Pagamento mensile (default). Opzione trimestrale anticipata (facoltativa).
+
+7.2 Way-out 30 giorni (OGGETTIVO)
+Non è “se mi piace”. È “se funziona come promesso”.
+Regola:
+                                          * Entro 30 giorni dalla Ready Date, Morfeus consegna il Pilot Build con criteri di accettazione misurabili.
+
+                                          * Se il Pilot Build NON soddisfa i criteri concordati → il cliente può esercitare way-out e terminare il contratto (senza penali future).
+
+                                          * Se il Pilot Build SÌ soddisfa i criteri → il contratto prosegue per l’anno e si rinnova automaticamente (salvo disdetta nei termini).
+
+Pilot Build per tier
+                                             * Tier 1: Pilot = S
+
+                                             * Tier 2: Pilot = M
+
+                                             * Tier 3: Pilot = M o L (scelto insieme in base all’impatto)
+
+Criteri di accettazione (template)
+Ogni Pilot Build deve avere:
+                                                * “fa X” (funzionale)
+
+                                                * tempi/affidabilità minimi (es. error rate sotto soglia)
+
+                                                * logging/audit base
+
+                                                * handover (doc + runbook) + demo
+
+Questa impostazione elimina il rischio “progetto a sconto”: o consegnate “come da spec” e continuano, oppure non avete mantenuto la promessa e il cliente può uscire.
+________________
+
+
+8) Tiers (prezzi + slot + governance)
+Tier 1 — €3–4k/mese — Foundation Lite
+Slot/mese: 2
+WIP: 1
+Backlog cap: 10 item
+Call: 1 ogni 2 settimane (30–45’)
+Update: settimanale async
+Handover: 1 sessione/mese + doc/runbook
+SLA tipico: S e M piccoli (prevalenza S)
+Chi è perfetto: entry 2–5M, complessità bassa, bisogno di quick wins e struttura.
+________________
+
+
+Tier 2 — €6–8k/mese — Control + Velocity
+Slot/mese: 4
+WIP: 2
+Backlog cap: 20 item
+Call: 1 settimanale (45–60’) + demo async
+Handover: runbook + owner checklist + workshop remoto trimestrale
+SLA tipico: M e qualche L
+Chi è perfetto: core 5–30M, vuole ecosistema che compone + ritmi chiari.
+________________
+
+
+Tier 3 — €12–16k/mese — Scale Pod
+Slot/mese: 8
+WIP: 3
+Backlog cap: 40 item (per domini)
+Call: 2 touchpoint/week + steering mensile exec
+Handover: avanzato + training; onsite quarterly opzionale o incluso
+SLA tipico: L, e M in parallelo
+Chi è perfetto: 30–100M o processi critici dove margini/cash sono in gioco.
+________________
+
+
+9) Il punto che hai citato: ogni deployment costa mantenerlo (policy inclusa)
+Questa è fondamentale e vi salva i margini.
+Maintenance Tax (regola semplice e onesta)
+Ogni mese, una parte della capacità serve per:
+                                                   * bugfix, monitoraggio, aggiornamenti, drift, piccole modifiche richieste dai sistemi già deployati.
+
+Policy consigliata:
+                                                      * 20% degli slot mensili sono implicitamente allocati a Maintenance & Reliability.
+
+                                                      * Il restante 80% va su nuove build.
+
+Esempio:
+                                                         * Tier 2 = 4 slot → 0.8 slot “maintenance budget” (accorpato nella pianificazione) + 3.2 slot nuove build (in pratica: gestite con buon senso nel planning).
+
+Warranty window (per evitare discussioni)
+                                                            * Bugfix relativi a un rilascio: inclusi per 14 giorni dal deploy (se non sono change request).
+
+                                                            * Dopo: rientrano in maintenance budget/slot.
+
+Questo vi evita il “supporto infinito” che uccide margini.
+________________
+
+
+10) Security Pack (Enterprise add-on)
+Avete un Security Pack e lo trattiamo come Enterprise:
+                                                               * se serve procurement/infosec/audit/pen-test/data residency → add-on enterprise (tempo e/o prezzo extra) oppure iniziativa L/XL.
+
+________________
+
+
+11) Delivery Unit (Pod) + capacità
+Pod standard:
+                                                                  * PM/Automation Expert (account owner)
+
+                                                                  * Full-stack/Agent developer
+
+Capacità target pod: ~16 slot/mese “sicuri” (con buffer e governance).
+Mix sostenibile:
+                                                                     * 1×Tier3 (8) + 2×Tier2 (8) = 16 slot → 3 clienti/pod
+
+                                                                     * 3×Tier2 (12) + 2×Tier1 (4) = 16 slot → 5 clienti/pod
+
+La vostra leva AI (Cursor/agent) può aumentare slot/mese, ma solo se WIP resta sotto controllo.
+________________
+
+
+                                                                        *  Definition of Done obbligatoria (prod + logging + doc + handover)
+
+                                                                        * Warranty window 14 giorni (bugfix vs change request)
+
+                                                                        * Maintenance Tax (ogni deploy pesa nel tempo)
+
+                                                                        * Acceptance criteria oggettivi per way-out (no “mi piace/non mi piace”)
+
+                                                                        * Taglie S/M/L definite per complessità reale (integrazioni, UI, rischio, test, osservabilità)
+
+                                                                        * Governance per tier (call, backlog cap, WIP cap, steering exec in Tier 3)
+
+                                                                        * Security enterprise add-on formalizzato
+
+________________
+
+
+Firmi un anno per avere continuità e priorità.
+Ma nei primi 30 giorni, se il Pilot Build non fa esattamente ciò che abbiamo scritto nei criteri di accettazione, puoi uscire.
+Se lo fa, prosegui e ogni mese accumuli sistemi che compongono valore—non un progetto isolato.
