@@ -134,7 +134,7 @@ export default function OperatingSystemPage() {
           
           {/* 1. HEADLINE */}
           <div className="mb-6 md:mb-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] font-black tracking-[-0.03em] leading-[1.05] uppercase">
+            <h1 className="text-[2.25rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-[-0.03em] leading-[1.05] uppercase">
               <span 
                 className="bg-clip-text text-transparent bg-gradient-to-b from-white via-[#e2e8f0] to-[#94a3b8] drop-shadow-[0_2px_10px_rgba(255,255,255,0.15)]"
                 style={{ WebkitBackgroundClip: 'text' }}
