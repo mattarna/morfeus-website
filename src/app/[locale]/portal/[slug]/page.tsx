@@ -17,6 +17,7 @@ export default function FounderPortalPage() {
   const [member, setMember] = useState<TeamMember | null>(null);
   const [displayName, setDisplayName] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [showQR, setShowQR] = useState(false);
 
   // Decrypt Animation Effect
   const decryptName = useCallback((targetName: string) => {
@@ -94,6 +95,8 @@ END:VCARD`;
     }
   };
 
+  const waMessage = encodeURIComponent(`Ciao ${member.name.split(' ')[0]}, ho visto il tuo profilo Morfeus, parliamo di come integrare l'AI?`);
+
   return (
     <div className="relative min-h-screen w-full bg-[#030508] text-white flex flex-col items-center px-6 py-10 overflow-x-hidden font-sans">
       {/* BACKGROUND ELEMENTS */}
@@ -156,7 +159,7 @@ END:VCARD`;
           <div className="grid grid-cols-4 gap-4 mb-8">
             {[
               { icon: "solar:phone-bold", href: `tel:${member.phone}`, color: "text-emerald-400 bg-emerald-400/10" },
-              { icon: "simple-icons:whatsapp", href: `https://wa.me/${member.phone.replace(/\+/g, '')}`, color: "text-green-400 bg-green-400/10" },
+              { icon: "simple-icons:whatsapp", href: `https://wa.me/${member.phone.replace(/\+/g, '')}?text=${waMessage}`, color: "text-green-400 bg-green-400/10" },
               { icon: "solar:letter-bold", href: `mailto:${member.email}`, color: "text-blue-400 bg-blue-400/10" },
               { icon: "simple-icons:linkedin", href: member.linkedin, color: "text-indigo-400 bg-indigo-400/10" },
             ].map((act, i) => (
@@ -223,6 +226,16 @@ END:VCARD`;
           </div>
         </div>
 
+        {/* QR CODE BUTTON */}
+        <button 
+          onClick={() => setShowQR(true)}
+          className="w-full mb-4 py-4 rounded-xl border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 text-xs font-mono uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-all duration-300 hover:bg-indigo-500/10 active:scale-95 animate-fadeIn"
+          style={{ animationDelay: "700ms" }}
+        >
+          <Icon icon="solar:qr-code-bold" className="w-4 h-4" />
+          Mostra QR Code
+        </button>
+
         {/* SHARE & FOOTER */}
         <button 
           onClick={handleShare} 
@@ -237,6 +250,39 @@ END:VCARD`;
           System Operational • 2026
         </div>
       </div>
+
+      {/* QR MODAL */}
+      {showQR && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6">
+          <div className="absolute inset-0 bg-[#030508]/80 backdrop-blur-xl transition-all" onClick={() => setShowQR(false)} />
+          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-[2rem] p-8 flex flex-col items-center animate-toastIn">
+            <div className="mb-6 text-center">
+              <h3 className="text-xl font-black uppercase tracking-tight mb-2">Il tuo QR Code</h3>
+              <p className="text-slate-400 text-[10px] font-mono uppercase tracking-widest">Scansiona per accedere al profilo</p>
+            </div>
+            
+            <div className="relative w-full aspect-square bg-white p-6 rounded-3xl mb-8">
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(window.location.href)}&color=030508`}
+                alt="QR Code"
+                className="w-full h-full"
+              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1">
+                   <img src="/favicon.ico" alt="M" className="w-full h-full object-contain" />
+                </div>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setShowQR(false)}
+              className="w-full py-4 rounded-xl bg-white/5 text-slate-300 font-mono text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
+            >
+              Chiudi
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* TOAST NOTIFICATION */}
       {showToast && (
