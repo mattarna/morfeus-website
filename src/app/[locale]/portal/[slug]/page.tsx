@@ -135,7 +135,7 @@ END:VCARD`;
               {member.role}
             </span>
             <span className="text-slate-400 text-xs font-light tracking-wide italic">
-              "{member.tagline}"
+              &quot;{member.tagline}&quot;
             </span>
           </div>
         </div>
