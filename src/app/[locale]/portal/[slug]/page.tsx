@@ -51,8 +51,13 @@ export default function FounderPortalPage() {
   if (!mounted || !member) return <div className="h-screen bg-[#030508]" />;
 
   const generateVCard = () => {
+    const nameParts = member.name.split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ");
+
     const vcard = `BEGIN:VCARD
 VERSION:3.0
+N:${lastName};${firstName};;;
 FN:${member.name}
 ORG:Morfeus
 TITLE:${member.role}
