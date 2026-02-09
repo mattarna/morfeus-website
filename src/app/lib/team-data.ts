@@ -83,7 +83,7 @@ export const teamMembers: Record<string, TeamMember> = {
   "matteo-alvazzi": {
     slug: "matteo-alvazzi",
     name: "Matteo Alvazzi",
-    role: "AI Specialist",
+    role: "CTO & Partner",
     tagline: "Designing AI-Native Organizations",
     email: "matteo.alvazzi@morfeushub.com",
     phone: "+393922273258",
@@ -93,7 +93,7 @@ export const teamMembers: Record<string, TeamMember> = {
   davide: {
     slug: "davide",
     name: "Davide Bertolini",
-    role: "AI Specialist",
+    role: "Marketing AI Expert",
     tagline: "Building the future of work",
     email: "davide@morfeushub.com",
     phone: "+393428402326",

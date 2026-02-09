@@ -142,7 +142,7 @@ END:VCARD`;
             <span className="text-indigo-400 font-mono text-xs md:text-sm uppercase tracking-[0.3em] font-bold">
               {member.role}
             </span>
-            <span className="text-slate-400 text-sm md:text-base font-light tracking-wide italic">
+            <span className="text-slate-400 text-sm md:text-base font-light tracking-wide italic text-balance px-4">
               &quot;{member.tagline}&quot;
             </span>
           </div>
@@ -179,7 +179,7 @@ END:VCARD`;
           <div className="flex flex-col gap-3 mb-8 px-2">
             <a href={`mailto:${member.email}`} className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group">
               <Icon icon="solar:letter-linear" className="w-4 h-4 text-indigo-500" />
-              <span className="text-sm font-mono tracking-wider">{member.email}</span>
+              <span className="text-sm font-mono tracking-wider break-all">{member.email}</span>
             </a>
             <a href={`tel:${member.phone}`} className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group">
               <Icon icon="solar:phone-linear" className="w-4 h-4 text-indigo-500" />
@@ -255,7 +255,7 @@ END:VCARD`;
       {showQR && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6">
           <div className="absolute inset-0 bg-[#030508]/80 backdrop-blur-xl transition-all" onClick={() => setShowQR(false)} />
-          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-[2rem] p-8 flex flex-col items-center animate-toastIn">
+          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-[2rem] p-8 flex flex-col items-center animate-modalIn">
             <div className="mb-6 text-center">
               <h3 className="text-xl font-black uppercase tracking-tight mb-2">Il tuo QR Code</h3>
               <p className="text-slate-400 text-[10px] font-mono uppercase tracking-widest">Scansiona per accedere al profilo</p>
@@ -268,7 +268,7 @@ END:VCARD`;
                 className="w-full h-full"
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1">
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-sm">
                    <img src="/favicon.ico" alt="M" className="w-full h-full object-contain" />
                 </div>
               </div>
@@ -276,7 +276,7 @@ END:VCARD`;
 
             <button 
               onClick={() => setShowQR(false)}
-              className="w-full py-4 rounded-xl bg-white/5 text-slate-300 font-mono text-xs uppercase tracking-widest hover:bg-white/10 transition-all"
+              className="w-full py-4 rounded-xl bg-white/5 text-slate-300 font-mono text-xs uppercase tracking-widest hover:bg-white/10 transition-all active:scale-95"
             >
               Chiudi
             </button>
@@ -286,8 +286,8 @@ END:VCARD`;
 
       {/* TOAST NOTIFICATION */}
       {showToast && (
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[1000] animate-toastIn">
-          <div className="px-6 py-3 rounded-full bg-indigo-600 text-white text-[10px] font-mono uppercase tracking-widest shadow-2xl border border-white/20">
+        <div className="fixed bottom-10 left-0 right-0 z-[1000] flex justify-center px-6 pointer-events-none">
+          <div className="px-6 py-3 rounded-full bg-indigo-600 text-white text-[10px] font-mono uppercase tracking-widest shadow-2xl border border-white/20 animate-modalIn">
             [ SISTEMA: LINK COPIATO ]
           </div>
         </div>
@@ -298,15 +298,15 @@ END:VCARD`;
           from { opacity: 0; transform: translateY(15px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes toastIn {
-          from { opacity: 0; transform: translate(-50%, 20px); }
-          to { opacity: 1; transform: translate(-50%, 0); }
+        @keyframes modalIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .animate-fadeIn {
           animation: fadeIn 0.8s ease-out forwards;
         }
-        .animate-toastIn {
-          animation: toastIn 0.3s ease-out forwards;
+        .animate-modalIn {
+          animation: modalIn 0.3s ease-out forwards;
         }
       `}</style>
     </div>
