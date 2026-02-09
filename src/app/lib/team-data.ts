@@ -2,6 +2,7 @@ export interface TeamMember {
   slug: string;
   name: string;
   role: string;
+  tagline: string;
   email: string;
   phone: string;
   linkedin: string;
@@ -25,7 +26,7 @@ export const globalLinks: GlobalLink[] = [
   {
     key: "homepage_en",
     url: "https://www.morfeushub.com/en",
-    icon: "solar:global-linear",
+    icon: "solar:home-2-linear", // Uniform icon
     color: "from-blue-600 to-cyan-600",
   },
   {
@@ -52,28 +53,31 @@ export const teamMembers: Record<string, TeamMember> = {
   matteo: {
     slug: "matteo",
     name: "Matteo Arnaboldi",
-    role: "CEO / Founder",
+    role: "CEO & Co-Founder",
+    tagline: "I turn AI into ROI",
     email: "matteo@morfeushub.com",
     phone: "+393388368457",
     linkedin: "https://www.linkedin.com/in/matteo-arnaboldi/",
-    image: "/profile pic/Profile Matt.png",
+    image: "/profile pic/Profile-matt.jpg",
   },
   alex: {
     slug: "alex",
     name: "Alex Carofiglio",
-    role: "CTO / Founder",
+    role: "Co-founder",
+    tagline: "AI Architecture & Engineering",
     email: "alex@morfeushub.com",
     phone: "+393520797697",
     linkedin: "https://www.linkedin.com/in/alex-carofiglio-aa4788186/",
-    image: "/profile pic/Profile-alex.jpg",
+    image: "/profile pic/Profile-alex.webp",
   },
   simone: {
     slug: "simone",
     name: "Simone Zin",
-    role: "COO / Founder",
+    role: "Co-founder",
+    tagline: "Operations & ROI Addicted",
     email: "simone@morfeushub.com",
     phone: "+393289245012",
     linkedin: "https://www.linkedin.com/in/simone-zin-9b745b210/",
-    image: "/profile pic/Profile-Simo.jpg",
+    image: "/profile pic/Profile-Simo.webp",
   },
 };
