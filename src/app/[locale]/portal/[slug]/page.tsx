@@ -127,14 +127,14 @@ END:VCARD`;
             </div>
           </div>
           
-          <h1 className="text-3xl font-black tracking-tighter mb-1 uppercase h-9">
+          <h1 className="text-3xl font-black tracking-tighter mb-2 uppercase h-9">
             {displayName}
           </h1>
-          <div className="flex flex-col gap-1">
-            <span className="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] font-bold">
+          <div className="flex flex-col gap-2">
+            <span className="text-indigo-400 font-mono text-xs md:text-sm uppercase tracking-[0.3em] font-bold">
               {member.role}
             </span>
-            <span className="text-slate-400 text-xs font-light tracking-wide italic">
+            <span className="text-slate-400 text-sm md:text-base font-light tracking-wide italic">
               &quot;{member.tagline}&quot;
             </span>
           </div>
@@ -142,13 +142,13 @@ END:VCARD`;
 
         {/* SECTION 1: DIRECT CONTACT */}
         <div className="w-full mb-12 animate-fadeIn" style={{ animationDelay: "400ms" }}>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-slate-800" />
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Contatto Diretto</span>
+            <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Contatto Diretto</span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-800" />
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-4 gap-4 mb-8">
             {[
               { icon: "solar:phone-bold", href: `tel:${member.phone}`, color: "text-emerald-400 bg-emerald-400/10" },
               { icon: "simple-icons:whatsapp", href: `https://wa.me/${member.phone.replace(/\+/g, '')}`, color: "text-green-400 bg-green-400/10" },
@@ -167,10 +167,22 @@ END:VCARD`;
             ))}
           </div>
 
+          {/* CONTACT DETAILS TEXT */}
+          <div className="flex flex-col gap-3 mb-8 px-2">
+            <a href={`mailto:${member.email}`} className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group">
+              <Icon icon="solar:letter-linear" className="w-4 h-4 text-indigo-500" />
+              <span className="text-sm font-mono tracking-wider">{member.email}</span>
+            </a>
+            <a href={`tel:${member.phone}`} className="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group">
+              <Icon icon="solar:phone-linear" className="w-4 h-4 text-indigo-500" />
+              <span className="text-sm font-mono tracking-wider">{member.phone}</span>
+            </a>
+          </div>
+
           {/* HERO ACTION: SAVE CONTACT */}
           <button 
             onClick={generateVCard}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-700 text-white font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
+            className="w-full py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-700 text-white font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
           >
             <Icon icon="solar:user-plus-bold" className="w-5 h-5" />
             {t("save_contact")}
@@ -178,14 +190,14 @@ END:VCARD`;
         </div>
 
         {/* SECTION 2: MORFEUS ECOSYSTEM */}
-        <div className="w-full mb-10 animate-fadeIn" style={{ animationDelay: "600ms" }}>
-          <div className="flex items-center gap-3 mb-6">
+        <div className="w-full mb-12 animate-fadeIn" style={{ animationDelay: "600ms" }}>
+          <div className="flex items-center gap-3 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-slate-800" />
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Morfeus Ecosystem</span>
+            <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Morfeus Ecosystem</span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-800" />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {globalLinks.map((link, i) => (
               <a 
                 key={i} 
@@ -194,12 +206,12 @@ END:VCARD`;
                 rel="noopener noreferrer"
                 className="group relative block w-full active:scale-[0.98] transition-all"
               >
-                <div className="relative flex items-center gap-4 px-5 py-4 rounded-xl bg-white/[0.03] border border-white/5 backdrop-blur-sm overflow-hidden group-hover:bg-white/[0.06] transition-colors">
-                  <Icon icon={link.icon} className="w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors" />
-                  <span className="flex-1 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
+                <div className="relative flex items-center gap-4 px-6 py-5 rounded-xl bg-white/[0.03] border border-white/5 backdrop-blur-sm overflow-hidden group-hover:bg-white/[0.06] transition-colors">
+                  <Icon icon={link.icon} className="w-6 h-6 text-slate-400 group-hover:text-indigo-400 transition-colors" />
+                  <span className="flex-1 text-base font-medium text-slate-300 group-hover:text-white transition-colors">
                     {t(`links.${link.key}`)}
                   </span>
-                  <Icon icon="solar:arrow-right-up-linear" className="w-4 h-4 text-slate-600 group-hover:text-white transition-all" />
+                  <Icon icon="solar:arrow-right-up-linear" className="w-5 h-5 text-slate-600 group-hover:text-white transition-all" />
                 </div>
               </a>
             ))}
@@ -209,14 +221,14 @@ END:VCARD`;
         {/* SHARE & FOOTER */}
         <button 
           onClick={handleShare} 
-          className="flex items-center gap-2 text-slate-500 hover:text-indigo-400 transition-colors text-[10px] font-mono uppercase tracking-widest mb-12 animate-fadeIn"
+          className="w-full py-4 rounded-xl border border-white/5 bg-white/5 flex items-center justify-center gap-3 text-slate-300 hover:text-white hover:bg-white/10 transition-all text-xs font-mono uppercase tracking-[0.2em] mb-12 animate-fadeIn"
           style={{ animationDelay: "800ms" }}
         >
           <Icon icon="solar:share-bold" className="w-4 h-4" />
           {t("share")}
         </button>
 
-        <div className="text-[9px] font-mono text-slate-700 uppercase tracking-[0.4em] animate-fadeIn" style={{ animationDelay: "900ms" }}>
+        <div className="text-[10px] font-mono text-slate-700 uppercase tracking-[0.4em] animate-fadeIn" style={{ animationDelay: "900ms" }}>
           System Operational • 2026
         </div>
       </div>

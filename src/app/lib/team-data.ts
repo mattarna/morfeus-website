@@ -26,7 +26,7 @@ export const globalLinks: GlobalLink[] = [
   {
     key: "homepage_en",
     url: "https://www.morfeushub.com/en",
-    icon: "solar:home-2-linear", // Uniform icon
+    icon: "solar:home-2-linear",
     color: "from-blue-600 to-cyan-600",
   },
   {
@@ -58,7 +58,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "matteo@morfeushub.com",
     phone: "+393388368457",
     linkedin: "https://www.linkedin.com/in/matteo-arnaboldi/",
-    image: "/profile pic/Profile-matt.jpg",
+    image: "/Profile-pics/Profile-matt.jpg",
   },
   alex: {
     slug: "alex",
@@ -68,7 +68,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "alex@morfeushub.com",
     phone: "+393520797697",
     linkedin: "https://www.linkedin.com/in/alex-carofiglio-aa4788186/",
-    image: "/profile pic/Profile-alex.webp",
+    image: "/Profile-pics/Profile-alex.webp",
   },
   simone: {
     slug: "simone",
@@ -78,6 +78,6 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "simone@morfeushub.com",
     phone: "+393289245012",
     linkedin: "https://www.linkedin.com/in/simone-zin-9b745b210/",
-    image: "/profile pic/Profile-Simo.webp",
+    image: "/Profile-pics/Profile-Simo.webp",
   },
 };
