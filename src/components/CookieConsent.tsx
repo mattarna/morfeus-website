@@ -96,7 +96,11 @@ export function CookieConsent() {
 
   const saveConsent = (prefs: CookiePreferences) => {
     const toSave = { ...prefs, timestamp: Date.now() };
-    localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(toSave));
+    try {
+      localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(toSave));
+    } catch (e) {
+      console.warn("[Cookie Consent] Could not save preferences to localStorage:", e);
+    }
     setIsVisible(false);
     
     // Update DataLayer and Consent Mode
@@ -135,15 +139,15 @@ export function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[1000] flex items-end justify-center p-4 sm:p-6 pointer-events-none">
+    <div className="fixed inset-0 z-[1000] flex items-center sm:items-end justify-center p-4 sm:p-6 pointer-events-none">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto"
+        className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto z-0"
         onClick={() => {}} // Prevent closing by clicking backdrop (GDPR requires explicit choice)
       />
       
       {/* Banner */}
-      <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden animate-fadeIn">
+      <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden animate-fadeIn z-10">
         {/* Gradient accent */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#4D39EB] to-transparent" />
         
@@ -224,7 +228,7 @@ export function CookieConsent() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleSavePreferences}
-                  className="w-full sm:flex-1 h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all active:scale-[0.98]"
+                  className="w-full sm:flex-1 h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all"
                 >
                   Save Preferences
                 </button>
@@ -239,7 +243,7 @@ export function CookieConsent() {
               <>
                 <button
                   onClick={handleAcceptAll}
-                  className="w-full h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all active:scale-[0.98] shadow-lg shadow-[#4D39EB]/20"
+                  className="w-full h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all shadow-lg shadow-[#4D39EB]/20"
                 >
                   Accept All
                 </button>
