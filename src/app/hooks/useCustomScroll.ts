@@ -5,10 +5,10 @@ import { useScrollStore } from '../store/useScrollStore';
 import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 
 const DESKTOP_BREAKPOINT = 1024;
-const SCROLL_COOLDOWN_MS = 1050;
-const GESTURE_COLLECT_MS = 80;
-const MIN_GESTURE_DELTA = 24;
-const POST_UNLOCK_IGNORE_MS = 220;
+const SCROLL_COOLDOWN_MS = 900;
+const GESTURE_COLLECT_MS = 90;
+const MIN_GESTURE_DELTA = 28;
+const MOMENTUM_GAP_MS = 140;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -29,7 +29,8 @@ export function useCustomScroll(): void {
   const lockedRef = useRef(false);
   const collectingRef = useRef(false);
   const netDeltaRef = useRef(0);
-  const unlockedAtRef = useRef(0);
+  const lastWheelAtRef = useRef(0);
+  const needsQuietAfterUnlockRef = useRef(false);
   const collectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const cooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -46,7 +47,7 @@ export function useCustomScroll(): void {
       lockedRef.current = false;
       collectingRef.current = false;
       netDeltaRef.current = 0;
-      unlockedAtRef.current = Date.now();
+      needsQuietAfterUnlockRef.current = true;
       useScrollStore.getState().setIsScrolling(false);
     };
 
@@ -55,7 +56,6 @@ export function useCustomScroll(): void {
       const delta = netDeltaRef.current;
       netDeltaRef.current = 0;
 
-      // Ignore tiny residual momentum from trackpads.
       if (Math.abs(delta) < MIN_GESTURE_DELTA) {
         return;
       }
@@ -87,15 +87,30 @@ export function useCustomScroll(): void {
 
       if (lockedRef.current) return;
 
-      // Short grace window after unlock to absorb trailing momentum.
-      if (Date.now() - unlockedAtRef.current < POST_UNLOCK_IGNORE_MS) return;
+      const now = Date.now();
+      const gapSinceLastWheel = now - lastWheelAtRef.current;
+      lastWheelAtRef.current = now;
+
+      // After unlock, ignore trailing momentum until a short quiet gap is detected.
+      if (needsQuietAfterUnlockRef.current) {
+        if (gapSinceLastWheel < MOMENTUM_GAP_MS) return;
+        needsQuietAfterUnlockRef.current = false;
+      }
 
       netDeltaRef.current += e.deltaY;
 
-      collectingRef.current = true;
-      if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
-      // Debounce by inactivity: commit when gesture burst settles.
-      collectTimerRef.current = setTimeout(commitScroll, GESTURE_COLLECT_MS);
+      if (!collectingRef.current) {
+        collectingRef.current = true;
+        if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
+        // Fixed window: decide quickly, don't wait for full momentum tail.
+        collectTimerRef.current = setTimeout(commitScroll, GESTURE_COLLECT_MS);
+      }
+
+      // Trigger early if intent is already strong enough.
+      if (Math.abs(netDeltaRef.current) >= MIN_GESTURE_DELTA) {
+        if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
+        commitScroll();
+      }
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -155,6 +170,7 @@ export function useCustomScroll(): void {
         netDeltaRef.current = 0;
         lockedRef.current = false;
         collectingRef.current = false;
+        needsQuietAfterUnlockRef.current = false;
       }
     };
     
