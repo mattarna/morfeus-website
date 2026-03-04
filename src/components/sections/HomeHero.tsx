@@ -82,7 +82,7 @@ export function HomeHero() {
 
         {/* Headline - REFINED FOR IMPACT */}
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto w-full">
-          <h1 className="text-[1.8rem] sm:text-6xl md:text-7xl lg:text-[5.2rem] leading-[1.15] md:leading-[1.05] font-black tracking-tighter uppercase break-words w-full">
+          <h1 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.2rem] leading-[1.1] md:leading-[1.05] font-black tracking-tighter uppercase break-words w-full">
             <span className="bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-transparent block pb-1">
               {t("headline_part1")}
             </span>

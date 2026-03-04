@@ -139,7 +139,7 @@ export function HomeProblem() {
 
                 <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
                   <button 
-                    onClick={() => setIndex(13)} 
+                    onClick={() => setIndex(10)} 
                     className="w-full flex items-center justify-between px-6 py-5 bg-white text-black rounded-2xl hover:bg-slate-200 transition-all duration-300 font-bold text-[16px] tracking-tight"
                   >
                     <span>{t("cta")}</span>
