@@ -7,6 +7,8 @@ import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 const DESKTOP_BREAKPOINT = 1024;
 const SCROLL_COOLDOWN_MS = 1050;
 const GESTURE_COLLECT_MS = 80;
+const MIN_GESTURE_DELTA = 24;
+const POST_UNLOCK_IGNORE_MS = 220;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -27,6 +29,7 @@ export function useCustomScroll(): void {
   const lockedRef = useRef(false);
   const collectingRef = useRef(false);
   const netDeltaRef = useRef(0);
+  const unlockedAtRef = useRef(0);
   const collectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const cooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -43,6 +46,7 @@ export function useCustomScroll(): void {
       lockedRef.current = false;
       collectingRef.current = false;
       netDeltaRef.current = 0;
+      unlockedAtRef.current = Date.now();
       useScrollStore.getState().setIsScrolling(false);
     };
 
@@ -51,7 +55,8 @@ export function useCustomScroll(): void {
       const delta = netDeltaRef.current;
       netDeltaRef.current = 0;
 
-      if (Math.abs(delta) < 1) {
+      // Ignore tiny residual momentum from trackpads.
+      if (Math.abs(delta) < MIN_GESTURE_DELTA) {
         return;
       }
 
@@ -82,13 +87,15 @@ export function useCustomScroll(): void {
 
       if (lockedRef.current) return;
 
+      // Short grace window after unlock to absorb trailing momentum.
+      if (Date.now() - unlockedAtRef.current < POST_UNLOCK_IGNORE_MS) return;
+
       netDeltaRef.current += e.deltaY;
 
-      if (!collectingRef.current) {
-        collectingRef.current = true;
-        if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
-        collectTimerRef.current = setTimeout(commitScroll, GESTURE_COLLECT_MS);
-      }
+      collectingRef.current = true;
+      if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
+      // Debounce by inactivity: commit when gesture burst settles.
+      collectTimerRef.current = setTimeout(commitScroll, GESTURE_COLLECT_MS);
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
