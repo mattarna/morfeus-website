@@ -5,7 +5,6 @@ import { Icon } from "@iconify/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 
-const DESKTOP_BREAKPOINT = 1024;
 const DEFAULT_VALUES = {
   people: 10,
   cost: 3200,

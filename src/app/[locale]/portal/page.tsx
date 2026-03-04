@@ -128,14 +128,16 @@ export default function GeneralPortalPage() {
             </div>
             
             <div className="relative w-full aspect-square bg-white p-6 rounded-3xl mb-8">
-              <img 
+              <Image 
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(window.location.href)}&color=030508`}
                 alt="QR Code"
-                className="w-full h-full"
+                fill
+                className="p-6"
+                unoptimized
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-sm">
-                   <img src="/favicon.ico" alt="M" className="w-full h-full object-contain" />
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-sm relative">
+                   <Image src="/favicon.ico" alt="M" fill className="object-contain p-1" />
                 </div>
               </div>
             </div>

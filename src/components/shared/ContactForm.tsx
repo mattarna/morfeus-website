@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 interface ContactFormProps {
   isOpen: boolean;
@@ -644,11 +645,15 @@ function Step1({
               ))}
             </select>
             {/* Flag Icon */}
-            <img 
-              src={`https://flagcdn.com/w20/${formData.phoneCountry.toLowerCase()}.png`}
-              alt=""
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-auto rounded-sm pointer-events-none"
-            />
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-4 pointer-events-none">
+              <Image 
+                src={`https://flagcdn.com/w20/${formData.phoneCountry.toLowerCase()}.png`}
+                alt=""
+                fill
+                className="object-contain rounded-sm"
+                unoptimized
+              />
+            </div>
             <Icon
               icon="solar:alt-arrow-down-linear"
               width={14}
