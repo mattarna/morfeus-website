@@ -9,7 +9,7 @@ import Image from "next/image";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * ProcessMaster Section - Indices 5-7 (pinned on desktop)
+ * ProcessMaster Section - Indices 6-8 (pinned on desktop)
  * 
  * Desktop: Pinned scroll with Z-space animation
  * Mobile: Vertical timeline with all steps visible

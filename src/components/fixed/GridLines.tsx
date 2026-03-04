@@ -6,19 +6,18 @@ import { useScrollStore } from "@/app/store/useScrollStore";
  * GridLines - Decorative vertical lines
  * 
  * Positioned inside ScrollWrapper (absolute)
- * Height: 1300vh to cover all sections
+ * Height: 1500vh to cover all sections
  * Matches legacy structure exactly
  */
 export function GridLines() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   
-  // Hide lines from index 4 (Process/Method) to 9 (Case Study)
-  // They will be visible again in FAQ (10), CTA (11) and Footer (12)
-  const isHiddenRange = currentIndex >= 4 && currentIndex <= 9;
+  // Hide lines from Services to ROIometer for a cleaner visual stage
+  const isHiddenRange = currentIndex >= 4 && currentIndex <= 10;
 
   return (
     <div
-      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1300vh] z-[2] pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
+      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1500vh] z-[2] pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
         isHiddenRange ? "opacity-0" : "opacity-100"
       }`}
       style={{

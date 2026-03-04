@@ -7,13 +7,13 @@ import { useScrollStore } from "@/app/store/useScrollStore";
  * 
  * Fixed position, visible only on desktop (xl+)
  * Shows "System Operational" with pulsing green dot
- * Hides on Footer section (index 12) to avoid duplicate
+ * Hides on Footer section (index 14) to avoid duplicate
  */
 export function SystemStatus() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   
   // Hide on Footer section to avoid duplicate
-  const shouldHide = currentIndex === 12;
+  const shouldHide = currentIndex === 14;
 
   return (
     <div 

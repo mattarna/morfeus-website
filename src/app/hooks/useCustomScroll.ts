@@ -6,7 +6,7 @@ import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 
 const DESKTOP_BREAKPOINT = 1024;
 const SCROLL_COOLDOWN_MS = 1000;
-const SCROLL_THRESHOLD = 40;
+const SCROLL_THRESHOLD = 20;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -23,34 +23,21 @@ const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
  */
 export function useCustomScroll(): void {
   const isScrollingRef = useRef(false);
+  const accumulatedDeltaRef = useRef(0);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // === CRITICAL: Check if we're on mobile AT MOUNT TIME ===
-    // If mobile, don't register ANY custom scroll handlers
-    const checkIsMobile = () => {
-      // Check viewport width
-      if (window.innerWidth < DESKTOP_BREAKPOINT) return true;
-      
-      // Also check if device has touch as primary input (tablets in portrait, etc.)
-      // This prevents issues on large touch devices
-      if (window.matchMedia('(pointer: coarse)').matches && 
-          window.matchMedia('(hover: none)').matches) {
-        return true;
+    const isDesktopMode = () => {
+      if (window.innerWidth < DESKTOP_BREAKPOINT) return false;
+      if (window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(hover: none)").matches) {
+        return false;
       }
-      
-      return false;
+      return true;
     };
-
-    // If mobile at mount, exit immediately - don't register anything
-    if (checkIsMobile()) {
-      return;
-    }
-
-    // === DESKTOP ONLY CODE BELOW ===
 
     const triggerScrollCooldown = () => {
       isScrollingRef.current = true;
+      accumulatedDeltaRef.current = 0;
       useScrollStore.getState().setIsScrolling(true);
       
       if (scrollTimeoutRef.current) {
@@ -64,18 +51,19 @@ export function useCustomScroll(): void {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      // Double-check we're still on desktop (in case of resize)
-      if (window.innerWidth < DESKTOP_BREAKPOINT) return;
+      // Keep native behavior on mobile/tablet.
+      if (!isDesktopMode()) return;
       
       if (useScrollStore.getState().isContactFormOpen) return;
       
       e.preventDefault();
 
       if (isScrollingRef.current) return;
-      if (Math.abs(e.deltaY) < SCROLL_THRESHOLD) return;
+      accumulatedDeltaRef.current += e.deltaY;
+      if (Math.abs(accumulatedDeltaRef.current) < SCROLL_THRESHOLD) return;
 
       const { currentIndex, next, prev } = useScrollStore.getState();
-      const direction = e.deltaY > 0 ? 1 : -1;
+      const direction = accumulatedDeltaRef.current > 0 ? 1 : -1;
 
       if (direction === 1 && currentIndex < MAX_INDEX) {
         next();
@@ -87,7 +75,7 @@ export function useCustomScroll(): void {
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (window.innerWidth < DESKTOP_BREAKPOINT) return;
+      if (!isDesktopMode()) return;
       if (useScrollStore.getState().isContactFormOpen) return;
       if (isScrollingRef.current) return;
 
@@ -126,16 +114,16 @@ export function useCustomScroll(): void {
       }
     };
 
-    // Register listeners ONLY on desktop
+    // Register listeners globally; handlers self-gate to desktop mode.
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Handle resize: if user resizes to mobile, we need to clean up
+    // Handle resize transition (desktop <-> mobile) without requiring remount.
     const handleResize = () => {
-      if (checkIsMobile()) {
-        // Reset overflow when switching to mobile
+      if (!isDesktopMode()) {
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
+        accumulatedDeltaRef.current = 0;
       }
     };
     

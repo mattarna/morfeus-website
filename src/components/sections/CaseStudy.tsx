@@ -8,7 +8,7 @@ import Image from "next/image";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * Case Study Section - Index 9
+ * Case Study Section - Index 11
  * 
  * Interactive showcase of client success stories with:
  * - Dynamic background images that crossfade (desktop)
@@ -39,8 +39,8 @@ export function CaseStudy() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 9
-  const isActive = !isDesktop || currentIndex === 9;
+  // On mobile: always visible. On desktop: only when at index 11
+  const isActive = !isDesktop || currentIndex === 11;
   
   const caseStudies: CaseStudyData[] = [
     {

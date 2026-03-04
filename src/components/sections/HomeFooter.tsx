@@ -8,7 +8,7 @@ import Image from "next/image";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * Footer Section - Index 12
+ * Footer Section - Index 14
  * 
  * Exact match to reference image:
  * - 4-column layout on desktop, 2-column on mobile
@@ -31,21 +31,23 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 12 or forceActive is true
-  const isActive = !isDesktop || currentIndex === 12 || forceActive;
+  // On mobile: always visible. On desktop: only when at index 14 or forceActive is true
+  const isActive = !isDesktop || currentIndex === 14 || forceActive;
   
   const currentYear = new Date().getFullYear();
 
-  // Navigation items - exact match to reference
+  // Navigation items - updated for 14-step logical scroll
   const navItems = [
     { label: t("links.start"), index: 0 },
     { label: t("links.vision"), index: 1 },
-    { label: t("links.services"), index: 3 },
-    { label: t("links.method"), index: 4 },
-    { label: t("links.roi"), index: 8 },
-    { label: t("links.cases"), index: 9 },
-    { label: t("links.faq"), index: 10 },
-    { label: t("links.book"), index: 11 },
+    { label: t("links.problem"), index: 2 },
+    { label: t("links.services"), index: 4 },
+    { label: t("links.method"), index: 5 },
+    { label: t("links.roi"), index: 9 },
+    { label: t("links.roiometer"), index: 10 },
+    { label: t("links.cases"), index: 11 },
+    { label: t("links.faq"), index: 12 },
+    { label: t("links.book"), index: 13 },
   ];
 
   return (

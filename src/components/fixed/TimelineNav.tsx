@@ -18,7 +18,7 @@ export function TimelineNav() {
   };
 
   // Hide nav only on the Footer section
-  const shouldHide = currentIndex === 12;
+  const shouldHide = currentIndex === 14;
 
   return (
     <nav 

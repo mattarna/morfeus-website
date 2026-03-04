@@ -109,8 +109,8 @@ export function HomeHero() {
         {/* CTAs - REVERTED TO PILL STYLE AS REQUESTED */}
         <div className="mt-10 md:mt-16 flex flex-col sm:flex-row items-center gap-6 z-10 w-full sm:w-auto px-6 md:px-0">
           <a 
-            href="#section-11"
-            onClick={(e) => handleCtaClick(e, 11, t("cta_primary"))}
+            href="#section-13"
+            onClick={(e) => handleCtaClick(e, 13, t("cta_primary"))}
             className="group h-14 md:h-12 px-10 bg-white text-black text-[15px] font-bold md:font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:min-w-[240px] sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_primary")}

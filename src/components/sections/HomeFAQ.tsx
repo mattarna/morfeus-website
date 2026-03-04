@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * FAQ Section - Index 10
+ * FAQ Section - Index 12
  * 
  * Accordion-style FAQ with:
  * - Two-column grid layout on desktop, single column on mobile
@@ -35,8 +35,8 @@ export function HomeFAQ() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 10
-  const isActive = !isDesktop || currentIndex === 10;
+  // On mobile: always visible. On desktop: only when at index 12
+  const isActive = !isDesktop || currentIndex === 12;
   
   const faqItems: FAQItem[] = [
     {

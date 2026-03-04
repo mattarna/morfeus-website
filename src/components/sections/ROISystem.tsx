@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * ROI System Section - Index 8
+ * ROI System Section - Index 9
  * 
  * Interactive ROI architecture visualization with 5 stages:
  * MAPPING → ARCHITECTURE → EXECUTION → OPTIMIZATION → SCALE
@@ -36,8 +36,8 @@ export function ROISystem() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 8
-  const isActive = !isDesktop || currentIndex === 8;
+  // On mobile: always visible. On desktop: only when at index 9
+  const isActive = !isDesktop || currentIndex === 9;
   
   const [activeStep, setActiveStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);

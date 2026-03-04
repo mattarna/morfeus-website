@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 /**
- * Process Headline Section - Index 4
+ * Process Headline Section - Index 5
  * 
  * Simple transition section before the pinned process steps.
  * Large gradient headline only.

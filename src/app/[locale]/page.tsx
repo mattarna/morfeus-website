@@ -16,11 +16,13 @@ import { HomeHero } from "@/components/sections/HomeHero";
 import { Manifesto } from "@/components/sections/Manifesto";
 
 // Section Components - Lazy Loaded (Below the fold)
+const HomeProblem = dynamic(() => import("@/components/sections/HomeProblem").then(m => m.HomeProblem));
 const Partners = dynamic(() => import("@/components/sections/Partners").then(m => m.Partners));
 const Services = dynamic(() => import("@/components/sections/Services").then(m => m.Services));
 const ProcessHeadline = dynamic(() => import("@/components/sections/ProcessHeadline").then(m => m.ProcessHeadline));
 const ProcessMaster = dynamic(() => import("@/components/sections/ProcessMaster").then(m => m.ProcessMaster));
 const ROISystem = dynamic(() => import("@/components/sections/ROISystem").then(m => m.ROISystem));
+const HomeROIMeter = dynamic(() => import("@/components/sections/HomeROIMeter").then(m => m.HomeROIMeter));
 const CaseStudy = dynamic(() => import("@/components/sections/CaseStudy").then(m => m.CaseStudy));
 const HomeFAQ = dynamic(() => import("@/components/sections/HomeFAQ").then(m => m.HomeFAQ));
 const CTA = dynamic(() => import("@/components/sections/CTA").then(m => m.CTA));
@@ -54,7 +56,7 @@ const DESKTOP_BREAKPOINT = 1024;
  * 
  * Scroll System:
  * ==============
- * - 13 logical indices (0-12)
+ * - 15 logical indices (0-14)
  * - Each scroll action moves to next/prev index
  * - 1000ms transition + cooldown between scrolls
  * - Indices 5-7 are "pinned" (Process section)
@@ -106,9 +108,9 @@ export default function Home() {
   useEffect(() => {
     if (typeof window !== "undefined" && window.dataLayer) {
       const sectionNames = [
-        "Hero", "Manifesto", "Partners", "Services", "Process", 
+        "Hero", "Manifesto", "Problem", "Partners", "Services", "Process", 
         "Process_Step_1", "Process_Step_2", "Process_Step_3", 
-        "ROISystem", "CaseStudy", "FAQ", "CTA", "Footer"
+        "ROISystem", "ROIometer", "CaseStudy", "FAQ", "CTA", "Footer"
       ];
       
       const name = sectionNames[currentIndex] || `Section-${currentIndex}`;
@@ -216,32 +218,38 @@ export default function Home() {
         {/* Index 1: Vision/Manifesto */}
         <div id="section-1"><Manifesto /></div>
         
-        {/* Index 2: Partners */}
-        <div id="section-2"><Partners /></div>
+        {/* Index 2: Problem */}
+        <div id="section-2"><HomeProblem /></div>
         
-        {/* Index 3: Services */}
-        <div id="section-3"><Services /></div>
+        {/* Index 3: Partners */}
+        <div id="section-3"><Partners /></div>
         
-        {/* Index 4: Process Headline */}
-        <div id="section-4"><ProcessHeadline /></div>
+        {/* Index 4: Services */}
+        <div id="section-4"><Services /></div>
         
-        {/* Index 5-7: Process Steps (pinned section) */}
-        <div id="section-5"><ProcessMaster /></div>
+        {/* Index 5: Process Headline */}
+        <div id="section-5"><ProcessHeadline /></div>
         
-        {/* Index 8: ROI System */}
-        <div id="section-8"><ROISystem /></div>
+        {/* Index 6-8: Process Steps (pinned section) */}
+        <div id="section-6"><ProcessMaster /></div>
         
-        {/* Index 9: Case Studies */}
-        <div id="section-9"><CaseStudy /></div>
+        {/* Index 9: ROI System */}
+        <div id="section-9"><ROISystem /></div>
         
-        {/* Index 10: FAQ */}
-        <div id="section-10"><HomeFAQ /></div>
+        {/* Index 10: ROIometer */}
+        <div id="section-10"><HomeROIMeter /></div>
         
-        {/* Index 11: Call to Action */}
-        <div id="section-11"><CTA /></div>
+        {/* Index 11: Case Studies */}
+        <div id="section-11"><CaseStudy /></div>
         
-        {/* Index 12: Footer */}
-        <div id="section-12"><HomeFooter /></div>
+        {/* Index 12: FAQ */}
+        <div id="section-12"><HomeFAQ /></div>
+        
+        {/* Index 13: Call to Action */}
+        <div id="section-13"><CTA /></div>
+
+        {/* Index 14: Footer */}
+        <div id="section-14"><HomeFooter /></div>
       </ScrollWrapper>
     </main>
     </>

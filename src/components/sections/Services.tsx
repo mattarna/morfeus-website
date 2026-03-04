@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 
 /**
- * Services Section - Index 3
+ * Services Section - Index 4
  * 
  * Full viewport height with service cards grid
  * Purple gradient overlay on each card
@@ -21,7 +21,7 @@ export function Services() {
       description: t("items.forge.description"),
       ctaPrimary: t("items.forge.cta_primary"),
       ctaSecondary: t("items.forge.cta_secondary"),
-      href: "#section-11", // Book a call section
+      href: "#section-13", // Book a call section
     },
     {
       icon: "lucide:library",
@@ -30,7 +30,7 @@ export function Services() {
       description: t("items.lab.description"),
       ctaPrimary: t("items.lab.cta_primary"),
       ctaSecondary: t("items.lab.cta_secondary"),
-      href: "#section-11",
+      href: "#section-13",
     },
   ];
 
@@ -108,7 +108,7 @@ function ServiceCard({
             href={href}
             onClick={(e) => {
               e.preventDefault();
-              setIndex(11); // Book call section
+              setIndex(13); // Book call section
             }}
             className="h-11 px-8 bg-white text-black text-[14px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(255,255,255,0.2)] w-full sm:w-auto"
           >
@@ -119,7 +119,7 @@ function ServiceCard({
             href={href}
             onClick={(e) => {
               e.preventDefault();
-              setIndex(11); // Or relevant section
+              setIndex(13); // Or relevant section
             }}
             className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide"
           >

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 const DESKTOP_BREAKPOINT = 1024;
 
 /**
- * CTA Section - Index 11
+ * CTA Section - Index 13
  * 
  * Final call to action section with:
  * - Large gradient headline
@@ -30,8 +30,8 @@ export function CTA() {
     return () => window.removeEventListener("resize", checkViewport);
   }, []);
 
-  // On mobile: always visible. On desktop: only when at index 11
-  const isActive = !isDesktop || currentIndex === 11;
+  // On mobile: always visible. On desktop: only when at index 13
+  const isActive = !isDesktop || currentIndex === 13;
 
   const trackCta = (text: string, location: string, type: string = "internal_link") => {
     if (typeof window !== "undefined" && window.dataLayer) {
