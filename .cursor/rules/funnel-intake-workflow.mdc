@@ -1,0 +1,26 @@
+---
+description: Funnel intake trigger and mandatory assistant behavior
+globs: src/{funnels/**,app/__funnels/**,middleware.ts}
+alwaysApply: false
+---
+
+# Funnel Intake Workflow
+
+- Trigger this workflow when the user asks to create/start/build a funnel.
+- Start by listing the user steps required to proceed, before implementation.
+- Intake is non-blocking: continue with partial inputs, but mark missing items as TODO.
+- Always report intake status with one of: `complete`, `partial`, `missing`.
+- Ask for funnel slug and objective if not provided.
+- Ask for A/B testing intent (`yes/no`) and note if selective.
+
+## Required intake buckets
+
+- `context/`: ICP, positioning, product, offer, funnel strategy.
+- `copy/`: headlines, body copy, CTA copy, objections, variants if present.
+- Funnel brief: step flow, conversion target, analytics events, constraints.
+
+## Output required after intake
+
+- Proposed structure (routes, steps, component order).
+- Risk list (missing inputs affecting quality/performance/tracking).
+- Next actions for user and assistant.

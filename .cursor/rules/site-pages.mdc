@@ -1,0 +1,40 @@
+---
+description: Standards for sito madre pages
+globs: src/app/[locale]/**/*.tsx
+alwaysApply: false
+---
+
+# Site Page Standards
+
+## Page Types
+
+### Homepage (`page.tsx` at root)
+- Visual-heavy: 70% design, 30% copy.
+- Uses components from `src/components/fixed/` (HomeHeader, HomeBackground, etc.) and `src/components/sections/` (HomeHero, HomeFAQ, etc.).
+- Custom scroll system via ScrollWrapper.
+- `"use client"` is expected.
+
+### Service Pages (`servizi/[slug]/page.tsx`)
+- Copy-heavy: 30% design, 60% copy.
+- Use components from `src/components/sections/` (Service* prefixed).
+- i18n namespace: `Services.<slug>` (e.g., `Services.operating-partner`).
+- Prefer server components. Only use `"use client"` for interactive elements (accordion, video player).
+- No framer-motion; CSS animations only.
+
+### Case Study Pages (`case-study/[slug]/page.tsx`)
+- Single template, variable content from i18n JSON.
+- i18n namespace: `CaseStudy.<slug>`.
+- Same rules as service pages for client/server split.
+
+## Required for Every Page
+
+1. `generateMetadata()` with full SEO (title, description, canonical, alternates, og, twitter).
+2. StructuredData component.
+3. All copy from i18n JSON (never hardcoded).
+4. Mobile responsive.
+
+## Naming Convention
+
+- Homepage components: `Home*` prefix (HomeHero, HomeFAQ, HomeFooter, HomeHeader, HomeBackground).
+- Service/landing components: `Service*` prefix (ServiceHero, ServiceFAQ, ServiceFooter, ServiceHeader, ServiceBackgroundGrid).
+- Shared components: no prefix, live in `src/components/shared/`.

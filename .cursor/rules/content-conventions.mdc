@@ -1,0 +1,53 @@
+---
+description: i18n JSON content structure and conventions
+globs: messages/**/*.json
+alwaysApply: false
+---
+
+# Content Conventions (i18n JSON)
+
+## File Structure
+
+All content lives in `messages/it.json` and `messages/en.json`. Both files must have identical key trees.
+
+## Namespace Convention
+
+```json
+{
+  "Metadata": {},
+  "Hero": {},
+  "Manifesto": {},
+  "Services": {
+    "operating-partner": {},
+    "formazione": {}
+  },
+  "CaseStudy": {
+    "progetto-alfa": {}
+  },
+  "Common": {
+    "cta": {},
+    "footer": {},
+    "nav": {}
+  },
+  "Offerta": {}
+}
+```
+
+- Homepage sections use top-level namespaces: `Hero`, `Manifesto`, `Partners`, `Services`, `FAQ`, etc.
+- New service pages: `Services.<slug>`.
+- New case study pages: `CaseStudy.<slug>`.
+- Shared strings (CTAs, footer, nav): `Common.<group>`.
+
+## Key Naming
+
+- camelCase for keys: `sectionTitle`, `ctaPrimary`, `heroHeadline`.
+- Nested objects for logical groups: `proof.blocks.1.number`.
+- Numbered items use string indices: `items.1.q`, `items.2.q`.
+
+## Copy Rules
+
+- Never hardcode copy in TSX. Always use `t("key")` or `useTranslations()`.
+- Meta description: 150-160 characters.
+- One H1 per page (mapped to the main headline key).
+- IT is the primary language; EN is a professional translation.
+- Keep IT and EN files in sync: same keys, same structure.

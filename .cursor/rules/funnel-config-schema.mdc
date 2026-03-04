@@ -1,0 +1,13 @@
+---
+description: Funnel JSON config schema and validation rules
+globs: src/funnels/**/*.json
+alwaysApply: false
+---
+
+# Funnel Config Schema
+
+- Every funnel config must include: `id`, `slug`, `locale`, `accentColor`, `steps`.
+- Each step must include: `id`, `title`, `path`, `componentOrder`, `content`.
+- `componentOrder` values must match allowed component names from `src/funnels/types.ts`.
+- Keep copy and section ordering in JSON, never hardcode marketing text inside route files.
+- Step IDs must be unique within a funnel.

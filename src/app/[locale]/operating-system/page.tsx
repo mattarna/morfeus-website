@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { 
-  BackgroundGrid, 
-  Header, 
-  HeroSection, 
+  ServiceBackgroundGrid, 
+  ServiceHeader, 
+  ServiceHero, 
   ProofSection, 
   FilterSection, 
   ProblemSection, 
@@ -13,8 +13,8 @@ import {
   DeliverySection, 
   PricingSection, 
   ContactSection, 
-  FAQSection, 
-  FooterSection 
+  ServiceFAQ, 
+  ServiceFooter 
 } from "@/components/sections";
 
 export default function OperatingSystemPage() {
@@ -76,15 +76,15 @@ export default function OperatingSystemPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#030508] text-white overflow-x-hidden">
-      <BackgroundGrid />
+      <ServiceBackgroundGrid />
       
-      <Header 
+      <ServiceHeader 
         showStickyCta={showStickyCta} 
         isHeaderHidden={isHeaderHidden} 
         scrollToContact={scrollToContact} 
       />
 
-      <HeroSection 
+      <ServiceHero 
         contentVisible={contentVisible} 
         isPlaying={isPlaying} 
         setIsPlaying={setIsPlaying} 
@@ -107,9 +107,9 @@ export default function OperatingSystemPage() {
 
       <ContactSection scrollToContact={scrollToContact} />
 
-      <FAQSection activeFaq={activeFaq} setActiveFaq={setActiveFaq} />
+      <ServiceFAQ activeFaq={activeFaq} setActiveFaq={setActiveFaq} />
 
-      <FooterSection />
+      <ServiceFooter />
     </div>
   );
 }

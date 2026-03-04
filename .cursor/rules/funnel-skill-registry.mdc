@@ -1,0 +1,13 @@
+---
+description: Skill registry update obligation when creating or publishing funnel marketing skills
+globs: src/funnels/_skill-drafts/**,src/funnels/_skill-drafts/SKILL-MAP.md,.cursor/skills/**
+alwaysApply: false
+---
+
+# Funnel Skill Registry
+
+- Every time a skill is created, revised, or published, update `src/funnels/_skill-drafts/SKILL-MAP.md`.
+- Required fields to add or update: codice, nome Cursor, cartella definitiva, file draft, stato.
+- When a skill moves from draft to published: update stato from `draft` to `published` in SKILL-MAP.md.
+- Skill `name` in frontmatter must always match the Nome Cursor in SKILL-MAP.md exactly.
+- When publishing a skill, replace all internal code references (A1, A2, B1, etc.) with the corresponding Nome Cursor from SKILL-MAP.md.

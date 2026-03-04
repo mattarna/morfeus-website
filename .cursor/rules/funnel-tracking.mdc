@@ -1,0 +1,13 @@
+---
+description: Funnel tracking event standards
+globs: src/{app/__funnels/**,components/funnels/**,funnels/**}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Funnel Tracking
+
+- Emit `funnel_view` when a funnel step is viewed.
+- Emit `cta_click` on funnel CTA interactions.
+- Emit `conversion` only on confirmed conversion steps (for example thank-you purchase).
+- Every event payload must include `funnel_id` and `step_id`.
+- If A/B is enabled for that funnel, include `variant`.

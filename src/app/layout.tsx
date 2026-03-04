@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -11,11 +11,19 @@ const outfit = Outfit({
   fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
 });
 
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+  preload: true,
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#000000",
+  themeColor: "#0B0B0C", // Night
   colorScheme: "dark",
 };
 
@@ -75,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <head>
         {/* Consent Mode v2 Inizializzazione */}
         <script
@@ -107,7 +115,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${outfit.variable} font-outfit antialiased bg-black text-slate-300`}>
+      <body className={`${outfit.variable} ${dmSans.variable} font-dm-sans antialiased bg-night text-ghost-white`}>
         {/* GTM Noscript */}
         <noscript>
           <iframe

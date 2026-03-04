@@ -1,0 +1,38 @@
+---
+description: Global project architecture and conventions
+alwaysApply: true
+---
+
+# Site Architecture
+
+## Two Separate Worlds
+
+1. **Sito Madre** (`src/app/[locale]/...`): locale-prefixed, i18n via next-intl, dual language IT+EN.
+2. **Funnel Area** (`src/app/__funnels/...`): no locale prefix, single-language per funnel, middleware rewrite from `/slug`.
+
+These are completely separate. Never share page components between them. Infrastructure (types, tracking, middleware) can be shared.
+
+## Folder Conventions
+
+```
+src/components/
+  fixed/          → Homepage-only fixed UI (HomeHeader, HomeBackground, TimelineNav, etc.)
+  sections/       → Page sections (HomeHero, ServiceHero, ProofSection, etc.)
+  shared/         → Cross-page components (CookieConsent, ContactForm, ErrorBoundary, StructuredData)
+  funnels/        → Funnel-only components (FunnelRenderer, FunnelPrimitives, etc.)
+
+src/app/[locale]/
+  page.tsx                    → Homepage
+  servizi/[slug]/page.tsx     → Service pages (copy-heavy)
+  case-study/[slug]/page.tsx  → Case study pages (proof-heavy)
+  operating-system/           → Existing landing page (template reference)
+  portal/                     → Team portal
+  privacy/, cookies/          → Utility pages
+```
+
+## Rules
+
+- Every page has ONE job: Homepage smista, service/case-study pages convert.
+- All copy lives in `messages/it.json` + `messages/en.json`. No hardcoded strings in TSX.
+- Before creating any new route, check `src/lib/reserved-slugs.ts` for conflicts with funnel slugs.
+- Before writing copy or deciding page structure, consult `.cursor/context/` files.

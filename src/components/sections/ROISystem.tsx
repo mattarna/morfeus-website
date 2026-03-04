@@ -41,6 +41,19 @@ export function ROISystem() {
   
   const [activeStep, setActiveStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!isDesktop) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isDesktop]);
 
   // Build steps from translations
   const roiSteps: ROIStep[] = [
@@ -199,6 +212,22 @@ export function ROISystem() {
   // Desktop Layout: Interactive Horizontal Timeline
   return (
     <section className="relative z-0 h-screen w-full flex flex-col bg-black overflow-hidden">
+      <style jsx>{`
+        @keyframes breathing {
+          0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+          50% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 30px rgba(255,255,255,0.6); }
+        }
+        .breathing-dot {
+          animation: breathing 3s ease-in-out infinite;
+        }
+        @keyframes line-glow {
+          0%, 100% { filter: drop-shadow(0 0 2px #4D39EB); }
+          50% { filter: drop-shadow(0 0 5px #4D39EB); }
+        }
+        .glowing-line {
+          animation: line-glow 4s ease-in-out infinite;
+        }
+      `}</style>
       {/* Background Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Center vertical line */}
@@ -239,6 +268,9 @@ export function ROISystem() {
             className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[160px] font-semibold text-white/[0.06] tracking-tighter select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap transition-all duration-500 ease-out ${
               isTransitioning ? "opacity-0 scale-95 blur-sm" : "opacity-100 scale-100 blur-0"
             }`}
+            style={{ 
+              transform: `translate(calc(-50% + ${mousePos.x}px), calc(-50% + ${mousePos.y}px))` 
+            }}
           >
             {currentStep.concept}
           </h3>
@@ -247,8 +279,8 @@ export function ROISystem() {
           <div className="relative z-20 flex flex-col items-center gap-4 md:gap-6 py-16 md:py-20">
             {/* Principle */}
             <p 
-              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-white tracking-tight leading-snug max-w-3xl transition-all duration-500 ease-out ${
-                isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
+              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight leading-snug max-w-3xl transition-all duration-700 ease-out bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/70 ${
+                isTransitioning ? "opacity-0 translate-y-8 blur-sm" : "opacity-100 translate-y-0 blur-0"
               }`}
             >
               {currentStep.principle}
@@ -256,7 +288,7 @@ export function ROISystem() {
 
             {/* Explanation */}
             <p 
-              className={`text-sm md:text-base lg:text-lg text-slate-400 font-light tracking-wide max-w-xl transition-all duration-500 ease-out delay-75 ${
+              className={`text-sm md:text-base lg:text-lg text-slate-400 font-light tracking-wide max-w-xl transition-all duration-700 ease-out delay-100 ${
                 isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
               }`}
             >
@@ -299,7 +331,7 @@ export function ROISystem() {
           
           {/* Progress Line */}
           <div 
-            className="absolute top-1/2 left-[10%] h-[1px] bg-[#4D39EB] -translate-y-1/2 transition-all duration-500 ease-out"
+            className="absolute top-1/2 left-[10%] h-[1px] bg-[#4D39EB] -translate-y-1/2 transition-all duration-500 ease-out glowing-line"
             style={{ width: `${progressPercent * 0.8}%` }}
           />
 
@@ -318,10 +350,10 @@ export function ROISystem() {
                 <div 
                   className={`relative w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 flex items-center justify-center ${
                     isStepActive
-                      ? "bg-black border-2 border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+                      ? "bg-black border-2 border-white breathing-dot"
                       : isPast
-                        ? "bg-[#4D39EB] border border-[#4D39EB] group-hover:border-white"
-                        : "bg-black border border-white/30 group-hover:border-white"
+                        ? "bg-[#4D39EB] border border-[#4D39EB] group-hover:border-white scale-110"
+                        : "bg-black border border-white/30 group-hover:border-white group-hover:scale-110"
                   }`}
                 >
                   {/* Inner fill for active */}

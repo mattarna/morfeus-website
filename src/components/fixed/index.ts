@@ -5,8 +5,8 @@
  * the main content scrolls via translateY.
  */
 
-export { Background } from './Background';
+export { HomeBackground } from './HomeBackground';
 export { GridLines } from './GridLines';
-export { Header } from './Header';
+export { HomeHeader } from './HomeHeader';
 export { SystemStatus } from './SystemStatus';
 export { TimelineNav } from './TimelineNav';

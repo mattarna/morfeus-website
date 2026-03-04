@@ -5,14 +5,14 @@ import { LoadingScreen } from "@/components/LoadingScreen";
 import dynamic from "next/dynamic";
 
 // Fixed UI Components (always visible, positioned fixed)
-import { Background } from "@/components/fixed/Background";
-import { Header } from "@/components/fixed/Header";
+import { HomeBackground } from "@/components/fixed/HomeBackground";
+import { HomeHeader } from "@/components/fixed/HomeHeader";
 import { TimelineNav } from "@/components/fixed/TimelineNav";
 import { SystemStatus } from "@/components/fixed/SystemStatus";
 import { GridLines } from "@/components/fixed/GridLines";
 
 // Section Components - Core (Immediately visible)
-import { Hero } from "@/components/sections/Hero";
+import { HomeHero } from "@/components/sections/HomeHero";
 import { Manifesto } from "@/components/sections/Manifesto";
 
 // Section Components - Lazy Loaded (Below the fold)
@@ -22,13 +22,13 @@ const ProcessHeadline = dynamic(() => import("@/components/sections/ProcessHeadl
 const ProcessMaster = dynamic(() => import("@/components/sections/ProcessMaster").then(m => m.ProcessMaster));
 const ROISystem = dynamic(() => import("@/components/sections/ROISystem").then(m => m.ROISystem));
 const CaseStudy = dynamic(() => import("@/components/sections/CaseStudy").then(m => m.CaseStudy));
-const FAQ = dynamic(() => import("@/components/sections/FAQ").then(m => m.FAQ));
+const HomeFAQ = dynamic(() => import("@/components/sections/HomeFAQ").then(m => m.HomeFAQ));
 const CTA = dynamic(() => import("@/components/sections/CTA").then(m => m.CTA));
-const Footer = dynamic(() => import("@/components/sections/Footer").then(m => m.Footer));
+const HomeFooter = dynamic(() => import("@/components/sections/HomeFooter").then(m => m.HomeFooter));
 
 // Overlay Components
-const ContactForm = dynamic(() => import("@/components/ContactForm").then(m => m.ContactForm));
-const CookieConsent = dynamic(() => import("@/components/CookieConsent").then(m => m.CookieConsent));
+const ContactForm = dynamic(() => import("@/components/shared/ContactForm").then(m => m.ContactForm));
+const CookieConsent = dynamic(() => import("@/components/shared/CookieConsent").then(m => m.CookieConsent));
 
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useLocale } from "next-intl";
@@ -183,8 +183,8 @@ export default function Home() {
       
       {/* Fixed UI Components (always visible, positioned fixed) 
           Moved outside <main> to avoid transform/containing block issues on mobile */}
-      <Background />
-      <Header />
+      <HomeBackground />
+      <HomeHeader />
       <TimelineNav />
       <SystemStatus />
       
@@ -211,7 +211,7 @@ export default function Home() {
           <GridLines />
         
         {/* Index 0: Hero */}
-        <div id="section-0"><Hero /></div>
+        <div id="section-0"><HomeHero /></div>
         
         {/* Index 1: Vision/Manifesto */}
         <div id="section-1"><Manifesto /></div>
@@ -235,13 +235,13 @@ export default function Home() {
         <div id="section-9"><CaseStudy /></div>
         
         {/* Index 10: FAQ */}
-        <div id="section-10"><FAQ /></div>
+        <div id="section-10"><HomeFAQ /></div>
         
         {/* Index 11: Call to Action */}
         <div id="section-11"><CTA /></div>
         
         {/* Index 12: Footer */}
-        <div id="section-12"><Footer /></div>
+        <div id="section-12"><HomeFooter /></div>
       </ScrollWrapper>
     </main>
     </>

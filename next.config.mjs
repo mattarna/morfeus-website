@@ -103,15 +103,23 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Redirect specifico richiesto per il bootcamp
         source: '/bootcamp-ai-champion-seconda-edizione',
         destination: 'https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione',
         permanent: true,
       },
       {
-        // Redirect per la versione senza slash finale (opzionale ma consigliato)
         source: '/bootcamp-ai-champion-seconda-edizione/',
         destination: 'https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|it)/offerta',
+        destination: '/:locale/operating-system',
+        permanent: true,
+      },
+      {
+        source: '/offerta',
+        destination: '/operating-system',
         permanent: true,
       },
     ];

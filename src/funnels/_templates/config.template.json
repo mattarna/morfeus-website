@@ -1,0 +1,45 @@
+{
+  "id": "example-funnel",
+  "slug": "example-funnel",
+  "locale": "it",
+  "accentColor": "#4f46e5",
+  "steps": [
+    {
+      "id": "optin",
+      "title": "Titolo step",
+      "path": "",
+      "isConversion": false,
+      "componentOrder": ["Hero", "ValueBullets", "CTABox"],
+      "content": {
+        "Hero": {
+          "eyebrow": "Eyebrow",
+          "headline": "Headline principale",
+          "subheadline": "Subheadline orientata conversione"
+        },
+        "ValueBullets": {
+          "title": "Valore",
+          "items": ["Benefit 1", "Benefit 2", "Benefit 3"]
+        },
+        "CTABox": {
+          "title": "Call to action",
+          "description": "Descrizione CTA",
+          "ctaLabel": "Vai allo step successivo",
+          "ctaHref": "/example-funnel/thank-you"
+        }
+      }
+    },
+    {
+      "id": "thank-you",
+      "title": "Conferma",
+      "path": "thank-you",
+      "isConversion": true,
+      "componentOrder": ["ThankYouSummary"],
+      "content": {
+        "ThankYouSummary": {
+          "title": "Grazie",
+          "body": "Conversione completata"
+        }
+      }
+    }
+  ]
+}

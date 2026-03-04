@@ -1,0 +1,44 @@
+---
+description: SEO and GEO standards for sito madre pages
+globs: src/app/[locale]/**/*.tsx
+alwaysApply: false
+---
+
+# SEO & GEO Standards
+
+## Every Page Must Have
+
+1. **`generateMetadata()`** returning:
+   - `title` (unique, max 60 chars)
+   - `description` (unique, 150-160 chars)
+   - `canonical` URL
+   - `alternates.languages` with hreflang for IT + EN + x-default
+   - `openGraph` (title, description, url, image, locale, type)
+   - `twitter` (card, title, description, image)
+   - `robots` (index: true, follow: true)
+
+2. **StructuredData** component with appropriate schema:
+   - Homepage: `Organization`
+   - Service pages: `Service` + `Organization`
+   - Case study pages: `Article` or `CaseStudy` (custom) + `Organization`
+
+3. **Hreflang tags** via `alternates.languages`:
+   ```
+   "en": baseUrl/en/path
+   "it": baseUrl/it/path
+   "x-default": baseUrl/en/path
+   ```
+
+## URL Slug Rules
+
+- Lowercase only
+- Hyphen-separated (no underscores, no camelCase)
+- Max 3 words (e.g., `operating-partner`, not `ai-native-operating-partner-service`)
+- Must not collide with reserved slugs in `src/lib/reserved-slugs.ts`
+
+## Internal Linking
+
+- Every service page links back to homepage.
+- Homepage links to all published service/case-study pages.
+- Case study pages link to the relevant service page.
+- Use `next/link` with locale-aware paths.

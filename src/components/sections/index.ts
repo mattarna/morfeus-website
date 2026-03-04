@@ -1,4 +1,4 @@
-export * from "./HeroSection";
+export * from "./ServiceHero";
 export * from "./ProofSection";
 export * from "./FilterSection";
 export * from "./ProblemSection";
@@ -7,7 +7,7 @@ export * from "./HowItWorksSection";
 export * from "./DeliverySection";
 export * from "./PricingSection";
 export * from "./ContactSection";
-export * from "./FAQSection";
-export * from "./FooterSection";
-export * from "./Header";
-export * from "./BackgroundGrid";
+export * from "./ServiceFAQ";
+export * from "./ServiceFooter";
+export * from "./ServiceHeader";
+export * from "./ServiceBackgroundGrid";

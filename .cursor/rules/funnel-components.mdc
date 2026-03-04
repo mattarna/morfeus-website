@@ -1,0 +1,13 @@
+---
+description: Funnel component system and naming conventions
+globs: src/components/funnels/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Funnel Components
+
+- Funnel-only UI lives in `src/components/funnels`.
+- Use `Funnel` prefix for primitive components (`FunnelHero`, `FunnelCTABox`, etc.).
+- Rendering order must come from `componentOrder` through `componentMap`, not from hardcoded JSX order.
+- Keep components reusable and content-driven via typed props.
+- Do not import funnel-specific config JSON directly in UI primitives.

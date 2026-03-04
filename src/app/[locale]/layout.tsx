@@ -2,7 +2,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
-import { StructuredData } from "@/components/SEO/StructuredData";
+import { StructuredData } from "@/components/shared/SEO/StructuredData";
+import { HtmlLang } from "@/components/shared/HtmlLang";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -101,6 +102,7 @@ export default async function LocaleLayout({
 
   return (
     <>
+      <HtmlLang locale={locale} />
       <StructuredData locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
         {children}

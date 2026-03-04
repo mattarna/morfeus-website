@@ -1,0 +1,38 @@
+---
+description: Pre-merge checklist for new pages or major changes
+globs: src/app/[locale]/**/*.tsx
+alwaysApply: false
+---
+
+# Release Checklist
+
+Before considering a new page or major change ready for merge, verify:
+
+## SEO
+- [ ] `generateMetadata()` present with title, description, canonical, alternates, og, twitter
+- [ ] StructuredData component included
+- [ ] Hreflang tags for IT + EN + x-default
+- [ ] Slug is lowercase, hyphenated, max 3 words
+
+## Content
+- [ ] All copy comes from `messages/it.json` + `messages/en.json`
+- [ ] IT and EN JSON keys are in sync
+- [ ] No hardcoded strings in TSX
+- [ ] Meta description is 150-160 characters
+- [ ] Single H1 per page
+
+## Technical
+- [ ] No layout shift (images have explicit dimensions)
+- [ ] Images below-the-fold are lazy loaded
+- [ ] Mobile responsive verified
+- [ ] No unnecessary `"use client"` directives
+
+## Routing
+- [ ] Slug does not conflict with funnel registry (`src/lib/reserved-slugs.ts`)
+- [ ] If new top-level route, added to `RESERVED_SITE_SLUGS`
+- [ ] Internal links use `next/link` with locale-aware paths
+
+## Tracking
+- [ ] Section view events configured (if applicable)
+- [ ] CTA click events configured
+- [ ] Conversion events mapped

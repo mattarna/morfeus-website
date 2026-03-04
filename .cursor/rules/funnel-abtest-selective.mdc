@@ -1,0 +1,13 @@
+---
+description: Selective AB test handling for funnels
+globs: src/{middleware.ts,funnels/**,app/__funnels/**}
+alwaysApply: false
+---
+
+# Selective AB Testing
+
+- A/B logic is enabled only when `abTest.enabled` is true in funnel registry.
+- Funnel without A/B uses a single config and must skip variant assignment.
+- Persist selected variant with per-funnel cookie key.
+- Variant values must be constrained to declared variants.
+- Do not apply global randomization to all funnels.
