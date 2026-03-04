@@ -18,12 +18,40 @@ export function HomeProblem() {
   const currentIndex = useScrollStore((state) => state.currentIndex);
   const setIndex = useScrollStore((state) => state.setIndex);
   const [isVisible, setIsVisible] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      if (window.innerWidth < 1024) return true;
+      if (window.matchMedia('(pointer: coarse)').matches && 
+          window.matchMedia('(hover: none)').matches) {
+        return true;
+      }
+      return false;
+    };
+    
+    const updateViewport = () => setIsDesktop(!checkIsMobile());
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
 
   useEffect(() => {
     if (currentIndex === 2) {
       setIsVisible(true);
     }
   }, [currentIndex]);
+
+  const handleCtaClick = (index: number) => {
+    if (isDesktop) {
+      setIndex(index);
+    } else {
+      const element = document.getElementById(`section-${index}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   const cards = [
     { key: "costs", icon: "solar:bill-list-bold", color: "text-blue-400" },
@@ -139,7 +167,7 @@ export function HomeProblem() {
 
                 <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
                   <button 
-                    onClick={() => setIndex(10)} 
+                    onClick={() => handleCtaClick(13)} 
                     className="w-full flex items-center justify-between px-6 py-5 bg-white text-black rounded-2xl hover:bg-slate-200 transition-all duration-300 font-bold text-[16px] tracking-tight"
                   >
                     <span>{t("cta")}</span>

@@ -40,13 +40,11 @@ export function HomeHero() {
       e.preventDefault();
       setIndex(index);
     } else {
-      // On mobile, we use a more robust scroll method to account for the fixed header
+      // On mobile, use scrollIntoView which is more reliable
       const element = document.getElementById(`section-${index}`);
       if (element) {
         e.preventDefault();
-        const yOffset = -70; // Header height offset
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };

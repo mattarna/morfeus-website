@@ -79,6 +79,34 @@ function ServiceCard({
   href: string;
 }) {
   const setIndex = useScrollStore((state) => state.setIndex);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      if (window.innerWidth < 1024) return true;
+      if (window.matchMedia('(pointer: coarse)').matches && 
+          window.matchMedia('(hover: none)').matches) {
+        return true;
+      }
+      return false;
+    };
+    
+    const updateViewport = () => setIsDesktop(!checkIsMobile());
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
+  const handleCtaClick = (index: number) => {
+    if (isDesktop) {
+      setIndex(index);
+    } else {
+      const element = document.getElementById(`section-${index}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <div className="group relative flex flex-col justify-between p-8 sm:p-12 xl:p-14 min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] xl:min-h-[650px] bg-[#050505] transition-all duration-500 hover:bg-[#080808]">
@@ -108,9 +136,9 @@ function ServiceCard({
             href={href}
             onClick={(e) => {
               e.preventDefault();
-              setIndex(13); // Book call section
+              handleCtaClick(13); // Book call section
             }}
-            className="h-11 px-8 bg-white text-black text-[14px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(255,255,255,0.2)] w-full sm:w-auto"
+            className="h-11 px-8 bg-white text-black text-[14px] font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(255,255,255,0.2)] w-full sm:w-auto cursor-pointer"
           >
             {ctaPrimary}
             <Icon icon="lucide:arrow-right" width={16} />
@@ -119,9 +147,9 @@ function ServiceCard({
             href={href}
             onClick={(e) => {
               e.preventDefault();
-              setIndex(13); // Or relevant section
+              handleCtaClick(13); // Or relevant section
             }}
-            className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide"
+            className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide cursor-pointer"
           >
             {ctaSecondary}
           </a>

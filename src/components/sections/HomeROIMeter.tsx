@@ -121,11 +121,31 @@ export function HomeROIMeter() {
   const viewedRef = useRef(false);
 
   useEffect(() => {
-    const checkViewport = () => setIsDesktop(window.innerWidth >= DESKTOP_BREAKPOINT);
-    checkViewport();
-    window.addEventListener("resize", checkViewport);
-    return () => window.removeEventListener("resize", checkViewport);
+    const checkIsMobile = () => {
+      if (window.innerWidth < 1024) return true;
+      if (window.matchMedia('(pointer: coarse)').matches && 
+          window.matchMedia('(hover: none)').matches) {
+        return true;
+      }
+      return false;
+    };
+    
+    const updateViewport = () => setIsDesktop(!checkIsMobile());
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
   }, []);
+
+  const handleCtaClick = (index: number) => {
+    if (isDesktop) {
+      setIndex(index);
+    } else {
+      const element = document.getElementById(`section-${index}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   const isActive = !isDesktop || currentIndex === 10;
 
@@ -336,9 +356,9 @@ export function HomeROIMeter() {
                 <button
                   onClick={() => {
                     track("roiometer_cta_click", { cta: "book_diagnosis", department });
-                    setIndex(13);
+                    handleCtaClick(13);
                   }}
-                  className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white text-black text-sm md:text-base font-bold hover:bg-slate-100 transition-all"
+                  className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white text-black text-sm md:text-base font-bold hover:bg-slate-100 transition-all cursor-pointer"
                 >
                   {t("ctaPrimary")}
                   <Icon icon="solar:arrow-right-up-linear" width={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
