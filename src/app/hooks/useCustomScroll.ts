@@ -5,9 +5,9 @@ import { useScrollStore } from '../store/useScrollStore';
 import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 
 const DESKTOP_BREAKPOINT = 1024;
-const SCROLL_COOLDOWN_MS = 1000;
-const SCROLL_THRESHOLD = 20;
-const WHEEL_IDLE_RELEASE_MS = 180;
+const SCROLL_COOLDOWN_MS = 1100;
+const GESTURE_COLLECT_MS = 80;
+const WHEEL_QUIET_MS = 150;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -17,16 +17,20 @@ const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
  * On mobile, native scroll is used and the IntersectionObserver
  * in page.tsx updates the currentIndex.
  * 
- * Features (Desktop only):
- * - Prevents native scroll
- * - Moves through logical steps with 1000ms cooldown
- * - Supports wheel and arrow keys
+ * Trackpad strategy:
+ * - Collect wheel deltas for GESTURE_COLLECT_MS to determine direction
+ * - Lock immediately, trigger one scroll, then hold the lock
+ * - Release only after SCROLL_COOLDOWN_MS AND wheel events have
+ *   been quiet for WHEEL_QUIET_MS (momentum fully ended)
  */
 export function useCustomScroll(): void {
-  const isScrollingRef = useRef(false);
-  const accumulatedDeltaRef = useRef(0);
-  const lastWheelEventAtRef = useRef(0);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lockedRef = useRef(false);
+  const collectingRef = useRef(false);
+  const netDeltaRef = useRef(0);
+  const lastWheelAtRef = useRef(0);
+  const collectTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const cooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const quietCheckTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const isDesktopMode = () => {
@@ -37,61 +41,86 @@ export function useCustomScroll(): void {
       return true;
     };
 
-    const triggerScrollCooldown = () => {
-      isScrollingRef.current = true;
-      accumulatedDeltaRef.current = 0;
-      useScrollStore.getState().setIsScrolling(true);
-      
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      
-      scrollTimeoutRef.current = setTimeout(() => {
-        const idleForMs = Date.now() - lastWheelEventAtRef.current;
-        if (idleForMs < WHEEL_IDLE_RELEASE_MS) {
-          scrollTimeoutRef.current = setTimeout(() => {
-            isScrollingRef.current = false;
-            useScrollStore.getState().setIsScrolling(false);
-          }, WHEEL_IDLE_RELEASE_MS - idleForMs);
-          return;
-        }
+    const unlock = () => {
+      lockedRef.current = false;
+      netDeltaRef.current = 0;
+      useScrollStore.getState().setIsScrolling(false);
+    };
 
-        isScrollingRef.current = false;
-        useScrollStore.getState().setIsScrolling(false);
+    const scheduleUnlock = () => {
+      if (quietCheckTimerRef.current) clearTimeout(quietCheckTimerRef.current);
+
+      quietCheckTimerRef.current = setTimeout(() => {
+        const silenceSince = Date.now() - lastWheelAtRef.current;
+        if (silenceSince >= WHEEL_QUIET_MS) {
+          unlock();
+        } else {
+          scheduleUnlock();
+        }
+      }, WHEEL_QUIET_MS);
+    };
+
+    const commitScroll = () => {
+      collectingRef.current = false;
+      const delta = netDeltaRef.current;
+      netDeltaRef.current = 0;
+
+      if (Math.abs(delta) < 1) {
+        return;
+      }
+
+      lockedRef.current = true;
+      useScrollStore.getState().setIsScrolling(true);
+
+      const { currentIndex, next, prev } = useScrollStore.getState();
+      const direction = delta > 0 ? 1 : -1;
+
+      if (direction === 1 && currentIndex < MAX_INDEX) {
+        next();
+      } else if (direction === -1 && currentIndex > 0) {
+        prev();
+      } else {
+        unlock();
+        return;
+      }
+
+      if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+      cooldownTimerRef.current = setTimeout(() => {
+        scheduleUnlock();
       }, SCROLL_COOLDOWN_MS);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      // Keep native behavior on mobile/tablet.
       if (!isDesktopMode()) return;
-      
       if (useScrollStore.getState().isContactFormOpen) return;
-      
+
       e.preventDefault();
-      lastWheelEventAtRef.current = Date.now();
+      lastWheelAtRef.current = Date.now();
 
-      if (isScrollingRef.current) return;
-      accumulatedDeltaRef.current += e.deltaY;
-      if (Math.abs(accumulatedDeltaRef.current) < SCROLL_THRESHOLD) return;
+      if (lockedRef.current) return;
 
-      const { currentIndex, next, prev } = useScrollStore.getState();
-      const direction = accumulatedDeltaRef.current > 0 ? 1 : -1;
+      netDeltaRef.current += e.deltaY;
 
-      if (direction === 1 && currentIndex < MAX_INDEX) {
-        next();
-        triggerScrollCooldown();
-      } else if (direction === -1 && currentIndex > 0) {
-        prev();
-        triggerScrollCooldown();
+      if (!collectingRef.current) {
+        collectingRef.current = true;
+        if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
+        collectTimerRef.current = setTimeout(commitScroll, GESTURE_COLLECT_MS);
       }
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isDesktopMode()) return;
       if (useScrollStore.getState().isContactFormOpen) return;
-      if (isScrollingRef.current) return;
+      if (lockedRef.current) return;
 
       const { currentIndex, next, prev, setIndex } = useScrollStore.getState();
+
+      const lockAndCooldown = () => {
+        lockedRef.current = true;
+        useScrollStore.getState().setIsScrolling(true);
+        if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+        cooldownTimerRef.current = setTimeout(unlock, SCROLL_COOLDOWN_MS);
+      };
 
       switch (e.key) {
         case 'ArrowDown':
@@ -99,7 +128,7 @@ export function useCustomScroll(): void {
           e.preventDefault();
           if (currentIndex < MAX_INDEX) {
             next();
-            triggerScrollCooldown();
+            lockAndCooldown();
           }
           break;
           
@@ -108,34 +137,34 @@ export function useCustomScroll(): void {
           e.preventDefault();
           if (currentIndex > 0) {
             prev();
-            triggerScrollCooldown();
+            lockAndCooldown();
           }
           break;
           
         case 'Home':
           e.preventDefault();
           setIndex(0);
-          triggerScrollCooldown();
+          lockAndCooldown();
           break;
           
         case 'End':
           e.preventDefault();
           setIndex(MAX_INDEX);
-          triggerScrollCooldown();
+          lockAndCooldown();
           break;
       }
     };
 
-    // Register listeners globally; handlers self-gate to desktop mode.
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
 
-    // Handle resize transition (desktop <-> mobile) without requiring remount.
     const handleResize = () => {
       if (!isDesktopMode()) {
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
-        accumulatedDeltaRef.current = 0;
+        netDeltaRef.current = 0;
+        lockedRef.current = false;
+        collectingRef.current = false;
       }
     };
     
@@ -145,9 +174,9 @@ export function useCustomScroll(): void {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('resize', handleResize);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
+      if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
+      if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
+      if (quietCheckTimerRef.current) clearTimeout(quietCheckTimerRef.current);
     };
   }, []);
 }
