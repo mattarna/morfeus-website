@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
