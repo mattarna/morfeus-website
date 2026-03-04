@@ -5,9 +5,8 @@ import { useScrollStore } from '../store/useScrollStore';
 import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 
 const DESKTOP_BREAKPOINT = 1024;
-const SCROLL_COOLDOWN_MS = 1100;
+const SCROLL_COOLDOWN_MS = 1050;
 const GESTURE_COLLECT_MS = 80;
-const WHEEL_QUIET_MS = 150;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -20,17 +19,16 @@ const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
  * Trackpad strategy:
  * - Collect wheel deltas for GESTURE_COLLECT_MS to determine direction
  * - Lock immediately, trigger one scroll, then hold the lock
- * - Release only after SCROLL_COOLDOWN_MS AND wheel events have
- *   been quiet for WHEEL_QUIET_MS (momentum fully ended)
+ * - Release after SCROLL_COOLDOWN_MS (matches CSS transition duration)
+ * - On unlock, reset all refs so residual momentum is filtered by
+ *   the collect window + delta threshold
  */
 export function useCustomScroll(): void {
   const lockedRef = useRef(false);
   const collectingRef = useRef(false);
   const netDeltaRef = useRef(0);
-  const lastWheelAtRef = useRef(0);
   const collectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const cooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const quietCheckTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const isDesktopMode = () => {
@@ -43,21 +41,9 @@ export function useCustomScroll(): void {
 
     const unlock = () => {
       lockedRef.current = false;
+      collectingRef.current = false;
       netDeltaRef.current = 0;
       useScrollStore.getState().setIsScrolling(false);
-    };
-
-    const scheduleUnlock = () => {
-      if (quietCheckTimerRef.current) clearTimeout(quietCheckTimerRef.current);
-
-      quietCheckTimerRef.current = setTimeout(() => {
-        const silenceSince = Date.now() - lastWheelAtRef.current;
-        if (silenceSince >= WHEEL_QUIET_MS) {
-          unlock();
-        } else {
-          scheduleUnlock();
-        }
-      }, WHEEL_QUIET_MS);
     };
 
     const commitScroll = () => {
@@ -85,9 +71,7 @@ export function useCustomScroll(): void {
       }
 
       if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
-      cooldownTimerRef.current = setTimeout(() => {
-        scheduleUnlock();
-      }, SCROLL_COOLDOWN_MS);
+      cooldownTimerRef.current = setTimeout(unlock, SCROLL_COOLDOWN_MS);
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -95,7 +79,6 @@ export function useCustomScroll(): void {
       if (useScrollStore.getState().isContactFormOpen) return;
 
       e.preventDefault();
-      lastWheelAtRef.current = Date.now();
 
       if (lockedRef.current) return;
 
@@ -176,7 +159,6 @@ export function useCustomScroll(): void {
       window.removeEventListener('resize', handleResize);
       if (collectTimerRef.current) clearTimeout(collectTimerRef.current);
       if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current);
-      if (quietCheckTimerRef.current) clearTimeout(quietCheckTimerRef.current);
     };
   }, []);
 }
