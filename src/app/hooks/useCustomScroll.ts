@@ -7,6 +7,7 @@ import { TOTAL_LOGICAL_STEPS } from '../lib/scrollConfig';
 const DESKTOP_BREAKPOINT = 1024;
 const SCROLL_COOLDOWN_MS = 1000;
 const SCROLL_THRESHOLD = 20;
+const WHEEL_IDLE_RELEASE_MS = 180;
 const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 
 /**
@@ -24,6 +25,7 @@ const MAX_INDEX = TOTAL_LOGICAL_STEPS - 1;
 export function useCustomScroll(): void {
   const isScrollingRef = useRef(false);
   const accumulatedDeltaRef = useRef(0);
+  const lastWheelEventAtRef = useRef(0);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -45,6 +47,15 @@ export function useCustomScroll(): void {
       }
       
       scrollTimeoutRef.current = setTimeout(() => {
+        const idleForMs = Date.now() - lastWheelEventAtRef.current;
+        if (idleForMs < WHEEL_IDLE_RELEASE_MS) {
+          scrollTimeoutRef.current = setTimeout(() => {
+            isScrollingRef.current = false;
+            useScrollStore.getState().setIsScrolling(false);
+          }, WHEEL_IDLE_RELEASE_MS - idleForMs);
+          return;
+        }
+
         isScrollingRef.current = false;
         useScrollStore.getState().setIsScrolling(false);
       }, SCROLL_COOLDOWN_MS);
@@ -57,6 +68,7 @@ export function useCustomScroll(): void {
       if (useScrollStore.getState().isContactFormOpen) return;
       
       e.preventDefault();
+      lastWheelEventAtRef.current = Date.now();
 
       if (isScrollingRef.current) return;
       accumulatedDeltaRef.current += e.deltaY;
