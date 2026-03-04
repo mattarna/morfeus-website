@@ -115,9 +115,9 @@ export function HomeROIMeter() {
   const setIndex = useScrollStore((s) => s.setIndex);
   const [isDesktop, setIsDesktop] = useState(false);
   const [department, setDepartment] = useState<DepartmentKey>("operations");
-  const [people, setPeople] = useState(DEFAULT_VALUES.people);
-  const [cost, setCost] = useState(DEFAULT_VALUES.cost);
-  const [manualPct, setManualPct] = useState(DEFAULT_VALUES.manualPct);
+  const [people, setPeople] = useState<number>(DEFAULT_VALUES.people);
+  const [cost, setCost] = useState<number>(DEFAULT_VALUES.cost);
+  const [manualPct, setManualPct] = useState<number>(DEFAULT_VALUES.manualPct);
   const viewedRef = useRef(false);
 
   useEffect(() => {
