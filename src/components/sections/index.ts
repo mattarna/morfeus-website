@@ -15,5 +15,6 @@ export * from "./ContactSection";
 export * from "./ServiceFAQ";
 export * from "./ServiceFooter";
 export * from "./ServiceHeader";
+export * from "./ServiceMobileMenu";
 export * from "./ServiceBackgroundGrid";
 export * from "./ServiceTimelineNav";
