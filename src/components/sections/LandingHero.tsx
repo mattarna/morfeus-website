@@ -51,7 +51,8 @@ export function LandingHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
           {t("subtitle")}
         </p>
 
-        {/* 3. VSL FRAME */}
+        {/* 3. VSL FRAME (Hidden temporarily as requested) */}
+        {/* 
         <div className="relative w-full max-w-4xl mb-12 group">
           <div className="absolute -inset-4 rounded-[2rem] opacity-20 blur-3xl bg-majorelle/30 pointer-events-none group-hover:opacity-30 transition-opacity duration-700" />
           <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-night/80 backdrop-blur-xl shadow-2xl">
@@ -109,6 +110,7 @@ export function LandingHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
             </div>
           </div>
         </div>
+        */}
 
         {/* 4. CTA SECTION */}
         <div className="flex flex-col items-center gap-6 w-full">
