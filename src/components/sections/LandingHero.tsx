@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import { useTranslations } from "next-intl";
+import { MARFVisualCore } from "../shared/MARFVisualCore";
 
 interface LandingHeroProps {
   contentVisible: boolean;
@@ -48,66 +49,11 @@ export function LandingHero({ contentVisible, scrollToContact }: LandingHeroProp
           {t("subtitle")}
         </p>
 
-        {/* 3. VSL FRAME (Hidden temporarily as requested) */}
-        {/* 
-        <div className="relative w-full max-w-4xl mb-12 group">
-          <div className="absolute -inset-4 rounded-[2rem] opacity-20 blur-3xl bg-majorelle/30 pointer-events-none group-hover:opacity-30 transition-opacity duration-700" />
-          <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-night/80 backdrop-blur-xl shadow-2xl">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-white/10" />
-                  <div className="w-2 h-2 rounded-full bg-white/10" />
-                  <div className="w-2 h-2 rounded-full bg-white/10" />
-                </div>
-                <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.2em]">{t("vsl_tag")}</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-[10px] font-mono text-white/30 tracking-wider">08:42</span>
-                <div className="flex items-center gap-1.5 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                  <span className="text-[9px] font-mono text-red-500 font-bold uppercase tracking-wider">{t("vsl_live")}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative aspect-video bg-black flex items-center justify-center">
-              {!isPlaying ? (
-                <div 
-                  className="absolute inset-0 flex items-center justify-center cursor-pointer group/vsl"
-                  onClick={() => setIsPlaying(true)}
-                >
-                  <Image 
-                    src="/Images-landing/COPERTINA VSL.png"
-                    alt="VSL Cover"
-                    fill
-                    className="object-cover opacity-60 group-hover/vsl:opacity-80 transition-opacity duration-700"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-transparent opacity-60" />
-                  
-                  <button className="relative z-10 w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/5 border border-white/20 backdrop-blur-xl flex items-center justify-center transition-all duration-500 group-hover/vsl:scale-110 group-hover/vsl:bg-majorelle group-hover/vsl:border-neon group-hover/vsl:shadow-[0_0_50px_rgba(83,61,252,0.5)]">
-                    <Icon icon="solar:play-bold" className="w-8 h-8 md:w-10 md:h-10 text-white ml-1.5 transition-transform group-hover/vsl:scale-110" />
-                  </button>
-
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-[10px] font-bold uppercase tracking-[0.3em] opacity-0 group-hover/vsl:opacity-100 transition-all duration-500 translate-y-2 group-hover/vsl:translate-y-0">
-                    {t("vsl_watch")}
-                  </div>
-                </div>
-              ) : (
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/NcgwgB9L0KI?autoplay=1"
-                  title="Morfeus VSL"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              )}
-            </div>
-          </div>
+        {/* 3. MARF VISUAL CORE (Interactive Replacement for Video) */}
+        <div className="relative w-full max-w-5xl mb-16 md:mb-20 px-4 group">
+          <div className="absolute -inset-10 rounded-[4rem] opacity-[0.08] blur-[120px] bg-majorelle pointer-events-none transition-opacity duration-1000 group-hover:opacity-[0.15]" />
+          <MARFVisualCore />
         </div>
-        */}
 
         {/* 4. CTA SECTION */}
         <div className="flex flex-col items-center gap-6 w-full">
