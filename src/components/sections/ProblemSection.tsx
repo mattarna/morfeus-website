@@ -8,7 +8,7 @@ export function ProblemSection() {
   return (
     <section id="problem" className="relative z-40 py-24 md:py-40 px-6 bg-[#0a111a] border-y border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
       {/* Module ID Tag */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-50">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-[100]">
         <span className="text-[10px] font-mono text-slate-500 tracking-[0.3em] uppercase whitespace-nowrap">Module_04: Diagnosis</span>
       </div>
       <div className="max-w-[1200px] mx-auto">

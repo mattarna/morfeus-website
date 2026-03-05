@@ -1,23 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { 
-  ServiceBackgroundGrid, 
-  ServiceHeader, 
-  ServiceHero, 
-  ProofSection, 
-  FilterSection, 
-  ProblemSection, 
-  ComparisonSection, 
-  HowItWorksSection, 
-  DeliverySection, 
-  PricingSection, 
-  ContactSection, 
-  ServiceFAQ, 
-  ServiceFooter 
+import {
+  ServiceHeader,
+  LandingHero,
+  ProofSection,
+  ProblemAnalysis,
+  BeliefShift,
+  ComparisonSection,
+  HowItWorksSection,
+  AssetsSection,
+  WayoutSection,
+  FilterSection,
+  ROISection,
+  PricingSection,
+  ContactSection,
+  ServiceFAQ,
+  ServiceFooter,
+  ServiceTimelineNav,
 } from "@/components/sections";
+import { useSmoothScroll } from "@/components/shared/SmoothScroll";
 
 export default function OperatingSystemPage() {
+  const { scrollTo } = useSmoothScroll();
   const [contentVisible, setContentVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -25,18 +30,12 @@ export default function OperatingSystemPage() {
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const scrollToContact = () => scrollTo("#contact");
 
   useEffect(() => {
     setMounted(true);
     const timer = setTimeout(() => setContentVisible(true), 100);
 
-    // Intersection Observer to hide header when on-page CTAs are visible
     const ctaObserver = new IntersectionObserver(
       (entries) => {
         const isAnyCtaVisible = entries.some((entry) => entry.isIntersecting);
@@ -45,17 +44,14 @@ export default function OperatingSystemPage() {
       { threshold: 0.1, rootMargin: "-50px 0px -50px 0px" }
     );
 
-    // Observe all elements with 'on-page-cta' class
     const observeCtas = () => {
       const ctas = document.querySelectorAll(".on-page-cta");
       ctas.forEach((cta) => ctaObserver.observe(cta));
     };
 
-    // Initial observation
     observeCtas();
 
     const handleScroll = () => {
-      // Show sticky background almost immediately after scroll starts
       if (window.scrollY > 50) {
         setShowStickyCta(true);
       } else {
@@ -76,39 +72,58 @@ export default function OperatingSystemPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#030508] text-white overflow-x-hidden">
-      <ServiceBackgroundGrid />
-      
       <ServiceHeader 
         showStickyCta={showStickyCta} 
         isHeaderHidden={isHeaderHidden} 
         scrollToContact={scrollToContact} 
       />
+      <ServiceTimelineNav />
 
-      <ServiceHero 
+      {/* 01 - HERO (Blue) */}
+      <LandingHero 
         contentVisible={contentVisible} 
         isPlaying={isPlaying} 
         setIsPlaying={setIsPlaying} 
         scrollToContact={scrollToContact} 
       />
 
+      {/* 02 - PROOF (Grid) */}
       <ProofSection />
 
-      <FilterSection scrollToContact={scrollToContact} />
+      {/* 03 - PROBLEM (Blue) */}
+      <ProblemAnalysis />
 
-      <ProblemSection />
+      {/* 04 - BELIEF SHIFT (Grid) */}
+      <BeliefShift />
 
+      {/* 05 - COMPARISON (Blue) */}
       <ComparisonSection />
 
+      {/* 06 - HOW IT WORKS (Grid) */}
       <HowItWorksSection scrollToContact={scrollToContact} />
 
-      <DeliverySection />
+      {/* 07 - ASSETS (Blue) */}
+      <AssetsSection />
 
+      {/* 08 - FILTER (Grid) */}
+      <FilterSection scrollToContact={scrollToContact} />
+
+      {/* 09 - ROIOMETER (Blue) */}
+      <ROISection />
+
+      {/* 10 - PRICING (Grid) */}
       <PricingSection scrollToContact={scrollToContact} />
 
+      {/* 11 - WAY-OUT (Blue) */}
+      <WayoutSection />
+
+      {/* 12 - CONTACT (Grid) */}
       <ContactSection scrollToContact={scrollToContact} />
 
+      {/* 13 - FAQ (Blue?) */}
       <ServiceFAQ activeFaq={activeFaq} setActiveFaq={setActiveFaq} />
 
+      {/* 14 - FOOTER (Blue) */}
       <ServiceFooter />
     </div>
   );

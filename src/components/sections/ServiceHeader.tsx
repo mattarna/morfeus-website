@@ -15,7 +15,7 @@ export function ServiceHeader({ showStickyCta, isHeaderHidden, scrollToContact }
 
   return (
     <header className={`fixed top-0 left-0 w-full z-[200] px-6 md:px-10 transition-all duration-700 ${
-      showStickyCta ? "bg-[#030508]/90 backdrop-blur-xl border-b border-white/5 py-3" : "bg-transparent py-5"
+      showStickyCta ? "bg-black/20 backdrop-blur-xl border-b border-white/5 py-2.5" : "bg-transparent py-4"
     } ${
       isHeaderHidden ? "opacity-0 -translate-y-full pointer-events-none" : "opacity-100 translate-y-0"
     }`}>

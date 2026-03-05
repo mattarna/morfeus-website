@@ -1,16 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { GridPattern } from "../shared/GridPattern";
 
 export function ProofSection() {
   const t = useTranslations("Offerta");
 
   return (
-    <section id="proof" className="relative z-20 py-24 md:py-40 px-6 bg-[#0a111a] border-y border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
-      {/* Module ID Tag */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-50">
-        <span className="text-[10px] font-mono text-slate-500 tracking-[0.3em] uppercase whitespace-nowrap">Module_02: Proof</span>
-      </div>
+    <section id="proof" className="relative z-20 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
+      <GridPattern />
       <div className="max-w-[1200px] mx-auto">
         
         {/* Section Title */}

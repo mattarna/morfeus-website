@@ -7,12 +7,13 @@ export function DeliverySection() {
 
   return (
     <section id="delivery" className="relative z-[80] py-24 md:py-40 px-6 bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
+      
       {/* Module ID Tag */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-[90]">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-[100]">
         <span className="text-[10px] font-mono text-slate-500 tracking-[0.3em] uppercase whitespace-nowrap">Module_07: Delivery_Protocol</span>
       </div>
 
-      <div className="max-w-[1000px] mx-auto">
+      <div className="relative z-10 max-w-[1100px] mx-auto">
         
         {/* Section Header */}
         <div className="text-center mb-20 md:mb-28">
