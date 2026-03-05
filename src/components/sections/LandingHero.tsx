@@ -1,17 +1,14 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 interface LandingHeroProps {
   contentVisible: boolean;
-  isPlaying: boolean;
-  setIsPlaying: (playing: boolean) => void;
   scrollToContact: () => void;
 }
 
-export function LandingHero({ contentVisible, isPlaying, setIsPlaying, scrollToContact }: LandingHeroProps) {
+export function LandingHero({ contentVisible, scrollToContact }: LandingHeroProps) {
   const t = useTranslations("Offerta.hero");
 
   return (

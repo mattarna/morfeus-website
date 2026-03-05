@@ -25,7 +25,6 @@ export default function OperatingSystemPage() {
   const { scrollTo } = useSmoothScroll();
   const [contentVisible, setContentVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
@@ -82,8 +81,6 @@ export default function OperatingSystemPage() {
       {/* 01 - HERO (Blue) */}
       <LandingHero 
         contentVisible={contentVisible} 
-        isPlaying={isPlaying} 
-        setIsPlaying={setIsPlaying} 
         scrollToContact={scrollToContact} 
       />
 
