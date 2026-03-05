@@ -117,9 +117,11 @@ export function HomeROIMeter() {
   const [people, setPeople] = useState<number>(DEFAULT_VALUES.people);
   const [cost, setCost] = useState<number>(DEFAULT_VALUES.cost);
   const [manualPct, setManualPct] = useState<number>(DEFAULT_VALUES.manualPct);
+  const [mounted, setMounted] = useState(false);
   const viewedRef = useRef(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkIsMobile = () => {
       if (window.innerWidth < 1024) return true;
       if (window.matchMedia('(pointer: coarse)').matches && 
@@ -184,6 +186,11 @@ export function HomeROIMeter() {
       }),
     [locale]
   );
+
+  const formatCurrency = (val: number) => {
+    if (!mounted) return `${val} €`;
+    return currencyFormatter.format(val);
+  };
 
   const track = (event: string, payload: Record<string, string | number>) => {
     if (typeof window === "undefined" || !window.dataLayer) return;
@@ -300,7 +307,7 @@ export function HomeROIMeter() {
                   step={100}
                   onChange={setCost}
                   onCommit={() => track("roiometer_interaction", { field: "cost", value: cost, department })}
-                  formatter={(v) => currencyFormatter.format(v)}
+                  formatter={(v) => formatCurrency(v)}
                 />
                 <MetricSlider
                   label={t("inputs.manualPct")}
@@ -321,9 +328,9 @@ export function HomeROIMeter() {
               <div className="rounded-2xl border border-rose-400/25 bg-rose-500/[0.07] p-4 md:p-5 flex flex-col justify-between">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.22em] text-rose-200/80 font-semibold mb-2.5">{t("results.losingLabel")}</p>
-                  <p className="text-3xl md:text-4xl font-black tracking-tighter text-rose-100 tabular-nums">
-                    {currencyFormatter.format(Math.max(0, displayedLoss))}
-                  </p>
+                <p className="text-3xl md:text-4xl font-black tracking-tighter text-rose-100 tabular-nums">
+                  {formatCurrency(Math.max(0, displayedLoss))}
+                </p>
                 </div>
                 <p className="mt-2.5 text-xs md:text-sm text-slate-300 leading-relaxed">{t("results.losingSub")}</p>
               </div>
@@ -332,7 +339,7 @@ export function HomeROIMeter() {
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.22em] text-emerald-200/90 font-semibold mb-2.5">{t("results.impactLabel")}</p>
                   <p className="text-3xl md:text-4xl font-black tracking-tighter text-emerald-100 tabular-nums">
-                    {currencyFormatter.format(Math.max(0, displayedImpactMin))} - {currencyFormatter.format(Math.max(0, displayedImpactMax))}
+                    {formatCurrency(Math.max(0, displayedImpactMin))} - {formatCurrency(Math.max(0, displayedImpactMax))}
                   </p>
                 </div>
                 <p className="mt-2.5 text-xs md:text-sm text-slate-300 leading-relaxed">{t("results.impactSub")}</p>
@@ -342,7 +349,7 @@ export function HomeROIMeter() {
             <div className="mt-4 rounded-2xl border border-sky-300/25 bg-sky-500/[0.08] p-4 md:p-5 flex flex-col justify-center">
               <p className="text-[10px] uppercase tracking-[0.22em] text-sky-200/90 font-semibold mb-2">{t("results.annualLabel")}</p>
               <p className="text-3xl md:text-4xl font-black tracking-tighter text-sky-100 tabular-nums">
-                {currencyFormatter.format(Math.max(0, displayedAnnualMin))} - {currencyFormatter.format(Math.max(0, displayedAnnualMax))}
+                {formatCurrency(Math.max(0, displayedAnnualMin))} - {formatCurrency(Math.max(0, displayedAnnualMax))}
               </p>
             </div>
 
