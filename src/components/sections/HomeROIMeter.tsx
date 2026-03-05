@@ -323,9 +323,9 @@ export function HomeROIMeter() {
             </div>
           </div>
 
-          <div className="xl:col-span-7 rounded-3xl border border-white/15 bg-gradient-to-br from-[#111118] to-[#07070d] p-6 md:p-8 backdrop-blur-sm shadow-[0_30px_90px_-30_rgba(77,57,235,0.45)] flex flex-col">
+          <div className="xl:col-span-7 rounded-3xl border border-white/15 bg-gradient-to-br from-[#111118] to-[#07070d] p-6 md:p-8 backdrop-blur-sm shadow-[0_30px_90px_-30_rgba(77,57,235,0.45)] flex flex-col min-h-[580px]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-              <div className="rounded-2xl border border-rose-400/25 bg-rose-500/[0.07] p-4 md:p-5 flex flex-col justify-between">
+              <div className="rounded-2xl border border-rose-400/25 bg-rose-500/[0.07] p-4 md:p-5 flex flex-col justify-between min-h-[110px]">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.22em] text-rose-200/80 font-semibold mb-2.5">{t("results.losingLabel")}</p>
                 <p className="text-3xl md:text-4xl font-black tracking-tighter text-rose-100 tabular-nums">
@@ -335,7 +335,7 @@ export function HomeROIMeter() {
                 <p className="mt-2.5 text-xs md:text-sm text-slate-300 leading-relaxed">{t("results.losingSub")}</p>
               </div>
 
-              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.09] p-4 md:p-5 flex flex-col justify-between">
+              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.09] p-4 md:p-5 flex flex-col justify-between min-h-[110px]">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.22em] text-emerald-200/90 font-semibold mb-2.5">{t("results.impactLabel")}</p>
                   <p className="text-3xl md:text-4xl font-black tracking-tighter text-emerald-100 tabular-nums">
@@ -346,14 +346,14 @@ export function HomeROIMeter() {
               </div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-sky-300/25 bg-sky-500/[0.08] p-4 md:p-5 flex flex-col justify-center">
+            <div className="mt-4 rounded-2xl border border-sky-300/25 bg-sky-500/[0.08] p-4 md:p-5 flex flex-col justify-center min-h-[100px]">
               <p className="text-[10px] uppercase tracking-[0.22em] text-sky-200/90 font-semibold mb-2">{t("results.annualLabel")}</p>
               <p className="text-3xl md:text-4xl font-black tracking-tighter text-sky-100 tabular-nums">
                 {formatCurrency(Math.max(0, displayedAnnualMin))} - {formatCurrency(Math.max(0, displayedAnnualMax))}
               </p>
             </div>
 
-            <div className="flex-grow flex flex-col justify-center py-4">
+            <div className="flex-grow flex flex-col justify-center py-4 min-h-[80px]">
               <p className="text-sm md:text-base text-slate-300 leading-relaxed">{t(`departments.${department}.impact`)}</p>
             </div>
 

@@ -115,8 +115,8 @@ export function HomeHero() {
             <Icon icon="lucide:arrow-right" width={18} className="transition-transform group-hover:translate-x-0.5" />
           </a>
           <a 
-            href="#section-1"
-            onClick={(e) => handleCtaClick(e, 1, t("cta_secondary"))}
+            href="#section-10"
+            onClick={(e) => handleCtaClick(e, 10, t("cta_secondary"))}
             className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-none focus:ring-0 cursor-pointer py-2"
           >
             {t("cta_secondary")}
