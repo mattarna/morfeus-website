@@ -70,7 +70,6 @@ export function MARFVisualCore() {
             const startX = 400 + node.x;
             const startY = 200 + node.y;
             const controlX = 400 + node.x * 0.4;
-            const controlY = 200 + node.y * 0.2;
             
             const path = `M ${startX} ${startY} C ${controlX} ${startY}, ${controlX} 200, 400 200`;
             
