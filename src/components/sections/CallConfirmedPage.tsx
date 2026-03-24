@@ -23,10 +23,10 @@ const staggerContainer = {
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }
   }
 };
 
@@ -66,16 +66,16 @@ interface CallConfirmedPageProps {
     agendaLabel: string;
     agendaTitle: string;
     agendaSubtitle: string;
-    agendaCards: Array<{ step: string; title: string; body: string }>;
+    agendaCards: ReadonlyArray<{ step: string; title: string; body: string }>;
     agendaDisclaimer: string;
     prepLabel: string;
     prepTitle: string;
     prepSubtitle: string;
-    prepItems: Array<{ icon: string; title: string; body: string }>;
+    prepItems: ReadonlyArray<{ icon: string; title: string; body: string }>;
     credibilityLabel: string;
     credibilityTitle: string;
     credibilityBody: string;
-    stats: string[];
+    stats: ReadonlyArray<string>;
     logosLabel: string;
     form: {
       preLabel: string;
@@ -95,9 +95,9 @@ interface CallConfirmedPageProps {
         repeatingProblemPlaceholder: string;
       };
       options: {
-        sector: Array<{ label: string; value: string }>;
-        revenue: Array<{ label: string; value: string }>;
-        friction: Array<{ label: string; value: string }>;
+        sector: ReadonlyArray<{ label: string; value: string }>;
+        revenue: ReadonlyArray<{ label: string; value: string }>;
+        friction: ReadonlyArray<{ label: string; value: string }>;
       };
       errors: {
         generic: string;

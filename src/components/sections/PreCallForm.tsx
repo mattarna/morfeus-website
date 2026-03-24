@@ -31,9 +31,9 @@ interface PreCallFormProps {
       repeatingProblemPlaceholder: string;
     };
     options: {
-      sector: SelectOption[];
-      revenue: SelectOption[];
-      friction: SelectOption[];
+      sector: ReadonlyArray<SelectOption>;
+      revenue: ReadonlyArray<SelectOption>;
+      friction: ReadonlyArray<SelectOption>;
     };
     errors: {
       generic: string;
