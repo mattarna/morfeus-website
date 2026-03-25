@@ -21,7 +21,7 @@ import {
 } from "@/components/sections";
 import { useSmoothScroll } from "@/components/shared/SmoothScroll";
 
-export default function OperatingSystemPage() {
+export default function ForgePage() {
   const { scrollTo } = useSmoothScroll();
   const [contentVisible, setContentVisible] = useState(false);
   const [mounted, setMounted] = useState(false);

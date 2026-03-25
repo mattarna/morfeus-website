@@ -13,6 +13,10 @@ interface FAQSectionProps {
 export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_operating_system" }: FAQSectionProps) {
   const t = useTranslations(namespace);
   const faqItems = Object.entries(t.raw("items"));
+  const useSingleColumn = faqItems.length > 10;
+  const faqGroups = useSingleColumn
+    ? [faqItems]
+    : [faqItems.slice(0, Math.ceil(faqItems.length / 2)), faqItems.slice(Math.ceil(faqItems.length / 2))];
 
   return (
     <section id="faq" className="relative z-[130] py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/[0.05] overflow-visible">
@@ -34,9 +38,10 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
         </div>
 
         {/* FAQ Accordion List - Two Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-4 items-start">
-          {/* Split faqs into two halves */}
-          {[faqItems.slice(0, Math.ceil(faqItems.length / 2)), faqItems.slice(Math.ceil(faqItems.length / 2))].map((group, groupIdx) => (
+        <div
+          className={`grid grid-cols-1 ${useSingleColumn ? "" : "lg:grid-cols-2"} gap-x-12 gap-y-4 items-start ${useSingleColumn ? "max-h-[1200px] overflow-y-auto pr-2" : ""}`}
+        >
+          {faqGroups.map((group, groupIdx) => (
             <div key={groupIdx} className="flex flex-col gap-4">
               {group.map(([id, item]) => {
                 const faq = item as { q: string; a: string };

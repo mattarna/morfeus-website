@@ -8,7 +8,7 @@ Main website with locale prefix. Contains:
 - **Service pages** (`/[locale]/servizi/[slug]`): copy-heavy (30% design, 60% copy), CONVERTE in call booked
 - **Case study pages** (`/[locale]/case-study/[slug]`): proof-heavy, CONVERTE in call booked
 - **Utility pages**: privacy, cookies, portal
-- **Operating-system** (`/[locale]/operating-system`): existing landing page, template reference for copy-heavy pages
+- **Forge** (`/[locale]/forge`): existing landing page, template reference for copy-heavy pages
 
 ### 2. Funnel Area (/slug)
 Separate area, NO locale prefix. Lives in `src/app/__funnels/` with middleware rewrite.

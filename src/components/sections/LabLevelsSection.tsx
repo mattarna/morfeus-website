@@ -39,6 +39,7 @@ interface LabLevelsSectionProps {
 
 export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionProps) {
   const t = useTranslations(namespace);
+  const insight = t("insight");
 
   return (
     <section id="levels" className="relative z-40 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
@@ -115,12 +116,14 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
           })}
         </div>
 
-        <div className="mt-20 text-center">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
-          <p className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight max-w-4xl mx-auto">
-            {t("insight")}
-          </p>
-        </div>
+        {insight.trim().length > 0 && (
+          <div className="mt-20 text-center">
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
+            <p className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight max-w-4xl mx-auto">
+              {insight}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

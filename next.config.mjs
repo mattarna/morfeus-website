@@ -114,12 +114,22 @@ const nextConfig = {
       },
       {
         source: '/:locale(en|it)/offerta',
-        destination: '/:locale/operating-system',
+        destination: '/:locale/forge',
         permanent: true,
       },
       {
         source: '/offerta',
-        destination: '/operating-system',
+        destination: '/forge',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|it)/operating-system',
+        destination: '/:locale/forge',
+        permanent: true,
+      },
+      {
+        source: '/operating-system',
+        destination: '/forge',
         permanent: true,
       },
     ];

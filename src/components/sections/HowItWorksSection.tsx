@@ -9,9 +9,18 @@ interface HowItWorksSectionProps {
   namespace?: string;
   stepIds?: string[];
   showMarfBox?: boolean;
+  showSecondaryCta?: boolean;
+  secondaryCtaTargetId?: string;
 }
 
-export function HowItWorksSection({ scrollToContact, namespace = "Offerta.how_it_works", stepIds: stepIdsProp, showMarfBox = true }: HowItWorksSectionProps) {
+export function HowItWorksSection({
+  scrollToContact,
+  namespace = "Offerta.how_it_works",
+  stepIds: stepIdsProp,
+  showMarfBox = true,
+  showSecondaryCta = false,
+  secondaryCtaTargetId = "how-it-works",
+}: HowItWorksSectionProps) {
   const t = useTranslations(namespace);
 
   const stepIds = stepIdsProp ?? ["1", "2", "3", "4"];
@@ -38,6 +47,31 @@ export function HowItWorksSection({ scrollToContact, namespace = "Offerta.how_it
           <p className="text-xl md:text-2xl text-slate-300 font-light max-w-3xl mx-auto leading-relaxed">
             {t("subtitle")}
           </p>
+
+          {showSecondaryCta && (
+            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5">
+              <button
+                onClick={scrollToContact}
+                className="on-page-cta group relative px-10 py-5 rounded-full font-black text-[13px] uppercase tracking-[0.2em] transition-all duration-500 overflow-hidden shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)] active:scale-95"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+                <div className="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity" />
+                <span className="relative z-10 flex items-center gap-3 text-white">
+                  {t("cta")}
+                  <Icon icon="solar:arrow-right-linear" className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </button>
+
+              <button
+                onClick={() => document.getElementById(secondaryCtaTargetId)?.scrollIntoView({ behavior: "smooth" })}
+                className="group relative px-10 py-5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm active:scale-95"
+              >
+                <span className="relative z-10 text-white/70 group-hover:text-white transition-colors">
+                  {t("cta_secondary")}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Timeline Container */}

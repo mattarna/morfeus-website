@@ -31,7 +31,7 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 | EN | IT |
 |----|----|
-| [/operating-system](https://morfeushub.com/en/operating-system) | [/operating-system](https://morfeushub.com/it/operating-system) |
+| [/forge](https://morfeushub.com/en/forge) | [/forge](https://morfeushub.com/it/forge) |
 
 ---
 
@@ -142,7 +142,7 @@ flowchart TB
   subgraph LOC["Sito madre — stesso ramo per EN e IT"]
     direction TB
     HUB((route sotto /en o /it))
-    HUB --- G1["home · operating-system · privacy · cookies"]
+    HUB --- G1["home · forge · privacy · cookies"]
     HUB --- G2["call-confirmed · thank-you"]
     HUB --- G3["portal · 5 membri · case-study · 5 verticali"]
   end
@@ -202,7 +202,7 @@ flowchart TB
 │
 ├── en/                         ← locale (next-intl)
 │   ├── (home)                  … page.tsx
-│   ├── operating-system/
+│   ├── forge/
 │   ├── privacy/
 │   ├── cookies/
 │   ├── call-confirmed/
@@ -240,8 +240,8 @@ Locale ammessi: **`en`**, **`it`** (da `src/i18n/routing.ts`).
 | `/` | Redirect → `/en` (`src/app/page.tsx`) |
 | `/en` | Homepage EN |
 | `/it` | Homepage IT |
-| `/en/operating-system` | Landing operating system |
-| `/it/operating-system` | |
+| `/en/forge` | Landing forge |
+| `/it/forge` | |
 | `/en/privacy` | Privacy |
 | `/it/privacy` | |
 | `/en/cookies` | Cookie policy |
@@ -322,7 +322,7 @@ Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next
 
 Da `src/lib/reserved-slugs.ts`:
 
-`it`, `en`, `servizi`, `case-study`, `portal`, `privacy`, `cookies`, `operating-system`, `call-confirmed`, `api`, `_next`, `_vercel`, `__funnels`, `mockup`
+`it`, `en`, `servizi`, `case-study`, `portal`, `privacy`, `cookies`, `forge`, `call-confirmed`, `api`, `_next`, `_vercel`, `__funnels`, `mockup`
 
 ---
 
@@ -336,7 +336,7 @@ Da `src/lib/reserved-slugs.ts`:
 ## Riepilogo conteggi URL “foglia” pubblici (orientativo)
 
 - Home: **2**
-- Fisse per locale (operating-system, privacy, cookies, call-confirmed, thank-you, portal index): **6 × 2 = 12**
+- Fisse per locale (forge, privacy, cookies, call-confirmed, thank-you, portal index): **6 × 2 = 12**
 - Portal membro: **5 × 2 = 10**
 - Case study: **5 × 2 = 10**
 - Mockup: **2**

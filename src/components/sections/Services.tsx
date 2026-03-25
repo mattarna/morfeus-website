@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { Link } from "@/i18n/navigation";
 
-type ServiceSecondaryHref = "/operating-system" | "/lab";
+type ServiceSecondaryHref = "/forge" | "/lab";
 
 /**
  * Services Section - Index 4
@@ -26,7 +26,7 @@ export function Services() {
       ctaPrimary: t("items.forge.cta_primary"),
       ctaSecondary: t("items.forge.cta_secondary"),
       href: "#section-13", // Book a call section
-      secondaryHref: "/operating-system" as ServiceSecondaryHref,
+      secondaryHref: "/forge" as ServiceSecondaryHref,
     },
     {
       icon: "lucide:library",

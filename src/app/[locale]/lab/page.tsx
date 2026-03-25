@@ -8,13 +8,13 @@ import {
   ProblemAnalysis,
   ComparisonSection,
   HowItWorksSection,
-  FilterSection,
   ContactSection,
   ServiceFAQ,
   ServiceFooter,
   ServiceTimelineNav,
   LabLevelsSection,
   LabOutcomesSection,
+  LabInvestmentSection,
   LabProgramSection,
   LabBridgeSection,
 } from "@/components/sections";
@@ -28,7 +28,7 @@ const LAB_SECTION_IDS = [
   "comparison",
   "how-it-works",
   "outcomes",
-  "filter",
+  "investment",
   "ai-champ",
   "bridge",
   "contact",
@@ -132,15 +132,16 @@ export default function LabPage() {
         namespace="Lab.how_it_works"
         stepIds={["1", "2", "3"]}
         showMarfBox={false}
+        showSecondaryCta={true}
+        secondaryCtaTargetId="how-it-works"
       />
 
       {/* 07 - OUTCOMES (Blue) */}
       <LabOutcomesSection />
 
-      {/* 08 - FILTER (Grid) */}
-      <FilterSection
+      {/* 08 - INVESTMENT (Grid) */}
+      <LabInvestmentSection
         scrollToContact={scrollToContact}
-        namespace="Lab.filter"
       />
 
       {/* 09 - AI CHAMP PROGRAM (Blue) */}

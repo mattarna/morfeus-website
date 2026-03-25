@@ -96,7 +96,7 @@ export function LabBridgeSection({ namespace = "Lab.bridge" }: LabBridgeSectionP
           </p>
 
           <Link
-            href="/operating-system"
+            href="/forge"
             className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full font-black text-[13px] uppercase tracking-[0.2em] transition-all duration-500 overflow-hidden border border-forge/30 hover:border-forge/60 bg-forge/5 hover:bg-forge/10"
           >
             <span className="relative z-10 text-forge group-hover:text-white transition-colors">

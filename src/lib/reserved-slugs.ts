@@ -15,7 +15,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "portal",
   "privacy",
   "cookies",
-  "operating-system",
+  "forge",
   "lab",
   "call-confirmed",
 
