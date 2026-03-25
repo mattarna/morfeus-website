@@ -73,7 +73,7 @@ export function ServiceFooter() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="relative w-32 h-8 opacity-30 grayscale brightness-200">
-                <Image src="/images/m-w2.png" alt="Morfeus" fill className="object-contain" />
+                <Image src="/images/brand/morfeus-mark.png" alt="Morfeus" fill className="object-contain" />
               </div>
               <p className="text-[10px] text-slate-700 font-mono tracking-widest uppercase text-center md:text-left">
                 © {new Date().getFullYear()} Morfeus. {t("copyright")}

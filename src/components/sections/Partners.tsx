@@ -7,12 +7,12 @@ import { useTranslations } from "next-intl";
  * Partner data for rendering
  */
 const PARTNERS = [
-  { name: "H-FARM", image: "/images/h-farm%20white.png" },
-  { name: "Assemprim", image: "/images/logo (9).png" },
-  { name: "Sisal", image: "/images/logo (6).png" },
-  { name: "Sole 24h Formazione", image: "/images/logo (7).png" },
-  { name: "Edison", image: "/images/logo (10).png" },
-  { name: "Zara", image: "/images/logo.png" },
+  { name: "H-FARM", image: "/images/clients-white/H-FARM.png" },
+  { name: "Asseprim", image: "/images/clients-white/Asseprim.png" },
+  { name: "Sisal", image: "/images/clients-white/Sisal.png" },
+  { name: "Sole 24h Formazione", image: "/images/clients-white/Sole_24_Ore.png" },
+  { name: "Edison", image: "/images/clients-white/Edison.png" },
+  { name: "Zara", image: "/images/clients-white/Zara.png" },
 ] as const;
 
 /**

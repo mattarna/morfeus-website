@@ -32,19 +32,19 @@ export function ProcessMaster() {
       key: "understand",
       title: t("understand.title"),
       description: t("understand.description"),
-      image: "/images/percorso%20(5).png",
+      image: "/images/process/step-1.png",
     },
     {
       key: "build",
       title: t("build.title"),
       description: t("build.description"),
-      image: "/images/percorso%20(1).png",
+      image: "/images/process/step-2.png",
     },
     {
       key: "automate",
       title: t("automate.title"),
       description: t("automate.description"),
-      image: "/images/percorso%20(6).png",
+      image: "/images/process/step-3.png",
     },
   ];
 

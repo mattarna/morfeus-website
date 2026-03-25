@@ -42,7 +42,7 @@ export default function GeneralPortalPage() {
         <div className="mb-12 animate-fadeIn">
           <div className="relative w-56 h-20 transition-transform duration-500 hover:scale-105">
             <Image 
-              src="/images/m-w2.png" 
+              src="/images/brand/morfeus-mark.png" 
               alt="Morfeus Logo" 
               fill
               className="object-contain"

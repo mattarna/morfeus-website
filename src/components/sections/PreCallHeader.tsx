@@ -26,7 +26,7 @@ export function PreCallHeader({ locale }: PreCallHeaderProps) {
         <Link href={`/${locale}`} className="flex items-center">
           <div className="relative h-8 w-28 md:h-12 md:w-40">
             <Image
-              src="/images/m-w2.png"
+              src="/images/brand/morfeus-mark.png"
               alt="Morfeus Logo"
               fill
               priority

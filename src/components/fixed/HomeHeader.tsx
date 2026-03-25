@@ -101,7 +101,7 @@ export function HomeHeader() {
             >
               <div className="h-3 md:h-4 w-[100px] md:w-[130px] relative">
                 <Image
-                  src="/images/m-w2.png"
+                  src="/images/brand/morfeus-mark.png"
                   alt="Morfeus Logo"
                   fill
                   className="object-contain opacity-90 hover:opacity-100 transition-opacity"

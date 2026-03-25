@@ -141,12 +141,12 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
 
   const logos = useMemo(
     () => [
-      { name: "Club Moritzino", src: "/images/CLIENTS LOGO/CLIENTS WHITE/Club_Moritzino.png" },
-      { name: "H-FARM", src: "/images/CLIENTS LOGO/CLIENTS WHITE/H-FARM.png" },
-      { name: "Studio Rotella", src: "/images/CLIENTS LOGO/CLIENTS WHITE/Studio_Rotella.png" },
-      { name: "Victor", src: "/images/CLIENTS LOGO/CLIENTS WHITE/Victor.png" },
-      { name: "Common", src: "/images/CLIENTS LOGO/CLIENTS WHITE/Common.png" },
-      { name: "Confcommercio", src: "/images/CLIENTS LOGO/CLIENTS WHITE/Confcommercio.png" },
+      { name: "Club Moritzino", src: "/images/clients-white/Club_Moritzino.png" },
+      { name: "H-FARM", src: "/images/clients-white/H-FARM.png" },
+      { name: "Studio Rotella", src: "/images/clients-white/Studio_Rotella.png" },
+      { name: "Victor", src: "/images/clients-white/Victor.png" },
+      { name: "Common", src: "/images/clients-white/Common.png" },
+      { name: "Confcommercio", src: "/images/clients-white/Confcommercio.png" },
     ],
     []
   );

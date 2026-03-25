@@ -175,7 +175,7 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
       >
         <div className="relative w-full max-w-[1400px] aspect-[4/1] mx-auto">
           <Image 
-            src="/images/m-w2.png" 
+            src="/images/brand/morfeus-mark.png" 
             alt="Morfeus Logo Large" 
             fill
             className="object-contain" 

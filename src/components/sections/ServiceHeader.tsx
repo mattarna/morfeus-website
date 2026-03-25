@@ -54,7 +54,7 @@ export function ServiceHeader({ showStickyCta, isHeaderHidden, scrollToContact }
           <a href="/" className="flex items-center group">
             <div className="relative w-28 h-8 md:w-40 md:h-12">
               <Image 
-                src="/images/m-w2.png" 
+                src="/images/brand/morfeus-mark.png" 
                 alt="Morfeus Logo" 
                 fill
                 className="object-contain object-left"

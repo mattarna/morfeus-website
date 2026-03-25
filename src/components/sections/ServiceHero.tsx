@@ -83,9 +83,11 @@ export function ServiceHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
                 >
                   {/* Cover Image */}
                   <Image 
-                    src="/Images-landing/COPERTINA VSL.png"
+                    src="/images/landing/copertina-vsl.webp"
                     alt="VSL Cover"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 896px"
+                    quality={80}
                     className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
                     priority
                   />

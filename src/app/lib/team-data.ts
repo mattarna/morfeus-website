@@ -58,7 +58,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "matteo@morfeushub.com",
     phone: "+393388368457",
     linkedin: "https://www.linkedin.com/in/matteo-arnaboldi/",
-    image: "/Profile-pics/Profile-matt.jpg",
+    image: "/images/team/Profile-matt.jpg",
   },
   alex: {
     slug: "alex",
@@ -68,7 +68,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "alex@morfeushub.com",
     phone: "+393520797697",
     linkedin: "https://www.linkedin.com/in/alex-carofiglio-aa4788186/",
-    image: "/Profile-pics/Profile-alex.webp",
+    image: "/images/team/Profile-alex.webp",
   },
   simone: {
     slug: "simone",
@@ -78,7 +78,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "simone@morfeushub.com",
     phone: "+393289245012",
     linkedin: "https://www.linkedin.com/in/simone-zin-9b745b210/",
-    image: "/Profile-pics/Profile-Simo.webp",
+    image: "/images/team/Profile-Simo.webp",
   },
   "matteo-alvazzi": {
     slug: "matteo-alvazzi",
@@ -88,7 +88,7 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "matteo.alvazzi@morfeushub.com",
     phone: "+393922273258",
     linkedin: "https://www.linkedin.com/in/matteo-alvazzi-delfrate/",
-    image: "/Profile-pics/Profile-matteo-alvazzi.webp",
+    image: "/images/team/Profile-matteo-alvazzi.webp",
   },
   davide: {
     slug: "davide",
@@ -98,6 +98,6 @@ export const teamMembers: Record<string, TeamMember> = {
     email: "davide@morfeushub.com",
     phone: "+393428402326",
     linkedin: "https://www.linkedin.com/in/davide-bertolini-a1417521a/",
-    image: "/Profile-pics/Profile-davide.webp",
+    image: "/images/team/Profile-davide.webp",
   },
 };

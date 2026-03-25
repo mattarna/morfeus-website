@@ -50,7 +50,7 @@ export function CaseStudy() {
       metricLabel: t("cases.salescraft.metricLabel"),
       description: t("cases.salescraft.description"),
       tags: t.raw("cases.salescraft.tags"),
-      image: "/images/Background (2).webp",
+      image: "/images/case-studies/bg-1.webp",
     },
     {
       id: "marketing-army",
@@ -68,7 +68,7 @@ export function CaseStudy() {
       metricLabel: t("cases.ai_champ.metricLabel"),
       description: t("cases.ai_champ.description"),
       tags: t.raw("cases.ai_champ.tags"),
-      image: "/images/Background (3).webp",
+      image: "/images/case-studies/bg-3.webp",
     },
   ];
 

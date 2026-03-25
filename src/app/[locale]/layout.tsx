@@ -75,9 +75,9 @@ export async function generateMetadata({
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "any" },
-        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/icon.png", type: "image/png" },
       ],
-      apple: "/apple-touch-icon.png",
+      apple: "/apple-icon.png",
     },
     
     manifest: "/site.webmanifest",

@@ -22,7 +22,7 @@ export function StructuredData({ locale }: StructuredDataProps) {
     url: baseUrl,
     logo: {
       "@type": "ImageObject",
-      url: `${baseUrl}/images/m-w2.png`,
+      url: `${baseUrl}/images/brand/morfeus-mark.png`,
       width: 400,
       height: 100,
     },
