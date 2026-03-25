@@ -43,7 +43,7 @@ export function LabBridgeSection({ namespace = "Lab.bridge" }: LabBridgeSectionP
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                  <Icon icon="solar:graduation-cap-bold-duotone" className="w-7 h-7 text-indigo-400" />
+                  <Icon icon="solar:medal-star-bold-duotone" className="w-7 h-7 text-indigo-400" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-black text-white uppercase tracking-tight">{t("lab.title")}</h3>
