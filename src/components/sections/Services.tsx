@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { Link } from "@/i18n/navigation";
 
+type ServiceSecondaryHref = "/operating-system" | "/lab";
+
 /**
  * Services Section - Index 4
  * 
@@ -24,7 +26,7 @@ export function Services() {
       ctaPrimary: t("items.forge.cta_primary"),
       ctaSecondary: t("items.forge.cta_secondary"),
       href: "#section-13", // Book a call section
-      secondaryHref: "/operating-system",
+      secondaryHref: "/operating-system" as ServiceSecondaryHref,
     },
     {
       icon: "lucide:library",
@@ -34,7 +36,7 @@ export function Services() {
       ctaPrimary: t("items.lab.cta_primary"),
       ctaSecondary: t("items.lab.cta_secondary"),
       href: "#section-13",
-      secondaryHref: "/lab",
+      secondaryHref: "/lab" as ServiceSecondaryHref,
     },
   ];
 
@@ -82,7 +84,7 @@ function ServiceCard({
   ctaPrimary: string;
   ctaSecondary: string;
   href: string;
-  secondaryHref: string;
+  secondaryHref: ServiceSecondaryHref;
 }) {
   const setIndex = useScrollStore((state) => state.setIndex);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -150,7 +152,7 @@ function ServiceCard({
             <Icon icon="solar:arrow-right-bold" width={16} />
           </a>
           <Link 
-            href={secondaryHref as any}
+            href={secondaryHref}
             className="text-[13px] font-bold text-slate-500 hover:text-white transition-colors tracking-wider cursor-pointer uppercase"
           >
             {ctaSecondary}

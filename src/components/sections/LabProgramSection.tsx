@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Icon } from "@iconify/react";
 
 interface LabProgramSectionProps {
   namespace?: string;
@@ -10,7 +9,6 @@ interface LabProgramSectionProps {
 export function LabProgramSection({ namespace = "Lab.program" }: LabProgramSectionProps) {
   const t = useTranslations(namespace);
   const tags = t.raw("tags") as string[];
-  const casePoints = t.raw("case_study.points") as Record<string, { number: string; desc: string }>;
 
   return (
     <section id="ai-champ" className="relative z-[100] py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
