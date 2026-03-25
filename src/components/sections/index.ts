@@ -18,3 +18,7 @@ export * from "./ServiceHeader";
 export * from "./ServiceMobileMenu";
 export * from "./ServiceBackgroundGrid";
 export * from "./ServiceTimelineNav";
+export * from "./LabLevelsSection";
+export * from "./LabOutcomesSection";
+export * from "./LabProgramSection";
+export * from "./LabBridgeSection";

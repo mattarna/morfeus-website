@@ -25,6 +25,7 @@ interface CaseStudyData {
   description: string;
   tags: string[];
   image: string;
+  featured?: boolean;
 }
 
 export function CaseStudy() {
@@ -44,13 +45,23 @@ export function CaseStudy() {
   
   const caseStudies: CaseStudyData[] = [
     {
+      id: "marf",
+      name: t("cases.marf.name"),
+      metric: t("cases.marf.metric"),
+      metricLabel: t("cases.marf.metricLabel"),
+      description: t("cases.marf.description"),
+      tags: t.raw("cases.marf.tags"),
+      image: "/images/case-studies/marf-real.jpg",
+      featured: true,
+    },
+    {
       id: "salescraft",
       name: t("cases.salescraft.name"),
       metric: t("cases.salescraft.metric"),
       metricLabel: t("cases.salescraft.metricLabel"),
       description: t("cases.salescraft.description"),
       tags: t.raw("cases.salescraft.tags"),
-      image: "/images/case-studies/bg-1.webp",
+      image: "/images/case-studies/salescraft-real.jpg",
     },
     {
       id: "marketing-army",
@@ -59,7 +70,7 @@ export function CaseStudy() {
       metricLabel: t("cases.marketing_army.metricLabel"),
       description: t("cases.marketing_army.description"),
       tags: t.raw("cases.marketing_army.tags"),
-      image: "/images/Background (5).webp",
+      image: "/images/case-studies/marketing-army-real.jpg",
     },
     {
       id: "ai-champ",
@@ -68,7 +79,7 @@ export function CaseStudy() {
       metricLabel: t("cases.ai_champ.metricLabel"),
       description: t("cases.ai_champ.description"),
       tags: t.raw("cases.ai_champ.tags"),
-      image: "/images/case-studies/bg-3.webp",
+      image: "/images/case-studies/ai-champ-real.jpg",
     },
   ];
 
@@ -79,6 +90,9 @@ export function CaseStudy() {
   // The displayed case is either the preview (on hover) or the active (confirmed)
   const displayedCase = previewCase !== null ? previewCase : activeCase;
   const currentData = caseStudies[displayedCase];
+  const metricGradient = currentData.featured
+    ? "from-[#8B7BFF] to-[#4D39EB]"
+    : "from-[#4D39EB] to-[#4D39EB]/60";
 
   const handleCaseClick = useCallback((index: number) => {
     if (index === activeCase) return;
@@ -117,11 +131,14 @@ export function CaseStudy() {
           {caseStudies.map((cs) => (
             <div
               key={cs.id}
-              className="relative rounded-2xl overflow-hidden border border-white/10"
+              className={`relative rounded-2xl overflow-hidden border ${
+                cs.featured ? "border-[#8B7BFF]/40 shadow-[0_0_50px_-10px_rgba(139,123,255,0.35)]" : "border-white/10"
+              }`}
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-black/70 z-10" />
+                {cs.featured && <div className="absolute inset-0 bg-gradient-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
                 <Image
                   src={cs.image}
                   alt={cs.name}
@@ -134,7 +151,9 @@ export function CaseStudy() {
               <div className="relative z-20 p-6 sm:p-8 flex flex-col gap-4">
                 {/* Metric */}
                 <h2 className="text-3xl sm:text-4xl font-medium tracking-tighter leading-none">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4D39EB] to-[#4D39EB]/60">
+                  <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
+                    cs.featured ? "from-[#8B7BFF] to-[#4D39EB]" : "from-[#4D39EB] to-[#4D39EB]/60"
+                  }`}>
                     {cs.metric}
                   </span>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/80 to-white/20 ml-2">
@@ -185,6 +204,7 @@ export function CaseStudy() {
           >
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/70 z-10" />
+            {cs.featured && <div className="absolute inset-0 bg-gradient-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
             {/* Image */}
             <Image
               src={cs.image}
@@ -213,7 +233,7 @@ export function CaseStudy() {
             }`}
           >
             <h2 className="text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tighter leading-none">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4D39EB] to-[#4D39EB]/60">
+              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${metricGradient}`}>
                 {currentData.metric}
               </span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/80 to-white/20 ml-4">
@@ -245,8 +265,8 @@ export function CaseStudy() {
                   <span 
                     className={`text-sm font-medium font-mono transition-colors duration-300 ${
                       isItemDisplayed 
-                        ? "text-[#4D39EB]" 
-                        : "text-slate-500 group-hover:text-[#4D39EB]"
+                        ? cs.featured ? "text-[#8B7BFF]" : "text-[#4D39EB]"
+                        : cs.featured ? "text-slate-500 group-hover:text-[#8B7BFF]" : "text-slate-500 group-hover:text-[#4D39EB]"
                     }`}
                   >
                     C{index + 1}
@@ -265,7 +285,7 @@ export function CaseStudy() {
 
                   {/* Active indicator */}
                   {isItemActive && (
-                    <div className="w-2 h-2 rounded-full bg-[#4D39EB] ml-auto animate-pulse" />
+                    <div className={`w-2 h-2 rounded-full ml-auto animate-pulse ${cs.featured ? "bg-[#8B7BFF]" : "bg-[#4D39EB]"}`} />
                   )}
                 </button>
               );
@@ -288,7 +308,11 @@ export function CaseStudy() {
               {currentData.tags.map((tag, tagIndex) => (
                 <div
                   key={tag}
-                  className="px-6 py-2.5 rounded-full bg-[#4D39EB]/15 border border-[#4D39EB]/30 backdrop-blur-sm transition-all duration-300 hover:bg-[#4D39EB]/25 hover:border-[#4D39EB]/50"
+                  className={`px-6 py-2.5 rounded-full backdrop-blur-sm transition-all duration-300 ${
+                    currentData.featured
+                      ? "bg-[#8B7BFF]/15 border border-[#8B7BFF]/35 hover:bg-[#8B7BFF]/25 hover:border-[#8B7BFF]/55"
+                      : "bg-[#4D39EB]/15 border border-[#4D39EB]/30 hover:bg-[#4D39EB]/25 hover:border-[#4D39EB]/50"
+                  }`}
                   style={{ 
                     transitionDelay: `${tagIndex * 50}ms`,
                     opacity: isTransitioning ? 0 : 1,

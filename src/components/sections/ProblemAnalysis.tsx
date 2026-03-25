@@ -16,8 +16,12 @@ const TRAP_CARD_ICONS = [
   "solar:graph-down-bold-duotone",
 ] as const;
 
-export function ProblemAnalysis() {
-  const t = useTranslations("Offerta.problem_analysis");
+interface ProblemAnalysisProps {
+  namespace?: string;
+}
+
+export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: ProblemAnalysisProps) {
+  const t = useTranslations(namespace);
 
   return (
     <section id="problem-analysis" className="relative z-30 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-y border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">

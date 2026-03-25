@@ -6,12 +6,15 @@ import { GridPattern } from "../shared/GridPattern";
 
 interface HowItWorksSectionProps {
   scrollToContact: () => void;
+  namespace?: string;
+  stepIds?: string[];
+  showMarfBox?: boolean;
 }
 
-export function HowItWorksSection({ scrollToContact }: HowItWorksSectionProps) {
-  const t = useTranslations("Offerta.how_it_works");
+export function HowItWorksSection({ scrollToContact, namespace = "Offerta.how_it_works", stepIds: stepIdsProp, showMarfBox = true }: HowItWorksSectionProps) {
+  const t = useTranslations(namespace);
 
-  const stepIds = ["1", "2", "3", "4"];
+  const stepIds = stepIdsProp ?? ["1", "2", "3", "4"];
 
   return (
     <section id="how-it-works" className="relative z-[60] bg-night border-t border-white/[0.05] overflow-visible">
@@ -109,67 +112,69 @@ export function HowItWorksSection({ scrollToContact }: HowItWorksSectionProps) {
         </div>
 
         {/* MARF Box */}
-        <div className="mt-40 p-8 md:p-12 lg:p-16 rounded-[2.5rem] bg-gradient-to-br from-[#0d1117] to-[#0a0c10] border border-indigo-500/30 shadow-[0_20px_50px_-20px_rgba(83,61,252,0.3)] relative overflow-hidden group transition-all duration-500 hover:border-indigo-500/50">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 blur-[120px] rounded-full -z-10 group-hover:bg-indigo-500/10 transition-colors duration-700" />
-          
-          {/* Header */}
-          <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
-            <div className="flex-shrink-0">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                <Icon icon="solar:cpu-bolt-bold" className="w-10 h-10 md:w-12 md:h-12 text-indigo-400" />
+        {showMarfBox && (
+          <div className="mt-40 p-8 md:p-12 lg:p-16 rounded-[2.5rem] bg-gradient-to-br from-[#0d1117] to-[#0a0c10] border border-indigo-500/30 shadow-[0_20px_50px_-20px_rgba(83,61,252,0.3)] relative overflow-hidden group transition-all duration-500 hover:border-indigo-500/50">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 blur-[120px] rounded-full -z-10 group-hover:bg-indigo-500/10 transition-colors duration-700" />
+            
+            {/* Header */}
+            <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
+              <div className="flex-shrink-0">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                  <Icon icon="solar:cpu-bolt-bold" className="w-10 h-10 md:w-12 md:h-12 text-indigo-400" />
+                </div>
+              </div>
+              
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tight">
+                  {t.rich("marf_box.title", {
+                    spanIndigo: (chunks) => <span className="text-indigo-400">{chunks}</span>
+                  })}
+                </h3>
+                <p className="text-lg md:text-xl text-slate-400 font-light leading-relaxed">
+                  {t("marf_box.text")}
+                </p>
               </div>
             </div>
-            
-            <div className="flex-1">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tight">
-                {t.rich("marf_box.title", {
-                  spanIndigo: (chunks) => <span className="text-indigo-400">{chunks}</span>
-                })}
-              </h3>
-              <p className="text-lg md:text-xl text-slate-400 font-light leading-relaxed">
-                {t("marf_box.text")}
+
+            {/* Bullet Points Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {(["1", "2", "3", "4"] as const).map((key) => {
+                const iconMap: Record<string, string> = {
+                  database: "solar:database-bold-duotone",
+                  robot: "solar:ghost-bold-duotone",
+                  brain: "solar:lightbulb-bolt-bold-duotone",
+                  network: "solar:share-circle-bold-duotone"
+                };
+                const bulletIcon = t(`marf_box.bullets.${key}.icon`);
+                return (
+                  <div key={key} className="flex gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/20 transition-all duration-300 relative group/bullet hover:bg-white/[0.04]">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center relative transition-colors group-hover/bullet:border-forge/40">
+                      {/* Tiny Orange Accent Dot */}
+                      <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-forge shadow-[0_0_8px_rgba(255,115,0,0.6)]" />
+                      
+                      <Icon icon={iconMap[bulletIcon] || "solar:star-bold"} className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-base font-bold text-white mb-1">
+                        {t(`marf_box.bullets.${key}.title`)}
+                      </h4>
+                      <p className="text-sm text-slate-400 font-light leading-relaxed">
+                        {t(`marf_box.bullets.${key}.desc`)}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Closing */}
+            <div className="pt-8 border-t border-white/5">
+              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed text-center italic">
+                {t("marf_box.closing")}
               </p>
             </div>
           </div>
-
-          {/* Bullet Points Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            {(["1", "2", "3", "4"] as const).map((key) => {
-              const iconMap: Record<string, string> = {
-                database: "solar:database-bold-duotone",
-                robot: "solar:ghost-bold-duotone",
-                brain: "solar:lightbulb-bolt-bold-duotone",
-                network: "solar:share-circle-bold-duotone"
-              };
-              const bulletIcon = t(`marf_box.bullets.${key}.icon`);
-              return (
-                <div key={key} className="flex gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/20 transition-all duration-300 relative group/bullet hover:bg-white/[0.04]">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center relative transition-colors group-hover/bullet:border-forge/40">
-                    {/* Tiny Orange Accent Dot */}
-                    <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-forge shadow-[0_0_8px_rgba(255,115,0,0.6)]" />
-                    
-                    <Icon icon={iconMap[bulletIcon] || "solar:star-bold"} className="w-5 h-5 text-indigo-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-base font-bold text-white mb-1">
-                      {t(`marf_box.bullets.${key}.title`)}
-                    </h4>
-                    <p className="text-sm text-slate-400 font-light leading-relaxed">
-                      {t(`marf_box.bullets.${key}.desc`)}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Closing */}
-          <div className="pt-8 border-t border-white/5">
-            <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed text-center italic">
-              {t("marf_box.closing")}
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* CTA Primary */}
         <div className="mt-32 md:mt-48 flex flex-col items-center gap-12">

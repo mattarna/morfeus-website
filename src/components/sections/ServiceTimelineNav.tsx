@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 
-const SECTION_IDS = [
+const DEFAULT_SECTION_IDS = [
   "hero",
   "proof",
   "problem-analysis",
@@ -21,8 +21,13 @@ const SECTION_IDS = [
   "footer"
 ] as const;
 
-export function ServiceTimelineNav() {
-  const t = useTranslations("Offerta.nav_timeline");
+interface ServiceTimelineNavProps {
+  sectionIds?: readonly string[];
+  namespace?: string;
+}
+
+export function ServiceTimelineNav({ sectionIds = DEFAULT_SECTION_IDS, namespace = "Offerta.nav_timeline" }: ServiceTimelineNavProps) {
+  const t = useTranslations(namespace);
   const [activeSection, setActiveSection] = useState("hero");
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
 
@@ -43,13 +48,13 @@ export function ServiceTimelineNav() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    SECTION_IDS.forEach((id) => {
+    sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [sectionIds]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -67,7 +72,7 @@ export function ServiceTimelineNav() {
 
   return (
     <nav className="fixed left-4 md:left-6 xl:left-4 top-1/2 -translate-y-1/2 z-[200] hidden xl:flex flex-col gap-4">
-      {SECTION_IDS.map((id) => {
+      {sectionIds.map((id) => {
         const isActive = activeSection === id;
         const isHovered = hoveredSection === id;
         const label = t(id);

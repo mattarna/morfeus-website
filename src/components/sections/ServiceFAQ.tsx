@@ -7,10 +7,11 @@ import { GridPattern } from "../shared/GridPattern";
 interface FAQSectionProps {
   activeFaq: number | null;
   setActiveFaq: (index: number | null) => void;
+  namespace?: string;
 }
 
-export function ServiceFAQ({ activeFaq, setActiveFaq }: FAQSectionProps) {
-  const t = useTranslations("Offerta.faq_operating_system");
+export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_operating_system" }: FAQSectionProps) {
+  const t = useTranslations(namespace);
   const faqItems = Object.entries(t.raw("items"));
 
   return (

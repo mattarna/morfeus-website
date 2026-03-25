@@ -7,10 +7,11 @@ import { GridPattern } from "../shared/GridPattern";
 
 interface FilterSectionProps {
   scrollToContact: () => void;
+  namespace?: string;
 }
 
-export function FilterSection({ scrollToContact }: FilterSectionProps) {
-  const t = useTranslations("Offerta.filter");
+export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }: FilterSectionProps) {
+  const t = useTranslations(namespace);
 
   return (
     <section id="filter" className="relative z-[90] py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">

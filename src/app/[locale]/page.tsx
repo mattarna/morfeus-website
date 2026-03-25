@@ -108,7 +108,7 @@ export default function Home() {
   useEffect(() => {
     if (typeof window !== "undefined" && window.dataLayer) {
       const sectionNames = [
-        "Hero", "Manifesto", "Problem", "Partners", "Services", "Process", 
+        "Hero", "Manifesto", "Problem", "Services", "Partners", "Process",
         "Process_Step_1", "Process_Step_2", "Process_Step_3", 
         "ROISystem", "ROIometer", "CaseStudy", "FAQ", "CTA", "Footer"
       ];
@@ -221,11 +221,11 @@ export default function Home() {
         {/* Index 2: Problem */}
         <div id="section-2"><HomeProblem /></div>
         
-        {/* Index 3: Partners */}
-        <div id="section-3"><Partners /></div>
+        {/* Index 3: Services */}
+        <div id="section-3"><Services /></div>
         
-        {/* Index 4: Services */}
-        <div id="section-4"><Services /></div>
+        {/* Index 4: Partners */}
+        <div id="section-4"><Partners /></div>
         
         {/* Index 5: Process Headline */}
         <div id="section-5"><ProcessHeadline /></div>

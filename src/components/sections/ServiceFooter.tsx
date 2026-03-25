@@ -4,10 +4,15 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-const NAV_LINK_IDS = ["hero", "how-it-works", "comparison", "roi-section", "pricing", "contact"] as const;
+const DEFAULT_NAV_LINK_IDS = ["hero", "how-it-works", "comparison", "roi-section", "pricing", "contact"] as const;
 
-export function ServiceFooter() {
-  const t = useTranslations("Offerta.landing_footer");
+interface ServiceFooterProps {
+  namespace?: string;
+  navLinkIds?: readonly string[];
+}
+
+export function ServiceFooter({ namespace = "Offerta.landing_footer", navLinkIds = DEFAULT_NAV_LINK_IDS }: ServiceFooterProps) {
+  const t = useTranslations(namespace);
 
   return (
     <footer id="footer" className="relative z-[150] bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] pt-24 pb-32 px-6 xl:px-40 overflow-visible">
@@ -16,7 +21,7 @@ export function ServiceFooter() {
           <div className="flex flex-col gap-8 items-center md:items-start">
             <h4 className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">{t("nav_title")}</h4>
             <ul className="flex flex-col gap-4 items-center md:items-start">
-              {NAV_LINK_IDS.map((id) => (
+              {navLinkIds.map((id) => (
                 <li key={id}>
                   <a
                     href={`#${id}`}

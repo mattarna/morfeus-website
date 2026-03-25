@@ -16,6 +16,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "privacy",
   "cookies",
   "operating-system",
+  "lab",
   "call-confirmed",
 
   // System routes

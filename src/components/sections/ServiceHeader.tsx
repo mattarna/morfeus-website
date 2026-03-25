@@ -10,10 +10,11 @@ interface HeaderProps {
   showStickyCta: boolean;
   isHeaderHidden: boolean;
   scrollToContact: () => void;
+  namespace?: string;
 }
 
-export function ServiceHeader({ showStickyCta, isHeaderHidden, scrollToContact }: HeaderProps) {
-  const t = useTranslations("Offerta");
+export function ServiceHeader({ showStickyCta, isHeaderHidden, scrollToContact, namespace = "Offerta" }: HeaderProps) {
+  const t = useTranslations(namespace);
   const h = useTranslations("Header");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

@@ -3,8 +3,12 @@
 import { useTranslations } from "next-intl";
 import { GridPattern } from "../shared/GridPattern";
 
-export function ProofSection() {
-  const t = useTranslations("Offerta");
+interface ProofSectionProps {
+  namespace?: string;
+}
+
+export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
+  const t = useTranslations(namespace);
 
   return (
     <section id="proof" className="relative z-20 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">

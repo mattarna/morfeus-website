@@ -3,14 +3,18 @@
 import { Icon } from "@iconify/react";
 import { useTranslations } from "next-intl";
 import { MARFVisualCore } from "../shared/MARFVisualCore";
+import { LabVisualCore } from "../shared/LabVisualCore";
 
 interface LandingHeroProps {
   contentVisible: boolean;
   scrollToContact: () => void;
+  namespace?: string;
+  visualCoreType?: "marf" | "lab";
+  showProof?: boolean;
 }
 
-export function LandingHero({ contentVisible, scrollToContact }: LandingHeroProps) {
-  const t = useTranslations("Offerta.hero");
+export function LandingHero({ contentVisible, scrollToContact, namespace = "Offerta.hero", visualCoreType = "marf", showProof = true }: LandingHeroProps) {
+  const t = useTranslations(namespace);
 
   return (
     <main 
@@ -49,10 +53,10 @@ export function LandingHero({ contentVisible, scrollToContact }: LandingHeroProp
           {t("subtitle")}
         </p>
 
-        {/* 3. MARF VISUAL CORE (Interactive Replacement for Video) */}
+        {/* 3. VISUAL CORE (Interactive Replacement for Video) */}
         <div className="relative w-full max-w-5xl mb-16 md:mb-20 px-4 group">
-          <div className="absolute -inset-10 rounded-[4rem] opacity-[0.08] blur-[120px] bg-majorelle pointer-events-none transition-opacity duration-1000 group-hover:opacity-[0.15]" />
-          <MARFVisualCore />
+          <div className={`absolute -inset-10 rounded-[4rem] opacity-[0.08] blur-[120px] pointer-events-none transition-opacity duration-1000 group-hover:opacity-[0.15] ${visualCoreType === "lab" ? "bg-fuchsia-500" : "bg-majorelle"}`} />
+          {visualCoreType === "lab" ? <LabVisualCore /> : <MARFVisualCore />}
         </div>
 
         {/* 4. CTA SECTION */}
@@ -86,20 +90,22 @@ export function LandingHero({ contentVisible, scrollToContact }: LandingHeroProp
         </div>
 
         {/* 5. PROOF BAR */}
-        <div className="mt-20 w-full max-w-5xl pt-10 border-t border-white/5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
-            {(Object.values(t.raw("proof_items")) as string[]).map((item, i) => (
-              <div key={i} className="flex flex-col items-center gap-2">
-                <div className="text-[10px] md:text-[11px] font-bold text-white/30 uppercase tracking-[0.15em] leading-relaxed">
-                  {item.split(' ').slice(1).join(' ')}
+        {showProof && (
+          <div className="mt-20 w-full max-w-5xl pt-10 border-t border-white/5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+              {(Object.values(t.raw("proof_items")) as string[]).map((item, i) => (
+                <div key={i} className="flex flex-col items-center gap-2">
+                  <div className="text-[10px] md:text-[11px] font-bold text-white/30 uppercase tracking-[0.15em] leading-relaxed">
+                    {item.split(' ').slice(1).join(' ')}
+                  </div>
+                  <div className="text-sm md:text-base font-black text-vista">
+                    {item.split(' ')[0]}
+                  </div>
                 </div>
-                <div className="text-sm md:text-base font-black text-vista">
-                  {item.split(' ')[0]}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </main>

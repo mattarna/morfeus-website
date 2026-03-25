@@ -9,8 +9,8 @@
  * Index 0:  Hero           → translateY: 0vh
  * Index 1:  Manifesto      → translateY: 100vh
  * Index 2:  Problem        → translateY: 200vh
- * Index 3:  Partners       → translateY: 300vh
- * Index 4:  Services       → translateY: 400vh
+ * Index 3:  Services       → translateY: 300vh
+ * Index 4:  Partners       → translateY: 400vh
  * Index 5:  ProcessHeadline → translateY: 500vh
  * Index 6:  ProcessStep1   → translateY: 600vh (pinned section)
  * Index 7:  ProcessStep2   → translateY: 600vh (pinned - same position)
@@ -42,8 +42,8 @@ export const NAV_POINTS: NavPoint[] = [
   { label: "Start",       index: 0,  range: [0, 0] },
   { label: "Vision",      index: 1,  range: [1, 1] },
   { label: "Problem",     index: 2,  range: [2, 2] },
-  { label: "Partners",    index: 3,  range: [3, 3] },
-  { label: "Services",    index: 4,  range: [4, 4] },
+  { label: "Services",    index: 3,  range: [3, 3] },
+  { label: "Partners",    index: 4,  range: [4, 4] },
   { label: "Method",      index: 5,  range: [5, 8] },
   { label: "ROI",         index: 9,  range: [9, 9] },
   { label: "ROIometer",   index: 10, range: [10, 10] },

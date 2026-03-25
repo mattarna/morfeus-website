@@ -7,10 +7,12 @@ import { GridPattern } from "../shared/GridPattern";
 
 interface ContactSectionProps {
   scrollToContact: () => void;
+  namespace?: string;
+  bookingUrl?: string;
 }
 
-export function ContactSection({ scrollToContact }: ContactSectionProps) {
-  const t = useTranslations("Offerta.contact");
+export function ContactSection({ scrollToContact, namespace = "Offerta.contact", bookingUrl = "https://cal.com/morfeus/operating-system-diagnosis" }: ContactSectionProps) {
+  const t = useTranslations(namespace);
   void scrollToContact;
 
   const scrollToRoi = () => {
@@ -47,7 +49,7 @@ export function ContactSection({ scrollToContact }: ContactSectionProps) {
 
               <div className="flex justify-center">
                 <a
-                  href="https://cal.com/morfeus/operating-system-diagnosis"
+                  href={bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="on-page-cta group relative px-12 py-6 rounded-full font-black text-base uppercase tracking-widest transition-all duration-500 overflow-hidden shadow-[0_0_50px_-10px_rgba(79,70,229,0.5)] hover:shadow-[0_0_80px_-10px_rgba(79,70,229,0.7)] hover:scale-105"
