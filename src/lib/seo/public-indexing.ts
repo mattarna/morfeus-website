@@ -14,8 +14,15 @@ export const INDEXABLE_LOCALE_PATHS = [
   "cookies",
 ] as const;
 
+export const INDEXABLE_CASE_STUDY_SLUGS = [
+  "sales",
+  "operations",
+  "administrative",
+  "ecommerce",
+  "info-business",
+] as const;
+
 export const NON_INDEXABLE_LOCALE_PREFIXES = [
-  "case-study",
   "portal",
   "call-confirmed",
 ] as const;
@@ -50,5 +57,18 @@ export function getIndexableLocalizedEntries(baseUrl: string) {
       path,
       url: buildLocalizedUrl(baseUrl, locale, path),
     }))
+  );
+}
+
+export function getIndexableCaseStudyEntries(baseUrl: string) {
+  return SUPPORTED_LOCALES.flatMap((locale) =>
+    INDEXABLE_CASE_STUDY_SLUGS.map((slug) => {
+      const path = `case-study/${slug}`;
+      return {
+        locale,
+        path,
+        url: buildLocalizedUrl(baseUrl, locale, path),
+      };
+    })
   );
 }

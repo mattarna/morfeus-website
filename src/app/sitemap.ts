@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import { getIndexableCaseStudyEntries, getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
 
 /**
  * Controlled sitemap generation.
@@ -9,7 +9,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://morfeushub.com";
   const lastModified = new Date();
 
-  const entries = getIndexableLocalizedEntries(baseUrl);
+  const entries = [
+    ...getIndexableLocalizedEntries(baseUrl),
+    ...getIndexableCaseStudyEntries(baseUrl),
+  ];
 
   return entries.map(({ locale, path, url }) => {
     const counterpartLocale = locale === "en" ? "it" : "en";
@@ -21,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url,
       lastModified,
       changeFrequency: path.length === 0 ? "weekly" : "monthly",
-      priority: path.length === 0 ? 1.0 : 0.8,
+      priority: path.length === 0 ? 1.0 : path.startsWith("case-study/") ? 0.7 : 0.8,
       alternates: {
         languages: {
           en: locale === "en" ? url : counterpart,

@@ -95,7 +95,7 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 | Risorsa | URL | Note |
 |---------|-----|------|
-| Sitemap XML | [/sitemap.xml](https://morfeushub.com/sitemap.xml) | Oggi elenca solo le home EN/IT |
+| Sitemap XML | [/sitemap.xml](https://morfeushub.com/sitemap.xml) | Elenca pagine pubbliche core + case study EN/IT |
 | Contact API | `/api/contact` | `POST` — vedi `src/app/api/contact/route.ts` |
 | Precall intake API | `/api/precall-intake` | `POST` — vedi `src/app/api/precall-intake/route.ts` |
 
@@ -118,7 +118,7 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 | **C** | Privacy e cookie |
 | **D** | Stato / ringraziamento dopo call |
 | **E** | Mini-sito team / contatti |
-| **F** | Case study (noindex in metadata route) |
+| **F** | Case study proof (indexabili e visibili a crawler AI) |
 | **G** | Mock interni / design |
 | **H** | SEO sitemap e backend form |
 | **I** | Campagne funnel a slug dedicato |

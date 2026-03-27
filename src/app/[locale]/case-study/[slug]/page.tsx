@@ -2,14 +2,9 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CaseStudyTemplate } from "@/components/sections/CaseStudyTemplate";
+import { buildLocaleAlternates, INDEXABLE_CASE_STUDY_SLUGS } from "@/lib/seo/public-indexing";
 
-const ALLOWED_CASE_SLUGS = new Set([
-  "sales",
-  "operations",
-  "administrative",
-  "ecommerce",
-  "info-business"
-]);
+const ALLOWED_CASE_SLUGS = new Set(INDEXABLE_CASE_STUDY_SLUGS);
 
 interface CaseStudyRouteProps {
   params: {
@@ -21,6 +16,8 @@ interface CaseStudyRouteProps {
 export async function generateMetadata({
   params: { locale, slug }
 }: CaseStudyRouteProps): Promise<Metadata> {
+  const safeLocale = locale === "it" ? "it" : "en";
+
   if (!ALLOWED_CASE_SLUGS.has(slug)) {
     return {};
   }
@@ -33,9 +30,10 @@ export async function generateMetadata({
   return {
     title: `${t("title")} — Morfeus`,
     description: t("description"),
+    alternates: buildLocaleAlternates(`case-study/${slug}`, safeLocale),
     robots: {
-      index: false,
-      follow: false
+      index: true,
+      follow: true
     }
   };
 }
