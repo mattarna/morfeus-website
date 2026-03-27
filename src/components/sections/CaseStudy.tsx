@@ -51,7 +51,7 @@ export function CaseStudy() {
       metricLabel: t("cases.marf.metricLabel"),
       description: t("cases.marf.description"),
       tags: t.raw("cases.marf.tags"),
-      image: "/images/case-studies/marf-real.jpg",
+      image: "/images/case-studies/marf-abstract.png",
       featured: true,
     },
     {
@@ -61,7 +61,7 @@ export function CaseStudy() {
       metricLabel: t("cases.salescraft.metricLabel"),
       description: t("cases.salescraft.description"),
       tags: t.raw("cases.salescraft.tags"),
-      image: "/images/case-studies/salescraft-real.jpg",
+      image: "/images/case-studies/salescraft-abstract.png",
     },
     {
       id: "marketing-army",
@@ -70,7 +70,7 @@ export function CaseStudy() {
       metricLabel: t("cases.marketing_army.metricLabel"),
       description: t("cases.marketing_army.description"),
       tags: t.raw("cases.marketing_army.tags"),
-      image: "/images/case-studies/marketing-army-real.jpg",
+      image: "/images/case-studies/marketing-army-abstract.png",
     },
     {
       id: "ai-champ",
@@ -79,7 +79,7 @@ export function CaseStudy() {
       metricLabel: t("cases.ai_champ.metricLabel"),
       description: t("cases.ai_champ.description"),
       tags: t.raw("cases.ai_champ.tags"),
-      image: "/images/case-studies/ai-champ-real.jpg",
+      image: "/images/case-studies/ai-champ-abstract.png",
     },
   ];
 
@@ -143,7 +143,7 @@ export function CaseStudy() {
                   src={cs.image}
                   alt={cs.name}
                   fill
-                  className="object-cover grayscale-[30%] opacity-40"
+                  className="object-cover opacity-60 mix-blend-screen"
                 />
               </div>
 
@@ -210,8 +210,8 @@ export function CaseStudy() {
               src={cs.image}
               alt={cs.name}
               fill
-              className={`object-cover grayscale-[30%] transition-all duration-1000 ${
-                index === displayedCase ? "scale-100 opacity-40" : "scale-110 opacity-0"
+              className={`object-cover transition-all duration-1000 mix-blend-screen ${
+                index === displayedCase ? "scale-100 opacity-60" : "scale-110 opacity-0"
               }`}
               priority={index === 0}
             />

@@ -39,13 +39,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Morfeus Team" }],
   creator: "Morfeus",
   publisher: "Morfeus",
-  alternates: {
-    canonical: "/",
-    languages: {
-      "en-US": "/en",
-      "it-IT": "/it",
-    },
-  },
   openGraph: {
     title: "Morfeus – AI-Native Organization Design",
     description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",

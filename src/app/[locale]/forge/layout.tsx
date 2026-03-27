@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SmoothScrollProvider } from "@/components/shared/SmoothScroll";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 
 export async function generateMetadata({
@@ -10,7 +9,7 @@ export async function generateMetadata({
   const safeLocale = locale === "it" ? "it" : "en";
 
   return {
-    alternates: buildLocaleAlternates("lab", safeLocale),
+    alternates: buildLocaleAlternates("forge", safeLocale),
     robots: {
       index: true,
       follow: true,
@@ -18,10 +17,10 @@ export async function generateMetadata({
   };
 }
 
-export default function LabLayout({
+export default function ForgeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <SmoothScrollProvider>{children}</SmoothScrollProvider>;
+  return children;
 }

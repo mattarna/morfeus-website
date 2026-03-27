@@ -24,7 +24,6 @@ import { useSmoothScroll } from "@/components/shared/SmoothScroll";
 export default function ForgePage() {
   const { scrollTo } = useSmoothScroll();
   const [contentVisible, setContentVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
@@ -32,7 +31,6 @@ export default function ForgePage() {
   const scrollToContact = () => scrollTo("#contact");
 
   useEffect(() => {
-    setMounted(true);
     const timer = setTimeout(() => setContentVisible(true), 100);
 
     const ctaObserver = new IntersectionObserver(
@@ -64,10 +62,6 @@ export default function ForgePage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  if (!mounted) {
-    return <div className="h-screen w-full bg-[#030508]" />;
-  }
 
   return (
     <div className="relative min-h-screen w-full bg-[#030508] text-white overflow-x-hidden">

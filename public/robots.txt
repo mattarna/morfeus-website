@@ -1,18 +1,44 @@
-# Morfeus Website Robots.txt
-# https://morfeushub.com
+# Morfeus Website Robots
+# Controlled crawl policy for SEO + LLM discoverability.
 
+# Default policy (search + AI bots)
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://morfeushub.com/sitemap.xml
-
-# Crawl-delay (optional, for polite crawling)
-Crawl-delay: 1
-
-# Block unnecessary paths
+# Block sensitive and intentionally non-indexable areas
 Disallow: /api/
-Disallow: /_next/
-Disallow: /static/
+Disallow: /_vercel/
+Disallow: /__funnels/
+Disallow: /en/case-study/
+Disallow: /it/case-study/
+Disallow: /en/call-confirmed/
+Disallow: /it/call-confirmed/
+Disallow: /en/portal/
+Disallow: /it/portal/
+
+# Major AI crawler identities (explicitly allowed)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Sitemap source of truth
+Sitemap: https://morfeushub.com/sitemap.xml
 
 

@@ -2,6 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 import { getFunnelRegistryItem, isRegisteredFunnelSlug } from "./funnels/registry";
+import { NON_INDEXABLE_LOCALE_PREFIXES, SUPPORTED_LOCALES } from "./lib/seo/public-indexing";
 
 const intlMiddleware = createMiddleware(routing);
 const AB_COOKIE_PREFIX = "mf_ab_";
@@ -20,6 +21,18 @@ function pickVariant(variants: Array<"A" | "B">): "A" | "B" {
 function buildInternalFunnelPath(slug: string, restSegments: string[]): string {
   const suffix = restSegments.length > 0 ? `/${restSegments.join("/")}` : "";
   return `/__funnels/${slug}${suffix}`;
+}
+
+function isNonIndexableLocalePath(segments: string[]): boolean {
+  if (segments.length < 2) {
+    return false;
+  }
+  const locale = segments[0];
+  const section = segments[1];
+  return (
+    SUPPORTED_LOCALES.includes(locale as (typeof SUPPORTED_LOCALES)[number]) &&
+    NON_INDEXABLE_LOCALE_PREFIXES.includes(section as (typeof NON_INDEXABLE_LOCALE_PREFIXES)[number])
+  );
 }
 
 export default function middleware(request: NextRequest) {
@@ -41,6 +54,8 @@ export default function middleware(request: NextRequest) {
     rewrittenUrl.pathname = buildInternalFunnelPath(firstSegment, segments.slice(1));
 
     const response = NextResponse.rewrite(rewrittenUrl);
+    // Funnel pages are conversion assets and should never be indexed.
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
 
     if (funnel?.abTest.enabled) {
       const cookieName = `${AB_COOKIE_PREFIX}${firstSegment}`;
@@ -61,7 +76,11 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+  if (isNonIndexableLocalePath(segments)) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+  }
+  return response;
 }
 
 export const config = {

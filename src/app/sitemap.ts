@@ -1,41 +1,33 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
+import { getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
 
 /**
- * Dynamic Sitemap Generation
- * Generates sitemap.xml for both EN and IT versions
+ * Controlled sitemap generation.
+ * Only includes explicitly whitelisted public pages.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://morfeushub.com';
+  const baseUrl = "https://morfeushub.com";
   const lastModified = new Date();
-  
-  return [
-    // English version
-    {
-      url: `${baseUrl}/en`,
+
+  const entries = getIndexableLocalizedEntries(baseUrl);
+
+  return entries.map(({ locale, path, url }) => {
+    const counterpartLocale = locale === "en" ? "it" : "en";
+    const counterpart = path.length === 0
+      ? `${baseUrl}/${counterpartLocale}`
+      : `${baseUrl}/${counterpartLocale}/${path}`;
+
+    return {
+      url,
       lastModified,
-      changeFrequency: 'weekly',
-      priority: 1.0,
+      changeFrequency: path.length === 0 ? "weekly" : "monthly",
+      priority: path.length === 0 ? 1.0 : 0.8,
       alternates: {
         languages: {
-          en: `${baseUrl}/en`,
-          it: `${baseUrl}/it`,
+          en: locale === "en" ? url : counterpart,
+          it: locale === "it" ? url : counterpart,
         },
       },
-    },
-    // Italian version
-    {
-      url: `${baseUrl}/it`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 1.0,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/en`,
-          it: `${baseUrl}/it`,
-        },
-      },
-    },
-  ];
+    };
+  });
 }
-
-
