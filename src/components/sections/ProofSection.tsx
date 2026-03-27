@@ -9,6 +9,7 @@ interface ProofSectionProps {
 
 export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
   const t = useTranslations(namespace);
+  const closing = t("proof.closing").trim();
 
   return (
     <section id="proof" className="relative z-20 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
@@ -72,10 +73,11 @@ export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
 
         </div>
 
-        {/* Closing Line */}
-        <p className="text-2xl sm:text-3xl md:text-4xl text-slate-400 font-light text-center max-w-5xl mx-auto leading-relaxed border-t border-white/5 pt-16">
-          {t("proof.closing")}
-        </p>
+        {closing ? (
+          <p className="text-2xl sm:text-3xl md:text-4xl text-slate-400 font-light text-center max-w-5xl mx-auto leading-relaxed border-t border-white/5 pt-16">
+            {closing}
+          </p>
+        ) : null}
 
       </div>
     </section>
