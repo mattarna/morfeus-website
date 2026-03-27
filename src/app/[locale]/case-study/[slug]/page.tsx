@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { CaseStudyTemplate } from "@/components/sections/CaseStudyTemplate";
 import { buildLocaleAlternates, INDEXABLE_CASE_STUDY_SLUGS } from "@/lib/seo/public-indexing";
 
-const ALLOWED_CASE_SLUGS = new Set(INDEXABLE_CASE_STUDY_SLUGS);
+const ALLOWED_CASE_SLUGS = new Set<string>(INDEXABLE_CASE_STUDY_SLUGS);
 
 interface CaseStudyRouteProps {
   params: {
