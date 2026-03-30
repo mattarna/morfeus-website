@@ -12,7 +12,7 @@ interface IntakePayload {
 }
 
 function isMissingRequiredField(payload: IntakePayload): boolean {
-  return !payload.sector || !payload.annualRevenue || !payload.frictionArea || !payload.repeatedProblem;
+  return !payload.annualRevenue || !payload.frictionArea;
 }
 
 export async function POST(request: Request) {

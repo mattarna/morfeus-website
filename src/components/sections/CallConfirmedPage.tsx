@@ -88,14 +88,12 @@ interface CallConfirmedPageProps {
       statusBody: string;
       statusFallback: string;
       fields: {
-        sector: string;
         revenue: string;
         friction: string;
         repeatingProblem: string;
         repeatingProblemPlaceholder: string;
       };
       options: {
-        sector: ReadonlyArray<{ label: string; value: string }>;
         revenue: ReadonlyArray<{ label: string; value: string }>;
         friction: ReadonlyArray<{ label: string; value: string }>;
       };
