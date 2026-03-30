@@ -83,6 +83,8 @@ interface CallConfirmedPageProps {
       subtitle: string;
       submitLabel: string;
       submittingLabel: string;
+      nextLabel: string;
+      backLabel: string;
       privacyNote: string;
       statusTitle: string;
       statusBody: string;
