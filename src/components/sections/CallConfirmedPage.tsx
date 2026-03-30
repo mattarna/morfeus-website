@@ -192,8 +192,8 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
           {/* VSL - Moved here for Above the Fold visibility */}
           {locale === "it" && (
             <motion.div variants={fadeInUp} className="mt-16">
-              <div className="group relative overflow-hidden rounded-[2rem] border border-majorelle/20 bg-black/30 shadow-2xl">
-                <div className="absolute -inset-10 rounded-[4rem] opacity-[0.05] blur-[100px] bg-majorelle pointer-events-none" />
+              <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/30 shadow-2xl">
+                {/* Removed the absolute blur element to prevent purple glow */}
                 {isPlaceholderVideo ? (
                   <div className="flex aspect-video items-center justify-center gap-3 text-slate-300">
                     <Icon icon="solar:play-circle-bold" className="h-12 w-12 text-majorelle opacity-80 group-hover:scale-110 transition-transform duration-500" />
