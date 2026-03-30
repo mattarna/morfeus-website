@@ -87,15 +87,35 @@ interface CallConfirmedPageProps {
       statusTitle: string;
       statusBody: string;
       statusFallback: string;
+      steps: {
+        step1: { overline: string; title: string };
+        step2: { overline: string; title: string };
+        step3: { overline: string; title: string };
+        step4: { overline: string; title: string };
+        step5: { overline: string; title: string };
+      };
       fields: {
+        email: string;
         revenue: string;
+        employees: string;
         friction: string;
-        repeatingProblem: string;
-        repeatingProblemPlaceholder: string;
+        problemDuration: string;
+        triedSolving: string;
+        blocker: string;
+        decisionMaker: string;
+        urgency: string;
+        goal: string;
+        goalPlaceholder: string;
       };
       options: {
         revenue: ReadonlyArray<{ label: string; value: string }>;
+        employees: ReadonlyArray<{ label: string; value: string }>;
         friction: ReadonlyArray<{ label: string; value: string }>;
+        problemDuration: ReadonlyArray<{ label: string; value: string }>;
+        triedSolving: ReadonlyArray<{ label: string; value: string }>;
+        blocker: ReadonlyArray<{ label: string; value: string }>;
+        decisionMaker: ReadonlyArray<{ label: string; value: string }>;
+        urgency: ReadonlyArray<{ label: string; value: string }>;
       };
       errors: {
         generic: string;

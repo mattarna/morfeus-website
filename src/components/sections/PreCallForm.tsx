@@ -23,15 +23,35 @@ interface PreCallFormProps {
     statusTitle: string;
     statusBody: string;
     statusFallback: string;
+    steps: {
+      step1: { overline: string; title: string };
+      step2: { overline: string; title: string };
+      step3: { overline: string; title: string };
+      step4: { overline: string; title: string };
+      step5: { overline: string; title: string };
+    };
     fields: {
+      email: string;
       revenue: string;
+      employees: string;
       friction: string;
-      repeatingProblem: string;
-      repeatingProblemPlaceholder: string;
+      problemDuration: string;
+      triedSolving: string;
+      blocker: string;
+      decisionMaker: string;
+      urgency: string;
+      goal: string;
+      goalPlaceholder: string;
     };
     options: {
       revenue: ReadonlyArray<SelectOption>;
+      employees: ReadonlyArray<SelectOption>;
       friction: ReadonlyArray<SelectOption>;
+      problemDuration: ReadonlyArray<SelectOption>;
+      triedSolving: ReadonlyArray<SelectOption>;
+      blocker: ReadonlyArray<SelectOption>;
+      decisionMaker: ReadonlyArray<SelectOption>;
+      urgency: ReadonlyArray<SelectOption>;
     };
     errors: {
       generic: string;
@@ -40,9 +60,16 @@ interface PreCallFormProps {
 }
 
 interface IntakePayload {
+  email: string;
   annualRevenue: string;
+  employees: string;
   frictionArea: string;
-  repeatedProblem: string;
+  problemDuration: string;
+  triedSolving: string;
+  blocker: string;
+  decisionMaker: string;
+  urgency: string;
+  goal: string;
   source: string;
   callDate: string;
   callTime: string;
@@ -50,6 +77,56 @@ interface IntakePayload {
 }
 
 const EMPTY_FIELD = "";
+
+const StepHeader = ({ overline, title }: { overline: string; title: string }) => (
+  <div className="col-span-full mb-2 mt-10 first:mt-0">
+    <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 rounded-full border border-vista/20 bg-vista/5 px-2.5 py-1">
+        <div className="h-1.5 w-1.5 rounded-full bg-vista" />
+        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-vista/80">{overline}</span>
+      </div>
+      <h4 className="text-xl font-bold tracking-tight text-white">{title}</h4>
+    </div>
+  </div>
+);
+
+const SelectField = ({ label, value, onChange, options }: { label: string, value: string, onChange: (val: string) => void, options: ReadonlyArray<SelectOption> }) => (
+  <div className="flex flex-col gap-2">
+    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{label}</span>
+    <div className="relative">
+      <select
+        required
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all"
+      >
+        <option value="" disabled className="bg-slate-900">{label}</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value} className="bg-slate-900">
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center">
+        <Icon icon="solar:alt-arrow-down-linear" className="h-4 w-4 text-slate-500" />
+      </div>
+    </div>
+  </div>
+);
+
+const InputField = ({ label, value, onChange, type = "text", placeholder }: { label: string, value: string, onChange: (val: string) => void, type?: string, placeholder?: string }) => (
+  <div className="flex flex-col gap-2">
+    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{label}</span>
+    <input
+      type={type}
+      required
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder || label}
+      className="w-full h-14 rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600"
+    />
+  </div>
+);
 
 export function PreCallForm({
   locale,
@@ -65,9 +142,16 @@ export function PreCallForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [payload, setPayload] = useState<IntakePayload>({
+    email: EMPTY_FIELD,
     annualRevenue: EMPTY_FIELD,
+    employees: EMPTY_FIELD,
     frictionArea: EMPTY_FIELD,
-    repeatedProblem: EMPTY_FIELD,
+    problemDuration: EMPTY_FIELD,
+    triedSolving: EMPTY_FIELD,
+    blocker: EMPTY_FIELD,
+    decisionMaker: EMPTY_FIELD,
+    urgency: EMPTY_FIELD,
+    goal: EMPTY_FIELD,
     source,
     callDate,
     callTime,
@@ -152,62 +236,102 @@ export function PreCallForm({
       <p className="max-w-2xl text-lg font-light leading-relaxed text-slate-400 mb-10">{text.subtitle}</p>
 
       <form className="grid grid-cols-1 gap-6 md:grid-cols-2" onSubmit={onSubmit} onFocus={onStart}>
-        <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.revenue}</span>
-          <div className="relative">
-            <select
-              required
-              value={payload.annualRevenue}
-              onChange={(event) => setPayload((prev) => ({ ...prev, annualRevenue: event.target.value }))}
-              className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all"
-            >
-              <option value="" disabled className="bg-slate-900">{text.fields.revenue}</option>
-              {text.options.revenue.map((option) => (
-                <option key={option.value} value={option.value} className="bg-slate-900">
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center">
-              <Icon icon="solar:alt-arrow-down-linear" className="h-4 w-4 text-slate-500" />
-            </div>
-          </div>
+        
+        <StepHeader overline={text.steps.step1.overline} title={text.steps.step1.title} />
+        
+        <div className="md:col-span-2">
+          <InputField 
+            label={text.fields.email} 
+            value={payload.email} 
+            onChange={(val) => setPayload(p => ({ ...p, email: val }))} 
+            type="email"
+          />
+        </div>
+        
+        <SelectField 
+          label={text.fields.revenue} 
+          value={payload.annualRevenue} 
+          onChange={(val) => setPayload(p => ({ ...p, annualRevenue: val }))} 
+          options={text.options.revenue} 
+        />
+        
+        <SelectField 
+          label={text.fields.employees} 
+          value={payload.employees} 
+          onChange={(val) => setPayload(p => ({ ...p, employees: val }))} 
+          options={text.options.employees} 
+        />
+
+        <StepHeader overline={text.steps.step2.overline} title={text.steps.step2.title} />
+
+        <div className="md:col-span-2">
+          <SelectField 
+            label={text.fields.friction} 
+            value={payload.frictionArea} 
+            onChange={(val) => setPayload(p => ({ ...p, frictionArea: val }))} 
+            options={text.options.friction} 
+          />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.friction}</span>
-          <div className="relative">
-            <select
-              required
-              value={payload.frictionArea}
-              onChange={(event) => setPayload((prev) => ({ ...prev, frictionArea: event.target.value }))}
-              className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all"
-            >
-              <option value="" disabled className="bg-slate-900">{text.fields.friction}</option>
-              {text.options.friction.map((option) => (
-                <option key={option.value} value={option.value} className="bg-slate-900">
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center">
-              <Icon icon="solar:alt-arrow-down-linear" className="h-4 w-4 text-slate-500" />
-            </div>
-          </div>
+        <div className="md:col-span-2">
+          <SelectField 
+            label={text.fields.problemDuration} 
+            value={payload.problemDuration} 
+            onChange={(val) => setPayload(p => ({ ...p, problemDuration: val }))} 
+            options={text.options.problemDuration} 
+          />
         </div>
+
+        <StepHeader overline={text.steps.step3.overline} title={text.steps.step3.title} />
+
+        <div className="md:col-span-2">
+          <SelectField 
+            label={text.fields.triedSolving} 
+            value={payload.triedSolving} 
+            onChange={(val) => setPayload(p => ({ ...p, triedSolving: val }))} 
+            options={text.options.triedSolving} 
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <SelectField 
+            label={text.fields.blocker} 
+            value={payload.blocker} 
+            onChange={(val) => setPayload(p => ({ ...p, blocker: val }))} 
+            options={text.options.blocker} 
+          />
+        </div>
+
+        <StepHeader overline={text.steps.step4.overline} title={text.steps.step4.title} />
+
+        <SelectField 
+          label={text.fields.decisionMaker} 
+          value={payload.decisionMaker} 
+          onChange={(val) => setPayload(p => ({ ...p, decisionMaker: val }))} 
+          options={text.options.decisionMaker} 
+        />
+
+        <SelectField 
+          label={text.fields.urgency} 
+          value={payload.urgency} 
+          onChange={(val) => setPayload(p => ({ ...p, urgency: val }))} 
+          options={text.options.urgency} 
+        />
+
+        <StepHeader overline={text.steps.step5.overline} title={text.steps.step5.title} />
 
         <div className="flex flex-col gap-2 md:col-span-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.repeatingProblem}</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.goal}</span>
           <textarea
             rows={4}
-            value={payload.repeatedProblem}
-            onChange={(event) => setPayload((prev) => ({ ...prev, repeatedProblem: event.target.value }))}
-            placeholder={text.fields.repeatingProblemPlaceholder}
+            value={payload.goal}
+            onChange={(event) => setPayload((prev) => ({ ...prev, goal: event.target.value }))}
+            placeholder={text.fields.goalPlaceholder}
             className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600 resize-none"
           />
         </div>
 
-        <div className="md:col-span-2 pt-4">
+        <div className="col-span-full pt-8 mt-4 border-t border-white/5">
           <button
             type="submit"
             disabled={isSubmitting}

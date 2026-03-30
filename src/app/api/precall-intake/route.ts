@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 
 interface IntakePayload {
-  sector?: string;
+  email?: string;
   annualRevenue?: string;
+  employees?: string;
   frictionArea?: string;
-  repeatedProblem?: string;
+  problemDuration?: string;
+  triedSolving?: string;
+  blocker?: string;
+  decisionMaker?: string;
+  urgency?: string;
+  goal?: string;
   source?: string;
   callDate?: string;
   callTime?: string;
@@ -12,7 +18,15 @@ interface IntakePayload {
 }
 
 function isMissingRequiredField(payload: IntakePayload): boolean {
-  return !payload.annualRevenue || !payload.frictionArea;
+  return !payload.email || 
+         !payload.annualRevenue || 
+         !payload.employees || 
+         !payload.frictionArea || 
+         !payload.problemDuration || 
+         !payload.triedSolving || 
+         !payload.blocker || 
+         !payload.decisionMaker || 
+         !payload.urgency;
 }
 
 export async function POST(request: Request) {
