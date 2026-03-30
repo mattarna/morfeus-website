@@ -191,7 +191,7 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
 
           {/* VSL - Moved here for Above the Fold visibility */}
           {locale === "it" && (
-            <motion.div variants={fadeInUp} className="mt-16">
+            <motion.div variants={fadeInUp} className="mt-16 mb-24">
               <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/30 shadow-2xl">
                 {/* Removed the absolute blur element to prevent purple glow */}
                 {isPlaceholderVideo ? (
@@ -230,6 +230,19 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
               </p>
             </motion.div>
           )}
+
+          {/* Form moved up here right after video */}
+          <motion.div variants={fadeInUp}>
+            <PreCallForm
+              locale={locale}
+              endpoint={PRECALL_INTAKE_ENDPOINT}
+              source={source}
+              callDate={date}
+              callTime={time}
+              initialComplete={form === "complete"}
+              text={text.form}
+            />
+          </motion.div>
         </PreCallSectionShell>
 
         <PreCallSectionShell number="02" variant="deep">
@@ -270,39 +283,7 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
           </motion.div>
         </PreCallSectionShell>
 
-        <PreCallSectionShell number="03" variant="transparent">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-            <motion.div variants={fadeInUp}>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-vista/20 bg-vista/5 px-4 py-1.5">
-                <div className="h-1.5 w-1.5 rounded-full bg-vista" />
-                <span className="text-[11px] font-bold uppercase tracking-widest text-vista/80">{text.prepLabel}</span>
-              </div>
-              <h2 className="mb-8 text-4xl font-black uppercase tracking-[-0.03em] leading-[1.1] text-white md:text-5xl">
-                {text.prepTitle}
-              </h2>
-              <p className="text-2xl font-light leading-relaxed text-slate-400">{text.prepSubtitle}</p>
-            </motion.div>
-            <div className="space-y-6">
-              {text.prepItems.map((item) => (
-                <motion.article 
-                  key={item.title} 
-                  variants={fadeInUp}
-                  className="group rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 transition-all duration-500 hover:border-white/10 hover:bg-white/[0.04]"
-                >
-                  <div className="flex items-start gap-6">
-                    <span className="text-5xl grayscale group-hover:grayscale-0 transition-all duration-500">{item.icon}</span>
-                    <div>
-                      <h3 className="text-2xl font-bold uppercase tracking-tight text-white mb-3">{item.title}</h3>
-                      <p className="text-xl font-light leading-relaxed text-slate-400">{item.body}</p>
-                    </div>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </PreCallSectionShell>
-
-        <PreCallSectionShell number="04" variant="deep">
+        <PreCallSectionShell number="03" variant="deep">
           <motion.div variants={fadeInUp}>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-vista/20 bg-vista/5 px-4 py-1.5">
               <div className="h-1.5 w-1.5 rounded-full bg-vista" />
@@ -342,18 +323,6 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
               ))}
             </div>
           </motion.div>
-        </PreCallSectionShell>
-
-        <PreCallSectionShell number="05" variant="transparent">
-          <PreCallForm
-            locale={locale}
-            endpoint={PRECALL_INTAKE_ENDPOINT}
-            source={source}
-            callDate={date}
-            callTime={time}
-            initialComplete={form === "complete"}
-            text={text.form}
-          />
         </PreCallSectionShell>
       </motion.div>
     </main>

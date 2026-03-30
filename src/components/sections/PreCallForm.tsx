@@ -24,14 +24,12 @@ interface PreCallFormProps {
     statusBody: string;
     statusFallback: string;
     fields: {
-      sector: string;
       revenue: string;
       friction: string;
       repeatingProblem: string;
       repeatingProblemPlaceholder: string;
     };
     options: {
-      sector: ReadonlyArray<SelectOption>;
       revenue: ReadonlyArray<SelectOption>;
       friction: ReadonlyArray<SelectOption>;
     };
@@ -42,7 +40,6 @@ interface PreCallFormProps {
 }
 
 interface IntakePayload {
-  sector: string;
   annualRevenue: string;
   frictionArea: string;
   repeatedProblem: string;
@@ -68,7 +65,6 @@ export function PreCallForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [payload, setPayload] = useState<IntakePayload>({
-    sector: EMPTY_FIELD,
     annualRevenue: EMPTY_FIELD,
     frictionArea: EMPTY_FIELD,
     repeatedProblem: EMPTY_FIELD,
@@ -157,28 +153,6 @@ export function PreCallForm({
 
       <form className="grid grid-cols-1 gap-6 md:grid-cols-2" onSubmit={onSubmit} onFocus={onStart}>
         <div className="flex flex-col gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.sector}</span>
-          <div className="relative">
-            <select
-              required
-              value={payload.sector}
-              onChange={(event) => setPayload((prev) => ({ ...prev, sector: event.target.value }))}
-              className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all"
-            >
-              <option value="" disabled className="bg-slate-900">{text.fields.sector}</option>
-              {text.options.sector.map((option) => (
-                <option key={option.value} value={option.value} className="bg-slate-900">
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center">
-              <Icon icon="solar:alt-arrow-down-linear" className="h-4 w-4 text-slate-500" />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.revenue}</span>
           <div className="relative">
             <select
@@ -200,7 +174,7 @@ export function PreCallForm({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 md:col-span-2">
+        <div className="flex flex-col gap-2">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.friction}</span>
           <div className="relative">
             <select
@@ -225,7 +199,6 @@ export function PreCallForm({
         <div className="flex flex-col gap-2 md:col-span-2">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 ml-1">{text.fields.repeatingProblem}</span>
           <textarea
-            required
             rows={4}
             value={payload.repeatedProblem}
             onChange={(event) => setPayload((prev) => ({ ...prev, repeatedProblem: event.target.value }))}

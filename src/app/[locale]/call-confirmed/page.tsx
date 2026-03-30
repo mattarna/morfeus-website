@@ -41,9 +41,9 @@ const FALLBACK_CALL_CONFIRMED_TEXT = {
     stats: ["Clienti 5-100M", "60 giorni way-out", "Focus su risultati reali"],
     logosLabel: "Alcune aziende con cui lavoriamo",
     form: {
-      preLabel: "Due minuti. Adesso.",
+      preLabel: "Aiutaci ad arrivare preparati",
       title: "Aiutaci ad arrivare preparati",
-      subtitle: "Tre domande veloci per entrare in call con il giusto contesto.",
+      subtitle: "Porta un numero, non un'opinione. Usiamo questo per non perdere tempo in call.",
       submitLabel: "Invia",
       submittingLabel: "Invio in corso...",
       privacyNote: "Nessun uso commerciale dei dati.",
@@ -51,31 +51,25 @@ const FALLBACK_CALL_CONFIRMED_TEXT = {
       statusBody: "Abbiamo tutto quello che ci serve. Il nostro team arrivera alla call gia con il tuo contesto. Adesso tocca a te: metti la call in calendario e presentati.",
       statusFallback: "Call confermata",
       fields: {
-        sector: "Settore",
         revenue: "Fatturato annuo",
-        friction: "Dove senti piu attrito?",
-        repeatingProblem: "Il problema che si ripete",
-        repeatingProblemPlaceholder: "Descrivi in una frase il problema principale."
+        friction: "Dove senti il problema principale",
+        repeatingProblem: "Il problema concreto (Opzionale)",
+        repeatingProblemPlaceholder: "Es. 'Perdiamo 3 settimane ogni volta che onboardiamo un nuovo responsabile'"
       },
       options: {
-        sector: [
-          { label: "Manufacturing / Produzione", value: "manufacturing" },
-          { label: "Servizi B2B", value: "b2b_services" },
-          { label: "Tech / SaaS", value: "tech_saas" },
-          { label: "Retail / E-commerce", value: "retail_ecommerce" },
-          { label: "Altro", value: "other" }
-        ],
         revenue: [
-          { label: "€1M – €5M", value: "1_5" },
-          { label: "€5M – €10M", value: "5_10" },
-          { label: "€10M – €25M", value: "10_25" },
-          { label: "€25M+", value: "25_plus" }
+          { label: "Sotto 2M", value: "under_2" },
+          { label: "2M – 10M", value: "2_10" },
+          { label: "10M – 50M", value: "10_50" },
+          { label: "Oltre 50M", value: "50_plus" }
         ],
         friction: [
-          { label: "Sales / Commerciale", value: "sales" },
-          { label: "Operations / Processi", value: "operations" },
-          { label: "Dati / Reporting", value: "data_decision_reporting" },
-          { label: "Marketing", value: "marketing" },
+          { label: "I processi non tengono il ritmo della crescita", value: "processes_scaling" },
+          { label: "Il team lavora ma i risultati non si vedono", value: "team_results" },
+          { label: "Troppi progetti aperti, pochi che si chiudono davvero", value: "too_many_projects" },
+          { label: "Le informazioni si perdono tra i reparti", value: "info_silos" },
+          { label: "Non ho visibilità reale su cosa sta succedendo", value: "lack_of_visibility" },
+          { label: "Ogni volta che entra qualcuno, ricominciamo da zero", value: "onboarding_knowledge" },
           { label: "Altro", value: "other" }
         ]
       },
@@ -118,9 +112,9 @@ const FALLBACK_CALL_CONFIRMED_TEXT = {
     stats: ["Clients 5-100M", "60-day way-out", "Real outcomes first"],
     logosLabel: "Some companies we work with",
     form: {
-      preLabel: "Two minutes. Now.",
+      preLabel: "Help us arrive prepared",
       title: "Help us arrive prepared",
-      subtitle: "Three quick questions so we enter the call with the right context.",
+      subtitle: "Bring a number, not an opinion. We use this to not waste time on the call.",
       submitLabel: "Submit",
       submittingLabel: "Sending...",
       privacyNote: "No commercial use of data.",
@@ -128,31 +122,25 @@ const FALLBACK_CALL_CONFIRMED_TEXT = {
       statusBody: "We have everything we need. Our team will join the call with your context already in hand. Your move now: add the call to calendar and show up.",
       statusFallback: "Call confirmed",
       fields: {
-        sector: "Sector",
         revenue: "Annual revenue",
         friction: "Where do you feel the most friction?",
-        repeatingProblem: "Recurring problem",
-        repeatingProblemPlaceholder: "Describe your main recurring issue in one sentence."
+        repeatingProblem: "The concrete problem (Optional)",
+        repeatingProblemPlaceholder: "E.g. 'We waste 3 weeks every time we onboard a new manager'"
       },
       options: {
-        sector: [
-          { label: "Manufacturing / Production", value: "manufacturing" },
-          { label: "B2B Services", value: "b2b_services" },
-          { label: "Tech / SaaS", value: "tech_saas" },
-          { label: "Retail / E-commerce", value: "retail_ecommerce" },
-          { label: "Other", value: "other" }
-        ],
         revenue: [
-          { label: "€1M – €5M", value: "1_5" },
-          { label: "€5M – €10M", value: "5_10" },
-          { label: "€10M – €25M", value: "10_25" },
-          { label: "€25M+", value: "25_plus" }
+          { label: "Under 2M", value: "under_2" },
+          { label: "2M – 10M", value: "2_10" },
+          { label: "10M – 50M", value: "10_50" },
+          { label: "Over 50M", value: "50_plus" }
         ],
         friction: [
-          { label: "Sales", value: "sales" },
-          { label: "Operations", value: "operations" },
-          { label: "Data / Reporting", value: "data_decision_reporting" },
-          { label: "Marketing", value: "marketing" },
+          { label: "Processes can't keep up with growth", value: "processes_scaling" },
+          { label: "The team works but results aren't visible", value: "team_results" },
+          { label: "Too many open projects, few actually close", value: "too_many_projects" },
+          { label: "Information gets lost between departments", value: "info_silos" },
+          { label: "I have no real visibility on what's happening", value: "lack_of_visibility" },
+          { label: "Every time someone joins, we start from scratch", value: "onboarding_knowledge" },
           { label: "Other", value: "other" }
         ]
       },
