@@ -209,9 +209,9 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
                       alt={text.videoTitle}
                       fill
                       unoptimized
-                      className="object-cover opacity-60 transition-all duration-700 group-hover/video:scale-105 group-hover/video:opacity-100" 
+                      className="object-cover opacity-60 transition-all duration-700 group-hover/video:opacity-100" 
                     />
-                    <div className="absolute z-10 flex h-20 w-20 items-center justify-center rounded-full bg-majorelle/90 text-white shadow-xl backdrop-blur-md transition-all duration-500 group-hover/video:scale-110 group-hover/video:bg-majorelle">
+                    <div className="absolute z-10 flex h-20 w-20 items-center justify-center rounded-full bg-majorelle/90 text-white shadow-xl backdrop-blur-md transition-all duration-500 group-hover/video:bg-majorelle">
                       <Icon icon="solar:play-bold" className="h-8 w-8 ml-1" />
                     </div>
                   </div>
