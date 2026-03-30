@@ -30,10 +30,10 @@ const fadeInUp = {
   }
 };
 
-// TODO: replace with real YouTube/Vimeo URL
-const PLACEHOLDER_VIDEO_LINKEDIN = "https://example.com/video-linkedin";
-// TODO: replace with real YouTube/Vimeo URL
-const PLACEHOLDER_VIDEO_COLDEMAIL = "https://example.com/video-cold-email";
+/** Pre-call VSL — https://youtu.be/rsau3BV5Yx0 */
+const CALL_CONFIRMED_VIDEO_EMBED = "https://www.youtube.com/embed/rsau3BV5Yx0";
+const PRECALL_VIDEO_LINKEDIN = CALL_CONFIRMED_VIDEO_EMBED;
+const PRECALL_VIDEO_COLDEMAIL = CALL_CONFIRMED_VIDEO_EMBED;
 // TODO: replace with real backend URL if needed
 const PRECALL_INTAKE_ENDPOINT = "/api/precall-intake";
 
@@ -120,8 +120,9 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
 
   const videoVariant = source === "cold_email" ? "cold_email" : "linkedin";
   const selectedVideoUrl =
-    videoVariant === "cold_email" ? PLACEHOLDER_VIDEO_COLDEMAIL : PLACEHOLDER_VIDEO_LINKEDIN;
-  const isPlaceholderVideo = selectedVideoUrl.includes("example.com");
+    videoVariant === "cold_email" ? PRECALL_VIDEO_COLDEMAIL : PRECALL_VIDEO_LINKEDIN;
+  const isPlaceholderVideo =
+    !selectedVideoUrl || selectedVideoUrl.includes("example.com");
 
   useEffect(() => {
     trackPrecallEvent("precall_page_view", {
@@ -184,28 +185,30 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
           </motion.div>
 
           {/* VSL - Moved here for Above the Fold visibility */}
-          <motion.div variants={fadeInUp} className="mt-16">
-            <div className="group relative overflow-hidden rounded-[2rem] border border-majorelle/20 bg-black/30 shadow-2xl">
-              <div className="absolute -inset-10 rounded-[4rem] opacity-[0.05] blur-[100px] bg-majorelle pointer-events-none" />
-              {isPlaceholderVideo ? (
-                <div className="flex aspect-video items-center justify-center gap-3 text-slate-300">
-                  <Icon icon="solar:play-circle-bold" className="h-12 w-12 text-majorelle opacity-80 group-hover:scale-110 transition-transform duration-500" />
-                  <span className="font-mono text-xs uppercase tracking-widest opacity-60">{text.videoPlaceholder}</span>
-                </div>
-              ) : (
-                <iframe
-                  src={selectedVideoUrl}
-                  title="Pre-call video"
-                  className="aspect-video w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              )}
-            </div>
-            <p className="mt-8 max-w-4xl text-lg font-light leading-relaxed text-slate-400">
-              {text.videoDescription}
-            </p>
-          </motion.div>
+          {locale === "it" && (
+            <motion.div variants={fadeInUp} className="mt-16">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-majorelle/20 bg-black/30 shadow-2xl">
+                <div className="absolute -inset-10 rounded-[4rem] opacity-[0.05] blur-[100px] bg-majorelle pointer-events-none" />
+                {isPlaceholderVideo ? (
+                  <div className="flex aspect-video items-center justify-center gap-3 text-slate-300">
+                    <Icon icon="solar:play-circle-bold" className="h-12 w-12 text-majorelle opacity-80 group-hover:scale-110 transition-transform duration-500" />
+                    <span className="font-mono text-xs uppercase tracking-widest opacity-60">{text.videoPlaceholder}</span>
+                  </div>
+                ) : (
+                  <iframe
+                    src={selectedVideoUrl}
+                    title={text.videoTitle}
+                    className="aspect-video w-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                )}
+              </div>
+              <p className="mt-8 max-w-4xl text-lg font-light leading-relaxed text-slate-400">
+                {text.videoDescription}
+              </p>
+            </motion.div>
+          )}
         </PreCallSectionShell>
 
         <PreCallSectionShell number="02" variant="deep">
