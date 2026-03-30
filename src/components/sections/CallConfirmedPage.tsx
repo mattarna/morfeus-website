@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
@@ -112,6 +112,8 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
   const time = getSingle(searchParams.time);
   const source = getSingle(searchParams.source);
   const form = getSingle(searchParams.form);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  
   const headline = name
     ? text.headlineWithName.replace("{name}", name)
     : text.headlineWithoutName;
@@ -123,6 +125,9 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
     videoVariant === "cold_email" ? PRECALL_VIDEO_COLDEMAIL : PRECALL_VIDEO_LINKEDIN;
   const isPlaceholderVideo =
     !selectedVideoUrl || selectedVideoUrl.includes("example.com");
+
+  const ytMatch = selectedVideoUrl?.match(/embed\/([^?]+)/);
+  const ytId = ytMatch ? ytMatch[1] : null;
 
   useEffect(() => {
     trackPrecallEvent("precall_page_view", {
@@ -194,11 +199,27 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
                     <Icon icon="solar:play-circle-bold" className="h-12 w-12 text-majorelle opacity-80 group-hover:scale-110 transition-transform duration-500" />
                     <span className="font-mono text-xs uppercase tracking-widest opacity-60">{text.videoPlaceholder}</span>
                   </div>
+                ) : !isVideoPlaying && ytId ? (
+                  <div 
+                    className="group/video relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden bg-zinc-900"
+                    onClick={() => setIsVideoPlaying(true)}
+                  >
+                    <Image 
+                      src={`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`}
+                      alt={text.videoTitle}
+                      fill
+                      unoptimized
+                      className="object-cover opacity-60 transition-all duration-700 group-hover/video:scale-105 group-hover/video:opacity-100" 
+                    />
+                    <div className="absolute z-10 flex h-20 w-20 items-center justify-center rounded-full bg-majorelle/90 text-white shadow-xl backdrop-blur-md transition-all duration-500 group-hover/video:scale-110 group-hover/video:bg-majorelle">
+                      <Icon icon="solar:play-bold" className="h-8 w-8 ml-1" />
+                    </div>
+                  </div>
                 ) : (
                   <iframe
-                    src={selectedVideoUrl}
+                    src={`${selectedVideoUrl}?autoplay=1&modestbranding=1&rel=0`}
                     title={text.videoTitle}
-                    className="aspect-video w-full border-0"
+                    className="aspect-video w-full border-0 bg-black"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                   />
