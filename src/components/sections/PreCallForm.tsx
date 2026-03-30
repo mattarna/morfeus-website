@@ -144,9 +144,9 @@ export function PreCallForm({
 
   return (
     <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-8 md:p-12 backdrop-blur-sm shadow-2xl">
-      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-vista/20 bg-vista/5 px-3 py-1">
-        <div className="h-1.5 w-1.5 rounded-full bg-vista" />
-        <span className="text-[10px] font-bold uppercase tracking-widest text-vista/80">{text.preLabel}</span>
+      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-forge/20 bg-forge/5 px-3 py-1">
+        <div className="h-1.5 w-1.5 rounded-full bg-forge" />
+        <span className="text-[10px] font-bold uppercase tracking-widest text-forge">{text.preLabel}</span>
       </div>
       <h3 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl mb-4">{text.title}</h3>
       <p className="max-w-2xl text-lg font-light leading-relaxed text-slate-400 mb-10">{text.subtitle}</p>
