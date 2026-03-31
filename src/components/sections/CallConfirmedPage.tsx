@@ -8,6 +8,7 @@ import { PreCallHeader } from "./PreCallHeader";
 import { PreCallSectionShell } from "./PreCallSectionShell";
 import { PreCallForm } from "./PreCallForm";
 import { ServiceBackgroundGrid } from "./ServiceBackgroundGrid";
+import { ServiceFooter } from "./ServiceFooter";
 import { trackPrecallEvent } from "@/lib/tracking/precall";
 
 const staggerContainer = {
@@ -345,6 +346,7 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
           </motion.div>
         </PreCallSectionShell>
       </motion.div>
+      <ServiceFooter navLinkIds={[]} />
     </main>
   );
 }

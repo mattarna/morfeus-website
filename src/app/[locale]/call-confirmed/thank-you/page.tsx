@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
+import { ServiceFooter } from "@/components/sections/ServiceFooter";
 
 interface ThankYouProps {
   params: { locale: string };
@@ -84,6 +85,9 @@ export default function CallConfirmedThankYouPage({ params: { locale }, searchPa
             ))}
           </div>
         </section>
+      </div>
+      <div className="mt-20">
+        <ServiceFooter navLinkIds={[]} />
       </div>
     </main>
   );

@@ -17,22 +17,24 @@ export function ServiceFooter({ namespace = "Offerta.landing_footer", navLinkIds
   return (
     <footer id="footer" className="relative z-[150] bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] pt-24 pb-32 px-6 xl:px-40 overflow-visible">
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
-          <div className="flex flex-col gap-8 items-center md:items-start">
-            <h4 className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">{t("nav_title")}</h4>
-            <ul className="flex flex-col gap-4 items-center md:items-start">
-              {navLinkIds.map((id) => (
-                <li key={id}>
-                  <a
-                    href={`#${id}`}
-                    className="text-lg text-slate-400 hover:text-white transition-colors font-light"
-                  >
-                    {t(`nav_links.${id}`)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-16 mb-24 ${navLinkIds.length > 0 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+          {navLinkIds.length > 0 && (
+            <div className="flex flex-col gap-8 items-center md:items-start">
+              <h4 className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">{t("nav_title")}</h4>
+              <ul className="flex flex-col gap-4 items-center md:items-start">
+                {navLinkIds.map((id) => (
+                  <li key={id}>
+                    <a
+                      href={`#${id}`}
+                      className="text-lg text-slate-400 hover:text-white transition-colors font-light"
+                    >
+                      {t(`nav_links.${id}`)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="flex flex-col gap-8 items-center md:items-start">
             <h4 className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">{t("info_title")}</h4>
