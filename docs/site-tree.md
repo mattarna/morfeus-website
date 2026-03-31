@@ -49,6 +49,8 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 | Pagina | EN | IT |
 |--------|----|----|
 | Call confirmed | [/call-confirmed](https://morfeushub.com/en/call-confirmed) | [/call-confirmed](https://morfeushub.com/it/call-confirmed) |
+| Intro confirmed | [/intro-confirmed](https://morfeushub.com/en/intro-confirmed) | [/intro-confirmed](https://morfeushub.com/it/intro-confirmed) |
+| Booking confirmed | [/booking-confirmed](https://morfeushub.com/en/booking-confirmed) | [/booking-confirmed](https://morfeushub.com/it/booking-confirmed) |
 | Thank you | [/call-confirmed/thank-you](https://morfeushub.com/en/call-confirmed/thank-you) | [/call-confirmed/thank-you](https://morfeushub.com/it/call-confirmed/thank-you) |
 
 ---
@@ -143,7 +145,7 @@ flowchart TB
     direction TB
     HUB((route sotto /en o /it))
     HUB --- G1["home · forge · privacy · cookies"]
-    HUB --- G2["call-confirmed · thank-you"]
+    HUB --- G2["call-confirmed · intro-confirmed · booking-confirmed"]
     HUB --- G3["portal · 5 membri · case-study · 5 verticali"]
   end
 
@@ -207,6 +209,8 @@ flowchart TB
 │   ├── cookies/
 │   ├── call-confirmed/
 │   │   └── thank-you/
+│   ├── intro-confirmed/
+│   ├── booking-confirmed/
 │   ├── portal/
 │   │   └── [slug]/             → matteo | alex | simone | matteo-alvazzi | davide
 │   └── case-study/
@@ -235,33 +239,49 @@ flowchart TB
 
 Locale ammessi: **`en`**, **`it`** (da `src/i18n/routing.ts`).
 
-| Path | Note |
-|------|------|
-| `/` | Redirect → `/en` (`src/app/page.tsx`) |
-| `/en` | Homepage EN |
-| `/it` | Homepage IT |
-| `/en/forge` | Landing forge |
-| `/it/forge` | |
-| `/en/privacy` | Privacy |
-| `/it/privacy` | |
-| `/en/cookies` | Cookie policy |
-| `/it/cookies` | |
-| `/en/call-confirmed` | Post-call / conferma |
-| `/it/call-confirmed` | |
-| `/en/call-confirmed/thank-you` | Thank you |
-| `/it/call-confirmed/thank-you` | |
-| `/en/portal` | Indice portal |
-| `/it/portal` | |
-| `/en/portal/matteo` | Scheda membro (`src/app/lib/team-data.ts`) |
-| `/en/portal/alex` | |
-| `/en/portal/simone` | |
-| `/en/portal/matteo-alvazzi` | |
-| `/en/portal/davide` | |
-| `/it/portal/matteo` | (stessi slug, prefisso `/it`) |
-| `/it/portal/alex` | |
-| `/it/portal/simone` | |
-| `/it/portal/matteo-alvazzi` | |
-| `/it/portal/davide` | |
+### Principali
+
+- `/` → Redirect a `/en` (`src/app/page.tsx`)
+- `/en` → Homepage EN
+- `/it` → Homepage IT
+
+### Landing
+
+- `/en/forge` → Landing forge
+- `/it/forge`
+
+### Legali
+
+- `/en/privacy` → Privacy
+- `/it/privacy`
+- `/en/cookies` → Cookie policy
+- `/it/cookies`
+
+### Flusso Post-Call
+
+- `/en/call-confirmed` → Post-call / conferma (Outbound / Lead Freddi - Form visibile)
+- `/it/call-confirmed`
+- `/en/call-confirmed/thank-you` → Thank you page (dopo compilazione form)
+- `/it/call-confirmed/thank-you`
+- `/en/intro-confirmed` → Post-call warm (Lead Caldi - Solo video, no form)
+- `/it/intro-confirmed`
+- `/en/booking-confirmed` → Post-call network (Caffè/Conoscenti - Solo conferma data/ora)
+- `/it/booking-confirmed`
+
+### Portal Team
+
+- `/en/portal` → Indice portal
+- `/it/portal`
+- `/en/portal/matteo` → Scheda membro (`src/app/lib/team-data.ts`)
+- `/en/portal/alex`
+- `/en/portal/simone`
+- `/en/portal/matteo-alvazzi`
+- `/en/portal/davide`
+- `/it/portal/matteo`
+- `/it/portal/alex`
+- `/it/portal/simone`
+- `/it/portal/matteo-alvazzi`
+- `/it/portal/davide`
 
 ### Case study (`/case-study/[slug]`)
 
@@ -336,7 +356,7 @@ Da `src/lib/reserved-slugs.ts`:
 ## Riepilogo conteggi URL “foglia” pubblici (orientativo)
 
 - Home: **2**
-- Fisse per locale (forge, privacy, cookies, call-confirmed, thank-you, portal index): **6 × 2 = 12**
+- Fisse per locale (forge, privacy, cookies, call-confirmed, thank-you, intro-confirmed, booking-confirmed, portal index): **8 × 2 = 16**
 - Portal membro: **5 × 2 = 10**
 - Case study: **5 × 2 = 10**
 - Mockup: **2**

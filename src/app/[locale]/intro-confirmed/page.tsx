@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { CallConfirmedPage } from "@/components/sections/CallConfirmedPage";
-import { getCallConfirmedText } from "./data";
+import { getCallConfirmedText } from "../call-confirmed/data";
 
-interface CallConfirmedRouteProps {
+interface IntroConfirmedRouteProps {
   params: { locale: string };
   searchParams: Record<string, string | string[] | undefined>;
 }
@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   return {
     title: locale === "it" ? "Call confermata — Morfeus" : "Call confirmed — Morfeus",
-    description: locale === "it" ? "Pagina di preparazione pre-call Morfeus." : "Morfeus pre-call preparation page.",
+    description: locale === "it" ? "La tua intro call con Morfeus è confermata." : "Your intro call with Morfeus is confirmed.",
     robots: {
       index: false,
       follow: false
@@ -22,13 +22,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function CallConfirmedRoute({ params: { locale }, searchParams }: CallConfirmedRouteProps) {
+export default async function IntroConfirmedRoute({ params: { locale }, searchParams }: IntroConfirmedRouteProps) {
   const text = await getCallConfirmedText(locale);
 
   return (
     <CallConfirmedPage
       locale={locale}
       searchParams={searchParams}
+      hideForm={true}
       text={text}
     />
   );

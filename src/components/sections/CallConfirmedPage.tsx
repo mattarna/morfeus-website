@@ -53,6 +53,7 @@ function getSingle(value: SearchValue): string {
 interface CallConfirmedPageProps {
   locale: string;
   searchParams: Record<string, SearchValue>;
+  hideForm?: boolean;
   text: {
     badge: string;
     preTitle: string;
@@ -127,7 +128,7 @@ interface CallConfirmedPageProps {
   };
 }
 
-export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedPageProps) {
+export function CallConfirmedPage({ locale, searchParams, hideForm = false, text }: CallConfirmedPageProps) {
   const name = getSingle(searchParams.name);
   const date = getSingle(searchParams.date);
   const time = getSingle(searchParams.time);
@@ -253,17 +254,19 @@ export function CallConfirmedPage({ locale, searchParams, text }: CallConfirmedP
           )}
 
           {/* Form moved up here right after video */}
-          <motion.div variants={fadeInUp}>
-            <PreCallForm
-              locale={locale}
-              endpoint={PRECALL_INTAKE_ENDPOINT}
-              source={source}
-              callDate={date}
-              callTime={time}
-              initialComplete={form === "complete"}
-              text={text.form}
-            />
-          </motion.div>
+          {!hideForm && (
+            <motion.div variants={fadeInUp}>
+              <PreCallForm
+                locale={locale}
+                endpoint={PRECALL_INTAKE_ENDPOINT}
+                source={source}
+                callDate={date}
+                callTime={time}
+                initialComplete={form === "complete"}
+                text={text.form}
+              />
+            </motion.div>
+          )}
         </PreCallSectionShell>
 
         <PreCallSectionShell number="02" variant="deep">
