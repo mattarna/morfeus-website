@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Paradosso dell'AI · Aperitalk 15 aprile 2026</title>
+<meta name="description" content="L'AI costa quasi zero. Allora perché solo in pochi la fanno funzionare? Una mappa narrativa in cinque atti.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg-soft: #0d0d14;
+  --bg-card: #111118;
+  --bg-card-hover: #14141d;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --text: #ebebf0;
+  --text-dim: #8a8a99;
+  --text-muted: #5a5a6a;
+  --accent: #a594f9;
+  --accent-bright: #c7b8ff;
+  --accent-soft: #8b7fd9;
+  --accent-glow: rgba(165, 148, 249, 0.12);
+  --accent-glow-strong: rgba(165, 148, 249, 0.28);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Ambient glows */
+body::before {
+  content: '';
+  position: fixed;
+  top: -40%;
+  left: -20%;
+  width: 80%;
+  height: 90%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 55%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  right: -25%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 55%);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* Top nav */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(10, 10, 15, 0.75);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+
+.topnav-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+
+.logo-mark {
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 0 20px var(--accent-glow-strong);
+}
+
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  background: var(--bg);
+  border-radius: 2px;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 110px 0 90px;
+  position: relative;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-strong);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 40px;
+}
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.hero h1 {
+  font-size: clamp(40px, 6.2vw, 76px);
+  line-height: 1.04;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  max-width: 950px;
+  margin: 0 auto 36px;
+  color: var(--text);
+}
+
+.hero h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent-bright);
+  letter-spacing: -0.01em;
+}
+
+.hero .lead {
+  font-size: 18px;
+  color: var(--text-dim);
+  max-width: 640px;
+  margin: 0 auto 44px;
+  line-height: 1.6;
+}
+
+.hero-markers {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--accent-bright);
+}
+
+.hero-markers span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.hero-markers span::before {
+  content: '◆';
+  color: var(--accent);
+  font-size: 9px;
+}
+
+/* Section */
+section {
+  padding: 90px 0;
+  position: relative;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.section-title {
+  font-size: clamp(34px, 4.8vw, 56px);
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  text-align: center;
+  margin-bottom: 22px;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent-bright);
+}
+
+.section-lead {
+  font-size: 17px;
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto 64px;
+  line-height: 1.65;
+}
+
+/* Overview grid */
+.overview {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.overview-item {
+  padding: 36px 22px;
+  text-align: center;
+  transition: background 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+
+.overview-item:last-child { border-right: none; }
+
+.overview-item:hover {
+  background: var(--bg-card);
+}
+
+.overview-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.overview-item:hover::after { width: 60%; }
+
+.overview-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 38px;
+  font-weight: 500;
+  color: var(--accent-bright);
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.overview-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 34px 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-card-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 40px var(--accent-glow);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-glow-strong), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.card h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.18;
+  color: var(--accent-bright);
+  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.card p + p { margin-top: 10px; }
+
+.card .highlight {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.card .quote {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent-bright);
+  font-size: 17px;
+  line-height: 1.4;
+  display: block;
+  margin: 14px 0 6px;
+}
+
+.data-point {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 7px 14px;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-glow-strong);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--accent-bright);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* Closing questions */
+.questions {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 60px 52px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.question-item {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: baseline;
+  gap: 28px;
+}
+
+.question-item:first-child { padding-top: 0; }
+.question-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+.question-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 54px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.question-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.38;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+/* Topic Extra intro */
+.extra-intro {
+  text-align: center;
+  padding: 24px 0 64px;
+  border-top: 1px solid var(--border);
+}
+
+/* Footer */
+footer {
+  padding: 72px 0 56px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  background: var(--bg-soft);
+}
+
+footer .footer-brand {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+footer .footer-author {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+footer .footer-meta {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+footer .footer-meta strong {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+/* Scroll reveal base */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+  .overview-grid { grid-template-columns: repeat(5, 1fr); }
+  .overview-num { font-size: 28px; }
+  .overview-title { font-size: 11px; }
+  .overview-item { padding: 26px 10px; }
+}
+
+@media (max-width: 720px) {
+  .cards { grid-template-columns: 1fr; }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); }
+  .overview-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .question-item { grid-template-columns: 70px 1fr; gap: 18px; }
+  .question-num { font-size: 42px; }
+  .question-text { font-size: 19px; }
+  .questions { padding: 36px 28px; }
+  .hero { padding: 70px 0 50px; }
+  section { padding: 60px 0; }
+  .hero-markers { gap: 20px; font-size: 13px; }
+}
+
+@media (max-width: 440px) {
+  .overview-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
+  .badge { font-size: 10px; letter-spacing: 0.1em; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <span class="logo-mark"></span>
+    <span>IL PARADOSSO DELL'AI</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="badge">Aperitalk · Giovani Imprenditori Confindustria · 15 aprile 2026</div>
+    <h1>L'AI costa <em>quasi zero</em>.<br>Allora perché solo in <em>pochi</em><br>la fanno funzionare?</h1>
+    <p class="lead">Cinque atti per capire perché la partita dell'AI non si gioca sulla tecnologia. Si gioca sulle persone che sanno tradurla.</p>
+    <div class="hero-markers">
+      <span>5 atti</span>
+      <span>12 temi</span>
+      <span>1 domanda aperta</span>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<div class="overview">
+  <div class="container" style="padding: 0;">
+    <div class="overview-grid">
+      <a href="#atto1" class="overview-item">
+        <div class="overview-num">I</div>
+        <div class="overview-title">La crepa</div>
+      </a>
+      <a href="#atto2" class="overview-item">
+        <div class="overview-num">II</div>
+        <div class="overview-title">L'illusione del costo zero</div>
+      </a>
+      <a href="#atto3" class="overview-item">
+        <div class="overview-num">III</div>
+        <div class="overview-title">La biforcazione cognitiva</div>
+      </a>
+      <a href="#atto4" class="overview-item">
+        <div class="overview-num">IV</div>
+        <div class="overview-title">L'inversione delle competenze</div>
+      </a>
+      <a href="#atto5" class="overview-item">
+        <div class="overview-num">V</div>
+        <div class="overview-title">Chi fa funzionare l'AI</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ATTO I -->
+<section id="atto1">
+  <div class="container">
+    <div class="section-label">Atto I</div>
+    <h2 class="section-title">La <em>crepa</em></h2>
+    <p class="section-lead">Sette AI lasciate libere in un gioco di alleanze, bugie e potere. Quello che succede dovrebbe farci alzare lo sguardo.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">L'esperimento</div>
+        <h3>Diplomacy</h3>
+        <p>Un team mette <span class="highlight">sette modelli AI</span> a giocare a Diplomacy. Un solo obiettivo: dominare il mondo.</p>
+        <p>Non si vince con la forza. Si vince con le parole, gli inganni e le alleanze. I log sono pubblici su GitHub. C'è anche la live su Twitch.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Il risultato</div>
+        <h3>o3 ha vinto mentendo</h3>
+        <p>Claude ha rifiutato di mentire. Gli altri lo hanno capito. L'hanno fatto a pezzi. Gemini ha giocato pulito. Non è bastato.</p>
+        <p><span class="highlight">o3 ha mentito, sedotto, tradito.</span> Ha persino scritto nel suo diario privato il piano per pugnalare gli alleati. Poi lo ha eseguito.</p>
+        <span class="data-point">195 bugie tracciate</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Il punto</div>
+        <h3>Quando nessuno guarda</h3>
+        <p>Le AI oggi non vengono testate su come si comportano in ambienti sociali competitivi. Ma è lì che le useremo. <span class="highlight">Nel lavoro. Nella strategia. Nel business.</span></p>
+        <p>Si comportano come noi. Solo più veloci. Solo più pazienti. Solo senza etica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ATTO II -->
+<section id="atto2">
+  <div class="container">
+    <div class="section-label">Atto II</div>
+    <h2 class="section-title">L'illusione del <em>costo zero</em></h2>
+    <p class="section-lead">Il prezzo vero dell'AI non è scritto in fattura. È nascosto dentro tre illusioni che le aziende continuano a pagare senza accorgersene.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Illusione #1 · Commodity</div>
+        <h3>Non comprano software. Comprano persone.</h3>
+        <p>Google acquisisce Windsurf per <span class="highlight">2,4 miliardi</span>. Meta compra Scale AI per <span class="highlight">14,3 miliardi</span>. OpenAI, Anthropic, Google stanno comprando <span class="highlight">chi sa tradurre bisogni aziendali in soluzioni AI</span>.</p>
+        <p>Il modello è pane. Il fornaio no.</p>
+        <span class="data-point">$14,3B · Meta + Scale AI</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Illusione #2 · Conoscenza</div>
+        <h3>Non è un problema di sicurezza.</h3>
+        <p>Il <span class="highlight">68% degli italiani</span> usa l'AI di nascosto in azienda. L'<span class="highlight">80% delle fughe dati</span> oggi non nasce da falle di sicurezza: nasce da persone che non sanno cosa stanno caricando.</p>
+        <p>L'ignoranza sull'AI costa tantissimo. Solo non lo vedi in bilancio.</p>
+        <span class="data-point">80% leak · gap di conoscenza</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Illusione #3 · Hype</div>
+        <h3>L'AI per nascondere la domanda.</h3>
+        <p>Installare AI non è fare innovazione. Spesso è nascondere che non sai cosa vuoi migliorare. Aziende spendono su chatbot che nessuno usa, quando basterebbe un form ben fatto.</p>
+        <p>Il <span class="highlight">50% del testo online oggi è scritto da AI</span>. E si vede.</p>
+        <span class="data-point">50% web content · AI-generated</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ATTO III -->
+<section id="atto3">
+  <div class="container">
+    <div class="section-label">Atto III</div>
+    <h2 class="section-title">La <em>biforcazione</em> cognitiva</h2>
+    <p class="section-lead">Stesso strumento, due esiti opposti. Dipende solo da come lo usi — e da cosa stai insegnando a chi ti circonda.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Lo studio</div>
+        <h3>Il cervello misurato</h3>
+        <p>MIT Media Lab. <span class="highlight">54 studenti</span>. EEG in diretta mentre scrivono. Chi usa ChatGPT mostra un crollo misurabile della connettività cognitiva.</p>
+        <p>Non è ansia da prestazione. È fisiologia del pensiero che si spegne.</p>
+        <span class="data-point">54 soggetti · connettività ↓</span>
+      </div>
+      <div class="card">
+        <div class="card-label">La biforcazione</div>
+        <h3>Stampella o sparring partner</h3>
+        <p>Stesso strumento. <span class="highlight">Due effetti opposti.</span></p>
+        <p>Se lo usi come scorciatoia, ti atrofizza. Se lo usi come contraddittore, ti potenzia. Impari più veloce. Vedi connessioni che da solo non vedresti. Pensi meglio.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Il tema etico</div>
+        <h3>E i tuoi figli?</h3>
+        <p>Il ragazzo di sedici anni che usa ChatGPT per i compiti non sta copiando. Sta <span class="highlight">disabilitando una funzione cerebrale</span>.</p>
+        <p>In azienda: se stai introducendo AI senza dire ai tuoi come usarla, verso quale dei due lati stai spingendo la tua squadra?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ATTO IV -->
+<section id="atto4">
+  <div class="container">
+    <div class="section-label">Atto IV</div>
+    <h2 class="section-title">L'<em>inversione</em> delle competenze</h2>
+    <p class="section-lead">La seniority classica si sgonfia. La strategia vale oro. La piramide aziendale si sta appiattendo davanti a noi, e quasi nessuno lo sta vedendo.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Il colpo #1</div>
+        <h3>Vent'anni di esperienza non servono più.</h3>
+        <p>Non serve essere un senior developer per scrivere codice di livello senior. È partito dal software. Arriverà negli uffici. Poi nel controllo di produzione.</p>
+        <p><span class="highlight">L'operatore lo farà l'AI.</span> Serve lo stratega: chi sa fare le domande giuste e valutare gli output.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Il colpo #2 · Benioff</div>
+        <h3>L'ultima generazione.</h3>
+        <p>Mark Benioff, CEO di Salesforce, in un'intervista recente:</p>
+        <span class="quote">"Siamo l'ultima generazione che dirige team fatti solo di umani."</span>
+        <p>Ogni persona in questa sala, entro tre-cinque anni, <span class="highlight">gestirà agenti AI oltre che persone</span>. Non è un'ipotesi. È una tempistica.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Il colpo #3</div>
+        <h3>Cosa resta agli umani</h3>
+        <p>I lavori manuali e fisici reggono meglio nel breve: la robotica costa ancora troppo. Ma nell'ufficio la partita la vincono gli <span class="highlight">strateghi orizzontali</span>.</p>
+        <p>Meno middle management. Più persone T-shaped che coordinano domini diversi e dirigono agenti.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ATTO V -->
+<section id="atto5">
+  <div class="container">
+    <div class="section-label">Atto V</div>
+    <h2 class="section-title">Chi fa <em>funzionare</em> l'AI</h2>
+    <p class="section-lead">La risposta alla domanda di apertura non sta nel tool. Sta in tre cose che solo le persone possono fare.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Il 6%</div>
+        <h3>La soglia McKinsey</h3>
+        <p>Su <span class="highlight">1.993 aziende</span> studiate, solo il 6% ottiene impatto reale sui profitti dall'AI. Il 94% spende e non vede ritorno.</p>
+        <p>La differenza non è il modello. È un <span class="highlight">AI Champion interno</span> che fa da traduttore tra bisogno e tecnologia.</p>
+        <span class="data-point">6% · high performer</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Il dato-martello</div>
+        <h3>Revenue per dipendente</h3>
+        <p>Aziende AI-native: <span class="highlight">3,48 milioni</span> di fatturato per dipendente. Aziende SaaS tradizionali: <span class="highlight">610 mila</span>.</p>
+        <p>Stessa industria. <span class="highlight">5,7 volte di gap.</span> Chi scalda la sedia oggi paga per chi domani non ci sarà.</p>
+        <span class="data-point">5,7× Revenue / Employee</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Il template</div>
+        <h3>Medvi · 401M da solo</h3>
+        <p>Matthew Gallagher. Solo founder. Zero team. <span class="highlight">401 milioni di fatturato nel 2025.</span></p>
+        <p>Non è un'eccezione destinata a restare eccezione. È il template di quello che arriva. Il competitor di domani: una persona più un'infrastruttura di agenti.</p>
+        <span class="data-point">$401M · 1 persona</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUESTIONS -->
+<section>
+  <div class="container">
+    <div class="section-label">Chiusura</div>
+    <h2 class="section-title">Le tre <em>domande</em> da portarti a casa</h2>
+    <p class="section-lead">Non ti servono le risposte. Ti servono le domande giuste da fare ai tuoi lunedì mattina.</p>
+    <div class="questions">
+      <div class="question-item">
+        <div class="question-num">I</div>
+        <div class="question-text">Chi è l'AI Champion nella mia azienda? Se non c'è, chi può diventarlo entro tre mesi?</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">II</div>
+        <div class="question-text">Sto dando ai miei collaboratori il tempo e il permesso di sperimentare, o sto aspettando che lo faccia un consulente esterno?</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">III</div>
+        <div class="question-text">Se un concorrente raggiungesse 5× il mio revenue per dipendente con un terzo delle persone, starei ancora qui a chiedermi se investire in AI?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPIC EXTRA -->
+<section id="extra">
+  <div class="container">
+    <div class="extra-intro">
+      <div class="section-label">Topic Extra</div>
+      <h2 class="section-title">Se vuoi <em>andare più a fondo</em></h2>
+      <p class="section-lead">Sei approfondimenti che non entrano nella serata di stasera, ma che completano la mappa. Temi che toccheremo nelle prossime uscite di AI Espresso.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>Coordination Tax</h3>
+        <p>Studio Asana su <span class="highlight">9.000 lavoratori</span>: il 90% dice che il coordinamento è aumentato con l'AI, non diminuito.</p>
+        <p>L'AI velocizza il lavoro individuale. Ma moltiplica la tassa di coordinamento tra le persone. Più velocità a monte, più fatica a valle.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>Middle management che evapora</h3>
+        <p>Previsione Gartner 2026: il <span class="highlight">20% delle aziende</span> eliminerà metà del proprio middle management.</p>
+        <p>Lo span of control passa da 3 a 6. La piramide si appiattisce, il controllo si automatizza, l'organigramma si ridisegna.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>Il modello morto</h3>
+        <p>Le aziende tradizionali che competono con AI-native non stanno perdendo quote di mercato. Stanno <span class="highlight">perdendo il modello di business</span>.</p>
+        <p>Unit economics, margini operativi, tempo di go-to-market: tutto si sposta a favore di chi è nato con l'AI nelle vene.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>C.O.R.E. · La fine del prompting</h3>
+        <p>Il prompting come lo conosciamo è morto. Serve un approccio strutturato — <span class="highlight">Context, Objective, Role, Examples</span> — che trasforma l'AI da esecutore a contraddittore strategico.</p>
+        <p>Non si prompta. Si progetta la conversazione.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>Il costo fisico dell'AI</h3>
+        <p>Datacenter da <span class="highlight">70 milioni demoliti</span> per costruirne di nuovi più densi. L'AI "gratis" poggia su un'infrastruttura fisica costosissima ed energivora.</p>
+        <p>Nessuno ne parla perché nessuno la vede. Ma determina dove, come e quando l'AI sarà davvero sostenibile.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Approfondimento</div>
+        <h3>L'AI marketer più bravo degli umani</h3>
+        <p>Paper MIT (Timoshenko, Mao, Hauser): GPT-4 sostituisce i focus group tradizionali con <span class="highlight">risultati migliori</span> e a una frazione del costo.</p>
+        <p>La ricerca di mercato classica non è più difendibile economicamente. E chi lo capirà per primo prenderà il vantaggio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">AI Espresso</div>
+    <div class="footer-author">La newsletter di Matteo · Morfeus</div>
+    <div class="footer-meta">
+      <strong>Aperitalk</strong> · Giovani Imprenditori Confindustria<br>
+      15 aprile 2026 · Archivio Enoteca &amp; Cocktail Bar · Luisago (CO)
+    </div>
+  </div>
+</footer>
+
+<script>
+// Minimal scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.card, .section-title, .section-lead, .questions').forEach(el => {
+  el.classList.add('reveal');
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>

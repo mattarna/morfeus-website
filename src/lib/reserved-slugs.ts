@@ -18,6 +18,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "forge",
   "lab",
   "call-confirmed",
+  "aperitalk",
 
   // System routes
   "api",

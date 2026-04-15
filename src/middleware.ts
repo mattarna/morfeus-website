@@ -45,6 +45,13 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
+  // Evento statico: URL pulito → HTML in public (prima di next-intl)
+  if (pathname === "/aperitalk" || pathname === "/aperitalk/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/PERCORSO_Aperitalk_15apr2026.html";
+    return NextResponse.rewrite(url);
+  }
+
   const segments = getPathSegments(pathname);
   const firstSegment = segments[0];
 
