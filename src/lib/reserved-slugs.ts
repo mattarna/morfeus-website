@@ -19,6 +19,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "lab",
   "call-confirmed",
   "aperitalk",
+  "aperitivo",
 
   // System routes
   "api",

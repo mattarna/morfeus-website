@@ -51,6 +51,11 @@ export default function middleware(request: NextRequest) {
     url.pathname = "/PERCORSO_Aperitalk_15apr2026.html";
     return NextResponse.rewrite(url);
   }
+  if (pathname === "/aperitivo" || pathname === "/aperitivo/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/PERCORSO_Aperitalk_15apr2026_v2.html";
+    return NextResponse.rewrite(url);
+  }
 
   const segments = getPathSegments(pathname);
   const firstSegment = segments[0];
