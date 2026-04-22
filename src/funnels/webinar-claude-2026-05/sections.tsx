@@ -2608,7 +2608,7 @@ export function WebinarBannerSection() {
         }}
       />
       <Image
-        src="/locandina_16-9_webinar_claude.png"
+        src="/locandina_16-9_webinar_claude_compressa.png"
         alt="Webinar gratuito — +300 ore di Claude. In una sera. — Matteo Arnaboldi, CEO Morfeus Hub — 5 Maggio ore 18:00"
         width={1120}
         height={626}
