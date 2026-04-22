@@ -2534,7 +2534,11 @@ export function WebinarStickyBarSection() {
   }, []);
 
   const scrollToForm = () => {
-    document.getElementById("final-form-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const el = document.getElementById("form-final") ?? document.getElementById("final-form-anchor");
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const y = window.scrollY + rect.top - window.innerHeight * 0.32;
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
   };
 
   const show = isMobile && !formsVisible;
