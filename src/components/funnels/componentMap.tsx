@@ -10,7 +10,9 @@ import {
 } from "@/components/funnels/FunnelPrimitives";
 import {
   WebinarAudienceSection,
+  WebinarBannerSection,
   WebinarChangeSection,
+  WebinarLogosSection,
   WebinarFinalCTASection,
   WebinarFooterSection,
   WebinarHeaderSection,
@@ -63,5 +65,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   WebinarFooter: () => <WebinarFooterSection />,
   WebinarThankYou: ({ accentColor, step }) =>
     step.content.WebinarThankYou ? <WebinarThankYouSection accentColor={accentColor} step={step} /> : null,
+  WebinarBanner: () => <WebinarBannerSection />,
+  WebinarLogos: () => <WebinarLogosSection />,
   WebinarStickyBar: () => <WebinarStickyBarSection />,
 };

@@ -21,7 +21,9 @@ const allowedComponents: FunnelComponentName[] = [
   "WebinarFinalCTA",
   "WebinarFooter",
   "WebinarThankYou",
-  "WebinarStickyBar"
+  "WebinarStickyBar",
+  "WebinarBanner",
+  "WebinarLogos"
 ];
 
 function hasUniqueStepIds(steps: FunnelStepConfig[]): boolean {

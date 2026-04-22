@@ -288,12 +288,17 @@ function StyledSelect({
 
 function Countdown({ targetIso }: { targetIso: string }) {
   const targetMs = new Date(targetIso).getTime();
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
+
+  if (!mounted) return <div style={{ height: 88 }} />;
 
   const diff = Math.max(0, targetMs - now);
   const s = Math.floor(diff / 1000);
@@ -2488,6 +2493,130 @@ export function WebinarThankYouSection({ step }: SectionProps) {
       >
         Martedì 5 maggio 2026 · 18:00–19:00 CEST · Online
       </p>
+    </section>
+  );
+}
+
+// ─── LOGOS ────────────────────────────────────────────────────────────────────
+
+export function WebinarLogosSection() {
+  const logos = [
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/H-FARM.png", alt: "H-FARM" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Sole_24_Ore.png", alt: "Il Sole 24 Ore" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Talent_Garden.png", alt: "Talent Garden" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Confcommercio.png", alt: "Confcommercio" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Asseprim.png", alt: "Asseprim" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/CNA.png", alt: "CNA" },
+  ];
+
+  return (
+    <section
+      style={{
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        padding: "44px 32px",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1120,
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 32,
+        }}
+      >
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          Formazione e partnership
+        </span>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "20px 52px",
+          }}
+        >
+          {logos.map((logo) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={logo.alt}
+              src={logo.src}
+              alt={logo.alt}
+              style={{
+                height: 68,
+                width: "auto",
+                display: "block",
+                opacity: 0.40,
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.75"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.40"; }}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── BANNER ───────────────────────────────────────────────────────────────────
+
+export function WebinarBannerSection() {
+  return (
+    <section
+      style={{
+        padding: "0 32px 80px",
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Ambient glow behind the image */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "30%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "80%",
+          height: "60%",
+          background:
+            "radial-gradient(ellipse, rgba(235,122,46,0.12) 0%, rgba(123,104,238,0.08) 50%, transparent 75%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/locandina_16-9_webinar_claude.png"
+        alt="Webinar gratuito — +300 ore di Claude. In una sera. — Matteo Arnaboldi, CEO Morfeus Hub — 5 Maggio ore 18:00"
+        style={{
+          width: "100%",
+          display: "block",
+          borderRadius: 16,
+          border: "1px solid rgba(255,255,255,0.07)",
+          boxShadow:
+            "0 2px 0 rgba(255,255,255,0.04), 0 24px 64px -16px rgba(0,0,0,0.55), 0 48px 96px -32px rgba(0,0,0,0.40)",
+        }}
+      />
     </section>
   );
 }
