@@ -185,6 +185,7 @@ export interface FunnelConfig {
 export interface FunnelRegistryItem {
   slug: string;
   locale: "it" | "en";
+  indexable?: boolean;
   abTest: {
     enabled: boolean;
     variants: FunnelVariant[];

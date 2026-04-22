@@ -66,8 +66,9 @@ export default function middleware(request: NextRequest) {
     rewrittenUrl.pathname = buildInternalFunnelPath(firstSegment, segments.slice(1));
 
     const response = NextResponse.rewrite(rewrittenUrl);
-    // Funnel pages are conversion assets and should never be indexed.
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    if (!funnel?.indexable) {
+      response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    }
 
     if (funnel?.abTest.enabled) {
       const cookieName = `${AB_COOKIE_PREFIX}${firstSegment}`;

@@ -1176,7 +1176,7 @@ export function WebinarLearnPointsSection() {
     {
       n: "01",
       t: "Le funzionalità che il 95% non sa che esistono",
-      b: "Projects, CoWork, Skills, Plugin, Cloud Code, Dispatch e altre funzioni avanzate. Non le basi. L'utilizzo avanzato che trasforma Claude da chatbot a strumento di lavoro reale.",
+      b: "Projects, CoWork, Skills, Plugin, Claude Code, Dispatch e altre funzioni avanzate. Non le basi. L'utilizzo avanzato che trasforma Claude da chatbot a strumento di lavoro reale.",
     },
     {
       n: "02",

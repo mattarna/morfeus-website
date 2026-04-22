@@ -32,6 +32,7 @@ export function getRegisteredFunnelConfig(slug: string): FunnelConfig | null {
 const webinarClaudeMay2026Item: FunnelRegistryItem = {
   slug: "webinar-claude",
   locale: "it",
+  indexable: true,
   abTest: {
     enabled: false,
     variants: ["A"]
