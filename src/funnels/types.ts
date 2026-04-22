@@ -22,7 +22,8 @@ export type FunnelComponentName =
   | "WebinarThankYou"
   | "WebinarStickyBar"
   | "WebinarBanner"
-  | "WebinarLogos";
+  | "WebinarLogos"
+  | "WebinarFAQ";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -129,6 +130,8 @@ export interface WebinarFooterContent {}
 export interface WebinarLetterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface WebinarChangeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarFAQContent {}
 
 export interface WebinarThankYouContent {
   title: string;
@@ -167,6 +170,7 @@ export interface FunnelStepConfig {
     WebinarAudience?: WebinarAudienceContent;
     WebinarHost?: WebinarHostContent;
     WebinarChange?: WebinarChangeContent;
+    WebinarFAQ?: WebinarFAQContent;
     WebinarFinalCTA?: WebinarFinalCTAContent;
     WebinarFooter?: WebinarFooterContent;
     WebinarThankYou?: WebinarThankYouContent;

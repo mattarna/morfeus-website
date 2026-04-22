@@ -12,6 +12,7 @@ import {
   WebinarAudienceSection,
   WebinarBannerSection,
   WebinarChangeSection,
+  WebinarFAQSection,
   WebinarLogosSection,
   WebinarFinalCTASection,
   WebinarFooterSection,
@@ -68,4 +69,5 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   WebinarBanner: () => <WebinarBannerSection />,
   WebinarLogos: () => <WebinarLogosSection />,
   WebinarStickyBar: () => <WebinarStickyBarSection />,
+  WebinarFAQ: () => <WebinarFAQSection />,
 };

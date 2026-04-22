@@ -2499,6 +2499,140 @@ export function WebinarThankYouSection({ step }: SectionProps) {
   );
 }
 
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+export function WebinarFAQSection() {
+  const faqs = [
+    {
+      q: "Devo pagare qualcosa?",
+      a: "No. Il webinar è completamente gratuito. Nessuna carta di credito, nessun impegno. Ti iscrivi con la tua email e ricevi il link per partecipare.",
+    },
+    {
+      q: "Devo saper programmare o avere esperienza tecnica?",
+      a: "No. Il webinar parte dal presupposto che usi Claude (o un altro strumento AI) per il tuo lavoro quotidiano, anche solo per fare domande e ottenere risposte. Se sai usare un browser, sei dentro.",
+    },
+    {
+      q: "Funziona anche se uso ChatGPT o Gemini e non Claude?",
+      a: "Il mindset e l'approccio che mostro valgono per qualsiasi strumento AI. Però il webinar è verticale su Claude per una ragione precisa: ad oggi è lo strumento che sta costruendo l'ecosistema più completo per lavorare davvero — Projects, CoWork mode, Skills, Plugin, Claude Code. Nessun altro tool ha un sistema così integrato per passare dalla semplice chat a workflow di lavoro reali. È lo strumento su cui ho 300+ ore e quello su cui costruisco ogni giorno.",
+    },
+    {
+      q: "E se il 5 maggio non posso esserci?",
+      a: "Il replay sarà disponibile per diverse settimane dopo il webinar. Iscriviti comunque: riceverai il link via email per guardarlo quando vuoi.",
+    },
+    {
+      q: "Quanto dura?",
+      a: "Circa un'ora. Inizio alle 18:00, fine stimata entro le 19:15.",
+    },
+    {
+      q: "Dove si svolge?",
+      a: "Su YouTube Live. Non devi scaricare nulla. Riceverai il link diretto via email dopo l'iscrizione.",
+    },
+    {
+      q: "Chi è Matteo Arnaboldi?",
+      a: "CEO e Co-Founder di Morfeus Hub, azienda che lavora con l'AI dal 2021. Docente H-FARM, formatore Il Sole 24 Ore e Talent Garden. +300 ore di utilizzo avanzato di Claude. Su LinkedIn lo seguono 16.000 professionisti.",
+    },
+  ];
+
+  return (
+    <section
+      className={styles.sectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <SectionLabel>Domande frequenti</SectionLabel>
+
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(38px, 5vw, 56px)",
+          lineHeight: 1.05,
+          letterSpacing: "-0.025em",
+          color: "#fff",
+          margin: "24px 0 56px 0",
+          maxWidth: 820,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Tutto quello che <Accent>ti stai chiedendo</Accent>
+      </h2>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 820 }}>
+        {faqs.map((item) => (
+          <details
+            key={item.q}
+            className={styles.faqItem}
+            style={{
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
+            <summary
+              className={styles.faqSummary}
+              style={{
+                cursor: "pointer",
+                padding: "22px 26px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 20,
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(17px, 1.8vw, 19px)",
+                fontWeight: 500,
+                color: "#fff",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              <span>{item.q}</span>
+              <span
+                aria-hidden
+                className={styles.faqIcon}
+                style={{
+                  flexShrink: 0,
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "rgba(235,122,46,0.12)",
+                  border: "1px solid rgba(235,122,46,0.3)",
+                  color: "var(--orange)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                +
+              </span>
+            </summary>
+            <div
+              style={{
+                padding: "0 26px 22px 26px",
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                lineHeight: 1.6,
+                color: "var(--ghost)",
+                opacity: 0.88,
+              }}
+            >
+              {item.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ─── LOGOS ────────────────────────────────────────────────────────────────────
 
 export function WebinarLogosSection() {
@@ -2608,7 +2742,7 @@ export function WebinarBannerSection() {
         }}
       />
       <Image
-        src="/locandina_16-9_webinar_claude_compressa.png"
+        src="/locandina_logo_16-9_webinar_claude.webp"
         alt="Webinar gratuito — +300 ore di Claude. In una sera. — Matteo Arnaboldi, CEO Morfeus Hub — 5 Maggio ore 18:00"
         width={1120}
         height={626}
