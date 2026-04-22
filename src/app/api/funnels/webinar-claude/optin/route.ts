@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         email,
         attributes: {
           FIRSTNAME: name,
-          ROLE: role,
+          JOB_TITLE: role,
           SOURCE: payload.source ?? "webinar-claude",
           OPTIN_AT: new Date().toISOString(),
           ...(payload.utm_source && { UTM_SOURCE: payload.utm_source }),
