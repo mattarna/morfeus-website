@@ -1383,7 +1383,7 @@ export function WebinarHostSection() {
           <div className={styles.hostAvatar}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Matteo Arnaboldi square hoodie.png"
+              src="/matteo-arnaboldi-hoodie.png"
               alt="Matteo Arnaboldi"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
             />
