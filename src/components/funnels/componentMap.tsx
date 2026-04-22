@@ -10,13 +10,17 @@ import {
 } from "@/components/funnels/FunnelPrimitives";
 import {
   WebinarAudienceSection,
+  WebinarChangeSection,
   WebinarFinalCTASection,
+  WebinarFooterSection,
+  WebinarHeaderSection,
   WebinarHeroSection,
   WebinarHostSection,
   WebinarLearnPointsSection,
+  WebinarLetterSection,
   WebinarSocialProofSection,
   WebinarThankYouSection
-} from "@/components/funnels/WebinarClaudeSections";
+} from "@/funnels/webinar-claude-2026-05/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -44,28 +48,18 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.CheckoutButton ? (
       <FunnelCheckoutButton accentColor={accentColor} content={step.content.CheckoutButton} />
     ) : null,
+  WebinarHeader: () => <WebinarHeaderSection />,
   WebinarHero: ({ accentColor, step }) =>
-    step.content.WebinarHero ? (
-      <WebinarHeroSection accentColor={accentColor} content={step.content.WebinarHero} />
-    ) : null,
-  WebinarSocialProof: ({ step }) =>
-    step.content.WebinarSocialProof ? (
-      <WebinarSocialProofSection content={step.content.WebinarSocialProof} />
-    ) : null,
-  WebinarLearnPoints: ({ step }) =>
-    step.content.WebinarLearnPoints ? (
-      <WebinarLearnPointsSection content={step.content.WebinarLearnPoints} />
-    ) : null,
-  WebinarAudience: ({ step }) =>
-    step.content.WebinarAudience ? <WebinarAudienceSection content={step.content.WebinarAudience} /> : null,
-  WebinarHost: ({ step }) =>
-    step.content.WebinarHost ? <WebinarHostSection content={step.content.WebinarHost} /> : null,
+    step.content.WebinarHero ? <WebinarHeroSection accentColor={accentColor} step={step} /> : null,
+  WebinarSocialProof: () => <WebinarSocialProofSection />,
+  WebinarLetter: () => <WebinarLetterSection />,
+  WebinarLearnPoints: () => <WebinarLearnPointsSection />,
+  WebinarAudience: () => <WebinarAudienceSection />,
+  WebinarHost: () => <WebinarHostSection />,
+  WebinarChange: () => <WebinarChangeSection />,
   WebinarFinalCTA: ({ accentColor, step }) =>
-    step.content.WebinarFinalCTA ? (
-      <WebinarFinalCTASection accentColor={accentColor} content={step.content.WebinarFinalCTA} />
-    ) : null,
+    step.content.WebinarFinalCTA ? <WebinarFinalCTASection accentColor={accentColor} step={step} /> : null,
+  WebinarFooter: () => <WebinarFooterSection />,
   WebinarThankYou: ({ accentColor, step }) =>
-    step.content.WebinarThankYou ? (
-      <WebinarThankYouSection accentColor={accentColor} content={step.content.WebinarThankYou} />
-    ) : null
+    step.content.WebinarThankYou ? <WebinarThankYouSection accentColor={accentColor} step={step} /> : null,
 };

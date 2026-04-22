@@ -3,6 +3,7 @@
   "slug": "webinar-claude",
   "locale": "it",
   "accentColor": "#eb7a2e",
+  "layout": "bare",
   "steps": [
     {
       "id": "optin",
@@ -10,14 +11,22 @@
       "path": "",
       "isConversion": false,
       "componentOrder": [
+        "WebinarHeader",
         "WebinarHero",
         "WebinarSocialProof",
+        "WebinarLetter",
         "WebinarLearnPoints",
         "WebinarAudience",
         "WebinarHost",
-        "WebinarFinalCTA"
+        "WebinarChange",
+        "WebinarFinalCTA",
+        "WebinarFooter"
       ],
       "content": {
+        "WebinarHeader": {},
+        "WebinarLetter": {},
+        "WebinarChange": {},
+        "WebinarFooter": {},
         "WebinarHero": {
           "badge": "Webinar gratuito · 5 maggio 2026",
           "headline": "Stai usando Claude al 10%. Ti mostro il restante 90%.",
@@ -94,8 +103,10 @@
       "title": "Webinar Claude - Thank You",
       "path": "thank-you",
       "isConversion": true,
-      "componentOrder": ["WebinarThankYou"],
+      "componentOrder": ["WebinarHeader", "WebinarThankYou", "WebinarFooter"],
       "content": {
+        "WebinarHeader": {},
+        "WebinarFooter": {},
         "WebinarThankYou": {
           "title": "Sei dentro. Ci vediamo il 5 maggio.",
           "body": "Iscrizione confermata al webinar gratuito su Claude. Salva data e orario ora, cosi' non perdi la diretta.",

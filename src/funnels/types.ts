@@ -9,12 +9,16 @@ export type FunnelComponentName =
   | "VideoSales"
   | "OfferStack"
   | "CheckoutButton"
+  | "WebinarHeader"
   | "WebinarHero"
   | "WebinarSocialProof"
+  | "WebinarLetter"
   | "WebinarLearnPoints"
   | "WebinarAudience"
   | "WebinarHost"
+  | "WebinarChange"
   | "WebinarFinalCTA"
+  | "WebinarFooter"
   | "WebinarThankYou";
 
 export interface HeroContent {
@@ -114,6 +118,15 @@ export interface WebinarFinalCTAContent {
   ctaHref: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarHeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarFooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarLetterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarChangeContent {}
+
 export interface WebinarThankYouContent {
   title: string;
   body: string;
@@ -143,12 +156,16 @@ export interface FunnelStepConfig {
     VideoSales?: VideoSalesContent;
     OfferStack?: OfferStackContent;
     CheckoutButton?: CheckoutButtonContent;
+    WebinarHeader?: WebinarHeaderContent;
     WebinarHero?: WebinarHeroContent;
     WebinarSocialProof?: WebinarSocialProofContent;
+    WebinarLetter?: WebinarLetterContent;
     WebinarLearnPoints?: WebinarLearnPointsContent;
     WebinarAudience?: WebinarAudienceContent;
     WebinarHost?: WebinarHostContent;
+    WebinarChange?: WebinarChangeContent;
     WebinarFinalCTA?: WebinarFinalCTAContent;
+    WebinarFooter?: WebinarFooterContent;
     WebinarThankYou?: WebinarThankYouContent;
   };
 }
@@ -158,6 +175,7 @@ export interface FunnelConfig {
   slug: string;
   locale: "it" | "en";
   accentColor: string;
+  layout?: "default" | "bare";
   steps: FunnelStepConfig[];
 }
 
