@@ -1968,7 +1968,7 @@ export function WebinarFooterSection() {
           Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
         </p>
         <p style={{ ...muted, marginTop: 6 }}>
-          Morfeus Hub S.r.l. — P.IVA [DA INSERIRE] — Sede legale: [INDIRIZZO DA INSERIRE] — REA [DA INSERIRE] — Capitale sociale: € [DA INSERIRE] i.v.
+          Morfeus Hub S.r.l. — P.IVA 14209210963 — Milano, Italia
         </p>
         <p style={{ ...muted, marginTop: 4, opacity: 1 }}>
           © 2026 Morfeus Hub S.r.l. — Tutti i diritti riservati.
