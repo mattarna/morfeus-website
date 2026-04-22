@@ -1,3 +1,4 @@
+import Script from "next/script";
 import WcThemeProvider from "@/funnels/webinar-claude-2026-05/WcThemeProvider";
 
 export default function FunnelSlugLayout({
@@ -7,8 +8,33 @@ export default function FunnelSlugLayout({
   children: React.ReactNode;
   params: { slug: string };
 }) {
-  if (params.slug === "webinar-claude") {
-    return <WcThemeProvider>{children}</WcThemeProvider>;
-  }
-  return <>{children}</>;
+  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
+  return (
+    <>
+      {/* Meta Pixel — fires on all funnel pages; set NEXT_PUBLIC_META_PIXEL_ID in env */}
+      {pixelId && (
+        <Script
+          id="meta-pixel-funnel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+              n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+              document,'script','https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init','${pixelId}');
+              fbq('track','PageView');
+            `,
+          }}
+        />
+      )}
+      {params.slug === "webinar-claude" ? (
+        <WcThemeProvider>{children}</WcThemeProvider>
+      ) : (
+        <>{children}</>
+      )}
+    </>
+  );
 }

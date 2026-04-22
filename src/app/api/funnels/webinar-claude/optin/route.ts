@@ -5,6 +5,11 @@ interface OptinPayload {
   name?: string;
   role?: string;
   source?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  utm_term?: string;
 }
 
 function isValidEmail(email: string): boolean {
@@ -44,7 +49,12 @@ export async function POST(request: Request) {
           FIRSTNAME: name,
           ROLE: role,
           SOURCE: payload.source ?? "webinar-claude",
-          OPTIN_AT: new Date().toISOString()
+          OPTIN_AT: new Date().toISOString(),
+          ...(payload.utm_source && { UTM_SOURCE: payload.utm_source }),
+          ...(payload.utm_medium && { UTM_MEDIUM: payload.utm_medium }),
+          ...(payload.utm_campaign && { UTM_CAMPAIGN: payload.utm_campaign }),
+          ...(payload.utm_content && { UTM_CONTENT: payload.utm_content }),
+          ...(payload.utm_term && { UTM_TERM: payload.utm_term }),
         },
         ...(listId ? { listIds: [listId] } : {}),
         updateEnabled: true
