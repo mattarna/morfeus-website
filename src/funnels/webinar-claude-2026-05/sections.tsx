@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
@@ -675,8 +676,7 @@ export function WebinarHeaderSection() {
       }}
     >
       {/* Logo Morfeus — m-w2 (symbol + wordmark) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo/m-w2.png" alt="Morfeus" style={{ height: logoHeight, display: "block" }} />
+      <Image src="/logo/m-w2.png" alt="Morfeus" width={120} height={logoHeight} priority style={{ height: logoHeight, width: "auto", display: "block" }} />
       <div
         style={{
           fontSize: 12,
@@ -1388,10 +1388,12 @@ export function WebinarHostSection() {
         {/* Avatar */}
         <div className={styles.hostAvatarWrap}>
           <div className={styles.hostAvatar}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/matteo-arnaboldi-hoodie.png"
               alt="Matteo Arnaboldi"
+              width={240}
+              height={240}
+              loading="lazy"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
             />
           </div>
@@ -2551,12 +2553,13 @@ export function WebinarLogosSection() {
             gap: "20px 52px",
           }}
         >
+          {/* eslint-disable @next/next/no-img-element */}
           {logos.map((logo) => (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               key={logo.alt}
               src={logo.src}
               alt={logo.alt}
+              loading="lazy"
               style={{
                 height: 68,
                 width: "auto",
@@ -2604,12 +2607,15 @@ export function WebinarBannerSection() {
           zIndex: -1,
         }}
       />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="/locandina_16-9_webinar_claude.png"
         alt="Webinar gratuito — +300 ore di Claude. In una sera. — Matteo Arnaboldi, CEO Morfeus Hub — 5 Maggio ore 18:00"
+        width={1120}
+        height={626}
+        loading="lazy"
         style={{
           width: "100%",
+          height: "auto",
           display: "block",
           borderRadius: 16,
           border: "1px solid rgba(255,255,255,0.07)",
