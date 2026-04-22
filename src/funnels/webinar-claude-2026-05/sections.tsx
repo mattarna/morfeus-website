@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type {
   WebinarFinalCTAContent,
   WebinarHeroContent,
@@ -460,14 +460,31 @@ function OptinFormTwoStep({
     setError("");
     setIsSubmitting(true);
     try {
+      // Capture UTM params from current URL
+      const sp = new URLSearchParams(window.location.search);
+      const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+      const utms: Record<string, string> = {};
+      utmKeys.forEach(k => { if (sp.has(k)) utms[k] = sp.get(k)!; });
+
       const res = await fetch("/api/funnels/webinar-claude/optin", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), name: name.trim(), role, source: "webinar-claude" }),
+        body: JSON.stringify({ email: email.trim(), name: name.trim(), role, source: "webinar-claude", ...utms }),
       });
       if (!res.ok) throw new Error("submit_failed");
+
+      // GA4 conversion event
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = window as any;
+      if (w.dataLayer) w.dataLayer.push({ event: "webinar_optin_complete", role, ...utms });
+      // Meta Pixel Lead event
+      if (w.fbq) w.fbq("track", "Lead", { content_name: "webinar-claude" });
+
       onComplete?.({ email: email.trim(), name: name.trim(), role });
-      router.push(successRedirect);
+
+      // Redirect preserving UTM params
+      const utmStr = new URLSearchParams(utms).toString();
+      router.push(utmStr ? `${successRedirect}?${utmStr}` : successRedirect);
     } catch {
       setError("Non siamo riusciti a completare l'iscrizione. Riprova.");
     } finally {
@@ -621,6 +638,22 @@ function OptinFormTwoStep({
 // ─── HEADER ───────────────────────────────────────────────────────────────────
 
 export function WebinarHeaderSection() {
+  const pathname = usePathname();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const isWebinarClaudeFunnelPage =
+    pathname === "/webinar-claude" || pathname === "/webinar-claude/thank-you";
+  const logoHeight = isMobile && isWebinarClaudeFunnelPage ? 20 : 24;
+
   return (
     <header
       className={styles.header}
@@ -638,7 +671,7 @@ export function WebinarHeaderSection() {
     >
       {/* Logo Morfeus — m-w2 (symbol + wordmark) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo/m-w2.png" alt="Morfeus" style={{ height: 24, display: "block" }} />
+      <img src="/logo/m-w2.png" alt="Morfeus" style={{ height: logoHeight, display: "block" }} />
       <div
         style={{
           fontSize: 12,
@@ -1884,35 +1917,57 @@ export function WebinarFinalCTASection({ step }: SectionProps) {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 
 export function WebinarFooterSection() {
+  const muted: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontSize: 11,
+    lineHeight: 1.6,
+    color: "var(--muted)",
+    opacity: 0.75,
+  };
+
   return (
     <footer
       className={styles.footerInner}
       style={{
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 24,
-        flexWrap: "wrap",
         maxWidth: 1200,
         margin: "0 auto",
         width: "100%",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 22, display: "block" }} />
-        <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Morfeus Hub · morfeushub.com
-        </span>
+      {/* Top bar: logo + links */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 20, display: "block" }} />
+          <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+            morfeushub.com
+          </span>
+        </div>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", display: "flex", gap: 16 }}>
+          <Link href="/it/privacy" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Privacy Policy</Link>
+          <Link href="/it/cookies" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Cookie Policy</Link>
+        </div>
       </div>
-      <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-        <Link href="/it/privacy" style={{ color: "var(--muted)" }}>
-          Privacy Policy
-        </Link>
-        <span style={{ margin: "0 10px" }}>·</span>
-        © 2026 Morfeus Hub. Tutti i diritti riservati.
+
+      {/* Disclaimers */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <p style={muted}>
+          <strong style={{ color: "var(--muted)", opacity: 1 }}>Facebook Disclaimer:</strong> This Website is not a part of Facebook or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. Facebook is a trademark of Facebook Inc. Disclaimer: The products and services sold on this web site are not to be interpreted as a promise or guarantee of earnings. — Questo sito non fa parte di Facebook o Facebook Inc. Inoltre, questo sito NON è approvato da Facebook in alcun modo. Facebook è un marchio registrato di Facebook, Inc. I prodotti/servizi venduti su questo sito NON costituiscono proiezione, promessa o garanzia di guadagno.
+        </p>
+        <p style={muted}>
+          <strong style={{ color: "var(--muted)", opacity: 1 }}>YouTube Disclaimer:</strong> This site is not a part of YouTube or Google LLC. YouTube is a trademark of Google LLC.
+        </p>
+        <p style={muted}>
+          I risultati individuali possono variare. Nessun risultato è garantito e dipende dall&apos;impegno, dall&apos;esperienza e dalle condizioni individuali di ciascun partecipante. / Individual results may vary. No results are guaranteed.
+        </p>
+        <p style={muted}>
+          Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
+        </p>
+        <p style={{ ...muted, marginTop: 6, opacity: 1 }}>
+          © 2026 Morfeus Hub S.r.l. — Tutti i diritti riservati.
+        </p>
       </div>
     </footer>
   );
