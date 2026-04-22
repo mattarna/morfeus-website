@@ -652,7 +652,7 @@ export function WebinarHeaderSection() {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  const logoHeight = isMobile ? 16 : 18;
+  const logoHeight = isMobile ? 13 : 16;
 
   return (
     <header
@@ -2488,5 +2488,100 @@ export function WebinarThankYouSection({ step }: SectionProps) {
         Martedì 5 maggio 2026 · 18:00–19:00 CEST · Online
       </p>
     </section>
+  );
+}
+
+// ─── STICKY MOBILE CTA BAR ────────────────────────────────────────────────────
+
+export function WebinarStickyBarSection() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [formsVisible, setFormsVisible] = useState(true);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const updateMobile = () => setIsMobile(mq.matches);
+    updateMobile();
+    mq.addEventListener("change", updateMobile);
+
+    const visibleSet = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) visibleSet.add(e.target.id);
+          else visibleSet.delete(e.target.id);
+        });
+        setFormsVisible(visibleSet.size > 0);
+      },
+      { threshold: 0.1 }
+    );
+
+    const tryObserve = () => {
+      ["form-hero", "form-final"].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    };
+    tryObserve();
+    const t = setTimeout(tryObserve, 300);
+
+    return () => {
+      mq.removeEventListener("change", updateMobile);
+      observer.disconnect();
+      clearTimeout(t);
+    };
+  }, []);
+
+  const scrollToForm = () => {
+    document.getElementById("final-form-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const show = isMobile && !formsVisible;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: "12px 16px",
+        paddingBottom: "calc(12px + env(safe-area-inset-bottom, 0px))",
+        background: "rgba(10,9,20,0.96)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)" as React.CSSProperties["WebkitBackdropFilter"],
+        borderTop: "1px solid rgba(255,255,255,0.10)",
+        zIndex: 200,
+        transform: show ? "translateY(0)" : "translateY(110%)",
+        transition: "transform 0.35s cubic-bezier(.4,0,.2,1)",
+        pointerEvents: show ? "auto" : "none",
+      }}
+    >
+      <button
+        type="button"
+        onClick={scrollToForm}
+        style={{
+          width: "100%",
+          padding: "17px",
+          background: "var(--orange)",
+          color: "#fff",
+          fontFamily: "var(--font-body)",
+          fontWeight: 700,
+          fontSize: 16,
+          borderRadius: 12,
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+          boxSizing: "border-box",
+          boxShadow: "0 4px 24px rgba(235,122,46,0.45)",
+          animation: "btn-pulse 2.4s infinite",
+        }}
+      >
+        Iscriviti gratis <span style={{ fontSize: 20 }}>→</span>
+      </button>
+    </div>
   );
 }

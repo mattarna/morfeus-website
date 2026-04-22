@@ -19,6 +19,7 @@ import {
   WebinarLearnPointsSection,
   WebinarLetterSection,
   WebinarSocialProofSection,
+  WebinarStickyBarSection,
   WebinarThankYouSection
 } from "@/funnels/webinar-claude-2026-05/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
@@ -62,4 +63,5 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   WebinarFooter: () => <WebinarFooterSection />,
   WebinarThankYou: ({ accentColor, step }) =>
     step.content.WebinarThankYou ? <WebinarThankYouSection accentColor={accentColor} step={step} /> : null,
+  WebinarStickyBar: () => <WebinarStickyBarSection />,
 };

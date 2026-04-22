@@ -19,7 +19,8 @@ export type FunnelComponentName =
   | "WebinarChange"
   | "WebinarFinalCTA"
   | "WebinarFooter"
-  | "WebinarThankYou";
+  | "WebinarThankYou"
+  | "WebinarStickyBar";
 
 export interface HeroContent {
   eyebrow?: string;
