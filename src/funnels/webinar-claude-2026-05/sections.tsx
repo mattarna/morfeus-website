@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import type {
   WebinarFinalCTAContent,
   WebinarHeroContent,
@@ -482,6 +482,9 @@ function OptinFormTwoStep({
 
       onComplete?.({ email: email.trim(), name: name.trim(), role });
 
+      // Store first name for thank-you page personalisation
+      sessionStorage.setItem("wc_optin_name", name.trim());
+
       // Redirect preserving UTM params
       const utmStr = new URLSearchParams(utms).toString();
       router.push(utmStr ? `${successRedirect}?${utmStr}` : successRedirect);
@@ -638,7 +641,6 @@ function OptinFormTwoStep({
 // ─── HEADER ───────────────────────────────────────────────────────────────────
 
 export function WebinarHeaderSection() {
-  const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -650,9 +652,7 @@ export function WebinarHeaderSection() {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  const isWebinarClaudeFunnelPage =
-    pathname === "/webinar-claude" || pathname === "/webinar-claude/thank-you";
-  const logoHeight = isMobile && isWebinarClaudeFunnelPage ? 20 : 24;
+  const logoHeight = isMobile ? 16 : 18;
 
   return (
     <header
@@ -762,18 +762,18 @@ export function WebinarHeroSection({ step }: SectionProps) {
         {content.subheadline}
       </p>
 
-      {content.countdownIso && (
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 40 }}>
-          <Countdown targetIso={content.countdownIso} />
-        </div>
-      )}
-
       <OptinFormTwoStep
         id="form-hero"
         successRedirect={content.formSuccessRedirect}
         ctaStep2={content.formSubmitLabel}
         microStep1={content.formMicrocopy}
       />
+
+      {content.countdownIso && (
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
+          <Countdown targetIso={content.countdownIso} />
+        </div>
+      )}
 
       {/* Scroll hint */}
       <div
@@ -799,8 +799,8 @@ export function WebinarHeroSection({ step }: SectionProps) {
 
 export function WebinarSocialProofSection() {
   const items = [
-    { n: "+300", label: "ore di Claude", sub: "utilizzo reale quotidiano" },
-    { n: "9.500", label: "lettori newsletter", sub: "professionisti italiani" },
+    { n: "+300", label: "ore di Claude", sub: "uso complessivo del team Morfeus" },
+    { n: "9.500", label: "lettori newsletter", sub: "AI Espresso" },
     { n: "H-Farm · Sole 24 Ore · Talent Garden", label: null, sub: "docente & formatore" },
   ];
 
@@ -870,6 +870,7 @@ export function WebinarSocialProofSection() {
                     opacity: 0.92,
                     letterSpacing: "-0.005em",
                     marginBottom: 4,
+                    textAlign: "center",
                   }}
                 >
                   {it.n}
@@ -1169,7 +1170,7 @@ export function WebinarLearnPointsSection() {
     {
       n: "01",
       t: "Le funzionalità che il 95% non sa che esistono",
-      b: "Projects, CoWork, Skills, Plugin. Non le basi. L'utilizzo avanzato che trasforma Claude da chatbot a strumento di lavoro reale.",
+      b: "Projects, CoWork, Skills, Plugin, Cloud Code, Dispatch e altre funzioni avanzate. Non le basi. L'utilizzo avanzato che trasforma Claude da chatbot a strumento di lavoro reale.",
     },
     {
       n: "02",
@@ -1179,7 +1180,7 @@ export function WebinarLearnPointsSection() {
     {
       n: "03",
       t: "Demo live dal mio lavoro quotidiano",
-      b: "Niente slide, niente teoria. Ti faccio vedere esattamente come uso Claude ogni giorno: cosa gli chiedo, come lo correggo, perché funziona. Poi puoi replicarlo nel tuo.",
+      b: "Niente slide, niente teoria. Ti faccio vedere esattamente come io e il team Morfeus usiamo Claude ogni giorno: cosa gli chiedo, come lo correggo, perché funziona. Poi puoi replicarlo nel tuo.",
     },
     {
       n: "04",
@@ -1410,7 +1411,7 @@ export function WebinarHostSection() {
           </p>
 
           <p style={bioPara}>
-            Morfeus è un&apos;azienda che lavora con l&apos;AI da oltre 4 anni. Aiutiamo professionisti e aziende a integrare l&apos;intelligenza artificiale nel loro lavoro con metodo, non con l&apos;hype. Partner Asseprim Confcommercio.
+            Morfeus è un&apos;azienda software che sviluppa prodotti AI e aiuta le aziende a integrare l&apos;intelligenza artificiale nei propri processi. Lavoriamo con l&apos;AI dal 2021 — prima che diventasse hype. Partner Asseprim Confcommercio.
           </p>
           <p style={bioPara}>
             <Accent>+300 ore</Accent> di utilizzo avanzato di Claude.<br />+180 ore di CoWork mode.
@@ -1419,7 +1420,7 @@ export function WebinarHostSection() {
             Non parlo di AI per sentito dire. La uso ogni giorno per costruire sistemi, workflow e processi che funzionano nel mio lavoro e in quello dei miei clienti.
           </p>
           <p style={bioPara}>
-            Ho costruito il mio team di dipendenti AI. Non è un concetto teorico. È il modo in cui gestisco la mia azienda.
+            Io e il mio team abbiamo costruito un intero team a parte di dipendenti AI.
           </p>
 
           {/* Institutions badge */}
@@ -1965,7 +1966,10 @@ export function WebinarFooterSection() {
         <p style={muted}>
           Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
         </p>
-        <p style={{ ...muted, marginTop: 6, opacity: 1 }}>
+        <p style={{ ...muted, marginTop: 6 }}>
+          Morfeus Hub S.r.l. — P.IVA [DA INSERIRE] — Sede legale: [INDIRIZZO DA INSERIRE] — REA [DA INSERIRE] — Capitale sociale: € [DA INSERIRE] i.v.
+        </p>
+        <p style={{ ...muted, marginTop: 4, opacity: 1 }}>
           © 2026 Morfeus Hub S.r.l. — Tutti i diritti riservati.
         </p>
       </div>
@@ -2177,8 +2181,12 @@ export function WebinarThankYouSection({ step }: SectionProps) {
   const content: WebinarThankYouContent = step.content.WebinarThankYou;
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
+  const [firstName, setFirstName] = useState("");
 
-  const firstName = "";
+  useEffect(() => {
+    const stored = sessionStorage.getItem("wc_optin_name");
+    if (stored) setFirstName(stored.split(" ")[0]);
+  }, []);
 
   function addToCalendar() {
     if (!content.calendarIcsContent) return;
@@ -2345,7 +2353,29 @@ export function WebinarThankYouSection({ step }: SectionProps) {
       />
 
       {/* LinkedIn connect */}
-      <LinkedInLink />
+      <div
+        style={{
+          padding: "24px 26px",
+          background: "rgba(255,255,255,0.025)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: 14,
+          marginTop: 8,
+          marginBottom: 24,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ color: "var(--violet)", flexShrink: 0 }}>
+            <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+          </svg>
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 18, lineHeight: 1.2, letterSpacing: "-0.015em", color: "#fff", margin: 0 }}>
+            Connettiti con Matteo su LinkedIn
+          </h3>
+        </div>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.80, margin: "0 0 18px 0" }}>
+          Condivido ogni settimana quello che imparo usando l&apos;AI nel lavoro reale — workflow, strumenti, riflessioni senza hype. Seguono 16.000 professionisti.
+        </p>
+        <LinkedInLink />
+      </div>
 
       {/* Call strategica */}
       <div
