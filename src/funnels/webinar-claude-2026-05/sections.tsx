@@ -2542,6 +2542,7 @@ export function WebinarFAQSection() {
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         zIndex: 1,
+        textAlign: "center",
       }}
     >
       <SectionLabel>Domande frequenti</SectionLabel>
@@ -2554,7 +2555,7 @@ export function WebinarFAQSection() {
           lineHeight: 1.05,
           letterSpacing: "-0.025em",
           color: "#fff",
-          margin: "24px 0 56px 0",
+          margin: "24px auto 56px auto",
           maxWidth: 820,
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
@@ -2562,7 +2563,7 @@ export function WebinarFAQSection() {
         Tutto quello che <Accent>ti stai chiedendo</Accent>
       </h2>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 820 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 820, margin: "0 auto", textAlign: "left" }}>
         {faqs.map((item) => (
           <details
             key={item.q}
