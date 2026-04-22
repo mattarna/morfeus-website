@@ -10,12 +10,16 @@ const allowedComponents: FunnelComponentName[] = [
   "VideoSales",
   "OfferStack",
   "CheckoutButton",
+  "WebinarHeader",
   "WebinarHero",
   "WebinarSocialProof",
+  "WebinarLetter",
   "WebinarLearnPoints",
   "WebinarAudience",
   "WebinarHost",
+  "WebinarChange",
   "WebinarFinalCTA",
+  "WebinarFooter",
   "WebinarThankYou"
 ];
 
