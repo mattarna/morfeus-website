@@ -48,13 +48,8 @@ export async function POST(request: Request) {
         attributes: {
           FIRSTNAME: name,
           JOB_TITLE: role,
-          SOURCE: payload.source ?? "webinar-claude",
-          OPTIN_AT: new Date().toISOString(),
-          ...(payload.utm_source && { UTM_SOURCE: payload.utm_source }),
-          ...(payload.utm_medium && { UTM_MEDIUM: payload.utm_medium }),
-          ...(payload.utm_campaign && { UTM_CAMPAIGN: payload.utm_campaign }),
-          ...(payload.utm_content && { UTM_CONTENT: payload.utm_content }),
-          ...(payload.utm_term && { UTM_TERM: payload.utm_term }),
+          FORM_NAME: payload.source ?? "webinar-claude",
+          OPT_IN: true,
         },
         ...(listId ? { listIds: [listId] } : {}),
         updateEnabled: true
