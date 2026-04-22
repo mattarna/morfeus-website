@@ -8,6 +8,7 @@ import type {
   WebinarHeroContent,
   WebinarThankYouContent,
 } from "@/funnels/types";
+import styles from "./sections.module.css";
 
 // ─── Shared prop shape ────────────────────────────────────────────────────────
 
@@ -622,8 +623,8 @@ function OptinFormTwoStep({
 export function WebinarHeaderSection() {
   return (
     <header
+      className={styles.header}
       style={{
-        padding: "22px 32px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -663,10 +664,10 @@ export function WebinarHeroSection({ step }: SectionProps) {
 
   return (
     <section
+      className={styles.heroSection}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
-        padding: "56px 32px 80px",
         position: "relative",
         zIndex: 1,
       }}
@@ -712,15 +713,15 @@ export function WebinarHeroSection({ step }: SectionProps) {
       </h1>
 
       <p
+        className={styles.heroSubheadline}
         style={{
           fontFamily: "var(--font-body)",
           fontWeight: 400,
-          fontSize: 19,
           lineHeight: 1.55,
           color: "var(--ghost)",
           opacity: 0.85,
           textAlign: "center",
-          margin: "0 auto 44px",
+          margin: "0 auto",
           maxWidth: 680,
           textWrap: "pretty" as React.CSSProperties["textWrap"],
         }}
@@ -783,26 +784,15 @@ export function WebinarSocialProofSection() {
       }}
     >
       <div
+        className={styles.statsRow}
         style={{
           maxWidth: 1120,
           margin: "0 auto",
-          display: "flex",
-          alignItems: "stretch",
-          justifyContent: "space-around",
-          flexWrap: "wrap",
-          gap: "0 0",
         }}
       >
         {items.map((it, i) => (
           <div key={i} style={{ display: "contents" }}>
-            <div
-              style={{
-                textAlign: "center",
-                padding: "8px 20px",
-                flex: "1 1 0",
-                minWidth: 240,
-              }}
-            >
+            <div className={styles.statItem}>
               {it.label ? (
                 <div
                   style={{
@@ -867,9 +857,9 @@ export function WebinarSocialProofSection() {
             </div>
             {i < items.length - 1 && (
               <span
+                className={styles.statDivider}
                 style={{
                   width: 1,
-                  alignSelf: "center",
                   height: 42,
                   background:
                     "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%)",
@@ -922,10 +912,10 @@ export function WebinarLetterSection() {
 
   return (
     <section
+      className={styles.sectionPadLg}
       style={{
         background:
           "radial-gradient(ellipse at top, rgba(235,122,46,0.06), transparent 60%), linear-gradient(180deg, rgba(15,14,26,0.0) 0%, rgba(25,21,35,0.35) 8%, rgba(25,21,35,0.35) 92%, rgba(15,14,26,0.0) 100%)",
-        padding: "100px 24px 120px",
         position: "relative",
         zIndex: 1,
       }}
@@ -1167,10 +1157,10 @@ export function WebinarLearnPointsSection() {
 
   return (
     <section
+      className={styles.sectionPad}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
-        padding: "120px 32px",
         position: "relative",
         zIndex: 1,
       }}
@@ -1208,13 +1198,7 @@ export function WebinarLearnPointsSection() {
         Non &ldquo;prompt engineering base&rdquo;. Non &ldquo;scrivi prompt migliori&rdquo;. Workflow concreti che usano le feature vere di Claude — quelle che il 95% della gente non sa nemmeno esistano.
       </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 20,
-        }}
-      >
+      <div className={styles.learnGrid}>
         {items.map((it) => (
           <LearnCard key={it.n} n={it.n} title={it.t} body={it.b} />
         ))}
@@ -1263,10 +1247,10 @@ export function WebinarAudienceSection() {
 
   return (
     <section
+      className={styles.sectionPad}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
-        padding: "120px 32px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         zIndex: 1,
@@ -1349,10 +1333,10 @@ export function WebinarHostSection() {
 
   return (
     <section
+      className={styles.sectionPad}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
-        padding: "120px 32px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         zIndex: 1,
@@ -1360,43 +1344,17 @@ export function WebinarHostSection() {
     >
       <SectionLabel>Chi parla</SectionLabel>
 
-      <div
-        style={{
-          marginTop: 48,
-          display: "grid",
-          gap: 56,
-          gridTemplateColumns: "280px 1fr",
-          alignItems: "start",
-        }}
-      >
+      <div className={styles.hostGrid}>
         {/* Avatar */}
-        <div
-          style={{
-            width: 240,
-            height: 240,
-            borderRadius: "50%",
-            background:
-              "linear-gradient(135deg, rgba(101,88,212,0.25) 0%, rgba(235,122,46,0.20) 100%)",
-            border: "1px solid rgba(255,255,255,0.10)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: 72,
-              color: "#fff",
-              opacity: 0.55,
-              letterSpacing: "-0.03em",
-            }}
-          >
-            MA
-          </span>
+        <div className={styles.hostAvatarWrap}>
+          <div className={styles.hostAvatar}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Matteo-Arnaboldi-Presentazione.png"
+              alt="Matteo Arnaboldi"
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
+            />
+          </div>
         </div>
 
         {/* Bio */}
@@ -1704,10 +1662,10 @@ export function WebinarChangeSection() {
 
   return (
     <section
+      className={styles.sectionPadLg}
       style={{
         maxWidth: 1200,
         margin: "0 auto",
-        padding: "140px 32px 120px",
         position: "relative",
         zIndex: 1,
         borderTop: "1px solid rgba(255,255,255,0.06)",
@@ -1752,6 +1710,7 @@ export function WebinarChangeSection() {
       <div style={{ position: "relative" }}>
         <div
           aria-hidden
+          className={styles.changeRail}
           style={{
             position: "absolute",
             top: 88,
@@ -1764,15 +1723,7 @@ export function WebinarChangeSection() {
             pointerEvents: "none",
           }}
         />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 24,
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
+        <div className={styles.changeGrid}>
           {levels.map((lv) => (
             <LevelCard key={lv.n} {...lv} />
           ))}
@@ -1835,10 +1786,10 @@ export function WebinarFinalCTASection({ step }: SectionProps) {
 
   return (
     <section
+      className={styles.finalCtaSection}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
-        padding: "120px 32px 120px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         zIndex: 1,
@@ -1935,9 +1886,9 @@ export function WebinarFinalCTASection({ step }: SectionProps) {
 export function WebinarFooterSection() {
   return (
     <footer
+      className={styles.footerInner}
       style={{
         borderTop: "1px solid rgba(255,255,255,0.06)",
-        padding: "36px 32px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -2209,10 +2160,10 @@ export function WebinarThankYouSection({ step }: SectionProps) {
 
   return (
     <section
+      className={styles.thankYouSection}
       style={{
         maxWidth: 720,
         margin: "0 auto",
-        padding: "72px 24px 100px",
         position: "relative",
         zIndex: 1,
       }}
@@ -2304,7 +2255,7 @@ export function WebinarThankYouSection({ step }: SectionProps) {
         title="Aggiungi l'evento al calendario"
         body={<>Martedì <strong style={{ color: "rgba(255,255,255,0.9)" }}>5 maggio 2026, dalle 18:00 alle 19:00 (CEST)</strong>. Un&apos;ora netta, online.</>}
         cta={
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, width: "100%" }}>
+          <div className={styles.thankYouStepsRow} style={{ width: "100%", marginTop: 0 }}>
             <a
               href={content.calendarGoogleHref ?? GCAL_URL}
               target="_blank"
