@@ -754,7 +754,8 @@ export function WebinarHeroSection({ step }: SectionProps) {
           color: "var(--ghost)",
           opacity: 0.85,
           textAlign: "center",
-          margin: "0 auto",
+          marginLeft: "auto",
+          marginRight: "auto",
           maxWidth: 680,
           textWrap: "pretty" as React.CSSProperties["textWrap"],
         }}
