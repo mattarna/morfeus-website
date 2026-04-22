@@ -8,6 +8,15 @@ import {
   FunnelValueBullets,
   FunnelVideoSales
 } from "@/components/funnels/FunnelPrimitives";
+import {
+  WebinarAudienceSection,
+  WebinarFinalCTASection,
+  WebinarHeroSection,
+  WebinarHostSection,
+  WebinarLearnPointsSection,
+  WebinarSocialProofSection,
+  WebinarThankYouSection
+} from "@/components/funnels/WebinarClaudeSections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -34,5 +43,29 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   CheckoutButton: ({ accentColor, step }) =>
     step.content.CheckoutButton ? (
       <FunnelCheckoutButton accentColor={accentColor} content={step.content.CheckoutButton} />
+    ) : null,
+  WebinarHero: ({ accentColor, step }) =>
+    step.content.WebinarHero ? (
+      <WebinarHeroSection accentColor={accentColor} content={step.content.WebinarHero} />
+    ) : null,
+  WebinarSocialProof: ({ step }) =>
+    step.content.WebinarSocialProof ? (
+      <WebinarSocialProofSection content={step.content.WebinarSocialProof} />
+    ) : null,
+  WebinarLearnPoints: ({ step }) =>
+    step.content.WebinarLearnPoints ? (
+      <WebinarLearnPointsSection content={step.content.WebinarLearnPoints} />
+    ) : null,
+  WebinarAudience: ({ step }) =>
+    step.content.WebinarAudience ? <WebinarAudienceSection content={step.content.WebinarAudience} /> : null,
+  WebinarHost: ({ step }) =>
+    step.content.WebinarHost ? <WebinarHostSection content={step.content.WebinarHost} /> : null,
+  WebinarFinalCTA: ({ accentColor, step }) =>
+    step.content.WebinarFinalCTA ? (
+      <WebinarFinalCTASection accentColor={accentColor} content={step.content.WebinarFinalCTA} />
+    ) : null,
+  WebinarThankYou: ({ accentColor, step }) =>
+    step.content.WebinarThankYou ? (
+      <WebinarThankYouSection accentColor={accentColor} content={step.content.WebinarThankYou} />
     ) : null
 };

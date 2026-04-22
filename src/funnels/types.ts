@@ -8,7 +8,14 @@ export type FunnelComponentName =
   | "ThankYouSummary"
   | "VideoSales"
   | "OfferStack"
-  | "CheckoutButton";
+  | "CheckoutButton"
+  | "WebinarHero"
+  | "WebinarSocialProof"
+  | "WebinarLearnPoints"
+  | "WebinarAudience"
+  | "WebinarHost"
+  | "WebinarFinalCTA"
+  | "WebinarThankYou";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -56,6 +63,71 @@ export interface CheckoutButtonContent {
   href: string;
 }
 
+export interface WebinarHeroContent {
+  badge: string;
+  headline: string;
+  subheadline: string;
+  eventLabel: string;
+  countdownIso?: string;
+  formTitle?: string;
+  formMicrocopy?: string;
+  formSubmitLabel?: string;
+  formSuccessRedirect?: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+export interface WebinarSocialProofContent {
+  stats: Array<{
+    label: string;
+    value: string;
+  }>;
+}
+
+export interface WebinarLearnPointsContent {
+  title: string;
+  points: Array<{
+    title: string;
+    body: string;
+  }>;
+}
+
+export interface WebinarAudienceContent {
+  title: string;
+  bullets: string[];
+}
+
+export interface WebinarHostContent {
+  title: string;
+  body: string;
+}
+
+export interface WebinarFinalCTAContent {
+  title: string;
+  body: string;
+  countdownIso?: string;
+  formTitle?: string;
+  formMicrocopy?: string;
+  formSubmitLabel?: string;
+  formSuccessRedirect?: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+export interface WebinarThankYouContent {
+  title: string;
+  body: string;
+  checklist: string[];
+  eventDateLabel?: string;
+  youtubeLabel?: string;
+  calendarLabel?: string;
+  calendarGoogleHref?: string;
+  calendarIcsFileName?: string;
+  calendarIcsContent?: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
 export interface FunnelStepConfig {
   id: string;
   title: string;
@@ -71,6 +143,13 @@ export interface FunnelStepConfig {
     VideoSales?: VideoSalesContent;
     OfferStack?: OfferStackContent;
     CheckoutButton?: CheckoutButtonContent;
+    WebinarHero?: WebinarHeroContent;
+    WebinarSocialProof?: WebinarSocialProofContent;
+    WebinarLearnPoints?: WebinarLearnPointsContent;
+    WebinarAudience?: WebinarAudienceContent;
+    WebinarHost?: WebinarHostContent;
+    WebinarFinalCTA?: WebinarFinalCTAContent;
+    WebinarThankYou?: WebinarThankYouContent;
   };
 }
 

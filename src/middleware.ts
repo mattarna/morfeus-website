@@ -20,7 +20,7 @@ function pickVariant(variants: Array<"A" | "B">): "A" | "B" {
 
 function buildInternalFunnelPath(slug: string, restSegments: string[]): string {
   const suffix = restSegments.length > 0 ? `/${restSegments.join("/")}` : "";
-  return `/__funnels/${slug}${suffix}`;
+  return `/funnel-internal/${slug}${suffix}`;
 }
 
 function isNonIndexableLocalePath(segments: string[]): boolean {

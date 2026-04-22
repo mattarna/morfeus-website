@@ -105,9 +105,9 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 ### Area I — Funnel (root senza `/en` né `/it`)
 
-| Stato | Note |
-|--------|------|
-| Nessun funnel registrato nel codice | Quando attivi un funnel, l’URL pubblico sarà `https://morfeushub.com/{slug}` (e sotto-path step); il middleware riscrive su `/__funnels/…` — **non** linkare `__funnels` direttamente. |
+| Funnel | URL pubbliche | Note |
+|--------|---------------|------|
+| Webinar Claude | `https://morfeushub.com/webinar-claude`<br/>`https://morfeushub.com/webinar-claude/thank-you` | Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; non indicizzabile (`X-Robots-Tag: noindex`). |
 
 ---
 
@@ -163,7 +163,7 @@ flowchart TB
   DOM --> SMAP["/sitemap.xml"]
 
   DOM --> FUN["/{funnel-slug}"]
-  FUN -.->|"rewrite middleware"| INTERNAL["/__funnels/…"]
+  FUN -.->|"rewrite middleware"| INTERNAL["/funnel-internal/…"]
 
   style INTERNAL fill:#2d2d2d,color:#eee
   style FUN fill:#3d4f5f,color:#fff
@@ -228,7 +228,7 @@ flowchart TB
 │
 ├── sitemap.ts                  → /sitemap.xml
 │
-└── __funnels/                  ← SOLO target interno (rewrite)
+└── funnel-internal/            ← SOLO target interno (rewrite)
     └── [slug]/
         └── [[...step]]/        → pubblico come /{slug}/… quando il funnel è registrato
 ```
@@ -316,9 +316,9 @@ Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next
 
 ## Funnel (root `/` senza locale)
 
-- **Comportamento:** se il primo segmento del path è uno **slug funnel registrato**, `src/middleware.ts` riscrive verso `/__funnels/{slug}/...`.
-- **Stato attuale:** `src/funnels/registry.ts` espone `registerFunnel`, ma **nessun funnel è registrato** nel repo (nessuna chiamata a `registerFunnel` oltre la definizione). Quindi **nessun URL funnel pubblico** finché non aggiungi registrazione + config.
-- Path interno (non da linkare agli utenti): `/__funnels/{slug}` e sotto-path degli step definiti nel JSON config (`step.path`).
+- **Comportamento:** se il primo segmento del path è uno **slug funnel registrato**, `src/middleware.ts` riscrive verso `/funnel-internal/{slug}/...`.
+- **Stato attuale:** funnel registrato `webinar-claude` con step root + `thank-you`.
+- Path interno (non da linkare agli utenti): `/funnel-internal/{slug}` e sotto-path degli step definiti nel JSON config (`step.path`).
 
 ---
 
@@ -342,7 +342,7 @@ Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next
 
 Da `src/lib/reserved-slugs.ts`:
 
-`it`, `en`, `servizi`, `case-study`, `portal`, `privacy`, `cookies`, `forge`, `call-confirmed`, `api`, `_next`, `_vercel`, `__funnels`, `mockup`
+`it`, `en`, `servizi`, `case-study`, `portal`, `privacy`, `cookies`, `forge`, `call-confirmed`, `api`, `_next`, `_vercel`, `__funnels`, `funnel-internal`, `mockup`
 
 ---
 

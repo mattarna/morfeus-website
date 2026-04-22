@@ -1,5 +1,6 @@
 import type { FunnelConfig, FunnelRegistryItem } from "@/funnels/types";
 import { isReservedSlug } from "@/lib/reserved-slugs";
+import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
 
@@ -27,3 +28,14 @@ export function isRegisteredFunnelSlug(slug: string): boolean {
 export function getRegisteredFunnelConfig(slug: string): FunnelConfig | null {
   return funnelConfigMap[slug] ?? null;
 }
+
+const webinarClaudeMay2026Item: FunnelRegistryItem = {
+  slug: "webinar-claude",
+  locale: "it",
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(webinarClaudeMay2026Item, webinarClaudeMay2026Config as FunnelConfig);

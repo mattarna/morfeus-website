@@ -52,5 +52,5 @@ Standard Skill:
 ## Routing
 
 - URL pubblico funnel: `/slug` (senza `/it` o `/en`)
-- Rewrite middleware interno: `/__funnels/slug/...`
+- Rewrite middleware interno: `/funnel-internal/slug/...`
 - Sito madre locale resta su `/it` e `/en`

@@ -26,6 +26,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "_next",
   "_vercel",
   "__funnels",
+  "funnel-internal",
   "mockup",
 ]);
 
