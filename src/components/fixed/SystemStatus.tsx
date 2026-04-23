@@ -16,8 +16,8 @@ export function SystemStatus() {
   const shouldHide = currentIndex === 14;
 
   return (
-    <div 
-      className={`fixed z-40 pointer-events-none hidden xl:block right-8 bottom-8 transition-opacity duration-500 ${
+    <div
+      className={`fixed z-40 pointer-events-none hidden xl:block left-8 bottom-8 transition-opacity duration-500 ${
         shouldHide ? "opacity-0" : "opacity-100"
       }`}
     >
