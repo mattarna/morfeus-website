@@ -135,13 +135,6 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* MARF Chatbot */}
-        <script
-          src="https://marf.alexcarofiglio.com/embed/v1/loader.js"
-          data-agent="69ea597fb183255195f330f1"
-          data-key="pk_live_f81IB_4abTYhCbLEx7K9MHFuWXv2p8Em"
-          defer
-        />
       </head>
       <body className={`${outfit.variable} ${dmSans.variable} font-dm-sans antialiased bg-night text-ghost-white`}>
         {/* GTM Noscript */}
