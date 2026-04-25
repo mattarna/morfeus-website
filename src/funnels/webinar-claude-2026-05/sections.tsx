@@ -677,17 +677,6 @@ export function WebinarHeaderSection() {
     >
       {/* Logo Morfeus — m-w2 (symbol + wordmark) */}
       <Image src="/logo/m-w2.png" alt="Morfeus" width={120} height={logoHeight} priority style={{ height: logoHeight, width: "auto", display: "block" }} />
-      <div
-        style={{
-          fontSize: 12,
-          color: "var(--muted)",
-          fontWeight: 500,
-          letterSpacing: "0.08em",
-          fontFamily: "var(--font-body)",
-        }}
-      >
-        Un evento Morfeus
-      </div>
     </header>
   );
 }

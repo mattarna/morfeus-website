@@ -30,7 +30,7 @@ export default function FunnelSlugLayout({
           }}
         />
       )}
-      {params.slug === "webinar-claude" ? (
+      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" ? (
         <>
           <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
           <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />

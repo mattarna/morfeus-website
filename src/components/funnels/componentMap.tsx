@@ -25,6 +25,11 @@ import {
   WebinarStickyBarSection,
   WebinarThankYouSection
 } from "@/funnels/webinar-claude-2026-05/sections";
+import {
+  FreebieHeroSection,
+  FreebieThankYouSection,
+  FreebieWebinarTeaserSection,
+} from "@/funnels/freebie-cowork-setup-skill-2026-04/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -70,4 +75,10 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   WebinarLogos: () => <WebinarLogosSection />,
   WebinarStickyBar: () => <WebinarStickyBarSection />,
   WebinarFAQ: () => <WebinarFAQSection />,
+  FreebieHero: ({ accentColor, step }) =>
+    step.content.FreebieHero ? <FreebieHeroSection accentColor={accentColor} step={step} /> : null,
+  FreebieWebinarTeaser: ({ accentColor, step }) =>
+    step.content.FreebieWebinarTeaser ? <FreebieWebinarTeaserSection accentColor={accentColor} step={step} /> : null,
+  FreebieThankYou: ({ accentColor, step }) =>
+    step.content.FreebieThankYou ? <FreebieThankYouSection accentColor={accentColor} step={step} /> : null,
 };

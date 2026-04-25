@@ -23,7 +23,10 @@ export type FunnelComponentName =
   | "WebinarStickyBar"
   | "WebinarBanner"
   | "WebinarLogos"
-  | "WebinarFAQ";
+  | "WebinarFAQ"
+  | "FreebieHero"
+  | "FreebieWebinarTeaser"
+  | "FreebieThankYou";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -147,6 +150,63 @@ export interface WebinarThankYouContent {
   ctaHref: string;
 }
 
+export interface FreebieHeroContent {
+  badge: string;
+  headline: string;
+  headlineAccent?: string;
+  subheadline: string;
+  coverSrc: string;
+  coverAlt: string;
+  formTitle: string;
+  formMicrocopy: string;
+  formSubmitLabel: string;
+  formName: string;
+  privacyText: string;
+  privacyHref: string;
+  successRedirect: string;
+  rolesOptions: string[];
+  rolesPlaceholder: string;
+}
+
+export interface FreebieWebinarTeaserContent {
+  eyebrow: string;
+  title: string;
+  body: string;
+  eventLabel: string;
+}
+
+export interface FreebieThankYouContent {
+  greetingPrefix: string;
+  greetingFallback: string;
+  body: string;
+  webinarCardTitle: string;
+  webinarCardBody: string;
+  eventDateLabel: string;
+  calendarGoogleHref: string;
+  calendarGoogleLabel: string;
+  calendarIcsFileName: string;
+  calendarIcsContent: string;
+  calendarIcsLabel: string;
+  videoTitle: string;
+  videoEmbedUrl: string;
+  downloadTitle: string;
+  downloadBody: string;
+  downloadHref: string;
+  downloadLabel: string;
+  stepsTitle: string;
+  steps: string[];
+  bottomCtasEyebrow: string;
+  bottomCtasTitle: string;
+  bottomCtas: Array<{
+    icon: string;
+    eyebrow: string;
+    title: string;
+    body: string;
+    ctaLabel: string;
+    ctaHref: string;
+  }>;
+}
+
 export interface FunnelStepConfig {
   id: string;
   title: string;
@@ -174,6 +234,9 @@ export interface FunnelStepConfig {
     WebinarFinalCTA?: WebinarFinalCTAContent;
     WebinarFooter?: WebinarFooterContent;
     WebinarThankYou?: WebinarThankYouContent;
+    FreebieHero?: FreebieHeroContent;
+    FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
+    FreebieThankYou?: FreebieThankYouContent;
   };
 }
 

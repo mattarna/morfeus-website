@@ -18,6 +18,8 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+const DEFAULT_FORM_NAME = "Freebie_cowork_setup_skill";
+
 export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as OptinPayload;
@@ -34,36 +36,45 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "missing_brevo_api_key" }, { status: 500 });
     }
 
-    const listId = getBrevoListId("WEBINAR_CLAUDE_5MAG");
+    // Auto-enroll: il contatto entra sia nella list freebie (consegna .zip)
+    // sia nella list webinar (riceve invito + reminder dall'automation esistente).
+    const freebieListId = getBrevoListId("FREEBIE_COWORK_SETUP_SKILL");
+    const webinarListId = getBrevoListId("WEBINAR_CLAUDE_5MAG");
+    const listIds = [freebieListId, webinarListId].filter(
+      (id): id is number => typeof id === "number"
+    );
 
     const contactResponse = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
         accept: "application/json",
         "content-type": "application/json",
-        "api-key": brevoApiKey
+        "api-key": brevoApiKey,
       },
       body: JSON.stringify({
         email,
         attributes: {
           [BREVO_ATTR.NOME]: name,
           [BREVO_ATTR.JOB_TITLE]: role,
-          [BREVO_ATTR.FORM_NAME]: payload.source ?? "webinar-claude",
+          [BREVO_ATTR.FORM_NAME]: payload.source ?? DEFAULT_FORM_NAME,
           [BREVO_ATTR.OPT_IN]: true,
         },
-        ...(listId ? { listIds: [listId] } : {}),
-        updateEnabled: true
-      })
+        ...(listIds.length > 0 ? { listIds } : {}),
+        updateEnabled: true,
+      }),
     });
 
     if (!contactResponse.ok) {
       const details = await contactResponse.text();
-      return NextResponse.json({ success: false, error: "brevo_contact_failed", details }, { status: 502 });
+      return NextResponse.json(
+        { success: false, error: "brevo_contact_failed", details },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("webinar optin failed", error);
+    console.error("freebie-cowork-setup-skill optin failed", error);
     return NextResponse.json({ success: false, error: "unexpected_error" }, { status: 500 });
   }
 }
