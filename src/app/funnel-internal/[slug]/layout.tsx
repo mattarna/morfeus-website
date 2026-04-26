@@ -1,5 +1,6 @@
 import Script from "next/script";
 import WcThemeProvider from "@/funnels/webinar-claude-2026-05/WcThemeProvider";
+import { CookieConsentFunnel } from "@/components/shared/CookieConsentFunnel";
 
 export default function FunnelSlugLayout({
   children,
@@ -39,6 +40,8 @@ export default function FunnelSlugLayout({
       ) : (
         <>{children}</>
       )}
+      {/* GDPR cookie banner — funnel styling */}
+      <CookieConsentFunnel />
     </>
   );
 }

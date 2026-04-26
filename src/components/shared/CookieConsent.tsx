@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { usePathname } from "next/navigation";
 
 /**
  * GDPR-Compliant Cookie Consent Banner
@@ -25,13 +25,15 @@ const CONSENT_EXPIRY_DAYS = 365;
 
 declare global {
   interface Window {
-    dataLayer: Record<string, unknown>[];
+    dataLayer?: Record<string, unknown>[];
     gtag: (...args: unknown[]) => void;
   }
 }
 
 export function CookieConsent() {
-  const locale = useLocale();
+  const pathname = usePathname();
+  const firstSegment = pathname?.split("/")[1];
+  const locale = firstSegment === "it" || firstSegment === "en" ? firstSegment : "en";
   const [isVisible, setIsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
