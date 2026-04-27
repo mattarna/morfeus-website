@@ -107,23 +107,24 @@ export default function Home() {
   // Track section views (Desktop & Mobile)
   useEffect(() => {
     if (typeof window !== "undefined" && window.dataLayer) {
+      const targetWindow = window as Window & { dataLayer: Record<string, unknown>[] };
       const sectionNames = [
         "Hero", "Manifesto", "Problem", "Services", "Partners", "Process",
-        "Process_Step_1", "Process_Step_2", "Process_Step_3", 
+        "Process_Step_1", "Process_Step_2", "Process_Step_3",
         "ROISystem", "ROIometer", "CaseStudy", "FAQ", "CTA", "Footer"
       ];
-      
+
       const name = sectionNames[currentIndex] || `Section-${currentIndex}`;
-      
+
       // Delay to ensure the user actually stays on the section (avoid tracking during fast scrolls)
       const timer = setTimeout(() => {
-        window.dataLayer.push({
+        targetWindow.dataLayer.push({
           event: "section_view",
           section_id: currentIndex,
           section_name: name,
         });
       }, 2000); // 2 seconds threshold
-      
+
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
