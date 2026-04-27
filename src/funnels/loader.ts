@@ -27,7 +27,28 @@ const allowedComponents: FunnelComponentName[] = [
   "WebinarFAQ",
   "FreebieHero",
   "FreebieWebinarTeaser",
-  "FreebieThankYou"
+  "FreebieThankYou",
+  "SalesHeader",
+  "SalesHero",
+  "SalesBridge",
+  "SalesProblem",
+  "SalesMechanism",
+  "SalesBenefits",
+  "SalesPromiseLetter",
+  "SalesModules",
+  "SalesProof",
+  "SalesReviews",
+  "SalesAudience",
+  "SalesComparison",
+  "SalesBonus",
+  "SalesOffer",
+  "SalesGuarantee",
+  "SalesFAQ",
+  "SalesUrgency",
+  "SalesFinalCTA",
+  "SalesB2B",
+  "SalesFooter",
+  "SalesStickyBar"
 ];
 
 function hasUniqueStepIds(steps: FunnelStepConfig[]): boolean {

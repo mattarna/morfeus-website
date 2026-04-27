@@ -9,6 +9,27 @@ import {
   FunnelVideoSales
 } from "@/components/funnels/FunnelPrimitives";
 import {
+  SalesAudienceSection,
+  SalesB2BSection,
+  SalesBenefitsSection,
+  SalesBonusSection,
+  SalesBridgeSection,
+  SalesComparisonSection,
+  SalesFAQSection,
+  SalesFinalCTASection,
+  SalesFooterSection,
+  SalesGuaranteeSection,
+  SalesHeaderSection,
+  SalesHeroSection,
+  SalesMechanismSection,
+  SalesModulesSection,
+  SalesOfferSection,
+  SalesProblemSection,
+  SalesPromiseLetterSection,
+  SalesProofSection,
+  SalesReviewsSection,
+  SalesStickyBarSection,
+  SalesUrgencySection,
   WebinarAudienceSection,
   WebinarBannerSection,
   WebinarChangeSection,
@@ -81,4 +102,33 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.FreebieWebinarTeaser ? <FreebieWebinarTeaserSection accentColor={accentColor} step={step} /> : null,
   FreebieThankYou: ({ accentColor, step }) =>
     step.content.FreebieThankYou ? <FreebieThankYouSection accentColor={accentColor} step={step} /> : null,
+  SalesHeader: () => <SalesHeaderSection />,
+  SalesHero: ({ accentColor, step }) =>
+    step.content.SalesHero ? <SalesHeroSection accentColor={accentColor} step={step} /> : null,
+  SalesBridge: () => <SalesBridgeSection />,
+  SalesProblem: () => <SalesProblemSection />,
+  SalesMechanism: () => <SalesMechanismSection />,
+  SalesBenefits: () => <SalesBenefitsSection />,
+  SalesPromiseLetter: () => <SalesPromiseLetterSection />,
+  SalesModules: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesModulesSection accentColor={accentColor} step={step} /> : null,
+  SalesProof: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesProofSection accentColor={accentColor} step={step} /> : null,
+  SalesReviews: () => <SalesReviewsSection />,
+  SalesAudience: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesAudienceSection accentColor={accentColor} step={step} /> : null,
+  SalesComparison: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesComparisonSection accentColor={accentColor} step={step} /> : null,
+  SalesBonus: () => <SalesBonusSection />,
+  SalesOffer: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesOfferSection accentColor={accentColor} step={step} /> : null,
+  SalesGuarantee: () => <SalesGuaranteeSection />,
+  SalesFAQ: () => <SalesFAQSection />,
+  SalesUrgency: ({ accentColor, step }) =>
+    step.content.SalesUrgency && step.content.SalesPricing ? <SalesUrgencySection accentColor={accentColor} step={step} /> : null,
+  SalesFinalCTA: ({ accentColor, step }) =>
+    step.content.SalesFinalCTA && step.content.SalesPricing ? <SalesFinalCTASection accentColor={accentColor} step={step} /> : null,
+  SalesB2B: () => <SalesB2BSection />,
+  SalesFooter: () => <SalesFooterSection />,
+  SalesStickyBar: ({ accentColor, step }) => <SalesStickyBarSection accentColor={accentColor} step={step} />,
 };

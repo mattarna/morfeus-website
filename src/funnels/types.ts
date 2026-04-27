@@ -26,7 +26,28 @@ export type FunnelComponentName =
   | "WebinarFAQ"
   | "FreebieHero"
   | "FreebieWebinarTeaser"
-  | "FreebieThankYou";
+  | "FreebieThankYou"
+  | "SalesHeader"
+  | "SalesHero"
+  | "SalesBridge"
+  | "SalesProblem"
+  | "SalesMechanism"
+  | "SalesBenefits"
+  | "SalesPromiseLetter"
+  | "SalesModules"
+  | "SalesProof"
+  | "SalesReviews"
+  | "SalesAudience"
+  | "SalesComparison"
+  | "SalesBonus"
+  | "SalesOffer"
+  | "SalesGuarantee"
+  | "SalesFAQ"
+  | "SalesUrgency"
+  | "SalesFinalCTA"
+  | "SalesB2B"
+  | "SalesFooter"
+  | "SalesStickyBar";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -175,6 +196,117 @@ export interface FreebieWebinarTeaserContent {
   eventLabel: string;
 }
 
+// ─── Sales Page (corso-claude) ──────────────────────────────────────────────
+
+export type SalesVariant = "live" | "replay" | "email";
+
+export interface SalesPricingContent {
+  earlyBirdPrice: number;
+  standardPrice: number;
+  fullPrice: number;
+  currency: "EUR";
+  earlyBirdDeadlineIso: string;
+  standardDeadlineIso: string;
+  checkoutUrlEarlyBird: string;
+  checkoutUrlStandard: string;
+  checkoutUrlFull: string;
+  b2bCallUrl: string;
+}
+
+export interface SalesHeroVariantCopy {
+  badge: string;
+  headlinePre: string;
+  headlinePost: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  subheadline: string;
+  ctaLabel: string;
+  microcopy: string;
+}
+
+export interface SalesHeroContent {
+  live: SalesHeroVariantCopy;
+  replay: SalesHeroVariantCopy;
+  email: SalesHeroVariantCopy;
+  proofBar: string[];
+  /**
+   * VSL (Video Sales Letter) — autoplay muted with facade pattern.
+   * Set vslYoutubeId to a real YouTube video ID to enable. When the value is
+   * missing or equals "PLACEHOLDER_VIDEO_ID", the player area falls back to
+   * showing the static thumbnail with play overlay (no iframe loaded).
+   */
+  vslYoutubeId?: string;
+  vslThumbnailSrc?: string;
+  vslTitle?: string;
+}
+
+export interface SalesUrgencyVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  timerLabel: string;
+  ctaLabel: string;
+}
+
+export interface SalesUrgencyContent {
+  live: SalesUrgencyVariantCopy;
+  replay: SalesUrgencyVariantCopy;
+  email: SalesUrgencyVariantCopy;
+}
+
+export interface SalesFinalCTAVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  ctaLabel: string;
+  closingPre: string;
+  closingAccent: string;
+  closingEnd: string;
+}
+
+export interface SalesFinalCTAContent {
+  live: SalesFinalCTAVariantCopy;
+  replay: SalesFinalCTAVariantCopy;
+  email: SalesFinalCTAVariantCopy;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesHeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesBridgeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesProblemContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesMechanismContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesBenefitsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesPromiseLetterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesModulesContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesProofContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesReviewsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesAudienceContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesComparisonContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesBonusContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesOfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesGuaranteeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesFAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesB2BContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesFooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesStickyBarContent {}
+
 export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
@@ -237,6 +369,28 @@ export interface FunnelStepConfig {
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;
+    SalesHeader?: SalesHeaderContent;
+    SalesHero?: SalesHeroContent;
+    SalesBridge?: SalesBridgeContent;
+    SalesProblem?: SalesProblemContent;
+    SalesMechanism?: SalesMechanismContent;
+    SalesBenefits?: SalesBenefitsContent;
+    SalesPromiseLetter?: SalesPromiseLetterContent;
+    SalesModules?: SalesModulesContent;
+    SalesProof?: SalesProofContent;
+    SalesReviews?: SalesReviewsContent;
+    SalesAudience?: SalesAudienceContent;
+    SalesComparison?: SalesComparisonContent;
+    SalesBonus?: SalesBonusContent;
+    SalesOffer?: SalesOfferContent;
+    SalesGuarantee?: SalesGuaranteeContent;
+    SalesFAQ?: SalesFAQContent;
+    SalesUrgency?: SalesUrgencyContent;
+    SalesFinalCTA?: SalesFinalCTAContent;
+    SalesB2B?: SalesB2BContent;
+    SalesFooter?: SalesFooterContent;
+    SalesStickyBar?: SalesStickyBarContent;
+    SalesPricing?: SalesPricingContent;
   };
 }
 

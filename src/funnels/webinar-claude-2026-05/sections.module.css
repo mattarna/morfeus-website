@@ -259,3 +259,359 @@
 .faqItem[open] .faqIcon {
   transform: rotate(45deg);
 }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   SALES PAGE (corso-claude / step `sales`) — responsive utilities.
+   Shared with webinar via the same css-modules file: `.header`, `.footerInner`,
+   `.faqSummary`, `.faqItem`, `.faqIcon`. Sales-only utilities below use a
+   `sales*` prefix when they conflict with webinar (e.g. salesSectionPad has
+   100px desktop padding vs webinar's 120px).
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Standard section padding (sales) ───────────────────────────────────── */
+
+.salesSectionPad {
+  padding: 100px 32px;
+}
+@media (max-width: 640px) {
+  .salesSectionPad {
+    padding: 56px 18px;
+  }
+}
+
+.salesSectionPadSm {
+  padding: 64px 32px;
+}
+@media (max-width: 640px) {
+  .salesSectionPadSm {
+    padding: 36px 18px;
+  }
+}
+
+/* ── Hero (sales) — slightly tighter mobile padding ─────────────────────── */
+
+.salesHeroSection {
+  padding: 56px 32px 80px;
+}
+@media (max-width: 640px) {
+  .salesHeroSection {
+    padding: 24px 18px 48px;
+  }
+}
+
+/* ── Bridge ─────────────────────────────────────────────────────────────── */
+
+.bridgeSection {
+  padding: 80px 32px;
+}
+@media (max-width: 640px) {
+  .bridgeSection {
+    padding: 48px 18px;
+  }
+}
+
+/* ── Mechanism: 3-step grid ─────────────────────────────────────────────── */
+
+.stepGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .stepGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Modules: 2-column grid ─────────────────────────────────────────────── */
+
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .moduleGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Audience: 2-column ─────────────────────────────────────────────────── */
+
+.audienceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 768px) {
+  .audienceGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Comparison ─────────────────────────────────────────────────────────── */
+
+.comparisonTable {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .comparisonTable {
+    display: none;
+  }
+}
+
+.comparisonStack {
+  display: none;
+}
+@media (max-width: 900px) {
+  .comparisonStack {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Offer: stack items ─────────────────────────────────────────────────── */
+
+.offerStack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* Stack card layout: row on desktop, "value" wraps below body on mobile */
+.offerStackCard {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 18px;
+  align-items: center;
+}
+@media (max-width: 560px) {
+  .offerStackCard {
+    grid-template-columns: 44px 1fr;
+    gap: 14px 16px;
+    align-items: start;
+  }
+  .offerStackValue {
+    grid-column: 2 / 3;
+    text-align: left;
+    margin-top: 2px;
+  }
+}
+
+.offerStackIndex {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.offerStackBody {
+  min-width: 0;
+}
+
+.offerStackValue {
+  text-align: right;
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .offerStackValue {
+    white-space: normal;
+  }
+}
+
+/* ── Authority + Logos ──────────────────────────────────────────────────── */
+
+.authorityGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .authorityGrid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* ── Problem grid (3 cards, row desktop / stack mobile) ─────────────────── */
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .problemGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Benefits grid (6 cards, 3x2 desktop / 2x3 tablet / 1 col mobile) ───── */
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 1000px) {
+  .benefitsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── B2B grid (text+CTA + icon, 2 cols desktop, stack mobile) ───────────── */
+
+.b2bGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .b2bGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+}
+
+/* ── Sales partner logo wall (full-width, responsive size) ──────────────── */
+
+.salesPartnerLogo {
+  height: 64px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+@media (max-width: 768px) {
+  .salesPartnerLogo {
+    height: 48px;
+    max-width: 140px;
+  }
+}
+@media (max-width: 420px) {
+  .salesPartnerLogo {
+    height: 40px;
+    max-width: 110px;
+  }
+}
+
+/* ── B2B decorative icon (shrink on mobile) ─────────────────────────────── */
+
+.b2bDecoIcon {
+  width: 180px;
+  height: 180px;
+}
+@media (max-width: 768px) {
+  .b2bDecoIcon {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* ── Reviews grid (3 testimonial cards, row desktop / stack mobile) ─────── */
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .reviewsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Screenshots grid (4 colonne portrait desktop / 2 mobile) ───────────── */
+
+.screenshotsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) {
+  .screenshotsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .screenshotsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+/* ── Bonus grid (4 cards, 2x2 desktop, stack mobile) ────────────────────── */
+
+.bonusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 768px) {
+  .bonusGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* ── Timer countdown row ────────────────────────────────────────────────── */
+
+.timerRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  border-radius: 14px;
+}
+@media (max-width: 640px) {
+  .timerRow {
+    padding: 16px 18px;
+    gap: 8px;
+  }
+}
+
+/* ── Hide on mobile / desktop helpers ───────────────────────────────────── */
+
+.hideOnMobile {
+  display: initial;
+}
+@media (max-width: 640px) {
+  .hideOnMobile {
+    display: none;
+  }
+}
+
+.showOnMobile {
+  display: none;
+}
+@media (max-width: 640px) {
+  .showOnMobile {
+    display: initial;
+  }
+}

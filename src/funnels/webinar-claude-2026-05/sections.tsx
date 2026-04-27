@@ -2,9 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import type {
+  SalesFinalCTAContent,
+  SalesHeroContent,
+  SalesPricingContent,
+  SalesUrgencyContent,
+  SalesVariant,
   WebinarFinalCTAContent,
   WebinarHeroContent,
   WebinarThankYouContent,
@@ -2845,6 +2850,4667 @@ export function WebinarStickyBarSection() {
         }}
       >
         Iscriviti gratis <span style={{ fontSize: 20 }}>→</span>
+      </button>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * SALES PAGE (corso-claude) — 17 sezioni
+ *
+ * Step `/webinar-claude/corso` del funnel webinar-claude.
+ * Maps 1:1 al doc master: copy/SALES_PAGE_CORSO_COMPLETA_V1.md
+ * Tre varianti URL-driven live | replay | email selezionate via ?src=.
+ * Cinque blocchi branchano per variante (hero, bridge, problem, urgency,
+ * finalCTA) + la FAQ aggiunge un item per la coorte email. Tutti gli altri
+ * blocchi sono identici fra varianti.
+ * Le primitive Accent / Badge / SectionLabel sono quelle dichiarate sopra
+ * (sezione webinar). PrimaryButton webinar è separato dal SalesPrimaryButton
+ * — quest'ultimo aggiunge supporto href anchor + size "xl".
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+// ─── Variant hook ─────────────────────────────────────────────────────────────
+
+function isVariant(v: string | null): v is SalesVariant {
+  return v === "live" || v === "replay" || v === "email";
+}
+
+function useSalesVariant(): SalesVariant {
+  const [variant, setVariant] = useState<SalesVariant>("replay");
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sp = new URLSearchParams(window.location.search);
+    const src = sp.get("src");
+    if (isVariant(src)) setVariant(src);
+  }, []);
+  return variant;
+}
+
+// ─── Pricing hook (auto-advances stage based on deadlines) ────────────────────
+
+type PricingStage = "earlyBird" | "standard" | "full";
+interface CurrentPricing {
+  stage: PricingStage;
+  price: number;
+  checkoutUrl: string;
+  activeDeadlineIso: string | null;
+}
+
+function useCurrentPricing(pricing: SalesPricingContent): CurrentPricing {
+  const [now, setNow] = useState<number>(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const earlyDeadline = useMemo(
+    () => new Date(pricing.earlyBirdDeadlineIso).getTime(),
+    [pricing.earlyBirdDeadlineIso]
+  );
+  const stdDeadline = useMemo(
+    () => new Date(pricing.standardDeadlineIso).getTime(),
+    [pricing.standardDeadlineIso]
+  );
+
+  if (!mounted) {
+    return {
+      stage: "earlyBird",
+      price: pricing.earlyBirdPrice,
+      checkoutUrl: pricing.checkoutUrlEarlyBird,
+      activeDeadlineIso: pricing.earlyBirdDeadlineIso,
+    };
+  }
+  if (now < earlyDeadline) {
+    return {
+      stage: "earlyBird",
+      price: pricing.earlyBirdPrice,
+      checkoutUrl: pricing.checkoutUrlEarlyBird,
+      activeDeadlineIso: pricing.earlyBirdDeadlineIso,
+    };
+  }
+  if (now < stdDeadline) {
+    return {
+      stage: "standard",
+      price: pricing.standardPrice,
+      checkoutUrl: pricing.checkoutUrlStandard,
+      activeDeadlineIso: pricing.standardDeadlineIso,
+    };
+  }
+  return {
+    stage: "full",
+    price: pricing.fullPrice,
+    checkoutUrl: pricing.checkoutUrlFull,
+    activeDeadlineIso: null,
+  };
+}
+
+// ─── GA4 / Meta tracking helper ───────────────────────────────────────────────
+
+function trackEvent(name: string, params: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const w = window as any;
+  if (w.dataLayer) w.dataLayer.push({ event: name, ...params });
+  if (w.gtag) w.gtag("event", name, params);
+}
+
+function trackCheckoutClick(block: string, variant: SalesVariant, stage: PricingStage, price: number) {
+  trackEvent("sales_cta_click", { block, variant, pricing_stage: stage, price });
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    if (w.fbq) w.fbq("track", "InitiateCheckout", { value: price, currency: "EUR", content_name: "corso-claude" });
+  }
+}
+
+// ─── Scroll helpers ───────────────────────────────────────────────────────────
+
+function scrollToId(id: string) {
+  if (typeof document === "undefined") return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const y = window.scrollY + rect.top - 40;
+  window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+}
+
+// ─── Primitives ───────────────────────────────────────────────────────────────
+// Accent, Badge, SectionLabel are reused from webinar-claude primitives
+// (declared at the top of this same file).
+
+function SalesPrimaryButton({
+  children,
+  onClick,
+  href,
+  type = "button",
+  disabled,
+  fullWidth,
+  pulse,
+  size = "md",
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  href?: string;
+  type?: "button" | "submit";
+  disabled?: boolean;
+  fullWidth?: boolean;
+  pulse?: boolean;
+  size?: "md" | "lg" | "xl";
+}) {
+  const [hover, setHover] = useState(false);
+  const [press, setPress] = useState(false);
+  // Responsive padding/fontSize via clamp — su mobile auto-shrink
+  const pad =
+    size === "xl"
+      ? "clamp(14px, 3.5vw, 22px) clamp(20px, 5vw, 36px)"
+      : size === "lg"
+        ? "clamp(14px, 3vw, 20px) clamp(18px, 4.5vw, 32px)"
+        : "clamp(12px, 2.5vw, 16px) clamp(16px, 4vw, 24px)";
+  const fs =
+    size === "xl"
+      ? "clamp(15px, 1.6vw, 18px)"
+      : size === "lg"
+        ? "clamp(15px, 1.5vw, 17px)"
+        : "clamp(14px, 1.4vw, 16px)";
+
+  const styleProps: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontWeight: 700,
+    fontSize: fs,
+    padding: pad,
+    borderRadius: 10,
+    border: "none",
+    background: press ? "var(--orange-pressed)" : hover ? "var(--orange-hover)" : "var(--orange)",
+    color: "#fff",
+    boxShadow: hover ? "0 6px 28px rgba(235,122,46,0.5)" : "0 4px 20px rgba(235,122,46,0.35)",
+    transform: hover && !press ? "translateY(-1px)" : "translateY(0)",
+    transition: "background .2s, box-shadow .2s, transform .2s",
+    cursor: disabled ? "default" : "pointer",
+    opacity: disabled ? 0.5 : 1,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    width: fullWidth ? "100%" : "auto",
+    animation: pulse ? "btn-pulse 2.4s infinite" : "none",
+    textDecoration: "none",
+    boxSizing: "border-box",
+  };
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        onClick={onClick}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => { setHover(false); setPress(false); }}
+        onMouseDown={() => setPress(true)}
+        onMouseUp={() => setPress(false)}
+        style={styleProps}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => { setHover(false); setPress(false); }}
+      onMouseDown={() => setPress(true)}
+      onMouseUp={() => setPress(false)}
+      style={styleProps}
+    >
+      {children}
+    </button>
+  );
+}
+
+function OutlineButton({
+  children,
+  href,
+  onClick,
+}: {
+  children: React.ReactNode;
+  href?: string;
+  onClick?: () => void;
+}) {
+  const [hover, setHover] = useState(false);
+  const styleProps: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontWeight: 700,
+    fontSize: 16,
+    padding: "14px 22px",
+    borderRadius: 10,
+    border: `2px solid ${hover ? "var(--orange-hover)" : "var(--orange)"}`,
+    background: hover ? "rgba(235,122,46,0.08)" : "transparent",
+    color: "var(--orange)",
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    transition: "background .2s, border-color .2s",
+    textDecoration: "none",
+    boxSizing: "border-box",
+  };
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={styleProps}
+        onClick={onClick}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={onClick}
+      style={styleProps}
+    >
+      {children}
+    </button>
+  );
+}
+
+// ─── Countdown ────────────────────────────────────────────────────────────────
+
+function CountdownCells({ targetIso, compact = false }: { targetIso: string; compact?: boolean }) {
+  const targetMs = useMemo(() => new Date(targetIso).getTime(), [targetIso]);
+  const [now, setNow] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (!mounted) return <div style={{ height: compact ? 36 : 96 }} />;
+
+  const diff = Math.max(0, targetMs - now);
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  if (diff <= 0) {
+    return (
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 10,
+          padding: "12px 20px",
+          borderRadius: 10,
+          background: "rgba(235,122,46,0.12)",
+          border: "1px solid rgba(235,122,46,0.35)",
+          color: "var(--orange)",
+          fontSize: 14,
+          fontWeight: 700,
+          fontFamily: "var(--font-body)",
+        }}
+      >
+        Prezzo aggiornato — il prossimo step è attivo
+      </div>
+    );
+  }
+
+  // Responsive sizing: clamp values fluidly between mobile and desktop
+  const cellSize = compact
+    ? { fs: "clamp(20px, 5vw, 22px)", pad: "10px 12px", min: "clamp(48px, 14vw, 56px)", label: 9 }
+    : { fs: "clamp(28px, 7vw, 44px)", pad: "clamp(12px, 3vw, 16px) clamp(12px, 3vw, 18px)", min: "clamp(58px, 16vw, 76px)", label: 11 };
+  const Cell = ({ n, label }: { n: number; label: string }) => (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        background: "var(--dusk)",
+        border: "1px solid rgba(235,122,46,0.25)",
+        borderRadius: 10,
+        padding: cellSize.pad,
+        minWidth: cellSize.min,
+        boxShadow: compact ? "none" : "0 0 30px rgba(235,122,46,0.10)",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: cellSize.fs,
+          lineHeight: 1,
+          color: "var(--orange)",
+          letterSpacing: "-0.02em",
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {pad(n)}
+      </span>
+      <span
+        style={{
+          fontSize: cellSize.label,
+          fontWeight: 700,
+          color: "var(--muted)",
+          letterSpacing: "0.20em",
+          textTransform: "uppercase",
+          marginTop: 8,
+          fontFamily: "var(--font-body)",
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+
+  return (
+    <div className={styles.timerRow}>
+      {days > 0 && <Cell n={days} label="Giorni" />}
+      <Cell n={hours} label="Ore" />
+      <Cell n={mins} label="Min" />
+      <Cell n={secs} label="Sec" />
+    </div>
+  );
+}
+
+function InlineTimer({ targetIso }: { targetIso: string }) {
+  const targetMs = useMemo(() => new Date(targetIso).getTime(), [targetIso]);
+  const [now, setNow] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  if (!mounted) return <span>—</span>;
+  const diff = Math.max(0, targetMs - now);
+  if (diff <= 0) return <span style={{ color: "var(--orange)" }}>scaduto</span>;
+  const s = Math.floor(diff / 1000);
+  const d = Math.floor(s / 86400);
+  const h = Math.floor((s % 86400) / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const ss = s % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  if (d > 0) return <span style={{ fontVariantNumeric: "tabular-nums" }}>{d}g {pad(h)}:{pad(m)}:{pad(ss)}</span>;
+  return <span style={{ fontVariantNumeric: "tabular-nums" }}>{pad(h)}:{pad(m)}:{pad(ss)}</span>;
+}
+
+// ─── Page-view tracker ────────────────────────────────────────────────────────
+
+function SalesPageVariantTracker() {
+  const variant = useSalesVariant();
+  useEffect(() => {
+    trackEvent("sales_view", { variant });
+  }, [variant]);
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 0 — HEADER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesHeaderSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const logoHeight = isMobile ? 13 : 16;
+
+  return (
+    <>
+      <SalesPageVariantTracker />
+      <header
+        className={styles.header}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          position: "relative",
+          zIndex: 2,
+          maxWidth: 1200,
+          margin: "0 auto",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <Image
+          src="/logo/m-w2.png"
+          alt="Morfeus"
+          width={120}
+          height={logoHeight}
+          priority
+          style={{ height: logoHeight, width: "auto", display: "block" }}
+        />
+      </header>
+    </>
+  );
+}
+
+// ─── Hero VSL (autoplay muted, facade pattern) ────────────────────────────────
+
+function HeroVSL({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thumbnailSrc?: string; title?: string }) {
+  const [mounted, setMounted] = useState(false);
+  const [unmuted, setUnmuted] = useState(false);
+  const playerRef = useRef<HTMLIFrameElement>(null);
+
+  const isPlaceholder = !youtubeId || youtubeId === "PLACEHOLDER_VIDEO_ID";
+
+  useEffect(() => {
+    if (isPlaceholder) return;
+    const t = setTimeout(() => setMounted(true), 250);
+    return () => clearTimeout(t);
+  }, [isPlaceholder]);
+
+  function unmute() {
+    const w = playerRef.current?.contentWindow;
+    if (!w) return;
+    w.postMessage(JSON.stringify({ event: "command", func: "unMute", args: [] }), "*");
+    w.postMessage(JSON.stringify({ event: "command", func: "setVolume", args: [80] }), "*");
+    setUnmuted(true);
+  }
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        maxWidth: 780,
+        margin: "0 auto 40px",
+        aspectRatio: "16 / 9",
+        borderRadius: 18,
+        overflow: "hidden",
+        boxShadow: "0 0 80px rgba(235,122,46,0.22), 0 24px 64px rgba(0,0,0,0.55)",
+        border: "1px solid rgba(235,122,46,0.30)",
+        background: "var(--dusk)",
+      }}
+    >
+      {/* Iframe (lazy mounted to allow facade to paint first) */}
+      {!isPlaceholder && mounted && (
+        <iframe
+          ref={playerRef}
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+          title={title ?? "Video Sales Letter"}
+          allow="autoplay; encrypted-media; fullscreen"
+          allowFullScreen
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            border: "none",
+            background: "#000",
+          }}
+        />
+      )}
+
+      {/* Facade thumbnail (visible until iframe mounts, or always for placeholder) */}
+      {(!mounted || isPlaceholder) && (
+        <div
+          aria-label={title ?? "Video Sales Letter — anteprima"}
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: thumbnailSrc ? `url(${thumbnailSrc})` : undefined,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundColor: "var(--dusk)",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          {/* Dark vignette overlay so play button stays readable */}
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
+            }}
+          />
+          {/* Play button */}
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              width: 92,
+              height: 92,
+              borderRadius: "50%",
+              background: "var(--orange)",
+              display: "grid",
+              placeItems: "center",
+              boxShadow: "0 14px 44px rgba(235,122,46,0.55)",
+              animation: "btn-pulse 2.4s infinite",
+            }}
+          >
+            <svg width="32" height="36" viewBox="0 0 32 36" fill="white" aria-hidden>
+              <path d="M3 1 L29 18 L3 35 Z" />
+            </svg>
+          </div>
+          {isPlaceholder && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: 14,
+                left: 14,
+                right: 14,
+                textAlign: "center",
+                fontSize: 11,
+                color: "rgba(255,255,255,0.55)",
+                fontFamily: "var(--font-body)",
+                letterSpacing: "0.10em",
+                textTransform: "uppercase",
+              }}
+            >
+              Video in arrivo — segnaposto
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Unmute pill */}
+      {!isPlaceholder && mounted && !unmuted && (
+        <button
+          type="button"
+          onClick={unmute}
+          style={{
+            position: "absolute",
+            bottom: 14,
+            left: 14,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "9px 14px",
+            background: "rgba(0,0,0,0.78)",
+            border: "1px solid rgba(255,255,255,0.20)",
+            color: "#fff",
+            fontFamily: "var(--font-body)",
+            fontSize: 13,
+            fontWeight: 600,
+            borderRadius: 100,
+            cursor: "pointer",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)" as React.CSSProperties["WebkitBackdropFilter"],
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+          Riproduci con audio
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 1 — HERO
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesHeroSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const content = step.content.SalesHero as SalesHeroContent;
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const copy = content[variant];
+
+  const onCheckout = () => trackCheckoutClick("hero", variant, current.stage, current.price);
+
+  return (
+    <section
+      className={styles.salesHeroSection}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        textAlign: "center",
+      }}
+    >
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 120,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "min(900px, 90vw)",
+          height: 320,
+          background:
+            "radial-gradient(ellipse, rgba(235,122,46,0.14) 0%, rgba(123,104,238,0.06) 40%, transparent 70%)",
+          filter: "blur(20px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        <Badge>{copy.badge}</Badge>
+        {current.activeDeadlineIso && (
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              color: "var(--muted)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.06em",
+            }}
+          >
+            scade tra <span style={{ color: "var(--orange)", fontWeight: 700 }}><InlineTimer targetIso={current.activeDeadlineIso} /></span>
+          </span>
+        )}
+      </div>
+
+      <h1
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(36px, 5.5vw, 64px)",
+          lineHeight: 1.04,
+          letterSpacing: "-0.025em",
+          color: "#fff",
+          margin: "0 auto 22px",
+          maxWidth: 920,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {copy.headlinePre}
+        <br />
+        {copy.headlinePost} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
+      </h1>
+
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontWeight: 400,
+          fontSize: "clamp(17px, 1.6vw, 20px)",
+          lineHeight: 1.55,
+          color: "var(--ghost)",
+          opacity: 0.88,
+          maxWidth: 720,
+          margin: "0 auto 40px",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {copy.subheadline}
+      </p>
+
+      {/* VSL */}
+      <HeroVSL
+        youtubeId={content.vslYoutubeId}
+        thumbnailSrc={content.vslThumbnailSrc}
+        title={content.vslTitle}
+      />
+
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}>
+        <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
+          {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+      </div>
+
+      <div
+        style={{
+          fontSize: 14,
+          color: "var(--muted)",
+          fontFamily: "var(--font-body)",
+          marginBottom: 32,
+        }}
+      >
+        {copy.microcopy} Pagamento sicuro · Accesso immediato · Garanzia 14 giorni.
+      </div>
+
+      {/* Price scale */}
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 14,
+          fontFamily: "var(--font-body)",
+          fontSize: 14,
+          color: "var(--muted)",
+          padding: "12px 20px",
+          background: "rgba(255,255,255,0.025)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: 100,
+          flexWrap: "wrap",
+          marginBottom: 36,
+        }}
+      >
+        <PriceScalePill value="67€" label="early bird" active={current.stage === "earlyBird"} />
+        <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
+        <PriceScalePill value="97€" label="standard" active={current.stage === "standard"} />
+        <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
+        <PriceScalePill value="147€" label="prezzo pieno" active={current.stage === "full"} />
+      </div>
+
+      {/* Proof bar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: "8px 22px",
+          paddingTop: 28,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          maxWidth: 820,
+          margin: "0 auto",
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          color: "var(--ghost)",
+          opacity: 0.88,
+        }}
+      >
+        {content.proofBar.map((item, i) => (
+          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 14 }}>
+            {i > 0 && <span style={{ color: "var(--orange)", opacity: 0.7 }}>·</span>}
+            <span>{item}</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PriceScalePill({ value, label, active }: { value: string; label: string; active: boolean }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "baseline",
+        gap: 6,
+        fontWeight: active ? 700 : 500,
+        color: active ? "var(--orange)" : "var(--muted)",
+      }}
+    >
+      <span style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>{value}</span>
+      <span style={{ textTransform: "uppercase", fontSize: 10, letterSpacing: "0.16em" }}>{label}</span>
+      {active && <span style={{ marginLeft: 4, color: "var(--orange)" }}>● sei qui</span>}
+    </span>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 2 — BRIDGE (variant-aware)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesBridgeSection() {
+  const variant = useSalesVariant();
+
+  const liveBody = (
+    <>
+      <p>Hai visto output che non sembravano generati da una macchina.</p>
+      <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+      <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+      <p style={{ marginTop: 28 }}>Adesso hai due strade.</p>
+      <p>Tornare a usarlo come prima.</p>
+      <p>Oppure imparare il sistema che hai visto in azione.</p>
+    </>
+  );
+
+  const replayBody = (
+    <>
+      <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+      <p style={{ marginTop: 22 }}>Hai visto output che non sembravano generati da una macchina.</p>
+      <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+      <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+      <p style={{ marginTop: 28 }}>Adesso hai due strade.</p>
+      <p>Tornare a usarlo come prima — una domanda ogni tanto, un testo ogni tanto, quella sensazione che &ldquo;per il mio lavoro non funziona&rdquo;.</p>
+      <p style={{ marginTop: 18 }}>Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.</p>
+    </>
+  );
+
+  return (
+    <section
+      className={styles.bridgeSection}
+      style={{
+        maxWidth: 760,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 36 }}>
+        {variant === "email" ? (
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(30px, 4vw, 44px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: 0,
+              maxWidth: 720,
+              marginInline: "auto",
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Stai usando Claude al 10% delle sue capacità.
+            <br />
+            E <Accent>non è colpa tua</Accent>.
+          </h2>
+        ) : (
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(30px, 4vw, 44px)",
+              lineHeight: 1.15,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: 0,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.
+          </h2>
+        )}
+      </div>
+
+      {variant === "email" ? (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.75,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
+          <p>La maggior parte dei professionisti usa Claude come un Google più intelligente. Fa domande. Ottiene risposte generiche. Pensa &ldquo;bah, niente di speciale&rdquo;.</p>
+          <p>Ma Claude non è un motore di ricerca. È uno strumento che può lavorare CON te — ogni giorno, su ogni progetto, nel tuo ambiente di lavoro.</p>
+          <p>Il problema è che nessuno ti ha mai mostrato come si fa.</p>
+          <p>I tutorial su YouTube ti insegnano dove cliccare. I prompt copiati da Twitter funzionano una volta. I corsi &ldquo;AI&rdquo; parlano di tutto e non ti insegnano nulla di applicabile al tuo lunedì mattina.</p>
+          <p
+            style={{
+              marginTop: 18,
+              fontFamily: "var(--font-display)",
+              fontSize: 22,
+              lineHeight: 1.4,
+              color: "#fff",
+            }}
+          >
+            Questo corso è diverso.
+          </p>
+          <p>10 moduli. Un metodo. Un sistema che costruisci pezzo per pezzo — calibrato sul tuo lavoro, non su demo generiche.</p>
+        </div>
+      ) : (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            paddingLeft: 24,
+            borderLeft: "3px solid var(--orange)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+          }}
+        >
+          {variant === "live" ? liveBody : replayBody}
+        </div>
+      )}
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 3 — PROBLEMA + COSTO NON AGIRE (variant-aware: compresso/medio/esteso)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesProblemSection() {
+  const variant = useSalesVariant();
+
+  // 3 cards "diagnosi" — universali fra varianti. Cattura del riconoscimento
+  // ("cazzo sì, è il mio problema"). Differenziate visivamente dal Mechanism
+  // perché qui usiamo icone (no watermark numerici), palette neutra (no orange-step).
+  const problemCards = [
+    {
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <polyline points="16 3 20 7 16 11" />
+          <path d="M4 7h16" />
+          <polyline points="16 21 12 25 16 29" />
+          <path d="M28 25H12" />
+        </svg>
+      ),
+      title: "Hai più tool che metodi.",
+      body: "Ogni settimana provi un nuovo strumento. ChatGPT, Claude, Gemini, Notion AI, Perplexity. Salti dall'uno all'altro inseguendo l'hype. Risultato: niente di quello che hai aperto è diventato davvero tuo.",
+      emphasis: "La scorciatoia è scegliere UN ecosistema e padroneggiarlo. Non collezionarli tutti.",
+    },
+    {
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M4 24V8a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H12l-8 6Z" />
+          <path d="M12 11h12" />
+          <path d="M12 16h7" />
+        </svg>
+      ),
+      title: "Hai input. Non hai output.",
+      body: "Hai 50 prompt copiati da Twitter in un Google Doc. Funzionano una volta, poi mai più. L'AI ti dà risposte. Ma non ti costruisce niente che resti.",
+      emphasis: "Senza un metodo, ogni interazione ricomincia da zero.",
+    },
+    {
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="16" cy="11" r="5" />
+          <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" />
+        </svg>
+      ),
+      title: "Sei solo quando devi applicare.",
+      body: "Tutorial YouTube, video corsi, community generiche. Ti spiegano. Poi lunedì mattina apri il laptop, devi lavorare davvero, e nessuno ti accompagna nel tradurre la teoria nel TUO contesto.",
+      emphasis: "Sapere è facile. Applicare è dove tutti si fermano.",
+    },
+  ];
+
+  // Variant-aware headlines
+  const headlineByVariant: Record<SalesVariant, React.ReactNode> = {
+    live: <>L&apos;hai sentito al webinar. Ma <Accent>perché succede</Accent> davvero?</>,
+    replay: <>Tutti parlano di AI. Ma <Accent>pochi la stanno usando</Accent> nel modo giusto.</>,
+    email: <>Se hai provato l&apos;AI e hai pensato &ldquo;non fa per me&rdquo;, <Accent>leggi questo</Accent>.</>,
+  };
+
+  // Variant-aware intro paragraph (1 sentence)
+  const introByVariant: Record<SalesVariant, string> = {
+    live: "L'hai visto in diretta. Ora vediamo i 3 motivi precisi per cui finora non hai ottenuto risultati.",
+    replay: "Tre blocchi che separano chi prova l'AI da chi la fa lavorare per sé. Riconoscili e capirai perché finora ti sei fermato.",
+    email: "Non è colpa tua. Ci sono tre blocchi precisi che impediscono al 95% dei professionisti di ottenere valore reale dall'AI. Vediamoli uno per uno.",
+  };
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Il problema</SectionLabel>
+      </div>
+
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 22px",
+          maxWidth: 920,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {headlineByVariant[variant]}
+      </h2>
+
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 18,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 56px",
+          maxWidth: 720,
+          textAlign: "center",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {introByVariant[variant]}
+      </p>
+
+      {/* 3 problem cards */}
+      <div className={styles.problemGrid}>
+        {problemCards.map((c, i) => (
+          <ProblemCard key={i} index={i + 1} {...c} />
+        ))}
+      </div>
+
+      {/* Email-only: ladder dei 5 livelli (educational deep-dive) */}
+      {variant === "email" && (
+        <div style={{ marginTop: 56, maxWidth: 760, marginInline: "auto" }}>
+          <h3
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(22px, 2.4vw, 28px)",
+              lineHeight: 1.2,
+              color: "#fff",
+              margin: "0 0 16px",
+              textAlign: "center",
+            }}
+          >
+            E sei sempre fermo al <Accent>Livello 1</Accent>.
+          </h3>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 17,
+              lineHeight: 1.65,
+              color: "var(--ghost)",
+              opacity: 0.85,
+              margin: "0 auto 24px",
+              maxWidth: 640,
+              textAlign: "center",
+            }}
+          >
+            L&apos;AI generativa ha 5 livelli di utilizzo. Il 95% delle persone non supera mai il primo. Non per stupidità — perché nessuno gli ha mai mostrato che gli altri esistono.
+          </p>
+          <LevelLadder />
+        </div>
+      )}
+
+      {/* Box ROI — prova razionale (universale) */}
+      <div
+        style={{
+          marginTop: 64,
+          background: "var(--deep-space)",
+          border: "1px solid rgba(235,122,46,0.40)",
+          borderRadius: 16,
+          padding: "36px 40px",
+          textAlign: "center",
+          boxShadow: "0 0 50px rgba(235,122,46,0.10)",
+          maxWidth: 760,
+          marginInline: "auto",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            marginBottom: 22,
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          Il calcolo che chiude la decisione
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
+            Ogni settimana senza un sistema = <Big color="var(--orange)">5-8 ore</Big> perse.
+          </div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
+            A 25€/ora, sono <Big color="var(--orange)">500-800€</Big> al mese.
+          </div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
+            Il corso costa <Big color="#fff">67€</Big>.
+          </div>
+        </div>
+      </div>
+
+      {/* Closing line — ponte verso il Mechanism */}
+      <p
+        style={{
+          marginTop: 48,
+          fontFamily: "var(--font-display)",
+          fontWeight: 500,
+          fontSize: "clamp(20px, 2.4vw, 26px)",
+          lineHeight: 1.35,
+          color: "#fff",
+          textAlign: "center",
+          maxWidth: 720,
+          marginInline: "auto",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Risolvere questi tre blocchi è esattamente quello che facciamo nel corso. <Accent>In modo pratico, guidato e replicabile</Accent>.
+      </p>
+    </section>
+  );
+}
+
+function ProblemCard({ index, icon, title, body, emphasis }: { index: number; icon: React.ReactNode; title: string; body: string; emphasis: string }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: "relative",
+        padding: "32px 28px 30px",
+        background: hover ? "rgba(255,255,255,0.04)" : "var(--deep-space)",
+        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
+        borderRadius: 16,
+        transition: "background .25s, border-color .25s, transform .25s",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* Icon */}
+      <div
+        style={{
+          width: 56,
+          height: 56,
+          borderRadius: 14,
+          background: "rgba(235,122,46,0.10)",
+          border: "1px solid rgba(235,122,46,0.25)",
+          display: "grid",
+          placeItems: "center",
+          color: "var(--orange)",
+          marginBottom: 22,
+        }}
+      >
+        {icon}
+      </div>
+
+      {/* Tag "Blocco N" */}
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "var(--muted)",
+          fontFamily: "var(--font-body)",
+          marginBottom: 10,
+        }}
+      >
+        Blocco {index}
+      </div>
+
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(20px, 2.2vw, 24px)",
+          lineHeight: 1.2,
+          letterSpacing: "-0.015em",
+          color: "#fff",
+          margin: "0 0 14px",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {title}
+      </h3>
+
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.88,
+          margin: "0 0 18px",
+          flex: 1,
+        }}
+      >
+        {body}
+      </p>
+
+      <p
+        style={{
+          fontFamily: "var(--font-italic)",
+          fontStyle: "italic",
+          fontSize: 16,
+          lineHeight: 1.5,
+          color: "var(--orange)",
+          margin: 0,
+          paddingTop: 16,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        {emphasis}
+      </p>
+    </div>
+  );
+}
+
+function Big({ children, color }: { children: React.ReactNode; color: string }) {
+  return (
+    <span
+      style={{
+        fontFamily: "var(--font-display)",
+        fontWeight: 600,
+        fontSize: "clamp(40px, 6vw, 56px)",
+        color,
+        letterSpacing: "-0.02em",
+        lineHeight: 1,
+        margin: "0 6px",
+        verticalAlign: "middle",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function LevelLadder() {
+  const levels = [
+    { n: "1", label: "Domanda / risposta", here: true, target: false },
+    { n: "2", label: "Prompting strutturato", here: false, target: false },
+    { n: "3", label: "Workflow ripetibili", here: false, target: false },
+    { n: "4", label: "Partner di lavoro quotidiano", here: false, target: true },
+    { n: "5", label: "Team AI orchestrato", here: false, target: false },
+  ];
+  return (
+    <div
+      style={{
+        marginTop: 8,
+        marginBottom: 8,
+        background: "var(--deep-space)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 12,
+        padding: 20,
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {levels.map((l) => {
+          const accent = l.target ? "var(--orange)" : l.here ? "var(--muted)" : "rgba(255,255,255,0.18)";
+          const labelColor = l.target ? "#fff" : l.here ? "var(--ghost)" : "var(--muted)";
+          return (
+            <div key={l.n} style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <span
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: 8,
+                  display: "grid",
+                  placeItems: "center",
+                  background: l.target ? "rgba(235,122,46,0.18)" : "rgba(255,255,255,0.04)",
+                  border: `1px solid ${accent}`,
+                  color: accent,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: 14,
+                  flexShrink: 0,
+                }}
+              >
+                {l.n}
+              </span>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: 16, color: labelColor }}>
+                {l.label}
+                {l.here && <span style={{ marginLeft: 10, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted)", textTransform: "uppercase" }}>sei qui</span>}
+                {l.target && <span style={{ marginLeft: 10, fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", color: "var(--orange)", textTransform: "uppercase" }}>il corso ti porta qui</span>}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 4 — MECCANISMO / METODO (3 step + effetti collaterali)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesMechanismSection() {
+  const steps = [
+    {
+      n: "01",
+      title: "Prima il pensiero, poi lo strumento.",
+      body: (
+        <>
+          Il Modulo 0 si chiama &ldquo;Come ragionare con l&apos;AI&rdquo;. Non &ldquo;Come usare Claude&rdquo;.
+          Impari il framework <strong style={{ color: "#fff" }}>T/Q/D</strong> — quali task delegare, quali tenere, quali verificare.
+          Prima di aprire lo strumento, sai già cosa chiedergli.
+          <br />
+          <span style={{ color: "var(--orange)" }}>Nessun competitor parte da qui.</span>
+        </>
+      ),
+    },
+    {
+      n: "02",
+      title: "Dal setup al sistema personalizzato.",
+      body: (
+        <>
+          Moduli 1-6: non impari le feature. Costruisci il <strong style={{ color: "#fff" }}>TUO</strong> ambiente di lavoro.
+          Projects con le TUE istruzioni. Contesto che riflette il TUO business. Skill che automatizzano i TUOI task ripetitivi.
+          <br />
+          Non è un corso generico su &ldquo;l&apos;AI&rdquo;. È il tuo Claude, configurato per il tuo lavoro.
+        </>
+      ),
+    },
+    {
+      n: "03",
+      title: "Metodo che resta, anche quando lo strumento cambia.",
+      body: (
+        <>
+          Moduli 7-9: workflow reali, progetti complessi, sicurezza. Il <strong style={{ color: "#fff" }}>70%</strong> di quello
+          che impari si applica a qualsiasi AI. I tool cambiano ogni 6 mesi. Il metodo no.
+          <br />
+          È la differenza tra imparare a guidare e imparare dove sono i bottoni di una macchina specifica.
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Il metodo</SectionLabel>
+      </div>
+
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 52px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 24px",
+          maxWidth: 880,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Perché questo corso <Accent>funziona</Accent> dove gli altri falliscono.
+      </h2>
+
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.65,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 56px",
+          maxWidth: 760,
+          textAlign: "center",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        La maggior parte dei corsi AI ti insegna dove cliccare. Funziona per la demo. Non funziona per il lunedì mattina.
+        Dopo due settimane sei punto e a capo. Questo corso è costruito al contrario.
+      </p>
+
+      <div className={styles.stepGrid}>
+        {steps.map((s) => (
+          <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
+        ))}
+      </div>
+      {/* Nota: la sezione "effetti collaterali" che stava qui è ora un blocco
+          autonomo SalesBenefitsSection mostrato dopo Mechanism. */}
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 4.5 — BENEFITS / EFFETTI COLLATERALI (sezione dedicata)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesBenefitsSection() {
+  const benefits = [
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+      ),
+      title: "Risparmi 5-8 ore a settimana",
+      body: "Quel tempo che oggi spendi su task ripetitivi torna nelle tue mani. Il corso si ripaga la prima settimana.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+      ),
+      title: "I colleghi ti chiedono \"come fai?\"",
+      body: "Output di qualità in tempi che prima erano impossibili. La gente nota subito chi ha un sistema vero.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6z" />
+          <polyline points="9 12 11 14 15 10" />
+        </svg>
+      ),
+      title: "Smetti di temere l'AI",
+      body: "Capisci come funziona, sai cosa può e cosa NON può fare. Smetti di chiederti \"mi sostituirà?\" e inizi a usarla per moltiplicarti.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+      title: "Vedi opportunità dove prima vedevi task",
+      body: "Quello che era \"un'altra cosa da fare\" diventa un workflow che Claude esegue per te. Pensi in termini di sistema, non di to-do.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="9" y1="15" x2="15" y2="15" />
+        </svg>
+      ),
+      title: "Output che sembrano scritti da te",
+      body: "Claude conosce la tua voce, il tuo settore, i tuoi clienti. Niente più copia-incolla scolastici: l'output esce già nel tuo tono.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </svg>
+      ),
+      title: "Non lavori più senza Claude aperto",
+      body: "Diventa il tuo browser. Una volta che hai il sistema in mano, è un upgrade del cervello che non vuoi più togliere.",
+    },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Subtle violet ambient glow to differentiate from orange-heavy sections */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "70%",
+          height: "60%",
+          background:
+            "radial-gradient(ellipse, rgba(123,104,238,0.08) 0%, rgba(101,88,212,0.04) 50%, transparent 75%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>I benefici concreti</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 18px",
+          maxWidth: 880,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Cosa cambia <Accent>davvero</Accent> quando padroneggi Claude.
+      </h2>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 18,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 56px",
+          maxWidth: 700,
+          textAlign: "center",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        I sei effetti collaterali che gli studenti raccontano dopo le prime due settimane di pratica.
+      </p>
+
+      <div className={styles.benefitsGrid}>
+        {benefits.map((b, i) => (
+          <BenefitCard key={i} {...b} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BenefitCard({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        padding: "26px 26px",
+        background: hover ? "rgba(123,104,238,0.06)" : "var(--deep-space)",
+        border: `1px solid ${hover ? "rgba(123,104,238,0.30)" : "rgba(255,255,255,0.07)"}`,
+        borderRadius: 14,
+        transition: "background .25s, border-color .25s, transform .25s",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        boxSizing: "border-box",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 12,
+          background: "rgba(123,104,238,0.12)",
+          border: "1px solid rgba(123,104,238,0.25)",
+          display: "grid",
+          placeItems: "center",
+          color: "var(--violet)",
+          marginBottom: 18,
+        }}
+      >
+        {icon}
+      </div>
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 19,
+          lineHeight: 1.25,
+          letterSpacing: "-0.01em",
+          color: "#fff",
+          margin: "0 0 10px",
+        }}
+      >
+        {title}
+      </h3>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: 0,
+          flex: 1,
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+function MechanismStepCard({ n, title, body }: { n: string; title: string; body: React.ReactNode }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: "relative",
+        padding: "32px 30px",
+        background: hover ? "rgba(255,255,255,0.04)" : "var(--deep-space)",
+        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
+        borderRadius: 16,
+        transition: "background .25s, border-color .25s, transform .25s",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        overflow: "hidden",
+        boxSizing: "border-box",
+        height: "100%",
+      }}
+    >
+      {/* Watermark numero */}
+      <span
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: -16,
+          right: 8,
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(80px, 18vw, 130px)",
+          lineHeight: 1,
+          color: "var(--orange)",
+          opacity: 0.10,
+          letterSpacing: "-0.04em",
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
+      >
+        {n}
+      </span>
+      <div
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: "0.20em",
+          textTransform: "uppercase",
+          color: "var(--orange)",
+          marginBottom: 16,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        Step {n}
+      </div>
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 22,
+          lineHeight: 1.2,
+          letterSpacing: "-0.015em",
+          color: "#fff",
+          margin: "0 0 14px",
+          position: "relative",
+          zIndex: 1,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {title}
+      </h3>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.65,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: 0,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 4.6 — PROMISE LETTER (future pacing — Matteo to reader)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesPromiseLetterSection() {
+  // Subtle italic-orange highlight (re-using webinar letter visual language)
+  const H = ({ children }: { children: React.ReactNode }) => (
+    <span
+      style={{
+        fontFamily: "var(--font-italic)",
+        fontStyle: "italic",
+        fontWeight: 600,
+        color: "#C85A15",
+        backgroundImage: "linear-gradient(to bottom, transparent 82%, rgba(200,90,21,0.25) 82%)",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {children}
+    </span>
+  );
+
+  const paragraphs: React.ReactNode[] = [
+    <>Voglio raccontarti come potrebbe essere una tua mattina, fra qualche mese da oggi.</>,
+    <>Sei alla scrivania. Apri il laptop. La prima cosa che fai non è ChatGPT, non è Google, non è la mail.<br />È una conversazione di Claude che hai lasciato aperta ieri sera. Ha preparato il documento per la riunione delle 10. A te basta una rilettura.</>,
+    <>Mentre bevi il caffè, hai già <H>quattro schede di Claude</H> aperte in parallelo. Una sta scrivendo la newsletter della settimana — sa il tuo tono, conosce i tuoi clienti, ricorda le ultime dodici puntate. Una sta sintetizzando un podcast di un&apos;ora che ti serviva per il pitch di domani. Una sta aggiornando il piano editoriale del prossimo trimestre. Una sta draftando una mail importante a un investitore.</>,
+    <>E tu? Tu non scrivi più. <H>Tu istruisci. Revisioni. Affini.</H></>,
+    <>Ti senti più un manager che un esecutore. Hai un team digitale che lavora con te, conosce le regole, segue lo standard. Tu parli, e quello che chiedi si fa.<br />Per il <H>70-80% del tuo tempo</H>, tu pensi e Claude esegue.</>,
+    <>Hai il pomeriggio libero che prima passavi a riformulare la stessa email per la dodicesima volta. Hai la lucidità di prendere decisioni vere, perché non sei più sommerso dal lavoro manuale.</>,
+    <>Ci hai messo qualche settimana per arrivarci. Hai sbagliato. Hai sistemato. Hai dovuto trovare il TUO metodo, configurare i TUOI Project, costruire la TUA libreria di skill personalizzate. Conosci anche la sicurezza, sai cosa condividere e cosa no, sai come strutturare le cose per non perderle.<br />Ma quel lavoro adesso è fatto. E non torna indietro.</>,
+    <>Non sei più tu davanti a uno schermo bianco. Sei tu <H>e una macchina di lavoro</H> che ti conosce, segue le tue regole, produce al tuo standard.</>,
+    <>Questo è il punto di arrivo del corso.<br />Non è promessa di marketing. È quello che vivono ogni giorno i nostri studenti più avanzati.</>,
+    <>E se sei arrivato fin qui, vuol dire che ce la puoi fare anche tu.</>,
+  ];
+
+  return (
+    <section
+      className={styles.sectionPadLg}
+      style={{
+        background:
+          "radial-gradient(ellipse at top, rgba(235,122,46,0.06), transparent 60%), linear-gradient(180deg, rgba(15,14,26,0.0) 0%, rgba(25,21,35,0.35) 8%, rgba(25,21,35,0.35) 92%, rgba(15,14,26,0.0) 100%)",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
+        {/* The paper */}
+        <div
+          style={{
+            position: "relative",
+            background: "linear-gradient(180deg, #F5EFE4 0%, #EFE7D8 100%)",
+            color: "#2A2420",
+            padding: "clamp(48px, 7vw, 88px) clamp(32px, 6vw, 80px)",
+            borderRadius: 4,
+            boxShadow:
+              "0 1px 0 rgba(255,255,255,0.08), 0 30px 80px -20px rgba(0,0,0,0.55), 0 60px 120px -40px rgba(0,0,0,0.45)",
+          }}
+        >
+          {/* Ruled lines */}
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              background:
+                "repeating-linear-gradient(180deg, transparent 0 31px, rgba(42,36,32,0.035) 31px 32px)",
+              borderRadius: 4,
+              mixBlendMode: "multiply",
+            }}
+          />
+
+          {/* Header row */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              marginBottom: 32,
+              position: "relative",
+              zIndex: 1,
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 500,
+              color: "#6B5E54",
+              letterSpacing: "0.10em",
+              textTransform: "uppercase",
+              gap: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <span>Una promessa</span>
+            <span>Per il tuo te di tra 6 mesi</span>
+          </div>
+
+          {/* Salutation */}
+          <div
+            style={{
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: 22,
+              lineHeight: 1.3,
+              color: "#2A2420",
+              opacity: 0.65,
+              marginBottom: 36,
+              position: "relative",
+              zIndex: 1,
+              letterSpacing: "0.01em",
+            }}
+          >
+            A te,
+          </div>
+
+          {/* Body */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 22, position: "relative", zIndex: 1 }}>
+            {paragraphs.map((p, i) => (
+              <p
+                key={i}
+                style={{
+                  fontFamily: "var(--font-italic)",
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  fontSize: "clamp(17px, 1.55vw, 19px)",
+                  lineHeight: 1.78,
+                  color: "#2A2420",
+                  margin: 0,
+                  textWrap: "pretty" as React.CSSProperties["textWrap"],
+                  letterSpacing: "0.005em",
+                }}
+              >
+                {p}
+              </p>
+            ))}
+          </div>
+
+          {/* Signature */}
+          <div style={{ marginTop: 56, position: "relative", zIndex: 1 }}>
+            <div
+              style={{
+                fontFamily: "var(--font-italic)",
+                fontStyle: "italic",
+                fontWeight: 500,
+                fontSize: 34,
+                lineHeight: 1,
+                color: "#2A2420",
+                letterSpacing: "0.01em",
+                transform: "rotate(-2deg)",
+                transformOrigin: "left center",
+                marginBottom: 14,
+                display: "inline-block",
+              }}
+            >
+              Matteo
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 13,
+                fontWeight: 500,
+                color: "#6B5E54",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+              }}
+            >
+              Matteo Arnaboldi · CEO &amp; Co-Founder, Morfeus Hub
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 5 — COSA C'È DENTRO (10 moduli)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesModulesSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "modules", variant });
+    scrollToId("offerta");
+  };
+
+  const modules = [
+    {
+      n: "00",
+      title: "Come ragionare con l'AI",
+      outcome: "Pensi diversamente all'AI prima ancora di toccarla.",
+      topics: [
+        "Framework T/Q/D: il modello mentale per decidere cosa fare con Claude",
+        "Quali task delegare, quali tenere, quali verificare",
+        "L'errore #1 dei principianti (e come evitarlo)",
+        "Mindset operativo: trattare l'AI come collega, non come Google",
+      ],
+    },
+    {
+      n: "01",
+      title: "Setup e primi passi",
+      outcome: "In 15 minuti sei operativo, anche se vieni da ChatGPT.",
+      topics: [
+        "Account, piani, differenze fra Free e Pro",
+        "L'interfaccia di Claude spiegata sezione per sezione",
+        "Migrazione da ChatGPT: cosa cambia, cosa resta",
+        "Settings essenziali e shortcut da imparare subito",
+      ],
+    },
+    {
+      n: "02",
+      title: "Chat: usare Claude ogni giorno",
+      outcome: "Il modulo che usi dal giorno 1, ogni giorno.",
+      topics: [
+        "Input vocale: 3x più veloce della tastiera",
+        "Prompting pratico (no \"prompt magici\", solo struttura)",
+        "Artifacts: documenti che si modificano in tempo reale",
+        "Analisi immagini, PDF e dati allegati",
+      ],
+    },
+    {
+      n: "03",
+      title: "Projects: il tuo Claude specializzato",
+      outcome: "Claude smette di essere generico e inizia a conoscere il tuo lavoro.",
+      topics: [
+        "Istruzioni personalizzate per ruolo / cliente / progetto",
+        "File di contesto e knowledge base",
+        "Strutturare i Project per riusarli per anni",
+        "3 esempi reali di Project di Matteo e Alex",
+      ],
+    },
+    {
+      n: "04",
+      title: "CoWork: Claude come collega",
+      outcome: "Claude lavora sui tuoi file. Non in chat — nel tuo ambiente di lavoro.",
+      topics: [
+        "Setup di CoWork mode passo per passo",
+        "Lavorare su documenti, presentazioni, fogli di calcolo",
+        "Gestire più file insieme",
+        "Limiti, best practice e cose da NON fare",
+      ],
+    },
+    {
+      n: "05",
+      title: "Il segreto della qualità: dare contesto",
+      outcome: "Claude che ti conosce e migliora ogni giorno.",
+      topics: [
+        "Istruzioni stratificate (system / project / chat)",
+        "Memoria persistente e maintenance",
+        "Stile, tono, lessico aziendale",
+        "Versioning del contesto quando il tuo lavoro evolve",
+      ],
+    },
+    {
+      n: "06",
+      title: "Skills, plugin e connettori",
+      outcome: "Claude diventa un sistema, non un chatbot.",
+      topics: [
+        "Skill marketplace: installazioni in 1 click",
+        "Costruire le tue skill custom (senza codice)",
+        "Connettori: Google Drive, Gmail, Calendar, Notion",
+        "Esempi business: report, analisi, pipeline",
+      ],
+    },
+    {
+      n: "07",
+      title: "Workflow: dal problema al risultato",
+      outcome: "Use case reali, non demo. Il modulo più pratico.",
+      topics: [
+        "Ricerca strutturata e sintesi",
+        "Generazione contenuti su brand voice",
+        "Documenti complessi (offerte, report, contratti)",
+        "Presentazioni complete da brief grezzo",
+        "Review e correzione di quello che hai già scritto",
+      ],
+    },
+    {
+      n: "08",
+      title: "Plan & Solve: progetti complessi",
+      outcome: "Pianifica prima, esegui dopo. Su qualsiasi progetto.",
+      topics: [
+        "Sistema Planner: scomporre prima di muoversi",
+        "Sistema Executor: eseguire un piano già strutturato",
+        "Quando usare quale (errore costoso da evitare)",
+        "Recupero da errori e iterazione efficiente",
+      ],
+    },
+    {
+      n: "09",
+      title: "Sicurezza, privacy e prossimi passi",
+      outcome: "Cosa condividere, cosa no. E dove stai andando.",
+      topics: [
+        "Cosa puoi condividere con Claude (e cosa NON)",
+        "Privacy reale del piano Pro vs versione gratuita",
+        "Come restare aggiornati senza impazzire",
+        "La visione: il tuo team AI nei prossimi 12 mesi",
+      ],
+    },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 920,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Il programma</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 52px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 18px",
+          maxWidth: 880,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        10 moduli. 48 lezioni. Un <Accent>sistema completo</Accent>.
+      </h2>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 48px",
+          maxWidth: 700,
+          textAlign: "center",
+        }}
+      >
+        Non una lista di video da guardare. Un percorso con un ordine preciso: ogni modulo sblocca il successivo. Clicca un modulo per vedere cosa c&apos;è dentro.
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {modules.map((m, i) => (
+          <ModuleAccordion key={m.n} module={m} defaultOpen={i === 0} />
+        ))}
+      </div>
+
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "48px auto 40px",
+          maxWidth: 720,
+          textAlign: "center",
+        }}
+      >
+        Totale: ~<strong style={{ color: "#fff" }}>4-5 ore</strong> di contenuto. Lezioni da 10-15 minuti. Guardi quando vuoi. Applichi subito. Nessuna lezione è teoria senza pratica.
+      </p>
+
+      {/* Inline CTA */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 16 }}>
+        <SalesPrimaryButton onClick={onCheckout} size="lg" pulse>
+          Voglio tutto questo — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+        </div>
+      </div>
+    </section>
+  );
+}
+
+interface ModuleData {
+  n: string;
+  title: string;
+  outcome: string;
+  topics: string[];
+}
+
+function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defaultOpen?: boolean }) {
+  return (
+    <details
+      className={styles.faqItem}
+      open={defaultOpen}
+      style={{
+        background: "var(--deep-space)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        overflow: "hidden",
+        transition: "border-color .2s",
+      }}
+    >
+      <summary
+        className={styles.faqSummary}
+        style={{
+          cursor: "pointer",
+          padding: "22px 26px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 18,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 18, flex: 1, minWidth: 0 }}>
+          <span
+            style={{
+              flexShrink: 0,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 32,
+              color: "var(--orange)",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+              minWidth: 56,
+            }}
+          >
+            {m.n}
+          </span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(17px, 1.6vw, 20px)",
+                color: "#fff",
+                letterSpacing: "-0.005em",
+                marginBottom: 4,
+                lineHeight: 1.25,
+              }}
+            >
+              {m.title}
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                color: "var(--muted)",
+                lineHeight: 1.45,
+              }}
+            >
+              {m.outcome}
+            </div>
+          </div>
+        </div>
+        <span
+          aria-hidden
+          className={styles.faqIcon}
+          style={{
+            flexShrink: 0,
+            width: 32,
+            height: 32,
+            borderRadius: "50%",
+            background: "rgba(235,122,46,0.12)",
+            border: "1px solid rgba(235,122,46,0.3)",
+            color: "var(--orange)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 20,
+            fontWeight: 500,
+            lineHeight: 1,
+            transition: "transform 0.2s ease",
+          }}
+        >
+          +
+        </span>
+      </summary>
+      <div
+        style={{
+          padding: "0 26px 26px clamp(26px, 8vw, 100px)",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          marginTop: -1,
+        }}
+      >
+        <ul style={{ margin: "20px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+          {m.topics.map((topic, i) => (
+            <li
+              key={i}
+              style={{
+                display: "flex",
+                gap: 12,
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: "var(--ghost)",
+                opacity: 0.92,
+              }}
+            >
+              <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>·</span>
+              <span>{topic}</span>
+            </li>
+          ))}
+        </ul>
+        {/* TODO: image slot per modulo (verrà popolato in seguito con screenshot/mockup) */}
+      </div>
+    </details>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 6 — PROOF (Founder story + Authority + Loghi partner)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesProofSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "founder", variant });
+    scrollToId("offerta");
+  };
+
+  const logos = [
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/H-FARM.png", alt: "H-FARM" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Sole_24_Ore.png", alt: "Il Sole 24 Ore" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Talent_Garden.png", alt: "Talent Garden" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Confcommercio.png", alt: "Confcommercio" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/Asseprim.png", alt: "Asseprim" },
+    { src: "/loghi_bianchi_clienti/loghi_bianchi/CNA.png", alt: "CNA" },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Chi te lo insegna</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 56px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Insegniamo quello che facciamo. <Accent>Non quello che leggiamo</Accent>.
+      </h2>
+
+      {/* Founder block: photo + authority story */}
+      <div className={styles.authorityGrid}>
+        {/* Authority text (left, wider) */}
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.7,
+            color: "var(--ghost)",
+            opacity: 0.95,
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(22px, 2.4vw, 28px)",
+              lineHeight: 1.25,
+              color: "#fff",
+              margin: 0,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Non siamo formatori che hanno letto dell&apos;AI.
+          </p>
+          <p>
+            Morfeus nasce nel 2024 da un&apos;agenzia di marketing che usa l&apos;intelligenza artificiale dal <strong style={{ color: "#fff" }}>2021</strong> — prima del boom ChatGPT.
+          </p>
+          <p>
+            Matteo e Alex hanno ottimizzato ogni processo della loro agenzia con l&apos;AI: copy, analisi, workflow, reportistica.
+            Non è teoria accademica. È sopravvivenza competitiva.
+          </p>
+          <p>Poi hanno capito che quel metodo serviva anche a tutti gli altri.</p>
+
+          <ul
+            style={{
+              margin: "10px 0 0",
+              padding: 0,
+              listStyle: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+            }}
+          >
+            <li style={{ display: "flex", gap: 14, fontSize: 16 }}>
+              <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>→</span>
+              <span><strong style={{ color: "#fff" }}>2.000+</strong> professionisti formati negli ultimi 18 mesi</span>
+            </li>
+            <li style={{ display: "flex", gap: 14, fontSize: 16 }}>
+              <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>→</span>
+              <span>Docenti per <strong style={{ color: "#fff" }}>HFarm, Sole 24 Ore Formazione, Talent Garden, Confcommercio</strong></span>
+            </li>
+            <li style={{ display: "flex", gap: 14, fontSize: 16 }}>
+              <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>→</span>
+              <span>Formazione interna per <strong style={{ color: "#fff" }}>Enel, Sisal, BNP Paribas, Zara</strong></span>
+            </li>
+            <li style={{ display: "flex", gap: 14, fontSize: 16 }}>
+              <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>→</span>
+              <span><strong style={{ color: "#fff" }}>+300 ore</strong> di utilizzo reale di Claude su lavoro vero</span>
+            </li>
+          </ul>
+
+          <p
+            style={{
+              marginTop: 16,
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: 19,
+              lineHeight: 1.5,
+              color: "var(--orange)",
+            }}
+          >
+            &ldquo;Quello che ti insegniamo nel corso è il metodo che noi usiamo ogni giorno per lavorare. Non un&apos;ora di teoria — il sistema reale.&rdquo;
+          </p>
+        </div>
+
+        {/* Founder photo (right, square + glow) */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: 320,
+              aspectRatio: "1 / 1",
+              borderRadius: 20,
+              overflow: "hidden",
+              border: "1px solid rgba(235,122,46,0.30)",
+              boxShadow: "0 0 60px rgba(235,122,46,0.18), 0 24px 48px rgba(0,0,0,0.45)",
+              background: "var(--dusk)",
+            }}
+          >
+            <Image
+              src="/matteo-arnaboldi-hoodie.png"
+              alt="Matteo Arnaboldi, CEO Morfeus Hub"
+              fill
+              sizes="(max-width: 768px) 280px, 320px"
+              style={{ objectFit: "cover", objectPosition: "center top" }}
+            />
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: 18,
+                color: "#fff",
+                letterSpacing: "-0.005em",
+              }}
+            >
+              Matteo Arnaboldi
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 13,
+                color: "var(--muted)",
+                marginTop: 4,
+                letterSpacing: "0.04em",
+              }}
+            >
+              CEO &amp; Co-Founder, Morfeus Hub
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Logo wall (full-width, BIG logos) */}
+      <div style={{ marginTop: 80, paddingTop: 48, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            fontFamily: "var(--font-body)",
+            marginBottom: 28,
+            textAlign: "center",
+          }}
+        >
+          Partner, docenze e formazione aziendale
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "clamp(20px, 3vw, 28px) clamp(24px, 5vw, 56px)",
+          }}
+        >
+          {/* eslint-disable @next/next/no-img-element */}
+          {logos.map((l) => (
+            <img
+              key={l.alt}
+              src={l.src}
+              alt={l.alt}
+              loading="lazy"
+              className={styles.salesPartnerLogo}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "0.7"; }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Inline CTA */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 64 }}>
+        <SalesPrimaryButton onClick={onCheckout} size="lg" pulse>
+          Voglio imparare da loro — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 6.5 — RECENSIONI (testimonianze + screenshot feedback)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Reviews — testimonianze testuali + griglia screenshot di feedback.
+ *
+ * STATO ATTUALE: contenuti placeholder.
+ *
+ * Per popolare con dati reali:
+ *  - Sostituire array `reviews` con quote / nome / ruolo / azienda reali
+ *  - Mettere gli screenshot in /public/reviews-screenshots/<filename>.{jpg|png}
+ *    e popolare l'array `screenshots` con `{src, alt}`. Se l'array è vuoto,
+ *    il blocco screenshot viene nascosto automaticamente.
+ */
+export function SalesReviewsSection() {
+  // TODO: sostituire con reviews reali
+  const reviews: Array<{
+    initials: string;
+    name: string;
+    role: string;
+    company: string;
+    quote: string;
+    rating?: number;
+  }> = [
+    {
+      initials: "FA",
+      name: "Francesca A.",
+      role: "Marketing Manager",
+      company: "Servizi B2B · Milano",
+      quote:
+        "Prima passavo 4 ore a preparare un report. Adesso 40 minuti, e Claude conosce la mia voce. Quello che mi mancava non era lo strumento — era il metodo per usarlo.",
+      rating: 5,
+    },
+    {
+      initials: "GM",
+      name: "Giulio M.",
+      role: "Commercialista",
+      company: "Studio professionale · Bologna",
+      quote:
+        "Pensavo l'AI fosse roba per chi sa programmare. Il modulo 0 mi ha cambiato la testa: capisci come ragionare con lo strumento, e tutto il resto viene da sé.",
+      rating: 5,
+    },
+    {
+      initials: "LP",
+      name: "Luca P.",
+      role: "Founder",
+      company: "Studio comunicazione · Torino",
+      quote:
+        "Ho 3 Project configurati: uno per i clienti retail, uno per il B2B, uno per la mia editoriale. Sembrano 3 collaboratori diversi. Vale 10 volte il prezzo del corso.",
+      rating: 5,
+    },
+  ];
+
+  // TODO: popolare con file in /public/reviews-screenshots/
+  const screenshots: Array<{ src: string; alt: string }> = [
+    // Esempio: { src: "/reviews-screenshots/whatsapp-feedback-01.jpg", alt: "Feedback WhatsApp di uno studente" },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Recensioni</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(30px, 4.2vw, 46px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 18px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Cosa dice <Accent>chi ha già fatto il salto</Accent>.
+      </h2>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 56px",
+          maxWidth: 660,
+          textAlign: "center",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Voci reali di chi ha applicato il metodo nel proprio lavoro quotidiano.
+      </p>
+
+      <div className={styles.reviewsGrid}>
+        {reviews.map((r) => (
+          <ReviewCard key={r.name} {...r} />
+        ))}
+      </div>
+
+      {screenshots.length > 0 && (
+        <div style={{ marginTop: 64 }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "var(--muted)",
+              fontFamily: "var(--font-body)",
+              marginBottom: 24,
+              textAlign: "center",
+            }}
+          >
+            Feedback raw — schermate dirette
+          </div>
+          <div className={styles.screenshotsGrid}>
+            {screenshots.map((s, i) => (
+              <ScreenshotCard key={i} src={s.src} alt={s.alt} />
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ReviewCard({
+  initials,
+  name,
+  role,
+  company,
+  quote,
+  rating,
+}: {
+  initials: string;
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  rating?: number;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: "relative",
+        background: hover ? "rgba(255,255,255,0.04)" : "var(--dusk)",
+        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
+        borderRadius: 16,
+        padding: "28px 26px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 18,
+        boxSizing: "border-box",
+        height: "100%",
+        transition: "background .25s, border-color .25s, transform .25s",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+      }}
+    >
+      {rating !== undefined && (
+        <div style={{ display: "inline-flex", gap: 3 }} aria-label={`${rating} stelle su 5`}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <svg
+              key={i}
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill={i < rating ? "var(--orange)" : "rgba(255,255,255,0.10)"}
+              stroke={i < rating ? "var(--orange)" : "rgba(255,255,255,0.18)"}
+              strokeWidth="1.4"
+              aria-hidden
+            >
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          ))}
+        </div>
+      )}
+      <p
+        style={{
+          fontFamily: "var(--font-italic)",
+          fontStyle: "italic",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "#fff",
+          margin: 0,
+          flex: 1,
+        }}
+      >
+        &ldquo;{quote}&rdquo;
+      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <span
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: "50%",
+            background: "rgba(235,122,46,0.18)",
+            border: "2px solid var(--orange)",
+            display: "grid",
+            placeItems: "center",
+            color: "var(--orange)",
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: 15,
+            flexShrink: 0,
+          }}
+        >
+          {initials}
+        </span>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 15,
+              color: "#fff",
+              lineHeight: 1.2,
+            }}
+          >
+            {name}
+          </div>
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              color: "var(--muted)",
+              marginTop: 2,
+              lineHeight: 1.3,
+            }}
+          >
+            {role} · {company}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScreenshotCard({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        borderRadius: 12,
+        overflow: "hidden",
+        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--dusk)",
+        aspectRatio: "9 / 16",
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 7 — PER CHI È / PER CHI NON È
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesAudienceSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "audience", variant });
+    scrollToId("offerta");
+  };
+
+  const yes = [
+    "Sei un professionista che vuole usare l'AI nel lavoro quotidiano, ma non sa da dove partire davvero.",
+    "Hai provato ChatGPT o Claude e hai pensato \"bah, niente di speciale\" — perché nessuno ti ha mostrato il Livello 2, 3 e 4.",
+    "Vedi colleghi e competitor ottenere risultati con l'AI e vuoi capire come fanno.",
+    "Non sei tecnico e non vuoi diventarlo — vuoi un metodo pratico, non un corso di programmazione.",
+    "Sei un imprenditore, freelance o manager che vuole risparmiare ore ogni settimana su task ripetitivi.",
+    "Vuoi smettere di navigare tra tutorial YouTube e prompt copiati da Twitter senza costruire nulla di strutturato.",
+  ];
+  const no = [
+    "Cerchi un corso su \"l'AI in generale\" — questo è verticale su Claude. Il 70% si applica ovunque, ma il focus è uno strumento, un metodo.",
+    "Sei già al Livello 4-5 (hai Projects configurati, usi skill personalizzate, hai un workflow quotidiano strutturato) — il corso base non aggiunge abbastanza. Guarda il bootcamp.",
+    "Vuoi risultati senza fare nulla — il corso richiede 4-5 ore di impegno e la volontà di applicare. Non è una pillola magica.",
+    "Pensi che l'AI sia una moda che passerà — questo corso non è per chi cerca conferme. È per chi ha capito che il mondo è cambiato.",
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Auto-selezione</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 56px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Questo corso è per te? <Accent>Scoprilo in 30 secondi</Accent>.
+      </h2>
+
+      <div className={styles.audienceGrid}>
+        <div
+          style={{
+            background: "var(--deep-space)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "3px solid var(--orange)",
+            borderRadius: 14,
+            padding: "32px 28px",
+            boxSizing: "border-box",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "var(--orange)",
+              marginBottom: 18,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            È per te se…
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
+            {yes.map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    background: "rgba(235,122,46,0.15)",
+                    border: "1px solid var(--orange)",
+                    color: "var(--orange)",
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
+                >
+                  ✓
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          style={{
+            background: "var(--deep-space)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "3px solid #8B2500",
+            borderRadius: 14,
+            padding: "32px 28px",
+            boxSizing: "border-box",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "#C56750",
+              marginBottom: 18,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            NON è per te se…
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
+            {no.map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.85 }}>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    background: "rgba(139,37,0,0.15)",
+                    border: "1px solid #8B2500",
+                    color: "#C56750",
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
+                >
+                  ✗
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Inline CTA */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 56 }}>
+        <SalesPrimaryButton onClick={onCheckout} size="lg" pulse>
+          Mi riconosco — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 8 — COMPARISON TABLE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesComparisonSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "comparison", variant });
+    scrollToId("offerta");
+  };
+
+  const rows: Array<{ label: string; a: string; b: string; c: string; highlight?: boolean }> = [
+    { label: "Tempo per risultati", a: "6-12 mesi", b: "4-6 settimane", c: "1 settimana" },
+    { label: "Struttura e ordine", a: "Nessuno. Salti da un video all'altro.", b: "Generica. Copre tutto e niente.", c: "Percorso in 10 moduli con ordine preciso." },
+    { label: "Focus", a: "Sparso su 10 tool diversi.", b: "\"AI\" in generale.", c: "Verticale Claude. Un metodo, uno strumento." },
+    { label: "Parte dal mindset?", a: "No.", b: "Raramente.", c: "Sì. Modulo 0: come ragionare con l'AI." },
+    { label: "Personalizzazione", a: "Nessuna.", b: "Template generici.", c: "Il TUO Claude, configurato per il TUO lavoro." },
+    { label: "Supporto", a: "Nessuno.", b: "Community generica.", c: "4 live settimanali con i founder." },
+    { label: "Costo reale", a: "\"Gratis\" + 150-300h del tuo tempo.", b: "100-500€ + tempo per filtrare il contenuto utile.", c: "67€ early bird. 4-5h totali. Applicabile subito.", highlight: true },
+    { label: "Garanzia", a: "—", b: "Variabile.", c: "14 giorni. Nessuna domanda." },
+    { label: "Aggiornamenti", a: "Devi cercarli tu ogni volta.", b: "Dipende.", c: "Inclusi. Il corso evolve con Claude." },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Posizionamento</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(28px, 4vw, 44px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 48px",
+          maxWidth: 920,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Imparare da solo <span style={{ color: "var(--muted)" }}>vs</span> Corso generico AI <span style={{ color: "var(--muted)" }}>vs</span> <Accent>Corso Claude Morfeus</Accent>.
+      </h2>
+
+      {/* Desktop table */}
+      <div className={styles.comparisonTable}>
+        <ComparisonHeaderCell label="Criterio" />
+        <ComparisonHeaderCell label="Da solo (YouTube + tutorial)" />
+        <ComparisonHeaderCell label="Corso generico AI" />
+        <ComparisonHeaderCell label="Corso Claude Morfeus" highlight />
+        {rows.map((r, i) => (
+          <ComparisonRow key={i} row={r} />
+        ))}
+      </div>
+
+      {/* Mobile stacked */}
+      <div className={styles.comparisonStack}>
+        <ComparisonMobileCard title="Da solo (YouTube + tutorial)" rows={rows.map((r) => ({ k: r.label, v: r.a }))} />
+        <ComparisonMobileCard title="Corso generico AI" rows={rows.map((r) => ({ k: r.label, v: r.b }))} />
+        <ComparisonMobileCard title="Corso Claude Morfeus" highlight rows={rows.map((r) => ({ k: r.label, v: r.c }))} />
+      </div>
+
+      <p
+        style={{
+          marginTop: 40,
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          color: "var(--ghost)",
+          textAlign: "center",
+          opacity: 0.92,
+        }}
+      >
+        Il tuo tempo vale più di <Big color="#fff">15€</Big> all&apos;ora? Allora il corso si ripaga prima di YouTube.
+      </p>
+
+      {/* Inline CTA */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 56 }}>
+        <SalesPrimaryButton onClick={onCheckout} size="lg" pulse>
+          Salto le scorciatoie — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComparisonHeaderCell({ label, highlight }: { label: string; highlight?: boolean }) {
+  return (
+    <div
+      style={{
+        padding: "20px 20px",
+        background: highlight ? "var(--orange)" : "var(--dusk)",
+        borderRight: "1px solid rgba(255,255,255,0.06)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        fontFamily: "var(--font-display)",
+        fontWeight: 600,
+        fontSize: 16,
+        color: highlight ? "#fff" : "var(--ghost)",
+        letterSpacing: "-0.005em",
+        lineHeight: 1.3,
+      }}
+    >
+      {label}
+    </div>
+  );
+}
+
+function ComparisonRow({ row }: { row: { label: string; a: string; b: string; c: string; highlight?: boolean } }) {
+  const baseCell: React.CSSProperties = {
+    padding: "20px 20px",
+    borderRight: "1px solid rgba(255,255,255,0.05)",
+    borderBottom: "1px solid rgba(255,255,255,0.05)",
+    fontFamily: "var(--font-body)",
+    fontSize: 16,
+    lineHeight: 1.55,
+    color: "var(--ghost)",
+    background: row.highlight ? "rgba(235,122,46,0.05)" : "transparent",
+    boxSizing: "border-box",
+  };
+  return (
+    <>
+      <div style={{ ...baseCell, fontWeight: 600, color: "#fff" }}>{row.label}</div>
+      <div style={{ ...baseCell, opacity: 0.78 }}>{row.a}</div>
+      <div style={{ ...baseCell, opacity: 0.78 }}>{row.b}</div>
+      <div
+        style={{
+          ...baseCell,
+          background: row.highlight ? "rgba(235,122,46,0.10)" : "rgba(235,122,46,0.04)",
+          color: "#fff",
+          fontWeight: 500,
+          borderRight: "2px solid var(--orange)",
+          borderLeft: "2px solid var(--orange)",
+        }}
+      >
+        {row.c}
+      </div>
+    </>
+  );
+}
+
+function ComparisonMobileCard({ title, rows, highlight }: { title: string; rows: Array<{ k: string; v: string }>; highlight?: boolean }) {
+  return (
+    <div
+      style={{
+        background: highlight ? "var(--dusk)" : "var(--deep-space)",
+        border: highlight ? "2px solid var(--orange)" : "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        padding: "24px 22px",
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 18,
+          color: highlight ? "var(--orange)" : "#fff",
+          margin: "0 0 18px",
+        }}
+      >
+        {title}
+      </h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {rows.map((r) => (
+          <div key={r.k}>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.16em", marginBottom: 4 }}>{r.k}</div>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>{r.v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 8.5 — BONUS INCLUSI (drum-roll prima dell'offerta)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesBonusSection() {
+  const bonuses = [
+    {
+      tag: "Bonus #1",
+      title: "4 live settimanali con i founder",
+      body: "Sessioni dal vivo dove fai domande, lavori con noi, vedi demo in tempo reale. Non sei solo davanti a un video.",
+      value: "197€",
+      icon: "⏵",
+    },
+    {
+      tag: "Bonus #2",
+      title: "Pacchetto Skill & Plugin curato",
+      body: "Strumenti pre-costruiti che installi in 1 click. Funzionano subito sui task più comuni — non devi inventarli da zero.",
+      value: "97€",
+      icon: "✦",
+    },
+    {
+      tag: "Bonus #3",
+      title: "Aggiornamenti per sempre",
+      body: "Claude evolve. Il corso evolve con lui. Nuove lezioni quando escono feature importanti — incluse, senza re-acquisto.",
+      value: "non quantificabile",
+      icon: "↻",
+    },
+    {
+      tag: "Bonus #4",
+      title: "Credito upgrade Bootcamp",
+      body: "Se dopo il corso vuoi fare il Bootcamp AI Champion, il costo del corso ti viene rimborsato come credito. Non perdi nulla.",
+      value: "fino a 67€",
+      icon: "↗",
+    },
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1080,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>I bonus inclusi</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(30px, 4.2vw, 46px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 18px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        E in più, dentro il corso, c&apos;è anche <Accent>tutto questo</Accent>.
+      </h2>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: "0 auto 56px",
+          maxWidth: 640,
+          textAlign: "center",
+        }}
+      >
+        Quattro bonus inclusi nel prezzo che da soli valgono più del corso stesso. Tutti compresi senza supplementi.
+      </p>
+
+      <div className={styles.bonusGrid}>
+        {bonuses.map((b) => (
+          <BonusCard key={b.tag} {...b} />
+        ))}
+      </div>
+
+      {/* Visual total */}
+      <div
+        style={{
+          marginTop: 48,
+          padding: "24px 28px",
+          background: "var(--deep-space)",
+          border: "1px solid rgba(235,122,46,0.30)",
+          borderRadius: 14,
+          textAlign: "center",
+          maxWidth: 560,
+          marginInline: "auto",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            fontFamily: "var(--font-body)",
+            marginBottom: 8,
+          }}
+        >
+          Valore complessivo dei bonus
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(36px, 5vw, 52px)",
+            color: "var(--orange)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+          }}
+        >
+          ~360€
+        </div>
+        <div
+          style={{
+            marginTop: 10,
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            color: "var(--ghost)",
+            opacity: 0.85,
+          }}
+        >
+          Più di 5 volte il prezzo del corso. <strong style={{ color: "#fff" }}>Tutto incluso</strong>.
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BonusCard({ tag, title, body, value, icon }: { tag: string; title: string; body: string; value: string; icon: string }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: "relative",
+        padding: "26px 26px",
+        background: hover ? "rgba(255,255,255,0.04)" : "var(--deep-space)",
+        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
+        borderRadius: 14,
+        transition: "background .25s, border-color .25s, transform .25s",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        boxSizing: "border-box",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, gap: 10, flexWrap: "wrap" }}>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            color: "var(--orange)",
+            fontFamily: "var(--font-body)",
+            padding: "5px 10px",
+            background: "rgba(235,122,46,0.12)",
+            borderRadius: 100,
+            flexShrink: 0,
+          }}
+        >
+          <span style={{ fontSize: 14, lineHeight: 1 }}>{icon}</span>
+          {tag}
+        </span>
+        <span
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: 18,
+            color: value.includes("€") ? "var(--orange)" : "var(--muted)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+            textAlign: "right",
+            minWidth: 0,
+          }}
+        >
+          {value.includes("€") && <span style={{ fontSize: 12, color: "var(--muted)", marginRight: 4, fontWeight: 500 }}>vale</span>}
+          {value}
+        </span>
+      </div>
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 19,
+          lineHeight: 1.25,
+          letterSpacing: "-0.01em",
+          color: "#fff",
+          margin: "0 0 10px",
+        }}
+      >
+        {title}
+      </h3>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.55,
+          color: "var(--ghost)",
+          opacity: 0.85,
+          margin: 0,
+          flex: 1,
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 9 — OFFERTA: STACK + REVEAL PREZZO
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesOfferSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+
+  const items = [
+    { title: "Il corso completo", body: "10 moduli, ~48 lezioni, ~4-5 ore di contenuto pratico. Dal mindset al sistema personalizzato.", value: "297€" },
+    { title: "4 live settimanali con i founder", body: "Sessioni dal vivo dove fai domande, lavori con noi, vedi demo in tempo reale. Non sei solo.", value: "197€" },
+    { title: "Pacchetto skill e plugin curato", body: "Strumenti pre-costruiti che installi in 1 click. Funzionano subito per i task più comuni.", value: "97€" },
+    { title: "Aggiornamenti futuri inclusi", body: "Claude evolve. Il corso evolve con lui. Non diventa obsoleto tra 3 mesi.", value: "non quantificabile" },
+  ];
+
+  const onCheckout = () => trackCheckoutClick("offer", variant, current.stage, current.price);
+
+  return (
+    <section
+      id="offerta"
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 960,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Strong orange ambient glow — mark the section visually */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "90%",
+          height: "70%",
+          background:
+            "radial-gradient(ellipse, rgba(235,122,46,0.18) 0%, rgba(123,104,238,0.08) 50%, transparent 75%)",
+          filter: "blur(50px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+
+      {/* "Zona acquisto" badge floating above the box */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "10px 20px",
+            background: "var(--orange)",
+            color: "#fff",
+            fontFamily: "var(--font-body)",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            borderRadius: 100,
+            boxShadow: "0 8px 28px rgba(235,122,46,0.45)",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          La tua decisione · Zona acquisto
+        </span>
+      </div>
+
+      {/* PURCHASE BOX wrapping all content */}
+      <div
+        style={{
+          background: "linear-gradient(180deg, var(--dusk) 0%, rgba(15,14,26,0.95) 100%)",
+          border: "2px solid var(--orange)",
+          borderRadius: 24,
+          padding: "clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px)",
+          boxShadow: "0 0 80px rgba(235,122,46,0.20), 0 32px 80px rgba(0,0,0,0.55)",
+          position: "relative",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <SectionLabel>L&apos;offerta</SectionLabel>
+        </div>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(32px, 4.5vw, 50px)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "16px auto 40px",
+            maxWidth: 720,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Ecco cosa ottieni. E quanto costa <Accent>davvero</Accent>.
+        </h2>
+
+        {/* Stack */}
+        <div className={styles.offerStack}>
+          {items.map((it, i) => (
+            <OfferStackCard key={i} index={i + 1} title={it.title} body={it.body} value={it.value} />
+          ))}
+        </div>
+
+      {/* Total + reveal */}
+      <div style={{ textAlign: "center", marginTop: 56 }}>
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            color: "var(--muted)",
+            marginBottom: 4,
+          }}
+        >
+          Valore totale
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: 32,
+            color: "var(--muted)",
+            textDecoration: "line-through",
+            textDecorationColor: "var(--orange)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          591€
+        </div>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: 36 }}>
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            fontWeight: 600,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            color: "var(--ghost)",
+            opacity: 0.7,
+            marginBottom: 8,
+          }}
+        >
+          Il tuo investimento oggi
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(72px, 13vw, 156px)",
+            lineHeight: 1,
+            color: "var(--orange)",
+            letterSpacing: "-0.04em",
+            textShadow: "0 0 60px rgba(235,122,46,0.25)",
+            margin: "8px 0 12px",
+          }}
+        >
+          {current.price}€
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 18,
+            color: "var(--ghost)",
+            opacity: 0.85,
+          }}
+        >
+          {priceWords(current.price)}.
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            margin: "20px auto 0",
+            maxWidth: 580,
+          }}
+        >
+          Meno di una cena fuori. Meno di un&apos;ora di consulenza con un esperto AI. Per un sistema che ti restituisce 5-8 ore ogni settimana.
+        </div>
+      </div>
+
+      {/* Visual price scale */}
+      <PriceScaleBar pricing={pricing} current={current} />
+
+      {/* CTA */}
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
+        <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
+          {current.stage === "earlyBird"
+            ? `Entra nel corso a ${current.price}€ — Prezzo early bird`
+            : current.stage === "standard"
+              ? `Entra nel corso a ${current.price}€`
+              : `Entra nel corso a ${current.price}€`} <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+      </div>
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: 14,
+          fontSize: 13,
+          color: "var(--muted)",
+          fontFamily: "var(--font-body)",
+        }}
+      >
+        Pagamento sicuro · Accesso immediato · Garanzia 14 giorni
+      </div>
+
+      {/* Credito upgrade box */}
+      <div
+        style={{
+          marginTop: 36,
+          padding: "18px 22px",
+          background: "rgba(123,104,238,0.05)",
+          border: "1px solid rgba(123,104,238,0.20)",
+          borderRadius: 12,
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 14,
+          maxWidth: 720,
+          marginInline: "auto",
+        }}
+      >
+        <span
+          style={{
+            flexShrink: 0,
+            width: 30,
+            height: 30,
+            borderRadius: 8,
+            background: "rgba(123,104,238,0.15)",
+            color: "var(--violet)",
+            display: "grid",
+            placeItems: "center",
+            fontFamily: "var(--font-display)",
+            fontWeight: 700,
+            fontSize: 14,
+          }}
+        >
+          €
+        </span>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+          <strong style={{ color: "#fff" }}>Credito upgrade Bootcamp.</strong> Se dopo il corso vuoi fare il Bootcamp AI Champion, il costo del corso ti viene rimborsato come credito. Non perdi nulla.
+        </div>
+      </div>
+      </div>
+      {/* /PURCHASE BOX */}
+    </section>
+  );
+}
+
+function priceWords(n: number): string {
+  if (n === 67) return "Sessantasette euro";
+  if (n === 97) return "Novantasette euro";
+  if (n === 147) return "Centoquarantasette euro";
+  return `${n} euro`;
+}
+
+function OfferStackCard({ index, title, body, value }: { index: number; title: string; body: string; value: string }) {
+  const isPrice = value.includes("€");
+  return (
+    <div
+      className={styles.offerStackCard}
+      style={{
+        padding: "20px 22px",
+        background: "var(--deep-space)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        boxSizing: "border-box",
+      }}
+    >
+      <span
+        className={styles.offerStackIndex}
+        style={{
+          background: "rgba(235,122,46,0.14)",
+          color: "var(--orange)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 16,
+        }}
+      >
+        {index}
+      </span>
+      <div className={styles.offerStackBody}>
+        <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#fff", marginBottom: 4, lineHeight: 1.25 }}>
+          {title}
+        </div>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.8 }}>
+          {body}
+        </div>
+      </div>
+      <div
+        className={styles.offerStackValue}
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: 17,
+          color: "var(--orange)",
+          textDecoration: isPrice ? "line-through" : "none",
+          textDecorationColor: "var(--muted)",
+          opacity: isPrice ? 0.85 : 0.7,
+        }}
+      >
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function PriceScaleBar({ pricing, current }: { pricing: SalesPricingContent; current: CurrentPricing }) {
+  const stages: Array<{ key: PricingStage; price: number; label: string }> = [
+    { key: "earlyBird", price: pricing.earlyBirdPrice, label: "Early bird" },
+    { key: "standard", price: pricing.standardPrice, label: "Standard" },
+    { key: "full", price: pricing.fullPrice, label: "Prezzo pieno" },
+  ];
+  return (
+    <div
+      style={{
+        marginTop: 44,
+        padding: "20px 24px",
+        background: "var(--deep-space)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 14,
+        flexWrap: "wrap",
+      }}
+    >
+      {stages.map((s, i) => {
+        const active = s.key === current.stage;
+        const passed = stages.findIndex((x) => x.key === current.stage) > i;
+        return (
+          <div key={s.key} style={{ display: "flex", alignItems: "center", gap: 14, flex: "1 1 0", minWidth: 130 }}>
+            <span
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                background: active ? "var(--orange)" : passed ? "var(--muted)" : "transparent",
+                border: `2px solid ${active ? "var(--orange)" : "var(--muted)"}`,
+                boxShadow: active ? "0 0 14px rgba(235,122,46,0.5)" : "none",
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: 18,
+                  color: active ? "var(--orange)" : passed ? "var(--muted)" : "var(--ghost)",
+                  textDecoration: passed ? "line-through" : "none",
+                }}
+              >
+                {s.price}€
+              </div>
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: active ? "var(--orange)" : "var(--muted)",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                {active ? "● sei qui" : s.label}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 10 — GARANZIA
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesGuaranteeSection() {
+  return (
+    <section
+      className={styles.salesSectionPadSm}
+      style={{
+        maxWidth: 880,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          background: "var(--dusk)",
+          border: "2px solid var(--orange)",
+          borderRadius: 18,
+          padding: "clamp(28px, 5vw, 44px) clamp(24px, 5vw, 44px) clamp(28px, 5vw, 40px)",
+          overflow: "hidden",
+        }}
+      >
+        {/* Watermark "14" */}
+        <span
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: -40,
+            right: -10,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(180px, 35vw, 280px)",
+            lineHeight: 1,
+            color: "var(--orange)",
+            opacity: 0.06,
+            letterSpacing: "-0.05em",
+            pointerEvents: "none",
+          }}
+        >
+          14
+        </span>
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "var(--orange)",
+            fontFamily: "var(--font-body)",
+            marginBottom: 14,
+          }}
+        >
+          Garanzia &ldquo;prova tutto&rdquo; — 14 giorni
+        </div>
+        <h2
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(28px, 4vw, 40px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "0 0 22px",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Non ti chiediamo di fidarti di noi. Ti chiediamo di provare.
+        </h2>
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.7,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+          }}
+        >
+          <p>Accedi al corso. Guarda le lezioni. Applica il metodo al tuo lavoro.</p>
+          <p>
+            Se dopo 14 giorni non ha cambiato il modo in cui lavori con l&apos;AI, ti rimborsiamo. Intero importo. Nessuna domanda. Nessuna burocrazia.
+          </p>
+          <p>
+            Perché offriamo questa garanzia? Perché sappiamo che funziona. Abbiamo formato 2.000+ professionisti. Il tasso di rimborso è sotto il 3%. Chi chiede il rimborso non era il cliente giusto — e va bene così.
+          </p>
+        </div>
+
+        <p
+          style={{
+            position: "relative",
+            zIndex: 1,
+            margin: "28px 0 0",
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 22,
+            color: "var(--orange)",
+            textAlign: "center",
+          }}
+        >
+          L&apos;unico rischio reale è non provare.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 11 — FAQ (+ FAQ extra per email variant)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesFAQSection() {
+  const variant = useSalesVariant();
+
+  const baseFaqs: Array<{ q: string; a: React.ReactNode }> = [
+    {
+      q: "Non ho tempo di seguire un altro corso.",
+      a: (
+        <>
+          Capisco. Se lavori 8-10 ore al giorno, l&apos;ultima cosa che vuoi è un altro impegno.
+          <br /><br />
+          Ma ecco il paradosso: le 4-5 ore che investi nel corso te ne restituiscono 5-8 OGNI SETTIMANA.
+          <br /><br />
+          Non è tempo in più. È l&apos;investimento che ti libera tempo. Lezioni da 10-15 minuti, guardabili quando vuoi, applicabili subito. Non è un master — è un toolkit.
+        </>
+      ),
+    },
+    {
+      q: "Ho già provato ChatGPT/Claude e non mi ha impressionato.",
+      a: (
+        <>
+          Corretto. Se hai fatto domande e hai ottenuto risposte generiche, il tuo giudizio è giusto. Quelle risposte SONO generiche.
+          <br /><br />
+          Ma quello era il Livello 1 — domanda/risposta. Come giudicare Excel dopo aver fatto solo una somma. Il 95% non supera mai il Livello 1 perché nessuno gli ha mostrato che il 2, 3 e 4 esistono.
+          <br /><br />
+          A Livello 4, Claude non ti dà risposte. Lavora CON te. Il corso ti porta lì.
+        </>
+      ),
+    },
+    {
+      q: "Non sono tecnico.",
+      a: (
+        <>
+          L&apos;85% dei nostri studenti non ha alcun background tecnico. Abbiamo formato commercialisti, avvocati, marketer, HR manager, imprenditori. Nessuno era &ldquo;tecnico&rdquo;.
+          <br /><br />
+          Se sai usare email e WhatsApp, sai usare Claude. Il Modulo 0 si chiama &ldquo;Come ragionare con l&apos;AI&rdquo;. Non &ldquo;Come programmare l&apos;AI&rdquo;.
+        </>
+      ),
+    },
+    {
+      q: "L'AI cambia troppo velocemente, tra 3 mesi è tutto diverso.",
+      a: (
+        <>
+          Se questo fosse un corso su UN tool specifico, avresti ragione.
+          <br /><br />
+          Ma questo corso insegna il METODO. Come pensare, come strutturare, come costruire sistemi con l&apos;AI. I tool cambiano. Il metodo resta.
+          <br /><br />
+          Noi usiamo l&apos;AI dal 2021. I tool sono cambiati 5 volte. Il nostro metodo funziona ancora. Più aspetti, più il gap si allarga. Chi inizia oggi ha un vantaggio su chi inizia a ottobre.
+        </>
+      ),
+    },
+    {
+      q: "Perché Claude e non ChatGPT?",
+      a: (
+        <>
+          Il corso insegna un metodo che funziona con qualsiasi AI. Ma usa Claude come strumento primario per un motivo: è il più adatto al lavoro professionale strutturato.
+          <br /><br />
+          Projects, CoWork, Skills, Connettori — funzionalità che gli altri non hanno allo stesso livello.
+          <br /><br />
+          Il 70% di quello che impari si applica ovunque. Stai imparando a guidare, non a usare una macchina specifica.
+        </>
+      ),
+    },
+    {
+      q: "Il prezzo sale davvero?",
+      a: (
+        <>
+          Sì. Non è una finta scadenza.
+          <br /><br />
+          67€ per le prime 24 ore dopo il webinar. 97€ dal giorno 2 al giorno 7. 147€ dal 13 maggio, per sempre.
+          <br /><br />
+          Il contenuto non cambierà. Il prezzo sì.
+        </>
+      ),
+    },
+    {
+      q: "E se poi voglio fare il bootcamp?",
+      a: (
+        <>
+          Il costo del corso ti viene rimborsato come credito sull&apos;iscrizione al Bootcamp AI Champion. Non perdi nulla. Il corso è il primo step. Il bootcamp è il secondo, per chi vuole andare oltre.
+        </>
+      ),
+    },
+    {
+      q: "Ho bisogno del piano a pagamento di Claude?",
+      a: (
+        <>
+          Puoi iniziare con il piano gratuito. Per le funzionalità avanzate (Projects, CoWork) serve il Pro: 18€/mese. Meno di un pranzo fuori, per uno strumento che ti risparmia 5+ ore a settimana.
+          <br /><br />
+          Tutti i nostri studenti hanno il Pro. Nessuno l&apos;ha mai cancellato dopo il corso.
+        </>
+      ),
+    },
+  ];
+
+  const emailExtra = {
+    q: "Non ho visto il webinar. Mi perdo qualcosa?",
+    a: (
+      <>
+        No. Il webinar era una demo dal vivo del metodo. Tutto quello che è stato mostrato è insegnato nel corso — in modo più approfondito, strutturato e replicabile.
+        <br /><br />
+        Il webinar ti fa dire &ldquo;wow&rdquo;. Il corso ti fa dire &ldquo;adesso so farlo&rdquo;. Non ti perdi nulla. Anzi: il corso è più completo.
+      </>
+    ),
+  };
+
+  const faqs = variant === "email" ? [...baseFaqs, emailExtra] : baseFaqs;
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 880,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        textAlign: "center",
+      }}
+    >
+      <SectionLabel>FAQ</SectionLabel>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 48px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "20px auto 48px",
+          maxWidth: 720,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Le domande che <Accent>ti stai facendo</Accent>.
+      </h2>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, textAlign: "left" }}>
+        {faqs.map((item, i) => (
+          <details
+            key={item.q}
+            className={styles.faqItem}
+            open={i === 0}
+            style={{
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
+            <summary
+              className={styles.faqSummary}
+              style={{
+                cursor: "pointer",
+                padding: "22px 26px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 20,
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(16px, 1.6vw, 18px)",
+                fontWeight: 500,
+                color: "#fff",
+                letterSpacing: "-0.005em",
+              }}
+            >
+              <span>{item.q}</span>
+              <span
+                aria-hidden
+                className={styles.faqIcon}
+                style={{
+                  flexShrink: 0,
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "rgba(235,122,46,0.12)",
+                  border: "1px solid rgba(235,122,46,0.3)",
+                  color: "var(--orange)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                +
+              </span>
+            </summary>
+            <div
+              style={{
+                padding: "0 26px 22px",
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                lineHeight: 1.65,
+                color: "var(--ghost)",
+                opacity: 0.88,
+              }}
+            >
+              {item.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 12 — URGENZA + SCARSITÀ (variant-aware)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesUrgencySection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const content = step.content.SalesUrgency as SalesUrgencyContent;
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const copy = content[variant];
+
+  const onCheckout = () => trackCheckoutClick("urgency", variant, current.stage, current.price);
+
+  const liveBody = (
+    <>
+      <p>67€. Solo per le prossime ore. Poi sale a 97€. E dopo 7 giorni, a 147€. Per sempre.</p>
+      <p>Non tornerà a questo prezzo. Non ci sarà un&apos;altra occasione identica.</p>
+      <p>Eri presente. Hai visto il metodo. Sai che funziona. L&apos;unica domanda è: agisci adesso o paghi di più dopo?</p>
+    </>
+  );
+  const replayBody = (
+    <>
+      <p>Tra poco, il prezzo sale da 67€ a 97€. Dopo 7 giorni, sale a 147€. Per sempre.</p>
+      <p>Non è una strategia di marketing. È il prezzo del webinar: riservato a chi ha partecipato e decide di agire.</p>
+      <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+        <li>— Il corso resta lo stesso</li>
+        <li>— La garanzia resta 14 giorni</li>
+        <li>— La qualità resta identica</li>
+      </ul>
+      <p>L&apos;unica cosa che cambia è il prezzo.</p>
+      <p>Ogni settimana di attesa sono 5-8 ore perse e un prezzo più alto.</p>
+    </>
+  );
+  const emailBody = (
+    <>
+      <p>Il corso è appena uscito. Il prezzo di lancio è il più basso che ci sarà mai:</p>
+      <p>
+        <strong style={{ color: "var(--orange)" }}>67€</strong> — adesso.<br />
+        <strong style={{ color: "#fff" }}>97€</strong> — tra pochi giorni.<br />
+        <strong style={{ color: "var(--muted)" }}>147€</strong> — prezzo pieno, per sempre.
+      </p>
+      <p>Il contenuto non cambierà. La garanzia 14 giorni resta identica. L&apos;unica cosa che cambia è quanto paghi.</p>
+      <p>Ma il prezzo non è l&apos;urgenza vera.</p>
+      <p>L&apos;urgenza vera è che ogni settimana senza un sistema sono 5-8 ore buttate in task che l&apos;AI potrebbe fare per te. A 25€/ora, sono 500-800€ al mese di tempo perso.</p>
+      <p>Il corso costa meno di una settimana di ritardo.</p>
+    </>
+  );
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 760,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        textAlign: "center",
+      }}
+    >
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(28px, 4vw, 42px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "0 auto 36px",
+          maxWidth: 720,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {copy.headlinePre} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd && <> {copy.headlineEnd}</>}
+      </h2>
+
+      {current.activeDeadlineIso && (
+        <>
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "var(--muted)",
+              marginBottom: 18,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            {copy.timerLabel}
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>
+            <CountdownCells targetIso={current.activeDeadlineIso} />
+          </div>
+        </>
+      )}
+
+      <div
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 16,
+          lineHeight: 1.7,
+          color: "var(--ghost)",
+          opacity: 0.92,
+          maxWidth: 620,
+          margin: "0 auto 36px",
+          textAlign: "left",
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+        }}
+      >
+        {variant === "live" ? liveBody : variant === "replay" ? replayBody : emailBody}
+      </div>
+
+      <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
+        {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+      </SalesPrimaryButton>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 13 — CTA FINALE + RECAP (variant-aware)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesFinalCTASection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const content = step.content.SalesFinalCTA as SalesFinalCTAContent;
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const copy = content[variant];
+
+  const onCheckout = () => trackCheckoutClick("final", variant, current.stage, current.price);
+
+  const recap = [
+    "10 moduli, 48 lezioni, ~4-5 ore di contenuto pratico",
+    "Il metodo dal mindset al sistema personalizzato",
+    "4 live settimanali con i founder",
+    "Pacchetto skill e plugin pronto all'uso",
+    "Aggiornamenti inclusi per sempre",
+    "Garanzia 14 giorni, nessuna domanda",
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 880,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        textAlign: "center",
+      }}
+    >
+      {/* Stronger orange ambient gradient — segnala "ultima call" */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(ellipse at center, rgba(235,122,46,0.14) 0%, rgba(123,104,238,0.06) 45%, transparent 75%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+
+      <div style={{ marginBottom: 18 }}>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 18px",
+            background: "rgba(235,122,46,0.12)",
+            border: "1px solid rgba(235,122,46,0.30)",
+            color: "var(--orange)",
+            fontFamily: "var(--font-body)",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            borderRadius: 100,
+          }}
+        >
+          Ultimo passo
+        </span>
+      </div>
+
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 48px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "0 auto 48px",
+          maxWidth: 760,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        {copy.headlinePre && <>{copy.headlinePre} </>}<Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
+      </h2>
+
+      <div
+        style={{
+          margin: "0 auto",
+          maxWidth: 600,
+          textAlign: "left",
+          padding: "28px 32px",
+          background: "var(--deep-space)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: 14,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            marginBottom: 16,
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          Stai per ottenere
+        </div>
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
+          {recap.map((line, i) => (
+            <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+              <span style={{ color: "var(--orange)", fontWeight: 700 }}>→</span>
+              <span>{line}</span>
+            </li>
+          ))}
+        </ul>
+        <div
+          style={{
+            marginTop: 22,
+            paddingTop: 22,
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            flexWrap: "wrap",
+            gap: 8,
+          }}
+        >
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)" }}>Valore: <span style={{ textDecoration: "line-through" }}>591€</span></div>
+          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 28, color: "var(--orange)" }}>
+            Oggi: {current.price}€
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
+        <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
+          {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+      </div>
+
+      <div
+        style={{
+          marginTop: 14,
+          fontSize: 13,
+          color: "var(--muted)",
+          fontFamily: "var(--font-body)",
+        }}
+      >
+        Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
+        {current.activeDeadlineIso && (
+          <>
+            <br />
+            Prezzo {current.stage === "earlyBird" ? "early bird" : "standard"} valido ancora per <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+          </>
+        )}
+      </div>
+
+      <p
+        style={{
+          marginTop: 56,
+          fontFamily: "var(--font-body)",
+          fontSize: 18,
+          lineHeight: 1.5,
+          color: "var(--ghost)",
+          opacity: 0.92,
+          maxWidth: 600,
+          marginInline: "auto",
+        }}
+      >
+        {copy.closingPre} <Accent>{copy.closingAccent}</Accent>{copy.closingEnd && <> {copy.closingEnd}</>}
+      </p>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 14 — SEZIONE B2B
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesB2BSection() {
+  const variant = useSalesVariant();
+  const onClick = () => trackEvent("sales_b2b_call_click", { variant });
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          background: "linear-gradient(135deg, rgba(101,88,212,0.18) 0%, rgba(123,104,238,0.10) 50%, rgba(15,14,26,0.90) 100%)",
+          border: "1px solid rgba(123,104,238,0.30)",
+          borderRadius: 24,
+          padding: "clamp(40px, 5vw, 64px) clamp(28px, 4vw, 56px)",
+          overflow: "hidden",
+          boxShadow: "0 0 60px rgba(123,104,238,0.15), 0 24px 60px rgba(0,0,0,0.45)",
+        }}
+      >
+        {/* Decorative violet glow inside the card */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: "-20%",
+            right: "-10%",
+            width: 360,
+            height: 360,
+            background: "radial-gradient(circle, rgba(123,104,238,0.25) 0%, transparent 70%)",
+            filter: "blur(40px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div className={styles.b2bGrid} style={{ position: "relative", zIndex: 1 }}>
+          {/* Left: text + CTA */}
+          <div>
+            <div style={{ marginBottom: 14 }}>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "6px 14px",
+                  background: "rgba(123,104,238,0.18)",
+                  border: "1px solid rgba(123,104,238,0.40)",
+                  color: "var(--violet)",
+                  fontFamily: "var(--font-body)",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  borderRadius: 100,
+                }}
+              >
+                Per le aziende
+              </span>
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(28px, 3.5vw, 40px)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                color: "#fff",
+                margin: "0 0 20px",
+                textWrap: "balance" as React.CSSProperties["textWrap"],
+              }}
+            >
+              Hai un&apos;azienda? Vogliamo formare il <Accent>tuo team</Accent>.
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 17,
+                lineHeight: 1.6,
+                color: "var(--ghost)",
+                opacity: 0.92,
+                margin: "0 0 14px",
+              }}
+            >
+              Abbiamo formato i team di <strong style={{ color: "#fff" }}>Enel, Sisal, BNP Paribas, Zara</strong> e decine di altre aziende italiane.
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 17,
+                lineHeight: 1.6,
+                color: "var(--ghost)",
+                opacity: 0.85,
+                margin: "0 0 28px",
+              }}
+            >
+              Se vuoi portare Claude nel tuo team con un percorso personalizzato sul vostro contesto, processi e settore — parliamone in 30 minuti.
+            </p>
+            <div>
+              <OutlineButton href="https://calendar.app.google/KPEsAKzdXdX6C3bX8" onClick={onClick}>
+                Prenota una chiamata commerciale <span style={{ fontSize: 16 }}>→</span>
+              </OutlineButton>
+            </div>
+          </div>
+
+          {/* Right: team illustration */}
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: 280,
+                aspectRatio: "1 / 1",
+                display: "grid",
+                placeItems: "center",
+              }}
+            >
+              {/* Decorative background circles */}
+              <div
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(123,104,238,0.18) 0%, transparent 60%)",
+                }}
+              />
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--violet)"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+                className={styles.b2bDecoIcon}
+                style={{ position: "relative", zIndex: 1, opacity: 0.95 }}
+              >
+                {/* Office building / team icon */}
+                <path d="M3 21h18" />
+                <path d="M5 21V7l8-4v18" />
+                <path d="M19 21V11l-6-4" />
+                <line x1="9" y1="9" x2="9" y2="9" />
+                <line x1="9" y1="12" x2="9" y2="12" />
+                <line x1="9" y1="15" x2="9" y2="15" />
+                <line x1="9" y1="18" x2="9" y2="18" />
+                <line x1="15" y1="14" x2="15" y2="14" />
+                <line x1="15" y1="17" x2="15" y2="17" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 15 — FOOTER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesFooterSection() {
+  const muted: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontSize: 11,
+    lineHeight: 1.6,
+    color: "var(--muted)",
+    opacity: 0.75,
+  };
+
+  return (
+    <footer
+      className={styles.footerInner}
+      style={{
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        maxWidth: 1200,
+        margin: "0 auto",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 20, display: "block" }} />
+          <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+            morfeushub.com
+          </span>
+        </div>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", display: "flex", gap: 16 }}>
+          <Link href="/it/privacy" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Privacy Policy</Link>
+          <Link href="/it/cookies" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Cookie Policy</Link>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <p style={muted}>
+          <strong style={{ color: "var(--muted)", opacity: 1 }}>Disclaimer:</strong> I prodotti e servizi venduti su questo sito non costituiscono proiezione, promessa o garanzia di guadagno. I risultati individuali possono variare e dipendono dall&apos;impegno, dall&apos;esperienza e dalle condizioni individuali di ciascun partecipante.
+        </p>
+        <p style={muted}>
+          Il Corso Claude Morfeus è un prodotto formativo indipendente. Claude è un marchio di Anthropic, PBC. Questo corso non è affiliato a, sponsorizzato da, o approvato da Anthropic.
+        </p>
+        <p style={muted}>
+          Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
+        </p>
+        <p style={{ ...muted, marginTop: 6 }}>
+          Morfeus Hub S.r.l. — P.IVA 14209210963 — Milano, Italia
+        </p>
+        <p style={{ ...muted, marginTop: 4, opacity: 1 }}>
+          © 2026 Morfeus Hub S.r.l. — Tutti i diritti riservati.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 16 — STICKY MOBILE CTA BAR
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesStickyBarSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step?.content?.SalesPricing as SalesPricingContent | undefined;
+  const current = useCurrentPricing(pricing ?? { earlyBirdPrice: 67, standardPrice: 97, fullPrice: 147, currency: "EUR", earlyBirdDeadlineIso: "", standardDeadlineIso: "", checkoutUrlEarlyBird: "", checkoutUrlStandard: "", checkoutUrlFull: "", b2bCallUrl: "" });
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
+  const [nearOffer, setNearOffer] = useState(false);
+  const [nearFinalCta, setNearFinalCta] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const updateMobile = () => setIsMobile(mq.matches);
+    updateMobile();
+    mq.addEventListener("change", updateMobile);
+
+    // Cache element references on each scroll (rebuilt as DOM updates)
+    const onScroll = () => {
+      setPastHero(window.scrollY > window.innerHeight * 0.55);
+
+      const offer = document.getElementById("offerta");
+      if (offer) {
+        const r = offer.getBoundingClientRect();
+        setNearOffer(r.top < window.innerHeight * 0.90 && r.bottom > window.innerHeight * 0.10);
+      }
+
+      // Final CTA non ha id dedicato — cerchiamo il footer come proxy della chiusura
+      const footer = document.querySelector("footer");
+      if (footer) {
+        const r = footer.getBoundingClientRect();
+        // Quando il footer è già in vista (siamo arrivati alla chiusura) nascondi
+        setNearFinalCta(r.top < window.innerHeight * 1.1);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      mq.removeEventListener("change", updateMobile);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  const onClick = () => {
+    trackEvent("sales_sticky_click", { variant, pricing_stage: current.stage });
+    scrollToId("offerta");
+  };
+
+  const show = isMobile && pastHero && !nearOffer && !nearFinalCta;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: "10px 14px",
+        paddingBottom: "calc(10px + env(safe-area-inset-bottom, 0px))",
+        background: "rgba(10,9,20,0.94)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)" as React.CSSProperties["WebkitBackdropFilter"],
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+        zIndex: 200,
+        transform: show ? "translateY(0)" : "translateY(110%)",
+        transition: "transform 0.35s cubic-bezier(.4,0,.2,1)",
+        pointerEvents: show ? "auto" : "none",
+      }}
+      aria-hidden={!show}
+    >
+      <button
+        type="button"
+        onClick={onClick}
+        style={{
+          width: "100%",
+          padding: "12px 16px",
+          background: "var(--orange)",
+          color: "#fff",
+          fontFamily: "var(--font-body)",
+          fontWeight: 700,
+          fontSize: 14,
+          borderRadius: 10,
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          boxSizing: "border-box",
+          boxShadow: "0 4px 18px rgba(235,122,46,0.40)",
+        }}
+      >
+        Acquista a {current.price}€ <span style={{ fontSize: 16 }}>→</span>
       </button>
     </div>
   );

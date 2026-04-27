@@ -1,6 +1,7 @@
 import type { FunnelConfig, FunnelRegistryItem } from "@/funnels/types";
 import { isReservedSlug } from "@/lib/reserved-slugs";
 import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.json";
+import claudeUnlockedV1Config from "@/funnels/webinar-claude-2026-05/sales-config.json";
 import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-2026-04/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
@@ -53,3 +54,15 @@ const freebieCoworkSetupSkillItem: FunnelRegistryItem = {
 };
 
 registerFunnel(freebieCoworkSetupSkillItem, freebieCoworkSetupSkillConfig as FunnelConfig);
+
+const claudeUnlockedV1Item: FunnelRegistryItem = {
+  slug: "claude-unlocked-v1",
+  locale: "it",
+  indexable: true,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(claudeUnlockedV1Item, claudeUnlockedV1Config as FunnelConfig);
