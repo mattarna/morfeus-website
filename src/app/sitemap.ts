@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getIndexableCaseStudyEntries, getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import { funnelRegistry, getRegisteredFunnelConfig } from "@/funnels/registry";
 
 /**
  * Controlled sitemap generation.
@@ -9,16 +10,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://morfeushub.com";
   const lastModified = new Date();
 
-  const entries = [
+  const localizedEntries = [
     ...getIndexableLocalizedEntries(baseUrl),
     ...getIndexableCaseStudyEntries(baseUrl),
   ];
 
-  return entries.map(({ locale, path, url }) => {
+  const localizedSitemapEntries: MetadataRoute.Sitemap = localizedEntries.map(({ locale, path, url }) => {
     const counterpartLocale = locale === "en" ? "it" : "en";
-    const counterpart = path.length === 0
-      ? `${baseUrl}/${counterpartLocale}`
-      : `${baseUrl}/${counterpartLocale}/${path}`;
+    const counterpart =
+      path.length === 0 ? `${baseUrl}/${counterpartLocale}` : `${baseUrl}/${counterpartLocale}/${path}`;
 
     return {
       url,
@@ -33,4 +33,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     };
   });
+
+  const funnelSitemapEntries: MetadataRoute.Sitemap = Object.values(funnelRegistry).flatMap((item) => {
+    const config = getRegisteredFunnelConfig(item.slug);
+    if (!config) {
+      return [];
+    }
+
+    return config.steps.map((step) => {
+      const normalizedStepPath = step.path.trim().replace(/^\/+|\/+$/g, "");
+      const url =
+        normalizedStepPath.length === 0
+          ? `${baseUrl}/${item.slug}`
+          : `${baseUrl}/${item.slug}/${normalizedStepPath}`;
+
+      return {
+        url,
+        lastModified,
+        changeFrequency: "monthly" as const,
+        priority: step.isConversion ? 0.7 : 0.6,
+      };
+    });
+  });
+
+  return [...localizedSitemapEntries, ...funnelSitemapEntries];
 }

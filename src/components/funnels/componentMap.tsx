@@ -13,6 +13,7 @@ import {
   SalesB2BSection,
   SalesBenefitsSection,
   SalesBonusSection,
+  SalesBootcampBridgeSection,
   SalesBridgeSection,
   SalesComparisonSection,
   SalesFAQSection,
@@ -29,6 +30,8 @@ import {
   SalesProofSection,
   SalesReviewsSection,
   SalesStickyBarSection,
+  SalesThreeLevelsSection,
+  SalesUpsellBootcampSection,
   SalesUrgencySection,
   WebinarAudienceSection,
   WebinarBannerSection,
@@ -106,6 +109,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesHero: ({ accentColor, step }) =>
     step.content.SalesHero ? <SalesHeroSection accentColor={accentColor} step={step} /> : null,
   SalesBridge: () => <SalesBridgeSection />,
+  SalesThreeLevels: ({ accentColor, step }) =>
+    step.content.SalesPricing ? <SalesThreeLevelsSection accentColor={accentColor} step={step} /> : null,
   SalesProblem: () => <SalesProblemSection />,
   SalesMechanism: () => <SalesMechanismSection />,
   SalesBenefits: () => <SalesBenefitsSection />,
@@ -122,8 +127,10 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesBonus: () => <SalesBonusSection />,
   SalesOffer: ({ accentColor, step }) =>
     step.content.SalesPricing ? <SalesOfferSection accentColor={accentColor} step={step} /> : null,
+  SalesUpsellBootcamp: () => <SalesUpsellBootcampSection />,
   SalesGuarantee: () => <SalesGuaranteeSection />,
   SalesFAQ: () => <SalesFAQSection />,
+  SalesBootcampBridge: () => <SalesBootcampBridgeSection />,
   SalesUrgency: ({ accentColor, step }) =>
     step.content.SalesUrgency && step.content.SalesPricing ? <SalesUrgencySection accentColor={accentColor} step={step} /> : null,
   SalesFinalCTA: ({ accentColor, step }) =>

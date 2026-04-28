@@ -443,6 +443,21 @@
   }
 }
 
+/* ── Three Levels grid (3 cards, row desktop / stack mobile) ────────────── */
+
+.threeLevelsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .threeLevelsGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
 /* ── Problem grid (3 cards, row desktop / stack mobile) ─────────────────── */
 
 .problemGrid {

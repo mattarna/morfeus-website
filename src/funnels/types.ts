@@ -30,6 +30,7 @@ export type FunnelComponentName =
   | "SalesHeader"
   | "SalesHero"
   | "SalesBridge"
+  | "SalesThreeLevels"
   | "SalesProblem"
   | "SalesMechanism"
   | "SalesBenefits"
@@ -41,8 +42,10 @@ export type FunnelComponentName =
   | "SalesComparison"
   | "SalesBonus"
   | "SalesOffer"
+  | "SalesUpsellBootcamp"
   | "SalesGuarantee"
   | "SalesFAQ"
+  | "SalesBootcampBridge"
   | "SalesUrgency"
   | "SalesFinalCTA"
   | "SalesB2B"
@@ -275,6 +278,8 @@ export interface SalesHeaderContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesBridgeContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesThreeLevelsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesProblemContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesMechanismContent {}
@@ -296,6 +301,10 @@ export interface SalesComparisonContent {}
 export interface SalesBonusContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesOfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesUpsellBootcampContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesBootcampBridgeContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesGuaranteeContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -372,6 +381,7 @@ export interface FunnelStepConfig {
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;
     SalesBridge?: SalesBridgeContent;
+    SalesThreeLevels?: SalesThreeLevelsContent;
     SalesProblem?: SalesProblemContent;
     SalesMechanism?: SalesMechanismContent;
     SalesBenefits?: SalesBenefitsContent;
@@ -383,8 +393,10 @@ export interface FunnelStepConfig {
     SalesComparison?: SalesComparisonContent;
     SalesBonus?: SalesBonusContent;
     SalesOffer?: SalesOfferContent;
+    SalesUpsellBootcamp?: SalesUpsellBootcampContent;
     SalesGuarantee?: SalesGuaranteeContent;
     SalesFAQ?: SalesFAQContent;
+    SalesBootcampBridge?: SalesBootcampBridgeContent;
     SalesUrgency?: SalesUrgencyContent;
     SalesFinalCTA?: SalesFinalCTAContent;
     SalesB2B?: SalesB2BContent;

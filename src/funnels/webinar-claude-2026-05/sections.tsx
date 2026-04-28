@@ -3569,7 +3569,35 @@ export function SalesHeroSection({ step }: SectionProps) {
         title={content.vslTitle}
       />
 
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}>
+      {/* Proof pill — moved between subheadline/VSL and CTA per v2 */}
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: "6px 18px",
+          padding: "10px 22px",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: 100,
+          fontFamily: "var(--font-body)",
+          fontSize: 14,
+          color: "var(--ghost)",
+          opacity: 0.92,
+          marginBottom: 28,
+          maxWidth: "100%",
+        }}
+      >
+        {content.proofBar.map((item, i) => (
+          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+            {i > 0 && <span style={{ color: "var(--orange)", opacity: 0.7 }}>·</span>}
+            <span>{item}</span>
+          </span>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
         <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
           {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
@@ -3580,10 +3608,17 @@ export function SalesHeroSection({ step }: SectionProps) {
           fontSize: 14,
           color: "var(--muted)",
           fontFamily: "var(--font-body)",
-          marginBottom: 32,
+          marginBottom: 28,
+          lineHeight: 1.5,
         }}
       >
-        {copy.microcopy} Pagamento sicuro · Accesso immediato · Garanzia 14 giorni.
+        {current.activeDeadlineIso && current.stage === "earlyBird" && (
+          <>
+            Prezzo sale a <strong style={{ color: "var(--orange)" }}>97€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            <br />
+          </>
+        )}
+        {copy.microcopy}
       </div>
 
       {/* Price scale */}
@@ -3601,7 +3636,6 @@ export function SalesHeroSection({ step }: SectionProps) {
           border: "1px solid rgba(255,255,255,0.07)",
           borderRadius: 100,
           flexWrap: "wrap",
-          marginBottom: 36,
         }}
       >
         <PriceScalePill value="67€" label="early bird" active={current.stage === "earlyBird"} />
@@ -3609,32 +3643,6 @@ export function SalesHeroSection({ step }: SectionProps) {
         <PriceScalePill value="97€" label="standard" active={current.stage === "standard"} />
         <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
         <PriceScalePill value="147€" label="prezzo pieno" active={current.stage === "full"} />
-      </div>
-
-      {/* Proof bar */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: "8px 22px",
-          paddingTop: 28,
-          borderTop: "1px solid rgba(255,255,255,0.06)",
-          maxWidth: 820,
-          margin: "0 auto",
-          fontFamily: "var(--font-body)",
-          fontSize: 16,
-          color: "var(--ghost)",
-          opacity: 0.88,
-        }}
-      >
-        {content.proofBar.map((item, i) => (
-          <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 14 }}>
-            {i > 0 && <span style={{ color: "var(--orange)", opacity: 0.7 }}>·</span>}
-            <span>{item}</span>
-          </span>
-        ))}
       </div>
     </section>
   );
@@ -3663,31 +3671,7 @@ function PriceScalePill({ value, label, active }: { value: string; label: string
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function SalesBridgeSection() {
-  const variant = useSalesVariant();
-
-  const liveBody = (
-    <>
-      <p>Hai visto output che non sembravano generati da una macchina.</p>
-      <p>Hai visto workflow che risparmiano ore, non minuti.</p>
-      <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
-      <p style={{ marginTop: 28 }}>Adesso hai due strade.</p>
-      <p>Tornare a usarlo come prima.</p>
-      <p>Oppure imparare il sistema che hai visto in azione.</p>
-    </>
-  );
-
-  const replayBody = (
-    <>
-      <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
-      <p style={{ marginTop: 22 }}>Hai visto output che non sembravano generati da una macchina.</p>
-      <p>Hai visto workflow che risparmiano ore, non minuti.</p>
-      <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
-      <p style={{ marginTop: 28 }}>Adesso hai due strade.</p>
-      <p>Tornare a usarlo come prima — una domanda ogni tanto, un testo ogni tanto, quella sensazione che &ldquo;per il mio lavoro non funziona&rdquo;.</p>
-      <p style={{ marginTop: 18 }}>Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.</p>
-    </>
-  );
-
+  // Bridge unificato fra varianti (v2). Hook + body identici.
   return (
     <section
       className={styles.bridgeSection}
@@ -3699,92 +3683,359 @@ export function SalesBridgeSection() {
       }}
     >
       <div style={{ textAlign: "center", marginBottom: 36 }}>
-        {variant === "email" ? (
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(30px, 4vw, 44px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-              color: "#fff",
-              margin: 0,
-              maxWidth: 720,
-              marginInline: "auto",
-              textWrap: "balance" as React.CSSProperties["textWrap"],
-            }}
-          >
-            Stai usando Claude al 10% delle sue capacità.
-            <br />
-            E <Accent>non è colpa tua</Accent>.
-          </h2>
-        ) : (
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(30px, 4vw, 44px)",
-              lineHeight: 1.15,
-              letterSpacing: "-0.02em",
-              color: "#fff",
-              margin: 0,
-              textWrap: "balance" as React.CSSProperties["textWrap"],
-            }}
-          >
-            Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.
-          </h2>
-        )}
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(30px, 4vw, 44px)",
+            lineHeight: 1.15,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: 0,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.
+        </h2>
       </div>
 
-      {variant === "email" ? (
-        <div
+      {/* Hook di apertura */}
+      <p
+        style={{
+          fontFamily: "var(--font-italic)",
+          fontStyle: "italic",
+          fontSize: 18,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.95,
+          textAlign: "center",
+          maxWidth: 640,
+          marginInline: "auto",
+          marginBottom: 36,
+        }}
+      >
+        Quello che hai visto nel webinar non è un trucco. È quello che succede quando Claude ha <Accent>il contesto giusto</Accent>.
+      </p>
+
+      {/* Body */}
+      <div
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.8,
+          color: "var(--ghost)",
+          opacity: 0.92,
+          paddingLeft: 24,
+          borderLeft: "3px solid var(--orange)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+        }}
+      >
+        <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+        <p>Hai visto output che non sembravano generati da una macchina.</p>
+        <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+        <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+        <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
+        <p>
+          Tornare a usarlo come prima. Una domanda ogni tanto, un testo ogni tanto. Guardare i colleghi ottenere in 20 minuti quello che tu fai in 3 ore, e continuare a dirti che &ldquo;forse non fa per me&rdquo;.
+        </p>
+        <p style={{ marginTop: 12 }}>
+          Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 2.5 — I TRE LIVELLI (v2)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesThreeLevelsSection({ step }: SectionProps) {
+  const variant = useSalesVariant();
+  const pricing = step.content.SalesPricing as SalesPricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "three-levels", variant });
+    scrollToId("offerta");
+  };
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1120,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Il cambiamento</SectionLabel>
+      </div>
+      <h2
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(30px, 4.2vw, 48px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 18px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
+        }}
+      >
+        Il tuo modo di lavorare sta diventando obsoleto.
+        <br />
+        Non è una previsione. <Accent>È già in corso</Accent>.
+      </h2>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.88,
+          margin: "0 auto 56px",
+          maxWidth: 700,
+          textAlign: "center",
+          textWrap: "pretty" as React.CSSProperties["textWrap"],
+        }}
+      >
+        La maggior parte dei professionisti è ferma al Livello 1.
+        Il corso ti porta al <Accent>Livello 2</Accent>.
+        E ti fa vedere dove porta il Livello 3.
+      </p>
+
+      <div className={styles.threeLevelsGrid}>
+        <SalesLevelCard
+          n="1"
+          tag="LIVELLO 1"
+          title="Fai tutto tu."
+          body="Ogni task passa da te. Ogni decisione. Ogni output. Hai provato l'AI — una domanda, una risposta, copia e incolla. Funziona? Sì. Ma il collo di bottiglia sei ancora tu. Sempre."
+          footer="Qui è fermo il 95% dei professionisti."
+          variant="neutral"
+        />
+        <SalesLevelCard
+          n="2"
+          tag="LIVELLO 2"
+          title="L'AI lavora con te."
+          body="Sai come usarla davvero. Le dai contesto, la guidi, la correggi. L'output è al tuo standard. Risparmi 5-8 ore ogni settimana su lavoro che prima facevi a mano. Il tuo tempo torna ad essere tuo."
+          footer="Questo è dove ti porta Claude Unlocked."
+          variant="primary"
+          badge="DOVE TI PORTA QUESTO CORSO"
+        />
+        <SalesLevelCard
+          n="3"
+          tag="LIVELLO 3"
+          title="L'AI lavora per te."
+          body="Hai un sistema. Claude conosce il tuo contesto, segue le tue regole, produce al tuo standard senza che tu debba ricominciare da zero ogni volta. Non è un assistente. È un membro del team. Un dipendente AI che lavora con te ogni giorno."
+          footer="Questo è dove ti porta il Bootcamp AI Champion."
+          variant="violet"
+          badge="IL PASSO SUCCESSIVO"
+        />
+      </div>
+
+      <p
+        style={{
+          marginTop: 56,
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.6,
+          color: "var(--ghost)",
+          opacity: 0.92,
+          textAlign: "center",
+          maxWidth: 720,
+          marginInline: "auto",
+        }}
+      >
+        Il corso è il primo step. <strong style={{ color: "#fff" }}>Il Livello 2 è il prerequisito.</strong>
+        <br />
+        Non puoi costruire un sistema AI senza padroneggiare lo strumento prima.
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 36 }}>
+        <SalesPrimaryButton onClick={onCheckout} size="lg" pulse>
+          Voglio iniziare dal Livello 2 <span style={{ fontSize: 18 }}>→</span>
+        </SalesPrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          {current.price}€ oggi · Accesso immediato
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SalesLevelCard({
+  n,
+  tag,
+  title,
+  body,
+  footer,
+  variant,
+  badge,
+}: {
+  n: string;
+  tag: string;
+  title: string;
+  body: string;
+  footer: string;
+  variant: "neutral" | "primary" | "violet";
+  badge?: string;
+}) {
+  const palette = {
+    neutral: {
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderTop: "3px solid rgba(255,255,255,0.18)",
+      bg: "var(--deep-space)",
+      tagColor: "var(--muted)",
+      titleColor: "var(--ghost)",
+      footerColor: "var(--muted)",
+      glow: "none",
+    },
+    primary: {
+      border: "1px solid rgba(235,122,46,0.40)",
+      borderTop: "3px solid var(--orange)",
+      bg: "linear-gradient(180deg, rgba(235,122,46,0.06) 0%, var(--deep-space) 100%)",
+      tagColor: "var(--orange)",
+      titleColor: "#fff",
+      footerColor: "var(--orange)",
+      glow: "0 0 50px rgba(235,122,46,0.18)",
+    },
+    violet: {
+      border: "1px solid rgba(123,104,238,0.40)",
+      borderTop: "3px solid var(--violet)",
+      bg: "linear-gradient(180deg, rgba(123,104,238,0.06) 0%, var(--deep-space) 100%)",
+      tagColor: "var(--violet)",
+      titleColor: "#fff",
+      footerColor: "var(--violet)",
+      glow: "0 0 40px rgba(123,104,238,0.15)",
+    },
+  }[variant];
+
+  return (
+    <div style={{ position: "relative", paddingTop: badge ? 24 : 0 }}>
+      {badge && (
+        <span
           style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "inline-flex",
+            alignItems: "center",
+            padding: "6px 14px",
+            background: variant === "primary" ? "var(--orange)" : "var(--violet)",
+            color: "#fff",
             fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.75,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            display: "flex",
-            flexDirection: "column",
-            gap: 18,
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: "0.20em",
+            textTransform: "uppercase",
+            borderRadius: 100,
+            whiteSpace: "nowrap",
+            boxShadow: `0 6px 20px ${variant === "primary" ? "rgba(235,122,46,0.45)" : "rgba(123,104,238,0.40)"}`,
+            zIndex: 2,
           }}
         >
-          <p>La maggior parte dei professionisti usa Claude come un Google più intelligente. Fa domande. Ottiene risposte generiche. Pensa &ldquo;bah, niente di speciale&rdquo;.</p>
-          <p>Ma Claude non è un motore di ricerca. È uno strumento che può lavorare CON te — ogni giorno, su ogni progetto, nel tuo ambiente di lavoro.</p>
-          <p>Il problema è che nessuno ti ha mai mostrato come si fa.</p>
-          <p>I tutorial su YouTube ti insegnano dove cliccare. I prompt copiati da Twitter funzionano una volta. I corsi &ldquo;AI&rdquo; parlano di tutto e non ti insegnano nulla di applicabile al tuo lunedì mattina.</p>
-          <p
+          {badge}
+        </span>
+      )}
+      <div
+        style={{
+          background: palette.bg,
+          border: palette.border,
+          borderTop: palette.borderTop,
+          borderRadius: 16,
+          padding: "32px 26px 28px",
+          boxShadow: palette.glow,
+          height: "100%",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            gap: 12,
+          }}
+        >
+          <span
             style={{
-              marginTop: 18,
-              fontFamily: "var(--font-display)",
-              fontSize: 22,
-              lineHeight: 1.4,
-              color: "#fff",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: palette.tagColor,
+              fontFamily: "var(--font-body)",
             }}
           >
-            Questo corso è diverso.
-          </p>
-          <p>10 moduli. Un metodo. Un sistema che costruisci pezzo per pezzo — calibrato sul tuo lavoro, non su demo generiche.</p>
+            {tag}
+          </span>
+          <span
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 56,
+              lineHeight: 1,
+              color: palette.tagColor,
+              opacity: 0.18,
+              letterSpacing: "-0.04em",
+            }}
+          >
+            {n}
+          </span>
         </div>
-      ) : (
-        <div
+        <h3
           style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.8,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            paddingLeft: 24,
-            borderLeft: "3px solid var(--orange)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 14,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(22px, 2.2vw, 26px)",
+            lineHeight: 1.2,
+            letterSpacing: "-0.015em",
+            color: palette.titleColor,
+            margin: 0,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          {variant === "live" ? liveBody : replayBody}
-        </div>
-      )}
-    </section>
+          {title}
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.88,
+            margin: 0,
+            flex: 1,
+          }}
+        >
+          {body}
+        </p>
+        <p
+          style={{
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 15,
+            lineHeight: 1.5,
+            color: palette.footerColor,
+            margin: 0,
+            paddingTop: 14,
+            borderTop: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          {footer}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -3939,45 +4190,8 @@ export function SalesProblemSection() {
         </div>
       )}
 
-      {/* Box ROI — prova razionale (universale) */}
-      <div
-        style={{
-          marginTop: 64,
-          background: "var(--deep-space)",
-          border: "1px solid rgba(235,122,46,0.40)",
-          borderRadius: 16,
-          padding: "36px 40px",
-          textAlign: "center",
-          boxShadow: "0 0 50px rgba(235,122,46,0.10)",
-          maxWidth: 760,
-          marginInline: "auto",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginBottom: 22,
-            fontFamily: "var(--font-body)",
-          }}
-        >
-          Il calcolo che chiude la decisione
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
-            Ogni settimana senza un sistema = <Big color="var(--orange)">5-8 ore</Big> perse.
-          </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
-            A 25€/ora, sono <Big color="var(--orange)">500-800€</Big> al mese.
-          </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)" }}>
-            Il corso costa <Big color="#fff">67€</Big>.
-          </div>
-        </div>
-      </div>
+      {/* NOTE v2: il box "Il calcolo che chiude la decisione" è stato spostato
+          nella SalesOfferSection (subito prima del reveal del prezzo). */}
 
       {/* Closing line — ponte verso il Mechanism */}
       <p
@@ -4185,9 +4399,14 @@ export function SalesMechanismSection() {
       title: "Prima il pensiero, poi lo strumento.",
       body: (
         <>
-          Il Modulo 0 si chiama &ldquo;Come ragionare con l&apos;AI&rdquo;. Non &ldquo;Come usare Claude&rdquo;.
-          Impari il framework <strong style={{ color: "#fff" }}>T/Q/D</strong> — quali task delegare, quali tenere, quali verificare.
-          Prima di aprire lo strumento, sai già cosa chiedergli.
+          Il Modulo 0 non si chiama &ldquo;Come usare Claude&rdquo;. Si chiama &ldquo;Come ragionare con l&apos;AI&rdquo;.
+          <br />
+          <br />
+          Prima di aprire lo strumento, impari il Framework <strong style={{ color: "#fff" }}>T/Q/D</strong>: quali task <strong style={{ color: "#fff" }}>delegare</strong> completamente a Claude, quali <strong style={{ color: "#fff" }}>tenere</strong> perché richiedono il tuo giudizio, quali <strong style={{ color: "#fff" }}>verificare</strong> insieme prima di usarli.
+          <br />
+          <br />
+          In 10 minuti sai già cosa chiedere, come chiederlo, e perché il 95% delle persone ottiene risposte generiche.
+          <br />
           <br />
           <span style={{ color: "var(--orange)" }}>Nessun competitor parte da qui.</span>
         </>
@@ -4292,7 +4511,7 @@ export function SalesBenefitsSection() {
         </svg>
       ),
       title: "Risparmi 5-8 ore a settimana",
-      body: "Quel tempo che oggi spendi su task ripetitivi torna nelle tue mani. Il corso si ripaga la prima settimana.",
+      body: "Francesca preparava i suoi report in 4 ore. Adesso in 40 minuti — e Claude conosce già la sua voce, i suoi clienti, il suo formato. Il corso si ripaga la prima settimana.",
     },
     {
       icon: (
@@ -4310,8 +4529,8 @@ export function SalesBenefitsSection() {
           <polyline points="9 12 11 14 15 10" />
         </svg>
       ),
-      title: "Smetti di temere l'AI",
-      body: "Capisci come funziona, sai cosa può e cosa NON può fare. Smetti di chiederti \"mi sostituirà?\" e inizi a usarla per moltiplicarti.",
+      title: "Smetti di chiederti \"mi sostituirà?\"",
+      body: "Capisci come funziona, cosa può fare, cosa non può fare. La domanda smette di essere \"mi ruba il lavoro?\" e diventa \"cosa gli delego oggi?\".",
     },
     {
       icon: (
@@ -4331,8 +4550,8 @@ export function SalesBenefitsSection() {
           <line x1="9" y1="15" x2="15" y2="15" />
         </svg>
       ),
-      title: "Output che sembrano scritti da te",
-      body: "Claude conosce la tua voce, il tuo settore, i tuoi clienti. Niente più copia-incolla scolastici: l'output esce già nel tuo tono.",
+      title: "Claude scrive come scrivi tu",
+      body: "Conosce il tuo tono, il tuo settore, i tuoi clienti. Non devi più correggere il registro ogni volta — l'output esce già nel tuo standard.",
     },
     {
       icon: (
@@ -4601,6 +4820,7 @@ export function SalesPromiseLetterSection() {
     <>Non sei più tu davanti a uno schermo bianco. Sei tu <H>e una macchina di lavoro</H> che ti conosce, segue le tue regole, produce al tuo standard.</>,
     <>Questo è il punto di arrivo del corso.<br />Non è promessa di marketing. È quello che vivono ogni giorno i nostri studenti più avanzati.</>,
     <>E se sei arrivato fin qui, vuol dire che ce la puoi fare anche tu.</>,
+    <>La differenza tra te oggi e loro <H>è solo che loro hanno iniziato</H>.</>,
   ];
 
   return (
@@ -4758,12 +4978,11 @@ export function SalesModulesSection({ step }: SectionProps) {
     {
       n: "00",
       title: "Come ragionare con l'AI",
-      outcome: "Pensi diversamente all'AI prima ancora di toccarla.",
+      outcome: "Dopo questo modulo sai esattamente cosa chiedere a Claude e perché — prima ancora di aprirlo. Hai un framework che usi per sempre, su qualsiasi AI.",
       topics: [
-        "Framework T/Q/D: il modello mentale per decidere cosa fare con Claude",
-        "Quali task delegare, quali tenere, quali verificare",
-        "L'errore #1 dei principianti (e come evitarlo)",
-        "Mindset operativo: trattare l'AI come collega, non come Google",
+        "Il Framework T/Q/D: delega, tieni, verifica — la decisione in 10 secondi",
+        "L'errore #1 di chi ottiene risposte generiche (e come evitarlo da subito)",
+        "Come trattare l'AI come un collega, non come un motore di ricerca",
       ],
     },
     {
@@ -4791,12 +5010,11 @@ export function SalesModulesSection({ step }: SectionProps) {
     {
       n: "03",
       title: "Projects: il tuo Claude specializzato",
-      outcome: "Claude smette di essere generico e inizia a conoscere il tuo lavoro.",
+      outcome: "Dopo questo modulo hai un Claude che ti conosce. Non devi più spiegare chi sei, come parli, a chi ti rivolgi. Lo sa già.",
       topics: [
-        "Istruzioni personalizzate per ruolo / cliente / progetto",
-        "File di contesto e knowledge base",
-        "Strutturare i Project per riusarli per anni",
-        "3 esempi reali di Project di Matteo e Alex",
+        "Configuri un Project per ogni ruolo, cliente o tipo di lavoro",
+        "Costruisci la tua knowledge base: settore, tono, clienti, regole",
+        "3 Project reali di Matteo e Alex — copiali e adattali al tuo lavoro",
       ],
     },
     {
@@ -4813,12 +5031,11 @@ export function SalesModulesSection({ step }: SectionProps) {
     {
       n: "05",
       title: "Il segreto della qualità: dare contesto",
-      outcome: "Claude che ti conosce e migliora ogni giorno.",
+      outcome: "Dopo questo modulo Claude ti migliora ogni giorno. Non riparte da zero a ogni conversazione. Ti ricorda. Evolve con te.",
       topics: [
-        "Istruzioni stratificate (system / project / chat)",
-        "Memoria persistente e maintenance",
-        "Stile, tono, lessico aziendale",
-        "Versioning del contesto quando il tuo lavoro evolve",
+        "Istruzioni stratificate: cosa dici una volta sola e cosa aggiorni",
+        "Il tuo stile, tono e lessico codificati in modo permanente",
+        "Come aggiornare il contesto quando il tuo lavoro cambia",
       ],
     },
     {
@@ -4835,13 +5052,12 @@ export function SalesModulesSection({ step }: SectionProps) {
     {
       n: "07",
       title: "Workflow: dal problema al risultato",
-      outcome: "Use case reali, non demo. Il modulo più pratico.",
+      outcome: "Dopo questo modulo smetti di \"provare Claude\" e inizi a lavorare con Claude. Use case reali sul tuo tipo di lavoro — non demo.",
       topics: [
-        "Ricerca strutturata e sintesi",
-        "Generazione contenuti su brand voice",
-        "Documenti complessi (offerte, report, contratti)",
-        "Presentazioni complete da brief grezzo",
-        "Review e correzione di quello che hai già scritto",
+        "Ricerca strutturata che produce sintesi usabili, non riassunti",
+        "Contenuti che escono già nel tuo brand voice",
+        "Documenti complessi (offerte, report, contratti) costruiti in sessione",
+        "Presentazioni complete da un brief grezzo",
       ],
     },
     {
@@ -5197,12 +5413,29 @@ export function SalesProofSection({ step }: SectionProps) {
               fontFamily: "var(--font-italic)",
               fontStyle: "italic",
               fontSize: 19,
-              lineHeight: 1.5,
+              lineHeight: 1.55,
               color: "var(--orange)",
             }}
           >
-            &ldquo;Quello che ti insegniamo nel corso è il metodo che noi usiamo ogni giorno per lavorare. Non un&apos;ora di teoria — il sistema reale.&rdquo;
+            &ldquo;Quello che insegniamo nel corso è il metodo che noi usiamo ogni giorno.
+            <br /><br />
+            Morfeus usa l&apos;AI dal 2021 — prima del boom ChatGPT. Non per fare bella figura. Per sopravvivere come azienda piccola in un mercato che si muoveva più veloce di noi.
+            <br /><br />
+            Abbiamo sbagliato metodo molte volte. Quello che insegniamo è quello che ha funzionato, non quello che suona bene in una slide.&rdquo;
           </p>
+          <div
+            style={{
+              marginTop: 14,
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              color: "var(--muted)",
+            }}
+          >
+            — Matteo Arnaboldi, CEO Morfeus Hub
+          </div>
         </div>
 
         {/* Founder photo (right, square + glow) */}
@@ -5969,7 +6202,7 @@ export function SalesBonusSection() {
     {
       tag: "Bonus #3",
       title: "Aggiornamenti per sempre",
-      body: "Claude evolve. Il corso evolve con lui. Nuove lezioni quando escono feature importanti — incluse, senza re-acquisto.",
+      body: "Claude ha già ricevuto aggiornamenti significativi da quando abbiamo lanciato il corso. Ogni volta, gli studenti hanno ricevuto le lezioni aggiornate — automaticamente, senza riacquistare. In un mercato dove i corsi AI diventano obsoleti in pochi mesi, questo è il bonus più importante.",
       value: "non quantificabile",
       icon: "↻",
     },
@@ -6313,6 +6546,45 @@ export function SalesOfferSection({ step }: SectionProps) {
         </div>
       </div>
 
+      {/* Box ROI — spostato qui dalla sezione Problema (v2) */}
+      <div
+        style={{
+          marginTop: 44,
+          background: "rgba(15,14,26,0.65)",
+          border: "1px solid rgba(235,122,46,0.30)",
+          borderRadius: 14,
+          padding: "28px clamp(20px, 4vw, 36px)",
+          textAlign: "center",
+          maxWidth: 640,
+          marginInline: "auto",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            marginBottom: 14,
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          Il calcolo semplice
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "var(--ghost)", lineHeight: 1.6 }}>
+            Ogni settimana senza un sistema = <strong style={{ color: "var(--orange)" }}>5-8 ore</strong> di produttività persa.
+          </div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "var(--ghost)", lineHeight: 1.6 }}>
+            A 25€/ora: <strong style={{ color: "var(--orange)" }}>500-800€</strong> al mese. Ogni mese. Senza che te ne accorga.
+          </div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#fff", marginTop: 6, lineHeight: 1.6 }}>
+            Il corso costa <strong style={{ color: "#fff" }}>67€</strong>. Si ripaga la prima settimana.
+          </div>
+        </div>
+      </div>
+
       <div style={{ textAlign: "center", marginTop: 36 }}>
         <div
           style={{
@@ -6374,11 +6646,7 @@ export function SalesOfferSection({ step }: SectionProps) {
       {/* CTA */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
         <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-          {current.stage === "earlyBird"
-            ? `Entra nel corso a ${current.price}€ — Prezzo early bird`
-            : current.stage === "standard"
-              ? `Entra nel corso a ${current.price}€`
-              : `Entra nel corso a ${current.price}€`} <span style={{ fontSize: 18 }}>→</span>
+          Entra a {current.price}€ — garanzia 14 giorni <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
       </div>
       <div
@@ -6559,6 +6827,119 @@ function PriceScaleBar({ pricing, current }: { pricing: SalesPricingContent; cur
         );
       })}
     </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 9.5 — UPSELL BOOTCAMP (compact, post-acquisto)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesUpsellBootcampSection() {
+  const variant = useSalesVariant();
+  const onClick = () => trackEvent("sales_upsell_bootcamp_click", { block: "post-offer", variant });
+
+  return (
+    <section
+      className={styles.salesSectionPadSm}
+      style={{
+        maxWidth: 880,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          padding: "32px clamp(24px, 4vw, 40px)",
+          background: "linear-gradient(135deg, rgba(101,88,212,0.10) 0%, rgba(15,14,26,0.85) 100%)",
+          border: "1px dashed rgba(123,104,238,0.35)",
+          borderRadius: 16,
+          boxShadow: "0 0 30px rgba(123,104,238,0.10)",
+        }}
+      >
+        <div style={{ marginBottom: 12 }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "var(--violet)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            Il passo successivo
+          </span>
+        </div>
+        <h3
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(22px, 2.6vw, 30px)",
+            lineHeight: 1.2,
+            letterSpacing: "-0.015em",
+            color: "#fff",
+            margin: "0 0 14px",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Vuoi il <Accent>Livello 3</Accent>? C&apos;è una strada. Ed è già inclusa.
+        </h3>
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.65,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            marginBottom: 22,
+          }}
+        >
+          <p style={{ margin: 0 }}>
+            Il corso ti porta a padroneggiare Claude. Per chi vuole andare oltre — costruire un sistema AI che lavora in autonomia, con metodo e supporto guidato — c&apos;è il <strong style={{ color: "#fff" }}>Bootcamp AI Champion</strong>.
+          </p>
+          <p style={{ margin: 0, color: "var(--muted)" }}>
+            Massimo 60 posti. Chiusura enrollment: <strong style={{ color: "#fff" }}>15 giugno</strong>.
+          </p>
+          <p style={{ margin: 0 }}>
+            E i 67€ del corso vengono rimborsati come credito. Comprare il corso adesso <strong style={{ color: "var(--violet)" }}>non ti costa niente in più</strong>.
+          </p>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8 }}>
+          <a
+            href="https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione/"
+            target="_blank"
+            rel="noreferrer noopener"
+            onClick={onClick}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 22px",
+              background: "rgba(123,104,238,0.12)",
+              border: "1px solid var(--violet)",
+              color: "var(--violet)",
+              fontFamily: "var(--font-body)",
+              fontSize: 15,
+              fontWeight: 700,
+              borderRadius: 10,
+              textDecoration: "none",
+              transition: "background .2s, transform .2s",
+            }}
+          >
+            Scopri il Bootcamp AI Champion <span style={{ fontSize: 16 }}>→</span>
+          </a>
+          <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", fontStyle: "italic" }}>
+            Prima si padroneggia lo strumento. Poi si costruisce il sistema.
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -6893,6 +7274,165 @@ export function SalesFAQSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 11.5 — BOOTCAMP BRIDGE (full version, post-FAQ)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesBootcampBridgeSection() {
+  const variant = useSalesVariant();
+  const onClick = () => trackEvent("sales_upsell_bootcamp_click", { block: "post-faq", variant });
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 1080,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          background: "linear-gradient(135deg, rgba(101,88,212,0.16) 0%, rgba(123,104,238,0.08) 50%, rgba(15,14,26,0.92) 100%)",
+          border: "1px solid rgba(123,104,238,0.30)",
+          borderRadius: 24,
+          padding: "clamp(40px, 5vw, 64px) clamp(28px, 4vw, 56px)",
+          overflow: "hidden",
+          boxShadow: "0 0 60px rgba(123,104,238,0.15), 0 24px 60px rgba(0,0,0,0.45)",
+        }}
+      >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: "-30%",
+            right: "-10%",
+            width: 400,
+            height: 400,
+            background: "radial-gradient(circle, rgba(123,104,238,0.25) 0%, transparent 70%)",
+            filter: "blur(50px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: 16 }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "var(--violet)",
+              fontFamily: "var(--font-body)",
+              padding: "6px 14px",
+              background: "rgba(123,104,238,0.18)",
+              border: "1px solid rgba(123,104,238,0.40)",
+              borderRadius: 100,
+            }}
+          >
+            Il passo successivo
+          </span>
+        </div>
+
+        <h2
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(28px, 3.8vw, 44px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "16px auto 32px",
+            maxWidth: 780,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Il corso ti porta al Livello 2.
+          <br />
+          Chi vuole il <Accent>Livello 3</Accent> ha una strada.
+        </h2>
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.7,
+            color: "var(--ghost)",
+            opacity: 0.95,
+            maxWidth: 720,
+            marginInline: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
+          <p style={{ margin: 0 }}>
+            Padroneggiare Claude è il primo step. Non puoi costruire un sistema di dipendenti AI senza prima padroneggiare lo strumento. <strong style={{ color: "#fff" }}>Il corso ti dà questa competenza</strong> — completa, applicabile, reale.
+          </p>
+          <p style={{ margin: 0 }}>
+            Per chi vuole andare oltre: trasformare la competenza in un sistema operativo, costruire dipendenti AI con metodo e supporto guidato, implementare nel proprio lavoro con qualcuno che ti corregge quando sbagli — c&apos;è il <strong style={{ color: "var(--violet)" }}>Bootcamp AI Champion</strong>.
+          </p>
+          <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            <li style={{ display: "flex", gap: 14 }}>
+              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span>Il metodo <strong style={{ color: "#fff" }}>M-V-A</strong> sviluppato da Morfeus</span>
+            </li>
+            <li style={{ display: "flex", gap: 14 }}>
+              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span>Implementazione guidata da Matt e Mattia</span>
+            </li>
+            <li style={{ display: "flex", gap: 14 }}>
+              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span>Massimo <strong style={{ color: "#fff" }}>60 posti</strong>. Chiusura enrollment: <strong style={{ color: "#fff" }}>15 giugno</strong></span>
+            </li>
+            <li style={{ display: "flex", gap: 14 }}>
+              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span>Il costo del corso ti viene rimborsato come credito. <strong style={{ color: "#fff" }}>Non perdi niente</strong> comprando il corso adesso.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginTop: 36 }}>
+          <a
+            href="https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione/"
+            target="_blank"
+            rel="noreferrer noopener"
+            onClick={onClick}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "16px 28px",
+              background: "var(--violet)",
+              color: "#fff",
+              fontFamily: "var(--font-body)",
+              fontSize: 16,
+              fontWeight: 700,
+              borderRadius: 12,
+              textDecoration: "none",
+              boxShadow: "0 8px 30px rgba(123,104,238,0.45)",
+              transition: "transform .15s, box-shadow .2s",
+            }}
+          >
+            Scopri il Bootcamp AI Champion <span style={{ fontSize: 18 }}>→</span>
+          </a>
+          <div style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-italic)", fontStyle: "italic" }}>
+            Prima si padroneggia. Poi si costruisce il sistema.
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 12 — URGENZA + SCARSITÀ (variant-aware)
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -7026,20 +7566,11 @@ export function SalesFinalCTASection({ step }: SectionProps) {
 
   const onCheckout = () => trackCheckoutClick("final", variant, current.stage, current.price);
 
-  const recap = [
-    "10 moduli, 48 lezioni, ~4-5 ore di contenuto pratico",
-    "Il metodo dal mindset al sistema personalizzato",
-    "4 live settimanali con i founder",
-    "Pacchetto skill e plugin pronto all'uso",
-    "Aggiornamenti inclusi per sempre",
-    "Garanzia 14 giorni, nessuna domanda",
-  ];
-
   return (
     <section
       className={styles.salesSectionPad}
       style={{
-        maxWidth: 880,
+        maxWidth: 760,
         margin: "0 auto",
         position: "relative",
         zIndex: 1,
@@ -7060,7 +7591,7 @@ export function SalesFinalCTASection({ step }: SectionProps) {
         }}
       />
 
-      <div style={{ marginBottom: 18 }}>
+      <div style={{ marginBottom: 22 }}>
         <span
           style={{
             display: "inline-flex",
@@ -7086,70 +7617,50 @@ export function SalesFinalCTASection({ step }: SectionProps) {
         style={{
           fontFamily: "var(--font-display)",
           fontWeight: 600,
-          fontSize: "clamp(32px, 4.5vw, 48px)",
-          lineHeight: 1.08,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.1,
           letterSpacing: "-0.02em",
           color: "#fff",
-          margin: "0 auto 48px",
-          maxWidth: 760,
+          margin: "0 auto 36px",
+          maxWidth: 720,
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        {copy.headlinePre && <>{copy.headlinePre} </>}<Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
+        {copy.headlinePre} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
       </h2>
 
+      {/* V2 narrative body */}
       <div
         style={{
-          margin: "0 auto",
-          maxWidth: 600,
+          margin: "0 auto 40px",
+          maxWidth: 640,
           textAlign: "left",
-          padding: "28px 32px",
-          background: "var(--deep-space)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: 14,
+          fontFamily: "var(--font-body)",
+          fontSize: 17,
+          lineHeight: 1.75,
+          color: "var(--ghost)",
+          opacity: 0.95,
+          display: "flex",
+          flexDirection: "column",
+          gap: 18,
         }}
       >
-        <div
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.20em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginBottom: 16,
-            fontFamily: "var(--font-body)",
-          }}
-        >
-          Stai per ottenere
-        </div>
-        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
-          {recap.map((line, i) => (
-            <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
-              <span style={{ color: "var(--orange)", fontWeight: 700 }}>→</span>
-              <span>{line}</span>
-            </li>
-          ))}
-        </ul>
-        <div
-          style={{
-            marginTop: 22,
-            paddingTop: 22,
-            borderTop: "1px solid rgba(255,255,255,0.07)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            flexWrap: "wrap",
-            gap: 8,
-          }}
-        >
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)" }}>Valore: <span style={{ textDecoration: "line-through" }}>591€</span></div>
-          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 28, color: "var(--orange)" }}>
-            Oggi: {current.price}€
-          </div>
-        </div>
+        <p style={{ margin: 0 }}>
+          Non perché ti manca qualcosa.
+          Ma perché ti ricorderai di questo momento — quello in cui hai scelto di non restare fermo mentre il mondo intorno a te cambia.
+        </p>
+        <p style={{ margin: 0 }}>
+          Il corso si chiama <Accent>Claude Unlocked</Accent> per un motivo.
+        </p>
+        <p style={{ margin: 0 }}>
+          Non stai imparando uno strumento. Stai smettendo di usarne uno al 10% e iniziando a capire cosa significa portarlo al 100% — nel tuo lavoro specifico, nel tuo tono, con le tue regole.
+        </p>
+        <p style={{ margin: 0 }}>
+          Il 95% dei professionisti aspetterà. Il momento giusto. Il corso perfetto. La versione migliore di Claude.
+        </p>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
         <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
           {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
@@ -7161,13 +7672,14 @@ export function SalesFinalCTASection({ step }: SectionProps) {
           fontSize: 13,
           color: "var(--muted)",
           fontFamily: "var(--font-body)",
+          lineHeight: 1.6,
         }}
       >
-        Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
-        {current.activeDeadlineIso && (
+        Accesso immediato · Pagamento sicuro
+        {current.activeDeadlineIso && current.stage === "earlyBird" && (
           <>
             <br />
-            Prezzo {current.stage === "earlyBird" ? "early bird" : "standard"} valido ancora per <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            Prezzo early bird scade tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
           </>
         )}
       </div>
