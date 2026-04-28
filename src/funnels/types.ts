@@ -50,7 +50,24 @@ export type FunnelComponentName =
   | "SalesFinalCTA"
   | "SalesB2B"
   | "SalesFooter"
-  | "SalesStickyBar";
+  | "SalesStickyBar"
+  | "BootcampHeader"
+  | "BootcampHero"
+  | "BootcampLevelGap"
+  | "BootcampWhyAlone"
+  | "BootcampMethod"
+  | "BootcampTransformation"
+  | "BootcampProgram"
+  | "BootcampFounders"
+  | "BootcampResults"
+  | "BootcampAudience"
+  | "BootcampB2B"
+  | "BootcampOffer"
+  | "BootcampGuarantee"
+  | "BootcampFAQ"
+  | "BootcampFinalCTA"
+  | "BootcampFooter"
+  | "BootcampStickyBar";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -316,6 +333,55 @@ export interface SalesFooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesStickyBarContent {}
 
+// ─── Bootcamp AI Champion (sales page) ──────────────────────────────────────
+
+export interface BootcampPricingContent {
+  /** Prezzo attuale in EUR (es. 1297) */
+  currentPrice: number;
+  /** Prezzo di listino barrato in EUR (es. 1500) */
+  listPrice: number;
+  /** Valore totale percepito dello stack in EUR (es. 4632) */
+  stackValue: number;
+  currency: "EUR";
+  /** URL Calendly call di selezione con Mattia. Vuoto = CTA renderizzato ma href="#" no-op */
+  callUrl: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampHeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampLevelGapContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampWhyAloneContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampMethodContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampTransformationContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampProgramContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampFoundersContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampResultsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampAudienceContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampB2BContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampOfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampGuaranteeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampFAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampHeroContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampFinalCTAContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampFooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampStickyBarContent {}
+
 export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
@@ -403,6 +469,24 @@ export interface FunnelStepConfig {
     SalesFooter?: SalesFooterContent;
     SalesStickyBar?: SalesStickyBarContent;
     SalesPricing?: SalesPricingContent;
+    BootcampHeader?: BootcampHeaderContent;
+    BootcampHero?: BootcampHeroContent;
+    BootcampLevelGap?: BootcampLevelGapContent;
+    BootcampWhyAlone?: BootcampWhyAloneContent;
+    BootcampMethod?: BootcampMethodContent;
+    BootcampTransformation?: BootcampTransformationContent;
+    BootcampProgram?: BootcampProgramContent;
+    BootcampFounders?: BootcampFoundersContent;
+    BootcampResults?: BootcampResultsContent;
+    BootcampAudience?: BootcampAudienceContent;
+    BootcampB2B?: BootcampB2BContent;
+    BootcampOffer?: BootcampOfferContent;
+    BootcampGuarantee?: BootcampGuaranteeContent;
+    BootcampFAQ?: BootcampFAQContent;
+    BootcampFinalCTA?: BootcampFinalCTAContent;
+    BootcampFooter?: BootcampFooterContent;
+    BootcampStickyBar?: BootcampStickyBarContent;
+    BootcampPricing?: BootcampPricingContent;
   };
 }
 

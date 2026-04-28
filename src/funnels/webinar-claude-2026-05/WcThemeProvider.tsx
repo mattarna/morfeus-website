@@ -45,18 +45,31 @@ const WC_GLOBAL_STYLES = `
   70%  { box-shadow: 0 4px 20px rgba(235,122,46,.35), 0 0 0 14px rgba(235,122,46,0); }
   100% { box-shadow: 0 4px 20px rgba(235,122,46,.35), 0 0 0 0 rgba(235,122,46,0); }
 }
+@keyframes btn-pulse-lime {
+  0%   { box-shadow: 0 4px 20px rgba(181,240,58,.40), 0 0 0 0 rgba(181,240,58,0.50); }
+  70%  { box-shadow: 0 4px 20px rgba(181,240,58,.40), 0 0 0 14px rgba(181,240,58,0); }
+  100% { box-shadow: 0 4px 20px rgba(181,240,58,.40), 0 0 0 0 rgba(181,240,58,0); }
+}
 @keyframes reveal-in {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 `;
 
-export default function WcThemeProvider({ children }: { children: React.ReactNode }) {
+type Theme = "default" | "bootcamp";
+
+export default function WcThemeProvider({
+  children,
+  theme = "default",
+}: {
+  children: React.ReactNode;
+  theme?: Theme;
+}) {
   return (
     <>
       {/* eslint-disable-next-line react/no-danger */}
       <style dangerouslySetInnerHTML={{ __html: WC_GLOBAL_STYLES }} />
-      <div className={styles.page}>{children}</div>
+      <div className={styles.page} data-theme={theme}>{children}</div>
     </>
   );
 }

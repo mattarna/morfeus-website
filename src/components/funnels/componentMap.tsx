@@ -54,6 +54,25 @@ import {
   FreebieThankYouSection,
   FreebieWebinarTeaserSection,
 } from "@/funnels/freebie-cowork-setup-skill-2026-04/sections";
+import {
+  BootcampHeaderSection,
+  BootcampHeroSection,
+  BootcampLevelGapSection,
+  BootcampWhyAloneSection,
+  BootcampMethodSection,
+  BootcampTransformationSection,
+  BootcampProgramSection,
+  BootcampFoundersSection,
+  BootcampResultsSection,
+  BootcampAudienceSection,
+  BootcampB2BSection,
+  BootcampOfferSection,
+  BootcampGuaranteeSection,
+  BootcampFAQSection,
+  BootcampFinalCTASection,
+  BootcampFooterSection,
+  BootcampStickyBarSection,
+} from "@/funnels/webinar-claude-2026-05/sections-bootcamp";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -138,4 +157,21 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesB2B: () => <SalesB2BSection />,
   SalesFooter: () => <SalesFooterSection />,
   SalesStickyBar: ({ accentColor, step }) => <SalesStickyBarSection accentColor={accentColor} step={step} />,
+  BootcampHeader: () => <BootcampHeaderSection />,
+  BootcampHero: ({ accentColor, step }) => <BootcampHeroSection accentColor={accentColor} step={step} />,
+  BootcampLevelGap: () => <BootcampLevelGapSection />,
+  BootcampWhyAlone: () => <BootcampWhyAloneSection />,
+  BootcampMethod: ({ accentColor, step }) => <BootcampMethodSection accentColor={accentColor} step={step} />,
+  BootcampTransformation: () => <BootcampTransformationSection />,
+  BootcampProgram: () => <BootcampProgramSection />,
+  BootcampFounders: () => <BootcampFoundersSection />,
+  BootcampResults: () => <BootcampResultsSection />,
+  BootcampAudience: () => <BootcampAudienceSection />,
+  BootcampB2B: ({ accentColor, step }) => <BootcampB2BSection accentColor={accentColor} step={step} />,
+  BootcampOffer: ({ accentColor, step }) => <BootcampOfferSection accentColor={accentColor} step={step} />,
+  BootcampGuarantee: () => <BootcampGuaranteeSection />,
+  BootcampFAQ: ({ accentColor, step }) => <BootcampFAQSection accentColor={accentColor} step={step} />,
+  BootcampFinalCTA: ({ accentColor, step }) => <BootcampFinalCTASection accentColor={accentColor} step={step} />,
+  BootcampFooter: () => <BootcampFooterSection />,
+  BootcampStickyBar: ({ accentColor, step }) => <BootcampStickyBarSection accentColor={accentColor} step={step} />,
 };

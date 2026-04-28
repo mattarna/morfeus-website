@@ -2,6 +2,7 @@ import type { FunnelConfig, FunnelRegistryItem } from "@/funnels/types";
 import { isReservedSlug } from "@/lib/reserved-slugs";
 import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.json";
 import claudeUnlockedV1Config from "@/funnels/webinar-claude-2026-05/sales-config.json";
+import bootcampAiChampionConfig from "@/funnels/webinar-claude-2026-05/bootcamp-config.json";
 import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-2026-04/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
@@ -66,3 +67,15 @@ const claudeUnlockedV1Item: FunnelRegistryItem = {
 };
 
 registerFunnel(claudeUnlockedV1Item, claudeUnlockedV1Config as FunnelConfig);
+
+const bootcampAiChampionItem: FunnelRegistryItem = {
+  slug: "bootcamp-ai-champion",
+  locale: "it",
+  indexable: true,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(bootcampAiChampionItem, bootcampAiChampionConfig as FunnelConfig);

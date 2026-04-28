@@ -107,7 +107,10 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 | Funnel | URL pubbliche | Note |
 |--------|---------------|------|
-| Webinar Claude | `https://morfeushub.com/webinar-claude`<br/>`https://morfeushub.com/webinar-claude/thank-you` | Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; non indicizzabile (`X-Robots-Tag: noindex`). |
+| Webinar Claude | `https://morfeushub.com/webinar-claude`<br/>`https://morfeushub.com/webinar-claude/thank-you` | Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; funnel indexabile (`indexable: true`). |
+| Claude Skill Anatomy | `https://morfeushub.com/claude-skill-anatomy`<br/>`https://morfeushub.com/claude-skill-anatomy/thank-you` | Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; funnel non indexabile (`indexable: false`). |
+| Claude Unlocked V1 | `https://morfeushub.com/claude-unlocked-v1` | Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; funnel indexabile (`indexable: true`). |
+| Bootcamp AI Champion | `https://morfeushub.com/bootcamp-ai-champion` | Sales page bootcamp (3a edizione). Registrato in `src/funnels/registry.ts`; rewrite middleware su `/funnel-internal/...`; funnel indexabile (`indexable: true`). Palette lime distinta dall'arancione del corso. |
 
 ---
 
@@ -317,8 +320,17 @@ Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next
 ## Funnel (root `/` senza locale)
 
 - **Comportamento:** se il primo segmento del path è uno **slug funnel registrato**, `src/middleware.ts` riscrive verso `/funnel-internal/{slug}/...`.
-- **Stato attuale:** funnel registrato `webinar-claude` con step root + `thank-you`.
+- **Stato attuale:** funnel registrati `webinar-claude`, `claude-skill-anatomy`, `claude-unlocked-v1`.
 - Path interno (non da linkare agli utenti): `/funnel-internal/{slug}` e sotto-path degli step definiti nel JSON config (`step.path`).
+
+URL pubbliche attive:
+
+- `https://morfeushub.com/webinar-claude`
+- `https://morfeushub.com/webinar-claude/thank-you`
+- `https://morfeushub.com/claude-skill-anatomy`
+- `https://morfeushub.com/claude-skill-anatomy/thank-you`
+- `https://morfeushub.com/claude-unlocked-v1`
+- `https://morfeushub.com/bootcamp-ai-champion`
 
 ---
 
@@ -360,8 +372,9 @@ Da `src/lib/reserved-slugs.ts`:
 - Portal membro: **5 × 2 = 10**
 - Case study: **5 × 2 = 10**
 - Mockup: **2**
+- Funnel registrati: **5**
 
-**Totale ~36 URL** (esclusi funnel futuri, esclusa `/` che redireziona).
+**Totale ~41 URL** (inclusi i funnel registrati, esclusa `/` che redireziona).
 
 ---
 

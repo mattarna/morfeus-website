@@ -31,11 +31,13 @@ export default function FunnelSlugLayout({
           }}
         />
       )}
-      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" || params.slug === "claude-unlocked-v1" ? (
+      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" || params.slug === "claude-unlocked-v1" || params.slug === "bootcamp-ai-champion" ? (
         <>
           <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
           <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <WcThemeProvider>{children}</WcThemeProvider>
+          <WcThemeProvider theme={params.slug === "bootcamp-ai-champion" ? "bootcamp" : "default"}>
+            {children}
+          </WcThemeProvider>
         </>
       ) : (
         <>{children}</>
