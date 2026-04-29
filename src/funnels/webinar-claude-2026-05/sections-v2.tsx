@@ -3671,7 +3671,18 @@ function PriceScalePill({ value, label, active }: { value: string; label: string
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function SalesV2BridgeSection() {
-  // Bridge unificato fra varianti (v2). Hook + body identici.
+  const variant = useSalesV2Variant();
+
+  const headline =
+    variant === "email" ? (
+      <>
+        Stai usando Claude al 10% delle sue capacita&apos;.<br />
+        E <Accent>non e&apos; colpa tua</Accent>.
+      </>
+    ) : (
+      <>Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.</>
+    );
+
   return (
     <section
       className={styles.bridgeSection}
@@ -3695,55 +3706,107 @@ export function SalesV2BridgeSection() {
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.
+          {headline}
         </h2>
       </div>
 
-      {/* Hook di apertura */}
-      <p
-        style={{
-          fontFamily: "var(--font-italic)",
-          fontStyle: "italic",
-          fontSize: 18,
-          lineHeight: 1.6,
-          color: "var(--ghost)",
-          opacity: 0.95,
-          textAlign: "center",
-          maxWidth: 640,
-          marginInline: "auto",
-          marginBottom: 36,
-        }}
-      >
-        Quello che hai visto nel webinar non è un trucco. È quello che succede quando Claude ha <Accent>il contesto giusto</Accent>.
-      </p>
+      {variant === "live" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            paddingLeft: 24,
+            borderLeft: "3px solid var(--orange)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          }}
+        >
+          <p>Hai visto output che non sembravano generati da una macchina.</p>
+          <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+          <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+          <p>Hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+          <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
+          <p>Tornare a usarlo come prima.</p>
+          <p>Oppure imparare il sistema che hai visto in azione.</p>
+        </div>
+      )}
 
-      {/* Body */}
-      <div
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 17,
-          lineHeight: 1.8,
-          color: "var(--ghost)",
-          opacity: 0.92,
-          paddingLeft: 24,
-          borderLeft: "3px solid var(--orange)",
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-        }}
-      >
-        <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
-        <p>Hai visto output che non sembravano generati da una macchina.</p>
-        <p>Hai visto workflow che risparmiano ore, non minuti.</p>
-        <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
-        <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
-        <p>
-          Tornare a usarlo come prima. Una domanda ogni tanto, un testo ogni tanto. Guardare i colleghi ottenere in 20 minuti quello che tu fai in 3 ore, e continuare a dirti che &ldquo;forse non fa per me&rdquo;.
-        </p>
-        <p style={{ marginTop: 12 }}>
-          Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.
-        </p>
-      </div>
+      {variant === "replay" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            paddingLeft: 24,
+            borderLeft: "3px solid var(--orange)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          }}
+        >
+          <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+          <p>Hai visto output che non sembravano generati da una macchina.</p>
+          <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+          <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+          <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
+          <p>
+            Tornare a usarlo come prima — una domanda ogni tanto, un testo ogni tanto, quella sensazione che &ldquo;per il mio lavoro non funziona&rdquo;.
+          </p>
+          <p style={{ marginTop: 12 }}>
+            Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.
+          </p>
+        </div>
+      )}
+
+      {variant === "email" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+            maxWidth: 640,
+            marginInline: "auto",
+          }}
+        >
+          <p>
+            La maggior parte dei professionisti usa Claude come un Google piu&apos; intelligente. Fa domande. Ottiene risposte generiche. Pensa &ldquo;bah, niente di speciale&rdquo;.
+          </p>
+          <p>
+            Ma Claude non e&apos; un motore di ricerca. E&apos; uno strumento che puo&apos; lavorare CON te — ogni giorno, su ogni progetto, nel tuo ambiente di lavoro.
+          </p>
+          <p>Il problema e&apos; che nessuno ti ha mai mostrato come si fa.</p>
+          <p>I tutorial su YouTube ti insegnano dove cliccare.</p>
+          <p>I prompt copiati da Twitter funzionano una volta.</p>
+          <p>
+            I corsi &ldquo;AI&rdquo; parlano di tutto e non ti insegnano nulla di applicabile al tuo lunedi&apos; mattina.
+          </p>
+          <p
+            style={{
+              marginTop: 16,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 22,
+              color: "#fff",
+            }}
+          >
+            Questo corso e&apos; diverso.
+          </p>
+          <p>
+            10 moduli. Un metodo. Un sistema che costruisci pezzo per pezzo — calibrato sul tuo lavoro, non su demo generiche.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
@@ -4046,67 +4109,20 @@ function SalesV2LevelCard({
 export function SalesV2ProblemSection() {
   const variant = useSalesV2Variant();
 
-  // 3 cards "diagnosi" — universali fra varianti. Cattura del riconoscimento
-  // ("cazzo sì, è il mio problema"). Differenziate visivamente dal Mechanism
-  // perché qui usiamo icone (no watermark numerici), palette neutra (no orange-step).
-  const problemCards = [
-    {
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <polyline points="16 3 20 7 16 11" />
-          <path d="M4 7h16" />
-          <polyline points="16 21 12 25 16 29" />
-          <path d="M28 25H12" />
-        </svg>
-      ),
-      title: "Hai più tool che metodi.",
-      body: "Ogni settimana provi un nuovo strumento. ChatGPT, Claude, Gemini, Notion AI, Perplexity. Salti dall'uno all'altro inseguendo l'hype. Risultato: niente di quello che hai aperto è diventato davvero tuo.",
-      emphasis: "La scorciatoia è scegliere UN ecosistema e padroneggiarlo. Non collezionarli tutti.",
-    },
-    {
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M4 24V8a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H12l-8 6Z" />
-          <path d="M12 11h12" />
-          <path d="M12 16h7" />
-        </svg>
-      ),
-      title: "Hai input. Non hai output.",
-      body: "Hai 50 prompt copiati da Twitter in un Google Doc. Funzionano una volta, poi mai più. L'AI ti dà risposte. Ma non ti costruisce niente che resti.",
-      emphasis: "Senza un metodo, ogni interazione ricomincia da zero.",
-    },
-    {
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <circle cx="16" cy="11" r="5" />
-          <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10" />
-        </svg>
-      ),
-      title: "Sei solo quando devi applicare.",
-      body: "Tutorial YouTube, video corsi, community generiche. Ti spiegano. Poi lunedì mattina apri il laptop, devi lavorare davvero, e nessuno ti accompagna nel tradurre la teoria nel TUO contesto.",
-      emphasis: "Sapere è facile. Applicare è dove tutti si fermano.",
-    },
-  ];
-
-  // Variant-aware headlines
-  const headlineByVariant: Record<SalesV2Variant, React.ReactNode> = {
-    live: <>L&apos;hai sentito al webinar. Ma <Accent>perché succede</Accent> davvero?</>,
-    replay: <>Tutti parlano di AI. Ma <Accent>pochi la stanno usando</Accent> nel modo giusto.</>,
-    email: <>Se hai provato l&apos;AI e hai pensato &ldquo;non fa per me&rdquo;, <Accent>leggi questo</Accent>.</>,
-  };
-
-  // Variant-aware intro paragraph (1 sentence)
-  const introByVariant: Record<SalesV2Variant, string> = {
-    live: "L'hai visto in diretta. Ora vediamo i 3 motivi precisi per cui finora non hai ottenuto risultati.",
-    replay: "Tre blocchi che separano chi prova l'AI da chi la fa lavorare per sé. Riconoscili e capirai perché finora ti sei fermato.",
-    email: "Non è colpa tua. Ci sono tre blocchi precisi che impediscono al 95% dei professionisti di ottenere valore reale dall'AI. Vediamoli uno per uno.",
-  };
+  const headline =
+    variant === "email" ? (
+      <>
+        Se hai provato l&apos;AI e hai pensato &ldquo;non fa per me&rdquo;, <Accent>leggi questo</Accent>.
+      </>
+    ) : (
+      <>Il problema che non si risolve da solo.</>
+    );
 
   return (
     <section
       className={styles.salesSectionPad}
       style={{
-        maxWidth: 1120,
+        maxWidth: 760,
         margin: "0 auto",
         position: "relative",
         zIndex: 1,
@@ -4120,96 +4136,141 @@ export function SalesV2ProblemSection() {
         style={{
           fontFamily: "var(--font-display)",
           fontWeight: 600,
-          fontSize: "clamp(32px, 4.5vw, 50px)",
-          lineHeight: 1.08,
+          fontSize: "clamp(30px, 4.2vw, 46px)",
+          lineHeight: 1.1,
           letterSpacing: "-0.02em",
           color: "#fff",
-          margin: "16px auto 22px",
-          maxWidth: 920,
+          margin: "16px auto 36px",
+          maxWidth: 760,
           textAlign: "center",
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        {headlineByVariant[variant]}
+        {headline}
       </h2>
 
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 18,
-          lineHeight: 1.6,
-          color: "var(--ghost)",
-          opacity: 0.85,
-          margin: "0 auto 56px",
-          maxWidth: 720,
-          textAlign: "center",
-          textWrap: "pretty" as React.CSSProperties["textWrap"],
-        }}
-      >
-        {introByVariant[variant]}
-      </p>
-
-      {/* 3 problem cards */}
-      <div className={styles.problemGrid}>
-        {problemCards.map((c, i) => (
-          <ProblemCard key={i} index={i + 1} {...c} />
-        ))}
-      </div>
-
-      {/* Email-only: ladder dei 5 livelli (educational deep-dive) */}
-      {variant === "email" && (
-        <div style={{ marginTop: 56, maxWidth: 760, marginInline: "auto" }}>
-          <h3
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(22px, 2.4vw, 28px)",
-              lineHeight: 1.2,
-              color: "#fff",
-              margin: "0 0 16px",
-              textAlign: "center",
-            }}
-          >
-            E sei sempre fermo al <Accent>Livello 1</Accent>.
-          </h3>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 17,
-              lineHeight: 1.65,
-              color: "var(--ghost)",
-              opacity: 0.85,
-              margin: "0 auto 24px",
-              maxWidth: 640,
-              textAlign: "center",
-            }}
-          >
-            L&apos;AI generativa ha 5 livelli di utilizzo. Il 95% delle persone non supera mai il primo. Non per stupidità — perché nessuno gli ha mai mostrato che gli altri esistono.
+      {variant === "live" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            maxWidth: 640,
+            marginInline: "auto",
+          }}
+        >
+          <p>Lo sai gia&apos;. L&apos;hai visto nel webinar.</p>
+          <p>
+            Ogni settimana perdi ore in task che l&apos;AI potrebbe fare in minuti. I tuoi colleghi che hanno un sistema fanno in 20 minuti quello che tu fai in 3 ore.
           </p>
-          <LevelLadder />
+          <p>Piu&apos; aspetti, piu&apos; il gap si allarga.</p>
         </div>
       )}
 
-      {/* NOTE v2: il box "Il calcolo che chiude la decisione" è stato spostato
-          nella SalesV2OfferSection (subito prima del reveal del prezzo). */}
+      {variant === "replay" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            maxWidth: 640,
+            marginInline: "auto",
+          }}
+        >
+          <p>Lo sai gia&apos;. Non serve che te lo spieghi.</p>
+          <p>
+            Ogni settimana perdi ore in task che l&apos;AI potrebbe fare in minuti. Scrivi email da zero. Prepari presentazioni da zero. Fai ricerche copiando e incollando. Rileggi, correggi, riformuli — manualmente.
+          </p>
+          <p>
+            Nel frattempo, i tuoi colleghi che hanno capito come usare Claude fanno in 20 minuti quello che tu fai in 3 ore. Non perche&apos; siano piu&apos; bravi. Perche&apos; hanno un sistema. Tu no.
+          </p>
+          <p>E piu&apos; aspetti, piu&apos; il gap si allarga.</p>
+        </div>
+      )}
 
-      {/* Closing line — ponte verso il Mechanism */}
-      <p
-        style={{
-          marginTop: 48,
-          fontFamily: "var(--font-display)",
-          fontWeight: 500,
-          fontSize: "clamp(20px, 2.4vw, 26px)",
-          lineHeight: 1.35,
-          color: "#fff",
-          textAlign: "center",
-          maxWidth: 720,
-          marginInline: "auto",
-          textWrap: "balance" as React.CSSProperties["textWrap"],
-        }}
-      >
-        Risolvere questi tre blocchi è esattamente quello che facciamo nel corso. <Accent>In modo pratico, guidato e replicabile</Accent>.
-      </p>
+      {variant === "email" && (
+        <div
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.8,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+            maxWidth: 640,
+            marginInline: "auto",
+          }}
+        >
+          {/* Riconoscimento */}
+          <p>
+            Hai scaricato ChatGPT. O hai provato Claude. Hai fatto qualche domanda. Hai ottenuto risposte che avresti potuto trovare su Google.
+          </p>
+          <p>Hai pensato: &ldquo;Ok, carino. Ma per il mio lavoro non cambia nulla.&rdquo;</p>
+          <p style={{ fontStyle: "italic", color: "#fff" }}>E hai ragione. A quel livello, non cambia nulla.</p>
+
+          {/* Diagnosi */}
+          <p
+            style={{
+              marginTop: 20,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 22,
+              color: "#fff",
+            }}
+          >
+            Ecco cosa sta succedendo davvero.
+          </p>
+          <p>
+            La maggior parte delle persone usa l&apos;AI al Livello 1: domanda/risposta. Utile, ma non trasformativo.
+          </p>
+          <p>
+            Al <Accent>Livello 2</Accent> — quello a cui arriva dopo il corso — hai un partner di lavoro che conosce il tuo business, i tuoi clienti, il tuo modo di lavorare, e ti produce output come li faresti tu. Ma meglio. E in un decimo del tempo.
+          </p>
+          <p>
+            Il 95% delle persone non supera mai il Livello 1. Non perche&apos; siano stupide. Perche&apos; nessuno gli ha mai mostrato che i livelli successivi esistono.
+          </p>
+          <p>
+            I tutorial YouTube? Ti insegnano feature. I corsi &ldquo;AI&rdquo;? Ti parlano di 15 strumenti diversi. I prompt copiati da Twitter? Funzionano una volta.
+          </p>
+          <p>
+            Nessuno di questi ti insegna un metodo. Un sistema che funziona lunedi&apos; mattina, quando apri il laptop e devi lavorare davvero.
+          </p>
+
+          {/* Costo dell'inazione */}
+          <p
+            style={{
+              marginTop: 20,
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: 22,
+              color: "#fff",
+            }}
+          >
+            Nel frattempo, chi ha capito come funziona davvero sta risparmiando 5-8 ore a settimana.
+          </p>
+          <p>
+            Fa ricerche in 10 minuti, non in 2 ore. Scrive email, report, presentazioni in un quarto del tempo. Ha un collega digitale che conosce i suoi clienti, il suo settore, il suo tono di voce.
+          </p>
+          <p>
+            Non perche&apos; siano piu&apos; bravi di te. Perche&apos; hanno un sistema. Tu non ancora.
+          </p>
+          <p>
+            E ogni settimana che aspetti, il gap si allarga. Tra sei mesi non avrai &ldquo;piu&apos; tempo per imparare&rdquo;. Avrai meno tempo, piu&apos; concorrenza, e lo stesso problema — solo piu&apos; grande.
+          </p>
+        </div>
+      )}
     </section>
   );
 }
@@ -4475,15 +4536,20 @@ export function SalesV2MechanismSection() {
           fontSize: 17,
           lineHeight: 1.65,
           color: "var(--ghost)",
-          opacity: 0.85,
+          opacity: 0.88,
           margin: "0 auto 56px",
           maxWidth: 760,
           textAlign: "center",
           textWrap: "pretty" as React.CSSProperties["textWrap"],
         }}
       >
-        La maggior parte dei corsi AI ti insegna dove cliccare. Funziona per la demo. Non funziona per il lunedì mattina.
-        Dopo due settimane sei punto e a capo. Questo corso è costruito al contrario.
+        La maggior parte dei corsi AI ti insegna dove cliccare. Funziona per la demo. Non funziona per il lunedi&apos; mattina.
+        <br />
+        <br />
+        Dopo due settimane sei punto e a capo, perche&apos; sapere dove si trova un bottone non e&apos; sapere COME lavorare con l&apos;intelligenza artificiale.
+        <br />
+        <br />
+        Questo corso e&apos; costruito al contrario.
       </p>
 
       <div className={styles.stepGrid}>
@@ -4491,8 +4557,65 @@ export function SalesV2MechanismSection() {
           <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
         ))}
       </div>
-      {/* Nota: la sezione "effetti collaterali" che stava qui è ora un blocco
-          autonomo SalesV2BenefitsSection mostrato dopo Mechanism. */}
+
+      {/* Sotto-blocco: Effetti collaterali (gradient viola sottile) */}
+      <div
+        style={{
+          marginTop: 56,
+          maxWidth: 760,
+          marginInline: "auto",
+          padding: "32px 28px",
+          background: "linear-gradient(180deg, rgba(123,104,238,0.07) 0%, rgba(123,104,238,0.02) 100%)",
+          border: "1px solid rgba(123,104,238,0.20)",
+          borderRadius: 14,
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--violet)",
+            margin: "0 0 18px",
+          }}
+        >
+          Effetti collaterali riportati dagli studenti
+        </p>
+        <ul
+          style={{
+            margin: 0,
+            padding: 0,
+            listStyle: "none",
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.5,
+            color: "var(--ghost)",
+            opacity: 0.92,
+          }}
+        >
+          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
+            <span>I colleghi ti chiedono &ldquo;come fai?&rdquo;</span>
+          </li>
+          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
+            <span>Smetti di temere che l&apos;AI ti sostituisca</span>
+          </li>
+          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
+            <span>Inizi a vedere opportunita&apos; dove prima vedevi task</span>
+          </li>
+          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
+            <span>Non riesci piu&apos; a lavorare senza Claude aperto</span>
+          </li>
+        </ul>
+      </div>
     </section>
   );
 }
@@ -4510,37 +4633,8 @@ export function SalesV2BenefitsSection() {
           <polyline points="12 6 12 12 16 14" />
         </svg>
       ),
-      title: "Risparmi 5-8 ore a settimana",
-      body: "Francesca preparava i suoi report in 4 ore. Adesso in 40 minuti — e Claude conosce già la sua voce, i suoi clienti, il suo formato. Il corso si ripaga la prima settimana.",
-    },
-    {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      ),
-      title: "I colleghi ti chiedono \"come fai?\"",
-      body: "Output di qualità in tempi che prima erano impossibili. La gente nota subito chi ha un sistema vero.",
-    },
-    {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6z" />
-          <polyline points="9 12 11 14 15 10" />
-        </svg>
-      ),
-      title: "Smetti di chiederti \"mi sostituirà?\"",
-      body: "Capisci come funziona, cosa può fare, cosa non può fare. La domanda smette di essere \"mi ruba il lavoro?\" e diventa \"cosa gli delego oggi?\".",
-    },
-    {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-      ),
-      title: "Vedi opportunità dove prima vedevi task",
-      body: "Quello che era \"un'altra cosa da fare\" diventa un workflow che Claude esegue per te. Pensi in termini di sistema, non di to-do.",
+      title: "Risparmi 5-8 ore a settimana.",
+      body: "Francesca preparava i suoi report in 4 ore. Adesso in 40 minuti — e Claude conosce gia' la sua voce, i suoi clienti, il suo formato. Il corso si ripaga la prima settimana.",
     },
     {
       icon: (
@@ -4550,17 +4644,28 @@ export function SalesV2BenefitsSection() {
           <line x1="9" y1="15" x2="15" y2="15" />
         </svg>
       ),
-      title: "Claude scrive come scrivi tu",
-      body: "Conosce il tuo tono, il tuo settore, i tuoi clienti. Non devi più correggere il registro ogni volta — l'output esce già nel tuo standard.",
+      title: "L'output esce gia' come lo faresti tu.",
+      body: "Claude conosce il tuo tono, il tuo settore, i tuoi clienti, le tue regole di stile. Scrivi “fammi il report” e il report esce gia' nel tuo standard. Non devi correggere il registro ogni volta.",
     },
     {
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          <path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6z" />
+          <polyline points="9 12 11 14 15 10" />
         </svg>
       ),
-      title: "Non lavori più senza Claude aperto",
-      body: "Diventa il tuo browser. Una volta che hai il sistema in mano, è un upgrade del cervello che non vuoi più togliere.",
+      title: "Smetti di chiederti “mi sostituira'?”.",
+      body: "Capisci come funziona, cosa puo' fare, cosa non puo' fare. La domanda smette di essere “mi ruba il lavoro?” e diventa “cosa gli delego oggi?”.",
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M3 7h4l2-3h6l2 3h4v13H3z" />
+          <circle cx="12" cy="13" r="3.5" />
+        </svg>
+      ),
+      title: "Non riparte da zero ogni conversazione.",
+      body: "Configuri il tuo ambiente una volta. Claude si ricorda il contesto, le tue regole, i tuoi clienti. Ogni conversazione riparte da dove l'hai lasciata — non da un foglio bianco.",
     },
   ];
 
@@ -4592,9 +4697,6 @@ export function SalesV2BenefitsSection() {
         }}
       />
 
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <SectionLabel>I benefici concreti</SectionLabel>
-      </div>
       <h2
         style={{
           fontFamily: "var(--font-display)",
@@ -4603,29 +4705,14 @@ export function SalesV2BenefitsSection() {
           lineHeight: 1.08,
           letterSpacing: "-0.02em",
           color: "#fff",
-          margin: "16px auto 18px",
+          margin: "16px auto 56px",
           maxWidth: 880,
           textAlign: "center",
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Cosa cambia <Accent>davvero</Accent> quando padroneggi Claude.
+        Cosa cambia <Accent>dopo il corso</Accent>.
       </h2>
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 18,
-          lineHeight: 1.6,
-          color: "var(--ghost)",
-          opacity: 0.85,
-          margin: "0 auto 56px",
-          maxWidth: 700,
-          textAlign: "center",
-          textWrap: "pretty" as React.CSSProperties["textWrap"],
-        }}
-      >
-        I sei effetti collaterali che gli studenti raccontano dopo le prime due settimane di pratica.
-      </p>
 
       <div className={styles.benefitsGrid}>
         {benefits.map((b, i) => (
@@ -4810,17 +4897,12 @@ export function SalesV2PromiseLetterSection() {
   );
 
   const paragraphs: React.ReactNode[] = [
-    <>Voglio raccontarti come potrebbe essere una tua mattina, fra qualche mese da oggi.</>,
-    <>Sei alla scrivania. Apri il laptop. La prima cosa che fai non è ChatGPT, non è Google, non è la mail.<br />È una conversazione di Claude che hai lasciato aperta ieri sera. Ha preparato il documento per la riunione delle 10. A te basta una rilettura.</>,
-    <>Mentre bevi il caffè, hai già <H>quattro schede di Claude</H> aperte in parallelo. Una sta scrivendo la newsletter della settimana — sa il tuo tono, conosce i tuoi clienti, ricorda le ultime dodici puntate. Una sta sintetizzando un podcast di un&apos;ora che ti serviva per il pitch di domani. Una sta aggiornando il piano editoriale del prossimo trimestre. Una sta draftando una mail importante a un investitore.</>,
-    <>E tu? Tu non scrivi più. <H>Tu istruisci. Revisioni. Affini.</H></>,
-    <>Ti senti più un manager che un esecutore. Hai un team digitale che lavora con te, conosce le regole, segue lo standard. Tu parli, e quello che chiedi si fa.<br />Per il <H>70-80% del tuo tempo</H>, tu pensi e Claude esegue.</>,
-    <>Hai il pomeriggio libero che prima passavi a riformulare la stessa email per la dodicesima volta. Hai la lucidità di prendere decisioni vere, perché non sei più sommerso dal lavoro manuale.</>,
-    <>Ci hai messo qualche settimana per arrivarci. Hai sbagliato. Hai sistemato. Hai dovuto trovare il TUO metodo, configurare i TUOI Project, costruire la TUA libreria di skill personalizzate. Conosci anche la sicurezza, sai cosa condividere e cosa no, sai come strutturare le cose per non perderle.<br />Ma quel lavoro adesso è fatto. E non torna indietro.</>,
-    <>Non sei più tu davanti a uno schermo bianco. Sei tu <H>e una macchina di lavoro</H> che ti conosce, segue le tue regole, produce al tuo standard.</>,
-    <>Questo è il punto di arrivo del corso.<br />Non è promessa di marketing. È quello che vivono ogni giorno i nostri studenti più avanzati.</>,
-    <>E se sei arrivato fin qui, vuol dire che ce la puoi fare anche tu.</>,
-    <>La differenza tra te oggi e loro <H>è solo che loro hanno iniziato</H>.</>,
+    <>Ti scrivo dal futuro. Solo <H>6 mesi avanti</H>.</>,
+    <>Questa mattina ho aperto Claude e gli ho detto di prepararmi il brief per il cliente nuovo. In <H>12 minuti</H> avevo un documento che prima mi avrebbe preso mezza giornata.</>,
+    <>Non è magia. È che adesso Claude sa come lavoro. Sa che tono uso. Sa cosa piace ai miei clienti. Sa come strutturare le mie presentazioni.</>,
+    <>La cosa strana è che non mi ricordo più com&apos;era prima. Come lavoravo senza. Come perdevo ore su cose che adesso si fanno in minuti.</>,
+    <>So solo che a un certo punto ho deciso di imparare <H>davvero</H>. Non un tutorial. Non un prompt copiato. Un metodo. E tutto è cambiato.</>,
+    <>La differenza tra te oggi e me <H>è solo che io ho iniziato</H>.</>,
   ];
 
   return (
@@ -4879,8 +4961,8 @@ export function SalesV2PromiseLetterSection() {
               flexWrap: "wrap",
             }}
           >
-            <span>Una promessa</span>
-            <span>Per il tuo te di tra 6 mesi</span>
+            <span>Una lettera</span>
+            <span>Dal tuo io di tra 6 mesi</span>
           </div>
 
           {/* Salutation */}
@@ -4898,7 +4980,7 @@ export function SalesV2PromiseLetterSection() {
               letterSpacing: "0.01em",
             }}
           >
-            A te,
+            A me, oggi.
           </div>
 
           {/* Body */}
@@ -4930,8 +5012,8 @@ export function SalesV2PromiseLetterSection() {
                 fontFamily: "var(--font-italic)",
                 fontStyle: "italic",
                 fontWeight: 500,
-                fontSize: 34,
-                lineHeight: 1,
+                fontSize: 28,
+                lineHeight: 1.1,
                 color: "#2A2420",
                 letterSpacing: "0.01em",
                 transform: "rotate(-2deg)",
@@ -4940,19 +5022,7 @@ export function SalesV2PromiseLetterSection() {
                 display: "inline-block",
               }}
             >
-              Matteo
-            </div>
-            <div
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 13,
-                fontWeight: 500,
-                color: "#6B5E54",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-              }}
-            >
-              Matteo Arnaboldi · CEO &amp; Co-Founder, Morfeus Hub
+              — Il tuo io di tra 6 mesi
             </div>
           </div>
         </div>
@@ -4988,7 +5058,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "01",
       title: "Setup e primi passi",
-      outcome: "In 15 minuti sei operativo, anche se vieni da ChatGPT.",
+      outcome: "Account, piano, interfaccia. Se vieni da ChatGPT, la migrazione e' coperta. In 15 minuti sei operativo.",
       topics: [
         "Account, piani, differenze fra Free e Pro",
         "L'interfaccia di Claude spiegata sezione per sezione",
@@ -4999,7 +5069,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "02",
       title: "Chat: usare Claude ogni giorno",
-      outcome: "Il modulo che usi dal giorno 1, ogni giorno.",
+      outcome: "Input vocale (3x piu' veloce), prompting pratico, artifacts, analisi immagini, PDF e dati. Il modulo che usi dal giorno 1.",
       topics: [
         "Input vocale: 3x più veloce della tastiera",
         "Prompting pratico (no \"prompt magici\", solo struttura)",
@@ -5020,7 +5090,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "04",
       title: "CoWork: Claude come collega",
-      outcome: "Claude lavora sui tuoi file. Non in chat — nel tuo ambiente di lavoro.",
+      outcome: "La funzionalita' che cambia tutto. Claude lavora sui tuoi file, i tuoi documenti, le tue presentazioni. Non in una chat — nel tuo ambiente di lavoro.",
       topics: [
         "Setup di CoWork mode passo per passo",
         "Lavorare su documenti, presentazioni, fogli di calcolo",
@@ -5041,7 +5111,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "06",
       title: "Skills, plugin e connettori",
-      outcome: "Claude diventa un sistema, non un chatbot.",
+      outcome: "Installa capacita' pre-costruite con un click. Crea le tue. Collega Claude ai tuoi strumenti esterni. Il modulo dove Claude diventa un sistema, non un chatbot.",
       topics: [
         "Skill marketplace: installazioni in 1 click",
         "Costruire le tue skill custom (senza codice)",
@@ -5063,7 +5133,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "08",
       title: "Plan & Solve: progetti complessi",
-      outcome: "Pianifica prima, esegui dopo. Su qualsiasi progetto.",
+      outcome: "Il metodo per affrontare qualsiasi progetto: pianifica prima, esegui dopo. Due sistemi (Planner + Executor) che lavorano insieme.",
       topics: [
         "Sistema Planner: scomporre prima di muoversi",
         "Sistema Executor: eseguire un piano già strutturato",
@@ -5074,7 +5144,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     {
       n: "09",
       title: "Sicurezza, privacy e prossimi passi",
-      outcome: "Cosa condividere, cosa no. E dove stai andando.",
+      outcome: "Cosa condividere, cosa no. Come restare aggiornati. La visione di dove stai andando: il tuo team AI.",
       topics: [
         "Cosa puoi condividere con Claude (e cosa NON)",
         "Privacy reale del piano Pro vs versione gratuita",
@@ -5339,7 +5409,7 @@ export function SalesV2ProofSection({ step }: SectionProps) {
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Insegniamo quello che facciamo. <Accent>Non quello che leggiamo</Accent>.
+        Chi te lo insegna. E chi <Accent>l&apos;ha gia&apos; fatto</Accent>.
       </h2>
 
       {/* Founder block: photo + authority story */}
@@ -5835,7 +5905,7 @@ export function SalesV2AudienceSection({ step }: SectionProps) {
 
   const yes = [
     "Sei un professionista che vuole usare l'AI nel lavoro quotidiano, ma non sa da dove partire davvero.",
-    "Hai provato ChatGPT o Claude e hai pensato \"bah, niente di speciale\" — perché nessuno ti ha mostrato il Livello 2, 3 e 4.",
+    "Hai provato ChatGPT o Claude e hai pensato \"bah, niente di speciale\" — perché nessuno ti ha mostrato il Livello 2 e oltre.",
     "Vedi colleghi e competitor ottenere risultati con l'AI e vuoi capire come fanno.",
     "Non sei tecnico e non vuoi diventarlo — vuoi un metodo pratico, non un corso di programmazione.",
     "Sei un imprenditore, freelance o manager che vuole risparmiare ore ogni settimana su task ripetitivi.",
@@ -5843,9 +5913,9 @@ export function SalesV2AudienceSection({ step }: SectionProps) {
   ];
   const no = [
     "Cerchi un corso su \"l'AI in generale\" — questo è verticale su Claude. Il 70% si applica ovunque, ma il focus è uno strumento, un metodo.",
-    "Sei già al Livello 4-5 (hai Projects configurati, usi skill personalizzate, hai un workflow quotidiano strutturato) — il corso base non aggiunge abbastanza. Guarda il bootcamp.",
+    "Hai già Projects configurati, usi skill personalizzate e hai un workflow quotidiano strutturato — il corso base non aggiunge abbastanza. Guarda il Bootcamp AI Champion.",
     "Vuoi risultati senza fare nulla — il corso richiede 4-5 ore di impegno e la volontà di applicare. Non è una pillola magica.",
-    "Pensi che l'AI sia una moda che passerà — questo corso non è per chi cerca conferme. È per chi ha capito che il mondo è cambiato.",
+    "Pensi che l'AI sia una moda che passerà — questo corso non è per te. È per chi ha capito che il mondo è cambiato e vuole stare dalla parte giusta.",
   ];
 
   return (
@@ -6045,7 +6115,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Imparare da solo <span style={{ color: "var(--muted)" }}>vs</span> Corso generico AI <span style={{ color: "var(--muted)" }}>vs</span> <Accent>Corso Claude Morfeus</Accent>.
+        Imparare da solo <span style={{ color: "var(--muted)" }}>vs</span> Corso generico AI <span style={{ color: "var(--muted)" }}>vs</span> <Accent>Claude Unlocked</Accent>.
       </h2>
 
       {/* Desktop table */}
@@ -6053,7 +6123,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
         <ComparisonHeaderCell label="Criterio" />
         <ComparisonHeaderCell label="Da solo (YouTube + tutorial)" />
         <ComparisonHeaderCell label="Corso generico AI" />
-        <ComparisonHeaderCell label="Corso Claude Morfeus" highlight />
+        <ComparisonHeaderCell label="Claude Unlocked Morfeus" highlight />
         {rows.map((r, i) => (
           <ComparisonRow key={i} row={r} />
         ))}
@@ -6063,7 +6133,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
       <div className={styles.comparisonStack}>
         <ComparisonMobileCard title="Da solo (YouTube + tutorial)" rows={rows.map((r) => ({ k: r.label, v: r.a }))} />
         <ComparisonMobileCard title="Corso generico AI" rows={rows.map((r) => ({ k: r.label, v: r.b }))} />
-        <ComparisonMobileCard title="Corso Claude Morfeus" highlight rows={rows.map((r) => ({ k: r.label, v: r.c }))} />
+        <ComparisonMobileCard title="Claude Unlocked Morfeus" highlight rows={rows.map((r) => ({ k: r.label, v: r.c }))} />
       </div>
 
       <p
@@ -6419,7 +6489,7 @@ export function SalesV2OfferSection({ step }: SectionProps) {
     { title: "Il corso completo", body: "10 moduli, ~48 lezioni, ~4-5 ore di contenuto pratico. Dal mindset al sistema personalizzato.", value: "297€" },
     { title: "4 live settimanali con i founder", body: "Sessioni dal vivo dove fai domande, lavori con noi, vedi demo in tempo reale. Non sei solo.", value: "197€" },
     { title: "Pacchetto skill e plugin curato", body: "Strumenti pre-costruiti che installi in 1 click. Funzionano subito per i task più comuni.", value: "97€" },
-    { title: "Aggiornamenti futuri inclusi", body: "Claude evolve. Il corso evolve con lui. Non diventa obsoleto tra 3 mesi.", value: "non quantificabile" },
+    { title: "Aggiornamenti futuri inclusi", body: "Claude evolve. Il corso evolve con lui. In un mercato dove i corsi AI diventano obsoleti in pochi mesi, gli studenti ricevono le lezioni aggiornate automaticamente — senza riacquistare. Questo e' il bonus piu' importante.", value: "non quantificabile" },
   ];
 
   const onCheckout = () => trackCheckoutClick("offer", variant, current.stage, current.price);
@@ -7088,9 +7158,9 @@ export function SalesV2FAQSection() {
         <>
           Corretto. Se hai fatto domande e hai ottenuto risposte generiche, il tuo giudizio è giusto. Quelle risposte SONO generiche.
           <br /><br />
-          Ma quello era il Livello 1 — domanda/risposta. Come giudicare Excel dopo aver fatto solo una somma. Il 95% non supera mai il Livello 1 perché nessuno gli ha mostrato che il 2, 3 e 4 esistono.
+          Ma quello era il Livello 1 — domanda/risposta. Come giudicare Excel dopo aver fatto solo una somma. Il 95% non supera mai il Livello 1 perche&apos; nessuno gli ha mostrato che il Livello 2 esiste.
           <br /><br />
-          A Livello 4, Claude non ti dà risposte. Lavora CON te. Il corso ti porta lì.
+          A Livello 2, Claude non ti da&apos; risposte. Lavora CON te. Il corso ti porta li&apos;.
         </>
       ),
     },
@@ -7377,7 +7447,7 @@ export function SalesV2BootcampBridgeSection() {
             Padroneggiare Claude è il primo step. Non puoi costruire un sistema di dipendenti AI senza prima padroneggiare lo strumento. <strong style={{ color: "#fff" }}>Il corso ti dà questa competenza</strong> — completa, applicabile, reale.
           </p>
           <p style={{ margin: 0 }}>
-            Per chi vuole andare oltre: trasformare la competenza in un sistema operativo, costruire dipendenti AI con metodo e supporto guidato, implementare nel proprio lavoro con qualcuno che ti corregge quando sbagli — c&apos;è il <strong style={{ color: "var(--violet)" }}>Bootcamp AI Champion</strong>.
+            Per chi vuole andare oltre: costruire dipendenti AI con metodo e supporto guidato, implementare nel proprio lavoro con qualcuno che ti corregge quando sbagli — c&apos;è il <strong style={{ color: "var(--violet)" }}>Bootcamp AI Champion</strong>.
           </p>
           <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
             <li style={{ display: "flex", gap: 14 }}>
@@ -7629,34 +7699,101 @@ export function SalesV2FinalCTASection({ step }: SectionProps) {
         {copy.headlinePre} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
       </h2>
 
-      {/* V2 narrative body */}
+      {/* V2 RECAP STACK — identico nelle 3 varianti */}
       <div
         style={{
           margin: "0 auto 40px",
           maxWidth: 640,
           textAlign: "left",
+          padding: "28px 28px",
+          background: "var(--deep-space)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRadius: 14,
           fontFamily: "var(--font-body)",
-          fontSize: 17,
-          lineHeight: 1.75,
-          color: "var(--ghost)",
-          opacity: 0.95,
-          display: "flex",
-          flexDirection: "column",
-          gap: 18,
         }}
       >
-        <p style={{ margin: 0 }}>
-          Non perché ti manca qualcosa.
-          Ma perché ti ricorderai di questo momento — quello in cui hai scelto di non restare fermo mentre il mondo intorno a te cambia.
+        <p
+          style={{
+            margin: "0 0 18px",
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+          }}
+        >
+          Stai per ottenere
         </p>
-        <p style={{ margin: 0 }}>
-          Il corso si chiama <Accent>Claude Unlocked</Accent> per un motivo.
-        </p>
-        <p style={{ margin: 0 }}>
-          Non stai imparando uno strumento. Stai smettendo di usarne uno al 10% e iniziando a capire cosa significa portarlo al 100% — nel tuo lavoro specifico, nel tuo tono, con le tue regole.
-        </p>
-        <p style={{ margin: 0 }}>
-          Il 95% dei professionisti aspetterà. Il momento giusto. Il corso perfetto. La versione migliore di Claude.
+        <ul
+          style={{
+            margin: "0 0 22px",
+            padding: 0,
+            listStyle: "none",
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            fontSize: 16,
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+            opacity: 0.95,
+          }}
+        >
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>10 moduli, 48 lezioni, ~4-5 ore di contenuto pratico</span>
+          </li>
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>Il metodo dal mindset al sistema personalizzato</span>
+          </li>
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>4 live settimanali con i founder</span>
+          </li>
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>Pacchetto skill e plugin pronto all&apos;uso</span>
+          </li>
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>Aggiornamenti inclusi per sempre</span>
+          </li>
+          <li style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+            <span>Garanzia 14 giorni, nessuna domanda</span>
+          </li>
+        </ul>
+        <div
+          style={{
+            paddingTop: 18,
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            gap: 12,
+            flexWrap: "wrap",
+            fontSize: 15,
+            lineHeight: 1.5,
+            color: "var(--ghost)",
+          }}
+        >
+          <span>
+            Valore: <strong style={{ color: "var(--muted)", textDecoration: "line-through" }}>591€</strong>
+          </span>
+          <span>
+            Il tuo prezzo oggi: <strong style={{ color: "var(--orange)", fontFamily: "var(--font-display)", fontSize: 22 }}>{current.price}€</strong>
+          </span>
+        </div>
+        <p
+          style={{
+            marginTop: 16,
+            fontSize: 14,
+            lineHeight: 1.5,
+            color: "var(--muted)",
+            fontStyle: "italic",
+          }}
+        >
+          Se dopo il corso vuoi fare il bootcamp, il costo del corso e&apos; un credito. Non perdi nulla.
         </p>
       </div>
 
@@ -7782,7 +7919,7 @@ export function SalesV2B2BSection() {
                 textWrap: "balance" as React.CSSProperties["textWrap"],
               }}
             >
-              Hai un&apos;azienda? Vogliamo formare il <Accent>tuo team</Accent>.
+              Hai un&apos;azienda? Vuoi formare il <Accent>tuo team</Accent>?
             </h2>
             <p
               style={{
@@ -7910,7 +8047,7 @@ export function SalesV2FooterSection() {
           <strong style={{ color: "var(--muted)", opacity: 1 }}>Disclaimer:</strong> I prodotti e servizi venduti su questo sito non costituiscono proiezione, promessa o garanzia di guadagno. I risultati individuali possono variare e dipendono dall&apos;impegno, dall&apos;esperienza e dalle condizioni individuali di ciascun partecipante.
         </p>
         <p style={muted}>
-          Il Corso Claude Morfeus è un prodotto formativo indipendente. Claude è un marchio di Anthropic, PBC. Questo corso non è affiliato a, sponsorizzato da, o approvato da Anthropic.
+          Il Claude Unlocked Morfeus è un prodotto formativo indipendente. Claude è un marchio di Anthropic, PBC. Questo corso non è affiliato a, sponsorizzato da, o approvato da Anthropic.
         </p>
         <p style={muted}>
           Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.

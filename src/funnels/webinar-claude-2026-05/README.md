@@ -1,9 +1,11 @@
-# Funnel: webinar-claude + claude-unlocked-v1 + bootcamp-ai-champion
+# Funnel: webinar-claude + claude-unlocked-v1/v2 + bootcamp-ai-champion (v1/v2)
 
-Cartella unica con i componenti React condivisi per **tre funnel registrati**:
+Cartella unica con i componenti React condivisi per **cinque funnel registrati**:
 - `webinar-claude` — opt-in + thank-you del webinar gratuito (5 maggio 2026, ore 18:00)
-- `claude-unlocked-v1` — sales page del Corso Claude (top-level slug, single step)
-- `bootcamp-ai-champion` — sales page del Bootcamp AI Champion — terza edizione (top-level slug, single step). **Palette lime** distinta dal corso (`#B5F03A`).
+- `claude-unlocked-v1` — sales page del Corso Claude (versione live, indexable). Copy "v1".
+- `claude-unlocked-v2` — sales page del Corso Claude (versione in confronto, **non indexable**). Copy revisionato dal documento `SALES_PAGE_CORSO_COPY_FINALE.md` del 29 aprile 2026. Palette arancione invariata. **Da confrontare side-by-side con v1; alla fine del confronto si tiene solo una.**
+- `bootcamp-ai-champion` — sales page del Bootcamp AI Champion — terza edizione. **Palette lime** distinta dal corso (`#B5F03A`).
+- `bootcamp-ai-champion-v2` — sales page Bootcamp v2 (in confronto, non indexable).
 
 Le sezioni `Sales*` in `sections.tsx` sono usate solo dal funnel `claude-unlocked-v1`. Le sezioni `Webinar*` sono usate solo dal funnel `webinar-claude`. Le sezioni `Bootcamp*` in `sections-bootcamp.tsx` sono usate solo dal funnel `bootcamp-ai-champion`. Il design system (`WcThemeProvider`, `theme.module.css`) è condiviso fra tutti e tre; il theme variant `data-theme="bootcamp"` cambia il gradient di sfondo della sales del bootcamp.
 
@@ -49,6 +51,37 @@ Cinque blocchi cambiano copy per variante (Hero, Bridge, Problem, Urgency, Final
 2. **Screenshot moduli**: ogni `ModuleAccordion` ha uno slot TODO commentato per inserire screenshot/mockup di Claude in azione (Project setup, CoWork, Skills, ecc.). Da riempire quando gli asset sono pronti.
 3. **Foto founder coppia**: la sales page usa `/matteo-arnaboldi-hoodie.png` (Matteo solo). Se disponibile una foto di Matteo + Alex insieme di qualità professionale, sostituire in `SalesProofSection`.
 4. **Deadline countdown**: i timestamp `earlyBirdDeadlineIso` e `standardDeadlineIso` in `sales-config.json` step `sales` sono calcolati a partire dal webinar 5 maggio 2026 18:00 CEST. Modificare se la finestra di lancio cambia.
+
+## Sales page v2 — TODO pre-go-live (in confronto, palette arancione invariata)
+
+URL: `/claude-unlocked-v2` (non indexable). Stessa logica varianti `?src=live|replay|email` di v1.
+
+Differenze strutturali con v1:
+- `Bridge` ora variant-aware (LIVE/REPLAY identici, EMAIL completamente riscritta — niente blockquote, headline diversa)
+- `Problem` rifatto in stile narrativo (compresso/medio/esteso) — rimosse 3 cards e LevelLadder per matchare il doc
+- `Benefits` ridotto da 6 → 4 card concrete (Francesca + tono + sostituzione + ricominciare-da-zero)
+- `PromiseLetter` riscritta come "lettera dal tuo io di tra 6 mesi" (era da Matteo) — body più breve, firma cambiata
+- `Mechanism` mantiene 3 step ma include sotto-blocco "Effetti collaterali" (4 bullet)
+- `FinalCTA` body sostituito con RECAP STACK universale (era body narrativo email-only)
+- `Bonus` (drum-roll bonus card) e `UpsellBootcamp` (upsell mid-page) **rimossi** dal componentOrder — il doc non li prevede
+- Headline section: tutte allineate al doc copy
+
+Item pendenti del doc copy `SALES_PAGE_CORSO_COPY_FINALE.md` (29 aprile 2026):
+1. **Checkout URL reali** (item #1 del doc) — `checkoutUrl*` in `sales-v2-config.json` sono placeholder identici a v1
+2. **URL Calendly B2B** (item #2 del doc) — usato `https://marf.alexcarofiglio.com/book/morfeushub` (default v1)
+3. **Testimonianze reali** (item #3 del doc) — `SalesV2ReviewsSection` ha placeholder etichettati TODO (Francesca / Giulio / Luca generici). Sostituire con 2-3 testimonianze reali con nome, ruolo, foto, risultato specifico
+4. **Foto founder Matt + Alex** (item #4 del doc) — `SalesV2ProofSection` usa `/matteo-arnaboldi-hoodie.png` (solo Matteo). Sostituire con foto coppia naturale quando disponibile
+5. **Permesso nomi aziendali** (item #5 del doc) — `SalesV2ProofSection` e `SalesV2B2BSection` citano già "Enel, Sisal, BNP Paribas, Zara" come nel v1. Se i permessi non sono confermati, sostituire con testo generico tipo "grandi aziende italiane in energia, finanza, retail, gaming"
+6. **Deadline esatta early bird** (item #6 del doc) — `earlyBirdDeadlineIso` in `sales-v2-config.json` (default 2026-05-06T18:00:00+02:00)
+7. **Deadline fine periodo standard** (item #7 del doc) — `standardDeadlineIso` (default 2026-05-12T18:00:00+02:00)
+8. **URL pagina Bootcamp AI Champion** (item #8 del doc) — `SalesV2BootcampBridgeSection` punta a `https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione/`. Aggiornare se cambia.
+9. **Conferma bonus Hormozi** (item #9 del doc) — attualmente NON incluso nello stack (4 voci: corso 297€ + 4 live 197€ + skill pack 97€ + aggiornamenti). Se confermato, aggiungere stack item con valore 97€ e ricalcolare totale (591€ → 688€)
+
+### Workflow di confronto v1 vs v2
+
+1. Apri side-by-side `/claude-unlocked-v1` e `/claude-unlocked-v2` con stessa variante (es. `?src=replay` su entrambe)
+2. Confronto desktop + mobile, golden path scroll completo + ognuno dei 3 variant URL
+3. Decisione finale: tieni una versione, rimuovi l'altra (config, sections file, type entries, registry, componentMap)
 
 ## Sales page — struttura sezioni (variante REPLAY default)
 
