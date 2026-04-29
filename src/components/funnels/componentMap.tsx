@@ -50,6 +50,32 @@ import {
   WebinarThankYouSection
 } from "@/funnels/webinar-claude-2026-05/sections";
 import {
+  SalesV2AudienceSection,
+  SalesV2B2BSection,
+  SalesV2BenefitsSection,
+  SalesV2BonusSection,
+  SalesV2BootcampBridgeSection,
+  SalesV2BridgeSection,
+  SalesV2ComparisonSection,
+  SalesV2FAQSection,
+  SalesV2FinalCTASection,
+  SalesV2FooterSection,
+  SalesV2GuaranteeSection,
+  SalesV2HeaderSection,
+  SalesV2HeroSection,
+  SalesV2MechanismSection,
+  SalesV2ModulesSection,
+  SalesV2OfferSection,
+  SalesV2ProblemSection,
+  SalesV2PromiseLetterSection,
+  SalesV2ProofSection,
+  SalesV2ReviewsSection,
+  SalesV2StickyBarSection,
+  SalesV2ThreeLevelsSection,
+  SalesV2UpsellBootcampSection,
+  SalesV2UrgencySection,
+} from "@/funnels/webinar-claude-2026-05/sections-v2";
+import {
   FreebieHeroSection,
   FreebieThankYouSection,
   FreebieWebinarTeaserSection,
@@ -179,6 +205,39 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesB2B: () => <SalesB2BSection />,
   SalesFooter: () => <SalesFooterSection />,
   SalesStickyBar: ({ accentColor, step }) => <SalesStickyBarSection accentColor={accentColor} step={step} />,
+  SalesV2Header: () => <SalesV2HeaderSection />,
+  SalesV2Hero: ({ accentColor, step }) =>
+    step.content.SalesV2Hero ? <SalesV2HeroSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Bridge: () => <SalesV2BridgeSection />,
+  SalesV2ThreeLevels: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2ThreeLevelsSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Problem: () => <SalesV2ProblemSection />,
+  SalesV2Mechanism: () => <SalesV2MechanismSection />,
+  SalesV2Benefits: () => <SalesV2BenefitsSection />,
+  SalesV2PromiseLetter: () => <SalesV2PromiseLetterSection />,
+  SalesV2Modules: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2ModulesSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Proof: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2ProofSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Reviews: () => <SalesV2ReviewsSection />,
+  SalesV2Audience: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2AudienceSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Comparison: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2ComparisonSection accentColor={accentColor} step={step} /> : null,
+  SalesV2Bonus: () => <SalesV2BonusSection />,
+  SalesV2Offer: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2OfferSection accentColor={accentColor} step={step} /> : null,
+  SalesV2UpsellBootcamp: () => <SalesV2UpsellBootcampSection />,
+  SalesV2Guarantee: () => <SalesV2GuaranteeSection />,
+  SalesV2FAQ: () => <SalesV2FAQSection />,
+  SalesV2BootcampBridge: () => <SalesV2BootcampBridgeSection />,
+  SalesV2Urgency: ({ accentColor, step }) =>
+    step.content.SalesV2Urgency && step.content.SalesV2Pricing ? <SalesV2UrgencySection accentColor={accentColor} step={step} /> : null,
+  SalesV2FinalCTA: ({ accentColor, step }) =>
+    step.content.SalesV2FinalCTA && step.content.SalesV2Pricing ? <SalesV2FinalCTASection accentColor={accentColor} step={step} /> : null,
+  SalesV2B2B: () => <SalesV2B2BSection />,
+  SalesV2Footer: () => <SalesV2FooterSection />,
+  SalesV2StickyBar: ({ accentColor, step }) => <SalesV2StickyBarSection accentColor={accentColor} step={step} />,
   BootcampHeader: () => <BootcampHeaderSection />,
   BootcampHero: ({ accentColor, step }) => <BootcampHeroSection accentColor={accentColor} step={step} />,
   BootcampLevelGap: () => <BootcampLevelGapSection />,

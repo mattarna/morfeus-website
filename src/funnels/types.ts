@@ -51,6 +51,30 @@ export type FunnelComponentName =
   | "SalesB2B"
   | "SalesFooter"
   | "SalesStickyBar"
+  | "SalesV2Header"
+  | "SalesV2Hero"
+  | "SalesV2Bridge"
+  | "SalesV2ThreeLevels"
+  | "SalesV2Problem"
+  | "SalesV2Mechanism"
+  | "SalesV2Benefits"
+  | "SalesV2PromiseLetter"
+  | "SalesV2Modules"
+  | "SalesV2Proof"
+  | "SalesV2Reviews"
+  | "SalesV2Audience"
+  | "SalesV2Comparison"
+  | "SalesV2Bonus"
+  | "SalesV2Offer"
+  | "SalesV2UpsellBootcamp"
+  | "SalesV2Guarantee"
+  | "SalesV2FAQ"
+  | "SalesV2BootcampBridge"
+  | "SalesV2Urgency"
+  | "SalesV2FinalCTA"
+  | "SalesV2B2B"
+  | "SalesV2Footer"
+  | "SalesV2StickyBar"
   | "BootcampHeader"
   | "BootcampHero"
   | "BootcampLevelGap"
@@ -354,6 +378,117 @@ export interface SalesFooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesStickyBarContent {}
 
+// ─── Sales Page v2 (corso-claude — copy nuovo, in fase di confronto) ────────
+
+export type SalesV2Variant = "live" | "replay" | "email";
+
+export interface SalesV2PricingContent {
+  earlyBirdPrice: number;
+  standardPrice: number;
+  fullPrice: number;
+  currency: "EUR";
+  earlyBirdDeadlineIso: string;
+  standardDeadlineIso: string;
+  checkoutUrlEarlyBird: string;
+  checkoutUrlStandard: string;
+  checkoutUrlFull: string;
+  b2bCallUrl: string;
+}
+
+export interface SalesV2HeroVariantCopy {
+  badge: string;
+  headlinePre: string;
+  headlinePost: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  subheadline: string;
+  ctaLabel: string;
+  microcopy: string;
+}
+
+export interface SalesV2HeroContent {
+  live: SalesV2HeroVariantCopy;
+  replay: SalesV2HeroVariantCopy;
+  email: SalesV2HeroVariantCopy;
+  proofBar: string[];
+  vslYoutubeId?: string;
+  vslThumbnailSrc?: string;
+  vslTitle?: string;
+}
+
+export interface SalesV2UrgencyVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  timerLabel: string;
+  ctaLabel: string;
+}
+
+export interface SalesV2UrgencyContent {
+  live: SalesV2UrgencyVariantCopy;
+  replay: SalesV2UrgencyVariantCopy;
+  email: SalesV2UrgencyVariantCopy;
+}
+
+export interface SalesV2FinalCTAVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  ctaLabel: string;
+  closingPre: string;
+  closingAccent: string;
+  closingEnd: string;
+}
+
+export interface SalesV2FinalCTAContent {
+  live: SalesV2FinalCTAVariantCopy;
+  replay: SalesV2FinalCTAVariantCopy;
+  email: SalesV2FinalCTAVariantCopy;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2HeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2BridgeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ThreeLevelsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ProblemContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2MechanismContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2BenefitsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2PromiseLetterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ModulesContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ProofContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ReviewsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2AudienceContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2ComparisonContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2BonusContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2OfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2UpsellBootcampContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2BootcampBridgeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2GuaranteeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2FAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2B2BContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2FooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2StickyBarContent {}
+
 // ─── Bootcamp AI Champion (sales page) ──────────────────────────────────────
 
 export interface BootcampPricingContent {
@@ -547,6 +682,31 @@ export interface FunnelStepConfig {
     SalesFooter?: SalesFooterContent;
     SalesStickyBar?: SalesStickyBarContent;
     SalesPricing?: SalesPricingContent;
+    SalesV2Header?: SalesV2HeaderContent;
+    SalesV2Hero?: SalesV2HeroContent;
+    SalesV2Bridge?: SalesV2BridgeContent;
+    SalesV2ThreeLevels?: SalesV2ThreeLevelsContent;
+    SalesV2Problem?: SalesV2ProblemContent;
+    SalesV2Mechanism?: SalesV2MechanismContent;
+    SalesV2Benefits?: SalesV2BenefitsContent;
+    SalesV2PromiseLetter?: SalesV2PromiseLetterContent;
+    SalesV2Modules?: SalesV2ModulesContent;
+    SalesV2Proof?: SalesV2ProofContent;
+    SalesV2Reviews?: SalesV2ReviewsContent;
+    SalesV2Audience?: SalesV2AudienceContent;
+    SalesV2Comparison?: SalesV2ComparisonContent;
+    SalesV2Bonus?: SalesV2BonusContent;
+    SalesV2Offer?: SalesV2OfferContent;
+    SalesV2UpsellBootcamp?: SalesV2UpsellBootcampContent;
+    SalesV2Guarantee?: SalesV2GuaranteeContent;
+    SalesV2FAQ?: SalesV2FAQContent;
+    SalesV2BootcampBridge?: SalesV2BootcampBridgeContent;
+    SalesV2Urgency?: SalesV2UrgencyContent;
+    SalesV2FinalCTA?: SalesV2FinalCTAContent;
+    SalesV2B2B?: SalesV2B2BContent;
+    SalesV2Footer?: SalesV2FooterContent;
+    SalesV2StickyBar?: SalesV2StickyBarContent;
+    SalesV2Pricing?: SalesV2PricingContent;
     BootcampHeader?: BootcampHeaderContent;
     BootcampHero?: BootcampHeroContent;
     BootcampLevelGap?: BootcampLevelGapContent;
