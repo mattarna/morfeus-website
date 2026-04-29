@@ -67,7 +67,27 @@ export type FunnelComponentName =
   | "BootcampFAQ"
   | "BootcampFinalCTA"
   | "BootcampFooter"
-  | "BootcampStickyBar";
+  | "BootcampStickyBar"
+  | "BootcampV2Header"
+  | "BootcampV2Hero"
+  | "BootcampV2LevelGap"
+  | "BootcampV2DisarmoEgo"
+  | "BootcampV2WhyAlone"
+  | "BootcampV2Method"
+  | "BootcampV2Transformation"
+  | "BootcampV2Program"
+  | "BootcampV2Founders"
+  | "BootcampV2Results"
+  | "BootcampV2Audience"
+  | "BootcampV2B2B"
+  | "BootcampV2PensaSe"
+  | "BootcampV2LaScelta"
+  | "BootcampV2Offer"
+  | "BootcampV2Guarantee"
+  | "BootcampV2FAQ"
+  | "BootcampV2FinalCTA"
+  | "BootcampV2Footer"
+  | "BootcampV2StickyBar";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -383,6 +403,63 @@ export interface BootcampFooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampStickyBarContent {}
 
+// ─── Bootcamp AI Champion v2 (sales page — copy nuovo, in fase di confronto) ──
+
+export interface BootcampV2PricingContent {
+  /** Prezzo pieno standard in EUR (es. 1500) */
+  currentPrice: number;
+  /** Prezzo early bird 48h post-webinar in EUR (es. 1297) */
+  earlyBirdPrice: number;
+  /** Prezzo di listino barrato in EUR (es. 1500) */
+  listPrice: number;
+  /** Valore totale percepito dello stack in EUR (es. 8900) */
+  stackValue: number;
+  currency: "EUR";
+  /** URL Calendly call di selezione con Mattia. Vuoto = CTA renderizzato ma href="#" no-op */
+  callUrl: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2HeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2HeroContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2LevelGapContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2DisarmoEgoContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2WhyAloneContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2MethodContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2TransformationContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2ProgramContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2FoundersContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2ResultsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2AudienceContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2B2BContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2PensaSeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2LaSceltaContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2OfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2GuaranteeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2FAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2FinalCTAContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2FooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampV2StickyBarContent {}
+
 export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
@@ -488,6 +565,27 @@ export interface FunnelStepConfig {
     BootcampFooter?: BootcampFooterContent;
     BootcampStickyBar?: BootcampStickyBarContent;
     BootcampPricing?: BootcampPricingContent;
+    BootcampV2Header?: BootcampV2HeaderContent;
+    BootcampV2Hero?: BootcampV2HeroContent;
+    BootcampV2LevelGap?: BootcampV2LevelGapContent;
+    BootcampV2DisarmoEgo?: BootcampV2DisarmoEgoContent;
+    BootcampV2WhyAlone?: BootcampV2WhyAloneContent;
+    BootcampV2Method?: BootcampV2MethodContent;
+    BootcampV2Transformation?: BootcampV2TransformationContent;
+    BootcampV2Program?: BootcampV2ProgramContent;
+    BootcampV2Founders?: BootcampV2FoundersContent;
+    BootcampV2Results?: BootcampV2ResultsContent;
+    BootcampV2Audience?: BootcampV2AudienceContent;
+    BootcampV2B2B?: BootcampV2B2BContent;
+    BootcampV2PensaSe?: BootcampV2PensaSeContent;
+    BootcampV2LaScelta?: BootcampV2LaSceltaContent;
+    BootcampV2Offer?: BootcampV2OfferContent;
+    BootcampV2Guarantee?: BootcampV2GuaranteeContent;
+    BootcampV2FAQ?: BootcampV2FAQContent;
+    BootcampV2FinalCTA?: BootcampV2FinalCTAContent;
+    BootcampV2Footer?: BootcampV2FooterContent;
+    BootcampV2StickyBar?: BootcampV2StickyBarContent;
+    BootcampV2Pricing?: BootcampV2PricingContent;
   };
 }
 

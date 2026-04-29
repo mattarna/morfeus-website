@@ -68,7 +68,27 @@ const allowedComponents: FunnelComponentName[] = [
   "BootcampFAQ",
   "BootcampFinalCTA",
   "BootcampFooter",
-  "BootcampStickyBar"
+  "BootcampStickyBar",
+  "BootcampV2Header",
+  "BootcampV2Hero",
+  "BootcampV2LevelGap",
+  "BootcampV2DisarmoEgo",
+  "BootcampV2WhyAlone",
+  "BootcampV2Method",
+  "BootcampV2Transformation",
+  "BootcampV2Program",
+  "BootcampV2Founders",
+  "BootcampV2Results",
+  "BootcampV2Audience",
+  "BootcampV2B2B",
+  "BootcampV2PensaSe",
+  "BootcampV2LaScelta",
+  "BootcampV2Offer",
+  "BootcampV2Guarantee",
+  "BootcampV2FAQ",
+  "BootcampV2FinalCTA",
+  "BootcampV2Footer",
+  "BootcampV2StickyBar"
 ];
 
 function hasUniqueStepIds(steps: FunnelStepConfig[]): boolean {

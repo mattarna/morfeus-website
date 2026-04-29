@@ -3,6 +3,7 @@ import { isReservedSlug } from "@/lib/reserved-slugs";
 import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.json";
 import claudeUnlockedV1Config from "@/funnels/webinar-claude-2026-05/sales-config.json";
 import bootcampAiChampionConfig from "@/funnels/webinar-claude-2026-05/bootcamp-config.json";
+import bootcampAiChampionV2Config from "@/funnels/webinar-claude-2026-05/bootcamp-v2-config.json";
 import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-2026-04/config.json";
 import freebieInstagramCarouselSkillsConfig from "@/funnels/freebie-instagram-carousel-skills-2026-04/config.json";
 
@@ -92,3 +93,15 @@ const bootcampAiChampionItem: FunnelRegistryItem = {
 };
 
 registerFunnel(bootcampAiChampionItem, bootcampAiChampionConfig as FunnelConfig);
+
+const bootcampAiChampionV2Item: FunnelRegistryItem = {
+  slug: "bootcamp-ai-champion-v2",
+  locale: "it",
+  indexable: false,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(bootcampAiChampionV2Item, bootcampAiChampionV2Config as FunnelConfig);
