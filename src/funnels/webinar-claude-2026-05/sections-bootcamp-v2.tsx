@@ -495,7 +495,81 @@ export function BootcampV2HeroSection({ step }: SectionProps) {
 // SECTION 02 — IL SALTO CHE MANCA
 // ═══════════════════════════════════════════════════════════════════════════════
 
+type MomentKey = "carriera" | "freelance" | "imprenditore";
+
+const MOMENTS: Array<{
+  key: MomentKey;
+  label: string;
+  when: string;
+  body: React.ReactNode;
+}> = [
+  {
+    key: "carriera",
+    label: "Carriera",
+    when: "Il lunedì mattina.",
+    body: (
+      <>
+        <p style={{ margin: "0 0 18px" }}>
+          Hai costruito qualcosa nel weekend. Un prompt che funziona davvero, un template che ti taglia tre ore di lavoro. Arrivi in ufficio con quella sensazione, piccola ma reale, di aver fatto qualcosa di intelligente.
+        </p>
+        <p style={{ margin: "0 0 18px", fontWeight: 600, color: "#fff" }}>Nessuno lo vede.</p>
+        <p style={{ margin: 0 }}>
+          Non perché non apprezzino. Ma perché il risultato è lo stesso di prima. Solo consegnato prima. E quindi quelle tre ore, che dovevano essere tue, le hai riempite con altro lavoro, un&apos;altra richiesta, un&apos;altra riunione. Il tuo cervello è ancora il collo di bottiglia. L&apos;AI ti ha reso più veloce. Non ti ha liberato.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: "freelance",
+    label: "Freelance",
+    when: "Il venerdì pomeriggio.",
+    body: (
+      <>
+        <p style={{ margin: "0 0 18px" }}>
+          Un cliente ti manda un messaggio: &laquo;Puoi fare la stessa cosa anche per gli altri cinque progetti?&raquo;
+        </p>
+        <p style={{ margin: "0 0 18px" }}>
+          Sai già come risponderai.
+          <br />
+          Sì, ma dimmi quando. Perché queste cose le fai tu, seduto, una alla volta.
+        </p>
+        <p style={{ margin: "0 0 18px" }}>
+          Con l&apos;AI lavori tre volte più veloce. Ma il sistema sei ancora tu. Non puoi accenderlo e tornare il giorno dopo. Non puoi delegarlo mentre dormi. Non puoi replicarti.
+        </p>
+        <p style={{ margin: "0 0 18px" }}>Ogni ora che produci è un&apos;ora che passi davanti allo schermo.</p>
+        <p style={{ margin: 0 }}>
+          Fai il conto: cinque ore a settimana che potresti far girare senza essere lì. Cinquanta euro l&apos;ora. Cinquantadue settimane.
+          <br />
+          <strong style={{ color: LIME, fontSize: "1.05em" }}>13.000 euro che non guadagni</strong>, non perché non sei bravo, ma perché il tuo sistema richiede che tu ci sia.
+        </p>
+      </>
+    ),
+  },
+  {
+    key: "imprenditore",
+    label: "Imprenditore",
+    when: "La domenica sera.",
+    body: (
+      <>
+        <p style={{ margin: "0 0 18px" }}>
+          Stai guardando la settimana che finisce. Il team usa l&apos;AI, hai pagato le licenze, hai condiviso qualche articolo, hai detto &laquo;esplorate pure.&raquo;
+        </p>
+        <p style={{ margin: "0 0 18px", fontWeight: 600, color: "#fff" }}>Ognuno la usa a modo suo.</p>
+        <p style={{ margin: "0 0 18px" }}>
+          Chi per le email. Chi per le slide. Chi non la usa perché &laquo;tanto poi devo ricontrollare tutto.&raquo; Stai gestendo un&apos;organizzazione dove ogni persona ha un giocattolo diverso e nessuno sa cosa fa il vicino. Non è adozione dell&apos;AI. È automazione individuale senza sistema.
+        </p>
+        <p style={{ margin: 0 }}>
+          E tu sai esattamente cosa manca, ma non hai ancora avuto il tempo di costruirlo.
+        </p>
+      </>
+    ),
+  },
+];
+
 export function BootcampV2LevelGapSection() {
+  const [active, setActive] = useState<MomentKey>("carriera");
+  const current = MOMENTS.find((m) => m.key === active) ?? MOMENTS[0];
+
   return (
     <section
       id="level-gap"
@@ -523,7 +597,7 @@ export function BootcampV2LevelGapSection() {
         >
           Usare l&apos;AI è una cosa.
           <br />
-          <Accent>Costruirsi qualcosa</Accent> che lavora per te è un&apos;altra.
+          <Accent>Costruirsi un team</Accent> che lavora per te è un&apos;altra.
         </h2>
 
         {/* Intro narrative */}
@@ -534,7 +608,7 @@ export function BootcampV2LevelGapSection() {
             lineHeight: 1.7,
             color: "var(--ghost)",
             opacity: 0.92,
-            marginBottom: 56,
+            marginBottom: 40,
           }}
         >
           <p style={{ margin: "0 0 18px" }}>Non stai partendo da zero.</p>
@@ -549,68 +623,81 @@ export function BootcampV2LevelGapSection() {
           </p>
         </div>
 
-        {/* Momento — Carriera */}
-        <Moment
-          tag="MOMENTO — CARRIERA"
-          when="Il lunedì mattina."
+        {/* Tabs selector */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 12,
+            color: "var(--muted)",
+            opacity: 0.7,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            margin: "0 0 14px",
+            fontWeight: 700,
+          }}
         >
-          <p style={{ margin: "0 0 18px" }}>
-            Hai costruito qualcosa nel weekend. Un prompt che funziona davvero, un template che ti taglia tre ore di lavoro. Arrivi in ufficio con quella sensazione &mdash; piccola, ma reale &mdash; di aver fatto qualcosa di intelligente.
-          </p>
-          <p style={{ margin: "0 0 18px", fontWeight: 600, color: "#fff" }}>Nessuno lo vede.</p>
-          <p style={{ margin: 0 }}>
-            Non perché non apprezzino. Ma perché il risultato è lo stesso di prima. Solo consegnato prima. E quindi quelle tre ore &mdash; che dovevano essere tue &mdash; le hai riempite con altro lavoro, un&apos;altra richiesta, un&apos;altra riunione. Il tuo cervello è ancora il collo di bottiglia. L&apos;AI ti ha reso più veloce. Non ti ha liberato.
-          </p>
-        </Moment>
+          Riconosci uno di questi momenti?
+        </p>
+        <div
+          role="tablist"
+          aria-label="Seleziona il tuo momento"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 8,
+            marginBottom: 24,
+          }}
+        >
+          {MOMENTS.map((m) => (
+            <MomentTab
+              key={m.key}
+              isActive={active === m.key}
+              onClick={() => setActive(m.key)}
+              label={m.label}
+            />
+          ))}
+        </div>
 
-        {/* Momento — Freelance */}
-        <Moment
-          tag="MOMENTO — FREELANCE"
-          when="Il venerdì pomeriggio."
+        {/* Active moment content */}
+        <div
+          key={current.key}
+          style={{
+            background: "var(--dusk)",
+            border: `1px solid ${LIME_BORDER_25}`,
+            borderRadius: 14,
+            padding: "28px clamp(20px, 4vw, 36px)",
+            animation: "reveal-in .25s ease both",
+          }}
         >
-          <p style={{ margin: "0 0 18px" }}>
-            Un cliente ti manda un messaggio: &laquo;Puoi fare la stessa cosa anche per gli altri cinque progetti?&raquo;
+          <p
+            style={{
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: "clamp(18px, 2vw, 22px)",
+              color: "#fff",
+              margin: "0 0 20px",
+              letterSpacing: "0.005em",
+            }}
+          >
+            {current.when}
           </p>
-          <p style={{ margin: "0 0 18px" }}>
-            Sai già come risponderai.
-            <br />
-            Sì, ma dimmi quando. Perché queste cose le fai tu, seduto, una alla volta.
-          </p>
-          <p style={{ margin: "0 0 18px" }}>
-            Con l&apos;AI lavori tre volte più veloce. Ma il sistema sei ancora tu. Non puoi accenderlo e tornare il giorno dopo. Non puoi delegarlo mentre dormi. Non puoi replicarti.
-          </p>
-          <p style={{ margin: "0 0 18px" }}>Ogni ora che produci è un&apos;ora che passi davanti allo schermo.</p>
-          <p style={{ margin: 0 }}>
-            Fai il conto: cinque ore a settimana che potresti far girare senza essere lì. Cinquanta euro l&apos;ora. Cinquantadue settimane.
-            <br />
-            <strong style={{ color: LIME, fontSize: "1.05em" }}>
-              13.000 euro che non guadagni
-            </strong>{" "}
-            &mdash; non perché non sei bravo, ma perché il tuo sistema richiede che tu ci sia.
-          </p>
-        </Moment>
-
-        {/* Momento — Imprenditore */}
-        <Moment
-          tag="MOMENTO — IMPRENDITORE"
-          when="La domenica sera."
-        >
-          <p style={{ margin: "0 0 18px" }}>
-            Stai guardando la settimana che finisce. Il team usa l&apos;AI &mdash; hai pagato le licenze, hai condiviso qualche articolo, hai detto &laquo;esplorate pure.&raquo;
-          </p>
-          <p style={{ margin: "0 0 18px", fontWeight: 600, color: "#fff" }}>Ognuno la usa a modo suo.</p>
-          <p style={{ margin: "0 0 18px" }}>
-            Chi per le email. Chi per le slide. Chi non la usa perché &laquo;tanto poi devo ricontrollare tutto.&raquo; Stai gestendo un&apos;organizzazione dove ogni persona ha un giocattolo diverso e nessuno sa cosa fa il vicino. Non è adozione dell&apos;AI. È automazione individuale senza sistema.
-          </p>
-          <p style={{ margin: 0 }}>
-            E tu sai esattamente cosa manca &mdash; ma non hai ancora avuto il tempo di costruirlo.
-          </p>
-        </Moment>
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(15px, 1.4vw, 17px)",
+              lineHeight: 1.7,
+              color: "var(--ghost)",
+              opacity: 0.92,
+            }}
+          >
+            {current.body}
+          </div>
+        </div>
 
         {/* Closing */}
         <div
           style={{
-            marginTop: 56,
+            marginTop: 48,
             paddingTop: 32,
             borderTop: `1px solid ${VIOLET_BORDER}`,
             fontFamily: "var(--font-body)",
@@ -625,7 +712,7 @@ export function BootcampV2LevelGapSection() {
             Il problema è che stai facendo le cose giuste nel modo sbagliato: caso per caso, ripartendo da zero ogni volta, portando ancora tu il peso di ogni singola decisione.
           </p>
           <p style={{ margin: "0 0 18px" }}>
-            C&apos;è una linea &mdash; sottile, quasi invisibile &mdash; che separa chi <Accent>usa</Accent> l&apos;AI da chi ha costruito qualcosa che <Accent>lavora</Accent> per lui mentre lui fa altro.
+            C&apos;è una linea, sottile, quasi invisibile, che separa chi <Accent>usa</Accent> l&apos;AI da chi ha costruito qualcosa che <Accent>lavora</Accent> per lui mentre lui fa altro.
           </p>
           <p style={{ margin: "0 0 18px", color: "#fff", fontWeight: 600 }}>
             Non l&apos;hai ancora attraversata.
@@ -639,61 +726,37 @@ export function BootcampV2LevelGapSection() {
   );
 }
 
-function Moment({
-  tag,
-  when,
-  children,
+function MomentTab({
+  isActive,
+  onClick,
+  label,
 }: {
-  tag: string;
-  when: string;
-  children: React.ReactNode;
+  isActive: boolean;
+  onClick: () => void;
+  label: string;
 }) {
   return (
-    <div
+    <button
+      type="button"
+      role="tab"
+      aria-selected={isActive}
+      onClick={onClick}
       style={{
-        marginBottom: 48,
-        paddingTop: 32,
-        borderTop: `1px solid ${VIOLET_BORDER}`,
+        fontFamily: "var(--font-body)",
+        fontWeight: 700,
+        fontSize: "clamp(13px, 1.3vw, 15px)",
+        padding: "10px 18px",
+        borderRadius: 100,
+        border: `1px solid ${isActive ? LIME : "var(--hairline)"}`,
+        background: isActive ? LIME_SOFT_18 : "transparent",
+        color: isActive ? LIME : "var(--ghost)",
+        cursor: "pointer",
+        transition: "background .2s, border-color .2s, color .2s",
+        letterSpacing: "0.02em",
       }}
     >
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 11,
-          color: LIME,
-          opacity: 0.7,
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          margin: "0 0 12px",
-          fontWeight: 700,
-        }}
-      >
-        {tag}
-      </p>
-      <p
-        style={{
-          fontFamily: "var(--font-italic)",
-          fontStyle: "italic",
-          fontSize: "clamp(18px, 2vw, 22px)",
-          color: "#fff",
-          margin: "0 0 20px",
-          letterSpacing: "0.005em",
-        }}
-      >
-        {when}
-      </p>
-      <div
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "clamp(16px, 1.5vw, 18px)",
-          lineHeight: 1.7,
-          color: "var(--ghost)",
-          opacity: 0.92,
-        }}
-      >
-        {children}
-      </div>
-    </div>
+      {label}
+    </button>
   );
 }
 
@@ -747,7 +810,7 @@ export function BootcampV2DisarmoEgoSection() {
           objection="«Non sono abbastanza tecnico.»"
         >
           <p style={{ margin: "0 0 18px" }}>
-            Il <strong style={{ color: LIME }}>60% delle persone</strong> nelle cohort precedenti non aveva un background tecnico. Avvocati, HR manager, architetti, consulenti, formatori. Il bootcamp non insegna a programmare &mdash; insegna a pensare in modo sistematico. Se sai usare un foglio Excel, hai già il profilo giusto.
+            Il <strong style={{ color: LIME }}>60% delle persone</strong> nelle edizioni precedenti non aveva un background tecnico. Avvocati, HR manager, architetti, consulenti, formatori. Il bootcamp non insegna a programmare, insegna a pensare in modo sistematico. Se sai usare un foglio Excel, hai già il profilo giusto.
           </p>
           <p style={{ margin: 0, opacity: 0.85, fontStyle: "italic", fontSize: "0.95em" }}>
             E per essere onesti: se la competenza richiesta fosse saper programmare, io stesso non sarei qui a insegnare questo. Non è quella la materia.
@@ -764,7 +827,7 @@ export function BootcampV2DisarmoEgoSection() {
             Queste sono le materie prime di un sistema AI.
           </p>
           <p style={{ margin: 0 }}>
-            La sessione 5 del bootcamp non è su un caso generico &mdash; è costruita sul tuo lavoro, nel tuo settore. Porti il tuo caso. Costruisci il tuo sistema. Le edizioni precedenti avevano avvocati, commercialisti, imprenditori del retail, consulenti finanziari, content creator. Ognuno ha costruito qualcosa di completamente diverso. Ognuno ha funzionato.
+            La sessione 5 del bootcamp non è su un caso generico, è costruita sul tuo lavoro, nel tuo settore. Porti il tuo caso. Costruisci il tuo sistema. Le edizioni precedenti avevano avvocati, commercialisti, imprenditori del retail, consulenti finanziari, content creator. Ognuno ha costruito qualcosa di completamente diverso. Ognuno ha funzionato.
           </p>
         </Objection>
 
@@ -772,13 +835,13 @@ export function BootcampV2DisarmoEgoSection() {
           objection="«Ho già fatto un corso AI e non è cambiato niente.»"
         >
           <p style={{ margin: "0 0 18px" }}>
-            Normale. <strong style={{ color: "#fff" }}>Non è colpa tua &mdash; è il formato.</strong>
+            Normale. <strong style={{ color: "#fff" }}>Non è colpa tua, è il formato.</strong>
           </p>
           <p style={{ margin: "0 0 18px" }}>
-            Un corso registrato ti dà informazioni. Il bootcamp ti dà trasformazione. La differenza non è il contenuto &mdash; è che qualcuno ti segue mentre lo costruisci, ti dice &laquo;non così, fai così&raquo;, ti corregge in tempo reale. Senza quello, la maggior parte della formazione finisce in una cartella che non apri più.
+            Un corso registrato ti dà informazioni. Il bootcamp ti dà trasformazione. La differenza non è il contenuto, è che qualcuno ti segue mentre lo costruisci, ti dice &laquo;non così, fai così&raquo;, ti corregge in tempo reale. Senza quello, la maggior parte della formazione finisce in una cartella che non apri più.
           </p>
           <p style={{ margin: 0, opacity: 0.85, fontStyle: "italic", fontSize: "0.95em" }}>
-            (E per essere trasparenti: anche una buona formazione di base, da sola, ti porta a un certo punto. Per costruire il sistema completo &mdash; quello che lavora per te mentre fai altro &mdash; serve il bootcamp.)
+            (E per essere trasparenti: anche una buona formazione di base, da sola, ti porta a un certo punto. Per costruire il sistema completo, quello che lavora per te mentre fai altro, serve il bootcamp.)
           </p>
         </Objection>
 
@@ -907,7 +970,7 @@ export function BootcampV2WhyAloneSection() {
           title="Il labirinto dei tutorial."
           body={
             <>
-              YouTube, Reddit, community online, corsi a 19 euro. Il problema non è che le risorse non ci siano &mdash; è che nessuno ti dice &laquo;stai sbagliando&raquo;. Sbagli, non lo sai, ci aggiungi sopra. Tre mesi dopo hai una pila di prompt che funzionano raramente e non capisci perché.{" "}
+              YouTube, Reddit, community online, corsi a 19 euro. Il problema non è che le risorse non ci siano, è che nessuno ti dice &laquo;stai sbagliando&raquo;. Sbagli, non lo sai, ci aggiungi sopra. Tre mesi dopo hai una pila di prompt che funzionano raramente e non capisci perché.{" "}
               <strong style={{ color: "#fff" }}>Il fai-da-te produce esperienza. Non sistema.</strong>
             </>
           }
@@ -917,7 +980,7 @@ export function BootcampV2WhyAloneSection() {
           title="La demo che non usi mai."
           body={
             <>
-              &laquo;I 10 prompt per il marketing. Come generare email in 2 minuti. I 5 tool del 2025.&raquo; Dopo il workshop torni al tuo lavoro e non sai da dove iniziare. Hai visto cosa fa lo strumento &mdash; non come integrarlo nel tuo.{" "}
+              &laquo;I 10 prompt per il marketing. Come generare email in 2 minuti. I 5 tool del 2025.&raquo; Dopo il workshop torni al tuo lavoro e non sai da dove iniziare. Hai visto cosa fa lo strumento, non come integrarlo nel tuo.{" "}
               <strong style={{ color: "#fff" }}>La formazione generica produce spettatori entusiasti. Non operatori.</strong>
             </>
           }
@@ -927,7 +990,7 @@ export function BootcampV2WhyAloneSection() {
           title="Il bootcamp da 200 persone."
           body={
             <>
-              Nessuna selezione. Nessun cap. Scrivi la domanda nella chat e speri che venga letta. Il formatore ha studiato la documentazione &mdash; non usa lo strumento nel lavoro reale. Zero feedback personalizzato, zero progetto tuo, zero accountability.{" "}
+              Nessuna selezione. Nessun cap. Scrivi la domanda nella chat e speri che venga letta. Il formatore ha studiato la documentazione, non usa lo strumento nel lavoro reale. Zero feedback personalizzato, zero progetto tuo, zero accountability.{" "}
               <strong style={{ color: "#fff" }}>Paghi, guardi, dimentichi.</strong>
             </>
           }
@@ -938,7 +1001,7 @@ export function BootcampV2WhyAloneSection() {
           body={
             <>
               Viene, fa, se ne va. 2.000&minus;5.000 euro per una panoramica. Zero competenza trasferita. Zero autonomia costruita. Il mese dopo hai un problema nuovo e devi richiamare.{" "}
-              <strong style={{ color: "#fff" }}>Non ha creato la tua competenza &mdash; ha creato la sua dipendenza.</strong>
+              <strong style={{ color: "#fff" }}>Non ha creato la tua competenza, ha creato la sua dipendenza.</strong>
             </>
           }
         />
@@ -1054,7 +1117,7 @@ export function BootcampV2MethodSection() {
           >
             Il metodo che insegniamo nel bootcamp si chiama <strong style={{ color: LIME }}>M-V-A</strong>.
             <br />
-            Non è teoria. È il processo che usiamo per costruire sistemi AI nel nostro business &mdash; e che insegniamo perché è l&apos;unico che produce qualcosa che funziona ancora dopo sei mesi.
+            Non è teoria. È il processo che usiamo per costruire sistemi AI nel nostro business, e che insegniamo perché è l&apos;unico che produce qualcosa che funziona ancora dopo sei mesi.
           </p>
         </div>
 
@@ -1130,7 +1193,7 @@ export function BootcampV2MethodSection() {
               lineHeight: 1.6,
             }}
           >
-            Il framework completo &mdash; come si costruisce ogni fase, come si testa, come si scala &mdash; è il cuore delle 7 sessioni. <span style={{ color: LIME }}>Nella call con Mattia vedi dove si applica al tuo caso specifico.</span>
+            Il framework completo, come si costruisce ogni fase, come si testa, come si scala, è il cuore delle 7 sessioni. <span style={{ color: LIME }}>Nella call con Mattia vedi dove si applica al tuo caso specifico.</span>
           </p>
         </div>
       </div>
@@ -1340,19 +1403,19 @@ export function BootcampV2TransformationSection() {
               Il lunedì mattina apri il laptop. Il sistema ha già preparato il briefing settimanale, organizzato le priorità, risposto alle email ricorrenti nel tuo tono. Tu prendi il caffè e inizi dal lavoro che conta.
             </p>
             <p style={{ margin: "0 0 18px" }}>
-              Hai un progetto reale completato &mdash; non un esercizio. Un deliverable che usi davvero.
+              Hai un progetto reale completato, non un esercizio. Un deliverable che usi davvero.
             </p>
             <p style={{ margin: "0 0 18px" }}>
-              I tuoi clienti si chiedono come fai a consegnare così tanto in così poco tempo. Non te lo chiedono in modo generico &mdash; te lo chiedono con una punta di invidia.
+              I tuoi clienti si chiedono come fai a consegnare così tanto in così poco tempo. Non te lo chiedono in modo generico, te lo chiedono con una punta di invidia.
             </p>
             <p style={{ margin: "0 0 18px" }}>
-              Il tuo capo ti propone il ruolo di referente AI interno. Non l&apos;avevi chiesto &mdash; te lo chiedono loro.
+              Il tuo capo ti propone il ruolo di referente AI interno. Non l&apos;avevi chiesto, te lo chiedono loro.
             </p>
             <p style={{ margin: "0 0 18px" }}>
               I competitor ti chiedono se hai assunto persone nuove. No: hai costruito un sistema.
             </p>
             <p style={{ margin: 0 }}>
-              Non dipendi più dal tool specifico. Se domani esce qualcosa di meglio, ci passi in un pomeriggio &mdash; perché hai un <Accent>metodo</Accent>, non una dipendenza.
+              Non dipendi più dal tool specifico. Se domani esce qualcosa di meglio, ci passi in un pomeriggio, perché hai un <Accent>metodo</Accent>, non una dipendenza.
             </p>
           </div>
         </div>
@@ -1498,7 +1561,7 @@ export function BootcampV2ProgramSection() {
             margin: "0 0 56px",
           }}
         >
-          Il bootcamp non è 7 lezioni su come usare Claude. È 7 trasformazioni progressive &mdash; ognuna con un output concreto che porti fuori con te.
+          Il bootcamp non è 7 lezioni su come usare Claude. È 7 trasformazioni progressive, ognuna con un output concreto che porti fuori con te.
         </p>
 
         {/* 7 sessioni */}
@@ -1628,7 +1691,7 @@ export function BootcampV2ProgramSection() {
           >
             <li style={{ padding: "8px 0", display: "flex", gap: 12 }}>
               <span aria-hidden style={{ color: LIME, flexShrink: 0 }}>·</span>
-              <span><strong style={{ color: "#fff" }}>Bisettimanale</strong> &mdash; 1 settimana impari, 1 settimana applichi nel tuo lavoro reale.</span>
+              <span><strong style={{ color: "#fff" }}>Bisettimanale</strong>,1 settimana impari, 1 settimana applichi nel tuo lavoro reale.</span>
             </li>
             <li style={{ padding: "8px 0", display: "flex", gap: 12 }}>
               <span aria-hidden style={{ color: LIME, flexShrink: 0 }}>·</span>
@@ -1711,7 +1774,7 @@ export function BootcampV2FoundersSection() {
             margin: "0 0 48px",
           }}
         >
-          <strong style={{ color: "#fff" }}>Matteo e Alex</strong> non sono esperti di AI. Sono imprenditori che l&apos;hanno usata per trasformare il loro business &mdash; e che ora insegnano quello che fanno ogni giorno, non quello che hanno letto su un manuale.
+          <strong style={{ color: "#fff" }}>Matteo e Alex</strong> non sono esperti di AI. Sono imprenditori che l&apos;hanno usata per trasformare il loro business, e che ora insegnano quello che fanno ogni giorno, non quello che hanno letto su un manuale.
         </p>
 
         {/* Foto founder placeholder */}
@@ -1770,7 +1833,7 @@ export function BootcampV2FoundersSection() {
             Quando Matteo ha iniziato con l&apos;AI, ha fatto esattamente quello che probabilmente stai facendo tu.
           </p>
           <p style={{ margin: "0 0 18px" }}>
-            Ha provato decine di tool. Ha seguito tutorial. Ha costruito cose che non usava il giorno dopo. Ha perso mesi a ottimizzare workflow che non scalavano. Per un anno intero ha creduto di star costruendo qualcosa &mdash; e invece girava in cerchio senza saperlo.
+            Ha provato decine di tool. Ha seguito tutorial. Ha costruito cose che non usava il giorno dopo. Ha perso mesi a ottimizzare workflow che non scalavano. Per un anno intero ha creduto di star costruendo qualcosa, e invece girava in cerchio senza saperlo.
           </p>
           <p style={{ margin: 0, color: "#fff", fontWeight: 600 }}>
             Il metodo M-V-A non è nato da un whiteboard. È nato da quegli errori.
@@ -1811,7 +1874,7 @@ export function BootcampV2FoundersSection() {
               lineHeight: 1.6,
             }}
           >
-            Aggiungere qui un momento specifico e reale dal percorso personale con l&apos;AI &mdash; più concreto e personale, più efficace. Es. &laquo;C&apos;è stata una settimana di ottobre 2022 in cui ho buttato via 40 ore di lavoro perché avevo costruito un sistema su un tool che non esisteva più.&raquo; Il dettaglio specifico fa tutta la differenza.
+            Aggiungere qui un momento specifico e reale dal percorso personale con l&apos;AI, più concreto e personale, più efficace. Es. &laquo;C&apos;è stata una settimana di ottobre 2022 in cui ho buttato via 40 ore di lavoro perché avevo costruito un sistema su un tool che non esisteva più.&raquo; Il dettaglio specifico fa tutta la differenza.
           </p>
         </div>
 
@@ -1827,7 +1890,7 @@ export function BootcampV2FoundersSection() {
             margin: "0 0 56px",
           }}
         >
-          (E per essere completamente trasparenti: ci guadagniamo da questo. Ovviamente. Ma il motivo per cui insegniamo in prima persona &mdash; senza delegare a formatori esterni &mdash; è che nessuno insegna questo come lo sappiamo insegnare noi. Perché viviamo quello che insegniamo, ogni giorno.)
+          (E per essere completamente trasparenti: ci guadagniamo da questo. Ovviamente. Ma il motivo per cui insegniamo in prima persona, senza delegare a formatori esterni, è che nessuno insegna questo come lo sappiamo insegnare noi. Perché viviamo quello che insegniamo, ogni giorno.)
         </p>
 
         {/* Perché i founder insegnano direttamente */}
@@ -1858,7 +1921,7 @@ export function BootcampV2FoundersSection() {
             Non è marketing. È struttura.
           </p>
           <p style={{ margin: "0 0 18px" }}>
-            Poche cohort all&apos;anno. 25 persone per cohort. Ogni sessione è live &mdash; non una slide deck pre-registrata. Gli esempi non sono &laquo;casi studio generici&raquo; &mdash; sono i progetti reali su cui stiamo lavorando mentre vi insegniamo.
+            Poche edizioni all&apos;anno. 25 persone per classe. Ogni sessione è live, non una slide deck pre-registrata. Gli esempi non sono &laquo;casi studio generici&raquo;, sono i progetti reali su cui stiamo lavorando mentre vi insegniamo.
           </p>
           <p style={{ margin: 0 }}>
             Se fossimo 200 persone, non funzionerebbe. A <strong style={{ color: LIME }}>25</strong>, funziona.
@@ -2097,7 +2160,7 @@ export function BootcampV2ResultsSection() {
           <span aria-hidden style={{ opacity: 0.4 }}>·</span>
           <span>
             <strong style={{ color: LIME, fontFamily: "var(--font-display)", fontSize: 22, marginRight: 6 }}>40+</strong>
-            partecipanti nelle cohort precedenti
+            partecipanti nelle edizioni precedenti
           </span>
         </div>
       </div>
@@ -2335,7 +2398,7 @@ export function BootcampV2AudienceSection({ step }: SectionProps) {
                 lineHeight: 1.5,
               }}
             >
-              (Non è un giudizio &mdash; è rispetto per il tuo tempo e il nostro. Il bootcamp funziona solo se ci sei davvero.)
+              (Non è un giudizio, è rispetto per il tuo tempo e il nostro. Il bootcamp funziona solo se ci sei davvero.)
             </p>
           </div>
         </div>
@@ -2353,7 +2416,7 @@ export function BootcampV2AudienceSection({ step }: SectionProps) {
             opacity: 0.95,
           }}
         >
-          <strong style={{ color: "#fff" }}>Il profilo comune:</strong> sai già che l&apos;AI può fare di più. Vuoi costruire qualcosa, non solo usare uno strumento. Hai 2 ore ogni 2 settimane da investire &mdash; integrate nel lavoro reale.
+          <strong style={{ color: "#fff" }}>Il profilo comune:</strong> sai già che l&apos;AI può fare di più. Vuoi costruire qualcosa, non solo usare uno strumento. Hai 2 ore ogni 2 settimane da investire, integrate nel lavoro reale.
         </p>
 
         {/* Non sei sicuro? */}
@@ -2387,7 +2450,7 @@ export function BootcampV2AudienceSection({ step }: SectionProps) {
               margin: "0 auto 32px",
             }}
           >
-            La call con Mattia serve esattamente a questo. Non devi sapere se sei pronto &mdash; devi solo essere onesto su dove sei. Il resto lo valuta lui.
+            La call con Mattia serve esattamente a questo. Non devi sapere se sei pronto, devi solo essere onesto su dove sei. Il resto lo valuta lui.
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
@@ -2463,7 +2526,7 @@ export function BootcampV2B2BSection({ step }: SectionProps) {
             Il bootcamp la trasforma in questo. In 3 mesi.
           </p>
           <p style={{ margin: 0 }}>
-            Torna con un sistema operativo AI costruito sul vostro workflow, la capacità di formare gradualmente i colleghi, e la competenza per valutare ogni proposta AI che vi arriva &mdash; e dire no a quelle inutili.
+            Torna con un sistema operativo AI costruito sul vostro workflow, la capacità di formare gradualmente i colleghi, e la competenza per valutare ogni proposta AI che vi arriva, e dire no a quelle inutili.
           </p>
         </div>
 
@@ -2623,10 +2686,10 @@ export function BootcampV2PensaSeSection() {
             Pensa se la prossima valutazione dice: <Accent>indispensabile.</Accent>
           </p>
           <p style={{ margin: "0 0 14px" }}>
-            Pensa se il tuo capo ti propone il ruolo di referente AI interno. Non l&apos;avevi chiesto &mdash; te lo chiedono loro.
+            Pensa se il tuo capo ti propone il ruolo di referente AI interno. Non l&apos;avevi chiesto, te lo chiedono loro.
           </p>
           <p style={{ margin: 0 }}>
-            Pensa se sei la persona a cui tutti chiedono &laquo;come fai?&raquo; Non perché lo spieghi &mdash; perché i risultati si vedono.
+            Pensa se sei la persona a cui tutti chiedono &laquo;come fai?&raquo; Non perché lo spieghi, perché i risultati si vedono.
           </p>
         </PensaSeCluster>
 
@@ -2636,7 +2699,7 @@ export function BootcampV2PensaSeSection() {
             Pensa se quel cliente che ti ha scritto giovedì lo prendi. Perché adesso hai le ore.
           </p>
           <p style={{ margin: "0 0 14px" }}>
-            Pensa se gestisci otto clienti invece di cinque &mdash; senza lavorare un&apos;ora in più.
+            Pensa se gestisci otto clienti invece di cinque, senza lavorare un&apos;ora in più.
           </p>
           <p style={{ margin: 0 }}>
             Pensa se il tuo sistema porta tre richieste di preventivo mentre dormi.
@@ -2652,7 +2715,7 @@ export function BootcampV2PensaSeSection() {
             Pensa se il tuo team di dieci produce come uno da quaranta.
           </p>
           <p style={{ margin: 0 }}>
-            Pensa se il prossimo trimestre fatturi il doppio &mdash; e l&apos;unica cosa che è cambiata è il sistema.
+            Pensa se il prossimo trimestre fatturi il doppio, e l&apos;unica cosa che è cambiata è il sistema.
           </p>
         </PensaSeCluster>
 
@@ -2785,7 +2848,7 @@ export function BootcampV2LaSceltaSection() {
                 Funziona, certo. L&apos;AI la usi, hai imparato come si usa, ottieni risultati decenti.
               </p>
               <p style={{ margin: "0 0 16px" }}>
-                Ma il gap tra chi usa l&apos;AI e chi ha un sistema si allarga ogni mese. Tra 12 mesi, chi ha costruito un sistema sarà stato promosso, avrà preso più clienti, avrà scalato senza assumere nessuno. Chi non ha un sistema sarà ancora lì &mdash; più veloce, forse, ma ancora lui il collo di bottiglia di tutto.
+                Ma il gap tra chi usa l&apos;AI e chi ha un sistema si allarga ogni mese. Tra 12 mesi, chi ha costruito un sistema sarà stato promosso, avrà preso più clienti, avrà scalato senza assumere nessuno. Chi non ha un sistema sarà ancora lì, più veloce, forse, ma ancora lui il collo di bottiglia di tutto.
               </p>
               <p
                 style={{
@@ -2850,7 +2913,7 @@ export function BootcampV2LaSceltaSection() {
                 3 mesi. 7 sessioni. <strong style={{ color: LIME }}>25 persone selezionate</strong>. I founder con te.
               </p>
               <p style={{ margin: "0 0 16px" }}>
-                Alla fine hai un sistema operativo AI costruito sul tuo lavoro. Non una competenza astratta &mdash; qualcosa che usi il lunedì mattina dopo.
+                Alla fine hai un sistema operativo AI costruito sul tuo lavoro. Non una competenza astratta, qualcosa che usi il lunedì mattina dopo.
               </p>
               <p
                 style={{
@@ -3234,7 +3297,7 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
                 margin: 0,
               }}
             >
-              Il range di mercato per bootcamp equivalenti è 3.000-5.000 EUR. Teniamo il prezzo accessibile perché la missione è portare la competenza AI ai professionisti italiani &mdash; non solo a chi ha già un budget grande.
+              Il range di mercato per bootcamp equivalenti è 3.000-5.000 EUR. Teniamo il prezzo accessibile perché la missione è portare la competenza AI ai professionisti italiani, non solo a chi ha già un budget grande.
             </p>
           </div>
           <div
@@ -3288,10 +3351,10 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
           }}
         >
           <p style={{ margin: 0 }}>
-            Add-on opzionale &mdash; Consulenza 1-on-1 con Mattia post-bootcamp: <strong style={{ color: LIME, fontStyle: "normal" }}>300 EUR</strong>.
+            Add-on opzionale, Consulenza 1-on-1 con Mattia post-bootcamp: <strong style={{ color: LIME, fontStyle: "normal" }}>300 EUR</strong>.
           </p>
           <p style={{ margin: 0 }}>
-            Early bird (solo 48h post-webinar): <strong style={{ color: LIME, fontStyle: "normal" }}>{pricing.earlyBirdPrice.toLocaleString("it-IT")} EUR</strong> &mdash; risparmio di {(pricing.currentPrice - pricing.earlyBirdPrice).toLocaleString("it-IT")} EUR.
+            Early bird (solo 48h post-webinar): <strong style={{ color: LIME, fontStyle: "normal" }}>{pricing.earlyBirdPrice.toLocaleString("it-IT")} EUR</strong>, risparmio di {(pricing.currentPrice - pricing.earlyBirdPrice).toLocaleString("it-IT")} EUR.
           </p>
         </div>
 
@@ -3309,7 +3372,7 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
               opacity: 0.75,
             }}
           >
-            25 posti · 1 sola classe · La prossima cohort non ha data certa
+            25 posti · 1 sola classe · La prossima edizione non ha data certa
           </p>
         </div>
       </div>
@@ -3402,10 +3465,10 @@ export function BootcampV2GuaranteeSection() {
             La call di selezione non è una formalità. È la garanzia principale.
           </p>
           <p style={{ margin: "0 0 18px" }}>
-            Mattia valuta tre cose: <strong style={{ color: LIME }}>motivazione</strong>, <strong style={{ color: LIME }}>caso d&apos;uso reale</strong>, <strong style={{ color: LIME }}>disponibilità di tempo</strong>. Se uno dei tre manca, ti indirizza altrove. Non per farti un torto &mdash; per non farti sprecare né il tuo tempo né i tuoi soldi.
+            Mattia valuta tre cose: <strong style={{ color: LIME }}>motivazione</strong>, <strong style={{ color: LIME }}>caso d&apos;uso reale</strong>, <strong style={{ color: LIME }}>disponibilità di tempo</strong>. Se uno dei tre manca, ti indirizza altrove. Non per farti un torto, per non farti sprecare né il tuo tempo né i tuoi soldi.
           </p>
           <p style={{ margin: 0 }}>
-            In ogni cohort precedente abbiamo rifiutato persone che volevano pagare. Perché un partecipante non adatto non è un guadagno &mdash; è un errore che paga tutto il gruppo.
+            Nelle edizioni precedenti abbiamo rifiutato persone che volevano pagare. Perché un partecipante non adatto non è un guadagno, è un errore che paga tutto il gruppo.
           </p>
         </div>
 
@@ -3446,7 +3509,7 @@ export function BootcampV2GuaranteeSection() {
               margin: "0 0 12px",
             }}
           >
-            <strong style={{ color: "#fff" }}>Garanzia di trasferimento</strong> &mdash; ti spostiamo alla prossima cohort, senza costi aggiuntivi.
+            <strong style={{ color: "#fff" }}>Garanzia di trasferimento</strong>, ti spostiamo alla prossima edizione, senza costi aggiuntivi.
           </p>
           <p
             style={{
@@ -3767,7 +3830,7 @@ export function BootcampV2FinalCTASection({ step }: SectionProps) {
               maxWidth: 480,
             }}
           >
-            La prossima cohort inizia a giugno. I 25 posti si stanno riempiendo.
+            La prossima edizione inizia a giugno. I 25 posti si stanno riempiendo.
           </p>
         </div>
 
