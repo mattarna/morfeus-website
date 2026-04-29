@@ -318,22 +318,42 @@ export function BootcampV2HeroSection({ step }: SectionProps) {
         }}
       />
 
-      {/* Pre-headline (eyebrow) */}
-      <p
-        style={{
-          fontFamily: "var(--font-italic)",
-          fontStyle: "italic",
-          fontSize: "clamp(15px, 1.5vw, 18px)",
-          color: LIME,
-          opacity: 0.9,
-          margin: "0 auto 22px",
-          letterSpacing: "0.01em",
-        }}
-      >
-        Sai usare l&apos;AI. Ma sai costruire un sistema?
-      </p>
+      {/* Badge pulsante */}
+      <div style={{ display: "inline-flex", marginBottom: 28 }}>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "8px 16px",
+            borderRadius: 100,
+            background: LIME_SOFT_10,
+            border: `1px solid ${LIME_BORDER_25}`,
+            color: LIME,
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          <span
+            aria-hidden
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: LIME,
+              boxShadow: `0 0 8px ${LIME_GLOW_50}`,
+              animation: "badge-pulse 2s infinite",
+              flexShrink: 0,
+            }}
+          />
+          3a Edizione · Solo 25 posti · Accesso via call di selezione
+        </span>
+      </div>
 
-      {/* Headline — 3 righe, "delegargli" in accent */}
+      {/* Headline — "dipendenti AI" in accent */}
       <h1
         style={{
           fontFamily: "var(--font-display)",
@@ -347,11 +367,9 @@ export function BootcampV2HeroSection({ step }: SectionProps) {
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Costruisci i tuoi dipendenti AI.
+        Costruisci i tuoi <Accent>dipendenti AI.</Accent>
         <br />
-        Smetti di usare Claude.
-        <br />
-        Inizia a <Accent>delegargli</Accent> lavoro.
+        Smetti di usare Claude. Inizia a delegargli lavoro.
       </h1>
 
       {/* Subheadline */}
@@ -368,7 +386,7 @@ export function BootcampV2HeroSection({ step }: SectionProps) {
           textWrap: "pretty" as React.CSSProperties["textWrap"],
         }}
       >
-        Per professionisti e team che hanno superato la fase &laquo;provo ChatGPT&raquo; e vogliono un sistema AI che lavora al loro standard, senza ricominciare da zero ogni volta.
+        Per quelle persone che hanno superato la fase &laquo;parlo con ChatGPT&raquo; e vogliono un sistema AI che lavora al loro standard, senza ricominciare da zero ogni volta.
       </p>
 
       {/* Proof pill — formato inline */}
