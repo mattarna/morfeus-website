@@ -349,7 +349,7 @@ export function BootcampV2HeroSection({ step }: SectionProps) {
               flexShrink: 0,
             }}
           />
-          3a Edizione · Solo 25 posti · Accesso via call di selezione
+          Bootcamp AI Champion · 3a Edizione · Solo 25 posti
         </span>
       </div>
 
