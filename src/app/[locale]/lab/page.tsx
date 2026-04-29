@@ -148,7 +148,7 @@ export default function LabPage() {
       <ContactSection
         scrollToContact={scrollToContact}
         namespace="Lab.contact"
-        bookingUrl="https://cal.com/morfeus/lab-assessment"
+        bookingUrl="https://marf.alexcarofiglio.com/book/morfeushub"
       />
 
       {/* 12 - FAQ (Grid) */}

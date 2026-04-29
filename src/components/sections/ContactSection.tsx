@@ -11,7 +11,7 @@ interface ContactSectionProps {
   bookingUrl?: string;
 }
 
-export function ContactSection({ scrollToContact, namespace = "Offerta.contact", bookingUrl = "https://cal.com/morfeus/operating-system-diagnosis" }: ContactSectionProps) {
+export function ContactSection({ scrollToContact, namespace = "Offerta.contact", bookingUrl = "https://marf.alexcarofiglio.com/book/morfeushub" }: ContactSectionProps) {
   const t = useTranslations(namespace);
   void scrollToContact;
 

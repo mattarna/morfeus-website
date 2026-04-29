@@ -110,7 +110,7 @@ export function CTA() {
         <div className="flex flex-col sm:flex-row items-center gap-6 mb-10">
           {/* Primary CTA */}
           <a 
-            href="https://calendar.app.google/25SgJzTo2SCJk2dF7" 
+            href="https://marf.alexcarofiglio.com/book/morfeushub" 
             target="_blank" 
             rel="noopener noreferrer"
             onClick={() => trackCta(t("primary"), "cta_section", "external_link")}

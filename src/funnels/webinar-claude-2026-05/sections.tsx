@@ -1983,7 +1983,7 @@ export function WebinarFooterSection() {
 
 const COMMUNITY_URL =
   "https://morfeus-ai-playground.circle.so/join?invitation_token=3e3d851f1b5c16a3dcdd249f6ab67f37af107f74-57169ac8-4206-407a-914d-a1ef537dc2f7";
-const CALL_URL = "https://calendar.app.google/KPEsAKzdXdX6C3bX8";
+const CALL_URL = "https://marf.alexcarofiglio.com/book/morfeushub";
 const GCAL_URL =
   "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Webinar%3A+come+usare+Claude+come+un+Pro+%E2%80%94+Morfeus+%7C+Matteo+Arnaboldi&dates=20260505T160000Z%2F20260505T171500Z&details=Webinar+gratuito%3A+quello+che+io+e+il+nostro+team+abbiamo+imparato+usando+Claude+per+pi%C3%B9+di+300+ore.%0A%0ALe+funzionalit%C3%A0+nascoste%2C+gli+errori+da+evitare%2C+i+workflow+che+uso+ogni+giorno.+Tutto+in+un%27ora.%0A%0A%E2%96%B6+Partecipa+qui%3A+https%3A%2F%2Fyoutube.com%2Flive%2FPa2-LKvlJ3g%3Ffeature%3Dshare%0A%0ACon+Matteo+Arnaboldi+%E2%80%94+CEO+Morfeus+Hub%0Amorfeushub.com&location=YouTube+Live+%E2%80%94+https%3A%2F%2Fyoutube.com%2Flive%2FPa2-LKvlJ3g%3Ffeature%3Dshare&ctz=Europe%2FRome";
 
@@ -7809,7 +7809,7 @@ export function SalesB2BSection() {
               Se vuoi portare Claude nel tuo team con un percorso personalizzato sul vostro contesto, processi e settore — parliamone in 30 minuti.
             </p>
             <div>
-              <OutlineButton href="https://calendar.app.google/KPEsAKzdXdX6C3bX8" onClick={onClick}>
+              <OutlineButton href="https://marf.alexcarofiglio.com/book/morfeushub" onClick={onClick}>
                 Prenota una chiamata commerciale <span style={{ fontSize: 16 }}>→</span>
               </OutlineButton>
             </div>

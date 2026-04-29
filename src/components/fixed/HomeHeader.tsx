@@ -132,7 +132,7 @@ export function HomeHeader() {
           {/* Right: CTA + Mobile Menu Toggle */}
           <div className="flex items-center gap-3 md:gap-4 pointer-events-auto">
             <a 
-              href="https://calendar.app.google/25SgJzTo2SCJk2dF7"
+              href="https://marf.alexcarofiglio.com/book/morfeushub"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackCta("Book a call", "navbar", "external_link")}
