@@ -950,7 +950,7 @@ export function BootcampV2WhyAloneSection() {
         >
           Sono i quattro modi
           <br />
-          in cui <Accent>l&apos;AI si impara male</Accent>.
+          per imparare l&apos;AI <Accent>che credi siano giusti</Accent>.
         </h2>
 
         <p
