@@ -4,6 +4,7 @@ import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.
 import claudeUnlockedV1Config from "@/funnels/webinar-claude-2026-05/sales-config.json";
 import bootcampAiChampionConfig from "@/funnels/webinar-claude-2026-05/bootcamp-config.json";
 import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-2026-04/config.json";
+import freebieInstagramCarouselSkillsConfig from "@/funnels/freebie-instagram-carousel-skills-2026-04/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
 
@@ -55,6 +56,18 @@ const freebieCoworkSetupSkillItem: FunnelRegistryItem = {
 };
 
 registerFunnel(freebieCoworkSetupSkillItem, freebieCoworkSetupSkillConfig as FunnelConfig);
+
+const freebieInstagramCarouselSkillsItem: FunnelRegistryItem = {
+  slug: "instagram-carousel-skills",
+  locale: "it",
+  indexable: false,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(freebieInstagramCarouselSkillsItem, freebieInstagramCarouselSkillsConfig as FunnelConfig);
 
 const claudeUnlockedV1Item: FunnelRegistryItem = {
   slug: "claude-unlocked-v1",

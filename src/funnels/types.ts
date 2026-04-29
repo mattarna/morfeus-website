@@ -207,6 +207,7 @@ export interface FreebieHeroContent {
   successRedirect: string;
   rolesOptions: string[];
   rolesPlaceholder: string;
+  optinEndpoint?: string;
 }
 
 export interface FreebieWebinarTeaserContent {
@@ -394,8 +395,8 @@ export interface FreebieThankYouContent {
   calendarIcsFileName: string;
   calendarIcsContent: string;
   calendarIcsLabel: string;
-  videoTitle: string;
-  videoEmbedUrl: string;
+  videoTitle?: string;
+  videoEmbedUrl?: string;
   downloadTitle: string;
   downloadBody: string;
   downloadHref: string;

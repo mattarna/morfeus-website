@@ -341,7 +341,8 @@ export function FreebieHeroSection({ step }: SectionProps) {
       const utms: Record<string, string> = {};
       utmKeys.forEach((k) => { if (sp.has(k)) utms[k] = sp.get(k)!; });
 
-      const res = await fetch("/api/funnels/freebie-cowork-setup-skill/optin", {
+      const endpoint = content.optinEndpoint ?? "/api/funnels/freebie-cowork-setup-skill/optin";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -785,48 +786,50 @@ export function FreebieThankYouSection({ step }: SectionProps) {
         </div>
       </div>
 
-      {/* Video tutorial */}
-      <div>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(24px, 3vw, 32px)",
-            lineHeight: 1.2,
-            color: "var(--white)",
-            margin: "0 0 16px 0",
-            fontWeight: 600,
-          }}
-        >
-          {content.videoTitle}
-        </h2>
-        <div
-          style={{
-            position: "relative",
-            paddingBottom: "56.25%",
-            height: 0,
-            overflow: "hidden",
-            borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.08)",
-            background: "rgba(0,0,0,0.4)",
-            boxShadow: "0 18px 60px rgba(0,0,0,0.45)",
-          }}
-        >
-          <iframe
-            src={content.videoEmbedUrl}
-            title={content.videoTitle}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
+      {/* Video tutorial — renderizzato solo se videoEmbedUrl e' presente */}
+      {content.videoEmbedUrl && (
+        <div>
+          <h2
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              border: 0,
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(24px, 3vw, 32px)",
+              lineHeight: 1.2,
+              color: "var(--white)",
+              margin: "0 0 16px 0",
+              fontWeight: 600,
             }}
-          />
+          >
+            {content.videoTitle}
+          </h2>
+          <div
+            style={{
+              position: "relative",
+              paddingBottom: "56.25%",
+              height: 0,
+              overflow: "hidden",
+              borderRadius: 16,
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "rgba(0,0,0,0.4)",
+              boxShadow: "0 18px 60px rgba(0,0,0,0.45)",
+            }}
+          >
+            <iframe
+              src={content.videoEmbedUrl}
+              title={content.videoTitle}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                border: 0,
+              }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Download */}
       <div
