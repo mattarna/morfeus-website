@@ -649,11 +649,16 @@ export function FreebieWebinarTeaserSection({ step }: SectionProps) {
 export function FreebieThankYouSection({ step }: SectionProps) {
   const content = step.content.FreebieThankYou as FreebieThankYouContent;
   const [name, setName] = useState<string>("");
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   useEffect(() => {
     const stored = typeof window !== "undefined" ? sessionStorage.getItem("freebie_optin_name") : null;
     setName(stored ?? "");
   }, []);
+
+  useEffect(() => {
+    setIsVideoOpen(false);
+  }, [content.videoEmbedUrl]);
 
   function downloadIcs() {
     const blob = new Blob([content.calendarIcsContent], { type: "text/calendar;charset=utf-8" });
@@ -801,33 +806,95 @@ export function FreebieThankYouSection({ step }: SectionProps) {
           >
             {content.videoTitle}
           </h2>
-          <div
-            style={{
-              position: "relative",
-              paddingBottom: "56.25%",
-              height: 0,
-              overflow: "hidden",
-              borderRadius: 16,
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(0,0,0,0.4)",
-              boxShadow: "0 18px 60px rgba(0,0,0,0.45)",
-            }}
-          >
-            <iframe
-              src={content.videoEmbedUrl}
-              title={content.videoTitle}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
+          {isVideoOpen ? (
+            <div
               style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                border: 0,
+                position: "relative",
+                paddingBottom: "56.25%",
+                height: 0,
+                overflow: "hidden",
+                borderRadius: 16,
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(0,0,0,0.4)",
+                boxShadow: "0 18px 60px rgba(0,0,0,0.45)",
               }}
-            />
-          </div>
+            >
+              <iframe
+                src={content.videoEmbedUrl}
+                title={content.videoTitle}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(true)}
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16 / 9",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 16,
+                overflow: "hidden",
+                padding: 0,
+                cursor: "pointer",
+                background: "rgba(0,0,0,0.4)",
+                boxShadow: "0 18px 60px rgba(0,0,0,0.45)",
+              }}
+            >
+              {content.videoThumbnailSrc ? (
+                <Image
+                  src={content.videoThumbnailSrc}
+                  alt={content.videoTitle || "Video thumbnail"}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(135deg, rgba(235,122,46,0.4), rgba(0,0,0,0.65))",
+                  }}
+                />
+              )}
+              <span
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.5), transparent 45%)",
+                }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 74,
+                  height: 74,
+                  borderRadius: "50%",
+                  display: "grid",
+                  placeItems: "center",
+                  background: "rgba(235,122,46,0.95)",
+                  color: "#fff",
+                  fontSize: 26,
+                  boxShadow: "0 10px 30px rgba(235,122,46,0.45)",
+                }}
+              >
+                ▶
+              </span>
+            </button>
+          )}
         </div>
       )}
 

@@ -609,6 +609,7 @@ export interface FreebieThankYouContent {
   calendarIcsLabel: string;
   videoTitle?: string;
   videoEmbedUrl?: string;
+  videoThumbnailSrc?: string;
   downloadTitle: string;
   downloadBody: string;
   downloadHref: string;
