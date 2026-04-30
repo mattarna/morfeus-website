@@ -260,29 +260,54 @@ export function WebinarReplayVideoSection({ step }: SectionProps) {
         />
       </div>
 
-      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 12 }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
         <a
           href={content.watchOnYoutubeUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={trackYoutubeClick}
           style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "12px 20px",
+            borderRadius: 100,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.16)",
             fontFamily: "var(--font-body)",
-            fontSize: 14,
-            color: "var(--muted)",
+            fontSize: 15,
+            fontWeight: 600,
+            color: "var(--ghost)",
             textDecoration: "none",
-            transition: "color .2s",
+            transition: "background .2s, border-color .2s, transform .2s",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = "var(--ghost)";
-            e.currentTarget.style.textDecoration = "underline";
+            e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)";
+            e.currentTarget.style.transform = "translateY(-1px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.color = "var(--muted)";
-            e.currentTarget.style.textDecoration = "none";
+            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)";
+            e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          Preferisco guardare su YouTube →
+          <svg
+            aria-hidden
+            width="22"
+            height="16"
+            viewBox="0 0 28 20"
+            fill="none"
+            style={{ flexShrink: 0 }}
+          >
+            <path
+              d="M27.4 3.1a3.5 3.5 0 0 0-2.5-2.5C22.7 0 14 0 14 0S5.3 0 3.1.6A3.5 3.5 0 0 0 .6 3.1C0 5.3 0 10 0 10s0 4.7.6 6.9a3.5 3.5 0 0 0 2.5 2.5C5.3 20 14 20 14 20s8.7 0 10.9-.6a3.5 3.5 0 0 0 2.5-2.5C28 14.7 28 10 28 10s0-4.7-.6-6.9z"
+              fill="#FF0033"
+            />
+            <path d="M11.2 14.3 18.4 10 11.2 5.7v8.6z" fill="#fff" />
+          </svg>
+          <span>Preferisco guardare su YouTube</span>
+          <span style={{ fontSize: 16, opacity: 0.7 }}>→</span>
         </a>
       </div>
     </section>
