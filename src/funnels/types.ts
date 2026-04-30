@@ -24,6 +24,12 @@ export type FunnelComponentName =
   | "WebinarBanner"
   | "WebinarLogos"
   | "WebinarFAQ"
+  | "WebinarReplayHeader"
+  | "WebinarReplayVideo"
+  | "WebinarReplayContext"
+  | "WebinarReplayCards"
+  | "WebinarReplayFAQ"
+  | "WebinarReplayFooter"
   | "FreebieHero"
   | "FreebieWebinarTeaser"
   | "FreebieThankYou"
@@ -233,6 +239,47 @@ export interface WebinarThankYouContent {
   calendarIcsContent?: string;
   ctaLabel: string;
   ctaHref: string;
+}
+
+// ─── Webinar Replay ─────────────────────────────────────────────────────────
+
+export interface WebinarReplayHeaderContent {
+  countdownIso: string;
+  label?: string;
+}
+
+export interface WebinarReplayVideoContent {
+  youtubeId: string;
+  watchOnYoutubeUrl: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarReplayContextContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarReplayFAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarReplayFooterContent {}
+
+export interface WebinarReplayCardsContent {
+  countdownIso: string;
+  standardDeadlineIso: string;
+  corso: {
+    earlyBirdPrice: number;
+    standardPrice: number;
+    fullPrice: number;
+    currency: "EUR";
+    checkoutUrlEarlyBird: string;
+    checkoutUrlStandard: string;
+    checkoutUrlFull: string;
+    salesPageUrl: string;
+  };
+  bootcamp: {
+    earlyBirdPrice: number;
+    fullPrice: number;
+    currency: "EUR";
+    callUrl: string;
+    salesPageUrl: string;
+  };
 }
 
 export interface FreebieHeroContent {
@@ -655,6 +702,12 @@ export interface FunnelStepConfig {
     WebinarFinalCTA?: WebinarFinalCTAContent;
     WebinarFooter?: WebinarFooterContent;
     WebinarThankYou?: WebinarThankYouContent;
+    WebinarReplayHeader?: WebinarReplayHeaderContent;
+    WebinarReplayVideo?: WebinarReplayVideoContent;
+    WebinarReplayContext?: WebinarReplayContextContent;
+    WebinarReplayCards?: WebinarReplayCardsContent;
+    WebinarReplayFAQ?: WebinarReplayFAQContent;
+    WebinarReplayFooter?: WebinarReplayFooterContent;
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;

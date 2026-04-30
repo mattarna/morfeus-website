@@ -50,6 +50,14 @@ import {
   WebinarThankYouSection
 } from "@/funnels/webinar-claude-2026-05/sections";
 import {
+  WebinarReplayCardsSection,
+  WebinarReplayContextSection,
+  WebinarReplayFAQSection,
+  WebinarReplayFooterSection,
+  WebinarReplayHeaderSection,
+  WebinarReplayVideoSection,
+} from "@/funnels/webinar-claude-2026-05/sections-replay";
+import {
   SalesV2AudienceSection,
   SalesV2B2BSection,
   SalesV2BenefitsSection,
@@ -166,6 +174,15 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   WebinarLogos: () => <WebinarLogosSection />,
   WebinarStickyBar: () => <WebinarStickyBarSection />,
   WebinarFAQ: () => <WebinarFAQSection />,
+  WebinarReplayHeader: ({ accentColor, step }) =>
+    step.content.WebinarReplayHeader ? <WebinarReplayHeaderSection accentColor={accentColor} step={step} /> : null,
+  WebinarReplayVideo: ({ accentColor, step }) =>
+    step.content.WebinarReplayVideo ? <WebinarReplayVideoSection accentColor={accentColor} step={step} /> : null,
+  WebinarReplayContext: () => <WebinarReplayContextSection />,
+  WebinarReplayCards: ({ accentColor, step }) =>
+    step.content.WebinarReplayCards ? <WebinarReplayCardsSection accentColor={accentColor} step={step} /> : null,
+  WebinarReplayFAQ: () => <WebinarReplayFAQSection />,
+  WebinarReplayFooter: () => <WebinarReplayFooterSection />,
   FreebieHero: ({ accentColor, step }) =>
     step.content.FreebieHero ? <FreebieHeroSection accentColor={accentColor} step={step} /> : null,
   FreebieWebinarTeaser: ({ accentColor, step }) =>

@@ -28,8 +28,30 @@ Le sezioni `Sales*` in `sections.tsx` sono usate solo dal funnel `claude-unlocke
 |---|---|---|---|---|
 | `webinar-claude` | `optin` | `/webinar-claude` | Lead capture (form Brevo) | false |
 | `webinar-claude` | `thank-you` | `/webinar-claude/thank-you` | Conferma post-iscrizione | true |
+| `webinar-claude` | `replay` | `/webinar-claude/replay` | Pagina replay post-webinar (video + 2 card prodotto) | false |
 | `claude-unlocked-v1` | `sales` | `/claude-unlocked-v1` | Sales page Corso Claude | true |
 | `bootcamp-ai-champion` | `sales` | `/bootcamp-ai-champion` | Sales page Bootcamp AI Champion (3a edizione) | true |
+
+## Replay page (`/webinar-claude/replay`)
+
+Pagina di atterraggio post-webinar (link replay via email) — orientata alla decisione: corso o call bootcamp.
+
+Struttura sezioni:
+1. `WebinarReplayHeader` — sticky top (logo + countdown 7 maggio 23:59 CEST)
+2. `WebinarReplayVideo` — embed YouTube `Pa2-LKvlJ3g` + link "guarda su YouTube" con UTM
+3. `WebinarReplayContext` — bridge "Hai visto il sistema. Questo è il passo successivo."
+4. `WebinarReplayCards` — 2 card affiancate (Claude Unlocked corso arancione · AI Champion bootcamp lime). Prezzo corso dinamico via JS lato client (147 → 297 → 397) basato su `countdownIso` + `standardDeadlineIso`.
+5. `WebinarReplayFAQ` — 3 FAQ accordion (corso→bootcamp credito · price ladder · sales-call)
+6. `WebinarReplayFooter` — minimal (P.IVA + © 2026)
+
+Tracking GA4 / Meta Pixel:
+- `youtube_link_click`, `cta_corso_click` (con stage + price), `cta_bootcamp_click`, `info_corso_click`, `info_bootcamp_click`
+- `InitiateCheckout` Meta Pixel sul CTA corso
+
+Replay — TODO pre-go-live:
+1. **Calendly Mattia**: il campo `WebinarReplayCards.bootcamp.callUrl` è vuoto → CTA bootcamp render con `href="#"` no-op (cursor: not-allowed). Inserire l'URL reale per attivare il bottone.
+2. **Stripe URLs**: `checkoutUrlEarlyBird/Standard/Full` riusano gli stessi placeholder di `sales-config.json` (`buy.morfeushub.com/corso-claude-{147,297,397}`). Sostituire con i link reali insieme alla sales page (TODO #1 della sales page).
+3. **Deadline countdown**: `countdownIso` = `2026-05-07T23:59:59+02:00` (CEST), `standardDeadlineIso` = `2026-05-12T23:59:59+02:00`. Modificare se cambia la finestra di lancio.
 
 ## Sales page — varianti dinamiche
 
