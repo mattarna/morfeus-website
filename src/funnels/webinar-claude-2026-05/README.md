@@ -30,7 +30,9 @@ Le sezioni `Sales*` in `sections.tsx` sono usate solo dal funnel `claude-unlocke
 | `webinar-claude` | `thank-you` | `/webinar-claude/thank-you` | Conferma post-iscrizione | true |
 | `webinar-claude` | `replay` | `/webinar-claude/replay` | Pagina replay post-webinar (video + 2 card prodotto) | false |
 | `claude-unlocked-v1` | `sales` | `/claude-unlocked-v1` | Sales page Corso Claude | true |
+| `claude-unlocked-v1` | `thank-you` | `/claude-unlocked-v1/access-9x4q2k7n` | TY page post-acquisto corso (onboarding + upsell bootcamp) — slug offuscato | true |
 | `bootcamp-ai-champion` | `sales` | `/bootcamp-ai-champion` | Sales page Bootcamp AI Champion (3a edizione) | true |
+| `bootcamp-ai-champion` | `thank-you` | `/bootcamp-ai-champion/access-25-m3p8r7q4` | TY page post-acquisto bootcamp (onboarding + roadmap) — slug offuscato | true |
 
 ## Replay page (`/webinar-claude/replay`)
 
@@ -66,6 +68,51 @@ La sales page (`/claude-unlocked-v1`) personalizza copy e CTA in base alla prove
 Fallback (nessun parametro) = `replay`.
 
 Cinque blocchi cambiano copy per variante (Hero, Bridge, Problem, Urgency, FinalCTA) + la FAQ aggiunge un item per la coorte email. Tutti gli altri blocchi sono identici.
+
+## TY page corso (`/claude-unlocked-v1/access-9x4q2k7n`)
+
+> **Slug offuscato**: il path non è `/thank-you` per evitare che utenti curiosi accedano alle risorse a tentativi. Lo slug va inserito esattamente così nel redirect URL di Stripe (success_url) — se cambia, aggiornare anche Stripe.
+
+Pagina post-acquisto del Corso Claude Unlocked (renderizzata dopo lo Stripe redirect). Stesso design system della sales (palette arancione), ma struttura ridotta: niente sticky bar, niente offerta. Header logo + thank-you content + footer disclaimer.
+
+Struttura sezioni:
+1. `SalesHeader` — logo only
+2. `SalesThankYou` — sezione conferma + 6 blocchi (Hero, Notice tecnica, 3 prossimi passi, 4 live, Upsell bootcamp con credito 147€, Supporto)
+3. `SalesFooter` — disclaimer Anthropic + AGCM
+
+Configurabile in `sales-config.json` step `thank-you`:
+- `circleUrl`, `module0Url` — link alla piattaforma corso (vuoto = href="#" no-op)
+- `bootcampSalesUrl` — default `/bootcamp-ai-champion`
+- `supportEmail` — default `matteo@morfeushub.com`
+- `liveSessions[]` — 4 card date (default: 12/19/26 maggio + 2 giugno 2026)
+
+TY corso — TODO pre-go-live:
+1. **Circle URL**: `circleUrl` e `module0Url` sono vuoti → CTA Step 1/Step 2 puntano a `href="#"`. Inserire l'URL reale dello space Circle del corso e il deeplink al Modulo 0 quando disponibili.
+2. **Date sessioni live**: `liveSessions[]` ha date placeholder. Aggiornare se cambia il calendario.
+
+## TY page bootcamp (`/bootcamp-ai-champion/access-25-m3p8r7q4`)
+
+> **Slug offuscato**: stesso ragionamento della TY corso — il path non è indovinabile. Inserire esattamente così nel redirect URL di Stripe (success_url) del bootcamp.
+
+Pagina post-acquisto del Bootcamp AI Champion v3 (renderizzata dopo lo Stripe redirect). Palette lime invariata, struttura più ricca della TY corso perché l'accesso non è immediato (gestione attesa + onboarding pre-Live #1).
+
+Struttura sezioni:
+1. `BootcampHeader` — logo only
+2. `BootcampThankYou` — Hero "Sei uno dei 25" + Notice tecnica + 4 step prossimi passi (2 lime priorità massima, 2 violetti priorità alta) + Timeline 4-tappe + 7 sessioni live + Card supporto Mattia
+3. `BootcampFooter` — disclaimer Anthropic + AGCM
+
+Configurabile in `bootcamp-config.json` step `thank-you`:
+- `whatsappGroupUrl` — invite gruppo WhatsApp bootcamp (vuoto = href="#" no-op)
+- `circleUrl` — space Circle bootcamp (vuoto = href="#" no-op)
+- `claudeUrl` — default `https://claude.ai`
+- `mattiaEmail` — default `mattia@morfeushub.com`
+
+TY bootcamp — TODO pre-go-live:
+1. **WhatsApp invite**: `whatsappGroupUrl` vuoto → CTA Step 1 punta a `href="#"`. Inserire l'invite link reale del gruppo WhatsApp bootcamp.
+2. **Circle URL**: `circleUrl` vuoto → CTA Step 2 punta a `href="#"`. Inserire l'URL reale dello space Circle del bootcamp.
+3. **Email Mattia**: `mattiaEmail` default `mattia@morfeushub.com`. Aggiornare se diverso.
+4. **Roadmap timeline**: i 4 voci timeline ("Adesso", "Entro fine maggio", "Prima settimana di giugno", "~13 settimane dopo") sono hardcoded nel componente — modificare in `BootcampThankYouSection` se cambia la finestra di lancio.
+5. **7 sessioni live**: titoli e descrizioni hardcoded nel componente, allineati alla v3 del bootcamp.
 
 ## Sales page — TODO pre-go-live
 

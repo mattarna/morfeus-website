@@ -30,6 +30,7 @@ import {
   SalesProofSection,
   SalesReviewsSection,
   SalesStickyBarSection,
+  SalesThankYouSection,
   SalesThreeLevelsSection,
   SalesUpsellBootcampSection,
   SalesUrgencySection,
@@ -106,6 +107,7 @@ import {
   BootcampFinalCTASection,
   BootcampFooterSection,
   BootcampStickyBarSection,
+  BootcampThankYouSection,
 } from "@/funnels/webinar-claude-2026-05/sections-bootcamp";
 import {
   BootcampV2HeaderSection,
@@ -222,6 +224,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesB2B: () => <SalesB2BSection />,
   SalesFooter: () => <SalesFooterSection />,
   SalesStickyBar: ({ accentColor, step }) => <SalesStickyBarSection accentColor={accentColor} step={step} />,
+  SalesThankYou: ({ accentColor, step }) =>
+    step.content.SalesThankYou ? <SalesThankYouSection accentColor={accentColor} step={step} /> : null,
   SalesV2Header: () => <SalesV2HeaderSection />,
   SalesV2Hero: ({ accentColor, step }) =>
     step.content.SalesV2Hero ? <SalesV2HeroSection accentColor={accentColor} step={step} /> : null,
@@ -272,6 +276,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampFinalCTA: ({ accentColor, step }) => <BootcampFinalCTASection accentColor={accentColor} step={step} />,
   BootcampFooter: () => <BootcampFooterSection />,
   BootcampStickyBar: ({ accentColor, step }) => <BootcampStickyBarSection accentColor={accentColor} step={step} />,
+  BootcampThankYou: ({ accentColor, step }) =>
+    step.content.BootcampThankYou ? <BootcampThankYouSection accentColor={accentColor} step={step} /> : null,
   BootcampV2Header: () => <BootcampV2HeaderSection />,
   BootcampV2Hero: ({ accentColor, step }) => <BootcampV2HeroSection accentColor={accentColor} step={step} />,
   BootcampV2LevelGap: () => <BootcampV2LevelGapSection />,

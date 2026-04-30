@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { BootcampPricingContent } from "@/funnels/types";
+import type { BootcampPricingContent, BootcampThankYouContent } from "@/funnels/types";
 import styles from "./sections.module.css";
 
 // ─── Shared prop shape ────────────────────────────────────────────────────────
@@ -3022,6 +3022,655 @@ export function BootcampFinalCTASection({ step }: SectionProps) {
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION — FOOTER
 // ═══════════════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION — THANK YOU BOOTCAMP (post-acquisto Bootcamp AI Champion v3)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function BootcampThankYouSection({ step }: SectionProps) {
+  const content = (step.content?.BootcampThankYou ?? {}) as BootcampThankYouContent;
+
+  const whatsappHref = content.whatsappGroupUrl && content.whatsappGroupUrl.trim().length > 0 ? content.whatsappGroupUrl : "#";
+  const circleHref = content.circleUrl && content.circleUrl.trim().length > 0 ? content.circleUrl : "#";
+  const claudeHref = content.claudeUrl && content.claudeUrl.trim().length > 0 ? content.claudeUrl : "https://claude.ai";
+  const mattiaEmail = content.mattiaEmail && content.mattiaEmail.trim().length > 0 ? content.mattiaEmail : "mattia@morfeushub.com";
+
+  const cardBase: React.CSSProperties = {
+    background: "rgba(255,255,255,0.025)",
+    border: "1px solid rgba(255,255,255,0.07)",
+    borderRadius: 14,
+    padding: "26px 28px",
+    boxSizing: "border-box",
+  };
+
+  const steps = [
+    {
+      n: "01",
+      tone: "lime" as const,
+      title: "Entra nel gruppo WhatsApp",
+      body: "Qui c'è tutto: aggiornamenti, annunci, domande tra partecipanti e con noi. Il tuo primo messaggio: presentati in 2 righe.",
+      ctaLabel: "Entra nel gruppo WhatsApp →",
+      ctaHref: whatsappHref,
+      ctaIcon: "whatsapp" as const,
+      priority: "Priorità massima",
+    },
+    {
+      n: "02",
+      tone: "lime" as const,
+      title: "Accedi a Claude Unlocked — è già tuo",
+      body: "Il corso base è incluso nel bootcamp. Entra su Circle e inizia subito dal Modulo 0 — è il prerequisito fondamentale per il Live #1. Non saltarlo.",
+      ctaLabel: "Accedi a Circle →",
+      ctaHref: circleHref,
+      ctaIcon: "external" as const,
+      priority: "Priorità massima",
+    },
+    {
+      n: "03",
+      tone: "violet" as const,
+      title: "Completa le 3 ore di lezioni pre-registrate",
+      body: "Sono il livellamento. Tutti i partecipanti le guardano prima del Live #1 — ti mettono sullo stesso piano di partenza indipendentemente dalla tua esperienza attuale.",
+      priority: "Priorità alta",
+    },
+    {
+      n: "04",
+      tone: "violet" as const,
+      title: "Configura il tuo account Claude",
+      body: "Se non ce l'hai già: attiva un abbonamento Claude Pro su claude.ai. È lo strumento che useremo durante tutto il bootcamp. Senza di esso non puoi seguire le sessioni pratiche.",
+      ctaLabel: "Vai a claude.ai →",
+      ctaHref: claudeHref,
+      ctaIcon: "external" as const,
+      priority: "Priorità alta",
+    },
+  ];
+
+  const timeline = [
+    { when: "Adesso", what: "Entra nel gruppo, inizia il corso", note: "WhatsApp + Circle + Modulo 0" },
+    { when: "Entro fine maggio", what: "Completa le lezioni pre-registrate", note: "3h di contenuto — il livellamento" },
+    { when: "Prima settimana di giugno", what: "Live #1 — Si inizia", note: "Data esatta comunicata nel gruppo WhatsApp" },
+    { when: "~13 settimane dopo", what: "Progetto finale + certificato", note: "Esci con un sistema operativo AI funzionante" },
+  ];
+
+  const sessions = [
+    { n: "01", title: "Il Sistema", body: "Mindset operativo, framework M-V-A, context engineering" },
+    { n: "02", title: "Prompt Engineering Avanzato", body: "Architettura delle richieste complesse" },
+    { n: "03", title: "Skill e Automazione", body: "Costruire strumenti personalizzati" },
+    { n: "04", title: "Plan & Solve", body: "Metodo per progetti complessi in 6 fasi" },
+    { n: "05", title: "Workflow Reali", body: "Use case end-to-end nel tuo lavoro" },
+    { n: "06", title: "Sicurezza, Privacy e Sistema Operativo AI", body: "" },
+    { n: "07", title: "Progetto Finale e Next Level", body: "Claude Code, Cursor, il futuro" },
+  ];
+
+  return (
+    <section
+      className={styles.sectionPad}
+      style={{
+        maxWidth: 980,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* ── 1. Hero / Conferma ────────────────────────────────────────── */}
+      <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <Badge>Bootcamp AI Champion · v3</Badge>
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(40px, 6vw, 68px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
+            color: "#fff",
+            margin: "20px auto 18px auto",
+            maxWidth: 780,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Sei uno dei <Accent>25</Accent>.
+        </h1>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 18,
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+            opacity: 0.85,
+            margin: "0 auto 18px",
+            maxWidth: 660,
+          }}
+        >
+          Hai superato la selezione. Hai investito. Adesso costruiamo il tuo sistema AI — con metodo e con noi accanto.
+        </p>
+        <p
+          style={{
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 17,
+            lineHeight: 1.5,
+            color: LIME,
+            opacity: 0.95,
+            margin: 0,
+          }}
+        >
+          Benvenuto nel bootcamp.
+        </p>
+      </div>
+
+      {/* ── 2. Notice tecnica ────────────────────────────────────────── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 14,
+          padding: "16px 20px",
+          background: LIME_SOFT_10,
+          border: `1px solid ${LIME_BORDER_25}`,
+          borderRadius: 12,
+          marginBottom: 64,
+        }}
+      >
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            flexShrink: 0,
+            display: "grid",
+            placeItems: "center",
+            borderRadius: 8,
+            background: LIME_SOFT_18,
+            color: LIME,
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </div>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: "var(--ghost)" }}>
+          Controlla la tua email — riceverai a breve la ricevuta Stripe e le istruzioni di accesso a Circle. Se non la vedi entro 10 minuti, controlla spam o scrivi a Mattia.
+        </div>
+      </div>
+
+      {/* ── 3. Prossimi passi (4 step) ────────────────────────────────── */}
+      <div style={{ marginBottom: 80 }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <SectionLabel>Cosa fai adesso · in ordine</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(30px, 4vw, 44px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px auto 14px auto",
+              maxWidth: 720,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            I tuoi <Accent>prossimi passi</Accent>.
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: "var(--ghost)",
+              opacity: 0.85,
+              margin: "0 auto",
+              maxWidth: 620,
+            }}
+          >
+            Non aspettare giugno per iniziare. Queste azioni nei prossimi giorni ti faranno arrivare al Live #1 già a un livello completamente diverso.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {steps.map((s) => (
+            <BcTyStepCard key={s.n} {...s} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── 4. Timeline / Roadmap ──────────────────────────────────── */}
+      <div style={{ marginBottom: 80 }}>
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <SectionLabel>Quando succede cosa</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(28px, 3.6vw, 40px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px auto 14px auto",
+              maxWidth: 720,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            La tua <Accent>roadmap</Accent>.
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 15,
+              lineHeight: 1.55,
+              color: "var(--ghost)",
+              opacity: 0.85,
+              margin: "0 auto",
+              maxWidth: 560,
+            }}
+          >
+            Il bootcamp parte a inizio giugno. Prima, preparati.
+          </p>
+        </div>
+
+        <div style={{ position: "relative", paddingLeft: 28 }}>
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              left: 11,
+              top: 6,
+              bottom: 6,
+              width: 1,
+              background: `linear-gradient(180deg, ${LIME_BORDER_25} 0%, rgba(255,255,255,0.06) 100%)`,
+            }}
+          />
+          <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 22 }}>
+            {timeline.map((t, i) => (
+              <li key={i} style={{ position: "relative" }}>
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    left: -24,
+                    top: 8,
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: i === 0 ? LIME : "rgba(255,255,255,0.08)",
+                    border: i === 0 ? `2px solid ${LIME}` : "2px solid rgba(255,255,255,0.15)",
+                    boxShadow: i === 0 ? `0 0 12px ${LIME_GLOW_50}` : "none",
+                  }}
+                />
+                <div
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: 12,
+                    padding: "18px 22px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: 12,
+                      fontWeight: 700,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: i === 0 ? LIME : "var(--muted)",
+                      marginBottom: 8,
+                    }}
+                  >
+                    {t.when}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 18,
+                      fontWeight: 600,
+                      lineHeight: 1.25,
+                      letterSpacing: "-0.015em",
+                      color: "#fff",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {t.what}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: 13.5,
+                      lineHeight: 1.5,
+                      color: "var(--ghost)",
+                      opacity: 0.8,
+                    }}
+                  >
+                    {t.note}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      {/* ── 5. Le 7 sessioni live ─────────────────────────────────── */}
+      <div style={{ marginBottom: 80 }}>
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <SectionLabel>Le 7 sessioni live</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(28px, 3.6vw, 40px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px auto 14px auto",
+              maxWidth: 720,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Cosa <Accent>costruiamo insieme</Accent>.
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 15,
+              lineHeight: 1.55,
+              color: "var(--ghost)",
+              opacity: 0.85,
+              margin: "0 auto",
+              maxWidth: 620,
+            }}
+          >
+            Cadenza bisettimanale — 1 settimana on, 1 settimana off per implementare. Replay permanente su Circle.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {sessions.map((s) => (
+            <div
+              key={s.n}
+              style={{
+                display: "flex",
+                gap: 18,
+                padding: "16px 20px",
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 10,
+                alignItems: "baseline",
+              }}
+            >
+              <span
+                style={{
+                  flexShrink: 0,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 600,
+                  fontSize: 18,
+                  color: LIME,
+                  width: 32,
+                }}
+              >
+                {s.n}
+              </span>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 600,
+                    fontSize: 16.5,
+                    lineHeight: 1.3,
+                    letterSpacing: "-0.01em",
+                    color: "#fff",
+                    marginBottom: s.body ? 4 : 0,
+                  }}
+                >
+                  {s.title}
+                </div>
+                {s.body && (
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: 13.5,
+                      lineHeight: 1.5,
+                      color: "var(--ghost)",
+                      opacity: 0.8,
+                    }}
+                  >
+                    {s.body}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 6. Contatto / Supporto ─────────────────────────────────── */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <SectionLabel>Hai domande?</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(26px, 3.4vw, 36px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px 0 0 0",
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Siamo <Accent>raggiungibili</Accent>.
+          </h2>
+        </div>
+        <div style={{ ...cardBase, padding: "30px 32px" }}>
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: LIME,
+              marginBottom: 10,
+            }}
+          >
+            Mattia · Coordinamento bootcamp
+          </div>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 15,
+              lineHeight: 1.6,
+              color: "var(--ghost)",
+              opacity: 0.92,
+              margin: "0 0 22px 0",
+              maxWidth: 620,
+            }}
+          >
+            Per domande su logistica, accessi, pagamenti o qualsiasi cosa pratica prima dell&apos;inizio — Mattia è il riferimento. Lo trovi nel gruppo WhatsApp o puoi scrivergli direttamente.
+          </p>
+          <a
+            href={`mailto:${mattiaEmail}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "12px 22px",
+              background: "transparent",
+              color: LIME,
+              fontFamily: "var(--font-body)",
+              fontSize: 14,
+              fontWeight: 700,
+              borderRadius: 10,
+              textDecoration: "none",
+              border: `1px solid ${LIME_BORDER_25}`,
+              transition: "background .15s",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            Scrivi a Mattia
+          </a>
+        </div>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 13.5,
+            lineHeight: 1.55,
+            color: "var(--muted)",
+            margin: "16px 0 0 0",
+            textAlign: "center",
+          }}
+        >
+          Per domande sul contenuto del bootcamp, usa direttamente il gruppo WhatsApp — così tutti beneficiano della risposta.
+        </p>
+      </div>
+
+      {/* ── Note finale ─────────────────────────────────────────────── */}
+      <p
+        style={{
+          textAlign: "center",
+          fontFamily: "var(--font-body)",
+          fontSize: 12,
+          lineHeight: 1.5,
+          color: "var(--muted)",
+          opacity: 0.7,
+          margin: "48px 0 0 0",
+        }}
+      >
+        Hai ricevuto questa pagina perché hai acquistato il Bootcamp AI Champion v3.
+      </p>
+    </section>
+  );
+}
+
+function BcTyStepCard({
+  n,
+  tone,
+  title,
+  body,
+  ctaLabel,
+  ctaHref,
+  ctaIcon,
+  priority,
+}: {
+  n: string;
+  tone: "lime" | "violet";
+  title: string;
+  body: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaIcon?: "whatsapp" | "external";
+  priority: string;
+}) {
+  const isLime = tone === "lime";
+  const accent = isLime ? LIME : "var(--violet)";
+  const accentSoft = isLime ? LIME_SOFT_10 : VIOLET_SOFT;
+  const accentBorder = isLime ? LIME_BORDER_25 : VIOLET_BORDER;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 20,
+        padding: "26px 28px",
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+        style={{
+          flexShrink: 0,
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          background: accentSoft,
+          border: `1px solid ${accentBorder}`,
+          display: "grid",
+          placeItems: "center",
+          color: accent,
+          fontFamily: "var(--font-display)",
+          fontSize: 17,
+          fontWeight: 600,
+        }}
+      >
+        {n}
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+        <span
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: accent,
+          }}
+        >
+          {priority}
+        </span>
+        <h3
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 19,
+            fontWeight: 600,
+            lineHeight: 1.25,
+            letterSpacing: "-0.015em",
+            color: "#fff",
+            margin: 0,
+          }}
+        >
+          {title}
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 14.5,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.85,
+            margin: 0,
+          }}
+        >
+          {body}
+        </p>
+        {ctaLabel && ctaHref && (
+          <div style={{ marginTop: 6 }}>
+            <a
+              href={ctaHref}
+              target={ctaHref.startsWith("http") ? "_blank" : undefined}
+              rel={ctaHref.startsWith("http") ? "noopener noreferrer" : undefined}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "10px 18px",
+                background: isLime ? LIME : "transparent",
+                color: isLime ? "#0B0B0C" : LIME,
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                fontWeight: 700,
+                borderRadius: 10,
+                textDecoration: "none",
+                border: isLime ? `1px solid ${LIME}` : `1px solid ${LIME_BORDER_25}`,
+                boxShadow: isLime ? `0 4px 18px ${LIME_GLOW_35}` : "none",
+                transition: "background .15s",
+              }}
+            >
+              {ctaIcon === "whatsapp" && (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                </svg>
+              )}
+              {ctaLabel}
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export function BootcampFooterSection() {
   const muted: React.CSSProperties = {

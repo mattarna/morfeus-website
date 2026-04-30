@@ -8,6 +8,7 @@ import type {
   SalesFinalCTAContent,
   SalesHeroContent,
   SalesPricingContent,
+  SalesThankYouContent,
   SalesUrgencyContent,
   SalesVariant,
   WebinarFinalCTAContent,
@@ -7864,6 +7865,540 @@ export function SalesB2BSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION — THANK YOU CORSO (post-acquisto Claude Unlocked)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesThankYouSection({ step }: SectionProps) {
+  const content = step.content.SalesThankYou as SalesThankYouContent;
+
+  const circleHref = content.circleUrl && content.circleUrl.trim().length > 0 ? content.circleUrl : "#";
+  const module0Href = content.module0Url && content.module0Url.trim().length > 0 ? content.module0Url : circleHref;
+  const bootcampHref = content.bootcampSalesUrl && content.bootcampSalesUrl.trim().length > 0 ? content.bootcampSalesUrl : "#";
+
+  const cardBase: React.CSSProperties = {
+    background: "rgba(255,255,255,0.025)",
+    border: "1px solid rgba(255,255,255,0.07)",
+    borderRadius: 14,
+    padding: "26px 28px",
+    boxSizing: "border-box",
+  };
+
+  return (
+    <section
+      className={styles.sectionPad}
+      style={{
+        maxWidth: 920,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* ── 1. Hero / Conferma ───────────────────────────────────────── */}
+      <div style={{ textAlign: "center", marginBottom: 48 }}>
+        <Badge>Claude Unlocked · accesso attivo</Badge>
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(40px, 6vw, 64px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
+            color: "#fff",
+            margin: "20px auto 18px auto",
+            maxWidth: 780,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Sei <Accent>dentro</Accent>.
+        </h1>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 18,
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+            opacity: 0.85,
+            margin: "0 auto",
+            maxWidth: 620,
+          }}
+        >
+          Hai appena fatto la cosa che il 95% delle persone rimanda. Adesso inizia la parte interessante.
+        </p>
+      </div>
+
+      {/* ── 2. Notice tecnica ────────────────────────────────────────── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 14,
+          padding: "16px 20px",
+          background: "rgba(235,122,46,0.06)",
+          border: "1px solid rgba(235,122,46,0.25)",
+          borderRadius: 12,
+          marginBottom: 56,
+        }}
+      >
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            flexShrink: 0,
+            display: "grid",
+            placeItems: "center",
+            borderRadius: 8,
+            background: "rgba(235,122,46,0.15)",
+            color: "var(--orange)",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </div>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: "var(--ghost)" }}>
+          Controlla la tua email — riceverai a breve l&apos;accesso a Circle e la ricevuta Stripe. Se non la vedi entro 5 minuti, controlla la cartella spam.
+        </div>
+      </div>
+
+      {/* ── 3. Prossimi passi (3 step) ───────────────────────────────── */}
+      <div style={{ marginBottom: 64 }}>
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <SectionLabel>Cosa fai adesso</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(30px, 4vw, 42px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px auto 12px auto",
+              maxWidth: 720,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Tre passi. <Accent>Inizia da qui.</Accent>
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 16,
+              lineHeight: 1.55,
+              color: "var(--ghost)",
+              opacity: 0.8,
+              margin: "0 auto",
+              maxWidth: 580,
+            }}
+          >
+            Non serve guardare tutto subito. Serve fare la cosa giusta per prima.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <TyStepCard
+            num="01"
+            title="Accedi al corso su Circle"
+            body="La tua piattaforma è Circle. Trovi tutto lì — moduli, materiali, replay delle live."
+            ctaLabel="Entra in Circle →"
+            ctaHref={circleHref}
+          />
+          <TyStepCard
+            num="02"
+            title="Inizia dal Modulo 0"
+            body="Prima di tutto il resto, guarda il Modulo 0. Non è un'introduzione generica — è il cambio di frame che rende tutto il resto del corso 10 volte più efficace. Sono circa 25 minuti."
+            ctaLabel="Vai al Modulo 0 →"
+            ctaHref={module0Href}
+          />
+          <TyStepCard
+            num="03"
+            title="Segna le sessioni live in calendario"
+            body="Hai accesso a 4 sessioni live con me. Sono incluse nel corso — mettile in calendario adesso, prima che le dimentichi."
+          />
+        </div>
+      </div>
+
+      {/* ── 4. Calendario live (4 card) ─────────────────────────────── */}
+      <div style={{ marginBottom: 72 }}>
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <SectionLabel>Sessioni live incluse</SectionLabel>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(28px, 3.6vw, 38px)",
+              lineHeight: 1.1,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "20px auto 12px auto",
+              maxWidth: 720,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Le tue 4 live con <Accent>Matteo</Accent>
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 15,
+              lineHeight: 1.55,
+              color: "var(--ghost)",
+              opacity: 0.8,
+              margin: "0 auto",
+              maxWidth: 580,
+            }}
+          >
+            Tutte le sessioni sono in diretta e con replay permanente su Circle.
+          </p>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: 14,
+          }}
+        >
+          {content.liveSessions.map((s) => (
+            <div
+              key={s.n}
+              style={{
+                ...cardBase,
+                padding: "22px 22px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+                textAlign: "left",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "var(--orange)",
+                }}
+              >
+                {s.n} · {s.title}
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 500, color: "#fff", letterSpacing: "-0.01em" }}>
+                {s.dateLabel}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 5. Upsell Bootcamp ──────────────────────────────────────── */}
+      <div
+        style={{
+          position: "relative",
+          padding: "44px 36px 40px",
+          background: "linear-gradient(135deg, rgba(235,122,46,0.10) 0%, rgba(123,104,238,0.06) 100%)",
+          border: "1px solid rgba(235,122,46,0.25)",
+          borderRadius: 18,
+          marginBottom: 56,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: -80,
+            right: -80,
+            width: 240,
+            height: 240,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(235,122,46,0.18) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "var(--orange)",
+              marginBottom: 14,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            Prima che tu inizi —
+          </div>
+          <h3
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 600,
+              fontSize: "clamp(24px, 3vw, 32px)",
+              lineHeight: 1.15,
+              letterSpacing: "-0.02em",
+              color: "#fff",
+              margin: "0 0 18px 0",
+              textWrap: "balance" as React.CSSProperties["textWrap"],
+            }}
+          >
+            Hai appena preso il manuale. <Accent>C&apos;è anche il personal trainer.</Accent>
+          </h3>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: "var(--ghost)",
+              opacity: 0.92,
+              margin: "0 0 14px 0",
+              maxWidth: 640,
+            }}
+          >
+            Il corso ti porta da L1 a L2: sai usare Claude, lo guidi, risparmi ore. Il <strong style={{ color: "#fff" }}>Bootcamp AI Champion</strong> ti porta al livello successivo — costruisci un sistema che lavora per te, con metodo e con Matteo e Alex che ti seguono in diretta per 13 settimane.
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 14,
+              lineHeight: 1.55,
+              color: "var(--muted)",
+              margin: "0 0 22px 0",
+              maxWidth: 640,
+            }}
+          >
+            25 posti. Call di selezione obbligatoria. I founder insegnano — non formatori a contratto.
+          </p>
+
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "10px 16px",
+              borderRadius: 10,
+              background: "rgba(235,122,46,0.10)",
+              border: "1px solid rgba(235,122,46,0.30)",
+              marginBottom: 22,
+            }}
+          >
+            <span aria-hidden style={{ fontSize: 16 }}>💡</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "var(--ghost)" }}>
+              Quello che hai appena pagato diventa <strong style={{ color: "var(--orange)" }}>credito fisso di 147€</strong> se decidi di fare il bootcamp — indipendentemente da quando lo acquisti.
+            </span>
+          </div>
+
+          <div>
+            <a
+              href={bootcampHref}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "14px 24px",
+                background: "var(--orange)",
+                color: "#fff",
+                fontFamily: "var(--font-body)",
+                fontSize: 15,
+                fontWeight: 700,
+                borderRadius: 10,
+                textDecoration: "none",
+                border: "1px solid rgba(235,122,46,0.5)",
+                transition: "background .15s",
+              }}
+            >
+              Scopri il Bootcamp AI Champion
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </div>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              lineHeight: 1.5,
+              color: "var(--muted)",
+              margin: "14px 0 0 0",
+            }}
+          >
+            Oppure aspetta — lo trovi sempre nella tua area corso su Circle.
+          </p>
+        </div>
+      </div>
+
+      {/* ── 6. Supporto ─────────────────────────────────────────────── */}
+      <div style={{ ...cardBase, padding: "30px 32px", textAlign: "left" }}>
+        <SectionLabel>Hai domande?</SectionLabel>
+        <h3
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(22px, 2.6vw, 28px)",
+            lineHeight: 1.2,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "16px 0 12px 0",
+          }}
+        >
+          Siamo qui.
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 15,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.9,
+            margin: "0 0 22px 0",
+            maxWidth: 580,
+          }}
+        >
+          Per problemi tecnici di accesso o domande sul corso, scrivici direttamente.
+        </p>
+        <a
+          href={`mailto:${content.supportEmail}`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "12px 20px",
+            background: "transparent",
+            color: "var(--orange)",
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            fontWeight: 600,
+            borderRadius: 10,
+            textDecoration: "none",
+            border: "1px solid rgba(235,122,46,0.5)",
+            transition: "background .15s",
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          {content.supportEmail}
+        </a>
+      </div>
+
+      {/* ── Note finale ─────────────────────────────────────────────── */}
+      <p
+        style={{
+          textAlign: "center",
+          fontFamily: "var(--font-body)",
+          fontSize: 12,
+          lineHeight: 1.5,
+          color: "var(--muted)",
+          opacity: 0.7,
+          margin: "48px 0 0 0",
+        }}
+      >
+        Hai ricevuto questa pagina perché hai acquistato Claude Unlocked.
+      </p>
+    </section>
+  );
+}
+
+function TyStepCard({
+  num,
+  title,
+  body,
+  ctaLabel,
+  ctaHref,
+}: {
+  num: string;
+  title: string;
+  body: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: 20,
+        padding: "26px 28px",
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        borderRadius: 14,
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+        style={{
+          flexShrink: 0,
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          background: "rgba(235,122,46,0.12)",
+          border: "1px solid rgba(235,122,46,0.30)",
+          display: "grid",
+          placeItems: "center",
+          color: "var(--orange)",
+          fontFamily: "var(--font-display)",
+          fontSize: 17,
+          fontWeight: 600,
+        }}
+      >
+        {num}
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+        <h3
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 19,
+            fontWeight: 600,
+            lineHeight: 1.25,
+            letterSpacing: "-0.015em",
+            color: "#fff",
+            margin: 0,
+          }}
+        >
+          {title}
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 14.5,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.85,
+            margin: 0,
+          }}
+        >
+          {body}
+        </p>
+        {ctaLabel && ctaHref && (
+          <div style={{ marginTop: 6 }}>
+            <a
+              href={ctaHref}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "10px 18px",
+                background: "var(--orange)",
+                color: "#fff",
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                fontWeight: 600,
+                borderRadius: 10,
+                textDecoration: "none",
+                border: "1px solid rgba(235,122,46,0.5)",
+                transition: "background .15s",
+              }}
+            >
+              {ctaLabel}
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

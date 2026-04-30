@@ -57,6 +57,7 @@ export type FunnelComponentName =
   | "SalesB2B"
   | "SalesFooter"
   | "SalesStickyBar"
+  | "SalesThankYou"
   | "SalesV2Header"
   | "SalesV2Hero"
   | "SalesV2Bridge"
@@ -98,6 +99,7 @@ export type FunnelComponentName =
   | "BootcampFinalCTA"
   | "BootcampFooter"
   | "BootcampStickyBar"
+  | "BootcampThankYou"
   | "BootcampV2Header"
   | "BootcampV2Hero"
   | "BootcampV2LevelGap"
@@ -425,6 +427,23 @@ export interface SalesFooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesStickyBarContent {}
 
+export interface SalesThankYouContent {
+  /** URL della piattaforma Circle (space corso) */
+  circleUrl: string;
+  /** Link diretto al Modulo 0 dentro Circle (fallback: circleUrl) */
+  module0Url: string;
+  /** URL della sales page del Bootcamp AI Champion */
+  bootcampSalesUrl: string;
+  /** Email di supporto / contatto */
+  supportEmail: string;
+  /** Le 4 sessioni live del corso (data + giorno) */
+  liveSessions: Array<{
+    n: string;
+    title: string;
+    dateLabel: string;
+  }>;
+}
+
 // ─── Sales Page v2 (corso-claude — copy nuovo, in fase di confronto) ────────
 
 export type SalesV2Variant = "live" | "replay" | "email";
@@ -585,6 +604,17 @@ export interface BootcampFooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampStickyBarContent {}
 
+export interface BootcampThankYouContent {
+  /** URL invite del gruppo WhatsApp bootcamp */
+  whatsappGroupUrl: string;
+  /** URL della piattaforma Circle (space bootcamp) */
+  circleUrl: string;
+  /** URL claude.ai per attivare Claude Pro */
+  claudeUrl: string;
+  /** Email diretta del coordinatore bootcamp (Mattia) */
+  mattiaEmail: string;
+}
+
 // ─── Bootcamp AI Champion v2 (sales page — copy nuovo, in fase di confronto) ──
 
 export interface BootcampV2PricingContent {
@@ -736,6 +766,7 @@ export interface FunnelStepConfig {
     SalesFooter?: SalesFooterContent;
     SalesStickyBar?: SalesStickyBarContent;
     SalesPricing?: SalesPricingContent;
+    SalesThankYou?: SalesThankYouContent;
     SalesV2Header?: SalesV2HeaderContent;
     SalesV2Hero?: SalesV2HeroContent;
     SalesV2Bridge?: SalesV2BridgeContent;
@@ -779,6 +810,7 @@ export interface FunnelStepConfig {
     BootcampFooter?: BootcampFooterContent;
     BootcampStickyBar?: BootcampStickyBarContent;
     BootcampPricing?: BootcampPricingContent;
+    BootcampThankYou?: BootcampThankYouContent;
     BootcampV2Header?: BootcampV2HeaderContent;
     BootcampV2Hero?: BootcampV2HeroContent;
     BootcampV2LevelGap?: BootcampV2LevelGapContent;
