@@ -3614,7 +3614,7 @@ export function SalesV2HeroSection({ step }: SectionProps) {
       >
         {current.activeDeadlineIso && current.stage === "earlyBird" && (
           <>
-            Prezzo sale a <strong style={{ color: "var(--orange)" }}>97€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            Prezzo sale a <strong style={{ color: "var(--orange)" }}>297€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
             <br />
           </>
         )}
@@ -3638,11 +3638,11 @@ export function SalesV2HeroSection({ step }: SectionProps) {
           flexWrap: "wrap",
         }}
       >
-        <PriceScalePill value="67€" label="early bird" active={current.stage === "earlyBird"} />
+        <PriceScalePill value="147€" label="early bird" active={current.stage === "earlyBird"} />
         <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
-        <PriceScalePill value="97€" label="standard" active={current.stage === "standard"} />
+        <PriceScalePill value="297€" label="standard" active={current.stage === "standard"} />
         <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
-        <PriceScalePill value="147€" label="prezzo pieno" active={current.stage === "full"} />
+        <PriceScalePill value="397€" label="prezzo pieno" active={current.stage === "full"} />
       </div>
     </section>
   );
@@ -5928,7 +5928,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
     { label: "Parte dal mindset?", a: "No.", b: "Raramente.", c: "Sì. Modulo 0: come ragionare con l'AI." },
     { label: "Personalizzazione", a: "Nessuna.", b: "Template generici.", c: "Il TUO Claude, configurato per il TUO lavoro." },
     { label: "Supporto", a: "Nessuno.", b: "Community generica.", c: "4 live settimanali con i founder." },
-    { label: "Costo reale", a: "\"Gratis\" + 150-300h del tuo tempo.", b: "100-500€ + tempo per filtrare il contenuto utile.", c: "67€ early bird. 4-5h totali. Applicabile subito.", highlight: true },
+    { label: "Costo reale", a: "\"Gratis\" + 150-300h del tuo tempo.", b: "100-500€ + tempo per filtrare il contenuto utile.", c: "147€ early bird. 4-5h totali. Applicabile subito.", highlight: true },
     { label: "Garanzia", a: "—", b: "Variabile.", c: "14 giorni. Nessuna domanda." },
     { label: "Aggiornamenti", a: "Devi cercarli tu ogni volta.", b: "Dipende.", c: "Inclusi. Il corso evolve con Claude." },
   ];
@@ -6111,7 +6111,7 @@ export function SalesV2BonusSection() {
       tag: "Bonus #2",
       title: "Pacchetto Skill & Plugin curato",
       body: "Strumenti pre-costruiti che installi in 1 click. Funzionano subito sui task più comuni — non devi inventarli da zero.",
-      value: "97€",
+      value: "297€",
       icon: "✦",
     },
     {
@@ -6124,8 +6124,8 @@ export function SalesV2BonusSection() {
     {
       tag: "Bonus #4",
       title: "Credito upgrade Bootcamp",
-      body: "Se dopo il corso vuoi fare il Bootcamp AI Champion, il costo del corso ti viene rimborsato come credito. Non perdi nulla.",
-      value: "fino a 67€",
+      body: "Se dopo il corso vuoi fare il Bootcamp AI Champion, ricevi un credito di 147 EUR verso il Bootcamp AI Champion. Non perdi nulla.",
+      value: "fino a 147€",
       icon: "↗",
     },
   ];
@@ -6495,7 +6495,7 @@ export function SalesV2OfferSection({ step }: SectionProps) {
             A 25€/ora: <strong style={{ color: "var(--orange)" }}>500-800€</strong> al mese. Ogni mese. Senza che te ne accorga.
           </div>
           <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#fff", marginTop: 6, lineHeight: 1.6 }}>
-            Il corso costa <strong style={{ color: "#fff" }}>67€</strong>. Si ripaga la prima settimana.
+            Il corso costa <strong style={{ color: "#fff" }}>147€</strong>. Si ripaga la prima settimana.
           </div>
         </div>
       </div>
@@ -6609,7 +6609,7 @@ export function SalesV2OfferSection({ step }: SectionProps) {
           €
         </span>
         <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
-          <strong style={{ color: "#fff" }}>Credito upgrade Bootcamp.</strong> Se dopo il corso vuoi fare il Bootcamp AI Champion, il costo del corso ti viene rimborsato come credito. Non perdi nulla.
+          <strong style={{ color: "#fff" }}>Credito upgrade Bootcamp.</strong> Se dopo il corso vuoi fare il Bootcamp AI Champion, ricevi un credito di 147 EUR verso il Bootcamp AI Champion. Non perdi nulla.
         </div>
       </div>
       </div>
@@ -6619,9 +6619,9 @@ export function SalesV2OfferSection({ step }: SectionProps) {
 }
 
 function priceWords(n: number): string {
-  if (n === 67) return "Sessantasette euro";
-  if (n === 97) return "Novantasette euro";
   if (n === 147) return "Centoquarantasette euro";
+  if (n === 297) return "Duecentonovantasette euro";
+  if (n === 397) return "Trecentonovantasette euro";
   return `${n} euro`;
 }
 
@@ -6678,9 +6678,9 @@ function OfferStackCard({ index, title, body, value }: { index: number; title: s
 
 function PriceScaleBar({ pricing, current }: { pricing: SalesV2PricingContent; current: CurrentPricing }) {
   const stages: Array<{ key: PricingStage; price: number; label: string }> = [
-    { key: "earlyBird", price: pricing.earlyBirdPrice, label: "Early bird" },
-    { key: "standard", price: pricing.standardPrice, label: "Standard" },
-    { key: "full", price: pricing.fullPrice, label: "Prezzo pieno" },
+    { key: "earlyBird", price: pricing.earlyBirdPrice, label: "prossime 48h" },
+    { key: "standard", price: pricing.standardPrice, label: "fino al 12 maggio" },
+    { key: "full", price: pricing.fullPrice, label: "dal 13 maggio" },
   ];
   return (
     <div
@@ -6819,10 +6819,10 @@ export function SalesV2UpsellBootcampSection() {
             Il corso ti porta a padroneggiare Claude. Per chi vuole andare oltre — costruire un sistema AI che lavora in autonomia, con metodo e supporto guidato — c&apos;è il <strong style={{ color: "#fff" }}>Bootcamp AI Champion</strong>.
           </p>
           <p style={{ margin: 0, color: "var(--muted)" }}>
-            Massimo 60 posti. Chiusura enrollment: <strong style={{ color: "#fff" }}>15 giugno</strong>.
+            Massimo 25 posti. Deadline prenotazione call: <strong style={{ color: "#fff" }}>26 maggio</strong>.
           </p>
           <p style={{ margin: 0 }}>
-            E i 67€ del corso vengono rimborsati come credito. Comprare il corso adesso <strong style={{ color: "var(--violet)" }}>non ti costa niente in più</strong>.
+            E ricevi un credito di 147 EUR verso il Bootcamp AI Champion. Comprare il corso adesso <strong style={{ color: "var(--violet)" }}>non ti costa niente in più</strong>.
           </p>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8 }}>
@@ -7049,7 +7049,7 @@ export function SalesV2FAQSection() {
         <>
           Sì. Non è una finta scadenza.
           <br /><br />
-          67€ per le prime 24 ore dopo il webinar. 97€ dal giorno 2 al giorno 7. 147€ dal 13 maggio, per sempre.
+          147€ per le prime 48 ore dopo il webinar. 297€ dal 8 al 12 maggio. 397€ dal 13 maggio, per sempre.
           <br /><br />
           Il contenuto non cambierà. Il prezzo sì.
         </>
@@ -7059,7 +7059,7 @@ export function SalesV2FAQSection() {
       q: "E se poi voglio fare il bootcamp?",
       a: (
         <>
-          Il costo del corso ti viene rimborsato come credito sull&apos;iscrizione al Bootcamp AI Champion. Non perdi nulla. Il corso è il primo step. Il bootcamp è il secondo, per chi vuole andare oltre.
+          Ricevi un credito di 147 EUR verso il Bootcamp AI Champion. Non perdi nulla. Il corso è il primo step. Il bootcamp è il secondo, per chi vuole andare oltre.
         </>
       ),
     },
@@ -7305,11 +7305,11 @@ export function SalesV2BootcampBridgeSection() {
             </li>
             <li style={{ display: "flex", gap: 14 }}>
               <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
-              <span>Massimo <strong style={{ color: "#fff" }}>60 posti</strong>. Chiusura enrollment: <strong style={{ color: "#fff" }}>15 giugno</strong></span>
+              <span>Massimo <strong style={{ color: "#fff" }}>25 posti</strong>. Deadline prenotazione call: <strong style={{ color: "#fff" }}>26 maggio</strong></span>
             </li>
             <li style={{ display: "flex", gap: 14 }}>
               <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
-              <span>Il costo del corso ti viene rimborsato come credito. <strong style={{ color: "#fff" }}>Non perdi niente</strong> comprando il corso adesso.</span>
+              <span>Ricevi un credito di 147 EUR verso il Bootcamp AI Champion. <strong style={{ color: "#fff" }}>Non perdi niente</strong> comprando il corso adesso.</span>
             </li>
           </ul>
         </div>
@@ -7362,14 +7362,14 @@ export function SalesV2UrgencySection({ step }: SectionProps) {
 
   const liveBody = (
     <>
-      <p>67€. Solo per le prossime ore. Poi sale a 97€. E dopo 7 giorni, a 147€. Per sempre.</p>
+      <p>147€. Solo per le prossime ore. Poi sale a 297€. E dopo 7 giorni, a 397€. Per sempre.</p>
       <p>Non tornerà a questo prezzo. Non ci sarà un&apos;altra occasione identica.</p>
       <p>Eri presente. Hai visto il metodo. Sai che funziona. L&apos;unica domanda è: agisci adesso o paghi di più dopo?</p>
     </>
   );
   const replayBody = (
     <>
-      <p>Tra poco, il prezzo sale da 67€ a 97€. Dopo 7 giorni, sale a 147€. Per sempre.</p>
+      <p>Tra poco, il prezzo sale da 147€ a 297€. Dopo 7 giorni, sale a 397€. Per sempre.</p>
       <p>Non è una strategia di marketing. È il prezzo del webinar: riservato a chi ha partecipato e decide di agire.</p>
       <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
         <li>— Il corso resta lo stesso</li>
@@ -7384,9 +7384,9 @@ export function SalesV2UrgencySection({ step }: SectionProps) {
     <>
       <p>Il corso è appena uscito. Il prezzo di lancio è il più basso che ci sarà mai:</p>
       <p>
-        <strong style={{ color: "var(--orange)" }}>67€</strong> — adesso.<br />
-        <strong style={{ color: "#fff" }}>97€</strong> — tra pochi giorni.<br />
-        <strong style={{ color: "var(--muted)" }}>147€</strong> — prezzo pieno, per sempre.
+        <strong style={{ color: "var(--orange)" }}>147€</strong> — adesso.<br />
+        <strong style={{ color: "#fff" }}>297€</strong> — tra pochi giorni.<br />
+        <strong style={{ color: "var(--muted)" }}>397€</strong> — prezzo pieno, per sempre.
       </p>
       <p>Il contenuto non cambierà. La garanzia 14 giorni resta identica. L&apos;unica cosa che cambia è quanto paghi.</p>
       <p>Ma il prezzo non è l&apos;urgenza vera.</p>
@@ -7638,7 +7638,7 @@ export function SalesV2FinalCTASection({ step }: SectionProps) {
             fontStyle: "italic",
           }}
         >
-          Se dopo il corso vuoi fare il bootcamp, il costo del corso e&apos; un credito. Non perdi nulla.
+          Se dopo il corso vuoi fare il bootcamp, ricevi un credito di 147 EUR verso il Bootcamp AI Champion. Non perdi nulla.
         </p>
       </div>
 
