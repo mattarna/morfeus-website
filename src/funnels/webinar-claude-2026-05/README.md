@@ -105,12 +105,12 @@ Configurabile in `bootcamp-config.json` step `thank-you`:
 - `whatsappGroupUrl` — invite gruppo WhatsApp bootcamp (vuoto = href="#" no-op)
 - `circleUrl` — space Circle bootcamp (vuoto = href="#" no-op)
 - `claudeUrl` — default `https://claude.ai`
-- `mattiaEmail` — default `mattia@morfeushub.com`
+- `supportEmail` — default `hello@morfeushub.com`
 
 TY bootcamp — TODO pre-go-live:
 1. **WhatsApp invite**: `whatsappGroupUrl` vuoto → CTA Step 1 punta a `href="#"`. Inserire l'invite link reale del gruppo WhatsApp bootcamp.
 2. **Circle URL**: `circleUrl` vuoto → CTA Step 2 punta a `href="#"`. Inserire l'URL reale dello space Circle del bootcamp.
-3. **Email Mattia**: `mattiaEmail` default `mattia@morfeushub.com`. Aggiornare se diverso.
+3. **Email supporto**: `supportEmail` default `hello@morfeushub.com`. Aggiornare se cambia.
 4. **Roadmap timeline**: i 4 voci timeline ("Adesso", "Entro fine maggio", "Prima settimana di giugno", "~13 settimane dopo") sono hardcoded nel componente — modificare in `BootcampThankYouSection` se cambia la finestra di lancio.
 5. **7 sessioni live**: titoli e descrizioni hardcoded nel componente, allineati alla v3 del bootcamp.
 

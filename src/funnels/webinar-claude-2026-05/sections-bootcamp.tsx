@@ -3033,7 +3033,7 @@ export function BootcampThankYouSection({ step }: SectionProps) {
   const whatsappHref = content.whatsappGroupUrl && content.whatsappGroupUrl.trim().length > 0 ? content.whatsappGroupUrl : "#";
   const circleHref = content.circleUrl && content.circleUrl.trim().length > 0 ? content.circleUrl : "#";
   const claudeHref = content.claudeUrl && content.claudeUrl.trim().length > 0 ? content.claudeUrl : "https://claude.ai";
-  const mattiaEmail = content.mattiaEmail && content.mattiaEmail.trim().length > 0 ? content.mattiaEmail : "mattia@morfeushub.com";
+  const supportEmail = content.supportEmail && content.supportEmail.trim().length > 0 ? content.supportEmail : "hello@morfeushub.com";
 
   const cardBase: React.CSSProperties = {
     background: "rgba(255,255,255,0.025)",
@@ -3471,7 +3471,7 @@ export function BootcampThankYouSection({ step }: SectionProps) {
               marginBottom: 10,
             }}
           >
-            Mattia · Coordinamento bootcamp
+            Supporto bootcamp
           </div>
           <p
             style={{
@@ -3484,45 +3484,61 @@ export function BootcampThankYouSection({ step }: SectionProps) {
               maxWidth: 620,
             }}
           >
-            Per domande su logistica, accessi, pagamenti o qualsiasi cosa pratica prima dell&apos;inizio — Mattia è il riferimento. Lo trovi nel gruppo WhatsApp o puoi scrivergli direttamente.
+            Per qualsiasi domanda su logistica, accessi, pagamenti o contenuto del bootcamp — scrivi sul gruppo WhatsApp o a <strong style={{ color: "#fff" }}>{supportEmail}</strong>.
           </p>
-          <a
-            href={`mailto:${mattiaEmail}`}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "12px 22px",
-              background: "transparent",
-              color: LIME,
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              fontWeight: 700,
-              borderRadius: 10,
-              textDecoration: "none",
-              border: `1px solid ${LIME_BORDER_25}`,
-              transition: "background .15s",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
-            Scrivi a Mattia
-          </a>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+            <a
+              href={whatsappHref}
+              target={whatsappHref.startsWith("http") ? "_blank" : undefined}
+              rel={whatsappHref.startsWith("http") ? "noopener noreferrer" : undefined}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "12px 22px",
+                background: LIME,
+                color: "#0B0B0C",
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                fontWeight: 700,
+                borderRadius: 10,
+                textDecoration: "none",
+                border: `1px solid ${LIME}`,
+                boxShadow: `0 4px 18px ${LIME_GLOW_35}`,
+                transition: "background .15s",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+              </svg>
+              Gruppo WhatsApp
+            </a>
+            <a
+              href={`mailto:${supportEmail}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "12px 22px",
+                background: "transparent",
+                color: LIME,
+                fontFamily: "var(--font-body)",
+                fontSize: 14,
+                fontWeight: 700,
+                borderRadius: 10,
+                textDecoration: "none",
+                border: `1px solid ${LIME_BORDER_25}`,
+                transition: "background .15s",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              {supportEmail}
+            </a>
+          </div>
         </div>
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 13.5,
-            lineHeight: 1.55,
-            color: "var(--muted)",
-            margin: "16px 0 0 0",
-            textAlign: "center",
-          }}
-        >
-          Per domande sul contenuto del bootcamp, usa direttamente il gruppo WhatsApp — così tutti beneficiano della risposta.
-        </p>
       </div>
 
       {/* ── Note finale ─────────────────────────────────────────────── */}

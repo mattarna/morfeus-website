@@ -611,8 +611,8 @@ export interface BootcampThankYouContent {
   circleUrl: string;
   /** URL claude.ai per attivare Claude Pro */
   claudeUrl: string;
-  /** Email diretta del coordinatore bootcamp (Mattia) */
-  mattiaEmail: string;
+  /** Email di supporto bootcamp */
+  supportEmail: string;
 }
 
 // ─── Bootcamp AI Champion v2 (sales page — copy nuovo, in fase di confronto) ──
