@@ -211,7 +211,7 @@ function readPricing(step: { content?: { BootcampV2Pricing?: BootcampV2PricingCo
       currentPrice: 1500,
       earlyBirdPrice: 1297,
       listPrice: 1500,
-      stackValue: 8900,
+      stackValue: 9100,
       currency: "EUR",
       callUrl: "",
     }
@@ -3016,7 +3016,7 @@ export function BootcampV2LaSceltaSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const OFFER_STACK: Array<{ label: string; value: string }> = [
-  { label: "Accesso a Claude Unlocked (10 moduli, ~48 lezioni, ~4-5h)", value: "197 EUR" },
+  { label: "Accesso a Claude Unlocked (18 moduli, ~12h, 4 live sessioni incluse)", value: "397 EUR" },
   { label: "3h di lezioni preparatorie pre-registrate", value: "297 EUR" },
   { label: "7 sessioni live da 2h con i founder (14h totali)", value: "3.500 EUR" },
   { label: "Replay permanenti di tutte le sessioni", value: "697 EUR" },
@@ -3204,7 +3204,7 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
               marginInline: "auto",
             }}
           >
-            (Hai già acquistato il corso base? Il suo valore viene scalato dal prezzo del bootcamp. Non paghi due volte.)
+            (Hai già acquistato il corso base? Ricevi un credito di 147 EUR verso il bootcamp.)
           </p>
         </div>
 
@@ -3358,6 +3358,123 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
           </p>
         </div>
 
+        {/* Opzioni di pagamento */}
+        <div
+          style={{
+            background: "var(--dusk)",
+            border: `1px solid ${LIME_BORDER_25}`,
+            borderRadius: 14,
+            padding: "24px clamp(20px, 4vw, 32px)",
+            marginBottom: 32,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              color: LIME,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              margin: "0 0 18px",
+              fontWeight: 700,
+            }}
+          >
+            Opzioni di pagamento
+          </p>
+
+          {/* Pagamento unico — principale */}
+          <div
+            style={{
+              paddingBottom: 16,
+              marginBottom: 16,
+              borderBottom: "1px solid var(--hairline)",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(15px, 1.5vw, 17px)",
+                color: "#fff",
+                margin: "0 0 6px",
+                letterSpacing: "-0.005em",
+              }}
+            >
+              Pagamento unico
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "clamp(14px, 1.4vw, 16px)",
+                color: "var(--ghost)",
+                margin: 0,
+                lineHeight: 1.5,
+              }}
+            >
+              <strong style={{ color: LIME }}>{pricing.earlyBirdPrice.toLocaleString("it-IT")} EUR</strong> early bird ·{" "}
+              <span style={{ opacity: 0.78 }}>{pricing.currentPrice.toLocaleString("it-IT")} EUR full price</span>
+            </p>
+          </div>
+
+          {/* 2 rate */}
+          <div style={{ marginBottom: 12 }}>
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 500,
+                fontSize: "clamp(13px, 1.3vw, 15px)",
+                color: "var(--ghost)",
+                margin: "0 0 2px",
+                opacity: 0.9,
+              }}
+            >
+              2 rate
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 13,
+                color: "var(--ghost)",
+                opacity: 0.78,
+                margin: 0,
+                lineHeight: 1.45,
+              }}
+            >
+              2 × <strong style={{ color: LIME }}>680 EUR</strong> = 1.360 EUR ·{" "}
+              <span style={{ opacity: 0.75 }}>full price: 2 × 800 EUR = 1.600 EUR</span>
+            </p>
+          </div>
+
+          {/* 3 rate */}
+          <div>
+            <p
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 500,
+                fontSize: "clamp(13px, 1.3vw, 15px)",
+                color: "var(--ghost)",
+                margin: "0 0 2px",
+                opacity: 0.9,
+              }}
+            >
+              3 rate
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 13,
+                color: "var(--ghost)",
+                opacity: 0.78,
+                margin: 0,
+                lineHeight: 1.45,
+              }}
+            >
+              3 × <strong style={{ color: LIME }}>460 EUR</strong> = 1.380 EUR ·{" "}
+              <span style={{ opacity: 0.75 }}>full price: 3 × 550 EUR = 1.650 EUR</span>
+            </p>
+          </div>
+        </div>
+
         {/* CTA */}
         <div style={{ textAlign: "center" }}>
           <PrimaryButton size="xl" href={callHref(pricing)} pulse onClick={() => onCtaClick("offer")}>
@@ -3372,7 +3489,7 @@ export function BootcampV2OfferSection({ step }: SectionProps) {
               opacity: 0.75,
             }}
           >
-            25 posti · 1 sola classe · La prossima edizione non ha data certa
+            25 posti · 1 sola classe · Prenota entro il 26 maggio (Live #3) per bloccare il prezzo
           </p>
         </div>
       </div>
