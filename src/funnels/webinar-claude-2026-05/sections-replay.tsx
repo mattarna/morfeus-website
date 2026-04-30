@@ -1033,14 +1033,55 @@ export function WebinarReplayFAQSection() {
 // ─── Minimal footer ───────────────────────────────────────────────────────────
 
 export function WebinarReplayFooterSection() {
+  const linkStyle: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontSize: 13,
+    color: "var(--muted)",
+    textDecoration: "none",
+    transition: "color .2s",
+  };
+
   return (
     <footer
       style={{
         padding: "40px 24px",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 12,
       }}
     >
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 20,
+        }}
+      >
+        <Link
+          href="/it/privacy"
+          target="_blank"
+          rel="noreferrer"
+          style={linkStyle}
+          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--ghost)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--muted)"; }}
+        >
+          Privacy Policy
+        </Link>
+        <Link
+          href="/it/cookies"
+          target="_blank"
+          rel="noreferrer"
+          style={linkStyle}
+          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--ghost)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--muted)"; }}
+        >
+          Cookie Policy
+        </Link>
+      </div>
       <p
         style={{
           fontFamily: "var(--font-body)",
