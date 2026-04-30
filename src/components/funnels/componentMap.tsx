@@ -58,6 +58,7 @@ import {
   WebinarReplayHeaderSection,
   WebinarReplayVideoSection,
 } from "@/funnels/webinar-claude-2026-05/sections-replay";
+import { WebinarTeamHubSection } from "@/funnels/webinar-claude-2026-05/sections-team-hub";
 import {
   SalesV2AudienceSection,
   SalesV2B2BSection,
@@ -185,6 +186,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.WebinarReplayCards ? <WebinarReplayCardsSection accentColor={accentColor} step={step} /> : null,
   WebinarReplayFAQ: () => <WebinarReplayFAQSection />,
   WebinarReplayFooter: () => <WebinarReplayFooterSection />,
+  WebinarTeamHub: () => <WebinarTeamHubSection />,
   FreebieHero: ({ accentColor, step }) =>
     step.content.FreebieHero ? <FreebieHeroSection accentColor={accentColor} step={step} /> : null,
   FreebieWebinarTeaser: ({ accentColor, step }) =>

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { FunnelRenderer } from "@/components/funnels/FunnelRenderer";
@@ -9,6 +10,19 @@ interface FunnelPageProps {
     slug: string;
     step?: string[];
   };
+}
+
+export function generateMetadata({ params }: FunnelPageProps): Metadata {
+  const funnel = loadFunnelConfig(params.slug);
+  if (!funnel) return {};
+  const step = getFunnelStepByPath(funnel, params.step ?? []);
+  if (step?.noindex) {
+    return {
+      title: step.title,
+      robots: { index: false, follow: false, nocache: true },
+    };
+  }
+  return {};
 }
 
 export default function FunnelPage({ params }: FunnelPageProps) {

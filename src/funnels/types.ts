@@ -30,6 +30,7 @@ export type FunnelComponentName =
   | "WebinarReplayCards"
   | "WebinarReplayFAQ"
   | "WebinarReplayFooter"
+  | "WebinarTeamHub"
   | "FreebieHero"
   | "FreebieWebinarTeaser"
   | "FreebieThankYou"
@@ -261,6 +262,9 @@ export interface WebinarReplayContextContent {}
 export interface WebinarReplayFAQContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface WebinarReplayFooterContent {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface WebinarTeamHubContent {}
 
 export interface WebinarReplayCardsContent {
   countdownIso: string;
@@ -710,6 +714,8 @@ export interface FunnelStepConfig {
   title: string;
   path: string;
   isConversion?: boolean;
+  /** Se true, applica meta robots noindex/nofollow a questa singola step (es. pagine interne / TY page). Indipendente dal flag indexable a livello funnel. */
+  noindex?: boolean;
   componentOrder: FunnelComponentName[];
   content: {
     Hero?: HeroContent;
@@ -738,6 +744,7 @@ export interface FunnelStepConfig {
     WebinarReplayCards?: WebinarReplayCardsContent;
     WebinarReplayFAQ?: WebinarReplayFAQContent;
     WebinarReplayFooter?: WebinarReplayFooterContent;
+    WebinarTeamHub?: WebinarTeamHubContent;
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;

@@ -31,6 +31,7 @@ const allowedComponents: FunnelComponentName[] = [
   "WebinarReplayCards",
   "WebinarReplayFAQ",
   "WebinarReplayFooter",
+  "WebinarTeamHub",
   "FreebieHero",
   "FreebieWebinarTeaser",
   "FreebieThankYou",

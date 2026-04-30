@@ -29,6 +29,7 @@ Le sezioni `Sales*` in `sections.tsx` sono usate solo dal funnel `claude-unlocke
 | `webinar-claude` | `optin` | `/webinar-claude` | Lead capture (form Brevo) | false |
 | `webinar-claude` | `thank-you` | `/webinar-claude/thank-you` | Conferma post-iscrizione | true |
 | `webinar-claude` | `replay` | `/webinar-claude/replay` | Pagina replay post-webinar (video + 2 card prodotto) | false |
+| `webinar-claude` | `team-hub` | `/webinar-claude/team-hub-mk7p3x9q` | Team hub interno (URL, prezzi, timeline, email seq, mancanti) — `noindex: true` | false |
 | `claude-unlocked-v1` | `sales` | `/claude-unlocked-v1` | Sales page Corso Claude | true |
 | `claude-unlocked-v1` | `thank-you` | `/claude-unlocked-v1/access-9x4q2k7n` | TY page post-acquisto corso (onboarding + upsell bootcamp) — slug offuscato | true |
 | `bootcamp-ai-champion` | `sales` | `/bootcamp-ai-champion` | Sales page Bootcamp AI Champion (3a edizione) | true |
