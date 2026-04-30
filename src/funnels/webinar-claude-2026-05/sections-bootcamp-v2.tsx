@@ -4016,7 +4016,8 @@ export function BootcampV2FooterSection() {
         <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
           <a href="/it/privacy" style={{ color: "var(--muted)", textDecoration: "none" }}>Privacy</a>
           <a href="/it/cookies" style={{ color: "var(--muted)", textDecoration: "none" }}>Cookie</a>
-          <span>P.IVA 12345678901</span>
+          <a href="/it/termini-bootcamp" style={{ color: "var(--muted)", textDecoration: "none" }}>Termini e Condizioni</a>
+          <span>Morfeus Hub S.r.l. · P.IVA 14209210963</span>
         </div>
       </div>
       <p

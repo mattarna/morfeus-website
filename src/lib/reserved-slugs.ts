@@ -15,6 +15,7 @@ export const RESERVED_SITE_SLUGS = new Set([
   "portal",
   "privacy",
   "cookies",
+  "termini-bootcamp",
   "forge",
   "lab",
   "call-confirmed",
