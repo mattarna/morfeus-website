@@ -8437,6 +8437,7 @@ export function SalesFooterSection() {
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", display: "flex", gap: 16 }}>
           <Link href="/it/privacy" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Privacy Policy</Link>
           <Link href="/it/cookies" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Cookie Policy</Link>
+          <Link href="/it/termini-corso" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Termini e Condizioni</Link>
         </div>
       </div>
 
