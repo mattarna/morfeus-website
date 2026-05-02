@@ -3511,6 +3511,20 @@ export function SalesV2HeroSection({ step }: SectionProps) {
         }}
       />
 
+      <Image
+        src="/claude-unlocked/logo-full.png"
+        alt="Claude Unlocked"
+        width={1980}
+        height={860}
+        priority
+        style={{
+          display: "block",
+          height: "auto",
+          width: "min(340px, 70vw)",
+          margin: "0 auto 22px",
+        }}
+      />
+
       <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
         <Badge>{copy.badge}</Badge>
         {current.activeDeadlineIso && (
@@ -7874,11 +7888,23 @@ export function SalesV2FooterSection() {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 20, display: "block" }} />
           <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
             morfeushub.com
+          </span>
+          <span aria-hidden style={{ color: "var(--muted)", opacity: 0.4 }}>·</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/claude-unlocked/logo-mark-light.png"
+              alt="Claude Unlocked"
+              style={{ height: 22, width: 22, display: "block", borderRadius: 5 }}
+            />
+            <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", letterSpacing: "0.06em", textTransform: "uppercase", opacity: 0.85 }}>
+              Claude Unlocked
+            </span>
           </span>
         </div>
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", display: "flex", gap: 16 }}>
