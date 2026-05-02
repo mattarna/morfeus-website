@@ -24,7 +24,7 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
   }
   // Vocabolario AI — SEO meta dedicati (pagina pubblica indicizzabile)
   if (params.slug === "vocabolario-ai" && step?.id === "page") {
-    const title = "Vocabolario AI — la guida ai termini di AI e Claude | Morfeus";
+    const title = "Vocabolario AI: la guida ai termini di AI e Claude | Morfeus";
     const description =
       "60+ termini di AI spiegati senza fuffa: LLM, RAG, MCP, fine-tuning, prompt engineering. Più una sezione dedicata a Claude (Cowork, Skill, Memory, Projects). La guida che ti serve per parlare il linguaggio dell'intelligenza artificiale.";
     return {

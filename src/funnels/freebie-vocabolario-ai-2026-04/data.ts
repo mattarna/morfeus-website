@@ -28,7 +28,7 @@ export interface VocabUseCaseGroup {
   cases: VocabUseCase[];
 }
 
-// ─── SEZIONE 1 — VOCABOLARIO AI ──────────────────────────────────────────────
+// ─── SEZIONE 1 · VOCABOLARIO AI ──────────────────────────────────────────────
 
 export const AI_TERMS: VocabTerm[] = [
   {
@@ -315,7 +315,7 @@ export const AI_TERMS: VocabTerm[] = [
   },
 ];
 
-// ─── SEZIONE 2A — PRODOTTI CLAUDE ────────────────────────────────────────────
+// ─── SEZIONE 2A · PRODOTTI CLAUDE ────────────────────────────────────────────
 
 export const CLAUDE_PRODUCTS: VocabTerm[] = [
   {
@@ -360,7 +360,7 @@ export const CLAUDE_PRODUCTS: VocabTerm[] = [
   },
 ];
 
-// ─── SEZIONE 2B — TERMINI OPERATIVI CLAUDE ───────────────────────────────────
+// ─── SEZIONE 2B · TERMINI OPERATIVI CLAUDE ───────────────────────────────────
 
 export const CLAUDE_OPS: VocabTerm[] = [
   {
@@ -475,7 +475,7 @@ export const CLAUDE_OPS: VocabTerm[] = [
   },
 ];
 
-// ─── SEZIONE 3 — USE CASE ────────────────────────────────────────────────────
+// ─── SEZIONE 3 · USE CASE ────────────────────────────────────────────────────
 
 export const USE_CASE_GROUPS: VocabUseCaseGroup[] = [
   {

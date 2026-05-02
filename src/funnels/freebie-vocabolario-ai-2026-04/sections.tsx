@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Vocabolario AI + Claude — pagina freebie pubblica.
+ * Vocabolario AI + Claude: pagina freebie pubblica.
  *
  * Singola sezione gigante (`VocabolarioPage`) per evitare di dover passare
  * lo stato del modal tra sezioni separate del sistema funnel.
@@ -30,6 +30,62 @@ import {
   USE_CASE_GROUPS,
   type VocabTerm,
 } from "@/funnels/freebie-vocabolario-ai-2026-04/data";
+
+// ─── SECTION COLOR MAP ──────────────────────────────────────────────────────
+//
+// Ogni sezione ha un suo accent colore: usato per heading, hover border delle
+// card, dot del badge, chip TOC attivo, sidebar item attivo, glow anchor.
+// I CTA principali restano sempre arancione per evitare ambiguità su "dove
+// cliccare per il webinar".
+
+interface SectionAccent {
+  /** CSS color value (var(--...) o hex) */
+  color: string;
+  /** Background "tint" rgba con bassa opacità per chip + bordi soft */
+  tint: string;
+  /** Bordo rgba a media opacità */
+  border: string;
+  /** Glow box-shadow per anchor highlight */
+  glow: string;
+}
+
+const SECTION_ACCENT: Record<string, SectionAccent> = {
+  "vocab-ai": {
+    color: "var(--orange)",
+    tint: "rgba(235,122,46,0.10)",
+    border: "rgba(235,122,46,0.30)",
+    glow: "0 0 0 3px rgba(235,122,46,0.45), 0 0 32px rgba(235,122,46,0.35)",
+  },
+  "vocab-claude-products": {
+    color: "var(--violet)",
+    tint: "rgba(123,104,238,0.10)",
+    border: "rgba(123,104,238,0.32)",
+    glow: "0 0 0 3px rgba(123,104,238,0.45), 0 0 32px rgba(123,104,238,0.35)",
+  },
+  "vocab-claude-ops": {
+    color: "#5EE3FF",
+    tint: "rgba(94,227,255,0.10)",
+    border: "rgba(94,227,255,0.32)",
+    glow: "0 0 0 3px rgba(94,227,255,0.45), 0 0 32px rgba(94,227,255,0.35)",
+  },
+  "vocab-use-cases": {
+    color: "var(--lime)",
+    tint: "rgba(181,240,58,0.10)",
+    border: "rgba(181,240,58,0.32)",
+    glow: "0 0 0 3px rgba(181,240,58,0.45), 0 0 32px rgba(181,240,58,0.35)",
+  },
+};
+
+const DEFAULT_ACCENT: SectionAccent = SECTION_ACCENT["vocab-ai"];
+
+// Mappa anchor id → sezione di appartenenza per il glow on landing
+function accentForAnchorId(anchorId: string): SectionAccent {
+  if (anchorId.startsWith("term-ai-")) return SECTION_ACCENT["vocab-ai"];
+  if (anchorId.startsWith("term-products-")) return SECTION_ACCENT["vocab-claude-products"];
+  if (anchorId.startsWith("term-ops-")) return SECTION_ACCENT["vocab-claude-ops"];
+  if (anchorId.startsWith("uc-")) return SECTION_ACCENT["vocab-use-cases"];
+  return DEFAULT_ACCENT;
+}
 
 // ─── GA4 PUSH HELPER ─────────────────────────────────────────────────────────
 
@@ -326,20 +382,31 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
-function TermCard({ t, anchorId }: { t: VocabTerm; anchorId: string }) {
+function TermCard({
+  t,
+  anchorId,
+  accent,
+}: {
+  t: VocabTerm;
+  anchorId: string;
+  accent: SectionAccent;
+}) {
   return (
     <div
       id={anchorId}
+      data-vocab-card
       style={{
-        scrollMarginTop: 90,
+        scrollMarginTop: 130,
         padding: "20px 22px",
         background: "rgba(255,255,255,0.025)",
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 14,
-        transition: "border-color .25s, background .25s",
+        transition:
+          "border-color .25s, background .25s, box-shadow .6s",
+        position: "relative",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = "rgba(235,122,46,0.25)";
+        e.currentTarget.style.borderColor = accent.border;
         e.currentTarget.style.background = "rgba(255,255,255,0.035)";
       }}
       onMouseLeave={(e) => {
@@ -347,6 +414,20 @@ function TermCard({ t, anchorId }: { t: VocabTerm; anchorId: string }) {
         e.currentTarget.style.background = "rgba(255,255,255,0.025)";
       }}
     >
+      {/* Accent dot */}
+      <span
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 22,
+          left: -4,
+          width: 4,
+          height: 22,
+          borderRadius: 2,
+          background: accent.color,
+          opacity: 0.7,
+        }}
+      />
       <h3
         style={{
           fontFamily: "var(--font-display)",
@@ -379,28 +460,51 @@ function TermCard({ t, anchorId }: { t: VocabTerm; anchorId: string }) {
 function SectionHeader({
   eyebrow,
   title,
+  titleAccent,
   intro,
   id,
+  accent,
 }: {
   eyebrow?: string;
+  /** Parte di titolo NON colorata (sempre bianca) */
   title: string;
+  /** Frammento finale del titolo da colorare con l'accent della sezione */
+  titleAccent?: string;
   intro?: string;
   id: string;
+  accent: SectionAccent;
 }) {
   return (
-    <div id={id} style={{ scrollMarginTop: 90, marginBottom: 28 }}>
+    <div id={id} style={{ scrollMarginTop: 130, marginBottom: 28 }}>
       {eyebrow && (
         <div
           style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "6px 12px",
+            borderRadius: 999,
+            background: accent.tint,
+            border: `1px solid ${accent.border}`,
             fontFamily: "var(--font-body)",
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: 700,
-            letterSpacing: "0.20em",
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: "var(--violet)",
-            marginBottom: 10,
+            color: accent.color,
+            marginBottom: 14,
           }}
         >
+          <span
+            aria-hidden
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: 999,
+              background: accent.color,
+              boxShadow: `0 0 8px ${accent.color}`,
+            }}
+          />
           {eyebrow}
         </div>
       )}
@@ -416,6 +520,12 @@ function SectionHeader({
         }}
       >
         {title}
+        {titleAccent && (
+          <>
+            {" "}
+            <span style={{ color: accent.color }}>{titleAccent}</span>
+          </>
+        )}
       </h2>
       {intro && (
         <p
@@ -444,8 +554,11 @@ export function VocabolarioPageSection() {
   const [query, setQuery] = useState("");
   const [activeNav, setActiveNav] = useState<string>("vocab-ai");
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const finalCtaRef = useRef<HTMLDivElement>(null);
+
+  const activeAccent = SECTION_ACCENT[activeNav] ?? DEFAULT_ACCENT;
 
   const openModal = useCallback(
     (source: string) => {
@@ -470,7 +583,7 @@ export function VocabolarioPageSection() {
     return () => clearTimeout(t);
   }, [query]);
 
-  // Scroll spy: aggiorna activeNav in base alla section visibile + sticky CTA
+  // Scroll spy: aggiorna activeNav in base alla section visibile + sticky CTA + back-to-top
   useEffect(() => {
     const ids = NAV_ITEMS.map((n) => n.id);
     const els = ids
@@ -493,14 +606,44 @@ export function VocabolarioPageSection() {
       const finalTop =
         finalCtaRef.current?.getBoundingClientRect().top ??
         Number.POSITIVE_INFINITY;
-      // mostra sticky bar dopo aver scrollato sotto l'hero, nasconde quando si avvicina al CTA finale
+      // sticky CTA mobile: dopo l'hero, nascondi vicino al final CTA
       setShowStickyCta(heroBottom < 0 && finalTop > 200);
+      // back-to-top floating: dopo aver scrollato di una viewport, nascondi vicino al final CTA
+      setShowBackToTop(window.scrollY > 600 && finalTop > 200);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  // Anchor highlight: glow del termine quando si arriva via #anchor
+  useEffect(() => {
+    function highlightFromHash() {
+      const hash =
+        typeof window !== "undefined" ? window.location.hash.slice(1) : "";
+      if (!hash) return;
+      const el = document.getElementById(hash);
+      if (!el) return;
+      const accent = accentForAnchorId(hash);
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      const prevShadow = el.style.boxShadow;
+      const prevBorder = el.style.borderColor;
+      el.style.boxShadow = accent.glow;
+      el.style.borderColor = accent.border;
+      window.setTimeout(() => {
+        el.style.boxShadow = prevShadow;
+        el.style.borderColor = prevBorder;
+      }, 1400);
+    }
+    // delay leggero per lasciare montare i refs
+    const t = window.setTimeout(highlightFromHash, 120);
+    window.addEventListener("hashchange", highlightFromHash);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("hashchange", highlightFromHash);
     };
   }, []);
 
@@ -575,8 +718,8 @@ export function VocabolarioPageSection() {
             margin: "0 auto 22px",
           }}
         >
-          Vocabolario AI —<br />
-          la guida definitiva ai{" "}
+          Vocabolario AI.<br />
+          La guida definitiva ai{" "}
           <span style={{ color: "var(--orange)" }}>termini</span> che devi
           conoscere
         </h1>
@@ -670,16 +813,37 @@ export function VocabolarioPageSection() {
         </div>
       </section>
 
-      {/* ─── SEARCH BAR ─── */}
+      {/* ─── STICKY SEARCH + MOBILE TOC ─── */}
       <section
         style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          padding: "0 20px",
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          padding: "10px 20px 12px",
+          background: "rgba(11,11,12,0.82)",
+          backdropFilter: "blur(14px)",
+          WebkitBackdropFilter: "blur(14px)",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
           marginBottom: 32,
         }}
       >
-        <SearchInput value={query} onChange={setQuery} totalMatches={totalMatches} hasQuery={Boolean(query)} />
+        <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            totalMatches={totalMatches}
+            hasQuery={Boolean(query)}
+          />
+          <MobileTOC
+            items={NAV_ITEMS.map((n) => ({
+              id: n.id,
+              label: n.label,
+              accent: SECTION_ACCENT[n.id] ?? DEFAULT_ACCENT,
+            }))}
+            activeId={activeNav}
+            onPick={handleNavClick}
+          />
+        </div>
       </section>
 
       {/* ─── BODY 2 COLUMNS (DESKTOP) ─── */}
@@ -694,13 +858,13 @@ export function VocabolarioPageSection() {
         }}
         className="vocab-grid"
       >
-        {/* SIDEBAR — desktop only via CSS */}
+        {/* SIDEBAR: desktop only via CSS */}
         <aside
           aria-label="Indice"
           className="vocab-sidebar"
           style={{
             position: "sticky",
-            top: 24,
+            top: 110,
             alignSelf: "start",
             display: "none",
           }}
@@ -720,7 +884,7 @@ export function VocabolarioPageSection() {
                 fontWeight: 700,
                 letterSpacing: "0.20em",
                 textTransform: "uppercase",
-                color: "var(--violet)",
+                color: "var(--muted)",
                 marginBottom: 14,
               }}
             >
@@ -736,50 +900,68 @@ export function VocabolarioPageSection() {
                 gap: 4,
               }}
             >
-              {NAV_ITEMS.map((n) => (
-                <li key={n.id}>
-                  <button
-                    type="button"
-                    onClick={() => handleNavClick(n.id)}
-                    style={{
-                      display: "block",
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "10px 12px",
-                      borderRadius: 8,
-                      background:
-                        activeNav === n.id
-                          ? "rgba(235,122,46,0.12)"
-                          : "transparent",
-                      border:
-                        activeNav === n.id
-                          ? "1px solid rgba(235,122,46,0.30)"
+              {NAV_ITEMS.map((n) => {
+                const itemAccent = SECTION_ACCENT[n.id] ?? DEFAULT_ACCENT;
+                const isActive = activeNav === n.id;
+                return (
+                  <li key={n.id}>
+                    <button
+                      type="button"
+                      onClick={() => handleNavClick(n.id)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "10px 12px",
+                        borderRadius: 8,
+                        background: isActive ? itemAccent.tint : "transparent",
+                        border: isActive
+                          ? `1px solid ${itemAccent.border}`
                           : "1px solid transparent",
-                      color:
-                        activeNav === n.id ? "var(--orange)" : "var(--ghost)",
-                      fontFamily: "var(--font-body)",
-                      fontSize: 14,
-                      fontWeight: activeNav === n.id ? 600 : 500,
-                      cursor: "pointer",
-                      transition: "background .2s, color .2s",
-                    }}
-                  >
-                    <div>{n.label}</div>
-                    {n.count != null && (
-                      <div
+                        color: isActive ? itemAccent.color : "var(--ghost)",
+                        fontFamily: "var(--font-body)",
+                        fontSize: 14,
+                        fontWeight: isActive ? 600 : 500,
+                        cursor: "pointer",
+                        transition: "background .2s, color .2s, border-color .2s",
+                      }}
+                    >
+                      <span
+                        aria-hidden
                         style={{
-                          fontSize: 11,
-                          color: "var(--muted)",
-                          marginTop: 2,
-                          fontWeight: 500,
+                          width: 8,
+                          height: 8,
+                          borderRadius: 999,
+                          background: itemAccent.color,
+                          opacity: isActive ? 1 : 0.5,
+                          flexShrink: 0,
+                          boxShadow: isActive
+                            ? `0 0 8px ${itemAccent.color}`
+                            : "none",
                         }}
-                      >
-                        {n.count} {n.count === 1 ? "voce" : "voci"}
-                      </div>
-                    )}
-                  </button>
-                </li>
-              ))}
+                      />
+                      <span style={{ minWidth: 0, flex: 1 }}>
+                        <span style={{ display: "block" }}>{n.label}</span>
+                        {n.count != null && (
+                          <span
+                            style={{
+                              display: "block",
+                              fontSize: 11,
+                              color: "var(--muted)",
+                              marginTop: 2,
+                              fontWeight: 500,
+                            }}
+                          >
+                            {n.count} {n.count === 1 ? "voce" : "voci"}
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
 
             <div
@@ -846,8 +1028,15 @@ export function VocabolarioPageSection() {
               <SectionHeader
                 id="vocab-ai"
                 eyebrow="Sezione 1 di 3"
-                title="Vocabolario AI"
+                title="Vocabolario"
+                titleAccent="AI"
+                accent={SECTION_ACCENT["vocab-ai"]}
                 intro="I termini fondamentali dell'intelligenza artificiale. Non servono per impressionare qualcuno a una cena. Servono per capire cosa stai usando quando apri ChatGPT, Claude o qualsiasi altro strumento AI."
+              />
+              <AlphabetJumper
+                terms={filteredAi}
+                idPrefix="term-ai-"
+                accent={SECTION_ACCENT["vocab-ai"]}
               />
               <div
                 style={{
@@ -861,6 +1050,7 @@ export function VocabolarioPageSection() {
                     key={t.id}
                     t={t}
                     anchorId={`term-ai-${t.id}`}
+                    accent={SECTION_ACCENT["vocab-ai"]}
                   />
                 ))}
               </div>
@@ -872,12 +1062,14 @@ export function VocabolarioPageSection() {
             <InlineCTA onClick={() => openModal("inline-1")} />
           )}
 
-          {/* ── Vocabolario Claude — Prodotti ── */}
+          {/* ── Vocabolario Claude (intro condivisa, attaccata a Prodotti) ── */}
           {(filteredProducts.length > 0 || filteredOps.length > 0) && !query && (
             <SectionHeader
               id="vocab-claude-products"
               eyebrow="Sezione 2 di 3"
-              title="Vocabolario Claude"
+              title="Vocabolario"
+              titleAccent="Claude"
+              accent={SECTION_ACCENT["vocab-claude-products"]}
               intro="Claude è sviluppato da Anthropic e ad oggi è l'ecosistema AI più completo disponibile. Non è un singolo chatbot: è una famiglia di prodotti, modelli e strumenti. Ecco tutto quello che devi conoscere."
             />
           )}
@@ -885,20 +1077,12 @@ export function VocabolarioPageSection() {
           {filteredProducts.length > 0 && (
             <section
               id={query ? "vocab-claude-products" : undefined}
-              style={{ scrollMarginTop: 90 }}
+              style={{ scrollMarginTop: 130 }}
             >
-              <h3
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 600,
-                  fontSize: "clamp(22px, 3vw, 28px)",
-                  color: "#fff",
-                  letterSpacing: "-0.02em",
-                  margin: "0 0 18px",
-                }}
-              >
-                I prodotti Claude
-              </h3>
+              <SubSectionHeader
+                title="I prodotti Claude"
+                accent={SECTION_ACCENT["vocab-claude-products"]}
+              />
               <div
                 style={{
                   display: "grid",
@@ -910,7 +1094,8 @@ export function VocabolarioPageSection() {
                   <TermCard
                     key={t.id}
                     t={t}
-                    anchorId={`term-claude-${t.id}`}
+                    anchorId={`term-products-${t.id}`}
+                    accent={SECTION_ACCENT["vocab-claude-products"]}
                   />
                 ))}
               </div>
@@ -918,19 +1103,11 @@ export function VocabolarioPageSection() {
           )}
 
           {filteredOps.length > 0 && (
-            <section id="vocab-claude-ops" style={{ scrollMarginTop: 90 }}>
-              <h3
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 600,
-                  fontSize: "clamp(22px, 3vw, 28px)",
-                  color: "#fff",
-                  letterSpacing: "-0.02em",
-                  margin: "0 0 18px",
-                }}
-              >
-                I termini operativi di Claude
-              </h3>
+            <section id="vocab-claude-ops" style={{ scrollMarginTop: 130 }}>
+              <SubSectionHeader
+                title="I termini operativi di Claude"
+                accent={SECTION_ACCENT["vocab-claude-ops"]}
+              />
               <div
                 style={{
                   display: "grid",
@@ -942,7 +1119,8 @@ export function VocabolarioPageSection() {
                   <TermCard
                     key={t.id}
                     t={t}
-                    anchorId={`term-claude-${t.id}`}
+                    anchorId={`term-ops-${t.id}`}
+                    accent={SECTION_ACCENT["vocab-claude-ops"]}
                   />
                 ))}
               </div>
@@ -960,7 +1138,9 @@ export function VocabolarioPageSection() {
               <SectionHeader
                 id="vocab-use-cases"
                 eyebrow="Sezione 3 di 3"
-                title="Cosa puoi farci"
+                title="Cosa puoi"
+                titleAccent="farci"
+                accent={SECTION_ACCENT["vocab-use-cases"]}
                 intro="Ok, conosci i termini. Ma nella pratica, cosa ci fai? Ecco use case reali, non &ldquo;puoi fare brainstorming&rdquo;. Roba concreta."
               />
               <div
@@ -968,18 +1148,10 @@ export function VocabolarioPageSection() {
               >
                 {USE_CASE_GROUPS.map((g) => (
                   <div key={g.id}>
-                    <h3
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontWeight: 600,
-                        fontSize: "clamp(20px, 2.6vw, 24px)",
-                        color: "#fff",
-                        letterSpacing: "-0.01em",
-                        margin: "0 0 14px",
-                      }}
-                    >
-                      {g.category}
-                    </h3>
+                    <SubSectionHeader
+                      title={g.category}
+                      accent={SECTION_ACCENT["vocab-use-cases"]}
+                    />
                     <div
                       className="vocab-usecase-grid"
                       style={{
@@ -991,13 +1163,38 @@ export function VocabolarioPageSection() {
                       {g.cases.map((uc) => (
                         <div
                           key={uc.id}
+                          id={uc.id}
                           style={{
+                            scrollMarginTop: 130,
                             padding: "18px 20px",
                             background: "rgba(255,255,255,0.025)",
                             border: "1px solid rgba(255,255,255,0.06)",
                             borderRadius: 12,
+                            position: "relative",
+                            transition: "border-color .25s, background .25s, box-shadow .6s",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = SECTION_ACCENT["vocab-use-cases"].border;
+                            e.currentTarget.style.background = "rgba(255,255,255,0.035)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                            e.currentTarget.style.background = "rgba(255,255,255,0.025)";
                           }}
                         >
+                          <span
+                            aria-hidden
+                            style={{
+                              position: "absolute",
+                              top: 20,
+                              left: -3,
+                              width: 3,
+                              height: 18,
+                              borderRadius: 2,
+                              background: SECTION_ACCENT["vocab-use-cases"].color,
+                              opacity: 0.7,
+                            }}
+                          />
                           <div
                             style={{
                               fontFamily: "var(--font-display)",
@@ -1163,6 +1360,12 @@ export function VocabolarioPageSection() {
           </div>
         </div>
       )}
+
+      <BackToTopButton
+        visible={showBackToTop}
+        accent={activeAccent}
+        offsetForStickyCta={showStickyCta}
+      />
 
       <VocabolarioModal
         open={modalOpen}
@@ -1343,5 +1546,265 @@ function SearchInput({
         </div>
       )}
     </div>
+  );
+}
+
+// ─── SUB-SECTION HEADER (small heading per Prodotti / Operativi / Categorie) ──
+
+function SubSectionHeader({
+  title,
+  accent,
+}: {
+  title: string;
+  accent: SectionAccent;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        margin: "0 0 18px",
+      }}
+    >
+      <span
+        aria-hidden
+        style={{
+          width: 10,
+          height: 10,
+          borderRadius: 999,
+          background: accent.color,
+          boxShadow: `0 0 10px ${accent.color}`,
+          flexShrink: 0,
+        }}
+      />
+      <h3
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(20px, 2.6vw, 24px)",
+          color: "#fff",
+          letterSpacing: "-0.01em",
+          margin: 0,
+        }}
+      >
+        {title}
+      </h3>
+    </div>
+  );
+}
+
+// ─── MOBILE TOC: chip orizzontali sticky sotto la search ──────────────────────
+
+function MobileTOC({
+  items,
+  activeId,
+  onPick,
+}: {
+  items: Array<{ id: string; label: string; accent: SectionAccent }>;
+  activeId: string;
+  onPick: (id: string) => void;
+}) {
+  return (
+    <div
+      className="vocab-mobile-toc"
+      style={{
+        display: "none",
+        marginTop: 10,
+        overflowX: "auto",
+        WebkitOverflowScrolling: "touch",
+        scrollbarWidth: "none",
+      }}
+    >
+      <style>{`
+        .vocab-mobile-toc::-webkit-scrollbar { display: none; }
+        @media (max-width: 959px) {
+          .vocab-mobile-toc { display: flex !important; gap: 8px; padding: 0 4px; }
+        }
+      `}</style>
+      {items.map((it) => {
+        const isActive = activeId === it.id;
+        return (
+          <button
+            key={it.id}
+            type="button"
+            onClick={() => onPick(it.id)}
+            style={{
+              flexShrink: 0,
+              padding: "8px 14px",
+              borderRadius: 999,
+              background: isActive ? it.accent.tint : "rgba(255,255,255,0.04)",
+              border: isActive
+                ? `1px solid ${it.accent.border}`
+                : "1px solid rgba(255,255,255,0.10)",
+              color: isActive ? it.accent.color : "var(--ghost)",
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              fontWeight: isActive ? 600 : 500,
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              transition: "background .2s, color .2s, border-color .2s",
+            }}
+          >
+            {it.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── ALPHABET JUMPER (per la sezione AI: 47 termini sono tanti) ──────────────
+
+function AlphabetJumper({
+  terms,
+  idPrefix,
+  accent,
+}: {
+  terms: VocabTerm[];
+  idPrefix: string;
+  accent: SectionAccent;
+}) {
+  const lettersWithFirstId = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const t of terms) {
+      const letter = t.term[0]?.toUpperCase();
+      if (!letter) continue;
+      if (!map.has(letter)) map.set(letter, t.id);
+    }
+    return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
+  }, [terms]);
+
+  if (lettersWithFirstId.length < 4) return null;
+
+  function jump(letter: string, firstTermId: string) {
+    const el = document.getElementById(`${idPrefix}${firstTermId}`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    gaPush("vocabolario_alphabet_jump", { letter });
+  }
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 4,
+        marginBottom: 18,
+        padding: "10px 12px",
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: 12,
+      }}
+    >
+      <span
+        style={{
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "var(--muted)",
+          fontFamily: "var(--font-body)",
+          alignSelf: "center",
+          marginRight: 8,
+        }}
+      >
+        Salta a:
+      </span>
+      {lettersWithFirstId.map(([letter, id]) => (
+        <button
+          key={letter}
+          type="button"
+          onClick={() => jump(letter, id)}
+          style={{
+            minWidth: 30,
+            height: 30,
+            padding: "0 8px",
+            borderRadius: 8,
+            background: "transparent",
+            border: "1px solid rgba(255,255,255,0.08)",
+            color: "var(--ghost)",
+            fontFamily: "var(--font-body)",
+            fontSize: 13,
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "background .2s, color .2s, border-color .2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = accent.tint;
+            e.currentTarget.style.borderColor = accent.border;
+            e.currentTarget.style.color = accent.color;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+            e.currentTarget.style.color = "var(--ghost)";
+          }}
+        >
+          {letter}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ─── BACK-TO-TOP FAB ─────────────────────────────────────────────────────────
+
+function BackToTopButton({
+  visible,
+  accent,
+  offsetForStickyCta,
+}: {
+  visible: boolean;
+  accent: SectionAccent;
+  offsetForStickyCta: boolean;
+}) {
+  // Su mobile la sticky CTA occupa ~70px in fondo: alziamo il FAB sopra
+  const bottomMobile = offsetForStickyCta ? 96 : 24;
+  return (
+    <>
+      <button
+        type="button"
+        aria-label="Torna su"
+        onClick={() =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        }
+        className="vocab-back-to-top"
+        style={{
+          position: "fixed",
+          right: 20,
+          bottom: bottomMobile,
+          zIndex: 80,
+          width: 44,
+          height: 44,
+          borderRadius: 999,
+          background: "rgba(11,11,12,0.85)",
+          border: `1px solid ${accent.border}`,
+          color: accent.color,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 18,
+          fontWeight: 700,
+          fontFamily: "var(--font-body)",
+          boxShadow: `0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px ${accent.border}`,
+          backdropFilter: "blur(10px)",
+          opacity: visible ? 1 : 0,
+          pointerEvents: visible ? "auto" : "none",
+          transform: visible ? "translateY(0)" : "translateY(8px)",
+          transition: "opacity .25s, transform .25s, bottom .25s, color .3s, border-color .3s",
+        }}
+      >
+        ↑
+      </button>
+      <style>{`
+        @media (min-width: 960px) {
+          .vocab-back-to-top {
+            bottom: 24px !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }

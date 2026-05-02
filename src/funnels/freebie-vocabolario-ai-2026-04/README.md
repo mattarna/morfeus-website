@@ -1,6 +1,6 @@
 # Funnel: freebie-vocabolario-ai
 
-Pagina pubblica freebie del funnel webinar Claude — **Vocabolario AI + Claude**.
+Pagina pubblica freebie del funnel webinar Claude: **Vocabolario AI + Claude**.
 
 Risorsa gratuita della Warm Up Week (Day 5) condivisa via post LinkedIn. Diversa
 dagli altri freebie della stessa famiglia (cowork-setup-skill,
@@ -14,7 +14,7 @@ AI", "termini Claude"). Tutti i CTA aprono un **modal popup** con il form
 
 - Slug pubblico: `/vocabolario-ai`
 - Single step `page` (path vuoto)
-- `indexable: true` → finisce in `sitemap.ts` automaticamente
+- `indexable: true`, finisce in `sitemap.ts` automaticamente
 - Meta SEO custom (title + description + canonical + OG + Twitter card) gestiti
   in `src/app/funnel-internal/[slug]/[[...step]]/page.tsx` con un branch
   dedicato sullo slug
@@ -27,8 +27,8 @@ arancione + viola, font Clash Display + Satoshi). L'attivazione del tema è in
 
 ## Componenti
 
-- `WebinarHeader` — logo only (riusato dal webinar funnel)
-- `VocabolarioPage` — sezione gigante che contiene tutto:
+- `WebinarHeader`: logo only (riusato dal webinar funnel)
+- `VocabolarioPage`: sezione gigante che contiene tutto:
   - Hero con badge "Warm Up Week · Day 5"
   - Search bar real-time client-side (filtra term, body, keywords)
   - Sidebar TOC sticky (desktop ≥960px) con scroll-spy
@@ -37,39 +37,39 @@ arancione + viola, font Clash Display + Satoshi). L'attivazione del tema è in
   - Final CTA hero
   - Sticky CTA mobile (auto-show dopo l'hero, auto-hide vicino al final CTA)
   - Modal popup con form 2-step
-- `WebinarFooter` — disclaimer + © (riusato dal webinar funnel)
+- `WebinarFooter`: disclaimer + © (riusato dal webinar funnel)
 
 ## Dati
 
 In `data.ts`:
-- `AI_TERMS` — 47 termini AI (ordine alfabetico)
-- `CLAUDE_PRODUCTS` — 8 prodotti Claude
-- `CLAUDE_OPS` — 19 termini operativi Claude
-- `USE_CASE_GROUPS` — 7 categorie, 20 use case totali
+- `AI_TERMS`: 47 termini AI (ordine alfabetico)
+- `CLAUDE_PRODUCTS`: 8 prodotti Claude
+- `CLAUDE_OPS`: 19 termini operativi Claude
+- `USE_CASE_GROUPS`: 7 categorie, 20 use case totali
 
 Ogni termine ha `id` (slug per anchor), `term`, `body`, `keywords?`. La search
 normalizza diacritici e fa AND su tutti i token della query, cercando in
 term + body + keywords.
 
-## Form modal — comportamento
+## Form modal: comportamento
 
 Il modal racchiude `OptinFormTwoStep` con:
 - `successRedirect="/webinar-claude/thank-you"` (stessa TY del webinar)
-- `source="webinar-claude-vocabolario"` → marcatura sorgente nei dati Brevo
-- Step 1: email → Step 2: nome + ruolo + privacy
+- `source="webinar-claude-vocabolario"` per marcatura sorgente nei dati Brevo
+- Step 1: email. Step 2: nome + ruolo + privacy
 - Submit POST `/api/funnels/webinar-claude/optin` (riusa endpoint webinar)
-- ESC per chiudere · click overlay per chiudere · scroll body locked
+- ESC per chiudere, click overlay per chiudere, scroll body locked
 
 ## Tracking GA4
 
 Eventi pushed su `window.dataLayer`:
-- `vocabolario_view` — al mount della pagina
-- `vocabolario_search` — su query (debounced 800ms, primi 60 char)
-- `vocabolario_section_anchor` — click sul TOC sidebar
-- `vocabolario_cta_webinar_click` — apertura modal (con `source`: hero,
+- `vocabolario_view`: al mount della pagina
+- `vocabolario_search`: su query (debounced 800ms, primi 60 char)
+- `vocabolario_section_anchor`: click sul TOC sidebar
+- `vocabolario_cta_webinar_click`: apertura modal (con `source`: hero,
   sidebar, inline-1, inline-2, final-cta, sticky)
-- `webinar_optin_complete` — al submit del form (tramite `OptinFormTwoStep`)
-- Meta Pixel `Lead` — al submit del form (tramite `OptinFormTwoStep`)
+- `webinar_optin_complete`: al submit del form (tramite `OptinFormTwoStep`)
+- Meta Pixel `Lead`: al submit del form (tramite `OptinFormTwoStep`)
 
 ## Per aggiornare i contenuti
 
