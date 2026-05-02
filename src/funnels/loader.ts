@@ -35,6 +35,7 @@ const allowedComponents: FunnelComponentName[] = [
   "FreebieHero",
   "FreebieWebinarTeaser",
   "FreebieThankYou",
+  "VocabolarioPage",
   "SalesHeader",
   "SalesHero",
   "SalesBridge",

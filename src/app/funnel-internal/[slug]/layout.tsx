@@ -31,7 +31,7 @@ export default function FunnelSlugLayout({
           }}
         />
       )}
-      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" || params.slug === "instagram-carousel-skills" || params.slug === "claude-unlocked-v1" || params.slug === "claude-unlocked-v2" || params.slug === "bootcamp-ai-champion" || params.slug === "bootcamp-ai-champion-v2" ? (
+      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" || params.slug === "instagram-carousel-skills" || params.slug === "vocabolario-ai" || params.slug === "claude-unlocked-v1" || params.slug === "claude-unlocked-v2" || params.slug === "bootcamp-ai-champion" || params.slug === "bootcamp-ai-champion-v2" ? (
         <>
           <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
           <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />

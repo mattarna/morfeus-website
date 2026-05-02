@@ -419,7 +419,7 @@ function Countdown({ targetIso }: { targetIso: string }) {
 
 // ─── Optin Form Two-Step ──────────────────────────────────────────────────────
 
-function OptinFormTwoStep({
+export function OptinFormTwoStep({
   onComplete,
   id,
   ctaStep1 = "Riserva il tuo posto",
@@ -427,6 +427,7 @@ function OptinFormTwoStep({
   microStep1 = "Gratuito. Nessuna carta. 10 secondi e sei dentro.",
   microStep2 = "Riceverai il link per partecipare via email entro 2 minuti.",
   successRedirect = "/webinar-claude/thank-you",
+  source = "webinar-claude",
 }: {
   onComplete?: (data: { email: string; name: string; role: string }) => void;
   id?: string;
@@ -435,6 +436,7 @@ function OptinFormTwoStep({
   microStep1?: string;
   microStep2?: string;
   successRedirect?: string;
+  source?: string;
 }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -481,7 +483,7 @@ function OptinFormTwoStep({
       const res = await fetch("/api/funnels/webinar-claude/optin", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), name: name.trim(), role, source: "webinar-claude", ...utms }),
+        body: JSON.stringify({ email: email.trim(), name: name.trim(), role, source, ...utms }),
       });
       if (!res.ok) throw new Error("submit_failed");
 

@@ -34,6 +34,7 @@ export type FunnelComponentName =
   | "FreebieHero"
   | "FreebieWebinarTeaser"
   | "FreebieThankYou"
+  | "VocabolarioPage"
   | "SalesHeader"
   | "SalesHero"
   | "SalesBridge"
@@ -676,6 +677,9 @@ export interface BootcampV2FooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampV2StickyBarContent {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface VocabolarioPageContent {}
+
 export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
@@ -748,6 +752,7 @@ export interface FunnelStepConfig {
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;
+    VocabolarioPage?: VocabolarioPageContent;
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;
     SalesBridge?: SalesBridgeContent;
