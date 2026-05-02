@@ -3543,7 +3543,9 @@ export function SalesV2HeroSection({ step }: SectionProps) {
       >
         {copy.headlinePre}
         <br />
-        {copy.headlinePost} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
+        {copy.headlinePost}
+        <br />
+        <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
       </h1>
 
       <p
