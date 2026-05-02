@@ -22,6 +22,38 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
       robots: { index: false, follow: false, nocache: true },
     };
   }
+  // Claude Unlocked v1/v2 — OG image dedicata (cover del corso)
+  if ((params.slug === "claude-unlocked-v1" || params.slug === "claude-unlocked-v2") && step?.id === "sales") {
+    const title = step.title;
+    const description =
+      "Il corso Claude Morfeus per usare Claude come uno strumento di lavoro reale. 10 moduli, sessioni live, garanzia 14 giorni.";
+    const url = `https://morfeushub.com/${params.slug}`;
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        url,
+        siteName: "Morfeus Hub",
+        images: [
+          {
+            url: "/claude-unlocked/cover-16x9.png",
+            width: 1920,
+            height: 1080,
+            alt: "Claude Unlocked — Corso Claude Morfeus",
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: ["/claude-unlocked/cover-16x9.png"],
+      },
+    };
+  }
   // Vocabolario AI — SEO meta dedicati (pagina pubblica indicizzabile)
   if (params.slug === "vocabolario-ai" && step?.id === "page") {
     const title = "Vocabolario AI: la guida ai termini di AI e Claude | Morfeus";
