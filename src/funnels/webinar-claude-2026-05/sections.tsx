@@ -3523,8 +3523,8 @@ export function SalesHeroSection({ step }: SectionProps) {
         style={{
           display: "block",
           height: "auto",
-          width: "min(340px, 70vw)",
-          margin: "0 auto 22px",
+          width: "min(140px, 32vw)",
+          margin: "-16px auto 14px",
         }}
       />
 
@@ -5111,6 +5111,19 @@ export function SalesModulesSection({ step }: SectionProps) {
         zIndex: 1,
       }}
     >
+      <Image
+        src="/claude-unlocked/logo-full.png"
+        alt="Claude Unlocked"
+        width={1980}
+        height={860}
+        style={{
+          display: "block",
+          height: "auto",
+          width: "min(120px, 28vw)",
+          margin: "0 auto 14px",
+          opacity: 0.92,
+        }}
+      />
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <SectionLabel>Il programma</SectionLabel>
       </div>
