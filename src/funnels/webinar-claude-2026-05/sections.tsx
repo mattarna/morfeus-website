@@ -3514,20 +3514,6 @@ export function SalesHeroSection({ step }: SectionProps) {
         }}
       />
 
-      <Image
-        src="/claude-unlocked/logo-full.png"
-        alt="Claude Unlocked"
-        width={1980}
-        height={860}
-        priority
-        style={{
-          display: "block",
-          height: "auto",
-          width: "min(140px, 32vw)",
-          margin: "-16px auto 14px",
-        }}
-      />
-
       <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
         <Badge>{copy.badge}</Badge>
         {current.activeDeadlineIso && (
