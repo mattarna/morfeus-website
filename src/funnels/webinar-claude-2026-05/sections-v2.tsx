@@ -4744,12 +4744,26 @@ export function SalesV2PromiseLetterSection() {
   );
 
   const paragraphs: React.ReactNode[] = [
-    <>Ti scrivo dal futuro. Solo <H>6 mesi avanti</H>.</>,
-    <>Questa mattina ho aperto Claude e gli ho detto di prepararmi il brief per il cliente nuovo. In <H>12 minuti</H> avevo un documento che prima mi avrebbe preso mezza giornata.</>,
-    <>Non è magia. È che adesso Claude sa come lavoro. Sa che tono uso. Sa cosa piace ai miei clienti. Sa come strutturare le mie presentazioni.</>,
-    <>La cosa strana è che non mi ricordo più com&apos;era prima. Come lavoravo senza. Come perdevo ore su cose che adesso si fanno in minuti.</>,
-    <>So solo che a un certo punto ho deciso di imparare <H>davvero</H>. Non un tutorial. Non un prompt copiato. Un metodo. E tutto è cambiato.</>,
-    <>La differenza tra te oggi e me <H>è solo che io ho iniziato</H>.</>,
+    <>So cosa stai pensando mentre leggi questa pagina.</>,
+    <>&ldquo;Magari funziona. Ma io ho già provato.&rdquo;</>,
+    <>Hai già aperto Claude decine di volte. Hai scritto prompt. Hai guardato tutorial. Hai copiato template che sembravano buoni. E dopo una settimana eri esattamente nello stesso posto. Tu, davanti allo schermo, a correggere output che non erano tuoi.</>,
+    <>Non è un tuo fallimento. È che ti mancava <H>il pezzo che fa tenere insieme tutto il resto</H>.</>,
+    <>Me ne sono accorto una sera. Erano le undici. Stavo ancora lavorando su un report che avrei dovuto finire nel pomeriggio. Avevo usato Claude. Avevo &ldquo;automatizzato&rdquo;. Ma ero ancora lì, a correggere, a riscrivere, a chiedermi perché non capiva cosa volevo.</>,
+    <>Quella sera ho smesso di cercare il prompt migliore. E <H>ho iniziato a costruire il sistema</H>.</>,
+    <>Sei mesi dopo, ti scrivo da un posto diverso.</>,
+    <>Non da un posto facile, devo dirtelo. C&apos;è stato un momento in cui ho realizzato quanto tempo avevo sprecato. Quanto potenziale avevo lasciato sul tavolo. Fa male, quella realizzazione.</>,
+    <>Ma quello che è venuto dopo vale più di qualsiasi cosa avessi fatto nei due anni precedenti.</>,
+    <>Stamattina il mio capo mi ha chiesto come faccio a produrre così tanto. Ho sorriso. Non sapevo da dove iniziare a spiegare.</>,
+    <>La settimana scorsa un cliente mi ha detto che non ha mai lavorato con qualcuno così preparato. Non sa cosa c&apos;è dietro.</>,
+    <>Non sono diventato più intelligente. Non lavoro più ore. Ho solo <H>smesso di ricominciare da zero ogni giorno</H>.</>,
+    <>Sai qual è la cosa più strana? Non mi ricordo più com&apos;era lavorare senza. Non nel senso che ho dimenticato. Nel senso che ci provo, e non riesco a capire come facevo. Come perdevo ore su cose che adesso si fanno da sole. Come portavo a casa quella stanchezza la sera. Come mi svegliavo già in ritardo.</>,
+    <>Lo so che hai paura.</>,
+    <>Paura che non funzioni, che anche questa sia una promessa vuota.</>,
+    <>Ma sai cosa non ti dicono mai? Che hai paura anche se funziona. Paura di quello che succede dopo. Di dover cambiare abitudini radicate. Di diventare la persona a cui gli altri chiedono aiuto.</>,
+    <>Entrambe le paure sono reali.</>,
+    <>Ma c&apos;è una terza paura, quella che non fa rumore: restare uguale. Tra uno, due, cinque anni. Stesso laptop, stesso lavoro, stessa sensazione di correre senza arrivare. <H>Quella paura non grida. Consuma.</H></>,
+    <>L&apos;unica differenza tra dove sei tu adesso e dove sono io è questa: a un certo punto ho smesso di aspettare il momento in cui sarei stato pronto.</>,
+    <>Nessuno è mai pronto. <H>Si inizia. E si diventa.</H></>,
   ];
 
   return (
@@ -4869,8 +4883,32 @@ export function SalesV2PromiseLetterSection() {
                 display: "inline-block",
               }}
             >
-              — Il tuo io di tra 6 mesi
+              Il tuo io di tra 6 mesi
             </div>
+          </div>
+
+          {/* P.S. */}
+          <div
+            style={{
+              marginTop: 36,
+              paddingTop: 24,
+              borderTop: "1px solid rgba(42, 36, 32, 0.15)",
+              position: "relative",
+              zIndex: 1,
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(16px, 1.45vw, 18px)",
+              lineHeight: 1.7,
+              color: "#2A2420",
+              opacity: 0.85,
+              letterSpacing: "0.005em",
+            }}
+          >
+            <strong style={{ fontStyle: "normal", fontWeight: 600, fontFamily: "var(--font-body)", fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", color: "#6B5E54", marginRight: 10 }}>
+              P.S.
+            </strong>
+            La prima settimana penserai di non star facendo abbastanza. È normale. Continua.
           </div>
         </div>
       </div>
