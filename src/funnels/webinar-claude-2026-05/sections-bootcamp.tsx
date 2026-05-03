@@ -867,7 +867,7 @@ export function BootcampMethodSection({ step }: SectionProps) {
     },
     {
       letter: "A",
-      title: "AUTOMATIZZATO",
+      title: "ATTIVATO",
       body: [
         "Quando funziona sempre, non ci torni. Non lo aggiusti. Non lo sorvegli.",
         "Produce mentre sei su altro. Lavora mentre dormi. Il tuo tempo smette di essere il collo di bottiglia.",
@@ -1014,7 +1014,7 @@ export function BootcampMethodSection({ step }: SectionProps) {
             Non è un problema di bravura. È strutturale.
           </p>
           <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            La transizione da Validato ad Automatizzato richiede una cosa che da soli non puoi darti: feedback esterno sul tuo standard.
+            La transizione da Validato ad Attivato richiede una cosa che da soli non puoi darti: feedback esterno sul tuo standard.
           </p>
           <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
             Sai cosa vuoi dall&apos;output, ma non sai se il sistema lo produce davvero al livello che serve, perché sei tu che lo giudichi e sei tu che lo correggi. È un circolo chiuso. Il tuo standard è invisibile a te stesso mentre lo applichi.
