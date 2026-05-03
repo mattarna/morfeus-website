@@ -340,6 +340,21 @@
   pointer-events: none;
 }
 
+/* ── A11y: cap mobile body inline a 17px (no piu' piccolo, no piu' grande) ──
+   I body in v2/v3 hanno fontSize 17/18/19 inline per leggibilita' desktop.
+   Su mobile le righe da 19px occupano poche parole; capping a 17px e'
+   l'equilibrio fra leggibilita' e densita' di info. Niente sotto i 17.
+   Nota: applico SOLO a <p> e <li> per non toccare badge/label inline span. */
+
+@media (max-width: 640px) {
+  section[class*="salesSectionPad"] p,
+  section[class*="salesSectionPad"] li,
+  section[class*="bridgeSection"] p,
+  section[class*="bridgeSection"] li {
+    font-size: 17px !important;
+  }
+}
+
 /* ── Utility: nasconde un blocco CTA su mobile/tablet (desktop ≥ 769px) ── */
 
 .ctaDesktopOnly {
