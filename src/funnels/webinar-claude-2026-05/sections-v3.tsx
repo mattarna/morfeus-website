@@ -5249,7 +5249,7 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
       />
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
         <Image
-          src="/logo corso claude unlocked completo black.png"
+          src="/claude-unlocked/logo-full-black.png"
           alt="Claude Unlocked"
           width={1980}
           height={860}
