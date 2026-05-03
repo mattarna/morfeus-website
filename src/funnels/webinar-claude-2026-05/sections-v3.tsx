@@ -3679,136 +3679,151 @@ export function SalesV3BridgeSection() {
     variant === "email" ? (
       <>
         Stai usando Claude al 10% delle sue capacita&apos;.<br />
-        E <Accent>non e&apos; colpa tua</Accent>.
+        E <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>non e&apos; colpa tua</span>.
       </>
     ) : (
-      <>Hai visto cosa succede quando usi Claude <Accent>davvero</Accent>.</>
+      <>Hai visto cosa succede quando usi Claude <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>davvero</span>.</>
     );
 
   return (
     <section
-      className={styles.bridgeSection}
       style={{
-        maxWidth: 760,
-        margin: "0 auto",
         position: "relative",
         zIndex: 1,
+        color: "#2A2420",
+        padding: "clamp(72px, 9vw, 110px) 0",
+        isolation: "isolate",
       }}
     >
-      <div style={{ textAlign: "center", marginBottom: 36 }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(30px, 4vw, 44px)",
-            lineHeight: 1.15,
-            letterSpacing: "-0.02em",
-            color: "#fff",
-            margin: 0,
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          {headline}
-        </h2>
-      </div>
-
-      {variant === "live" && (
-        <div
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.8,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            paddingLeft: 24,
-            borderLeft: "3px solid var(--orange)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-          }}
-        >
-          <p>Hai visto output che non sembravano generati da una macchina.</p>
-          <p>Hai visto workflow che risparmiano ore, non minuti.</p>
-          <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
-          <p>Hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
-          <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
-          <p>Tornare a usarlo come prima.</p>
-          <p>Oppure imparare il sistema che hai visto in azione.</p>
-        </div>
-      )}
-
-      {variant === "replay" && (
-        <div
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.8,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            paddingLeft: 24,
-            borderLeft: "3px solid var(--orange)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-          }}
-        >
-          <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
-          <p>Hai visto output che non sembravano generati da una macchina.</p>
-          <p>Hai visto workflow che risparmiano ore, non minuti.</p>
-          <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
-          <p style={{ marginTop: 16 }}>Adesso hai due strade.</p>
-          <p>
-            Tornare a usarlo come prima — una domanda ogni tanto, un testo ogni tanto, quella sensazione che &ldquo;per il mio lavoro non funziona&rdquo;.
-          </p>
-          <p style={{ marginTop: 12 }}>
-            Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.
-          </p>
-        </div>
-      )}
-
-      {variant === "email" && (
-        <div
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.8,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            display: "flex",
-            flexDirection: "column",
-            gap: 18,
-            maxWidth: 640,
-            marginInline: "auto",
-          }}
-        >
-          <p>
-            La maggior parte dei professionisti usa Claude come un Google piu&apos; intelligente. Fa domande. Ottiene risposte generiche. Pensa &ldquo;bah, niente di speciale&rdquo;.
-          </p>
-          <p>
-            Ma Claude non e&apos; un motore di ricerca. E&apos; uno strumento che puo&apos; lavorare CON te — ogni giorno, su ogni progetto, nel tuo ambiente di lavoro.
-          </p>
-          <p>Il problema e&apos; che nessuno ti ha mai mostrato come si fa.</p>
-          <p>I tutorial su YouTube ti insegnano dove cliccare.</p>
-          <p>I prompt copiati da Twitter funzionano una volta.</p>
-          <p>
-            I corsi &ldquo;AI&rdquo; parlano di tutto e non ti insegnano nulla di applicabile al tuo lunedi&apos; mattina.
-          </p>
-          <p
+      {/* Full-bleed cream */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          background: "#F0EBE0",
+          zIndex: -1,
+          boxShadow:
+            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+        }}
+      />
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <h2
             style={{
-              marginTop: 16,
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: 22,
-              color: "#fff",
+              fontSize: "clamp(30px, 4vw, 44px)",
+              lineHeight: 1.15,
+              letterSpacing: "-0.02em",
+              color: "#2A2420",
+              margin: 0,
+              textWrap: "balance" as React.CSSProperties["textWrap"],
             }}
           >
-            Questo corso e&apos; diverso.
-          </p>
-          <p>
-            10 moduli. Un metodo. Un sistema che costruisci pezzo per pezzo — calibrato sul tuo lavoro, non su demo generiche.
-          </p>
+            {headline}
+          </h2>
         </div>
-      )}
+
+        {variant === "live" && (
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 17,
+              lineHeight: 1.8,
+              color: "#3A322B",
+              paddingLeft: 24,
+              borderLeft: "3px solid var(--orange)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <p>Hai visto output che non sembravano generati da una macchina.</p>
+            <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+            <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+            <p>Hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+            <p style={{ marginTop: 16, color: "#2A2420", fontWeight: 500 }}>Adesso hai due strade.</p>
+            <p>Tornare a usarlo come prima.</p>
+            <p>Oppure imparare il sistema che hai visto in azione.</p>
+          </div>
+        )}
+
+        {variant === "replay" && (
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 17,
+              lineHeight: 1.8,
+              color: "#3A322B",
+              paddingLeft: 24,
+              borderLeft: "3px solid var(--orange)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+            }}
+          >
+            <p>Nel webinar hai visto la differenza tra fare domande all&apos;AI e avere un sistema che lavora con te.</p>
+            <p>Hai visto output che non sembravano generati da una macchina.</p>
+            <p>Hai visto workflow che risparmiano ore, non minuti.</p>
+            <p>Hai visto cosa cambia quando Claude ha il contesto giusto.</p>
+            <p style={{ marginTop: 16, color: "#2A2420", fontWeight: 500 }}>Adesso hai due strade.</p>
+            <p>
+              Tornare a usarlo come prima: una domanda ogni tanto, un testo ogni tanto, quella sensazione che &ldquo;per il mio lavoro non funziona&rdquo;.
+            </p>
+            <p style={{ marginTop: 12 }}>
+              Oppure imparare il sistema che hai visto in azione. Strutturato in 10 moduli. Costruito per chi parte da zero o da &ldquo;ci ho provato ma non ha funzionato&rdquo;.
+            </p>
+          </div>
+        )}
+
+        {variant === "email" && (
+          <div
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 17,
+              lineHeight: 1.8,
+              color: "#3A322B",
+              display: "flex",
+              flexDirection: "column",
+              gap: 18,
+              maxWidth: 640,
+              marginInline: "auto",
+            }}
+          >
+            <p>
+              La maggior parte dei professionisti usa Claude come un Google piu&apos; intelligente. Fa domande. Ottiene risposte generiche. Pensa &ldquo;bah, niente di speciale&rdquo;.
+            </p>
+            <p>
+              Ma Claude non e&apos; un motore di ricerca. E&apos; uno strumento che puo&apos; lavorare CON te, ogni giorno, su ogni progetto, nel tuo ambiente di lavoro.
+            </p>
+            <p>Il problema e&apos; che nessuno ti ha mai mostrato come si fa.</p>
+            <p>I tutorial su YouTube ti insegnano dove cliccare.</p>
+            <p>I prompt copiati da Twitter funzionano una volta.</p>
+            <p>
+              I corsi &ldquo;AI&rdquo; parlano di tutto e non ti insegnano nulla di applicabile al tuo lunedi&apos; mattina.
+            </p>
+            <p
+              style={{
+                marginTop: 16,
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: 22,
+                color: "#2A2420",
+              }}
+            >
+              Questo corso e&apos; diverso.
+            </p>
+            <p>
+              10 moduli. Un metodo. Un sistema che costruisci pezzo per pezzo, calibrato sul tuo lavoro, non su demo generiche.
+            </p>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -4291,13 +4306,13 @@ export function SalesV3MechanismSection() {
           Il Modulo 0 non si chiama &ldquo;Come usare Claude&rdquo;. Si chiama &ldquo;Come ragionare con l&apos;AI&rdquo;.
           <br />
           <br />
-          Prima di aprire lo strumento, impari il Framework <strong style={{ color: "#fff" }}>T/Q/D</strong>: quali task <strong style={{ color: "#fff" }}>delegare</strong> completamente a Claude, quali <strong style={{ color: "#fff" }}>tenere</strong> perché richiedono il tuo giudizio, quali <strong style={{ color: "#fff" }}>verificare</strong> insieme prima di usarli.
+          Prima di aprire lo strumento, impari il Framework <strong style={{ color: "#1A1814" }}>T/Q/D</strong>: quali task <strong style={{ color: "#1A1814" }}>delegare</strong> completamente a Claude, quali <strong style={{ color: "#1A1814" }}>tenere</strong> perché richiedono il tuo giudizio, quali <strong style={{ color: "#1A1814" }}>verificare</strong> insieme prima di usarli.
           <br />
           <br />
           In 10 minuti sai già cosa chiedere, come chiederlo, e perché il 95% delle persone ottiene risposte generiche.
           <br />
           <br />
-          <span style={{ color: "var(--orange)" }}>questa è la parte più importante</span>
+          <span style={{ color: "#C85A15", fontStyle: "italic" }}>questa è la parte più importante</span>
         </>
       ),
     },
@@ -4306,7 +4321,7 @@ export function SalesV3MechanismSection() {
       title: "Dal setup al sistema personalizzato.",
       body: (
         <>
-          Moduli 1-6: non impari le feature. Costruisci il <strong style={{ color: "#fff" }}>TUO</strong> ambiente di lavoro.
+          Moduli 1-6: non impari le feature. Costruisci il <strong style={{ color: "#1A1814" }}>TUO</strong> ambiente di lavoro.
           Projects con le TUE istruzioni. Contesto che riflette il TUO business. Skill che automatizzano i TUOI task ripetitivi.
           <br />
           Non è un corso generico su &ldquo;l&apos;AI&rdquo;. È il tuo Claude, configurato per il tuo lavoro.
@@ -4318,7 +4333,7 @@ export function SalesV3MechanismSection() {
       title: "Metodo che resta, anche quando lo strumento cambia.",
       body: (
         <>
-          Workflow reali, progetti complessi, sicurezza. Il <strong style={{ color: "#fff" }}>70%</strong> di quello
+          Workflow reali, progetti complessi, sicurezza. Il <strong style={{ color: "#1A1814" }}>70%</strong> di quello
           che impari si applica a qualsiasi AI. I tool cambiano ogni 6 mesi. Il metodo no.
           <br />
           È la differenza tra imparare a guidare e imparare dove sono i bottoni di una macchina specifica.
@@ -4329,61 +4344,94 @@ export function SalesV3MechanismSection() {
 
   return (
     <section
-      className={`${styles.salesSectionPadV2} ${styles.sectionDarkMidBg}`}
       style={{
-        maxWidth: 1120,
-        margin: "0 auto",
         position: "relative",
         zIndex: 1,
+        color: "#2A2420",
+        padding: "clamp(72px, 9vw, 110px) 0",
+        isolation: "isolate",
       }}
     >
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <SectionLabel>Il metodo</SectionLabel>
-      </div>
-
-      <h2
+      {/* Full-bleed cream */}
+      <div
+        aria-hidden
         style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 600,
-          fontSize: "clamp(32px, 4.5vw, 52px)",
-          lineHeight: 1.08,
-          letterSpacing: "-0.02em",
-          color: "#fff",
-          margin: "16px auto 24px",
-          maxWidth: 880,
-          textAlign: "center",
-          textWrap: "balance" as React.CSSProperties["textWrap"],
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          background: "#F0EBE0",
+          zIndex: -1,
+          boxShadow:
+            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
         }}
-      >
-        Perché questo corso <Accent>funziona</Accent> dove gli altri falliscono.
-      </h2>
+      />
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontFamily: "var(--font-body)",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: "var(--orange)",
+              padding: "6px 14px",
+              background: "rgba(235,122,46,0.10)",
+              border: "1px solid rgba(235,122,46,0.30)",
+              borderRadius: 100,
+            }}
+          >
+            Il metodo
+          </span>
+        </div>
 
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 17,
-          lineHeight: 1.65,
-          color: "var(--ghost)",
-          opacity: 0.88,
-          margin: "0 auto 56px",
-          maxWidth: 760,
-          textAlign: "center",
-          textWrap: "pretty" as React.CSSProperties["textWrap"],
-        }}
-      >
-        La maggior parte dei corsi AI ti insegna dove cliccare. Funziona per la demo. Non funziona per il lunedi&apos; mattina.
-        <br />
-        <br />
-        Dopo due settimane sei punto e a capo, perche&apos; sapere dove si trova un bottone non e&apos; sapere COME lavorare con l&apos;intelligenza artificiale.
-        <br />
-        <br />
-        Questo corso e&apos; costruito al contrario.
-      </p>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(32px, 4.5vw, 52px)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.02em",
+            color: "#2A2420",
+            margin: "16px auto 24px",
+            maxWidth: 880,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Perché questo corso <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>funziona</span> dove gli altri falliscono.
+        </h2>
 
-      <div className={styles.stepGrid}>
-        {steps.map((s) => (
-          <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
-        ))}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.65,
+            color: "#3A322B",
+            margin: "0 auto 56px",
+            maxWidth: 760,
+            textAlign: "center",
+            textWrap: "pretty" as React.CSSProperties["textWrap"],
+          }}
+        >
+          La maggior parte dei corsi AI ti insegna dove cliccare. Funziona per la demo. Non funziona per il lunedi&apos; mattina.
+          <br />
+          <br />
+          Dopo due settimane sei punto e a capo, perche&apos; sapere dove si trova un bottone non e&apos; sapere COME lavorare con l&apos;intelligenza artificiale.
+          <br />
+          <br />
+          Questo corso e&apos; costruito al contrario.
+        </p>
+
+        <div className={styles.stepGrid}>
+          {steps.map((s) => (
+            <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -4742,14 +4790,15 @@ function MechanismStepCard({ n, title, body }: { n: string; title: string; body:
       style={{
         position: "relative",
         padding: "32px 30px",
-        background: hover ? "rgba(255,255,255,0.04)" : "var(--deep-space)",
-        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
+        background: hover ? "#FFFCF5" : "#FBF7EE",
+        border: `1px solid ${hover ? "rgba(200,90,21,0.35)" : "rgba(42,36,32,0.10)"}`,
         borderRadius: 16,
         transition: "background .25s, border-color .25s, transform .25s",
         transform: hover ? "translateY(-2px)" : "translateY(0)",
         overflow: "hidden",
         boxSizing: "border-box",
         height: "100%",
+        boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 14px rgba(42,36,32,0.06)",
       }}
     >
       {/* Watermark numero */}
@@ -4764,7 +4813,7 @@ function MechanismStepCard({ n, title, body }: { n: string; title: string; body:
           fontSize: "clamp(80px, 18vw, 130px)",
           lineHeight: 1,
           color: "var(--orange)",
-          opacity: 0.10,
+          opacity: 0.12,
           letterSpacing: "-0.04em",
           pointerEvents: "none",
           overflow: "hidden",
@@ -4794,7 +4843,7 @@ function MechanismStepCard({ n, title, body }: { n: string; title: string; body:
           fontSize: 22,
           lineHeight: 1.2,
           letterSpacing: "-0.015em",
-          color: "#fff",
+          color: "#2A2420",
           margin: "0 0 14px",
           position: "relative",
           zIndex: 1,
@@ -4808,8 +4857,7 @@ function MechanismStepCard({ n, title, body }: { n: string; title: string; body:
           fontFamily: "var(--font-body)",
           fontSize: 16,
           lineHeight: 1.65,
-          color: "var(--ghost)",
-          opacity: 0.85,
+          color: "#3A322B",
           margin: 0,
           position: "relative",
           zIndex: 1,
@@ -5141,89 +5189,121 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
 
   return (
     <section
-      className={styles.salesSectionPadV2}
       style={{
-        maxWidth: 920,
-        margin: "0 auto",
         position: "relative",
         zIndex: 1,
+        color: "#2A2420",
+        padding: "clamp(72px, 9vw, 110px) 0",
+        isolation: "isolate",
       }}
     >
-      <Image
-        src="/claude-unlocked/logo-full.png"
-        alt="Claude Unlocked"
-        width={1980}
-        height={860}
+      {/* Full-bleed cream */}
+      <div
+        aria-hidden
         style={{
-          display: "block",
-          height: "auto",
-          width: "min(120px, 28vw)",
-          margin: "0 auto 14px",
-          opacity: 0.92,
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          background: "#F0EBE0",
+          zIndex: -1,
+          boxShadow:
+            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
         }}
       />
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <SectionLabel>Il programma</SectionLabel>
-      </div>
-      <h2
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 600,
-          fontSize: "clamp(32px, 4.5vw, 52px)",
-          lineHeight: 1.08,
-          letterSpacing: "-0.02em",
-          color: "#fff",
-          margin: "16px auto 18px",
-          maxWidth: 880,
-          textAlign: "center",
-          textWrap: "balance" as React.CSSProperties["textWrap"],
-        }}
-      >
-        10 moduli. 48 lezioni. Un <Accent>sistema completo</Accent>.
-      </h2>
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 17,
-          lineHeight: 1.6,
-          color: "var(--ghost)",
-          opacity: 0.85,
-          margin: "0 auto 48px",
-          maxWidth: 700,
-          textAlign: "center",
-        }}
-      >
-        Non una lista di video da guardare. Un percorso con un ordine preciso: ogni modulo sblocca il successivo. Clicca un modulo per vedere cosa c&apos;è dentro.
-      </p>
+      <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
+        <Image
+          src="/claude-unlocked/logo-full.png"
+          alt="Claude Unlocked"
+          width={1980}
+          height={860}
+          style={{
+            display: "block",
+            height: "auto",
+            width: "min(120px, 28vw)",
+            margin: "0 auto 14px",
+            opacity: 0.92,
+          }}
+        />
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontFamily: "var(--font-body)",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: "var(--orange)",
+              padding: "6px 14px",
+              background: "rgba(235,122,46,0.10)",
+              border: "1px solid rgba(235,122,46,0.30)",
+              borderRadius: 100,
+            }}
+          >
+            Il programma
+          </span>
+        </div>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(32px, 4.5vw, 52px)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.02em",
+            color: "#2A2420",
+            margin: "16px auto 18px",
+            maxWidth: 880,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          10 moduli. 48 lezioni. Un <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>sistema completo</span>.
+        </h2>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.6,
+            color: "#3A322B",
+            margin: "0 auto 48px",
+            maxWidth: 700,
+            textAlign: "center",
+          }}
+        >
+          Non una lista di video da guardare. Un percorso con un ordine preciso: ogni modulo sblocca il successivo. Clicca un modulo per vedere cosa c&apos;è dentro.
+        </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {modules.map((m, i) => (
-          <ModuleAccordion key={m.n} module={m} defaultOpen={i === 0} />
-        ))}
-      </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {modules.map((m, i) => (
+            <ModuleAccordion key={m.n} module={m} defaultOpen={i === 0} />
+          ))}
+        </div>
 
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: 16,
-          lineHeight: 1.6,
-          color: "var(--ghost)",
-          opacity: 0.85,
-          margin: "48px auto 40px",
-          maxWidth: 720,
-          textAlign: "center",
-        }}
-      >
-        Totale: ~<strong style={{ color: "#fff" }}>8-9 ore</strong> di contenuto. Lezioni da 10-15 minuti. Guardi quando vuoi. Applichi subito. Nessuna lezione è teoria senza pratica.
-      </p>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.6,
+            color: "#3A322B",
+            margin: "48px auto 40px",
+            maxWidth: 720,
+            textAlign: "center",
+          }}
+        >
+          Totale: ~<strong style={{ color: "#1A1814" }}>8-9 ore</strong> di contenuto. Lezioni da 10-15 minuti. Guardi quando vuoi. Applichi subito. Nessuna lezione è teoria senza pratica.
+        </p>
 
-      {/* Inline CTA */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 16 }}>
-        <SalesV3PrimaryButton onClick={onCheckout} size="lg" pulse>
-          Voglio tutto questo — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
-        </SalesV3PrimaryButton>
-        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Pagamento sicuro · Accesso immediato
+        {/* Inline CTA */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 16 }}>
+          <SalesV3PrimaryButton onClick={onCheckout} size="lg" pulse>
+            Voglio tutto questo — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+          </SalesV3PrimaryButton>
+          <div style={{ fontSize: 12, color: "#6B5E54", fontFamily: "var(--font-body)" }}>
+            Pagamento sicuro · Accesso immediato
+          </div>
         </div>
       </div>
     </section>
@@ -5243,11 +5323,12 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
       className={styles.faqItem}
       open={defaultOpen}
       style={{
-        background: "var(--deep-space)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "#FBF7EE",
+        border: "1px solid rgba(42,36,32,0.10)",
         borderRadius: 14,
         overflow: "hidden",
         transition: "border-color .2s",
+        boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset",
       }}
     >
       <summary
@@ -5282,7 +5363,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
                 fontSize: "clamp(17px, 1.6vw, 20px)",
-                color: "#fff",
+                color: "#2A2420",
                 letterSpacing: "-0.005em",
                 marginBottom: 4,
                 lineHeight: 1.25,
@@ -5294,7 +5375,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: 14,
-                color: "var(--muted)",
+                color: "#6B5E54",
                 lineHeight: 1.45,
               }}
             >
@@ -5310,8 +5391,8 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
             width: 32,
             height: 32,
             borderRadius: "50%",
-            background: "rgba(235,122,46,0.12)",
-            border: "1px solid rgba(235,122,46,0.3)",
+            background: "rgba(235,122,46,0.14)",
+            border: "1px solid rgba(235,122,46,0.40)",
             color: "var(--orange)",
             display: "inline-flex",
             alignItems: "center",
@@ -5328,7 +5409,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
       <div
         style={{
           padding: "0 26px 26px clamp(26px, 8vw, 100px)",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
+          borderTop: "1px solid rgba(42,36,32,0.08)",
           marginTop: -1,
         }}
       >
@@ -5342,8 +5423,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
                 fontFamily: "var(--font-body)",
                 fontSize: 16,
                 lineHeight: 1.55,
-                color: "var(--ghost)",
-                opacity: 0.92,
+                color: "#3A322B",
               }}
             >
               <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>·</span>
@@ -5351,7 +5431,6 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
             </li>
           ))}
         </ul>
-        {/* TODO: image slot per modulo (verrà popolato in seguito con screenshot/mockup) */}
       </div>
     </details>
   );
@@ -5952,218 +6031,182 @@ export function SalesV3AudienceSection({ step }: SectionProps) {
 
   return (
     <section
+      className={styles.salesSectionPadV2}
       style={{
+        maxWidth: 1120,
+        margin: "0 auto",
         position: "relative",
         zIndex: 1,
-        color: "#2A2420",
-        padding: "clamp(72px, 9vw, 110px) 0",
-        isolation: "isolate",
       }}
     >
-      {/* Full-bleed cream */}
-      <div
-        aria-hidden
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <SectionLabel>Auto-selezione</SectionLabel>
+      </div>
+      <h2
         style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100vw",
-          background: "#F0EBE0",
-          zIndex: -1,
-          boxShadow:
-            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 50px)",
+          lineHeight: 1.08,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "16px auto 56px",
+          maxWidth: 820,
+          textAlign: "center",
+          textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
-      />
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
-        <div style={{ textAlign: "center", marginBottom: 16 }}>
-          <span
+      >
+        Questo corso è per te? <Accent>Scoprilo in 30 secondi</Accent>.
+      </h2>
+
+      <div className={styles.audienceGrid}>
+        <div
+          style={{
+            background: "var(--deep-space)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "3px solid var(--orange)",
+            borderRadius: 14,
+            padding: "32px 28px",
+            boxSizing: "border-box",
+            height: "100%",
+          }}
+        >
+          <div
             style={{
-              display: "inline-block",
-              fontFamily: "var(--font-body)",
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 700,
-              letterSpacing: "0.24em",
+              letterSpacing: "0.20em",
               textTransform: "uppercase",
               color: "var(--orange)",
-              padding: "6px 14px",
-              background: "rgba(235,122,46,0.10)",
-              border: "1px solid rgba(235,122,46,0.30)",
-              borderRadius: 100,
-            }}
-          >
-            Auto-selezione
-          </span>
-        </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(32px, 4.5vw, 50px)",
-            lineHeight: 1.08,
-            letterSpacing: "-0.02em",
-            color: "#2A2420",
-            margin: "16px auto 56px",
-            maxWidth: 820,
-            textAlign: "center",
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          Questo corso è per te? <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>Scoprilo in 30 secondi</span>.
-        </h2>
-
-        <div className={styles.audienceGrid}>
-          <div
-            style={{
-              background: "#FBF7EE",
-              border: "1px solid rgba(42,36,32,0.10)",
-              borderTop: "3px solid var(--orange)",
-              borderRadius: 14,
-              padding: "32px 28px",
-              boxSizing: "border-box",
-              height: "100%",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 14px rgba(42,36,32,0.06)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                color: "var(--orange)",
-                marginBottom: 18,
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              È per te se…
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
-              {yes.map((item, i) => (
-                <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "#2A2420" }}>
-                  <span
-                    style={{
-                      flexShrink: 0,
-                      width: 22,
-                      height: 22,
-                      borderRadius: "50%",
-                      background: "rgba(235,122,46,0.18)",
-                      border: "1px solid var(--orange)",
-                      color: "#C85A15",
-                      display: "grid",
-                      placeItems: "center",
-                      fontSize: 12,
-                      fontWeight: 700,
-                    }}
-                  >
-                    ✓
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div
-            style={{
-              background: "#FBF7EE",
-              border: "1px solid rgba(42,36,32,0.10)",
-              borderTop: "3px solid #8B2500",
-              borderRadius: 14,
-              padding: "32px 28px",
-              boxSizing: "border-box",
-              height: "100%",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 14px rgba(42,36,32,0.06)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                color: "#8B2500",
-                marginBottom: 18,
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              NON è per te se…
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
-              {no.map((item, i) => (
-                <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "#3A322B" }}>
-                  <span
-                    style={{
-                      flexShrink: 0,
-                      width: 22,
-                      height: 22,
-                      borderRadius: "50%",
-                      background: "rgba(139,37,0,0.15)",
-                      border: "1px solid #8B2500",
-                      color: "#8B2500",
-                      display: "grid",
-                      placeItems: "center",
-                      fontSize: 12,
-                      fontWeight: 700,
-                    }}
-                  >
-                    ✗
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Micro-quote — obiezione "non sono tecnico" */}
-        <figure
-          style={{
-            marginTop: 40,
-            marginInline: "auto",
-            maxWidth: 640,
-            padding: "20px 28px",
-            borderLeft: "3px solid var(--orange)",
-            background: "rgba(235,122,46,0.06)",
-            borderRadius: "0 10px 10px 0",
-          }}
-        >
-          <blockquote
-            style={{
-              margin: 0,
-              fontFamily: "var(--font-italic)",
-              fontStyle: "italic",
-              fontSize: "clamp(16px, 1.6vw, 18px)",
-              lineHeight: 1.55,
-              color: "#2A2420",
-            }}
-          >
-            &ldquo;Anche temi non immediati diventano chiari e comprensibili per chi non è tecnico.&rdquo;
-          </blockquote>
-          <figcaption
-            style={{
-              marginTop: 10,
+              marginBottom: 18,
               fontFamily: "var(--font-body)",
-              fontSize: 12,
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "#6B5E54",
             }}
           >
-            — Danilo Maver, studente Claude Unlocked
-          </figcaption>
-        </figure>
-
-        {/* Inline CTA */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 56 }}>
-          <SalesV3PrimaryButton onClick={onCheckout} size="lg" pulse>
-            Mi riconosco — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
-          </SalesV3PrimaryButton>
-          <div style={{ fontSize: 12, color: "#6B5E54", fontFamily: "var(--font-body)" }}>
-            Pagamento sicuro · Accesso immediato
+            È per te se…
           </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
+            {yes.map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    background: "rgba(235,122,46,0.15)",
+                    border: "1px solid var(--orange)",
+                    color: "var(--orange)",
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
+                >
+                  ✓
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          style={{
+            background: "var(--deep-space)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "3px solid #8B2500",
+            borderRadius: 14,
+            padding: "32px 28px",
+            boxSizing: "border-box",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "#C56750",
+              marginBottom: 18,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            NON è per te se…
+          </div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
+            {no.map((item, i) => (
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.85 }}>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    background: "rgba(139,37,0,0.15)",
+                    border: "1px solid #8B2500",
+                    color: "#C56750",
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                  }}
+                >
+                  ✗
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Micro-quote — obiezione "non sono tecnico" */}
+      <figure
+        style={{
+          marginTop: 40,
+          marginInline: "auto",
+          maxWidth: 640,
+          padding: "20px 28px",
+          borderLeft: "3px solid var(--orange)",
+          background: "rgba(235,122,46,0.04)",
+          borderRadius: "0 10px 10px 0",
+        }}
+      >
+        <blockquote
+          style={{
+            margin: 0,
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: "clamp(16px, 1.6vw, 18px)",
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+          }}
+        >
+          &ldquo;Anche temi non immediati diventano chiari e comprensibili per chi non è tecnico.&rdquo;
+        </blockquote>
+        <figcaption
+          style={{
+            marginTop: 10,
+            fontFamily: "var(--font-body)",
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+          }}
+        >
+          — Danilo Maver, studente Claude Unlocked
+        </figcaption>
+      </figure>
+
+      {/* Inline CTA */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 56 }}>
+        <SalesV3PrimaryButton onClick={onCheckout} size="lg" pulse>
+          Mi riconosco — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesV3PrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Pagamento sicuro · Accesso immediato
         </div>
       </div>
     </section>
@@ -7530,133 +7573,99 @@ export function SalesV3FAQSection() {
 
   return (
     <section
+      className={styles.salesSectionPadV2}
       style={{
+        maxWidth: 880,
+        margin: "0 auto",
         position: "relative",
         zIndex: 1,
-        color: "#2A2420",
-        padding: "clamp(72px, 9vw, 110px) 0",
-        isolation: "isolate",
         textAlign: "center",
       }}
     >
-      {/* Full-bleed cream */}
-      <div
-        aria-hidden
+      <SectionLabel>FAQ</SectionLabel>
+      <h2
         style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100vw",
-          background: "#F0EBE0",
-          zIndex: -1,
-          boxShadow:
-            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 600,
+          fontSize: "clamp(32px, 4.5vw, 48px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.02em",
+          color: "#fff",
+          margin: "20px auto 48px",
+          maxWidth: 720,
+          textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
-      />
-      <div style={{ maxWidth: 880, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
-        <span
-          style={{
-            display: "inline-block",
-            fontFamily: "var(--font-body)",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.24em",
-            textTransform: "uppercase",
-            color: "var(--orange)",
-            padding: "6px 14px",
-            background: "rgba(235,122,46,0.10)",
-            border: "1px solid rgba(235,122,46,0.30)",
-            borderRadius: 100,
-          }}
-        >
-          FAQ
-        </span>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(32px, 4.5vw, 48px)",
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            color: "#2A2420",
-            margin: "20px auto 48px",
-            maxWidth: 720,
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          Le domande che <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>ti stai facendo</span>.
-        </h2>
+      >
+        Le domande che <Accent>ti stai facendo</Accent>.
+      </h2>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 12, textAlign: "left" }}>
-          {faqs.map((item, i) => (
-            <details
-              key={item.q}
-              className={styles.faqItem}
-              open={i === 0}
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, textAlign: "left" }}>
+        {faqs.map((item, i) => (
+          <details
+            key={item.q}
+            className={styles.faqItem}
+            open={i === 0}
+            style={{
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 12,
+              overflow: "hidden",
+            }}
+          >
+            <summary
+              className={styles.faqSummary}
               style={{
-                background: "#FBF7EE",
-                border: "1px solid rgba(42,36,32,0.10)",
-                borderRadius: 12,
-                overflow: "hidden",
-                boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset",
+                cursor: "pointer",
+                padding: "22px 26px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 20,
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(16px, 1.6vw, 18px)",
+                fontWeight: 500,
+                color: "#fff",
+                letterSpacing: "-0.005em",
               }}
             >
-              <summary
-                className={styles.faqSummary}
+              <span>{item.q}</span>
+              <span
+                aria-hidden
+                className={styles.faqIcon}
                 style={{
-                  cursor: "pointer",
-                  padding: "22px 26px",
-                  display: "flex",
+                  flexShrink: 0,
+                  width: 28,
+                  height: 28,
+                  borderRadius: "50%",
+                  background: "rgba(235,122,46,0.12)",
+                  border: "1px solid rgba(235,122,46,0.3)",
+                  color: "var(--orange)",
+                  display: "inline-flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 20,
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(16px, 1.6vw, 18px)",
+                  justifyContent: "center",
+                  fontSize: 18,
                   fontWeight: 500,
-                  color: "#2A2420",
-                  letterSpacing: "-0.005em",
+                  lineHeight: 1,
+                  transition: "transform 0.2s ease",
                 }}
               >
-                <span>{item.q}</span>
-                <span
-                  aria-hidden
-                  className={styles.faqIcon}
-                  style={{
-                    flexShrink: 0,
-                    width: 28,
-                    height: 28,
-                    borderRadius: "50%",
-                    background: "rgba(235,122,46,0.14)",
-                    border: "1px solid rgba(235,122,46,0.40)",
-                    color: "var(--orange)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 18,
-                    fontWeight: 500,
-                    lineHeight: 1,
-                    transition: "transform 0.2s ease",
-                  }}
-                >
-                  +
-                </span>
-              </summary>
-              <div
-                style={{
-                  padding: "0 26px 22px",
-                  fontFamily: "var(--font-body)",
-                  fontSize: 16,
-                  lineHeight: 1.65,
-                  color: "#3A322B",
-                }}
-              >
-                {item.a}
-              </div>
-            </details>
-          ))}
-        </div>
+                +
+              </span>
+            </summary>
+            <div
+              style={{
+                padding: "0 26px 22px",
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                lineHeight: 1.65,
+                color: "var(--ghost)",
+                opacity: 0.88,
+              }}
+            >
+              {item.a}
+            </div>
+          </details>
+        ))}
       </div>
     </section>
   );
