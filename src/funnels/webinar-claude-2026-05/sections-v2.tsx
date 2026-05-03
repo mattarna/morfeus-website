@@ -4316,7 +4316,7 @@ export function SalesV2MechanismSection() {
           In 10 minuti sai già cosa chiedere, come chiederlo, e perché il 95% delle persone ottiene risposte generiche.
           <br />
           <br />
-          <span style={{ color: "var(--orange)" }}>Nessun competitor parte da qui.</span>
+          <span style={{ color: "var(--orange)" }}>questa è la parte più importante</span>
         </>
       ),
     },
@@ -4337,7 +4337,7 @@ export function SalesV2MechanismSection() {
       title: "Metodo che resta, anche quando lo strumento cambia.",
       body: (
         <>
-          Moduli 7-9: workflow reali, progetti complessi, sicurezza. Il <strong style={{ color: "#fff" }}>70%</strong> di quello
+          Workflow reali, progetti complessi, sicurezza. Il <strong style={{ color: "#fff" }}>70%</strong> di quello
           che impari si applica a qualsiasi AI. I tool cambiano ogni 6 mesi. Il metodo no.
           <br />
           È la differenza tra imparare a guidare e imparare dove sono i bottoni di una macchina specifica.
