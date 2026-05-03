@@ -345,7 +345,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampB2B: ({ accentColor, step }) => <BootcampB2BSection accentColor={accentColor} step={step} />,
   BootcampOffer: ({ accentColor, step }) => <BootcampOfferSection accentColor={accentColor} step={step} />,
   BootcampGuarantee: () => <BootcampGuaranteeSection />,
-  BootcampFAQ: ({ accentColor, step }) => <BootcampFAQSection accentColor={accentColor} step={step} />,
+  BootcampFAQ: () => <BootcampFAQSection />,
   BootcampFinalCTA: ({ accentColor, step }) => <BootcampFinalCTASection accentColor={accentColor} step={step} />,
   BootcampFooter: () => <BootcampFooterSection />,
   BootcampStickyBar: ({ accentColor, step }) => <BootcampStickyBarSection accentColor={accentColor} step={step} />,

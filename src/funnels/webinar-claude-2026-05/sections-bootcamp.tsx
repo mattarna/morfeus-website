@@ -253,7 +253,7 @@ function scrollToId(id: string) {
 function readPricing(step: { content?: { BootcampPricing?: BootcampPricingContent } } | undefined): BootcampPricingContent {
   return (
     step?.content?.BootcampPricing ?? {
-      currentPrice: 1500,
+      currentPrice: 1397,
       listPrice: 6700,
       stackValue: 6282,
       currency: "EUR",
@@ -1773,21 +1773,22 @@ function ReviewCardLime({ initials, name, role, company, quote, rating }: Bootca
       style={{
         background: "var(--night)",
         border: `1px solid ${LIME_BORDER_25}`,
-        borderRadius: 16,
-        padding: "26px 24px",
+        borderRadius: 18,
+        padding: "32px 30px",
         display: "flex",
         flexDirection: "column",
-        gap: 16,
+        gap: 22,
         height: "100%",
         boxSizing: "border-box",
+        boxShadow: `0 12px 40px ${LIME_SOFT_10}`,
       }}
     >
-      <div style={{ display: "inline-flex", gap: 3 }} aria-label={`${rating} stelle su 5`}>
+      <div style={{ display: "inline-flex", gap: 4 }} aria-label={`${rating} stelle su 5`}>
         {Array.from({ length: 5 }).map((_, i) => (
           <svg
             key={i}
-            width="16"
-            height="16"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill={i < rating ? LIME : "rgba(255,255,255,0.10)"}
             stroke={i < rating ? LIME : "rgba(255,255,255,0.18)"}
@@ -1802,8 +1803,8 @@ function ReviewCardLime({ initials, name, role, company, quote, rating }: Bootca
         style={{
           fontFamily: "var(--font-italic)",
           fontStyle: "italic",
-          fontSize: 16,
-          lineHeight: 1.55,
+          fontSize: 19,
+          lineHeight: 1.6,
           color: "#fff",
           margin: 0,
           flex: 1,
@@ -1811,11 +1812,11 @@ function ReviewCardLime({ initials, name, role, company, quote, rating }: Bootca
       >
         &ldquo;{quote}&rdquo;
       </p>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
         <span
           style={{
-            width: 40,
-            height: 40,
+            width: 46,
+            height: 46,
             borderRadius: "50%",
             background: LIME_SOFT_18,
             border: `2px solid ${LIME}`,
@@ -1824,17 +1825,17 @@ function ReviewCardLime({ initials, name, role, company, quote, rating }: Bootca
             color: LIME,
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: 13,
+            fontSize: 15,
             flexShrink: 0,
           }}
         >
           {initials}
         </span>
         <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 14, color: "#fff", lineHeight: 1.2 }}>
+          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 16, color: "#fff", lineHeight: 1.2 }}>
             {name}
           </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--muted)", marginTop: 2, lineHeight: 1.3 }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", marginTop: 3, lineHeight: 1.35 }}>
             {role} · {company}
           </div>
         </div>
@@ -1851,7 +1852,7 @@ export function BootcampResultsSection() {
         padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 32px)",
       }}
     >
-      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ marginBottom: 14, textAlign: "center" }}>
           <SectionLabel>La prova</SectionLabel>
         </div>
@@ -1891,18 +1892,33 @@ export function BootcampResultsSection() {
           <NumberStat big="60%+" label="partecipanti fuori da marketing e comunicazione" />
         </div>
 
-        {/* 6 recensioni testuali (dark cards, stelle lime) */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 18,
-            marginBottom: 12,
-          }}
-        >
-          {bootcampReviews.map((r) => (
-            <ReviewCardLime key={r.name} {...r} />
-          ))}
+        {/* Recensioni testuali in risalto */}
+        <div style={{ marginTop: 16, marginBottom: 12 }}>
+          <p
+            style={{
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: "clamp(20px, 2.4vw, 24px)",
+              lineHeight: 1.4,
+              color: LIME,
+              textAlign: "center",
+              margin: "0 auto 36px",
+              maxWidth: 720,
+            }}
+          >
+            Cosa dice chi ci è già passato.
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: 22,
+            }}
+          >
+            {bootcampReviews.map((r) => (
+              <ReviewCardLime key={r.name} {...r} />
+            ))}
+          </div>
         </div>
 
         {/* Box dato non-marketing */}
@@ -2127,7 +2143,7 @@ export function BootcampROISection({ step }: SectionProps) {
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          <span style={{ color: LIME }}>1.500 euro.</span>
+          <span style={{ color: LIME }}>1.397 euro.</span>
           <br />
           O <Accent>13.000 euro all&apos;anno</Accent>
           <br />
@@ -2875,17 +2891,15 @@ function GuaranteeCard({ icon, title, body, primary }: { icon: string; title: st
 // SECTION 13 — FAQ
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampFAQSection({ step }: SectionProps) {
-  const pricing = readPricing(step);
+export function BootcampFAQSection() {
   const faqs = [
     {
-      q: `${pricing.currentPrice.toLocaleString("it-IT")} EUR sono tanti. Non so se vale.`,
+      q: "Ho paura di iniziare e di mollare a metà.",
       a: [
-        "Capito. È un investimento significativo e ha senso valutarlo.",
-        "Facciamo i conti: se risparmi 5 ore a settimana (stima conservativa), in un anno sono ~240 ore. A 25 EUR/ora di costo-opportunità, valgono 6.000 EUR. Il payback è a circa 3 mesi. Il ROI anno 1 è 4x.",
-        "Se sei un freelance a 50 EUR/ora, il payback scende a 6 settimane.",
-        "Se sei un'azienda con effetto moltiplicatore interno, le stime cambiano ancora.",
-        "Non devi crederci sulla parola. Porta i tuoi numeri in call di selezione e calcoliamolo insieme.",
+        "È la paura più onesta che si possa avere prima di un percorso che richiede impegno. Tutti la sentono. Anche noi, prima di investire su noi stessi, l'abbiamo sentita.",
+        "Quello che cambia rispetto a tutto quello che hai provato prima è semplice: non sei da solo davanti allo schermo. Tra una sessione e l'altra c'è il gruppo. E noi vediamo se ti perdi.",
+        "Il formato bisettimanale è pensato esattamente per questo: 2 ore intense, due settimane per applicare nel tuo lavoro vero, e qualcuno che si accorge se sparisci.",
+        "Non puoi mollare in silenzio quando qualcuno ti sta guardando lavorare.",
       ],
     },
     {
