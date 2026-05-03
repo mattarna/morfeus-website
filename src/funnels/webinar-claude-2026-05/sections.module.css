@@ -340,6 +340,20 @@
   pointer-events: none;
 }
 
+/* ── Utility: nasconde un blocco CTA su mobile/tablet (desktop ≥ 769px) ── */
+
+.ctaDesktopOnly {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+@media (max-width: 768px) {
+  .ctaDesktopOnly {
+    display: none;
+  }
+}
+
 /* ── v2 only: dark "alternate" pieno (#1F1E2E) full-bleed con shadow inset ── */
 
 .sectionDarkAltBg {

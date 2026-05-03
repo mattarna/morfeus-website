@@ -265,9 +265,11 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesV2ThreeLevels: ({ accentColor, step }) =>
     step.content.SalesV2Pricing ? <SalesV2ThreeLevelsSection accentColor={accentColor} step={step} /> : null,
   SalesV2Problem: () => <SalesV2ProblemSection />,
-  SalesV2Mechanism: () => <SalesV2MechanismSection />,
+  SalesV2Mechanism: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2MechanismSection accentColor={accentColor} step={step} /> : null,
   SalesV2EffettiCollaterali: () => <SalesV2EffettiCollateraliSection />,
-  SalesV2Benefits: () => <SalesV2BenefitsSection />,
+  SalesV2Benefits: ({ accentColor, step }) =>
+    step.content.SalesV2Pricing ? <SalesV2BenefitsSection accentColor={accentColor} step={step} /> : null,
   SalesV2PromiseLetter: () => <SalesV2PromiseLetterSection />,
   SalesV2Modules: ({ accentColor, step }) =>
     step.content.SalesV2Pricing ? <SalesV2ModulesSection accentColor={accentColor} step={step} /> : null,
@@ -299,9 +301,11 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   SalesV3ThreeLevels: ({ accentColor, step }) =>
     step.content.SalesV3Pricing ? <SalesV3ThreeLevelsSection accentColor={accentColor} step={step} /> : null,
   SalesV3Problem: () => <SalesV3ProblemSection />,
-  SalesV3Mechanism: () => <SalesV3MechanismSection />,
+  SalesV3Mechanism: ({ accentColor, step }) =>
+    step.content.SalesV3Pricing ? <SalesV3MechanismSection accentColor={accentColor} step={step} /> : null,
   SalesV3EffettiCollaterali: () => <SalesV3EffettiCollateraliSection />,
-  SalesV3Benefits: () => <SalesV3BenefitsSection />,
+  SalesV3Benefits: ({ accentColor, step }) =>
+    step.content.SalesV3Pricing ? <SalesV3BenefitsSection accentColor={accentColor} step={step} /> : null,
   SalesV3PromiseLetter: () => <SalesV3PromiseLetterSection />,
   SalesV3Modules: ({ accentColor, step }) =>
     step.content.SalesV3Pricing ? <SalesV3ModulesSection accentColor={accentColor} step={step} /> : null,

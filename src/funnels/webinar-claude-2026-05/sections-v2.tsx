@@ -4300,7 +4300,14 @@ function Big({ children, color }: { children: React.ReactNode; color: string }) 
 // SECTION 4 — MECCANISMO / METODO (3 step + effetti collaterali)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function SalesV2MechanismSection() {
+export function SalesV2MechanismSection({ step }: SectionProps) {
+  const variant = useSalesV2Variant();
+  const pricing = step.content.SalesV2Pricing as SalesV2PricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "mechanism", variant });
+    scrollToId("offerta");
+  };
   const steps = [
     {
       n: "01",
@@ -4403,6 +4410,16 @@ export function SalesV2MechanismSection() {
         {steps.map((s) => (
           <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
         ))}
+      </div>
+
+      {/* Inline CTA — desktop only */}
+      <div className={styles.ctaDesktopOnly} style={{ marginTop: 56 }}>
+        <SalesV2PrimaryButton onClick={onCheckout} size="lg" pulse>
+          Voglio questo metodo — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesV2PrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Pagamento sicuro · Accesso immediato
+        </div>
       </div>
     </section>
   );
@@ -4589,7 +4606,14 @@ export function SalesV2EffettiCollateraliSection() {
 // SECTION 4.5 — BENEFITS / COSA CAMBIA DOPO IL CORSO (4 card, grid 2x2)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function SalesV2BenefitsSection() {
+export function SalesV2BenefitsSection({ step }: SectionProps) {
+  const variant = useSalesV2Variant();
+  const pricing = step.content.SalesV2Pricing as SalesV2PricingContent;
+  const current = useCurrentPricing(pricing);
+  const onCheckout = () => {
+    trackEvent("sales_inline_cta_click", { block: "benefits", variant });
+    scrollToId("offerta");
+  };
   const benefits = [
     {
       icon: (
@@ -4683,6 +4707,16 @@ export function SalesV2BenefitsSection() {
         {benefits.map((b, i) => (
           <BenefitCard key={i} {...b} />
         ))}
+      </div>
+
+      {/* Inline CTA — desktop only */}
+      <div className={styles.ctaDesktopOnly} style={{ marginTop: 56 }}>
+        <SalesV2PrimaryButton onClick={onCheckout} size="lg" pulse>
+          Voglio questi cambiamenti — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
+        </SalesV2PrimaryButton>
+        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+          Pagamento sicuro · Accesso immediato
+        </div>
       </div>
     </section>
   );
