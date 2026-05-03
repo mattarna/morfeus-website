@@ -121,6 +121,7 @@ const allowedComponents: FunnelComponentName[] = [
   "BootcampFounders",
   "BootcampResults",
   "BootcampAudience",
+  "BootcampROI",
   "BootcampB2B",
   "BootcampOffer",
   "BootcampGuarantee",

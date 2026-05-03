@@ -253,9 +253,9 @@ function scrollToId(id: string) {
 function readPricing(step: { content?: { BootcampPricing?: BootcampPricingContent } } | undefined): BootcampPricingContent {
   return (
     step?.content?.BootcampPricing ?? {
-      currentPrice: 1500,
-      listPrice: 6700,
-      stackValue: 6282,
+      currentPrice: 1297,
+      listPrice: 1500,
+      stackValue: 4632,
       currency: "EUR",
       callUrl: "",
     }
@@ -421,7 +421,7 @@ export function BootcampHeroSection({ step }: SectionProps) {
           letterSpacing: "0.02em",
         }}
       >
-        ⚠ Posti chiusi a 25 partecipanti, accesso solo via call di selezione
+        ⚠ Cohort chiusa a 25 partecipanti — accesso solo via call di selezione con Mattia
       </p>
 
       {/* CTA */}
@@ -596,7 +596,7 @@ export function BootcampLevelGapSection() {
           </p>
         </div>
 
-        {/* Cost box — Costo autodidatta L3 */}
+        {/* Cost box */}
         <div
           style={{
             marginTop: 36,
@@ -607,19 +607,23 @@ export function BootcampLevelGapSection() {
             maxWidth: 720,
           }}
         >
-          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 13, color: LIME, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-            Costo del percorso autodidatta verso L3
+          <p style={{ margin: "0 0 10px", fontFamily: "var(--font-body)", fontSize: 13, color: LIME, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            Costo medio del percorso autodidatta verso L3
           </p>
-          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4.4vw, 38px)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.01em" }}>
-            <span style={{ color: LIME }}>9.000–20.000 EUR.</span>
-            <br />
-            Più 1 anno del tuo tempo.
+          <p style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: "#fff" }}>
+            150–300 ore · 3.750–7.500 EUR in corsi e risorse
           </p>
-          <p style={{ margin: "0 0 6px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
-            È quello che spendi a fare da solo il salto da L2 a L3.
+          <p style={{ margin: "0 0 18px", fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)" }}>
+            Nessuno che ti corregga quando vai in direzione sbagliata.
           </p>
-          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 14, lineHeight: 1.55, color: "var(--muted)" }}>
-            Senza che nessuno ti dica quando il tuo standard è troppo basso, o troppo alto.
+          <p style={{ margin: "0 0 10px", fontFamily: "var(--font-body)", fontSize: 13, color: LIME, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            Costo del non fare niente
+          </p>
+          <p style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: "#fff" }}>
+            5–8h/settimana che continui a fare tu.
+          </p>
+          <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 14, color: "var(--ghost)", opacity: 0.85 }}>
+            In un anno: oltre <strong style={{ color: LIME }}>5.750 EUR di lavoro</strong> che potrebbe fare il tuo sistema AI.
           </p>
         </div>
 
@@ -785,7 +789,13 @@ export function BootcampWhyAloneSection() {
           Non parliamo di persone. Parliamo di approcci che non funzionano per definizione.
         </p>
 
-        <div className={styles.bootcampEnemiesGrid}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: 18,
+          }}
+        >
           {enemies.map((e) => (
             <div
               key={e.n}
@@ -848,29 +858,20 @@ export function BootcampMethodSection({ step }: SectionProps) {
     {
       letter: "M",
       title: "MANUALE",
-      body: [
-        "Prima capisci il task completamente. Ogni passaggio, ogni decisione, ogni eccezione, ogni standard di qualità.",
-        "Non perché l'AI sia stupida. Perché non puoi delegare quello che non sai spiegare ad alta voce. Se non riesci a descrivere il processo con precisione, ottieni output che sembra giusto ma non lo è, e non lo capisci finché è troppo tardi.",
-        "Questa fase è dove quasi tutta la formazione AI si ferma. Ti insegna cosa fare con lo strumento, non come capire cosa delegare e come farlo bene.",
-      ],
+      tag: "Capisci prima di delegare",
+      body: "Prima di dare un compito all'AI, devi capire cosa stai delegando e perché. Questo step ti porta a vedere con chiarezza dove il tuo tempo va davvero — e cosa ha senso affidare a un sistema.",
     },
     {
       letter: "V",
       title: "VALIDATO",
-      body: [
-        "Costruisci il sistema. Lo testi. Lo correggi. Finché produce al tuo standard, senza che tu debba supervisionarlo ogni volta.",
-        "Questa è la fase in cui il sistema guadagna la tua fiducia. Non la fiducia cieca: la fiducia basata su dati. “Ho testato. Funziona. Produce quello che voglio, nel mio tono, con i miei criteri.”",
-        "È anche la fase in cui quasi tutti si bloccano.",
-      ],
+      tag: "Deleghi, poi controlli",
+      body: "Impari a costruire istruzioni precise, a strutturare il lavoro perché l'AI lo esegua correttamente, e a validare l'output senza doverlo rifare da capo. Il risultato è affidabile perché è verificato — non perché ci speri.",
     },
     {
       letter: "A",
       title: "AUTOMATIZZATO",
-      body: [
-        "Quando funziona sempre, non ci torni. Non lo aggiusti. Non lo sorvegli.",
-        "Produce mentre sei su altro. Lavora mentre dormi. Il tuo tempo smette di essere il collo di bottiglia.",
-        "Questa è L3.",
-      ],
+      tag: "Il sistema lavora senza di te",
+      body: "Quando il flusso funziona e il risultato è validato, lo rendi autonomo. Da quel momento, quel lavoro non è più tuo. È del sistema.",
     },
   ];
 
@@ -883,7 +884,7 @@ export function BootcampMethodSection({ step }: SectionProps) {
     >
       <div style={{ maxWidth: 1080, margin: "0 auto" }}>
         <div style={{ marginBottom: 14, textAlign: "center" }}>
-          <SectionLabel>Il motivo per cui funziona</SectionLabel>
+          <SectionLabel>Il metodo proprietario del bootcamp</SectionLabel>
         </div>
 
         <h2
@@ -900,9 +901,9 @@ export function BootcampMethodSection({ step }: SectionProps) {
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          Non è un corso.
+          Non uno strumento.
           <br />
-          È un <Accent>metodo in tre fasi</Accent>.
+          <Accent>Un metodo</Accent> per costruire sistemi AI.
         </h2>
 
         <p
@@ -910,151 +911,123 @@ export function BootcampMethodSection({ step }: SectionProps) {
             margin: "0 auto 14px",
             maxWidth: 760,
             fontFamily: "var(--font-body)",
-            fontSize: 18,
+            fontSize: 17,
             lineHeight: 1.6,
             color: "var(--ghost)",
-            opacity: 0.95,
+            opacity: 0.9,
             textAlign: "center",
           }}
         >
-          Il bootcamp usa un metodo preciso. Si chiama <strong style={{ color: "#fff" }}>M-V-A</strong>.
+          Il Bootcamp AI Champion è strutturato attorno al framework M-V-A — un approccio in tre fasi che porta da
+          &ldquo;so come si usa Claude&rdquo; a &ldquo;ho un sistema operativo AI che lavora per me&rdquo;.
         </p>
 
         <p
           style={{
             margin: "0 auto 56px",
-            maxWidth: 760,
+            maxWidth: 720,
             fontFamily: "var(--font-body)",
-            fontSize: 16,
-            lineHeight: 1.6,
-            color: "var(--ghost)",
-            opacity: 0.85,
+            fontSize: 15,
+            color: "var(--muted)",
             textAlign: "center",
           }}
         >
-          Tre fasi. Una sequenza obbligata. Non puoi saltare la seconda per arrivare alla terza, e quasi tutti si fermano esattamente lì.
+          Qui ti spieghiamo i principi. Come si applica operativamente lo impari dentro il bootcamp.
         </p>
 
-        {/* 3 step (dark, no cream) */}
-        <div className={styles.bootcampMvaGrid}>
-          {steps.map((s) => (
+        {/* 3 step */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 20,
+            position: "relative",
+          }}
+        >
+          {steps.map((s, i) => (
             <div
               key={s.letter}
               style={{
                 background: "var(--night)",
                 border: "1px solid var(--hairline)",
                 borderRadius: 16,
-                padding: 28,
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
+                padding: 26,
+                position: "relative",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8 }}>
-                <div
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 12,
-                    background: LIME,
-                    color: "#0B0B0C",
-                    display: "grid",
-                    placeItems: "center",
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: 26,
-                    boxShadow: `0 8px 24px ${LIME_GLOW_35}`,
-                    flexShrink: 0,
-                  }}
-                >
-                  {s.letter}
-                </div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 22, color: "#fff", margin: 0, letterSpacing: "0.05em" }}>
-                  {s.title}
-                </h3>
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 12,
+                  background: LIME,
+                  color: "#0B0B0C",
+                  display: "grid",
+                  placeItems: "center",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: 26,
+                  marginBottom: 18,
+                  boxShadow: `0 8px 24px ${LIME_GLOW_35}`,
+                }}
+              >
+                {s.letter}
               </div>
-              {s.body.map((p, idx) => (
-                <p
-                  key={idx}
+              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 22, color: "#fff", margin: "0 0 6px", letterSpacing: "0.05em" }}>
+                {s.title}
+              </h3>
+              <p style={{ margin: "0 0 14px", fontFamily: "var(--font-italic)", fontStyle: "italic", color: LIME, fontSize: 15 }}>
+                {s.tag}
+              </p>
+              <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.88 }}>
+                {s.body}
+              </p>
+              {i < steps.length - 1 && (
+                <span
+                  aria-hidden
                   style={{
-                    margin: 0,
-                    fontFamily: "var(--font-body)",
-                    fontSize: 15,
-                    lineHeight: 1.6,
-                    color: "var(--ghost)",
-                    opacity: 0.92,
+                    position: "absolute",
+                    right: -14,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    color: LIME,
+                    fontSize: 22,
+                    display: "none",
                   }}
                 >
-                  {p}
-                </p>
-              ))}
+                  →
+                </span>
+              )}
             </div>
           ))}
         </div>
 
-        {/* Perché tra V e A quasi tutti si fermano */}
+        {/* Box violetto */}
         <div
           style={{
-            marginTop: 48,
-            padding: "clamp(24px, 4vw, 36px)",
+            marginTop: 40,
+            padding: "clamp(20px, 4vw, 28px)",
             background: VIOLET_SOFT,
             border: `1px solid ${VIOLET_BORDER}`,
-            borderRadius: 16,
+            borderRadius: 14,
             maxWidth: 820,
             marginLeft: "auto",
             marginRight: "auto",
+            fontFamily: "var(--font-body)",
+            fontSize: 16,
+            lineHeight: 1.65,
+            color: "var(--ghost)",
           }}
         >
-          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, color: "#fff", margin: "0 0 16px" }}>
-            Perché tra V e A quasi tutti si fermano.
-          </h3>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            Non è un problema di bravura. È strutturale.
-          </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            La transizione da Validato ad Automatizzato richiede una cosa che da soli non puoi darti: feedback esterno sul tuo standard.
-          </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            Sai cosa vuoi dall&apos;output, ma non sai se il sistema lo produce davvero al livello che serve, perché sei tu che lo giudichi e sei tu che lo correggi. È un circolo chiuso. Il tuo standard è invisibile a te stesso mentre lo applichi.
-          </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            Hai bisogno di qualcuno che guardi il tuo sistema dall&apos;esterno, ti dica dove il tuo standard è troppo basso o troppo alto, e ti mostri esattamente dove lasciare andare e dove tenere il controllo.
-          </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
-            Nessun corso pre-registrato te lo può dare. Nessun tutorial. Nessuna AI che si auto-valuta.
-          </p>
-          <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "#fff", fontWeight: 600 }}>
-            Ci vuole qualcuno che lavora con te, sul tuo caso, e ti corregge mentre costruisci.
-          </p>
+          I tre step non sono teoria. Li attraversi su casi reali nelle 7 sessioni live. Il tuo progetto finale è un sistema M-V-A funzionante — non un esercizio, non una demo.
         </div>
 
-        {/* Le alternative ti portano a M */}
-        <p
-          style={{
-            margin: "40px auto 0",
-            maxWidth: 720,
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(22px, 3vw, 28px)",
-            fontWeight: 600,
-            lineHeight: 1.3,
-            color: "#fff",
-            textAlign: "center",
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          Le alternative ti portano a <strong style={{ color: LIME }}>M</strong>.
-          <br />
-          Qualche volta a <strong style={{ color: LIME }}>V</strong>.
-          <br />
-          Il bootcamp ti porta ad <Accent>A</Accent>.
-        </p>
-
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 36, gap: 10 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 40, gap: 10 }}>
           <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("method")}>
             Prenota la call di selezione
           </PrimaryButton>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
-            Nella call vedi a che punto sei nel metodo, e dove si applica al tuo lavoro specifico.
+            25 posti · Call gratuita · Zero impegno fino alla decisione
           </p>
         </div>
       </div>
@@ -1157,8 +1130,8 @@ export function BootcampTransformationSection() {
           }}
         >
           <NumberStat big="5–8h/sett." label="risparmiate in media dopo il bootcamp" />
-          <NumberStat big="~3 mesi" label="payback period (a 25 EUR/h)" />
-          <NumberStat big="4x" label="ROI anno 1 — conservativo" />
+          <NumberStat big="~2.8 mesi" label="payback period (a 25 EUR/h)" />
+          <NumberStat big="3.8x" label="ROI anno 1 — conservativo" />
         </div>
       </div>
     </section>
@@ -1321,7 +1294,7 @@ export function BootcampProgramSection() {
         >
           7 sessioni live.
           <br />
-          <Accent>14 ore</Accent> di formazione reale.
+          <Accent>17 ore</Accent> di formazione reale.
           <br />
           Un sistema che funziona.
         </h2>
@@ -1364,7 +1337,7 @@ export function BootcampProgramSection() {
           </h3>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
             <FormatBullet icon="📅">Bisettimanale (1 settimana on, 1 settimana off)</FormatBullet>
-            <FormatBullet icon="⏱">7 sessioni live da 2h = <strong style={{ color: LIME }}>14h totali in ~13 settimane</strong></FormatBullet>
+            <FormatBullet icon="⏱">7 sessioni live da 2h + 3h preparatorie pre-registrate = <strong style={{ color: LIME }}>17h totali in ~13 settimane</strong></FormatBullet>
             <FormatBullet icon="🎥">Replay permanenti — rivedi ogni sessione quando vuoi, per sempre</FormatBullet>
             <FormatBullet icon="💬">Gruppo WhatsApp attivo per tutta la durata + 30 giorni post-bootcamp</FormatBullet>
             <FormatBullet icon="🏗">Progetto finale guidato su un caso reale tuo</FormatBullet>
@@ -1380,6 +1353,42 @@ export function BootcampProgramSection() {
             }}
           >
             Il formato bisettimanale non è una scelta commerciale. È la condizione perché l&apos;implementazione funzioni. Hai bisogno di tempo tra una sessione e l&apos;altra per applicare, sbagliare, tornare con le domande giuste.
+          </p>
+        </div>
+
+        {/* 3h preparatorie */}
+        <div
+          style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid var(--hairline)",
+            borderRadius: 14,
+            padding: "clamp(20px, 4vw, 28px)",
+            marginBottom: 40,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 700,
+              color: LIME,
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              margin: "0 0 14px",
+            }}
+          >
+            Prima di iniziare
+          </p>
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, color: "#fff", margin: "0 0 18px" }}>
+            3h preparatorie pre-registrate
+          </h3>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8, fontFamily: "var(--font-body)", fontSize: 15, color: "var(--ghost)" }}>
+            <li><strong style={{ color: LIME }}>→ Prep 1:</strong> Fondamenta operative di Claude (context window, memoria, limiti reali)</li>
+            <li><strong style={{ color: LIME }}>→ Prep 2:</strong> Anatomia di un prompt avanzato (da semplice a strutturato)</li>
+            <li><strong style={{ color: LIME }}>→ Prep 3:</strong> Setup del tuo ambiente di lavoro AI</li>
+          </ul>
+          <p style={{ margin: "16px 0 0", fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 13, color: "var(--muted)", lineHeight: 1.55 }}>
+            Incluso nel bootcamp. Serve per livellare il gruppo prima della Sessione 1. Se hai già Claude Unlocked, alcune parti le conosci già — le prep ti portano al livello richiesto.
           </p>
         </div>
 
@@ -1507,6 +1516,16 @@ function FormatBullet({ icon, children }: { icon: string; children: React.ReactN
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampFoundersSection() {
+  const timeline = [
+    { year: "2019", text: "Matteo e Alex iniziano ad esplorare i LLM prima che esistesse ChatGPT" },
+    { year: "2021", text: "Primo uso professionale di AI generativa in contesti aziendali reali" },
+    { year: "2022", text: "Costruiscono Morfeus Hub. Prima cohort: esperimento con 15 persone" },
+    { year: "2023", text: "Le cohort crescono. Si affacciano le prime aziende. Il metodo si consolida" },
+    { year: "2024", text: "2.000+ persone formate. Nascono i primi \"dipendenti AI\" dei partecipanti" },
+    { year: "2025", text: "Lancio Bootcamp AI Champion v1. 40+ partecipanti per cohort" },
+    { year: "2026", text: "AI Champion — terza edizione: cohort ridotte a 25. Più supervisione. Risultati migliori." },
+  ];
+
   return (
     <section
       style={{
@@ -1516,7 +1535,7 @@ export function BootcampFoundersSection() {
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: 14, textAlign: "center" }}>
-          <SectionLabel>Con chi sarai in aula</SectionLabel>
+          <SectionLabel>Chi sei in aula con</SectionLabel>
         </div>
 
         <h2
@@ -1550,35 +1569,35 @@ export function BootcampFoundersSection() {
             textAlign: "center",
           }}
         >
-          Matteo e Alex non sono professionisti della formazione che si sono reinventati AI educator. Sono i founder di Morfeus Hub, usano Claude professionalmente dal 2021, e insegnano ciò che applicano ogni giorno.
+          Matteo e Alex non sono professionisti della formazione che si sono reinventati AI educator. Sono i founder di Morfeus Hub, usano Claude professionalmente dal 2021 — prima del boom — e insegnano ciò che applicano ogni giorno.
         </p>
 
         {/* 2 founder card */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 22 }}>
           <FounderCard
-            imgSrc="/images/team/Profile-matt.jpg"
-            imgAlt="Matteo Arnaboldi, CEO Morfeus"
+            imgSrc="/matteo-arnaboldi-hoodie.png"
+            imgAlt="Matteo Arnaboldi — Co-founder Morfeus Hub"
             name="Matteo"
-            role="CEO Morfeus · AI in uso professionale dal 2021"
-            tag="Founder & lead trainer"
+            role="Co-founder Morfeus Hub · AI in uso professionale dal 2021"
+            tag="Selezione cohort"
             bullets={[
               "Ha formato oltre 2.000 professionisti su Claude e AI applicata",
               "Ha costruito il framework M-V-A applicato in aziende come Enel, Sisal, BNP Paribas, Zara",
               "Partner di HFarm, Talent Garden, Confcommercio, Asseprim, Sole 24 Ore Formazione",
-              "Gestisce la selezione: ogni partecipante passa da lui prima di entrare",
+              "Gestisce la selezione delle cohort: ogni partecipante passa da lui prima di entrare",
             ]}
           />
           <FounderCard
-            imgSrc="/images/team/Profile-alex.webp"
-            imgAlt="Alex Carofiglio, Head of Product & CTO Morfeus"
+            imgSrc=""
+            imgAlt="Alex Carofiglio — Co-founder Morfeus Hub"
             name="Alex"
-            role="Head of Product & CTO · Prompt engineering e sistemi AI"
+            role="Co-founder Morfeus Hub · Prompt engineering e sistemi AI"
             tag="Architettura tecnica"
             bullets={[
               "Progetta l'architettura tecnica dei workflow AI del bootcamp",
               "Responsabile delle sessioni su prompt avanzato, skill e automazione",
               "Costruisce e mantiene i sistemi AI interni di Morfeus Hub",
-              "In ogni sessione live, non delega a collaboratori esterni",
+              "In ogni sessione live — non delega a collaboratori esterni",
             ]}
           />
         </div>
@@ -1605,6 +1624,54 @@ export function BootcampFoundersSection() {
           <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
             Quando costruisci qualcosa che non funziona, lo sanno. Perché ci sono passati.
           </p>
+        </div>
+
+        {/* Timeline */}
+        <div style={{ marginTop: 64 }}>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 700,
+              color: LIME,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              textAlign: "center",
+              margin: "0 0 32px",
+            }}
+          >
+            Dal 2019 a oggi
+          </p>
+          <div style={{ display: "grid", gap: 0 }}>
+            {timeline.map((t, idx) => (
+              <div
+                key={t.year}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "100px 1fr",
+                  gap: 24,
+                  padding: "16px 0",
+                  borderBottom: idx < timeline.length - 1 ? "1px solid var(--hairline)" : "none",
+                  alignItems: "baseline",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: 28,
+                    color: LIME,
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {t.year}
+                </span>
+                <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.9 }}>
+                  {t.text}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1723,123 +1790,8 @@ function FounderCard({
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 08 — RISULTATI (Results) + recensioni testuali
+// SECTION 08 — RISULTATI (Results)
 // ═══════════════════════════════════════════════════════════════════════════════
-
-interface BootcampReview {
-  initials: string;
-  name: string;
-  role: string;
-  company: string;
-  quote: string;
-  rating: number;
-}
-
-const bootcampReviews: BootcampReview[] = [
-  {
-    initials: "AG",
-    name: "Alessandro Giandolfo",
-    role: "Studente Morfeus",
-    company: "Edizione Claude Unlocked",
-    quote:
-      "Ho sostituito il fai da te con un metodo solido e una gestione strategica delle mie capacità. La forza di questa esperienza sta nell'equilibrio perfetto tra una chiarezza cristallina e una concretezza che genera risultati immediati.",
-    rating: 5,
-  },
-  {
-    initials: "AV",
-    name: "Andrea Vitali",
-    role: "Studente Morfeus",
-    company: "Edizione Claude Unlocked",
-    quote:
-      "La vera differenza rispetto ad altri corsi è la forte componente pratica: ti porta davvero a cambiare il modo di usare questi strumenti e ti spinge a fare un salto di livello. È un percorso che, lezione dopo lezione, fa accendere nuove lampadine.",
-    rating: 5,
-  },
-  {
-    initials: "GB",
-    name: "Giovanni Bocca",
-    role: "Studente Morfeus",
-    company: "Edizione Claude Unlocked",
-    quote:
-      "Premesse rispettate e promesse mantenute: il corso è stata un'ottima opportunità di acquisire contesto, basi e soprattutto metodo. Teoria e pratica affrontate hanno già cambiato il mio modo di approcciare all'automazione lato AI.",
-    rating: 5,
-  },
-];
-
-function ReviewCardLime({ initials, name, role, company, quote, rating }: BootcampReview) {
-  return (
-    <div
-      style={{
-        background: "var(--night)",
-        border: `1px solid ${LIME_BORDER_25}`,
-        borderRadius: 16,
-        padding: "26px 24px",
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-        height: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      <div style={{ display: "inline-flex", gap: 3 }} aria-label={`${rating} stelle su 5`}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <svg
-            key={i}
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill={i < rating ? LIME : "rgba(255,255,255,0.10)"}
-            stroke={i < rating ? LIME : "rgba(255,255,255,0.18)"}
-            strokeWidth="1.4"
-            aria-hidden
-          >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-        ))}
-      </div>
-      <p
-        style={{
-          fontFamily: "var(--font-italic)",
-          fontStyle: "italic",
-          fontSize: 16,
-          lineHeight: 1.55,
-          color: "#fff",
-          margin: 0,
-          flex: 1,
-        }}
-      >
-        &ldquo;{quote}&rdquo;
-      </p>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <span
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: "50%",
-            background: LIME_SOFT_18,
-            border: `2px solid ${LIME}`,
-            display: "grid",
-            placeItems: "center",
-            color: LIME,
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: 13,
-            flexShrink: 0,
-          }}
-        >
-          {initials}
-        </span>
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 14, color: "#fff", lineHeight: 1.2 }}>
-            {name}
-          </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--muted)", marginTop: 2, lineHeight: 1.3 }}>
-            {role} · {company}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function BootcampResultsSection() {
   return (
@@ -1885,22 +1837,40 @@ export function BootcampResultsSection() {
         >
           <NumberStat big="2.000+" label="professionisti formati da Morfeus Hub" />
           <NumberStat big="3" label="edizioni del bootcamp (questa è la terza)" />
-          <NumberStat big="40+ → 25" label="edizioni precedenti ridotte per qualità" />
+          <NumberStat big="40+ → 25" label="cohort precedenti ridotte per qualità" />
           <NumberStat big="Enel · Sisal" label="BNP Paribas · Zara — aziende con persone formate" />
         </div>
 
-        {/* 6 recensioni testuali (dark cards, stelle lime) */}
+        {/* Testimonial placeholder */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 18,
-            marginBottom: 12,
+            background: "var(--night)",
+            border: "1px dashed var(--hairline)",
+            borderRadius: 16,
+            padding: "clamp(28px, 5vw, 44px)",
+            textAlign: "center",
+            color: "var(--muted)",
           }}
         >
-          {bootcampReviews.map((r) => (
-            <ReviewCardLime key={r.name} {...r} />
-          ))}
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 700,
+              color: LIME,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              margin: "0 0 14px",
+            }}
+          >
+            Testimonianze partecipanti
+          </p>
+          <p style={{ margin: "0 0 8px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.85 }}>
+            3–5 video o testo da partecipanti delle cohort 1 e 2 — pronti a essere inseriti.
+          </p>
+          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 14, color: "var(--muted)" }}>
+            Slot riservato. Contenuto in arrivo prima del go-live.
+          </p>
         </div>
 
         {/* Box dato non-marketing */}
@@ -1920,7 +1890,7 @@ export function BootcampResultsSection() {
             Un dato che ci teniamo a dire:
           </h3>
           <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)" }}>
-            Nelle prime due edizioni, oltre il <strong style={{ color: LIME }}>60% dei partecipanti non lavorava in marketing o comunicazione</strong>.
+            Nelle prime due cohort, oltre il <strong style={{ color: LIME }}>60% dei partecipanti non lavorava in marketing o comunicazione</strong>.
           </p>
           <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
             Commerciali, avvocati, consulenti, manager HR, ingegneri, imprenditori, architetti.
@@ -1952,7 +1922,7 @@ export function BootcampAudienceSection() {
     { strong: "Non hai mai aperto Claude o ChatGPT.", rest: " Il bootcamp non parte da zero. Per questo esiste Claude Unlocked. (Se vuoi partire da lì, contattaci — te lo includiamo.)" },
     { strong: "Stai cercando trucchi e shortcut.", rest: " Se pensi che il problema sia non avere \"il prompt giusto\", questo non è il posto. Qui si costruisce metodo, non si colleziona copy-paste." },
     { strong: "Vuoi una certificazione per il CV.", rest: " Il certificato c'è, ma non è il punto. Se la tua priorità è un badge, ci sono percorsi più economici." },
-    { strong: "Non hai 2 ore ogni due settimane.", rest: " Il bootcamp è bisettimanale. Non è intensivo. Ma richiede presenza e implementazione tra una sessione e l'altra. Se non hai questo spazio ora, aspetta la prossima edizione." },
+    { strong: "Non hai 2 ore ogni due settimane.", rest: " Il bootcamp è bisettimanale. Non è intensivo. Ma richiede presenza e implementazione tra una sessione e l'altra. Se non hai questo spazio ora, aspetta la prossima cohort." },
     { strong: "Ti aspetti che qualcuno faccia al posto tuo.", rest: " Il bootcamp ti dà metodo e supervisione. Tu costruisci. Non è una consulenza." },
   ];
 
@@ -2015,7 +1985,7 @@ export function BootcampAudienceSection() {
               color: "#fff",
             }}
           >
-            &ldquo;La call di selezione non è una formalità. Incontriamo ogni persona prima di confermare il posto: un bootcamp pieno di persone sbagliate non funziona per nessuno.&rdquo;
+            &ldquo;La call di selezione non è una formalità. Mattia incontra ogni persona prima di confermare il posto — perché un bootcamp pieno di persone sbagliate non funziona per nessuno.&rdquo;
           </p>
         </div>
       </div>
@@ -2094,197 +2064,7 @@ function AudienceColumn({
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 10A — ROI (Facciamo i conti) — sezione individuale
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export function BootcampROISection({ step }: SectionProps) {
-  const pricing = readPricing(step);
-  return (
-    <section
-      style={{
-        background: "var(--night)",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 32px)",
-      }}
-    >
-      <div style={{ maxWidth: 920, margin: "0 auto" }}>
-        <div style={{ marginBottom: 14, textAlign: "center" }}>
-          <SectionLabel>Facciamo i conti</SectionLabel>
-        </div>
-
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(32px, 5vw, 56px)",
-            lineHeight: 1.04,
-            letterSpacing: "-0.02em",
-            color: "#fff",
-            margin: "0 auto 28px",
-            maxWidth: 820,
-            textAlign: "center",
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          <span style={{ color: LIME }}>1.500 euro.</span>
-          <br />
-          O <Accent>13.000 euro all&apos;anno</Accent>
-          <br />
-          che escono dalla finestra.
-        </h2>
-
-        <div
-          style={{
-            margin: "0 auto",
-            maxWidth: 740,
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.65,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            textAlign: "left",
-          }}
-        >
-          <p style={{ margin: "0 0 14px" }}>
-            Ogni settimana che lavori senza un sistema AI, ci sono ore che fai tu che non dovresti fare tu.
-          </p>
-          <p style={{ margin: "0 0 14px" }}>
-            Non perché tu non sia bravo. Perché stai usando il tuo tempo per cose che un sistema potrebbe fare al tuo posto, e meglio, e più velocemente, e senza che tu ci sia.
-          </p>
-          <p style={{ margin: 0, color: "#fff", fontWeight: 600 }}>
-            Fai il conto sulla tua situazione.
-          </p>
-        </div>
-
-        {/* Box scenario */}
-        <div
-          style={{
-            marginTop: 40,
-            padding: "clamp(24px, 4vw, 36px)",
-            background: "var(--dusk)",
-            border: `1px solid ${LIME_BORDER_25}`,
-            borderRadius: 16,
-            display: "grid",
-            gap: 22,
-          }}
-        >
-          <p style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(20px, 2.6vw, 24px)", fontWeight: 600, color: "#fff", lineHeight: 1.3 }}>
-            5 ore a settimana liberate.
-            <span style={{ color: "var(--muted)", fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 400, fontSize: 16, display: "block", marginTop: 6 }}>
-              Stima conservativa di chi ha completato le edizioni precedenti.
-            </span>
-          </p>
-
-          <RoiScenario
-            tier="25 EUR/h"
-            label="Dipendente, consulente, professionista"
-            yearly="6.000 EUR/anno"
-            payback="Il bootcamp si ripaga in 3 mesi. Poi è puro guadagno ogni anno."
-          />
-          <RoiScenario
-            tier="50 EUR/h"
-            label="Freelance, libero professionista"
-            yearly="12.000 EUR/anno"
-            payback="Il bootcamp si ripaga in 6 settimane. Il primo cliente che prendi con le ore liberate copre tutto."
-          />
-          <RoiScenario
-            tier="Imprenditore o azienda"
-            label="Mandi qualcuno dall'azienda al bootcamp"
-            yearly="3-5x effetto moltiplicatore"
-            payback="Quella persona torna con un sistema costruito sul vostro workflow. In 3-6 mesi diventa il punto di riferimento interno sull'AI."
-          />
-        </div>
-
-        {/* Box riassunto */}
-        <div
-          style={{
-            marginTop: 28,
-            padding: "clamp(20px, 4vw, 28px)",
-            background: VIOLET_SOFT,
-            border: `1px solid ${VIOLET_BORDER}`,
-            borderRadius: 16,
-            display: "grid",
-            gap: 10,
-            fontFamily: "var(--font-body)",
-            fontSize: 17,
-            lineHeight: 1.6,
-            color: "var(--ghost)",
-          }}
-        >
-          <p style={{ margin: 0, color: "#fff", fontWeight: 600 }}>
-            Il bootcamp costa {pricing.currentPrice.toLocaleString("it-IT")} euro.
-          </p>
-          <p style={{ margin: 0 }}>
-            Non farlo costa <strong style={{ color: LIME }}>6.000-12.000 euro all&apos;anno</strong>, ogni anno, finché non costruisci il sistema.
-          </p>
-          <p style={{ margin: 0 }}>
-            E il gap tra chi ha il sistema e chi non ce l&apos;ha si allarga ogni mese.
-          </p>
-        </div>
-
-        {/* Box deducibilità */}
-        <div
-          style={{
-            marginTop: 22,
-            padding: "16px 22px",
-            background: LIME_SOFT_10,
-            border: `1px solid ${LIME_BORDER_25}`,
-            borderRadius: 12,
-            fontFamily: "var(--font-body)",
-            fontSize: 15,
-            lineHeight: 1.6,
-            color: "var(--ghost)",
-          }}
-        >
-          Deducibile come formazione professionale. Costo netto dopo deducibilità (24%): <strong style={{ color: LIME }}>~{Math.round(pricing.currentPrice * 0.76).toLocaleString("it-IT")} EUR</strong>.
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 40, gap: 10, textAlign: "center" }}>
-          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("roi")}>
-            Prenota la call di selezione
-          </PrimaryButton>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
-            Nella call fai il calcolo sulla tua situazione specifica.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function RoiScenario({ tier, label, yearly, payback }: { tier: string; label: string; yearly: string; payback: string }) {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "minmax(160px, 220px) 1fr",
-        gap: 18,
-        alignItems: "start",
-        paddingTop: 18,
-        borderTop: "1px solid var(--hairline)",
-      }}
-    >
-      <div>
-        <p style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: LIME, letterSpacing: "-0.01em" }}>
-          {tier}
-        </p>
-        <p style={{ margin: "4px 0 0", fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", lineHeight: 1.4 }}>
-          {label}
-        </p>
-      </div>
-      <div>
-        <p style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: "#fff" }}>
-          {yearly}
-        </p>
-        <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.9 }}>
-          {payback}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 10B — PER LE AZIENDE (B2B compatto, ricalca pattern v2 corso)
+// SECTION 10 — PER LE AZIENDE (B2B)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampB2BSection({ step }: SectionProps) {
@@ -2292,139 +2072,221 @@ export function BootcampB2BSection({ step }: SectionProps) {
   return (
     <section
       style={{
-        padding: "clamp(48px, 8vw, 80px) clamp(20px, 5vw, 32px)",
-        background: "var(--night)",
+        background: "var(--dusk)",
+        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 32px)",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          position: "relative",
-          background: "linear-gradient(135deg, rgba(101,88,212,0.18) 0%, rgba(123,104,238,0.10) 50%, rgba(15,14,26,0.90) 100%)",
-          border: `1px solid ${VIOLET_BORDER}`,
-          borderRadius: 24,
-          padding: "clamp(36px, 5vw, 56px) clamp(26px, 4vw, 52px)",
-          overflow: "hidden",
-          boxShadow: "0 0 60px rgba(123,104,238,0.15), 0 24px 60px rgba(0,0,0,0.45)",
-        }}
-      >
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: "-20%",
-            right: "-10%",
-            width: 360,
-            height: 360,
-            background: "radial-gradient(circle, rgba(123,104,238,0.25) 0%, transparent 70%)",
-            filter: "blur(40px)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "grid",
-            gridTemplateColumns: "1.2fr 0.8fr",
-            gap: 32,
-            alignItems: "center",
-          }}
-          className={styles.bootcampB2bGrid}
-        >
-          <div>
-            <div style={{ marginBottom: 14 }}>
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "6px 14px",
-                  background: "rgba(123,104,238,0.18)",
-                  border: "1px solid rgba(123,104,238,0.40)",
-                  color: "var(--violet)",
-                  fontFamily: "var(--font-body)",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  borderRadius: 100,
-                }}
-              >
-                Per le aziende
-              </span>
-            </div>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 600,
-                fontSize: "clamp(26px, 3.5vw, 38px)",
-                lineHeight: 1.15,
-                letterSpacing: "-0.02em",
-                color: "#fff",
-                margin: "0 0 18px",
-                textWrap: "balance" as React.CSSProperties["textWrap"],
-              }}
-            >
-              Mandi una persona chiave? <Accent>Parliamone.</Accent>
-            </h2>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.92, margin: "0 0 12px" }}>
-              Abbiamo formato i team di <strong style={{ color: "#fff" }}>Enel, Sisal, BNP Paribas, Zara</strong> e decine di altre aziende italiane.
-            </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.95, margin: "0 0 24px" }}>
-              Deducibile come formazione professionale, finanziabile via Fondimpresa/Fondir. La persona torna con un sistema costruito sul vostro workflow, non con un certificato.
-            </p>
-            <OutlineButton href={callHref(pricing)} onClick={() => onCtaClick("b2b")}>
-              Prenota una call commerciale →
-            </OutlineButton>
-          </div>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <div style={{ marginBottom: 14, textAlign: "center" }}>
+          <SectionLabel>Per chi manda una persona dall&apos;azienda</SectionLabel>
+        </div>
 
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                maxWidth: 240,
-                aspectRatio: "1 / 1",
-                display: "grid",
-                placeItems: "center",
-              }}
-            >
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: "50%",
-                  background: "radial-gradient(circle, rgba(123,104,238,0.18) 0%, transparent 60%)",
-                }}
-              />
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="var(--violet)"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-                style={{ position: "relative", zIndex: 1, opacity: 0.95, width: "70%", height: "70%" }}
-              >
-                <path d="M3 21h18" />
-                <path d="M5 21V7l8-4v18" />
-                <path d="M19 21V11l-6-4" />
-                <line x1="9" y1="9" x2="9" y2="9" />
-                <line x1="9" y1="12" x2="9" y2="12" />
-                <line x1="9" y1="15" x2="9" y2="15" />
-                <line x1="9" y1="18" x2="9" y2="18" />
-                <line x1="15" y1="14" x2="15" y2="14" />
-                <line x1="15" y1="17" x2="15" y2="17" />
-              </svg>
-            </div>
-          </div>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(30px, 4.8vw, 52px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "0 auto 22px",
+            maxWidth: 820,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Un investimento in formazione
+          <br />
+          con <Accent>ROI misurabile.</Accent>
+        </h2>
+
+        <p
+          style={{
+            margin: "0 auto 36px",
+            maxWidth: 740,
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.88,
+            textAlign: "center",
+          }}
+        >
+          Non stiamo parlando di &ldquo;cultura del cambiamento&rdquo; o &ldquo;digital transformation&rdquo;. Stiamo parlando di numeri.
+        </p>
+
+        <div style={{ maxWidth: 800, margin: "0 auto", fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
+          <p style={{ margin: "0 0 18px", color: "#fff", fontWeight: 600 }}>La logica è semplice:</p>
+          <p style={{ margin: "0 0 14px" }}>
+            Mandate una persona al bootcamp. Quella persona torna con un metodo reale, un sistema funzionante e la capacità di trasferire competenza all&apos;interno del team.
+          </p>
+          <p style={{ margin: "0 0 14px" }}>
+            Non torna con un certificato e un hard disk di slide.
+          </p>
+          <p style={{ margin: "0 0 14px" }}>
+            In 13 settimane, costruisce qualcosa che usi già. In 3-6 mesi, diventa la persona che sa come si fa — e lo insegna agli altri.
+          </p>
+          <p style={{ margin: 0, fontWeight: 600, color: "#fff" }}>
+            Questo è il moltiplicatore che giustifica l&apos;investimento.
+          </p>
+        </div>
+
+        {/* Tabella ROI */}
+        <div
+          style={{
+            marginTop: 44,
+            background: "var(--night)",
+            border: "1px solid var(--hairline)",
+            borderRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          <RoiRow header label="Scenario" col1="Risparmio stimato" col2="ROI anno 1" col3="Payback" />
+          <RoiRow label="Dipendente individuale (25 EUR/h)" col1="5.750 EUR/anno" col2="3.8x" col3="~2.8 mesi" />
+          <RoiRow label="Dipendente individuale (50 EUR/h)" col1="11.500 EUR/anno" col2="7.7x" col3="~1.4 mesi" />
+          <RoiRow label="Azienda — effetto moltiplicatore interno" col1="Variabile" col2="8.7–10.7x" col3="Da valutare" last />
+        </div>
+        <p
+          style={{
+            marginTop: 14,
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 13,
+            color: "var(--muted)",
+            lineHeight: 1.55,
+            textAlign: "center",
+            maxWidth: 760,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          Ipotesi conservativa: risparmio 5h/settimana, 230h/anno. ROI calcolato su prezzo di listino 1.500 EUR. I numeri cambiano in base al costo orario e all&apos;effetto di trasferimento interno.
+        </p>
+
+        {/* Box deducibilità */}
+        <div
+          style={{
+            marginTop: 40,
+            padding: "clamp(22px, 4vw, 30px)",
+            background: LIME_SOFT_10,
+            border: `1px solid ${LIME_BORDER_25}`,
+            borderRadius: 16,
+          }}
+        >
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 22, color: "#fff", margin: "0 0 14px" }}>
+            Il costo è deducibile.
+          </h3>
+          <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.92 }}>
+            Il Bootcamp AI Champion è un programma di formazione professionale. Le aziende possono dedurlo come costo di formazione. In molti casi è finanziabile tramite fondi interprofessionali (Fondimpresa, Fondir e altri). Parlatene con il vostro consulente del lavoro o chiedete a Mattia in call.
+          </p>
+        </div>
+
+        {/* Confronto consulente vs bootcamp */}
+        <div
+          style={{
+            marginTop: 36,
+            background: "var(--night)",
+            border: "1px solid var(--hairline)",
+            borderRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          <CompareRow header label="" col1="Consulente AI (giornata)" col2="Bootcamp AI Champion" />
+          <CompareRow label="Costo" col1="2.000–5.000 EUR/giorno" col2={`${pricing.currentPrice.toLocaleString("it-IT")} EUR totali`} highlight />
+          <CompareRow label="Risultato" col1="Una soluzione puntuale" col2="Una competenza interna permanente" highlight />
+          <CompareRow label="Dipendenza" col1="Alta — serve di nuovo" col2="Zero — la competenza resta" highlight />
+          <CompareRow label="Scalabilità" col1="Nessuna" col2="Il metodo si moltiplica nel team" highlight last />
+        </div>
+
+        {/* CTA aziende */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 40, gap: 10, textAlign: "center" }}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("b2b")}>
+            Manda la tua persona chiave al bootcamp — parla con Mattia
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
+            Call gratuita · Senza impegno · Valutiamo insieme se è il percorso giusto
+          </p>
         </div>
       </div>
     </section>
+  );
+}
+
+function RoiRow({
+  header,
+  label,
+  col1,
+  col2,
+  col3,
+  last,
+}: {
+  header?: boolean;
+  label: string;
+  col1: string;
+  col2: string;
+  col3: string;
+  last?: boolean;
+}) {
+  const cellBase: React.CSSProperties = {
+    padding: "16px 18px",
+    fontFamily: "var(--font-body)",
+    fontSize: header ? 12 : 14,
+    fontWeight: header ? 700 : 500,
+    color: header ? "var(--muted)" : "var(--ghost)",
+    letterSpacing: header ? "0.14em" : "0",
+    textTransform: header ? "uppercase" : "none",
+    borderBottom: last ? "none" : "1px solid var(--hairline)",
+  };
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 0.8fr 0.8fr", gap: 0 }}>
+      <div style={{ ...cellBase, color: header ? "var(--muted)" : "#fff", fontWeight: header ? 700 : 600 }}>{label}</div>
+      <div style={cellBase}>{col1}</div>
+      <div style={{ ...cellBase, color: header ? "var(--muted)" : LIME, fontWeight: 700 }}>{col2}</div>
+      <div style={cellBase}>{col3}</div>
+    </div>
+  );
+}
+
+function CompareRow({
+  header,
+  label,
+  col1,
+  col2,
+  highlight,
+  last,
+}: {
+  header?: boolean;
+  label: string;
+  col1: string;
+  col2: string;
+  highlight?: boolean;
+  last?: boolean;
+}) {
+  const cellBase: React.CSSProperties = {
+    padding: "16px 18px",
+    fontFamily: "var(--font-body)",
+    fontSize: header ? 12 : 14,
+    fontWeight: header ? 700 : 500,
+    color: header ? "var(--muted)" : "var(--ghost)",
+    letterSpacing: header ? "0.14em" : "0",
+    textTransform: header ? "uppercase" : "none",
+    borderBottom: last ? "none" : "1px solid var(--hairline)",
+  };
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr 1.4fr", gap: 0 }}>
+      <div style={{ ...cellBase, color: header ? "var(--muted)" : "#fff", fontWeight: 600 }}>{label}</div>
+      <div style={cellBase}>{col1}</div>
+      <div
+        style={{
+          ...cellBase,
+          color: highlight ? LIME : header ? "var(--muted)" : "var(--ghost)",
+          fontWeight: highlight ? 700 : header ? 700 : 500,
+          background: highlight ? LIME_SOFT_10 : "transparent",
+        }}
+      >
+        {col2}
+      </div>
+    </div>
   );
 }
 
@@ -2435,14 +2297,15 @@ export function BootcampB2BSection({ step }: SectionProps) {
 export function BootcampOfferSection({ step }: SectionProps) {
   const pricing = readPricing(step);
   const stack = [
-    { title: "7 sessioni live da 2h con Matteo e Alex (i founder)", body: "14h totali × 250€/h. Non collaboratori, non tutor.", value: "3.500 EUR" },
-    { title: "Corso AI Basics — lezioni preparatorie pre-registrate", body: "Livella il gruppo prima del via. Setup, fondamenta, mindset.", value: "197 EUR" },
-    { title: "Claude Unlocked — corso base incluso", body: "Il prerequisito logico del bootcamp. Se non lo hai già, lo ricevi.", value: "397 EUR" },
-    { title: "Replay permanenti di tutte le sessioni", body: "Non a tempo, non a 90 giorni. Per sempre.", value: "697 EUR" },
-    { title: "Gruppo WhatsApp — durata bootcamp + 30gg post", body: "Supporto, domande, feedback tra le sessioni.", value: "297 EUR" },
-    { title: "Progetto finale guidato su un caso reale tuo", body: "Un sistema funzionante, deliverable reale, non un esercizio.", value: "897 EUR" },
-    { title: "Pacchetto plugin e skill bonus", body: "Costruiti sui framework Morfeus. Pronti all'uso.", value: "297 EUR" },
-    { title: "Certificato di completamento Morfeus Hub", body: "Riconosciuto dai nostri partner.", value: "incluso" },
+    { title: "7 sessioni live da 2h con Matteo e Alex (i founder)", body: "Non collaboratori, non tutor.", value: "897 EUR" },
+    { title: "3h di lezioni preparatorie pre-registrate", body: "Setup, fondamenta, livellamento del gruppo prima del via.", value: "197 EUR" },
+    { title: "Claude Unlocked — corso base incluso", body: "Il prerequisito logico del bootcamp. Se non lo hai già, lo ricevi.", value: "147 EUR" },
+    { title: "Replay permanenti di tutte le sessioni", body: "Non a tempo, non a 90 giorni. Per sempre.", value: "497 EUR" },
+    { title: "Gruppo WhatsApp attivo per tutta la durata + 30gg post-bootcamp", body: "Supporto, domande, feedback tra le sessioni.", value: "297 EUR" },
+    { title: "Progetto finale guidato su un caso reale tuo", body: "Un sistema funzionante che esci con — non un esercizio.", value: "897 EUR" },
+    { title: "Pacchetto plugin e skill bonus", body: "Dettaglio del pacchetto in arrivo prima del go-live.", value: "297 EUR" },
+    { title: "Certificato di completamento Morfeus Hub", body: "Riconosciuto dai nostri partner.", value: "—" },
+    { title: "Accesso alla community alumni", body: "Il network di chi ha già attraversato il percorso.", value: "297 EUR" },
   ];
 
   return (
@@ -2621,7 +2484,7 @@ export function BootcampOfferSection({ step }: SectionProps) {
           <p style={{ margin: "0 0 28px", fontFamily: "var(--font-body)", fontSize: 14, color: "var(--muted)", lineHeight: 1.6 }}>
             Listino del bootcamp: <span style={{ textDecoration: "line-through" }}>{pricing.listPrice.toLocaleString("it-IT")} EUR</span> · Stai accedendo al prezzo riservato attuale.
             <br />
-            Accesso solo via call di selezione · Pagamento confermato post-call
+            Accesso solo via call di selezione · Pagamento confermato post-call con Mattia
             <br />
             Fattura disponibile · Deducibile come formazione professionale
           </p>
@@ -2664,10 +2527,10 @@ export function BootcampOfferSection({ step }: SectionProps) {
           <AnchorBox
             title="Bootcamp AI Champion"
             lines={[
-              `${pricing.currentPrice.toLocaleString("it-IT")} EUR · 14h di formazione reale`,
+              `${pricing.currentPrice.toLocaleString("it-IT")} EUR · 17h di formazione reale`,
               "Metodo + supervisione + implementazione",
               "Esci con un sistema funzionante",
-              "ROI stimato: 4x in anno 1",
+              "ROI stimato: 3.8x in anno 1",
             ]}
             highlight
           />
@@ -2706,7 +2569,7 @@ export function BootcampOfferSection({ step }: SectionProps) {
               lineHeight: 1.3,
             }}
           >
-            Il prezzo di non farlo è <span style={{ color: LIME }}>6.000 EUR all&apos;anno</span>.
+            Il prezzo di non farlo è <span style={{ color: LIME }}>5.750 EUR all&apos;anno</span>.
           </p>
           <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 15, color: "var(--muted)", lineHeight: 1.55 }}>
             5–8h/settimana che continui a fare tu. Ogni anno. Finché non costruisci il sistema.
@@ -2810,7 +2673,7 @@ export function BootcampGuaranteeSection() {
             icon="🛡"
             title="Garanzia di continuità — trasferimento gratuito"
             body={[
-              "Se per qualsiasi motivo non riesci a completare il percorso (lavoro, imprevisti, salute), ti trasferiamo all'edizione successiva senza costi aggiuntivi.",
+              "Se per qualsiasi motivo non riesci a completare la cohort — lavoro, imprevisti, salute — ti trasferiamo alla cohort successiva senza costi aggiuntivi.",
               "Non perdi l'investimento. Cambi la finestra temporale.",
             ]}
             primary
@@ -2819,8 +2682,8 @@ export function BootcampGuaranteeSection() {
             icon="🎯"
             title="La call di selezione è già una garanzia"
             body={[
-              "Prima di confermare il tuo posto, fai una call di selezione con noi.",
-              "Non è un colloquio di vendita. È una conversazione reale per capire se il bootcamp è il passo giusto per te ora, con il tuo livello e i tuoi obiettivi.",
+              "Prima di confermare il tuo posto, parli con Mattia.",
+              "Non è un colloquio di vendita. È una conversazione reale per capire se il bootcamp è il passo giusto per te — ora, con il tuo livello, con i tuoi obiettivi.",
               "Se non lo è, te lo diciamo in quella call. Non prendiamo persone che non siamo sicuri di poter portare al risultato.",
               "Questo è il vero risk reversal: entri solo se ha senso entrare.",
             ]}
@@ -2837,7 +2700,7 @@ export function BootcampGuaranteeSection() {
             textAlign: "center",
           }}
         >
-          Abbiamo ridotto i posti da 40+ a 25 partecipanti proprio per questo: con meno persone possiamo garantire supervisione reale. Non è un claim di marketing. È la ragione per cui il numero esiste.
+          Abbiamo ridotto la cohort da 40+ a 25 partecipanti proprio per questo: con meno persone possiamo garantire supervisione reale. Non è un claim di marketing. È la ragione per cui il numero esiste.
         </p>
       </div>
     </section>
@@ -2880,10 +2743,10 @@ export function BootcampFAQSection({ step }: SectionProps) {
       q: `${pricing.currentPrice.toLocaleString("it-IT")} EUR sono tanti. Non so se vale.`,
       a: [
         "Capito. È un investimento significativo e ha senso valutarlo.",
-        "Facciamo i conti: se risparmi 5 ore a settimana (stima conservativa), in un anno sono ~240 ore. A 25 EUR/ora di costo-opportunità, valgono 6.000 EUR. Il payback è a circa 3 mesi. Il ROI anno 1 è 4x.",
+        "Facciamo i conti: se risparmi 5 ore a settimana — stima conservativa — in un anno sono 230 ore. A 25 EUR/ora di costo-opportunità, valgono 5.750 EUR. Il payback è a circa 3 mesi. Il ROI anno 1 è 3.8x.",
         "Se sei un freelance a 50 EUR/ora, il payback scende a 6 settimane.",
         "Se sei un'azienda con effetto moltiplicatore interno, le stime cambiano ancora.",
-        "Non devi crederci sulla parola. Porta i tuoi numeri in call di selezione e calcoliamolo insieme.",
+        "Non devi crederci sulla parola. Porta i tuoi numeri in call con Mattia e calcoliamolo insieme.",
       ],
     },
     {
@@ -2891,7 +2754,7 @@ export function BootcampFAQSection({ step }: SectionProps) {
       a: [
         "Il bootcamp è bisettimanale: una sessione ogni due settimane. Sono 2 ore ogni quindici giorni, più implementazione nel tuo lavoro reale.",
         "Non ti chiediamo di mettere il tuo lavoro in pausa. Ti chiediamo di applicare quello che impari mentre lavori. Questo è esattamente il motivo del formato bisettimanale.",
-        "Se non hai nemmeno questo spazio, aspetta la prossima edizione. Non ha senso entrare con meno attenzione di quella che serve.",
+        "Se non hai nemmeno questo spazio, aspetta la prossima cohort. Non ha senso entrare con meno attenzione di quella che serve.",
       ],
     },
     {
@@ -2899,7 +2762,7 @@ export function BootcampFAQSection({ step }: SectionProps) {
       a: [
         "Puoi. Il percorso autodidatta funziona — richiede in media 150–300 ore per arrivare allo stesso livello. Senza nessuno che ti corregge quando vai nella direzione sbagliata.",
         "Il problema non è l'accesso alle informazioni. È la struttura, la sequenza, e la supervisione. Puoi guardare ore di contenuto senza mai costruire qualcosa che funziona davvero.",
-        "14 ore con metodo e correzione live valgono più di 200 ore da soli: non come slogan, ma come dato di chi ha fatto entrambi.",
+        "17 ore con metodo e correzione live valgono più di 200 ore da soli — non come slogan, ma come dato di chi ha fatto entrambi.",
       ],
     },
     {
@@ -2921,7 +2784,7 @@ export function BootcampFAQSection({ step }: SectionProps) {
     {
       q: "Il mio settore è molto specifico. Funzionerà per me?",
       a: [
-        "Nelle prime due edizioni, oltre il 60% dei partecipanti non lavorava in marketing o comunicazione. Consulenti finanziari, avvocati, ingegneri, manager HR, architetti, imprenditori.",
+        "Nelle prime due cohort, oltre il 60% dei partecipanti non lavorava in marketing o comunicazione. Consulenti finanziari, avvocati, ingegneri, manager HR, architetti, imprenditori.",
         "Il metodo M-V-A non è settore-specifico — è processo-specifico. Si applica a qualunque flusso di lavoro che ha input, elaborazione e output. Se lavori con testo, documenti, analisi o decisioni, si applica al tuo lavoro.",
         "Portaci il tuo caso in call. Se non siamo sicuri che funzioni, te lo diciamo.",
       ],
@@ -2930,8 +2793,8 @@ export function BootcampFAQSection({ step }: SectionProps) {
       q: "La call di selezione è solo un modo per vendermi qualcosa.",
       a: [
         "Lo capisco. Dall'esterno assomiglia a un'upsell call.",
-        "La differenza: abbiamo 25 posti, non 250. Abbiamo rifiutato persone nelle edizioni precedenti. Non perché fossero inadatte, ma perché il momento non era quello giusto per loro.",
-        "La call è di 20–30 minuti. Parliamo con ogni candidato. Non è scalabile come tattica di vendita: funziona solo se è genuina.",
+        "La differenza: abbiamo 25 posti, non 250. Abbiamo rifiutato persone nelle cohort precedenti. Non perché fossero inadatte, ma perché il momento non era quello giusto per loro.",
+        "La call è di 20–30 minuti. Mattia parla con ogni candidato. Non è scalabile come tattica di vendita — funziona solo se è genuina.",
         "Se vuoi verificarlo prima: guarda le testimonianze di chi ci è già passato.",
       ],
     },
@@ -2955,7 +2818,7 @@ export function BootcampFAQSection({ step }: SectionProps) {
       q: "Perché solo 25 posti? Non è solo marketing?",
       a: [
         "Non è marketing. È un vincolo reale.",
-        "Matteo e Alex insegnano in prima persona ogni sessione live. Con più di 25 persone, la qualità della supervisione scende: lo abbiamo visto nelle prime edizioni con 40+ partecipanti.",
+        "Matteo e Alex insegnano in prima persona ogni sessione live. Con più di 25 persone, la qualità della supervisione scende — lo abbiamo visto nelle prime cohort con 40+ partecipanti.",
         "Con 25 persone possiamo correggere, rispondere a domande specifiche, seguire i progetti individuali. Con 50 non possiamo.",
         "Quando diciamo 25, intendiamo 25. Punto.",
       ],
@@ -3118,16 +2981,16 @@ export function BootcampFinalCTASection({ step }: SectionProps) {
           }}
         >
           <p style={{ margin: 0 }}>
-            Il Bootcamp AI Champion è la 3a edizione di un percorso testato e rifinito. 14 ore di formazione reale, metodo M-V-A, supervisione dei founder, 25 posti.
+            Il Bootcamp AI Champion è la 3a edizione di un percorso testato e rifinito. 17 ore di formazione reale, metodo M-V-A, supervisione dei founder, 25 posti.
           </p>
           <p style={{ margin: 0 }}>
             Non è un corso. Non è una consulenza. È il percorso per costruire il tuo sistema operativo AI — con metodo, con supporto, con risultati verificabili.
           </p>
           <p style={{ margin: 0 }}>
-            Il prezzo è <strong style={{ color: LIME }}>{pricing.currentPrice.toLocaleString("it-IT")} EUR</strong>. Il costo di non farlo è <strong style={{ color: LIME }}>6.000 EUR all&apos;anno</strong> di lavoro che continui a fare tu.
+            Il prezzo è <strong style={{ color: LIME }}>{pricing.currentPrice.toLocaleString("it-IT")} EUR</strong>. Il costo di non farlo è <strong style={{ color: LIME }}>5.750 EUR all&apos;anno</strong> di lavoro che continui a fare tu.
           </p>
           <p style={{ margin: 0 }}>
-            La call di selezione è gratuita, dura 20–30 minuti, e non c&apos;è nessun impegno finché non decidi tu.
+            La call con Mattia è gratuita, dura 20–30 minuti, e non c&apos;è nessun impegno finché non decidi tu.
           </p>
           <p style={{ margin: 0, fontWeight: 600, color: "#fff" }}>
             Se sei arrivato fin qui, hai già le informazioni che ti servono.
@@ -3147,7 +3010,7 @@ export function BootcampFinalCTASection({ step }: SectionProps) {
           </p>
           <div style={{ marginTop: 18 }}>
             <OutlineButton href={callHref(pricing)} onClick={() => onCtaClick("final-b2b")}>
-              Per aziende: prenota una call con noi →
+              Per aziende: parla con Mattia →
             </OutlineButton>
           </div>
         </div>
@@ -3324,7 +3187,7 @@ export function BootcampThankYouSection({ step }: SectionProps) {
           </svg>
         </div>
         <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: "var(--ghost)" }}>
-          Controlla la tua email: riceverai a breve la ricevuta Stripe e le istruzioni di accesso a Circle. Se non la vedi entro 10 minuti, controlla spam o scrivi a hello@morfeushub.com.
+          Controlla la tua email — riceverai a breve la ricevuta Stripe e le istruzioni di accesso a Circle. Se non la vedi entro 10 minuti, controlla spam o scrivi a Mattia.
         </div>
       </div>
 

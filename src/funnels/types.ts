@@ -120,6 +120,7 @@ export type FunnelComponentName =
   | "BootcampFounders"
   | "BootcampResults"
   | "BootcampAudience"
+  | "BootcampROI"
   | "BootcampB2B"
   | "BootcampOffer"
   | "BootcampGuarantee"
@@ -734,6 +735,8 @@ export interface BootcampResultsContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampAudienceContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampROIContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampB2BContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampOfferContent {}
@@ -982,6 +985,7 @@ export interface FunnelStepConfig {
     BootcampFounders?: BootcampFoundersContent;
     BootcampResults?: BootcampResultsContent;
     BootcampAudience?: BootcampAudienceContent;
+    BootcampROI?: BootcampROIContent;
     BootcampB2B?: BootcampB2BContent;
     BootcampOffer?: BootcampOfferContent;
     BootcampGuarantee?: BootcampGuaranteeContent;

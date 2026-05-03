@@ -749,3 +749,44 @@
     display: initial;
   }
 }
+
+/* ── Bootcamp enemies grid (2x2 desktop, 1 col mobile) ──────────────────── */
+
+.bootcampEnemiesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media (max-width: 720px) {
+  .bootcampEnemiesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Bootcamp M-V-A grid (3 col desktop, 1 col mobile) ──────────────────── */
+
+.bootcampMvaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 920px) {
+  .bootcampMvaGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Bootcamp B2B compact grid (2 col desktop, 1 col mobile) ────────────── */
+
+.bootcampB2bGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .bootcampB2bGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
