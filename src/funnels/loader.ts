@@ -67,6 +67,7 @@ const allowedComponents: FunnelComponentName[] = [
   "SalesV2ThreeLevels",
   "SalesV2Problem",
   "SalesV2Mechanism",
+  "SalesV2EffettiCollaterali",
   "SalesV2Benefits",
   "SalesV2PromiseLetter",
   "SalesV2Modules",

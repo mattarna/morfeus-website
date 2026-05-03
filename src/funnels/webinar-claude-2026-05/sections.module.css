@@ -491,6 +491,22 @@
   }
 }
 
+/* ── Benefits grid v2 (4 card, 2x2 desktop / 1 col mobile) ─────────────── */
+
+.benefitsGridV2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 880px;
+  margin-inline: auto;
+}
+@media (max-width: 640px) {
+  .benefitsGridV2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
 /* ── B2B grid (text+CTA + icon, 2 cols desktop, stack mobile) ───────────── */
 
 .b2bGrid {

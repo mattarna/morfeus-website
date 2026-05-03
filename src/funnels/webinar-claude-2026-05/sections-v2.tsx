@@ -4404,71 +4404,189 @@ export function SalesV2MechanismSection() {
           <MechanismStepCard key={s.n} n={s.n} title={s.title} body={s.body} />
         ))}
       </div>
+    </section>
+  );
+}
 
-      {/* Sotto-blocco: Effetti collaterali (gradient viola sottile) */}
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 4.4 — EFFETTI COLLATERALI (sezione dedicata, dopo "Il metodo")
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export function SalesV2EffettiCollateraliSection() {
+  const effetti = [
+    "Il tuo capo ti chiede com'è che consegni prima degli altri. Non c'è una risposta breve.",
+    "I colleghi ti mandano messaggi chiedendo “come hai fatto quel documento?” Inizi a non sapere da dove iniziare a spiegare.",
+    "Ti propongono il ruolo di referente AI del team. Non l'avevi chiesto.",
+    "I clienti ti descrivono ai loro contatti come “la persona più preparata con cui abbia mai lavorato.” Non sanno cosa c'è dietro.",
+    "Guardi il calendario e realizzi che hai spazio per un cliente nuovo. Non hai lavorato un'ora in più.",
+    "Il tuo commercialista ti chiede se hai assunto qualcuno. Non hai assunto nessuno.",
+    "La domenica sera non ha più quella sensazione. Sai già che il sistema regge. Lunedì è un giorno come gli altri.",
+    "Non riesci più a capire come lavoravi prima. Non nel senso che hai dimenticato. Nel senso che ti sembra impossibile.",
+    "Smetti di chiederti se l'AI ti sostituirà. Sei tu che decidi cosa fare e cosa delegare. La domanda cambia.",
+    "Non riesci più a lavorare senza Claude aperto. Non per dipendenza. Per standard.",
+  ];
+
+  return (
+    <section
+      className={styles.salesSectionPad}
+      style={{
+        maxWidth: 880,
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Wrapper card con accent viola — coerente col vecchio sotto-blocco */}
       <div
         style={{
-          marginTop: 56,
-          maxWidth: 760,
-          marginInline: "auto",
-          padding: "32px 28px",
-          background: "linear-gradient(180deg, rgba(123,104,238,0.07) 0%, rgba(123,104,238,0.02) 100%)",
-          border: "1px solid rgba(123,104,238,0.20)",
-          borderRadius: 14,
+          padding: "clamp(36px, 5vw, 56px) clamp(28px, 4vw, 48px)",
+          background:
+            "linear-gradient(180deg, rgba(123,104,238,0.09) 0%, rgba(123,104,238,0.02) 100%)",
+          border: "1px solid rgba(123,104,238,0.25)",
+          borderRadius: 18,
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <p
+        {/* Decorative violet glow */}
+        <div
+          aria-hidden
           style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--violet)",
-            margin: "0 0 18px",
+            position: "absolute",
+            top: "-30%",
+            right: "-10%",
+            width: 360,
+            height: 360,
+            background:
+              "radial-gradient(circle, rgba(123,104,238,0.18) 0%, transparent 70%)",
+            filter: "blur(50px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Header */}
+        <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: 12 }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: "var(--violet)",
+              fontFamily: "var(--font-body)",
+              padding: "6px 14px",
+              background: "rgba(123,104,238,0.18)",
+              border: "1px solid rgba(123,104,238,0.40)",
+              borderRadius: 100,
+            }}
+          >
+            Avvertenza
+          </span>
+        </div>
+
+        <h2
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(32px, 4.5vw, 50px)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "16px auto 18px",
+            maxWidth: 720,
+            textAlign: "center",
+            textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          Effetti collaterali riportati dagli studenti
+          Effetti <Accent>collaterali</Accent>.
+        </h2>
+
+        <p
+          style={{
+            position: "relative",
+            zIndex: 1,
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.88,
+            margin: "0 auto 36px",
+            maxWidth: 640,
+            textAlign: "center",
+          }}
+        >
+          Questi sono gli effetti collaterali riportati da chi ha completato il sistema.
+          <br />
+          Non li abbiamo promessi. <strong style={{ color: "#fff" }}>Continuano ad arrivare.</strong>
         </p>
+
+        {/* Lista effetti */}
         <ul
           style={{
-            margin: 0,
+            position: "relative",
+            zIndex: 1,
+            margin: "0 auto",
             padding: 0,
             listStyle: "none",
             display: "flex",
             flexDirection: "column",
-            gap: 12,
+            gap: 18,
             fontFamily: "var(--font-body)",
             fontSize: 16,
-            lineHeight: 1.5,
+            lineHeight: 1.6,
             color: "var(--ghost)",
-            opacity: 0.92,
+            opacity: 0.95,
+            maxWidth: 720,
           }}
         >
-          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
-            <span>I colleghi ti chiedono &ldquo;come fai?&rdquo;</span>
-          </li>
-          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
-            <span>Smetti di temere che l&apos;AI ti sostituisca</span>
-          </li>
-          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
-            <span>Inizi a vedere opportunita&apos; dove prima vedevi task</span>
-          </li>
-          <li style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0 }}>→</span>
-            <span>Non riesci piu&apos; a lavorare senza Claude aperto</span>
-          </li>
+          {effetti.map((e, i) => (
+            <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+              <span
+                style={{
+                  color: "var(--orange)",
+                  flexShrink: 0,
+                  fontWeight: 700,
+                  marginTop: 1,
+                }}
+              >
+                →
+              </span>
+              <span>{e}</span>
+            </li>
+          ))}
         </ul>
+
+        {/* Footer didascalico */}
+        <p
+          style={{
+            position: "relative",
+            zIndex: 1,
+            marginTop: 36,
+            paddingTop: 24,
+            borderTop: "1px solid rgba(123,104,238,0.18)",
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            lineHeight: 1.55,
+            color: "var(--muted)",
+            textAlign: "center",
+            maxWidth: 640,
+            marginInline: "auto",
+          }}
+        >
+          Effetti riportati da professionisti nei settori: marketing, legale, HR, consulenza, architettura, finanza.
+          <br />
+          <strong style={{ color: "var(--ghost)" }}>Nessuno di loro era un programmatore.</strong>
+        </p>
       </div>
     </section>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 4.5 — BENEFITS / EFFETTI COLLATERALI (sezione dedicata)
+// SECTION 4.5 — BENEFITS / COSA CAMBIA DOPO IL CORSO (4 card, grid 2x2)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function SalesV2BenefitsSection() {
@@ -4561,7 +4679,7 @@ export function SalesV2BenefitsSection() {
         Cosa cambia <Accent>dopo il corso</Accent>.
       </h2>
 
-      <div className={styles.benefitsGrid}>
+      <div className={styles.benefitsGridV2}>
         {benefits.map((b, i) => (
           <BenefitCard key={i} {...b} />
         ))}
@@ -4995,12 +5113,13 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
     },
     {
       n: "06",
-      title: "Skills, plugin e connettori",
-      outcome: "Installa capacita' pre-costruite con un click. Crea le tue. Collega Claude ai tuoi strumenti esterni. Il modulo dove Claude diventa un sistema, non un chatbot.",
+      title: "Skills, plugin, connettori e MCP",
+      outcome: "Installa capacita' pre-costruite con un click. Crea le tue. Collega Claude ai tuoi strumenti esterni con connettori e MCP server. Il modulo dove Claude diventa un sistema, non un chatbot.",
       topics: [
         "Skill marketplace: installazioni in 1 click",
         "Costruire le tue skill custom (senza codice)",
         "Connettori: Google Drive, Gmail, Calendar, Notion",
+        "MCP server: collegare Claude a strumenti aziendali e API custom",
         "Esempi business: report, analisi, pipeline",
       ],
     },
@@ -5114,7 +5233,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
           textAlign: "center",
         }}
       >
-        Totale: ~<strong style={{ color: "#fff" }}>4-5 ore</strong> di contenuto. Lezioni da 10-15 minuti. Guardi quando vuoi. Applichi subito. Nessuna lezione è teoria senza pratica.
+        Totale: ~<strong style={{ color: "#fff" }}>8-9 ore</strong> di contenuto. Lezioni da 10-15 minuti. Guardi quando vuoi. Applichi subito. Nessuna lezione è teoria senza pratica.
       </p>
 
       {/* Inline CTA */}
@@ -5307,7 +5426,7 @@ export function SalesV2ProofSection({ step }: SectionProps) {
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Chi te lo insegna. E chi <Accent>l&apos;ha gia&apos; fatto</Accent>.
+        Chi te lo insegna. è chi <Accent>l&apos;ha gia&apos; fatto</Accent>.
       </h2>
 
       {/* Founder block: photo + authority story */}
@@ -5535,30 +5654,30 @@ export function SalesV2ReviewsSection() {
     rating?: number;
   }> = [
     {
-      initials: "FA",
-      name: "Francesca A.",
-      role: "Marketing Manager",
-      company: "Servizi B2B · Milano",
+      initials: "AG",
+      name: "Alessandro Giandolfo",
+      role: "Studente Claude Unlocked",
+      company: "Cohort Morfeus",
       quote:
-        "Prima passavo 4 ore a preparare un report. Adesso 40 minuti, e Claude conosce la mia voce. Quello che mi mancava non era lo strumento — era il metodo per usarlo.",
+        "Ho sostituito il “fai da te” con un metodo solido e una gestione strategica delle mie capacità. La forza di questa esperienza sta nell'equilibrio perfetto tra una chiarezza cristallina e una concretezza che genera risultati immediati.",
       rating: 5,
     },
     {
-      initials: "GM",
-      name: "Giulio M.",
-      role: "Commercialista",
-      company: "Studio professionale · Bologna",
+      initials: "AV",
+      name: "Andrea Vitali",
+      role: "Studente Claude Unlocked",
+      company: "Cohort Morfeus",
       quote:
-        "Pensavo l'AI fosse roba per chi sa programmare. Il modulo 0 mi ha cambiato la testa: capisci come ragionare con lo strumento, e tutto il resto viene da sé.",
+        "La vera differenza rispetto ad altri corsi è la forte componente pratica… ti porta davvero a cambiare il modo di usare questi strumenti e ti spinge a fare un salto di livello. È un percorso che, lezione dopo lezione, fa accendere nuove lampadine.",
       rating: 5,
     },
     {
-      initials: "LP",
-      name: "Luca P.",
-      role: "Founder",
-      company: "Studio comunicazione · Torino",
+      initials: "GB",
+      name: "Giovanni Bocca",
+      role: "Studente Claude Unlocked",
+      company: "Cohort Morfeus",
       quote:
-        "Ho 3 Project configurati: uno per i clienti retail, uno per il B2B, uno per la mia editoriale. Sembrano 3 collaboratori diversi. Vale 10 volte il prezzo del corso.",
+        "Premesse rispettate e promesse mantenute: il corso è stata un'ottima opportunità di acquisire contesto, basi e soprattutto metodo. Teoria e pratica affrontate durante il bootcamp hanno già cambiato il mio modo di approcciare all'automazione lato AI.",
       rating: 5,
     },
   ];
@@ -5812,7 +5931,7 @@ export function SalesV2AudienceSection({ step }: SectionProps) {
   const no = [
     "Cerchi un corso su \"l'AI in generale\" — questo è verticale su Claude. Il 70% si applica ovunque, ma il focus è uno strumento, un metodo.",
     "Hai già Projects configurati, usi skill personalizzate e hai un workflow quotidiano strutturato — il corso base non aggiunge abbastanza. Guarda il Bootcamp AI Champion.",
-    "Vuoi risultati senza fare nulla — il corso richiede 4-5 ore di impegno e la volontà di applicare. Non è una pillola magica.",
+    "Vuoi risultati senza fare nulla — il corso richiede 8-9 ore di impegno e la volontà di applicare. Non è una pillola magica.",
     "Pensi che l'AI sia una moda che passerà — questo corso non è per te. È per chi ha capito che il mondo è cambiato e vuole stare dalla parte giusta.",
   ];
 
@@ -5948,6 +6067,45 @@ export function SalesV2AudienceSection({ step }: SectionProps) {
         </div>
       </div>
 
+      {/* Micro-quote — obiezione "non sono tecnico" */}
+      <figure
+        style={{
+          marginTop: 40,
+          marginInline: "auto",
+          maxWidth: 640,
+          padding: "20px 28px",
+          borderLeft: "3px solid var(--orange)",
+          background: "rgba(235,122,46,0.04)",
+          borderRadius: "0 10px 10px 0",
+        }}
+      >
+        <blockquote
+          style={{
+            margin: 0,
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: "clamp(16px, 1.6vw, 18px)",
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+          }}
+        >
+          &ldquo;Anche temi non immediati diventano chiari e comprensibili per chi non è tecnico.&rdquo;
+        </blockquote>
+        <figcaption
+          style={{
+            marginTop: 10,
+            fontFamily: "var(--font-body)",
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            color: "var(--muted)",
+          }}
+        >
+          — Danilo Maver, studente Claude Unlocked
+        </figcaption>
+      </figure>
+
       {/* Inline CTA */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 56 }}>
         <SalesV2PrimaryButton onClick={onCheckout} size="lg" pulse>
@@ -5982,7 +6140,6 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
     { label: "Personalizzazione", a: "Nessuna.", b: "Template generici.", c: "Il TUO Claude, configurato per il TUO lavoro." },
     { label: "Supporto", a: "Nessuno.", b: "Community generica.", c: "4 live settimanali con i founder." },
     { label: "Costo reale", a: "\"Gratis\" + 150-300h del tuo tempo.", b: "100-500€ + tempo per filtrare il contenuto utile.", c: "147€ early bird. 4-5h totali. Applicabile subito.", highlight: true },
-    { label: "Garanzia", a: "—", b: "Variabile.", c: "14 giorni. Nessuna domanda." },
     { label: "Aggiornamenti", a: "Devi cercarli tu ogni volta.", b: "Dipende.", c: "Inclusi. Il corso evolve con Claude." },
   ];
 
@@ -6044,7 +6201,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
           opacity: 0.92,
         }}
       >
-        Il tuo tempo vale più di <Big color="#fff">15€</Big> all&apos;ora? Allora il corso si ripaga prima di YouTube.
+        Il tuo tempo vale più di <Big color="#fff">12€</Big> all&apos;ora? Allora il corso si ripaga prima di YouTube.
       </p>
 
       {/* Inline CTA */}
@@ -6384,7 +6541,7 @@ export function SalesV2OfferSection({ step }: SectionProps) {
   const current = useCurrentPricing(pricing);
 
   const items = [
-    { title: "Il corso completo", body: "10 moduli, ~48 lezioni, ~4-5 ore di contenuto pratico. Dal mindset al sistema personalizzato.", value: "297€" },
+    { title: "Il corso completo", body: "10 moduli, ~48 lezioni, ~8-9 ore di contenuto pratico. Dal mindset al sistema personalizzato.", value: "297€" },
     { title: "4 live settimanali con i founder", body: "Sessioni dal vivo dove fai domande, lavori con noi, vedi demo in tempo reale. Non sei solo.", value: "197€" },
     { title: "Pacchetto skill e plugin curato", body: "Strumenti pre-costruiti che installi in 1 click. Funzionano subito per i task più comuni.", value: "97€" },
     { title: "Aggiornamenti futuri inclusi", body: "Claude evolve. Il corso evolve con lui. In un mercato dove i corsi AI diventano obsoleti in pochi mesi, gli studenti ricevono le lezioni aggiornate automaticamente — senza riacquistare. Questo e' il bonus piu' importante.", value: "non quantificabile" },
@@ -7044,7 +7201,7 @@ export function SalesV2FAQSection() {
         <>
           Capisco. Se lavori 8-10 ore al giorno, l&apos;ultima cosa che vuoi è un altro impegno.
           <br /><br />
-          Ma ecco il paradosso: le 4-5 ore che investi nel corso te ne restituiscono 5-8 OGNI SETTIMANA.
+          Ma ecco il paradosso: le 8-9 ore che investi nel corso te ne restituiscono 5-8 OGNI SETTIMANA.
           <br /><br />
           Non è tempo in più. È l&apos;investimento che ti libera tempo. Lezioni da 10-15 minuti, guardabili quando vuoi, applicabili subito. Non è un master — è un toolkit.
         </>
@@ -7638,7 +7795,7 @@ export function SalesV2FinalCTASection({ step }: SectionProps) {
         >
           <li style={{ display: "flex", gap: 12 }}>
             <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>10 moduli, 48 lezioni, ~4-5 ore di contenuto pratico</span>
+            <span>10 moduli, 48 lezioni, ~8-9 ore di contenuto pratico</span>
           </li>
           <li style={{ display: "flex", gap: 12 }}>
             <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>

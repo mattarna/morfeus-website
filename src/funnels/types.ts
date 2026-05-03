@@ -66,6 +66,7 @@ export type FunnelComponentName =
   | "SalesV2ThreeLevels"
   | "SalesV2Problem"
   | "SalesV2Mechanism"
+  | "SalesV2EffettiCollaterali"
   | "SalesV2Benefits"
   | "SalesV2PromiseLetter"
   | "SalesV2Modules"
@@ -528,6 +529,8 @@ export interface SalesV2ProblemContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesV2MechanismContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV2EffettiCollateraliContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesV2BenefitsContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesV2PromiseLetterContent {}
@@ -785,6 +788,7 @@ export interface FunnelStepConfig {
     SalesV2ThreeLevels?: SalesV2ThreeLevelsContent;
     SalesV2Problem?: SalesV2ProblemContent;
     SalesV2Mechanism?: SalesV2MechanismContent;
+    SalesV2EffettiCollaterali?: SalesV2EffettiCollateraliContent;
     SalesV2Benefits?: SalesV2BenefitsContent;
     SalesV2PromiseLetter?: SalesV2PromiseLetterContent;
     SalesV2Modules?: SalesV2ModulesContent;

@@ -66,6 +66,7 @@ import {
   SalesV2BonusSection,
   SalesV2BootcampBridgeSection,
   SalesV2BridgeSection,
+  SalesV2EffettiCollateraliSection,
   SalesV2ComparisonSection,
   SalesV2FAQSection,
   SalesV2FinalCTASection,
@@ -238,6 +239,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.SalesV2Pricing ? <SalesV2ThreeLevelsSection accentColor={accentColor} step={step} /> : null,
   SalesV2Problem: () => <SalesV2ProblemSection />,
   SalesV2Mechanism: () => <SalesV2MechanismSection />,
+  SalesV2EffettiCollaterali: () => <SalesV2EffettiCollateraliSection />,
   SalesV2Benefits: () => <SalesV2BenefitsSection />,
   SalesV2PromiseLetter: () => <SalesV2PromiseLetterSection />,
   SalesV2Modules: ({ accentColor, step }) =>
