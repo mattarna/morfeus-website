@@ -316,16 +316,28 @@
   }
 }
 
-/* ── v2 only: dark medio alternato (sfondo sottilmente piu' chiaro) ────── */
+/* ── v2 only: dark medio alternato — full bleed (estende oltre maxWidth) ── */
 
 .sectionDarkMidBg {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0%,
-      rgba(255, 255, 255, 0.025) 50%,
-      rgba(255, 255, 255, 0.018) 100%
-    );
+  position: relative;
+  isolation: isolate;
+}
+.sectionDarkMidBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.022) 0%,
+    rgba(255, 255, 255, 0.035) 50%,
+    rgba(255, 255, 255, 0.022) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* ── Hero (sales) — slightly tighter mobile padding ─────────────────────── */

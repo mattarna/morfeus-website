@@ -5690,17 +5690,30 @@ export function SalesV2ReviewsSection() {
   return (
     <section
       style={{
-        maxWidth: 1100,
-        margin: "0 auto",
         position: "relative",
         zIndex: 1,
-        background: "#F0EBE0",
         color: "#2A2420",
-        borderRadius: 24,
-        padding: "clamp(56px, 7vw, 88px) clamp(24px, 4vw, 56px)",
-        boxShadow: "0 30px 80px -20px rgba(0,0,0,0.45), 0 60px 120px -40px rgba(0,0,0,0.30)",
+        padding: "clamp(72px, 9vw, 110px) 0",
+        isolation: "isolate",
       }}
     >
+      {/* Full-bleed cream background — esce dai bordi del container parent */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          background: "#F0EBE0",
+          zIndex: -1,
+          boxShadow:
+            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+        }}
+      />
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <span
           style={{
@@ -5780,6 +5793,7 @@ export function SalesV2ReviewsSection() {
           </div>
         </div>
       )}
+      </div>
     </section>
   );
 }
