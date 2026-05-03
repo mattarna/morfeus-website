@@ -148,7 +148,26 @@ export type FunnelComponentName =
   | "BootcampV2FAQ"
   | "BootcampV2FinalCTA"
   | "BootcampV2Footer"
-  | "BootcampV2StickyBar";
+  | "BootcampV2StickyBar"
+  | "BootcampV3Header"
+  | "BootcampV3Hero"
+  | "BootcampV3LevelGap"
+  | "BootcampV3WhyAlone"
+  | "BootcampV3Method"
+  | "BootcampV3Transformation"
+  | "BootcampV3Program"
+  | "BootcampV3Founders"
+  | "BootcampV3Results"
+  | "BootcampV3Audience"
+  | "BootcampV3ROI"
+  | "BootcampV3B2B"
+  | "BootcampV3Offer"
+  | "BootcampV3Guarantee"
+  | "BootcampV3FAQ"
+  | "BootcampV3FinalCTA"
+  | "BootcampV3Footer"
+  | "BootcampV3StickyBar"
+  | "BootcampV3ThankYou";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -1016,6 +1035,25 @@ export interface FunnelStepConfig {
     BootcampV2Footer?: BootcampV2FooterContent;
     BootcampV2StickyBar?: BootcampV2StickyBarContent;
     BootcampV2Pricing?: BootcampV2PricingContent;
+    BootcampV3Header?: BootcampHeaderContent;
+    BootcampV3Hero?: BootcampHeroContent;
+    BootcampV3LevelGap?: BootcampLevelGapContent;
+    BootcampV3WhyAlone?: BootcampWhyAloneContent;
+    BootcampV3Method?: BootcampMethodContent;
+    BootcampV3Transformation?: BootcampTransformationContent;
+    BootcampV3Program?: BootcampProgramContent;
+    BootcampV3Founders?: BootcampFoundersContent;
+    BootcampV3Results?: BootcampResultsContent;
+    BootcampV3Audience?: BootcampAudienceContent;
+    BootcampV3ROI?: BootcampROIContent;
+    BootcampV3B2B?: BootcampB2BContent;
+    BootcampV3Offer?: BootcampOfferContent;
+    BootcampV3Guarantee?: BootcampGuaranteeContent;
+    BootcampV3FAQ?: BootcampFAQContent;
+    BootcampV3FinalCTA?: BootcampFinalCTAContent;
+    BootcampV3Footer?: BootcampFooterContent;
+    BootcampV3StickyBar?: BootcampStickyBarContent;
+    BootcampV3ThankYou?: BootcampThankYouContent;
   };
 }
 

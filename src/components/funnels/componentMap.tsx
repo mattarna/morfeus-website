@@ -162,6 +162,27 @@ import {
   BootcampV2FooterSection,
   BootcampV2StickyBarSection,
 } from "@/funnels/webinar-claude-2026-05/sections-bootcamp-v2";
+import {
+  BootcampV3HeaderSection,
+  BootcampV3HeroSection,
+  BootcampV3LevelGapSection,
+  BootcampV3WhyAloneSection,
+  BootcampV3MethodSection,
+  BootcampV3TransformationSection,
+  BootcampV3ProgramSection,
+  BootcampV3FoundersSection,
+  BootcampV3ResultsSection,
+  BootcampV3AudienceSection,
+  BootcampV3ROISection,
+  BootcampV3B2BSection,
+  BootcampV3OfferSection,
+  BootcampV3GuaranteeSection,
+  BootcampV3FAQSection,
+  BootcampV3FinalCTASection,
+  BootcampV3FooterSection,
+  BootcampV3StickyBarSection,
+  BootcampV3ThankYouSection,
+} from "@/funnels/webinar-claude-2026-05/sections-bootcamp-v3";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -371,4 +392,24 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampV2FinalCTA: ({ accentColor, step }) => <BootcampV2FinalCTASection accentColor={accentColor} step={step} />,
   BootcampV2Footer: () => <BootcampV2FooterSection />,
   BootcampV2StickyBar: ({ accentColor, step }) => <BootcampV2StickyBarSection accentColor={accentColor} step={step} />,
+  BootcampV3Header: () => <BootcampV3HeaderSection />,
+  BootcampV3Hero: ({ accentColor, step }) => <BootcampV3HeroSection accentColor={accentColor} step={step} />,
+  BootcampV3LevelGap: () => <BootcampV3LevelGapSection />,
+  BootcampV3WhyAlone: () => <BootcampV3WhyAloneSection />,
+  BootcampV3Method: ({ accentColor, step }) => <BootcampV3MethodSection accentColor={accentColor} step={step} />,
+  BootcampV3Transformation: () => <BootcampV3TransformationSection />,
+  BootcampV3Program: () => <BootcampV3ProgramSection />,
+  BootcampV3Founders: () => <BootcampV3FoundersSection />,
+  BootcampV3Results: () => <BootcampV3ResultsSection />,
+  BootcampV3Audience: () => <BootcampV3AudienceSection />,
+  BootcampV3ROI: ({ accentColor, step }) => <BootcampV3ROISection accentColor={accentColor} step={step} />,
+  BootcampV3B2B: ({ accentColor, step }) => <BootcampV3B2BSection accentColor={accentColor} step={step} />,
+  BootcampV3Offer: ({ accentColor, step }) => <BootcampV3OfferSection accentColor={accentColor} step={step} />,
+  BootcampV3Guarantee: () => <BootcampV3GuaranteeSection />,
+  BootcampV3FAQ: () => <BootcampV3FAQSection />,
+  BootcampV3FinalCTA: ({ accentColor, step }) => <BootcampV3FinalCTASection accentColor={accentColor} step={step} />,
+  BootcampV3Footer: () => <BootcampV3FooterSection />,
+  BootcampV3StickyBar: ({ accentColor, step }) => <BootcampV3StickyBarSection accentColor={accentColor} step={step} />,
+  BootcampV3ThankYou: ({ accentColor, step }) =>
+    step.content.BootcampThankYou ? <BootcampV3ThankYouSection accentColor={accentColor} step={step} /> : null,
 };
