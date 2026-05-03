@@ -1566,9 +1566,9 @@ export function BootcampFoundersSection() {
           />
           <FounderCard
             imgSrc="/images/team/Profile-alex.webp"
-            imgAlt="Alex Carofiglio, Head of Product & CTO Morfeus"
+            imgAlt="Alex Carofiglio, Head of Product & Head of Delivery Morfeus"
             name="Alex"
-            role="Co-founder · Head of Product & CTO"
+            role="Co-founder · Head of Product & Head of Delivery"
             tag="Architettura tecnica"
           />
         </div>
