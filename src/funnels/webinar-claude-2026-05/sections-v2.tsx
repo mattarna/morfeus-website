@@ -3687,7 +3687,7 @@ export function SalesV2BridgeSection() {
 
   return (
     <section
-      className={styles.bridgeSection}
+      className={`${styles.bridgeSection} ${styles.sectionDarkAltBg}`}
       style={{
         maxWidth: 760,
         margin: "0 auto",
@@ -4348,7 +4348,7 @@ export function SalesV2MechanismSection() {
 
   return (
     <section
-      className={`${styles.salesSectionPadV2} ${styles.sectionDarkMidBg}`}
+      className={`${styles.salesSectionPadV2} ${styles.sectionDarkAltBg}`}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
@@ -5160,7 +5160,7 @@ export function SalesV2ModulesSection({ step }: SectionProps) {
 
   return (
     <section
-      className={styles.salesSectionPadV2}
+      className={`${styles.salesSectionPadV2} ${styles.sectionDarkAltBg}`}
       style={{
         maxWidth: 920,
         margin: "0 auto",
@@ -5692,12 +5692,12 @@ export function SalesV2ReviewsSection() {
       style={{
         position: "relative",
         zIndex: 1,
-        color: "#2A2420",
+        color: "var(--ghost)",
         padding: "clamp(72px, 9vw, 110px) 0",
         isolation: "isolate",
       }}
     >
-      {/* Full-bleed cream background — esce dai bordi del container parent */}
+      {/* Full-bleed dark alt #1F1E2E */}
       <div
         aria-hidden
         style={{
@@ -5707,31 +5707,15 @@ export function SalesV2ReviewsSection() {
           left: "50%",
           transform: "translateX(-50%)",
           width: "100vw",
-          background: "#F0EBE0",
+          background: "#1F1E2E",
           zIndex: -1,
           boxShadow:
-            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+            "inset 0 12px 24px -12px rgba(0,0,0,0.45), inset 0 -12px 24px -12px rgba(0,0,0,0.45)",
         }}
       />
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
       <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <span
-          style={{
-            display: "inline-block",
-            fontFamily: "var(--font-body)",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.24em",
-            textTransform: "uppercase",
-            color: "var(--orange)",
-            padding: "6px 14px",
-            background: "rgba(235,122,46,0.10)",
-            border: "1px solid rgba(235,122,46,0.30)",
-            borderRadius: 100,
-          }}
-        >
-          Recensioni
-        </span>
+        <SectionLabel>Recensioni</SectionLabel>
       </div>
       <h2
         style={{
@@ -5740,21 +5724,22 @@ export function SalesV2ReviewsSection() {
           fontSize: "clamp(30px, 4.2vw, 46px)",
           lineHeight: 1.1,
           letterSpacing: "-0.02em",
-          color: "#2A2420",
+          color: "#fff",
           margin: "16px auto 18px",
           maxWidth: 820,
           textAlign: "center",
           textWrap: "balance" as React.CSSProperties["textWrap"],
         }}
       >
-        Cosa dice <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>chi ha già fatto il salto</span>.
+        Cosa dice <Accent>chi ha già fatto il salto</Accent>.
       </h2>
       <p
         style={{
           fontFamily: "var(--font-body)",
           fontSize: 17,
           lineHeight: 1.6,
-          color: "#6B5E54",
+          color: "var(--ghost)",
+          opacity: 0.85,
           margin: "0 auto 56px",
           maxWidth: 660,
           textAlign: "center",
@@ -5820,8 +5805,8 @@ function ReviewCard({
       onMouseLeave={() => setHover(false)}
       style={{
         position: "relative",
-        background: hover ? "#FFFCF5" : "#FBF7EE",
-        border: `1px solid ${hover ? "rgba(200,90,21,0.35)" : "rgba(42,36,32,0.10)"}`,
+        background: hover ? "rgba(255,255,255,0.04)" : "var(--deep-space)",
+        border: `1px solid ${hover ? "rgba(235,122,46,0.30)" : "rgba(255,255,255,0.07)"}`,
         borderRadius: 16,
         padding: "28px 26px",
         display: "flex",
@@ -5831,7 +5816,6 @@ function ReviewCard({
         height: "100%",
         transition: "background .25s, border-color .25s, transform .25s",
         transform: hover ? "translateY(-2px)" : "translateY(0)",
-        boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 14px rgba(42,36,32,0.06)",
       }}
     >
       {rating !== undefined && (
@@ -5842,8 +5826,8 @@ function ReviewCard({
               width="18"
               height="18"
               viewBox="0 0 24 24"
-              fill={i < rating ? "#EB7A2E" : "rgba(42,36,32,0.10)"}
-              stroke={i < rating ? "#EB7A2E" : "rgba(42,36,32,0.18)"}
+              fill={i < rating ? "var(--orange)" : "rgba(255,255,255,0.10)"}
+              stroke={i < rating ? "var(--orange)" : "rgba(255,255,255,0.18)"}
               strokeWidth="1.4"
               aria-hidden
             >
@@ -5858,24 +5842,24 @@ function ReviewCard({
           fontStyle: "italic",
           fontSize: 17,
           lineHeight: 1.6,
-          color: "#1A1814",
+          color: "#fff",
           margin: 0,
           flex: 1,
         }}
       >
         &ldquo;{quote}&rdquo;
       </p>
-      <div style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 14, borderTop: "1px solid rgba(42,36,32,0.10)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <span
           style={{
             width: 44,
             height: 44,
             borderRadius: "50%",
-            background: "rgba(235,122,46,0.14)",
-            border: "2px solid #EB7A2E",
+            background: "rgba(235,122,46,0.18)",
+            border: "2px solid var(--orange)",
             display: "grid",
             placeItems: "center",
-            color: "#C85A15",
+            color: "var(--orange)",
             fontFamily: "var(--font-display)",
             fontWeight: 600,
             fontSize: 15,
@@ -5890,7 +5874,7 @@ function ReviewCard({
               fontFamily: "var(--font-display)",
               fontWeight: 600,
               fontSize: 15,
-              color: "#2A2420",
+              color: "#fff",
               lineHeight: 1.2,
             }}
           >
@@ -5900,7 +5884,7 @@ function ReviewCard({
             style={{
               fontFamily: "var(--font-body)",
               fontSize: 13,
-              color: "#6B5E54",
+              color: "var(--muted)",
               marginTop: 2,
               lineHeight: 1.3,
             }}
@@ -6179,7 +6163,7 @@ export function SalesV2ComparisonSection({ step }: SectionProps) {
 
   return (
     <section
-      className={`${styles.salesSectionPadV2} ${styles.sectionDarkMidBg}`}
+      className={`${styles.salesSectionPadV2} ${styles.sectionDarkAltBg}`}
       style={{
         maxWidth: 1120,
         margin: "0 auto",
@@ -7872,7 +7856,7 @@ export function SalesV2FinalCTASection({ step }: SectionProps) {
 
   return (
     <section
-      className={styles.salesSectionPadV2}
+      className={`${styles.salesSectionPadV2} ${styles.sectionDarkAltBg}`}
       style={{
         maxWidth: 760,
         margin: "0 auto",
