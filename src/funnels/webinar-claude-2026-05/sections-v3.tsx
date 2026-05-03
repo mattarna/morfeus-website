@@ -7965,199 +7965,202 @@ export function SalesV3FinalCTASection({ step }: SectionProps) {
 
   return (
     <section
-      className={styles.salesSectionPadV2}
       style={{
-        maxWidth: 760,
-        margin: "0 auto",
         position: "relative",
         zIndex: 1,
+        color: "#2A2420",
+        padding: "clamp(72px, 9vw, 110px) 0",
+        isolation: "isolate",
         textAlign: "center",
       }}
     >
-      {/* Stronger orange ambient gradient — segnala "ultima call" */}
+      {/* Full-bleed cream */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(ellipse at center, rgba(235,122,46,0.14) 0%, rgba(123,104,238,0.06) 45%, transparent 75%)",
-          filter: "blur(40px)",
-          pointerEvents: "none",
+          top: 0,
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          background: "#F0EBE0",
           zIndex: -1,
+          boxShadow:
+            "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
         }}
       />
-
-      <div style={{ marginBottom: 22 }}>
-        <span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "8px 18px",
-            background: "rgba(235,122,46,0.12)",
-            border: "1px solid rgba(235,122,46,0.30)",
-            color: "var(--orange)",
-            fontFamily: "var(--font-body)",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            borderRadius: 100,
-          }}
-        >
-          Ultimo passo
-        </span>
-      </div>
-
-      <h2
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 600,
-          fontSize: "clamp(32px, 4.5vw, 50px)",
-          lineHeight: 1.1,
-          letterSpacing: "-0.02em",
-          color: "#fff",
-          margin: "0 auto 36px",
-          maxWidth: 720,
-          textWrap: "balance" as React.CSSProperties["textWrap"],
-        }}
-      >
-        {copy.headlinePre} <Accent>{copy.headlineAccent}</Accent>{copy.headlineEnd}
-      </h2>
-
-      {/* V2 RECAP STACK — identico nelle 3 varianti */}
-      <div
-        style={{
-          margin: "0 auto 40px",
-          maxWidth: 640,
-          textAlign: "left",
-          padding: "28px 28px",
-          background: "var(--deep-space)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: 14,
-          fontFamily: "var(--font-body)",
-        }}
-      >
-        <p
-          style={{
-            margin: "0 0 18px",
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-          }}
-        >
-          Stai per ottenere
-        </p>
-        <ul
-          style={{
-            margin: "0 0 22px",
-            padding: 0,
-            listStyle: "none",
-            display: "flex",
-            flexDirection: "column",
-            gap: 12,
-            fontSize: 16,
-            lineHeight: 1.55,
-            color: "var(--ghost)",
-            opacity: 0.95,
-          }}
-        >
-          <li style={{ display: "flex", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>10 moduli, 48 lezioni, ~8-9 ore di contenuto pratico</span>
-          </li>
-          <li style={{ display: "flex", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>Il metodo dal mindset al sistema personalizzato</span>
-          </li>
-          <li style={{ display: "flex", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>4 live settimanali con i founder</span>
-          </li>
-          <li style={{ display: "flex", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>Pacchetto skill e plugin pronto all&apos;uso</span>
-          </li>
-          <li style={{ display: "flex", gap: 12 }}>
-            <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
-            <span>Aggiornamenti inclusi per sempre</span>
-          </li>
-        </ul>
-        <div
-          style={{
-            paddingTop: 18,
-            borderTop: "1px solid rgba(255,255,255,0.07)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            gap: 12,
-            flexWrap: "wrap",
-            fontSize: 15,
-            lineHeight: 1.5,
-            color: "var(--ghost)",
-          }}
-        >
-          <span>
-            Valore: <strong style={{ color: "var(--muted)", textDecoration: "line-through" }}>1.594€</strong>
-          </span>
-          <span>
-            Il tuo prezzo oggi: <strong style={{ color: "var(--orange)", fontFamily: "var(--font-display)", fontSize: 22 }}>{current.price}€</strong>
+      <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
+        <div style={{ marginBottom: 22 }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 18px",
+              background: "rgba(235,122,46,0.12)",
+              border: "1px solid rgba(235,122,46,0.30)",
+              color: "var(--orange)",
+              fontFamily: "var(--font-body)",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              borderRadius: 100,
+            }}
+          >
+            Ultimo passo
           </span>
         </div>
-        <p
+
+        <h2
           style={{
-            marginTop: 16,
-            fontSize: 14,
-            lineHeight: 1.5,
-            color: "var(--muted)",
-            fontStyle: "italic",
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(32px, 4.5vw, 50px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: "#2A2420",
+            margin: "0 auto 36px",
+            maxWidth: 720,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          Se dopo il corso vuoi fare il bootcamp, quello che hai pagato per il corso ti viene scalato dal prezzo del Bootcamp. Non perdi nulla.
+          {copy.headlinePre} <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>{copy.headlineAccent}</span>{copy.headlineEnd}
+        </h2>
+
+        {/* RECAP STACK — palette light */}
+        <div
+          style={{
+            margin: "0 auto 40px",
+            maxWidth: 640,
+            textAlign: "left",
+            padding: "28px 28px",
+            background: "#FBF7EE",
+            border: "1px solid rgba(42,36,32,0.10)",
+            borderRadius: 14,
+            fontFamily: "var(--font-body)",
+            boxShadow: "0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 14px rgba(42,36,32,0.06)",
+          }}
+        >
+          <p
+            style={{
+              margin: "0 0 18px",
+              fontSize: 14,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#6B5E54",
+            }}
+          >
+            Stai per ottenere
+          </p>
+          <ul
+            style={{
+              margin: "0 0 22px",
+              padding: 0,
+              listStyle: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+              fontSize: 16,
+              lineHeight: 1.55,
+              color: "#3A322B",
+            }}
+          >
+            <li style={{ display: "flex", gap: 12 }}>
+              <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+              <span>10 moduli, 48 lezioni, ~8-9 ore di contenuto pratico</span>
+            </li>
+            <li style={{ display: "flex", gap: 12 }}>
+              <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+              <span>Il metodo dal mindset al sistema personalizzato</span>
+            </li>
+            <li style={{ display: "flex", gap: 12 }}>
+              <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+              <span>4 live settimanali con i founder</span>
+            </li>
+            <li style={{ display: "flex", gap: 12 }}>
+              <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+              <span>Pacchetto skill e plugin pronto all&apos;uso</span>
+            </li>
+            <li style={{ display: "flex", gap: 12 }}>
+              <span style={{ color: "var(--orange)", flexShrink: 0, fontWeight: 700 }}>→</span>
+              <span>Aggiornamenti inclusi per sempre</span>
+            </li>
+          </ul>
+          <div
+            style={{
+              paddingTop: 18,
+              borderTop: "1px solid rgba(42,36,32,0.10)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              gap: 12,
+              flexWrap: "wrap",
+              fontSize: 15,
+              lineHeight: 1.5,
+              color: "#3A322B",
+            }}
+          >
+            <span>
+              Valore: <strong style={{ color: "#9B8E83", textDecoration: "line-through" }}>1.594€</strong>
+            </span>
+            <span>
+              Il tuo prezzo oggi: <strong style={{ color: "var(--orange)", fontFamily: "var(--font-display)", fontSize: 22 }}>{current.price}€</strong>
+            </span>
+          </div>
+          <p
+            style={{
+              marginTop: 16,
+              fontSize: 14,
+              lineHeight: 1.5,
+              color: "#6B5E54",
+              fontStyle: "italic",
+            }}
+          >
+            Se dopo il corso vuoi fare il bootcamp, quello che hai pagato per il corso ti viene scalato dal prezzo del Bootcamp. Non perdi nulla.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+          <SalesV3PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
+            {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+          </SalesV3PrimaryButton>
+        </div>
+
+        <div
+          style={{
+            marginTop: 14,
+            fontSize: 13,
+            color: "#6B5E54",
+            fontFamily: "var(--font-body)",
+            lineHeight: 1.6,
+          }}
+        >
+          Accesso immediato · Pagamento sicuro
+          {current.activeDeadlineIso && current.stage === "earlyBird" && (
+            <>
+              <br />
+              Prezzo early bird scade tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            </>
+          )}
+        </div>
+
+        <p
+          style={{
+            marginTop: 56,
+            fontFamily: "var(--font-body)",
+            fontSize: 18,
+            lineHeight: 1.5,
+            color: "#3A322B",
+            maxWidth: 600,
+            marginInline: "auto",
+          }}
+        >
+          {copy.closingPre} <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#C85A15" }}>{copy.closingAccent}</span>{copy.closingEnd && <> {copy.closingEnd}</>}
         </p>
       </div>
-
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
-        <SalesV3PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-          {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
-        </SalesV3PrimaryButton>
-      </div>
-
-      <div
-        style={{
-          marginTop: 14,
-          fontSize: 13,
-          color: "var(--muted)",
-          fontFamily: "var(--font-body)",
-          lineHeight: 1.6,
-        }}
-      >
-        Accesso immediato · Pagamento sicuro
-        {current.activeDeadlineIso && current.stage === "earlyBird" && (
-          <>
-            <br />
-            Prezzo early bird scade tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
-          </>
-        )}
-      </div>
-
-      <p
-        style={{
-          marginTop: 56,
-          fontFamily: "var(--font-body)",
-          fontSize: 18,
-          lineHeight: 1.5,
-          color: "var(--ghost)",
-          opacity: 0.92,
-          maxWidth: 600,
-          marginInline: "auto",
-        }}
-      >
-        {copy.closingPre} <Accent>{copy.closingAccent}</Accent>{copy.closingEnd && <> {copy.closingEnd}</>}
-      </p>
     </section>
   );
 }
