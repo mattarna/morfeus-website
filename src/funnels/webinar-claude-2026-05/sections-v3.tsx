@@ -5215,7 +5215,7 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
       />
       <div style={{ maxWidth: 920, margin: "0 auto", padding: "0 clamp(24px, 4vw, 56px)" }}>
         <Image
-          src="/claude-unlocked/logo-full.png"
+          src="/logo corso claude unlocked completo black.png"
           alt="Claude Unlocked"
           width={1980}
           height={860}
@@ -5224,7 +5224,6 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
             height: "auto",
             width: "min(120px, 28vw)",
             margin: "0 auto 14px",
-            opacity: 0.92,
           }}
         />
         <div style={{ textAlign: "center", marginBottom: 16 }}>
