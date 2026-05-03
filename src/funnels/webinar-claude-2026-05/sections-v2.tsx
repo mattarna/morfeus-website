@@ -7477,12 +7477,12 @@ export function SalesV2BootcampBridgeSection() {
       <div
         style={{
           position: "relative",
-          background: "linear-gradient(135deg, rgba(101,88,212,0.16) 0%, rgba(123,104,238,0.08) 50%, rgba(15,14,26,0.92) 100%)",
-          border: "1px solid rgba(123,104,238,0.30)",
+          background: "linear-gradient(135deg, rgba(181,240,58,0.14) 0%, rgba(181,240,58,0.06) 50%, rgba(15,14,26,0.92) 100%)",
+          border: "1px solid rgba(181,240,58,0.30)",
           borderRadius: 24,
           padding: "clamp(40px, 5vw, 64px) clamp(28px, 4vw, 56px)",
           overflow: "hidden",
-          boxShadow: "0 0 60px rgba(123,104,238,0.15), 0 24px 60px rgba(0,0,0,0.45)",
+          boxShadow: "0 0 60px rgba(181,240,58,0.14), 0 24px 60px rgba(0,0,0,0.45)",
         }}
       >
         <div
@@ -7493,7 +7493,7 @@ export function SalesV2BootcampBridgeSection() {
             right: "-10%",
             width: 400,
             height: 400,
-            background: "radial-gradient(circle, rgba(123,104,238,0.25) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(181,240,58,0.22) 0%, transparent 70%)",
             filter: "blur(50px)",
             pointerEvents: "none",
           }}
@@ -7507,11 +7507,11 @@ export function SalesV2BootcampBridgeSection() {
               fontWeight: 700,
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "var(--violet)",
+              color: "#B5F03A",
               fontFamily: "var(--font-body)",
               padding: "6px 14px",
-              background: "rgba(123,104,238,0.18)",
-              border: "1px solid rgba(123,104,238,0.40)",
+              background: "rgba(181,240,58,0.16)",
+              border: "1px solid rgba(181,240,58,0.40)",
               borderRadius: 100,
             }}
           >
@@ -7537,7 +7537,7 @@ export function SalesV2BootcampBridgeSection() {
         >
           Il corso ti porta al Livello 2.
           <br />
-          Chi vuole il <Accent>Livello 3</Accent> ha una strada.
+          Chi vuole il <span style={{ fontFamily: "var(--font-italic)", fontStyle: "italic", fontWeight: 500, color: "#B5F03A" }}>Livello 3</span> ha una strada.
         </h2>
 
         <div
@@ -7560,23 +7560,23 @@ export function SalesV2BootcampBridgeSection() {
             Padroneggiare Claude è il primo step. Non puoi costruire un sistema di dipendenti AI senza prima padroneggiare lo strumento. <strong style={{ color: "#fff" }}>Il corso ti dà questa competenza</strong> — completa, applicabile, reale.
           </p>
           <p style={{ margin: 0 }}>
-            Per chi vuole andare oltre: costruire dipendenti AI con metodo e supporto guidato, implementare nel proprio lavoro con qualcuno che ti corregge quando sbagli — c&apos;è il <strong style={{ color: "var(--violet)" }}>Bootcamp AI Champion</strong>.
+            Per chi vuole andare oltre: costruire dipendenti AI con metodo e supporto guidato, implementare nel proprio lavoro con qualcuno che ti corregge quando sbagli — c&apos;è il <strong style={{ color: "#B5F03A" }}>Bootcamp AI Champion</strong>.
           </p>
           <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
             <li style={{ display: "flex", gap: 14 }}>
-              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span style={{ color: "#B5F03A", fontWeight: 700 }}>→</span>
               <span>Il metodo <strong style={{ color: "#fff" }}>M-V-A</strong> sviluppato da Morfeus</span>
             </li>
             <li style={{ display: "flex", gap: 14 }}>
-              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span style={{ color: "#B5F03A", fontWeight: 700 }}>→</span>
               <span>Implementazione guidata da Matt e Mattia</span>
             </li>
             <li style={{ display: "flex", gap: 14 }}>
-              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span style={{ color: "#B5F03A", fontWeight: 700 }}>→</span>
               <span>Massimo <strong style={{ color: "#fff" }}>25 posti</strong>. Deadline prenotazione call: <strong style={{ color: "#fff" }}>26 maggio</strong></span>
             </li>
             <li style={{ display: "flex", gap: 14 }}>
-              <span style={{ color: "var(--violet)", fontWeight: 700 }}>→</span>
+              <span style={{ color: "#B5F03A", fontWeight: 700 }}>→</span>
               <span>Quello che hai pagato per il corso ti viene scalato dal prezzo del Bootcamp. <strong style={{ color: "#fff" }}>Non perdi niente</strong> comprando il corso adesso.</span>
             </li>
           </ul>
@@ -7593,14 +7593,14 @@ export function SalesV2BootcampBridgeSection() {
               alignItems: "center",
               gap: 10,
               padding: "16px 28px",
-              background: "var(--violet)",
-              color: "#fff",
+              background: "#B5F03A",
+              color: "#0F0E1A",
               fontFamily: "var(--font-body)",
               fontSize: 16,
               fontWeight: 700,
               borderRadius: 12,
               textDecoration: "none",
-              boxShadow: "0 8px 30px rgba(123,104,238,0.45)",
+              boxShadow: "0 8px 30px rgba(181,240,58,0.40)",
               transition: "transform .15s, box-shadow .2s",
             }}
           >
