@@ -1561,27 +1561,15 @@ export function BootcampFoundersSection() {
             imgSrc="/images/team/Profile-matt.jpg"
             imgAlt="Matteo Arnaboldi, CEO Morfeus"
             name="Matteo"
-            role="Co-founder · CEO Morfeus · AI in uso professionale dal 2021"
+            role="Co-founder · CEO Morfeus"
             tag="Founder & lead trainer"
-            bullets={[
-              "Usa Claude professionalmente dal 2021, prima ancora che esistesse ChatGPT",
-              "Il framework M-V-A nasce dai progetti reali con Enel, Sisal, BNP Paribas, Zara",
-              "Speaker e partner formativo di HFarm, Talent Garden, Sole 24 Ore Formazione",
-              "Tiene di persona ogni call di selezione e ogni sessione live",
-            ]}
           />
           <FounderCard
             imgSrc="/images/team/Profile-alex.webp"
             imgAlt="Alex Carofiglio, Head of Product & CTO Morfeus"
             name="Alex"
-            role="Co-founder · Head of Product & CTO · Prompt engineering e sistemi AI"
+            role="Co-founder · Head of Product & CTO"
             tag="Architettura tecnica"
-            bullets={[
-              "Costruisce e mantiene i sistemi AI interni di Morfeus, ne è il primo utente",
-              "Le skill, i plugin e i workflow che vedrai sono i suoi: testati ogni giorno",
-              "Tiene le sessioni su prompt avanzato, automazione e architettura sistemi",
-              "Tra una sessione e l'altra è lui che risponde nel gruppo, non un assistente",
-            ]}
           />
         </div>
 
@@ -1619,14 +1607,12 @@ function FounderCard({
   name,
   role,
   tag,
-  bullets,
 }: {
   imgSrc: string;
   imgAlt: string;
   name: string;
   role: string;
   tag: string;
-  bullets: string[];
 }) {
   const hasImg = imgSrc.trim().length > 0;
   return (
@@ -1699,27 +1685,6 @@ function FounderCard({
       >
         {tag}
       </span>
-
-      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
-        {bullets.map((b, idx) => (
-          <li
-            key={idx}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              lineHeight: 1.55,
-              color: "var(--ghost)",
-              opacity: 0.9,
-              display: "flex",
-              gap: 10,
-              alignItems: "flex-start",
-            }}
-          >
-            <span style={{ color: LIME, flexShrink: 0, fontWeight: 700 }}>—</span>
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
