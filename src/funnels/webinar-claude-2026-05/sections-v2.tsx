@@ -6576,7 +6576,7 @@ export function SalesV2OfferSection({ step }: SectionProps) {
 
   const items: Array<{ title: string; body: string; value: string; subValue?: string }> = [
     { title: "Il corso completo", body: "10 moduli, ~8-9 ore di contenuto pratico. Dal mindset al sistema personalizzato.", value: "397€" },
-    { title: "4 live settimanali con i founder", body: "Sessioni dal vivo dove fai domande, lavori con noi, vedi demo in tempo reale. Non sei solo.", value: "1.000€", subValue: "(4 sessioni × 250€, tariffa consulenza Morfeus)" },
+    { title: "4 live settimanali con i founder", body: "Sessioni live dedicate solo agli studenti Claude Unlocked. Fai domande, lavora con noi, vedi demo in tempo reale.\n📅 12 maggio · 19 maggio · 26 maggio · 2 giugno\nReplay inclusi e permanenti.", value: "1.000€", subValue: "(4 sessioni × 250€, tariffa consulenza Morfeus)" },
     { title: "Pacchetto skill e plugin curato", body: "Strumenti pre-costruiti sui nostri framework proprietari. Installi in 1 click. Funzionano subito per i task più comuni.", value: "197€" },
     { title: "Aggiornamenti futuri inclusi", body: "Claude evolve. Il corso evolve con lui. In un mercato dove i corsi AI diventano obsoleti in pochi mesi, gli studenti ricevono le lezioni aggiornate automaticamente, senza riacquistare. Questo e' il bonus piu' importante.", value: "non quantificabile" },
   ];
@@ -6802,6 +6802,9 @@ export function SalesV2OfferSection({ step }: SectionProps) {
       {/* Visual price scale */}
       <PriceScaleBar pricing={pricing} current={current} />
 
+      {/* Cosa succede dopo il pagamento */}
+      <PostPurchaseBox />
+
       {/* CTA */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
         <SalesV2PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
@@ -6898,7 +6901,7 @@ function OfferStackCard({ index, title, body, value, subValue }: { index: number
         <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#fff", marginBottom: 4, lineHeight: 1.25 }}>
           {title}
         </div>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.8 }}>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.8, whiteSpace: "pre-line" }}>
           {body}
         </div>
       </div>
@@ -6939,6 +6942,134 @@ function OfferStackCard({ index, title, body, value, subValue }: { index: number
             {subValue}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function PostPurchaseBox() {
+  const sectionTitle: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontSize: 12,
+    fontWeight: 700,
+    letterSpacing: "0.20em",
+    textTransform: "uppercase",
+    color: "var(--orange)",
+    marginBottom: 16,
+  };
+  const liStyle: React.CSSProperties = {
+    display: "flex",
+    gap: 12,
+    fontFamily: "var(--font-body)",
+    fontSize: 15,
+    lineHeight: 1.55,
+    color: "var(--ghost)",
+  };
+  const checkSpan: React.CSSProperties = {
+    color: "var(--orange)",
+    fontWeight: 700,
+    flexShrink: 0,
+  };
+  const separator: React.CSSProperties = {
+    height: 1,
+    background: "rgba(255,255,255,0.08)",
+    margin: "28px 0",
+  };
+
+  return (
+    <div
+      style={{
+        marginTop: 44,
+        padding: "32px clamp(20px, 4vw, 32px)",
+        background: "#1A1830",
+        border: "1px solid rgba(235, 122, 46, 0.40)",
+        borderRadius: 12,
+        maxWidth: 720,
+        marginInline: "auto",
+      }}
+    >
+      {/* Sezione 1 — Cosa ottieni subito */}
+      <div style={sectionTitle}>Cosa ottieni subito</div>
+      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+        <li style={liStyle}>
+          <span style={checkSpan}>✓</span>
+          <span>Accesso alla community privata</span>
+        </li>
+        <li style={liStyle}>
+          <span style={checkSpan}>✓</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>Lezione di benvenuto</strong>: tutto quello che devi sapere prima di iniziare, in ordine
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={checkSpan}>✓</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>Tutorial community</strong>: sei operativo in 10 minuti
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={checkSpan}>✓</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>AI Basics</strong>: corso introduttivo incluso, accesso immediato
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={checkSpan}>✓</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>Pacchetto skill e plugin</strong>: disponibile in community
+          </span>
+        </li>
+      </ul>
+
+      <div style={separator} />
+
+      {/* Sezione 2 — Le 4 live esclusive */}
+      <div style={sectionTitle}>Le 4 live esclusive · solo per chi compra ora</div>
+      <ul style={{ margin: "0 0 16px", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+        <li style={liStyle}>
+          <span style={{ ...checkSpan, color: "var(--ghost)", opacity: 0.85 }}>📅</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>12 maggio</strong> · Live #1
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={{ ...checkSpan, color: "var(--ghost)", opacity: 0.85 }}>📅</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>19 maggio</strong> · Live #2
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={{ ...checkSpan, color: "var(--ghost)", opacity: 0.85 }}>📅</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>26 maggio</strong> · Live #3
+          </span>
+        </li>
+        <li style={liStyle}>
+          <span style={{ ...checkSpan, color: "var(--ghost)", opacity: 0.85 }}>📅</span>
+          <span>
+            <strong style={{ color: "#fff", fontWeight: 600 }}>2 giugno</strong> · Live #4
+          </span>
+        </li>
+      </ul>
+      <p style={{ ...liStyle, opacity: 0.85, margin: 0 }}>
+        Sessioni live dedicate agli studenti Claude Unlocked. <strong style={{ color: "#fff", fontWeight: 600 }}>I replay sono tuoi per sempre.</strong>
+      </p>
+
+      <div style={separator} />
+
+      {/* Sezione 3 — Vantaggio founding member */}
+      <div style={sectionTitle}>Il tuo vantaggio da founding member</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <p style={{ ...liStyle, margin: 0 }}>Stai entrando prima del lancio ufficiale.</p>
+        <p style={{ ...liStyle, margin: 0 }}>
+          Puoi dirci cosa vuoi nel corso e noi lo costruiamo anche intorno a te.
+        </p>
+        <p style={{ ...liStyle, margin: 0 }}>
+          Il corso esce nella sua forma completa il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong>.
+        </p>
+        <p style={{ ...liStyle, margin: 0, color: "var(--orange)", fontWeight: 500 }}>
+          Chi compra dopo non avrà mai questa finestra.
+        </p>
       </div>
     </div>
   );
