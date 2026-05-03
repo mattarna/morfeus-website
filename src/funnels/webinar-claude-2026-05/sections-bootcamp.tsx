@@ -1561,7 +1561,7 @@ export function BootcampFoundersSection() {
             imgSrc="/images/team/Profile-matt.jpg"
             imgAlt="Matteo Arnaboldi, CEO Morfeus"
             name="Matteo"
-            role="CEO Morfeus · AI in uso professionale dal 2021"
+            role="Co-founder · CEO Morfeus · AI in uso professionale dal 2021"
             tag="Founder & lead trainer"
             bullets={[
               "Ha formato oltre 2.000 professionisti su Claude e AI applicata",
@@ -1574,7 +1574,7 @@ export function BootcampFoundersSection() {
             imgSrc="/images/team/Profile-alex.webp"
             imgAlt="Alex Carofiglio, Head of Product & CTO Morfeus"
             name="Alex"
-            role="Head of Product & CTO · Prompt engineering e sistemi AI"
+            role="Co-founder · Head of Product & CTO · Prompt engineering e sistemi AI"
             tag="Architettura tecnica"
             bullets={[
               "Progetta l'architettura tecnica dei workflow AI del bootcamp",
