@@ -4277,25 +4277,6 @@ export function SalesV3ProblemSection() {
   );
 }
 
-function Big({ children, color }: { children: React.ReactNode; color: string }) {
-  return (
-    <span
-      style={{
-        fontFamily: "var(--font-display)",
-        fontWeight: 600,
-        fontSize: "clamp(40px, 6vw, 56px)",
-        color,
-        letterSpacing: "-0.02em",
-        lineHeight: 1,
-        margin: "0 6px",
-        verticalAlign: "middle",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 4 — MECCANISMO / METODO (3 step + effetti collaterali)
 // ═══════════════════════════════════════════════════════════════════════════════
