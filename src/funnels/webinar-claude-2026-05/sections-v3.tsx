@@ -169,7 +169,7 @@ function SecondaryButton({ children, onClick }: { children: React.ReactNode; onC
       style={{
         fontFamily: "var(--font-body)",
         fontWeight: 600,
-        fontSize: 14,
+        fontSize: 16,
         padding: "12px 20px",
         borderRadius: 10,
         border: "1px solid rgba(255,255,255,0.14)",
@@ -219,7 +219,7 @@ function StyledInput({
       style={{
         fontFamily: "var(--font-body)",
         fontWeight: 500,
-        fontSize: 16,
+        fontSize: 17,
         color: "#fff",
         background: focus ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.4)",
         border: `1px solid ${focus ? "var(--orange)" : "rgba(255,255,255,0.12)"}`,
@@ -257,7 +257,7 @@ function StyledSelect({
         style={{
           fontFamily: "var(--font-body)",
           fontWeight: 500,
-          fontSize: 16,
+          fontSize: 17,
           color: value ? "#fff" : "rgba(255,255,255,0.5)",
           background: focus ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.4)",
           border: `1px solid ${focus ? "var(--orange)" : "rgba(255,255,255,0.12)"}`,
@@ -608,7 +608,7 @@ function OptinFormTwoStep({
               gap: 12,
               cursor: "pointer",
               userSelect: "none",
-              fontSize: 14,
+              fontSize: 16,
               lineHeight: 1.5,
               color: "var(--ghost)",
               opacity: 0.8,
@@ -751,7 +751,7 @@ export function WebinarHeroSection({ step }: SectionProps) {
           fontWeight: 400,
           lineHeight: 1.55,
           color: "var(--ghost)",
-          opacity: 0.85,
+          opacity: 0.95,
           textAlign: "center",
           marginLeft: "auto",
           marginRight: "auto",
@@ -865,7 +865,7 @@ export function WebinarSocialProofSection() {
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 500,
-                    fontSize: 16,
+                    fontSize: 17,
                     color: "#fff",
                     opacity: 0.92,
                     letterSpacing: "-0.005em",
@@ -1220,7 +1220,7 @@ export function WebinarLearnPointsSection() {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "var(--ghost)",
           opacity: 0.80,
@@ -1274,7 +1274,7 @@ export function WebinarAudienceSection() {
     fontSize: "clamp(22px, 2.4vw, 28px)",
     lineHeight: 1.3,
     color: "var(--ghost)",
-    opacity: 0.88,
+    opacity: 0.95,
     margin: 0,
     letterSpacing: "-0.01em",
   };
@@ -1334,7 +1334,7 @@ export function WebinarAudienceSection() {
             >
               0{i + 1}
             </span>
-            <span style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.92 }}>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.92 }}>
               {p}
             </span>
           </li>
@@ -1357,10 +1357,10 @@ export function WebinarAudienceSection() {
 export function WebinarHostSection() {
   const bioPara: React.CSSProperties = {
     fontFamily: "var(--font-body)",
-    fontSize: 17,
+    fontSize: 18,
     lineHeight: 1.6,
     color: "var(--ghost)",
-    opacity: 0.88,
+    opacity: 0.95,
     margin: "0 0 18px 0",
     maxWidth: 620,
   };
@@ -1408,7 +1408,7 @@ export function WebinarHostSection() {
           >
             Matteo Arnaboldi
           </h2>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, fontWeight: 500, color: "var(--ghost)", opacity: 0.7, margin: "0 0 32px 0" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 17, fontWeight: 500, color: "var(--ghost)", opacity: 0.7, margin: "0 0 32px 0" }}>
             CEO e Co-Founder di Morfeus Hub
           </p>
 
@@ -1472,7 +1472,7 @@ function LinkedInLink() {
         background: hover ? "rgba(235,122,46,0.06)" : "transparent",
         color: "var(--ghost)",
         textDecoration: "none",
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 500,
         fontFamily: "var(--font-body)",
         transition: "border-color .2s, background .2s",
@@ -1731,7 +1731,7 @@ export function WebinarChangeSection() {
           fontSize: 18,
           lineHeight: 1.6,
           color: "var(--ghost)",
-          opacity: 0.88,
+          opacity: 0.95,
           margin: "0 0 72px 0",
           maxWidth: 720,
           textWrap: "pretty" as React.CSSProperties["textWrap"],
@@ -2080,7 +2080,7 @@ function StepCard({
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 14,
+          fontSize: 16,
           lineHeight: 1.55,
           color: "var(--ghost)",
           opacity: 0.82,
@@ -2151,7 +2151,7 @@ function ShareBlock() {
           Condividi con chi pensi possa servire
         </h3>
       </div>
-      <p style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.80, margin: "0 0 18px 0" }}>
+      <p style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.80, margin: "0 0 18px 0" }}>
         Se conosci un collega, un amico imprenditore o un professionista che vuole capire come usare davvero l&apos;AI — passaglielo.
       </p>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -2212,7 +2212,7 @@ export function WebinarThankYouSection({ step }: SectionProps) {
     background: "var(--orange)",
     color: "#fff",
     fontFamily: "var(--font-body)",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 600,
     borderRadius: 10,
     textDecoration: "none",
@@ -2252,10 +2252,10 @@ export function WebinarThankYouSection({ step }: SectionProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.55,
             color: "var(--ghost)",
-            opacity: 0.85,
+            opacity: 0.95,
             margin: "0 auto",
             maxWidth: 520,
           }}
@@ -2373,7 +2373,7 @@ export function WebinarThankYouSection({ step }: SectionProps) {
             Connettiti con Matteo su LinkedIn
           </h3>
         </div>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.80, margin: "0 0 18px 0" }}>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.80, margin: "0 0 18px 0" }}>
           Condivido ogni settimana quello che imparo usando l&apos;AI nel lavoro reale — workflow, strumenti, riflessioni senza hype. Seguono 16.000 professionisti.
         </p>
         <LinkedInLink />
@@ -2613,10 +2613,10 @@ export function WebinarFAQSection() {
               style={{
                 padding: "0 26px 22px 26px",
                 fontFamily: "var(--font-body)",
-                fontSize: 16,
+                fontSize: 17,
                 lineHeight: 1.6,
                 color: "var(--ghost)",
-                opacity: 0.88,
+                opacity: 0.95,
               }}
             >
               {item.a}
@@ -2836,7 +2836,7 @@ export function WebinarStickyBarSection() {
           color: "#fff",
           fontFamily: "var(--font-body)",
           fontWeight: 700,
-          fontSize: 16,
+          fontSize: 17,
           borderRadius: 12,
           border: "none",
           cursor: "pointer",
@@ -3086,7 +3086,7 @@ function OutlineButton({
   const styleProps: React.CSSProperties = {
     fontFamily: "var(--font-body)",
     fontWeight: 700,
-    fontSize: 16,
+    fontSize: 17,
     padding: "14px 22px",
     borderRadius: 10,
     border: `2px solid ${hover ? "var(--orange-hover)" : "var(--orange)"}`,
@@ -3165,7 +3165,7 @@ function CountdownCells({ targetIso, compact = false }: { targetIso: string; com
           background: "rgba(235,122,46,0.12)",
           border: "1px solid rgba(235,122,46,0.35)",
           color: "var(--orange)",
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: 700,
           fontFamily: "var(--font-body)",
         }}
@@ -3555,7 +3555,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
           fontSize: "clamp(17px, 1.6vw, 20px)",
           lineHeight: 1.55,
           color: "var(--ghost)",
-          opacity: 0.88,
+          opacity: 0.95,
           maxWidth: 720,
           margin: "0 auto 40px",
           textWrap: "pretty" as React.CSSProperties["textWrap"],
@@ -3584,7 +3584,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: 100,
           fontFamily: "var(--font-body)",
-          fontSize: 14,
+          fontSize: 16,
           color: "var(--ghost)",
           opacity: 0.92,
           marginBottom: 28,
@@ -3607,7 +3607,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
 
       <div
         style={{
-          fontSize: 14,
+          fontSize: 16,
           color: "var(--muted)",
           fontFamily: "var(--font-body)",
           marginBottom: 28,
@@ -3631,7 +3631,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
           justifyContent: "center",
           gap: 14,
           fontFamily: "var(--font-body)",
-          fontSize: 14,
+          fontSize: 16,
           color: "var(--muted)",
           padding: "12px 20px",
           background: "rgba(255,255,255,0.025)",
@@ -3733,7 +3733,7 @@ export function SalesV3BridgeSection() {
           <div
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.8,
               color: "#3A322B",
               paddingLeft: 24,
@@ -3757,7 +3757,7 @@ export function SalesV3BridgeSection() {
           <div
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.8,
               color: "#3A322B",
               paddingLeft: 24,
@@ -3785,7 +3785,7 @@ export function SalesV3BridgeSection() {
           <div
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.8,
               color: "#3A322B",
               display: "flex",
@@ -3875,10 +3875,10 @@ export function SalesV3ThreeLevelsSection({ step }: SectionProps) {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "var(--ghost)",
-          opacity: 0.88,
+          opacity: 0.95,
           margin: "0 auto 56px",
           maxWidth: 700,
           textAlign: "center",
@@ -3923,7 +3923,7 @@ export function SalesV3ThreeLevelsSection({ step }: SectionProps) {
         style={{
           marginTop: 56,
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "var(--ghost)",
           opacity: 0.92,
@@ -4090,10 +4090,10 @@ function SalesV3LevelCard({
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.6,
             color: "var(--ghost)",
-            opacity: 0.88,
+            opacity: 0.95,
             margin: 0,
             flex: 1,
           }}
@@ -4170,7 +4170,7 @@ export function SalesV3ProblemSection() {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.8,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -4193,7 +4193,7 @@ export function SalesV3ProblemSection() {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.8,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -4219,7 +4219,7 @@ export function SalesV3ProblemSection() {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.8,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -4416,7 +4416,7 @@ export function SalesV3MechanismSection({ step }: SectionProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.65,
             color: "#3A322B",
             margin: "0 auto 56px",
@@ -4555,10 +4555,10 @@ export function SalesV3EffettiCollateraliSection() {
             position: "relative",
             zIndex: 1,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: "var(--ghost)",
-            opacity: 0.88,
+            opacity: 0.95,
             margin: "0 auto 36px",
             maxWidth: 640,
             textAlign: "center",
@@ -4581,7 +4581,7 @@ export function SalesV3EffettiCollateraliSection() {
             flexDirection: "column",
             gap: 18,
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.6,
             color: "var(--ghost)",
             opacity: 0.95,
@@ -4614,7 +4614,7 @@ export function SalesV3EffettiCollateraliSection() {
             paddingTop: 24,
             borderTop: "1px solid rgba(123,104,238,0.18)",
             fontFamily: "var(--font-body)",
-            fontSize: 14,
+            fontSize: 16,
             lineHeight: 1.55,
             color: "var(--muted)",
             textAlign: "center",
@@ -4801,10 +4801,10 @@ function BenefitCard({ icon, title, body }: { icon: React.ReactNode; title: stri
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 16,
+          fontSize: 17,
           lineHeight: 1.6,
           color: "var(--ghost)",
-          opacity: 0.85,
+          opacity: 0.95,
           margin: 0,
           flex: 1,
         }}
@@ -4889,7 +4889,7 @@ function MechanismStepCard({ n, title, body }: { n: string; title: string; body:
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 16,
+          fontSize: 17,
           lineHeight: 1.65,
           color: "#3A322B",
           margin: 0,
@@ -5082,11 +5082,11 @@ export function SalesV3PromiseLetterSection() {
               fontSize: "clamp(16px, 1.45vw, 18px)",
               lineHeight: 1.7,
               color: "#2A2420",
-              opacity: 0.85,
+              opacity: 0.95,
               letterSpacing: "0.005em",
             }}
           >
-            <strong style={{ fontStyle: "normal", fontWeight: 600, fontFamily: "var(--font-body)", fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", color: "#6B5E54", marginRight: 10 }}>
+            <strong style={{ fontStyle: "normal", fontWeight: 600, fontFamily: "var(--font-body)", fontSize: 16, letterSpacing: "0.08em", textTransform: "uppercase", color: "#6B5E54", marginRight: 10 }}>
               P.S.
             </strong>
             La prima settimana penserai di non star facendo abbastanza. È normale. Continua.
@@ -5298,7 +5298,7 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: "#3A322B",
             margin: "0 auto 48px",
@@ -5318,7 +5318,7 @@ export function SalesV3ModulesSection({ step }: SectionProps) {
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.6,
             color: "#3A322B",
             margin: "48px auto 40px",
@@ -5407,7 +5407,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
             <div
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: 14,
+                fontSize: 16,
                 color: "#6B5E54",
                 lineHeight: 1.45,
               }}
@@ -5454,7 +5454,7 @@ function ModuleAccordion({ module: m, defaultOpen }: { module: ModuleData; defau
                 display: "flex",
                 gap: 12,
                 fontFamily: "var(--font-body)",
-                fontSize: 16,
+                fontSize: 17,
                 lineHeight: 1.55,
                 color: "#3A322B",
               }}
@@ -5528,7 +5528,7 @@ export function SalesV3ProofSection({ step }: SectionProps) {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.7,
             color: "var(--ghost)",
             opacity: 0.95,
@@ -5845,7 +5845,7 @@ export function SalesV3ReviewsSection() {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "#6B5E54",
           margin: "0 auto 56px",
@@ -5949,7 +5949,7 @@ function ReviewCard({
         style={{
           fontFamily: "var(--font-italic)",
           fontStyle: "italic",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "#1A1814",
           margin: 0,
@@ -6119,7 +6119,7 @@ export function SalesV3AudienceSection({ step }: SectionProps) {
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
             {yes.map((item, i) => (
-              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "var(--ghost)" }}>
                 <span
                   style={{
                     flexShrink: 0,
@@ -6169,7 +6169,7 @@ export function SalesV3AudienceSection({ step }: SectionProps) {
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
             {no.map((item, i) => (
-              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.85 }}>
+              <li key={i} style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.85 }}>
                 <span
                   style={{
                     flexShrink: 0,
@@ -6355,7 +6355,7 @@ export function SalesV3ComparisonSection({ step }: SectionProps) {
           style={{
             marginTop: 40,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             color: "#2A2420",
             textAlign: "center",
           }}
@@ -6387,7 +6387,7 @@ function ComparisonHeaderCell({ label, highlight }: { label: string; highlight?:
         borderBottom: "1px solid rgba(42,36,32,0.10)",
         fontFamily: "var(--font-display)",
         fontWeight: 600,
-        fontSize: 16,
+        fontSize: 17,
         color: highlight ? "#fff" : "#2A2420",
         letterSpacing: "-0.005em",
         lineHeight: 1.3,
@@ -6404,7 +6404,7 @@ function ComparisonRow({ row }: { row: { label: string; a: string; b: string; c:
     borderRight: "1px solid rgba(42,36,32,0.08)",
     borderBottom: "1px solid rgba(42,36,32,0.08)",
     fontFamily: "var(--font-body)",
-    fontSize: 16,
+    fontSize: 17,
     lineHeight: 1.55,
     color: "#3A322B",
     background: row.highlight ? "rgba(235,122,46,0.06)" : "transparent",
@@ -6456,7 +6456,7 @@ function ComparisonMobileCard({ title, rows, highlight }: { title: string; rows:
         {rows.map((r) => (
           <div key={r.k}>
             <div style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 700, color: "#9B8E83", textTransform: "uppercase", letterSpacing: "0.16em", marginBottom: 4 }}>{r.k}</div>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "#3A322B" }}>{r.v}</div>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "#3A322B" }}>{r.v}</div>
           </div>
         ))}
       </div>
@@ -6532,10 +6532,10 @@ export function SalesV3BonusSection() {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           lineHeight: 1.6,
           color: "var(--ghost)",
-          opacity: 0.85,
+          opacity: 0.95,
           margin: "0 auto 56px",
           maxWidth: 640,
           textAlign: "center",
@@ -6592,9 +6592,9 @@ export function SalesV3BonusSection() {
           style={{
             marginTop: 10,
             fontFamily: "var(--font-body)",
-            fontSize: 14,
+            fontSize: 16,
             color: "var(--ghost)",
-            opacity: 0.85,
+            opacity: 0.95,
           }}
         >
           Più di 5 volte il prezzo del corso. <strong style={{ color: "#fff" }}>Tutto incluso</strong>.
@@ -6642,7 +6642,7 @@ function BonusCard({ tag, title, body, value, icon }: { tag: string; title: stri
             flexShrink: 0,
           }}
         >
-          <span style={{ fontSize: 14, lineHeight: 1 }}>{icon}</span>
+          <span style={{ fontSize: 16, lineHeight: 1 }}>{icon}</span>
           {tag}
         </span>
         <span
@@ -6677,10 +6677,10 @@ function BonusCard({ tag, title, body, value, icon }: { tag: string; title: stri
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 16,
+          fontSize: 17,
           lineHeight: 1.55,
           color: "var(--ghost)",
-          opacity: 0.85,
+          opacity: 0.95,
           margin: 0,
           flex: 1,
         }}
@@ -6809,7 +6809,7 @@ export function SalesV3OfferSection({ step }: SectionProps) {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             color: "var(--muted)",
             marginBottom: 4,
           }}
@@ -6858,13 +6858,13 @@ export function SalesV3OfferSection({ step }: SectionProps) {
           Il calcolo semplice
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center" }}>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "var(--ghost)", lineHeight: 1.6 }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)", lineHeight: 1.6 }}>
             Ogni settimana senza un sistema = <strong style={{ color: "var(--orange)" }}>5-8 ore</strong> di produttività persa.
           </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "var(--ghost)", lineHeight: 1.6 }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)", lineHeight: 1.6 }}>
             A 25€/ora: <strong style={{ color: "var(--orange)" }}>500-800€</strong> al mese. Ogni mese. Senza che te ne accorga.
           </div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#fff", marginTop: 6, lineHeight: 1.6 }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#fff", marginTop: 6, lineHeight: 1.6 }}>
             Il corso costa <strong style={{ color: "#fff" }}>147€</strong>. Si ripaga la prima settimana.
           </div>
         </div>
@@ -6874,7 +6874,7 @@ export function SalesV3OfferSection({ step }: SectionProps) {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: 600,
             letterSpacing: "0.20em",
             textTransform: "uppercase",
@@ -6905,7 +6905,7 @@ export function SalesV3OfferSection({ step }: SectionProps) {
             fontStyle: "italic",
             fontSize: 18,
             color: "var(--ghost)",
-            opacity: 0.85,
+            opacity: 0.95,
           }}
         >
           {priceWords(current.price)}.
@@ -6913,7 +6913,7 @@ export function SalesV3OfferSection({ step }: SectionProps) {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.6,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -6976,12 +6976,12 @@ export function SalesV3OfferSection({ step }: SectionProps) {
             placeItems: "center",
             fontFamily: "var(--font-display)",
             fontWeight: 700,
-            fontSize: 14,
+            fontSize: 16,
           }}
         >
           €
         </span>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.55, color: "var(--ghost)" }}>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "var(--ghost)" }}>
           <strong style={{ color: "#fff" }}>Credito upgrade Bootcamp.</strong> Se dopo il corso vuoi fare il Bootcamp AI Champion, quello che hai pagato per il corso ti viene scalato dal prezzo del Bootcamp. Non perdi nulla.
         </div>
       </div>
@@ -7018,16 +7018,16 @@ function OfferStackCard({ index, title, body, value, subValue }: { index: number
           color: "var(--orange)",
           fontFamily: "var(--font-display)",
           fontWeight: 600,
-          fontSize: 16,
+          fontSize: 17,
         }}
       >
         {index}
       </span>
       <div className={styles.offerStackBody}>
-        <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#fff", marginBottom: 4, lineHeight: 1.25 }}>
+        <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 18, color: "#fff", marginBottom: 4, lineHeight: 1.25 }}>
           {title}
         </div>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.8, whiteSpace: "pre-line" }}>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.5, color: "var(--ghost)", opacity: 0.8, whiteSpace: "pre-line" }}>
           {body}
         </div>
       </div>
@@ -7044,7 +7044,7 @@ function OfferStackCard({ index, title, body, value, subValue }: { index: number
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: 17,
+            fontSize: 18,
             color: "var(--orange)",
             textDecoration: isPrice ? "line-through" : "none",
             textDecorationColor: "var(--muted)",
@@ -7321,7 +7321,7 @@ export function SalesV3UpsellBootcampSection() {
         <div
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.65,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -7456,7 +7456,7 @@ export function SalesV3GuaranteeSection() {
             position: "relative",
             zIndex: 1,
             fontFamily: "var(--font-body)",
-            fontSize: 16,
+            fontSize: 17,
             lineHeight: 1.7,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -7689,10 +7689,10 @@ export function SalesV3FAQSection() {
               style={{
                 padding: "0 26px 22px",
                 fontFamily: "var(--font-body)",
-                fontSize: 16,
+                fontSize: 17,
                 lineHeight: 1.65,
                 color: "var(--ghost)",
-                opacity: 0.88,
+                opacity: 0.95,
               }}
             >
               {item.a}
@@ -7793,7 +7793,7 @@ export function SalesV3BootcampBridgeSection() {
             position: "relative",
             zIndex: 1,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.7,
             color: "var(--ghost)",
             opacity: 0.95,
@@ -7844,7 +7844,7 @@ export function SalesV3BootcampBridgeSection() {
               background: "#B5F03A",
               color: "#0F0E1A",
               fontFamily: "var(--font-body)",
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: 700,
               borderRadius: 12,
               textDecoration: "none",
@@ -7961,7 +7961,7 @@ export function SalesV3UrgencySection({ step }: SectionProps) {
       <div
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 16,
+          fontSize: 17,
           lineHeight: 1.7,
           color: "var(--ghost)",
           opacity: 0.92,
@@ -8079,7 +8079,7 @@ export function SalesV3FinalCTASection({ step }: SectionProps) {
           <p
             style={{
               margin: "0 0 18px",
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: 700,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -8096,7 +8096,7 @@ export function SalesV3FinalCTASection({ step }: SectionProps) {
               display: "flex",
               flexDirection: "column",
               gap: 12,
-              fontSize: 16,
+              fontSize: 17,
               lineHeight: 1.55,
               color: "#3A322B",
             }}
@@ -8146,7 +8146,7 @@ export function SalesV3FinalCTASection({ step }: SectionProps) {
           <p
             style={{
               marginTop: 16,
-              fontSize: 14,
+              fontSize: 16,
               lineHeight: 1.5,
               color: "#6B5E54",
               fontStyle: "italic",
@@ -8283,7 +8283,7 @@ export function SalesV3B2BSection() {
             <p
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: 17,
+                fontSize: 18,
                 lineHeight: 1.6,
                 color: "var(--ghost)",
                 opacity: 0.92,
@@ -8295,10 +8295,10 @@ export function SalesV3B2BSection() {
             <p
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: 17,
+                fontSize: 18,
                 lineHeight: 1.6,
                 color: "var(--ghost)",
-                opacity: 0.85,
+                opacity: 0.95,
                 margin: "0 0 28px",
               }}
             >
@@ -8519,7 +8519,7 @@ export function SalesV3StickyBarSection({ step }: SectionProps) {
           color: "#fff",
           fontFamily: "var(--font-body)",
           fontWeight: 700,
-          fontSize: 14,
+          fontSize: 16,
           borderRadius: 10,
           border: "none",
           cursor: "pointer",
