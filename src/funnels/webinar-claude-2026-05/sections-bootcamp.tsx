@@ -768,6 +768,8 @@ export function BootcampWhyAloneSection() {
           I 4 motivi per cui l&apos;AI
           <br />
           non ha ancora <Accent>cambiato niente</Accent>
+          <br />
+          nel tuo lavoro
         </h2>
 
         <p
