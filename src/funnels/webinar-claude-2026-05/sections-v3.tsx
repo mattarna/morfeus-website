@@ -7038,43 +7038,43 @@ function PostPurchaseBox() {
         marginInline: "auto",
       }}
     >
-      {/* Sezione 1 — Cosa ottieni subito */}
-      <div style={sectionTitle}>Cosa ottieni subito</div>
+      {/* Sezione 1 — Maggio è il tuo mese di preparazione */}
+      <div style={sectionTitle}>Maggio è il tuo mese di preparazione</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
+        <p style={{ ...liStyle, margin: 0 }}>
+          Prima che il corso esca il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong>, hai 4 settimane per costruire le fondamenta.
+        </p>
+        <p style={{ ...liStyle, margin: 0 }}>Chi le salta arriva al corso da zero.</p>
+        <p style={{ ...liStyle, margin: 0, color: "#fff", fontWeight: 500 }}>Chi le fa, entra già avanzato.</p>
+      </div>
       <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
         <li style={liStyle}>
           <span style={checkSpan}>✓</span>
-          <span>Accesso alla community privata</span>
-        </li>
-        <li style={liStyle}>
-          <span style={checkSpan}>✓</span>
           <span>
-            <strong style={{ color: "#fff", fontWeight: 600 }}>Lezione di benvenuto</strong>: tutto quello che devi sapere prima di iniziare, in ordine
+            <strong style={{ color: "#fff", fontWeight: 600 }}>AI Basics</strong>: il punto di partenza che tutti danno per scontato ma che fa tutta la differenza
           </span>
         </li>
         <li style={liStyle}>
           <span style={checkSpan}>✓</span>
           <span>
-            <strong style={{ color: "#fff", fontWeight: 600 }}>Tutorial community</strong>: sei operativo in 10 minuti
+            <strong style={{ color: "#fff", fontWeight: 600 }}>Lezione di benvenuto</strong>: come strutturare il mese per arrivare pronti
           </span>
         </li>
         <li style={liStyle}>
           <span style={checkSpan}>✓</span>
           <span>
-            <strong style={{ color: "#fff", fontWeight: 600 }}>AI Basics</strong>: corso introduttivo incluso, accesso immediato
-          </span>
-        </li>
-        <li style={liStyle}>
-          <span style={checkSpan}>✓</span>
-          <span>
-            <strong style={{ color: "#fff", fontWeight: 600 }}>Pacchetto skill e plugin</strong>: disponibile in community
+            <strong style={{ color: "#fff", fontWeight: 600 }}>Community + pacchetto skill e plugin</strong>: operativo dal primo giorno
           </span>
         </li>
       </ul>
 
       <div style={separator} />
 
-      {/* Sezione 2 — Le 4 live esclusive */}
-      <div style={sectionTitle}>Le 4 live esclusive · solo per chi compra ora</div>
+      {/* Sezione 2 — Le 4 live di maggio */}
+      <div style={sectionTitle}>Le 4 live di maggio · solo per i founding member</div>
+      <p style={{ ...liStyle, margin: "0 0 16px", color: "#fff", fontWeight: 500 }}>
+        Non sono sessioni di attesa. Sono <span style={{ color: "var(--orange)" }}>il percorso</span>.
+      </p>
       <ul style={{ margin: "0 0 16px", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
         <li style={liStyle}>
           <span style={{ ...checkSpan, color: "var(--ghost)", opacity: 0.85 }}>📅</span>
@@ -7101,26 +7101,17 @@ function PostPurchaseBox() {
           </span>
         </li>
       </ul>
-      <p style={{ ...liStyle, opacity: 0.85, margin: 0 }}>
-        Sessioni live dedicate agli studenti Claude Unlocked. <strong style={{ color: "#fff", fontWeight: 600 }}>I replay sono tuoi per sempre.</strong>
+      <p style={{ ...liStyle, opacity: 0.92, margin: 0 }}>
+        Lavori con noi ogni settimana. Arrivi al corso il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong> con un mese di pratica già fatto. <strong style={{ color: "#fff", fontWeight: 600 }}>I replay sono tuoi per sempre.</strong>
       </p>
 
       <div style={separator} />
 
-      {/* Sezione 3 — Vantaggio founding member */}
-      <div style={sectionTitle}>Il tuo vantaggio da founding member</div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <p style={{ ...liStyle, margin: 0 }}>Stai entrando prima del lancio ufficiale.</p>
-        <p style={{ ...liStyle, margin: 0 }}>
-          Puoi dirci cosa vuoi nel corso e noi lo costruiamo anche intorno a te.
-        </p>
-        <p style={{ ...liStyle, margin: 0 }}>
-          Il corso esce nella sua forma completa il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong>.
-        </p>
-        <p style={{ ...liStyle, margin: 0, color: "var(--orange)", fontWeight: 500 }}>
-          Chi compra dopo non avrà mai questa finestra.
-        </p>
-      </div>
+      {/* Sezione 3 — Il 5 giugno entra il corso completo */}
+      <div style={sectionTitle}>Il 5 giugno entra il corso completo</div>
+      <p style={{ ...liStyle, margin: 0, color: "var(--orange)", fontWeight: 500 }}>
+        E tu ci arrivi già avanzato.
+      </p>
     </div>
   );
 }
