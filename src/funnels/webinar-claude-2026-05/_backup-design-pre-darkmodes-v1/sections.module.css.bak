@@ -288,46 +288,6 @@
   }
 }
 
-/* ── v2 only: padding standard + section divider sottile in alto ──────── */
-
-.salesSectionPadV2 {
-  padding: 100px 32px;
-  position: relative;
-}
-.salesSectionPadV2::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(640px, 70%);
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(235, 122, 46, 0.18) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-@media (max-width: 640px) {
-  .salesSectionPadV2 {
-    padding: 56px 18px;
-  }
-}
-
-/* ── v2 only: dark medio alternato (sfondo sottilmente piu' chiaro) ────── */
-
-.sectionDarkMidBg {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0%,
-      rgba(255, 255, 255, 0.025) 50%,
-      rgba(255, 255, 255, 0.018) 100%
-    );
-}
-
 /* ── Hero (sales) — slightly tighter mobile padding ─────────────────────── */
 
 .salesHeroSection {
