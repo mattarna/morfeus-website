@@ -2385,16 +2385,16 @@ export function BootcampB2BSection({ step }: SectionProps) {
                 textWrap: "balance" as React.CSSProperties["textWrap"],
               }}
             >
-              Mandi una persona chiave? <Accent>Parliamone.</Accent>
+              Hai un&apos;azienda? Vuoi formare il <Accent>tuo team</Accent>?
             </h2>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.92, margin: "0 0 12px" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.92, margin: "0 0 14px" }}>
               Abbiamo formato i team di <strong style={{ color: "#fff" }}>Enel, Sisal, BNP Paribas, Zara</strong> e decine di altre aziende italiane.
             </p>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.95, margin: "0 0 24px" }}>
-              Deducibile come formazione professionale, finanziabile via Fondimpresa/Fondir. La persona torna con un sistema costruito sul vostro workflow, non con un certificato.
+              Se vuoi portare Claude nel tuo team con un percorso personalizzato sul vostro contesto, processi e settore, parliamone in 30 minuti.
             </p>
             <OutlineButton href={callHref(pricing)} onClick={() => onCtaClick("b2b")}>
-              Prenota una call commerciale →
+              Prenota una chiamata commerciale →
             </OutlineButton>
           </div>
 
@@ -2962,18 +2962,9 @@ export function BootcampFAQSection() {
     {
       q: "Ho già Claude Unlocked. Devo ancora pagare tutto?",
       a: [
-        "No. Chi ha già comprato Claude Unlocked riceve il valore del corso (147 EUR) come credito sul prezzo del bootcamp.",
-        "Non paghi due volte lo stesso contenuto. Il corso era il prerequisito — lo hai già.",
+        "No. Chi ha già comprato Claude Unlocked riceve il valore del corso come credito sul prezzo del bootcamp, in base alla cifra che hai effettivamente pagato.",
+        "Non paghi due volte lo stesso contenuto. Il corso era il prerequisito, lo hai già.",
         "Portalo in call e lo gestiamo lì.",
-      ],
-    },
-    {
-      q: "Perché solo 25 posti? Non è solo marketing?",
-      a: [
-        "Non è marketing. È un vincolo reale.",
-        "Matteo e Alex insegnano in prima persona ogni sessione live. Con più di 25 persone, la qualità della supervisione scende: lo abbiamo visto nelle prime edizioni con 40+ partecipanti.",
-        "Con 25 persone possiamo correggere, rispondere a domande specifiche, seguire i progetti individuali. Con 50 non possiamo.",
-        "Quando diciamo 25, intendiamo 25. Punto.",
       ],
     },
   ];
