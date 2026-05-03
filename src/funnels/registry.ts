@@ -1,8 +1,8 @@
 import type { FunnelConfig, FunnelRegistryItem } from "@/funnels/types";
 import { isReservedSlug } from "@/lib/reserved-slugs";
 import webinarClaudeMay2026Config from "@/funnels/webinar-claude-2026-05/config.json";
-import claudeUnlockedV1Config from "@/funnels/webinar-claude-2026-05/sales-config.json";
 import claudeUnlockedV2Config from "@/funnels/webinar-claude-2026-05/sales-v2-config.json";
+import claudeUnlockedV3Config from "@/funnels/webinar-claude-2026-05/sales-v3-config.json";
 import bootcampAiChampionConfig from "@/funnels/webinar-claude-2026-05/bootcamp-config.json";
 import bootcampAiChampionV2Config from "@/funnels/webinar-claude-2026-05/bootcamp-v2-config.json";
 import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-2026-04/config.json";
@@ -84,18 +84,6 @@ const freebieVocabolarioAiItem: FunnelRegistryItem = {
 
 registerFunnel(freebieVocabolarioAiItem, freebieVocabolarioAiConfig as FunnelConfig);
 
-const claudeUnlockedV1Item: FunnelRegistryItem = {
-  slug: "claude-unlocked-v1",
-  locale: "it",
-  indexable: true,
-  abTest: {
-    enabled: false,
-    variants: ["A"]
-  }
-};
-
-registerFunnel(claudeUnlockedV1Item, claudeUnlockedV1Config as FunnelConfig);
-
 const claudeUnlockedV2Item: FunnelRegistryItem = {
   slug: "claude-unlocked-v2",
   locale: "it",
@@ -107,6 +95,18 @@ const claudeUnlockedV2Item: FunnelRegistryItem = {
 };
 
 registerFunnel(claudeUnlockedV2Item, claudeUnlockedV2Config as FunnelConfig);
+
+const claudeUnlockedV3Item: FunnelRegistryItem = {
+  slug: "claude-unlocked-v3",
+  locale: "it",
+  indexable: false,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(claudeUnlockedV3Item, claudeUnlockedV3Config as FunnelConfig);
 
 const bootcampAiChampionItem: FunnelRegistryItem = {
   slug: "bootcamp-ai-champion",

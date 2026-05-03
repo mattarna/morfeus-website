@@ -85,6 +85,31 @@ export type FunnelComponentName =
   | "SalesV2B2B"
   | "SalesV2Footer"
   | "SalesV2StickyBar"
+  | "SalesV3Header"
+  | "SalesV3Hero"
+  | "SalesV3Bridge"
+  | "SalesV3ThreeLevels"
+  | "SalesV3Problem"
+  | "SalesV3Mechanism"
+  | "SalesV3EffettiCollaterali"
+  | "SalesV3Benefits"
+  | "SalesV3PromiseLetter"
+  | "SalesV3Modules"
+  | "SalesV3Proof"
+  | "SalesV3Reviews"
+  | "SalesV3Audience"
+  | "SalesV3Comparison"
+  | "SalesV3Bonus"
+  | "SalesV3Offer"
+  | "SalesV3UpsellBootcamp"
+  | "SalesV3Guarantee"
+  | "SalesV3FAQ"
+  | "SalesV3BootcampBridge"
+  | "SalesV3Urgency"
+  | "SalesV3FinalCTA"
+  | "SalesV3B2B"
+  | "SalesV3Footer"
+  | "SalesV3StickyBar"
   | "BootcampHeader"
   | "BootcampHero"
   | "BootcampLevelGap"
@@ -563,6 +588,119 @@ export interface SalesV2FooterContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SalesV2StickyBarContent {}
 
+// ─── Sales Page v3 (corso-claude — design "cream aggressivo", in confronto) ──
+
+export type SalesV3Variant = "live" | "replay" | "email";
+
+export interface SalesV3PricingContent {
+  earlyBirdPrice: number;
+  standardPrice: number;
+  fullPrice: number;
+  currency: "EUR";
+  earlyBirdDeadlineIso: string;
+  standardDeadlineIso: string;
+  checkoutUrlEarlyBird: string;
+  checkoutUrlStandard: string;
+  checkoutUrlFull: string;
+  b2bCallUrl: string;
+}
+
+export interface SalesV3HeroVariantCopy {
+  badge: string;
+  headlinePre: string;
+  headlinePost: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  subheadline: string;
+  ctaLabel: string;
+  microcopy: string;
+}
+
+export interface SalesV3HeroContent {
+  live: SalesV3HeroVariantCopy;
+  replay: SalesV3HeroVariantCopy;
+  email: SalesV3HeroVariantCopy;
+  proofBar: string[];
+  vslYoutubeId?: string;
+  vslThumbnailSrc?: string;
+  vslTitle?: string;
+}
+
+export interface SalesV3UrgencyVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  timerLabel: string;
+  ctaLabel: string;
+}
+
+export interface SalesV3UrgencyContent {
+  live: SalesV3UrgencyVariantCopy;
+  replay: SalesV3UrgencyVariantCopy;
+  email: SalesV3UrgencyVariantCopy;
+}
+
+export interface SalesV3FinalCTAVariantCopy {
+  headlinePre: string;
+  headlineAccent: string;
+  headlineEnd: string;
+  ctaLabel: string;
+  closingPre: string;
+  closingAccent: string;
+  closingEnd: string;
+}
+
+export interface SalesV3FinalCTAContent {
+  live: SalesV3FinalCTAVariantCopy;
+  replay: SalesV3FinalCTAVariantCopy;
+  email: SalesV3FinalCTAVariantCopy;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3HeaderContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3BridgeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ThreeLevelsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ProblemContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3MechanismContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3EffettiCollateraliContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3BenefitsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3PromiseLetterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ModulesContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ProofContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ReviewsContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3AudienceContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3ComparisonContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3BonusContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3OfferContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3UpsellBootcampContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3BootcampBridgeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3GuaranteeContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3FAQContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3B2BContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3FooterContent {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface SalesV3StickyBarContent {}
+
 // ─── Bootcamp AI Champion (sales page) ──────────────────────────────────────
 
 export interface BootcampPricingContent {
@@ -808,6 +946,32 @@ export interface FunnelStepConfig {
     SalesV2Footer?: SalesV2FooterContent;
     SalesV2StickyBar?: SalesV2StickyBarContent;
     SalesV2Pricing?: SalesV2PricingContent;
+    SalesV3Header?: SalesV3HeaderContent;
+    SalesV3Hero?: SalesV3HeroContent;
+    SalesV3Bridge?: SalesV3BridgeContent;
+    SalesV3ThreeLevels?: SalesV3ThreeLevelsContent;
+    SalesV3Problem?: SalesV3ProblemContent;
+    SalesV3Mechanism?: SalesV3MechanismContent;
+    SalesV3EffettiCollaterali?: SalesV3EffettiCollateraliContent;
+    SalesV3Benefits?: SalesV3BenefitsContent;
+    SalesV3PromiseLetter?: SalesV3PromiseLetterContent;
+    SalesV3Modules?: SalesV3ModulesContent;
+    SalesV3Proof?: SalesV3ProofContent;
+    SalesV3Reviews?: SalesV3ReviewsContent;
+    SalesV3Audience?: SalesV3AudienceContent;
+    SalesV3Comparison?: SalesV3ComparisonContent;
+    SalesV3Bonus?: SalesV3BonusContent;
+    SalesV3Offer?: SalesV3OfferContent;
+    SalesV3UpsellBootcamp?: SalesV3UpsellBootcampContent;
+    SalesV3Guarantee?: SalesV3GuaranteeContent;
+    SalesV3FAQ?: SalesV3FAQContent;
+    SalesV3BootcampBridge?: SalesV3BootcampBridgeContent;
+    SalesV3Urgency?: SalesV3UrgencyContent;
+    SalesV3FinalCTA?: SalesV3FinalCTAContent;
+    SalesV3B2B?: SalesV3B2BContent;
+    SalesV3Footer?: SalesV3FooterContent;
+    SalesV3StickyBar?: SalesV3StickyBarContent;
+    SalesV3Pricing?: SalesV3PricingContent;
     BootcampHeader?: BootcampHeaderContent;
     BootcampHero?: BootcampHeroContent;
     BootcampLevelGap?: BootcampLevelGapContent;
