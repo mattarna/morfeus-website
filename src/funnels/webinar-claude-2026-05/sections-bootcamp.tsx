@@ -1564,10 +1564,10 @@ export function BootcampFoundersSection() {
             role="Co-founder · CEO Morfeus · AI in uso professionale dal 2021"
             tag="Founder & lead trainer"
             bullets={[
-              "Ha formato oltre 2.000 professionisti su Claude e AI applicata",
-              "Ha costruito il framework M-V-A applicato in aziende come Enel, Sisal, BNP Paribas, Zara",
-              "Partner di HFarm, Talent Garden, Confcommercio, Asseprim, Sole 24 Ore Formazione",
-              "Gestisce la selezione: ogni partecipante passa da lui prima di entrare",
+              "Usa Claude professionalmente dal 2021, prima ancora che esistesse ChatGPT",
+              "Il framework M-V-A nasce dai progetti reali con Enel, Sisal, BNP Paribas, Zara",
+              "Speaker e partner formativo di HFarm, Talent Garden, Sole 24 Ore Formazione",
+              "Tiene di persona ogni call di selezione e ogni sessione live",
             ]}
           />
           <FounderCard
@@ -1577,10 +1577,10 @@ export function BootcampFoundersSection() {
             role="Co-founder · Head of Product & CTO · Prompt engineering e sistemi AI"
             tag="Architettura tecnica"
             bullets={[
-              "Progetta l'architettura tecnica dei workflow AI del bootcamp",
-              "Responsabile delle sessioni su prompt avanzato, skill e automazione",
-              "Costruisce e mantiene i sistemi AI interni di Morfeus Hub",
-              "In ogni sessione live, non delega a collaboratori esterni",
+              "Costruisce e mantiene i sistemi AI interni di Morfeus, ne è il primo utente",
+              "Le skill, i plugin e i workflow che vedrai sono i suoi: testati ogni giorno",
+              "Tiene le sessioni su prompt avanzato, automazione e architettura sistemi",
+              "Tra una sessione e l'altra è lui che risponde nel gruppo, non un assistente",
             ]}
           />
         </div>
