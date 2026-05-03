@@ -1888,7 +1888,7 @@ export function BootcampResultsSection() {
           <NumberStat big="2.000+" label="professionisti formati da Morfeus Hub" />
           <NumberStat big="3" label="edizioni del bootcamp (questa è la terza)" />
           <NumberStat big="40+ → 25" label="edizioni precedenti ridotte per qualità" />
-          <NumberStat big="Enel · Sisal" label="BNP Paribas · Zara — aziende con persone formate" />
+          <NumberStat big="60%+" label="partecipanti fuori da marketing e comunicazione" />
         </div>
 
         {/* 6 recensioni testuali (dark cards, stelle lime) */}
