@@ -3047,6 +3047,46 @@ function useCurrentPricing(pricing: SalesV3PricingContent): CurrentPricing {
   };
 }
 
+// ─── Stage-aware copy helpers ────────────────────────────────────────────────
+//
+// Quando il timer scatta da una soglia all'altra, vogliamo che TUTTO il copy
+// riferito al prezzo si aggiorni: badge, CTA, microcopy "tra poco sale a X".
+// I valori nel config JSON sono scritti per earlyBird (con "147€"); a runtime
+// qui sostituiamo il numero col prezzo corrente o riscriviamo l'intero copy
+// in base allo stage.
+
+/** Sostituisce qualsiasi "<n>€" in una stringa col prezzo corrente. Usato
+ *  per CTA dal config tipo "Entra a 147€" → "Entra a 297€" quando stage cambia. */
+function applyCurrentPrice(label: string | undefined, currentPrice: number): string {
+  if (!label) return "";
+  return label.replace(/\d+€/g, `${currentPrice}€`);
+}
+
+/** Badge Hero / FinalCTA in base allo stage. */
+function stageBadgeLabel(stage: PricingStage): string {
+  if (stage === "earlyBird") return "Founding member · Prezzo early bird";
+  if (stage === "standard") return "Founding member · Prezzo scontato";
+  return "Prezzo pieno · Accesso evergreen";
+}
+
+/** Microcopy sotto la CTA Hero. Cambia per ogni stage. */
+function stageHeroMicrocopy(stage: PricingStage, pricing: SalesV3PricingContent): string {
+  if (stage === "earlyBird") {
+    return `Prezzo più basso di sempre. Tra poco sale a ${pricing.standardPrice}€.`;
+  }
+  if (stage === "standard") {
+    return `Ultimi giorni a ${pricing.standardPrice}€. Poi sale a ${pricing.fullPrice}€ per sempre.`;
+  }
+  return "Prezzo pieno. Accesso evergreen, contenuto sempre aggiornato.";
+}
+
+/** Label timer Urgency: cambia in base alla soglia che sta arrivando. */
+function stageTimerLabel(stage: PricingStage): string {
+  if (stage === "earlyBird") return "Il prezzo early bird scade tra:";
+  if (stage === "standard") return "Il prezzo scontato scade tra:";
+  return "";
+}
+
 // ─── GA4 / Meta tracking helper ───────────────────────────────────────────────
 
 function trackEvent(name: string, params: Record<string, unknown> = {}) {
@@ -3141,9 +3181,12 @@ function SalesV3PrimaryButton({
   };
 
   if (href) {
+    const isAnchor = href.startsWith("#");
     return (
       <a
         href={href}
+        target={isAnchor ? undefined : "_blank"}
+        rel={isAnchor ? undefined : "noopener noreferrer"}
         onClick={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => { setHover(false); setPress(false); }}
@@ -3663,7 +3706,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
       />
 
       <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
-        <Badge>{copy.badge}</Badge>
+        <Badge>{stageBadgeLabel(current.stage)}</Badge>
         {current.activeDeadlineIso && (
           <span
             style={{
@@ -3752,7 +3795,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
 
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
         <SalesV3PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-          {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+          {applyCurrentPrice(copy.ctaLabel, current.price)} <span style={{ fontSize: 18 }}>→</span>
         </SalesV3PrimaryButton>
       </div>
 
@@ -3777,7 +3820,7 @@ export function SalesV3HeroSection({ step }: SectionProps) {
             <br />
           </>
         )}
-        {copy.microcopy}
+        {stageHeroMicrocopy(current.stage, pricing)}
       </div>
 
       {/* Price scale */}
@@ -8033,16 +8076,31 @@ export function SalesV3UrgencySection({ step }: SectionProps) {
 
   const onCheckout = () => trackCheckoutClick("urgency", variant, current.stage, current.price);
 
+  // Stage-aware narrative: ogni stage ha il suo blocco di copy.
+  // earlyBird: "147 ora, 297 tra poco, 397 per sempre"
+  // standard:  "297 ora, 397 tra poco, evergreen"
+  // full:      "397 evergreen, agisci ora"
+  const isEarly = current.stage === "earlyBird";
+  const isStd = current.stage === "standard";
+  const isFull = current.stage === "full";
+  const cur = current.price;
+  const std = pricing.standardPrice;
+  const full = pricing.fullPrice;
+
   const liveBody = (
     <>
-      <p>147€. Solo per le prossime ore. Poi sale a 297€. E dopo 7 giorni, a 397€. Per sempre.</p>
+      {isEarly && <p>{cur}€. Solo per le prossime ore. Poi sale a {std}€. E dopo, a {full}€. Per sempre.</p>}
+      {isStd && <p>{cur}€. Solo per pochi giorni. Poi sale a {full}€. Per sempre.</p>}
+      {isFull && <p>{cur}€. Prezzo pieno, evergreen. Non scende più.</p>}
       <p>Non tornerà a questo prezzo. Non ci sarà un&apos;altra occasione identica.</p>
       <p>Eri presente. Hai visto il metodo. Sai che funziona. L&apos;unica domanda è: agisci adesso o paghi di più dopo?</p>
     </>
   );
   const replayBody = (
     <>
-      <p>Tra poco, il prezzo sale da 147€ a 297€. Dopo 7 giorni, sale a 397€. Per sempre.</p>
+      {isEarly && <p>Tra poco, il prezzo sale da {cur}€ a {std}€. Dopo, sale a {full}€. Per sempre.</p>}
+      {isStd && <p>Tra poco, il prezzo sale da {cur}€ a {full}€. Per sempre.</p>}
+      {isFull && <p>Sei al prezzo pieno {cur}€. Resta evergreen, non scende più.</p>}
       <p>Non è una strategia di marketing. È il prezzo del webinar: riservato a chi ha partecipato e decide di agire.</p>
       <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
         <li>— Il corso resta lo stesso</li>
@@ -8054,11 +8112,11 @@ export function SalesV3UrgencySection({ step }: SectionProps) {
   );
   const emailBody = (
     <>
-      <p>Il corso è appena uscito. Il prezzo di lancio è il più basso che ci sarà mai:</p>
+      <p>Il prezzo del corso è strutturato così:</p>
       <p>
-        <strong style={{ color: "var(--orange)" }}>147€</strong> — adesso.<br />
-        <strong style={{ color: "#fff" }}>297€</strong> — tra pochi giorni.<br />
-        <strong style={{ color: "var(--muted)" }}>397€</strong> — prezzo pieno, per sempre.
+        <strong style={{ color: isEarly ? "var(--orange)" : "var(--muted)" }}>147€</strong>{isEarly ? " — adesso." : " — chiuso."}<br />
+        <strong style={{ color: isStd ? "var(--orange)" : isEarly ? "#fff" : "var(--muted)" }}>297€</strong>{isStd ? " — adesso." : isEarly ? " — tra pochi giorni." : " — chiuso."}<br />
+        <strong style={{ color: isFull ? "var(--orange)" : "var(--muted)" }}>397€</strong>{isFull ? " — adesso, prezzo pieno per sempre." : " — prezzo pieno, per sempre."}
       </p>
       <p>Il contenuto non cambierà. L&apos;unica cosa che cambia è quanto paghi.</p>
       <p>Ma il prezzo non è l&apos;urgenza vera.</p>
@@ -8107,7 +8165,7 @@ export function SalesV3UrgencySection({ step }: SectionProps) {
               fontFamily: "var(--font-body)",
             }}
           >
-            {copy.timerLabel}
+            {stageTimerLabel(current.stage) || copy.timerLabel}
           </div>
           <div style={{ display: "flex", justifyContent: "center", marginBottom: 36 }}>
             <CountdownCells targetIso={current.activeDeadlineIso} />
@@ -8134,7 +8192,7 @@ export function SalesV3UrgencySection({ step }: SectionProps) {
       </div>
 
       <SalesV3PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-        {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+        {applyCurrentPrice(copy.ctaLabel, current.price)} <span style={{ fontSize: 18 }}>→</span>
       </SalesV3PrimaryButton>
     </section>
   );
@@ -8315,7 +8373,7 @@ export function SalesV3FinalCTASection({ step }: SectionProps) {
 
         <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
           <SalesV3PrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-            {copy.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+            {applyCurrentPrice(copy.ctaLabel, current.price)} <span style={{ fontSize: 18 }}>→</span>
           </SalesV3PrimaryButton>
         </div>
 
