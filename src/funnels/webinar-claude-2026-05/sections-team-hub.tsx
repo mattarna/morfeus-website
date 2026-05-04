@@ -175,7 +175,7 @@ export function WebinarTeamHubSection() {
           <Pill tone="warning">🔒 Pagina interna</Pill>
           <Pill tone="neutral">noindex / nofollow</Pill>
           <Pill tone="neutral" size="sm">Owner: Matteo</Pill>
-          <Pill tone="neutral" size="sm">Aggiornato 30 apr 2026</Pill>
+          <Pill tone="neutral" size="sm">Aggiornato 4 mag 2026</Pill>
         </div>
         <h1 className={styles.heroTitle}>Team Hub — Webinar Claude × Morfeus</h1>
         <p className={styles.heroSub}>
@@ -450,74 +450,157 @@ export function WebinarTeamHubSection() {
 
       {/* ── Link · Prodotti ────────────────────────────────────────── */}
       <section className={styles.section}>
-        <SectionHeader eyebrow="Link · Prodotti" title="Sales page, TY page, checkout" />
+        <SectionHeader eyebrow="Link · Prodotti" title="Sales page, TY page, checkout (canonical)" />
         <div className={styles.tableWrap}>
           <table className={styles.table}>
             <thead>
               <tr>
                 <th style={{ width: 110 }}>Tag</th>
-                <th style={{ width: 250 }}>Pagina</th>
+                <th style={{ width: 270 }}>Pagina</th>
                 <th>URL</th>
-                <th style={{ width: 180 }}>Stato</th>
+                <th style={{ width: 130 }}>Stato</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page V1</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked-v1" /></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page (canonical)</strong></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page V2</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked-v2" /></Td>
-                <Td label="Stato"><StatusBadge status="wip" /></Td>
-              </tr>
-              <tr>
-                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page V1</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/bootcamp-ai-champion" /></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Paywall Tier 1 — 147€</strong></Td>
+                <Td label="URL"><CopyableLink href="https://morfeus-ai-playground.circle.so/checkout/claude-course-tier-1" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
-                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page V2</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/bootcamp-ai-champion-v2" /></Td>
-                <Td label="Stato"><StatusBadge status="wip" /></Td>
+                <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Paywall Tier 2 — 297€</strong></Td>
+                <Td label="URL"><CopyableLink href="https://morfeus-ai-playground.circle.so/checkout/claude-course-tier-2" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Checkout</strong></Td>
-                <Td label="URL"><span style={{ color: "var(--muted)", fontStyle: "italic" }}>(in arrivo)</span></Td>
-                <Td label="Stato"><StatusBadge status="missing" /></Td>
-              </tr>
-              <tr>
-                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Checkout</strong></Td>
-                <Td label="URL"><span style={{ color: "var(--muted)" }}>n/a — vendita solo via call Mattia</span></Td>
-                <Td label="Stato"><StatusBadge status="na" /></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Paywall Tier 3 — 397€</strong></Td>
+                <Td label="URL"><CopyableLink href="https://morfeus-ai-playground.circle.so/checkout/claude-course-tier-3" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
                 <Td label="Pagina"><strong style={{ color: "#fff" }}>TY page (post-acquisto)</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked-v1/access-9x4q2k7n" /></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked/access-9x4q2k7n" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Sales Page (canonical)</strong></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/bootcamp-ai-champion-3a-edizione" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Stripe — Acconto 199€ (Giugno 26)</strong></Td>
+                <Td label="URL"><CopyableLink href="https://buy.stripe.com/9B67sKgAZb3F0jc2QH5Ne05" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Stripe — Completo 1.297€</strong></Td>
+                <Td label="URL"><CopyableLink href="https://buy.stripe.com/7sYfZg1G57Rtc1U0Iz5Ne07" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Stripe — Completo 1.500€</strong></Td>
+                <Td label="URL"><CopyableLink href="https://buy.stripe.com/00w3cu3Od9ZB2rkbnd5Ne08" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
                 <Td label="Pagina"><strong style={{ color: "#fff" }}>TY page (post-acquisto)</strong></Td>
-                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/bootcamp-ai-champion/access-25-m3p8r7q4" /></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/bootcamp-ai-champion-3a-edizione/access-25-m3p8r7q4" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="bootcamp" size="sm">Bootcamp</Pill></Td>
-                <Td label="Pagina"><strong style={{ color: "#fff" }}>Calendly Mattia (call)</strong></Td>
+                <Td label="Pagina"><strong style={{ color: "#fff" }}>Calendly call di selezione</strong></Td>
                 <Td label="URL"><span style={{ color: "var(--muted)", fontStyle: "italic" }}>(in arrivo)</span></Td>
                 <Td label="Stato"><StatusBadge status="missing" /></Td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        {/* Codici sconto Bootcamp Giugno 2026 */}
+        <div
+          style={{
+            marginTop: 28,
+            padding: "20px 22px",
+            background: LIME_SOFT,
+            border: `1px solid ${LIME_BORDER}`,
+            borderRadius: 12,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
+            <Pill tone="bootcamp" size="sm">Bootcamp</Pill>
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: 18,
+                letterSpacing: "-0.01em",
+                color: "#fff",
+                margin: 0,
+              }}
+            >
+              Codici sconto · Giugno 2026
+            </h3>
+          </div>
+          <div style={{ display: "grid", gap: 12, fontFamily: "var(--font-body)", fontSize: 14.5, lineHeight: 1.6, color: "var(--ghost)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "baseline" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: "4px 12px",
+                  background: "rgba(0,0,0,0.35)",
+                  border: `1px solid ${LIME_BORDER}`,
+                  borderRadius: 6,
+                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: LIME,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                BOOTCAMPGIUGNO26
+              </span>
+              <span>
+                Sconto applicato in automatico nelle email per chi sceglie l&apos;<strong style={{ color: "#fff" }}>acconto 199€</strong>. Tienilo come fallback.
+              </span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "baseline" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  padding: "4px 12px",
+                  background: "rgba(0,0,0,0.35)",
+                  border: `1px solid ${LIME_BORDER}`,
+                  borderRadius: 6,
+                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: LIME,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                BOOTCAMP100
+              </span>
+              <span>
+                <strong style={{ color: "#fff" }}>100€</strong> di sconto, leva commerciale per Mattia in call (da usare secondo necessità).
+              </span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -542,13 +625,28 @@ export function WebinarTeamHubSection() {
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
-                <Td label="Cosa"><strong style={{ color: "#fff" }}>Freebie Cowork Setup</strong></Td>
+                <Td label="Cosa"><strong style={{ color: "#fff" }}>Gruppo WhatsApp · Webinar</strong></Td>
+                <Td label="URL"><CopyableLink href="https://chat.whatsapp.com/Kh2Sj8aLcInAZOEpteHCO0?mode=gi_t" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Cosa"><strong style={{ color: "#fff" }}>Freebie · Cowork Setup Skill</strong></Td>
                 <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-skill-anatomy" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
               <tr>
-                <Td label="Cosa"><strong style={{ color: "#fff" }}>Freebie Caroselli IG</strong></Td>
+                <Td label="Cosa"><strong style={{ color: "#fff" }}>Freebie · Caroselli IG</strong></Td>
                 <Td label="URL"><CopyableLink href="https://www.morfeushub.com/instagram-carousel-skills" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Cosa"><strong style={{ color: "#fff" }}>Freebie · AI Design System Blueprint</strong></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/design-system-skill" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Cosa"><strong style={{ color: "#fff" }}>Vocabolario AI</strong></Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/vocabolario-ai" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
               </tr>
             </tbody>
@@ -628,7 +726,7 @@ export function WebinarTeamHubSection() {
 
       {/* ── Ancora mancante ────────────────────────────────────────── */}
       <section className={styles.section}>
-        <SectionHeader eyebrow="Ancora mancante" title="Asset bloccanti per il go-live" />
+        <SectionHeader eyebrow="Ancora mancante" title="Asset bloccanti residui" />
         <div className={`${styles.tableWrap} ${styles.danger}`}>
           <table className={styles.table}>
             <thead>
@@ -641,56 +739,47 @@ export function WebinarTeamHubSection() {
             </thead>
             <tbody>
               <MissingRow
-                what={<><Pill tone="corso" size="sm">Corso</Pill> <strong style={{ color: "#fff" }}>Checkout</strong></>}
-                who="Matteo"
-                urgency="critical"
-                urgencyLabel="🔴 Prima del webinar"
-                note="Serve nelle email PW come CTA acquisto"
-              />
-              <MissingRow
-                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Calendly Mattia</strong></>}
+                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Calendly call selezione</strong></>}
                 who="Mattia / Matteo"
                 urgency="critical"
-                urgencyLabel="🔴 Prima del webinar"
-                note="Serve in email PW7, AQ3 e nella sales page bootcamp"
+                urgencyLabel="🔴 Da pubblicare"
+                note="Serve sulla sales page bootcamp + email AQ3 / PW7"
               />
               <MissingRow
-                what={<><Pill tone="corso" size="sm">Corso</Pill> <strong style={{ color: "#fff" }}>Sales Page V2</strong></>}
-                who="Team / Dev"
-                urgency="warning"
-                urgencyLabel="🟡 Post-webinar"
-                note="V1 è live, V2 è upgrade copy"
-              />
-              <MissingRow
-                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Sales Page V2</strong></>}
-                who="Team / Dev"
-                urgency="warning"
-                urgencyLabel="🟡 Post-webinar"
-                note="V1 è live, V2 è upgrade copy"
-              />
-              <MissingRow
-                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Date prima cohort</strong></>}
+                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Date 3a edizione (calendar)</strong></>}
                 who="Matteo"
                 urgency="warning"
                 urgencyLabel="🟡 Prima del Live #1"
-                note="Da comunicare agli iscritti call"
+                note="Da comunicare a chi prenota call. Inizio prima settimana giugno."
               />
               <MissingRow
-                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Video testimonianze cohort</strong></>}
+                what={<><Pill tone="bootcamp" size="sm">Bootcamp</Pill> <strong style={{ color: "#fff" }}>Video testimonianze edizioni precedenti</strong></>}
                 who="Matteo"
                 urgency="warning"
                 urgencyLabel="🟡 Pre-Live #1"
-                note="3–5 video per sales page bootcamp V2"
+                note="3–5 video per sostituire le 3 review testuali attuali nella sales page"
               />
             </tbody>
           </table>
         </div>
+        <p
+          style={{
+            marginTop: 16,
+            fontFamily: "var(--font-italic)",
+            fontStyle: "italic",
+            fontSize: 13,
+            color: "var(--muted)",
+            lineHeight: 1.5,
+          }}
+        >
+          Risolti dal 30 apr: checkout corso (Circle paywall Tier 1/2/3 live), checkout bootcamp (Stripe Acconto/1297/1500 live), sales page corso (canonical /claude-unlocked v3 cream), sales page bootcamp (canonical /bootcamp-ai-champion-3a-edizione v3 cream), gruppo WhatsApp webinar.
+        </p>
       </section>
 
       {/* ── Footer ─────────────────────────────────────────────────── */}
       <div className={styles.footer}>
         <p className={styles.footerLine}>
-          Owner: Matteo Arnaboldi · matteo@morfeushub.com · Aggiornato 30 aprile 2026
+          Owner: Matteo Arnaboldi · matteo@morfeushub.com · Aggiornato 4 maggio 2026
         </p>
         <p className={styles.footerSub}>Pagina interna · noindex / nofollow</p>
       </div>
