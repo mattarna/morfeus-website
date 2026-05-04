@@ -453,7 +453,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
           fontFamily: "var(--font-body)",
           color: "var(--ghost)",
           opacity: 0.85,
-          fontSize: 17,
+          fontSize: 18,
         }}
       >
         <ProofStat value="2.000+" label="persone formate" />
@@ -467,7 +467,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: 17,
+          fontSize: 18,
           color: LIME,
           opacity: 0.95,
           margin: "0 auto 32px",
@@ -526,7 +526,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
             opacity: 0.7,
             color: "var(--ghost)",
             fontFamily: "var(--font-display)",
-            fontSize: 17,
+            fontSize: 18,
             fontWeight: 500,
           }}
         >
@@ -597,7 +597,7 @@ export function BootcampV3LevelGapSection() {
           Non hai ancora <AccentCream>un sistema.</AccentCream>
         </h2>
 
-        <div style={{ maxWidth: 720, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+        <div style={{ maxWidth: 720, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
           <p style={{ margin: "0 0 14px" }}>C&apos;è un punto in cui molti si bloccano.</p>
           <p style={{ margin: "0 0 14px" }}>
             Hai fatto il corso, o hai imparato da solo. Sai scrivere prompt. Sai che Claude è potente. Lo usi. Forse tutti i giorni.
@@ -641,7 +641,7 @@ export function BootcampV3LevelGapSection() {
           />
         </div>
 
-        <div style={{ marginTop: 44, maxWidth: 720, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.65, color: CREAM_INK }}>
+        <div style={{ marginTop: 44, maxWidth: 720, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK }}>
           <p style={{ margin: "0 0 14px", opacity: 0.9 }}>Il problema non sei tu. È l&apos;approccio.</p>
           <p style={{ margin: "0 0 14px", opacity: 0.9 }}>
             Imparare uno strumento non basta per costruire un sistema. Servono metodo, supervisione esterna, e il tempo di implementare su casi reali, non esercizi didattici.
@@ -673,7 +673,7 @@ export function BootcampV3LevelGapSection() {
           <p style={{ margin: "0 0 6px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.55, color: CREAM_INK }}>
             È quello che spendi a fare da solo il salto da L2 a L3.
           </p>
-          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 17, lineHeight: 1.55, color: CREAM_INK_SOFT }}>
+          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 18, lineHeight: 1.55, color: CREAM_INK_SOFT }}>
             Senza che nessuno ti dica quando il tuo standard è troppo basso, o troppo alto.
           </p>
         </div>
@@ -682,7 +682,7 @@ export function BootcampV3LevelGapSection() {
           style={{
             marginTop: 32,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             color: CREAM_INK_SOFT,
             cursor: "pointer",
           }}
@@ -740,7 +740,7 @@ function LevelCard({
       >
         {title}
       </h3>
-      <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: CREAM_INK, opacity: 0.85 }}>
+      <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.55, color: CREAM_INK, opacity: 0.85 }}>
         {body}
       </p>
       {badge && (
@@ -832,7 +832,7 @@ export function BootcampV3WhyAloneSection() {
             margin: "0 auto 48px",
             maxWidth: 720,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.55,
             color: "var(--ghost)",
             opacity: 0.85,
@@ -868,7 +868,7 @@ export function BootcampV3WhyAloneSection() {
               <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 21, color: "#fff", margin: "0 0 12px" }}>
                 {e.title}
               </h3>
-              <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.85 }}>
+              <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.85 }}>
                 {e.body}
               </p>
             </div>
@@ -1036,7 +1036,7 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
                   style={{
                     margin: 0,
                     fontFamily: "var(--font-body)",
-                    fontSize: 17,
+                    fontSize: 18,
                     lineHeight: 1.6,
                     color: CREAM_INK,
                     opacity: 0.92,
@@ -1264,7 +1264,7 @@ function BeforeAfterColumn({
             key={idx}
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.6,
               color: "var(--ghost)",
               opacity: isBefore ? 0.75 : 1,
@@ -1280,7 +1280,7 @@ function BeforeAfterColumn({
                 color: isBefore ? "rgba(220,80,80,0.85)" : LIME,
                 fontWeight: 700,
                 flexShrink: 0,
-                fontSize: 17,
+                fontSize: 18,
                 lineHeight: 1.6,
               }}
             >
@@ -1300,7 +1300,7 @@ function NumberStat({ big, label }: { big: string; label: string }) {
       <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(28px, 4vw, 38px)", color: LIME, lineHeight: 1.1 }}>
         {big}
       </div>
-      <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 17, color: "var(--ghost)", opacity: 0.85 }}>
+      <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 18, color: "var(--ghost)", opacity: 0.85 }}>
         {label}
       </p>
     </div>
@@ -1313,7 +1313,7 @@ function NumberStatCream({ big, label }: { big: string; label: string }) {
       <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(28px, 4vw, 38px)", color: LIME_DARK, lineHeight: 1.1 }}>
         {big}
       </div>
-      <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 17, color: CREAM_INK, opacity: 0.85 }}>
+      <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 18, color: CREAM_INK, opacity: 0.85 }}>
         {label}
       </p>
     </div>
@@ -1402,7 +1402,7 @@ export function BootcampV3ProgramSection() {
             margin: "0 auto 48px",
             maxWidth: 720,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.55,
             color: CREAM_INK_SOFT,
             textAlign: "center",
@@ -1518,7 +1518,7 @@ export function BootcampV3ProgramSection() {
                     margin: 0,
                     fontFamily: "var(--font-italic)",
                     fontStyle: "italic",
-                    fontSize: 17,
+                    fontSize: 18,
                     color: CREAM_INK_SOFT,
                     lineHeight: 1.55,
                   }}
@@ -1612,7 +1612,7 @@ export function BootcampV3FoundersSection() {
             margin: "0 auto 56px",
             maxWidth: 760,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: "var(--ghost)",
             opacity: 0.88,
@@ -1857,7 +1857,7 @@ function ReviewCardCream({ initials, name, role, company, quote, rating }: Bootc
             color: LIME_DARK,
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: 17,
+            fontSize: 18,
             flexShrink: 0,
           }}
         >
@@ -2113,7 +2113,7 @@ function AudienceColumn({
             key={idx}
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.6,
               color: "var(--ghost)",
               opacity: isFor ? 1 : 0.8,
@@ -2189,7 +2189,7 @@ export function BootcampV3ROISection({ step }: SectionProps) {
             margin: "0 auto",
             maxWidth: 740,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.65,
             color: CREAM_INK,
             opacity: 0.92,
@@ -2257,7 +2257,7 @@ export function BootcampV3ROISection({ step }: SectionProps) {
             display: "grid",
             gap: 10,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: CREAM_INK,
           }}
@@ -2282,7 +2282,7 @@ export function BootcampV3ROISection({ step }: SectionProps) {
             border: `1px solid ${LIME_DARK_BORDER_25}`,
             borderRadius: 12,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: CREAM_INK,
           }}
@@ -2327,7 +2327,7 @@ function RoiScenario({ tier, label, yearly, payback }: { tier: string; label: st
         <p style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: CREAM_INK }}>
           {yearly}
         </p>
-        <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: CREAM_INK, opacity: 0.9 }}>
+        <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.55, color: CREAM_INK, opacity: 0.9 }}>
           {payback}
         </p>
       </div>
@@ -2421,10 +2421,10 @@ export function BootcampV3B2BSection({ step }: SectionProps) {
             >
               Hai un&apos;azienda? Vuoi formare il <Accent>tuo team</Accent>?
             </h2>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.92, margin: "0 0 14px" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.92, margin: "0 0 14px" }}>
               Abbiamo formato i team di <strong style={{ color: "#fff" }}>Enel, Sisal, BNP Paribas, Zara</strong> e decine di altre aziende italiane.
             </p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.95, margin: "0 0 24px" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.6, color: "var(--ghost)", opacity: 0.95, margin: "0 0 24px" }}>
               Se vuoi portare Claude nel tuo team con un percorso personalizzato sul vostro contesto, processi e settore, parliamone in 30 minuti.
             </p>
             <OutlineButton href={callHref(pricing)} onClick={() => onCtaClick("b2b")}>
@@ -2534,7 +2534,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
             margin: "0 auto 56px",
             maxWidth: 760,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.6,
             color: "var(--ghost)",
             opacity: 0.88,
@@ -2569,7 +2569,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
                   display: "grid",
                   placeItems: "center",
                   fontWeight: 700,
-                  fontSize: 17,
+                  fontSize: 18,
                   flexShrink: 0,
                   marginTop: 2,
                 }}
@@ -2577,10 +2577,10 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
                 ✓
               </span>
               <div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 17, color: "#fff", margin: "0 0 4px", lineHeight: 1.3 }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 18, color: "#fff", margin: "0 0 4px", lineHeight: 1.3 }}>
                   {item.title}
                 </h3>
-                <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.8 }}>
+                <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.8 }}>
                   {item.body}
                 </p>
               </div>
@@ -2670,7 +2670,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
               {pricing.currentPrice.toLocaleString("it-IT")} EUR
             </span>
           </div>
-          <p style={{ margin: "0 0 28px", fontFamily: "var(--font-body)", fontSize: 17, color: "var(--muted)", lineHeight: 1.6 }}>
+          <p style={{ margin: "0 0 28px", fontFamily: "var(--font-body)", fontSize: 18, color: "var(--muted)", lineHeight: 1.6 }}>
             Listino del bootcamp: <span style={{ textDecoration: "line-through" }}>{pricing.listPrice.toLocaleString("it-IT")} EUR</span> · Stai accedendo al prezzo riservato attuale.
             <br />
             Accesso solo via call di selezione · Pagamento confermato post-call
@@ -2760,7 +2760,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
           >
             Il prezzo di non farlo è <span style={{ color: LIME }}>6.000 EUR all&apos;anno</span>.
           </p>
-          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 17, color: "var(--muted)", lineHeight: 1.55 }}>
+          <p style={{ margin: 0, fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 18, color: "var(--muted)", lineHeight: 1.55 }}>
             5–8h/settimana che continui a fare tu. Ogni anno. Finché non costruisci il sistema.
           </p>
         </div>
@@ -2814,7 +2814,7 @@ function AnchorBox({ title, lines, highlight }: { title: string; lines: string[]
       </h3>
       <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8 }}>
         {lines.map((l, idx) => (
-          <li key={idx} style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.9 }}>
+          <li key={idx} style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.55, color: "var(--ghost)", opacity: 0.9 }}>
             {l}
           </li>
         ))}
@@ -2884,7 +2884,7 @@ export function BootcampV3GuaranteeSection() {
           style={{
             marginTop: 40,
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.65,
             color: CREAM_INK_SOFT,
             textAlign: "center",
@@ -3084,7 +3084,7 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
         }}
       >
         <span style={{ display: "flex", gap: 14, alignItems: "baseline" }}>
-          <span style={{ color: LIME, fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 17, flexShrink: 0 }}>
+          <span style={{ color: LIME, fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>
             {String(index).padStart(2, "0")}
           </span>
           <span>{q}</span>
@@ -3111,7 +3111,7 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
           style={{ padding: "0 24px 24px 60px", display: "grid", gap: 12 }}
         >
           {a.map((p, idx) => (
-            <p key={idx} style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
+            <p key={idx} style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
               {p}
             </p>
           ))}
@@ -3163,7 +3163,7 @@ export function BootcampV3FinalCTASection({ step }: SectionProps) {
             maxWidth: 760,
             margin: "0 auto 36px",
             fontFamily: "var(--font-body)",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.65,
             color: "var(--ghost)",
             opacity: 0.92,
@@ -3186,7 +3186,7 @@ export function BootcampV3FinalCTASection({ step }: SectionProps) {
           </p>
         </div>
 
-        <p style={{ margin: "0 0 28px", fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 17, color: "var(--muted)", lineHeight: 1.55 }}>
+        <p style={{ margin: "0 0 28px", fontFamily: "var(--font-italic)", fontStyle: "italic", fontSize: 18, color: "var(--muted)", lineHeight: 1.55 }}>
           I posti rimasti si vedono in call. Non facciamo scarcity falsa: quando sono finiti, sono finiti.
         </p>
 
@@ -3334,7 +3334,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-italic)",
             fontStyle: "italic",
-            fontSize: 17,
+            fontSize: 18,
             lineHeight: 1.5,
             color: LIME,
             opacity: 0.95,
@@ -3375,7 +3375,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
             <polyline points="22,6 12,13 2,6" />
           </svg>
         </div>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.5, color: "var(--ghost)" }}>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.5, color: "var(--ghost)" }}>
           Controlla la tua email: riceverai a breve la ricevuta Stripe e le istruzioni di accesso a Circle. Se non la vedi entro 10 minuti, controlla spam o scrivi a hello@morfeushub.com.
         </div>
       </div>
@@ -3443,7 +3443,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.55,
               color: "var(--ghost)",
               opacity: 0.85,
@@ -3558,7 +3558,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.55,
               color: "var(--ghost)",
               opacity: 0.85,
@@ -3665,7 +3665,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 17,
+              fontSize: 18,
               lineHeight: 1.6,
               color: "var(--ghost)",
               opacity: 0.92,
@@ -3688,7 +3688,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
                 background: LIME,
                 color: "#0B0B0C",
                 fontFamily: "var(--font-body)",
-                fontSize: 17,
+                fontSize: 18,
                 fontWeight: 700,
                 borderRadius: 10,
                 textDecoration: "none",
@@ -3712,7 +3712,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
                 background: "transparent",
                 color: LIME,
                 fontFamily: "var(--font-body)",
-                fontSize: 17,
+                fontSize: 18,
                 fontWeight: 700,
                 borderRadius: 10,
                 textDecoration: "none",
@@ -3796,7 +3796,7 @@ function BcTyStepCard({
           placeItems: "center",
           color: accent,
           fontFamily: "var(--font-display)",
-          fontSize: 17,
+          fontSize: 18,
           fontWeight: 600,
         }}
       >
@@ -3831,7 +3831,7 @@ function BcTyStepCard({
         <p
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: 17.5,
+            fontSize: 18.5,
             lineHeight: 1.6,
             color: "var(--ghost)",
             opacity: 0.85,
@@ -3854,7 +3854,7 @@ function BcTyStepCard({
                 background: isLime ? LIME : "transparent",
                 color: isLime ? "#0B0B0C" : LIME,
                 fontFamily: "var(--font-body)",
-                fontSize: 17,
+                fontSize: 18,
                 fontWeight: 700,
                 borderRadius: 10,
                 textDecoration: "none",
@@ -4011,7 +4011,7 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
           color: "#0B0B0C",
           fontFamily: "var(--font-body)",
           fontWeight: 700,
-          fontSize: 17,
+          fontSize: 18,
           borderRadius: 10,
           border: "none",
           cursor: "pointer",
