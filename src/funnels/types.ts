@@ -482,10 +482,14 @@ export interface SalesFooterContent {}
 export interface SalesStickyBarContent {}
 
 export interface SalesThankYouContent {
-  /** URL della piattaforma Circle (space corso) */
+  /** URL invite alla community Circle (space corso) */
   circleUrl: string;
-  /** Link diretto al Modulo 0 dentro Circle (fallback: circleUrl) */
-  module0Url: string;
+  /** URL del corso bonus gratuito "AI Fundamentals" su Circle */
+  aiFundamentalsUrl: string;
+  /** URL della lezione di introduzione del corso Claude Unlocked su Circle */
+  introLessonUrl: string;
+  /** URL del calendario appuntamenti su Circle (sessioni live) */
+  calendarUrl: string;
   /** URL della sales page del Bootcamp AI Champion */
   bootcampSalesUrl: string;
   /** Email di supporto / contatto */

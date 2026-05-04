@@ -7893,7 +7893,9 @@ export function SalesThankYouSection({ step }: SectionProps) {
   const content = step.content.SalesThankYou as SalesThankYouContent;
 
   const circleHref = content.circleUrl && content.circleUrl.trim().length > 0 ? content.circleUrl : "#";
-  const module0Href = content.module0Url && content.module0Url.trim().length > 0 ? content.module0Url : circleHref;
+  const aiFundamentalsHref = content.aiFundamentalsUrl && content.aiFundamentalsUrl.trim().length > 0 ? content.aiFundamentalsUrl : circleHref;
+  const introLessonHref = content.introLessonUrl && content.introLessonUrl.trim().length > 0 ? content.introLessonUrl : circleHref;
+  const calendarHref = content.calendarUrl && content.calendarUrl.trim().length > 0 ? content.calendarUrl : circleHref;
   const bootcampHref = content.bootcampSalesUrl && content.bootcampSalesUrl.trim().length > 0 ? content.bootcampSalesUrl : "#";
 
   const cardBase: React.CSSProperties = {
@@ -7982,7 +7984,7 @@ export function SalesThankYouSection({ step }: SectionProps) {
         </div>
       </div>
 
-      {/* ── 3. Prossimi passi (3 step) ───────────────────────────────── */}
+      {/* ── 3. Prossimi passi (4 step) ───────────────────────────────── */}
       <div style={{ marginBottom: 64 }}>
         <div style={{ textAlign: "center", marginBottom: 36 }}>
           <SectionLabel>Cosa fai adesso</SectionLabel>
@@ -7999,7 +8001,7 @@ export function SalesThankYouSection({ step }: SectionProps) {
               textWrap: "balance" as React.CSSProperties["textWrap"],
             }}
           >
-            Tre passi. <Accent>Inizia da qui.</Accent>
+            Quattro passi. <Accent>Inizia da qui.</Accent>
           </h2>
           <p
             style={{
@@ -8026,15 +8028,24 @@ export function SalesThankYouSection({ step }: SectionProps) {
           />
           <TyStepCard
             num="02"
-            title="Inizia dal Modulo 0"
-            body="Prima di tutto il resto, guarda il Modulo 0. Non è un'introduzione generica — è il cambio di frame che rende tutto il resto del corso 10 volte più efficace. Sono circa 25 minuti."
-            ctaLabel="Vai al Modulo 0 →"
-            ctaHref={module0Href}
+            title="Guarda gratuitamente il corso AI Fundamentals"
+            body="Bonus incluso: prima di iniziare con Claude, guarda il corso AI Fundamentals. È il livellamento sul mindset operativo che useremo poi su Claude — nessun costo aggiuntivo."
+            ctaLabel="Vai al corso AI Fundamentals →"
+            ctaHref={aiFundamentalsHref}
           />
           <TyStepCard
             num="03"
+            title="Guarda la lezione di introduzione"
+            body="Prima di tutto il resto del corso Claude, guarda la lezione di introduzione. Non è un'introduzione generica — è il cambio di frame che rende tutto il resto del corso 10 volte più efficace. Sono circa 25 minuti."
+            ctaLabel="Vai alla lezione di introduzione →"
+            ctaHref={introLessonHref}
+          />
+          <TyStepCard
+            num="04"
             title="Segna le sessioni live in calendario"
-            body="Hai accesso a 4 sessioni live con me. Sono incluse nel corso — mettile in calendario adesso, prima che le dimentichi."
+            body="Hai accesso a 4 sessioni live con me. Tutte le date e i link sono già nel calendario di Circle — aprilo e mettile in agenda adesso, prima che le dimentichi."
+            ctaLabel="Apri il calendario su Circle →"
+            ctaHref={calendarHref}
           />
         </div>
       </div>

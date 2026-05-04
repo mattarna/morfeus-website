@@ -82,13 +82,16 @@ Struttura sezioni:
 3. `SalesFooter` — disclaimer Anthropic + AGCM
 
 Configurabile in `sales-config.json` step `thank-you`:
-- `circleUrl`, `module0Url` — link alla piattaforma corso (vuoto = href="#" no-op)
+- `circleUrl` — invite community Circle (corso) (vuoto = href="#" no-op)
+- `aiFundamentalsUrl` — bonus gratuito AI Fundamentals su Circle (fallback: circleUrl)
+- `introLessonUrl` — lezione di introduzione corso Claude su Circle (fallback: circleUrl)
+- `calendarUrl` — calendario appuntamenti Circle con le 4 live (fallback: circleUrl)
 - `bootcampSalesUrl` — default `/bootcamp-ai-champion`
 - `supportEmail` — default `matteo@morfeushub.com`
 - `liveSessions[]` — 4 card date (default: 12/19/26 maggio + 2 giugno 2026)
 
 TY corso — TODO pre-go-live:
-1. **Circle URL**: `circleUrl` e `module0Url` sono vuoti → CTA Step 1/Step 2 puntano a `href="#"`. Inserire l'URL reale dello space Circle del corso e il deeplink al Modulo 0 quando disponibili.
+1. **Circle URLs**: `circleUrl`, `aiFundamentalsUrl`, `introLessonUrl`, `calendarUrl` ora popolati con i link reali dello space Morfeus AI Playground (community + AI Fundamentals + Claude Unlocked + calendario appuntamenti). Aggiornare se cambiano gli space su Circle.
 2. **Date sessioni live**: `liveSessions[]` ha date placeholder. Aggiornare se cambia il calendario.
 
 ## TY page bootcamp (`/bootcamp-ai-champion/access-25-m3p8r7q4`)
