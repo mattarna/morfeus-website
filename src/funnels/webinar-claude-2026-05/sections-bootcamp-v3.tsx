@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import type { BootcampPricingContent, BootcampThankYouContent } from "@/funnels/types";
+import { useEffect, useRef, useState } from "react";
+import type { BootcampHeroContent, BootcampPricingContent, BootcampThankYouContent } from "@/funnels/types";
 import styles from "./sections.module.css";
 
 // ─── Shared prop shape ────────────────────────────────────────────────────────
@@ -211,9 +211,12 @@ function PrimaryButton({
   };
 
   if (href) {
+    const isAnchor = href.startsWith("#");
     return (
       <a
         href={href}
+        target={isAnchor ? undefined : "_blank"}
+        rel={isAnchor ? undefined : "noopener noreferrer"}
         onClick={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => { setHover(false); setPress(false); }}
@@ -270,8 +273,17 @@ function OutlineButton({
     boxSizing: "border-box",
   };
   if (href) {
+    const isAnchor = href.startsWith("#");
     return (
-      <a href={href} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={styleProps} onClick={onClick}>
+      <a
+        href={href}
+        target={isAnchor ? undefined : "_blank"}
+        rel={isAnchor ? undefined : "noopener noreferrer"}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={styleProps}
+        onClick={onClick}
+      >
         {children}
       </a>
     );
@@ -370,12 +382,168 @@ export function BootcampV3HeaderSection() {
   );
 }
 
+// ─── Hero VSL (autoplay muted, facade pattern, palette lime) ──────────────────
+
+function HeroVSL({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thumbnailSrc?: string; title?: string }) {
+  const [mounted, setMounted] = useState(false);
+  const [unmuted, setUnmuted] = useState(false);
+  const playerRef = useRef<HTMLIFrameElement>(null);
+
+  const isPlaceholder = !youtubeId || youtubeId === "PLACEHOLDER_VIDEO_ID";
+
+  useEffect(() => {
+    if (isPlaceholder) return;
+    const t = setTimeout(() => setMounted(true), 250);
+    return () => clearTimeout(t);
+  }, [isPlaceholder]);
+
+  function unmute() {
+    const w = playerRef.current?.contentWindow;
+    if (!w) return;
+    w.postMessage(JSON.stringify({ event: "command", func: "unMute", args: [] }), "*");
+    w.postMessage(JSON.stringify({ event: "command", func: "setVolume", args: [80] }), "*");
+    setUnmuted(true);
+  }
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        maxWidth: 780,
+        margin: "0 auto 40px",
+        aspectRatio: "16 / 9",
+        borderRadius: 18,
+        overflow: "hidden",
+        boxShadow: `0 0 80px ${LIME_GLOW_35}, 0 24px 64px rgba(0,0,0,0.55)`,
+        border: `1px solid ${LIME_BORDER_25}`,
+        background: "var(--dusk)",
+      }}
+    >
+      {/* Iframe lazy mounted */}
+      {!isPlaceholder && mounted && (
+        <iframe
+          ref={playerRef}
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+          title={title ?? "Video Sales Letter"}
+          allow="autoplay; encrypted-media; fullscreen"
+          allowFullScreen
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            border: "none",
+            background: "#000",
+          }}
+        />
+      )}
+
+      {/* Facade thumbnail (visibile finche iframe non monta, o sempre per placeholder) */}
+      {(!mounted || isPlaceholder) && (
+        <div
+          aria-label={title ?? "Video Sales Letter — anteprima"}
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: thumbnailSrc ? `url(${thumbnailSrc})` : undefined,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundColor: "var(--dusk)",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
+            }}
+          />
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1,
+              width: 92,
+              height: 92,
+              borderRadius: "50%",
+              background: LIME,
+              display: "grid",
+              placeItems: "center",
+              boxShadow: `0 14px 44px ${LIME_GLOW_50}`,
+              animation: "btn-pulse-lime 2.4s infinite",
+            }}
+          >
+            <svg width="32" height="36" viewBox="0 0 32 36" fill="#0B0B0C" aria-hidden>
+              <path d="M3 1 L29 18 L3 35 Z" />
+            </svg>
+          </div>
+          {isPlaceholder && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: 14,
+                left: 14,
+                right: 14,
+                textAlign: "center",
+                fontSize: 11,
+                color: "rgba(255,255,255,0.55)",
+                fontFamily: "var(--font-body)",
+                letterSpacing: "0.10em",
+                textTransform: "uppercase",
+              }}
+            >
+              Video in arrivo — segnaposto
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Unmute pill */}
+      {!isPlaceholder && mounted && !unmuted && (
+        <button
+          type="button"
+          onClick={unmute}
+          style={{
+            position: "absolute",
+            bottom: 14,
+            left: 14,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "9px 14px",
+            background: "rgba(0,0,0,0.78)",
+            border: "1px solid rgba(255,255,255,0.20)",
+            color: "#fff",
+            fontFamily: "var(--font-body)",
+            fontSize: 13,
+            fontWeight: 600,
+            borderRadius: 100,
+            cursor: "pointer",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)" as React.CSSProperties["WebkitBackdropFilter"],
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+          Attiva audio
+        </button>
+      )}
+    </div>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 01 — HERO
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3HeroSection({ step }: SectionProps) {
   const pricing = readPricing(step);
+  const heroContent = (step?.content?.BootcampV3Hero ?? {}) as BootcampHeroContent;
   return (
     <section
       style={{
@@ -440,6 +608,13 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
       >
         Il Bootcamp AI Champion è il percorso avanzato per professionisti e aziende che vogliono passare dall&apos;AI come strumento all&apos;AI come sistema operativo — con metodo, supervisione e risultati verificabili.
       </p>
+
+      {/* VSL */}
+      <HeroVSL
+        youtubeId={heroContent.vslYoutubeId}
+        thumbnailSrc={heroContent.vslThumbnailSrc}
+        title={heroContent.vslTitle}
+      />
 
       {/* Proof bar */}
       <div
@@ -3313,8 +3488,11 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
     {
       n: "03",
       tone: "violet" as const,
-      title: "Completa le 3 ore di lezioni pre-registrate",
-      body: "Sono il livellamento. Tutti i partecipanti le guardano prima del Live #1 — ti mettono sullo stesso piano di partenza indipendentemente dalla tua esperienza attuale.",
+      title: "Completa il corso AI Basics & AI Foundamentals su Circle",
+      body: "È il livellamento. Tutti i partecipanti lo completano prima del Live #1, per arrivare allo stesso punto di partenza indipendentemente dalla tua esperienza attuale.",
+      ctaLabel: "Accedi al corso su Circle →",
+      ctaHref: circleHref,
+      ctaIcon: "external" as const,
       priority: "Priorità alta",
     },
     {
@@ -3921,7 +4099,7 @@ function BcTyStepCard({
               }}
             >
               {ctaIcon === "whatsapp" && (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
                 </svg>
               )}

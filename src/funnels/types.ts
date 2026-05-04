@@ -770,8 +770,14 @@ export interface BootcampOfferContent {}
 export interface BootcampGuaranteeContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampFAQContent {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface BootcampHeroContent {}
+export interface BootcampHeroContent {
+  /** YouTube video id del VSL (Video Sales Letter) embeddato nell'hero. Vuoto/PLACEHOLDER_VIDEO_ID = solo facade thumbnail */
+  vslYoutubeId?: string;
+  /** Path della cover image mostrata come facade prima del play */
+  vslThumbnailSrc?: string;
+  /** Title accessibile dell'iframe / facade */
+  vslTitle?: string;
+}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BootcampFinalCTAContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
