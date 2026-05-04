@@ -8547,10 +8547,15 @@ export function SalesV3StickyBarSection({ step }: SectionProps) {
 
   const onClick = () => {
     trackEvent("sales_sticky_click", { variant, pricing_stage: current.stage });
-    scrollToId("offerta");
+    // Link diretto al checkout: nessun fallback a scroll, l'utente vuole agire ora.
+    // Se per qualche motivo l'URL non è impostato, fallback su #offerta.
+    if (!current.checkoutUrl) {
+      scrollToId("offerta");
+    }
   };
 
   const show = isMobile && pastHero && !nearOffer && !nearFinalCta;
+  const hasCheckoutUrl = Boolean(current.checkoutUrl && current.checkoutUrl.trim().length > 0);
 
   return (
     <div
@@ -8572,8 +8577,10 @@ export function SalesV3StickyBarSection({ step }: SectionProps) {
       }}
       aria-hidden={!show}
     >
-      <button
-        type="button"
+      <a
+        href={hasCheckoutUrl ? current.checkoutUrl : "#offerta"}
+        target={hasCheckoutUrl ? "_blank" : undefined}
+        rel={hasCheckoutUrl ? "noreferrer noopener" : undefined}
         onClick={onClick}
         style={{
           width: "100%",
@@ -8592,10 +8599,11 @@ export function SalesV3StickyBarSection({ step }: SectionProps) {
           gap: 8,
           boxSizing: "border-box",
           boxShadow: "0 4px 18px rgba(235,122,46,0.40)",
+          textDecoration: "none",
         }}
       >
         Acquista a {current.price}€ <span style={{ fontSize: 16 }}>→</span>
-      </button>
+      </a>
     </div>
   );
 }
