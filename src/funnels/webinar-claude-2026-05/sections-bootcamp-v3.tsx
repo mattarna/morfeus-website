@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import type { BootcampPricingContent, BootcampThankYouContent } from "@/funnels/types";
 import styles from "./sections.module.css";
 
@@ -14,16 +14,28 @@ interface SectionProps {
   step: any;
 }
 
-// ─── Lime palette (hardcoded — distinto dal funnel corso che usa arancione) ──
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║ [TEST PALETTE] Switcher LIME vs CYAN — RIMUOVERE DOPO SCELTA COLORE      ║
+// ║                                                                          ║
+// ║ Per togliere il test:                                                    ║
+// ║  1) ripristinare i 12 `let` lime/lime_dark a `const` con i valori lime   ║
+// ║  2) eliminare il blocco CYAN_*, _palette, _palListeners, setPalette,    ║
+// ║     usePalette, BootcampV3PaletteSwitcher                                ║
+// ║  3) rimuovere `usePalette();` da ogni section component                  ║
+// ║  4) rimuovere il <BootcampV3PaletteSwitcher /> dal Header                ║
+// ║  5) togliere `useSyncExternalStore` dall'import                          ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
 
-const LIME = "#B5F03A";
-const LIME_HOVER = "#C5F75E";
-const LIME_PRESSED = "#9BD827";
-const LIME_GLOW_35 = "rgba(181,240,58,0.35)";
-const LIME_GLOW_50 = "rgba(181,240,58,0.50)";
-const LIME_SOFT_10 = "rgba(181,240,58,0.10)";
-const LIME_SOFT_18 = "rgba(181,240,58,0.18)";
-const LIME_BORDER_25 = "rgba(181,240,58,0.30)";
+// ─── Lime palette (let invece di const per consentire swap runtime [TEST]) ──
+
+let LIME = "#B5F03A";
+let LIME_HOVER = "#C5F75E";
+let LIME_PRESSED = "#9BD827";
+let LIME_GLOW_35 = "rgba(181,240,58,0.35)";
+let LIME_GLOW_50 = "rgba(181,240,58,0.50)";
+let LIME_SOFT_10 = "rgba(181,240,58,0.10)";
+let LIME_SOFT_18 = "rgba(181,240,58,0.18)";
+let LIME_BORDER_25 = "rgba(181,240,58,0.30)";
 const VIOLET_BORDER = "rgba(123,104,238,0.45)";
 const VIOLET_SOFT = "rgba(123,104,238,0.08)";
 
@@ -36,10 +48,157 @@ const CREAM_CARD = "#FBF7EE";
 const CREAM_INK = "#0F0F1A";
 const CREAM_INK_SOFT = "#3A3A4A";
 const CREAM_HAIRLINE = "rgba(15,15,26,0.10)";
-const LIME_DARK = "#5E8A0D";
-const LIME_DARK_SOFT_10 = "rgba(94,138,13,0.10)";
-const LIME_DARK_SOFT_18 = "rgba(94,138,13,0.18)";
-const LIME_DARK_BORDER_25 = "rgba(94,138,13,0.30)";
+let LIME_DARK = "#5E8A0D";
+let LIME_DARK_SOFT_10 = "rgba(94,138,13,0.10)";
+let LIME_DARK_SOFT_18 = "rgba(94,138,13,0.18)";
+let LIME_DARK_BORDER_25 = "rgba(94,138,13,0.30)";
+
+// ─── [TEST PALETTE] Cyan equivalents (#22D3EE) ─────────────────────────────
+// rgb(34,211,238). DARK = teal scuro #0E7490 (analogo a olive #5E8A0D su cream)
+const _LIME_VALUES = {
+  LIME: "#B5F03A",
+  LIME_HOVER: "#C5F75E",
+  LIME_PRESSED: "#9BD827",
+  LIME_GLOW_35: "rgba(181,240,58,0.35)",
+  LIME_GLOW_50: "rgba(181,240,58,0.50)",
+  LIME_SOFT_10: "rgba(181,240,58,0.10)",
+  LIME_SOFT_18: "rgba(181,240,58,0.18)",
+  LIME_BORDER_25: "rgba(181,240,58,0.30)",
+  LIME_DARK: "#5E8A0D",
+  LIME_DARK_SOFT_10: "rgba(94,138,13,0.10)",
+  LIME_DARK_SOFT_18: "rgba(94,138,13,0.18)",
+  LIME_DARK_BORDER_25: "rgba(94,138,13,0.30)",
+};
+const _CYAN_VALUES = {
+  LIME: "#22D3EE",
+  LIME_HOVER: "#67E8F9",
+  LIME_PRESSED: "#06B6D4",
+  LIME_GLOW_35: "rgba(34,211,238,0.35)",
+  LIME_GLOW_50: "rgba(34,211,238,0.50)",
+  LIME_SOFT_10: "rgba(34,211,238,0.10)",
+  LIME_SOFT_18: "rgba(34,211,238,0.18)",
+  LIME_BORDER_25: "rgba(34,211,238,0.30)",
+  LIME_DARK: "#0E7490",
+  LIME_DARK_SOFT_10: "rgba(14,116,144,0.10)",
+  LIME_DARK_SOFT_18: "rgba(14,116,144,0.18)",
+  LIME_DARK_BORDER_25: "rgba(14,116,144,0.30)",
+};
+
+type _PaletteName = "lime" | "cyan";
+let _palette: _PaletteName = "lime";
+const _palListeners = new Set<() => void>();
+function _setPalette(p: _PaletteName) {
+  _palette = p;
+  const v = p === "lime" ? _LIME_VALUES : _CYAN_VALUES;
+  LIME = v.LIME;
+  LIME_HOVER = v.LIME_HOVER;
+  LIME_PRESSED = v.LIME_PRESSED;
+  LIME_GLOW_35 = v.LIME_GLOW_35;
+  LIME_GLOW_50 = v.LIME_GLOW_50;
+  LIME_SOFT_10 = v.LIME_SOFT_10;
+  LIME_SOFT_18 = v.LIME_SOFT_18;
+  LIME_BORDER_25 = v.LIME_BORDER_25;
+  LIME_DARK = v.LIME_DARK;
+  LIME_DARK_SOFT_10 = v.LIME_DARK_SOFT_10;
+  LIME_DARK_SOFT_18 = v.LIME_DARK_SOFT_18;
+  LIME_DARK_BORDER_25 = v.LIME_DARK_BORDER_25;
+  _palListeners.forEach((l) => l());
+}
+function _subPalette(cb: () => void) {
+  _palListeners.add(cb);
+  return () => {
+    _palListeners.delete(cb);
+  };
+}
+function _getPalette(): _PaletteName {
+  return _palette;
+}
+function _getPaletteServer(): _PaletteName {
+  return "lime";
+}
+function usePalette(): _PaletteName {
+  return useSyncExternalStore(_subPalette, _getPalette, _getPaletteServer);
+}
+
+/**
+ * [TEST PALETTE] Floating switcher per confrontare LIME vs CYAN a colpo d'occhio.
+ * Si monta una volta nel Header. Mantiene la scelta in localStorage per
+ * sopravvivere agli scroll-triggered re-render. Rimuovere insieme al resto
+ * del blocco [TEST PALETTE].
+ */
+function BootcampV3PaletteSwitcher() {
+  const current = usePalette();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const saved = window.localStorage.getItem("bcv3-palette-test");
+      if (saved === "cyan" || saved === "lime") _setPalette(saved);
+    } catch {}
+  }, []);
+
+  const choose = (p: _PaletteName) => {
+    _setPalette(p);
+    try {
+      window.localStorage.setItem("bcv3-palette-test", p);
+    } catch {}
+  };
+
+  const swatch = (p: _PaletteName, hex: string, label: string) => {
+    const active = current === p;
+    return (
+      <button
+        key={p}
+        type="button"
+        onClick={() => choose(p)}
+        aria-label={`Palette ${label}`}
+        aria-pressed={active}
+        style={{
+          width: 28,
+          height: 28,
+          borderRadius: 999,
+          background: hex,
+          border: active ? "2px solid #fff" : "2px solid rgba(255,255,255,0.2)",
+          boxShadow: active ? `0 0 0 2px ${hex}` : "none",
+          cursor: "pointer",
+          padding: 0,
+          transition: "box-shadow 120ms ease, border-color 120ms ease",
+        }}
+      />
+    );
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 16,
+        right: 16,
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "8px 12px",
+        background: "rgba(15,15,26,0.85)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderRadius: 999,
+        fontFamily: "var(--font-sans, system-ui)",
+        fontSize: 11,
+        color: "rgba(255,255,255,0.7)",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        fontWeight: 600,
+        userSelect: "none",
+      }}
+    >
+      <span style={{ opacity: 0.65 }}>palette</span>
+      {swatch("lime", "#B5F03A", "lime")}
+      {swatch("cyan", "#22D3EE", "cyan")}
+    </div>
+  );
+}
 
 // ─── Primitives ───────────────────────────────────────────────────────────────
 
@@ -329,6 +488,7 @@ function onCtaClick(block: string) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3HeaderSection() {
+  usePalette(); // [TEST PALETTE]
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -365,6 +525,8 @@ export function BootcampV3HeaderSection() {
         priority
         style={{ height: logoHeight, width: "auto", display: "block" }}
       />
+      {/* [TEST PALETTE] Rimuovere insieme al blocco di test in cima al file */}
+      <BootcampV3PaletteSwitcher />
     </header>
   );
 }
@@ -374,6 +536,7 @@ export function BootcampV3HeaderSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3HeroSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   return (
     <section
@@ -564,6 +727,7 @@ function Sep() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3LevelGapSection() {
+  usePalette(); // [TEST PALETTE]
   return (
     <section
       style={{
@@ -770,6 +934,7 @@ function LevelCard({
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3WhyAloneSection() {
+  usePalette(); // [TEST PALETTE]
   const enemies = [
     {
       n: "01",
@@ -899,6 +1064,7 @@ export function BootcampV3WhyAloneSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3MethodSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   const steps = [
     {
@@ -1123,6 +1289,7 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3TransformationSection() {
+  usePalette(); // [TEST PALETTE]
   const before = [
     "Ogni prompt riparte da zero — non hai template né procedure standardizzate",
     "Usi Claude per task isolati, non per flussi di lavoro completi",
@@ -1324,6 +1491,7 @@ function NumberStatCream({ big, label }: { big: string; label: string }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3ProgramSection() {
+  usePalette(); // [TEST PALETTE]
   const sessions = [
     {
       n: "Sessione 1",
@@ -1575,6 +1743,7 @@ function FormatBullet({ icon, children }: { icon: string; children: React.ReactN
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3FoundersSection() {
+  usePalette(); // [TEST PALETTE]
   return (
     <section
       style={{
@@ -1876,6 +2045,7 @@ function ReviewCardCream({ initials, name, role, company, quote, rating }: Bootc
 }
 
 export function BootcampV3ResultsSection() {
+  usePalette(); // [TEST PALETTE]
   return (
     <section
       style={{
@@ -1989,6 +2159,7 @@ export function BootcampV3ResultsSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3AudienceSection() {
+  usePalette(); // [TEST PALETTE]
   const isFor = [
     { strong: "Sei un freelance o professionista", rest: " che vuole trasformare ore di lavoro esecutivo in output dell'AI — e fatturare di più sulle stesse ore" },
     { strong: "Sei un imprenditore o manager", rest: " che ha bisogno di capire davvero cosa può fare l'AI — non da un consulente esterno, ma in prima persona — per prendere decisioni di investimento consapevoli" },
@@ -2148,6 +2319,7 @@ function AudienceColumn({
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3ROISection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   return (
     <section
@@ -2339,6 +2511,7 @@ function RoiScenario({ tier, label, yearly, payback }: { tier: string; label: st
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3B2BSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   return (
     <section
@@ -2484,6 +2657,7 @@ export function BootcampV3B2BSection({ step }: SectionProps) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3OfferSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   const stack = [
     { title: "7 sessioni live da 2h con Matteo e Alex (i founder)", body: "14h totali × 250€/h. Non collaboratori, non tutor.", value: "3.500 EUR" },
@@ -2827,6 +3001,7 @@ function AnchorBox({ title, lines, highlight }: { title: string; lines: string[]
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3GuaranteeSection() {
+  usePalette(); // [TEST PALETTE]
   return (
     <section
       style={{
@@ -2926,6 +3101,7 @@ function GuaranteeCard({ icon, title, body, primary }: { icon: string; title: st
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3FAQSection() {
+  usePalette(); // [TEST PALETTE]
   const faqs = [
     {
       q: "Ho paura di iniziare e di mollare a metà.",
@@ -3046,6 +3222,8 @@ export function BootcampV3FAQSection() {
 
 function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
   const [open, setOpen] = useState(false);
+  const panelId = `bootcamp-v3-faq-panel-${index}`;
+  const buttonId = `bootcamp-v3-faq-button-${index}`;
   return (
     <div
       style={{
@@ -3058,6 +3236,9 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
     >
       <button
         type="button"
+        id={buttonId}
+        aria-expanded={open}
+        aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
         style={{
           width: "100%",
@@ -3098,7 +3279,12 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
         </span>
       </button>
       {open && (
-        <div style={{ padding: "0 24px 24px 60px", display: "grid", gap: 12 }}>
+        <div
+          id={panelId}
+          role="region"
+          aria-labelledby={buttonId}
+          style={{ padding: "0 24px 24px 60px", display: "grid", gap: 12 }}
+        >
           {a.map((p, idx) => (
             <p key={idx} style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
               {p}
@@ -3115,6 +3301,7 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3FinalCTASection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   return (
     <section
@@ -3206,6 +3393,7 @@ export function BootcampV3FinalCTASection({ step }: SectionProps) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3ThankYouSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const content = (step.content?.BootcampThankYou ?? {}) as BootcampThankYouContent;
 
   const whatsappHref = content.whatsappGroupUrl && content.whatsappGroupUrl.trim().length > 0 ? content.whatsappGroupUrl : "#";
@@ -3867,6 +4055,7 @@ function BcTyStepCard({
 }
 
 export function BootcampV3FooterSection() {
+  usePalette(); // [TEST PALETTE]
   const muted: React.CSSProperties = {
     fontFamily: "var(--font-body)",
     fontSize: 11,
@@ -3927,6 +4116,7 @@ export function BootcampV3FooterSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function BootcampV3StickyBarSection({ step }: SectionProps) {
+  usePalette(); // [TEST PALETTE]
   const pricing = readPricing(step);
   const [isMobile, setIsMobile] = useState(false);
   const [pastHero, setPastHero] = useState(false);
