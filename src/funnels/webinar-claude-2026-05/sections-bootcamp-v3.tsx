@@ -3189,6 +3189,7 @@ export function BootcampV3FinalCTASection({ step }: SectionProps) {
   const pricing = readPricing(step);
   return (
     <section
+      id="final-cta"
       style={{
         background: "var(--deep-space)",
         padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 32px)",
@@ -3999,8 +4000,10 @@ export function BootcampV3FooterSection() {
 
 export function BootcampV3StickyBarSection({ step }: SectionProps) {
   const pricing = readPricing(step);
+  const hasCallUrl = Boolean(pricing.callUrl && pricing.callUrl.trim().length > 0);
+  const targetHref = hasCallUrl ? pricing.callUrl : "#final-cta";
+
   const [isMobile, setIsMobile] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
   const [nearOffer, setNearOffer] = useState(false);
   const [nearFinal, setNearFinal] = useState(false);
 
@@ -4011,18 +4014,22 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
     mq.addEventListener("change", updateMobile);
 
     const onScroll = () => {
-      setPastHero(window.scrollY > window.innerHeight * 0.55);
-
       const offer = document.getElementById("offerta");
       if (offer) {
         const r = offer.getBoundingClientRect();
         setNearOffer(r.top < window.innerHeight * 0.90 && r.bottom > window.innerHeight * 0.10);
       }
 
-      const footer = document.querySelector("footer");
-      if (footer) {
-        const r = footer.getBoundingClientRect();
-        setNearFinal(r.top < window.innerHeight * 1.1);
+      const finalCta = document.getElementById("final-cta");
+      if (finalCta) {
+        const r = finalCta.getBoundingClientRect();
+        setNearFinal(r.top < window.innerHeight * 0.90 && r.bottom > window.innerHeight * 0.10);
+      } else {
+        const footer = document.querySelector("footer");
+        if (footer) {
+          const r = footer.getBoundingClientRect();
+          setNearFinal(r.top < window.innerHeight * 1.1);
+        }
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -4035,11 +4042,14 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
   }, []);
 
   const onClick = () => {
-    trackEvent("bootcamp_sticky_click", {});
-    scrollToId("offerta");
+    trackEvent("bootcamp_sticky_click", { has_call_url: hasCallUrl });
+    if (!hasCallUrl) {
+      scrollToId("final-cta");
+    }
   };
 
-  const show = isMobile && pastHero && !nearOffer && !nearFinal;
+  // Sticky bar mobile sempre visibile dall'apertura, finche non si arriva all'offerta o al final-cta
+  const show = isMobile && !nearOffer && !nearFinal;
 
   return (
     <div
@@ -4061,8 +4071,10 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
       }}
       aria-hidden={!show}
     >
-      <button
-        type="button"
+      <a
+        href={targetHref}
+        target={hasCallUrl ? "_blank" : undefined}
+        rel={hasCallUrl ? "noreferrer noopener" : undefined}
         onClick={onClick}
         style={{
           width: "100%",
@@ -4081,10 +4093,11 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
           gap: 8,
           boxSizing: "border-box",
           boxShadow: `0 4px 18px ${LIME_GLOW_35}`,
+          textDecoration: "none",
         }}
       >
-        Prenota la call · {pricing.currentPrice.toLocaleString("it-IT")}€ <span style={{ fontSize: 18 }}>→</span>
-      </button>
+        Prenota la call di selezione <span style={{ fontSize: 18 }}>→</span>
+      </a>
     </div>
   );
 }

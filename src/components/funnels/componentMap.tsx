@@ -409,7 +409,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampV3FAQ: () => <BootcampV3FAQSection />,
   BootcampV3FinalCTA: ({ accentColor, step }) => <BootcampV3FinalCTASection accentColor={accentColor} step={step} />,
   BootcampV3Footer: () => <BootcampV3FooterSection />,
-  BootcampV3StickyBar: ({ accentColor, step }) => <BootcampV3StickyBarSection accentColor={accentColor} step={step} />,
+  BootcampV3StickyBar: () => <BootcampV3StickyBarSection />,
   BootcampV3ThankYou: ({ accentColor, step }) =>
     step.content.BootcampThankYou ? <BootcampV3ThankYouSection accentColor={accentColor} step={step} /> : null,
 };
