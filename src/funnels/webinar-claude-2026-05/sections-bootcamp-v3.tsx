@@ -989,7 +989,7 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
             textAlign: "center",
           }}
         >
-          Tre fasi. Una sequenza obbligata. Non puoi saltare la seconda per arrivare alla terza, e quasi tutti si fermano esattamente lì.
+          <strong style={{ color: CREAM_INK }}>Tre fasi. Una sequenza obbligata.</strong> Non puoi saltare la seconda per arrivare alla terza, e <strong style={{ color: CREAM_INK }}>quasi tutti si fermano esattamente lì</strong>.
         </p>
 
         {/* 3 step (cream cards) */}
@@ -1065,19 +1065,19 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
           <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 22, color: CREAM_INK, margin: "0 0 16px" }}>
             Perché tra V e A quasi tutti si fermano.
           </h3>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
-            Non è un problema di bravura. È strutturale.
+          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+            Non è un problema di bravura. <strong style={{ color: CREAM_INK, opacity: 1 }}>È strutturale.</strong>
           </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
-            La transizione da Validato ad Attivato richiede una cosa che da soli non puoi darti: feedback esterno sul tuo standard.
+          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+            La transizione da Validato ad Attivato richiede una cosa che da soli non puoi darti: <strong style={{ color: CREAM_INK, opacity: 1 }}>feedback esterno sul tuo standard.</strong>
           </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
-            Sai cosa vuoi dall&apos;output, ma non sai se il sistema lo produce davvero al livello che serve, perché sei tu che lo giudichi e sei tu che lo correggi. È un circolo chiuso. Il tuo standard è invisibile a te stesso mentre lo applichi.
+          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+            Sai cosa vuoi dall&apos;output, ma non sai se il sistema lo produce davvero al livello che serve, perché sei tu che lo giudichi e sei tu che lo correggi. È un circolo chiuso. <strong style={{ color: CREAM_INK, opacity: 1 }}>Il tuo standard è invisibile a te stesso mentre lo applichi.</strong>
           </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
-            Hai bisogno di qualcuno che guardi il tuo sistema dall&apos;esterno, ti dica dove il tuo standard è troppo basso o troppo alto, e ti mostri esattamente dove lasciare andare e dove tenere il controllo.
+          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+            Hai bisogno di <strong style={{ color: CREAM_INK, opacity: 1 }}>qualcuno che guardi il tuo sistema dall&apos;esterno</strong>, ti dica dove il tuo standard è troppo basso o troppo alto, e ti mostri esattamente dove lasciare andare e dove tenere il controllo.
           </p>
-          <p style={{ margin: "0 0 12px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, opacity: 0.92 }}>
+          <p style={{ margin: "0 0 14px", fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, fontWeight: 600 }}>
             Nessun corso pre-registrato te lo può dare. Nessun tutorial. Nessuna AI che si auto-valuta.
           </p>
           <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.65, color: CREAM_INK, fontWeight: 700 }}>
@@ -1425,14 +1425,14 @@ export function BootcampV3ProgramSection() {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: 20,
+              fontSize: 22,
               color: CREAM_INK,
-              margin: "0 0 18px",
+              margin: "0 0 20px",
             }}
           >
             Formato che rispetta il tuo tempo:
           </h3>
-          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 12 }}>
             <FormatBullet icon="📅">Bisettimanale (1 settimana on, 1 settimana off)</FormatBullet>
             <FormatBullet icon="⏱">7 sessioni live da 2h = <strong style={{ color: LIME_DARK }}>14h totali in ~13 settimane</strong></FormatBullet>
             <FormatBullet icon="🎥">Replay permanenti, rivedi ogni sessione quando vuoi, per sempre</FormatBullet>
@@ -1441,15 +1441,15 @@ export function BootcampV3ProgramSection() {
           </ul>
           <p
             style={{
-              margin: "20px 0 0",
+              margin: "22px 0 0",
               fontFamily: "var(--font-italic)",
               fontStyle: "italic",
-              fontSize: 17,
+              fontSize: 18,
               color: CREAM_INK_SOFT,
-              lineHeight: 1.55,
+              lineHeight: 1.6,
             }}
           >
-            Il formato bisettimanale non è una scelta commerciale. È la condizione perché l&apos;implementazione funzioni. Hai bisogno di tempo tra una sessione e l&apos;altra per applicare, sbagliare, tornare con le domande giuste.
+            Il formato bisettimanale non è una scelta commerciale. <strong style={{ color: CREAM_INK, fontStyle: "normal" }}>È la condizione perché l&apos;implementazione funzioni.</strong> Hai bisogno di tempo tra una sessione e l&apos;altra per applicare, sbagliare, tornare con le domande giuste.
           </p>
         </div>
 
@@ -1564,8 +1564,8 @@ export function BootcampV3ProgramSection() {
 
 function FormatBullet({ icon, children }: { icon: string; children: React.ReactNode }) {
   return (
-    <li style={{ display: "flex", gap: 12, fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: CREAM_INK }}>
-      <span style={{ flexShrink: 0, fontSize: 18 }}>{icon}</span>
+    <li style={{ display: "flex", gap: 14, fontFamily: "var(--font-body)", fontSize: 18, lineHeight: 1.6, color: CREAM_INK }}>
+      <span style={{ flexShrink: 0, fontSize: 20 }}>{icon}</span>
       <span>{children}</span>
     </li>
   );
