@@ -22,8 +22,8 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
       robots: { index: false, follow: false, nocache: true },
     };
   }
-  // Claude Unlocked v1/v2 — OG image dedicata (cover del corso)
-  if ((params.slug === "claude-unlocked-v1" || params.slug === "claude-unlocked-v2") && step?.id === "sales") {
+  // Claude Unlocked — OG image dedicata (cover del corso)
+  if (params.slug === "claude-unlocked" && step?.id === "sales") {
     const title = step.title;
     const description =
       "Il corso Claude Morfeus per usare Claude come uno strumento di lavoro reale. 10 moduli, sessioni live, garanzia 14 giorni.";

@@ -67,6 +67,49 @@ body {
 }
 
 /* ================================
+   Accessibility: skip link
+   WCAG 2.4.1 — Bypass Blocks
+   Hidden until keyboard-focused, then visible top-left.
+   ================================ */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  z-index: 9999;
+  transform: translateY(-110%);
+  transition: transform 0.15s ease-out;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: 2px;
+}
+
+/* ================================
+   Accessibility: prefers-reduced-motion
+   WCAG 2.3.1 + 2.2.2 — utenti sensibili al moto / vestibolari
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
    Selection
    ================================ */
 ::selection {

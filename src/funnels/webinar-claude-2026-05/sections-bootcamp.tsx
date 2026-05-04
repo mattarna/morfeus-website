@@ -2977,6 +2977,8 @@ export function BootcampFAQSection() {
 
 function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
   const [open, setOpen] = useState(false);
+  const panelId = `bootcamp-faq-panel-${index}`;
+  const buttonId = `bootcamp-faq-button-${index}`;
   return (
     <div
       style={{
@@ -2989,6 +2991,9 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
     >
       <button
         type="button"
+        id={buttonId}
+        aria-expanded={open}
+        aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
         style={{
           width: "100%",
@@ -3029,7 +3034,12 @@ function FaqItem({ index, q, a }: { index: number; q: string; a: string[] }) {
         </span>
       </button>
       {open && (
-        <div style={{ padding: "0 24px 24px 60px", display: "grid", gap: 12 }}>
+        <div
+          id={panelId}
+          role="region"
+          aria-labelledby={buttonId}
+          style={{ padding: "0 24px 24px 60px", display: "grid", gap: 12 }}
+        >
           {a.map((p, idx) => (
             <p key={idx} style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.65, color: "var(--ghost)", opacity: 0.9 }}>
               {p}

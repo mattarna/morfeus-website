@@ -197,6 +197,13 @@ function StyledInput({
   placeholder,
   onEnter,
   autoFocus,
+  id,
+  name,
+  autoComplete,
+  ariaLabel,
+  ariaDescribedBy,
+  ariaInvalid,
+  required,
 }: {
   type?: string;
   value: string;
@@ -204,6 +211,13 @@ function StyledInput({
   placeholder?: string;
   onEnter?: () => void;
   autoFocus?: boolean;
+  id?: string;
+  name?: string;
+  autoComplete?: string;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
+  ariaInvalid?: boolean;
+  required?: boolean;
 }) {
   const [focus, setFocus] = useState(false);
   return (
@@ -211,6 +225,13 @@ function StyledInput({
       type={type}
       value={value}
       autoFocus={autoFocus}
+      id={id}
+      name={name}
+      autoComplete={autoComplete}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedBy}
+      aria-invalid={ariaInvalid}
+      required={required}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       onFocus={() => setFocus(true)}
@@ -228,8 +249,8 @@ function StyledInput({
         outline: "none",
         width: "100%",
         boxSizing: "border-box",
-        transition: "border-color .2s, background .2s",
-        boxShadow: focus ? "0 0 0 4px rgba(235,122,46,0.08)" : "none",
+        transition: "border-color .2s, background .2s, box-shadow .2s",
+        boxShadow: focus ? "0 0 0 3px rgba(235,122,46,0.45)" : "none",
       }}
     />
   );
@@ -240,17 +261,32 @@ function StyledSelect({
   onChange,
   options,
   placeholder,
+  id,
+  name,
+  ariaLabel,
+  ariaDescribedBy,
+  required,
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[];
   placeholder: string;
+  id?: string;
+  name?: string;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
+  required?: boolean;
 }) {
   const [focus, setFocus] = useState(false);
   return (
     <div style={{ position: "relative", width: "100%" }}>
       <select
         value={value}
+        id={id}
+        name={name}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedBy}
+        required={required}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
@@ -269,7 +305,8 @@ function StyledSelect({
           appearance: "none",
           WebkitAppearance: "none",
           cursor: "pointer",
-          transition: "border-color .2s, background .2s",
+          transition: "border-color .2s, background .2s, box-shadow .2s",
+          boxShadow: focus ? "0 0 0 3px rgba(235,122,46,0.45)" : "none",
         }}
       >
         <option value="" disabled>{placeholder}</option>
@@ -555,6 +592,13 @@ function OptinFormTwoStep({
         <div style={{ flex: 1, minWidth: 220 }}>
           <StyledInput
             type="email"
+            id="optin-email"
+            name="email"
+            autoComplete="email"
+            ariaLabel="La tua email"
+            ariaDescribedBy={error ? "optin-error" : undefined}
+            ariaInvalid={Boolean(error)}
+            required
             value={email}
             onChange={setEmail}
             placeholder="La tua email"
@@ -576,6 +620,7 @@ function OptinFormTwoStep({
           transition: "max-height .45s cubic-bezier(.4,0,.2,1), margin-top .45s cubic-bezier(.4,0,.2,1)",
           marginTop: expanded ? 16 : 0,
         }}
+        aria-hidden={!expanded}
       >
         <div
           ref={expansionRef}
@@ -589,6 +634,11 @@ function OptinFormTwoStep({
           }}
         >
           <StyledInput
+            id="optin-name"
+            name="name"
+            autoComplete="given-name"
+            ariaLabel="Il tuo nome"
+            required
             value={name}
             onChange={setName}
             placeholder="Il tuo nome"
@@ -596,12 +646,17 @@ function OptinFormTwoStep({
             autoFocus={expanded}
           />
           <StyledSelect
+            id="optin-role"
+            name="role"
+            ariaLabel="Qual è il tuo ruolo?"
+            required
             value={role}
             onChange={setRole}
             placeholder="Qual è il tuo ruolo?"
             options={["Freelance", "Dipendente", "Imprenditore / Founder", "Manager", "Altro"]}
           />
           <label
+            htmlFor="optin-privacy"
             style={{
               display: "flex",
               alignItems: "flex-start",
@@ -618,6 +673,9 @@ function OptinFormTwoStep({
           >
             <input
               type="checkbox"
+              id="optin-privacy"
+              name="privacy"
+              required
               checked={privacy}
               onChange={(e) => setPrivacy(e.target.checked)}
               style={{ width: 18, height: 18, marginTop: 2, accentColor: "var(--orange)", cursor: "pointer", flexShrink: 0 }}
@@ -637,7 +695,12 @@ function OptinFormTwoStep({
       </div>
 
       {error && (
-        <div style={{ fontSize: 13, color: "#FF8a6a", marginTop: 12, fontWeight: 500, fontFamily: "var(--font-body)" }}>
+        <div
+          id="optin-error"
+          role="alert"
+          aria-live="polite"
+          style={{ fontSize: 13, color: "#FF8a6a", marginTop: 12, fontWeight: 500, fontFamily: "var(--font-body)" }}
+        >
           {error}
         </div>
       )}
