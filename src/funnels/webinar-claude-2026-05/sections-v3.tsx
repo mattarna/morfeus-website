@@ -3679,7 +3679,13 @@ export function SalesV3HeroSection({ step }: SectionProps) {
       >
         {current.activeDeadlineIso && current.stage === "earlyBird" && (
           <>
-            Prezzo sale a <strong style={{ color: "var(--orange)" }}>297€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            Prezzo sale a <strong style={{ color: "var(--orange)" }}>{pricing.standardPrice}€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
+            <br />
+          </>
+        )}
+        {current.activeDeadlineIso && current.stage === "standard" && (
+          <>
+            Prezzo sale a <strong style={{ color: "var(--orange)" }}>{pricing.fullPrice}€</strong> tra <strong style={{ color: "var(--orange)" }}><InlineTimer targetIso={current.activeDeadlineIso} /></strong>
             <br />
           </>
         )}
@@ -6928,7 +6934,7 @@ export function SalesV3OfferSection({ step }: SectionProps) {
             A 25€/ora: <strong style={{ color: "var(--orange)" }}>500-800€</strong> al mese. Ogni mese. Senza che te ne accorga.
           </div>
           <div style={{ fontFamily: "var(--font-body)", fontSize: 18, color: "#fff", marginTop: 6, lineHeight: 1.6 }}>
-            Il corso costa <strong style={{ color: "#fff" }}>147€</strong>. Si ripaga la prima settimana.
+            Il corso costa <strong style={{ color: "#fff" }}>{current.price}€</strong>. Si ripaga la prima settimana.
           </div>
         </div>
       </div>
