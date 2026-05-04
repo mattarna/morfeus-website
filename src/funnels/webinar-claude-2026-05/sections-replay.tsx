@@ -27,6 +27,98 @@ function getCorsoStage(now: number, earlyBirdMs: number, standardMs: number): Co
   return "full";
 }
 
+// ─── Inline countdown (in-card) ───────────────────────────────────────────────
+
+function InlineCountdown({
+  targetMs,
+  now,
+  mounted,
+  color,
+}: {
+  targetMs: number;
+  now: number;
+  mounted: boolean;
+  color: string;
+}) {
+  const diff = mounted ? Math.max(0, targetMs - now) : 0;
+  if (mounted && diff <= 0) return null;
+
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  const cells: { n: number; label: string }[] = [
+    { n: days, label: "GG" },
+    { n: hours, label: "HH" },
+    { n: mins, label: "MIN" },
+    { n: secs, label: "SEC" },
+  ];
+
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+      {cells.map((c, i) => (
+        <div
+          key={c.label}
+          style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              minWidth: 30,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: 26,
+                lineHeight: 1,
+                color,
+                letterSpacing: "-0.02em",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {pad(c.n)}
+            </span>
+            <span
+              style={{
+                fontSize: 9,
+                fontWeight: 700,
+                color: "var(--muted)",
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                marginTop: 4,
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              {c.label}
+            </span>
+          </div>
+          {i < cells.length - 1 && (
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 500,
+                fontSize: 22,
+                color: "rgba(255,255,255,0.18)",
+                lineHeight: 1,
+                marginTop: -2,
+              }}
+            >
+              :
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Sticky Header with countdown ─────────────────────────────────────────────
 
 export function WebinarReplayHeaderSection({ step }: SectionProps) {
@@ -408,6 +500,10 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
   const corso = content.corso;
   const bootcamp = content.bootcamp;
 
+  const corsoTimerTargetMs =
+    stage === "earlyBird" ? earlyBirdMs : stage === "standard" ? standardMs : 0;
+  const bootcampDeadlineMs = new Date(bootcamp.earlyBirdDeadlineIso).getTime();
+
   const corsoActivePrice =
     stage === "earlyBird" ? corso.earlyBirdPrice : stage === "standard" ? corso.standardPrice : corso.fullPrice;
   const corsoCheckoutUrl =
@@ -543,6 +639,18 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
           >
             {corsoSubtext}
           </div>
+
+          {/* Countdown corso */}
+          {corsoTimerTargetMs > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <InlineCountdown
+                targetMs={corsoTimerTargetMs}
+                now={now}
+                mounted={mounted}
+                color="var(--orange)"
+              />
+            </div>
+          )}
 
           {/* Price ladder */}
           <div
@@ -733,53 +841,36 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
             AI Champion
           </h2>
 
-          {/* Prezzo early bird */}
-          <div
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(44px, 8vw, 56px)",
-              lineHeight: 1,
-              color: "var(--lime)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            {fmtPrice(bootcamp.earlyBirdPrice)} EUR
+          {/* Countdown early bird */}
+          <div style={{ marginTop: 4 }}>
+            <InlineCountdown
+              targetMs={bootcampDeadlineMs}
+              now={now}
+              mounted={mounted}
+              color="var(--lime)"
+            />
           </div>
           <div
             style={{
               fontFamily: "var(--font-body)",
               fontSize: 14,
               color: "rgba(181,240,58,0.7)",
-              marginTop: 8,
+              marginTop: 14,
             }}
           >
             Early bird · prenota la call entro 48h
           </div>
 
-          {/* Prezzo full */}
+          {/* Info pagamento */}
           <div
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 15,
+              fontSize: 14,
               color: "var(--muted)",
               marginTop: 14,
             }}
           >
-            Poi:{" "}
-            <span style={{ textDecoration: "line-through" }}>{fmtPrice(bootcamp.fullPrice)} EUR</span>
-          </div>
-
-          {/* Opzioni rate */}
-          <div
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 13,
-              color: "var(--muted)",
-              marginTop: 6,
-            }}
-          >
-            Oppure: 2 × 680 EUR · 3 × 460 EUR
+            Pagamento in un&apos;unica soluzione o rateizzabile
           </div>
 
           {/* Benefit list */}
@@ -900,7 +991,7 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
               textAlign: "center",
             }}
           >
-            Garanzia di trasferimento: se non riesci a completare il bootcamp, accedi alla prossima cohort gratis.
+            Garanzia di trasferimento: se non riesci a completare il bootcamp, accedi alla prossima edizione gratis.
           </div>
         </article>
       </div>

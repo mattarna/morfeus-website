@@ -327,9 +327,7 @@ export interface WebinarReplayCardsContent {
     salesPageUrl: string;
   };
   bootcamp: {
-    earlyBirdPrice: number;
-    fullPrice: number;
-    currency: "EUR";
+    earlyBirdDeadlineIso: string;
     callUrl: string;
     salesPageUrl: string;
   };
