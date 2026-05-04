@@ -770,7 +770,8 @@ function LevelCard({
 // SECTION 03 — PERCHÉ DA SOLO NON FUNZIONA
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampV3WhyAloneSection() {
+export function BootcampV3WhyAloneSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   const enemies = [
     {
       n: "01",
@@ -890,6 +891,15 @@ export function BootcampV3WhyAloneSection() {
         >
           Nessuno di questi approcci costruisce un sistema. Te lo fanno usare, o te lo costruiscono. Non è la stessa cosa.
         </p>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("why-alone")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -1123,7 +1133,8 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
 // SECTION 05 — LA TRASFORMAZIONE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampV3TransformationSection() {
+export function BootcampV3TransformationSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   const before = [
     "Ogni prompt riparte da zero — non hai template né procedure standardizzate",
     "Usi Claude per task isolati, non per flussi di lavoro completi",
@@ -1216,6 +1227,15 @@ export function BootcampV3TransformationSection() {
           <NumberStat big="5–8h/sett." label="risparmiate in media dopo il bootcamp" />
           <NumberStat big="~3 mesi" label="payback period (a 25 EUR/h)" />
           <NumberStat big="4x" label="ROI anno 1 — conservativo" />
+        </div>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("transformation")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
+          </p>
         </div>
       </div>
     </section>
@@ -1324,7 +1344,8 @@ function NumberStatCream({ big, label }: { big: string; label: string }) {
 // SECTION 06 — LE 7 SESSIONI + FORMATO (Program)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampV3ProgramSection() {
+export function BootcampV3ProgramSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   const sessions = [
     {
       n: "Sessione 1",
@@ -1555,6 +1576,15 @@ export function BootcampV3ProgramSection() {
           <p style={{ margin: 0, fontFamily: "var(--font-body)", fontSize: 18, color: CREAM_INK, lineHeight: 1.6 }}>
             Sì, per sempre. Rivedi ogni sessione quando vuoi. La maggior parte dei competitor non li dà, o li toglie dopo 90 giorni.{" "}
             <strong style={{ color: LIME_DARK }}>Noi no.</strong>
+          </p>
+        </div>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("program")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: CREAM_INK_SOFT, margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
           </p>
         </div>
       </div>
@@ -1876,7 +1906,8 @@ function ReviewCardCream({ initials, name, role, company, quote, rating }: Bootc
   );
 }
 
-export function BootcampV3ResultsSection() {
+export function BootcampV3ResultsSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   return (
     <section
       style={{
@@ -1980,6 +2011,15 @@ export function BootcampV3ResultsSection() {
             Il metodo M-V-A funziona perché si applica al tuo lavoro reale, non a template generici.
           </p>
         </div>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("results")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: CREAM_INK_SOFT, margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -1989,7 +2029,8 @@ export function BootcampV3ResultsSection() {
 // SECTION 09 — PER CHI È / PER CHI NON È (Audience)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampV3AudienceSection() {
+export function BootcampV3AudienceSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   const isFor = [
     { strong: "Sei un freelance o professionista", rest: " che vuole trasformare ore di lavoro esecutivo in output dell'AI — e fatturare di più sulle stesse ore" },
     { strong: "Sei un imprenditore o manager", rest: " che ha bisogno di capire davvero cosa può fare l'AI — non da un consulente esterno, ma in prima persona — per prendere decisioni di investimento consapevoli" },
@@ -2067,6 +2108,15 @@ export function BootcampV3AudienceSection() {
             }}
           >
             &ldquo;La call di selezione non è una formalità. Incontriamo ogni persona prima di confermare il posto: un bootcamp pieno di persone sbagliate non funziona per nessuno.&rdquo;
+          </p>
+        </div>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("audience")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--muted)", margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
           </p>
         </div>
       </div>
@@ -2613,7 +2663,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
             color: "var(--ghost)",
           }}
         >
-          Valore totale percepito dello stack:{" "}
+          Valore totale del bootcamp:{" "}
           <strong style={{ color: LIME, fontFamily: "var(--font-display)", fontSize: 22 }}>
             {pricing.stackValue.toLocaleString("it-IT")} EUR
           </strong>
@@ -2827,7 +2877,8 @@ function AnchorBox({ title, lines, highlight }: { title: string; lines: string[]
 // SECTION 12 — GARANZIA
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export function BootcampV3GuaranteeSection() {
+export function BootcampV3GuaranteeSection({ step }: SectionProps) {
+  const pricing = readPricing(step);
   return (
     <section
       style={{
@@ -2892,6 +2943,15 @@ export function BootcampV3GuaranteeSection() {
         >
           Abbiamo ridotto i posti da 40+ a 25 partecipanti proprio per questo: con meno persone possiamo garantire supervisione reale. Non è un claim di marketing. È la ragione per cui il numero esiste.
         </p>
+
+        <div className={styles.bootcampCtaDesktopOnly}>
+          <PrimaryButton size="lg" href={callHref(pricing)} onClick={() => onCtaClick("guarantee")}>
+            Prenota la call di selezione
+          </PrimaryButton>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: CREAM_INK_SOFT, margin: 0 }}>
+            25 posti · Call gratuita · Zero impegno fino alla decisione
+          </p>
+        </div>
       </div>
     </section>
   );
