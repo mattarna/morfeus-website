@@ -470,6 +470,39 @@ export function WebinarTeamHubSection() {
               </tr>
               <tr>
                 <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
+                <Td label="Pagina">
+                  <strong style={{ color: "#fff" }}>Preview · Stage Early Bird (147€)</strong>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 4, fontFamily: "var(--font-italic)", fontStyle: "italic" }}>
+                    Forza la pagina come fosse stage 1 — utile in qualunque momento
+                  </div>
+                </Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked?stage=earlyBird" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
+                <Td label="Pagina">
+                  <strong style={{ color: "#fff" }}>Preview · Stage Standard (297€)</strong>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 4, fontFamily: "var(--font-italic)", fontStyle: "italic" }}>
+                    Vedi la pagina come sarà dall&apos;8 al 12 maggio 23:59
+                  </div>
+                </Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked?stage=standard" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
+                <Td label="Pagina">
+                  <strong style={{ color: "#fff" }}>Preview · Stage Full (397€)</strong>
+                  <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 4, fontFamily: "var(--font-italic)", fontStyle: "italic" }}>
+                    Vedi la pagina come sarà dal 13 maggio in poi (evergreen)
+                  </div>
+                </Td>
+                <Td label="URL"><CopyableLink href="https://www.morfeushub.com/claude-unlocked?stage=full" /></Td>
+                <Td label="Stato"><StatusBadge status="live" /></Td>
+              </tr>
+              <tr>
+                <Td label="Tag"><Pill tone="corso" size="sm">Corso</Pill></Td>
                 <Td label="Pagina"><strong style={{ color: "#fff" }}>Paywall Tier 1 — 147€</strong></Td>
                 <Td label="URL"><CopyableLink href="https://morfeus-ai-playground.circle.so/checkout/claude-course-tier-1" /></Td>
                 <Td label="Stato"><StatusBadge status="live" /></Td>
