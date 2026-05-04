@@ -2962,10 +2962,20 @@ interface CurrentPricing {
 function useCurrentPricing(pricing: SalesV3PricingContent): CurrentPricing {
   const [now, setNow] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
+  const [override, setOverride] = useState<PricingStage | null>(null);
 
   useEffect(() => {
     setMounted(true);
     setNow(Date.now());
+
+    // Preview mode: ?stage=earlyBird|standard|full forza lo stage scelto
+    // (utile per revisionare le versioni successive prima dello scadere del timer)
+    const params = new URLSearchParams(window.location.search);
+    const stage = params.get("stage");
+    if (stage === "earlyBird" || stage === "standard" || stage === "full") {
+      setOverride(stage);
+    }
+
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
@@ -2987,6 +2997,32 @@ function useCurrentPricing(pricing: SalesV3PricingContent): CurrentPricing {
       activeDeadlineIso: pricing.earlyBirdDeadlineIso,
     };
   }
+  // Override via query param (preview)
+  if (override === "earlyBird") {
+    return {
+      stage: "earlyBird",
+      price: pricing.earlyBirdPrice,
+      checkoutUrl: pricing.checkoutUrlEarlyBird,
+      activeDeadlineIso: pricing.earlyBirdDeadlineIso,
+    };
+  }
+  if (override === "standard") {
+    return {
+      stage: "standard",
+      price: pricing.standardPrice,
+      checkoutUrl: pricing.checkoutUrlStandard,
+      activeDeadlineIso: pricing.standardDeadlineIso,
+    };
+  }
+  if (override === "full") {
+    return {
+      stage: "full",
+      price: pricing.fullPrice,
+      checkoutUrl: pricing.checkoutUrlFull,
+      activeDeadlineIso: null,
+    };
+  }
+  // Logica normale basata sulle deadline
   if (now < earlyDeadline) {
     return {
       stage: "earlyBird",
@@ -3349,6 +3385,7 @@ export function SalesV3HeaderSection() {
   return (
     <>
       <SalesV3PageVariantTracker />
+      <SalesV3PreviewStageBanner />
       <header
         className={styles.header}
         style={{
@@ -3373,6 +3410,57 @@ export function SalesV3HeaderSection() {
         />
       </header>
     </>
+  );
+}
+
+/**
+ * Banner sticky-top che si attiva solo se URL ha ?stage=earlyBird|standard|full.
+ * Serve a chi revisiona le versioni successive di pricing prima dello scadere
+ * del timer reale. Non visibile in produzione "normale".
+ */
+function SalesV3PreviewStageBanner() {
+  const [stage, setStage] = useState<PricingStage | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get("stage");
+    if (s === "earlyBird" || s === "standard" || s === "full") {
+      setStage(s);
+    }
+  }, []);
+
+  if (!stage) return null;
+
+  const label =
+    stage === "earlyBird" ? "EARLY BIRD · 147€"
+    : stage === "standard" ? "STANDARD · 297€"
+    : "FULL · 397€";
+
+  return (
+    <div
+      role="status"
+      style={{
+        position: "sticky",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 300,
+        padding: "8px 14px",
+        background: "rgba(235,122,46,0.95)",
+        color: "#0B0B0C",
+        fontFamily: "var(--font-body)",
+        fontSize: 12,
+        fontWeight: 700,
+        letterSpacing: "0.10em",
+        textTransform: "uppercase",
+        textAlign: "center",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.25)",
+        borderBottom: "1px solid rgba(0,0,0,0.15)",
+      }}
+    >
+      🔍 Preview stage: {label} · cambia con ?stage=earlyBird|standard|full
+    </div>
   );
 }
 
