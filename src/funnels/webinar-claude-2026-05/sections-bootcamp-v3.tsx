@@ -384,7 +384,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
         position: "relative",
         zIndex: 1,
         textAlign: "center",
-        padding: "clamp(40px, 8vw, 80px) clamp(20px, 5vw, 32px) clamp(40px, 6vw, 60px)",
+        padding: "clamp(44px, 9vw, 80px) clamp(20px, 5vw, 32px) clamp(44px, 8vw, 60px)",
       }}
     >
       <div
@@ -411,7 +411,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
         style={{
           fontFamily: "var(--font-display)",
           fontWeight: 600,
-          fontSize: "clamp(40px, 7.5vw, 68px)",
+          fontSize: "clamp(44px, 8.5vw, 68px)",
           lineHeight: 1.04,
           letterSpacing: "-0.025em",
           color: "#fff",
@@ -583,7 +583,7 @@ export function BootcampV3LevelGapSection() {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -958,7 +958,7 @@ export function BootcampV3MethodSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -1168,7 +1168,7 @@ export function BootcampV3TransformationSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: "#fff",
@@ -1317,7 +1317,7 @@ function BeforeAfterColumn({
 function NumberStat({ big, label }: { big: string; label: string }) {
   return (
     <div>
-      <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(32px, 5.8vw, 38px)", color: LIME, lineHeight: 1.1 }}>
+      <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(34px, 6.5vw, 38px)", color: LIME, lineHeight: 1.1 }}>
         {big}
       </div>
       <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 19, color: "var(--ghost)", opacity: 0.85 }}>
@@ -1330,7 +1330,7 @@ function NumberStat({ big, label }: { big: string; label: string }) {
 function NumberStatCream({ big, label }: { big: string; label: string }) {
   return (
     <div>
-      <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(32px, 5.8vw, 38px)", color: LIME_DARK, lineHeight: 1.1 }}>
+      <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(34px, 6.5vw, 38px)", color: LIME_DARK, lineHeight: 1.1 }}>
         {big}
       </div>
       <p style={{ margin: "8px 0 0", fontFamily: "var(--font-body)", fontSize: 19, color: CREAM_INK, opacity: 0.85 }}>
@@ -1401,7 +1401,7 @@ export function BootcampV3ProgramSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -1622,7 +1622,7 @@ export function BootcampV3FoundersSection() {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: "#fff",
@@ -1925,7 +1925,7 @@ export function BootcampV3ResultsSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -2064,7 +2064,7 @@ export function BootcampV3AudienceSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: "#fff",
@@ -2217,7 +2217,7 @@ export function BootcampV3ROISection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(36px, 6.5vw, 56px)",
+            fontSize: "clamp(40px, 7.5vw, 56px)",
             lineHeight: 1.04,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -2390,7 +2390,7 @@ export function BootcampV3B2BSection({ step }: SectionProps) {
   return (
     <section
       style={{
-        padding: "clamp(48px, 8vw, 80px) clamp(20px, 5vw, 32px)",
+        padding: "clamp(52px, 9vw, 80px) clamp(20px, 5vw, 32px)",
         background: "var(--night)",
       }}
     >
@@ -2402,7 +2402,7 @@ export function BootcampV3B2BSection({ step }: SectionProps) {
           background: "linear-gradient(135deg, rgba(101,88,212,0.18) 0%, rgba(123,104,238,0.10) 50%, rgba(15,14,26,0.90) 100%)",
           border: `1px solid ${VIOLET_BORDER}`,
           borderRadius: 24,
-          padding: "clamp(36px, 5vw, 56px) clamp(26px, 4vw, 52px)",
+          padding: "clamp(40px, 7vw, 56px) clamp(30px, 6vw, 52px)",
           overflow: "hidden",
           boxShadow: "0 0 60px rgba(123,104,238,0.15), 0 24px 60px rgba(0,0,0,0.45)",
         }}
@@ -2560,7 +2560,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: "#fff",
@@ -2671,7 +2671,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
             background: "var(--dusk)",
             border: `2px solid ${LIME}`,
             borderRadius: 18,
-            padding: "clamp(28px, 5vw, 44px)",
+            padding: "clamp(32px, 6vw, 44px)",
             textAlign: "center",
             boxShadow: `0 16px 60px ${LIME_SOFT_18}`,
           }}
@@ -2707,7 +2707,7 @@ export function BootcampV3OfferSection({ step }: SectionProps) {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 700,
-                fontSize: "clamp(48px, 7vw, 72px)",
+                fontSize: "clamp(52px, 9vw, 72px)",
                 color: "#fff",
                 lineHeight: 1,
                 letterSpacing: "-0.025em",
@@ -2892,7 +2892,7 @@ export function BootcampV3GuaranteeSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: CREAM_INK,
@@ -3076,7 +3076,7 @@ export function BootcampV3FAQSection() {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(34px, 6.5vw, 52px)",
+            fontSize: "clamp(38px, 7.5vw, 52px)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: "#fff",
@@ -3200,7 +3200,7 @@ export function BootcampV3FinalCTASection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(38px, 6.8vw, 60px)",
+            fontSize: "clamp(42px, 8vw, 60px)",
             lineHeight: 1.04,
             letterSpacing: "-0.025em",
             color: "#fff",
@@ -3363,7 +3363,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(40px, 6vw, 68px)",
+            fontSize: "clamp(44px, 8vw, 68px)",
             lineHeight: 1.05,
             letterSpacing: "-0.025em",
             color: "#fff",
@@ -3486,7 +3486,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(32px, 5.5vw, 40px)",
+              fontSize: "clamp(34px, 6.5vw, 40px)",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               color: "#fff",
@@ -3601,7 +3601,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(32px, 5.5vw, 40px)",
+              fontSize: "clamp(34px, 6.5vw, 40px)",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               color: "#fff",
@@ -3694,7 +3694,7 @@ export function BootcampV3ThankYouSection({ step }: SectionProps) {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(30px, 4.8vw, 36px)",
+              fontSize: "clamp(32px, 5.5vw, 36px)",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               color: "#fff",
