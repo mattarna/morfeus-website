@@ -810,3 +810,19 @@
     margin-top: 40px;
   }
 }
+
+/* ── Bootcamp v3 — ROI scenario row (2 col desktop, 1 col mobile) ─────────── */
+
+.bootcampRoiScenario {
+  display: grid;
+  grid-template-columns: minmax(160px, 220px) 1fr;
+  gap: 18px;
+  align-items: start;
+  padding-top: 18px;
+}
+@media (max-width: 640px) {
+  .bootcampRoiScenario {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
