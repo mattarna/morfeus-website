@@ -53,6 +53,7 @@ import {
 import {
   WebinarReplayCardsSection,
   WebinarReplayContextSection,
+  WebinarReplayCountdownBannerSection,
   WebinarReplayFAQSection,
   WebinarReplayFooterSection,
   WebinarReplayHeaderSection,
@@ -232,6 +233,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.WebinarReplayHeader ? <WebinarReplayHeaderSection accentColor={accentColor} step={step} /> : null,
   WebinarReplayVideo: ({ accentColor, step }) =>
     step.content.WebinarReplayVideo ? <WebinarReplayVideoSection accentColor={accentColor} step={step} /> : null,
+  WebinarReplayCountdownBanner: ({ accentColor, step }) =>
+    step.content.WebinarReplayCountdownBanner ? <WebinarReplayCountdownBannerSection accentColor={accentColor} step={step} /> : null,
   WebinarReplayContext: () => <WebinarReplayContextSection />,
   WebinarReplayCards: ({ accentColor, step }) =>
     step.content.WebinarReplayCards ? <WebinarReplayCardsSection accentColor={accentColor} step={step} /> : null,

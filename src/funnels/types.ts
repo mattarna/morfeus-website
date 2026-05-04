@@ -26,6 +26,7 @@ export type FunnelComponentName =
   | "WebinarFAQ"
   | "WebinarReplayHeader"
   | "WebinarReplayVideo"
+  | "WebinarReplayCountdownBanner"
   | "WebinarReplayContext"
   | "WebinarReplayCards"
   | "WebinarReplayFAQ"
@@ -294,13 +295,17 @@ export interface WebinarThankYouContent {
 // ─── Webinar Replay ─────────────────────────────────────────────────────────
 
 export interface WebinarReplayHeaderContent {
-  countdownIso: string;
   label?: string;
 }
 
 export interface WebinarReplayVideoContent {
   youtubeId: string;
   watchOnYoutubeUrl: string;
+}
+
+export interface WebinarReplayCountdownBannerContent {
+  countdownIso: string;
+  label?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -905,6 +910,7 @@ export interface FunnelStepConfig {
     WebinarThankYou?: WebinarThankYouContent;
     WebinarReplayHeader?: WebinarReplayHeaderContent;
     WebinarReplayVideo?: WebinarReplayVideoContent;
+    WebinarReplayCountdownBanner?: WebinarReplayCountdownBannerContent;
     WebinarReplayContext?: WebinarReplayContextContent;
     WebinarReplayCards?: WebinarReplayCardsContent;
     WebinarReplayFAQ?: WebinarReplayFAQContent;

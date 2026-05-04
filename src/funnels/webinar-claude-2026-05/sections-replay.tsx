@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type {
   WebinarReplayCardsContent,
+  WebinarReplayCountdownBannerContent,
   WebinarReplayHeaderContent,
   WebinarReplayVideoContent,
 } from "@/funnels/types";
@@ -119,125 +120,20 @@ function InlineCountdown({
   );
 }
 
-// ─── Sticky Header with countdown ─────────────────────────────────────────────
+// ─── Sticky Header (logo + label, no countdown) ───────────────────────────────
 
 export function WebinarReplayHeaderSection({ step }: SectionProps) {
   const content: WebinarReplayHeaderContent = step.content.WebinarReplayHeader;
-  const targetMs = new Date(content.countdownIso).getTime();
-
-  const [now, setNow] = useState(0);
-  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [isTinyMobile, setIsTinyMobile] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    setNow(Date.now());
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const mqMobile = window.matchMedia("(max-width: 640px)");
-    const mqTiny = window.matchMedia("(max-width: 380px)");
-    const update = () => {
-      setIsMobile(mqMobile.matches);
-      setIsTinyMobile(mqTiny.matches);
-    };
+    const update = () => setIsMobile(mqMobile.matches);
     update();
     mqMobile.addEventListener("change", update);
-    mqTiny.addEventListener("change", update);
-    return () => {
-      mqMobile.removeEventListener("change", update);
-      mqTiny.removeEventListener("change", update);
-    };
+    return () => mqMobile.removeEventListener("change", update);
   }, []);
-
-  const diff = mounted ? Math.max(0, targetMs - now) : 0;
-  const expired = mounted && diff <= 0;
-
-  if (expired) {
-    return (
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
-          background: "rgba(11,11,12,0.92)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          height: isMobile ? 56 : 64,
-          display: "flex",
-          alignItems: "center",
-          padding: isMobile ? "0 18px" : "0 32px",
-        }}
-      >
-        <Image
-          src="/logo/m-w2.png"
-          alt="Morfeus"
-          width={120}
-          height={isMobile ? 13 : 16}
-          priority
-          style={{ height: isMobile ? 13 : 16, width: "auto", display: "block" }}
-        />
-      </header>
-    );
-  }
-
-  const s = Math.floor(diff / 1000);
-  const days = Math.floor(s / 86400);
-  const hours = Math.floor((s % 86400) / 3600);
-  const mins = Math.floor((s % 3600) / 60);
-  const secs = s % 60;
-  const pad = (n: number) => String(n).padStart(2, "0");
-
-  const Cell = ({ n, label }: { n: number; label: string }) => (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: isMobile ? 26 : 34 }}>
-      <span
-        style={{
-          fontFamily: "var(--font-display)",
-          fontWeight: 600,
-          fontSize: isMobile ? 18 : 22,
-          lineHeight: 1,
-          color: "var(--orange)",
-          letterSpacing: "-0.02em",
-          fontVariantNumeric: "tabular-nums",
-        }}
-      >
-        {pad(n)}
-      </span>
-      <span
-        style={{
-          fontSize: isMobile ? 8 : 9,
-          fontWeight: 700,
-          color: "var(--muted)",
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          marginTop: 4,
-          fontFamily: "var(--font-body)",
-        }}
-      >
-        {label}
-      </span>
-    </div>
-  );
-
-  const Sep = () => (
-    <span
-      style={{
-        fontFamily: "var(--font-display)",
-        fontWeight: 500,
-        fontSize: isMobile ? 16 : 20,
-        color: "rgba(255,255,255,0.18)",
-        lineHeight: 1,
-        marginTop: -2,
-      }}
-    >
-      :
-    </span>
-  );
 
   return (
     <header
@@ -253,7 +149,7 @@ export function WebinarReplayHeaderSection({ step }: SectionProps) {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: isMobile ? "0 14px" : "0 32px",
+        padding: isMobile ? "0 18px" : "0 32px",
         gap: 12,
       }}
     >
@@ -265,42 +161,161 @@ export function WebinarReplayHeaderSection({ step }: SectionProps) {
         priority
         style={{ height: isMobile ? 13 : 16, width: "auto", display: "block", flexShrink: 0 }}
       />
+      {content.label && (
+        <span
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: isMobile ? 10 : 11,
+            fontWeight: 700,
+            color: "var(--orange)",
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {content.label}
+        </span>
+      )}
+    </header>
+  );
+}
 
-      <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
-        {!isTinyMobile && content.label && (
+// ─── Countdown banner (under video) ───────────────────────────────────────────
+
+export function WebinarReplayCountdownBannerSection({ step }: SectionProps) {
+  const content: WebinarReplayCountdownBannerContent = step.content.WebinarReplayCountdownBanner;
+  const targetMs = new Date(content.countdownIso).getTime();
+
+  const [now, setNow] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const diff = mounted ? Math.max(0, targetMs - now) : 0;
+  if (mounted && diff <= 0) return null;
+
+  const s = Math.floor(diff / 1000);
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const mins = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  const cells: { n: number; label: string }[] = [
+    { n: days, label: "GG" },
+    { n: hours, label: "HH" },
+    { n: mins, label: "MIN" },
+    { n: secs, label: "SEC" },
+  ];
+
+  return (
+    <section
+      style={{
+        padding: "32px 24px 0",
+        maxWidth: 860,
+        margin: "0 auto",
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+        style={{
+          background: "rgba(235,122,46,0.06)",
+          border: "1px solid rgba(235,122,46,0.25)",
+          borderRadius: 14,
+          padding: "20px 18px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        {content.label && (
           <span
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: isMobile ? 10 : 11,
-              fontWeight: 600,
-              color: "var(--muted)",
-              letterSpacing: "0.14em",
+              fontSize: 12,
+              fontWeight: 700,
+              color: "var(--orange)",
+              letterSpacing: "0.16em",
               textTransform: "uppercase",
-              whiteSpace: "nowrap",
+              textAlign: "center",
             }}
           >
             {content.label}
           </span>
         )}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: isMobile ? 4 : 8 }}>
-          {!isTinyMobile && (
-            <>
-              <Cell n={days} label="GG" />
-              <Sep />
-            </>
-          )}
-          {!isTinyMobile && (
-            <>
-              <Cell n={hours} label="HH" />
-              <Sep />
-            </>
-          )}
-          <Cell n={mins} label="MIN" />
-          <Sep />
-          <Cell n={secs} label="SEC" />
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            flexWrap: "nowrap",
+          }}
+        >
+          {cells.map((c, i) => (
+            <div
+              key={c.label}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10 }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  minWidth: 44,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 600,
+                    fontSize: "clamp(32px, 7vw, 44px)",
+                    lineHeight: 1,
+                    color: "var(--orange)",
+                    letterSpacing: "-0.02em",
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  {pad(c.n)}
+                </span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "var(--muted)",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    marginTop: 6,
+                    fontFamily: "var(--font-body)",
+                  }}
+                >
+                  {c.label}
+                </span>
+              </div>
+              {i < cells.length - 1 && (
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 500,
+                    fontSize: "clamp(26px, 5vw, 36px)",
+                    color: "rgba(255,255,255,0.20)",
+                    lineHeight: 1,
+                    marginTop: -10,
+                  }}
+                >
+                  :
+                </span>
+              )}
+            </div>
+          ))}
         </div>
       </div>
-    </header>
+    </section>
   );
 }
 
