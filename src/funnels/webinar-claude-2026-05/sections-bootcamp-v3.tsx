@@ -382,27 +382,146 @@ export function BootcampV3HeaderSection() {
   );
 }
 
-// ─── Hero VSL (autoplay muted, facade pattern, palette lime) ──────────────────
+// ─── VSL Player (YouTube IFrame API + fake bar + anti-skip + custom controls) ──
+//
+// Uso YouTube come backend gratuito ma con UI VSL:
+// - controls=0 + overlay click-blocker -> niente scrubber, niente pause-on-click
+// - fake progress bar non interattiva, curva "anchored" (rapida all'inizio,
+//   lenta verso la fine: 1 - (1-x)^0.45)
+// - anti-skip forward via seekTo se currentTime > maxReached + 2s
+// - pause/unmute via bottoni custom; backward seek bloccato (no scrubber visibile)
+//
+// Caricare il video YT come «Non in elenco», embedding ON, monetization OFF.
 
-function HeroVSL({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thumbnailSrc?: string; title?: string }) {
-  const [mounted, setMounted] = useState(false);
-  const [unmuted, setUnmuted] = useState(false);
-  const playerRef = useRef<HTMLIFrameElement>(null);
+interface YTPlayerControls {
+  playVideo?: () => void;
+  pauseVideo?: () => void;
+  mute?: () => void;
+  unMute?: () => void;
+  setVolume?: (v: number) => void;
+  getCurrentTime?: () => number;
+  getDuration?: () => number;
+  seekTo?: (t: number, allowSeekAhead: boolean) => void;
+}
+
+function VslPlayer({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thumbnailSrc?: string; title?: string }) {
+  const containerIdRef = useRef(`yt-vsl-${Math.random().toString(36).slice(2, 10)}`);
+  const playerRef = useRef<YTPlayerControls | null>(null);
+  const maxReachedRef = useRef(0);
+
+  const [apiReady, setApiReady] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [fakePct, setFakePct] = useState(0);
 
   const isPlaceholder = !youtubeId || youtubeId === "PLACEHOLDER_VIDEO_ID";
 
+  // Carica YouTube IFrame API (una sola volta a livello di pagina)
   useEffect(() => {
-    if (isPlaceholder) return;
-    const t = setTimeout(() => setMounted(true), 250);
-    return () => clearTimeout(t);
+    if (typeof window === "undefined" || isPlaceholder) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+
+    if (w.YT && w.YT.Player) {
+      setApiReady(true);
+      return;
+    }
+
+    if (!document.getElementById("yt-iframe-api")) {
+      const tag = document.createElement("script");
+      tag.id = "yt-iframe-api";
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
+
+    const previous = w.onYouTubeIframeAPIReady;
+    w.onYouTubeIframeAPIReady = () => {
+      if (typeof previous === "function") previous();
+      setApiReady(true);
+    };
   }, [isPlaceholder]);
 
-  function unmute() {
-    const w = playerRef.current?.contentWindow;
-    if (!w) return;
-    w.postMessage(JSON.stringify({ event: "command", func: "unMute", args: [] }), "*");
-    w.postMessage(JSON.stringify({ event: "command", func: "setVolume", args: [80] }), "*");
-    setUnmuted(true);
+  // Inizializza player quando l'API e' pronta
+  useEffect(() => {
+    if (!apiReady || isPlaceholder || playerRef.current || typeof window === "undefined") return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    if (!w.YT?.Player) return;
+
+    playerRef.current = new w.YT.Player(containerIdRef.current, {
+      videoId: youtubeId,
+      width: "100%",
+      height: "100%",
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 0,
+        modestbranding: 1,
+        rel: 0,
+        disablekb: 1,
+        fs: 0,
+        iv_load_policy: 3,
+        enablejsapi: 1,
+        playsinline: 1,
+      },
+      events: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onReady: (e: any) => e.target?.playVideo?.(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onStateChange: (e: any) => {
+          // YT.PlayerState: PLAYING=1, PAUSED=2, ENDED=0
+          if (e.data === 1) {
+            setPlaying(true);
+            setPaused(false);
+          } else if (e.data === 2) {
+            setPaused(true);
+          }
+        },
+      },
+    });
+  }, [apiReady, isPlaceholder, youtubeId]);
+
+  // Polling currentTime (200ms): aggiorna fake bar e blocca skip avanti
+  useEffect(() => {
+    if (!playing) return;
+    const interval = setInterval(() => {
+      const p = playerRef.current;
+      if (!p?.getCurrentTime || !p?.getDuration) return;
+      const real = p.getCurrentTime();
+      const duration = p.getDuration();
+      if (!duration || real == null) return;
+
+      // Anti-skip forward: se l'utente prova a saltare > 2s rispetto al massimo raggiunto
+      if (real > maxReachedRef.current + 2) {
+        p.seekTo?.(maxReachedRef.current, true);
+        return;
+      }
+      if (real > maxReachedRef.current) maxReachedRef.current = real;
+
+      const realPct = Math.min(real / duration, 1);
+      // Curva "anchored": 1 - (1-x)^0.45
+      // Esempio su video 25min: 1min reale (4%) -> 28% barra; 50% reale -> 78% barra; 90% reale -> 96% barra
+      const fake = 1 - Math.pow(1 - realPct, 0.45);
+      setFakePct(fake * 100);
+    }, 200);
+    return () => clearInterval(interval);
+  }, [playing]);
+
+  function handleUnmute() {
+    playerRef.current?.unMute?.();
+    playerRef.current?.setVolume?.(80);
+    setMuted(false);
+  }
+  function handleMute() {
+    playerRef.current?.mute?.();
+    setMuted(true);
+  }
+  function handleTogglePause() {
+    const p = playerRef.current;
+    if (!p) return;
+    if (paused) p.playVideo?.();
+    else p.pauseVideo?.();
   }
 
   return (
@@ -420,118 +539,194 @@ function HeroVSL({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thumb
         background: "var(--dusk)",
       }}
     >
-      {/* Iframe lazy mounted */}
-      {!isPlaceholder && mounted && (
-        <iframe
-          ref={playerRef}
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
-          title={title ?? "Video Sales Letter"}
-          allow="autoplay; encrypted-media; fullscreen"
-          allowFullScreen
+      {/* Container YouTube (sostituito dall'iframe quando il player monta) */}
+      {!isPlaceholder && (
+        <div
+          id={containerIdRef.current}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        />
+      )}
+
+      {/* Cover thumbnail: copre l'iframe finche playing non e' true */}
+      <div
+        aria-label={title ?? "Video Sales Letter — anteprima"}
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: thumbnailSrc ? `url(${thumbnailSrc})` : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "var(--dusk)",
+          display: "grid",
+          placeItems: "center",
+          opacity: playing && !isPlaceholder ? 0 : 1,
+          pointerEvents: playing && !isPlaceholder ? "none" : "auto",
+          transition: "opacity 350ms ease",
+          zIndex: 1,
+        }}
+      >
+        <div
+          aria-hidden
           style={{
             position: "absolute",
             inset: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-            background: "#000",
+            background: "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            width: 92,
+            height: 92,
+            borderRadius: "50%",
+            background: LIME,
+            display: "grid",
+            placeItems: "center",
+            boxShadow: `0 14px 44px ${LIME_GLOW_50}`,
+            animation: "btn-pulse-lime 2.4s infinite",
+          }}
+        >
+          <svg width="32" height="36" viewBox="0 0 32 36" fill="#0B0B0C" aria-hidden>
+            <path d="M3 1 L29 18 L3 35 Z" />
+          </svg>
+        </div>
+        {isPlaceholder && (
+          <div
+            style={{
+              position: "absolute",
+              bottom: 14,
+              left: 14,
+              right: 14,
+              textAlign: "center",
+              fontSize: 11,
+              color: "rgba(255,255,255,0.55)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.10em",
+              textTransform: "uppercase",
+            }}
+          >
+            Video in arrivo — segnaposto
+          </div>
+        )}
+      </div>
+
+      {/* Click-blocker: catttura click sull'iframe (impedisce pause-on-click + apertura su YouTube via logo) */}
+      {playing && !isPlaceholder && (
+        <div
+          aria-hidden
+          onClick={(e) => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 2,
+            cursor: "default",
           }}
         />
       )}
 
-      {/* Facade thumbnail (visibile finche iframe non monta, o sempre per placeholder) */}
-      {(!mounted || isPlaceholder) && (
+      {/* Custom controls (unmute + pause), solo dopo che il video parte */}
+      {playing && !isPlaceholder && (
         <div
-          aria-label={title ?? "Video Sales Letter — anteprima"}
           style={{
             position: "absolute",
-            inset: 0,
-            backgroundImage: thumbnailSrc ? `url(${thumbnailSrc})` : undefined,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundColor: "var(--dusk)",
-            display: "grid",
-            placeItems: "center",
+            bottom: 16,
+            left: 14,
+            right: 14,
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 10,
+            zIndex: 4,
+            pointerEvents: "none",
           }}
         >
-          <div
-            aria-hidden
+          <button
+            type="button"
+            onClick={muted ? handleUnmute : handleMute}
             style={{
-              position: "absolute",
-              inset: 0,
-              background: "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
-            }}
-          />
-          <div
-            style={{
-              position: "relative",
-              zIndex: 1,
-              width: 92,
-              height: 92,
-              borderRadius: "50%",
-              background: LIME,
-              display: "grid",
-              placeItems: "center",
-              boxShadow: `0 14px 44px ${LIME_GLOW_50}`,
-              animation: "btn-pulse-lime 2.4s infinite",
+              pointerEvents: "auto",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "9px 14px",
+              background: muted ? LIME : "rgba(0,0,0,0.78)",
+              border: muted ? `1px solid ${LIME}` : "1px solid rgba(255,255,255,0.20)",
+              color: muted ? "#0B0B0C" : "#fff",
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              fontWeight: 700,
+              borderRadius: 100,
+              cursor: "pointer",
+              backdropFilter: muted ? undefined : "blur(8px)",
+              WebkitBackdropFilter: muted ? undefined : ("blur(8px)" as React.CSSProperties["WebkitBackdropFilter"]),
+              boxShadow: muted ? `0 4px 18px ${LIME_GLOW_35}` : undefined,
             }}
           >
-            <svg width="32" height="36" viewBox="0 0 32 36" fill="#0B0B0C" aria-hidden>
-              <path d="M3 1 L29 18 L3 35 Z" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              {muted ? (
+                <>
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </>
+              ) : (
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+              )}
             </svg>
-          </div>
-          {isPlaceholder && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: 14,
-                left: 14,
-                right: 14,
-                textAlign: "center",
-                fontSize: 11,
-                color: "rgba(255,255,255,0.55)",
-                fontFamily: "var(--font-body)",
-                letterSpacing: "0.10em",
-                textTransform: "uppercase",
-              }}
-            >
-              Video in arrivo — segnaposto
-            </div>
-          )}
+            {muted ? "Attiva audio" : "Mute"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleTogglePause}
+            style={{
+              pointerEvents: "auto",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "9px 14px",
+              background: "rgba(0,0,0,0.78)",
+              border: "1px solid rgba(255,255,255,0.20)",
+              color: "#fff",
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              fontWeight: 600,
+              borderRadius: 100,
+              cursor: "pointer",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)" as React.CSSProperties["WebkitBackdropFilter"],
+            }}
+          >
+            {paused ? "▶ Riprendi" : "⏸ Pausa"}
+          </button>
         </div>
       )}
 
-      {/* Unmute pill */}
-      {!isPlaceholder && mounted && !unmuted && (
-        <button
-          type="button"
-          onClick={unmute}
+      {/* Fake progress bar non interattiva (anchored curve) */}
+      {playing && !isPlaceholder && (
+        <div
+          aria-hidden
           style={{
             position: "absolute",
-            bottom: 14,
-            left: 14,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "9px 14px",
-            background: "rgba(0,0,0,0.78)",
-            border: "1px solid rgba(255,255,255,0.20)",
-            color: "#fff",
-            fontFamily: "var(--font-body)",
-            fontSize: 13,
-            fontWeight: 600,
-            borderRadius: 100,
-            cursor: "pointer",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)" as React.CSSProperties["WebkitBackdropFilter"],
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 5,
+            background: "rgba(0,0,0,0.55)",
+            zIndex: 3,
           }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-          </svg>
-          Attiva audio
-        </button>
+          <div
+            style={{
+              height: "100%",
+              width: `${fakePct}%`,
+              background: LIME,
+              boxShadow: `0 0 12px ${LIME_GLOW_50}`,
+              transition: "width 200ms linear",
+            }}
+          />
+        </div>
       )}
     </div>
   );
@@ -610,7 +805,7 @@ export function BootcampV3HeroSection({ step }: SectionProps) {
       </p>
 
       {/* VSL */}
-      <HeroVSL
+      <VslPlayer
         youtubeId={heroContent.vslYoutubeId}
         thumbnailSrc={heroContent.vslThumbnailSrc}
         title={heroContent.vslTitle}
