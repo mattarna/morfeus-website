@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { FunnelRenderer } from "@/components/funnels/FunnelRenderer";
@@ -95,6 +96,9 @@ export default function FunnelPage({ params }: FunnelPageProps) {
   const variantCookie = cookies().get(cookieName)?.value;
   const variant = variantCookie === "A" || variantCookie === "B" ? variantCookie : undefined;
   const isConversionStep = step.isConversion === true;
+  const showMarfChatbot =
+    step.id === "sales" &&
+    (params.slug === "bootcamp-ai-champion-3a-edizione" || params.slug === "claude-unlocked");
 
   return (
     <>
@@ -105,6 +109,15 @@ export default function FunnelPage({ params }: FunnelPageProps) {
         isConversionStep={isConversionStep}
       />
       <FunnelRenderer funnel={funnel} step={step} />
+      {showMarfChatbot && (
+        <Script
+          id="marf-chatbot-loader"
+          src="https://api.marf.app/embed/v1/loader.js"
+          data-agent="69f937f8d138ca6479b3ce6a"
+          data-key="pk_live_TUvcYAn8QsHjlsWvQXDHmvRWX6WWm89R"
+          strategy="afterInteractive"
+        />
+      )}
     </>
   );
 }
