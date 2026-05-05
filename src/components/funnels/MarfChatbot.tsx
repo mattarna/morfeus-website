@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 
 const MARF_CHATBOT_SCRIPT_ID = "marf-chatbot-loader";
-const MARF_CHATBOT_SRC = "https://api.marf.app/embed/v1/loader.js";
-const MARF_CHATBOT_AGENT = "69f937f8d138ca6479b3ce6a";
-const MARF_CHATBOT_KEY = "pk_live_TUvcYAn8QsHjlsWvQXDHmvRWX6WWm89R";
+const MARF_CHATBOT_SRC = "https://marf.alexcarofiglio.com/embed/v1/loader.js";
+const MARF_CHATBOT_AGENT = "69f9dd4b1deae57521710783";
+const MARF_CHATBOT_KEY = "pk_live_hIJMNy9GApRQ2PQFs5brpEvWGkWJrnJT";
 
 export function MarfChatbot() {
   useEffect(() => {
