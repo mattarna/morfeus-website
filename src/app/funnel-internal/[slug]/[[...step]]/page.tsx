@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { FunnelRenderer } from "@/components/funnels/FunnelRenderer";
 import { FunnelTrackingBridge } from "@/components/funnels/FunnelTrackingBridge";
+import { MarfChatbot } from "@/components/funnels/MarfChatbot";
 import { getFunnelStepByPath, loadFunnelConfig } from "@/funnels/loader";
 
 interface FunnelPageProps {
@@ -109,15 +109,7 @@ export default function FunnelPage({ params }: FunnelPageProps) {
         isConversionStep={isConversionStep}
       />
       <FunnelRenderer funnel={funnel} step={step} />
-      {showMarfChatbot && (
-        <Script
-          id="marf-chatbot-loader"
-          src="https://api.marf.app/embed/v1/loader.js"
-          data-agent="69f937f8d138ca6479b3ce6a"
-          data-key="pk_live_TUvcYAn8QsHjlsWvQXDHmvRWX6WWm89R"
-          strategy="afterInteractive"
-        />
-      )}
+      {showMarfChatbot && <MarfChatbot />}
     </>
   );
 }
