@@ -4186,7 +4186,7 @@ export function BootcampV3CallBookedSection() {
             textWrap: "pretty" as React.CSSProperties["textWrap"],
           }}
         >
-          La tua call e' prenotata. Useremo quei minuti per capire dove sei adesso, cosa vuoi costruire con l'AI e se il bootcamp e' il modo piu rapido per arrivarci.
+          La tua call e&apos; prenotata. Useremo quei minuti per capire dove sei adesso, cosa vuoi costruire con l&apos;AI e se il bootcamp e&apos; il modo piu rapido per arrivarci.
         </p>
       </div>
 
@@ -4279,7 +4279,7 @@ export function BootcampV3CallBookedSection() {
             maxWidth: 780,
           }}
         >
-          Vedremo il tuo punto di partenza, individueremo una prima area dove l'AI puo' liberarti tempo operativo e ti diremo con chiarezza se ha senso candidarti al percorso. Se non e' il momento giusto, te lo diciamo senza giri lunghi.
+          Vedremo il tuo punto di partenza, individueremo una prima area dove l&apos;AI puo&apos; liberarti tempo operativo e ti diremo con chiarezza se ha senso candidarti al percorso. Se non e&apos; il momento giusto, te lo diciamo senza giri lunghi.
         </p>
         <p
           style={{
@@ -4290,7 +4290,7 @@ export function BootcampV3CallBookedSection() {
             margin: "4px 0 0",
           }}
         >
-          Se devi spostare la call, usa il link di modifica che trovi nell'email di conferma.
+          Se devi spostare la call, usa il link di modifica che trovi nell&apos;email di conferma.
         </p>
       </div>
     </section>
