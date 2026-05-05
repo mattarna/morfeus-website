@@ -169,6 +169,7 @@ const allowedComponents: FunnelComponentName[] = [
   "BootcampV3FinalCTA",
   "BootcampV3Footer",
   "BootcampV3StickyBar",
+  "BootcampV3CallBooked",
   "BootcampV3ThankYou"
 ];
 

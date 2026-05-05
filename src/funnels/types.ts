@@ -168,6 +168,7 @@ export type FunnelComponentName =
   | "BootcampV3FinalCTA"
   | "BootcampV3Footer"
   | "BootcampV3StickyBar"
+  | "BootcampV3CallBooked"
   | "BootcampV3ThankYou";
 
 export interface HeroContent {
@@ -796,6 +797,9 @@ export interface BootcampThankYouContent {
   supportEmail: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BootcampCallBookedContent {}
+
 // ─── Bootcamp AI Champion v2 (sales page — copy nuovo, in fase di confronto) ──
 
 export interface BootcampV2PricingContent {
@@ -1067,6 +1071,7 @@ export interface FunnelStepConfig {
     BootcampV3FinalCTA?: BootcampFinalCTAContent;
     BootcampV3Footer?: BootcampFooterContent;
     BootcampV3StickyBar?: BootcampStickyBarContent;
+    BootcampV3CallBooked?: BootcampCallBookedContent;
     BootcampV3ThankYou?: BootcampThankYouContent;
   };
 }

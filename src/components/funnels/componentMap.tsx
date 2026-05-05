@@ -181,6 +181,7 @@ import {
   BootcampV3FAQSection,
   BootcampV3FinalCTASection,
   BootcampV3FooterSection,
+  BootcampV3CallBookedSection,
   BootcampV3StickyBarSection,
   BootcampV3ThankYouSection,
 } from "@/funnels/webinar-claude-2026-05/sections-bootcamp-v3";
@@ -412,6 +413,7 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampV3FAQ: () => <BootcampV3FAQSection />,
   BootcampV3FinalCTA: ({ accentColor, step }) => <BootcampV3FinalCTASection accentColor={accentColor} step={step} />,
   BootcampV3Footer: () => <BootcampV3FooterSection />,
+  BootcampV3CallBooked: () => <BootcampV3CallBookedSection />,
   BootcampV3StickyBar: ({ accentColor, step }) => <BootcampV3StickyBarSection accentColor={accentColor} step={step} />,
   BootcampV3ThankYou: ({ accentColor, step }) =>
     step.content.BootcampThankYou ? <BootcampV3ThankYouSection accentColor={accentColor} step={step} /> : null,

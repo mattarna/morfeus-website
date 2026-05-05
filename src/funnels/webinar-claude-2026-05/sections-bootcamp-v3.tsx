@@ -4112,6 +4112,191 @@ function BcTyStepCard({
   );
 }
 
+export function BootcampV3CallBookedSection() {
+  const nextSteps = [
+    {
+      n: "01",
+      title: "Controlla la conferma nel calendario",
+      body: "Troverai data, ora e link della call direttamente nell'email di conferma del booking system.",
+    },
+    {
+      n: "02",
+      title: "Arriva con il tuo contesto reale",
+      body: "In call partiamo dalla tua situazione: team, processi, colli di bottiglia e obiettivo dei prossimi 90 giorni.",
+    },
+    {
+      n: "03",
+      title: "Capiremo se il bootcamp e' il percorso giusto",
+      body: "Non sara' una call generica. Verifichiamo fit, priorita' e prossimi passi concreti.",
+    },
+  ];
+
+  return (
+    <section
+      style={{
+        maxWidth: 980,
+        margin: "0 auto",
+        padding: "clamp(54px, 8vw, 92px) clamp(22px, 4vw, 40px) clamp(72px, 9vw, 110px)",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 80,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "min(760px, 86vw)",
+          height: 300,
+          background: `radial-gradient(ellipse, ${LIME_SOFT_18} 0%, rgba(123,104,238,0.08) 42%, transparent 72%)`,
+          filter: "blur(22px)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
+
+      <div style={{ textAlign: "center", marginBottom: 42 }}>
+        <Badge>Call di selezione prenotata</Badge>
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: "clamp(38px, 6vw, 68px)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.025em",
+            color: "#fff",
+            margin: "24px auto 18px",
+            maxWidth: 820,
+            textWrap: "balance" as React.CSSProperties["textWrap"],
+          }}
+        >
+          Complimenti. Sei un passo piu vicino al <Accent>Bootcamp AI Champion</Accent>.
+        </h1>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "clamp(18px, 2vw, 21px)",
+            lineHeight: 1.55,
+            color: "var(--ghost)",
+            opacity: 0.9,
+            margin: "0 auto",
+            maxWidth: 660,
+            textWrap: "pretty" as React.CSSProperties["textWrap"],
+          }}
+        >
+          La tua call e' prenotata. Useremo quei minuti per capire dove sei adesso, cosa vuoi costruire con l'AI e se il bootcamp e' il modo piu rapido per arrivarci.
+        </p>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 14,
+          marginBottom: 34,
+        }}
+      >
+        {nextSteps.map((step) => (
+          <div
+            key={step.n}
+            style={{
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 14,
+              padding: "24px 22px",
+              minHeight: 190,
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                background: LIME_SOFT_10,
+                border: `1px solid ${LIME_BORDER_25}`,
+                color: LIME,
+                display: "grid",
+                placeItems: "center",
+                fontFamily: "var(--font-display)",
+                fontSize: 18,
+                fontWeight: 600,
+                marginBottom: 18,
+              }}
+            >
+              {step.n}
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 22,
+                fontWeight: 600,
+                lineHeight: 1.18,
+                letterSpacing: "-0.015em",
+                color: "#fff",
+                margin: "0 0 10px",
+              }}
+            >
+              {step.title}
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: "var(--ghost)",
+                opacity: 0.82,
+                margin: 0,
+              }}
+            >
+              {step.body}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div
+        style={{
+          background: `linear-gradient(135deg, ${LIME_SOFT_10} 0%, rgba(123,104,238,0.06) 100%)`,
+          border: `1px solid ${LIME_BORDER_25}`,
+          borderRadius: 16,
+          padding: "28px clamp(22px, 4vw, 34px)",
+          display: "grid",
+          gap: 12,
+        }}
+      >
+        <SectionLabel>Durante la call</SectionLabel>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 18,
+            lineHeight: 1.62,
+            color: "var(--ghost)",
+            opacity: 0.92,
+            margin: 0,
+            maxWidth: 780,
+          }}
+        >
+          Vedremo il tuo punto di partenza, individueremo una prima area dove l'AI puo' liberarti tempo operativo e ti diremo con chiarezza se ha senso candidarti al percorso. Se non e' il momento giusto, te lo diciamo senza giri lunghi.
+        </p>
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 14,
+            lineHeight: 1.55,
+            color: "var(--muted)",
+            margin: "4px 0 0",
+          }}
+        >
+          Se devi spostare la call, usa il link di modifica che trovi nell'email di conferma.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export function BootcampV3FooterSection() {
   const muted: React.CSSProperties = {
     fontFamily: "var(--font-body)",
@@ -4275,4 +4460,3 @@ export function BootcampV3StickyBarSection({ step }: SectionProps) {
     </div>
   );
 }
-
