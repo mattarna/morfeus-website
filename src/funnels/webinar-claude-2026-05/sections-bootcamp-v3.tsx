@@ -547,9 +547,22 @@ function VslPlayer({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thu
         />
       )}
 
-      {/* Cover thumbnail: copre l'iframe finche playing non e' true */}
+      {/* Cover thumbnail: copre l'iframe finche playing non e' true. Cliccabile come fallback se l'autoplay e' bloccato. */}
       <div
+        role={!isPlaceholder ? "button" : undefined}
+        tabIndex={!isPlaceholder ? 0 : undefined}
         aria-label={title ?? "Video Sales Letter — anteprima"}
+        onClick={() => {
+          if (isPlaceholder) return;
+          playerRef.current?.playVideo?.();
+        }}
+        onKeyDown={(e) => {
+          if (isPlaceholder) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            playerRef.current?.playVideo?.();
+          }
+        }}
         style={{
           position: "absolute",
           inset: 0,
@@ -563,6 +576,7 @@ function VslPlayer({ youtubeId, thumbnailSrc, title }: { youtubeId?: string; thu
           pointerEvents: playing && !isPlaceholder ? "none" : "auto",
           transition: "opacity 350ms ease",
           zIndex: 1,
+          cursor: isPlaceholder ? "default" : "pointer",
         }}
       >
         <div
