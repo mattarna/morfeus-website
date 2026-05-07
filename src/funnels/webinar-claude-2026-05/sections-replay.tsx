@@ -564,9 +564,6 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
     if (w.dataLayer) w.dataLayer.push({ event: "info_bootcamp_click", source: "replay_page" });
   }
 
-  const bootcampCallHref = bootcamp.callUrl || "#";
-  const bootcampCallIsLive = Boolean(bootcamp.callUrl);
-
   return (
     <section
       style={{
@@ -927,13 +924,10 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
 
           {/* CTA primario */}
           <a
-            href={bootcampCallHref}
-            target={bootcampCallIsLive ? "_blank" : undefined}
-            rel={bootcampCallIsLive ? "noopener noreferrer" : undefined}
-            onClick={(e) => {
-              if (!bootcampCallIsLive) e.preventDefault();
-              trackBootcampCta();
-            }}
+            href={bootcamp.callUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackBootcampCta}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -952,11 +946,8 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
               animation: "btn-pulse-lime 2.4s infinite",
               transition: "background .2s, box-shadow .2s, transform .2s",
               boxSizing: "border-box",
-              opacity: bootcampCallIsLive ? 1 : 0.85,
-              cursor: bootcampCallIsLive ? "pointer" : "not-allowed",
             }}
             onMouseEnter={(e) => {
-              if (!bootcampCallIsLive) return;
               e.currentTarget.style.background = "var(--lime-hover)";
               e.currentTarget.style.transform = "translateY(-1px)";
             }}
