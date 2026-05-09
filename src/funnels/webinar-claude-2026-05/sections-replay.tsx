@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import type {
   WebinarReplayCardsContent,
   WebinarReplayCountdownBannerContent,
+  WebinarReplayExpiredContent,
   WebinarReplayHeaderContent,
   WebinarReplayVideoContent,
 } from "@/funnels/types";
@@ -510,7 +511,12 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
     return () => clearInterval(id);
   }, []);
 
-  const stage: CorsoStage = mounted ? getCorsoStage(now, earlyBirdMs, standardMs) : "earlyBird";
+  const evergreen = content.evergreen === true;
+  const stage: CorsoStage = evergreen
+    ? "full"
+    : mounted
+    ? getCorsoStage(now, earlyBirdMs, standardMs)
+    : "earlyBird";
 
   const corso = content.corso;
   const bootcamp = content.bootcamp;
@@ -853,25 +859,29 @@ export function WebinarReplayCardsSection({ step }: SectionProps) {
             AI Champion
           </h2>
 
-          {/* Countdown early bird */}
-          <div style={{ marginTop: 4 }}>
-            <InlineCountdown
-              targetMs={bootcampDeadlineMs}
-              now={now}
-              mounted={mounted}
-              color="var(--lime)"
-            />
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              color: "rgba(181,240,58,0.7)",
-              marginTop: 14,
-            }}
-          >
-            Early bird · prenota la call entro 48h
-          </div>
+          {/* Countdown early bird (nascosto in evergreen) */}
+          {!evergreen && (
+            <>
+              <div style={{ marginTop: 4 }}>
+                <InlineCountdown
+                  targetMs={bootcampDeadlineMs}
+                  now={now}
+                  mounted={mounted}
+                  color="var(--lime)"
+                />
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 14,
+                  color: "rgba(181,240,58,0.7)",
+                  marginTop: 14,
+                }}
+              >
+                Early bird · prenota la call entro 48h
+              </div>
+            </>
+          )}
 
           {/* Info pagamento */}
           <div
@@ -1190,5 +1200,581 @@ export function WebinarReplayFooterSection() {
         © 2026 Morfeus Hub S.r.l. · P.IVA 14209210963 · morfeushub.com
       </p>
     </footer>
+  );
+}
+
+// ─── Replay Expired Overlay ──────────────────────────────────────────────────
+//
+// Quando l'orario corrente supera `cutoffIso`, questo componente prende il
+// sopravvento sulla pagina replay con un overlay full-screen `position: fixed`
+// + `z-index` alto, indipendente dall'ordinamento delle altre sezioni.
+//
+// Strategia idratazione: prima del mount lato client renderizziamo `null`
+// (la pagina replay sotto rimane visibile durante SSR). Al mount controlliamo
+// `Date.now()` contro `cutoffIso` e se siamo oltre la deadline montiamo
+// l'overlay. Per chi visita la pagina dopo il cutoff c'è un breve flash
+// iniziale del replay sotto, immediatamente coperto dall'overlay.
+
+export function WebinarReplayExpiredSection({ step }: SectionProps) {
+  const content: WebinarReplayExpiredContent = step.content.WebinarReplayExpired;
+  const cutoffMs = new Date(content.cutoffIso).getTime();
+
+  const [mounted, setMounted] = useState(false);
+  const [now, setNow] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [forcePreview, setForcePreview] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [privacy, setPrivacy] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
+  const [roleFocus, setRoleFocus] = useState(false);
+
+  const ctaRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Override: ?preview=expired forza l'overlay anche prima del cutoff (utile per
+  // QA / per mostrare al team come apparirà la pagina post-scadenza)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const sp = new URLSearchParams(window.location.search);
+    setForcePreview(sp.get("preview") === "expired");
+  }, []);
+
+  const expired = forcePreview || (mounted && now >= cutoffMs);
+
+  // Blocca scroll del documento sottostante quando l'overlay è attivo
+  useEffect(() => {
+    if (!expired) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [expired]);
+
+  if (!expired) return null;
+
+  async function submit(e?: FormEvent) {
+    e?.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError("Inserisci una email valida"); return; }
+    if (!name.trim()) { setError("Il nome è richiesto"); return; }
+    if (!role) { setError("Seleziona la tua professione"); return; }
+    if (!privacy) { setError("Serve accettare la privacy policy"); return; }
+    setError("");
+    setSubmitting(true);
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+      const utms: Record<string, string> = {};
+      utmKeys.forEach(k => { if (sp.has(k)) utms[k] = sp.get(k)!; });
+
+      const res = await fetch("/api/funnels/webinar-claude/next-webinar-waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim(),
+          role,
+          source: "next-webinar-waitlist",
+          ...utms,
+        }),
+      });
+      if (!res.ok) throw new Error("submit_failed");
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const w = window as any;
+      if (w.dataLayer) w.dataLayer.push({ event: "next_webinar_waitlist_complete", role, ...utms });
+      if (w.fbq) w.fbq("track", "Lead", { content_name: "next-webinar-waitlist" });
+
+      setSuccess(true);
+    } catch {
+      setError("Non siamo riusciti a registrare l'iscrizione. Riprova.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  function trackCorso() {
+    if (typeof window === "undefined") return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    if (w.dataLayer) w.dataLayer.push({ event: "expired_corso_click", source: "replay_expired" });
+  }
+
+  function trackBootcamp() {
+    if (typeof window === "undefined") return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    if (w.dataLayer) w.dataLayer.push({ event: "expired_bootcamp_click", source: "replay_expired" });
+  }
+
+  const inputBase: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontWeight: 500,
+    fontSize: 16,
+    color: "#fff",
+    borderRadius: 10,
+    padding: "16px 18px",
+    outline: "none",
+    width: "100%",
+    boxSizing: "border-box",
+    transition: "border-color .2s, background .2s, box-shadow .2s",
+  };
+
+  function focusedInputStyle(focused: boolean): React.CSSProperties {
+    return {
+      ...inputBase,
+      background: focused ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.4)",
+      border: `1px solid ${focused ? "var(--orange)" : "rgba(255,255,255,0.12)"}`,
+      boxShadow: focused ? "0 0 0 4px rgba(235,122,46,0.08)" : "none",
+    };
+  }
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="replay-expired-title"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        background: "var(--bg, #0b0b0c)",
+        overflowY: "auto",
+        WebkitOverflowScrolling: "touch",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: isMobile ? "48px 20px 56px" : "80px 32px 80px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Logo */}
+        <Image
+          src="/logo/m-w2.png"
+          alt="Morfeus"
+          width={140}
+          height={isMobile ? 16 : 20}
+          priority
+          style={{ height: isMobile ? 16 : 20, width: "auto", display: "block", marginBottom: isMobile ? 36 : 56 }}
+        />
+
+        {/* Badge */}
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "8px 16px",
+            borderRadius: 100,
+            background: "rgba(235,122,46,0.10)",
+            border: "1px solid rgba(235,122,46,0.25)",
+            color: "var(--orange)",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            fontFamily: "var(--font-body)",
+            marginBottom: 28,
+          }}
+        >
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "var(--orange)",
+              boxShadow: "0 0 8px rgba(235,122,46,0.6)",
+              flexShrink: 0,
+            }}
+          />
+          {content.badge}
+        </span>
+
+        {/* Headline */}
+        <h1
+          id="replay-expired-title"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 600,
+            fontSize: isMobile ? "clamp(40px, 12vw, 56px)" : "clamp(56px, 7vw, 84px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            color: "#fff",
+            margin: "0 0 22px",
+          }}
+        >
+          {content.headlinePre}{" "}
+          <span
+            style={{
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontWeight: 500,
+              color: "var(--orange)",
+            }}
+          >
+            {content.headlineAccent}
+          </span>
+        </h1>
+
+        {/* Subheadline */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: isMobile ? 16 : 18,
+            lineHeight: 1.6,
+            color: "var(--ghost)",
+            opacity: 0.85,
+            maxWidth: 540,
+            margin: "0 0 44px",
+          }}
+        >
+          {content.subheadline}
+        </p>
+
+        {/* Form / Success card */}
+        <form
+          onSubmit={submit}
+          style={{
+            width: "100%",
+            maxWidth: 520,
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 16,
+            padding: isMobile ? 22 : 28,
+            backdropFilter: "blur(10px)",
+            position: "relative",
+            textAlign: "left",
+            boxSizing: "border-box",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: 16,
+              padding: 1,
+              background: "linear-gradient(135deg, rgba(123,104,238,0.3), rgba(235,122,46,0.2))",
+              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
+              pointerEvents: "none",
+            }}
+          />
+
+          <div
+            style={{
+              fontSize: 11,
+              letterSpacing: "0.20em",
+              textTransform: "uppercase",
+              color: "var(--violet)",
+              fontWeight: 700,
+              marginBottom: 14,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            {success ? content.successTitle : content.formTitle}
+          </div>
+
+          {success ? (
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 15,
+                lineHeight: 1.6,
+                color: "var(--ghost)",
+                opacity: 0.9,
+                margin: 0,
+              }}
+            >
+              {content.successBody}
+            </p>
+          ) : (
+            <>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
+                  placeholder="La tua email"
+                  autoComplete="email"
+                  style={focusedInputStyle(emailFocus)}
+                />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onFocus={() => setNameFocus(true)}
+                  onBlur={() => setNameFocus(false)}
+                  placeholder="Il tuo nome"
+                  autoComplete="given-name"
+                  style={focusedInputStyle(nameFocus)}
+                />
+                <div style={{ position: "relative", width: "100%" }}>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    onFocus={() => setRoleFocus(true)}
+                    onBlur={() => setRoleFocus(false)}
+                    style={{
+                      ...focusedInputStyle(roleFocus),
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                      cursor: "pointer",
+                      color: role ? "#fff" : "rgba(255,255,255,0.5)",
+                    }}
+                  >
+                    <option value="" disabled>{content.rolesPlaceholder}</option>
+                    {content.rolesOptions.map((o) => (
+                      <option key={o} value={o} style={{ background: "#111" }}>{o}</option>
+                    ))}
+                  </select>
+                  <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    style={{ position: "absolute", right: 18, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--muted)" }}
+                  >
+                    <path d="M1 1.5 L6 6.5 L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 12,
+                    cursor: "pointer",
+                    userSelect: "none",
+                    fontSize: 13,
+                    lineHeight: 1.5,
+                    color: "var(--ghost)",
+                    opacity: 0.8,
+                    fontFamily: "var(--font-body)",
+                    marginTop: 4,
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={privacy}
+                    onChange={(e) => setPrivacy(e.target.checked)}
+                    style={{ width: 18, height: 18, marginTop: 2, accentColor: "var(--orange)", cursor: "pointer", flexShrink: 0 }}
+                  />
+                  <span>
+                    Accetto la{" "}
+                    <Link href={content.privacyHref} target="_blank" rel="noreferrer" style={{ color: "var(--orange)" }}>
+                      privacy policy
+                    </Link>{" "}
+                    e acconsento al trattamento dei dati.
+                  </span>
+                </label>
+
+                <button
+                  ref={ctaRef}
+                  type="submit"
+                  disabled={submitting}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 700,
+                    fontSize: 17,
+                    padding: "18px 26px",
+                    borderRadius: 10,
+                    border: "none",
+                    background: "var(--orange)",
+                    color: "#fff",
+                    boxShadow: "0 6px 28px rgba(235,122,46,0.5)",
+                    cursor: submitting ? "default" : "pointer",
+                    opacity: submitting ? 0.6 : 1,
+                    width: "100%",
+                    marginTop: 4,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                    transition: "background .2s, box-shadow .2s, transform .2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (submitting) return;
+                    e.currentTarget.style.background = "var(--orange-hover, #f08a44)";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "var(--orange)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  {submitting ? "Invio in corso..." : <>{content.formSubmitLabel} <span style={{ fontSize: 18 }}>→</span></>}
+                </button>
+              </div>
+
+              {error && (
+                <div style={{ fontSize: 13, color: "#FF8a6a", marginTop: 12, fontWeight: 500, fontFamily: "var(--font-body)" }}>
+                  {error}
+                </div>
+              )}
+
+              <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 14, lineHeight: 1.5, fontFamily: "var(--font-body)" }}>
+                {content.formMicrocopy}
+              </div>
+            </>
+          )}
+        </form>
+
+        {/* Divider */}
+        <div
+          aria-hidden
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            width: "100%",
+            maxWidth: 360,
+            margin: isMobile ? "44px 0 28px" : "56px 0 32px",
+          }}
+        >
+          <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 11,
+              fontWeight: 700,
+              color: "var(--muted)",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+            }}
+          >
+            Oppure
+          </span>
+          <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.08)" }} />
+        </div>
+
+        {/* Secondary CTAs: corso + bootcamp */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gap: 12,
+            width: "100%",
+            maxWidth: 520,
+          }}
+        >
+          <Link
+            href={content.corsoHref}
+            onClick={trackCorso}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 600,
+              fontSize: 15,
+              padding: "16px 20px",
+              borderRadius: 10,
+              border: "1px solid rgba(235,122,46,0.30)",
+              background: "rgba(235,122,46,0.06)",
+              color: "var(--ghost)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              transition: "background .2s, border-color .2s, transform .2s",
+              boxSizing: "border-box",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(235,122,46,0.12)";
+              e.currentTarget.style.borderColor = "rgba(235,122,46,0.50)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(235,122,46,0.06)";
+              e.currentTarget.style.borderColor = "rgba(235,122,46,0.30)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            {content.corsoLabel} <span style={{ fontSize: 16, opacity: 0.8 }}>→</span>
+          </Link>
+
+          <Link
+            href={content.bootcampHref}
+            onClick={trackBootcamp}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 600,
+              fontSize: 15,
+              padding: "16px 20px",
+              borderRadius: 10,
+              border: "1px solid rgba(255,255,255,0.14)",
+              background: "rgba(255,255,255,0.03)",
+              color: "var(--ghost)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              transition: "background .2s, border-color .2s, transform .2s",
+              boxSizing: "border-box",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            {content.bootcampLabel} <span style={{ fontSize: 16, opacity: 0.8 }}>→</span>
+          </Link>
+        </div>
+
+        {/* Footer mini */}
+        <p
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 12,
+            color: "var(--muted)",
+            margin: isMobile ? "40px 0 0" : "56px 0 0",
+            opacity: 0.7,
+          }}
+        >
+          © 2026 Morfeus Hub S.r.l. · morfeushub.com
+        </p>
+      </div>
+    </div>
   );
 }

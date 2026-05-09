@@ -31,6 +31,7 @@ export type FunnelComponentName =
   | "WebinarReplayCards"
   | "WebinarReplayFAQ"
   | "WebinarReplayFooter"
+  | "WebinarReplayExpired"
   | "WebinarTeamHub"
   | "FreebieHero"
   | "FreebieWebinarTeaser"
@@ -316,12 +317,42 @@ export interface WebinarReplayFAQContent {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface WebinarReplayFooterContent {}
 
+export interface WebinarReplayExpiredContent {
+  /** ISO con timezone. Quando ora corrente >= cutoffIso, l'overlay copre la pagina replay e mostra la waitlist. */
+  cutoffIso: string;
+  badge: string;
+  headlinePre: string;
+  headlineAccent: string;
+  subheadline: string;
+  formTitle: string;
+  formMicrocopy: string;
+  formSubmitLabel: string;
+  successTitle: string;
+  successBody: string;
+  rolesPlaceholder: string;
+  rolesOptions: string[];
+  privacyHref: string;
+  /** CTA primario: porta alla sales page del corso */
+  corsoLabel: string;
+  corsoHref: string;
+  /** CTA secondario: porta alla sales page del bootcamp */
+  bootcampLabel: string;
+  bootcampHref: string;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface WebinarTeamHubContent {}
 
 export interface WebinarReplayCardsContent {
   countdownIso: string;
   standardDeadlineIso: string;
+  /**
+   * Modalita evergreen (replay privato sempre attivo). Quando true:
+   * - Forza pricing corso a "full" (no countdown, prezzo definitivo)
+   * - Nasconde countdown bootcamp + microcopy "Early bird · prenota la call entro 48h"
+   * Default false (replay pubblico con prezzi flash a tempo).
+   */
+  evergreen?: boolean;
   corso: {
     earlyBirdPrice: number;
     standardPrice: number;
@@ -929,6 +960,7 @@ export interface FunnelStepConfig {
     WebinarReplayCards?: WebinarReplayCardsContent;
     WebinarReplayFAQ?: WebinarReplayFAQContent;
     WebinarReplayFooter?: WebinarReplayFooterContent;
+    WebinarReplayExpired?: WebinarReplayExpiredContent;
     WebinarTeamHub?: WebinarTeamHubContent;
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
