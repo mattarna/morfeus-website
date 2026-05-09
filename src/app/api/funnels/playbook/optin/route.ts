@@ -12,7 +12,7 @@ interface OptinPayload {
   utm_term?: string;
 }
 
-const DEFAULT_FORM_NAME = "Playbook_infobusiness_milionario";
+const DEFAULT_FORM_NAME = "Playbook_imprenditore_milionario";
 const PLAYBOOK_LIST_ID = 64;
 
 function isValidEmail(email: string): boolean {
@@ -61,15 +61,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = NextResponse.json({ success: true });
-    response.cookies.set("mf_playbook_download", "1", {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-    });
-    return response;
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("playbook optin failed", error);
     return NextResponse.json({ success: false, error: "unexpected_error" }, { status: 500 });

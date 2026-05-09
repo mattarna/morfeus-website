@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { FunnelStepConfig } from "@/funnels/types";
 import { PlaybookDownloadGate } from "./DownloadGate";
@@ -10,6 +11,7 @@ interface SectionProps {
 }
 
 const contentDir = path.join(process.cwd(), "src", "funnels", "playbook-2026-05", "content");
+const PLAYBOOK_PATH = "/playbook-imprenditore-milionario";
 
 const modules = [
   {
@@ -19,6 +21,7 @@ const modules = [
     title: "Le Nuove Regole dell'Infobusiness",
     speaker: "Marco",
     duration: "76 min",
+    color: "#EB7A2E",
     focus: "Diagnosi mercato, 4 pilastri, ecosistema",
     tags: ["mercato", "ecosistema", "vendita", "AI"],
   },
@@ -29,6 +32,7 @@ const modules = [
     title: "La Leva Invisibile delle Offerte",
     speaker: "Michele",
     duration: "28 min",
+    color: "#7B68EE",
     focus: "High ticket, pre-qualifica, frizione produttiva",
     tags: ["offerta", "pricing", "conversione"],
   },
@@ -39,6 +43,7 @@ const modules = [
     title: "The War Machine",
     speaker: "Roberto",
     duration: "31 min",
+    color: "#B5F03A",
     focus: "Workshop, VSL, CAC/LTV, scaling",
     tags: ["funnel", "liquidita", "ads"],
   },
@@ -49,6 +54,7 @@ const modules = [
     title: "Creativita, Organico e Advertising",
     speaker: "Federico",
     duration: "27 min",
+    color: "#38BDF8",
     focus: "Angoli creativi, organico, unit economics",
     tags: ["creativita", "organico", "advertising"],
   },
@@ -59,6 +65,7 @@ const modules = [
     title: "Da Agenzia a Incubatore",
     speaker: "Marco + Socio",
     duration: "43 min",
+    color: "#F43F5E",
     focus: "Formula Partner, bootstrapping, hiring",
     tags: ["partner", "incubatore", "team"],
   },
@@ -69,6 +76,7 @@ const modules = [
     title: "Vendita Etica dalla Nicchia",
     speaker: "Simone Rossi",
     duration: "25 min",
+    color: "#FBBF24",
     focus: "Fiducia, palco, storytelling, vendita",
     tags: ["vendita", "fiducia", "storytelling"],
   },
@@ -79,6 +87,7 @@ const modules = [
     title: "Framework Operativo Meta Ads",
     speaker: "Michelangelo",
     duration: "33 min",
+    color: "#22C55E",
     focus: "Stabilita algoritmica, budget, stop loss",
     tags: ["Meta Ads", "tracking", "scaling"],
   },
@@ -110,9 +119,9 @@ function slugify(value: string): string {
 }
 
 function convertHref(href: string): string {
-  if (href === "../index.md") return "/playbook";
+  if (href === "../index.md") return PLAYBOOK_PATH;
   const match = href.match(/(\d{2})-/);
-  if (match) return `/playbook/modulo-${match[1]}`;
+  if (match) return `${PLAYBOOK_PATH}/modulo-${match[1]}`;
   return href;
 }
 
@@ -280,13 +289,13 @@ function extractToc(markdown: string) {
 function Header() {
   return (
     <header className={styles.header}>
-      <Link className={styles.brand} href="/playbook">
+      <Link className={styles.brand} href={PLAYBOOK_PATH}>
         Morfeus Playbook
       </Link>
       <nav className={styles.nav} aria-label="Navigazione playbook">
-        <Link href="/playbook">Indice</Link>
-        <a href="/playbook#moduli">Moduli</a>
-        <a href="#download">Download</a>
+        <Link href={PLAYBOOK_PATH}>Indice</Link>
+        <a href={`${PLAYBOOK_PATH}#moduli`}>Moduli</a>
+        <a href="#download">Folder Claude</a>
       </nav>
     </header>
   );
@@ -311,13 +320,13 @@ export function PlaybookHomeSection() {
             </p>
           </div>
           <div className={styles.heroCard}>
-            <h2>Se ti e utile, iscriviti e scarica il pacchetto.</h2>
+            <h2>Se ti e utile, ti mando la folder completa.</h2>
             <p>
-              Le pagine sono aperte. Il download completo resta riservato a chi lascia nome
-              ed email: ricevi il pacchetto con tutti i materiali sorgente.
+              Le pagine sono aperte. Lunedi preparo tutto in una folder ordinata:
+              materiali, moduli e struttura da usare come cervello per il tuo Claude.
             </p>
             <a className={styles.primaryButton} href="#download">
-              Sblocca download
+              Voglio la folder
             </a>
           </div>
         </div>
@@ -346,7 +355,12 @@ export function PlaybookHomeSection() {
         <h2 className={styles.sectionTitle}>Scegli il playbook da applicare adesso.</h2>
         <div className={styles.moduleGrid}>
           {modules.map((playbookModule) => (
-            <Link className={styles.moduleCard} href={`/playbook/${playbookModule.id}`} key={playbookModule.id}>
+            <Link
+              className={styles.moduleCard}
+              href={`${PLAYBOOK_PATH}/${playbookModule.id}`}
+              key={playbookModule.id}
+              style={{ "--speaker": playbookModule.color } as CSSProperties}
+            >
               <span className={styles.moduleNumber}>Modulo {playbookModule.number}</span>
               <h3>{playbookModule.title}</h3>
               <p>
@@ -383,7 +397,7 @@ export function PlaybookModuleSection({ step }: SectionProps) {
   const next = currentIndex < modules.length - 1 ? modules[currentIndex + 1] : null;
 
   return (
-    <div className={styles.page}>
+    <div className={styles.page} style={{ "--speaker": playbookModule.color } as CSSProperties}>
       <Header />
       <section className={styles.moduleHero}>
         <p className={styles.kicker}>Modulo {playbookModule.number}</p>
@@ -396,25 +410,85 @@ export function PlaybookModuleSection({ step }: SectionProps) {
       </section>
       <div className={styles.moduleLayout}>
         <aside className={styles.toc} aria-label="Indice modulo">
-          <Link href="/playbook">Torna all&apos;indice</Link>
+          <Link href={PLAYBOOK_PATH}>Torna all&apos;indice</Link>
           {toc.map((item) => (
             <a href={item.href} key={item.href}>
               {item.title}
             </a>
           ))}
-          <a href="#download">Scarica materiali</a>
+          <a href="#download">Ricevi folder</a>
         </aside>
         <article className={styles.article}>
           <div dangerouslySetInnerHTML={{ __html: html }} />
           <nav className={styles.moduleFooterNav} aria-label="Navigazione moduli">
-            {previous ? <Link className={styles.textLink} href={`/playbook/${previous.id}`}>Modulo precedente</Link> : <span />}
-            <Link className={styles.textLink} href="/playbook">Torna all&apos;indice</Link>
-            {next ? <Link className={styles.textLink} href={`/playbook/${next.id}`}>Modulo successivo</Link> : <span />}
+            {previous ? <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${previous.id}`}>Modulo precedente</Link> : <span />}
+            <Link className={styles.textLink} href={PLAYBOOK_PATH}>Torna all&apos;indice</Link>
+            {next ? <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${next.id}`}>Modulo successivo</Link> : <span />}
           </nav>
         </article>
       </div>
       <section className={styles.section}>
         <PlaybookDownloadGate />
+      </section>
+      <Footer />
+    </div>
+  );
+}
+
+export function PlaybookThankYouSection() {
+  return (
+    <div className={styles.page}>
+      <Header />
+      <section className={styles.thankYouHero}>
+        <p className={styles.kicker}>Ci sei</p>
+        <h1>Lunedi ti mando la folder completa.</h1>
+        <p>
+          Sto mettendo insieme tutto in modo utile: non un archivio buttato li, ma una folder
+          pensata per diventare il cervello operativo del tuo Claude su questo tema.
+        </p>
+      </section>
+
+      <section className={styles.thankYouGrid}>
+        <div className={styles.thankYouMain}>
+          <p className={styles.kicker}>Morfeus</p>
+          <h2>Se vuoi usare l&apos;AI seriamente, sei nel posto giusto.</h2>
+          <p>
+            Morfeus aiuta imprenditori, creator e team a trasformare Claude e gli strumenti AI
+            in sistemi di lavoro reali: processi, skill, automazioni, playbook e formazione
+            applicata. Meno prompt casuali. Piu metodo.
+          </p>
+          <div className={styles.linkGrid}>
+            <a href="/" className={styles.resourceCard}>
+              <span>Website</span>
+              <strong>Vai alla home Morfeus</strong>
+            </a>
+            <a href="https://www.linkedin.com/in/matteo-arnaboldi/" className={styles.resourceCard}>
+              <span>LinkedIn</span>
+              <strong>Segui Matteo Arnaboldi</strong>
+            </a>
+            <a href="https://www.instagram.com/its.matteoarnaboldi/" className={styles.resourceCard}>
+              <span>Instagram</span>
+              <strong>Seguimi anche li</strong>
+            </a>
+          </div>
+        </div>
+
+        <aside className={styles.thankYouSide}>
+          <p className={styles.kicker}>Prossimo step</p>
+          <h2>Formati su Claude con metodo.</h2>
+          <p>
+            Se vuoi capire come usare Claude e l&apos;AI nel lavoro vero, questi sono i due percorsi
+            da guardare adesso.
+          </p>
+          <div className={styles.stackLinks}>
+            <a href="/claude-unlocked" className={styles.primaryButton}>
+              Claude Unlocked
+            </a>
+            <a href="/bootcamp-ai-champion-3a-edizione" className={styles.secondaryButton}>
+              Bootcamp AI Champion
+            </a>
+          </div>
+        </aside>
       </section>
       <Footer />
     </div>

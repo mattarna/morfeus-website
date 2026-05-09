@@ -38,7 +38,7 @@ export function PlaybookDownloadGate() {
         body: JSON.stringify({
           name,
           email,
-          source: "Playbook_infobusiness_milionario",
+          source: "Playbook_imprenditore_milionario",
           ...readUtmParams(),
         }),
       });
@@ -50,7 +50,8 @@ export function PlaybookDownloadGate() {
       }
 
       setState("success");
-      setMessage("Perfetto. Download sbloccato.");
+      setMessage("Perfetto. Ti porto alla pagina di conferma.");
+      window.location.href = "/playbook-imprenditore-milionario/thank-you";
     } catch {
       setState("error");
       setMessage("Qualcosa non ha risposto. Riprova tra un momento.");
@@ -60,20 +61,17 @@ export function PlaybookDownloadGate() {
   return (
     <div className={styles.downloadPanel} id="download">
       <div>
-        <p className={styles.kicker}>Download completo</p>
-        <h2>Portati via tutto il materiale.</h2>
+        <p className={styles.kicker}>Folder in arrivo</p>
+        <h2>Vuoi ricevere il cervello pronto per Claude?</h2>
         <p>
-          Lascia nome ed email e sblocchi il pacchetto con hub, moduli, template
-          e materiali sorgente del playbook.
+          Lascia nome ed email. Lunedi metto insieme la folder completa e te la mando:
+          materiali, moduli e struttura pronta da caricare nel tuo Claude.
         </p>
       </div>
 
       {state === "success" ? (
         <div className={styles.downloadSuccess}>
           <p>{message}</p>
-          <a className={styles.primaryButton} href="/api/funnels/playbook/download">
-            Scarica il pacchetto ZIP
-          </a>
         </div>
       ) : (
         <form className={styles.downloadForm} onSubmit={onSubmit}>
@@ -86,7 +84,7 @@ export function PlaybookDownloadGate() {
             <input name="email" required type="email" autoComplete="email" placeholder="nome@email.com" />
           </label>
           <button className={styles.primaryButton} type="submit" disabled={state === "loading"}>
-            {state === "loading" ? "Invio in corso..." : "Sblocca download"}
+            {state === "loading" ? "Invio in corso..." : "Mandami la folder"}
           </button>
           {message ? <p className={styles.formMessage}>{message}</p> : null}
         </form>

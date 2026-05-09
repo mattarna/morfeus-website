@@ -6,6 +6,7 @@
   --hairline: rgba(255, 255, 255, 0.1);
   --hairline-strong: rgba(255, 255, 255, 0.18);
   --orange: #eb7a2e;
+  --speaker: var(--orange);
   --orange-soft: rgba(235, 122, 46, 0.14);
   --ghost: #e4e7f0;
   --muted: #9b9bb0;
@@ -68,7 +69,7 @@
 }
 
 .kicker {
-  color: var(--orange);
+  color: var(--speaker);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -165,8 +166,10 @@
 }
 
 .moduleCard {
-  background: var(--panel);
-  border: 1px solid var(--hairline);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--speaker) 14%, transparent), transparent 58%),
+    var(--panel);
+  border: 1px solid color-mix(in srgb, var(--speaker) 28%, var(--hairline));
   border-radius: 8px;
   color: inherit;
   display: block;
@@ -178,12 +181,12 @@
 
 .moduleCard:hover {
   background: var(--panel-strong);
-  border-color: rgba(235, 122, 46, 0.45);
+  border-color: var(--speaker);
   transform: translateY(-2px);
 }
 
 .moduleNumber {
-  color: var(--orange);
+  color: var(--speaker);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
   font-weight: 800;
@@ -210,8 +213,8 @@
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--speaker) 12%, rgba(255, 255, 255, 0.04));
+  border: 1px solid color-mix(in srgb, var(--speaker) 24%, var(--hairline));
   border-radius: 999px;
   color: var(--ghost);
   font-size: 12px;
@@ -319,7 +322,7 @@
 }
 
 .moduleMeta span {
-  border: 1px solid var(--hairline);
+  border: 1px solid color-mix(in srgb, var(--speaker) 26%, var(--hairline));
   border-radius: 999px;
   padding: 7px 10px;
 }
@@ -375,7 +378,7 @@
 
 .article h3 {
   background: var(--panel);
-  border: 1px solid var(--hairline);
+  border: 1px solid color-mix(in srgb, var(--speaker) 26%, var(--hairline));
   border-radius: 8px;
   color: var(--white);
   font-size: 24px;
@@ -417,12 +420,12 @@
 }
 
 .article a {
-  color: var(--orange);
+  color: var(--speaker);
 }
 
 .article blockquote {
-  background: var(--orange-soft);
-  border-left: 3px solid var(--orange);
+  background: color-mix(in srgb, var(--speaker) 14%, transparent);
+  border-left: 3px solid var(--speaker);
   border-radius: 8px;
   color: var(--white);
   margin: 24px 0;
@@ -494,10 +497,119 @@
   text-align: center;
 }
 
+.thankYouHero {
+  margin: 0 auto;
+  max-width: 980px;
+  padding: 94px 32px 54px;
+}
+
+.thankYouHero h1 {
+  color: var(--white);
+  font-family: "Clash Display", "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: clamp(46px, 7vw, 86px);
+  letter-spacing: 0;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.thankYouHero p {
+  color: var(--ghost);
+  font-size: 21px;
+  line-height: 1.6;
+  margin: 26px 0 0;
+  max-width: 820px;
+}
+
+.thankYouGrid {
+  align-items: start;
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 28px 32px 92px;
+}
+
+.thankYouMain,
+.thankYouSide {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.thankYouMain h2,
+.thankYouSide h2 {
+  color: var(--white);
+  font-family: "Clash Display", "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.thankYouMain p,
+.thankYouSide p {
+  color: var(--ghost);
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+
+.linkGrid,
+.stackLinks {
+  display: grid;
+  gap: 12px;
+}
+
+.resourceCard {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  color: inherit;
+  display: grid;
+  gap: 6px;
+  padding: 18px;
+  text-decoration: none;
+}
+
+.resourceCard:hover {
+  border-color: rgba(235, 122, 46, 0.48);
+}
+
+.resourceCard span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.resourceCard strong {
+  color: var(--white);
+  font-size: 18px;
+}
+
+.secondaryButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  color: var(--white);
+  display: inline-flex;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 850;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  text-decoration: none;
+}
+
 @media (max-width: 900px) {
   .heroGrid,
   .downloadPanel,
-  .moduleLayout {
+  .moduleLayout,
+  .thankYouGrid {
     grid-template-columns: 1fr;
   }
 
@@ -527,7 +639,9 @@
   .hero,
   .section,
   .moduleHero,
-  .moduleLayout {
+  .moduleLayout,
+  .thankYouHero,
+  .thankYouGrid {
     padding-left: 18px;
     padding-right: 18px;
   }

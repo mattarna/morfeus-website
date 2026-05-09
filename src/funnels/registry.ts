@@ -121,7 +121,7 @@ const bootcampAiChampion3aEdizioneItem: FunnelRegistryItem = {
 registerFunnel(bootcampAiChampion3aEdizioneItem, bootcampAiChampion3aEdizioneConfig as FunnelConfig);
 
 const playbookItem: FunnelRegistryItem = {
-  slug: "playbook",
+  slug: "playbook-imprenditore-milionario",
   locale: "it",
   indexable: false,
   abTest: {

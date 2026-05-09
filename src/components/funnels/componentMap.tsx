@@ -189,6 +189,7 @@ import {
 import {
   PlaybookHomeSection,
   PlaybookModuleSection,
+  PlaybookThankYouSection,
 } from "@/funnels/playbook-2026-05/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
@@ -426,4 +427,5 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.BootcampThankYou ? <BootcampV3ThankYouSection accentColor={accentColor} step={step} /> : null,
   PlaybookHome: () => <PlaybookHomeSection />,
   PlaybookModule: ({ step }) => <PlaybookModuleSection step={step} />,
+  PlaybookThankYou: () => <PlaybookThankYouSection />,
 };

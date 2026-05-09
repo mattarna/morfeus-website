@@ -54,7 +54,6 @@ const nextConfig = {
     optimizePackageImports: ['@iconify/react', 'lucide-react', 'framer-motion'],
     outputFileTracingIncludes: {
       '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
-      '/api/funnels/playbook/download': ['./src/funnels/playbook-2026-05/download/**/*'],
     },
   },
 
@@ -106,6 +105,16 @@ const nextConfig = {
   // ============================================
   async redirects() {
     return [
+      {
+        source: '/playbook',
+        destination: '/playbook-imprenditore-milionario',
+        permanent: true,
+      },
+      {
+        source: '/playbook/:path*',
+        destination: '/playbook-imprenditore-milionario/:path*',
+        permanent: true,
+      },
       {
         source: '/bootcamp-ai-champion-seconda-edizione',
         destination: 'https://go.morfeushub.com/bootcamp-ai-champion-seconda-edizione',

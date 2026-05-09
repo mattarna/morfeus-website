@@ -78,10 +78,10 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
       },
     };
   }
-  if (params.slug === "playbook") {
+  if (params.slug === "playbook-imprenditore-milionario") {
     const title =
       step?.id === "index"
-        ? "Playbook Infobusiness Milionario | Morfeus"
+        ? "Playbook Imprenditore Milionario | Morfeus"
         : `${step?.title ?? "Playbook"} | Morfeus`;
     const description =
       "I materiali operativi di Infobusiness Milionario: 7 moduli, quick win, framework, checklist e playbook completi.";
@@ -89,12 +89,18 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
       title,
       description,
       robots: { index: false, follow: false },
-      alternates: { canonical: step?.path ? `/playbook/${step.path}` : "/playbook" },
+      alternates: {
+        canonical: step?.path
+          ? `/playbook-imprenditore-milionario/${step.path}`
+          : "/playbook-imprenditore-milionario",
+      },
       openGraph: {
         title,
         description,
         type: "website",
-        url: step?.path ? `https://morfeushub.com/playbook/${step.path}` : "https://morfeushub.com/playbook",
+        url: step?.path
+          ? `https://morfeushub.com/playbook-imprenditore-milionario/${step.path}`
+          : "https://morfeushub.com/playbook-imprenditore-milionario",
         siteName: "Morfeus Hub",
       },
     };
