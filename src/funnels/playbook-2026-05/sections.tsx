@@ -342,11 +342,17 @@ export function PlaybookHomeSection() {
               Materiali Infobusiness Milionario
             </span>
             <h1>
-              Una giornata. Otto speaker. <span className={styles.accent}>Zero teoria inutile.</span>
+              Due giornate.<br />
+              +15 speaker.<br />
+              <span className={styles.accent}>Il cervello per il tuo Claude.</span>
             </h1>
             <p className={styles.heroLead}>
-              Tutto quello che e stato detto a Infobusiness Milionario, distillato in playbook
-              operativi, framework testati e checklist pronte all&apos;uso.
+              Tutto quello che è stato detto a Infobusiness Milionario, distillato in playbook
+              operativi. Framework testati. Checklist pronte.
+            </p>
+            <p className={styles.heroLead}>
+              Scorri e studia tutto. Oppure scarica la folder .md e caricala nel tuo Claude
+              {" — "}lui saprà tutto per sempre.
             </p>
             <div className={styles.heroCtaRow}>
               <a className={styles.primaryButton} href="#download">
@@ -364,10 +370,12 @@ export function PlaybookHomeSection() {
             </div>
           </div>
           <aside className={styles.heroCard}>
-            <h2>Se ti e utile, ti mando la folder completa.</h2>
+            <h2>Vuoi anche il cervello per Claude?</h2>
             <p>
-              Le pagine sono aperte. Lunedi preparo tutto in una folder ordinata: materiali,
-              moduli e struttura da usare come cervello per il tuo Claude.
+              Tutti i materiali che trovi qui sotto esistono anche come file .md strutturati
+              {" — "}pensati per essere caricati nella tua AI. Trascina la folder nel tuo Claude
+              e lui avrà accesso a playbook, framework, checklist e connessioni tra i moduli.
+              Senza ricopiare nulla.
             </p>
             <a className={styles.primaryButton} href="#download">
               Voglio la folder
