@@ -170,7 +170,9 @@ export type FunnelComponentName =
   | "BootcampV3Footer"
   | "BootcampV3StickyBar"
   | "BootcampV3CallBooked"
-  | "BootcampV3ThankYou";
+  | "BootcampV3ThankYou"
+  | "PlaybookHome"
+  | "PlaybookModule";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -1107,6 +1109,8 @@ export interface FunnelStepConfig {
     BootcampV3StickyBar?: BootcampStickyBarContent;
     BootcampV3CallBooked?: BootcampCallBookedContent;
     BootcampV3ThankYou?: BootcampThankYouContent;
+    PlaybookHome?: Record<string, never>;
+    PlaybookModule?: Record<string, never>;
   };
 }
 

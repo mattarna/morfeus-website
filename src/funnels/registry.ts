@@ -7,6 +7,7 @@ import freebieCoworkSetupSkillConfig from "@/funnels/freebie-cowork-setup-skill-
 import freebieInstagramCarouselSkillsConfig from "@/funnels/freebie-instagram-carousel-skills-2026-04/config.json";
 import freebieVocabolarioAiConfig from "@/funnels/freebie-vocabolario-ai-2026-04/config.json";
 import freebieDesignSystemBlueprintConfig from "@/funnels/freebie-design-system-blueprint-2026-05/config.json";
+import playbookConfig from "@/funnels/playbook-2026-05/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
 
@@ -118,3 +119,15 @@ const bootcampAiChampion3aEdizioneItem: FunnelRegistryItem = {
 };
 
 registerFunnel(bootcampAiChampion3aEdizioneItem, bootcampAiChampion3aEdizioneConfig as FunnelConfig);
+
+const playbookItem: FunnelRegistryItem = {
+  slug: "playbook",
+  locale: "it",
+  indexable: false,
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(playbookItem, playbookConfig as FunnelConfig);

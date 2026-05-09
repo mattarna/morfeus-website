@@ -52,6 +52,10 @@ const nextConfig = {
   // Optimize package imports
   experimental: {
     optimizePackageImports: ['@iconify/react', 'lucide-react', 'framer-motion'],
+    outputFileTracingIncludes: {
+      '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
+      '/api/funnels/playbook/download': ['./src/funnels/playbook-2026-05/download/**/*'],
+    },
   },
 
   // ============================================

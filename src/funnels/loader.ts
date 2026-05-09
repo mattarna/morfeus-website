@@ -171,7 +171,9 @@ const allowedComponents: FunnelComponentName[] = [
   "BootcampV3Footer",
   "BootcampV3StickyBar",
   "BootcampV3CallBooked",
-  "BootcampV3ThankYou"
+  "BootcampV3ThankYou",
+  "PlaybookHome",
+  "PlaybookModule"
 ];
 
 function hasUniqueStepIds(steps: FunnelStepConfig[]): boolean {

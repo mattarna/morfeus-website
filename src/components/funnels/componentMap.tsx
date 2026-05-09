@@ -186,6 +186,10 @@ import {
   BootcampV3StickyBarSection,
   BootcampV3ThankYouSection,
 } from "@/funnels/webinar-claude-2026-05/sections-bootcamp-v3";
+import {
+  PlaybookHomeSection,
+  PlaybookModuleSection,
+} from "@/funnels/playbook-2026-05/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -420,4 +424,6 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   BootcampV3StickyBar: ({ accentColor, step }) => <BootcampV3StickyBarSection accentColor={accentColor} step={step} />,
   BootcampV3ThankYou: ({ accentColor, step }) =>
     step.content.BootcampThankYou ? <BootcampV3ThankYouSection accentColor={accentColor} step={step} /> : null,
+  PlaybookHome: () => <PlaybookHomeSection />,
+  PlaybookModule: ({ step }) => <PlaybookModuleSection step={step} />,
 };
