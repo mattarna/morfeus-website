@@ -14,6 +14,7 @@ export const BREVO_LIST_ENV = {
   FREEBIE_INSTAGRAM_CAROUSEL_SKILLS: "BREVO_FREEBIE_INSTAGRAM_CAROUSEL_LIST_ID", // dashboard ID: 57
   FREEBIE_DESIGN_SYSTEM_BLUEPRINT: "BREVO_FREEBIE_DESIGN_SYSTEM_LIST_ID", // dashboard ID: 61
   NEXT_WEBINAR_WAITLIST: "BREVO_NEXT_WEBINAR_LIST_ID", // dashboard ID: 62 (Iscritti_al_prossimo_webinar)
+  PLAYBOOK_INFOBIZ_MILIONARIO: "BREVO_PLAYBOOK_INFOBIZ_LIST_ID", // dashboard ID: 63 (infobiz_milionario)
 } as const;
 
 export type BrevoListEnvKey = keyof typeof BREVO_LIST_ENV;

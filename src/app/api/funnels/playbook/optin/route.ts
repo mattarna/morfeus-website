@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { BREVO_ATTR } from "@/lib/brevo/attributes";
+import { getBrevoListId } from "@/lib/brevo/lists";
 
 interface OptinPayload {
   email?: string;
@@ -13,7 +14,6 @@ interface OptinPayload {
 }
 
 const DEFAULT_FORM_NAME = "Playbook_imprenditore_milionario";
-const PLAYBOOK_LIST_ID = 64;
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -34,6 +34,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "missing_brevo_api_key" }, { status: 500 });
     }
 
+    const playbookListId = getBrevoListId("PLAYBOOK_INFOBIZ_MILIONARIO");
+    if (!playbookListId) {
+      return NextResponse.json({ success: false, error: "missing_playbook_list_id" }, { status: 500 });
+    }
+
     const contactResponse = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
@@ -48,7 +53,7 @@ export async function POST(request: Request) {
           [BREVO_ATTR.FORM_NAME]: payload.source ?? DEFAULT_FORM_NAME,
           [BREVO_ATTR.OPT_IN]: true,
         },
-        listIds: [PLAYBOOK_LIST_ID],
+        listIds: [playbookListId],
         updateEnabled: true,
       }),
     });
