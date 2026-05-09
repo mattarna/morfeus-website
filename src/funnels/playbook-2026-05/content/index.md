@@ -26,7 +26,7 @@ Tutto quello che è stato detto a Infobusiness Milionario — distillato in play
 | 05 | [Da Agenzia a Incubatore](./moduli/05-formula-partner-incubatore.md) | Marco + Socio | Formula Partner, bootstrapping, hiring | → |
 | 06 | [Vendita Etica dalla Nicchia](./moduli/06-simone-vendita-etica.md) | Simone Rossi | Fiducia, palco, 11 principi, storytelling | → |
 | 07 | [Framework Operativo Meta Ads](./moduli/07-michelangelo-meta-ads.md) | Michelangelo | Stabilità algoritmica, budget, stop loss, OMTM | → |
-| 08 | [AI Memory Architecture](./moduli/08-gio-disiena-ai-memoria.md) | Gio Di Siena | WikiLLM, MCP server, auto-research, articulation gap | → |
+| 08 | [AI Memory Architecture](./moduli/08-gio-disiena-ai-memoria.md) | Joe Di Siena | WikiLLM, MCP server, auto-research, articulation gap | → |
 
 ---
 

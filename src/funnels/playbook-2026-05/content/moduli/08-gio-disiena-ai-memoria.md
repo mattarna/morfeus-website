@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 08 |
-| Speaker | Gio Di Siena (coaching client di Rich Schefren dal 2014, nel marketing dal 2008) |
+| Speaker | Joe Di Siena (coaching client di Rich Schefren dal 2014, nel marketing dal 2008) |
 | Titolo | AI Memory Architecture: Come Non Farsi Fottere dalle AI |
 | Tipo | tattico |
 | Durata | 30 min |
@@ -15,7 +15,7 @@
 
 ## In 30 Secondi
 
-L'AI ha amnesia e tu non sai comunicarle quello che conosci davvero. Gio Di Siena (coaching client di Rich Schefren dal 2014, nel marketing dal 2008) mostra il costo nascosto: 173 ore/anno sprecate, output mediocri, zero compounding. La soluzione: costruire un sistema di memoria proprietaria (WikiLLM) sul tuo disco, non nel cloud, che rende la tua AI 10x più potente. Tre pilastri: Memoria in bottiglia, MCP Server, Auto-Research.
+L'AI ha amnesia e tu non sai comunicarle quello che conosci davvero. Joe Di Siena (coaching client di Rich Schefren dal 2014, nel marketing dal 2008) mostra il costo nascosto: 173 ore/anno sprecate, output mediocri, zero compounding. La soluzione: costruire un sistema di memoria proprietaria (WikiLLM) sul tuo disco, non nel cloud, che rende la tua AI 10x più potente. Tre pilastri: Memoria in bottiglia, MCP Server, Auto-Research.
 
 ---
 
@@ -33,7 +33,7 @@ Stanotte. Crea un file .md con il tuo core context completo:
 
 **Identità e posizionamento:** chi sei, cosa fai, per chi, cosa NON fai.
 
-**Tono di voce REALE**, non "diretto e professionale" ma: lunghezza media frasi, verbi preferiti, punteggiatura, parole che non usi MAI, parole che usi SEMPRE, pattern ricorrenti, tipo di metafore. Esempio di Gio: "frasi max 14 parole, inizio con verbo imperativo, mai punti esclamativi, una metafora per paragrafo, domanda secca + affermazione di 4-6 parole."
+**Tono di voce REALE**, non "diretto e professionale" ma: lunghezza media frasi, verbi preferiti, punteggiatura, parole che non usi MAI, parole che usi SEMPRE, pattern ricorrenti, tipo di metafore. Esempio di Joe: "frasi max 14 parole, inizio con verbo imperativo, mai punti esclamativi, una metafora per paragrafo, domanda secca + affermazione di 4-6 parole."
 
 **Cliente ideale REALE**, non "imprenditore 35-55 anni" ma: segnali comportamentali del cliente giusto (come risponde alle mail, quanto parla vs ascolta, cosa chiede nei primi contatti) e red flag del cliente sbagliato (cerca un salvatore, usa "asap" ripetutamente, manda vocali da 4 minuti, chiede sconti subito).
 
@@ -47,11 +47,11 @@ Non partire con tutto. Scegli un'area (copy, ads, email, contenuti, vendita) usa
 
 ## Playbook Completo
 
-### Azioni Medio Termine — Entro 30 Giorni
+### Azioni Medio Termine — Entro 30 Joerni
 
 #### MT1: Costruisci la Tua Wiki Personale (WikiLLM)
 
-L'architettura a strati di Gio:
+L'architettura a strati di Joe:
 
 ```
 /memoria/
@@ -102,14 +102,14 @@ Rendi la wiki accessibile automaticamente a ogni nuova chat.
 **Dal più semplice al più avanzato:**
 - **Livello 1:** Copia file .md in custom instructions/project knowledge (immediato, limitato)
 - **Livello 2:** Claude Projects o GPT con knowledge base (più strutturato, memoria sulla piattaforma)
-- **Livello 3:** MCP Server locale, la wiki sta sul tuo disco, ogni AI-client compatibile la consulta (proprietà totale, quello che raccomanda Gio)
+- **Livello 3:** MCP Server locale, la wiki sta sul tuo disco, ogni AI-client compatibile la consulta (proprietà totale, quello che raccomanda Joe)
 - **Livello 4:** RAG completo con database vettoriale locale (per 100+ documenti)
 
-### Progetti Strategici — Entro 90 Giorni
+### Progetti Strategici — Entro 90 Joerni
 
 #### PS1: Implementa l'Auto-Research (Metodo Karpathy)
 
-Il concetto di Andrej Karpathy (co-founder OpenAI) implementato da Gio: non accettare il primo output. Per ogni deliverable critico:
+Il concetto di Andrej Karpathy (co-founder OpenAI) implementato da Joe: non accettare il primo output. Per ogni deliverable critico:
 
 ```
 1. Genera 5 versioni diverse
@@ -119,7 +119,7 @@ Il concetto di Andrej Karpathy (co-founder OpenAI) implementato da Gio: non acce
 5. Consegna SOLO il top + ragionamento
 ```
 
-Caso Shopify: 93 persone testate overnight, 53% più rapido, codice zero. Caso Gio: 100 varianti di una sales bridge generate e testate di notte, al mattino i risultati.
+Caso Shopify: 93 persone testate overnight, 53% più rapido, codice zero. Caso Joe: 100 varianti di una sales bridge generate e testate di notte, al mattino i risultati.
 
 #### PS2: Sistema di Conoscenza Proprietaria Completa
 
@@ -127,7 +127,7 @@ Espandi la wiki iniziale a tutte le aree: posizionamento, offerte, copy, funnel,
 
 #### PS3: Separa la Memoria dal Cloud
 
-La tua memoria deve stare sul TUO disco. Come dice Gio: "Se continuate a usare Cloud/GPT come avete sempre fatto, state permettendo al padrone di casa di buttarvi fuori a calci senza preavviso." Piano: backup tutto dal cloud → installa sistema locale → la wiki locale diventa single source of truth → il cloud diventa client, non server della conoscenza.
+La tua memoria deve stare sul TUO disco. Come dice Joe: "Se continuate a usare Cloud/GPT come avete sempre fatto, state permettendo al padrone di casa di buttarvi fuori a calci senza preavviso." Piano: backup tutto dal cloud → installa sistema locale → la wiki locale diventa single source of truth → il cloud diventa client, non server della conoscenza.
 
 ---
 
@@ -196,7 +196,7 @@ Quello che l'AI vorrebbe: "Frasi max 14 parole, verbo imperativo, mai punti escl
 L'AI non porta tutti allo stesso livello. Chi è ignorante sarà 10x più ignorante. Chi ha esperienza sarà 10x più esperto. L'AI ha creato l'"epistemia digitale": la convinzione di sapere ciò che non si è studiato.
 
 ### Memory in a Bottle (Rich Schefren)
-Concetto spiegato da Rich Schefren a Gio: mettere la tua memoria in un contenitore persistente che ogni nuova chat eredita automaticamente. Non un tool o un trucco, un'architettura. Il know-how sul TUO disco, non nel cloud del provider. I marketer americani stanno comprando Mac M4 per salvare la memoria in locale.
+Concetto spiegato da Rich Schefren a Joe: mettere la tua memoria in un contenitore persistente che ogni nuova chat eredita automaticamente. Non un tool o un trucco, un'architettura. Il know-how sul TUO disco, non nel cloud del provider. I marketer americani stanno comprando Mac M4 per salvare la memoria in locale.
 
 ### Il Filtro della Memoria
 L'errore più comune: dare tutto alla memoria senza filtri. La memoria deve verificare: "quello che è stato detto in questa chat è allineato con i principi già stabiliti? Se no, lo scarto." Senza filtri, inquini la conoscenza e l'AI produce output che pensa siano giusti ma non lo sono.
@@ -234,12 +234,12 @@ Azienda che ha sostituito un dipendente con un agente AI. L'agente ha fallito: 6
 
 | Modulo | Come si collega |
 |--------|----------------|
-| [01 - Le Nuove Regole](./01-marco-regole-infobusiness.md) | Marco indica AI come leva strategica, Gio spiega COME implementarla con WikiLLM senza farsi fottere |
+| [01 - Le Nuove Regole](./01-marco-regole-infobusiness.md) | Marco indica AI come leva strategica, Joe spiega COME implementarla con WikiLLM senza farsi fottere |
 | [02 - Offerte e Conversione](./02-michele-offerte-conversione.md) | L'avatar comportamentale di Michele (segnali, red flag) diventa un file wiki. L'articulation gap spiega perché le pre-qualifiche generiche non funzionano |
-| [03 - The War Machine](./03-roberto-war-machine.md) | Roberto testa varianti di VSL/ads manualmente, l'auto-research di Gio automatizza il testing su scala (100+ varianti overnight) |
+| [03 - The War Machine](./03-roberto-war-machine.md) | Roberto testa varianti di VSL/ads manualmente, l'auto-research di Joe automatizza il testing su scala (100+ varianti overnight) |
 | [04 - Creatività e Advertising](./04-federico-creativita-advertising.md) | Federico genera angoli creativi, l'auto-research li testa in automatico e seleziona i migliori per look/originalità/engagement |
 | [05 - Formula Partner](./05-formula-partner-incubatore.md) | Il know-how del founder deve scalare, la wiki rende la conoscenza trasferibile e persistente |
-| [06 - Vendita Etica](./06-simone-vendita-etica.md) | Simone parla di voce autentica, l'articulation gap di Gio spiega perché è così difficile replicarla (la tacit knowledge non si trasferisce con "scrivi come me") |
+| [06 - Vendita Etica](./06-simone-vendita-etica.md) | Simone parla di voce autentica, l'articulation gap di Joe spiega perché è così difficile replicarla (la tacit knowledge non si trasferisce con "scrivi come me") |
 | [07 - Meta Ads](./07-michelangelo-meta-ads.md) | Dati proprietari delle ads, nella wiki come conoscenza strutturata consultabile dall'AI per decisioni future |
 
 ---

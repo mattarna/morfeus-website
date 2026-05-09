@@ -98,7 +98,7 @@ const modules = [
     number: "08",
     file: "08-gio-disiena-ai-memoria.md",
     title: "AI Memory Architecture",
-    speaker: "Gio Di Siena",
+    speaker: "Joe Di Siena",
     duration: "30 min",
     color: "#A855F7",
     focus: "WikiLLM, MCP server, auto-research",
