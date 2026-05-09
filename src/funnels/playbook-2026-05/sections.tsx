@@ -115,7 +115,7 @@ function slugify(value: string): string {
   return value
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
@@ -292,19 +292,30 @@ function Header() {
   return (
     <header className={styles.header}>
       <Link className={styles.brand} href={PLAYBOOK_PATH}>
+        <span className={styles.brandDot} aria-hidden />
         Morfeus Playbook
       </Link>
       <nav className={styles.nav} aria-label="Navigazione playbook">
         <Link href={PLAYBOOK_PATH}>Indice</Link>
         <a href={`${PLAYBOOK_PATH}#moduli`}>Moduli</a>
-        <a href="#download">Folder Claude</a>
+        <a className={styles.navCta} href={`${PLAYBOOK_PATH}#download`}>
+          Folder Claude
+        </a>
       </nav>
     </header>
   );
 }
 
 function Footer() {
-  return <footer className={styles.footer}>Morfeus Hub - Playbook Infobusiness Milionario</footer>;
+  return (
+    <footer className={styles.footer}>
+      <span className={styles.footerBrand}>
+        <span className={styles.brandDot} aria-hidden />
+        <strong>Morfeus Hub</strong> · Playbook Infobusiness Milionario
+      </span>
+      <span>© 2026 Morfeus</span>
+    </footer>
+  );
 }
 
 export function PlaybookHomeSection() {
@@ -312,30 +323,56 @@ export function PlaybookHomeSection() {
     <div className={styles.page}>
       <Header />
       <section className={styles.hero}>
-        <div className={styles.heroGrid}>
+        <div className={styles.heroGlow} aria-hidden />
+        <div className={styles.heroLayout}>
           <div>
-            <p className={styles.kicker}>Infobusiness Milionario - materiali evento</p>
-            <h1>Una giornata. Sette speaker. Zero teoria inutile.</h1>
+            <span className={styles.kickerPill}>
+              <span className={styles.kickerPillDot} aria-hidden />
+              Materiali Infobusiness Milionario
+            </span>
+            <h1>
+              Una giornata. Sette speaker. <span className={styles.accent}>Zero teoria inutile.</span>
+            </h1>
             <p className={styles.heroLead}>
               Tutto quello che e stato detto a Infobusiness Milionario, distillato in playbook
               operativi, framework testati e checklist pronte all&apos;uso.
             </p>
+            <div className={styles.heroCtaRow}>
+              <a className={styles.primaryButton} href="#download">
+                Voglio la folder
+              </a>
+              <a className={styles.secondaryButton} href="#moduli">
+                Vai ai moduli
+              </a>
+            </div>
+            <div className={styles.heroProofBar}>
+              <span><strong>7</strong> speaker</span>
+              <span><strong>263</strong> minuti</span>
+              <span><strong>42+</strong> azioni</span>
+              <span><strong>15</strong> framework</span>
+            </div>
           </div>
-          <div className={styles.heroCard}>
+          <aside className={styles.heroCard}>
             <h2>Se ti e utile, ti mando la folder completa.</h2>
             <p>
-              Le pagine sono aperte. Lunedi preparo tutto in una folder ordinata:
-              materiali, moduli e struttura da usare come cervello per il tuo Claude.
+              Le pagine sono aperte. Lunedi preparo tutto in una folder ordinata: materiali,
+              moduli e struttura da usare come cervello per il tuo Claude.
             </p>
             <a className={styles.primaryButton} href="#download">
               Voglio la folder
             </a>
-          </div>
+          </aside>
         </div>
-        <div className={styles.statGrid} aria-label="Statistiche playbook">
+      </section>
+
+      <div className={styles.divider} />
+
+      <section className={styles.statSection} aria-label="Statistiche playbook">
+        <p className={styles.sectionLabel}>Cosa c&apos;e dentro</p>
+        <div className={styles.statGrid}>
           <div className={styles.stat}>
             <strong>7</strong>
-            <span>speaker</span>
+            <span>speaker dal palco</span>
           </div>
           <div className={styles.stat}>
             <strong>263</strong>
@@ -352,33 +389,46 @@ export function PlaybookHomeSection() {
         </div>
       </section>
 
+      <div className={styles.divider} />
+
       <section className={styles.section} id="moduli">
-        <p className={styles.kicker}>Indice dei moduli</p>
-        <h2 className={styles.sectionTitle}>Scegli il playbook da applicare adesso.</h2>
+        <p className={styles.sectionLabel}>Indice playbook</p>
+        <h2 className={styles.sectionTitle}>
+          Scegli il modulo da <span className={styles.accent}>applicare adesso.</span>
+        </h2>
+        <p className={styles.sectionLead}>
+          Sette playbook autonomi. Ognuno e un sistema operativo: framework, esempi, checklist.
+          Apri quello che ti serve, applica, torna alla folder per il prossimo.
+        </p>
         <div className={styles.moduleGrid}>
           {modules.map((playbookModule) => (
             <Link
               className={styles.moduleCard}
+              data-watermark={playbookModule.number}
               href={`${PLAYBOOK_PATH}/${playbookModule.id}`}
               key={playbookModule.id}
               style={{ "--speaker": playbookModule.color } as CSSProperties}
             >
-              <span className={styles.moduleNumber}>Modulo {playbookModule.number}</span>
+              <span className={styles.moduleSpeakerPill}>{playbookModule.speaker}</span>
+              <p className={styles.moduleNumber}>Modulo {playbookModule.number} · {playbookModule.duration}</p>
               <h3>{playbookModule.title}</h3>
-              <p>
-                {playbookModule.speaker} - {playbookModule.focus}
-              </p>
-              <div className={styles.tagRow}>
-                {playbookModule.tags.map((tag) => (
-                  <span className={styles.tag} key={tag}>
-                    {tag}
-                  </span>
-                ))}
+              <p>{playbookModule.focus}</p>
+              <div className={styles.moduleCardFooter}>
+                <div className={styles.tagRow}>
+                  {playbookModule.tags.map((tag) => (
+                    <span className={styles.tag} key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className={styles.moduleCardArrow} aria-hidden>→</span>
               </div>
             </Link>
           ))}
         </div>
       </section>
+
+      <div className={styles.divider} />
 
       <section className={styles.section}>
         <PlaybookDownloadGate />
@@ -402,33 +452,71 @@ export function PlaybookModuleSection({ step }: SectionProps) {
     <div className={styles.page} style={{ "--speaker": playbookModule.color } as CSSProperties}>
       <Header />
       <section className={styles.moduleHero}>
-        <p className={styles.kicker}>Modulo {playbookModule.number}</p>
-        <h1>{playbookModule.title}</h1>
-        <div className={styles.moduleMeta}>
-          <span>{playbookModule.speaker}</span>
-          <span>{playbookModule.duration}</span>
-          <span>{playbookModule.focus}</span>
+        <Link className={styles.moduleHeroBack} href={PLAYBOOK_PATH}>
+          <span aria-hidden>←</span> Torna all&apos;indice playbook
+        </Link>
+        <div className={styles.moduleHeroInner}>
+          <div>
+            <span className={styles.kickerPill} data-tone="speaker">
+              <span className={styles.kickerPillDot} aria-hidden />
+              Modulo {playbookModule.number} · {playbookModule.speaker}
+            </span>
+            <h1>{playbookModule.title}</h1>
+            <div className={styles.moduleMeta}>
+              <span className={styles.moduleMetaSpeaker}>{playbookModule.speaker}</span>
+              <span>{playbookModule.duration}</span>
+              <span>{playbookModule.focus}</span>
+            </div>
+          </div>
+          <span className={styles.moduleNumberMega} aria-hidden>
+            {playbookModule.number}
+          </span>
         </div>
       </section>
+
+      <div className={styles.divider} />
+
       <div className={styles.moduleLayout}>
         <aside className={styles.toc} aria-label="Indice modulo">
-          <Link href={PLAYBOOK_PATH}>Torna all&apos;indice</Link>
+          <p className={styles.tocLabel}>Indice modulo</p>
+          <Link className={styles.tocBack} href={PLAYBOOK_PATH}>
+            <span aria-hidden>←</span> Tutti i moduli
+          </Link>
           {toc.map((item) => (
             <a href={item.href} key={item.href}>
               {item.title}
             </a>
           ))}
-          <a href="#download">Ricevi folder</a>
+          <a className={styles.tocFolder} href="#download">
+            Ricevi la folder Claude →
+          </a>
         </aside>
         <article className={styles.article}>
           <div dangerouslySetInnerHTML={{ __html: html }} />
           <nav className={styles.moduleFooterNav} aria-label="Navigazione moduli">
-            {previous ? <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${previous.id}`}>Modulo precedente</Link> : <span />}
-            <Link className={styles.textLink} href={PLAYBOOK_PATH}>Torna all&apos;indice</Link>
-            {next ? <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${next.id}`}>Modulo successivo</Link> : <span />}
+            {previous ? (
+              <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${previous.id}`}>
+                <span aria-hidden>←</span> Modulo {previous.number}
+              </Link>
+            ) : (
+              <span />
+            )}
+            <Link className={styles.textLink} href={PLAYBOOK_PATH}>
+              Torna all&apos;indice
+            </Link>
+            {next ? (
+              <Link className={styles.textLink} href={`${PLAYBOOK_PATH}/${next.id}`}>
+                Modulo {next.number} <span aria-hidden>→</span>
+              </Link>
+            ) : (
+              <span />
+            )}
           </nav>
         </article>
       </div>
+
+      <div className={styles.divider} />
+
       <section className={styles.section}>
         <PlaybookDownloadGate />
       </section>
@@ -442,18 +530,24 @@ export function PlaybookThankYouSection() {
     <div className={styles.page}>
       <Header />
       <section className={styles.thankYouHero}>
-        <p className={styles.kicker}>Ci sei</p>
-        <h1>Lunedi ti mando la folder completa.</h1>
+        <span className={styles.thankYouBadge}>Sei dentro</span>
+        <h1>
+          Lunedi ti mando la <span className={styles.accent}>folder completa</span>.
+        </h1>
         <p>
           Sto mettendo insieme tutto in modo utile: non un archivio buttato li, ma una folder
           pensata per diventare il cervello operativo del tuo Claude su questo tema.
         </p>
       </section>
 
+      <div className={styles.divider} />
+
       <section className={styles.thankYouGrid}>
         <div className={styles.thankYouMain}>
-          <p className={styles.kicker}>Morfeus</p>
-          <h2>Se vuoi usare l&apos;AI seriamente, sei nel posto giusto.</h2>
+          <p className={styles.sectionLabel}>Morfeus</p>
+          <h2>
+            Se vuoi usare l&apos;AI seriamente, sei <span className={styles.accent}>nel posto giusto.</span>
+          </h2>
           <p>
             Morfeus aiuta imprenditori, creator e team a trasformare Claude e gli strumenti AI
             in sistemi di lavoro reali: processi, skill, automazioni, playbook e formazione
@@ -461,23 +555,34 @@ export function PlaybookThankYouSection() {
           </p>
           <div className={styles.linkGrid}>
             <a href="/" className={styles.resourceCard}>
-              <span>Website</span>
-              <strong>Vai alla home Morfeus</strong>
+              <span className={styles.resourceCardLabel}>
+                <span>Website</span>
+                <strong>Vai alla home Morfeus</strong>
+              </span>
+              <span className={styles.resourceCardArrow} aria-hidden>→</span>
             </a>
             <a href="https://www.linkedin.com/in/matteo-arnaboldi/" className={styles.resourceCard}>
-              <span>LinkedIn</span>
-              <strong>Segui Matteo Arnaboldi</strong>
+              <span className={styles.resourceCardLabel}>
+                <span>LinkedIn</span>
+                <strong>Segui Matteo Arnaboldi</strong>
+              </span>
+              <span className={styles.resourceCardArrow} aria-hidden>→</span>
             </a>
             <a href="https://www.instagram.com/its.matteoarnaboldi/" className={styles.resourceCard}>
-              <span>Instagram</span>
-              <strong>Seguimi anche li</strong>
+              <span className={styles.resourceCardLabel}>
+                <span>Instagram</span>
+                <strong>Seguimi anche li</strong>
+              </span>
+              <span className={styles.resourceCardArrow} aria-hidden>→</span>
             </a>
           </div>
         </div>
 
         <aside className={styles.thankYouSide}>
-          <p className={styles.kicker}>Prossimo step</p>
-          <h2>Formati su Claude con metodo.</h2>
+          <p className={styles.sectionLabel}>Prossimo step</p>
+          <h2>
+            Formati su Claude <span className={styles.accent}>con metodo.</span>
+          </h2>
           <p>
             Se vuoi capire come usare Claude e l&apos;AI nel lavoro vero, questi sono i due percorsi
             da guardare adesso.
@@ -502,8 +607,13 @@ export function PlaybookQrSection() {
     <div className={styles.qrPage}>
       <div className={styles.qrContent}>
         <div className={styles.qrCopy}>
-          <p className={styles.kicker}>Scansiona ora</p>
-          <h1>Playbook Imprenditore Milionario</h1>
+          <span className={styles.kickerPill}>
+            <span className={styles.kickerPillDot} aria-hidden />
+            Scansiona ora
+          </span>
+          <h1>
+            Playbook <span className={styles.accent}>Imprenditore Milionario.</span>
+          </h1>
           <p>
             Apri la pagina, scegli il modulo che ti serve e lascia l&apos;email per ricevere
             la folder completa da usare con Claude.
