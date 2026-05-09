@@ -3,6 +3,7 @@ import path from "path";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { FunnelStepConfig } from "@/funnels/types";
+import { DayFilter } from "./DayFilter";
 import { PlaybookDownloadGate, PlaybookOptinForm } from "./DownloadGate";
 import styles from "./sections.module.css";
 
@@ -26,6 +27,7 @@ const modules = [
     color: "#EB7A2E",
     focus: "Diagnosi mercato, 4 pilastri, ecosistema",
     tags: ["mercato", "ecosistema", "vendita", "AI"],
+    day: 1,
   },
   {
     id: "modulo-02",
@@ -37,6 +39,7 @@ const modules = [
     color: "#7B68EE",
     focus: "High ticket, pre-qualifica, frizione produttiva",
     tags: ["offerta", "pricing", "conversione"],
+    day: 1,
   },
   {
     id: "modulo-03",
@@ -48,6 +51,7 @@ const modules = [
     color: "#B5F03A",
     focus: "Workshop, VSL, CAC/LTV, scaling",
     tags: ["funnel", "liquidita", "ads"],
+    day: 1,
   },
   {
     id: "modulo-04",
@@ -59,6 +63,7 @@ const modules = [
     color: "#38BDF8",
     focus: "Angoli creativi, organico, unit economics",
     tags: ["creativita", "organico", "advertising"],
+    day: 1,
   },
   {
     id: "modulo-05",
@@ -70,6 +75,7 @@ const modules = [
     color: "#F43F5E",
     focus: "Formula Partner, bootstrapping, hiring",
     tags: ["partner", "incubatore", "team"],
+    day: 1,
   },
   {
     id: "modulo-06",
@@ -81,6 +87,7 @@ const modules = [
     color: "#FBBF24",
     focus: "Fiducia, palco, storytelling, vendita",
     tags: ["vendita", "fiducia", "storytelling"],
+    day: 1,
   },
   {
     id: "modulo-07",
@@ -92,6 +99,7 @@ const modules = [
     color: "#22C55E",
     focus: "Stabilita algoritmica, budget, stop loss",
     tags: ["Meta Ads", "tracking", "scaling"],
+    day: 1,
   },
   {
     id: "modulo-08",
@@ -103,6 +111,7 @@ const modules = [
     color: "#A855F7",
     focus: "WikiLLM, MCP server, auto-research",
     tags: ["AI", "memoria", "WikiLLM"],
+    day: 1,
   },
 ] as const;
 
@@ -414,35 +423,10 @@ export function PlaybookHomeSection() {
           Scegli il modulo da <span className={styles.accent}>applicare adesso.</span>
         </h2>
         <p className={styles.sectionLead}>
-          Otto playbook autonomi. Ognuno e un sistema operativo: framework, esempi, checklist.
-          Apri quello che ti serve, applica, torna alla folder per il prossimo.
+          Playbook autonomi divisi in due giornate. Ognuno e un sistema operativo: framework,
+          esempi, checklist. Apri quello che ti serve, applica, torna alla folder per il prossimo.
         </p>
-        <div className={styles.moduleGrid}>
-          {modules.map((playbookModule) => (
-            <Link
-              className={styles.moduleCard}
-              data-watermark={playbookModule.number}
-              href={`${PLAYBOOK_PATH}/${playbookModule.id}`}
-              key={playbookModule.id}
-              style={{ "--speaker": playbookModule.color } as CSSProperties}
-            >
-              <span className={styles.moduleSpeakerPill}>{playbookModule.speaker}</span>
-              <p className={styles.moduleNumber}>Modulo {playbookModule.number} · {playbookModule.duration}</p>
-              <h3>{playbookModule.title}</h3>
-              <p>{playbookModule.focus}</p>
-              <div className={styles.moduleCardFooter}>
-                <div className={styles.tagRow}>
-                  {playbookModule.tags.map((tag) => (
-                    <span className={styles.tag} key={tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <span className={styles.moduleCardArrow} aria-hidden>→</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <DayFilter modules={modules} basePath={PLAYBOOK_PATH} />
       </section>
 
       <div className={styles.divider} />
