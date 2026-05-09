@@ -3,7 +3,7 @@ import path from "path";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { FunnelStepConfig } from "@/funnels/types";
-import { PlaybookDownloadGate } from "./DownloadGate";
+import { PlaybookDownloadGate, PlaybookOptinForm } from "./DownloadGate";
 import styles from "./sections.module.css";
 
 interface SectionProps {
@@ -377,9 +377,7 @@ export function PlaybookHomeSection() {
               e lui avrà accesso a playbook, framework, checklist e connessioni tra i moduli.
               Senza ricopiare nulla.
             </p>
-            <a className={styles.primaryButton} href="#download">
-              Voglio la folder
-            </a>
+            <PlaybookOptinForm />
           </aside>
         </div>
       </section>

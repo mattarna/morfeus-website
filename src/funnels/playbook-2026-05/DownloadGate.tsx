@@ -17,7 +17,7 @@ function readUtmParams() {
   };
 }
 
-export function PlaybookDownloadGate() {
+function usePlaybookOptin() {
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
 
@@ -58,6 +58,39 @@ export function PlaybookDownloadGate() {
     }
   }
 
+  return { state, message, onSubmit };
+}
+
+export function PlaybookOptinForm() {
+  const { state, message, onSubmit } = usePlaybookOptin();
+
+  if (state === "success") {
+    return (
+      <div className={styles.downloadSuccess}>
+        <p>{message}</p>
+      </div>
+    );
+  }
+
+  return (
+    <form className={styles.downloadForm} onSubmit={onSubmit}>
+      <label>
+        Nome
+        <input name="name" required autoComplete="name" placeholder="Il tuo nome" />
+      </label>
+      <label>
+        Email
+        <input name="email" required type="email" autoComplete="email" placeholder="nome@email.com" />
+      </label>
+      <button className={styles.primaryButton} type="submit" disabled={state === "loading"}>
+        {state === "loading" ? "Invio in corso..." : "Mandami la folder"}
+      </button>
+      {message ? <p className={styles.formMessage}>{message}</p> : null}
+    </form>
+  );
+}
+
+export function PlaybookDownloadGate() {
   return (
     <div className={styles.downloadPanel} id="download">
       <div>
@@ -68,27 +101,7 @@ export function PlaybookDownloadGate() {
           materiali, moduli e struttura pronta da caricare nel tuo Claude.
         </p>
       </div>
-
-      {state === "success" ? (
-        <div className={styles.downloadSuccess}>
-          <p>{message}</p>
-        </div>
-      ) : (
-        <form className={styles.downloadForm} onSubmit={onSubmit}>
-          <label>
-            Nome
-            <input name="name" required autoComplete="name" placeholder="Il tuo nome" />
-          </label>
-          <label>
-            Email
-            <input name="email" required type="email" autoComplete="email" placeholder="nome@email.com" />
-          </label>
-          <button className={styles.primaryButton} type="submit" disabled={state === "loading"}>
-            {state === "loading" ? "Invio in corso..." : "Mandami la folder"}
-          </button>
-          {message ? <p className={styles.formMessage}>{message}</p> : null}
-        </form>
-      )}
+      <PlaybookOptinForm />
     </div>
   );
 }
