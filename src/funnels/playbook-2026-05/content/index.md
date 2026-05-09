@@ -2,13 +2,13 @@
 
 <!-- [DESIGN: Hero section, sfondo scuro, titoli grandi, proof bar sotto] -->
 
-## Una giornata. Sette speaker. Zero teoria inutile.
+## Una giornata. Otto speaker. Zero teoria inutile.
 
 Tutto quello che è stato detto a Infobusiness Milionario — distillato in playbook operativi, framework testati e checklist pronte all'uso.
 
-7 interventi. 42+ azioni concrete. 15 framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
+8 interventi. 50+ azioni concrete. 19 framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
 
-| 7 Speaker | 263 min di contenuto | 42+ azioni operative | 15 framework |
+| 8 Speaker | 293 min di contenuto | 50+ azioni operative | 19 framework |
 |-----------|---------------------|---------------------|--------------|
 
 ---
@@ -26,6 +26,7 @@ Tutto quello che è stato detto a Infobusiness Milionario — distillato in play
 | 05 | [Da Agenzia a Incubatore](./moduli/05-formula-partner-incubatore.md) | Marco + Socio | Formula Partner, bootstrapping, hiring | → |
 | 06 | [Vendita Etica dalla Nicchia](./moduli/06-simone-vendita-etica.md) | Simone Rossi | Fiducia, palco, 11 principi, storytelling | → |
 | 07 | [Framework Operativo Meta Ads](./moduli/07-michelangelo-meta-ads.md) | Michelangelo | Stabilità algoritmica, budget, stop loss, OMTM | → |
+| 08 | [AI Memory Architecture](./moduli/08-gio-disiena-ai-memoria.md) | Gio Di Siena | WikiLLM, MCP server, auto-research, articulation gap | → |
 
 ---
 
@@ -59,7 +60,7 @@ Ogni pagina contiene:
 | Team & Hiring | 01, 05 |
 | Advertising & Paid Media | 03, 04, 07 |
 | Creatività & Contenuti | 04, 05 |
-| AI & Automazione | 01, 07 |
+| AI & Automazione | 01, 07, 08 |
 
 ---
 

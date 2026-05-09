@@ -9,7 +9,7 @@
 | Durata | 33 min |
 | Tags | Meta Ads, stabilita' algoritmica, CPA, budget scaling, stop loss, creative testing, OMTM, tracking, MCP Meta, AI |
 
-[← Modulo precedente](./06-simone-vendita-etica.md) | [Torna all'indice](../index.md)
+[← Modulo precedente](./06-simone-vendita-etica.md) | [Torna all'indice](../index.md) | [Modulo successivo →](./08-gio-disiena-ai-memoria.md)
 
 ---
 
@@ -547,4 +547,4 @@ Se non hai dati storici: alloca un piccolo budget che ti puoi permettere per cap
 
 ---
 
-[← Modulo precedente](./06-simone-vendita-etica.md) | [Torna all'indice](../index.md)
+[← Modulo precedente](./06-simone-vendita-etica.md) | [Torna all'indice](../index.md) | [Modulo successivo →](./08-gio-disiena-ai-memoria.md)

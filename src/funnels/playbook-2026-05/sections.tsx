@@ -93,6 +93,17 @@ const modules = [
     focus: "Stabilita algoritmica, budget, stop loss",
     tags: ["Meta Ads", "tracking", "scaling"],
   },
+  {
+    id: "modulo-08",
+    number: "08",
+    file: "08-gio-disiena-ai-memoria.md",
+    title: "AI Memory Architecture",
+    speaker: "Gio Di Siena",
+    duration: "30 min",
+    color: "#A855F7",
+    focus: "WikiLLM, MCP server, auto-research",
+    tags: ["AI", "memoria", "WikiLLM"],
+  },
 ] as const;
 
 function getModuleByStep(stepId: string) {
@@ -331,7 +342,7 @@ export function PlaybookHomeSection() {
               Materiali Infobusiness Milionario
             </span>
             <h1>
-              Una giornata. Sette speaker. <span className={styles.accent}>Zero teoria inutile.</span>
+              Una giornata. Otto speaker. <span className={styles.accent}>Zero teoria inutile.</span>
             </h1>
             <p className={styles.heroLead}>
               Tutto quello che e stato detto a Infobusiness Milionario, distillato in playbook
@@ -346,10 +357,10 @@ export function PlaybookHomeSection() {
               </a>
             </div>
             <div className={styles.heroProofBar}>
-              <span><strong>7</strong> speaker</span>
-              <span><strong>263</strong> minuti</span>
-              <span><strong>42+</strong> azioni</span>
-              <span><strong>15</strong> framework</span>
+              <span><strong>8</strong> speaker</span>
+              <span><strong>293</strong> minuti</span>
+              <span><strong>50+</strong> azioni</span>
+              <span><strong>19</strong> framework</span>
             </div>
           </div>
           <aside className={styles.heroCard}>
@@ -371,19 +382,19 @@ export function PlaybookHomeSection() {
         <p className={styles.sectionLabel}>Cosa c&apos;e dentro</p>
         <div className={styles.statGrid}>
           <div className={styles.stat}>
-            <strong>7</strong>
+            <strong>8</strong>
             <span>speaker dal palco</span>
           </div>
           <div className={styles.stat}>
-            <strong>263</strong>
+            <strong>293</strong>
             <span>minuti di contenuto</span>
           </div>
           <div className={styles.stat}>
-            <strong>42+</strong>
+            <strong>50+</strong>
             <span>azioni operative</span>
           </div>
           <div className={styles.stat}>
-            <strong>15</strong>
+            <strong>19</strong>
             <span>framework proprietari</span>
           </div>
         </div>
@@ -397,7 +408,7 @@ export function PlaybookHomeSection() {
           Scegli il modulo da <span className={styles.accent}>applicare adesso.</span>
         </h2>
         <p className={styles.sectionLead}>
-          Sette playbook autonomi. Ognuno e un sistema operativo: framework, esempi, checklist.
+          Otto playbook autonomi. Ognuno e un sistema operativo: framework, esempi, checklist.
           Apri quello che ti serve, applica, torna alla folder per il prossimo.
         </p>
         <div className={styles.moduleGrid}>
