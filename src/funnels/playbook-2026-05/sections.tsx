@@ -607,10 +607,10 @@ export function PlaybookThankYouSection() {
             da guardare adesso.
           </p>
           <div className={styles.stackLinks}>
-            <a href="/claude-unlocked" className={`${styles.primaryButtonLime} ${styles.ctaLg}`}>
+            <a href="/claude-unlocked" className={`${styles.primaryButton} ${styles.ctaLg}`}>
               Claude Unlocked
             </a>
-            <a href="/bootcamp-ai-champion-3a-edizione" className={`${styles.primaryButton} ${styles.ctaLg}`}>
+            <a href="/bootcamp-ai-champion-3a-edizione" className={`${styles.primaryButtonLime} ${styles.ctaLg}`}>
               Bootcamp AI Champion
             </a>
           </div>
