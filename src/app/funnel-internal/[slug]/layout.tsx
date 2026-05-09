@@ -39,6 +39,23 @@ export default function FunnelSlugLayout({
             {children}
           </WcThemeProvider>
         </>
+      ) : params.slug === "playbook-imprenditore-milionario" ? (
+        <>
+          <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+          <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+          <link rel="preload" href="/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+          {/* eslint-disable-next-line react/no-danger */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @font-face { font-family: 'Clash Display'; src: url('/fonts/webinar-claude/ClashDisplay-Variable.ttf') format('truetype'); font-weight: 200 700; font-style: normal; font-display: swap; }
+            @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-Variable.ttf') format('truetype'); font-weight: 300 900; font-style: normal; font-display: swap; }
+            @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-VariableItalic.ttf') format('truetype'); font-weight: 300 900; font-style: italic; font-display: swap; }
+            @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: normal; font-display: swap; }
+            @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: italic; font-display: swap; }
+            html { scroll-padding-top: 96px; }
+            @media (max-width: 640px) { html { scroll-padding-top: 76px; } }
+          `}} />
+          {children}
+        </>
       ) : (
         <>{children}</>
       )}
