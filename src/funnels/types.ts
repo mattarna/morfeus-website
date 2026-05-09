@@ -324,6 +324,8 @@ export interface WebinarReplayExpiredContent {
   headlinePre: string;
   headlineAccent: string;
   subheadline: string;
+  /** Testo del bottone primario "chiuso" (stato iniziale, prima di aprire il form). */
+  ctaLabel: string;
   formTitle: string;
   formMicrocopy: string;
   formSubmitLabel: string;
@@ -332,7 +334,7 @@ export interface WebinarReplayExpiredContent {
   rolesPlaceholder: string;
   rolesOptions: string[];
   privacyHref: string;
-  /** CTA primario: porta alla sales page del corso */
+  /** CTA secondario: porta alla sales page del corso */
   corsoLabel: string;
   corsoHref: string;
   /** CTA secondario: porta alla sales page del bootcamp */

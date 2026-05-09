@@ -1224,6 +1224,7 @@ export function WebinarReplayExpiredSection({ step }: SectionProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [forcePreview, setForcePreview] = useState(false);
 
+  const [formOpen, setFormOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
@@ -1237,6 +1238,7 @@ export function WebinarReplayExpiredSection({ step }: SectionProps) {
   const [roleFocus, setRoleFocus] = useState(false);
 
   const ctaRef = useRef<HTMLButtonElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -1464,7 +1466,52 @@ export function WebinarReplayExpiredSection({ step }: SectionProps) {
           {content.subheadline}
         </p>
 
-        {/* Form / Success card */}
+        {/* Stato 1: solo bottone CTA (prima di aprire il form) */}
+        {!formOpen && !success && (
+          <button
+            type="button"
+            onClick={() => {
+              setFormOpen(true);
+              // focus email al frame successivo
+              setTimeout(() => emailRef.current?.focus(), 50);
+            }}
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 700,
+              fontSize: isMobile ? 17 : 18,
+              padding: isMobile ? "20px 28px" : "22px 36px",
+              borderRadius: 12,
+              border: "none",
+              background: "var(--orange)",
+              color: "#fff",
+              boxShadow: "0 8px 32px rgba(235,122,46,0.45)",
+              cursor: "pointer",
+              width: "100%",
+              maxWidth: 520,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              transition: "background .2s, box-shadow .2s, transform .2s",
+              animation: "btn-pulse 2.4s infinite",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--orange-hover, #f08a44)";
+              e.currentTarget.style.boxShadow = "0 10px 40px rgba(235,122,46,0.6)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--orange)";
+              e.currentTarget.style.boxShadow = "0 8px 32px rgba(235,122,46,0.45)";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            {content.ctaLabel} <span style={{ fontSize: 19 }}>→</span>
+          </button>
+        )}
+
+        {/* Stato 2/3: form aperto o success */}
+        {(formOpen || success) && (
         <form
           onSubmit={submit}
           style={{
@@ -1525,6 +1572,7 @@ export function WebinarReplayExpiredSection({ step }: SectionProps) {
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <input
+                  ref={emailRef}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -1654,6 +1702,7 @@ export function WebinarReplayExpiredSection({ step }: SectionProps) {
             </>
           )}
         </form>
+        )}
 
         {/* Divider */}
         <div
