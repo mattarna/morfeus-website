@@ -605,6 +605,71 @@
   text-decoration: none;
 }
 
+.qrPage {
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 16% 20%, rgba(235, 122, 46, 0.16), transparent 38%),
+    radial-gradient(ellipse at 86% 84%, rgba(123, 104, 238, 0.14), transparent 42%),
+    #0b0b0c;
+  color: var(--ghost);
+  display: flex;
+  min-height: 100vh;
+  padding: 54px;
+}
+
+.qrContent {
+  align-items: center;
+  display: grid;
+  gap: 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.72fr);
+  margin: 0 auto;
+  max-width: 1380px;
+  width: 100%;
+}
+
+.qrCopy h1 {
+  color: var(--white);
+  font-family: "Clash Display", "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: clamp(64px, 8vw, 122px);
+  letter-spacing: 0;
+  line-height: 0.9;
+  margin: 0;
+  max-width: 900px;
+}
+
+.qrCopy p {
+  color: var(--ghost);
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.35;
+  margin: 34px 0 0;
+  max-width: 820px;
+}
+
+.qrUrl {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  color: var(--white);
+  display: inline-flex;
+  font-size: clamp(18px, 1.6vw, 26px);
+  font-weight: 800;
+  margin-top: 38px;
+  padding: 16px 20px;
+}
+
+.qrFrame {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.45);
+  padding: clamp(18px, 2vw, 30px);
+}
+
+.qrFrame img {
+  aspect-ratio: 1;
+  display: block;
+  height: auto;
+  width: min(42vw, 620px);
+}
+
 @media (max-width: 900px) {
   .heroGrid,
   .downloadPanel,
@@ -618,8 +683,17 @@
   }
 
   .statGrid,
-  .moduleGrid {
+  .moduleGrid,
+  .qrContent {
     grid-template-columns: 1fr;
+  }
+
+  .qrPage {
+    padding: 28px;
+  }
+
+  .qrFrame img {
+    width: 100%;
   }
 }
 

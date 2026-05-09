@@ -12,6 +12,8 @@ interface SectionProps {
 
 const contentDir = path.join(process.cwd(), "src", "funnels", "playbook-2026-05", "content");
 const PLAYBOOK_PATH = "/playbook-imprenditore-milionario";
+const PLAYBOOK_URL = "https://morfeushub.com/playbook-imprenditore-milionario";
+const QR_IMAGE_URL = `https://api.qrserver.com/v1/create-qr-code/?size=760x760&margin=24&data=${encodeURIComponent(PLAYBOOK_URL)}`;
 
 const modules = [
   {
@@ -491,6 +493,28 @@ export function PlaybookThankYouSection() {
         </aside>
       </section>
       <Footer />
+    </div>
+  );
+}
+
+export function PlaybookQrSection() {
+  return (
+    <div className={styles.qrPage}>
+      <div className={styles.qrContent}>
+        <div className={styles.qrCopy}>
+          <p className={styles.kicker}>Scansiona ora</p>
+          <h1>Playbook Imprenditore Milionario</h1>
+          <p>
+            Apri la pagina, scegli il modulo che ti serve e lascia l&apos;email per ricevere
+            la folder completa da usare con Claude.
+          </p>
+          <div className={styles.qrUrl}>{PLAYBOOK_URL.replace("https://", "")}</div>
+        </div>
+        <div className={styles.qrFrame}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={QR_IMAGE_URL} alt="QR code per aprire il Playbook Imprenditore Milionario" />
+        </div>
+      </div>
     </div>
   );
 }

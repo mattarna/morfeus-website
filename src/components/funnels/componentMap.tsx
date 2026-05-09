@@ -189,6 +189,7 @@ import {
 import {
   PlaybookHomeSection,
   PlaybookModuleSection,
+  PlaybookQrSection,
   PlaybookThankYouSection,
 } from "@/funnels/playbook-2026-05/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
@@ -428,4 +429,5 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   PlaybookHome: () => <PlaybookHomeSection />,
   PlaybookModule: ({ step }) => <PlaybookModuleSection step={step} />,
   PlaybookThankYou: () => <PlaybookThankYouSection />,
+  PlaybookQr: () => <PlaybookQrSection />,
 };

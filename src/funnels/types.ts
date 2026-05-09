@@ -173,7 +173,8 @@ export type FunnelComponentName =
   | "BootcampV3ThankYou"
   | "PlaybookHome"
   | "PlaybookModule"
-  | "PlaybookThankYou";
+  | "PlaybookThankYou"
+  | "PlaybookQr";
 
 export interface HeroContent {
   eyebrow?: string;
@@ -1113,6 +1114,7 @@ export interface FunnelStepConfig {
     PlaybookHome?: Record<string, never>;
     PlaybookModule?: Record<string, never>;
     PlaybookThankYou?: Record<string, never>;
+    PlaybookQr?: Record<string, never>;
   };
 }
 
