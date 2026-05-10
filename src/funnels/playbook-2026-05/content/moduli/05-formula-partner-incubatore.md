@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 05 |
-| Speaker | Marco + Socio operativo |
+| Speaker | Marco Lutzu + Socio operativo |
 | Titolo | Da Agenzia a Incubatore: La Formula Partner per Lanciare Business da Zero |
 | Tipo | strategico con caso studio |
 | Durata | 43 min |

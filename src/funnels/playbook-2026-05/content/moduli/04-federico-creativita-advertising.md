@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 04 |
-| Speaker | Federico Zannini |
+| Speaker | Federico Giannini |
 | Titolo | Creatività, Organico e Advertising: Come Sta Cambiando Tutto |
 | Tipo | tattico |
 | Durata | 27 min |

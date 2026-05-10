@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 03 |
-| Speaker | Roberto (MarketX) |
+| Speaker | Roberto Resta (MarketX) |
 | Titolo | The War Machine — Sistema a 3 Layer per Generare Liquidità |
 | Tipo | tattico con benchmark reali |
 | Durata | 31 min |

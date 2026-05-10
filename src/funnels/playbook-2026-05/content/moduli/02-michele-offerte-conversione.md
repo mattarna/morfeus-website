@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 02 |
-| Speaker | Michele (copywriter, consulente offerte, direttore commerciale) |
+| Speaker | Michele Sainville (copywriter, consulente offerte, direttore commerciale) |
 | Titolo | La Leva Invisibile delle Offerte ad Alta Conversione |
 | Tipo | tattico-strategico |
 | Durata | 28 min |

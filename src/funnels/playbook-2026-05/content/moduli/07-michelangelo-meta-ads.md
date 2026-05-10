@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 07 |
-| Speaker | Michelangelo (media buyer, 10-15M€/anno di budget gestito) |
+| Speaker | Michelangelo Acquino (media buyer, 10-15M€/anno di budget gestito) |
 | Titolo | Framework Operativo per Gestire le Campagne Meta: Stabilita' Algoritmica, Budget e Iterazione Creativa |
 | Tipo | tecnico-operativo |
 | Durata | 33 min |

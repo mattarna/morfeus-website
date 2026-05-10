@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 01 |
-| Speaker | Marco |
+| Speaker | Mario Olivelli |
 | Titolo | Stato dell'Infobusiness e Nuove Regole del Gioco |
 | Tipo | keynote strategico |
 | Durata | 76 min |
