@@ -2863,10 +2863,91 @@
 }
 
 .shareOptions {
-  display: grid;
+  display: none;
   gap: 10px;
   grid-template-columns: repeat(5, 1fr);
   margin-bottom: 18px;
+}
+
+.shareOptions[data-variant="mobile"] {
+  display: none;
+}
+
+/* Desktop pill row */
+.sharePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sharePills[data-variant="desktop"] {
+  display: flex;
+}
+
+.sharePillBtn {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  color: var(--ghost);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
+  letter-spacing: -0.005em;
+  padding: 10px 14px;
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+
+.sharePillBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.sharePillBtn:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.sharePillBtn[data-channel="whatsapp"]:hover {
+  border-color: rgba(37, 211, 102, 0.6);
+  color: #6ee7a4;
+}
+
+.sharePillBtn[data-channel="telegram"]:hover {
+  border-color: rgba(34, 158, 217, 0.6);
+  color: #6cc4ee;
+}
+
+.sharePillBtn[data-channel="linkedin"]:hover {
+  border-color: rgba(10, 102, 194, 0.6);
+  color: #8ec3f5;
+}
+
+.sharePillBtn[data-channel="x"]:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.sharePillBtn[data-channel="email"]:hover {
+  border-color: rgba(235, 122, 46, 0.6);
+  color: #f5b07a;
+}
+
+.sharePillBtn[data-copied="true"] {
+  background: rgba(52, 211, 153, 0.14);
+  border-color: rgba(52, 211, 153, 0.5);
+  color: #6ee7b7;
+}
+
+.sharePillBtn[data-copied="true"]:hover {
+  background: rgba(52, 211, 153, 0.18);
+  border-color: rgba(52, 211, 153, 0.7);
+  color: #6ee7b7;
 }
 
 .shareOption {
@@ -2956,7 +3037,7 @@
   border-radius: 14px;
   color: #fff;
   cursor: pointer;
-  display: grid;
+  display: none;
   font-family: var(--font-body);
   gap: 14px;
   grid-template-columns: auto 1fr auto;
@@ -3024,11 +3105,19 @@
     padding: 10px;
   }
 
-  .shareOptions {
-    grid-template-columns: repeat(3, 1fr);
+  /* Mobile: hide desktop pills, show icon-grid + big copy button */
+  .sharePills[data-variant="desktop"] {
+    display: none;
   }
 
-  .shareCopyButton {
+  .shareOptions[data-variant="mobile"] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 18px;
+  }
+
+  .shareCopyButton[data-variant="mobile"] {
+    display: grid;
     grid-template-columns: auto 1fr;
   }
 
