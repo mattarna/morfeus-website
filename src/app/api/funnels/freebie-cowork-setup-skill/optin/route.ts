@@ -36,11 +36,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "missing_brevo_api_key" }, { status: 500 });
     }
 
-    // Auto-enroll: il contatto entra sia nella list freebie (consegna .zip)
-    // sia nella list webinar (riceve invito + reminder dall'automation esistente).
     const freebieListId = getBrevoListId("FREEBIE_COWORK_SETUP_SKILL");
-    const webinarListId = getBrevoListId("WEBINAR_CLAUDE_5MAG");
-    const listIds = [freebieListId, webinarListId].filter(
+    const listIds = [freebieListId].filter(
       (id): id is number => typeof id === "number"
     );
 

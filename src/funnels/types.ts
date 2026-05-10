@@ -904,6 +904,8 @@ export interface FreebieThankYouContent {
   webinarCardTitle: string;
   webinarCardBody: string;
   eventDateLabel: string;
+  webinarCtaLabel?: string;
+  webinarCtaHref?: string;
   calendarGoogleHref: string;
   calendarGoogleLabel: string;
   calendarIcsFileName: string;

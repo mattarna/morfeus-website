@@ -782,12 +782,20 @@ export function FreebieThankYouSection({ step }: SectionProps) {
             gap: 10,
           }}
         >
-          <SecondaryButton href={content.calendarGoogleHref}>
-            {content.calendarGoogleLabel}
-          </SecondaryButton>
-          <SecondaryButton onClick={downloadIcs}>
-            {content.calendarIcsLabel}
-          </SecondaryButton>
+          {content.webinarCtaHref ? (
+            <SecondaryButton href={content.webinarCtaHref}>
+              {content.webinarCtaLabel ?? "Guarda il replay"}
+            </SecondaryButton>
+          ) : (
+            <>
+              <SecondaryButton href={content.calendarGoogleHref}>
+                {content.calendarGoogleLabel}
+              </SecondaryButton>
+              <SecondaryButton onClick={downloadIcs}>
+                {content.calendarIcsLabel}
+              </SecondaryButton>
+            </>
+          )}
         </div>
       </div>
 

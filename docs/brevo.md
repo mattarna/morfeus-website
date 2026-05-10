@@ -116,7 +116,7 @@ Ogni endpoint `/api/funnels/<funnel>/optin` deve:
 
 Endpoint di riferimento:
 - [src/app/api/funnels/webinar-claude/optin/route.ts](../src/app/api/funnels/webinar-claude/optin/route.ts) — list singola
-- [src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts](../src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts) — auto-enroll a 2 list (freebie + webinar)
+- [src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts](../src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts) — list singola freebie
 
 ---
 
