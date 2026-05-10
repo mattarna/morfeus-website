@@ -713,8 +713,9 @@ export function PlaybookThankYouSection() {
           Lunedi ti mando la <span className={styles.accent}>folder completa</span>.
         </h1>
         <p>
-          Sto mettendo insieme tutto in modo utile: non un archivio buttato li, ma una folder
-          pensata per diventare il cervello operativo del tuo Claude su questo tema.
+          Sto mettendo insieme tutto in modo utile: non un archivio buttato li, ma una folder{" "}
+          <span className={styles.accent}>per il tuo Claude</span>. Il cervello operativo
+          dell&apos;evento, pronto da caricare.
         </p>
       </section>
 
@@ -756,7 +757,7 @@ export function PlaybookThankYouSection() {
           </ul>
 
           <div className={styles.featureStripe}>
-            <strong>11 speaker dal palco. 80+ azioni operative. 25+ framework.</strong>
+            <strong>13 speaker dal palco. 100+ azioni operative. 35+ framework.</strong>
             <span>Tutto organizzato, collegato, pronto.</span>
           </div>
         </div>
@@ -774,8 +775,8 @@ export function PlaybookThankYouSection() {
         <div className={styles.plotTwistInner}>
           <p className={styles.sectionLabel}>Una cosa che devi sapere</p>
           <h2 className={styles.plotTwistTitle}>
-            Tutto questo l&apos;ho costruito{" "}
-            <span className={styles.accent}>in poche ore. Con l&apos;AI.</span>
+            Tutto questo lo hanno costruito in poche ore<br />
+            <span className={styles.accent}>i miei dipendenti AI.</span>
           </h2>
           <p>
             I playbook, i framework, le connessioni tra speaker, l&apos;intero sistema.
@@ -794,7 +795,8 @@ export function PlaybookThankYouSection() {
       <section className={styles.tySection}>
         <p className={styles.sectionLabel}>Proof</p>
         <h2 className={styles.tySectionTitle}>
-          I numeri <span className={styles.accent}>parlano.</span>
+          I numeri che l&apos;AI ci ha permesso di ottenere.<br />
+          <span className={styles.accent}>Totally crazy.</span>
         </h2>
 
         <div className={styles.proofGrid}>
@@ -873,12 +875,11 @@ export function PlaybookThankYouSection() {
         <div className={styles.thankYouMain}>
           <p className={styles.sectionLabel}>Morfeus</p>
           <h2>
-            Se vuoi usare l&apos;AI seriamente, sei <span className={styles.accent}>nel posto giusto.</span>
+            Mi trovi <span className={styles.accent}>qui sotto.</span>
           </h2>
           <p>
-            Morfeus aiuta imprenditori, creator e team a trasformare Claude e gli strumenti AI
-            in sistemi di lavoro reali: processi, skill, automazioni, playbook e formazione
-            applicata. Meno prompt casuali. Piu metodo.
+            Scrivo, parlo e lavoro su queste piattaforme. Se ti va di restare in giro,
+            da qualcuna di queste passa qualcosa di utile quasi ogni settimana.
           </p>
           <div className={styles.linkGrid}>
             <a href="/" className={styles.resourceCard}>
@@ -935,7 +936,7 @@ export function PlaybookThankYouSection() {
         </div>
 
         <aside className={styles.thankYouCta}>
-          <p className={styles.sectionLabel}>Vuoi sapere come faccio?</p>
+          <p className={styles.sectionLabel}>Se hai bisogno di una mano</p>
           <h2 className={styles.thankYouCtaTitle}>
             Facciamoci <span className={styles.accent}>due chiacchiere.</span>
           </h2>
