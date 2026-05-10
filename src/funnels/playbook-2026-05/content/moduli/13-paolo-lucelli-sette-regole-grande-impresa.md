@@ -279,7 +279,7 @@ Target ideale: dirigenti 37-38 anni, 4-5K/mese, macchina aziendale, ma senza un 
 | [11 - Soro](./11-soro-youtube-personal-brand.md) | Stesso principio: non vendere teoria, vendere risultati. Soro costruisce fiducia col video, Lucelli con i numeri del cliente. Complementari |
 | [07 - Michelangelo](./07-michelangelo-meta-ads.md) | Antitesi del modello ads-dependent: 50% dei clienti OSM viene da passaparola. Complementari: le ads acquisiscono, lo scambio in abbondanza trattiene e moltiplica |
 | [01 - Marco](./01-marco-regole-infobusiness.md) | Le 7 regole di Lucelli sono il fondamento su cui poggiano i 4 pilastri di Marco. Senza scambio in abbondanza e management strutturato, i funnel costruiscono su sabbia |
-| [10 - Transfer Manager](./10-transfer-manager-protezione-patrimoniale.md) | Convergenza sul modello societario distribuito. Il piano partnership di Lucelli (37 soci) potrebbe usare le strutture del Transfer Manager per formalizzare le quote |
+| [10 - Simone Giannetti](./10-transfer-manager-protezione-patrimoniale.md) | Convergenza sul modello societario distribuito. Il piano partnership di Lucelli (37 soci) potrebbe usare le strutture del transfer manager per formalizzare le quote |
 
 ---
 

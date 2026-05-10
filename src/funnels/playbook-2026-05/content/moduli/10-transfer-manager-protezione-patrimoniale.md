@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 10 |
-| Speaker | Transfer Manager |
+| Speaker | Simone Giannetti |
 | Titolo | Protezione Patrimoniale e Ottimizzazione Fiscale: Piano B per Infobusiness |
 | Tipo | speech tecnico-strategico |
 | Durata | 44 min |

@@ -147,7 +147,7 @@ const modules = [
     number: "10",
     file: "10-transfer-manager-protezione-patrimoniale.md",
     title: "Protezione Patrimoniale e Ottimizzazione Fiscale",
-    speaker: "Transfer Manager",
+    speaker: "Simone Giannetti",
     duration: "44 min",
     color: "#06B6D4",
     focus: "Malta, Panama, LLC USA, exit tax, residenza fiscale",
