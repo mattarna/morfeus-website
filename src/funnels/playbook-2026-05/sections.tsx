@@ -947,6 +947,17 @@ export function PlaybookThankYouSection() {
               <span className={styles.resourceCardArrow} aria-hidden>→</span>
             </a>
           </div>
+
+          <div className={styles.thankYouByline}>
+            <div className={styles.bylinePhoto}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/matteo-arnaboldi-hoodie.png" alt="Matteo Arnaboldi, founder di Morfeus" />
+            </div>
+            <div className={styles.bylineCopy}>
+              <strong>Matteo Arnaboldi</strong>
+              <span>Founder Morfeus. Quello che ti sta preparando la folder.</span>
+            </div>
+          </div>
         </div>
 
         <aside className={styles.thankYouCta}>
