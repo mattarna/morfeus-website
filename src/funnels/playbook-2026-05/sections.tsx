@@ -787,10 +787,6 @@ export function PlaybookThankYouSection() {
 
       <section className={styles.plotTwist}>
         <div className={styles.plotTwistInner}>
-          <div className={styles.plotTwistPhoto}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/matteo-arnaboldi-hoodie.png" alt="Matteo Arnaboldi, founder di Morfeus" />
-          </div>
           <p className={styles.sectionLabel}>Una cosa che devi sapere</p>
           <h2 className={styles.plotTwistTitle}>
             Tutto questo lo hanno costruito in poche ore<br />
@@ -805,6 +801,17 @@ export function PlaybookThankYouSection() {
             scrivere copy, lanciare campagne, creare contenuti, senza fare quasi nulla
             manualmente.
           </p>
+
+          <div className={styles.plotTwistSignature}>
+            <div className={styles.plotTwistPhoto}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/matteo-arnaboldi-hoodie.png" alt="Matteo Arnaboldi, founder di Morfeus" />
+            </div>
+            <div className={styles.plotTwistByline}>
+              <strong>Matteo Arnaboldi</strong>
+              <span>@ceo morfeus hub</span>
+            </div>
+          </div>
         </div>
       </section>
 
