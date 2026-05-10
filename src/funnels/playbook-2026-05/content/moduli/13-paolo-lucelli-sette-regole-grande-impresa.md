@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 13 (D2-02) |
-| Speaker | Paolo Lucelli |
+| Speaker | Paolo Ruggeri |
 | Ruolo | Co-fondatore OSM (Open Source Management) |
 | Numeri | 85M fatturato, 800 collaboratori, 37 soci, ~8M utile annuo |
 | Tipo | keynote |
@@ -16,7 +16,7 @@
 
 ## In 30 Secondi
 
-Questo intervento e' l'antitesi strutturale di tutto il resto dell'evento. Niente funnel, niente ads, niente hook. Paolo Lucelli ha costruito OSM da 0 a 85 milioni di fatturato con 800 persone e 37 soci in 16 anni. Le sue 7 regole sono i principi fondamentali su cui qualsiasi tattica di marketing diventa sostenibile: scambio in abbondanza, recupero clienti, indicatore numerico, vero interesse, management strutturato, scuola interna, partnership societaria. Non sono alternative al funnel, sono il terreno su cui il funnel cresce.
+Questo intervento e' l'antitesi strutturale di tutto il resto dell'evento. Niente funnel, niente ads, niente hook. Paolo Ruggeri ha costruito OSM da 0 a 85 milioni di fatturato con 800 persone e 37 soci in 16 anni. Le sue 7 regole sono i principi fondamentali su cui qualsiasi tattica di marketing diventa sostenibile: scambio in abbondanza, recupero clienti, indicatore numerico, vero interesse, management strutturato, scuola interna, partnership societaria. Non sono alternative al funnel, sono il terreno su cui il funnel cresce.
 
 ---
 
@@ -32,7 +32,7 @@ Prendi i tuoi ultimi 10 clienti. Per ciascuno rispondi: ha consigliato il serviz
 
 ### QW2: Lista Clienti Inattivi + 3 Chiamate
 
-Apri il CRM. Chi ha comprato da te e non ha comprato piu'? Per Lucelli sono TUTTI clienti scontenti, indipendentemente da cosa dicono. Chiamane 3 questa settimana. Script: "Non ti sto vendendo nulla. Sto cercando di migliorare. Cosa ti e' mancato?" Le risposte valgono piu' di qualsiasi survey.
+Apri il CRM. Chi ha comprato da te e non ha comprato piu'? Per Ruggeri sono TUTTI clienti scontenti, indipendentemente da cosa dicono. Chiamane 3 questa settimana. Script: "Non ti sto vendendo nulla. Sto cercando di migliorare. Cosa ti e' mancato?" Le risposte valgono piu' di qualsiasi survey.
 
 ### QW3: Definisci il Tuo Indicatore Numerico
 
@@ -54,7 +54,7 @@ Disegna l'organigramma della tua azienda con 4 macro-funzioni: Amministrazione, 
 3. Identifica quante ne stai coprendo tu in prima persona
 4. Se ne copri piu' di una: scegli quale delegare per prima
 
-La regola di Lucelli: il fondatore puo' coprire temporaneamente UNA funzione dall'alto. Se ne copre due o piu', la crescita e' bloccata.
+La regola di Ruggeri: il fondatore puo' coprire temporaneamente UNA funzione dall'alto. Se ne copre due o piu', la crescita e' bloccata.
 
 #### MT2: Riunione Settimanale con Statistiche
 
@@ -112,7 +112,7 @@ Ordine di priorita' degli argomenti: (1) valori e etica, (2) competenze trasvers
 
 Struttura un percorso chiaro per i collaboratori chiave. Ogni persona deve sapere: dove puo' arrivare? Quali obiettivi? Cosa succede quando li raggiunge?
 
-Il livello avanzato: il piano per diventare socio. La matematica di Lucelli: 2009: 50% di 100K utile = 50K. 2025: 28,66% di 8M utile = 2,3M+. "Era meglio il mio 50% o il mio 28,66%?"
+Il livello avanzato: il piano per diventare socio. La matematica di Ruggeri: 2009: 50% di 100K utile = 50K. 2025: 28,66% di 8M utile = 2,3M+. "Era meglio il mio 50% o il mio 28,66%?"
 
 Il messaggio di recruiting che cambia tutto: "Non cerco venditori. Cerco qualcuno che voglia diventare socio. Comincerai come venditore, ma ti formeremo, ti faremo crescere, un giorno diventerai socio."
 
@@ -126,7 +126,7 @@ Domanda chiave: stai giocando il gioco "micro" (liberta', 3 ore/giorno, supply l
 
 #### PS4: Preparati ai 3 Shift 2026-2030
 
-"Da qui al 2030 cambiera' tutto." I 3 shift secondo Lucelli:
+"Da qui al 2030 cambiera' tutto." I 3 shift secondo Ruggeri:
 
 1. **Da efficienza a resilienza:** Smetti di ottimizzare solo per il costo minimo. Clienti diversificati, non un solo canale, riserve di cassa, team formato.
 2. **Da individualismo a comunita':** Chi e' solo e' fragile. Costruisci la tua rete di imprenditori complementari.
@@ -142,7 +142,7 @@ Test di resilienza: se domani le ads si spengono, l'AI rende i tuoi contenuti ir
 
 ### F1: I 4 Livelli di Scambio
 
-Il framework centrale di Lucelli. Ogni transazione commerciale si colloca su uno di 4 livelli: solo il livello 4 genera passaparola e crescita organica.
+Il framework centrale di Ruggeri. Ogni transazione commerciale si colloca su uno di 4 livelli: solo il livello 4 genera passaparola e crescita organica.
 
 | Livello | Descrizione | Effetto |
 |---------|-------------|---------|
@@ -207,19 +207,19 @@ Il cliente inattivo non e' un problema commerciale, e' la fonte primaria di inno
 
 ### KB1: Professional Service Firm
 
-Il modello di riferimento di Lucelli non e' "business di corsi" ma Professional Service Firm (McKinsey, KPMG). Conseguenze operative: pensare grande forza decisioni diverse, il fondatore deve rendersi sostituibile, l'azienda deve produrre imprenditori e soci, non dipendenti.
+Il modello di riferimento di Ruggeri non e' "business di corsi" ma Professional Service Firm (McKinsey, KPMG). Conseguenze operative: pensare grande forza decisioni diverse, il fondatore deve rendersi sostituibile, l'azienda deve produrre imprenditori e soci, non dipendenti.
 
 ### KB2: "Prima Chi, Poi Che Cosa"
 
-Identificata da Lucelli come "la prima regola del business". Il valore di un'idea e' proporzionale alla qualita' delle persone che l'hanno sposata. "Se con Marco apriamo un negozio di frutta e verdura, facciamo i soldi uguale." La scuola interna e il piano partnership servono a questo: attrarre e formare le persone giuste.
+Identificata da Ruggeri come "la prima regola del business". Il valore di un'idea e' proporzionale alla qualita' delle persone che l'hanno sposata. "Se con Marco apriamo un negozio di frutta e verdura, facciamo i soldi uguale." La scuola interna e il piano partnership servono a questo: attrarre e formare le persone giuste.
 
 ### KB3: Caso Studio. La Lezione da 200.000 Euro
 
-2002: cliente da 250K/anno di consulenza chiede 40 copie del libro. Lucelli chiede il pagamento (1.200 euro). L'anno dopo la consulenza scende a 5.000 euro. Lezione: "Non devo guadagnare l'euro di oggi, devo guadagnare il rapporto nel lungo termine." Il costo di uno scambio "equo" puo' essere enorme.
+2002: cliente da 250K/anno di consulenza chiede 40 copie del libro. Ruggeri chiede il pagamento (1.200 euro). L'anno dopo la consulenza scende a 5.000 euro. Lezione: "Non devo guadagnare l'euro di oggi, devo guadagnare il rapporto nel lungo termine." Il costo di uno scambio "equo" puo' essere enorme.
 
 ### KB4: La Lezione dei Padovani
 
-Lucelli porta una filiale da 300K a 2M in 2 anni. Chiede il 5% delle azioni. Rifiutato. Se ne va con Andrea. Fondano OSM. "Non gli sarebbe convenuto venderci sto cazzo di 5%." Da qui nasce il principio: offri un percorso di partnership a chi e' bravo, oppure lo perdi, e si porta via il valore che ha creato.
+Ruggeri porta una filiale da 300K a 2M in 2 anni. Chiede il 5% delle azioni. Rifiutato. Se ne va con Andrea. Fondano OSM. "Non gli sarebbe convenuto venderci sto cazzo di 5%." Da qui nasce il principio: offri un percorso di partnership a chi e' bravo, oppure lo perdi, e si porta via il valore che ha creato.
 
 ### KB5: Il Differenziatore vs AI
 
@@ -245,7 +245,7 @@ Target ideale: dirigenti 37-38 anni, 4-5K/mese, macchina aziendale, ma senza un 
 - [ ] Lista completa dei clienti inattivi dal CRM
 - [ ] Contatta personalmente 3 clienti inattivi: non vendere, capire
 - [ ] Definisci UN indicatore numerico per misurare i risultati dei clienti
-- [ ] Scrivi la "responsabilita' assunta" (esercizio di Lucelli)
+- [ ] Scrivi la "responsabilita' assunta" (esercizio di Ruggeri)
 
 ### P2. Entro 30 Giorni
 
@@ -273,16 +273,16 @@ Target ideale: dirigenti 37-38 anni, 4-5K/mese, macchina aziendale, ma senza un 
 
 | Modulo | Come si collega |
 |--------|----------------|
-| [12 - Mik Cosentino](./12-mik-cosentino-micro-personal-brand.md) | Contrasto strutturale: Mik = micro (3 ore/giorno, supply limitata), Lucelli = macro (800 persone, 37 soci). Convergenza su: prezzo alto, profitto > fatturato, valore reale. Scambio in abbondanza alimenta il passaparola che potenzia il micro personal brand |
-| [09 - Alfio Bardolla](./09-alfio-bardolla-infobusiness-impresa.md) | Convergenza forte su profitto netto > fatturato e necessita' di struttura. Divergenza: Alfio punta a exit/investimenti, Lucelli a crescita perpetua con soci |
-| [08 - Joe Di Siena](./08-gio-disiena-ai-memoria.md) | Lucelli conferma la tesi di Joe: l'AI commoditizza le informazioni. L'indicatore numerico (risultati misurabili) e' il differenziatore che l'AI non puo' replicare |
-| [11 - Amin Halibi](./11-soro-youtube-personal-brand.md) | Stesso principio: non vendere teoria, vendere risultati. Amin costruisce fiducia col video, Lucelli con i numeri del cliente. Complementari |
+| [12 - Mik Cosentino](./12-mik-cosentino-micro-personal-brand.md) | Contrasto strutturale: Mik = micro (3 ore/giorno, supply limitata), Ruggeri = macro (800 persone, 37 soci). Convergenza su: prezzo alto, profitto > fatturato, valore reale. Scambio in abbondanza alimenta il passaparola che potenzia il micro personal brand |
+| [09 - Alfio Bardolla](./09-alfio-bardolla-infobusiness-impresa.md) | Convergenza forte su profitto netto > fatturato e necessita' di struttura. Divergenza: Alfio punta a exit/investimenti, Ruggeri a crescita perpetua con soci |
+| [08 - Joe Di Siena](./08-gio-disiena-ai-memoria.md) | Ruggeri conferma la tesi di Joe: l'AI commoditizza le informazioni. L'indicatore numerico (risultati misurabili) e' il differenziatore che l'AI non puo' replicare |
+| [11 - Amin Halibi](./11-soro-youtube-personal-brand.md) | Stesso principio: non vendere teoria, vendere risultati. Amin costruisce fiducia col video, Ruggeri con i numeri del cliente. Complementari |
 | [07 - Michelangelo](./07-michelangelo-meta-ads.md) | Antitesi del modello ads-dependent: 50% dei clienti OSM viene da passaparola. Complementari: le ads acquisiscono, lo scambio in abbondanza trattiene e moltiplica |
-| [01 - Marco](./01-marco-regole-infobusiness.md) | Le 7 regole di Lucelli sono il fondamento su cui poggiano i 4 pilastri di Marco. Senza scambio in abbondanza e management strutturato, i funnel costruiscono su sabbia |
-| [10 - Simone Giannetti](./10-transfer-manager-protezione-patrimoniale.md) | Convergenza sul modello societario distribuito. Il piano partnership di Lucelli (37 soci) potrebbe usare le strutture del transfer manager per formalizzare le quote |
+| [01 - Marco](./01-marco-regole-infobusiness.md) | Le 7 regole di Ruggeri sono il fondamento su cui poggiano i 4 pilastri di Marco. Senza scambio in abbondanza e management strutturato, i funnel costruiscono su sabbia |
+| [10 - Simone Giannetti](./10-transfer-manager-protezione-patrimoniale.md) | Convergenza sul modello societario distribuito. Il piano partnership di Ruggeri (37 soci) potrebbe usare le strutture del transfer manager per formalizzare le quote |
 
 ---
 
-**Nota:** Questo intervento e' il contrappunto strutturale dell'intero evento. Le 7 regole non sostituiscono funnel, ads o personal brand, sono il terreno su cui quelle tattiche diventano sostenibili. Lucelli e' il fondamento. Gli altri speaker sono le colonne.
+**Nota:** Questo intervento e' il contrappunto strutturale dell'intero evento. Le 7 regole non sostituiscono funnel, ads o personal brand, sono il terreno su cui quelle tattiche diventano sostenibili. Ruggeri e' il fondamento. Gli altri speaker sono le colonne.
 
 [← Modulo 12: Mik Cosentino](./12-mik-cosentino-micro-personal-brand.md) | [Torna all'indice](../index.md)
