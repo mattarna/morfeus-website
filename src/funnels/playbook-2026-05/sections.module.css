@@ -1165,44 +1165,45 @@
   text-transform: uppercase;
 }
 
-.toc a {
-  border-left: 2px solid transparent;
-  color: var(--muted);
-  display: block;
-  font-size: 13px;
-  line-height: 1.45;
-  margin-left: -22px;
-  padding: 9px 0 9px 20px;
-  text-decoration: none;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.toc a:hover {
-  border-left-color: var(--speaker);
-  color: var(--white);
-}
-
 .tocBack,
 .tocFolder {
   align-items: center;
-  color: var(--ghost) !important;
+  color: var(--ghost);
   display: inline-flex;
   font-family: var(--font-display);
-  font-weight: 600 !important;
+  font-size: 12px;
+  font-weight: 600;
   gap: 6px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.tocBack {
+  margin-left: -22px;
+  padding: 4px 0 14px 22px;
+}
+
+.tocBack:hover {
+  color: var(--white);
+  transform: translateX(-3px);
 }
 
 .tocFolder {
   background: color-mix(in srgb, var(--speaker) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--speaker) 32%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--speaker) 32%, transparent);
   border-radius: 999px;
-  margin-left: 0 !important;
-  margin-top: 18px !important;
-  padding: 10px 16px !important;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-top: 18px;
+  padding: 10px 16px;
 }
 
 .tocFolder:hover {
   background: color-mix(in srgb, var(--speaker) 24%, transparent);
+  color: var(--white);
 }
 
 /* ============================================================================
@@ -1264,9 +1265,9 @@
 .article li {
   color: var(--ghost);
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.72;
-  opacity: 0.92;
+  font-size: 18px;
+  line-height: 1.7;
+  opacity: 0.94;
 }
 
 .article p {
@@ -1425,6 +1426,372 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/* ============================================================================
+   READING PROGRESS BAR
+   ============================================================================ */
+
+.readingProgress {
+  background: rgba(255, 255, 255, 0.05);
+  height: 3px;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.readingProgressBar {
+  background: linear-gradient(90deg, var(--speaker), color-mix(in srgb, var(--speaker) 60%, var(--white)));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--speaker) 60%, transparent);
+  height: 100%;
+  transition: width 0.05s linear;
+  width: 0;
+}
+
+/* ============================================================================
+   TOC NAV (h2 + h3 nested)
+   ============================================================================ */
+
+.tocNav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+
+.tocNav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tocNav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.tocMain,
+.tocSub {
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  display: block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  margin-left: -22px;
+  padding: 9px 0 9px 20px;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.tocMain {
+  color: var(--ghost);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  margin-top: 12px;
+}
+
+.tocMain:first-child {
+  margin-top: 0;
+}
+
+.tocSub {
+  font-size: 12px;
+  margin-left: -22px;
+  opacity: 0.78;
+  padding-left: 36px;
+}
+
+.tocMain:hover,
+.tocSub:hover {
+  color: var(--white);
+  border-left-color: color-mix(in srgb, var(--speaker) 60%, transparent);
+}
+
+.tocMain[data-active="true"],
+.tocSub[data-active="true"] {
+  border-left-color: var(--speaker);
+  color: var(--white);
+}
+
+.tocMain[data-active="true"] {
+  background: color-mix(in srgb, var(--speaker) 8%, transparent);
+}
+
+/* ============================================================================
+   SUMMARY CARD ("In 30 Secondi")
+   ============================================================================ */
+
+.summaryCard {
+  background:
+    linear-gradient(180deg, rgba(123, 104, 238, 0.12) 0%, rgba(123, 104, 238, 0.04) 100%);
+  border: 1px solid rgba(123, 104, 238, 0.32);
+  border-radius: 18px;
+  display: block;
+  margin: 0 0 48px;
+  padding: 28px clamp(22px, 3vw, 36px) clamp(22px, 3vw, 36px);
+  position: relative;
+}
+
+.summaryCard::before {
+  align-items: center;
+  background: rgba(123, 104, 238, 0.18);
+  border: 1px solid rgba(123, 104, 238, 0.42);
+  border-radius: 999px;
+  color: #d6cdff;
+  content: "Sommario · 30s";
+  display: inline-flex;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  left: clamp(20px, 3vw, 32px);
+  letter-spacing: 0.16em;
+  padding: 7px 14px;
+  position: absolute;
+  text-transform: uppercase;
+  top: -16px;
+}
+
+.summaryCard h2 {
+  border: 0 !important;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 28px) !important;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+  margin: 6px 0 14px !important;
+  padding-top: 0 !important;
+}
+
+.summaryCard p {
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 17px !important;
+  line-height: 1.62 !important;
+  margin: 0 !important;
+  opacity: 0.96 !important;
+}
+
+.summaryCard p + p {
+  margin-top: 14px !important;
+}
+
+.summaryCard strong {
+  color: var(--white);
+}
+
+/* ============================================================================
+   ACTION CARD ("Quick Win")
+   ============================================================================ */
+
+.actionCard {
+  background:
+    radial-gradient(ellipse at top right, rgba(235, 122, 46, 0.16), transparent 60%),
+    linear-gradient(180deg, rgba(235, 122, 46, 0.08) 0%, rgba(235, 122, 46, 0.02) 100%);
+  border: 1px solid rgba(235, 122, 46, 0.34);
+  border-radius: 18px;
+  display: block;
+  margin: 0 0 48px;
+  padding: 32px clamp(22px, 3vw, 36px);
+  position: relative;
+}
+
+.actionCard::before {
+  align-items: center;
+  background: var(--orange);
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(235, 122, 46, 0.4);
+  color: #160d08;
+  content: "⚡ Fai entro 48h";
+  display: inline-flex;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  left: clamp(20px, 3vw, 32px);
+  letter-spacing: 0.16em;
+  padding: 8px 14px;
+  position: absolute;
+  text-transform: uppercase;
+  top: -17px;
+}
+
+.actionCard h2 {
+  border: 0 !important;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px) !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 8px 0 24px !important;
+  padding-top: 0 !important;
+}
+
+.actionCard h3 {
+  background: rgba(235, 122, 46, 0.1);
+  border: 1px solid rgba(235, 122, 46, 0.32);
+  border-left-width: 3px;
+  counter-increment: action-step;
+  padding-left: clamp(56px, 6vw, 72px);
+  position: relative;
+}
+
+.actionCard h3::before {
+  align-items: center;
+  background: var(--orange);
+  border-radius: 50%;
+  color: #160d08;
+  content: counter(action-step);
+  display: inline-flex;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  height: 28px;
+  justify-content: center;
+  left: clamp(18px, 2.4vw, 24px);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+}
+
+.actionCard {
+  counter-reset: action-step;
+}
+
+.actionCard p,
+.actionCard li {
+  color: var(--white);
+}
+
+.actionCard pre {
+  background: rgba(11, 11, 12, 0.55);
+}
+
+/* ============================================================================
+   FRAMEWORK META STRIP (replaces "Campo | Dettaglio" tables)
+   ============================================================================ */
+
+.metaStrip {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 18px 0 24px;
+}
+
+.metaChip {
+  align-items: start;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--hairline);
+  border-left: 2px solid color-mix(in srgb, var(--speaker) 60%, transparent);
+  border-radius: 10px;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+}
+
+.metaChip span {
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.metaChip strong {
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* ============================================================================
+   CONNECTIONS GRID ("Connessioni con altri moduli")
+   ============================================================================ */
+
+.connectionsSection {
+  display: block;
+}
+
+.connectionsGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 22px 0 0;
+}
+
+.connectionCard {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  color: inherit;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr auto;
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.connectionCard:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.025) 100%);
+  border-color: color-mix(in srgb, var(--speaker) 38%, transparent);
+  transform: translateX(2px);
+}
+
+.connectionLabel {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.connectionLabel strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.connectionLabel span {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.connectionArrow {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  color: var(--white);
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 13px;
+  height: 32px;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  width: 32px;
+}
+
+.connectionCard:hover .connectionArrow {
+  background: var(--speaker);
+  border-color: var(--speaker);
+  color: #160d08;
+  transform: translateX(3px);
 }
 
 .moduleFooterNav {
@@ -2080,7 +2447,8 @@
 
   .article p,
   .article li {
-    font-size: 16px;
+    font-size: 17px;
+    line-height: 1.65;
   }
 
   .article blockquote {

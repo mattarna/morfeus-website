@@ -5,7 +5,18 @@ import Link from "next/link";
 import type { FunnelStepConfig } from "@/funnels/types";
 import { DayFilter } from "./DayFilter";
 import { PlaybookDownloadGate, PlaybookOptinForm } from "./DownloadGate";
+import { ReadingProgress, ActiveTocClient } from "./ModuleReader";
 import styles from "./sections.module.css";
+
+interface RenderContext {
+  sectionKind?: "summary" | "action" | "connections";
+}
+
+interface TocEntry {
+  title: string;
+  href: string;
+  level: 2 | 3;
+}
 
 interface SectionProps {
   step: FunnelStepConfig;
@@ -197,7 +208,7 @@ function isTableDivider(line: string): boolean {
   return /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(line);
 }
 
-function renderTable(lines: string[]): string {
+function renderTable(lines: string[], context?: RenderContext): string {
   const rows = lines
     .filter((line) => !isTableDivider(line))
     .map((line) =>
@@ -211,6 +222,35 @@ function renderTable(lines: string[]): string {
 
   if (rows.length === 0) return "";
   const [head, ...body] = rows;
+
+  const headerLooksLikeMeta =
+    head.length === 2 &&
+    /\bcampo\b/i.test(head[0]) &&
+    /(dettaglio|valore)/i.test(head[1]);
+  if (headerLooksLikeMeta) {
+    const items = body
+      .map(
+        (row) =>
+          `<div class="${styles.metaChip}"><span>${row[0]}</span><strong>${row[1] ?? ""}</strong></div>`
+      )
+      .join("");
+    return `<div class="${styles.metaStrip}">${items}</div>`;
+  }
+
+  if (context?.sectionKind === "connections" && head.length === 2) {
+    const items = body
+      .map((row) => {
+        const cell = row[0] ?? "";
+        const linkMatch = cell.match(/<a href="([^"]+)">([^<]+)<\/a>/);
+        const href = linkMatch ? linkMatch[1] : "#";
+        const label = linkMatch ? linkMatch[2] : cell;
+        const description = row[1] ?? "";
+        return `<a class="${styles.connectionCard}" href="${href}"><span class="${styles.connectionLabel}"><strong>${label}</strong><span>${description}</span></span><span class="${styles.connectionArrow}" aria-hidden>→</span></a>`;
+      })
+      .join("");
+    return `<div class="${styles.connectionsGrid}">${items}</div>`;
+  }
+
   return `
     <div class="${styles.tableWrap}">
       <table>
@@ -235,8 +275,15 @@ function renderList(lines: string[], ordered: boolean): string {
   return `<${tag}>${items.join("")}</${tag}>`;
 }
 
-function renderMarkdown(markdown: string): string {
-  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+function detectSectionKind(title: string): RenderContext["sectionKind"] | undefined {
+  const lower = title.toLowerCase();
+  if (lower.includes("30 secondi") || lower.startsWith("in 30")) return "summary";
+  if (lower.includes("quick win")) return "action";
+  if (lower.includes("connessioni")) return "connections";
+  return undefined;
+}
+
+function renderLines(lines: string[], context?: RenderContext): string {
   const html: string[] = [];
   let index = 0;
 
@@ -267,7 +314,7 @@ function renderMarkdown(markdown: string): string {
         table.push(lines[index]);
         index += 1;
       }
-      html.push(renderTable(table));
+      html.push(renderTable(table, context));
       continue;
     }
 
@@ -331,17 +378,66 @@ function renderMarkdown(markdown: string): string {
   return html.join("\n");
 }
 
+function renderMarkdown(markdown: string): string {
+  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+  const segments: { title: string; lines: string[] }[] = [];
+  let pre: string[] = [];
+  let current: { title: string; lines: string[] } | null = null;
+
+  for (const line of lines) {
+    const m = line.match(/^##\s+(.+)$/);
+    if (m) {
+      if (current) segments.push(current);
+      current = { title: m[1].trim(), lines: [line] };
+    } else if (current) {
+      current.lines.push(line);
+    } else {
+      pre.push(line);
+    }
+  }
+  if (current) segments.push(current);
+
+  const out: string[] = [];
+  if (pre.some((l) => l.trim())) {
+    out.push(renderLines(pre));
+  }
+  for (const seg of segments) {
+    const kind = detectSectionKind(seg.title);
+    const inner = renderLines(seg.lines, { sectionKind: kind });
+    if (kind === "summary") {
+      out.push(`<section class="${styles.summaryCard}" data-section-kind="summary">${inner}</section>`);
+    } else if (kind === "action") {
+      out.push(`<section class="${styles.actionCard}" data-section-kind="action">${inner}</section>`);
+    } else if (kind === "connections") {
+      out.push(`<section class="${styles.connectionsSection}" data-section-kind="connections">${inner}</section>`);
+    } else {
+      out.push(inner);
+    }
+  }
+  return out.join("\n");
+}
+
 function extractBody(markdown: string): string {
   const parts = markdown.split(/\n---\n/);
   return parts.length > 1 ? parts.slice(1).join("\n---\n") : markdown;
 }
 
-function extractToc(markdown: string) {
-  return markdown
-    .split(/\r?\n/)
-    .map((line) => line.match(/^##\s+(.+)$/)?.[1])
-    .filter((title): title is string => Boolean(title))
-    .map((title) => ({ title, href: `#${slugify(title)}` }));
+function extractToc(markdown: string): TocEntry[] {
+  const entries: TocEntry[] = [];
+  for (const line of markdown.split(/\r?\n/)) {
+    const h2 = line.match(/^##\s+(.+)$/);
+    if (h2) {
+      const title = h2[1].trim();
+      entries.push({ title, href: `#${slugify(title)}`, level: 2 });
+      continue;
+    }
+    const h3 = line.match(/^###\s+(.+)$/);
+    if (h3) {
+      const title = h3[1].trim();
+      entries.push({ title, href: `#${slugify(title)}`, level: 3 });
+    }
+  }
+  return entries;
 }
 
 function Header() {
@@ -485,8 +581,12 @@ export function PlaybookModuleSection({ step }: SectionProps) {
   const previous = currentIndex > 0 ? modules[currentIndex - 1] : null;
   const next = currentIndex < modules.length - 1 ? modules[currentIndex + 1] : null;
 
+  const wordCount = body.split(/\s+/).filter(Boolean).length;
+  const readMinutes = Math.max(1, Math.round(wordCount / 220));
+
   return (
     <div className={styles.page} style={{ "--speaker": playbookModule.color } as CSSProperties}>
+      <ReadingProgress />
       <Header />
       <section className={styles.moduleHero}>
         <Link className={styles.moduleHeroBack} href={PLAYBOOK_PATH}>
@@ -501,7 +601,8 @@ export function PlaybookModuleSection({ step }: SectionProps) {
             <h1>{playbookModule.title}</h1>
             <div className={styles.moduleMeta}>
               <span className={styles.moduleMetaSpeaker}>{playbookModule.speaker}</span>
-              <span>{playbookModule.duration}</span>
+              <span>{playbookModule.duration} dal palco</span>
+              <span>{readMinutes} min di lettura</span>
               <span>{playbookModule.focus}</span>
             </div>
           </div>
@@ -519,16 +620,24 @@ export function PlaybookModuleSection({ step }: SectionProps) {
           <Link className={styles.tocBack} href={PLAYBOOK_PATH}>
             <span aria-hidden>←</span> Tutti i moduli
           </Link>
-          {toc.map((item) => (
-            <a href={item.href} key={item.href}>
-              {item.title}
-            </a>
-          ))}
+          <nav className={styles.tocNav}>
+            {toc.map((item) => (
+              <a
+                href={item.href}
+                key={item.href}
+                data-toc-link
+                data-toc-level={item.level}
+                className={item.level === 3 ? styles.tocSub : styles.tocMain}
+              >
+                {item.title}
+              </a>
+            ))}
+          </nav>
           <a className={styles.tocFolder} href="#download">
             Ricevi la folder Claude →
           </a>
         </aside>
-        <article className={styles.article}>
+        <article className={styles.article} data-article-root>
           <div dangerouslySetInnerHTML={{ __html: html }} />
           <nav className={styles.moduleFooterNav} aria-label="Navigazione moduli">
             {previous ? (
@@ -551,6 +660,7 @@ export function PlaybookModuleSection({ step }: SectionProps) {
           </nav>
         </article>
       </div>
+      <ActiveTocClient />
 
       <div className={styles.divider} />
 
