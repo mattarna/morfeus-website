@@ -2,14 +2,14 @@
 
 <!-- [DESIGN: Hero section, sfondo scuro, titoli grandi, proof bar sotto] -->
 
-## Una giornata. Otto speaker. Zero teoria inutile.
+## Due giornate. +15 speaker. Zero teoria inutile.
 
 Tutto quello che è stato detto a Infobusiness Milionario — distillato in playbook operativi, framework testati e checklist pronte all'uso.
 
-8 interventi. 50+ azioni concrete. 19 framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
+11 interventi gia' disponibili. 80+ azioni concrete. 25+ framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
 
-| 8 Speaker | 293 min di contenuto | 50+ azioni operative | 19 framework |
-|-----------|---------------------|---------------------|--------------|
+| 11 Speaker | 417 min di contenuto | 80+ azioni operative | 25+ framework |
+|------------|----------------------|---------------------|---------------|
 
 ---
 
@@ -27,6 +27,9 @@ Tutto quello che è stato detto a Infobusiness Milionario — distillato in play
 | 06 | [Vendita Etica dalla Nicchia](./moduli/06-simone-vendita-etica.md) | Simone Rossi | Fiducia, palco, 11 principi, storytelling | → |
 | 07 | [Framework Operativo Meta Ads](./moduli/07-michelangelo-meta-ads.md) | Michelangelo | Stabilità algoritmica, budget, stop loss, OMTM | → |
 | 08 | [AI Memory Architecture](./moduli/08-gio-disiena-ai-memoria.md) | Joe Di Siena | WikiLLM, MCP server, auto-research, articulation gap | → |
+| 09 | [Da Infobusiness a Impresa](./moduli/09-alfio-bardolla-infobusiness-impresa.md) | Alfio Bardolla | Cash cow, struttura aziendale, ricchezza generazionale | → |
+| 10 | [Protezione Patrimoniale e Ottimizzazione Fiscale](./moduli/10-transfer-manager-protezione-patrimoniale.md) | Transfer Manager | Malta, Panama, LLC USA, exit tax, residenza fiscale | → |
+| 11 | [YouTube come Motore di Fiducia](./moduli/11-soro-youtube-personal-brand.md) | Soro | Personal brand, contenuto educativo, video conversione | → |
 
 ---
 

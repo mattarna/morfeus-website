@@ -113,6 +113,42 @@ const modules = [
     tags: ["AI", "memoria", "WikiLLM"],
     day: 1,
   },
+  {
+    id: "modulo-09",
+    number: "09",
+    file: "09-alfio-bardolla-infobusiness-impresa.md",
+    title: "Da Infobusiness a Impresa",
+    speaker: "Alfio Bardolla",
+    duration: "54 min",
+    color: "#F59E0B",
+    focus: "Cash cow, struttura aziendale, ricchezza generazionale",
+    tags: ["struttura", "delega", "diversificazione"],
+    day: 1,
+  },
+  {
+    id: "modulo-10",
+    number: "10",
+    file: "10-transfer-manager-protezione-patrimoniale.md",
+    title: "Protezione Patrimoniale e Ottimizzazione Fiscale",
+    speaker: "Transfer Manager",
+    duration: "44 min",
+    color: "#06B6D4",
+    focus: "Malta, Panama, LLC USA, exit tax, residenza fiscale",
+    tags: ["fiscale", "protezione", "geopolitica"],
+    day: 1,
+  },
+  {
+    id: "modulo-11",
+    number: "11",
+    file: "11-soro-youtube-personal-brand.md",
+    title: "YouTube come Motore di Fiducia",
+    speaker: "Soro",
+    duration: "26 min",
+    color: "#EF4444",
+    focus: "Personal brand, contenuto educativo, video conversione",
+    tags: ["YouTube", "personal brand", "organico"],
+    day: 1,
+  },
 ] as const;
 
 function getModuleByStep(stepId: string) {
@@ -372,10 +408,10 @@ export function PlaybookHomeSection() {
               </a>
             </div>
             <div className={styles.heroProofBar}>
-              <span><strong>8</strong> speaker</span>
-              <span><strong>293</strong> minuti</span>
-              <span><strong>50+</strong> azioni</span>
-              <span><strong>19</strong> framework</span>
+              <span><strong>11</strong> speaker</span>
+              <span><strong>417</strong> minuti</span>
+              <span><strong>80+</strong> azioni</span>
+              <span><strong>25+</strong> framework</span>
             </div>
           </div>
           <aside className={styles.heroCard}>
@@ -397,19 +433,19 @@ export function PlaybookHomeSection() {
         <p className={styles.sectionLabel}>Cosa c&apos;e dentro</p>
         <div className={styles.statGrid}>
           <div className={styles.stat}>
-            <strong>8</strong>
+            <strong>11</strong>
             <span>speaker dal palco</span>
           </div>
           <div className={styles.stat}>
-            <strong>293</strong>
+            <strong>417</strong>
             <span>minuti di contenuto</span>
           </div>
           <div className={styles.stat}>
-            <strong>50+</strong>
+            <strong>80+</strong>
             <span>azioni operative</span>
           </div>
           <div className={styles.stat}>
-            <strong>19</strong>
+            <strong>25+</strong>
             <span>framework proprietari</span>
           </div>
         </div>

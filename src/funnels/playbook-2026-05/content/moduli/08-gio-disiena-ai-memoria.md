@@ -9,7 +9,7 @@
 | Durata | 30 min |
 | Tags | AI, memoria, WikiLLM, RAG, MCP server, auto-research, articulation gap |
 
-[← Modulo precedente](./07-michelangelo-meta-ads.md) | [Torna all'indice](../index.md)
+[← Modulo precedente](./07-michelangelo-meta-ads.md) | [Torna all'indice](../index.md) | [Modulo successivo →](./09-alfio-bardolla-infobusiness-impresa.md)
 
 ---
 
@@ -244,4 +244,4 @@ Azienda che ha sostituito un dipendente con un agente AI. L'agente ha fallito: 6
 
 ---
 
-[← Modulo precedente](./07-michelangelo-meta-ads.md) | [Torna all'indice](../index.md)
+[← Modulo precedente](./07-michelangelo-meta-ads.md) | [Torna all'indice](../index.md) | [Modulo successivo →](./09-alfio-bardolla-infobusiness-impresa.md)
