@@ -35,7 +35,11 @@ export function SharePill() {
   }, [open]);
 
   async function handlePillClick() {
-    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(max-width: 640px)").matches ||
+        window.matchMedia("(pointer: coarse)").matches);
+    if (isMobile && typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
         await navigator.share({
           title: "Playbook Infobusiness Milionario",
@@ -44,7 +48,7 @@ export function SharePill() {
         });
         return;
       } catch {
-        // user dismissed native share or unsupported, fall through to popover
+        // user dismissed native share, fall through to popover
       }
     }
     setOpen(true);
