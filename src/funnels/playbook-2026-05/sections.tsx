@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { FunnelStepConfig } from "@/funnels/types";
 import { DayFilter } from "./DayFilter";
+import { BackToTop } from "./BackToTop";
 import { PlaybookDownloadGate, PlaybookOptinForm } from "./DownloadGate";
 import { ReadingProgress, ActiveTocClient } from "./ModuleReader";
 import { SharePill } from "./SharePill";
@@ -711,6 +712,7 @@ export function PlaybookModuleSection({ step }: SectionProps) {
         <PlaybookDownloadGate />
       </section>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

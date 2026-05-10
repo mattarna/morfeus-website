@@ -2685,6 +2685,52 @@
 }
 
 /* ============================================================================
+   BACK TO TOP
+   ============================================================================ */
+
+.backToTop {
+  align-items: center;
+  background: rgba(20, 20, 24, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  bottom: clamp(16px, 2.5vw, 28px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  left: clamp(16px, 2.5vw, 28px);
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transform: translateY(8px);
+  transition: opacity 0.22s, transform 0.22s, background 0.18s, border-color 0.18s, color 0.18s;
+  width: 42px;
+  z-index: 55;
+}
+
+.backToTop[data-visible="true"] {
+  opacity: 0.55;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.backToTop[data-visible="true"]:hover {
+  background: rgba(35, 35, 42, 0.9);
+  border-color: rgba(235, 122, 46, 0.45);
+  color: #fff;
+  opacity: 1;
+}
+
+.backToTop:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* ============================================================================
    SHARE PILL + MODAL
    ============================================================================ */
 
