@@ -166,6 +166,18 @@ const modules = [
     tags: ["YouTube", "personal brand", "organico"],
     day: 1,
   },
+  {
+    id: "modulo-12",
+    number: "12",
+    file: "12-mik-cosentino-micro-personal-brand.md",
+    title: "Micro Personal Brand e Instagram Authority Funnel",
+    speaker: "Mik Cosentino",
+    duration: "56 min",
+    color: "#EC4899",
+    focus: "Instagram funnel, supply-demand, vendita 1-a-tanti",
+    tags: ["Instagram", "personal brand", "vendita 1-a-tanti"],
+    day: 2,
+  },
 ] as const;
 
 function getModuleByStep(stepId: string) {
