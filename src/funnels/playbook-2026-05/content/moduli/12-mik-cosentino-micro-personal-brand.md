@@ -62,7 +62,7 @@ Il paradosso: Mik ha iniziato non da 50 (il suo massimo), ma da 25. Con meno sup
 
 Il profilo Instagram non e' un biglietto da visita, e' un funnel travestito.
 
-**Step 1. Il Profilo:** nome e cognome reali e cercabili. Bio: "Aiuto [chi specifico] a [risultato specifico]. [Prova concreta con numero]." Link in bio: YouTube (cross-ref mod. 11, Soro) o risorsa gratuita diretta.
+**Step 1. Il Profilo:** nome e cognome reali e cercabili. Bio: "Aiuto [chi specifico] a [risultato specifico]. [Prova concreta con numero]." Link in bio: YouTube (cross-ref mod. 11, Amin Halibi) o risorsa gratuita diretta.
 
 **Step 2. Storie in Evidenza:** strutturale come una sales letter. (1) Chi sei: storia personale, da dove sei partito. (2) Cosa hai ottenuto: risultati specifici. (3) Come ci sei arrivato: il tuo metodo. (4) Chi hai aiutato: proof con clienti e risultati. (5) CTA finale: come lavorare con te.
 
@@ -87,7 +87,7 @@ Il caso studio: una cliente vede una storia Instagram, scrive in DM, breve chat,
 
 #### MT4: Collega Instagram a YouTube
 
-Il link in bio manda a YouTube. YouTube e' il tuo canale evergreen, lavora 24/7, contiene ore di contenuti che approfondiscono e pre-riscaldano. La catena completa: Instagram cattura l'attenzione (contenuti brevi, virali) → YouTube costruisce la fiducia (contenuti lunghi, profondi) → il ciclo mensile converte (webinar + apertura cancelli). Cross-ref modulo 11 (Soro): Soro ha spiegato l'architettura YouTube nel dettaglio. Mik aggiunge il pezzo mancante: Instagram come motore di acquisizione che alimenta YouTube.
+Il link in bio manda a YouTube. YouTube e' il tuo canale evergreen, lavora 24/7, contiene ore di contenuti che approfondiscono e pre-riscaldano. La catena completa: Instagram cattura l'attenzione (contenuti brevi, virali) → YouTube costruisce la fiducia (contenuti lunghi, profondi) → il ciclo mensile converte (webinar + apertura cancelli). Cross-ref modulo 11 (Amin Halibi): Amin ha spiegato l'architettura YouTube nel dettaglio. Mik aggiunge il pezzo mancante: Instagram come motore di acquisizione che alimenta YouTube.
 
 #### MT5: Implementa il ciclo mensile supply-demand
 
@@ -292,7 +292,7 @@ Storia Instagram, DM, breve chat, offer doc (Google Doc), acquisto a 15.000€ s
 
 | Modulo | Come si collega |
 |--------|----------------|
-| [11 - Soro, YouTube](./11-soro-youtube-personal-brand.md) | Mik manda il traffico Instagram su YouTube come evergreen. Soro ha spiegato l'architettura YouTube. Insieme: Instagram cattura attenzione, YouTube costruisce fiducia, ciclo mensile converte |
+| [11 - Amin Halibi, YouTube](./11-soro-youtube-personal-brand.md) | Mik manda il traffico Instagram su YouTube come evergreen. Amin ha spiegato l'architettura YouTube. Insieme: Instagram cattura attenzione, YouTube costruisce fiducia, ciclo mensile converte |
 | [09 - Alfio Bardolla](./09-alfio-bardolla-infobusiness-impresa.md) | Filosofia parallela: profitto netto > fatturato. Alfio: smetti di essere il tecnico. Mik: 3 ore/giorno per 1.5M netti. Stessa destinazione, percorsi complementari |
 | [07 - Michelangelo, Meta Ads](./07-michelangelo-meta-ads.md) | Mik riduce la dipendenza dalle ads. Il micro personal brand organico e' la risposta a "se le ads si spengono, sono fottuto." Michelangelo ottimizza le ads; Mik costruisce l'alternativa organica |
 | [02 - Michele, Offerte](./02-michele-offerte-conversione.md) | Michele lavora sull'asse pricing-conversione. Mik aggiunge la leva supply-demand: tagliare la supply amplifica la percezione di valore dell'offerta stessa |

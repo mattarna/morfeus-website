@@ -3,7 +3,7 @@
 | Campo | Valore |
 |-------|--------|
 | Modulo | 11 |
-| Speaker | Soro |
+| Speaker | Amin Halibi |
 | Titolo | YouTube come Motore di Fiducia: Personal Brand e Traffico Organico per Infobusiness |
 | Tipo | speech strategico-operativo |
 | Durata | 26 min |

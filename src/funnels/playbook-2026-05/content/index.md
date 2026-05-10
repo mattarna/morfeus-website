@@ -29,7 +29,7 @@ Tutto quello che è stato detto a Infobusiness Milionario — distillato in play
 | 08 | [AI Memory Architecture](./moduli/08-gio-disiena-ai-memoria.md) | Joe Di Siena | WikiLLM, MCP server, auto-research, articulation gap | → |
 | 09 | [Da Infobusiness a Impresa](./moduli/09-alfio-bardolla-infobusiness-impresa.md) | Alfio Bardolla | Cash cow, struttura aziendale, ricchezza generazionale | → |
 | 10 | [Protezione Patrimoniale e Ottimizzazione Fiscale](./moduli/10-transfer-manager-protezione-patrimoniale.md) | Simone Giannetti | Malta, Panama, LLC USA, exit tax, residenza fiscale | → |
-| 11 | [YouTube come Motore di Fiducia](./moduli/11-soro-youtube-personal-brand.md) | Soro | Personal brand, contenuto educativo, video conversione | → |
+| 11 | [YouTube come Motore di Fiducia](./moduli/11-soro-youtube-personal-brand.md) | Amin Halibi | Personal brand, contenuto educativo, video conversione | → |
 
 ---
 

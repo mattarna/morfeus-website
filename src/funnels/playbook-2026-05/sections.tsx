@@ -159,7 +159,7 @@ const modules = [
     number: "11",
     file: "11-soro-youtube-personal-brand.md",
     title: "YouTube come Motore di Fiducia",
-    speaker: "Soro",
+    speaker: "Amin Halibi",
     duration: "26 min",
     color: "#EF4444",
     focus: "Personal brand, contenuto educativo, video conversione",
