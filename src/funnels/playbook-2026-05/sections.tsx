@@ -203,6 +203,18 @@ const modules = [
     tags: ["reinvenzione", "mindset", "resilienza"],
     day: 2,
   },
+  {
+    id: "modulo-15",
+    number: "15",
+    file: "15-mario-olivelli-rete-vendita-milionaria.md",
+    title: "Rete Vendita Milionaria",
+    speaker: "Mario Olivelli",
+    duration: "50 min",
+    color: "#EB7A2E",
+    focus: "Rete vendita, hiring venditori, cultura e retention",
+    tags: ["rete vendita", "hiring", "sales team"],
+    day: 2,
+  },
 ] as const;
 
 function getModuleByStep(stepId: string) {
@@ -547,10 +559,10 @@ export function PlaybookHomeSection() {
               </a>
             </div>
             <div className={styles.heroProofBar}>
-              <span><strong>11</strong> speaker</span>
-              <span><strong>417</strong> minuti</span>
-              <span><strong>80+</strong> azioni</span>
-              <span><strong>25+</strong> framework</span>
+              <span><strong>15</strong> speaker</span>
+              <span><strong>626</strong> minuti</span>
+              <span><strong>120+</strong> azioni</span>
+              <span><strong>40+</strong> framework</span>
             </div>
           </div>
           <aside className={styles.heroCard}>
@@ -572,19 +584,19 @@ export function PlaybookHomeSection() {
         <p className={styles.sectionLabel}>Cosa c&apos;e dentro</p>
         <div className={styles.statGrid}>
           <div className={styles.stat}>
-            <strong>11</strong>
+            <strong>15</strong>
             <span>speaker dal palco</span>
           </div>
           <div className={styles.stat}>
-            <strong>417</strong>
+            <strong>626</strong>
             <span>minuti di contenuto</span>
           </div>
           <div className={styles.stat}>
-            <strong>80+</strong>
+            <strong>120+</strong>
             <span>azioni operative</span>
           </div>
           <div className={styles.stat}>
-            <strong>25+</strong>
+            <strong>40+</strong>
             <span>framework proprietari</span>
           </div>
         </div>
@@ -771,7 +783,7 @@ export function PlaybookThankYouSection() {
           </ul>
 
           <div className={styles.featureStripe}>
-            <strong>13 speaker dal palco. 100+ azioni operative. 35+ framework.</strong>
+            <strong>15 speaker dal palco. 120+ azioni operative. 40+ framework.</strong>
             <span>Tutto organizzato, collegato, pronto.</span>
           </div>
         </div>

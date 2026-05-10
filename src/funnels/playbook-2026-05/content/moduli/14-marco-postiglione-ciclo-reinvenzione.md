@@ -10,7 +10,7 @@
 | Durata | ~53 min |
 | Tags | reinvenzione, resilienza, obiettivo, intensita, frequenza, mindset, ciclo-impresa, amor-fati |
 
-[← Modulo 13: Paolo Ruggeri](./13-paolo-lucelli-sette-regole-grande-impresa.md) | [Torna all'indice](../index.md)
+[← Modulo 13: Paolo Ruggeri](./13-paolo-lucelli-sette-regole-grande-impresa.md) | [Torna all'indice](../index.md) | [Modulo 15 →](./15-mario-olivelli-rete-vendita-milionaria.md)
 
 ---
 
@@ -262,4 +262,4 @@ Consulenza one-to-one, porta a porta, master, rete consulenti, ritorno da solo, 
 
 **Nota:** Questo intervento non e' il tattico, e' il filosofo pratico del gruppo. Da consultare quando sai cosa fare ma non hai l'energia o la direzione per farlo. In quei momenti, rileggi la storia di Travagliato. Poi muovi il culo.
 
-[← Modulo 13: Paolo Ruggeri](./13-paolo-lucelli-sette-regole-grande-impresa.md) | [Torna all'indice](../index.md)
+[← Modulo 13: Paolo Ruggeri](./13-paolo-lucelli-sette-regole-grande-impresa.md) | [Torna all'indice](../index.md) | [Modulo 15 →](./15-mario-olivelli-rete-vendita-milionaria.md)

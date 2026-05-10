@@ -6,9 +6,9 @@
 
 Tutto quello che è stato detto a Infobusiness Milionario — distillato in playbook operativi, framework testati e checklist pronte all'uso.
 
-11 interventi gia' disponibili. 80+ azioni concrete. 25+ framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
+15 interventi disponibili. 120+ azioni concrete. 40+ framework proprietari. Organizzati per priorità: cosa fare entro 48 ore, 30 giorni, 90 giorni.
 
-| 11 Speaker | 417 min di contenuto | 80+ azioni operative | 25+ framework |
+| 15 Speaker | 626 min di contenuto | 120+ azioni operative | 40+ framework |
 |------------|----------------------|---------------------|---------------|
 
 ---
@@ -30,6 +30,10 @@ Tutto quello che è stato detto a Infobusiness Milionario — distillato in play
 | 09 | [Da Infobusiness a Impresa](./moduli/09-alfio-bardolla-infobusiness-impresa.md) | Alfio Bardolla | Cash cow, struttura aziendale, ricchezza generazionale | → |
 | 10 | [Protezione Patrimoniale e Ottimizzazione Fiscale](./moduli/10-transfer-manager-protezione-patrimoniale.md) | Simone Giannetti | Malta, Panama, LLC USA, exit tax, residenza fiscale | → |
 | 11 | [YouTube come Motore di Fiducia](./moduli/11-soro-youtube-personal-brand.md) | Amin Halibi | Personal brand, contenuto educativo, video conversione | → |
+| 12 | [Micro Personal Brand e Instagram Authority Funnel](./moduli/12-mik-cosentino-micro-personal-brand.md) | Mik Cosentino | Instagram funnel, supply-demand, vendita 1-a-tanti | → |
+| 13 | [Sette Regole per Costruire una Grande Impresa di Servizi](./moduli/13-paolo-lucelli-sette-regole-grande-impresa.md) | Paolo Ruggeri | Management, partnership, scuola interna, scambio in abbondanza | → |
+| 14 | [Il Ciclo della Reinvenzione e i 4 Principi Immutabili](./moduli/14-marco-postiglione-ciclo-reinvenzione.md) | Marco Postiglione | Ciclo reinvenzione, intensità, frequenza, mindset | → |
+| 15 | [Rete Vendita Milionaria](./moduli/15-mario-olivelli-rete-vendita-milionaria.md) | Mario Olivelli | Rete vendita, hiring venditori, sales team, cultura | → |
 
 ---
 
@@ -60,7 +64,8 @@ Ogni pagina contiene:
 | Offerta & Pricing | 02 |
 | Personal Brand & Storytelling | 01, 06 |
 | Business Model & Scaling | 01, 03, 05 |
-| Team & Hiring | 01, 05 |
+| Team & Hiring | 01, 05, 13, 15 |
+| Rete Vendita & Sales Team | 06, 09, 13, 15 |
 | Advertising & Paid Media | 03, 04, 07 |
 | Creatività & Contenuti | 04, 05 |
 | AI & Automazione | 01, 07, 08 |
