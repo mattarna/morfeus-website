@@ -178,6 +178,18 @@ const modules = [
     tags: ["Instagram", "personal brand", "vendita 1-a-tanti"],
     day: 2,
   },
+  {
+    id: "modulo-13",
+    number: "13",
+    file: "13-paolo-lucelli-sette-regole-grande-impresa.md",
+    title: "Sette Regole per Costruire una Grande Impresa di Servizi",
+    speaker: "Paolo Lucelli",
+    duration: "50 min",
+    color: "#6366F1",
+    focus: "Management, partnership, scuola interna, scambio in abbondanza",
+    tags: ["management", "partnership", "organigramma"],
+    day: 2,
+  },
 ] as const;
 
 function getModuleByStep(stepId: string) {
@@ -803,7 +815,7 @@ export function PlaybookThankYouSection() {
             <strong>2 newsletter attive</strong>
             <span>
               Una in italiano (6.300+ iscritti), una in inglese (3.700+ subscribers). Stesso
-              approccio. Stessa automazione.
+              approccio. Tutto automatizzato. Open rate medio del 41%.
             </span>
           </div>
         </div>
