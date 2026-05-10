@@ -381,7 +381,7 @@ function renderLines(lines: string[], context?: RenderContext): string {
 function renderMarkdown(markdown: string): string {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const segments: { title: string; lines: string[] }[] = [];
-  let pre: string[] = [];
+  const pre: string[] = [];
   let current: { title: string; lines: string[] } | null = null;
 
   for (const line of lines) {
