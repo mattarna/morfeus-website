@@ -2243,6 +2243,27 @@
   margin-bottom: 14px;
 }
 
+.plotTwistPhoto {
+  border: 2px solid rgba(235, 122, 46, 0.55);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 18px 48px rgba(235, 122, 46, 0.22);
+  height: clamp(96px, 12vw, 132px);
+  margin: 0 auto 22px;
+  overflow: hidden;
+  padding: 4px;
+  width: clamp(96px, 12vw, 132px);
+}
+
+.plotTwistPhoto img {
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
 .plotTwistTitle {
   color: var(--white);
   font-family: var(--font-display);
@@ -2414,21 +2435,28 @@
 
 .thankYouByline {
   align-items: center;
-  border-top: 1px solid var(--hairline);
+  background:
+    radial-gradient(ellipse at left, rgba(235, 122, 46, 0.1), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.012) 100%);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
   display: flex;
-  gap: 16px;
+  gap: 18px;
   margin-top: 28px;
-  padding-top: 24px;
+  padding: 18px 22px 18px 18px;
 }
 
 .bylinePhoto {
-  border: 1px solid rgba(235, 122, 46, 0.32);
+  border: 2px solid rgba(235, 122, 46, 0.55);
   border-radius: 50%;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 8px 22px rgba(235, 122, 46, 0.18);
   flex-shrink: 0;
-  height: 60px;
+  height: 88px;
   overflow: hidden;
-  padding: 2px;
-  width: 60px;
+  padding: 3px;
+  width: 88px;
 }
 
 .bylinePhoto img {
@@ -2442,21 +2470,24 @@
 .bylineCopy {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  min-width: 0;
 }
 
 .bylineCopy strong {
   color: var(--white);
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 .bylineCopy span {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.4;
+  color: var(--ghost);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0.85;
 }
 
 .thankYouCta {

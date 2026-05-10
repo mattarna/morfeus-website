@@ -787,6 +787,10 @@ export function PlaybookThankYouSection() {
 
       <section className={styles.plotTwist}>
         <div className={styles.plotTwistInner}>
+          <div className={styles.plotTwistPhoto}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/matteo-arnaboldi-hoodie.png" alt="Matteo Arnaboldi, founder di Morfeus" />
+          </div>
           <p className={styles.sectionLabel}>Una cosa che devi sapere</p>
           <h2 className={styles.plotTwistTitle}>
             Tutto questo lo hanno costruito in poche ore<br />
@@ -948,16 +952,6 @@ export function PlaybookThankYouSection() {
             </a>
           </div>
 
-          <div className={styles.thankYouByline}>
-            <div className={styles.bylinePhoto}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/matteo-arnaboldi-hoodie.png" alt="Matteo Arnaboldi, founder di Morfeus" />
-            </div>
-            <div className={styles.bylineCopy}>
-              <strong>Matteo Arnaboldi</strong>
-              <span>Founder Morfeus. Quello che ti sta preparando la folder.</span>
-            </div>
-          </div>
         </div>
 
         <aside className={styles.thankYouCta}>
