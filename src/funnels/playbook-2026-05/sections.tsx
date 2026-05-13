@@ -33,6 +33,10 @@ const WHATSAPP_MESSAGE =
   "Ciao Matteo, ero all'evento Infobusiness Milionario e vorrei capire come funziona il tuo sistema AI.";
 const WHATSAPP_URL = `https://wa.me/393388368457?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const SUBSTACK_URL = "https://matteoarnaboldi.substack.com";
+// Toggle a true per riattivare la card CTA "Facciamoci due chiacchiere" (Calendly + WhatsApp) sulla TY.
+const SHOW_THANKYOU_CTA = false;
+// Toggle a false per riaprire pubblicamente la home playbook e la thank-you page.
+const PAGE_HIDDEN = true;
 
 const modules = [
   {
@@ -525,7 +529,30 @@ function Footer() {
   );
 }
 
+function HiddenPlaceholder() {
+  return (
+    <div className={styles.page}>
+      <main className={styles.hiddenPage}>
+        <div className={styles.hiddenPageInner}>
+          <p className={styles.hiddenPageKicker}>Morfeus</p>
+          <h1>
+            Pagina <span className={styles.accent}>non disponibile.</span>
+          </h1>
+          <p>
+            Questa pagina al momento non e accessibile. Per scoprire cosa stiamo costruendo,
+            vai sul sito principale.
+          </p>
+          <a className={styles.primaryButton} href="https://morfeushub.com">
+            Vai a morfeushub.com
+          </a>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 export function PlaybookHomeSection() {
+  if (PAGE_HIDDEN) return <HiddenPlaceholder />;
   return (
     <div className={styles.page}>
       <Header />
@@ -730,6 +757,7 @@ export function PlaybookModuleSection({ step }: SectionProps) {
 }
 
 export function PlaybookThankYouSection() {
+  if (PAGE_HIDDEN) return <HiddenPlaceholder />;
   return (
     <div className={styles.page}>
       <Header />
@@ -908,7 +936,7 @@ export function PlaybookThankYouSection() {
 
       <div className={styles.divider} />
 
-      <section className={styles.thankYouGrid}>
+      <section className={styles.thankYouGrid} data-cta-hidden={!SHOW_THANKYOU_CTA}>
         <div className={styles.thankYouMain}>
           <p className={styles.sectionLabel}>Morfeus</p>
           <h2>
@@ -973,6 +1001,7 @@ export function PlaybookThankYouSection() {
 
         </div>
 
+        {SHOW_THANKYOU_CTA && (
         <aside className={styles.thankYouCta}>
           <p className={styles.sectionLabel}>Se hai bisogno di una mano</p>
           <h2 className={styles.thankYouCtaTitle}>
@@ -1025,6 +1054,7 @@ export function PlaybookThankYouSection() {
             <span>Scrivimi su WhatsApp</span>
           </a>
         </aside>
+        )}
       </section>
       <Footer />
       <SharePill />
