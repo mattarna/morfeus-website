@@ -413,6 +413,7 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
           maxWidth: 1120,
           margin: "0 auto",
           padding: "0 32px",
+          marginBottom: 40,
           display: "flex",
           alignItems: "center",
           gap: 20,
