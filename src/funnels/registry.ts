@@ -8,6 +8,7 @@ import freebieInstagramCarouselSkillsConfig from "@/funnels/freebie-instagram-ca
 import freebieVocabolarioAiConfig from "@/funnels/freebie-vocabolario-ai-2026-04/config.json";
 import freebieDesignSystemBlueprintConfig from "@/funnels/freebie-design-system-blueprint-2026-05/config.json";
 import playbookConfig from "@/funnels/playbook-2026-05/config.json";
+import asseprimWebinarConfig from "@/funnels/asseprim-18-maggio-2026/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
 
@@ -40,6 +41,10 @@ const webinarClaudeMay2026Item: FunnelRegistryItem = {
   slug: "webinar-claude",
   locale: "it",
   indexable: true,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -52,6 +57,10 @@ const freebieCoworkSetupSkillItem: FunnelRegistryItem = {
   slug: "claude-skill-anatomy",
   locale: "it",
   indexable: false,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -64,6 +73,10 @@ const freebieInstagramCarouselSkillsItem: FunnelRegistryItem = {
   slug: "instagram-carousel-skills",
   locale: "it",
   indexable: false,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -76,6 +89,11 @@ const freebieVocabolarioAiItem: FunnelRegistryItem = {
   slug: "vocabolario-ai",
   locale: "it",
   indexable: true,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+    metadataPreset: "vocabolario-page",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -88,6 +106,10 @@ const freebieDesignSystemBlueprintItem: FunnelRegistryItem = {
   slug: "design-system-skill",
   locale: "it",
   indexable: false,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -100,6 +122,12 @@ const claudeUnlockedItem: FunnelRegistryItem = {
   slug: "claude-unlocked",
   locale: "it",
   indexable: true,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+    metadataPreset: "claude-unlocked-sales",
+    chatbotStepIds: ["sales"],
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -112,6 +140,11 @@ const bootcampAiChampion3aEdizioneItem: FunnelRegistryItem = {
   slug: "bootcamp-ai-champion-3a-edizione",
   locale: "it",
   indexable: true,
+  runtime: {
+    fontPack: "webinar",
+    theme: "bootcamp",
+    chatbotStepIds: ["sales"],
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -124,6 +157,10 @@ const playbookItem: FunnelRegistryItem = {
   slug: "playbook-imprenditore-milionario",
   locale: "it",
   indexable: false,
+  runtime: {
+    fontPack: "playbook",
+    metadataPreset: "playbook",
+  },
   abTest: {
     enabled: false,
     variants: ["A"]
@@ -131,3 +168,19 @@ const playbookItem: FunnelRegistryItem = {
 };
 
 registerFunnel(playbookItem, playbookConfig as FunnelConfig);
+
+const asseprimWebinarItem: FunnelRegistryItem = {
+  slug: "asseprim-18-maggio-2026",
+  locale: "it",
+  indexable: false,
+  runtime: {
+    fontPack: "webinar",
+    theme: "default",
+  },
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(asseprimWebinarItem, asseprimWebinarConfig as FunnelConfig);

@@ -192,6 +192,10 @@ import {
   PlaybookQrSection,
   PlaybookThankYouSection,
 } from "@/funnels/playbook-2026-05/sections";
+import {
+  AsseprimBusinessPageSection,
+  AsseprimRoutingPageSection,
+} from "@/funnels/asseprim-18-maggio-2026/sections";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -430,4 +434,6 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   PlaybookModule: ({ step }) => <PlaybookModuleSection step={step} />,
   PlaybookThankYou: () => <PlaybookThankYouSection />,
   PlaybookQr: () => <PlaybookQrSection />,
+  AsseprimRoutingPage: ({ step }) => <AsseprimRoutingPageSection step={step} />,
+  AsseprimBusinessPage: ({ step }) => <AsseprimBusinessPageSection step={step} />,
 };
