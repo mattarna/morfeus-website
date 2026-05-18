@@ -727,41 +727,6 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
           </div>
         </div>
 
-        {/* ── Urgency strip ──────────────────────────────────────────── */}
-        <div
-          style={{
-            marginTop: 24,
-            padding: "18px 24px",
-            borderRadius: 14,
-            background: "rgba(235,122,46,0.07)",
-            border: "1px solid rgba(235,122,46,0.20)",
-            display: "flex",
-            alignItems: "center",
-            gap: 14,
-          }}
-        >
-          <span
-            style={{
-              flexShrink: 0,
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: "#EB7A2E",
-              animation: "badge-pulse 2s infinite",
-            }}
-          />
-          <p
-            style={{
-              margin: 0,
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              lineHeight: 1.55,
-              color: "#f5c9a6",
-            }}
-          >
-            {content.urgencyNote}
-          </p>
-        </div>
       </section>
 
       <Footer />
