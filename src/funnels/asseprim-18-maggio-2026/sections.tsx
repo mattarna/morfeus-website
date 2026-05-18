@@ -503,7 +503,7 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
                   marginBottom: 14,
                 }}
               >
-                Corso individuale
+                Community · Gratuita
               </span>
               <h2
                 style={{
@@ -534,35 +534,48 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
               {content.claudeCardBody}
             </p>
 
-            {/* Price — reduced prominence */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "clamp(32px,3.5vw,42px)",
-                  lineHeight: 1,
-                  color: "#EB7A2E",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                297€
-              </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <span
+            {/* Feature list */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+              {[
+                "Formazione live e sessioni con i founder",
+                "Workflow AI, casi studio e confronto tra professionisti",
+                "Accesso a percorsi strutturati e ambiente di execution",
+              ].map((item) => (
+                <div
+                  key={item}
                   style={{
+                    display: "flex",
+                    gap: 12,
+                    alignItems: "flex-start",
                     fontFamily: "var(--font-body)",
                     fontSize: 15,
-                    color: "#9B9BB0",
-                    textDecoration: "line-through",
+                    lineHeight: 1.5,
+                    color: "#E4E7F0",
+                    opacity: 0.85,
                   }}
                 >
-                  397€
-                </span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#9B9BB0" }}>
-                  pagamento unico
-                </span>
-              </div>
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      marginTop: 2,
+                      width: 18,
+                      height: 18,
+                      borderRadius: "50%",
+                      background: "rgba(235,122,46,0.15)",
+                      border: "1px solid rgba(235,122,46,0.35)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#EB7A2E",
+                      fontSize: 10,
+                      fontWeight: 800,
+                    }}
+                  >
+                    ✓
+                  </span>
+                  {item}
+                </div>
+              ))}
             </div>
 
             <PrimaryButton href={content.claudeCtaHref} fullWidth size="lg">
