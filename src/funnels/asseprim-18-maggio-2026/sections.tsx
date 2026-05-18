@@ -942,7 +942,7 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
               opacity: 0.88,
             }}
           >
-            &ldquo;Dopo 60 giorni il team usava Claude ogni giorno. Non avrei creduto possibile un'adozione così rapida.&rdquo;
+            &ldquo;Dopo 60 giorni il team usava Claude ogni giorno. Non avrei creduto possibile un&apos;adozione così rapida.&rdquo;
           </p>
           <p
             style={{
