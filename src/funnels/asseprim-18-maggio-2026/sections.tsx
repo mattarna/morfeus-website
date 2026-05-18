@@ -48,10 +48,10 @@ function Accent({ children }: { children: React.ReactNode }) {
   return (
     <span
       style={{
-        fontFamily: "var(--font-italic)",
+        fontFamily: "var(--font-italic, 'Playfair Display', Georgia, serif)",
         fontStyle: "italic",
-        fontWeight: 500,
-        color: "var(--orange)",
+        fontWeight: 400,
+        color: "var(--orange, #EB7A2E)",
       }}
     >
       {children}
@@ -926,7 +926,7 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
               Ogni azienda che formiamo racconta{" "}
               <span
                 style={{
-                  fontFamily: "var(--font-italic)",
+                  fontFamily: "var(--font-italic, 'Playfair Display', Georgia, serif)",
                   fontStyle: "italic",
                   fontWeight: 500,
                   color: "#EB7A2E",
@@ -1162,7 +1162,7 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
               Tre passi per partire.{" "}
               <span
                 style={{
-                  fontFamily: "var(--font-italic)",
+                  fontFamily: "var(--font-italic, 'Playfair Display', Georgia, serif)",
                   fontStyle: "italic",
                   fontWeight: 500,
                   color: "#EB7A2E",

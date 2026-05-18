@@ -1,6 +1,37 @@
 import Script from "next/script";
 import WcThemeProvider from "@/funnels/webinar-claude-2026-05/WcThemeProvider";
 import { CookieConsentFunnel } from "@/components/shared/CookieConsentFunnel";
+import { getFunnelRegistryItem } from "@/funnels/registry";
+
+function FunnelRuntimeStyles({ fontPack }: { fontPack: "webinar" | "playbook" }) {
+  if (fontPack === "playbook") {
+    return (
+      <>
+        <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line react/no-danger */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @font-face { font-family: 'Clash Display'; src: url('/fonts/webinar-claude/ClashDisplay-Variable.ttf') format('truetype'); font-weight: 200 700; font-style: normal; font-display: swap; }
+          @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-Variable.ttf') format('truetype'); font-weight: 300 900; font-style: normal; font-display: swap; }
+          @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-VariableItalic.ttf') format('truetype'); font-weight: 300 900; font-style: italic; font-display: swap; }
+          @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: normal; font-display: swap; }
+          @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: italic; font-display: swap; }
+          html { scroll-padding-top: 96px; }
+          @media (max-width: 640px) { html { scroll-padding-top: 76px; } }
+        ` }} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+      <link rel="preload" href="/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+    </>
+  );
+}
 
 export default function FunnelSlugLayout({
   children,
@@ -10,6 +41,9 @@ export default function FunnelSlugLayout({
   params: { slug: string };
 }) {
   const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const runtime = getFunnelRegistryItem(params.slug)?.runtime;
+  const fontPack = runtime?.fontPack;
+  const theme = runtime?.theme;
 
   return (
     <>
@@ -31,29 +65,16 @@ export default function FunnelSlugLayout({
           }}
         />
       )}
-      {params.slug === "webinar-claude" || params.slug === "claude-skill-anatomy" || params.slug === "instagram-carousel-skills" || params.slug === "vocabolario-ai" || params.slug === "design-system-skill" || params.slug === "claude-unlocked" || params.slug === "bootcamp-ai-champion-3a-edizione" ? (
+      {fontPack === "webinar" && theme ? (
         <>
-          <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <WcThemeProvider theme={params.slug === "bootcamp-ai-champion-3a-edizione" ? "bootcamp" : "default"}>
+          <FunnelRuntimeStyles fontPack={fontPack} />
+          <WcThemeProvider theme={theme}>
             {children}
           </WcThemeProvider>
         </>
-      ) : params.slug === "playbook-imprenditore-milionario" ? (
+      ) : fontPack === "playbook" ? (
         <>
-          <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <link rel="preload" href="/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          {/* eslint-disable-next-line react/no-danger */}
-          <style dangerouslySetInnerHTML={{ __html: `
-            @font-face { font-family: 'Clash Display'; src: url('/fonts/webinar-claude/ClashDisplay-Variable.ttf') format('truetype'); font-weight: 200 700; font-style: normal; font-display: swap; }
-            @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-Variable.ttf') format('truetype'); font-weight: 300 900; font-style: normal; font-display: swap; }
-            @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-VariableItalic.ttf') format('truetype'); font-weight: 300 900; font-style: italic; font-display: swap; }
-            @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: normal; font-display: swap; }
-            @font-face { font-family: 'Playfair Display'; src: url('/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf') format('truetype'); font-weight: 400 900; font-style: italic; font-display: swap; }
-            html { scroll-padding-top: 96px; }
-            @media (max-width: 640px) { html { scroll-padding-top: 76px; } }
-          `}} />
+          <FunnelRuntimeStyles fontPack={fontPack} />
           {children}
         </>
       ) : (
