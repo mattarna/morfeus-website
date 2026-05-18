@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import type { FunnelStepConfig } from "@/funnels/types";
 import styles from "./sections.module.css";
 
-// ─── Shared prop shape ────────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface SectionProps {
   step: FunnelStepConfig;
@@ -67,11 +66,11 @@ function Badge({ children }: { children: React.ReactNode }) {
         display: "inline-flex",
         alignItems: "center",
         gap: 10,
-        padding: "8px 16px",
+        padding: "9px 18px",
         borderRadius: 100,
-        background: "rgba(235,122,46,0.10)",
-        border: "1px solid rgba(235,122,46,0.25)",
-        color: "var(--orange)",
+        background: "rgba(235,122,46,0.12)",
+        border: "1px solid rgba(235,122,46,0.30)",
+        color: "#EB7A2E",
         fontSize: 12,
         fontWeight: 700,
         letterSpacing: "0.14em",
@@ -84,8 +83,8 @@ function Badge({ children }: { children: React.ReactNode }) {
           width: 6,
           height: 6,
           borderRadius: "50%",
-          background: "var(--orange)",
-          boxShadow: "0 0 8px rgba(235,122,46,0.6)",
+          background: "#EB7A2E",
+          boxShadow: "0 0 8px rgba(235,122,46,0.7)",
           animation: "badge-pulse 2s infinite",
           flexShrink: 0,
         }}
@@ -102,10 +101,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
         display: "inline-flex",
         alignItems: "center",
         gap: 12,
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: 700,
-        color: "var(--violet)",
-        letterSpacing: "0.20em",
+        color: "#7B68EE",
+        letterSpacing: "0.22em",
         textTransform: "uppercase",
         fontFamily: "var(--font-body)",
       }}
@@ -114,7 +113,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
         style={{
           width: 24,
           height: 1,
-          background: "var(--violet)",
+          background: "#7B68EE",
           opacity: 0.5,
           flexShrink: 0,
         }}
@@ -124,21 +123,48 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * PrimaryButton — modelled 1:1 on SalesV3PrimaryButton which is confirmed
+ * working in production. Key differences from v1: uses plain <a> (not
+ * Next.js Link), color is #fff (not #0B0B0C), background has hex fallback.
+ */
 function PrimaryButton({
   children,
   href,
   pulse,
   fullWidth,
+  size = "md",
 }: {
   children: React.ReactNode;
   href: string;
   pulse?: boolean;
   fullWidth?: boolean;
+  size?: "md" | "lg" | "xl";
 }) {
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);
+
+  const pad =
+    size === "xl"
+      ? "clamp(14px,3.5vw,22px) clamp(20px,5vw,36px)"
+      : size === "lg"
+        ? "clamp(14px,3vw,20px) clamp(18px,4.5vw,32px)"
+        : "clamp(12px,2.5vw,16px) clamp(16px,4vw,24px)";
+  const fs =
+    size === "xl"
+      ? "clamp(15px,1.6vw,18px)"
+      : size === "lg"
+        ? "clamp(15px,1.5vw,17px)"
+        : "clamp(14px,1.4vw,16px)";
+
+  const bg = press
+    ? "#D4652A"
+    : hover
+      ? "#F09A5C"
+      : "#EB7A2E";
+
   return (
-    <Link
+    <a
       href={href}
       data-funnel-cta="true"
       data-cta-href={href}
@@ -149,21 +175,17 @@ function PrimaryButton({
       style={{
         fontFamily: "var(--font-body)",
         fontWeight: 700,
-        fontSize: "clamp(15px, 1.6vw, 18px)",
-        padding: "clamp(14px, 3.5vw, 20px) clamp(20px, 5vw, 36px)",
+        fontSize: fs,
+        padding: pad,
         borderRadius: 10,
         border: "none",
-        background: press
-          ? "var(--orange-pressed)"
-          : hover
-          ? "var(--orange-hover)"
-          : "var(--orange)",
-        color: "#0B0B0C",
+        background: bg,
+        color: "#fff",
         boxShadow: hover
-          ? "0 6px 28px rgba(235,122,46,0.50)"
-          : "0 4px 20px rgba(235,122,46,0.35)",
+          ? "0 6px 28px rgba(235,122,46,0.55)"
+          : "0 4px 20px rgba(235,122,46,0.38)",
         transform: hover && !press ? "translateY(-1px)" : "translateY(0)",
-        transition: "background .2s, box-shadow .2s, transform .2s",
+        transition: "background .18s, box-shadow .18s, transform .18s",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
@@ -172,10 +194,11 @@ function PrimaryButton({
         animation: pulse ? "btn-pulse 2.4s infinite" : "none",
         textDecoration: "none",
         cursor: "pointer",
+        boxSizing: "border-box",
       }}
     >
       {children}
-    </Link>
+    </a>
   );
 }
 
@@ -190,7 +213,7 @@ function OutlineButton({
 }) {
   const [hover, setHover] = useState(false);
   return (
-    <Link
+    <a
       href={href}
       data-funnel-cta="true"
       data-cta-href={href}
@@ -198,14 +221,14 @@ function OutlineButton({
       onMouseLeave={() => setHover(false)}
       style={{
         fontFamily: "var(--font-body)",
-        fontWeight: 700,
-        fontSize: "clamp(15px, 1.6vw, 18px)",
-        padding: "clamp(14px, 3.5vw, 20px) clamp(20px, 5vw, 36px)",
+        fontWeight: 600,
+        fontSize: "clamp(14px,1.5vw,17px)",
+        padding: "clamp(12px,2.5vw,16px) clamp(16px,4vw,28px)",
         borderRadius: 10,
-        border: "1.5px solid rgba(255,255,255,0.22)",
-        background: hover ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.025)",
-        color: "var(--ghost)",
-        transition: "background .2s, border-color .2s",
+        border: "1.5px solid rgba(255,255,255,0.20)",
+        background: hover ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
+        color: "#E4E7F0",
+        transition: "background .18s, border-color .18s",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
@@ -213,76 +236,11 @@ function OutlineButton({
         width: fullWidth ? "100%" : "auto",
         textDecoration: "none",
         cursor: "pointer",
+        boxSizing: "border-box",
       }}
     >
       {children}
-    </Link>
-  );
-}
-
-function CheckItem({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        gap: 14,
-        alignItems: "flex-start",
-        fontFamily: "var(--font-body)",
-        fontSize: 17,
-        lineHeight: 1.6,
-        color: "var(--ghost)",
-      }}
-    >
-      <span
-        style={{
-          flexShrink: 0,
-          marginTop: 2,
-          width: 20,
-          height: 20,
-          borderRadius: "50%",
-          background: "rgba(235,122,46,0.15)",
-          border: "1px solid rgba(235,122,46,0.4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--orange)",
-          fontSize: 11,
-          fontWeight: 800,
-        }}
-      >
-        ✓
-      </span>
-      <span>{children}</span>
-    </div>
-  );
-}
-
-function CrossItem({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        gap: 14,
-        alignItems: "flex-start",
-        fontFamily: "var(--font-body)",
-        fontSize: 17,
-        lineHeight: 1.6,
-        color: "#c9c9d8",
-      }}
-    >
-      <span
-        style={{
-          flexShrink: 0,
-          marginTop: 3,
-          color: "var(--muted)",
-          fontSize: 16,
-          opacity: 0.7,
-        }}
-      >
-        ·
-      </span>
-      <span>{children}</span>
-    </div>
+    </a>
   );
 }
 
@@ -292,21 +250,17 @@ function Header() {
   return (
     <header className={styles.header}>
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-        <Link
+        <a
           href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            textDecoration: "none",
-          }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 1, textDecoration: "none" }}
         >
           <span
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: 18,
-              color: "var(--white)",
-              letterSpacing: "-0.02em",
+              fontSize: 19,
+              color: "#fff",
+              letterSpacing: "-0.025em",
             }}
           >
             morfeus
@@ -315,14 +269,14 @@ function Header() {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: 18,
-              color: "var(--orange)",
-              letterSpacing: "-0.02em",
+              fontSize: 19,
+              color: "#EB7A2E",
+              letterSpacing: "-0.025em",
             }}
           >
             hub
           </span>
-        </Link>
+        </a>
       </div>
     </header>
   );
@@ -337,8 +291,8 @@ function Footer() {
         style={{
           maxWidth: 1120,
           margin: "0 auto",
-          borderTop: "1px solid var(--hairline)",
-          paddingTop: 32,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          paddingTop: 28,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -347,44 +301,29 @@ function Footer() {
         }}
       >
         <span
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 13,
-            color: "var(--muted)",
-          }}
+          style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#9B9BB0" }}
         >
-          © 2026 Morfeus Hub — P.IVA 12345678901
+          © 2026 Morfeus Hub
         </span>
         <div style={{ display: "flex", gap: 20 }}>
-          <Link
-            href="/it/privacy"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 13,
-              color: "var(--muted)",
-              textDecoration: "none",
-            }}
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/it/cookies"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 13,
-              color: "var(--muted)",
-              textDecoration: "none",
-            }}
-          >
-            Cookie
-          </Link>
+          {["Privacy", "Cookie"].map((l) => (
+            <a
+              key={l}
+              href={`/it/${l.toLowerCase()}`}
+              style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#9B9BB0", textDecoration: "none" }}
+            >
+              {l}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
   );
 }
 
-// ─── Routing Page ─────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// PAGINA 1 — Smistamento
+// ═══════════════════════════════════════════════════════════════════════════════
 
 export function AsseprimRoutingPageSection({ step }: SectionProps) {
   const content = (step.content as Record<string, unknown>)
@@ -395,36 +334,30 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
     <>
       <Header />
 
-      {/* Hero */}
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section
         className={styles.heroSection}
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          textAlign: "center",
-          position: "relative",
-          zIndex: 1,
-        }}
+        style={{ maxWidth: 1120, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}
       >
         {/* Ambient glow */}
         <div
           aria-hidden
           style={{
             position: "absolute",
-            top: 80,
+            top: 60,
             left: "50%",
             transform: "translateX(-50%)",
-            width: "min(800px, 90vw)",
-            height: 280,
+            width: "min(760px,90vw)",
+            height: 260,
             background:
-              "radial-gradient(ellipse, rgba(235,122,46,0.13) 0%, rgba(123,104,238,0.07) 40%, transparent 70%)",
-            filter: "blur(20px)",
+              "radial-gradient(ellipse, rgba(235,122,46,0.16) 0%, rgba(123,104,238,0.08) 40%, transparent 70%)",
+            filter: "blur(24px)",
             pointerEvents: "none",
             zIndex: -1,
           }}
         />
 
-        <div style={{ display: "inline-flex", marginBottom: 28 }}>
+        <div style={{ display: "inline-flex", marginBottom: 32 }}>
           <Badge>{content.eyebrow}</Badge>
         </div>
 
@@ -432,16 +365,17 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(44px, 7vw, 80px)",
-            lineHeight: 1.0,
-            letterSpacing: "-0.03em",
-            color: "var(--white)",
-            margin: "0 auto 24px",
-            maxWidth: 800,
+            fontSize: "clamp(52px,8vw,96px)",
+            lineHeight: 0.98,
+            letterSpacing: "-0.035em",
+            color: "#fff",
+            margin: "0 auto 28px",
+            maxWidth: 820,
             textWrap: "balance" as React.CSSProperties["textWrap"],
           }}
         >
-          A cosa sei{" "}
+          A cosa sei
+          <br />
           <Accent>interessato?</Accent>
         </h1>
 
@@ -449,11 +383,11 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-body)",
             fontWeight: 400,
-            fontSize: "clamp(17px, 1.6vw, 20px)",
+            fontSize: "clamp(17px,1.6vw,20px)",
             lineHeight: 1.55,
-            color: "var(--ghost)",
-            opacity: 0.9,
-            maxWidth: 640,
+            color: "#E4E7F0",
+            opacity: 0.88,
+            maxWidth: 620,
             margin: "0 auto",
             textWrap: "pretty" as React.CSSProperties["textWrap"],
           }}
@@ -462,87 +396,165 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
         </p>
       </section>
 
-      {/* Choice cards */}
-      <section
-        className={styles.sectionPad}
-        style={{ maxWidth: 1120, margin: "0 auto" }}
+      {/* ── Section divider ──────────────────────────────────────────────── */}
+      <div
+        style={{
+          maxWidth: 1120,
+          margin: "0 auto",
+          padding: "0 32px",
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+        }}
       >
+        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.06)" }} />
+        <span
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "#9B9BB0",
+          }}
+        >
+          Scegli il tuo percorso
+        </span>
+        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.06)" }} />
+      </div>
+
+      {/* ── Choice cards ─────────────────────────────────────────────────── */}
+      <section className={styles.sectionPad} style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div className={styles.cardsGrid}>
-          {/* Claude Unlocked — primary */}
+
+          {/* ── Card primaria: Claude Unlocked ─────────────────────────── */}
           <div
             style={{
-              borderRadius: 20,
-              border: "1px solid rgba(235,122,46,0.30)",
+              borderRadius: 22,
+              border: "1px solid rgba(235,122,46,0.35)",
               background:
-                "linear-gradient(145deg, rgba(235,122,46,0.08) 0%, rgba(11,11,12,0.95) 60%)",
-              padding: "clamp(28px, 4vw, 44px)",
+                "linear-gradient(150deg, rgba(235,122,46,0.18) 0%, rgba(11,11,12,0.97) 55%)",
+              padding: "clamp(28px,4vw,48px)",
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: 22,
               position: "relative",
               overflow: "hidden",
             }}
           >
-            {/* Card glow */}
+            {/* Top-border accent */}
             <div
               aria-hidden
               style={{
                 position: "absolute",
-                top: -40,
-                right: -40,
-                width: 200,
-                height: 200,
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                background:
+                  "linear-gradient(to right, transparent 0%, rgba(235,122,46,0.85) 40%, rgba(235,122,46,0.85) 60%, transparent 100%)",
+                borderRadius: "22px 22px 0 0",
+              }}
+            />
+            {/* Corner glow */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                top: -60,
+                right: -60,
+                width: 240,
+                height: 240,
                 borderRadius: "50%",
-                background: "rgba(235,122,46,0.09)",
-                filter: "blur(40px)",
+                background: "rgba(235,122,46,0.11)",
+                filter: "blur(50px)",
                 pointerEvents: "none",
               }}
             />
 
-            <div>
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "5px 12px",
-                  borderRadius: 100,
-                  background: "rgba(235,122,46,0.12)",
-                  border: "1px solid rgba(235,122,46,0.30)",
-                  color: "var(--orange)",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  fontFamily: "var(--font-body)",
-                  marginBottom: 16,
-                }}
-              >
+            {/* Header row */}
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
+              <div>
                 <span
                   style={{
-                    width: 5,
-                    height: 5,
-                    borderRadius: "50%",
-                    background: "var(--orange)",
-                    animation: "badge-pulse 2s infinite",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
+                    padding: "5px 11px",
+                    borderRadius: 100,
+                    background: "rgba(235,122,46,0.14)",
+                    border: "1px solid rgba(235,122,46,0.32)",
+                    color: "#EB7A2E",
+                    fontSize: 10,
+                    fontWeight: 800,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    fontFamily: "var(--font-body)",
+                    marginBottom: 14,
                   }}
-                />
-                Offerta webinar · 24 ore
-              </span>
-
-              <h2
+                >
+                  <span
+                    style={{
+                      width: 5,
+                      height: 5,
+                      borderRadius: "50%",
+                      background: "#EB7A2E",
+                      animation: "badge-pulse 2s infinite",
+                    }}
+                  />
+                  Offerta webinar · 24 ore
+                </span>
+                <h2
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 600,
+                    fontSize: "clamp(30px,3.5vw,44px)",
+                    lineHeight: 1.0,
+                    letterSpacing: "-0.025em",
+                    color: "#fff",
+                    margin: 0,
+                  }}
+                >
+                  {content.claudeCardTitle}
+                </h2>
+              </div>
+              {/* Savings badge */}
+              <div
                 style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 600,
-                  fontSize: "clamp(28px, 3.5vw, 40px)",
-                  lineHeight: 1.05,
-                  letterSpacing: "-0.025em",
-                  color: "var(--white)",
-                  margin: 0,
+                  flexShrink: 0,
+                  padding: "8px 12px",
+                  borderRadius: 10,
+                  background: "rgba(235,122,46,0.18)",
+                  border: "1px solid rgba(235,122,46,0.35)",
+                  textAlign: "center",
                 }}
               >
-                {content.claudeCardTitle}
-              </h2>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: 18,
+                    color: "#EB7A2E",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                  }}
+                >
+                  −100€
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 10,
+                    color: "#9B9BB0",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                    marginTop: 3,
+                  }}
+                >
+                  risparmio
+                </div>
+              </div>
             </div>
 
             <p
@@ -550,8 +562,8 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
                 fontFamily: "var(--font-body)",
                 fontSize: 17,
                 lineHeight: 1.65,
-                color: "var(--ghost)",
-                opacity: 0.88,
+                color: "#E4E7F0",
+                opacity: 0.85,
                 margin: 0,
                 flex: 1,
               }}
@@ -559,80 +571,106 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
               {content.claudeCardBody}
             </p>
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 16,
-                flexWrap: "wrap",
-              }}
-            >
+            {/* Price */}
+            <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
               <span
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
-                  fontSize: 36,
-                  color: "var(--orange)",
-                  letterSpacing: "-0.03em",
+                  fontSize: "clamp(56px,6vw,76px)",
+                  lineHeight: 1,
+                  color: "#EB7A2E",
+                  letterSpacing: "-0.04em",
                 }}
               >
                 297€
               </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: 15,
-                  color: "var(--muted)",
-                  textDecoration: "line-through",
-                }}
-              >
-                397€
-              </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 18,
+                    color: "#9B9BB0",
+                    textDecoration: "line-through",
+                  }}
+                >
+                  397€
+                </span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#9B9BB0" }}>
+                  pagamento unico
+                </span>
+              </div>
             </div>
 
-            <PrimaryButton href={content.claudeCtaHref} pulse fullWidth>
+            <PrimaryButton href={content.claudeCtaHref} pulse fullWidth size="lg">
               {content.claudeCtaLabel} <span style={{ fontSize: 18 }}>→</span>
             </PrimaryButton>
 
-            <p
+            {/* Reassurance */}
+            <div
               style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 13,
-                color: "var(--muted)",
-                margin: 0,
-                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: 20,
+                flexWrap: "wrap",
               }}
             >
-              Accesso immediato · Garanzia 14 giorni
-            </p>
+              {["⚡ Solo 24 ore", "Accesso immediato", "Garanzia 14 gg"].map((item) => (
+                <span
+                  key={item}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 12,
+                    color: "#9B9BB0",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
-          {/* Formazione aziendale — secondary */}
+          {/* ── Card secondaria: Formazione Aziendale ──────────────────── */}
           <div
             style={{
-              borderRadius: 20,
-              border: "1px solid rgba(123,104,238,0.20)",
+              borderRadius: 22,
+              border: "1px solid rgba(123,104,238,0.22)",
               background:
-                "linear-gradient(145deg, rgba(123,104,238,0.06) 0%, rgba(11,11,12,0.95) 60%)",
-              padding: "clamp(28px, 4vw, 44px)",
+                "linear-gradient(150deg, rgba(123,104,238,0.07) 0%, rgba(11,11,12,0.97) 55%)",
+              padding: "clamp(28px,4vw,48px)",
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: 22,
               position: "relative",
               overflow: "hidden",
             }}
           >
+            {/* Top-border accent violet */}
             <div
               aria-hidden
               style={{
                 position: "absolute",
-                top: -40,
-                right: -40,
-                width: 200,
-                height: 200,
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                background:
+                  "linear-gradient(to right, transparent 0%, rgba(123,104,238,0.60) 40%, rgba(123,104,238,0.60) 60%, transparent 100%)",
+                borderRadius: "22px 22px 0 0",
+              }}
+            />
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                top: -60,
+                right: -60,
+                width: 220,
+                height: 220,
                 borderRadius: "50%",
                 background: "rgba(123,104,238,0.07)",
-                filter: "blur(40px)",
+                filter: "blur(50px)",
                 pointerEvents: "none",
               }}
             />
@@ -642,31 +680,30 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 8,
-                  padding: "5px 12px",
+                  gap: 7,
+                  padding: "5px 11px",
                   borderRadius: 100,
                   background: "rgba(123,104,238,0.10)",
                   border: "1px solid rgba(123,104,238,0.25)",
-                  color: "var(--violet)",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.16em",
+                  color: "#7B68EE",
+                  fontSize: 10,
+                  fontWeight: 800,
+                  letterSpacing: "0.18em",
                   textTransform: "uppercase",
                   fontFamily: "var(--font-body)",
-                  marginBottom: 16,
+                  marginBottom: 14,
                 }}
               >
                 Aziende · Team · Manager
               </span>
-
               <h2
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 600,
-                  fontSize: "clamp(28px, 3.5vw, 40px)",
-                  lineHeight: 1.05,
+                  fontSize: "clamp(30px,3.5vw,44px)",
+                  lineHeight: 1.0,
                   letterSpacing: "-0.025em",
-                  color: "var(--white)",
+                  color: "#fff",
                   margin: 0,
                 }}
               >
@@ -679,8 +716,8 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
                 fontFamily: "var(--font-body)",
                 fontSize: 17,
                 lineHeight: 1.65,
-                color: "var(--ghost)",
-                opacity: 0.88,
+                color: "#E4E7F0",
+                opacity: 0.85,
                 margin: 0,
                 flex: 1,
               }}
@@ -688,42 +725,76 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
               {content.businessCardBody}
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {/* Feature list */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
               {[
-                "Training interno per team",
-                "Coaching per imprenditori e manager",
-                "Mentorship e percorsi one-to-one",
+                "Training interno per team marketing, sales e operations",
+                "Coaching per imprenditori e leadership team",
+                "Mentorship e percorsi one-to-one su casi reali",
               ].map((item) => (
-                <CheckItem key={item}>{item}</CheckItem>
+                <div
+                  key={item}
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    alignItems: "flex-start",
+                    fontFamily: "var(--font-body)",
+                    fontSize: 16,
+                    lineHeight: 1.5,
+                    color: "#E4E7F0",
+                    opacity: 0.80,
+                  }}
+                >
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      marginTop: 2,
+                      width: 18,
+                      height: 18,
+                      borderRadius: "50%",
+                      background: "rgba(123,104,238,0.15)",
+                      border: "1px solid rgba(123,104,238,0.35)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#7B68EE",
+                      fontSize: 10,
+                      fontWeight: 800,
+                    }}
+                  >
+                    ✓
+                  </span>
+                  {item}
+                </div>
               ))}
             </div>
 
             <OutlineButton href={content.businessCtaHref} fullWidth>
-              {content.businessCtaLabel} <span style={{ fontSize: 18 }}>→</span>
+              {content.businessCtaLabel} <span style={{ fontSize: 17 }}>→</span>
             </OutlineButton>
           </div>
         </div>
 
-        {/* Urgency note */}
+        {/* ── Urgency strip ──────────────────────────────────────────── */}
         <div
           style={{
-            marginTop: 28,
-            padding: "16px 20px",
-            borderRadius: 12,
-            background: "rgba(235,122,46,0.06)",
-            border: "1px solid rgba(235,122,46,0.18)",
+            marginTop: 24,
+            padding: "18px 24px",
+            borderRadius: 14,
+            background: "rgba(235,122,46,0.07)",
+            border: "1px solid rgba(235,122,46,0.20)",
             display: "flex",
             alignItems: "center",
-            gap: 12,
+            gap: 14,
           }}
         >
           <span
             style={{
               flexShrink: 0,
-              width: 6,
-              height: 6,
+              width: 7,
+              height: 7,
               borderRadius: "50%",
-              background: "var(--orange)",
+              background: "#EB7A2E",
               animation: "badge-pulse 2s infinite",
             }}
           />
@@ -732,8 +803,8 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
               margin: 0,
               fontFamily: "var(--font-body)",
               fontSize: 14,
-              lineHeight: 1.5,
-              color: "#ffd6b6",
+              lineHeight: 1.55,
+              color: "#f5c9a6",
             }}
           >
             {content.urgencyNote}
@@ -746,7 +817,9 @@ export function AsseprimRoutingPageSection({ step }: SectionProps) {
   );
 }
 
-// ─── Business Page ────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// PAGINA 2 — Formazione Aziendale
+// ═══════════════════════════════════════════════════════════════════════════════
 
 export function AsseprimBusinessPageSection({ step }: SectionProps) {
   const content = (step.content as Record<string, unknown>)
@@ -757,35 +830,29 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
     <>
       <Header />
 
-      {/* Hero */}
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section
         className={styles.heroSection}
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          textAlign: "center",
-          position: "relative",
-          zIndex: 1,
-        }}
+        style={{ maxWidth: 1120, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}
       >
         <div
           aria-hidden
           style={{
             position: "absolute",
-            top: 80,
+            top: 60,
             left: "50%",
             transform: "translateX(-50%)",
-            width: "min(800px, 90vw)",
+            width: "min(800px,90vw)",
             height: 300,
             background:
-              "radial-gradient(ellipse, rgba(123,104,238,0.14) 0%, rgba(235,122,46,0.06) 40%, transparent 70%)",
-            filter: "blur(20px)",
+              "radial-gradient(ellipse, rgba(123,104,238,0.16) 0%, rgba(235,122,46,0.07) 40%, transparent 70%)",
+            filter: "blur(22px)",
             pointerEvents: "none",
             zIndex: -1,
           }}
         />
 
-        <div style={{ display: "inline-flex", marginBottom: 28 }}>
+        <div style={{ display: "inline-flex", marginBottom: 30 }}>
           <Badge>{content.eyebrow}</Badge>
         </div>
 
@@ -793,10 +860,10 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 600,
-            fontSize: "clamp(38px, 5.5vw, 68px)",
-            lineHeight: 1.04,
+            fontSize: "clamp(40px,5.5vw,70px)",
+            lineHeight: 1.03,
             letterSpacing: "-0.03em",
-            color: "var(--white)",
+            color: "#fff",
             margin: "0 auto 24px",
             maxWidth: 900,
             textWrap: "balance" as React.CSSProperties["textWrap"],
@@ -809,34 +876,35 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
           style={{
             fontFamily: "var(--font-body)",
             fontWeight: 400,
-            fontSize: "clamp(17px, 1.6vw, 20px)",
+            fontSize: "clamp(17px,1.6vw,20px)",
             lineHeight: 1.55,
-            color: "var(--ghost)",
-            opacity: 0.9,
-            maxWidth: 700,
-            margin: "0 auto 48px",
+            color: "#E4E7F0",
+            opacity: 0.88,
+            maxWidth: 680,
+            margin: "0 auto 40px",
             textWrap: "pretty" as React.CSSProperties["textWrap"],
           }}
         >
           {content.subheadline}
         </p>
 
-        {/* Proof stats */}
+        {/* Proof bar */}
         <div
           style={{
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             flexWrap: "wrap",
-            gap: "6px 18px",
-            padding: "10px 22px",
+            gap: "6px 20px",
+            padding: "11px 24px",
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 100,
             fontFamily: "var(--font-body)",
             fontSize: 15,
-            color: "var(--ghost)",
+            color: "#E4E7F0",
             opacity: 0.92,
+            marginBottom: 36,
           }}
         >
           {[
@@ -844,20 +912,54 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
             "Percorsi in azienda e one-to-one",
             "Metodo operativo, non teoria",
           ].map((item, i) => (
-            <span
-              key={i}
-              style={{ display: "inline-flex", alignItems: "center", gap: 12 }}
-            >
-              {i > 0 && (
-                <span style={{ color: "var(--orange)", opacity: 0.7 }}>·</span>
-              )}
+            <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 14 }}>
+              {i > 0 && <span style={{ color: "#EB7A2E" }}>·</span>}
               <span>{item}</span>
             </span>
           ))}
         </div>
+
+        {/* Customer quote */}
+        <div
+          style={{
+            maxWidth: 580,
+            margin: "0 auto",
+            padding: "20px 28px",
+            borderRadius: 14,
+            borderLeft: "3px solid #EB7A2E",
+            background: "rgba(235,122,46,0.06)",
+            textAlign: "left",
+          }}
+        >
+          <p
+            style={{
+              margin: "0 0 10px",
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: 17,
+              lineHeight: 1.65,
+              color: "#E4E7F0",
+              opacity: 0.88,
+            }}
+          >
+            &ldquo;Dopo 60 giorni il team usava Claude ogni giorno. Non avrei creduto possibile un'adozione così rapida.&rdquo;
+          </p>
+          <p
+            style={{
+              margin: 0,
+              fontFamily: "var(--font-body)",
+              fontSize: 13,
+              color: "#9B9BB0",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+            }}
+          >
+            — CEO, PMI manifatturiera · 45 dipendenti
+          </p>
+        </div>
       </section>
 
-      {/* Problems — full-bleed cream */}
+      {/* ── Problems — full-bleed cream ───────────────────────────────────── */}
       <section
         className={styles.salesSectionPadV2}
         style={{ position: "relative", zIndex: 1, isolation: "isolate" }}
@@ -875,61 +977,96 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
             background: "#F0EBE0",
             zIndex: -1,
             boxShadow:
-              "inset 0 12px 24px -12px rgba(0,0,0,0.20), inset 0 -12px 24px -12px rgba(0,0,0,0.20)",
+              "inset 0 14px 28px -14px rgba(0,0,0,0.22), inset 0 -14px 28px -14px rgba(0,0,0,0.22)",
           }}
         />
 
-        <div
-          style={{
-            maxWidth: 1120,
-            margin: "0 auto",
-            padding: "0 clamp(24px, 4vw, 32px)",
-          }}
-        >
-          <div style={{ marginBottom: 44, textAlign: "center" }}>
-            <SectionLabel>{content.painTitle}</SectionLabel>
+        <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(20px,4vw,32px)" }}>
+          {/* Intro statement */}
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <p
+              style={{
+                margin: "0 auto 12px",
+                fontFamily: "var(--font-body)",
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "#8B6A2A",
+              }}
+            >
+              Il problema
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(26px,3.5vw,42px)",
+                lineHeight: 1.12,
+                letterSpacing: "-0.025em",
+                color: "#1A1208",
+                margin: "0 auto",
+                maxWidth: 680,
+                textWrap: "balance" as React.CSSProperties["textWrap"],
+              }}
+            >
+              Ogni azienda che formiamo racconta{" "}
+              <span
+                style={{
+                  fontFamily: "var(--font-italic)",
+                  fontStyle: "italic",
+                  fontWeight: 500,
+                  color: "#7A4A10",
+                }}
+              >
+                la stessa storia.
+              </span>
+            </h2>
           </div>
 
           <div className={styles.painGrid}>
-            {content.painItems.map((item) => (
+            {content.painItems.map((item, i) => (
               <div
                 key={item}
                 style={{
-                  padding: "24px 28px",
+                  padding: "clamp(22px,3vw,32px)",
                   borderRadius: 16,
-                  background: "rgba(15,15,26,0.05)",
-                  border: "1px solid rgba(15,15,26,0.08)",
+                  background: "rgba(255,252,244,0.65)",
+                  border: "1px solid rgba(42,36,32,0.10)",
                   display: "flex",
-                  gap: 16,
+                  gap: 18,
                   alignItems: "flex-start",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
+                {/* Large background number */}
                 <span
                   style={{
-                    flexShrink: 0,
-                    marginTop: 2,
-                    width: 20,
-                    height: 20,
-                    borderRadius: "50%",
-                    background: "rgba(63,107,10,0.10)",
-                    border: "1px solid rgba(63,107,10,0.25)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#3F6B0A",
-                    fontSize: 10,
-                    fontWeight: 800,
+                    position: "absolute",
+                    top: -10,
+                    right: 16,
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: 80,
+                    lineHeight: 1,
+                    color: "rgba(42,36,32,0.07)",
+                    letterSpacing: "-0.04em",
+                    userSelect: "none",
+                    pointerEvents: "none",
                   }}
                 >
-                  ·
+                  0{i + 1}
                 </span>
                 <p
                   style={{
                     margin: 0,
                     fontFamily: "var(--font-body)",
-                    fontSize: 17,
+                    fontSize: 16,
                     lineHeight: 1.65,
                     color: "#2A2420",
+                    position: "relative",
+                    zIndex: 1,
                   }}
                 >
                   {item}
@@ -940,108 +1077,156 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
         </div>
       </section>
 
-      {/* Offer — dark mid */}
+      {/* ── Offer — dark mid ──────────────────────────────────────────────── */}
       <section
         className={`${styles.salesSectionPadV2} ${styles.sectionDarkMidBg}`}
-        style={{ maxWidth: 1120, margin: "0 auto" }}
       >
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <SectionLabel>{content.offerTitle}</SectionLabel>
-        </div>
-
-        <div className={styles.offerGrid}>
-          {content.offerItems.map((item) => (
-            <div
-              key={item}
-              style={{
-                padding: "28px 28px",
-                borderRadius: 16,
-                border: "1px solid var(--hairline)",
-                background: "rgba(255,255,255,0.025)",
-              }}
-            >
-              <CheckItem>{item}</CheckItem>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Process — numbered steps */}
-      <section
-        className={styles.salesSectionPadV2}
-        style={{ maxWidth: 1120, margin: "0 auto" }}
-      >
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <SectionLabel>{content.processTitle}</SectionLabel>
-          <h2
+        <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(20px,4vw,32px)" }}>
+          <div style={{ textAlign: "center", marginBottom: 16 }}>
+            <SectionLabel>{content.offerTitle}</SectionLabel>
+          </div>
+          <p
             style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(30px, 4vw, 46px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.025em",
-              color: "var(--white)",
-              margin: "16px auto 0",
-              maxWidth: 680,
-              textWrap: "balance" as React.CSSProperties["textWrap"],
+              textAlign: "center",
+              margin: "12px auto 48px",
+              fontFamily: "var(--font-italic)",
+              fontStyle: "italic",
+              fontSize: "clamp(17px,1.6vw,20px)",
+              lineHeight: 1.5,
+              color: "#E4E7F0",
+              opacity: 0.78,
+              maxWidth: 560,
             }}
           >
-            Tre passi per partire.{" "}
-            <Accent>Nessuna burocrazia.</Accent>
-          </h2>
-        </div>
+            Non un corso standard. Un progetto su misura per il tuo scenario.
+          </p>
 
-        <div className={styles.processGrid}>
-          {content.processSteps.map((item, i) => (
-            <div
-              key={item}
-              style={{
-                padding: "clamp(24px, 3vw, 36px)",
-                borderRadius: 18,
-                border: "1px solid var(--hairline)",
-                background: "rgba(255,255,255,0.02)",
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 48,
-                  lineHeight: 1,
-                  color: "rgba(235,122,46,0.18)",
-                  letterSpacing: "-0.04em",
-                }}
-              >
-                0{i + 1}
-              </span>
-              <p
-                style={{
-                  margin: 0,
-                  fontFamily: "var(--font-body)",
-                  fontSize: 17,
-                  lineHeight: 1.7,
-                  color: "var(--ghost)",
-                }}
-              >
-                {item}
-              </p>
-            </div>
-          ))}
+          <div className={styles.offerGrid}>
+            {content.offerItems.map((item, i) => {
+              const labels = ["Training", "Coaching", "Mentorship", "Percorsi"];
+              const icons = ["⚡", "🎯", "👤", "📈"];
+              return (
+                <div
+                  key={item}
+                  style={{
+                    padding: "clamp(24px,3vw,36px)",
+                    borderRadius: 16,
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: "rgba(255,255,255,0.025)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 14,
+                  }}
+                >
+                  {/* Mini service header */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{ fontSize: 18 }}>{icons[i]}</span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "#7B68EE",
+                      }}
+                    >
+                      {labels[i]}
+                    </span>
+                  </div>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontFamily: "var(--font-body)",
+                      fontSize: 16,
+                      lineHeight: 1.65,
+                      color: "#E4E7F0",
+                      opacity: 0.82,
+                    }}
+                  >
+                    {item}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* CTA section */}
+      {/* ── Process — 01 / 02 / 03 ────────────────────────────────────────── */}
+      <section className={styles.salesSectionPadV2}>
+        <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 clamp(20px,4vw,32px)" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <SectionLabel>{content.processTitle}</SectionLabel>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "clamp(30px,4vw,48px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.025em",
+                color: "#fff",
+                margin: "16px auto 0",
+                maxWidth: 680,
+                textWrap: "balance" as React.CSSProperties["textWrap"],
+              }}
+            >
+              Tre passi per partire.{" "}
+              <Accent>Nessuna burocrazia.</Accent>
+            </h2>
+          </div>
+
+          <div className={styles.processGrid}>
+            {content.processSteps.map((item, i) => (
+              <div
+                key={item}
+                style={{
+                  padding: "clamp(24px,3vw,40px)",
+                  borderRadius: 18,
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "rgba(255,255,255,0.02)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 18,
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "clamp(64px,7vw,80px)",
+                    lineHeight: 1,
+                    color: "rgba(235,122,46,0.14)",
+                    letterSpacing: "-0.05em",
+                  }}
+                >
+                  0{i + 1}
+                </span>
+                <p
+                  style={{
+                    margin: 0,
+                    fontFamily: "var(--font-body)",
+                    fontSize: 17,
+                    lineHeight: 1.7,
+                    color: "#E4E7F0",
+                    opacity: 0.85,
+                  }}
+                >
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA section ───────────────────────────────────────────────────── */}
       <section
-        style={{
-          position: "relative",
-          zIndex: 1,
-          isolation: "isolate",
-        }}
+        style={{ position: "relative", zIndex: 1, isolation: "isolate" }}
       >
-        {/* Full-bleed orange warm glow */}
+        {/* Full-bleed warm glow */}
         <div
           aria-hidden
           style={{
@@ -1052,7 +1237,7 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
             transform: "translateX(-50%)",
             width: "100vw",
             background:
-              "linear-gradient(180deg, rgba(235,122,46,0.08) 0%, rgba(235,122,46,0.12) 50%, rgba(235,122,46,0.08) 100%)",
+              "linear-gradient(180deg, rgba(235,122,46,0.09) 0%, rgba(235,122,46,0.15) 50%, rgba(235,122,46,0.09) 100%)",
             zIndex: -1,
           }}
         />
@@ -1061,19 +1246,34 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
           style={{
             maxWidth: 760,
             margin: "0 auto",
-            padding: "clamp(64px, 8vw, 100px) clamp(24px, 4vw, 32px)",
+            padding: "clamp(72px,9vw,108px) clamp(20px,4vw,32px)",
             textAlign: "center",
           }}
         >
+          {/* Social proof */}
+          <p
+            style={{
+              margin: "0 0 24px",
+              fontFamily: "var(--font-body)",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#EB7A2E",
+            }}
+          >
+            Già adottato da 30+ aziende nel 2026
+          </p>
+
           <h2
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 600,
-              fontSize: "clamp(32px, 4.5vw, 54px)",
-              lineHeight: 1.08,
-              letterSpacing: "-0.025em",
-              color: "var(--white)",
-              margin: "0 auto 20px",
+              fontSize: "clamp(36px,5vw,60px)",
+              lineHeight: 1.06,
+              letterSpacing: "-0.028em",
+              color: "#fff",
+              margin: "0 auto 22px",
               maxWidth: 620,
               textWrap: "balance" as React.CSSProperties["textWrap"],
             }}
@@ -1084,67 +1284,88 @@ export function AsseprimBusinessPageSection({ step }: SectionProps) {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "clamp(17px, 1.6vw, 19px)",
+              fontSize: "clamp(17px,1.6vw,19px)",
               lineHeight: 1.65,
-              color: "var(--ghost)",
-              opacity: 0.9,
-              margin: "0 auto 36px",
-              maxWidth: 560,
+              color: "#E4E7F0",
+              opacity: 0.88,
+              margin: "0 auto 40px",
+              maxWidth: 540,
               textWrap: "pretty" as React.CSSProperties["textWrap"],
             }}
           >
             {content.ctaBody}
           </p>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginBottom: 16,
-            }}
-          >
-            <PrimaryButton href={content.ctaHref} pulse>
-              {content.ctaLabel}{" "}
-              <span style={{ fontSize: 18 }}>→</span>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+            <PrimaryButton href={content.ctaHref} pulse size="xl">
+              {content.ctaLabel} <span style={{ fontSize: 19 }}>→</span>
             </PrimaryButton>
           </div>
 
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: 14,
-              color: "var(--muted)",
-              margin: 0,
+              fontSize: 13,
+              color: "#9B9BB0",
+              margin: "0 0 52px",
             }}
           >
             {content.ctaMicrocopy}
           </p>
 
+          {/* Objection handling */}
           <div
             style={{
-              marginTop: 56,
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              gap: 14,
+              textAlign: "left",
+              maxWidth: 460,
+              margin: "0 auto",
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              paddingTop: 32,
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                textAlign: "left",
-                maxWidth: 480,
-                width: "100%",
-              }}
-            >
-              {[
-                "Nessun impegno prima della call",
-                "30 minuti per capire se ha senso lavorare insieme",
-                "Risposta diretta: se non è adatto alla tua azienda, te lo diciamo",
-              ].map((item) => (
-                <CrossItem key={item}>{item}</CrossItem>
-              ))}
-            </div>
+            {[
+              "Nessun impegno prima della call",
+              "30 minuti per capire se ha senso lavorare insieme",
+              "Risposta diretta: se non è adatto, te lo diciamo",
+            ].map((item) => (
+              <div
+                key={item}
+                style={{
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                  fontFamily: "var(--font-body)",
+                  fontSize: 16,
+                  lineHeight: 1.55,
+                  color: "#E4E7F0",
+                  opacity: 0.78,
+                }}
+              >
+                <span
+                  style={{
+                    flexShrink: 0,
+                    marginTop: 2,
+                    width: 18,
+                    height: 18,
+                    borderRadius: "50%",
+                    background: "rgba(235,122,46,0.15)",
+                    border: "1px solid rgba(235,122,46,0.35)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#EB7A2E",
+                    fontSize: 10,
+                    fontWeight: 800,
+                  }}
+                >
+                  ✓
+                </span>
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </section>
