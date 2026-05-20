@@ -3062,13 +3062,6 @@ function applyCurrentPrice(label: string | undefined, currentPrice: number): str
   return label.replace(/\d+€/g, `${currentPrice}€`);
 }
 
-/** Badge Hero / FinalCTA in base allo stage. */
-function stageBadgeLabel(stage: PricingStage): string {
-  if (stage === "earlyBird") return "Founding member · Prezzo early bird";
-  if (stage === "standard") return "Founding member · Prezzo scontato";
-  return "Prezzo pieno · Accesso evergreen";
-}
-
 /** Microcopy sotto la CTA Hero. Cambia per ogni stage. */
 function stageHeroMicrocopy(stage: PricingStage, pricing: SalesV3PricingContent): string {
   if (stage === "earlyBird") {
@@ -3706,7 +3699,11 @@ export function SalesV3HeroSection({ step }: SectionProps) {
       />
 
       <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, flexWrap: "wrap", justifyContent: "center" }}>
-        <Badge>{stageBadgeLabel(current.stage)}</Badge>
+        <Badge>
+          {current.stage === "earlyBird" ? "Founding member · Prezzo early bird"
+            : current.stage === "standard" ? "Founding member · Prezzo scontato"
+            : "GIÀ DENTRO 500+ PROFESSIONISTI"}
+        </Badge>
         {current.activeDeadlineIso && (
           <span
             style={{
@@ -3823,29 +3820,32 @@ export function SalesV3HeroSection({ step }: SectionProps) {
         {stageHeroMicrocopy(current.stage, pricing)}
       </div>
 
-      {/* Price scale */}
-      <div
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 14,
-          fontFamily: "var(--font-body)",
-          fontSize: 17,
-          color: "var(--muted)",
-          padding: "12px 20px",
-          background: "rgba(255,255,255,0.025)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: 100,
-          flexWrap: "wrap",
-        }}
-      >
-        <PriceScalePill value="147€" label="early bird" active={current.stage === "earlyBird"} />
-        <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
-        <PriceScalePill value="297€" label="standard" active={current.stage === "standard"} />
-        <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
-        <PriceScalePill value="397€" label="prezzo pieno" active={current.stage === "full"} />
-      </div>
+      {/* Price scale — solo per earlyBird e standard */}
+      {current.stage !== "full" && (
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 14,
+            fontFamily: "var(--font-body)",
+            fontSize: 17,
+            color: "var(--muted)",
+            padding: "12px 20px",
+            background: "rgba(255,255,255,0.025)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: 100,
+            flexWrap: "wrap",
+          }}
+        >
+          <PriceScalePill value="147€" label="early bird" active={current.stage === "earlyBird"} />
+          <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
+          <PriceScalePill value="297€" label="standard" active={current.stage === "standard"} />
+          <span style={{ color: "var(--muted)", opacity: 0.4 }}>→</span>
+          <PriceScalePill value="397€" label="prezzo pieno" active={false} />
+        </div>
+      )}
+
     </section>
   );
 }
@@ -7125,8 +7125,8 @@ export function SalesV3OfferSection({ step }: SectionProps) {
         </div>
       </div>
 
-      {/* Visual price scale */}
-      <PriceScaleBar pricing={pricing} current={current} />
+      {/* Visual price scale — solo per earlyBird e standard */}
+      {current.stage !== "full" && <PriceScaleBar pricing={pricing} current={current} />}
 
       {/* Cosa succede dopo il pagamento */}
       <PostPurchaseBox />
@@ -7291,6 +7291,12 @@ function PostPurchaseBox() {
     lineHeight: 1.55,
     color: "var(--ghost)",
   };
+  const paragraphStyle: React.CSSProperties = {
+    fontFamily: "var(--font-body)",
+    fontSize: 15,
+    lineHeight: 1.55,
+    color: "var(--ghost)",
+  };
   const checkSpan: React.CSSProperties = {
     color: "var(--orange)",
     fontWeight: 700,
@@ -7317,11 +7323,11 @@ function PostPurchaseBox() {
       {/* Sezione 1 — Maggio è il tuo mese di preparazione */}
       <div style={sectionTitle}>Maggio è il tuo mese di preparazione</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
-        <p style={{ ...liStyle, margin: 0 }}>
+        <p style={{ ...paragraphStyle, margin: 0 }}>
           Prima che il corso esca il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong>, hai 4 settimane per costruire le fondamenta.
         </p>
-        <p style={{ ...liStyle, margin: 0 }}>Chi le salta arriva al corso da zero.</p>
-        <p style={{ ...liStyle, margin: 0, color: "#fff", fontWeight: 500 }}>Chi le fa, entra già avanzato.</p>
+        <p style={{ ...paragraphStyle, margin: 0 }}>Chi le salta arriva al corso da zero.</p>
+        <p style={{ ...paragraphStyle, margin: 0, color: "#fff", fontWeight: 500 }}>Chi le fa, entra già avanzato.</p>
       </div>
       <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
         <li style={liStyle}>
@@ -7348,7 +7354,7 @@ function PostPurchaseBox() {
 
       {/* Sezione 2 — Le 4 live di maggio */}
       <div style={sectionTitle}>Le 4 live di maggio · solo per i founding member</div>
-      <p style={{ ...liStyle, margin: "0 0 16px", color: "#fff", fontWeight: 500 }}>
+      <p style={{ ...paragraphStyle, margin: "0 0 16px", color: "#fff", fontWeight: 500 }}>
         Non sono sessioni di attesa. Sono <span style={{ color: "var(--orange)" }}>il percorso</span>.
       </p>
       <ul style={{ margin: "0 0 16px", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -7377,7 +7383,7 @@ function PostPurchaseBox() {
           </span>
         </li>
       </ul>
-      <p style={{ ...liStyle, opacity: 0.92, margin: 0 }}>
+      <p style={{ ...paragraphStyle, opacity: 0.92, margin: 0 }}>
         Lavori con noi ogni settimana. Arrivi al corso il <strong style={{ color: "#fff", fontWeight: 600 }}>5 giugno</strong> con un mese di pratica già fatto. <strong style={{ color: "#fff", fontWeight: 600 }}>I replay sono tuoi per sempre.</strong>
       </p>
 
@@ -7385,7 +7391,7 @@ function PostPurchaseBox() {
 
       {/* Sezione 3 — Il 5 giugno entra il corso completo */}
       <div style={sectionTitle}>Il 5 giugno entra il corso completo</div>
-      <p style={{ ...liStyle, margin: 0, color: "var(--orange)", fontWeight: 500 }}>
+      <p style={{ ...paragraphStyle, margin: 0, color: "var(--orange)", fontWeight: 500 }}>
         E tu ci arrivi già avanzato.
       </p>
     </div>
@@ -8521,7 +8527,7 @@ export function SalesV3B2BSection() {
             </p>
             <div>
               <OutlineButton href="https://marf.alexcarofiglio.com/book/morfeushub" onClick={onClick}>
-                Prenota una chiamata commerciale <span style={{ fontSize: 16 }}>→</span>
+                Prenota una chiamata con un esperto <span style={{ fontSize: 16 }}>→</span>
               </OutlineButton>
             </div>
           </div>
