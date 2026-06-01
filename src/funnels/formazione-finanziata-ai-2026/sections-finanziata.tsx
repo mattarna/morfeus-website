@@ -68,6 +68,8 @@ const CSS = `
 .ff-root .btn-acc{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:11px 26px;font-size:14px;font-weight:800;cursor:pointer;transition:opacity .2s,transform .15s,box-shadow .2s}
 .ff-root .btn-acc:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 8px 24px rgba(47,107,255,.32)}
 .ff-root .btn-acc-lg{border-radius:10px;padding:17px 38px;font-size:16px}
+.ff-root .pulse-dot{width:9px;height:9px;border-radius:50%;background:#fff;flex-shrink:0;animation:ff-pulsedot 1.3s infinite}
+@keyframes ff-pulsedot{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 9px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
 .ff-root .btn-outline{display:inline-flex;align-items:center;background:transparent;color:var(--text-dark);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:17px 28px;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s}
 .ff-root .btn-outline:hover{background:rgba(255,255,255,.05)}
 
@@ -83,8 +85,8 @@ const CSS = `
 .ff-root .hero-sub{font-size:21px;color:#C4C4D4;max-width:620px;margin:0 auto;line-height:1.7}
 
 /* VSL */
-.ff-root .vsl-wrap{background:#0A0A0A;border:1px solid var(--border-dark);border-radius:16px;overflow:hidden;margin:40px auto 0;max-width:900px}
-.ff-root .vsl-bar{padding:11px 16px;border-bottom:1px solid var(--border-dark);display:flex;align-items:center;gap:7px}
+.ff-root .vsl-wrap{background:#E9E9EE;border:1px solid #C7C7D2;border-radius:14px;overflow:hidden;margin:40px auto 0;max-width:900px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.ff-root .vsl-bar{background:#E9E9EE;padding:11px 16px;border-bottom:1px solid #D2D2DC;display:flex;align-items:center;gap:7px}
 .ff-root .vdot{width:10px;height:10px;border-radius:50%}
 .ff-root .vsl-player{aspect-ratio:16/9;position:relative;background:#080808;cursor:pointer;overflow:hidden}
 .ff-root .vsl-poster{width:100%;height:100%;object-fit:cover;opacity:.62;transition:opacity .25s}
@@ -278,7 +280,7 @@ const CSS = `
 .ff-root .form-hd p{font-size:17px;color:#AFC2FF;line-height:1.65}
 .ff-root .form-body{padding:30px 36px}
 .ff-root .fg{margin-bottom:20px}
-.ff-root .fg label{display:block;font-size:12px;font-weight:700;color:#8E8EA0;margin-bottom:8px;letter-spacing:.03em;text-transform:uppercase}
+.ff-root .fg > label{display:block;font-size:12px;font-weight:700;color:#8E8EA0;margin-bottom:8px;letter-spacing:.03em;text-transform:uppercase}
 .ff-root .fg input{width:100%;background:#0A0A0A;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:15px 16px;color:var(--text-dark);font-size:15px;font-family:inherit;transition:border-color .2s,box-shadow .2s}
 .ff-root .fg input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(47,107,255,.12)}
 .ff-root .fg input::placeholder{color:#3A3A4A}
@@ -429,7 +431,7 @@ const CSS = `
 .ff-root .review-name{font-size:14px}
 .ff-root .review-tag{font-size:13px}
 .ff-root .form-hd p{font-size:18px}
-.ff-root .fg label{font-size:14px}
+.ff-root .fg > label{font-size:14px}
 .ff-root .fg input{font-size:17px}
 .ff-root .radio-opt span{font-size:16px;line-height:1.35}
 .ff-root .success-steps p{font-size:17px}
@@ -454,19 +456,22 @@ const CSS = `
   .ff-root .section-pad{padding:56px 0}
   .ff-root .container{padding:0 18px}
 
-  /* nav + banner */
-  .ff-root .nav{padding:13px 18px}
+  /* nav + banner — logo centrato pulito, sfondo unificato col banner (niente stacco di colore) */
+  .ff-root .nav{padding:14px 18px;background:#110E2A;border-bottom:none}
   .ff-root .nav .inner{justify-content:center}
   .ff-root .nav .btn-acc{display:none}
-  .ff-root .logo-img{height:24px}
+  .ff-root .logo-img{height:26px}
   .ff-root .lomb-banner{padding:10px 16px}
   .ff-root .lomb-banner p{font-size:13px;line-height:1.5}
 
   /* hero */
-  .ff-root .hero{padding:46px 0 44px}
-  .ff-root .hero h1{font-size:clamp(31px,8.2vw,46px);letter-spacing:-0.02em;line-height:1.12}
+  .ff-root .hero{padding:44px 0 44px}
+  .ff-root .hero h1{font-size:clamp(36px,9.4vw,54px);letter-spacing:-0.025em;line-height:1.08}
   .ff-root .hero h1 .serif{white-space:nowrap}
   .ff-root .hero-sub{font-size:17px;max-width:100%}
+
+  /* CTA: su mobile tengo solo i bottoni dell'hero; gli altri li copre lo sticky */
+  .ff-root .section-cta{display:none}
   .ff-root .hero-pills{gap:8px}
   .ff-root .hero-pill{font-size:12px;padding:5px 12px}
   .ff-root .hero-ctas{flex-direction:column;align-items:stretch;gap:10px;margin:30px 0 40px}
@@ -554,9 +559,10 @@ const CSS = `
   /* mva bottom */
   .ff-root .mva-bottom{font-size:18px;line-height:2}
 
-  /* sticky cta */
-  .ff-root .mobile-sticky{display:block;position:fixed;bottom:0;left:0;right:0;z-index:600;background:rgba(13,12,30,0.97);border-top:1px solid rgba(255,255,255,.09);backdrop-filter:blur(14px);padding:12px 16px;padding-bottom:max(14px,env(safe-area-inset-bottom))}
-  .ff-root .mobile-sticky .btn-acc{width:100%;justify-content:center;padding:15px;font-size:16px;border-radius:10px}
+  /* sticky cta — nascosto above-the-fold, slide-up quando compare */
+  .ff-root .mobile-sticky{display:block;position:fixed;bottom:0;left:0;right:0;z-index:600;background:rgba(13,12,30,0.97);border-top:1px solid rgba(255,255,255,.09);backdrop-filter:blur(14px);padding:12px 16px;padding-bottom:max(14px,env(safe-area-inset-bottom));transform:translateY(130%);transition:transform .32s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+  .ff-root .mobile-sticky.show{transform:translateY(0);pointer-events:auto}
+  .ff-root .mobile-sticky .btn-acc{width:100%;justify-content:center;gap:10px;padding:15px;font-size:16px;border-radius:10px}
 }
 
 /* Small phones (≤480px) */
@@ -679,6 +685,10 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
   const [openModule, setOpenModule] = useState<number | null>(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  // Sticky CTA (mobile): nascosto above-the-fold, compare dopo aver superato i bottoni dell'hero
+  const heroCtasRef = useRef<HTMLDivElement>(null);
+  const [showSticky, setShowSticky] = useState(false);
+
   // form state
   const [nome, setNome] = useState("");
   const [cognome, setCognome] = useState("");
@@ -735,6 +745,20 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
+  }, []);
+
+  // Mostra lo sticky CTA solo quando i bottoni dell'hero sono scrollati sopra la viewport
+  useEffect(() => {
+    const el = heroCtasRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setShowSticky(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   const scrollToForm = useCallback(() => {
@@ -842,7 +866,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               <div className="vdot" style={{ background: "#FF5F57" }} />
               <div className="vdot" style={{ background: "#FFBD2E", margin: "0 5px" }} />
               <div className="vdot" style={{ background: "#28CA41" }} />
-              <span style={{ fontSize: 11, color: "#5A5A70", marginLeft: 9 }}>
+              <span style={{ fontSize: 12, color: "#555", marginLeft: 9, fontWeight: 600 }}>
                 AI Zero to Operator — Presentazione del corso
               </span>
             </div>
@@ -888,7 +912,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
             </div>
           </div>
 
-          <div className="hero-ctas">
+          <div className="hero-ctas" ref={heroCtasRef}>
             <button type="button" className="btn-acc btn-acc-lg" onClick={scrollToForm}>
               Invia la tua candidatura →
             </button>
@@ -1525,8 +1549,9 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
       </footer>
 
       {/* MOBILE STICKY CTA */}
-      <div className="mobile-sticky">
+      <div className={`mobile-sticky${showSticky ? " show" : ""}`}>
         <button type="button" className="btn-acc" onClick={scrollToForm}>
+          <span className="pulse-dot" aria-hidden="true" />
           Invia la tua candidatura →
         </button>
       </div>
