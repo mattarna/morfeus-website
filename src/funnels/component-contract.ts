@@ -175,6 +175,7 @@ export const FUNNEL_COMPONENT_NAMES = [
   "PlaybookQr",
   "AsseprimRoutingPage",
   "AsseprimBusinessPage",
+  "FinanziataLanding",
 ] as const;
 
 export type FunnelComponentName = (typeof FUNNEL_COMPONENT_NAMES)[number];

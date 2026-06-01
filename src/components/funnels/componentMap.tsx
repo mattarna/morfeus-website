@@ -196,6 +196,7 @@ import {
   AsseprimBusinessPageSection,
   AsseprimRoutingPageSection,
 } from "@/funnels/asseprim-18-maggio-2026/sections";
+import { FinanziataLandingSection } from "@/funnels/formazione-finanziata-ai-2026/sections-finanziata";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -436,4 +437,6 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   PlaybookQr: () => <PlaybookQrSection />,
   AsseprimRoutingPage: ({ step }) => <AsseprimRoutingPageSection step={step} />,
   AsseprimBusinessPage: ({ step }) => <AsseprimBusinessPageSection step={step} />,
+  FinanziataLanding: ({ accentColor, step }) =>
+    step.content.FinanziataLanding ? <FinanziataLandingSection accentColor={accentColor} step={step} /> : null,
 };

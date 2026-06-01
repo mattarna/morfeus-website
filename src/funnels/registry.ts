@@ -9,6 +9,7 @@ import freebieVocabolarioAiConfig from "@/funnels/freebie-vocabolario-ai-2026-04
 import freebieDesignSystemBlueprintConfig from "@/funnels/freebie-design-system-blueprint-2026-05/config.json";
 import playbookConfig from "@/funnels/playbook-2026-05/config.json";
 import asseprimWebinarConfig from "@/funnels/asseprim-18-maggio-2026/config.json";
+import formazioneFinanziataConfig from "@/funnels/formazione-finanziata-ai-2026/config.json";
 
 export const funnelRegistry: Record<string, FunnelRegistryItem> = {};
 
@@ -184,3 +185,20 @@ const asseprimWebinarItem: FunnelRegistryItem = {
 };
 
 registerFunnel(asseprimWebinarItem, asseprimWebinarConfig as FunnelConfig);
+
+const formazioneFinanziataItem: FunnelRegistryItem = {
+  slug: "formazione-finanziata-2026",
+  locale: "it",
+  indexable: true,
+  runtime: {
+    fontPack: "webinar",
+    theme: "finanziata",
+    metadataPreset: "formazione-finanziata",
+  },
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(formazioneFinanziataItem, formazioneFinanziataConfig as FunnelConfig);

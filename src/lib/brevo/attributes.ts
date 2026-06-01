@@ -26,6 +26,10 @@ export const BREVO_ATTR = {
   NUMERO_DIPENDENTI: "NUMERO_DIPENDENTI",
   BIO: "BIO",
 
+  // Formazione finanziata 2026 (boolean custom fields)
+  P_IVA_LOMBARDIA: "P_IVA_LOMBARDIA", // boolean: ha P.IVA / azienda con sede in Lombardia
+  SEI_AZIENDA: "SEI_AZIENDA", // boolean: true = azienda, false = libero professionista
+
   // Acquisition / lifecycle
   FORM_NAME: "FORM_NAME",
   REFERRAL_NAME: "REFERRAL_NAME",

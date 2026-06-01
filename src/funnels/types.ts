@@ -944,7 +944,21 @@ export interface FunnelStepConfig {
     PlaybookModule?: Record<string, never>;
     PlaybookThankYou?: Record<string, never>;
     PlaybookQr?: Record<string, never>;
+    FinanziataLanding?: FinanziataLandingContent;
   };
+}
+
+export interface FinanziataLandingContent {
+  /** YouTube video ID della VSL (es. "YNMv_F_1iRY"). Se assente, mostra il poster placeholder. */
+  vslYoutubeId?: string;
+  /** URL del calendario per prenotare la call (mostrato nello stato di successo del form). */
+  calendarUrl: string;
+  /** Endpoint API a cui inviare il form di candidatura. */
+  optinEndpoint: string;
+  /** Deadline candidatura mostrata in copy (es. "15 giugno"). */
+  deadline?: string;
+  /** Email di supporto mostrata nello stato di successo. */
+  supportEmail?: string;
 }
 
 export interface FunnelConfig {
@@ -962,8 +976,8 @@ export interface FunnelRegistryItem {
   indexable?: boolean;
   runtime?: {
     fontPack?: "webinar" | "playbook";
-    theme?: "default" | "bootcamp";
-    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook";
+    theme?: "default" | "bootcamp" | "finanziata";
+    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata";
     chatbotStepIds?: string[];
   };
   abTest: {

@@ -56,7 +56,7 @@ const WC_GLOBAL_STYLES = `
 }
 `;
 
-type Theme = "default" | "bootcamp";
+type Theme = "default" | "bootcamp" | "finanziata";
 
 export default function WcThemeProvider({
   children,
