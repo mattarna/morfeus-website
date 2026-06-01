@@ -456,17 +456,14 @@ const CSS = `
   .ff-root .section-pad{padding:56px 0}
   .ff-root .container{padding:0 18px}
 
-  /* nav + banner — logo centrato pulito, sfondo unificato col banner (niente stacco di colore) */
-  .ff-root .nav{padding:14px 18px;background:#110E2A;border-bottom:none}
-  .ff-root .nav .inner{justify-content:center}
-  .ff-root .nav .btn-acc{display:none}
-  .ff-root .logo-img{height:26px}
+  /* nav: su mobile la togliamo del tutto (logo occupava troppo spazio) — resta solo il banner */
+  .ff-root .nav{display:none}
   .ff-root .lomb-banner{padding:10px 16px}
   .ff-root .lomb-banner p{font-size:13px;line-height:1.5}
 
   /* hero */
-  .ff-root .hero{padding:44px 0 44px}
-  .ff-root .hero h1{font-size:clamp(36px,9.4vw,54px);letter-spacing:-0.025em;line-height:1.08}
+  .ff-root .hero{padding:40px 0 44px}
+  .ff-root .hero h1{font-size:clamp(40px,10vw,58px);letter-spacing:-0.025em;line-height:1.07}
   .ff-root .hero h1 .serif{white-space:nowrap}
   .ff-root .hero-sub{font-size:17px;max-width:100%}
 
@@ -567,7 +564,7 @@ const CSS = `
 
 /* Small phones (≤480px) */
 @media(max-width:480px){
-  .ff-root .hero h1{font-size:clamp(29px,8.8vw,40px)}
+  .ff-root .hero h1{font-size:clamp(34px,9.6vw,48px)}
   .ff-root .hero-pills{gap:6px}
   .ff-root .hero-pill{font-size:11px;padding:5px 10px}
   .ff-root .who-grid{grid-template-columns:1fr}
