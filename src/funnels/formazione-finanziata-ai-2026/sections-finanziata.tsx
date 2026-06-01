@@ -60,7 +60,7 @@ const CSS = `
 .ff-root .nav .inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .ff-root .logo{font-size:19px;font-weight:800;letter-spacing:-0.03em}
 .ff-root .logo em{font-style:italic;color:var(--purple-light);font-family:'Playfair Display',serif}
-.ff-root .logo-img{height:30px;width:auto;display:block}
+.ff-root .logo-img{height:25px;width:auto;display:block}
 .ff-root .footer-logo{height:22px;width:auto;display:block}
 .ff-root .footer-brand-row{display:flex;align-items:center;gap:10px}
 
@@ -469,6 +469,9 @@ const CSS = `
 
   /* CTA: su mobile tengo solo i bottoni dell'hero; gli altri li copre lo sticky */
   .ff-root .section-cta{display:none}
+
+  /* VSL: su mobile mostro solo "AI Zero to Operator" */
+  .ff-root .vsl-title-extra{display:none}
   .ff-root .hero-pills{gap:8px}
   .ff-root .hero-pill{font-size:12px;padding:5px 12px}
   .ff-root .hero-ctas{flex-direction:column;align-items:stretch;gap:10px;margin:30px 0 40px}
@@ -864,7 +867,8 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               <div className="vdot" style={{ background: "#FFBD2E", margin: "0 5px" }} />
               <div className="vdot" style={{ background: "#28CA41" }} />
               <span style={{ fontSize: 12, color: "#555", marginLeft: 9, fontWeight: 600 }}>
-                AI Zero to Operator — Presentazione del corso
+                AI Zero to Operator
+                <span className="vsl-title-extra"> — Presentazione del corso</span>
               </span>
             </div>
             <div
