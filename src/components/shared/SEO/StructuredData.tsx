@@ -73,14 +73,6 @@ export function StructuredData({ locale }: StructuredDataProps) {
       "@id": `${baseUrl}/#organization`,
     },
     inLanguage: locale === "it" ? "it-IT" : "en-US",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   // Service Schema
