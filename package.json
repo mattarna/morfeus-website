@@ -15,7 +15,8 @@
     "check:public-assets:strict": "node scripts/check-public-assets.mjs --strict",
     "check:env": "node scripts/check-env.mjs",
     "check:env:strict": "node scripts/check-env.mjs --strict",
-    "report:health": "node scripts/report-health.mjs"
+    "report:health": "node scripts/report-health.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
@@ -33,6 +34,8 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
     "postcss": "^8",
     "prettier": "^3.8.3",
     "tailwindcss": "^3.4.1",
@@ -43,5 +46,8 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "lint-staged": {
+    "*.{md,css,yml,yaml}": "prettier --write"
+  }
 }

@@ -1,0 +1,5 @@
+# Guardia veloce pre-push: blocca la footer-bomb + errori di tipo/lint.
+# Il build completo lo fa la CI su clone pulito.
+node scripts/check-untracked-imports.mjs &&
+npm run typecheck &&
+npm run lint
