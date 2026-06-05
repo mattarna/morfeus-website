@@ -16,6 +16,7 @@ import type {
   WebinarThankYouContent,
 } from "@/funnels/types";
 import styles from "./sections.module.css";
+export { SalesFooterSection } from "./sections-sales-footer";
 
 // ─── Shared prop shape ────────────────────────────────────────────────────────
 
@@ -5173,7 +5174,7 @@ export function SalesModulesSection({ step }: SectionProps) {
           Voglio tutto questo — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+          Pagamento sicuro · Accesso immediato
         </div>
       </div>
     </section>
@@ -5552,7 +5553,7 @@ export function SalesProofSection({ step }: SectionProps) {
           Voglio imparare da loro — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+          Pagamento sicuro · Accesso immediato
         </div>
       </div>
     </section>
@@ -6004,7 +6005,7 @@ export function SalesAudienceSection({ step }: SectionProps) {
           Mi riconosco — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+          Pagamento sicuro · Accesso immediato
         </div>
       </div>
     </section>
@@ -6032,7 +6033,6 @@ export function SalesComparisonSection({ step }: SectionProps) {
     { label: "Personalizzazione", a: "Nessuna.", b: "Template generici.", c: "Il TUO Claude, configurato per il TUO lavoro." },
     { label: "Supporto", a: "Nessuno.", b: "Community generica.", c: "4 live settimanali con i founder." },
     { label: "Costo reale", a: "\"Gratis\" + 150-300h del tuo tempo.", b: "100-500€ + tempo per filtrare il contenuto utile.", c: "147€ early bird. 4-5h totali. Applicabile subito.", highlight: true },
-    { label: "Garanzia", a: "—", b: "Variabile.", c: "14 giorni. Nessuna domanda." },
     { label: "Aggiornamenti", a: "Devi cercarli tu ogni volta.", b: "Dipende.", c: "Inclusi. Il corso evolve con Claude." },
   ];
 
@@ -6103,7 +6103,7 @@ export function SalesComparisonSection({ step }: SectionProps) {
           Salto le scorciatoie — Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
         <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Garanzia 14 giorni · Pagamento sicuro · Accesso immediato
+          Pagamento sicuro · Accesso immediato
         </div>
       </div>
     </section>
@@ -6664,7 +6664,7 @@ export function SalesOfferSection({ step }: SectionProps) {
       {/* CTA */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: 36 }}>
         <SalesPrimaryButton href={current.checkoutUrl} onClick={onCheckout} size="xl" pulse>
-          Entra a {current.price}€ — garanzia 14 giorni <span style={{ fontSize: 18 }}>→</span>
+          Entra a {current.price}€ <span style={{ fontSize: 18 }}>→</span>
         </SalesPrimaryButton>
       </div>
       <div
@@ -6676,7 +6676,7 @@ export function SalesOfferSection({ step }: SectionProps) {
           fontFamily: "var(--font-body)",
         }}
       >
-        Pagamento sicuro · Accesso immediato · Garanzia 14 giorni
+        Pagamento sicuro · Accesso immediato
       </div>
 
       {/* Credito upgrade box */}
@@ -6966,118 +6966,8 @@ export function SalesUpsellBootcampSection() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function SalesGuaranteeSection() {
-  return (
-    <section
-      className={styles.salesSectionPadSm}
-      style={{
-        maxWidth: 880,
-        margin: "0 auto",
-        position: "relative",
-        zIndex: 1,
-      }}
-    >
-      <div
-        style={{
-          position: "relative",
-          background: "var(--dusk)",
-          border: "2px solid var(--orange)",
-          borderRadius: 18,
-          padding: "clamp(28px, 5vw, 44px) clamp(24px, 5vw, 44px) clamp(28px, 5vw, 40px)",
-          overflow: "hidden",
-        }}
-      >
-        {/* Watermark "14" */}
-        <span
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: -40,
-            right: -10,
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(180px, 35vw, 280px)",
-            lineHeight: 1,
-            color: "var(--orange)",
-            opacity: 0.06,
-            letterSpacing: "-0.05em",
-            pointerEvents: "none",
-          }}
-        >
-          14
-        </span>
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--orange)",
-            fontFamily: "var(--font-body)",
-            marginBottom: 14,
-          }}
-        >
-          Garanzia &ldquo;prova tutto&rdquo; — 14 giorni
-        </div>
-        <h2
-          style={{
-            position: "relative",
-            zIndex: 1,
-            fontFamily: "var(--font-display)",
-            fontWeight: 600,
-            fontSize: "clamp(28px, 4vw, 40px)",
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            color: "#fff",
-            margin: "0 0 22px",
-            textWrap: "balance" as React.CSSProperties["textWrap"],
-          }}
-        >
-          Non ti chiediamo di fidarti di noi. Ti chiediamo di provare.
-        </h2>
-
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            fontFamily: "var(--font-body)",
-            fontSize: 16,
-            lineHeight: 1.7,
-            color: "var(--ghost)",
-            opacity: 0.92,
-            display: "flex",
-            flexDirection: "column",
-            gap: 14,
-          }}
-        >
-          <p>Accedi al corso. Guarda le lezioni. Applica il metodo al tuo lavoro.</p>
-          <p>
-            Se dopo 14 giorni non ha cambiato il modo in cui lavori con l&apos;AI, ti rimborsiamo. Intero importo. Nessuna domanda. Nessuna burocrazia.
-          </p>
-          <p>
-            Perché offriamo questa garanzia? Perché sappiamo che funziona. Abbiamo formato 2.000+ professionisti. Il tasso di rimborso è sotto il 3%. Chi chiede il rimborso non era il cliente giusto — e va bene così.
-          </p>
-        </div>
-
-        <p
-          style={{
-            position: "relative",
-            zIndex: 1,
-            margin: "28px 0 0",
-            fontFamily: "var(--font-italic)",
-            fontStyle: "italic",
-            fontSize: 22,
-            color: "var(--orange)",
-            textAlign: "center",
-          }}
-        >
-          L&apos;unico rischio reale è non provare.
-        </p>
-      </div>
-    </section>
-  );
+  // Sezione "garanzia 14 giorni" rimossa: la garanzia non esiste e non va mostrata.
+  return null;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -7476,7 +7366,6 @@ export function SalesUrgencySection({ step }: SectionProps) {
       <p>Non è una strategia di marketing. È il prezzo del webinar: riservato a chi ha partecipato e decide di agire.</p>
       <ul style={{ margin: "12px 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
         <li>— Il corso resta lo stesso</li>
-        <li>— La garanzia resta 14 giorni</li>
         <li>— La qualità resta identica</li>
       </ul>
       <p>L&apos;unica cosa che cambia è il prezzo.</p>
@@ -7491,7 +7380,7 @@ export function SalesUrgencySection({ step }: SectionProps) {
         <strong style={{ color: "#fff" }}>297€</strong> — tra pochi giorni.<br />
         <strong style={{ color: "var(--muted)" }}>397€</strong> — prezzo pieno, per sempre.
       </p>
-      <p>Il contenuto non cambierà. La garanzia 14 giorni resta identica. L&apos;unica cosa che cambia è quanto paghi.</p>
+      <p>Il contenuto non cambierà. L&apos;unica cosa che cambia è quanto paghi.</p>
       <p>Ma il prezzo non è l&apos;urgenza vera.</p>
       <p>L&apos;urgenza vera è che ogni settimana senza un sistema sono 5-8 ore buttate in task che l&apos;AI potrebbe fare per te. A 25€/ora, sono 500-800€ al mese di tempo perso.</p>
       <p>Il corso costa meno di una settimana di ritardo.</p>
@@ -8427,78 +8316,6 @@ function TyStepCard({
         )}
       </div>
     </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 15 — FOOTER
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export function SalesFooterSection() {
-  const muted: React.CSSProperties = {
-    fontFamily: "var(--font-body)",
-    fontSize: 11,
-    lineHeight: 1.6,
-    color: "var(--muted)",
-    opacity: 0.75,
-  };
-
-  return (
-    <footer
-      className={styles.footerInner}
-      style={{
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        maxWidth: 1200,
-        margin: "0 auto",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 20, display: "block" }} />
-          <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-            morfeushub.com
-          </span>
-          <span aria-hidden style={{ color: "var(--muted)", opacity: 0.4 }}>·</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/claude-unlocked/logo-mark-light.png"
-              alt="Claude Unlocked"
-              style={{ height: 22, width: 22, display: "block", borderRadius: 5 }}
-            />
-            <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", letterSpacing: "0.06em", textTransform: "uppercase", opacity: 0.85 }}>
-              Claude Unlocked
-            </span>
-          </span>
-        </div>
-        <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-body)", display: "flex", gap: 16 }}>
-          <Link href="/it/privacy" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Privacy Policy</Link>
-          <Link href="/it/cookies" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Cookie Policy</Link>
-          <Link href="/it/termini-corso" target="_blank" rel="noreferrer" style={{ color: "var(--muted)" }}>Termini e Condizioni</Link>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <p style={muted}>
-          <strong style={{ color: "var(--muted)", opacity: 1 }}>Disclaimer:</strong> I prodotti e servizi venduti su questo sito non costituiscono proiezione, promessa o garanzia di guadagno. I risultati individuali possono variare e dipendono dall&apos;impegno, dall&apos;esperienza e dalle condizioni individuali di ciascun partecipante.
-        </p>
-        <p style={muted}>
-          Il Corso Claude Morfeus è un prodotto formativo indipendente. Claude è un marchio di Anthropic, PBC. Questo corso non è affiliato a, sponsorizzato da, o approvato da Anthropic.
-        </p>
-        <p style={muted}>
-          Questo contenuto rispetta le linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
-        </p>
-        <p style={{ ...muted, marginTop: 6 }}>
-          Morfeus Hub S.r.l. — P.IVA 14209210963 — Milano, Italia
-        </p>
-        <p style={{ ...muted, marginTop: 4, opacity: 1 }}>
-          © 2026 Morfeus Hub S.r.l. — Tutti i diritti riservati.
-        </p>
-      </div>
-    </footer>
   );
 }
 
