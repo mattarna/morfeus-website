@@ -74,6 +74,7 @@ Mai hardcodare gli ID nel codice: usare `getBrevoListId()` da [src/lib/brevo/lis
 | `FREEBIE_INSTAGRAM_CAROUSEL_SKILLS` | `BREVO_FREEBIE_INSTAGRAM_CAROUSEL_LIST_ID` | `57` | Freebie_instagram_carousel_skills | Chi ha scaricato la skill "Instagram Carousel Skills" |
 | `FREEBIE_DESIGN_SYSTEM_BLUEPRINT` | `BREVO_FREEBIE_DESIGN_SYSTEM_LIST_ID` | `61` | Freebie_design_system_blueprint | Chi ha scaricato la skill "AI Design System Blueprint" |
 | `PLAYBOOK_INFOBIZ_MILIONARIO` | `BREVO_PLAYBOOK_INFOBIZ_LIST_ID` | `63` | infobiz_milionario | Lead dal funnel Playbook Imprenditore Milionario |
+| `FREEBIE_AI_FUNDAMENTALS_GIUGNO` | `BREVO_FREEBIE_AI_FUNDAMENTALS_LIST_ID` | `65` | Freebie_ai_fundamentals_giugno | Chi ha sbloccato il corso gratuito "AI Fundamentals" (`/ai-fundamentals`) |
 
 ---
 

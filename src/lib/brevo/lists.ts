@@ -16,6 +16,7 @@ export const BREVO_LIST_ENV = {
   NEXT_WEBINAR_WAITLIST: "BREVO_NEXT_WEBINAR_LIST_ID", // dashboard ID: 62 (Iscritti_al_prossimo_webinar)
   PLAYBOOK_INFOBIZ_MILIONARIO: "BREVO_PLAYBOOK_INFOBIZ_LIST_ID", // dashboard ID: 63 (infobiz_milionario)
   FORMAZIONE_FINANZIATA_2026: "BREVO_FORMAZIONE_FINANZIATA_LIST_ID", // dashboard ID: 64 (Candidature AI Zero to Operator)
+  FREEBIE_AI_FUNDAMENTALS_GIUGNO: "BREVO_FREEBIE_AI_FUNDAMENTALS_LIST_ID", // dashboard ID: 65 (Freebie_ai_fundamentals_giugno)
 } as const;
 
 export type BrevoListEnvKey = keyof typeof BREVO_LIST_ENV;

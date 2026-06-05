@@ -89,6 +89,7 @@ function PrimaryButton({
   fullWidth,
   size = "md",
   href,
+  external,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
@@ -97,6 +98,8 @@ function PrimaryButton({
   fullWidth?: boolean;
   size?: "md" | "lg";
   href?: string;
+  /** Se true, apre href in una nuova scheda (link esterno) invece di forzare il download. */
+  external?: boolean;
 }) {
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);
@@ -128,10 +131,13 @@ function PrimaryButton({
   };
 
   if (href) {
+    const externalProps = external
+      ? { target: "_blank" as const, rel: "noreferrer" as const }
+      : { download: true };
     return (
       <a
         href={href}
-        download
+        {...externalProps}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => { setHover(false); setPress(false); }}
         onMouseDown={() => setPress(true)}
@@ -943,8 +949,8 @@ export function FreebieThankYouSection({ step }: SectionProps) {
         >
           {content.downloadBody}
         </p>
-        <PrimaryButton href={content.downloadHref} size="lg">
-          ⬇ {content.downloadLabel}
+        <PrimaryButton href={content.downloadHref} size="lg" external={content.downloadExternal}>
+          {content.downloadIcon ?? "⬇"} {content.downloadLabel}
         </PrimaryButton>
       </div>
 

@@ -745,6 +745,10 @@ export interface FreebieThankYouContent {
   downloadBody: string;
   downloadHref: string;
   downloadLabel: string;
+  /** Icona mostrata prima della label del bottone download/accesso. Default: "⬇". Usa es. "→" per accessi esterni (community/corso). */
+  downloadIcon?: string;
+  /** Se true, il bottone apre downloadHref in una nuova scheda (target=_blank) invece di forzare il download. Usalo per link esterni (es. community Circle). */
+  downloadExternal?: boolean;
   stepsTitle: string;
   steps: string[];
   bottomCtasEyebrow: string;
@@ -757,6 +761,31 @@ export interface FreebieThankYouContent {
     ctaLabel: string;
     ctaHref: string;
   }>;
+}
+
+export interface FreebieHubResource {
+  /** Etichetta del badge (es. "Skill per Claude", "Guida", "Nuovo"). */
+  badge: string;
+  title: string;
+  body: string;
+  /** Cover 16:9 opzionale. Se assente viene mostrato un gradiente con l'icona. */
+  coverSrc?: string;
+  /** Emoji/icona di fallback usata quando manca la cover. */
+  icon?: string;
+  /** URL della landing del freebie (es. "/ai-fundamentals"). */
+  href: string;
+  ctaLabel: string;
+  /** Se true la card occupa tutta la larghezza ed è evidenziata in cima. */
+  featured?: boolean;
+}
+
+export interface FreebieHubContent {
+  badge: string;
+  headline: string;
+  headlineAccent?: string;
+  subheadline: string;
+  resources: FreebieHubResource[];
+  footnote?: string;
 }
 
 export interface FunnelStepConfig {
@@ -800,6 +829,7 @@ export interface FunnelStepConfig {
     FreebieHero?: FreebieHeroContent;
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;
+    FreebieHub?: FreebieHubContent;
     VocabolarioPage?: VocabolarioPageContent;
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;
@@ -977,7 +1007,7 @@ export interface FunnelRegistryItem {
   runtime?: {
     fontPack?: "webinar" | "playbook";
     theme?: "default" | "bootcamp" | "finanziata";
-    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata";
+    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata" | "freebie-hub";
     chatbotStepIds?: string[];
   };
   abTest: {
