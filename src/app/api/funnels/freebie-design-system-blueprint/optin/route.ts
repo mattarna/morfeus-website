@@ -37,6 +37,9 @@ export async function POST(request: Request) {
     }
 
     const freebieListId = getBrevoListId("FREEBIE_DESIGN_SYSTEM_BLUEPRINT");
+    if (typeof freebieListId !== "number") {
+      return NextResponse.json({ success: false, error: "missing_brevo_list_id" }, { status: 500 });
+    }
     const listIds = [freebieListId].filter(
       (id): id is number => typeof id === "number"
     );
