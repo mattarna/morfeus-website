@@ -1,0 +1,24 @@
+# Normalizza i fine-riga: in repo sempre LF, niente più diff fantasma CRLF/LF.
+* text=auto eol=lf
+
+# File che devono restare CRLF (script Windows)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binari: mai trattati come testo (evita corruzione)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.mp4 binary
+*.mov binary
