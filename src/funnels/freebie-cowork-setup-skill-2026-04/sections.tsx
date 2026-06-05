@@ -667,11 +667,12 @@ export function FreebieThankYouSection({ step }: SectionProps) {
   }, [content.videoEmbedUrl]);
 
   function downloadIcs() {
+    if (!content.calendarIcsContent) return;
     const blob = new Blob([content.calendarIcsContent], { type: "text/calendar;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = content.calendarIcsFileName;
+    a.download = content.calendarIcsFileName ?? "calendar.ics";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -724,7 +725,8 @@ export function FreebieThankYouSection({ step }: SectionProps) {
         </p>
       </div>
 
-      {/* Webinar card */}
+      {/* Webinar card — opzionale, renderizzata solo se presente webinarCardTitle */}
+      {content.webinarCardTitle && (
       <div
         style={{
           background: "linear-gradient(135deg, rgba(235,122,46,0.10), rgba(123,104,238,0.06))",
@@ -804,6 +806,7 @@ export function FreebieThankYouSection({ step }: SectionProps) {
           )}
         </div>
       </div>
+      )}
 
       {/* Video tutorial — renderizzato solo se videoEmbedUrl e' presente */}
       {content.videoEmbedUrl && (
@@ -1025,6 +1028,101 @@ export function FreebieThankYouSection({ step }: SectionProps) {
           ))}
         </ol>
       </div>
+
+      {/* Claude Unlocked — promo corso, opzionale, prima di "Continua a esplorare" */}
+      {content.claudeUnlocked && (
+        <div
+          style={{
+            background: "linear-gradient(135deg, rgba(235,122,46,0.14), rgba(123,104,238,0.10))",
+            border: "1px solid rgba(235,122,46,0.30)",
+            borderRadius: 18,
+            padding: "32px 28px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            alignItems: "flex-start",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 11,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "var(--orange)",
+              fontWeight: 700,
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            {content.claudeUnlocked.eyebrow}
+          </div>
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(26px, 3.4vw, 36px)",
+              lineHeight: 1.12,
+              letterSpacing: "-0.01em",
+              color: "var(--white)",
+              margin: 0,
+              fontWeight: 600,
+            }}
+          >
+            {renderHeadlineWithAccent(content.claudeUnlocked.title, content.claudeUnlocked.titleAccent)}
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: 17,
+              lineHeight: 1.55,
+              color: "var(--ghost)",
+              opacity: 0.9,
+              margin: 0,
+              maxWidth: 640,
+            }}
+          >
+            {content.claudeUnlocked.body}
+          </p>
+          {content.claudeUnlocked.bullets && content.claudeUnlocked.bullets.length > 0 && (
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+              }}
+            >
+              {content.claudeUnlocked.bullets.map((b, i) => (
+                <li
+                  key={i}
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    alignItems: "flex-start",
+                    fontFamily: "var(--font-body)",
+                    fontSize: 16,
+                    lineHeight: 1.5,
+                    color: "var(--ghost)",
+                  }}
+                >
+                  <span style={{ color: "var(--orange)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div style={{ marginTop: 4 }}>
+            <PrimaryButton href={content.claudeUnlocked.ctaHref} size="lg" external>
+              {content.claudeUnlocked.ctaLabel} <span style={{ fontSize: 18 }}>→</span>
+            </PrimaryButton>
+          </div>
+          {content.claudeUnlocked.note && (
+            <div style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
+              {content.claudeUnlocked.note}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Bottom CTAs — community + newsletter */}
       <div style={{ marginTop: 16 }}>

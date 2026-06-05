@@ -728,16 +728,28 @@ export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
   body: string;
-  webinarCardTitle: string;
-  webinarCardBody: string;
-  eventDateLabel: string;
+  /** Card bonus webinar/replay. Opzionale: se webinarCardTitle è assente la card non viene renderizzata. */
+  webinarCardTitle?: string;
+  webinarCardBody?: string;
+  eventDateLabel?: string;
   webinarCtaLabel?: string;
   webinarCtaHref?: string;
-  calendarGoogleHref: string;
-  calendarGoogleLabel: string;
-  calendarIcsFileName: string;
-  calendarIcsContent: string;
-  calendarIcsLabel: string;
+  calendarGoogleHref?: string;
+  calendarGoogleLabel?: string;
+  calendarIcsFileName?: string;
+  calendarIcsContent?: string;
+  calendarIcsLabel?: string;
+  /** Blocco promozionale opzionale (es. corso Claude Unlocked) renderizzato prima di "Continua a esplorare". */
+  claudeUnlocked?: {
+    eyebrow: string;
+    title: string;
+    titleAccent?: string;
+    body: string;
+    bullets?: string[];
+    ctaLabel: string;
+    ctaHref: string;
+    note?: string;
+  };
   videoTitle?: string;
   videoEmbedUrl?: string;
   videoThumbnailSrc?: string;
