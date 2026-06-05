@@ -31,7 +31,7 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
   if (metadataPreset === "claude-unlocked-sales" && step?.id === "sales") {
     const title = step.title;
     const description =
-      "Il corso Claude Morfeus per usare Claude come uno strumento di lavoro reale. 10 moduli, sessioni live, garanzia 14 giorni.";
+      "Il corso Claude Morfeus per usare Claude come uno strumento di lavoro reale. 10 moduli, sessioni live, accesso immediato.";
     const url = `https://morfeushub.com/${params.slug}`;
     return {
       title,
