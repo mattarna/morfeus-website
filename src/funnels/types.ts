@@ -728,6 +728,8 @@ export interface FreebieThankYouContent {
   greetingPrefix: string;
   greetingFallback: string;
   body: string;
+  /** Se true, nasconde la card bonus webinar/replay pur conservandone i contenuti nel config (modalità evergreen). */
+  hideWebinarCard?: boolean;
   /** Card bonus webinar/replay. Opzionale: se webinarCardTitle è assente la card non viene renderizzata. */
   webinarCardTitle?: string;
   webinarCardBody?: string;

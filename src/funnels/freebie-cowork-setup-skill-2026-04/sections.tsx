@@ -725,8 +725,8 @@ export function FreebieThankYouSection({ step }: SectionProps) {
         </p>
       </div>
 
-      {/* Webinar card — opzionale, renderizzata solo se presente webinarCardTitle */}
-      {content.webinarCardTitle && (
+      {/* Webinar card — opzionale, nascosta in modalità evergreen (hideWebinarCard) */}
+      {content.webinarCardTitle && !content.hideWebinarCard && (
       <div
         style={{
           background: "linear-gradient(135deg, rgba(235,122,46,0.10), rgba(123,104,238,0.06))",
