@@ -34,7 +34,7 @@ con me ogni giorno" — con un metodo testato su 2.000+ professionisti.
 **[Proof bar — 3 elementi in linea]**
 
 ```
-2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore  ·  Garanzia 14 giorni
+2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore
 ```
 
 **[CTA primaria — bottone arancione]**
@@ -443,9 +443,6 @@ Costo reale               "Gratis" +       100-500€            67€ early bir
                                            il contenuto         subito.
                                            utile               
 
-Garanzia                  —                Variabile           14 giorni. 
-                                                              Nessuna domanda.
-                          
 Aggiornamenti             Devi cercarli    Dipende             Inclusi. Il corso 
                           tu ogni volta                        evolve con Claude.
 ```
@@ -541,7 +538,7 @@ Entra nel corso a 67€ — Prezzo early bird
 **[Micro-copy]**
 
 ```
-Pagamento sicuro · Accesso immediato · Garanzia 14 giorni
+Pagamento sicuro · Accesso immediato
 ```
 
 **[Credito upgrade]**
@@ -556,39 +553,9 @@ Non perdi nulla.
 
 ---
 
-## BLOCCO 10 — GARANZIA
+## BLOCCO 10 — (rimosso)
 
-**[Badge / titolo]**
-
-```
-GARANZIA "PROVA TUTTO" — 14 GIORNI
-```
-
-**[Body]**
-
-```
-Non ti chiediamo di fidarti di noi.
-Ti chiediamo di provare.
-
-Accedi al corso. Guarda le lezioni. 
-Applica il metodo al tuo lavoro.
-
-Se dopo 14 giorni non ha cambiato il modo in cui 
-lavori con l'AI, ti rimborsiamo. Intero importo. 
-Nessuna domanda. Nessuna burocrazia.
-
-Perché offriamo questa garanzia? 
-Perché sappiamo che funziona.
-
-Abbiamo formato 2.000+ professionisti. 
-Il tasso di rimborso è sotto il 3%.
-Chi chiede il rimborso non era il cliente giusto 
-— e va bene così.
-
-L'unico rischio reale è non provare.
-```
-
-**Note regia:** Box con bordo arancione, sfondo leggermente diverso (#1A1535). Icona scudo o badge garanzia. "14 GIORNI" in grande. Il body centrato, colonna stretta. L'ultima riga ("L'unico rischio reale è non provare") in bold o in Playfair Italic arancione — è il punch finale della sezione.
+> ⚠️ La "garanzia 14 giorni / soddisfatti o rimborsati" NON esiste e non va usata in nessuna copy. Sezione garanzia rimossa.
 
 ---
 
@@ -744,7 +711,6 @@ e decide di agire.
 
 Tre cose che non cambieranno dopo la scadenza:
 — Il corso resta lo stesso
-— La garanzia resta 14 giorni
 — La qualità resta identica
 
 L'unica cosa che cambia è il prezzo.
@@ -781,7 +747,6 @@ Stai per ottenere:
 → 4 live settimanali con i founder
 → Pacchetto skill e plugin pronto all'uso
 → Aggiornamenti inclusi per sempre
-→ Garanzia 14 giorni, nessuna domanda
 
 Valore: 591€
 Il tuo prezzo oggi: 67€
@@ -799,7 +764,7 @@ Sì, voglio padroneggiare Claude — Entra a 67€
 **[Micro-copy finale]**
 
 ```
-Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
+Pagamento sicuro · Accesso immediato
 Prezzo early bird valido ancora per [TIMER]
 ```
 

@@ -73,7 +73,7 @@ BLOCCO                  LIVE          REPLAY        EMAIL
 ```
 
 **Blocchi che cambiano: 1, 2, 3, 12, 13 + 1 FAQ aggiuntiva per email.**
-**Blocchi identici: 4-10, 14.** Lo stack, il prezzo, la garanzia e il meccanismo non cambiano mai — sono la struttura portante dell'offerta.
+**Blocchi identici: 4-10, 14.** Lo stack, il prezzo e il meccanismo non cambiano mai — sono la struttura portante dell'offerta.
 
 ### Logica per variante
 
@@ -123,7 +123,7 @@ Hai appena visto il metodo in azione. 10 moduli per farlo tuo
 **[Proof bar]**
 
 ```
-2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore  ·  Garanzia 14 giorni
+2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore
 ```
 
 **[CTA primaria]**
@@ -175,7 +175,7 @@ con me ogni giorno" — con un metodo testato su 2.000+ professionisti.
 **[Proof bar]**
 
 ```
-2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore  ·  Garanzia 14 giorni
+2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore
 ```
 
 **[CTA primaria]**
@@ -228,7 +228,7 @@ già usato per risparmiare 5-8 ore a settimana.
 **[Proof bar]**
 
 ```
-2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore  ·  Garanzia 14 giorni
+2.000+ professionisti formati  ·  HFarm, Talent Garden, Sole 24 Ore
 ```
 
 **[CTA primaria]**
@@ -1012,8 +1012,6 @@ Costo reale               "Gratis" +       100-500€            67€ early bir
                                            il contenuto         subito.
                                            utile               
 
-Garanzia                  —                Variabile           14 giorni. 
-                                                              Nessuna domanda.
 
 Aggiornamenti             Devi cercarli    Dipende             Inclusi. Il corso 
                           tu ogni volta                        evolve con Claude.
@@ -1131,7 +1129,7 @@ Entra nel corso a 67€ — Prezzo early bird
 **[Micro-copy]**
 
 ```
-Pagamento sicuro · Accesso immediato · Garanzia 14 giorni
+Pagamento sicuro · Accesso immediato
 ```
 
 **[Credito upgrade]**
@@ -1170,54 +1168,9 @@ Non perdi nulla.
 ---
 ---
 
-## BLOCCO 10 — GARANZIA
+## BLOCCO 10 — (rimosso)
 
-### Struttura e funzione
-
-Risk reversal offensivo. La garanzia non è una nota legale — è una leva di vendita. Tecnica Hormozi: più è forte la garanzia, più è forte la fiducia nel prodotto. "L'unico rischio è non provare" = inversione psicologica completa.
-
-### Copy
-
-**[Titolo]**
-
-```
-GARANZIA "PROVA TUTTO" — 14 GIORNI
-```
-
-**[Body]**
-
-```
-Non ti chiediamo di fidarti di noi.
-Ti chiediamo di provare.
-
-Accedi al corso. Guarda le lezioni. 
-Applica il metodo al tuo lavoro.
-
-Se dopo 14 giorni non ha cambiato il modo in cui 
-lavori con l'AI, ti rimborsiamo. Intero importo. 
-Nessuna domanda. Nessuna burocrazia.
-
-Perché offriamo questa garanzia? 
-Perché sappiamo che funziona.
-
-Abbiamo formato 2.000+ professionisti. 
-Il tasso di rimborso è sotto il 3%.
-Chi chiede il rimborso non era il cliente giusto 
-— e va bene così.
-
-L'unico rischio reale è non provare.
-```
-
-### Elementi visivi
-
-- **Box garanzia:** Sfondo #1A1535, bordo arancione 2px, border-radius 16px, padding generoso (40px).
-
-- **Badge garanzia:** A sinistra del testo (desktop) o centrato sopra (mobile).
-  - Opzione A: Cerchio con bordo arancione (2px), icona scudo + check mark al centro, testo circolare "GARANZIA 14 GIORNI". Stile pulito, non troppo corporate.
-  - Opzione B (più elegante): **"14" enorme** in Clash Display arancione, opacity 15%, come watermark dietro il testo. Nessun badge — il numero stesso comunica sicurezza.
-  - Raccomando opzione B per coerenza con il design system (tipografia > illustrazione).
-
-- **Ultima riga** ("L'unico rischio reale è non provare"): in Playfair Display Italic arancione. È il punch finale. Isolata, con spazio sopra (24px).
+> ⚠️ La garanzia "prova tutto / 14 giorni / soddisfatti o rimborsati" NON esiste e non va usata in nessuna copy. Blocco garanzia rimosso.
 
 ---
 ---
@@ -1475,7 +1428,6 @@ e decide di agire.
 
 Tre cose che non cambieranno dopo la scadenza:
 — Il corso resta lo stesso
-— La garanzia resta 14 giorni
 — La qualità resta identica
 
 L'unica cosa che cambia è il prezzo.
@@ -1521,8 +1473,7 @@ Il corso è appena uscito. Il prezzo di lancio
 97€ — tra pochi giorni.
 147€ — prezzo pieno, per sempre.
 
-Il contenuto non cambierà. La garanzia 14 giorni 
-resta identica. L'unica cosa che cambia è quanto paghi.
+Il contenuto non cambierà. L'unica cosa che cambia è quanto paghi.
 
 Ma il prezzo non è l'urgenza vera.
 
@@ -1586,7 +1537,6 @@ Stai per ottenere:
 → 4 live settimanali con i founder
 �� Pacchetto skill e plugin pronto all'uso
 → Aggiornamenti inclusi per sempre
-→ Garanzia 14 giorni, nessuna domanda
 
 Valore: 591€
 Il tuo prezzo oggi: 67€
@@ -1604,7 +1554,7 @@ Sì, voglio padroneggiare Claude — Entra a 67€
 **[Micro-copy]**
 
 ```
-Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
+Pagamento sicuro · Accesso immediato
 Prezzo esclusivo partecipanti live: ancora per [TIMER]
 ```
 
@@ -1639,7 +1589,6 @@ Stai per ottenere:
 → 4 live settimanali con i founder
 → Pacchetto skill e plugin pronto all'uso
 → Aggiornamenti inclusi per sempre
-→ Garanzia 14 giorni, nessuna domanda
 
 Valore: 591€
 Il tuo prezzo oggi: 67€
@@ -1657,7 +1606,7 @@ Sì, voglio padroneggiare Claude — Entra a 67€
 **[Micro-copy]**
 
 ```
-Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
+Pagamento sicuro · Accesso immediato
 Prezzo early bird valido ancora per [TIMER]
 ```
 
@@ -1692,7 +1641,6 @@ Stai per ottenere:
 → 4 live settimanali con i founder
 → Pacchetto skill e plugin pronto all'uso
 → Aggiornamenti inclusi per sempre
-→ Garanzia 14 giorni, nessuna domanda
 
 Valore: 591€
 Il tuo prezzo oggi: 67€
@@ -1710,7 +1658,7 @@ Voglio imparare a usare Claude davvero — Entra a 67€
 **[Micro-copy]**
 
 ```
-Pagamento sicuro · Accesso immediato · 14 giorni di garanzia
+Pagamento sicuro · Accesso immediato
 Prezzo di lancio: ancora per [TIMER]
 ```
 
