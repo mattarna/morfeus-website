@@ -107,6 +107,30 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
     };
   }
 
+  if (metadataPreset === "plan-solve") {
+    const title = "Plan & Solve — La macchina per i lavori grandi con l'AI | Morfeus";
+    const description =
+      "Il metodo Morfeus per far fare all'AI un lavoro grande senza che crolli a metà. Capisci il metodo, poi costruisci la tua macchina sul tuo progetto reale — gratis.";
+    const url = "https://morfeushub.com/plan-and-solve";
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        url,
+        siteName: "Morfeus Hub",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+      },
+    };
+  }
+
   if (metadataPreset === "freebie-hub") {
     const title = "Risorse gratuite sull'AI: corsi, skill e guide | Morfeus";
     const description =

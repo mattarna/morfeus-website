@@ -20,44 +20,49 @@ I nomi qui sotto sono quelli **realmente usati** nell'account Brevo Morfeus.
 Sono case-sensitive e devono matchare esattamente.
 
 ### Identity
-| Costante | Valore Brevo | Tipo | Note |
-|---|---|---|---|
-| `NOME` | `NOME` | Testo | Nome di battesimo. **Usare questo, non `FIRSTNAME`** |
-| `COGNOME` | `COGNOME` | Testo | Cognome. **Usare questo, non `LASTNAME`** |
+
+| Costante  | Valore Brevo | Tipo  | Note                                                 |
+| --------- | ------------ | ----- | ---------------------------------------------------- |
+| `NOME`    | `NOME`       | Testo | Nome di battesimo. **Usare questo, non `FIRSTNAME`** |
+| `COGNOME` | `COGNOME`    | Testo | Cognome. **Usare questo, non `LASTNAME`**            |
 
 ### Contact channels
-| Costante | Valore Brevo | Tipo | Note |
-|---|---|---|---|
-| `TELEFONO` | `TELEFONO_` | Testo | **Underscore finale intenzionale** |
-| `WHATSAPP` | `WHATSAPP` | Testo | |
-| `LANDLINE_NUMBER` | `LANDLINE_NUMBER` | Testo | |
-| `SMS` | `SMS` | Testo | |
-| `LINKEDIN` | `LINKEDIN` | Testo | URL profilo |
+
+| Costante          | Valore Brevo      | Tipo  | Note                               |
+| ----------------- | ----------------- | ----- | ---------------------------------- |
+| `TELEFONO`        | `TELEFONO_`       | Testo | **Underscore finale intenzionale** |
+| `WHATSAPP`        | `WHATSAPP`        | Testo |                                    |
+| `LANDLINE_NUMBER` | `LANDLINE_NUMBER` | Testo |                                    |
+| `SMS`             | `SMS`             | Testo |                                    |
+| `LINKEDIN`        | `LINKEDIN`        | Testo | URL profilo                        |
 
 ### Professional context
-| Costante | Valore Brevo | Tipo | Note |
-|---|---|---|---|
-| `AZIENDA` | `AZIENDA` | Testo | |
-| `JOB_TITLE` | `JOB_TITLE` | Testo | Posizione lavorativa |
-| `NUMERO_DIPENDENTI` | `NUMERO_DIPENDENTI` | Testo | |
-| `BIO` | `BIO` | Testo | |
+
+| Costante            | Valore Brevo        | Tipo  | Note                 |
+| ------------------- | ------------------- | ----- | -------------------- |
+| `AZIENDA`           | `AZIENDA`           | Testo |                      |
+| `JOB_TITLE`         | `JOB_TITLE`         | Testo | Posizione lavorativa |
+| `NUMERO_DIPENDENTI` | `NUMERO_DIPENDENTI` | Testo |                      |
+| `BIO`               | `BIO`               | Testo |                      |
 
 ### Acquisition / lifecycle
-| Costante | Valore Brevo | Tipo | Note |
-|---|---|---|---|
-| `FORM_NAME` | `FORM_NAME` | Testo | **Sempre popolare**: identifica la sorgente del contatto. Convenzione: `Freebie_X`, `Webinar_Y`, `LeadMagnet_Z` |
-| `REFERRAL_NAME` | `REFERRAL_NAME` | Testo | |
-| `WS_DAY` | `WS_DAY` | Testo | |
-| `DATA_ENTRATA` | `DATA_ENTRATA` | Testo | |
-| `CREATED_AT` | `CREATED_AT` | Data | |
-| `OPT_IN` | `OPT_IN` | Booleano | |
-| `DOUBLE_OPT_IN` | `DOUBLE_OPT-IN` | Categoria | **Trattino intenzionale** nel nome Brevo |
-| `ACTIVE_STATUS` | `ACTIVE_STATUS` | Booleano | |
+
+| Costante        | Valore Brevo    | Tipo      | Note                                                                                                            |
+| --------------- | --------------- | --------- | --------------------------------------------------------------------------------------------------------------- |
+| `FORM_NAME`     | `FORM_NAME`     | Testo     | **Sempre popolare**: identifica la sorgente del contatto. Convenzione: `Freebie_X`, `Webinar_Y`, `LeadMagnet_Z` |
+| `REFERRAL_NAME` | `REFERRAL_NAME` | Testo     |                                                                                                                 |
+| `WS_DAY`        | `WS_DAY`        | Testo     |                                                                                                                 |
+| `DATA_ENTRATA`  | `DATA_ENTRATA`  | Testo     |                                                                                                                 |
+| `CREATED_AT`    | `CREATED_AT`    | Data      |                                                                                                                 |
+| `OPT_IN`        | `OPT_IN`        | Booleano  |                                                                                                                 |
+| `DOUBLE_OPT_IN` | `DOUBLE_OPT-IN` | Categoria | **Trattino intenzionale** nel nome Brevo                                                                        |
+| `ACTIVE_STATUS` | `ACTIVE_STATUS` | Booleano  |                                                                                                                 |
 
 ### System
-| Costante | Valore Brevo | Tipo |
-|---|---|---|
-| `EXT_ID` | `EXT_ID` | Testo |
+
+| Costante           | Valore Brevo       | Tipo  |
+| ------------------ | ------------------ | ----- |
+| `EXT_ID`           | `EXT_ID`           | Testo |
 | `CONTACT_TIMEZONE` | `CONTACT_TIMEZONE` | Testo |
 
 ---
@@ -67,22 +72,23 @@ Sono case-sensitive e devono matchare esattamente.
 Le list ID vivono come env var su Vercel (production + preview).
 Mai hardcodare gli ID nel codice: usare `getBrevoListId()` da [src/lib/brevo/lists.ts](../src/lib/brevo/lists.ts).
 
-| Chiave | Env var | ID Brevo | Nome dashboard | Uso |
-|---|---|---|---|---|
-| `WEBINAR_CLAUDE_5MAG` | `BREVO_WEBINAR_LIST_ID` | `54` | Webinar Claude \| 5 Maggio 2026 | Iscritti webinar 5 maggio 2026 |
-| `FREEBIE_COWORK_SETUP_SKILL` | `BREVO_FREEBIE_SKILL_LIST_ID` | `56` | Freebie_cowork_setup_skill | Chi ha scaricato la skill "Cowork Setup Creator" |
-| `FREEBIE_INSTAGRAM_CAROUSEL_SKILLS` | `BREVO_FREEBIE_INSTAGRAM_CAROUSEL_LIST_ID` | `57` | Freebie_instagram_carousel_skills | Chi ha scaricato la skill "Instagram Carousel Skills" |
-| `FREEBIE_DESIGN_SYSTEM_BLUEPRINT` | `BREVO_FREEBIE_DESIGN_SYSTEM_LIST_ID` | `61` | Freebie_design_system_blueprint | Chi ha scaricato la skill "AI Design System Blueprint" |
-| `PLAYBOOK_INFOBIZ_MILIONARIO` | `BREVO_PLAYBOOK_INFOBIZ_LIST_ID` | `63` | infobiz_milionario | Lead dal funnel Playbook Imprenditore Milionario |
-| `FREEBIE_AI_FUNDAMENTALS_GIUGNO` | `BREVO_FREEBIE_AI_FUNDAMENTALS_LIST_ID` | `65` | Freebie_ai_fundamentals_giugno | Chi ha sbloccato il corso gratuito "AI Fundamentals" (`/ai-fundamentals`) |
+| Chiave                              | Env var                                    | ID Brevo | Nome dashboard                    | Uso                                                                                                                                       |
+| ----------------------------------- | ------------------------------------------ | -------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `WEBINAR_CLAUDE_5MAG`               | `BREVO_WEBINAR_LIST_ID`                    | `54`     | Webinar Claude \| 5 Maggio 2026   | Iscritti webinar 5 maggio 2026                                                                                                            |
+| `FREEBIE_COWORK_SETUP_SKILL`        | `BREVO_FREEBIE_SKILL_LIST_ID`              | `56`     | Freebie_cowork_setup_skill        | Chi ha scaricato la skill "Cowork Setup Creator"                                                                                          |
+| `FREEBIE_INSTAGRAM_CAROUSEL_SKILLS` | `BREVO_FREEBIE_INSTAGRAM_CAROUSEL_LIST_ID` | `57`     | Freebie_instagram_carousel_skills | Chi ha scaricato la skill "Instagram Carousel Skills"                                                                                     |
+| `FREEBIE_DESIGN_SYSTEM_BLUEPRINT`   | `BREVO_FREEBIE_DESIGN_SYSTEM_LIST_ID`      | `61`     | Freebie_design_system_blueprint   | Chi ha scaricato la skill "AI Design System Blueprint"                                                                                    |
+| `PLAYBOOK_INFOBIZ_MILIONARIO`       | `BREVO_PLAYBOOK_INFOBIZ_LIST_ID`           | `63`     | infobiz_milionario                | Lead dal funnel Playbook Imprenditore Milionario                                                                                          |
+| `FREEBIE_AI_FUNDAMENTALS_GIUGNO`    | `BREVO_FREEBIE_AI_FUNDAMENTALS_LIST_ID`    | `65`     | Freebie_ai_fundamentals_giugno    | Chi ha sbloccato il corso gratuito "AI Fundamentals" (`/ai-fundamentals`)                                                                 |
+| `FREEBIE_PLAN_SOLVE`                | `BREVO_FREEBIE_PLAN_SOLVE_LIST_ID`         | `66`     | Freebie*plan*&\_solve             | Chi sblocca il kit del freebie interattivo "Plan & Solve" (`/plan-and-solve`). Optin email + telefono opzionale (→ attributo `TELEFONO_`) |
 
 ---
 
 ## API key
 
-| Env var | Note |
-|---|---|
-| `BREVO_API_KEY` | Primary key |
+| Env var            | Note                                            |
+| ------------------ | ----------------------------------------------- |
+| `BREVO_API_KEY`    | Primary key                                     |
 | `BREVO_API_KEY_V2` | Fallback (gli endpoint provano prima V2 poi V1) |
 
 ---
@@ -116,6 +122,7 @@ Ogni endpoint `/api/funnels/<funnel>/optin` deve:
 6. Su success → `{ success: true }`
 
 Endpoint di riferimento:
+
 - [src/app/api/funnels/webinar-claude/optin/route.ts](../src/app/api/funnels/webinar-claude/optin/route.ts) — list singola
 - [src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts](../src/app/api/funnels/freebie-cowork-setup-skill/optin/route.ts) — list singola freebie
 

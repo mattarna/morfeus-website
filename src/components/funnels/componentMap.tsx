@@ -121,6 +121,7 @@ import {
   FreebieWebinarTeaserSection,
 } from "@/funnels/freebie-cowork-setup-skill-2026-04/sections";
 import { FreebieHubSection } from "@/funnels/freebie-hub-2026-06/sections";
+import { PlanSolveSection } from "@/funnels/freebie-plan-solve-2026-06/sections";
 import { VocabolarioPageSection } from "@/funnels/freebie-vocabolario-ai-2026-04/sections";
 import {
   BootcampHeaderSection,
@@ -265,6 +266,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.FreebieThankYou ? <FreebieThankYouSection accentColor={accentColor} step={step} /> : null,
   FreebieHub: ({ accentColor, step }) =>
     step.content.FreebieHub ? <FreebieHubSection accentColor={accentColor} step={step} /> : null,
+  PlanSolve: ({ accentColor, step }) =>
+    step.content.PlanSolve ? <PlanSolveSection accentColor={accentColor} step={step} /> : null,
   VocabolarioPage: () => <VocabolarioPageSection />,
   SalesHeader: () => <SalesHeaderSection />,
   SalesHero: ({ accentColor, step }) =>

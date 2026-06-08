@@ -35,6 +35,7 @@ export const FUNNEL_COMPONENT_NAMES = [
   "FreebieWebinarTeaser",
   "FreebieThankYou",
   "FreebieHub",
+  "PlanSolve",
   "VocabolarioPage",
   "SalesHeader",
   "SalesHero",

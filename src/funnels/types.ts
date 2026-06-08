@@ -802,6 +802,13 @@ export interface FreebieHubContent {
   footnote?: string;
 }
 
+export interface PlanSolveContent {
+  /** Endpoint optin del gate del wizard. Default: /api/funnels/freebie-plan-solve/optin */
+  optinEndpoint?: string;
+  /** FORM_NAME Brevo. Default: Freebie_plan_&_solve */
+  formName?: string;
+}
+
 export interface FunnelStepConfig {
   id: string;
   title: string;
@@ -844,6 +851,7 @@ export interface FunnelStepConfig {
     FreebieWebinarTeaser?: FreebieWebinarTeaserContent;
     FreebieThankYou?: FreebieThankYouContent;
     FreebieHub?: FreebieHubContent;
+    PlanSolve?: PlanSolveContent;
     VocabolarioPage?: VocabolarioPageContent;
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;
@@ -1021,7 +1029,7 @@ export interface FunnelRegistryItem {
   runtime?: {
     fontPack?: "webinar" | "playbook";
     theme?: "default" | "bootcamp" | "finanziata";
-    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata" | "freebie-hub";
+    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata" | "freebie-hub" | "plan-solve";
     chatbotStepIds?: string[];
   };
   abTest: {

@@ -9,6 +9,7 @@ import freebieVocabolarioAiConfig from "@/funnels/freebie-vocabolario-ai-2026-04
 import freebieDesignSystemBlueprintConfig from "@/funnels/freebie-design-system-blueprint-2026-05/config.json";
 import freebieAiFundamentalsConfig from "@/funnels/freebie-ai-fundamentals-2026-06/config.json";
 import freebieHubConfig from "@/funnels/freebie-hub-2026-06/config.json";
+import freebiePlanSolveConfig from "@/funnels/freebie-plan-solve-2026-06/config.json";
 import playbookConfig from "@/funnels/playbook-2026-05/config.json";
 import asseprimWebinarConfig from "@/funnels/asseprim-18-maggio-2026/config.json";
 import formazioneFinanziataConfig from "@/funnels/formazione-finanziata-ai-2026/config.json";
@@ -153,6 +154,21 @@ const freebieHubItem: FunnelRegistryItem = {
 };
 
 registerFunnel(freebieHubItem, freebieHubConfig as FunnelConfig);
+
+const freebiePlanSolveItem: FunnelRegistryItem = {
+  slug: "plan-and-solve",
+  locale: "it",
+  indexable: true,
+  runtime: {
+    metadataPreset: "plan-solve",
+  },
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(freebiePlanSolveItem, freebiePlanSolveConfig as FunnelConfig);
 
 const claudeUnlockedItem: FunnelRegistryItem = {
   slug: "claude-unlocked",
