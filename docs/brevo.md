@@ -36,6 +36,8 @@ Sono case-sensitive e devono matchare esattamente.
 | `SMS`             | `SMS`             | Testo |                                    |
 | `LINKEDIN`        | `LINKEDIN`        | Testo | URL profilo                        |
 
+> ⚠️ **REGOLA TELEFONO.** Per il telefono raccolto dagli utenti usa **sempre `TELEFONO` (→ `TELEFONO_`)**: è un campo Testo libero, accetta qualunque formato e **non fa mai fallire l'optin**. **NON** mettere l'input utente in `SMS` / `WHATSAPP` / `LANDLINE_NUMBER`: i campi nativi SMS/WhatsApp validano il formato (E.164) e possono rifiutare l'intero contatto. Normalizza a `+39…` quando possibile.
+
 ### Professional context
 
 | Costante            | Valore Brevo        | Tipo  | Note                 |

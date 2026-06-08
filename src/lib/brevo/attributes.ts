@@ -14,10 +14,15 @@ export const BREVO_ATTR = {
   COGNOME: "COGNOME",
 
   // Contact channels
-  TELEFONO: "TELEFONO_", // trailing underscore is intentional (matches Brevo)
-  WHATSAPP: "WHATSAPP",
+  // ⚠️ REGOLA TELEFONO: per il numero di telefono raccolto dagli utenti usa SEMPRE
+  // TELEFONO (→ "TELEFONO_"). È un campo Testo libero: accetta qualsiasi formato e
+  // NON fa mai fallire l'optin. NON usare SMS/WHATSAPP/LANDLINE_NUMBER per l'input
+  // utente: i campi nativi SMS/WhatsApp validano il formato (E.164) e possono
+  // rifiutare l'intero contatto. Normalizza a +39… quando puoi.
+  TELEFONO: "TELEFONO_", // underscore finale intenzionale (matches Brevo)
+  WHATSAPP: "WHATSAPP", // ⚠️ non per input utente diretto — vedi REGOLA TELEFONO sopra
   LANDLINE_NUMBER: "LANDLINE_NUMBER",
-  SMS: "SMS",
+  SMS: "SMS", // ⚠️ non per input utente diretto — vedi REGOLA TELEFONO sopra
   LINKEDIN: "LINKEDIN",
 
   // Professional context
