@@ -220,6 +220,9 @@ export interface FreebieHeroContent {
   rolesOptions: string[];
   rolesPlaceholder: string;
   optinEndpoint?: string;
+  /** Se true, mostra un campo telefono (obbligatorio) nel form → Brevo TELEFONO_. */
+  collectPhone?: boolean;
+  phonePlaceholder?: string;
 }
 
 export interface FreebieWebinarTeaserContent {
@@ -809,6 +812,9 @@ export interface PlanSolveContent {
   formName?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface PlanSolveThankYouContent {}
+
 export interface FunnelStepConfig {
   id: string;
   title: string;
@@ -852,6 +858,7 @@ export interface FunnelStepConfig {
     FreebieThankYou?: FreebieThankYouContent;
     FreebieHub?: FreebieHubContent;
     PlanSolve?: PlanSolveContent;
+    PlanSolveThankYou?: PlanSolveThankYouContent;
     VocabolarioPage?: VocabolarioPageContent;
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;
@@ -997,6 +1004,7 @@ export interface FunnelStepConfig {
     PlaybookThankYou?: Record<string, never>;
     PlaybookQr?: Record<string, never>;
     FinanziataLanding?: FinanziataLandingContent;
+    FinanziataThankYou?: FinanziataThankYouContent;
   };
 }
 
@@ -1010,6 +1018,13 @@ export interface FinanziataLandingContent {
   /** Deadline candidatura mostrata in copy (es. "15 giugno"). */
   deadline?: string;
   /** Email di supporto mostrata nello stato di successo. */
+  supportEmail?: string;
+}
+
+export interface FinanziataThankYouContent {
+  /** URL del calendario per prenotare la call (CTA principale dello stato "idoneo"). */
+  calendarUrl: string;
+  /** Email di supporto mostrata in fondo allo stato "idoneo". */
   supportEmail?: string;
 }
 

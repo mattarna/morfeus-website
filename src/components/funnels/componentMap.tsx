@@ -122,6 +122,7 @@ import {
 } from "@/funnels/freebie-cowork-setup-skill-2026-04/sections";
 import { FreebieHubSection } from "@/funnels/freebie-hub-2026-06/sections";
 import { PlanSolveSection } from "@/funnels/freebie-plan-solve-2026-06/sections";
+import { PlanSolveThankYouSection } from "@/funnels/freebie-plan-solve-2026-06/thankyou";
 import { VocabolarioPageSection } from "@/funnels/freebie-vocabolario-ai-2026-04/sections";
 import {
   BootcampHeaderSection,
@@ -198,7 +199,7 @@ import {
   AsseprimBusinessPageSection,
   AsseprimRoutingPageSection,
 } from "@/funnels/asseprim-18-maggio-2026/sections";
-import { FinanziataLandingSection } from "@/funnels/formazione-finanziata-ai-2026/sections-finanziata";
+import { FinanziataLandingSection, FinanziataThankYouSection } from "@/funnels/formazione-finanziata-ai-2026/sections-finanziata";
 import type { FunnelComponentName, FunnelStepConfig } from "@/funnels/types";
 
 interface RenderProps {
@@ -268,6 +269,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.FreebieHub ? <FreebieHubSection accentColor={accentColor} step={step} /> : null,
   PlanSolve: ({ accentColor, step }) =>
     step.content.PlanSolve ? <PlanSolveSection accentColor={accentColor} step={step} /> : null,
+  PlanSolveThankYou: ({ accentColor, step }) =>
+    step.content.PlanSolveThankYou ? <PlanSolveThankYouSection accentColor={accentColor} step={step} /> : null,
   VocabolarioPage: () => <VocabolarioPageSection />,
   SalesHeader: () => <SalesHeaderSection />,
   SalesHero: ({ accentColor, step }) =>
@@ -445,4 +448,6 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
   AsseprimBusinessPage: ({ step }) => <AsseprimBusinessPageSection step={step} />,
   FinanziataLanding: ({ accentColor, step }) =>
     step.content.FinanziataLanding ? <FinanziataLandingSection accentColor={accentColor} step={step} /> : null,
+  FinanziataThankYou: ({ accentColor, step }) =>
+    step.content.FinanziataThankYou ? <FinanziataThankYouSection accentColor={accentColor} step={step} /> : null,
 };

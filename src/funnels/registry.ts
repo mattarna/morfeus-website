@@ -10,6 +10,7 @@ import freebieDesignSystemBlueprintConfig from "@/funnels/freebie-design-system-
 import freebieAiFundamentalsConfig from "@/funnels/freebie-ai-fundamentals-2026-06/config.json";
 import freebieHubConfig from "@/funnels/freebie-hub-2026-06/config.json";
 import freebiePlanSolveConfig from "@/funnels/freebie-plan-solve-2026-06/config.json";
+import freebiePlanSolveToolConfig from "@/funnels/freebie-plan-solve-2026-06/tool-config.json";
 import playbookConfig from "@/funnels/playbook-2026-05/config.json";
 import asseprimWebinarConfig from "@/funnels/asseprim-18-maggio-2026/config.json";
 import formazioneFinanziataConfig from "@/funnels/formazione-finanziata-ai-2026/config.json";
@@ -160,6 +161,8 @@ const freebiePlanSolveItem: FunnelRegistryItem = {
   locale: "it",
   indexable: true,
   runtime: {
+    fontPack: "webinar",
+    theme: "default",
     metadataPreset: "plan-solve",
   },
   abTest: {
@@ -169,6 +172,20 @@ const freebiePlanSolveItem: FunnelRegistryItem = {
 };
 
 registerFunnel(freebiePlanSolveItem, freebiePlanSolveConfig as FunnelConfig);
+
+// Tool interattivo Plan & Solve — consegnato via email, noindex, tema proprio (no fontPack).
+const freebiePlanSolveToolItem: FunnelRegistryItem = {
+  slug: "plan-and-solve-strumento",
+  locale: "it",
+  indexable: false,
+  runtime: {},
+  abTest: {
+    enabled: false,
+    variants: ["A"]
+  }
+};
+
+registerFunnel(freebiePlanSolveToolItem, freebiePlanSolveToolConfig as FunnelConfig);
 
 const claudeUnlockedItem: FunnelRegistryItem = {
   slug: "claude-unlocked",

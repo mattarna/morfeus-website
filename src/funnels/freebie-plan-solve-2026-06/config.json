@@ -2,20 +2,59 @@
   "id": "freebie-plan-solve",
   "slug": "plan-and-solve",
   "locale": "it",
-  "accentColor": "#8B82F0",
+  "accentColor": "#eb7a2e",
   "layout": "bare",
   "steps": [
     {
-      "id": "page",
-      "title": "Plan & Solve — La macchina per i lavori grandi con l'AI | Morfeus",
+      "id": "optin",
+      "title": "Plan & Solve - La macchina per i lavori grandi con l'AI | Morfeus",
       "path": "",
-      "isConversion": true,
-      "componentOrder": ["PlanSolve"],
+      "isConversion": false,
+      "componentOrder": ["WebinarHeader", "FreebieHero", "WebinarFooter"],
       "content": {
-        "PlanSolve": {
+        "WebinarHeader": {},
+        "WebinarFooter": {},
+        "FreebieHero": {
+          "badge": "Risorsa gratuita - Tool interattivo",
+          "headline": "La macchina per i lavori grandi con l'AI.",
+          "headlineAccent": "lavori grandi",
+          "subheadline": "Plan & Solve e' il metodo Morfeus per far fare all'AI un lavoro grande senza che crolli a meta'. Lascia i tuoi dati: ti arriva via email lo strumento interattivo che monta il metodo sul TUO progetto reale e ti consegna un prompt pronto da incollare in Claude o ChatGPT.",
+          "coverSrc": "/freebies/plan-solve/cover.jpg",
+          "coverAlt": "Plan & Solve - rallenta per finire 3x piu' veloce",
+          "formTitle": "Accedi gratis",
+          "formMicrocopy": "Ti inviamo subito il link allo strumento via email. Niente carta richiesta, niente spam.",
+          "formSubmitLabel": "Accedi a Plan & Solve",
+          "formName": "Freebie_plan_&_solve",
+          "privacyText": "Accetto la privacy policy e acconsento al trattamento dei dati per ricevere la risorsa e comunicazioni da Morfeus.",
+          "privacyHref": "/it/privacy",
+          "successRedirect": "/plan-and-solve/thank-you",
           "optinEndpoint": "/api/funnels/freebie-plan-solve/optin",
-          "formName": "Freebie_plan_&_solve"
+          "collectPhone": true,
+          "phonePlaceholder": "Il tuo numero di telefono",
+          "rolesOptions": [
+            "Imprenditore / CEO",
+            "C-Level (COO, CFO, CMO, ecc.)",
+            "Head Of",
+            "Manager",
+            "Dipendente",
+            "Studente",
+            "Freelance"
+          ],
+          "rolesPlaceholder": "Qual e' la tua posizione lavorativa?"
         }
+      }
+    },
+    {
+      "id": "thank-you",
+      "title": "Plan & Solve - Controlla la mail",
+      "path": "thank-you",
+      "isConversion": true,
+      "noindex": true,
+      "componentOrder": ["WebinarHeader", "PlanSolveThankYou", "WebinarFooter"],
+      "content": {
+        "WebinarHeader": {},
+        "WebinarFooter": {},
+        "PlanSolveThankYou": {}
       }
     }
   ]

@@ -676,7 +676,6 @@ interface Props {
 export function FinanziataLandingSection({ accentColor, step }: Props) {
   const content = step.content.FinanziataLanding;
   const vslYoutubeId = content?.vslYoutubeId ?? "";
-  const calendarUrl = content?.calendarUrl ?? "#";
   const optinEndpoint = content?.optinEndpoint ?? "/api/funnels/formazione-finanziata/optin";
   const deadline = content?.deadline ?? "15 giugno";
   const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
@@ -698,7 +697,6 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
   const [profilo, setProfilo] = useState<"freelance" | "azienda" | null>(null);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   // reviews drag-scroll
   const trackRef = useRef<HTMLDivElement>(null);
@@ -803,7 +801,10 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
         }),
       });
       if (res.ok) {
-        setSuccess(true);
+        // Redirect alla thank-you page dedicata (full page-load: così il Pixel
+        // sulla TY page parte pulito e la conversione è tracciabile su URL propria).
+        window.location.href = "/formazione-finanziata-2026/grazie";
+        return;
       } else {
         const body = await res.json().catch(() => ({}));
         setError("Si è verificato un errore (" + res.status + "). Riprova o scrivici a " + supportEmail + ".");
@@ -1388,38 +1389,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               </p>
             </div>
 
-            {success ? (
-              <div className="form-success">
-                <div className="success-icon">✓</div>
-                <h3>Sei idoneo/a</h3>
-                <p style={{ fontSize: 16, color: "#9A9AB0" }}>Ecco cosa devi fare ora</p>
-                <ul className="success-steps">
-                  <li>
-                    <span className="success-badge a">1</span>
-                    <p>
-                      <strong>Prenota subito una call con Paola</strong> per verificare i requisiti e ricevere tutte le
-                      informazioni sul corso:
-                      <br />
-                      <a className="success-cal" href={calendarUrl} target="_blank" rel="noopener noreferrer">
-                        → Prenota la tua call
-                      </a>
-                    </p>
-                  </li>
-                  <li>
-                    <span className="success-badge b">2</span>
-                    <p>
-                      All'indirizzo email che hai inserito riceverai da oggi tutte le comunicazioni necessarie con i
-                      dettagli del corso, del rimborso e dei prossimi passi.
-                    </p>
-                  </li>
-                </ul>
-                <p className="success-spam">
-                  <strong>Controlla anche spam, promozioni e offerte</strong> della tua casella: a volte le nostre
-                  comunicazioni finiscono lì. Se non trovi nulla entro 24 ore, scrivici a <strong>{supportEmail}</strong>
-                </p>
-              </div>
-            ) : (
-              <form className="form-body" onSubmit={handleSubmit} noValidate>
+            <form className="form-body" onSubmit={handleSubmit} noValidate>
                 <div className="fg2">
                   <div className="fg">
                     <label htmlFor="ff-nome">Nome</label>
@@ -1485,7 +1455,6 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
                   riguardo al corso. Non verranno condivisi con terze parti.
                 </p>
               </form>
-            )}
           </div>
         </div>
       </section>
@@ -1556,6 +1525,108 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
           Invia la tua candidatura →
         </button>
       </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   THANK-YOU PAGE — "Sei idoneo/a"
+   Pagina dedicata su URL propria (/formazione-finanziata-2026/grazie) a cui
+   la landing reindirizza dopo l'invio andato a buon fine del form. Stesso
+   identico contenuto dello stato "idoneo" + stesso link calendario. È qui che
+   va inserito l'evento custom del Pixel per tracciare il lead avvenuto.
+════════════════════════════════════════════════════════════════════ */
+
+interface ThankYouProps {
+  accentColor: string;
+  step: FunnelStepConfig;
+}
+
+export function FinanziataThankYouSection({ accentColor, step }: ThankYouProps) {
+  const content = step.content.FinanziataThankYou;
+  const calendarUrl = content?.calendarUrl ?? "#";
+  const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
+
+  return (
+    <div className="ff-root" style={{ ["--accent" as string]: accentColor }}>
+      {/* eslint-disable-next-line react/no-danger */}
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
+
+      {/* NAV */}
+      <div className="nav">
+        <div className="inner">
+          <img className="logo-img" src="/logo/m-w2.png" alt="Morfeus Hub" />
+        </div>
+      </div>
+
+      {/* SUCCESS */}
+      <section className="candidatura section-pad">
+        <div className="container">
+          <div className="form-wrap">
+            <div className="form-hd">
+              <span className="form-badge">⚡ Candidatura ricevuta</span>
+              <h2>Sei idoneo/a</h2>
+              <p>Abbiamo ricevuto la tua candidatura. Ecco cosa devi fare ora.</p>
+            </div>
+            <div className="form-success">
+              <div className="success-icon">✓</div>
+              <h3>Sei idoneo/a</h3>
+              <p style={{ fontSize: 16, color: "#9A9AB0" }}>Ecco cosa devi fare ora</p>
+              <ul className="success-steps">
+                <li>
+                  <span className="success-badge a">1</span>
+                  <p>
+                    <strong>Prenota subito una call con Paola</strong> per verificare i requisiti e ricevere tutte le
+                    informazioni sul corso:
+                    <br />
+                    <a className="success-cal" href={calendarUrl} target="_blank" rel="noopener noreferrer">
+                      → Prenota la tua call
+                    </a>
+                  </p>
+                </li>
+                <li>
+                  <span className="success-badge b">2</span>
+                  <p>
+                    All'indirizzo email che hai inserito riceverai da oggi tutte le comunicazioni necessarie con i
+                    dettagli del corso, del rimborso e dei prossimi passi.
+                  </p>
+                </li>
+              </ul>
+              <p className="success-spam">
+                <strong>Controlla anche spam, promozioni e offerte</strong> della tua casella: a volte le nostre
+                comunicazioni finiscono lì. Se non trovi nulla entro 24 ore, scrivici a <strong>{supportEmail}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="footer">
+        <div className="inner">
+          <div className="footer-top-bar">
+            <div className="footer-brand-row">
+              <img className="footer-logo" src="/logo/m-w.png" alt="Morfeus Hub" />
+              <span className="footer-site">morfeushub.com</span>
+            </div>
+            <nav className="footer-nav">
+              <a href="https://www.morfeushub.com/it/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+              <a href="https://www.morfeushub.com/it/cookies" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+            </nav>
+          </div>
+          <p className="footer-disc">
+            <strong>Disclaimer:</strong> I prodotti e servizi venduti su questo sito non costituiscono proiezione,
+            promessa o garanzia di guadagno. I risultati individuali possono variare e dipendono dall'impegno,
+            dall'esperienza e dalle condizioni individuali di ciascun partecipante. Claude è un marchio di Anthropic,
+            PBC. Questo corso non è affiliato a, sponsorizzato da, o approvato da Anthropic. Questo contenuto rispetta le
+            linee guida AGCM in materia di correttezza pubblicitaria e pratiche commerciali.
+          </p>
+          <div className="footer-bottom">
+            <p>Morfeus Hub S.r.l. · P.IVA 14209210963 · Milano, Italia</p>
+            <p>© 2026 Morfeus Hub S.r.l. · Tutti i diritti riservati.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FunnelStepConfig } from "@/funnels/types";
 import styles from "./PlanSolve.module.css";
 
@@ -148,9 +148,10 @@ const emptyWiz: WizState = {
 };
 
 export function PlanSolveSection({ step }: SectionProps) {
-  const cfg = ((step.content as Record<string, unknown>).PlanSolve ?? {}) as PlanSolveConfig;
-  const optinEndpoint = cfg.optinEndpoint ?? "/api/funnels/freebie-plan-solve/optin";
-  const formName = cfg.formName ?? "Freebie_plan_&_solve";
+  // Tool consegnato via email a chi ha già fatto l'optin a monte: nessun gate qui,
+  // il wizard genera il prompt e lo si scarica direttamente.
+  const _cfg = ((step.content as Record<string, unknown>).PlanSolve ?? {}) as PlanSolveConfig;
+  void _cfg;
 
   // ── Phase selector ──
   const [curPhase, setCurPhase] = useState(0);
@@ -231,9 +232,6 @@ export function PlanSolveSection({ step }: SectionProps) {
     setWz(emptyWiz);
     setErrors({});
     setGateUnlocked(false);
-    setGateEmail("");
-    setGatePhone("");
-    setGateError("");
     showStep(0);
   }
 
@@ -365,16 +363,8 @@ export function PlanSolveSection({ step }: SectionProps) {
     });
   }
 
-  // ── Email gate ──
-  const [gateEmail, setGateEmail] = useState("");
+  // ── Download (post-optin: niente gate, scarica e basta) ──
   const [gateUnlocked, setGateUnlocked] = useState(false);
-  const [gateSubmitting, setGateSubmitting] = useState(false);
-  const [gateError, setGateError] = useState("");
-  const [gatePhone, setGatePhone] = useState("");
-
-  function isValidEmail(v: string) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  }
 
   function downloadKit() {
     if (typeof window === "undefined" || typeof document === "undefined") return;
@@ -395,52 +385,9 @@ export function PlanSolveSection({ step }: SectionProps) {
     setTimeout(() => URL.revokeObjectURL(url), 1500);
   }
 
-  async function gateSubmit(e: FormEvent) {
-    e.preventDefault();
-    const email = gateEmail.trim();
-    if (!isValidEmail(email)) {
-      setGateError("Inserisci una email valida");
-      return;
-    }
-    setGateError("");
-    setGateSubmitting(true);
-    try {
-      const sp = new URLSearchParams(window.location.search);
-      const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-      const utms: Record<string, string> = {};
-      utmKeys.forEach((k) => {
-        if (sp.has(k)) utms[k] = sp.get(k)!;
-      });
-
-      const res = await fetch(optinEndpoint, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          email,
-          phone: gatePhone.trim(),
-          name: "",
-          role: "",
-          source: formName,
-          project: wz.project,
-          ...utms,
-        }),
-      });
-      if (!res.ok) throw new Error("submit_failed");
-
-      const w = window as unknown as {
-        dataLayer?: { push: (o: Record<string, unknown>) => void };
-        fbq?: (...args: unknown[]) => void;
-      };
-      if (w.dataLayer) w.dataLayer.push({ event: "freebie_optin_complete", form_name: formName, ...utms });
-      if (w.fbq) w.fbq("track", "Lead", { content_name: formName });
-
-      setGateUnlocked(true);
-      downloadKit();
-    } catch {
-      setGateError("Non siamo riusciti a completare. Riprova.");
-    } finally {
-      setGateSubmitting(false);
-    }
+  function onDownload() {
+    downloadKit();
+    setGateUnlocked(true);
   }
 
   // ── Effects: cursor glow + reveal-on-scroll + hero path draw-in ──
@@ -1290,33 +1237,10 @@ export function PlanSolveSection({ step }: SectionProps) {
                 <h4>
                   <i className="ti ti-download" /> Scarica il prompt (+ il tuo Brief)
                 </h4>
-                <p>
-                  Il prompt di avvio e il tuo Brief in un unico file pronto all&apos;uso. Ti lascio anche
-                  l&apos;invito a GSD quando esce.
-                </p>
-                <form className={styles["gate-form"]} onSubmit={gateSubmit}>
-                  <input
-                    type="email"
-                    value={gateEmail}
-                    onChange={(e) => setGateEmail(e.target.value)}
-                    placeholder="latua@email.com"
-                    required
-                  />
-                  <input
-                    type="tel"
-                    value={gatePhone}
-                    onChange={(e) => setGatePhone(e.target.value)}
-                    placeholder="Telefono (opzionale)"
-                    autoComplete="tel"
-                  />
-                  <button type="submit" className={cx("btn", "btn-primary")} disabled={gateSubmitting}>
-                    <i className="ti ti-download" /> {gateSubmitting ? "Invio..." : "Scarica"}
-                  </button>
-                </form>
-                {gateError && (
-                  <div style={{ fontSize: 14, color: "var(--red)", marginTop: 10 }}>{gateError}</div>
-                )}
-                <div className={styles["gate-fine"]}>Niente spam. Solo il file e, quando esce, GSD.</div>
+                <p>Il prompt di avvio e il tuo Brief in un unico file Markdown, pronto all&apos;uso.</p>
+                <button type="button" className={cx("btn", "btn-primary")} onClick={onDownload}>
+                  <i className="ti ti-download" /> Scarica il kit (.md)
+                </button>
                 <div className={styles["gate-success"]}>
                   <i className="ti ti-circle-check" style={{ fontSize: 22 }} />{" "}
                   <span>Fatto. Download partito — controlla la cartella download.</span>

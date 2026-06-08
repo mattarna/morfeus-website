@@ -4,7 +4,9 @@ import { getBrevoListId } from "@/lib/brevo/lists";
 
 interface OptinPayload {
   email?: string;
-  // Il gate del wizard Plan & Solve raccoglie email + telefono (opzionale) + progetto.
+  // Optin Plan & Solve: nome/email/ruolo (come gli altri freebie) + telefono.
+  name?: string;
+  role?: string;
   phone?: string;
   project?: string;
   source?: string;
@@ -67,6 +69,8 @@ export async function POST(request: Request) {
         attributes: {
           [BREVO_ATTR.FORM_NAME]: payload.source ?? DEFAULT_FORM_NAME,
           [BREVO_ATTR.OPT_IN]: true,
+          ...(payload.name?.trim() ? { [BREVO_ATTR.NOME]: payload.name.trim() } : {}),
+          ...(payload.role?.trim() ? { [BREVO_ATTR.JOB_TITLE]: payload.role.trim() } : {}),
           // Telefono opzionale → attributo testo TELEFONO_ (solo se fornito).
           ...(normalizePhone(payload.phone) ? { [BREVO_ATTR.TELEFONO]: normalizePhone(payload.phone) } : {}),
         },

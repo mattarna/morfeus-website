@@ -36,6 +36,7 @@ export const FUNNEL_COMPONENT_NAMES = [
   "FreebieThankYou",
   "FreebieHub",
   "PlanSolve",
+  "PlanSolveThankYou",
   "VocabolarioPage",
   "SalesHeader",
   "SalesHero",
@@ -178,6 +179,7 @@ export const FUNNEL_COMPONENT_NAMES = [
   "AsseprimRoutingPage",
   "AsseprimBusinessPage",
   "FinanziataLanding",
+  "FinanziataThankYou",
 ] as const;
 
 export type FunnelComponentName = (typeof FUNNEL_COMPONENT_NAMES)[number];
