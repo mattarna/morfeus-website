@@ -324,6 +324,7 @@ export function FreebieHeroSection({ step }: SectionProps) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
   const [privacy, setPrivacy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -338,6 +339,7 @@ export function FreebieHeroSection({ step }: SectionProps) {
     if (!name.trim()) { setError("Inserisci il tuo nome"); return; }
     if (!isValidEmail(email.trim())) { setError("Inserisci una email valida"); return; }
     if (!role) { setError("Seleziona la tua posizione lavorativa"); return; }
+    if (content.collectPhone && !phone.trim()) { setError("Inserisci il tuo numero di telefono"); return; }
     if (!privacy) { setError("Serve accettare la privacy policy"); return; }
     setError("");
     setIsSubmitting(true);
@@ -355,6 +357,7 @@ export function FreebieHeroSection({ step }: SectionProps) {
           email: email.trim(),
           name: name.trim(),
           role,
+          ...(content.collectPhone ? { phone: phone.trim() } : {}),
           source: content.formName,
           ...utms,
         }),
@@ -492,6 +495,9 @@ export function FreebieHeroSection({ step }: SectionProps) {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <StyledInput value={name} onChange={setName} placeholder="Il tuo nome" onEnter={submit} />
             <StyledInput type="email" value={email} onChange={setEmail} placeholder="La tua email" onEnter={submit} />
+            {content.collectPhone && (
+              <StyledInput type="tel" value={phone} onChange={setPhone} placeholder={content.phonePlaceholder ?? "Il tuo numero di telefono"} onEnter={submit} />
+            )}
             <StyledSelect value={role} onChange={setRole} options={content.rolesOptions} placeholder={content.rolesPlaceholder} />
 
             {/* Hidden field — FORM_NAME for Brevo segmentation */}
