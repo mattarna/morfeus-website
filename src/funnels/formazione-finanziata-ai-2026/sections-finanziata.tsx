@@ -803,7 +803,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
       if (res.ok) {
         // Redirect alla thank-you page dedicata (full page-load: così il Pixel
         // sulla TY page parte pulito e la conversione è tracciabile su URL propria).
-        window.location.href = "/formazione-finanziata-2026/grazie";
+        window.location.href = "/formazione-finanziata-2026/thank-you";
         return;
       } else {
         const body = await res.json().catch(() => ({}));
