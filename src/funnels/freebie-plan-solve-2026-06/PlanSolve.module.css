@@ -2093,3 +2093,40 @@
     margin-bottom: 4px;
   }
 }
+
+/* ============================================================
+   GUTTER MOBILE GARANTITO
+   Le classi sezione (.hero, .section-pad, .footer) usano lo
+   shorthand `padding: Ypx 0` che AZZERA l'orizzontale e, venendo
+   dopo .wrap nella cascata, vince -> contenuto a filo bordo su
+   mobile. Qui ripristiniamo il gutter con longhand padding-left/
+   right (vince sempre sullo shorthand perche' ultima regola in
+   source order). NON tocca il padding verticale.
+   ============================================================ */
+@media (max-width: 768px) {
+  .psRoot .wrap,
+  .psRoot .hero,
+  .psRoot .section-pad,
+  .psRoot .footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+@media (max-width: 640px) {
+  .psRoot .wrap,
+  .psRoot .hero,
+  .psRoot .section-pad,
+  .psRoot .footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media (max-width: 380px) {
+  .psRoot .wrap,
+  .psRoot .hero,
+  .psRoot .section-pad,
+  .psRoot .footer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
