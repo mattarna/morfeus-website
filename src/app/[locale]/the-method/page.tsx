@@ -1,10 +1,7 @@
 "use client";
 
-/* eslint-disable react/jsx-no-comment-textnodes --
-   The "// ..." strings below are intentional draftsman-note UI text,
-   not stray code comments. */
-
 import { useEffect, useRef, useState } from "react";
+import { CONTENT, type Lang } from "./content";
 import "./the-method.css";
 
 type Theme = "light" | "dark";
@@ -12,11 +9,20 @@ type Theme = "light" | "dark";
 export default function TheMethodPage() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [theme, setThemeState] = useState<Theme>("light");
+  const [lang, setLangState] = useState<Lang>("en");
 
-  const setTheme = (t: Theme) => {
-    setThemeState(t);
+  const setTheme = (val: Theme) => {
+    setThemeState(val);
     try {
-      localStorage.setItem("method-theme", t);
+      localStorage.setItem("method-theme", val);
+    } catch {
+      /* ignore */
+    }
+  };
+  const setLang = (val: Lang) => {
+    setLangState(val);
+    try {
+      localStorage.setItem("method-lang", val);
     } catch {
       /* ignore */
     }
@@ -24,8 +30,10 @@ export default function TheMethodPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("method-theme") as Theme | null;
-      if (saved === "light" || saved === "dark") setThemeState(saved);
+      const savedT = localStorage.getItem("method-theme") as Theme | null;
+      if (savedT === "light" || savedT === "dark") setThemeState(savedT);
+      const savedL = localStorage.getItem("method-lang") as Lang | null;
+      if (savedL === "en" || savedL === "it") setLangState(savedL);
     } catch {
       /* ignore */
     }
@@ -34,37 +42,31 @@ export default function TheMethodPage() {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             e.target.classList.add("in");
-            e.target
-              .querySelectorAll<HTMLElement>(".g-fill,.stage-track .fill")
-              .forEach((b) => {
-                if (b.dataset.w) b.style.width = b.dataset.w;
-              });
+            e.target.querySelectorAll<HTMLElement>(".g-fill,.stage-track .fill").forEach((b) => {
+              if (b.dataset.w) b.style.width = b.dataset.w;
+            });
             io.unobserve(e.target);
           }
         });
       },
       { threshold: 0.16 }
     );
-
     root.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-
     const arcs = root.querySelectorAll<SVGElement>(".hero-arc .draw");
     const timers: ReturnType<typeof setTimeout>[] = [];
-    arcs.forEach((c, i) => {
-      timers.push(setTimeout(() => c.classList.add("in"), 120 + i * 140));
-    });
-
+    arcs.forEach((c, i) => timers.push(setTimeout(() => c.classList.add("in"), 120 + i * 140)));
     return () => {
       io.disconnect();
       timers.forEach(clearTimeout);
     };
   }, []);
+
+  const t = CONTENT[lang];
 
   const logoPaths = (
     <>
@@ -74,9 +76,10 @@ export default function TheMethodPage() {
     </>
   );
 
+  const quadKeys = ["exposed", "indispensable", "commodity", "specialist"];
+
   return (
     <div className="tm-method" data-theme={theme} ref={rootRef}>
-      {/* DRAWING FRAME + REGISTRATION CROP-MARKS */}
       <div className="tm-frame" aria-hidden="true">
         <span className="cm cm-tl" />
         <span className="cm cm-tr" />
@@ -84,23 +87,35 @@ export default function TheMethodPage() {
         <span className="cm cm-br" />
       </div>
 
-      {/* THEME TOGGLE */}
-      <div className="toggle" role="group" aria-label="Theme">
-        <button className={theme === "dark" ? "on" : ""} onClick={() => setTheme("dark")}>
-          rev: dark
-        </button>
-        <button className={theme === "light" ? "on" : ""} onClick={() => setTheme("light")}>
-          rev: light
+      {/* CONTROLS — language + theme */}
+      <div className="controls">
+        <div className="seg" role="group" aria-label="Language">
+          <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>
+            EN
+          </button>
+          <button className={lang === "it" ? "on" : ""} onClick={() => setLang("it")}>
+            IT
+          </button>
+        </div>
+        <button
+          className="seg-single"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          aria-label={theme === "light" ? t.ui.dark : t.ui.light}
+        >
+          {theme === "light" ? "◗" : "◖"}
         </button>
       </div>
 
       {/* TITLE BLOCK */}
       <div className="titleblock" aria-hidden="true">
-        <div>drawing</div><div><b>THE METHOD</b></div>
-        <div>standard</div><div>Morfeus OS</div>
-        <div>rev.</div><div>1.0 · 2026-06</div>
-        <div>scope</div><div>company-wide</div>
-        <div>scala</div><div>1:1</div>
+        <div>drawing</div>
+        <div>
+          <b>{t.brand.sub.toUpperCase()}</b>
+        </div>
+        <div>rev.</div>
+        <div>1.0 · 2026</div>
+        <div>scope</div>
+        <div>company-wide</div>
       </div>
 
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
@@ -122,141 +137,127 @@ export default function TheMethodPage() {
                 {logoPaths}
               </svg>
               <span className="brand-name">
-                Morfeus <span>· The Method</span>
+                {t.brand.name} <span>· {t.brand.sub}</span>
               </span>
             </div>
-            <span className="sheet-id">Operating Standard · fig. 00</span>
+            <span className="sheet-id">{t.brand.tag}</span>
           </div>
         </div>
 
         {/* HERO */}
         <section className="hero">
-          <svg className="hero-arc" viewBox="0 0 400 400" fill="none">
+          <svg className="hero-arc" viewBox="0 0 400 400" fill="none" aria-hidden="true">
             <g stroke="url(#tmGa)" fill="none" strokeLinecap="round">
-              <circle className="draw" cx="200" cy="200" r="60" strokeWidth="1.5" pathLength="1" opacity=".9" strokeDasharray="4 4" />
-              <circle className="draw" cx="200" cy="200" r="105" strokeWidth="1.5" pathLength="1" opacity=".7" />
-              <circle className="draw" cx="200" cy="200" r="150" strokeWidth="1.5" pathLength="1" opacity=".5" strokeDasharray="4 4" />
-              <circle className="draw" cx="200" cy="200" r="195" strokeWidth="1.5" pathLength="1" opacity=".32" />
-              <circle className="draw" cx="200" cy="200" r="240" strokeWidth="1.5" pathLength="1" opacity=".18" strokeDasharray="4 4" />
-              <line x1="200" y1="200" x2="395" y2="200" strokeWidth="1" opacity=".3" />
-              <line x1="200" y1="200" x2="200" y2="5" strokeWidth="1" opacity=".3" />
-              <circle cx="200" cy="200" r="3" fill="url(#tmGa)" stroke="none" />
+              <circle className="draw" cx="200" cy="200" r="70" strokeWidth="1.5" pathLength="1" opacity=".9" strokeDasharray="4 4" />
+              <circle className="draw" cx="200" cy="200" r="120" strokeWidth="1.5" pathLength="1" opacity=".6" />
+              <circle className="draw" cx="200" cy="200" r="170" strokeWidth="1.5" pathLength="1" opacity=".4" strokeDasharray="4 4" />
+              <circle className="draw" cx="200" cy="200" r="220" strokeWidth="1.5" pathLength="1" opacity=".22" />
             </g>
           </svg>
           <svg className="hero-mark" viewBox="0 0 1000 476" fill="none" aria-hidden="true">
             <g>{logoPaths}</g>
           </svg>
           <div className="wrap">
-            <span className="eyebrow">The Morfeus Operating Standard — How We Work</span>
-            <h1>
-              The Method<span className="rule"></span>
-            </h1>
-            <p className="thesis">
-              Your value isn&apos;t your effort. It&apos;s <em>how hard you are to replace</em> — and how much rides on you.
-            </p>
-            <p className="thesis-attr">// The standard we train, hire, and pay against.</p>
-            <p className="hero-body">
-              Expertise is being commoditized and effort is invisible. What compounds is your{" "}
-              <strong>approach</strong>: how you define done, the questions you ask, and how much you own. This is the
-              standing logic of how we work — the beliefs we align on first, the loop we build inside second, and the
-              tools that make it repeatable in any field.
-            </p>
+            <div className="col">
+              <span className="eyebrow">{t.hero.eyebrow}</span>
+              <h1>{t.hero.title}</h1>
+              <p className="thesis">
+                {t.hero.thesisPre}
+                <em>{t.hero.thesisEm}</em>
+                {t.hero.thesisPost}
+              </p>
+              <p className="thesis-attr">{t.hero.attr}</p>
+              <p className="hero-body">{t.hero.body}</p>
+            </div>
           </div>
-          <span className="note hero-note">// fig. 00 — tavola d&apos;apertura · disegnato da Alex</span>
         </section>
 
-        {/* MANTRA / LEGEND */}
-        <div className="mantras">
-          <div className="mantra reveal"><span className="n">01 · LEGENDA</span><p>Value = how hard to replace, times how much you own.</p></div>
-          <div className="mantra reveal"><span className="n">02 · LEGENDA</span><p>AI fluency is a consequence of the approach, not the goal.</p></div>
-          <div className="mantra reveal"><span className="n">03 · LEGENDA</span><p>Always start from the definition of done.</p></div>
-          <div className="mantra reveal"><span className="n">04 · LEGENDA</span><p>If you can&apos;t repeat it, you didn&apos;t understand it.</p></div>
+        {/* MANTRAS */}
+        <div className="mantras-wrap">
+          <div className="mantras">
+            {t.mantras.map((m, i) => (
+              <div className="mantra reveal" key={i}>
+                <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                <p>{m}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* VALUE EQUATION */}
+        {/* ECONOMICS */}
         <section className="part">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>fig. 01</span><i className="tick"></i><span>l&apos;economia · what you&apos;re paid for</span></div>
-              <span className="eyebrow">The economics</span>
-              <h2 style={{ marginTop: "14px" }}>What you&apos;re actually paid for.</h2>
-              <p>Two forces set your value. Most people only push on one — and it&apos;s usually hours, the one that doesn&apos;t compound.</p>
+            <div className="part-head col reveal">
+              <span className="eyebrow">{t.economics.eyebrow}</span>
+              <h2>{t.economics.title}</h2>
+              <p>{t.economics.sub}</p>
+            </div>
+
+            <div className="eq-wrap reveal">
               <div className="eq-formula">
-                <span className="eq-term" data-q="asse x">How hard you are to replace</span>
+                <span className="eq-term" data-q="x">{t.economics.x}</span>
                 <span className="eq-op">×</span>
-                <span className="eq-term" data-q="asse y">How much rides on you</span>
+                <span className="eq-term" data-q="y">{t.economics.y}</span>
                 <span className="eq-op">=</span>
-                <span className="eq-result">What you&apos;re worth</span>
+                <span className="eq-result">{t.economics.result}</span>
+              </div>
+              <p className="eq-hint">{t.economics.quadHint}</p>
+            </div>
+
+            <div className="matrix-block reveal">
+              <div className="matrix">
+                {t.matrix.quads.map((q, i) => (
+                  <div className={`quad ${quadKeys[i]}`} key={i}>
+                    {i === 1 && <span className="grow">{t.matrix.grow}</span>}
+                    <span className="q-pos">{q.pos}</span>
+                    <div className="q-name">{q.name}</div>
+                    <p className="q-desc">{q.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="x-axis">
+                <span>← {t.matrix.xLeft}</span>
+                <span className="x-mid">{t.matrix.xMid}</span>
+                <span>{t.matrix.xRight} →</span>
               </div>
             </div>
 
-            <div className="matrix-section reveal">
-              <div className="matrix-layout">
-                <div className="y-axis">Responsibility — how much rides on you ↑</div>
-                <div>
-                  <div className="matrix">
-                    <div className="quad exposed">
-                      <span className="q-pos">High stakes · Replaceable</span>
-                      <div className="q-name">Exposed</div>
-                      <p className="q-desc">All the pressure rides on you, but you can be swapped out. Stressful, fragile, and still not the top of the pay scale.</p>
-                    </div>
-                    <div className="quad indispensable">
-                      <span className="star">▸ grow here</span>
-                      <span className="q-pos">High stakes · Hard to replace</span>
-                      <div className="q-name">Indispensable</div>
-                      <p className="q-desc">The outcome rides on you, and only you do it that way. Highest leverage, highest pay.</p>
-                    </div>
-                    <div className="quad commodity">
-                      <span className="q-pos">Low stakes · Replaceable</span>
-                      <div className="q-name">Commodity</div>
-                      <p className="q-desc">Anyone can do it and nothing rides on it. Hours are the only lever — and hours don&apos;t compound.</p>
-                    </div>
-                    <div className="quad specialist">
-                      <span className="q-pos">Low stakes · Hard to replace</span>
-                      <div className="q-name">Specialist</div>
-                      <p className="q-desc">Rare skill, but you&apos;re handed the spec and don&apos;t own the result. Valued — and capped.</p>
-                    </div>
-                  </div>
-                  <div className="x-axis">
-                    <span>← Easily replaced</span>
-                    <span className="x-mid">Replaceability</span>
-                    <span>Hard to replace →</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p className="eq-foot reveal">
-              It&apos;s multiplication, not addition. <b>Max out one axis and zero the other, and you&apos;re still a commodity or still exposed.</b> The career move is the diagonal — <span className="accent">harder to replace and more ownership, at the same time.</span>
-            </p>
-            <div className="source reveal">
-              <span className="src-tag">// nota a margine — il principio in una riga</span>
-              <p>&quot;It&apos;s not about how hard you work — it&apos;s about how easy it is to substitute you. Take more accountability: real objectives, real payments, real consequences.&quot;</p>
+            <div className="col">
+              <p className="eq-foot reveal">
+                {t.economics.foot1}
+                <span className="accent">{t.economics.footEm}</span>
+                {t.economics.foot2}
+              </p>
+              <blockquote className="source reveal">{t.economics.quote}</blockquote>
             </div>
           </div>
         </section>
 
-        {/* CONTEXT: TWO LAYERS */}
+        {/* TWO LAYERS */}
         <section className="part tinted">
           <div className="wrap">
-            <div className="dim reveal"><span>fig. 02</span><i className="tick"></i><span>sequenza operativa · l&apos;ordine è il punto</span></div>
             <div className="context-grid">
-              <div className="context-intro reveal">
-                <span className="eyebrow">How a session works</span>
-                <h2 style={{ marginTop: "14px" }}>Align first. Then train.</h2>
-                <p>Every working session has two layers, in this order — and the order is the whole point.</p>
-                <p className="order-rule">Alignment without training is theory. Training without alignment is busywork. You need <b>both, in that order.</b></p>
-                <p className="note" style={{ marginTop: "22px" }}>// le citazioni in rosso sono parole di Alex, ripulite il minimo.</p>
+              <div className="context-intro col reveal">
+                <span className="eyebrow">{t.layers.eyebrow}</span>
+                <h2>{t.layers.title}</h2>
+                <p>{t.layers.sub}</p>
+                <p className="order-rule">{t.layers.rule}</p>
               </div>
               <div className="layers reveal">
                 <div className="layer-card">
                   <div className="layer-num">I</div>
-                  <div><h4>Alignment</h4><p>Get the beliefs straight before anyone touches the work — what value is, how it&apos;s earned, what &quot;done&quot; means.</p></div>
+                  <div>
+                    <h4>{t.layers.aHead}</h4>
+                    <p>{t.layers.aBody}</p>
+                  </div>
                 </div>
                 <div className="flowmark">↓</div>
                 <div className="layer-card">
                   <div className="layer-num">II</div>
-                  <div><h4>Training</h4><p>Run the build loop against a real bar — frame, build, review, repeat back, raise the bar.</p></div>
+                  <div>
+                    <h4>{t.layers.bHead}</h4>
+                    <p>{t.layers.bBody}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -266,149 +267,88 @@ export default function TheMethodPage() {
         {/* PART I — ALIGNMENT */}
         <section className="part">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>tav. I</span><i className="tick"></i><span>allineamento · le convinzioni sotto il lavoro</span></div>
-              <span className="part-tag">Part I — Alignment</span>
-              <h2>The beliefs under the work.</h2>
-              <p>Before the first move, we agree on how the work actually works. If we don&apos;t share these, every review turns into the same argument.</p>
+            <div className="part-head col reveal">
+              <span className="part-tag">{t.alignment.tag}</span>
+              <h2>{t.alignment.title}</h2>
+              <p>{t.alignment.sub}</p>
             </div>
             <div className="items">
-              <div className="item reveal">
-                <div className="item-num">01</div>
-                <div className="item-body">
-                  <h3>Approach beats expertise</h3>
-                  <p className="desc">You don&apos;t need to be the expert to know whether something is ready. You need a repeatable process for judging it. The expertise follows the approach — not the other way around.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;You don&apos;t need deep coding knowledge to know whether something is ready. It&apos;s about the approach.&quot;</p></div>
+              {t.alignment.items.map((it, i) => (
+                <div className="item reveal" key={i}>
+                  <div className="item-num">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="item-body">
+                    <h3>{it.title}</h3>
+                    <p className="desc">{it.desc}</p>
+                    <blockquote className="source">{it.quote}</blockquote>
+                  </div>
                 </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">02</div>
-                <div className="item-body">
-                  <h3>The questions are the work</h3>
-                  <p className="desc">Right answers come from right questions. Right questions come from a clear objective. When you&apos;re stuck, you&apos;re usually asking the wrong thing — go back to the objective.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;It&apos;s always about the questions. If you don&apos;t have a clear objective, you&apos;re not asking yourself the right questions.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">03</div>
-                <div className="item-body">
-                  <h3>Start from the definition of done</h3>
-                  <p className="desc">The first question on anything: what does done look like? Define the target before you move. No clear target means wrong questions — and you loop on the same wall forever.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;The first question was: what&apos;s the definition of done? If I have to reach the objective, I need a clear objective.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">04</div>
-                <div className="item-body">
-                  <h3>Set your own standards</h3>
-                  <p className="desc">No one expects mastery in week one. They expect you to hold a bar — and raise it on purpose. Standards are something you set for yourself, not something handed to you.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;You need to set yourself some standards. Nobody&apos;s asking you to be at the level in the first week.&quot;</p></div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* DIAGNOSIS PULL QUOTE + GAUGES */}
+        {/* DIAGNOSIS */}
         <section className="pull">
-          <svg className="pull-arc" viewBox="0 0 400 400" fill="none">
-            <g stroke="url(#tmGa)" fill="none">
-              <circle cx="200" cy="200" r="80" strokeWidth="1.2" opacity=".8" strokeDasharray="4 4" />
-              <circle cx="200" cy="200" r="135" strokeWidth="1.2" opacity=".55" />
-              <circle cx="200" cy="200" r="190" strokeWidth="1.2" opacity=".35" strokeDasharray="4 4" />
-              <circle cx="200" cy="200" r="245" strokeWidth="1.2" opacity=".2" />
-            </g>
-          </svg>
           <div className="wrap">
-            <div className="dim reveal"><span>fig. 03</span><i className="tick"></i><span>strumento di misura · two readouts</span></div>
-            <span className="pull-tag">The diagnosis</span>
-            <blockquote>&quot;I see improvement in the <em>quality</em> of the work. I don&apos;t see improvement in the <em>approach</em> — so we keep hitting the same wall.&quot;</blockquote>
+            <div className="col">
+              <span className="pull-tag">{t.diagnosis.tag}</span>
+              <blockquote className="pull-quote">
+                {t.diagnosis.quotePre}
+                <em>{t.diagnosis.quoteEm1}</em>
+                {t.diagnosis.quoteMid}
+                <em>{t.diagnosis.quoteEm2}</em>
+                {t.diagnosis.quotePost}
+              </blockquote>
+            </div>
             <div className="gauges reveal">
               <div className="gauge">
                 <div className="g-label">
-                  <span className="g-name">Output layer <small>// the artifact · the visible result</small></span>
-                  <span className="g-state up">Improving ↗</span>
+                  <span className="g-name">
+                    {t.diagnosis.bar1Name}
+                    <small>{t.diagnosis.bar1Sub}</small>
+                  </span>
+                  <span className="g-state up">{t.diagnosis.bar1State}</span>
                 </div>
-                <div className="g-track"><div className="g-fill lit" data-w="82%"></div></div>
+                <div className="g-track">
+                  <div className="g-fill lit" data-w="82%"></div>
+                </div>
               </div>
               <div className="gauge">
                 <div className="g-label">
-                  <span className="g-name">Approach layer <small>// how you think · the questions you ask</small></span>
-                  <span className="g-state flat">Flat →</span>
+                  <span className="g-name">
+                    {t.diagnosis.bar2Name}
+                    <small>{t.diagnosis.bar2Sub}</small>
+                  </span>
+                  <span className="g-state flat">{t.diagnosis.bar2State}</span>
                 </div>
-                <div className="g-track"><div className="g-fill dim" data-w="26%"></div></div>
+                <div className="g-track">
+                  <div className="g-fill dim" data-w="26%"></div>
+                </div>
               </div>
             </div>
-            <p className="pull-attr">// The output layer can be copied. The approach layer can&apos;t — and it&apos;s the only one that compounds. So that&apos;s the one we train.</p>
+            <p className="pull-attr col">{t.diagnosis.attr}</p>
           </div>
         </section>
 
         {/* PART II — TRAINING */}
         <section className="part tinted">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>tav. II</span><i className="tick"></i><span>training · il loop di costruzione</span></div>
-              <span className="part-tag">Part II — Training</span>
-              <h2>The loop we build inside.</h2>
-              <p>Skill is built inside a structured loop with guardrails. I set the frame. You build inside it with full creative freedom. We review against the bar. You prove you understood. We raise the bar.</p>
+            <div className="part-head col reveal">
+              <span className="part-tag">{t.training.tag}</span>
+              <h2>{t.training.title}</h2>
+              <p>{t.training.sub}</p>
             </div>
             <div className="items loop">
-              <div className="item reveal">
-                <div className="item-num">01</div>
-                <div className="item-body">
-                  <h3>Frame the project</h3>
-                  <p className="desc">Someone builds the scaffold and the constraints — including what&apos;s explicitly <em>not</em> wanted inside it. You don&apos;t set up the project; you inherit a clean frame so you can focus on the actual work.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;I set up the project — you never set up the project, I do it for you. Then you start working on it.&quot;</p></div>
+              {t.training.items.map((it, i) => (
+                <div className="item reveal" key={i}>
+                  <div className="item-num">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="item-body">
+                    <h3>{it.title}</h3>
+                    <p className="desc">{it.desc}</p>
+                    <blockquote className="source">{it.quote}</blockquote>
+                  </div>
                 </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">02</div>
-                <div className="item-body">
-                  <h3>Build inside the guardrails</h3>
-                  <p className="desc">Within the frame you have full creative freedom. The constraints are the moat; the creativity is yours. You always know the boundary you can&apos;t cross.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;You have the creativity to work on whatever you want, but you still know what I do not want inside the project.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">03</div>
-                <div className="item-body">
-                  <h3>Two postures of help</h3>
-                  <p className="desc">Sometimes you get exactly what you ask for. Sometimes the answer stays eye-level and you find it yourself. The second one is where the approach actually gets built.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;From me you&apos;ll have exactly what you ask — the other is more eye-level, and you&apos;ll find the answers on your own.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">04</div>
-                <div className="item-body">
-                  <h3>Be your own first reviewer</h3>
-                  <p className="desc">Run your definition of done against your own work <em>before</em> you hand it over. &quot;Came close&quot; should be caught by you, not by me. My review is the backstop, not the first check.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;We came very close — but it was not done.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">05</div>
-                <div className="item-body">
-                  <h3>The repeat-back test</h3>
-                  <p className="desc">Explain the brief back in your own words. If you can&apos;t repeat it, you didn&apos;t understand it 100%. We do this live, out loud, every time.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;In your own way, explain to me what I just said. If you cannot repeat it, you did not understand it 100%.&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">06</div>
-                <div className="item-body">
-                  <h3>Use the corpus</h3>
-                  <p className="desc">The transcripts are a knowledge base — thousands of them. Ask them &quot;what is Alex saying here?&quot; Use AI on the record to close your own gaps before you ask a person.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;You have thousands of transcripts — you can ask those transcripts questions like &apos;what is Alex saying here?&apos;&quot;</p></div>
-                </div>
-              </div>
-              <div className="item reveal">
-                <div className="item-num">07</div>
-                <div className="item-body">
-                  <h3>Critique is care; consequences are real</h3>
-                  <p className="desc">Critique is given to make you better, never to attack. And missing the bar has consequences — because the objectives and the payments are real.</p>
-                  <div className="source"><span className="src-tag">// dal lavoro</span><p>&quot;It&apos;s not a critique — the best way you can improve is by starting. But if you mess up, there are consequences.&quot;</p></div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -416,110 +356,110 @@ export default function TheMethodPage() {
         {/* TOOLKIT 1 — DEFINITION OF DONE */}
         <section className="tool-block">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>fig. 04</span><i className="tick"></i><span>procedura di costruzione · definire &quot;done&quot;</span></div>
-              <span className="part-tag">Toolkit — The core skill</span>
-              <h2>Defining &quot;done&quot; in a field you don&apos;t know.</h2>
-              <p>You don&apos;t need to be the expert to set the bar — you need a repeatable way to build one. This process is domain-agnostic: it works on a website, a sales call, a contract, a campaign, anything.</p>
+            <div className="part-head col reveal">
+              <span className="part-tag">{t.tool1.tag}</span>
+              <h2>{t.tool1.title}</h2>
+              <p>{t.tool1.sub}</p>
             </div>
             <div className="derive reveal">
-              <div className="step"><div className="s-num">1</div><div><h4>Accept you&apos;re at zero — it doesn&apos;t disqualify you</h4><p>Expertise isn&apos;t the prerequisite for judgment. You can set a bar in a domain you&apos;ve never touched.</p></div></div>
-              <div className="step"><div className="s-num">2</div><div><h4>Find the real objective</h4><p>What does the person who asked actually need? <span className="q">What does success look like to them?</span> Done is defined by their outcome, not your effort.</p></div></div>
-              <div className="step"><div className="s-num">3</div><div><h4>Surface the dimensions that matter</h4><p>Ask people, ask AI: <span className="q">what does a good version of this have to satisfy?</span> List every axis of quality you can find.</p></div></div>
-              <div className="step"><div className="s-num">4</div><div><h4>Set a threshold on each</h4><p>Decide what &quot;good enough&quot; is on every axis. <span className="q">Where&apos;s the line between done and not done?</span> That list <em>is</em> your definition of done.</p></div></div>
-              <div className="step"><div className="s-num">5</div><div><h4>Now you can judge</h4><p>With the bar written down, you can evaluate any output — yours or the AI&apos;s — without being the domain expert.</p></div></div>
+              {t.tool1.steps.map((s, i) => (
+                <div className="step" key={i}>
+                  <div className="s-num">{i + 1}</div>
+                  <div>
+                    <h4>{s.title}</h4>
+                    <p>{s.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="derive-example reveal">
-              <span className="ex-tag">// esempio reale — applicato a un sito</span>
-              <p>Knowing nothing about the stack, this process produced a bar like: <b>works on every device, fast, secure, usable, finished.</b> A contract would produce a different list. A sales call, another. <b>The list changes by domain — the process never does.</b></p>
+            <div className="derive-example col reveal">
+              <span className="ex-tag">{t.tool1.exampleTag}</span>
+              <p>{t.tool1.example}</p>
             </div>
-            <p className="tool-foot reveal">Write the bar <em>before</em> you start. No bar means wrong questions — and the same wall, again and again.</p>
+            <p className="tool-foot col reveal">{t.tool1.foot}</p>
           </div>
         </section>
 
         {/* TOOLKIT 2 — WORKING WITH AI */}
         <section className="tool-block tinted">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>fig. 05</span><i className="tick"></i><span>distinta · cosa deleghi / cosa tieni</span></div>
-              <span className="part-tag">Toolkit — The leverage</span>
-              <h2>Delegate the doing. Keep the judgment.</h2>
-              <p>AI fluency isn&apos;t the goal — it&apos;s what you get for free once the approach is right. The line is simple: hand AI the execution, never the deciding.</p>
+            <div className="part-head col reveal">
+              <span className="part-tag">{t.tool2.tag}</span>
+              <h2>{t.tool2.title}</h2>
+              <p>{t.tool2.sub}</p>
             </div>
             <div className="split reveal">
               <div className="split-col delegate">
-                <h4>Delegate — the doing</h4>
-                <p className="sub">AI is faster than you here. Let it run.</p>
+                <h4>{t.tool2.delegateHead}</h4>
+                <p className="sub">{t.tool2.delegateSub}</p>
                 <ul>
-                  <li>Drafting and generating</li>
-                  <li>Boilerplate and setup</li>
-                  <li>Search, recall, summarizing</li>
-                  <li>Refactors and variations</li>
-                  <li>First passes on anything</li>
+                  {t.tool2.delegate.map((li, i) => (
+                    <li key={i}>{li}</li>
+                  ))}
                 </ul>
               </div>
               <div className="split-col keep">
-                <h4>Keep — the judgment</h4>
-                <p className="sub">This is yours. It&apos;s what you&apos;re paid for.</p>
+                <h4>{t.tool2.keepHead}</h4>
+                <p className="sub">{t.tool2.keepSub}</p>
                 <ul>
-                  <li>The objective</li>
-                  <li>The definition of done</li>
-                  <li>The questions</li>
-                  <li>The call on what&apos;s good enough</li>
-                  <li>Ownership of the outcome</li>
+                  {t.tool2.keep.map((li, i) => (
+                    <li key={i}>{li}</li>
+                  ))}
                 </ul>
               </div>
             </div>
-            <div className="ai-warn reveal">
-              <span className="wtag">// la trappola</span>
-              The danger isn&apos;t using AI — it&apos;s offloading the <b>thinking</b> with it. You can have AI and still not finish, because the gap is judgment, not labor. The better your bar and your questions, the more AI multiplies you. Get those wrong and it just helps you <b>fail faster.</b>
+            <div className="ai-warn col reveal">
+              <span className="wtag">{t.tool2.warnTag}</span>
+              {t.tool2.warn}
             </div>
-            <div className="source reveal" style={{ marginTop: "22px" }}>
-              <span className="src-tag">// nota a margine — il principio in una riga</span>
-              <p>&quot;Knowing how to use AI is the consequence of the approach. You had AI — and still didn&apos;t manage to finish the project on your own.&quot;</p>
-            </div>
+            <blockquote className="source col reveal">{t.tool2.quote}</blockquote>
           </div>
         </section>
 
         {/* TOOLKIT 3 — MATURITY CURVE */}
         <section className="tool-block">
           <div className="wrap">
-            <div className="part-head reveal">
-              <div className="dim"><span>fig. 06</span><i className="tick"></i><span>prospetto quotato · la diagonale</span></div>
-              <span className="part-tag">Toolkit — Where this goes</span>
-              <h2>Four stages. Walk the diagonal.</h2>
-              <p>Nobody starts at the top — I didn&apos;t. On my first platform I knew nothing: not the stack, not the database, not the tooling. This is the ladder I climbed, and the one you&apos;re on. Every stage is more judgment and more ownership than the last.</p>
+            <div className="part-head col reveal">
+              <span className="part-tag">{t.tool3.tag}</span>
+              <h2>{t.tool3.title}</h2>
+              <p>{t.tool3.sub}</p>
             </div>
             <div className="stages reveal">
-              <div className="stage"><span className="s-rank">Stage 01</span><h4>Executes</h4><p>Does the task as given. Needs the frame and the answers handed over.</p></div>
-              <div className="stage"><span className="s-rank">Stage 02</span><h4>Judges</h4><p>Checks own work against a bar before handing it over. Catches its own &quot;almost.&quot;</p></div>
-              <div className="stage"><span className="s-rank">Stage 03</span><h4>Frames</h4><p>Defines done and asks the right questions without being handed them.</p></div>
-              <div className="stage"><span className="s-rank">Stage 04</span><h4>Sets the standard</h4><p>Frames the problem and the bar for others. Builds the guardrails everyone works inside.</p></div>
+              {t.tool3.stages.map((s, i) => (
+                <div className="stage" key={i}>
+                  <span className="s-rank">{s.rank}</span>
+                  <h4>{s.title}</h4>
+                  <p>{s.desc}</p>
+                </div>
+              ))}
             </div>
-            <div className="stage-track reveal"><div className="fill" data-w="100%"></div></div>
-            <div className="stage-axis reveal"><span>More dependence</span><span className="end">More judgment · more ownership →</span></div>
-            <div className="source reveal" style={{ marginTop: "30px" }}>
-              <span className="src-tag">// nota a margine — il senso della scala</span>
-              <p>&quot;This is exactly what I would ask when I built my first platform. I told them I know nothing — and I still got there, by the approach.&quot;</p>
+            <div className="stage-track reveal">
+              <div className="fill" data-w="100%"></div>
             </div>
+            <div className="stage-axis reveal">
+              <span>{t.tool3.axisStart}</span>
+              <span className="end">{t.tool3.axisEnd}</span>
+            </div>
+            <blockquote className="source col reveal">{t.tool3.quote}</blockquote>
           </div>
         </section>
 
         {/* CLOSING */}
         <section className="closing">
-          <svg className="closing-arc" viewBox="0 0 400 400" fill="none">
+          <svg className="closing-arc" viewBox="0 0 400 400" fill="none" aria-hidden="true">
             <g stroke="url(#tmGa)" fill="none">
-              <circle cx="200" cy="200" r="70" strokeWidth="1.1" opacity=".5" strokeDasharray="4 4" />
-              <circle cx="200" cy="200" r="120" strokeWidth="1.1" opacity=".4" />
-              <circle cx="200" cy="200" r="170" strokeWidth="1.1" opacity=".28" strokeDasharray="4 4" />
-              <circle cx="200" cy="200" r="220" strokeWidth="1.1" opacity=".18" />
-              <circle cx="200" cy="200" r="270" strokeWidth="1.1" opacity=".1" strokeDasharray="4 4" />
+              <circle cx="200" cy="200" r="80" strokeWidth="1.1" opacity=".4" strokeDasharray="4 4" />
+              <circle cx="200" cy="200" r="135" strokeWidth="1.1" opacity=".28" />
+              <circle cx="200" cy="200" r="190" strokeWidth="1.1" opacity=".16" strokeDasharray="4 4" />
             </g>
           </svg>
           <div className="wrap">
-            <span className="eyebrow">The standard, in one line</span>
-            <p className="standard-line">Hold a clear definition of done. Ask better questions. Own the outcome. <em>Make yourself hard to replace.</em></p>
-            <p className="tagline">&quot;The future of work is a metamorphosis — where human creativity and AI precision merge, unlocking new potential and elevating what businesses can achieve.&quot;</p>
+            <span className="eyebrow">{t.closing.eyebrow}</span>
+            <p className="standard-line">
+              {t.closing.line}
+              <em>{t.closing.lineEm}</em>
+            </p>
+            <p className="tagline">{t.closing.tagline}</p>
           </div>
         </section>
 
@@ -529,7 +469,7 @@ export default function TheMethodPage() {
             <svg viewBox="0 0 1000 476" xmlns="http://www.w3.org/2000/svg" aria-label="Morfeus">
               {logoPaths}
             </svg>
-            <span className="foot-meta">Morfeus Hub · The Method · Operating standard for the cohort · rev 1.0</span>
+            <span className="foot-meta">{t.foot}</span>
           </div>
         </footer>
       </div>
