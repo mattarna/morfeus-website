@@ -855,7 +855,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
           <h1 className="display">
             Da zero al tuo <span className="serif acc">sistema AI</span>
             <br />
-            Rimborsabile fino al <span className="acc">100%</span>
+            Rimborsabile fino al <span className="acc">90%</span>
           </h1>
           <p className="hero-sub">
             Il corso pratico da 40 ore per liberi professionisti e aziende in Lombardia che vogliono portare l'AI
@@ -933,8 +933,8 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               <div className="stat-label">di esercitazioni incluse</div>
             </div>
             <div>
-              <div className="stat-num">100%</div>
-              <div className="stat-label">rimborso P.IVA Lombardia</div>
+              <div className="stat-num">90%</div>
+              <div className="stat-label">rimborso in Lombardia</div>
             </div>
             <div>
               <div className="stat-num">0</div>
@@ -1004,11 +1004,11 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               <p>Paghi l'intera quota prima dell'inizio del corso per confermare il tuo posto.</p>
             </div>
             <div className="proc-card hl">
-              <div className="proc-perc">100%</div>
-              <h3>Rimborso P.IVA</h3>
+              <div className="proc-perc">90%</div>
+              <h3>Rimborso fino al 90%</h3>
               <p>
-                Se partecipi ad almeno il 75% delle lezioni (30 ore su 40), ricevi il rimborso totale. Al 90% per le
-                aziende.
+                Se partecipi ad almeno il 75% delle lezioni (30 ore su 40), ricevi il rimborso fino al 90%, sia con
+                P.IVA sia come azienda.
               </p>
             </div>
             <div className="proc-card">
@@ -1085,9 +1085,9 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
             ))}
           </div>
           <div className="who-lomb">
-            📍 <strong>Requisito obbligatorio: sede in Lombardia.</strong> Il rimborso, fino al 100% per P.IVA e fino
-            al 90% per le aziende, è disponibile esclusivamente per chi ha partita IVA attiva o azienda con sede in
-            Lombardia. Il corso non è gratuito: si anticipa e si viene rimborsati.
+            📍 <strong>Requisito obbligatorio: sede in Lombardia.</strong> Il rimborso, fino al 90%, è disponibile
+            esclusivamente per chi ha partita IVA attiva o azienda con sede in Lombardia. Il corso non è gratuito: si
+            anticipa e si viene rimborsati.
           </div>
           <div className="section-cta">
             <button type="button" className="btn-acc btn-acc-lg" onClick={scrollToForm}>
@@ -1256,7 +1256,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
               <h2 className="sec-h2 display">
                 Rimborsabile
                 <br />
-                fino al <span className="acc">100%</span>
+                fino al <span className="acc">90%</span>
               </h2>
               <p>
                 Se hai la partita IVA o un'azienda con sede in Lombardia, puoi richiedere il rimborso attraverso il
@@ -1266,10 +1266,10 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
             </div>
             <div className="rimborso-cards">
               <div className="rimborso-card">
-                <div className="rimborso-perc g">100%</div>
+                <div className="rimborso-perc g">90%</div>
                 <div className="rimborso-who">Liberi professionisti · P.IVA</div>
                 <div className="rimborso-note">
-                  Rimborso totale per chi ha partita IVA attiva con sede in Lombardia. Anticipo necessario, rimborso
+                  Rimborso del 90% per chi ha partita IVA attiva con sede in Lombardia. Anticipo necessario, rimborso
                   successivo alla verifica dei requisiti.
                 </div>
               </div>

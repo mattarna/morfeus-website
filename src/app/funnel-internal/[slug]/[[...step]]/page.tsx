@@ -84,9 +84,9 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
   }
 
   if (metadataPreset === "formazione-finanziata" && step?.id === "sales") {
-    const title = "AI Zero to Operator — Corso AI rimborsabile fino al 100% | Morfeus Hub";
+    const title = "AI Zero to Operator — Corso AI rimborsabile fino al 90% | Morfeus Hub";
     const description =
-      "Corso pratico da 40 ore per professionisti e aziende in Lombardia. Rimborsabile fino al 100% (P.IVA) e 90% (aziende) con il bando Formazione Continua di Regione Lombardia (FSE+). Parti da zero, esci con un sistema AI funzionante.";
+      "Corso pratico da 40 ore per professionisti e aziende in Lombardia. Rimborsabile fino al 90% con il bando Formazione Continua di Regione Lombardia (FSE+). Parti da zero, esci con un sistema AI funzionante.";
     const url = `https://morfeushub.com/${params.slug}`;
     return {
       title,
