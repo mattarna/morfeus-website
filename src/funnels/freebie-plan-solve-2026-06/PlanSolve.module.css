@@ -25,8 +25,8 @@
   --red: #e0625c;
   --grid: rgba(255, 255, 255, 0.028);
   --grid-bold: rgba(255, 255, 255, 0.05);
-  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font: var(--ps-font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: var(--ps-font-mono), ui-monospace, "SF Mono", Menlo, monospace;
   --r-s: 8px;
   --r-m: 13px;
   --r-l: 20px;
@@ -258,6 +258,37 @@
 .psRoot .hero-sub b {
   color: var(--ink);
   font-weight: 600;
+}
+/* legibility floor: reading copy never below 16px */
+.psRoot .prob p,
+.psRoot .prob-eg,
+.psRoot .soul p,
+.psRoot .phase-detail .pd-body,
+.psRoot .pd-out p,
+.psRoot .pp-step p,
+.psRoot .lp-item,
+.psRoot .lp-note p,
+.psRoot .rule p,
+.psRoot .wz-step .wz-hint,
+.psRoot .wz-field label,
+.psRoot .wz-input,
+.psRoot .wz-area,
+.psRoot .wz-select,
+.psRoot .wz-chip,
+.psRoot .wz-result .res-sub,
+.psRoot .res-steps li,
+.psRoot .res-note p,
+.psRoot .gate p,
+.psRoot .gate-form input,
+.psRoot .gate-success,
+.psRoot .course .cfeat,
+.psRoot .art-head .ah-l {
+  font-size: 16px;
+}
+.psRoot .sec-head p,
+.psRoot .wz-top p,
+.psRoot .principle .ps {
+  font-size: 16.5px;
 }
 .psRoot .hero-meta {
   display: flex;
@@ -1480,12 +1511,14 @@
 }
 .psRoot .art-body pre {
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--ink-2);
   padding: 17px 18px;
   white-space: pre-wrap;
   word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 .psRoot .art-head .chev {
   color: var(--ink-3);
@@ -1803,4 +1836,260 @@
 }
 .psRoot .draw.in {
   stroke-dashoffset: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — mobile-first hardening. The original layout was
+   desktop-first; these blocks guarantee no horizontal scroll and
+   full usability down to 360px while keeping reading copy >=16px.
+   ════════════════════════════════════════════════════════════════ */
+
+/* hard overflow guard: nothing may bleed out horizontally */
+.psRoot {
+  max-width: 100%;
+}
+.psRoot svg {
+  max-width: 100%;
+  height: auto;
+}
+.psRoot .hb-svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---- <= 768px : tablet / large phone ---- */
+@media (max-width: 768px) {
+  .psRoot .wrap {
+    padding: 0 18px;
+  }
+  .psRoot .nav-in {
+    padding: 12px 18px;
+  }
+  .psRoot .section-pad {
+    padding: 48px 0;
+  }
+  .psRoot .hero {
+    padding: 48px 0 40px;
+  }
+  .psRoot .hero-blueprint {
+    margin-top: 36px;
+  }
+  .psRoot .sec-head {
+    margin-bottom: 28px;
+  }
+
+  /* collapse every multi-column grid */
+  .psRoot .prob-grid,
+  .psRoot .souls,
+  .psRoot .lp,
+  .psRoot .pp-stage,
+  .psRoot .rules {
+    grid-template-columns: 1fr;
+  }
+
+  /* heavy padded blocks roughly halve */
+  .psRoot .principle {
+    padding: 32px 24px;
+  }
+  .psRoot .gsd,
+  .psRoot .course {
+    padding: 40px 26px;
+  }
+  .psRoot .pp {
+    padding: 26px 22px;
+  }
+  .psRoot .phase-detail {
+    padding: 24px 22px;
+  }
+  .psRoot .wz-top {
+    padding: 26px 22px 0;
+  }
+  .psRoot .wz-prog {
+    padding: 18px 22px 0;
+  }
+  .psRoot .wz-body {
+    padding: 22px 22px 28px;
+  }
+}
+
+/* ---- <= 640px : phone ---- */
+@media (max-width: 640px) {
+  .psRoot .wrap {
+    padding: 0 16px;
+  }
+  .psRoot .section-pad {
+    padding: 40px 0;
+  }
+  .psRoot .hero {
+    padding: 38px 0 34px;
+  }
+
+  /* headings scale down so 360px never overflows */
+  .psRoot .hero h1 {
+    font-size: clamp(30px, 9vw, 44px);
+    margin-bottom: 18px;
+  }
+  .psRoot .sec-head h2 {
+    font-size: clamp(23px, 6.6vw, 32px);
+  }
+  .psRoot .gsd h2,
+  .psRoot .course h2 {
+    font-size: clamp(23px, 6.6vw, 34px);
+  }
+  .psRoot .wz-top h2 {
+    font-size: clamp(22px, 6vw, 30px);
+  }
+  .psRoot .principle .pt {
+    font-size: clamp(20px, 5.6vw, 28px);
+  }
+  .psRoot .pd-top h3 {
+    font-size: 20px;
+  }
+
+  /* watermark numbers must not push width */
+  .psRoot .principle .big-n {
+    font-size: 96px;
+    right: 12px;
+    bottom: -18px;
+  }
+  .psRoot .gsd .big-gsd {
+    font-size: clamp(110px, 40vw, 180px);
+  }
+
+  /* shrink remaining padded blocks */
+  .psRoot .principle {
+    padding: 26px 18px;
+  }
+  .psRoot .gsd,
+  .psRoot .course {
+    padding: 34px 18px;
+  }
+  .psRoot .prob {
+    padding: 22px 18px;
+  }
+  .psRoot .soul {
+    padding: 24px 18px;
+  }
+  .psRoot .pp {
+    padding: 22px 16px;
+  }
+  .psRoot .phase-detail {
+    padding: 20px 16px;
+  }
+  .psRoot .wz-top {
+    padding: 22px 18px 0;
+  }
+  .psRoot .wz-prog {
+    padding: 16px 18px 0;
+  }
+  .psRoot .wz-body {
+    padding: 20px 18px 24px;
+  }
+  .psRoot .gate {
+    padding: 22px 18px;
+  }
+
+  /* hero meta stacks; cta full-width */
+  .psRoot .hero-meta {
+    flex-direction: column;
+    gap: 10px;
+    margin: 24px 0 30px;
+  }
+  .psRoot .cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .psRoot .cta-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* tap targets >=44px */
+  .psRoot .btn {
+    padding: 14px 22px;
+    min-height: 44px;
+  }
+  .psRoot .fnode {
+    padding: 11px 16px 11px 11px;
+    min-height: 44px;
+    font-size: 15px;
+  }
+  .psRoot .wz-chip {
+    padding: 11px 16px;
+    min-height: 44px;
+  }
+  .psRoot .pp-btn {
+    min-height: 44px;
+  }
+
+  /* artifact header wraps so copy button stays reachable */
+  .psRoot .art-head {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .psRoot .art-head .ah-l {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---- <= 480px : small phone (360px target) ---- */
+@media (max-width: 480px) {
+  .psRoot .hero h1 {
+    font-size: clamp(28px, 9.5vw, 38px);
+  }
+  .psRoot .sec-head h2 {
+    font-size: clamp(22px, 7vw, 28px);
+  }
+
+  /* wizard actions stack vertically, full-width buttons */
+  .psRoot .wz-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .psRoot .wz-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .psRoot .wz-actions .wz-back {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+  /* keep the empty <span /> spacer from taking a row */
+  .psRoot .wz-actions > span:empty {
+    display: none;
+  }
+
+  /* gate download button full-width */
+  .psRoot .gate .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* phase nav buttons share the row evenly */
+  .psRoot .pd-nav button {
+    flex: 1;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  /* watermark numbers tamed further */
+  .psRoot .principle .big-n {
+    font-size: 72px;
+  }
+  .psRoot .gsd .big-gsd {
+    font-size: clamp(90px, 42vw, 140px);
+  }
+
+  /* ping-pong controls wrap, primary keeps full reach */
+  .psRoot .pp-ctrl {
+    flex-wrap: wrap;
+  }
+  .psRoot .pp-ctrl .pp-dotrow {
+    flex-basis: 100%;
+    justify-content: center;
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
 }

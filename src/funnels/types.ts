@@ -815,6 +815,9 @@ export interface PlanSolveContent {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PlanSolveThankYouContent {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface PlanSolveOptinExtrasContent {}
+
 export interface FunnelStepConfig {
   id: string;
   title: string;
@@ -859,6 +862,7 @@ export interface FunnelStepConfig {
     FreebieHub?: FreebieHubContent;
     PlanSolve?: PlanSolveContent;
     PlanSolveThankYou?: PlanSolveThankYouContent;
+    PlanSolveOptinExtras?: PlanSolveOptinExtrasContent;
     VocabolarioPage?: VocabolarioPageContent;
     SalesHeader?: SalesHeaderContent;
     SalesHero?: SalesHeroContent;

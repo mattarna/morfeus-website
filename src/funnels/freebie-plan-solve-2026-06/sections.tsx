@@ -1,8 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import type { FunnelStepConfig } from "@/funnels/types";
+import "@tabler/icons-webfont/dist/tabler-icons.min.css";
 import styles from "./PlanSolve.module.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--ps-font-inter",
+  display: "swap",
+});
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--ps-font-mono",
+  display: "swap",
+});
 
 interface SectionProps {
   accentColor: string;
@@ -447,6 +462,16 @@ export function PlanSolveSection({ step }: SectionProps) {
     return () => clearTimeout(t);
   }, []);
 
+  // ── URL prefill: ?project= → wizard project field ──
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const project = params.get("project");
+    if (project) {
+      setWz((w) => ({ ...w, project }));
+    }
+  }, []);
+
   // helper to compose class names with the always-on root scope intact
   const cx = (...names: string[]) => names.map((n) => styles[n] ?? "").join(" ").trim();
 
@@ -454,18 +479,7 @@ export function PlanSolveSection({ step }: SectionProps) {
   const pp = ppSteps[ppI];
 
   return (
-    <div className={styles.psRoot} ref={rootRef}>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet"
-      />
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
-      />
-
+    <div className={`${styles.psRoot} ${inter.variable} ${mono.variable}`} ref={rootRef}>
       <div className={styles["bp-grid"]} />
       <div className={styles["bp-glow"]} />
       <div className={styles["cursor-glow"]} ref={cursorGlowRef} />

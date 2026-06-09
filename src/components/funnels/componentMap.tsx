@@ -123,6 +123,7 @@ import {
 import { FreebieHubSection } from "@/funnels/freebie-hub-2026-06/sections";
 import { PlanSolveSection } from "@/funnels/freebie-plan-solve-2026-06/sections";
 import { PlanSolveThankYouSection } from "@/funnels/freebie-plan-solve-2026-06/thankyou";
+import { PlanSolveOptinExtrasSection } from "@/funnels/freebie-plan-solve-2026-06/optin-extras";
 import { VocabolarioPageSection } from "@/funnels/freebie-vocabolario-ai-2026-04/sections";
 import {
   BootcampHeaderSection,
@@ -271,6 +272,8 @@ export const funnelComponentMap: Record<FunnelComponentName, ComponentRenderer> 
     step.content.PlanSolve ? <PlanSolveSection accentColor={accentColor} step={step} /> : null,
   PlanSolveThankYou: ({ accentColor, step }) =>
     step.content.PlanSolveThankYou ? <PlanSolveThankYouSection accentColor={accentColor} step={step} /> : null,
+  PlanSolveOptinExtras: ({ accentColor, step }) =>
+    step.content.PlanSolveOptinExtras ? <PlanSolveOptinExtrasSection accentColor={accentColor} step={step} /> : null,
   VocabolarioPage: () => <VocabolarioPageSection />,
   SalesHeader: () => <SalesHeaderSection />,
   SalesHero: ({ accentColor, step }) =>
