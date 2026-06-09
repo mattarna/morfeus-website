@@ -143,6 +143,9 @@ export default function TheMethodPage() {
               <circle cx="200" cy="200" r="3" fill="url(#tmGa)" stroke="none" />
             </g>
           </svg>
+          <svg className="hero-mark" viewBox="0 0 1000 476" fill="none" aria-hidden="true">
+            <g>{logoPaths}</g>
+          </svg>
           <div className="wrap">
             <span className="eyebrow">The Morfeus Operating Standard — How We Work</span>
             <h1>
@@ -198,8 +201,6 @@ export default function TheMethodPage() {
                       <p className="q-desc">All the pressure rides on you, but you can be swapped out. Stressful, fragile, and still not the top of the pay scale.</p>
                     </div>
                     <div className="quad indispensable">
-                      <span className="node" aria-hidden="true"><i></i></span>
-                      <span className="node-tag">↑ resp · → rare</span>
                       <span className="star">▸ grow here</span>
                       <span className="q-pos">High stakes · Hard to replace</span>
                       <div className="q-name">Indispensable</div>
