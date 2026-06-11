@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artifacts: output strutturati — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--blue:#378ADD;--blue-soft:#e6f1fb;--amber:#BA7517;--amber-soft:#faeeda;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--blue:#85b7eb;--blue-soft:#0c447c;--amber:#fac775;--amber-soft:#412402;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* split visual */
+.split{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh)}
+.splithead{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px}
+.splithead .dot{width:9px;height:9px;border-radius:50%}
+.splithead span{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-left:6px}
+.splitbody{display:grid;grid-template-columns:1fr 1fr}
+.splitL{padding:20px;border-right:1px solid var(--line)}
+.splitR{padding:20px;background:var(--bg-2)}
+.splbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:12px;display:flex;align-items:center;gap:6px}.splbl i{font-size:13px;color:var(--accent)}
+.bubble{background:var(--bg-2);border-radius:var(--r);padding:9px 13px;font-size:12px;color:var(--ink-2);margin-bottom:8px;line-height:1.5}
+.bubble.user{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.artmock{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.artmock .att{font-weight:600;color:var(--ink);font-size:13px;margin-bottom:9px;display:flex;align-items:center;gap:6px}.artmock .att i{color:var(--accent)}
+.artline{height:4px;background:var(--ink);border-radius:2px;margin-bottom:5px;opacity:.09}
+.artbar{display:flex;gap:6px;margin-top:11px}
+.artbar span{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:3px 7px}
+.splitcap{font-size:13px;color:var(--ink-3);text-align:center;margin-top:10px}
+/* type cards */
+.types{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.tcard .ti2{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:12px}
+.tcard h4{font-size:15px;font-weight:600;margin-bottom:3px}.tcard .tsub{font-size:12.5px;color:var(--ink-3);margin-bottom:11px}
+.tcard .tex{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--bg-2);border-left:2px solid var(--accent-line);border-radius:0 var(--r) var(--r) 0;padding:9px 11px;line-height:1.5}
+/* controls */
+.ctrls{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cctl{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 12px;text-align:center}
+.cctl i{font-size:25px;color:var(--accent);display:block;margin-bottom:8px}
+.cctl .cn{font-size:13px;font-weight:600;margin-bottom:4px}.cctl .cd{font-size:11px;color:var(--ink-3);line-height:1.4}
+/* iteration / blocks selector */
+.blocks{display:flex;flex-direction:column;gap:8px}
+.blk{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.blk:hover{border-color:var(--line-2)}.blk.on{border-color:var(--accent);background:var(--accent-soft)}
+.blk .bn{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blk.on .bn{background:var(--accent);color:#fff}
+.blk .bt{font-size:14.5px;font-weight:600}
+.blkdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.blkdetail p{font-size:14.5px;color:var(--ink-2)}
+.blkdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.tip{display:flex;gap:14px;background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r-l);padding:18px}
+.tip i{color:var(--good);font-size:21px;flex-shrink:0}
+.tip h4{font-size:14px;font-weight:600;color:var(--good);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.types{grid-template-columns:1fr}.ctrls{grid-template-columns:1fr 1fr}.splitbody{grid-template-columns:1fr}.splitL{border-right:none;border-bottom:1px solid var(--line)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.tcard,.cctl,.cp,.blk,.blkdetail,.split,.tip,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B2.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">Artifacts: output strutturati</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-layout-sidebar-right"></i><span class="no">01</span><h2 data-i="s1">Prodotto e processo, separati</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-layout-columns"></i></div><div><h4 data-i="note1H">Una finestra a parte</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layout-columns"></i><span class="no">02</span><h2 data-i="s2">Come si presenta</h2></div>
+  <div class="split rv">
+    <div class="splithead">
+      <div class="dot" style="background:#E05252"></div>
+      <div class="dot" style="background:#EF9F27"></div>
+      <div class="dot" style="background:#6BA32E"></div>
+      <span data-i="splUrl">claude.ai</span>
+    </div>
+    <div class="splitbody">
+      <div class="splitL">
+        <div class="splbl"><i class="ti ti-message"></i> <span data-i="splChatL">Conversazione · il processo</span></div>
+        <div class="bubble user" data-i="splB1"></div>
+        <div class="bubble" data-i="splB2"></div>
+        <div class="bubble user" data-i="splB3"></div>
+        <div class="bubble" data-i="splB4"></div>
+      </div>
+      <div class="splitR">
+        <div class="splbl"><i class="ti ti-file-text"></i> <span data-i="splArtL">Artifact · il prodotto</span></div>
+        <div class="artmock">
+          <div class="att"><i class="ti ti-file-text"></i> <span data-i="splArtTitle"></span></div>
+          <div class="artline" style="width:60%;opacity:.16"></div>
+          <div class="artline" style="width:100%"></div>
+          <div class="artline" style="width:90%"></div>
+          <div class="artline" style="width:95%;margin-bottom:10px"></div>
+          <div class="artline" style="width:45%;opacity:.13"></div>
+          <div class="artline" style="width:100%"></div>
+          <div class="artline" style="width:82%;margin-bottom:0"></div>
+          <div class="artbar">
+            <span><i class="ti ti-copy"></i> <span data-i="splCopy">Copia</span></span>
+            <span><i class="ti ti-download"></i> <span data-i="splDl">Download</span></span>
+            <span><i class="ti ti-maximize"></i> <span data-i="splExp">Espandi</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="splitcap rv" data-i="splCap"></p>
+
+  <div class="sh rv"><i class="ti ti-category"></i><span class="no">03</span><h2 data-i="s3">I tipi di Artifact</h2></div>
+  <div class="types rv">
+    <div class="tcard"><div class="ti2" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-file-text"></i></div><h4 data-i="t1H">Documento</h4><div class="tsub" data-i="t1S"></div><div class="tex" data-i="t1E"></div></div>
+    <div class="tcard"><div class="ti2" style="background:var(--good-soft);color:var(--good)"><i class="ti ti-code"></i></div><h4 data-i="t2H">Codice</h4><div class="tsub" data-i="t2S"></div><div class="tex" data-i="t2E"></div></div>
+    <div class="tcard"><div class="ti2" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-table"></i></div><h4 data-i="t3H">Tabella / Markdown</h4><div class="tsub" data-i="t3S"></div><div class="tex" data-i="t3E"></div></div>
+    <div class="tcard"><div class="ti2" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-browser"></i></div><h4 data-i="t4H">HTML / Presentazione</h4><div class="tsub" data-i="t4S"></div><div class="tex" data-i="t4E"></div></div>
+  </div>
+  <div class="tip rv" style="margin-top:18px"><i class="ti ti-bulb"></i><div><h4 data-i="tipQH">Quando Claude crea un Artifact?</h4><p data-i="tipQP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-horizontal"></i><span class="no">04</span><h2 data-i="s4">I controlli dell'Artifact</h2></div>
+  <div class="ctrls rv">
+    <div class="cctl"><i class="ti ti-copy"></i><div class="cn" data-i="c1N">Copia</div><div class="cd" data-i="c1D"></div></div>
+    <div class="cctl"><i class="ti ti-download"></i><div class="cn" data-i="c2N">Download</div><div class="cd" data-i="c2D"></div></div>
+    <div class="cctl"><i class="ti ti-eye"></i><div class="cn" data-i="c3N">Anteprima</div><div class="cd" data-i="c3D"></div></div>
+    <div class="cctl"><i class="ti ti-maximize"></i><div class="cn" data-i="c4N">Schermo intero</div><div class="cd" data-i="c4D"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">05</span><h2 data-i="s5">Il flusso di iterazione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="iterIntro"></p>
+  <div class="blocks rv" id="blocks"></div>
+  <div class="blkdetail rv" id="blkdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">06</span><h2 data-i="s6">La frase da ricordare</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-layout-sidebar-right"></i> <span data-i="cpH">Crea il tuo primo Artifact</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Artifacts: output strutturati</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B2.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'Artifacts: output strutturati',
+lede:'Quando Claude produce un output strutturato non lo butta nella chat: lo apre in una finestra separata. Sembra una distinzione piccola. Non lo è — è ciò che trasforma la chat in un tavolo di lavoro.',
+s1:'Prodotto e processo, separati',
+note1H:'Una finestra a parte',
+note1P:'L\'Artifact è il <strong>prodotto</strong>; la conversazione è il <strong>processo</strong>. Tenerli separati è come tenere la bozza distinta dal documento finale: non si mescolano, ognuno ha il suo posto. Il risultato pulito da una parte, il dialogo che lo costruisce dall\'altra.',
+q1:'«L\'Artifact è il prodotto. La conversazione è il processo. Separarli è ciò che ti fa lavorare sul risultato, non rincorrerlo nella chat.»',
+s2:'Come si presenta',
+splUrl:'claude.ai',
+splChatL:'Conversazione · il processo',
+splArtL:'Artifact · il prodotto',
+splB1:'Scrivi un documento che spiega come funziona Claude a chi non ha mai usato l\'AI…',
+splB2:'Fatto. Ho strutturato il documento in quattro punti chiave…',
+splB3:'Il terzo esempio è troppo tecnico. Riscrivilo come se lo spiegassi a tua nonna.',
+splB4:'Ho semplificato il terzo esempio e aggiunto un quarto sul lavoro in ufficio.',
+splArtTitle:'Guida a Claude',
+splCopy:'Copia',splDl:'Download',splExp:'Espandi',
+splCap:'A sinistra il dialogo con Claude. A destra il documento, che si aggiorna in tempo reale a ogni richiesta.',
+s3:'I tipi di Artifact',
+t1H:'Documento',t1S:'Testo strutturato con titoli e sezioni',t1E:'«Scrivi un documento di una pagina che spiega come funziona Claude…»',
+t2H:'Codice',t2S:'Syntax highlighting e copia diretta',t2E:'«Scrivi una formula in VBA che somma automaticamente una colonna…»',
+t3H:'Tabella / Markdown',t3S:'Dati strutturati e confronti',t3E:'«Crea una tabella comparativa tra tre strumenti di scrittura…»',
+t4H:'HTML / Presentazione',t4S:'Output visivo con anteprima renderizzata',t4E:'«Crea una slide con titolo centrato, tre bullet, sfondo scuro…»',
+tipQH:'Quando Claude crea un Artifact?',
+tipQP:'Non tutti gli output diventano Artifact. Claude li crea in automatico quando l\'output è strutturato e abbastanza lungo: documenti, codice, tabelle, HTML. Le risposte brevi o conversazionali restano nella chat.',
+s4:'I controlli dell\'Artifact',
+c1N:'Copia',c1D:'Testo raw, pronto da incollare ovunque',
+c2N:'Download',c2D:'Salva come file nel formato giusto',
+c3N:'Anteprima',c3D:'Per HTML e codice: mostra il risultato renderizzato',
+c4N:'Schermo intero',c4D:'Espandi l\'Artifact per lavorarci meglio',
+s5:'Il flusso di iterazione',
+iterIntro:'La vera potenza degli Artifact è che si migliorano dialogando. Non si ricomincia da zero: si raffina ciò che esiste già. Clicca ogni passo.',
+s6:'La frase da ricordare',
+q2:'«Non scrivi il documento perfetto al primo colpo. Lo fai nascere, poi lo modelli — una richiesta alla volta, senza mai perdere quello che hai già.»',
+s7:'Checkpoint',
+cpH:'Crea il tuo primo Artifact',
+cpP:'Chiedi a Claude qualcosa di strutturato: un\'email formattata, una tabella comparativa, una lista con sezioni. Guarda l\'Artifact aprirsi a destra.',
+cpQ:'Poi fai una modifica via conversazione — «cambia solo il terzo punto» — e osserva l\'Artifact aggiornarsi senza riscrivere il resto. È quello il momento in cui smetti di essere un utente e diventi un editor.',
+bridge:'Sai gestire gli output strutturati. <b>Prossimo:</b> dare a Claude occhi — analizzare immagini e PDF come se li avesse letti lui.',
+foot:'Morfeus — Artifacts: output strutturati'
+},
+en:{
+kicker:'Lesson B2.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'Artifacts: structured outputs',
+lede:'When Claude produces a structured output it doesn\'t dump it into the chat: it opens it in a separate window. It seems like a small distinction. It isn\'t — it\'s what turns the chat into a workbench.',
+s1:'Product and process, kept apart',
+note1H:'A window of its own',
+note1P:'The Artifact is the <strong>product</strong>; the conversation is the <strong>process</strong>. Keeping them apart is like keeping the draft distinct from the final document: they don\'t mix, each has its place. The clean result on one side, the dialogue that builds it on the other.',
+q1:'"The Artifact is the product. The conversation is the process. Separating them is what lets you work on the result instead of chasing it through the chat."',
+s2:'How it shows up',
+splUrl:'claude.ai',
+splChatL:'Conversation · the process',
+splArtL:'Artifact · the product',
+splB1:'Write a document explaining how Claude works to someone who has never used AI…',
+splB2:'Done. I\'ve structured the document around four key points…',
+splB3:'The third example is too technical. Rewrite it as if explaining to your grandmother.',
+splB4:'I simplified the third example and added a fourth one about office work.',
+splArtTitle:'A Guide to Claude',
+splCopy:'Copy',splDl:'Download',splExp:'Expand',
+splCap:'On the left, the dialogue with Claude. On the right, the document — updating in real time with every request.',
+s3:'The types of Artifact',
+t1H:'Document',t1S:'Structured text with headings and sections',t1E:'"Write a one-page document explaining how Claude works…"',
+t2H:'Code',t2S:'Syntax highlighting and direct copy',t2E:'"Write a VBA formula that automatically sums a column…"',
+t3H:'Table / Markdown',t3S:'Structured data and comparisons',t3E:'"Create a comparison table across three writing tools…"',
+t4H:'HTML / Presentation',t4S:'Visual output with a rendered preview',t4E:'"Create a slide with a centered title, three bullets, dark background…"',
+tipQH:'When does Claude create an Artifact?',
+tipQP:'Not every output becomes an Artifact. Claude creates them automatically when the output is structured and long enough: documents, code, tables, HTML. Short or conversational replies stay in the chat.',
+s4:'The Artifact controls',
+c1N:'Copy',c1D:'Raw text, ready to paste anywhere',
+c2N:'Download',c2D:'Save as a file in the right format',
+c3N:'Preview',c3D:'For HTML and code: shows the rendered result',
+c4N:'Full screen',c4D:'Expand the Artifact to work on it better',
+s5:'The iteration loop',
+iterIntro:'The real power of Artifacts is that they improve through dialogue. You don\'t start over: you refine what already exists. Click each step.',
+s6:'The phrase to remember',
+q2:'"You don\'t write the perfect document on the first try. You bring it to life, then shape it — one request at a time, without ever losing what you already have."',
+s7:'Checkpoint',
+cpH:'Create your first Artifact',
+cpP:'Ask Claude for something structured: a formatted email, a comparison table, a list with sections. Watch the Artifact open on the right.',
+cpQ:'Then make a change via conversation — "only change the third point" — and watch the Artifact update without rewriting the rest. That\'s the moment you stop being a user and become an editor.',
+bridge:'You can handle structured outputs. <b>Next:</b> giving Claude eyes — analyzing images and PDFs as if it had read them itself.',
+foot:'Morfeus — Artifacts: structured outputs'
+}};
+
+var STEPS={it:[
+['Chiedi l\'output iniziale','Claude genera l\'Artifact nella finestra a destra. Parti da una richiesta chiara su cosa vuoi e in che forma.','«Scrivi un documento che spiega come funziona Claude a chi non ha mai usato l\'intelligenza artificiale.»'],
+['Leggi e individua cosa migliorare','L\'Artifact è la bozza, tu sei l\'editor. Concentrati su cosa cambiare, non su cosa riscrivere da capo.',''],
+['Chiedi la modifica specifica','Claude aggiorna l\'Artifact mantenendo intatto il resto del contenuto. Sii puntuale: una richiesta, un cambiamento.','«Il terzo esempio è troppo tecnico. Riscrivilo più semplice e aggiungi un quarto esempio sul lavoro in ufficio.»'],
+['Ripeti finché sei soddisfatto','Ogni iterazione migliora il prodotto. La conversazione tiene traccia di tutte le versioni: puoi tornare indietro in qualsiasi momento.','']
+],en:[
+['Ask for the initial output','Claude generates the Artifact in the window on the right. Start with a clear request about what you want and in what form.','"Write a document explaining how Claude works to someone who has never used artificial intelligence."'],
+['Read it and spot what to improve','The Artifact is the draft, you are the editor. Focus on what to change, not on what to rewrite from scratch.',''],
+['Ask for the specific change','Claude updates the Artifact while keeping the rest intact. Be precise: one request, one change.','"The third example is too technical. Rewrite it more simply and add a fourth example about office work."'],
+['Repeat until you\'re satisfied','Every iteration improves the product. The conversation keeps track of all versions: you can go back at any time.','']
+]};
+
+var LANG='it',curBlk=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('blocks').innerHTML=STEPS[LANG].map(function(b,i){return '<div class="blk'+(i===curBlk?' on':'')+'" onclick="showBlk('+i+')"><div class="bn">'+(i+1)+'</div><div class="bt">'+b[0]+'</div></div>'}).join('');
+  showBlk(curBlk);
+}
+function showBlk(i){curBlk=i;var b=STEPS[LANG][i];document.querySelectorAll('.blk').forEach(function(x,k){x.classList.toggle('on',k===i)});var h='<p>'+b[1]+'</p>';if(b[2])h+='<div class="ex">'+b[2]+'</div>';document.getElementById('blkdetail').innerHTML=h}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

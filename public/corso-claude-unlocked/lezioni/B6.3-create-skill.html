@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creare una Skill da zero — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#85b7eb;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--blue:#85b7eb;--blue-soft:#0c447c;--blue-line:#185fa5;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.p-txt{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:16px}
+.p-txt code,.exp-body code,.ft-exp-body code,.pd-body-inner code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);padding:2px 5px;border-radius:4px;color:var(--ink);border:1px solid var(--line)}
+.p-txt strong{color:var(--ink);font-weight:600}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.warn{border:1px solid var(--amber-line);background:var(--amber-soft);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn .wt{font-size:13px;font-weight:600;color:var(--amber);margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.warn p{font-size:13.5px;color:var(--ink-2);line-height:1.6}.warn p strong{color:var(--ink)}
+.tip{border:1px solid var(--teal-line);background:var(--teal-soft);border-radius:var(--r-l);padding:18px 22px;margin:0}
+.tip .tt{font-size:13px;font-weight:600;color:var(--teal);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.tip p{font-size:13.5px;color:var(--ink-2);line-height:1.6}.tip p strong{color:var(--ink)}
+/* anatomy interactive */
+.anat{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.anat-h i{font-size:16px;color:var(--accent)}
+.anat-body{display:grid;grid-template-columns:1fr 1fr;min-height:320px}
+@media(max-width:640px){.anat-body{grid-template-columns:1fr}}
+.anat-code{padding:18px;font-family:var(--mono);font-size:11.5px;line-height:1.85;border-right:1px solid var(--line);background:var(--bg-2)}
+@media(max-width:640px){.anat-code{border-right:none;border-bottom:1px solid var(--line)}}
+.anat-exp{padding:20px;display:flex;flex-direction:column;justify-content:center}
+.exp-empty{font-size:13px;color:var(--ink-3);font-style:italic;text-align:center;padding:28px 8px}
+.exp-content{display:none}.exp-content.show{display:block;animation:fadeSlide .3s ease}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.exp-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.exp-title{font-size:15px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.exp-body{font-size:13px;color:var(--ink-2);line-height:1.65}
+.aline{cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .2s;display:inline-block}
+.aline:hover{background:var(--line)}
+.aline.active{background:var(--accent-soft);outline:1px solid var(--accent);outline-offset:1px}
+.aline-dim{color:var(--ink-3)}.aline-name{color:var(--accent)}.aline-desc{color:var(--teal)}
+.aline-body{color:var(--ink-2)}.aline-section{color:var(--accent);font-weight:600}
+.aline-comment{color:var(--ink-3);font-style:italic}.aline-output{color:var(--amber)}
+/* progressive disclosure */
+.pd-wrap{margin:0}
+.pd-level{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.pd-level.open{border-color:var(--accent)}
+.pd-trigger{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;user-select:none}
+.pd-arrow{font-size:18px;color:var(--ink-3);transition:transform .25s;flex-shrink:0}
+.pd-level.open .pd-arrow{transform:rotate(90deg);color:var(--accent)}
+.pd-badge{width:32px;height:32px;border-radius:50%;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink-3);flex-shrink:0;transition:all .25s;font-family:var(--mono)}
+.pd-level.open .pd-badge{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pd-trigger-text{flex:1}.pd-trigger-text strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.pd-trigger-text .pds{font-size:12px;color:var(--ink-3);display:block}
+.pd-tag{font-size:10px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:5px}
+.pd-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0}
+.pd-body-inner{padding:0 20px 20px}
+.pd-body-inner p{font-size:13px;color:var(--ink-2);line-height:1.65;margin-top:12px}.pd-body-inner p strong{color:var(--ink)}
+.pd-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pd-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 12px;border-radius:20px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+.pd-pill i{font-size:14px}
+.pd-ind{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-3);margin-top:12px}
+.pd-dot{width:8px;height:8px;border-radius:50%}
+/* file tree */
+.ftree{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.ftree-h{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.ftree-h i{font-size:16px;color:var(--accent)}
+.ftree-body{display:grid;grid-template-columns:210px 1fr;min-height:240px}
+@media(max-width:600px){.ftree-body{grid-template-columns:1fr}}
+.ftree-tree{padding:16px 14px;border-right:1px solid var(--line);font-family:var(--mono);font-size:12px;line-height:1.8;background:var(--bg-2)}
+@media(max-width:600px){.ftree-tree{border-right:none;border-bottom:1px solid var(--line)}}
+.ft-root{color:var(--ink-2);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.ft-root i{font-size:14px;color:var(--accent)}
+.ft-item{display:flex;align-items:center;gap:6px;padding:3px 6px 3px 16px;cursor:pointer;border-radius:4px;transition:background .15s;color:var(--ink-2)}
+.ft-item:hover{background:var(--line)}.ft-item.active{background:var(--accent-soft);color:var(--accent)}
+.ft-item i{font-size:13px;flex-shrink:0}.ft-item .ft-label{font-size:11px}
+.ft-opt{font-size:10px;color:var(--ink-3);margin-left:4px;font-style:italic}
+.ftree-exp{padding:20px;display:flex;flex-direction:column;justify-content:center}
+.ft-empty{font-size:13px;color:var(--ink-3);font-style:italic;text-align:center;padding:16px 8px}
+.ft-exp-content{display:none}.ft-exp-content.show{display:block;animation:fadeSlide .3s ease}
+.ft-exp-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.ft-exp-title{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.ft-exp-body{font-size:13px;color:var(--ink-2);line-height:1.65}
+/* checklist */
+.checklist{margin:0}
+.cl-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--sh);margin-bottom:8px;background:var(--card);cursor:pointer;transition:all .2s;user-select:none}
+.cl-item:hover{border-color:var(--line-2)}.cl-item.checked{background:var(--accent-soft);border-color:var(--accent-line)}
+.cl-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .2s;color:transparent;font-size:13px}
+.cl-item.checked .cl-check{background:var(--accent);border-color:var(--accent);color:#fff}
+.cl-text{flex:1}.cl-text strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.cl-text span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.cl-counter{font-size:12px;color:var(--ink-3);margin-top:10px;text-align:right;font-family:var(--mono)}
+/* steps */
+.steps{display:flex;flex-direction:column;gap:12px;margin:0}
+.step-card{background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r-l);display:flex;align-items:flex-start;gap:16px;padding:18px 20px;cursor:pointer;transition:border-color .2s}
+.step-card:hover{border-color:var(--line-2)}.step-card.done{border-color:var(--accent)}
+.step-num{width:36px;height:36px;border-radius:50%;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--ink-3);flex-shrink:0;transition:all .2s;font-family:var(--mono)}
+.step-card.done .step-num{border-color:var(--accent);color:#fff;background:var(--accent)}
+.step-content h4{font-size:14px;font-weight:600;margin-bottom:4px}.step-content p{font-size:13px;color:var(--ink-2);line-height:1.55;display:none}
+.step-card.done .step-content p{display:block;animation:fadeSlide .3s ease}
+/* workflow */
+.wf-wrap{background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r-l);padding:24px;margin:0}
+.wf-steps{display:flex;flex-direction:column;gap:0}
+.wf-step{display:flex;align-items:flex-start;gap:14px;position:relative}
+.wf-step:not(:last-child)::after{content:'';position:absolute;left:16px;top:38px;bottom:-12px;width:1px;background:var(--line-2)}
+.wf-icon{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);border:1.5px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--accent);flex-shrink:0;z-index:1}
+.wf-content{flex:1;padding-bottom:20px}.wf-content strong{font-size:14px;font-weight:600;display:block;margin-bottom:4px}.wf-content p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.wf-step:last-child .wf-content{padding-bottom:0}
+.wf-badge{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:6px}
+/* feat */
+.feat-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.feat-row:last-child{border-bottom:none}
+.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-soft);color:var(--accent)}
+.feat-icon.no{background:var(--bad-soft);color:var(--bad)}
+.feat-text{flex:1}.feat-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}.feat-text span{font-size:13px;color:var(--ink-2);line-height:1.55}.feat-text span code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.65}.cp p strong{color:var(--ink)}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.pd-body{max-height:none!important;opacity:1!important}.exp-content,.ft-exp-content,.step-content p{display:block!important}.exp-empty,.ft-empty{display:none!important}.note,.card3,.cp,.tip,.warn,.anat,.pd-level,.ftree,.cl-item,.step-card,.wf-wrap,.feat-row,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B6.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Livello avanzato</div>
+  <h1 class="rv" data-i="h1">Creare una Skill da zero</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Il principio</h4><p data-i-html="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-file-code"></i><span class="no">01</span><h2 data-i="s1">La struttura di una Skill</h2></div>
+  <p class="p-txt rv" data-i-html="structP"></p>
+
+  <div class="sh rv"><i class="ti ti-cursor-text"></i><span class="no">02</span><h2 data-i="s2">Anatomia interattiva di SKILL.md</h2></div>
+  <p class="p-txt rv" data-i="anatIntro"></p>
+  <div class="anat rv">
+    <div class="anat-h"><i class="ti ti-file-code"></i> <span data-i="anatHdr"></span></div>
+    <div class="anat-body">
+      <div class="anat-code" id="anatCode"></div>
+      <div class="anat-exp" id="anatExp">
+        <div class="exp-empty" id="expEmpty"><i class="ti ti-hand-click" style="font-size:28px;display:block;margin-bottom:8px"></i><span data-i="anatEmpty"></span></div>
+        <div class="exp-content" id="exp-name"></div>
+        <div class="exp-content" id="exp-description"></div>
+        <div class="exp-content" id="exp-frontmatter"></div>
+        <div class="exp-content" id="exp-instructions"></div>
+        <div class="exp-content" id="exp-instructions-body"></div>
+        <div class="exp-content" id="exp-output"></div>
+        <div class="exp-content" id="exp-output-body"></div>
+        <div class="exp-content" id="exp-comment"></div>
+      </div>
+    </div>
+  </div>
+  <div class="warn rv" style="margin-top:16px"><div class="wt"><i class="ti ti-alert-triangle"></i> <span data-i="warnH"></span></div><p data-i-html="warnP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layers-difference"></i><span class="no">03</span><h2 data-i="s3">I 3 livelli di progressive disclosure</h2></div>
+  <p class="p-txt rv" data-i="pdIntro"></p>
+  <div class="pd-wrap rv" id="pdWrap"></div>
+  <div class="tip rv" style="margin-top:16px"><div class="tt"><i class="ti ti-bulb"></i> <span data-i="pdTipH"></span></div><p data-i="pdTipP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-folder-open"></i><span class="no">04</span><h2 data-i="s4">La cartella di una Skill</h2></div>
+  <p class="p-txt rv" data-i-html="ftIntro"></p>
+  <div class="ftree rv">
+    <div class="ftree-h"><i class="ti ti-folder"></i> <span data-i="ftHdr"></span></div>
+    <div class="ftree-body">
+      <div class="ftree-tree">
+        <div class="ft-root"><i class="ti ti-folder-filled"></i> weekly-review/</div>
+        <div class="ft-item" id="ftSKILL" onclick="selectFile('SKILL')"><i class="ti ti-file-code" style="color:var(--accent)"></i><span class="ft-label">SKILL.md</span></div>
+        <div class="ft-item" id="ftscripts" onclick="selectFile('scripts')"><i class="ti ti-folder" style="color:var(--amber)"></i><span class="ft-label">scripts/</span><span class="ft-opt" data-i="ftOpt"></span></div>
+        <div class="ft-item" id="ftreferences" onclick="selectFile('references')"><i class="ti ti-folder" style="color:var(--blue)"></i><span class="ft-label">references/</span><span class="ft-opt" data-i="ftOpt2"></span></div>
+        <div class="ft-item" id="ftassets" onclick="selectFile('assets')"><i class="ti ti-folder" style="color:var(--accent)"></i><span class="ft-label">assets/</span><span class="ft-opt" data-i="ftOpt3"></span></div>
+      </div>
+      <div class="ftree-exp" id="ftExp">
+        <div class="ft-empty" id="ftEmpty"><i class="ti ti-hand-click" style="font-size:28px;display:block;margin-bottom:8px"></i><span data-i="ftEmptyT"></span></div>
+        <div class="ft-exp-content" id="ftExp-SKILL"></div>
+        <div class="ft-exp-content" id="ftExp-scripts"></div>
+        <div class="ft-exp-content" id="ftExp-references"></div>
+        <div class="ft-exp-content" id="ftExp-assets"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">05</span><h2 data-i="s5">Questo workflow merita una Skill?</h2></div>
+  <p class="p-txt rv" data-i="clIntro"></p>
+  <div class="checklist rv" id="checklist"></div>
+
+  <div class="sh rv"><i class="ti ti-upload"></i><span class="no">06</span><h2 data-i="s6">Come caricare la Skill in Cowork</h2></div>
+  <p class="p-txt rv" data-i="upIntro"></p>
+  <div class="steps rv" id="steps"></div>
+  <div class="tip rv" style="margin-top:16px"><div class="tt"><i class="ti ti-shield-check"></i> <span data-i="upTipH"></span></div><p data-i="upTipP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-wand"></i><span class="no">07</span><h2 data-i="s7">skill-creator — una Skill in 15–30 minuti</h2></div>
+  <p class="p-txt rv" data-i-html="wfIntro"></p>
+  <div class="wf-wrap rv"><div class="wf-steps" id="wfSteps"></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">08</span><h2 data-i="s8">Best practice e limiti</h2></div>
+  <div class="rv" id="feats"></div>
+
+  <div class="key rv" data-i="keyP" style="margin-top:36px"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-checkbox cpi"></i><h4 data-i="cpH"></h4><p data-i-html="cpP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Creare una Skill da zero</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B6.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Livello avanzato',
+h1:'Creare una Skill da zero',
+lede:'Ogni workflow ripetitivo che spieghi a Claude più di due volte merita di diventare una Skill. Non serve saper programmare: serve solo saper descrivere come lavori.',
+hookH:'Il principio',
+hookP:'Ogni procedura ripetibile che spieghi a Claude più di due volte merita di diventare una Skill. <strong>Non è automazione avanzata</strong> — è trasformare la conoscenza di come lavori in uno strumento che funziona ogni volta.',
+s1:'La struttura di una Skill',
+structP:'Una Skill è una <strong>cartella</strong> con un file <code>SKILL.md</code> al centro. Tutto il resto — script, documenti di riferimento, template — è opzionale. Il cuore è Markdown in linguaggio naturale. <strong>Non codice.</strong>',
+s2:'Anatomia interattiva di SKILL.md',
+anatIntro:'Clicca su ciascuna parte del file per capire cosa fa e perché è importante.',
+anatHdr:'SKILL.md — clicca le parti evidenziate',
+anatEmpty:'Clicca una riga del file per vedere la spiegazione',
+warnH:'Punto fermo: non esiste un campo "Trigger"',
+warnP:'Alcune guide citano un campo separato chiamato "Trigger". Non esiste nel formato ufficiale. I campi obbligatori del frontmatter sono <strong>solo <code>name</code> e <code>description</code></strong>. Il trigger — il meccanismo che fa scattare la Skill — sta <em>dentro</em> la description. È lì che scrivi "usala quando…".',
+s3:'I 3 livelli di progressive disclosure',
+pdIntro:'Le Skills non intasano il contesto perché funzionano a tre livelli: Claude carica solo ciò che serve, nel momento in cui serve. Clicca ciascun livello.',
+pdTipH:'Perché capire i 3 livelli è importante',
+pdTipP:'È il motivo per cui puoi abilitare decine di Skills senza saturare il contesto. Solo i ~100 parole di name + description costano sempre. Il resto entra solo quando serve. Un\'architettura progettata per scalare.',
+s4:'La cartella di una Skill',
+ftIntro:'La struttura standard. Solo <code>SKILL.md</code> è obbligatorio. Clicca i file per capire il ruolo di ognuno.',
+ftHdr:'Struttura cartella — clicca un file',
+ftOpt:'opzionale',ftOpt2:'opzionale',ftOpt3:'opzionale',
+ftEmptyT:'Clicca un file o cartella',
+s5:'Questo workflow merita una Skill?',
+clIntro:'Spunta i criteri che si applicano al workflow che stai valutando. Più criteri spunti, più vale la pena investire in una Skill.',
+s6:'Come caricare la Skill in Cowork',
+upIntro:'Una volta creata la cartella con il tuo SKILL.md, hai tre modi per portarla in Cowork. Clicca ogni opzione per i dettagli.',
+upTipH:'Le Skills custom sono private',
+upTipP:'Le Skills che crei sono private al tuo account, salvo condivisione esplicita a livello organizzazione. Non compaiono ad altri utenti. Le abiliti/disabiliti singolarmente da Customize → Skills con un toggle.',
+s7:'skill-creator — una Skill in 15–30 minuti',
+wfIntro:'Non devi costruire tutto da zero. Anthropic ha pubblicato una Skill ufficiale chiamata <strong>skill-creator</strong> — una meta-skill che ti intervista e scrive il SKILL.md per te. Disponibile su <code>claude.com/plugins</code> e nel repo <code>anthropics/skills</code>.',
+s8:'Best practice e limiti',
+keyP:'Una Skill non è automazione avanzata. È trasformare la conoscenza di come lavori — i passi, il formato, le regole — in uno strumento che funziona ogni volta, senza rispiegare nulla.',
+s9:'Checkpoint',
+cpH:'Un\'azione concreta dopo questa lezione.',
+cpP:'Identifica nel tuo lavoro <strong>un solo workflow</strong> che ripeti regolarmente — un\'analisi, un riepilogo, un documento che produci sempre nello stesso modo. Descrivi come lo fai: i passi, il formato del risultato, le domande che fai. Poi apri Cowork e chiedi alla Skill <strong>skill-creator</strong> di costruirla. Verifica se funziona alla prima invocazione.',
+bridge:'Sai costruire una Skill da zero. <b>Il passo che moltiplica tutto:</b> non creare le Skills una a una — fare in modo che Claude le crei per te. La meta-creazione.',
+foot:'Morfeus — Creare una Skill da zero'
+},
+en:{
+kicker:'Lesson B6.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced level',
+h1:'Creating a Skill from scratch',
+lede:'Every repetitive workflow you explain to Claude more than twice deserves to become a Skill. You don\'t need to know how to code: you just need to know how to describe the way you work.',
+hookH:'The principle',
+hookP:'Every repeatable procedure you explain to Claude more than twice deserves to become a Skill. <strong>It\'s not advanced automation</strong> — it\'s turning the knowledge of how you work into a tool that performs the same way every time.',
+s1:'The structure of a Skill',
+structP:'A Skill is a <strong>folder</strong> with a <code>SKILL.md</code> file at its core. Everything else — scripts, reference documents, templates — is optional. The heart is Markdown in plain language. <strong>Not code.</strong>',
+s2:'Interactive anatomy of SKILL.md',
+anatIntro:'Click each part of the file to understand what it does and why it matters.',
+anatHdr:'SKILL.md — click the highlighted parts',
+anatEmpty:'Click a line of the file to see its explanation',
+warnH:'Hard rule: there is no "Trigger" field',
+warnP:'Some guides mention a separate field called "Trigger". It doesn\'t exist in the official format. The required frontmatter fields are <strong>only <code>name</code> and <code>description</code></strong>. The trigger — the mechanism that fires the Skill — lives <em>inside</em> the description. That\'s where you write "use it when…".',
+s3:'The 3 levels of progressive disclosure',
+pdIntro:'Skills don\'t clog the context because they work on three levels: Claude loads only what\'s needed, exactly when it\'s needed. Click each level.',
+pdTipH:'Why understanding the 3 levels matters',
+pdTipP:'It\'s why you can enable dozens of Skills without saturating the context. Only the ~100 words of name + description always cost. The rest loads only when needed. An architecture designed to scale.',
+s4:'The folder of a Skill',
+ftIntro:'The standard structure. Only <code>SKILL.md</code> is required. Click the files to understand each one\'s role.',
+ftHdr:'Folder structure — click a file',
+ftOpt:'optional',ftOpt2:'optional',ftOpt3:'optional',
+ftEmptyT:'Click a file or folder',
+s5:'Does this workflow deserve a Skill?',
+clIntro:'Tick the criteria that apply to the workflow you\'re evaluating. The more you tick, the more it pays to invest in a Skill.',
+s6:'How to load the Skill into Cowork',
+upIntro:'Once you\'ve created the folder with your SKILL.md, you have three ways to bring it into Cowork. Click each option for details.',
+upTipH:'Custom Skills are private',
+upTipP:'The Skills you create are private to your account, unless explicitly shared at the organization level. They don\'t appear to other users. You enable/disable them individually from Customize → Skills with a toggle.',
+s7:'skill-creator — a Skill in 15–30 minutes',
+wfIntro:'You don\'t have to build everything from scratch. Anthropic has published an official Skill called <strong>skill-creator</strong> — a meta-skill that interviews you and writes the SKILL.md for you. Available on <code>claude.com/plugins</code> and in the <code>anthropics/skills</code> repo.',
+s8:'Best practices and limits',
+keyP:'A Skill isn\'t advanced automation. It\'s turning the knowledge of how you work — the steps, the format, the rules — into a tool that performs the same way every time, without re-explaining anything.',
+s9:'Checkpoint',
+cpH:'One concrete action after this lesson.',
+cpP:'Identify <strong>a single workflow</strong> in your work that you repeat regularly — an analysis, a recap, a document you always produce the same way. Describe how you do it: the steps, the result format, the questions you ask. Then open Cowork and ask the <strong>skill-creator</strong> Skill to build it. Check whether it works on the first invocation.',
+bridge:'You can build a Skill from scratch. <b>The step that multiplies everything:</b> don\'t create Skills one by one — get Claude to create them for you. Meta-creation.',
+foot:'Morfeus — Creating a Skill from scratch'
+}};
+
+/* anatomy lines (rendered HTML) and explanation panels */
+var ANAT={it:[
+['frontmatter','dim','---'],
+['name','name','name: weekly-review'],
+['description','desc','description: Conduce la review settimanale del lavoro. Usala quando l\'utente vuole riflettere sulla settimana, fare il punto su completato/bloccato/priorità o produrre il riepilogo settimanale.'],
+['frontmatter','dim','---'],
+['blank','',' '],
+['instructions','section','## Istruzioni'],
+['instructions-body','body','1. Chiedi le 3 cose più importanti completate questa settimana.\n2. Chiedi cosa non è stato completato e perché.\n3. Chiedi le 3 priorità della prossima settimana.'],
+['blank','',' '],
+['output','section','## Formato output'],
+['output-body','output','# Weekly Review — [data]\n\n## Completato\n- [lista]\n\n## Non completato\n- [motivo]\n\n## Priorità prossima settimana\n- [lista]'],
+['blank','',' '],
+['comment','comment','# Tono: diretto, no fronzoli']
+],en:[
+['frontmatter','dim','---'],
+['name','name','name: weekly-review'],
+['description','desc','description: Runs the weekly work review. Use it when the user wants to reflect on the week, take stock of done/blocked/priorities, or produce the weekly recap.'],
+['frontmatter','dim','---'],
+['blank','',' '],
+['instructions','section','## Instructions'],
+['instructions-body','body','1. Ask for the 3 most important things completed this week.\n2. Ask what was not completed and why.\n3. Ask for the 3 priorities for next week.'],
+['blank','',' '],
+['output','section','## Output format'],
+['output-body','output','# Weekly Review — [date]\n\n## Completed\n- [list]\n\n## Not completed\n- [reason]\n\n## Priorities next week\n- [list]'],
+['blank','',' '],
+['comment','comment','# Tone: direct, no fluff']
+]};
+
+var EXP={it:{
+'name':['accent','Campo obbligatorio','ti-tag','name — l\'identificatore della Skill','Il nome con cui invochi la Skill, di solito in <code>kebab-case</code>. Breve, descrittivo, facile da ricordare. È il testo che appare nel menu <code>/</code> in chat e nell\'elenco Customize → Skills.'],
+'description':['accent','Il campo più importante','ti-key','description — il vero meccanismo di trigger','Questo è il pezzo critico. La <code>description</code> è sempre in contesto (circa 100 parole): Claude la legge in ogni chat per decidere <em>se</em> questa Skill è rilevante. Deve dire due cose: <strong>cosa fa</strong> la Skill e <strong>quando usarla</strong>. Non esiste un campo "Trigger" separato — il trigger è dentro la description.'],
+'frontmatter':['gray','Frontmatter YAML','ti-code','I delimitatori del frontmatter','I tre trattini <code>---</code> delimitano il blocco <em>frontmatter</em> YAML. Tutto ciò che sta qui dentro è metadato strutturato — letto da Claude per capire quando e come usare la Skill.'],
+'instructions':['purple','Corpo della Skill','ti-list-check','Istruzioni operative','Il corpo viene caricato in contesto <em>solo quando la Skill scatta</em>. Scrivi in forma imperativa e spiega il <em>perché</em> dei passi, non solo il cosa. Ideale: meno di 500 righe totali. Se hai regole lunghe, spostale in <code>references/</code>.'],
+'instructions-body':['purple','Passi operativi','ti-list-numbers','I passi da seguire','Ogni passo è chiaro, numerato, azionabile. Non scrivere solo "analizza" o "riassumi" — specifica cosa domandare, in quale ordine, e perché quell\'ordine è importante per il risultato.'],
+'output':['amber','Formato output','ti-layout-bottombar','Il template dell\'output','Definisce <em>come deve apparire il risultato</em>. Un template esplicito garantisce coerenza ogni volta che invochi la Skill. Claude non inventa la struttura: la segue.'],
+'output-body':['amber','Template Markdown','ti-file-text','Struttura del documento finale','Il template con i segnaposto tra parentesi quadre. Claude lo riempie con i contenuti reali. Sezioni, heading, elenchi, tabelle — qualsiasi struttura Markdown che vuoi nel documento di output.'],
+'comment':['gray','Nota interna','ti-message','Commenti e note operative','Puoi aggiungere note con <code>#</code> per guidare Claude su aspetti difficili da codificare in istruzioni formali — tono, eccezioni, casi limite. Claude li legge come indicazioni operative.']
+},en:{
+'name':['accent','Required field','ti-tag','name — the Skill\'s identifier','The name you invoke the Skill with, usually in <code>kebab-case</code>. Short, descriptive, easy to remember. It\'s the text that appears in the <code>/</code> menu in chat and in the Customize → Skills list.'],
+'description':['accent','The most important field','ti-key','description — the real trigger mechanism','This is the critical piece. The <code>description</code> is always in context (about 100 words): Claude reads it in every chat to decide <em>whether</em> this Skill is relevant. It must say two things: <strong>what</strong> the Skill does and <strong>when to use it</strong>. There is no separate "Trigger" field — the trigger lives inside the description.'],
+'frontmatter':['gray','YAML frontmatter','ti-code','The frontmatter delimiters','The three dashes <code>---</code> delimit the YAML <em>frontmatter</em> block. Everything inside is structured metadata — read by Claude to understand when and how to use the Skill.'],
+'instructions':['purple','Skill body','ti-list-check','Operating instructions','The body is loaded into context <em>only when the Skill fires</em>. Write in the imperative and explain the <em>why</em> of the steps, not just the what. Ideal: under 500 lines total. If you have long rules, move them to <code>references/</code>.'],
+'instructions-body':['purple','Operating steps','ti-list-numbers','The steps to follow','Each step is clear, numbered, actionable. Don\'t just write "analyze" or "summarize" — specify what to ask, in what order, and why that order matters for the result.'],
+'output':['amber','Output format','ti-layout-bottombar','The output template','Defines <em>how the result should look</em>. An explicit template guarantees consistency every time you invoke the Skill. Claude doesn\'t invent the structure: it follows it.'],
+'output-body':['amber','Markdown template','ti-file-text','Structure of the final document','The template with placeholders in square brackets. Claude fills it with the real content. Sections, headings, lists, tables — any Markdown structure you want in the output document.'],
+'comment':['gray','Internal note','ti-message','Comments and operating notes','You can add notes with <code>#</code> to steer Claude on things hard to encode as formal instructions — tone, exceptions, edge cases. Claude reads them as operating guidance.']
+}};
+
+var PD={it:[
+['1','name + description — sempre in contesto','~100 parole · presenti in ogni chat','accent','Sempre attivo',
+ '<p>Il <code>name</code> e la <code>description</code> di ogni Skill abilitata sono caricati in ogni conversazione, occupando circa 100 parole ciascuno. Claude li scansiona silenziosamente per capire se una Skill è rilevante per la richiesta in corso.</p><p><strong>Cosa succede qui:</strong> Claude decide <em>se</em> usare la Skill. Nulla del corpo viene caricato ancora.</p>',
+ [['ti-eye','Sempre in contesto'],['ti-scale','~100 parole per Skill'],['ti-brain','Decisione se attivare']],
+ 'Costo fisso: non cresce con la complessità della Skill'],
+['2','Corpo di SKILL.md — caricato quando scatta','Ideale < 500 righe · entra solo se rilevante','teal','On demand',
+ '<p>Quando Claude riconosce la Skill come rilevante — dall\'invocazione esplicita <code>/nome-skill</code> o da pattern nel linguaggio — carica il corpo completo di <code>SKILL.md</code>: istruzioni operative, template di output, note.</p><p><strong>Buona pratica:</strong> tieni il corpo sotto le 500 righe. Se le regole sono molte, spostale nei file <code>references/</code> e richiamale dal corpo.</p>',
+ [['ti-file-text','Istruzioni operative'],['ti-layout-bottombar','Template output'],['ti-message','Note di tono/stile']],
+ 'Costo variabile: entra solo quando la Skill è rilevante per quella chat'],
+['3','File aggiuntivi — letti/eseguiti solo se necessari','scripts/ · references/ · assets/','amber','Su richiesta',
+ '<p>Script, documenti di riferimento e template vengono caricati o eseguiti solo quando il corpo della Skill li richiede esplicitamente. Questo livello permette di gestire logiche complesse o grandi quantità di dati senza appesantire ogni conversazione.</p>',
+ [['ti-code','scripts/ — codice eseguibile'],['ti-book','references/ — doc di supporto'],['ti-photo','assets/ — template, icone, font']],
+ 'Praticamente illimitato: entra in contesto solo su chiamata esplicita']
+],en:[
+['1','name + description — always in context','~100 words · present in every chat','accent','Always on',
+ '<p>The <code>name</code> and <code>description</code> of every enabled Skill are loaded into every conversation, taking about 100 words each. Claude silently scans them to see whether a Skill is relevant to the request at hand.</p><p><strong>What happens here:</strong> Claude decides <em>whether</em> to use the Skill. None of the body is loaded yet.</p>',
+ [['ti-eye','Always in context'],['ti-scale','~100 words per Skill'],['ti-brain','Decide whether to activate']],
+ 'Fixed cost: doesn\'t grow with the Skill\'s complexity'],
+['2','SKILL.md body — loaded when it fires','Ideal < 500 lines · loads only if relevant','teal','On demand',
+ '<p>When Claude recognizes the Skill as relevant — from the explicit <code>/skill-name</code> invocation or from patterns in the language — it loads the full body of <code>SKILL.md</code>: operating instructions, output template, notes.</p><p><strong>Best practice:</strong> keep the body under 500 lines. If the rules are many, move them into <code>references/</code> files and call them from the body.</p>',
+ [['ti-file-text','Operating instructions'],['ti-layout-bottombar','Output template'],['ti-message','Tone/style notes']],
+ 'Variable cost: loads only when the Skill is relevant to that chat'],
+['3','Additional files — read/run only when needed','scripts/ · references/ · assets/','amber','On request',
+ '<p>Scripts, reference documents and templates are loaded or executed only when the Skill body explicitly requires them. This level lets the Skill handle complex logic or large amounts of data without weighing down every conversation.</p>',
+ [['ti-code','scripts/ — executable code'],['ti-book','references/ — supporting docs'],['ti-photo','assets/ — templates, icons, fonts']],
+ 'Practically unlimited: enters context only on explicit call']
+]};
+
+var FT={it:{
+'SKILL':['accent','Obbligatorio','ti-asterisk','SKILL.md — il cuore della Skill','Contiene il frontmatter YAML con <code>name</code> e <code>description</code>, seguito dalle istruzioni operative in Markdown. È l\'unico file strettamente necessario: una Skill minimale può essere solo questo file. Tienilo sotto le 500 righe; oltre quella soglia, estrai le parti verbose in <code>references/</code>.'],
+'scripts':['amber','Opzionale','ti-code','scripts/ — codice eseguibile','Script per task deterministici che beneficiano di codice vero invece del linguaggio naturale: calcoli, manipolazione file, trasformazioni dati. Claude può eseguirli durante una sessione Cowork. La maggioranza delle Skills funziona benissimo con solo Markdown.'],
+'references':['blue','Opzionale','ti-book','references/ — documenti di supporto','Regole dettagliate, glossari, esempi lunghi, policy. Claude li legge solo quando il corpo di SKILL.md li richiama esplicitamente. Utili per mantenere SKILL.md snello spostando qui il contenuto denso che serve raramente.'],
+'assets':['accent','Opzionale','ti-photo','assets/ — template e risorse','Template di documento, icone, font, immagini usate negli output della Skill. Utile quando la Skill produce file formattati (Word, PDF, presentazioni) con uno stile visivo definito. Per Skills testuali spesso non serve.']
+},en:{
+'SKILL':['accent','Required','ti-asterisk','SKILL.md — the heart of the Skill','It contains the YAML frontmatter with <code>name</code> and <code>description</code>, followed by the operating instructions in Markdown. It\'s the only strictly necessary file: a minimal Skill can be just this file. Keep it under 500 lines; beyond that threshold, extract the verbose parts into <code>references/</code>.'],
+'scripts':['amber','Optional','ti-code','scripts/ — executable code','Scripts for deterministic tasks that benefit from real code rather than natural language: calculations, file manipulation, data transformations. Claude can run them during a Cowork session. Most Skills work perfectly well with Markdown alone.'],
+'references':['blue','Optional','ti-book','references/ — supporting documents','Detailed rules, glossaries, long examples, policies. Claude reads them only when the SKILL.md body calls them explicitly. Useful for keeping SKILL.md lean by moving here the dense content that\'s rarely needed.'],
+'assets':['accent','Optional','ti-photo','assets/ — templates and resources','Document templates, icons, fonts, images used in the Skill\'s outputs. Useful when the Skill produces formatted files (Word, PDF, presentations) with a defined visual style. For text-only Skills it\'s often unnecessary.']
+}};
+
+var CL={it:[
+['Lo faccio almeno una volta alla settimana','Se è un\'attività rara, un prompt ad hoc probabilmente basta. La Skill si ripaga sulla frequenza.'],
+['Ogni volta spiego le stesse istruzioni a Claude','Se ti trovi a riscrivere le stesse regole o lo stesso contesto, stai buttando tempo. Una Skill lo incapsula una volta sola.'],
+['L\'output deve avere sempre lo stesso formato','Report, riepilogo, analisi, proposta — se la struttura è sempre la stessa, un template nel SKILL.md la rende coerente per sempre.'],
+['Copio e incollo spesso lo stesso prompt','Ctrl+C Ctrl+V di un prompt è il segnale più chiaro: quello è il candidato perfetto per diventare una Skill.']
+],en:[
+['I do it at least once a week','If it\'s a rare activity, an ad-hoc prompt is probably enough. The Skill pays off through frequency.'],
+['Every time I explain the same instructions to Claude','If you keep rewriting the same rules or the same context, you\'re wasting time. A Skill captures it once and for all.'],
+['The output always needs the same format','Report, recap, analysis, proposal — if the structure is always the same, a template in SKILL.md keeps it consistent forever.'],
+['I often copy-paste the same prompt','Ctrl+C Ctrl+V of a prompt is the clearest signal: that\'s the perfect candidate to become a Skill.']
+]};
+var CLc={it:['{n} di {t} criteri selezionati','{n} di {t} — buon candidato per una Skill','{n} di {t} — questo workflow merita decisamente una Skill!'],
+en:['{n} of {t} criteria selected','{n} of {t} — good candidate for a Skill','{n} of {t} — this workflow definitely deserves a Skill!']};
+
+var STEPS={it:[
+['A','Crea direttamente dall\'interfaccia','Vai in <strong>Customize → Skills → "+"</strong> e scegli <strong>"+ Create skill"</strong>. Ti apre un editor dove scrivi il SKILL.md direttamente in Cowork, senza preparare file in anticipo. Ottimo per Skills semplici.'],
+['B','Carica una Skill già pronta (ZIP)','Hai già la cartella con SKILL.md (e file opzionali)? Comprimila in un file <strong>.zip</strong>, poi vai in <strong>Customize → Skills → "+" → "Upload a skill"</strong> e carica lo ZIP. Utile quando hai più file (scripts, references) o gestisci la Skill esternamente.'],
+['C','In Claude Code (terminale)','Le Skills stanno nella cartella <code>.claude/skills/</code> del progetto. Crea lì la cartella della Skill e Claude Code la rileva in automatico. Il workflow è più ricco: sub-agent, eval viewer e test sistematici.']
+],en:[
+['A','Create it directly from the interface','Go to <strong>Customize → Skills → "+"</strong> and choose <strong>"+ Create skill"</strong>. It opens an editor where you write the SKILL.md directly in Cowork, with no files prepared in advance. Great for simple Skills.'],
+['B','Upload a ready-made Skill (ZIP)','Already have the folder with SKILL.md (and optional files)? Zip it into a <strong>.zip</strong> file, then go to <strong>Customize → Skills → "+" → "Upload a skill"</strong> and upload the ZIP. Useful when you have multiple files (scripts, references) or manage the Skill externally.'],
+['C','In Claude Code (terminal)','Skills live in the project\'s <code>.claude/skills/</code> folder. Create the Skill folder there and Claude Code detects it automatically. The workflow is richer: sub-agents, eval viewer and systematic tests.']
+]};
+
+var WF={it:[
+['ti-download','Installa skill-creator','Cercala nella Unified Directory (Customize → "+" → Browse) oppure scaricala dal repo ufficiale Anthropic. Abilitala da Customize → Skills.','accent','Setup una-tantum'],
+['ti-message-circle','Descrivi il workflow da automatizzare','Avvia una sessione in Cowork e descrivi cosa fa il workflow: quali input riceve, cosa produce, in quale formato, in quali occasioni lo usi. Parla in linguaggio naturale.','teal','Tu descrivi'],
+['ti-help-circle','skill-creator ti intervista','Fa domande di chiarimento: cosa abilita la Skill, quando deve scattare, come si presenta il risultato, quali casi limite ci sono. L\'intervista affina la description — la parte più critica.','teal','Claude intervista'],
+['ti-file-plus','skill-creator scrive il SKILL.md','Produce il file completo con frontmatter corretto, istruzioni operative e template di output. Puoi leggerlo, modificarlo, iterare. È Markdown normale — niente di misterioso.','amber','Claude scrive'],
+['ti-test-pipe','Installa, testa, itera','Carica la Skill, invocala su un caso reale, valuta il risultato. Quasi sempre serve una piccola iterazione sulla description o sul template — è normale. Poi è pronta.','accent','15–30 min totali']
+],en:[
+['ti-download','Install skill-creator','Find it in the Unified Directory (Customize → "+" → Browse) or download it from the official Anthropic repo. Enable it from Customize → Skills.','accent','One-time setup'],
+['ti-message-circle','Describe the workflow to automate','Start a session in Cowork and describe what the workflow does: what inputs it takes, what it produces, in what format, on what occasions you use it. Speak in plain language.','teal','You describe'],
+['ti-help-circle','skill-creator interviews you','It asks clarifying questions: what the Skill enables, when it should fire, how the result should look, what edge cases exist. The interview sharpens the description — the most critical part.','teal','Claude interviews'],
+['ti-file-plus','skill-creator writes the SKILL.md','It produces the full file with correct frontmatter, operating instructions and output template. You can read it, edit it, iterate. It\'s plain Markdown — nothing mysterious.','amber','Claude writes'],
+['ti-test-pipe','Install, test, iterate','Load the Skill, invoke it on a real case, judge the result. Almost always a small iteration on the description or template is needed — that\'s normal. Then it\'s ready.','accent','15–30 min total']
+]};
+
+var FEATS={it:[
+['ti-pencil',0,'La description è l\'investimento principale','Se la Skill non scatta quando dovrebbe, il problema è quasi sempre la description. Rendila "pushy": specifica i contesti di trigger. Vago = mai attivata.'],
+['ti-ruler-2',0,'Meno di 500 righe nel SKILL.md','Una Skill lunga non è più potente. Spostare il contenuto verboso in <code>references/</code> mantiene il corpo leggibile e il caricamento veloce.'],
+['ti-template',0,'Definisci sempre il formato output','Un template esplicito con segnaposto è la differenza tra output coerenti e output che variano arbitrariamente. Non lasciare la struttura all\'improvvisazione.'],
+['ti-x',1,'Non serve saper programmare','Il cuore di una Skill è Markdown in linguaggio naturale. Gli script (<code>scripts/</code>) sono opzionali e utili solo per task deterministici. La stragrande maggioranza funziona senza una riga di codice.'],
+['ti-x',1,'Raramente è perfetta al primo giro','Una Skill generata da skill-creator va testata su un caso reale, poi raffinata. Un\'iterazione sulla description o sul template è la norma — non un fallimento. Pianificala.']
+],en:[
+['ti-pencil',0,'The description is the main investment','If the Skill doesn\'t fire when it should, the problem is almost always the description. Make it "pushy": specify the trigger contexts. Vague = never activated.'],
+['ti-ruler-2',0,'Under 500 lines in SKILL.md','A long Skill isn\'t more powerful. Moving verbose content into <code>references/</code> keeps the body readable and loading fast.'],
+['ti-template',0,'Always define the output format','An explicit template with placeholders is the difference between consistent outputs and outputs that vary arbitrarily. Don\'t leave the structure to improvisation.'],
+['ti-x',1,'You don\'t need to know how to code','The heart of a Skill is Markdown in plain language. Scripts (<code>scripts/</code>) are optional and useful only for deterministic tasks. The vast majority work without a single line of code.'],
+['ti-x',1,'It\'s rarely perfect on the first try','A Skill generated by skill-creator should be tested on a real case, then refined. One iteration on the description or template is the norm — not a failure. Plan for it.']
+]};
+
+var LANG='it',curPart=null,curFile=null;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+var BADGE={accent:'background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)',
+gray:'background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line)',
+purple:'background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)',
+amber:'background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)',
+blue:'background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)',
+teal:'background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)'};
+
+function buildAnat(){
+  var html=ANAT[LANG].map(function(l){
+    if(l[1]===''){return '<span style="display:block"> </span>'}
+    return '<span class="aline aline-'+l[1]+'" data-part="'+l[0]+'" onclick="selectPart(\''+l[0]+'\')" style="display:block;white-space:pre-wrap">'+esc(l[2])+'</span>';
+  }).join('');
+  document.getElementById('anatCode').innerHTML=html;
+  Object.keys(EXP[LANG]).forEach(function(k){
+    var e=EXP[LANG][k],el=document.getElementById('exp-'+k);
+    if(el)el.innerHTML='<span class="exp-badge" style="'+BADGE[e[0]]+'"><i class="ti '+e[2]+'"></i> '+esc(e[1])+'</span><div class="exp-title">'+esc(e[3])+'</div><div class="exp-body">'+e[4]+'</div>';
+  });
+  curPart=null;document.getElementById('expEmpty').style.display='';
+}
+function selectPart(id){
+  if(curPart){var p=document.querySelector('[data-part="'+curPart+'"]');if(p)p.classList.remove('active');var pe=document.getElementById('exp-'+curPart);if(pe)pe.classList.remove('show')}
+  if(curPart===id){curPart=null;document.getElementById('expEmpty').style.display='';return}
+  curPart=id;var el=document.querySelector('[data-part="'+id+'"]');if(el)el.classList.add('active');
+  var ex=document.getElementById('exp-'+id);if(ex){document.getElementById('expEmpty').style.display='none';ex.classList.add('show')}
+}
+function buildPD(){
+  document.getElementById('pdWrap').innerHTML=PD[LANG].map(function(p,i){
+    var pills=p[6].map(function(pl){return '<span class="pd-pill"><i class="ti '+pl[0]+'"></i> '+esc(pl[1])+'</span>'}).join('');
+    return '<div class="pd-level" id="pdL'+i+'"><div class="pd-trigger" onclick="togglePD('+i+')"><i class="ti ti-chevron-right pd-arrow"></i><div class="pd-badge">'+p[0]+'</div><div class="pd-trigger-text"><strong>'+esc(p[1])+'</strong><span class="pds">'+esc(p[2])+'</span><span class="pd-tag" style="'+BADGE[p[3]]+'">'+esc(p[4])+'</span></div></div><div class="pd-body" id="pdB'+i+'"><div class="pd-body-inner">'+p[5]+'<div class="pd-pill-row">'+pills+'</div><div class="pd-ind"><div class="pd-dot" style="background:var(--'+p[3]+')"></div><span>'+esc(p[7])+'</span></div></div></div></div>';
+  }).join('');
+}
+function togglePD(i){var lv=document.getElementById('pdL'+i),b=document.getElementById('pdB'+i);if(lv.classList.contains('open')){lv.classList.remove('open');b.style.maxHeight='0';b.style.opacity='0'}else{lv.classList.add('open');b.style.maxHeight=b.scrollHeight+80+'px';b.style.opacity='1'}}
+function buildFT(){
+  Object.keys(FT[LANG]).forEach(function(k){
+    var f=FT[LANG][k],el=document.getElementById('ftExp-'+k);
+    if(el)el.innerHTML='<span class="ft-exp-badge" style="'+BADGE[f[0]]+'"><i class="ti '+f[2]+'"></i> '+esc(f[1])+'</span><div class="ft-exp-title">'+esc(f[3])+'</div><div class="ft-exp-body">'+f[4]+'</div>';
+  });
+  curFile=null;document.getElementById('ftEmpty').style.display='';
+}
+function selectFile(k){
+  if(curFile){var p=document.getElementById('ft'+curFile);if(p)p.classList.remove('active');var pe=document.getElementById('ftExp-'+curFile);if(pe)pe.classList.remove('show')}
+  if(curFile===k){curFile=null;document.getElementById('ftEmpty').style.display='';return}
+  curFile=k;var el=document.getElementById('ft'+k);if(el)el.classList.add('active');
+  var ex=document.getElementById('ftExp-'+k);if(ex){document.getElementById('ftEmpty').style.display='none';ex.classList.add('show')}
+}
+function buildCL(){
+  document.getElementById('checklist').innerHTML=CL[LANG].map(function(c){
+    return '<div class="cl-item" onclick="toggleCheck(this)"><div class="cl-check"><i class="ti ti-check"></i></div><div class="cl-text"><strong>'+esc(c[0])+'</strong><span>'+esc(c[1])+'</span></div></div>';
+  }).join('')+'<div class="cl-counter" id="clCounter"></div>';
+  updateCL();
+}
+function updateCL(){
+  var checked=document.querySelectorAll('.cl-item.checked').length,total=document.querySelectorAll('.cl-item').length,c=document.getElementById('clCounter');
+  var t=CLc[LANG][0];c.style.color='';c.style.fontWeight='';
+  if(checked===total){t=CLc[LANG][2];c.style.color='var(--accent)';c.style.fontWeight='600'}
+  else if(checked>=2){t=CLc[LANG][1];c.style.color='var(--teal)';c.style.fontWeight='600'}
+  c.textContent=t.replace('{n}',checked).replace('{t}',total);
+}
+function toggleCheck(it){it.classList.toggle('checked');updateCL()}
+function buildSteps(){
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s){
+    return '<div class="step-card" onclick="this.classList.toggle(\'done\')"><div class="step-num">'+s[0]+'</div><div class="step-content"><h4>'+esc(s[1])+'</h4><p>'+s[2]+'</p></div></div>';
+  }).join('');
+}
+function buildWF(){
+  document.getElementById('wfSteps').innerHTML=WF[LANG].map(function(w){
+    return '<div class="wf-step"><div class="wf-icon"><i class="ti '+w[0]+'"></i></div><div class="wf-content"><strong>'+esc(w[1])+'</strong><p>'+w[2]+'</p><span class="wf-badge" style="'+BADGE[w[3]]+'">'+esc(w[4])+'</span></div></div>';
+  }).join('');
+}
+function buildFeats(){
+  document.getElementById('feats').innerHTML=FEATS[LANG].map(function(f){
+    return '<div class="feat-row"><div class="feat-icon'+(f[1]?' no':'')+'"><i class="ti '+f[0]+'"></i></div><div class="feat-text"><strong>'+esc(f[2])+'</strong><span>'+f[3]+'</span></div></div>';
+  }).join('');
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.querySelector('[data-i="keyP"]').innerHTML='<p>'+DICT[LANG].keyP+'</p>';
+  buildAnat();buildPD();buildFT();buildCL();buildSteps();buildWF();buildFeats();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*45)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

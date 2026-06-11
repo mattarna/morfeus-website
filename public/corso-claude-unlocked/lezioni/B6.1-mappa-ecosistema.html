@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La mappa dell'ecosistema Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* Morfeus v6 lesson template — light theme default, dark via toggle; blueprint grid background, mono technical accents, bracketed section numbers, scroll-reveal, print-expand rules */
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede b{color:var(--accent);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lead-p{font-size:14.5px;color:var(--ink-2);margin-bottom:16px;line-height:1.7}
+.lead-p strong{color:var(--ink);font-weight:600}
+
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex+.ex{margin-top:8px}.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:7px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}.tag.good{background:var(--good-soft);color:var(--good)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+/* ===== ECOSYSTEM MAP ===== */
+.eco{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 18px}
+.eco-hint{text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+.eco-hint i{font-size:14px;color:var(--accent)}
+.lay{border-radius:var(--r-l);border:2px solid transparent;padding:13px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px}
+.lay i{font-size:19px}
+.lay:hover{transform:translateY(-1px)}
+.lay .lb{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 9px;border-radius:20px}
+.lay.pl{background:var(--accent-soft);color:var(--accent)} .lay.pl .lb{background:var(--accent);color:#fff} .lay.pl.on{border-color:var(--accent)}
+.lay.sk{background:var(--agent-soft);color:var(--agent)} .lay.sk .lb{background:var(--agent);color:#fff} .lay.sk.on{border-color:var(--agent)}
+.lay.cn{background:var(--good-soft);color:var(--good)} .lay.cn .lb{background:var(--good);color:#fff} .lay.cn.on{border-color:var(--good)}
+.lay.mc{background:var(--bg-2);color:var(--ink-2);border:2px solid var(--line)} .lay.mc .lb{background:var(--ink-2);color:var(--bg)} .lay.mc.on{border-color:var(--ink-2)}
+.eco-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.eco-d{display:none;margin-top:14px;border-radius:var(--r-l);padding:18px;border:1px solid var(--line)}
+.eco-d.show{display:block;animation:fs .3s ease}
+@keyframes fs{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ed-pl{background:var(--accent-soft);border-color:var(--accent-line)} .ed-pl .edt{color:var(--accent)}
+.ed-sk{background:var(--agent-soft);border-color:var(--agent-line)} .ed-sk .edt{color:var(--agent)}
+.ed-cn{background:var(--good-soft);border-color:var(--good)} .ed-cn .edt{color:var(--good)}
+.ed-mc{background:var(--bg-2);border-color:var(--line-2)} .ed-mc .edt{color:var(--ink-2)}
+.edt{font-size:15px;font-weight:600;display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.edt i{font-size:18px}
+.edg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.edb{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px}
+.edb h5{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:5px}
+.edb p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.edb code{font-family:var(--mono);font-size:11.5px;color:var(--ink)}
+.edr{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-2);font-size:13px;color:var(--ink-2);line-height:1.6}
+.edr strong{color:var(--ink)}
+.edr code{font-family:var(--mono);font-size:11.5px;color:var(--ink)}
+
+/* ===== CUSTOMIZE PANEL ILLUSTRATION ===== */
+.pan{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.pan-bar{background:var(--bg-2);border-bottom:1px solid var(--line);padding:9px 14px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);display:flex;gap:7px;align-items:center}
+.pan-bar i{color:var(--accent);font-size:14px}
+.pan-tabs{display:grid;grid-template-columns:repeat(4,1fr)}
+.pan-tab{padding:13px 6px;text-align:center;font-size:12.5px;font-weight:600;border-bottom:2.5px solid transparent}
+.pan-tab i{display:block;font-size:18px;margin-bottom:4px}
+.pt1{color:var(--agent);border-bottom-color:var(--agent);background:var(--agent-soft)}
+.pt2{color:var(--good);border-bottom-color:var(--good);background:var(--good-soft)}
+.pt3{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-soft)}
+.pt4{color:var(--ink-2);border-bottom-color:var(--ink-2);background:var(--bg-2)}
+.pan-note{padding:13px 16px;font-size:13.5px;color:var(--ink-2);text-align:center;border-top:1px solid var(--line)}
+.pan-note strong{color:var(--ink);font-weight:600}
+
+/* ===== SUMMARY TABLE ===== */
+.tblw{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);text-align:left;padding:12px 14px;border-bottom:2px solid var(--line-2)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top;line-height:1.5}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .one{color:var(--ink);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill i{font-size:14px}
+.pill.p-sk{background:var(--agent-soft);color:var(--agent)}
+.pill.p-cn{background:var(--good-soft);color:var(--good)}
+.pill.p-mc{background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line-2)}
+.pill.p-pl{background:var(--accent-soft);color:var(--accent)}
+.yes{color:var(--good);font-weight:600}.no-c{color:var(--ink-3)}.dev{color:var(--agent);font-weight:600}
+
+/* ===== WIZARD ===== */
+.wz{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.wz-t{font-size:15px;font-weight:600;display:flex;gap:8px;align-items:center;margin-bottom:3px}
+.wz-t i{color:var(--accent);font-size:18px}
+.wz-s{font-size:13px;color:var(--ink-3);margin-bottom:16px}
+.wz-btns{display:flex;flex-direction:column;gap:8px}
+.wz-b{display:flex;align-items:center;gap:10px;text-align:left;padding:12px 14px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);font-size:13.5px;font-weight:500;cursor:pointer;transition:.18s}
+.wz-b i{font-size:17px;color:var(--accent);flex-shrink:0}
+.wz-b:hover{border-color:var(--line-2);color:var(--ink)}
+.wz-b.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.wz-b.on i{color:var(--accent)}
+.wz-r{display:none;margin-top:12px;border-radius:var(--r-l);padding:16px;border:1px solid var(--line)}
+.wz-r.show{display:block;animation:fs .3s ease}
+.wz-r.ed-pl{background:var(--accent-soft);border-color:var(--accent-line)}
+.wz-r.ed-sk{background:var(--agent-soft);border-color:var(--agent-line)}
+.wz-r.ed-cn{background:var(--good-soft);border-color:var(--good)}
+.wz-r.ed-mc{background:var(--bg-2);border-color:var(--line-2)}
+.wr-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.wr-i{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ed-sk .wr-i{background:var(--agent);color:#fff}.ed-sk .wr-l{color:var(--agent)}
+.ed-cn .wr-i{background:var(--good);color:#fff}.ed-cn .wr-l{color:var(--good)}
+.ed-pl .wr-i{background:var(--accent);color:#fff}.ed-pl .wr-l{color:var(--accent)}
+.ed-mc .wr-i{background:var(--ink-2);color:var(--bg)}.ed-mc .wr-l{color:var(--ink-2)}
+.wr-l{font-size:16px;font-weight:600}
+.wr-b{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.wr-b strong{color:var(--ink);font-weight:600}
+.wr-b code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.wr-x{margin-top:10px;font-family:var(--mono);font-size:11.5px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px;color:var(--ink-2)}
+.wz-reset{display:inline-flex;align-items:center;gap:6px;margin-top:12px;height:32px;padding:0 13px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:11.5px;font-weight:600;cursor:pointer;transition:.18s}
+.wz-reset:hover{color:var(--ink);border-color:var(--line-2)}
+.wz-reset i{font-size:14px}
+
+/* ===== MYTH CARDS ===== */
+.myth{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:.18s}
+.myth:hover{border-color:var(--line-2);border-left-color:var(--bad)}
+.myth .mh{display:flex;align-items:center;gap:10px}
+.myth .mi{width:30px;height:30px;border-radius:9px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:.18s}
+.myth .mq{font-size:14px;font-weight:600;flex:1}
+.myth .mc2{font-size:11px;color:var(--ink-3);font-family:var(--mono);white-space:nowrap}
+.myth .mt{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2);font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.myth .mt strong{color:var(--ink)}
+.myth.open .mt{display:block;animation:fs .25s ease}
+.myth.open{border-left-color:var(--good)}
+.myth.open .mi{background:var(--good-soft);color:var(--good)}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.eco-row{grid-template-columns:1fr}.edg{grid-template-columns:1fr}.pan-tabs{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background-image:none}.bar,.ic-btn,.wz-reset,.lang{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.eco-d,.wz-r{display:block!important}.myth .mt{display:block!important}.eco,.pan,.note,.tblw,.wz,.myth,.eco-d,.wz-r{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Lezione B6.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 6 — Estendere Claude</div>
+  <h1 class="rv" data-i="h1">La mappa dell'ecosistema Claude</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="goalH">L'obiettivo di questa lezione</h4><p data-i-html="goalP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-topology-star-3"></i><span class="no">01</span><h2 data-i="s1">I quattro mattoni</h2></div>
+  <p class="lead-p rv" data-i-html="s1p"></p>
+
+  <div class="eco rv">
+    <div class="eco-hint"><i class="ti ti-pointer"></i> <span data-i="ecoHint"></span></div>
+    <div class="lay pl" id="lay-pl" onclick="eco('pl')"><i class="ti ti-package"></i> Plugin <span class="lb" data-i="layPl"></span></div>
+    <div class="eco-row">
+      <div class="lay sk" id="lay-sk" onclick="eco('sk')"><i class="ti ti-file-code-2"></i> Skill <span class="lb" data-i="laySk"></span></div>
+      <div class="lay cn" id="lay-cn" onclick="eco('cn')"><i class="ti ti-plug"></i> Connector <span class="lb" data-i="layCn"></span></div>
+    </div>
+    <div class="lay mc" id="lay-mc" onclick="eco('mc')"><i class="ti ti-cpu"></i> MCP — Model Context Protocol <span class="lb" data-i="layMc"></span></div>
+
+    <div class="eco-d ed-pl" id="ed-pl">
+      <div class="edt"><i class="ti ti-package"></i> <span data-i="edtPl"></span></div>
+      <div class="edg">
+        <div class="edb"><h5 data-i="edWhat"></h5><p data-i-html="plWhat"></p></div>
+        <div class="edb"><h5 data-i="edFor"></h5><p data-i-html="plFor"></p></div>
+        <div class="edb"><h5 data-i="edWhen"></h5><p data-i-html="plWhen"></p></div>
+        <div class="edb"><h5 data-i="edCase"></h5><p data-i-html="plCase"></p></div>
+      </div>
+      <div class="edr" data-i-html="plRel"></div>
+    </div>
+
+    <div class="eco-d ed-sk" id="ed-sk">
+      <div class="edt"><i class="ti ti-file-code-2"></i> <span data-i="edtSk"></span></div>
+      <div class="edg">
+        <div class="edb"><h5 data-i="edWhat"></h5><p data-i-html="skWhat"></p></div>
+        <div class="edb"><h5 data-i="edFor"></h5><p data-i-html="skFor"></p></div>
+        <div class="edb"><h5 data-i="edWhen"></h5><p data-i-html="skWhen"></p></div>
+        <div class="edb"><h5 data-i="edCase"></h5><p data-i-html="skCase"></p></div>
+      </div>
+      <div class="edr" data-i-html="skRel"></div>
+    </div>
+
+    <div class="eco-d ed-cn" id="ed-cn">
+      <div class="edt"><i class="ti ti-plug"></i> <span data-i="edtCn"></span></div>
+      <div class="edg">
+        <div class="edb"><h5 data-i="edWhat"></h5><p data-i-html="cnWhat"></p></div>
+        <div class="edb"><h5 data-i="edFor"></h5><p data-i-html="cnFor"></p></div>
+        <div class="edb"><h5 data-i="edWhen"></h5><p data-i-html="cnWhen"></p></div>
+        <div class="edb"><h5 data-i="edCase"></h5><p data-i-html="cnCase"></p></div>
+      </div>
+      <div class="edr" data-i-html="cnRel"></div>
+    </div>
+
+    <div class="eco-d ed-mc" id="ed-mc">
+      <div class="edt"><i class="ti ti-cpu"></i> <span data-i="edtMc"></span></div>
+      <div class="edg">
+        <div class="edb"><h5 data-i="edWhat"></h5><p data-i-html="mcWhat"></p></div>
+        <div class="edb"><h5 data-i="edFor"></h5><p data-i-html="mcFor"></p></div>
+        <div class="edb"><h5 data-i="edWhenMc"></h5><p data-i-html="mcWhen"></p></div>
+        <div class="edb"><h5 data-i="edStatus"></h5><p data-i-html="mcStatus"></p></div>
+      </div>
+      <div class="edr" data-i-html="mcRel"></div>
+    </div>
+  </div>
+
+  <div class="key rv"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layout-sidebar"></i><span class="no">02</span><h2 data-i="s2">Dove vivono nell'interfaccia</h2></div>
+  <p class="lead-p rv" data-i-html="s2p"></p>
+
+  <div class="pan rv">
+    <div class="pan-bar"><i class="ti ti-adjustments"></i> <span data-i="panBar"></span></div>
+    <div class="pan-tabs">
+      <div class="pan-tab pt1"><i class="ti ti-file-code-2"></i>Skills</div>
+      <div class="pan-tab pt2"><i class="ti ti-plug"></i>Connectors</div>
+      <div class="pan-tab pt3"><i class="ti ti-package"></i>Plugins</div>
+      <div class="pan-tab pt4"><i class="ti ti-grid-dots"></i><span data-i="panTab4"></span></div>
+    </div>
+    <div class="pan-note" data-i-html="panNote"></div>
+  </div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="noteInstrH">Le Istruzioni non sono Skill</h4><p data-i-html="noteInstrP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">03</span><h2 data-i="s3">A colpo d'occhio</h2></div>
+  <div class="tblw rv">
+    <table class="tbl">
+      <thead><tr><th data-i="thEl"></th><th data-i="thOne"></th><th data-i="thWhere"></th><th data-i="thBuild"></th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill p-sk"><i class="ti ti-file-code-2"></i> Skill</span></td><td class="one" data-i="tSkOne"></td><td>Customize → Skills</td><td class="yes" data-i="tSkBuild"></td></tr>
+        <tr><td><span class="pill p-cn"><i class="ti ti-plug"></i> Connector</span></td><td class="one" data-i="tCnOne"></td><td>Customize → Connectors</td><td class="no-c" data-i="tCnBuild"></td></tr>
+        <tr><td><span class="pill p-mc"><i class="ti ti-cpu"></i> MCP</span></td><td class="one" data-i="tMcOne"></td><td data-i="tMcWhere"></td><td class="dev" data-i="tMcBuild"></td></tr>
+        <tr><td><span class="pill p-pl"><i class="ti ti-package"></i> Plugin</span></td><td class="one" data-i="tPlOne"></td><td>Customize → Plugins</td><td class="yes" data-i="tPlBuild"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-wand"></i><span class="no">04</span><h2 data-i="s4">«Mi serve…» — il selettore rapido</h2></div>
+  <div class="wz rv">
+    <div class="wz-t"><i class="ti ti-help-circle"></i> <span data-i="wzT"></span></div>
+    <div class="wz-s" data-i="wzS"></div>
+    <div class="wz-btns">
+      <button class="wz-b" onclick="wiz(this,'sk')"><i class="ti ti-repeat"></i> <span data-i="wzbSk"></span></button>
+      <button class="wz-b" onclick="wiz(this,'cn')"><i class="ti ti-calendar"></i> <span data-i="wzbCn"></span></button>
+      <button class="wz-b" onclick="wiz(this,'pl')"><i class="ti ti-package"></i> <span data-i="wzbPl"></span></button>
+      <button class="wz-b" onclick="wiz(this,'mc')"><i class="ti ti-code"></i> <span data-i="wzbMc"></span></button>
+    </div>
+
+    <div class="wz-r ed-sk" id="wr-sk">
+      <div class="wr-h"><div class="wr-i"><i class="ti ti-file-code-2"></i></div><div class="wr-l" data-i="wrlSk"></div></div>
+      <div class="wr-b" data-i-html="wrbSk"></div>
+      <div class="wr-x" data-i="wrxSk"></div>
+      <button class="wz-reset" onclick="wizReset()"><i class="ti ti-refresh"></i> <span data-i="wzReset"></span></button>
+    </div>
+    <div class="wz-r ed-cn" id="wr-cn">
+      <div class="wr-h"><div class="wr-i"><i class="ti ti-plug"></i></div><div class="wr-l" data-i="wrlCn"></div></div>
+      <div class="wr-b" data-i-html="wrbCn"></div>
+      <div class="wr-x" data-i="wrxCn"></div>
+      <button class="wz-reset" onclick="wizReset()"><i class="ti ti-refresh"></i> <span data-i="wzReset"></span></button>
+    </div>
+    <div class="wz-r ed-pl" id="wr-pl">
+      <div class="wr-h"><div class="wr-i"><i class="ti ti-package"></i></div><div class="wr-l" data-i="wrlPl"></div></div>
+      <div class="wr-b" data-i-html="wrbPl"></div>
+      <div class="wr-x" data-i="wrxPl"></div>
+      <button class="wz-reset" onclick="wizReset()"><i class="ti ti-refresh"></i> <span data-i="wzReset"></span></button>
+    </div>
+    <div class="wz-r ed-mc" id="wr-mc">
+      <div class="wr-h"><div class="wr-i"><i class="ti ti-cpu"></i></div><div class="wr-l" data-i="wrlMc"></div></div>
+      <div class="wr-b" data-i-html="wrbMc"></div>
+      <div class="wr-x" data-i="wrxMc"></div>
+      <button class="wz-reset" onclick="wizReset()"><i class="ti ti-refresh"></i> <span data-i="wzReset"></span></button>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">05</span><h2 data-i="s5">Tre equivoci da abbandonare</h2></div>
+  <p class="lead-p rv" data-i="s5p"></p>
+
+  <div class="rv">
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m1q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m1t"></div>
+    </div>
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m2q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m2t"></div>
+    </div>
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m3q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m3t"></div>
+    </div>
+  </div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-map"></i></div><div><h4 data-i="mapH">La mappa in un respiro</h4><p data-i-html="mapP"></p></div></div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-arrow-right"></i></div><div><h4 data-i="nextH">Prossimo: le Skill da vicino</h4><p data-i-html="nextP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — La mappa dell'ecosistema Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 6 — Estendere Claude',
+h1:'La mappa dell\'ecosistema Claude',
+lede:'Skill, Plugin, MCP, Connettori. Quattro termini che incontrerai ovunque — spesso usati come se fossero la stessa cosa. Non lo sono. Questa lezione li separa: cos\'è ciascuno, cosa fa e <b>quale scegliere esattamente</b>.',
+goalH:'L\'obiettivo di questa lezione',
+goalP:'Se hai letto un po\' di documentazione di Claude di recente, hai visto queste quattro parole dappertutto — spesso trattate come sinonimi. Non lo sono. Alla fine di questa pagina porterai con te una <strong>mappa mentale pulita</strong>: una definizione, un compito e una condizione di attivazione per ogni mattone.',
+s1:'I quattro mattoni',
+s1p:'L\'ecosistema di estensibilità di Claude è a strati. Il <strong>Plugin</strong> è il contenitore più esterno; dentro vivono <strong>Skill</strong> e <strong>Connettori</strong>; i Connettori poggiano sul protocollo <strong>MCP</strong> che sta sotto a tutto. Clicca ogni livello per aprire la sua scheda di dettaglio.',
+ecoHint:'Clicca un livello per vederne la definizione, l\'uso e come si lega agli altri',
+layPl:'Contenitore',laySk:'Procedura',layCn:'Porta',layMc:'Protocollo',
+edWhat:'Cos\'è',edFor:'A cosa serve',edWhen:'Quando usarlo',edWhenMc:'Quando "usarlo"',edCase:'Caso tipico',edStatus:'Stato attuale',
+edtPl:'Plugin — il pacchetto completo',
+plWhat:'Un bundle che impacchetta più Skill + Connettori + sub-agent + hook in un unico pacchetto pronto all\'uso.',
+plFor:'Avere un sistema verticale completo già configurato: lo installi una volta e hai subito capacità, connessioni e automazioni per un dominio specifico.',
+plWhen:'Vuoi un kit verticale già pronto (marketing, legale, finance, HR) senza costruire ogni pezzo da solo.',
+plCase:'Un Plugin "marketing": Skill per le campagne, un Connettore CRM, un sub-agent di revisione. Un\'installazione, tutto al suo posto.',
+plRel:'<strong>Come si lega:</strong> un Plugin <em>contiene</em> Skill e Connettori (che a loro volta parlano via MCP). Lo trovi sotto <em>Customize → Plugins</em> o nel catalogo ufficiale su <code>claude.com/plugins</code>.',
+edtSk:'Skill — la procedura specializzata',
+skWhat:'Una procedura salvata: una cartella con un file <code>SKILL.md</code> (Markdown + frontmatter YAML) che Claude carica solo quando è rilevante.',
+skFor:'Standardizzare flussi di lavoro ripetitivi senza riscrivere le istruzioni ogni volta. Nessun codice richiesto: il cuore è Markdown in linguaggio naturale.',
+skWhen:'Hai un flusso ripetibile che non ha bisogno di accedere a servizi esterni — per esempio generare un piano editoriale settimanale o analizzare il feedback dei clienti.',
+skCase:'<code>piano-editoriale-settimanale</code>, <code>analisi-feedback-clienti</code>. La invochi con <code>/</code> in chat, oppure si attiva da sola.',
+skRel:'<strong>Come si lega:</strong> le Skill sono un componente dei Plugin. Non hanno bisogno di MCP. Vivono in <em>Customize → Skills</em>. Tre origini: incluse nel tuo piano (Excel, Word, PDF…), impacchettate dentro un Plugin installato, o create da te.',
+edtCn:'Connettore — la porta verso un servizio',
+cnWhat:'Una connessione concreta e autenticata a UN servizio specifico (Gmail, Notion, Google Calendar, Slack…), realizzata sul protocollo MCP.',
+cnFor:'Permettere a Claude di leggere e agire sugli strumenti che già usi. È l\'"MCP pronto da accendere" per l\'utente non tecnico.',
+cnWhen:'Vuoi Claude sui tuoi dati reali: leggere le email, controllare gli eventi del calendario, consultare le note Notion, scrivere task in un tool di PM.',
+cnCase:'Connettore Google Calendar: Claude legge i tuoi eventi e trova gli slot liberi. Connettore Notion: Claude consulta la tua knowledge base personale.',
+cnRel:'<strong>Come si lega:</strong> un Connettore <em>è</em> un server MCP reso disponibile e autenticato in un clic. MCP è il protocollo sotto; il Connettore è l\'istanza puntata su un servizio specifico. Vive in <em>Customize → Connectors</em>, attivato via OAuth.',
+edtMc:'MCP — il protocollo, non il prodotto',
+mcWhat:'Model Context Protocol: lo standard <em>aperto</em> che le app AI usano per parlare con sistemi esterni. La metafora ufficiale di Anthropic: "USB-C per le applicazioni AI".',
+mcFor:'Definisce il linguaggio comune che permette a qualsiasi client AI di connettersi a qualsiasi server MCP. Non è un prodotto: è infrastruttura.',
+mcWhen:'Se sei uno sviluppatore e vuoi esporre un sistema interno a Claude, costruisci un server MCP. Da utente lo tocchi solo indirettamente, attraverso i Connettori.',
+mcStatus:'Annunciato da Anthropic a novembre 2024. Da fine 2025 governato dalla <strong>Agentic AI Foundation</strong> (vendor-neutral, non più "di Anthropic"). Adottato anche da OpenAI, Google DeepMind e Microsoft Copilot.',
+mcRel:'<strong>Come si lega:</strong> MCP è il protocollo <em>sotto</em> ai Connettori. Non vedi mai MCP direttamente: vedi i Connettori. Per l\'utente non tecnico → <em>Connettore = MCP "pronto da accendere"</em>.',
+key1:'MCP è il protocollo. Un Connettore è una porta. Una Skill è una procedura. Un Plugin è una valigia che porta tutto.',
+s2:'Dove vivono nell\'interfaccia',
+s2p:'In <strong>Cowork</strong> (e nell\'app web di Claude) tutto vive nel pannello <strong>Customize</strong> della sidebar di sinistra. Tre tab principali — più una directory unificata, lanciata a fine 2025, che li raccoglie tutti in un solo posto.',
+panBar:'Pannello Customize — tab principali',panTab4:'Directory',
+panNote:'La <strong>Directory unificata</strong> (il pulsante "+") raccoglie Skill, Connettori e Plugin in un unico catalogo navigabile — niente più caccia tra tab separate.',
+noteInstrH:'Le Istruzioni non sono Skill',
+noteInstrP:'Nel pannello Customize trovi anche le <strong>Istruzioni</strong> — indicazioni permanenti su tono, formato e convenzioni. Sono un concetto separato: le istruzioni dicono <strong>come comportarsi sempre</strong>; le Skill dicono <strong>cosa fare in situazioni specifiche</strong>.',
+s3:'A colpo d\'occhio',
+thEl:'Elemento',thOne:'In una frase',thWhere:'Dove vive',thBuild:'Lo costruisci tu?',
+tSkOne:'Una procedura specializzata e salvata (una cartella con un SKILL.md)',tSkBuild:'Sì, facilmente',
+tCnOne:'Una connessione concreta a un servizio (Gmail, Notion…), via MCP',tCnBuild:'No — lo accendi',
+tMcOne:'Lo standard aperto che permette a Claude di parlare con sistemi esterni',tMcWhere:'Sotto il cofano',tMcBuild:'Solo se sei dev',
+tPlOne:'Un bundle: Skill + Connettori + sub-agent + hook, pre-assemblati',tPlBuild:'Sì (avanzato) — o ne installi uno',
+s4:'«Mi serve…» — il selettore rapido',
+wzT:'Quale mattone risolve il tuo problema?',
+wzS:'Scegli la situazione che ti descrive meglio',
+wzbSk:'Ripeto lo stesso flusso di lavoro — senza dati esterni di mezzo',
+wzbCn:'Voglio Claude dentro i miei strumenti (email, calendario, note…)',
+wzbPl:'Voglio un sistema verticale completo e già pronto',
+wzbMc:'Sono uno sviluppatore — voglio esporre un sistema interno',
+wrlSk:'Ti serve una Skill',
+wrbSk:'Una Skill è una procedura salvata in un file <code>SKILL.md</code>. Niente codice: scrivi le istruzioni in Markdown, carichi la cartella sotto Customize → Skills, e Claude la usa quando serve — in automatico, o via <code>/nome-skill</code>.<br><br>La costruisci tu in pochi minuti, o usi la Skill ufficiale <strong>skill-creator</strong>, che ti intervista e scrive il file per te.',
+wrxSk:'Customize → Skills → "+" → "Create skill" o "Upload a skill" (ZIP)',
+wrlCn:'Ti serve un Connettore',
+wrbCn:'Un Connettore è una connessione autenticata a un servizio specifico. Niente da scrivere: scegli il servizio dalla lista, completi il login OAuth, e Claude può accedere ai tuoi dati.<br><br><strong>Nota:</strong> Claude rispecchia i tuoi permessi esistenti, e ogni azione richiede la tua approvazione esplicita. Con Gmail crea bozze — non invia.',
+wrxCn:'Customize → Connectors → "+" → scegli un servizio → Connect (flusso OAuth)',
+wrlPl:'Ti serve un Plugin',
+wrbPl:'Un Plugin è un kit completo: installi un pacchetto e hai subito Skill, Connettori, sub-agent e hook pre-configurati per un dominio.<br><br><strong>Nota:</strong> hook e sub-agent girano <strong>solo in Cowork</strong> (non nella chat web). Installa solo da fonti fidate: controlla la card "Will install" prima di procedere.',
+wrxPl:'Customize → Plugins → "Browse" → scegli un plugin → Install',
+wrlMc:'Ti serve costruire un server MCP',
+wrbMc:'Se hai un sistema interno che vuoi far raggiungere a Claude — un database proprietario, un\'API aziendale, un tool custom — costruisci un server MCP. È lo strato tecnico su cui poggia tutto l\'ecosistema.<br><br>MCP è uno standard aperto (governato dalla Agentic AI Foundation da fine 2025), adottato da OpenAI, Google, Microsoft e altri. Docs e SDK su <code>modelcontextprotocol.io</code>.',
+wrxMc:'modelcontextprotocol.io → Getting Started → Build a server',
+wzReset:'Ricomincia',
+s5:'Tre equivoci da abbandonare',
+s5p:'Clicca ogni affermazione per scoprire perché è sbagliata.',
+m1q:'«MCP e Connettore sono la stessa cosa»',
+m1t:'<strong>No.</strong> MCP è lo standard (il protocollo); un Connettore è una sua istanza concreta, puntata su un servizio specifico. È la differenza tra "USB-C" (lo standard) e "il cavo che collega il laptop al monitor" (l\'istanza).',
+m2q:'«Un Plugin è solo una Skill più grande»',
+m2t:'<strong>No.</strong> Un Plugin <em>contiene</em> Skill — e molto altro: Connettori, sub-agent, hook. È la differenza tra un singolo attrezzo e una cassetta degli attrezzi completa.',
+m3q:'«Devo essere tecnico per usare tutto questo»',
+m3t:'<strong>No</strong> — non per Skill, Connettori e Plugin: gestisci tutti e tre dal pannello Customize senza scrivere codice. <strong>Sì</strong> solo per costruire un server MCP da zero (e non è il caso d\'uso di questo corso).',
+mapH:'La mappa in un respiro',
+mapP:'<strong>Le Skill sono procedure. I Connettori sono porte. I Plugin sono valigie che portano entrambi. MCP è il protocollo che fa funzionare le porte.</strong> Tre strumenti diversi, tre livelli diversi di espansione — e più il flusso è complesso, più ne combini.',
+nextH:'Prossimo: le Skill da vicino',
+nextP:'La mappa è chiara. Partiamo dalle <strong>Skill</strong> — il mattone più semplice da capire e da creare, e l\'unico che puoi costruire tu oggi senza scrivere una sola riga di codice.',
+foot:'Morfeus — La mappa dell\'ecosistema Claude',
+mcLabel:'reveal ▾',mcDone:'capito ✓'
+},
+en:{
+pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 6 — Extending Claude',
+h1:'The Claude ecosystem map',
+lede:'Skills, Plugins, MCP, Connectors. Four terms you will meet everywhere — often used as if they meant the same thing. They don\'t. This lesson pulls them apart: what each one is, what it does, and <b>exactly which one to reach for</b>.',
+goalH:'The goal of this lesson',
+goalP:'If you\'ve read any Claude documentation lately, you\'ve seen these four words everywhere — frequently treated as synonyms. They are not. By the end of this page you\'ll carry a <strong>clean mental map</strong>: one definition, one job and one trigger condition per building block.',
+s1:'The four building blocks',
+s1p:'Claude\'s extensibility ecosystem is layered. The <strong>Plugin</strong> is the outermost container; inside it live <strong>Skills</strong> and <strong>Connectors</strong>; Connectors rest on the <strong>MCP</strong> protocol underneath everything. Click each layer to open its detail card.',
+ecoHint:'Click a layer to see its definition, its use and how it relates to the others',
+layPl:'Container',laySk:'Procedure',layCn:'Door',layMc:'Protocol',
+edWhat:'What it is',edFor:'What it\'s for',edWhen:'When to use it',edWhenMc:'When to "use" it',edCase:'Typical case',edStatus:'Current status',
+edtPl:'Plugin — the complete package',
+plWhat:'A bundle that packs several Skills + Connectors + sub-agents + hooks into a single ready-to-use package.',
+plFor:'Getting a complete vertical system already configured: install it once and you instantly have capabilities, connections and automations for a specific domain.',
+plWhen:'You want a ready-made vertical kit (marketing, legal, finance, HR) without building every piece yourself.',
+plCase:'A "marketing" Plugin: campaign Skills, a CRM Connector, a review sub-agent. One install, everything in place.',
+plRel:'<strong>How it relates:</strong> a Plugin <em>contains</em> Skills and Connectors (which in turn talk via MCP). You\'ll find it under <em>Customize → Plugins</em> or in the official catalog at <code>claude.com/plugins</code>.',
+edtSk:'Skill — the specialised procedure',
+skWhat:'A saved procedure: a folder with a <code>SKILL.md</code> file (Markdown + YAML frontmatter) that Claude loads only when it\'s relevant.',
+skFor:'Standardising repetitive workflows without rewriting the instructions every time. No code required: the core is natural-language Markdown.',
+skWhen:'You have a repeatable workflow that needs no access to external services — say, generating a weekly editorial plan or analysing customer feedback.',
+skCase:'<code>weekly-editorial-plan</code>, <code>customer-feedback-analysis</code>. Invoke with <code>/</code> in chat, or let it trigger automatically.',
+skRel:'<strong>How it relates:</strong> Skills are one component of Plugins. They don\'t need MCP. They live in <em>Customize → Skills</em>. Three origins: built into your plan (Excel, Word, PDF…), bundled inside an installed Plugin, or created by you.',
+edtCn:'Connector — the door to a service',
+cnWhat:'A concrete, authenticated connection to ONE specific service (Gmail, Notion, Google Calendar, Slack…), implemented over the MCP protocol.',
+cnFor:'Letting Claude read and act on the tools you already use. It\'s the "MCP ready to switch on" for the non-technical user.',
+cnWhen:'You want Claude on your real data: reading email, checking calendar events, consulting Notion notes, writing tasks into a PM tool.',
+cnCase:'Google Calendar Connector: Claude reads your events and finds free slots. Notion Connector: Claude consults your personal knowledge base.',
+cnRel:'<strong>How it relates:</strong> a Connector <em>is</em> an MCP server made available and authenticated in one click. MCP is the protocol underneath; the Connector is the instance pointed at one specific service. Lives in <em>Customize → Connectors</em>, activated via OAuth.',
+edtMc:'MCP — the protocol, not the product',
+mcWhat:'Model Context Protocol: the <em>open</em> standard AI apps use to talk to external systems. Anthropic\'s official metaphor: "USB-C for AI applications".',
+mcFor:'It defines the common language that lets any AI client connect to any MCP server. It isn\'t a product: it\'s infrastructure.',
+mcWhen:'If you\'re a developer and want to expose an internal system to Claude, you build an MCP server. As a user, you touch it only indirectly, through Connectors.',
+mcStatus:'Announced by Anthropic in Nov 2024. Since late 2025 governed by the <strong>Agentic AI Foundation</strong> (vendor-neutral, no longer "Anthropic\'s"). Also adopted by OpenAI, Google DeepMind and Microsoft Copilot.',
+mcRel:'<strong>How it relates:</strong> MCP is the protocol <em>underneath</em> Connectors. You never see MCP directly: you see Connectors. For the non-technical user → <em>Connector = MCP "ready to switch on"</em>.',
+key1:'MCP is the protocol. A Connector is a door. A Skill is a procedure. A Plugin is a suitcase that carries all of it.',
+s2:'Where they live in the interface',
+s2p:'In <strong>Cowork</strong> (and in the Claude web app) everything lives in the <strong>Customize</strong> panel of the left sidebar. Three main tabs — plus a unified directory, launched in late 2025, that gathers them all in one place.',
+panBar:'Customize panel — main tabs',panTab4:'Directory',
+panNote:'The <strong>Unified Directory</strong> (the "+" button) gathers Skills, Connectors and Plugins into a single browsable catalog — no more hunting through separate tabs.',
+noteInstrH:'Instructions are not Skills',
+noteInstrP:'In the Customize panel you\'ll also find <strong>Instructions</strong> — permanent guidance about tone, format and conventions. They\'re a separate concept: instructions say <strong>how to behave at all times</strong>; Skills say <strong>what to do in specific situations</strong>.',
+s3:'At a glance',
+thEl:'Element',thOne:'In one sentence',thWhere:'Where it lives',thBuild:'Do you build it?',
+tSkOne:'A saved, specialised procedure (a folder with a SKILL.md)',tSkBuild:'Yes, easily',
+tCnOne:'A concrete connection to one service (Gmail, Notion…), via MCP',tCnBuild:'No — you switch it on',
+tMcOne:'The open standard that lets Claude talk to external systems',tMcWhere:'Under the hood',tMcBuild:'Only if you\'re a dev',
+tPlOne:'A bundle: Skills + Connectors + sub-agents + hooks, pre-assembled',tPlBuild:'Yes (advanced) — or install one',
+s4:'"I need…" — the quick selector',
+wzT:'Which block solves your problem?',
+wzS:'Pick the situation that describes you best',
+wzbSk:'I repeat the same workflow — no external data involved',
+wzbCn:'I want Claude inside my tools (email, calendar, notes…)',
+wzbPl:'I want a complete, ready-made vertical system',
+wzbMc:'I\'m a developer — I want to expose an internal system',
+wrlSk:'You need a Skill',
+wrbSk:'A Skill is a procedure saved in a <code>SKILL.md</code> file. No code needed: write the instructions in Markdown, upload the folder under Customize → Skills, and Claude uses it whenever it fits — automatically, or via <code>/skill-name</code>.<br><br>Build it yourself in minutes, or use the official <strong>skill-creator</strong> Skill, which interviews you and writes the file for you.',
+wrxSk:'Customize → Skills → "+" → "Create skill" or "Upload a skill" (ZIP)',
+wrlCn:'You need a Connector',
+wrbCn:'A Connector is an authenticated connection to one specific service. Nothing to write: pick the service from the list, complete the OAuth login, and Claude can access your data.<br><br><strong>Note:</strong> Claude mirrors your existing permissions, and every action requires your explicit approval. With Gmail it creates drafts — it doesn\'t send.',
+wrxCn:'Customize → Connectors → "+" → pick a service → Connect (OAuth flow)',
+wrlPl:'You need a Plugin',
+wrbPl:'A Plugin is a complete kit: install one package and you instantly get Skills, Connectors, sub-agents and hooks pre-configured for a domain.<br><br><strong>Note:</strong> hooks and sub-agents run <strong>only in Cowork</strong> (not in the web chat). Install only from trusted sources: review the "Will install" card before you proceed.',
+wrxPl:'Customize → Plugins → "Browse" → pick a plugin → Install',
+wrlMc:'You need to build an MCP server',
+wrbMc:'If you have an internal system you want Claude to reach — a proprietary database, a company API, a custom tool — you build an MCP server. It\'s the technical layer the whole ecosystem rests on.<br><br>MCP is an open standard (governed by the Agentic AI Foundation since late 2025), adopted by OpenAI, Google, Microsoft and others. Docs and SDKs at <code>modelcontextprotocol.io</code>.',
+wrxMc:'modelcontextprotocol.io → Getting Started → Build a server',
+wzReset:'Start over',
+s5:'Three misconceptions to drop',
+s5p:'Click each statement to reveal why it\'s wrong.',
+m1q:'"MCP and Connector are the same thing"',
+m1t:'<strong>No.</strong> MCP is the standard (the protocol); a Connector is one concrete instance of it, pointed at a specific service. It\'s the difference between "USB-C" (the standard) and "the cable connecting your laptop to the monitor" (the instance).',
+m2q:'"A Plugin is just a bigger Skill"',
+m2t:'<strong>No.</strong> A Plugin <em>contains</em> Skills — and much more: Connectors, sub-agents, hooks. It\'s the difference between a single tool and a fully stocked toolbox.',
+m3q:'"I need to be technical to use any of this"',
+m3t:'<strong>No</strong> — not for Skills, Connectors and Plugins: you manage all three from the Customize panel without writing code. <strong>Yes</strong> only for building an MCP server from scratch (and that isn\'t this course\'s use case).',
+mapH:'The map in one breath',
+mapP:'<strong>Skills are procedures. Connectors are doors. Plugins are suitcases that carry both. MCP is the protocol that makes the doors work.</strong> Three different tools, three different levels of expansion — and the more complex the workflow, the more of them you combine.',
+nextH:'Next: Skills in depth',
+nextP:'The map is clear. We start with <strong>Skills</strong> — the simplest block to understand and to create, and the one you can build yourself today without writing a single line of code.',
+foot:'Morfeus — The Claude ecosystem map',
+mcLabel:'reveal ▾',mcDone:'got it ✓'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.querySelectorAll('.myth').forEach(function(m){var c=m.querySelector('[data-mc]');if(c)c.textContent=m.classList.contains('open')?DICT[LANG].mcDone:DICT[LANG].mcLabel});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ecoKeys=['pl','sk','cn','mc'],ecoCur=null;
+function eco(k){
+  if(ecoCur===k){ecoClose();return}
+  ecoCur=k;
+  ecoKeys.forEach(function(x){
+    document.getElementById('lay-'+x).classList.toggle('on',x===k);
+    document.getElementById('ed-'+x).classList.toggle('show',x===k);
+  });
+  var d=document.getElementById('ed-'+k);
+  setTimeout(function(){d.scrollIntoView({behavior:'smooth',block:'nearest'})},120);
+}
+function ecoClose(){
+  ecoCur=null;
+  ecoKeys.forEach(function(x){
+    document.getElementById('lay-'+x).classList.remove('on');
+    document.getElementById('ed-'+x).classList.remove('show');
+  });
+}
+
+function wiz(btn,k){
+  document.querySelectorAll('.wz-b').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  ecoKeys.forEach(function(x){
+    var r=document.getElementById('wr-'+x);
+    if(r)r.classList.toggle('show',x===k);
+  });
+  var res=document.getElementById('wr-'+k);
+  setTimeout(function(){res.scrollIntoView({behavior:'smooth',block:'nearest'})},120);
+}
+function wizReset(){
+  document.querySelectorAll('.wz-b').forEach(function(b){b.classList.remove('on')});
+  document.querySelectorAll('.wz-r').forEach(function(r){r.classList.remove('show')});
+}
+
+function myth(el){
+  el.classList.toggle('open');
+  el.querySelector('[data-mc]').textContent=el.classList.contains('open')?DICT[LANG].mcDone:DICT[LANG].mcLabel;
+}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

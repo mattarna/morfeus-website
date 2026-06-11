@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Istruzioni e memoria: personalizzare Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.scen{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px}
+.scen .si{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.scen.bad{border-color:var(--bad)}.scen.bad .si{background:var(--bad-soft);color:var(--bad)}
+.scen.good{border-color:var(--teal)}.scen.good .si{background:var(--teal-soft);color:var(--teal)}
+.scen h4{font-size:14px;font-weight:600;margin-bottom:3px}.scen p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.demo{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin-bottom:12px}
+.demo .dl{padding:11px 18px;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.demo.bad .dl{color:var(--bad);background:var(--bad-soft)}.demo.good .dl{color:var(--teal);background:var(--teal-soft)}
+.demo .dc{padding:16px 18px;border-top:1px solid var(--line)}
+.demo .um{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:10px 13px;margin-bottom:12px;color:var(--ink-2)}
+.demo .am{font-size:13.5px;line-height:1.6}
+.demo.bad .am{color:var(--ink-3);font-style:italic}.demo.good .am{color:var(--ink)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch}
+.vsc{padding:20px;border-radius:var(--r-l)}
+.vsc.a{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.vsc.b{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.vsc h4{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.vsc.a h4{color:var(--accent)}.vsc.b h4{color:var(--teal)}
+.vsc .sub{font-size:12px;color:var(--ink-3);margin-bottom:13px}
+.vsc ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.vsc li{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+.vsc li i{font-size:14px;flex-shrink:0;margin-top:2px}.vsc.a li i{color:var(--accent)}.vsc.b li i{color:var(--teal)}
+.vsd{display:flex;align-items:center;justify-content:center;padding:0 14px;font-family:var(--mono);font-weight:700;color:var(--ink-3)}
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer{display:flex;align-items:center;gap:13px;border-radius:var(--r-l);padding:16px 18px;border:1px solid var(--line)}
+.layer .ln{width:28px;height:28px;border-radius:50%;color:#fff;font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.layer .lt{flex:1}.layer .lt strong{font-size:14px;display:block;margin-bottom:1px}.layer .lt span{font-size:12.5px;color:var(--ink-2)}
+.layer .lsc{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.blocks{display:flex;flex-direction:column;gap:8px}
+.blk{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.blk:hover{border-color:var(--line-2)}.blk.on{border-color:var(--accent);background:var(--accent-soft)}
+.blk .bn{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blk.on .bn{background:var(--accent);color:#fff}
+.blk .bt{font-size:14.5px;font-weight:600}
+.blkdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.blkdetail p{font-size:14.5px;color:var(--ink-2)}
+.blkdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.75;overflow-x:auto}
+.code .hh{color:var(--accent);font-weight:700}.code .hr{color:var(--bad)}.code .ht{color:var(--teal)}.code .ha{color:var(--agent)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.tbl th{text-align:left;padding:11px 13px;font-family:var(--mono);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line-2)}
+.tbl td{padding:11px 13px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}.tbl .fn{font-weight:600;color:var(--ink)}
+.tblw{overflow-x:auto}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.warn i{color:var(--agent);font-size:21px;flex-shrink:0}.warn h4{font-size:14px;font-weight:600;color:var(--agent);margin-bottom:4px}.warn p{font-size:13.5px;color:var(--ink-2)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.vs{grid-template-columns:1fr}.vsd{padding:10px 0}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.scen,.demo,.vsc,.layer,.blk,.blkdetail,.card3,.code,.cp,.warn,.key,.tbl{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B2.8</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">Istruzioni e memoria: personalizzare Claude</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">01</span><h2 data-i="s1">Il problema di base</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="probIntro"></p>
+  <div class="scen bad rv"><div class="si"><i class="ti ti-mood-sad"></i></div><div><h4 data-i="probBadH">Senza istruzioni: il Claude generico</h4><p data-i="probBadP"></p></div></div>
+  <div class="scen good rv"><div class="si"><i class="ti ti-mood-happy"></i></div><div><h4 data-i="probGoodH">Con istruzioni + memoria: il tuo Claude</h4><p data-i="probGoodP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">02</span><h2 data-i="s2">Stesso prompt, risultato diverso</h2></div>
+  <div class="demo bad rv"><div class="dl"><i class="ti ti-x"></i> <span data-i="dBadL">Senza istruzioni personalizzate</span></div><div class="dc"><div class="um" data-i="dPrompt"></div><div class="am" data-i="dBadA"></div></div></div>
+  <div class="demo good rv"><div class="dl"><i class="ti ti-check"></i> <span data-i="dGoodL">Con istruzioni + memoria</span></div><div class="dc"><div class="um" data-i="dPrompt2"></div><div class="am" data-i="dGoodA"></div></div></div>
+  <div class="key rv" style="margin-top:20px"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">03</span><h2 data-i="s3">I due livelli di personalizzazione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="lvIntro"></p>
+  <div class="vs rv">
+    <div class="vsc a">
+      <h4><i class="ti ti-file-text"></i> <span data-i="vsAH">Instructions</span></h4>
+      <div class="sub" data-i="vsASub"></div>
+      <ul id="vsAList"></ul>
+    </div>
+    <div class="vsd">+</div>
+    <div class="vsc b">
+      <h4><i class="ti ti-brain"></i> <span data-i="vsBH">Memory</span></h4>
+      <div class="sub" data-i="vsBSub"></div>
+      <ul id="vsBList"></ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layers-intersect"></i><span class="no">04</span><h2 data-i="s4">Come si combinano i livelli</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stackIntro"></p>
+  <div class="layers rv" id="layers"></div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="stackTipH">Perché questo conta</h4><p data-i="stackTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Instructions: cosa scrivere</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="instrIntro"></p>
+  <div class="blocks rv" id="areas"></div>
+  <div class="blkdetail rv" id="areadetail"></div>
+
+  <div class="sh rv"><i class="ti ti-code"></i><span class="no">06</span><h2 data-i="s6">Esempio di istruzioni reali</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:14px" data-i="exIntro"></p>
+  <div class="code rv" id="exCode"></div>
+  <div class="warn rv"><i class="ti ti-alert-triangle"></i><div><h4 data-i="exWarnH">Nota importante</h4><p data-i="exWarnP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">07</span><h2 data-i="s7">Memory: come Claude ti conosce</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="memIntro"></p>
+  <div class="cards rv" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="card3"><div class="ci"><i class="ti ti-refresh"></i></div><h4 data-i="mem1H"></h4><p data-i="mem1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-message-plus"></i></div><h4 data-i="mem2H"></h4><p data-i="mem2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-eye"></i></div><h4 data-i="mem3H"></h4><p data-i="mem3P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:22px"><p data-i="key2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">08</span><h2 data-i="s8">6 cose che cambiano</h2></div>
+  <div class="cards rv" id="changes"></div>
+
+  <div class="sh rv"><i class="ti ti-settings"></i><span class="no">09</span><h2 data-i="s9">Dove trovare tutto</h2></div>
+  <div class="tblw rv">
+    <table class="tbl">
+      <thead><tr><th data-i="thA">Impostazione</th><th data-i="thB">Dove trovarla</th><th data-i="thC">Cosa fa</th></tr></thead>
+      <tbody id="settings"></tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">10</span><h2 data-i="s10">Errori comuni</h2></div>
+  <div class="cards rv" id="errors"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">11</span><h2 data-i="s11">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-adjustments-horizontal"></i> <span data-i="cpH">Configuralo adesso. 5 minuti.</span></h4>
+    <p data-i-html="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Istruzioni e memoria: personalizzare Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B2.8',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'Istruzioni e memoria: personalizzare Claude',
+lede:'La singola azione con il maggior impatto sulla qualità delle risposte di Claude. Configuri una volta, migliori ogni conversazione per sempre. Cinque minuti di setup che valgono più di mille prompt.',
+s1:'Il problema di base',
+probIntro:'Claude è progettato per essere utile al maggior numero di persone possibile. Il risultato? Senza istruzioni personalizzate, le risposte sono calibrate sull\'utente medio: diplomatiche, verbose, piene di preamboli, tendenzialmente condiscendenti. Non perché Claude sia stupido, ma perché non sa chi sei.',
+probBadH:'Senza istruzioni: il Claude generico',
+probBadP:'Ti dà ragione anche quando sbagli. Apre con «Ottima domanda!». Riassume quello che hai detto prima di rispondere. Aggiunge disclaimer inutili. Fa lunghe premesse prima di arrivare al punto. Ti tratta come uno che non sa nulla.',
+probGoodH:'Con istruzioni + memoria: il tuo Claude',
+probGoodP:'Ti dice quando sbagli. Va dritto al punto. Usa il tuo registro. Conosce il tuo contesto. Calibra la profondità sulla tua esperienza. Le risposte sono radicalmente diverse, anche con lo stesso prompt.',
+s2:'Stesso prompt, risultato diverso',
+dBadL:'Senza istruzioni personalizzate',
+dPrompt:'Analizza questa strategia di pricing per il mio corso',
+dBadA:'«Ottima domanda! Analizzare la strategia di pricing è un passo fondamentale. Ecco una panoramica completa dei fattori da considerare...» (segue un muro di testo generico con 15 bullet point e zero opinioni concrete)',
+dGoodL:'Con istruzioni + memoria',
+dPrompt2:'Analizza questa strategia di pricing per il mio corso',
+dGoodA:'Il pricing è troppo basso per il posizionamento che cerchi. A 297€ attiri il segmento sbagliato: chi cerca il prezzo, non chi cerca il risultato. Due opzioni: alzi a 497€ con un bonus ad alto valore percepito, oppure crei un tier a 997€ con coaching. La seconda ha margini migliori dato il tuo CAC. Vuoi che modelli i numeri?',
+key1:'La differenza non è nel prompt. È in quello che Claude sa di te prima ancora che tu scriva qualcosa.',
+s3:'I due livelli di personalizzazione',
+lvIntro:'Claude ha due meccanismi separati che lavorano insieme. Entrambi si configurano in Settings. Entrambi sono necessari: le istruzioni senza memoria sono una faccia senza nome.',
+vsAH:'Instructions',vsASub:'Regole esplicite che scrivi tu',
+vsBH:'Memory',vsBSub:'Fatti che Claude impara su di te',
+s4:'Come si combinano i livelli',
+stackIntro:'Ogni volta che scrivi un messaggio, Claude combina tutto in quest\'ordine. I livelli superiori hanno priorità in caso di conflitto.',
+stackTipH:'Perché questo conta',
+stackTipP:'Quando i livelli 1 e 2 sono configurati bene, il livello 4 (il tuo messaggio) può essere più breve e meno specifico: Claude ha già il contesto per interpretarlo. Scrivi meno, ottieni di più.',
+s5:'Instructions: cosa scrivere',
+instrIntro:'Le istruzioni stanno in <strong>Settings → Instructions for Claude</strong>. Hai circa 1.500 caratteri: non è molto, ogni parola deve contare. Ecco le 5 aree da coprire, in ordine di impatto — clicca ciascuna.',
+s6:'Esempio di istruzioni reali',
+exIntro:'Un esempio concreto di istruzioni che trasformano completamente il comportamento di Claude.',
+exWarnH:'Nota importante',
+exWarnP:'Questo è un esempio di configurazione avanzata. Non copiarlo alla lettera se non corrisponde al tuo stile. Le istruzioni migliori sono quelle che descrivono come TU vuoi lavorare, non come lavora qualcun altro.',
+s7:'Memory: come Claude ti conosce',
+memIntro:'La Memory è il secondo pezzo del puzzle. Si attiva in <strong>Settings → Capabilities</strong>. Una volta attiva, Claude fa tre cose.',
+mem1H:'Sintesi automatica',mem1P:'Ogni ~24h Claude analizza le tue conversazioni e costruisce un profilo: ruolo, progetti, preferenze, contesto. Lo aggiorna di continuo.',
+mem2H:'Memoria esplicita',mem2P:'Puoi dirgli «Ricordati che lavoro nel settore X». Lo aggiunge subito alla memoria, senza aspettare il ciclo automatico.',
+mem3H:'Trasparenza totale',mem3P:'Puoi vedere, modificare e cancellare tutto ciò che Claude ha memorizzato, in qualsiasi momento da Settings.',
+key2:'Le istruzioni dicono a Claude COME comportarsi. La memoria gli dice CHI sei. Insieme, trasformano un assistente generico in un collaboratore che ti conosce.',
+s8:'6 cose che cambiano',
+s9:'Dove trovare tutto',thA:'Impostazione',thB:'Dove trovarla',thC:'Cosa fa',
+s10:'Errori comuni',
+s11:'Checkpoint',
+cpH:'Configuralo adesso. 5 minuti.',
+cpP:'Vai in <strong>Settings → Instructions for Claude</strong>. Scrivi 3 cose: una regola su cosa NON fare, una sul tono che vuoi, una su come deve pensare. Poi vai in <strong>Settings → Capabilities</strong> e attiva la memoria.',
+cpQ:'Fai una domanda nella prossima chat e confronta la risposta con quelle che ricevevi prima. La differenza è immediata — è la prova che 5 minuti valgono più di mille prompt.',
+bridge:'Hai reso Claude tuo: un tono, una memoria, una voce. <b>Prossimo:</b> il Prompt Generator — far costruire a Claude il prompt al posto tuo.',
+foot:'Morfeus — Istruzioni e memoria: personalizzare Claude'
+},
+en:{
+kicker:'Lesson B2.8',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'Instructions and memory: personalizing Claude',
+lede:'The single action with the biggest impact on the quality of Claude\'s answers. Set it up once, improve every conversation forever. Five minutes of setup worth more than a thousand prompts.',
+s1:'The core problem',
+probIntro:'Claude is designed to be useful to as many people as possible. The result? Without personal instructions, answers are calibrated for the average user: diplomatic, verbose, full of preambles, and a bit condescending. Not because Claude is dumb, but because it doesn\'t know who you are.',
+probBadH:'Without instructions: generic Claude',
+probBadP:'It agrees with you even when you\'re wrong. Opens with "Great question!". Summarizes what you said before answering. Adds useless disclaimers. Builds long preambles before getting to the point. Treats you like someone who knows nothing.',
+probGoodH:'With instructions + memory: your Claude',
+probGoodP:'It tells you when you\'re wrong. Gets straight to the point. Uses your register. Knows your context. Calibrates depth to your experience. The answers are radically different, even with the same prompt.',
+s2:'Same prompt, different result',
+dBadL:'Without personal instructions',
+dPrompt:'Analyze this pricing strategy for my course',
+dBadA:'"Great question! Analyzing your pricing strategy is a crucial step. Here\'s a complete overview of the factors to consider..." (followed by a wall of generic text with 15 bullet points and zero concrete opinions)',
+dGoodL:'With instructions + memory',
+dPrompt2:'Analyze this pricing strategy for my course',
+dGoodA:'The pricing is too low for the positioning you\'re after. At €297 you attract the wrong segment: people shopping on price, not on outcome. Two options: raise to €497 with a high-perceived-value bonus, or build a €997 tier with coaching. The second has better margins given your CAC. Want me to model the numbers?',
+key1:'The difference isn\'t in the prompt. It\'s in what Claude knows about you before you even type anything.',
+s3:'The two levels of personalization',
+lvIntro:'Claude has two separate mechanisms that work together. Both are set up in Settings. Both are needed: instructions without memory are a face without a name.',
+vsAH:'Instructions',vsASub:'Explicit rules you write',
+vsBH:'Memory',vsBSub:'Facts Claude learns about you',
+s4:'How the levels combine',
+stackIntro:'Every time you send a message, Claude combines all of this in this order. Higher levels win in case of conflict.',
+stackTipH:'Why this matters',
+stackTipP:'When levels 1 and 2 are set up well, level 4 (your message) can be shorter and less specific: Claude already has the context to interpret it. Write less, get more.',
+s5:'Instructions: what to write',
+instrIntro:'Instructions live in <strong>Settings → Instructions for Claude</strong>. You have about 1,500 characters: not much, every word must count. Here are the 5 areas to cover, in order of impact — click each.',
+s6:'A real instructions example',
+exIntro:'A concrete example of instructions that completely transform how Claude behaves.',
+exWarnH:'Important note',
+exWarnP:'This is an advanced setup. Don\'t copy it literally if it doesn\'t match your style. The best instructions are the ones that describe how YOU want to work, not how someone else works.',
+s7:'Memory: how Claude knows you',
+memIntro:'Memory is the second piece of the puzzle. You turn it on in <strong>Settings → Capabilities</strong>. Once on, Claude does three things.',
+mem1H:'Automatic synthesis',mem1P:'Every ~24h Claude analyzes your conversations and builds a profile: role, projects, preferences, context. It keeps it updated.',
+mem2H:'Explicit memory',mem2P:'You can tell it "Remember I work in industry X". It adds that to memory right away, without waiting for the automatic cycle.',
+mem3H:'Full transparency',mem3P:'You can see, edit and delete everything Claude has stored, at any time, from Settings.',
+key2:'Instructions tell Claude HOW to behave. Memory tells it WHO you are. Together, they turn a generic assistant into a collaborator who knows you.',
+s8:'6 things that change',
+s9:'Where to find everything',thA:'Setting',thB:'Where to find it',thC:'What it does',
+s10:'Common mistakes',
+s11:'Checkpoint',
+cpH:'Set it up now. 5 minutes.',
+cpP:'Go to <strong>Settings → Instructions for Claude</strong>. Write 3 things: one rule about what NOT to do, one about the tone you want, one about how it should think. Then go to <strong>Settings → Capabilities</strong> and turn on memory.',
+cpQ:'Ask a question in the next chat and compare the answer to the ones you got before. The difference is immediate — proof that 5 minutes beat a thousand prompts.',
+bridge:'You made Claude yours: a tone, a memory, a voice. <b>Next:</b> the Prompt Generator — letting Claude build the prompt for you.',
+foot:'Morfeus — Instructions and memory: personalizing Claude'
+}};
+
+var VSA={it:[
+'Come deve comunicare (tono, formato, lunghezza)',
+'Cosa NON deve fare (condiscendenza, preamboli, emoji)',
+'Come deve pensare (profondità, criticità, standard)',
+'Attive su OGNI conversazione',
+'Limite: ~1.500 caratteri'
+],en:[
+'How it should communicate (tone, format, length)',
+'What it must NOT do (condescension, preambles, emoji)',
+'How it should think (depth, criticality, standards)',
+'Active on EVERY conversation',
+'Limit: ~1,500 characters'
+]};
+var VSB={it:[
+'Chi sei, cosa fai, il tuo ruolo',
+'I tuoi progetti attuali',
+'Le tue preferenze osservate nel tempo',
+'Si aggiorna automaticamente (~ogni 24h)',
+'Puoi anche dirgli: «Ricordati che...»'
+],en:[
+'Who you are, what you do, your role',
+'Your current projects',
+'Your preferences observed over time',
+'Updates automatically (~every 24h)',
+'You can also tell it: "Remember that..."'
+]};
+
+var LAYERS={it:[
+['Instructions for Claude','Le tue regole globali: tono, formato, vincoli, standard di pensiero','Tutte le chat','accent'],
+['Memory','Chi sei, cosa fai, i tuoi progetti, le tue preferenze apprese','Tutte le chat','teal'],
+['Project Instructions','Contesto specifico per un progetto: knowledge base, vincoli, ruolo','Solo quel Project','blue'],
+['Il tuo messaggio','La richiesta specifica che fai in quel momento','Questa chat','agent']
+],en:[
+['Instructions for Claude','Your global rules: tone, format, constraints, thinking standards','All chats','accent'],
+['Memory','Who you are, what you do, your projects, your learned preferences','All chats','teal'],
+['Project Instructions','Context specific to a project: knowledge base, constraints, role','That Project only','blue'],
+['Your message','The specific request you make in that moment','This chat','agent']
+]};
+
+var AREAS={it:[
+['Cosa NON fare (anti-pattern)','I vincoli negativi hanno l\'impatto più immediato. Eliminano i pattern più fastidiosi in un colpo.','«Non usare em dash. Non iniziare con "Ottima domanda". Non ripetere il mio input. Non usare emoji.»'],
+['Tono e stile','Il reset anti-condiscendenza più potente. Definisci come deve suonare la voce.','«Sii diretto, non diplomatico. Se un\'idea ha buchi, dillo subito. Priorità alla sostanza, zero filler.»'],
+['Standard di pensiero','Cambia la profondità di analisi. Dici a Claude come deve ragionare.','«Pensa in sistemi: trade-off, effetti di secondo ordine. Sfida le mie assunzioni. Esponi l\'evitamento mascherato da prudenza.»'],
+['Modalità operative','Permetti a Claude di calibrare la profondità in automatico, senza specificarla ogni volta.','«Default: strategico. Se il task è creativo, cambia modalità.»'],
+['Formato di risposta','Elimina le risposte troppo lunghe o troppo corte per il contesto.','«Lunghezza ottimale, non breve o lunga. Formato decisionale: 3 opzioni, scegline una.»']
+],en:[
+['What NOT to do (anti-pattern)','Negative constraints have the most immediate impact. They kill the most annoying patterns in one shot.','"No em dashes. Don\'t open with \'Great question\'. Don\'t repeat my input. No emoji."'],
+['Tone and style','The most powerful anti-condescension reset. Define how the voice should sound.','"Be direct, not diplomatic. If an idea has holes, say so right away. Substance first, zero filler."'],
+['Thinking standards','Changes the depth of analysis. You tell Claude how to reason.','"Think in systems: trade-offs, second-order effects. Challenge my assumptions. Expose avoidance disguised as caution."'],
+['Operating modes','Let Claude calibrate depth automatically, without specifying it every time.','"Default: strategic. If the task is creative, switch mode."'],
+['Response format','Removes answers that are too long or too short for the context.','"Optimal length, not short or long. Decision format: 3 options, pick one."']
+]};
+
+var EXCODE={it:'<span class="hh">## Regole assolute</span>\n<span class="hr">- NON introdurre, riassumere o fare preamboli</span>\n<span class="hr">- NON ripetere il mio input</span>\n<span class="hr">- NON usare em dash</span>\n<span class="hr">- Se ho torto, dillo prima di spiegare perché</span>\n- Non inventare fatti o numeri\n\n<span class="hh">## Stile di risposta</span>\n<span class="ht">Niente padding, niente talk fancy. Parti dalla sostanza.</span>\nLunghezza ottimale per utilità, non brevità o verbosità.\nLingua default: italiano.\n<span class="ha">Se la richiesta è vaga: rendila precisa e procedi.</span>\n<span class="ha">Se la richiesta è debole: rinforzala.</span>\n\n<span class="hh">## Standard di pensiero</span>\nPensa in sistemi: trade-off, effetti di secondo ordine,\nrischi, vincoli. Sfida il mio ragionamento. Esponi\nl\'evitamento mascherato da prudenza e la complessità\nmascherata da rigore.',
+en:'<span class="hh">## Absolute rules</span>\n<span class="hr">- Do NOT introduce, summarize or preamble</span>\n<span class="hr">- Do NOT repeat my input</span>\n<span class="hr">- Do NOT use em dashes</span>\n<span class="hr">- If I\'m wrong, say so before explaining why</span>\n- Don\'t make up facts or numbers\n\n<span class="hh">## Response style</span>\n<span class="ht">No padding, no fancy talk. Start from substance.</span>\nOptimal length for usefulness, not brevity or verbosity.\nDefault language: Italian.\n<span class="ha">If the request is vague: make it precise and proceed.</span>\n<span class="ha">If the request is weak: reinforce it.</span>\n\n<span class="hh">## Thinking standards</span>\nThink in systems: trade-offs, second-order effects,\nrisks, constraints. Challenge my reasoning. Expose\navoidance disguised as caution and complexity\ndisguised as rigor.'};
+
+var CHANGES={it:[
+['ti-mood-heart','Elimini la condiscendenza','Claude smette di darti ragione per default. Se il tuo ragionamento ha un buco, te lo dice. La differenza più impattante per chi usa Claude per decisioni reali.'],
+['ti-scissors','Elimini il rumore','Zero «Ottima domanda!», zero preamboli, zero riassunti del tuo input. Le risposte si accorciano del 30-40% a parità di contenuto utile.'],
+['ti-adjustments-alt','Calibri la profondità','Claude sa quando servono 3 righe e quando serve un\'analisi profonda, perché gli hai dato i tuoi standard. Non lo specifichi ogni volta.'],
+['ti-user-check','Le risposte si tarano su di te','Con la memoria attiva Claude sa chi sei e su cosa lavori. Le risposte partono da dove sei tu, non da zero.'],
+['ti-writing','Rimuovi i pattern fastidiosi','Em dash, buzzword, «dive deep», «let\'s unpack». Li banni una volta nelle istruzioni e non li vedi mai più.'],
+['ti-fingerprint','Due Claude diventano diversi','Stesso prompt, stessa knowledge base. Ma con instructions + memory diverse, le risposte sono radicalmente diverse.']
+],en:[
+['ti-mood-heart','You kill the condescension','Claude stops agreeing by default. If your reasoning has a hole, it tells you. The most impactful difference for anyone using Claude for real decisions.'],
+['ti-scissors','You kill the noise','No "Great question!", no preambles, no summaries of your input. Answers shrink by 30-40% with the same useful content.'],
+['ti-adjustments-alt','You calibrate depth','Claude knows when 3 lines are enough and when deep analysis is needed, because you gave it your standards. You don\'t specify it each time.'],
+['ti-user-check','Answers tune to you','With memory on, Claude knows who you are and what you\'re working on. Answers start from where you are, not from zero.'],
+['ti-writing','You remove annoying patterns','Em dashes, buzzwords, "dive deep", "let\'s unpack". You ban them once in the instructions and never see them again.'],
+['ti-fingerprint','Two Claudes become different','Same prompt, same knowledge base. But with different instructions + memory, the answers are radically different.']
+]};
+
+var SETTINGS={it:[
+['Instructions for Claude','Settings → Instructions for Claude','Regole globali su come Claude deve comunicare e pensare'],
+['Memory on/off','Settings → Capabilities → Memory','Abilita o disabilita la memoria persistente tra conversazioni'],
+['Riepilogo memoria','Settings → Capabilities → Memory → Vedi memoria','Vedi, modifica, cancella ciò che Claude ha memorizzato'],
+['Project Instructions','Dentro un Project → Istruzioni personalizzate','Regole specifiche per quel progetto (si sommano alle globali)']
+],en:[
+['Instructions for Claude','Settings → Instructions for Claude','Global rules on how Claude should communicate and think'],
+['Memory on/off','Settings → Capabilities → Memory','Enable or disable persistent memory across conversations'],
+['Memory summary','Settings → Capabilities → Memory → View memory','See, edit, delete what Claude has stored'],
+['Project Instructions','Inside a Project → Custom instructions','Rules specific to that project (added to the global ones)']
+]};
+
+var ERRORS={it:[
+['Istruzioni lunghe e generiche','2.000 parole vaghe sono peggio di 200 caratteri precisi. Se non le leggi in 90 secondi, sono troppo lunghe.'],
+['Non usare vincoli negativi','Dire cosa FARE è utile. Dire cosa NON fare è più potente: impatto immediato e misurabile.'],
+['Copiare le istruzioni altrui','Quelle che funzionano per un CEO tech non funzionano per un designer freelance. Devono riflettere il TUO modo di lavorare.'],
+['Ignorare la memoria','Istruzioni senza memoria: Claude sa COME parlare ma non CON CHI. Attiva entrambe.']
+],en:[
+['Long, generic instructions','2,000 vague words are worse than 200 precise characters. If you can\'t read them in 90 seconds, they\'re too long.'],
+['Not using negative constraints','Saying what to DO is useful. Saying what NOT to do is more powerful: immediate, measurable impact.'],
+['Copying someone else\'s instructions','What works for a tech CEO won\'t work for a freelance designer. They must reflect YOUR way of working.'],
+['Ignoring memory','Instructions without memory: Claude knows HOW to talk but not WITH WHOM. Turn on both.']
+]};
+
+var LANG='it',curA=0;
+var COLORS={accent:['var(--accent)','var(--accent-soft)'],teal:['var(--teal)','var(--teal-soft)'],blue:['var(--blue)','var(--blue-soft)'],agent:['var(--agent)','var(--agent-soft)']};
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('vsAList').innerHTML=VSA[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+x+'</li>'}).join('');
+  document.getElementById('vsBList').innerHTML=VSB[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+x+'</li>'}).join('');
+  document.getElementById('layers').innerHTML=LAYERS[LANG].map(function(l,i){var c=COLORS[l[3]];return '<div class="layer" style="background:'+c[1]+';border-color:'+c[0]+'"><div class="ln" style="background:'+c[0]+'">'+(i+1)+'</div><div class="lt"><strong>'+l[0]+'</strong><span>'+l[1]+'</span></div><div class="lsc" style="background:'+c[1]+';color:'+c[0]+'">'+l[2]+'</div></div>'}).join('');
+  document.getElementById('areas').innerHTML=AREAS[LANG].map(function(b,i){return '<div class="blk'+(i===curA?' on':'')+'" onclick="showA('+i+')"><div class="bn">'+(i+1)+'</div><div class="bt">'+b[0]+'</div></div>'}).join('');
+  document.getElementById('exCode').innerHTML=EXCODE[LANG];
+  document.getElementById('changes').innerHTML=CHANGES[LANG].map(function(c){return '<div class="card3"><div class="ci"><i class="ti '+c[0]+'"></i></div><h4>'+c[1]+'</h4><p>'+c[2]+'</p></div>'}).join('');
+  document.getElementById('settings').innerHTML=SETTINGS[LANG].map(function(s){return '<tr><td class="fn">'+s[0]+'</td><td style="font-family:var(--mono);font-size:12px">'+s[1]+'</td><td>'+s[2]+'</td></tr>'}).join('');
+  document.getElementById('errors').innerHTML=ERRORS[LANG].map(function(e){return '<div class="card3" style="border-color:var(--bad)"><div class="ci" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x"></i></div><h4>'+e[0]+'</h4><p>'+e[1]+'</p></div>'}).join('');
+  showA(curA);
+}
+function showA(i){curA=i;var b=AREAS[LANG][i];document.querySelectorAll('#areas .blk').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('areadetail').innerHTML='<p>'+b[1]+'</p><div class="ex">'+b[2]+'</div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

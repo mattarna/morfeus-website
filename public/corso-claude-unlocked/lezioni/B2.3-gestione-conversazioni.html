@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestione delle conversazioni — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--warn:#c98a17;--warn-soft:#faeeda;--warn-line:#f0d49a;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--warn:#e3a93b;--warn-soft:#3f2d12;--warn-line:#7a5a22;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* context window */
+.cw{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.cw h4{font-size:14.5px;font-weight:600;text-align:center;margin-bottom:5px}
+.cw .cwsub{font-size:12.5px;color:var(--ink-3);text-align:center;margin-bottom:20px}
+.cwrow{margin-bottom:14px}
+.cwhead{font-size:12px;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between}
+.cwbarw{height:26px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.cwbar{height:100%;border-radius:var(--r)}
+.cwstages{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:18px}
+.cwst{text-align:center;padding:14px 10px;border-radius:var(--r-l);border:1px solid var(--line);background:var(--bg-2)}
+.cwst i{font-size:23px;display:block;margin-bottom:7px}
+.cwst .ctt{font-size:12.5px;font-weight:600;margin-bottom:4px}
+.cwst .ctd{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+/* decision grid */
+.dec{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.decc{padding:20px;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh)}
+.decc.g{background:var(--good-soft);border-color:var(--good)}.decc.w{background:var(--warn-soft);border-color:var(--warn-line)}
+.decc h3{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.decc.g h3{color:var(--good)}.decc.w h3{color:var(--warn)}
+.decc .dsub{font-size:12px;color:var(--ink-3);margin-bottom:14px}
+.decc .di{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--ink-2);line-height:1.5}
+.decc .di i{font-size:15px;flex-shrink:0;margin-top:1px}
+.decc.g .di i{color:var(--good)}.decc.w .di i{color:var(--warn)}
+/* flow */
+.flow{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.flow h4{font-size:14.5px;font-weight:600;text-align:center;margin-bottom:5px}
+.flow .fsub{font-size:12.5px;color:var(--ink-3);text-align:center;margin-bottom:20px}
+.fstep{display:flex;align-items:stretch;gap:14px}
+.fq{flex:1;background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-l);padding:15px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px}
+.fq .qn{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fa{flex:0 0 auto;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.fac{padding:6px 12px;border-radius:var(--r);font-size:11.5px;font-weight:700;text-align:center;white-space:nowrap;font-family:var(--mono)}
+.fac.y{background:var(--good-soft);color:var(--good);border:1px solid var(--good)}
+.fac.n{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-line)}
+.fconn{display:flex;justify-content:center;padding:6px 0;color:var(--ink-3);font-size:18px}
+.fres{text-align:center;padding:14px 18px;border-radius:var(--r-l);font-size:13.5px;font-weight:600;margin-top:8px;background:var(--accent-soft);color:var(--accent)}
+/* scenarios */
+.scen{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.scen .si{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.scen.cont .si{background:var(--good-soft);color:var(--good)}.scen.new .si{background:var(--warn-soft);color:var(--warn)}
+.scen .st{flex:1}.scen .st strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}.scen .st span{font-size:13px;color:var(--ink-2);line-height:1.5}
+.scen .sr{font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap;padding:4px 10px;border-radius:20px}
+.scen.cont .sr{background:var(--good-soft);color:var(--good)}.scen.new .sr{background:var(--warn-soft);color:var(--warn)}
+/* feature rows */
+.feats{margin:0}
+.feat{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.feat .fi{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.feat .ft strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.feat .ft span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* table */
+.tblw{overflow-x:auto}
+table.cmt{width:100%;border-collapse:collapse;font-size:13px}
+table.cmt th{text-align:left;padding:10px 12px;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);border-bottom:2px solid var(--line-2);font-family:var(--mono);white-space:nowrap}
+table.cmt td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+table.cmt tr:last-child td{border-bottom:none}
+table.cmt .fn{font-weight:600;color:var(--ink)}
+table.cmt td.cc{text-align:center}
+/* bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.dec,.cwstages{grid-template-columns:1fr}.fstep{flex-direction:column;gap:10px}.fa{flex-direction:row;justify-content:center}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cw,.decc,.flow,.scen,.feat,.cp,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B2.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">Gestione delle conversazioni</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Il punto</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">02</span><h2 data-i="s1">La context window</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="cwIntro"></p>
+  <div class="cw rv">
+    <h4 data-i="cwH"></h4>
+    <div class="cwsub" data-i="cwSub"></div>
+    <div class="cwrow"><div class="cwhead"><span data-i="cw1L"></span><span style="color:var(--good)" data-i="cw1T"></span></div><div class="cwbarw"><div class="cwbar" style="width:20%;background:var(--good)"></div></div></div>
+    <div class="cwrow"><div class="cwhead"><span data-i="cw2L"></span><span style="color:var(--accent)" data-i="cw2T"></span></div><div class="cwbarw"><div class="cwbar" style="width:55%;background:var(--accent)"></div></div></div>
+    <div class="cwrow"><div class="cwhead"><span data-i="cw3L"></span><span style="color:var(--warn)" data-i="cw3T"></span></div><div class="cwbarw"><div class="cwbar" style="width:85%;background:var(--warn)"></div></div></div>
+    <div class="cwrow"><div class="cwhead"><span data-i="cw4L"></span><span style="color:var(--bad)" data-i="cw4T"></span></div><div class="cwbarw"><div class="cwbar" style="width:100%;background:var(--bad)"></div></div></div>
+    <div class="cwstages">
+      <div class="cwst"><i class="ti ti-rocket" style="color:var(--good)"></i><div class="ctt" data-i="z1T"></div><div class="ctd" data-i="z1D"></div></div>
+      <div class="cwst"><i class="ti ti-alert-triangle" style="color:var(--warn)"></i><div class="ctt" data-i="z2T"></div><div class="ctd" data-i="z2D"></div></div>
+      <div class="cwst"><i class="ti ti-alert-octagon" style="color:var(--bad)"></i><div class="ctt" data-i="z3T"></div><div class="ctd" data-i="z3D"></div></div>
+    </div>
+  </div>
+  <div class="note rv" style="margin-top:16px"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="cwNoteH"></h4><p data-i="cwNoteP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">03</span><h2 data-i="s2">Continua o nuova conversazione?</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0;padding-bottom:24px"><p data-i="q2" style="font-size:19px"></p></div>
+  <div class="dec rv" style="margin-top:20px">
+    <div class="decc g"><h3><i class="ti ti-arrow-right"></i> <span data-i="contH"></span></h3><div class="dsub" data-i="contSub"></div><div id="contL"></div></div>
+    <div class="decc w"><h3><i class="ti ti-plus"></i> <span data-i="newH"></span></h3><div class="dsub" data-i="newSub"></div><div id="newL"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">04</span><h2 data-i="s3">Flowchart: cosa faccio?</h2></div>
+  <div class="flow rv">
+    <h4 data-i="flowH"></h4>
+    <div class="fsub" data-i="flowSub"></div>
+    <div id="flowSteps"></div>
+    <div class="fres"><i class="ti ti-bulb"></i> <span data-i="flowRes"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">05</span><h2 data-i="s4">Scenari pratici</h2></div>
+  <div class="rv" id="scenarios"></div>
+
+  <div class="sh rv"><i class="ti ti-search"></i><span class="no">06</span><h2 data-i="s5">Cronologia e ricerca</h2></div>
+  <div class="feats rv">
+    <div class="feat"><div class="fi"><i class="ti ti-layout-sidebar-left-collapse"></i></div><div class="ft"><strong data-i="h1H"></strong><span data-i="h1P"></span></div></div>
+    <div class="feat"><div class="fi"><i class="ti ti-search"></i></div><div class="ft"><strong data-i="h2H"></strong><span data-i="h2P"></span></div></div>
+    <div class="feat"><div class="fi"><i class="ti ti-pencil"></i></div><div class="ft"><strong data-i="h3H"></strong><span data-i="h3P"></span></div></div>
+  </div>
+  <div class="note rv" style="margin-top:16px"><div class="ni"><i class="ti ti-bolt"></i></div><div><h4 data-i="trickH"></h4><p data-i="trickP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">07</span><h2 data-i="s6">Conversazione vs Project</h2></div>
+  <div class="tblw rv">
+    <table class="cmt">
+      <thead><tr><th></th><th style="text-align:center"><i class="ti ti-message"></i> <span data-i="thConv"></span></th><th style="text-align:center"><i class="ti ti-folder"></i> Project</th></tr></thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+  </div>
+  <div class="bridge rv"><i class="ti ti-folder"></i><p data-i-html="bridgeProj"></p></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s7">La regola d'oro</h2></div>
+  <div class="key rv"><p data-i="q3"></p></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">09</span><h2 data-i="s8">Errori comuni</h2></div>
+  <div class="rv" id="errors"></div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">10</span><h2 data-i="s9">Provalo adesso</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-messages"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Gestione delle conversazioni</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B2.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'Gestione delle conversazioni',
+lede:'Quando continuare, quando ricominciare da zero, e perché la lunghezza della conversazione impatta la qualità dell\'output di Claude.',
+s0:'Il punto',
+q1:'«La cronologia di Claude non è un cassetto dove butti le cose. È un patrimonio di contesto — ma solo se sai quando usarlo e quando ripartire pulito.»',
+s1:'La context window',
+cwIntro:'Dentro ogni conversazione, Claude legge <strong>tutto</strong> quello che è stato detto dall\'inizio. Questo spazio si chiama <em>context window</em>. Più la conversazione è lunga, più contesto ha — ma c\'è un limite fisico.',
+cwH:'Come si riempie la context window',
+cwSub:'Ogni messaggio (tuo e di Claude) e ogni file allegato occupano spazio',
+cw1L:'5-10 scambi',cw1T:'Ottimale',
+cw2L:'20-40 scambi',cw2T:'Buona',
+cw3L:'50+ scambi + file',cw3T:'Attenzione',
+cw4L:'Limite raggiunto',cw4T:'Degrado',
+z1T:'Zona verde',z1D:'Claude ricorda tutto, output preciso e coerente',
+z2T:'Zona gialla',z2D:'Funziona ancora bene, ma i dettagli iniziali possono sbiadire',
+z3T:'Zona rossa',z3D:'Risposte meno precise, possibili ripetizioni: ripartire è meglio',
+cwNoteH:'Nell\'uso quotidiano raramente arrivi al limite',
+cwNoteP:'Ma se lavori per ore nella stessa chat su un progetto complesso, con file grandi e decine di scambi, potresti notare un calo di qualità. In quel caso il segnale è chiaro: è ora di una nuova conversazione.',
+s2:'Continua o nuova conversazione?',
+q2:'«La conversazione serve il lavoro, non il contrario. Non spezzare una sessione in venti chat solo per tenere tutto ordinato.»',
+contH:'Continua quando',contSub:'Il contesto precedente serve a Claude',
+newH:'Nuova chat quando',newSub:'Il contesto precedente non serve o danneggia',
+s3:'Flowchart: cosa faccio?',
+flowH:'Devo continuare o aprire una nuova chat?',
+flowSub:'Segui le domande in ordine',
+flowRes:'Nel dubbio? Se il contesto è utile, continua. Se è rumore, ricomincia.',
+s4:'Scenari pratici',
+s5:'Cronologia e ricerca',
+h1H:'Sidebar organizzata per data',h1P:'Le conversazioni sono raggruppate per oggi, ieri, ultima settimana. Cliccando su una qualsiasi, Claude ha accesso a tutto il contesto precedente.',
+h2H:'Ricerca nella cronologia',h2P:'Se hai tante conversazioni, usa la barra di ricerca nella sidebar. Utile per ritrovare lavoro passato, specialmente se dai titoli significativi alle chat.',
+h3H:'Rinomina le conversazioni importanti',h3P:'Claude genera titoli automatici, ma puoi rinominarli. «Report Q2 Marketing» è più utile di «Scrivi un report per me».',
+trickH:'Trucco da power user',trickP:'Quando torni su una conversazione vecchia, Claude ha ancora tutto il contesto. Riprendi dicendo «continua da dove avevamo lasciato»: non devi rispiegare nulla.',
+s6:'Conversazione vs Project',
+thConv:'Conversazione',
+bridgeProj:'<strong>Quando una conversazione diventa un Project.</strong> Se ti ritrovi a copiare e incollare lo stesso contesto, riallegare gli stessi file o riscrivere le stesse istruzioni a ogni nuova chat su un argomento, quello è il segnale: quell\'argomento merita un Project.',
+s7:'La regola d\'oro',
+q3:'«Una conversazione è la memoria di lavoro per un task. Un Project è la memoria permanente per un contesto. Capire questa differenza ti cambia il modo di organizzare il lavoro con Claude.»',
+s8:'Errori comuni',
+s9:'Provalo adesso',
+cpH:'Guarda la tua cronologia adesso',
+cpP:'Apri la sidebar e scorri le tue ultime conversazioni con occhio critico.',
+cpQ:'Quante chat hai avviato per la stessa cosa in momenti diversi? Se ne trovi, è il segnale che quella cosa doveva essere un Project, non una serie di chat isolate. Tienilo a mente per la lezione sui Projects.',
+bridge:'Sai gestire le conversazioni. <b>Prossimo:</b> gli Artifacts — come ottenere output strutturati, modificabili e riusabili, separati dal flusso della chat.',
+foot:'Morfeus — Gestione delle conversazioni'
+},
+en:{
+kicker:'Lesson B2.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'Managing conversations',
+lede:'When to continue, when to start over, and why conversation length impacts the quality of Claude\'s output.',
+s0:'The point',
+q1:'"Claude\'s history isn\'t a drawer where you dump things. It\'s an asset of context — but only if you know when to use it and when to start clean."',
+s1:'The context window',
+cwIntro:'Inside every conversation, Claude reads <strong>everything</strong> said since the start. This space is the <em>context window</em>. The longer the conversation, the more context it has — but there\'s a physical limit.',
+cwH:'How the context window fills up',
+cwSub:'Every message (yours and Claude\'s) and every attached file takes up space',
+cw1L:'5-10 exchanges',cw1T:'Optimal',
+cw2L:'20-40 exchanges',cw2T:'Good',
+cw3L:'50+ exchanges + files',cw3T:'Caution',
+cw4L:'Limit reached',cw4T:'Degraded',
+z1T:'Green zone',z1D:'Claude remembers everything, precise and coherent output',
+z2T:'Yellow zone',z2D:'Still works well, but early details may start to fade',
+z3T:'Red zone',z3D:'Less precise answers, possible repetition: starting over is better',
+cwNoteH:'In everyday use you rarely hit the limit',
+cwNoteP:'But if you work for hours in the same chat on a complex project, with large files and dozens of exchanges, you may notice a quality drop. Then the signal is clear: time for a new conversation.',
+s2:'Continue or new conversation?',
+q2:'"The conversation serves the work, not the other way around. Don\'t split a session into twenty chats just to keep things tidy."',
+contH:'Continue when',contSub:'The previous context helps Claude',
+newH:'New chat when',newSub:'The previous context is useless or harmful',
+s3:'Flowchart: what do I do?',
+flowH:'Should I continue or open a new chat?',
+flowSub:'Follow the questions in order',
+flowRes:'In doubt? If the context helps, continue. If it\'s noise, start over.',
+s4:'Practical scenarios',
+s5:'History and search',
+h1H:'Sidebar organized by date',h1P:'Conversations are grouped by today, yesterday, last week. Click any one and Claude has access to all its prior context.',
+h2H:'Search the history',h2P:'With many conversations, use the search bar in the sidebar. Handy for finding past work, especially if you give chats meaningful titles.',
+h3H:'Rename important conversations',h3P:'Claude generates automatic titles, but you can rename them. "Q2 Marketing report" is more useful than "Write a report for me".',
+trickH:'Power-user trick',trickP:'When you return to an old conversation, Claude still has all the context. Pick up by saying "continue where we left off": you don\'t need to re-explain anything.',
+s6:'Conversation vs Project',
+thConv:'Conversation',
+bridgeProj:'<strong>When a conversation becomes a Project.</strong> If you find yourself copy-pasting the same context, re-attaching the same files or rewriting the same instructions at every new chat on a topic, that\'s the signal: that topic deserves a Project.',
+s7:'The golden rule',
+q3:'"A conversation is the working memory for a task. A Project is the permanent memory for a context. Understanding this difference changes how you organize your work with Claude."',
+s8:'Common mistakes',
+s9:'Try it now',
+cpH:'Look at your history now',
+cpP:'Open the sidebar and scroll your latest conversations with a critical eye.',
+cpQ:'How many chats did you start for the same thing at different times? If you find some, that\'s the signal it should have been a Project, not a series of isolated chats. Keep it in mind for the Projects lesson.',
+bridge:'You can manage conversations. <b>Next:</b> Artifacts — how to get structured, editable, reusable output, separate from the chat flow.',
+foot:'Morfeus — Managing conversations'
+}};
+
+var CONT={it:[
+['ti-refresh','Stai iterando sullo stesso output: revisioni, miglioramenti, variazioni'],
+['ti-link','Claude ha bisogno del contesto precedente per rispondere bene'],
+['ti-stairs-up','Stai costruendo qualcosa passo dopo passo'],
+['ti-file-text','Hai caricato file o dato contesto che non vuoi ripetere']
+],en:[
+['ti-refresh','You\'re iterating on the same output: revisions, improvements, variations'],
+['ti-link','Claude needs the prior context to answer well'],
+['ti-stairs-up','You\'re building something step by step'],
+['ti-file-text','You uploaded files or gave context you don\'t want to repeat']
+]};
+var NEWC={it:[
+['ti-switch-horizontal','Stai iniziando un topic completamente diverso'],
+['ti-sparkles','Vuoi Claude «fresco», senza bias dal contesto precedente'],
+['ti-arrows-exchange','Vuoi testare un approccio diverso allo stesso problema'],
+['ti-alert-triangle','La conversazione è molto lunga e le risposte stanno degradando']
+],en:[
+['ti-switch-horizontal','You\'re starting a completely different topic'],
+['ti-sparkles','You want a "fresh" Claude, with no bias from prior context'],
+['ti-arrows-exchange','You want to test a different approach to the same problem'],
+['ti-alert-triangle','The conversation is very long and answers are degrading']
+]};
+
+var FLOW={it:[
+['Sto lavorando sullo stesso task di prima?','Sì → Continua','No → Prossima'],
+['Claude ha bisogno del contesto di questa chat per rispondere?','Sì → Continua','No → Prossima'],
+['Questa chat ha più di 40-50 scambi?','Sì → Nuova chat','No → Prossima'],
+['Voglio un punto di vista diverso su qualcosa già discusso?','Sì → Nuova chat','No → Continua qui']
+],en:[
+['Am I working on the same task as before?','Yes → Continue','No → Next'],
+['Does Claude need this chat\'s context to answer?','Yes → Continue','No → Next'],
+['Does this chat have more than 40-50 exchanges?','Yes → New chat','No → Next'],
+['Do I want a different angle on something already discussed?','Yes → New chat','No → Continue here']
+]};
+var FLOWNEW={it:[false,false,true,true],en:[false,false,true,true]};
+
+var SCEN={it:[
+['ti-file-text','Sto scrivendo un report, chiedo revisioni e modifiche','Claude ha bisogno delle versioni precedenti per capire cosa cambiare.','Continua',true],
+['ti-bulb','Ho finito il report, ora voglio scrivere un\'email diversa','Topic nuovo, contesto precedente inutile.','Nuova chat',false],
+['ti-code','Sto debuggando, il codice ha contesto accumulato in chat','Rompere il flusso significherebbe riallegare e rispiegare tutto.','Continua',true],
+['ti-refresh','L\'output è in loop, ripete le stesse cose','Segno che il contesto sta confondendo: ricomincia con un prompt pulito.','Nuova chat',false],
+['ti-arrows-exchange','Voglio provare una strategia diversa per lo stesso problema','Claude non sarà influenzato dall\'approccio precedente.','Nuova chat',false]
+],en:[
+['ti-file-text','I\'m writing a report, asking for revisions and edits','Claude needs the previous versions to understand what to change.','Continue',true],
+['ti-bulb','I finished the report, now I want to write a different email','New topic, previous context useless.','New chat',false],
+['ti-code','I\'m debugging, the code has context built up in chat','Breaking the flow would mean re-attaching and re-explaining everything.','Continue',true],
+['ti-refresh','The output is in a loop, repeating the same things','A sign the context is confusing it: start over with a clean prompt.','New chat',false],
+['ti-arrows-exchange','I want to try a different strategy for the same problem','Claude won\'t be influenced by the previous approach.','New chat',false]
+]};
+
+var TBL={it:[
+['Contesto','Solo dentro quella chat','Persistente tra tutte le chat del Project'],
+['Durata','Una sessione di lavoro','Settimane, mesi'],
+['File e contesto','Vanno riallegati ogni volta','Caricati una volta, disponibili sempre'],
+['Istruzioni custom','Da ripetere a ogni chat','Scritte una volta, applicate in automatico'],
+['Ideale per','Task singoli, domande rapide','Lavoro ricorrente su stesso contesto'],
+['Quando usarlo','Default per tutto','Quando ti ritrovi a ripetere lo stesso contesto']
+],en:[
+['Context','Only within that chat','Persistent across all the Project\'s chats'],
+['Duration','One work session','Weeks, months'],
+['Files and context','Re-attached every time','Loaded once, always available'],
+['Custom instructions','Repeated in every chat','Written once, applied automatically'],
+['Best for','Single tasks, quick questions','Recurring work on the same context'],
+['When to use it','Default for everything','When you keep repeating the same context']
+]};
+
+var ERR={it:[
+['Frammentare in troppe chat','Aprire una nuova conversazione per ogni domanda sullo stesso progetto: Claude perde contesto e tu ripeti informazioni.'],
+['Maratona infinita nella stessa chat','100+ scambi su topic diversi nella stessa conversazione: Claude confonde i contesti e le risposte degradano.'],
+['Non tornare sulle conversazioni utili','Hai fatto un ottimo lavoro su un tema ma non lo ritrovi più. Rinomina le chat importanti.']
+],en:[
+['Fragmenting into too many chats','Opening a new conversation for every question on the same project: Claude loses context and you repeat information.'],
+['Endless marathon in one chat','100+ exchanges on different topics in the same conversation: Claude confuses contexts and answers degrade.'],
+['Never returning to useful conversations','You did great work on a topic but can\'t find it again. Rename the important chats.']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('contL').innerHTML=CONT[LANG].map(function(x){return '<div class="di"><i class="ti '+x[0]+'"></i>'+x[1]+'</div>'}).join('');
+  document.getElementById('newL').innerHTML=NEWC[LANG].map(function(x){return '<div class="di"><i class="ti '+x[0]+'"></i>'+x[1]+'</div>'}).join('');
+  document.getElementById('flowSteps').innerHTML=FLOW[LANG].map(function(s,i){var isNew=FLOWNEW[LANG][i];var a1cls=isNew?'n':'y';var a2cls='y';var conn=(i<FLOW[LANG].length-1)?'<div class="fconn"><i class="ti ti-chevron-down"></i></div>':'';return '<div class="fstep"><div class="fq"><span class="qn">'+(i+1)+'</span>'+s[0]+'</div><div class="fa"><div class="fac '+a1cls+'">'+s[1]+'</div><div class="fac '+(i<2?'y':'n')+'">'+s[2]+'</div></div></div>'+conn}).join('');
+  document.getElementById('scenarios').innerHTML=SCEN[LANG].map(function(s){var cls=s[4]?'cont':'new';return '<div class="scen '+cls+'"><div class="si"><i class="ti '+s[0]+'"></i></div><div class="st"><strong>'+s[1]+'</strong><span>'+s[2]+'</span></div><div class="sr">'+s[3]+'</div></div>'}).join('');
+  document.getElementById('tblBody').innerHTML=TBL[LANG].map(function(r){return '<tr><td class="fn">'+r[0]+'</td><td class="cc">'+r[1]+'</td><td class="cc">'+r[2]+'</td></tr>'}).join('');
+  document.getElementById('errors').innerHTML=ERR[LANG].map(function(e){return '<div class="scen new" style="border-color:var(--bad)"><div class="si" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x"></i></div><div class="st"><strong>'+e[0]+'</strong><span>'+e[1]+'</span></div></div>'}).join('');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

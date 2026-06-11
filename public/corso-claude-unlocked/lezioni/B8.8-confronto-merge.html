@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confronto &amp; merge tra modelli — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--agent-soft);border:1px solid var(--agent-line);color:var(--agent);font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:5px 13px;border-radius:30px;margin-bottom:14px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.hook{border-left:3px solid var(--agent);background:var(--card);box-shadow:var(--sh);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 24px;margin:26px 0 0;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+
+.flow{display:flex;align-items:stretch;gap:0}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:32px;flex-shrink:0;color:var(--ink-3);font-size:20px}
+.fstep{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 12px 20px;text-align:center;cursor:pointer;transition:.2s}
+.fstep:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.fstep.on:nth-child(1),.fstep.on:nth-child(5){border-color:var(--accent);background:var(--accent-soft)}
+.fstep.on:nth-child(3){border-color:var(--agent);background:var(--agent-soft)}
+.fstep .fn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 12px;transition:.2s}
+.fstep:nth-child(1) .fn{background:var(--accent-soft);color:var(--accent)}
+.fstep:nth-child(3) .fn{background:var(--agent-soft);color:var(--agent)}
+.fstep:nth-child(5) .fn{background:var(--accent-soft);color:var(--accent)}
+.fstep.on:nth-child(1) .fn,.fstep.on:nth-child(5) .fn{background:var(--accent);color:#fff}
+.fstep.on:nth-child(3) .fn{background:var(--agent);color:#fff}
+.fstep h3{font-size:15px;font-weight:600;margin-bottom:3px}.fstep p{font-size:12.5px;color:var(--ink-3)}
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:13px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:13px}
+.fdetail ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+.fdetail li{display:flex;gap:10px;font-size:14px;color:var(--ink-2)}.fdetail li i{color:var(--accent);font-size:16px;margin-top:2px}
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex+.ex{margin-top:8px}.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:7px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}.tag.good{background:var(--good-soft);color:var(--good)}
+
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.wc.a{background:var(--accent-soft);border-color:var(--accent-line)}.wc.b{background:var(--agent-soft);border-color:var(--agent-line)}
+.wc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.wc.a h4{color:var(--accent)}.wc.b h4{color:var(--agent)}
+.wc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.wc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.wc li i{font-size:14px;margin-top:2px}
+.wc.a li i{color:var(--accent)}.wc.b li i{color:var(--agent)}
+
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px 22px}
+.mgrid{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:12px}
+.mcard{border-radius:13px;padding:15px 13px;text-align:center;transition:.3s}
+.mcard.you{background:var(--accent-soft);border:2px solid var(--accent)}
+.mcard.aiM{background:var(--agent-soft);border:2px solid var(--agent)}
+.mcard .mt{font-size:14px;font-weight:700}
+.mcard.you .mt{color:var(--accent)}.mcard.aiM .mt{color:var(--agent)}
+.mcard .ms{font-size:12px;color:var(--ink-2);margin-top:3px}
+.mcard.flash{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--agent-line)}50%{box-shadow:0 0 0 9px transparent}}
+.mplus{display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--ink-3)}
+.rail{width:2px;height:20px;margin:11px auto;background-image:repeating-linear-gradient(var(--line-2) 0 4px,transparent 4px 8px)}
+.result{background:var(--good-soft);border:1.5px solid var(--good);border-radius:12px;padding:14px 16px;font-size:13.5px;display:flex;gap:10px;align-items:center;opacity:0;transform:translateY(-6px);transition:.5s}
+.result.show{opacity:1;transform:none}
+.result i{color:var(--good);font-size:20px;flex-shrink:0}
+.result b{color:var(--good)}
+.statusln{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);min-height:18px;margin-top:14px}
+.runbtn{display:flex;align-items:center;gap:8px;margin:14px auto 0;background:var(--agent);color:#fff;border:none;padding:11px 23px;border-radius:30px;font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px var(--agent-line);transition:.2s}
+.runbtn:hover{transform:translateY(-1px)}
+
+.pwrap{position:relative;margin-bottom:10px}
+.pwrap .ex{padding-right:74px}
+.copybtn{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:10.5px;font-weight:700;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);border-radius:20px;padding:4px 10px;cursor:pointer;transition:.18s}
+.copybtn:hover{color:var(--accent);border-color:var(--accent-line)}
+.copybtn.ok{color:var(--good);border-color:var(--good)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warm{background:var(--agent-soft);border-color:var(--agent-line)}
+.note.warm .ni{background:var(--agent)}.note.warm h4{color:var(--agent)}
+.note.win{background:var(--good-soft);border-color:var(--good)}
+.note.win .ni{background:var(--good)}.note.win h4{color:var(--good)}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.wg{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.mplus i{transform:rotate(90deg)}}
+@media print{body{background-image:none}.bar,.runbtn,.ic-btn,.lang,.pdf-btn,.copybtn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.result{opacity:1!important;transform:none!important}.stage,.wc,.note,.hook,.ex,.fstep,.fdetail,.mcard{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Lezione B8.8</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow"></div>
+  <div class="rv"><span class="chip"><i class="ti ti-flag"></i> <span data-i="chip"></span></span></div>
+  <h1 class="rv" data-i="h1"></h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="hook rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-user-check"></i><span class="no">01</span><h2 data-i="s1"></h2></div>
+  <div class="wg rv">
+    <div class="wc a"><h4><i class="ti ti-file-pencil"></i> <span data-i="wcaT"></span></h4><ul>
+      <li><i class="ti ti-point-filled"></i><span data-i="wca1"></span></li>
+      <li><i class="ti ti-point-filled"></i><span data-i="wca2"></span></li>
+    </ul></div>
+    <div class="wc b"><h4><i class="ti ti-git-merge"></i> <span data-i="wcbT"></span></h4><ul>
+      <li><i class="ti ti-point-filled"></i><span data-i="wcb1"></span></li>
+      <li><i class="ti ti-point-filled"></i><span data-i="wcb2"></span></li>
+    </ul></div>
+  </div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-alert-circle"></i></div><div><h4 data-i="n0H"></h4><p data-i-html="n0P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">02</span><h2 data-i="s2"></h2></div>
+  <div class="flow rv">
+    <div class="fstep on" onclick="showFlow(0)"><div class="fn"><i class="ti ti-message-question"></i></div><h3 data-i="f0T"></h3><p data-i="f0S"></p></div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="fstep" onclick="showFlow(1)"><div class="fn"><i class="ti ti-arrows-left-right"></i></div><h3 data-i="f1T"></h3><p data-i="f1S"></p></div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="fstep" onclick="showFlow(2)"><div class="fn"><i class="ti ti-git-merge"></i></div><h3 data-i="f2T"></h3><p data-i="f2S"></p></div>
+  </div>
+  <div class="fdetail rv" id="fdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">03</span><h2 data-i="s3"></h2></div>
+  <div class="stage rv">
+    <div class="mgrid">
+      <div class="mcard you" id="mcYou"><div class="mt" data-i="mcYouT"></div><div class="ms" data-i="mcYouS"></div></div>
+      <div class="mplus"><i class="ti ti-plus"></i></div>
+      <div class="mcard aiM" id="mcAi"><div class="mt" data-i="mcAiT"></div><div class="ms" data-i="mcAiS"></div></div>
+    </div>
+    <div class="rail"></div>
+    <div class="result" id="mres"><i class="ti ti-circle-check-filled"></i><span data-i-html="resTxt"></span></div>
+    <div class="statusln" id="statusln" data-i="statusInit"></div>
+    <button class="runbtn" id="runBtn" onclick="runMerge()"><i class="ti ti-git-merge"></i> <span id="runBtnTxt"></span></button>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-terminal-2"></i><span class="no">04</span><h2 data-i="s4"></h2></div>
+  <div class="pwrap rv"><div class="ex"><span class="tag good" data-i="p1Tag"></span><span data-i="p1"></span></div><button class="copybtn" onclick="copyP(this)" data-i="copyL"></button></div>
+  <div class="pwrap rv"><div class="ex"><span class="tag good" data-i="p2Tag"></span><span data-i="p2"></span></div><button class="copybtn" onclick="copyP(this)" data-i="copyL"></button></div>
+  <div class="note warm rv"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="n1H"></h4><p data-i-html="n1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">05</span><h2 data-i="s5"></h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:14px" data-i-html="s5p"></p>
+  <div class="rv">
+    <div class="ex bad"><span class="tag bad" data-i="egoTag"></span><span data-i="egoEx"></span></div>
+    <div class="ex good"><span class="tag good" data-i="mergeTag"></span><span data-i="mergeEx"></span></div>
+  </div>
+  <div class="note rv"><div class="ni"><i class="ti ti-heart-handshake"></i></div><div><h4 data-i="n2H"></h4><p data-i-html="n2P"></p></div></div>
+
+  <div class="note warm rv"><div class="ni"><i class="ti ti-player-pause"></i></div><div><h4 data-i="n3H"></h4><p data-i-html="n3P"></p></div></div>
+
+  <div class="key rv"><p data-i="keyP"></p></div>
+
+  <div class="note win rv"><div class="ni"><i class="ti ti-flag-check"></i></div><div><h4 data-i="n4H"></h4><p data-i-html="n4P"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot"></span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+pdfT:'Scarica PDF',themeT:'Cambia tema',copyL:'copia',
+eyebrow:'Modulo 8 · Il metodo Plan &amp; Solve',
+chip:'Capolavoro · 2 di 2',
+h1:'Confronto &amp; merge tra modelli',
+lede:'Il momento più potente non è usare l\'<span class="cl">AI</span> per ciò che non sai fare. È puntarla su ciò che <span class="you">credi di saper fare meglio</span> — e trovare un modo migliore.',
+hook:'È esattamente lì che hai un soffitto invisibile: "il modo in cui l\'ho sempre fatto". Oggi lo sfondi — e di solito guadagni un livello su qualcosa che fai da anni.',
+s1:'Stavolta il validatore sei tu',
+wcaT:'Foglio bianco — lezione precedente',
+wca1:'Non conoscevi il campo',
+wca2:'L\'AI validava il piano, perché tu non potevi',
+wcbT:'Confronto / Merge — ora',
+wcb1:'Conosci il mestiere — bene',
+wcb2:'Hai l\'esperienza per decidere cosa resta',
+n0H:'La trappola del sapere',
+n0P:'Proprio <strong>perché</strong> conosci il mestiere, arrivi con una risposta già in testa e filtri ogni alternativa attraverso il tuo metodo. L\'errore che fanno quasi tutti — esperti inclusi — è <strong>attaccare l\'AI sopra il processo che hanno già</strong>. Guadagno minuscolo.',
+s2:'Il workflow del merge',
+f0T:'Chiedi il suo metodo',f0S:'Pulito, senza pre-frame',
+f1T:'Confronta',f1S:'Il tuo vs il suo',
+f2T:'Merge',f2S:'Tieni il meglio di entrambi',
+s3:'Guarda il merge',
+mcYouT:'Il tuo metodo',mcYouS:'esperienza · gusto · contesto',
+mcAiT:'Il metodo dell\'AI',mcAiS:'nessun pre-frame · struttura grezza',
+resTxt:'<b>Il metodo unito:</b> il pezzo migliore del tuo + il pezzo migliore del suo. Migliore di entrambi presi singolarmente — e il validatore sei tu.',
+statusInit:'Avvia il merge per vedere cosa porta ogni parte.',
+s4:'La demo, dal vivo',
+p1Tag:'Prompt 1 — il suo metodo',
+p1:'Devo [compito che fai bene]. Non ti dico come lo faccio io. Prima voglio il TUO metodo: se dovessi farlo da zero, qual è il percorso — e perché?',
+p2Tag:'Prompt 2 — il confronto',
+p2:'Ecco come lo faccio di solito: [il tuo metodo]. Confronta i due. Dove è più forte il mio? Dove il tuo? Costruiamo la versione migliore prendendo il meglio di entrambi.',
+n1H:'Un caso reale',
+n1P:'Ottimizzare una campagna pubblicitaria. L\'AI è più brava su <strong>soglie, kill-switch, scaling del budget</strong> — è matematica. Il lato umano porta l\'esperienza per sterzarla via dal muro. Risultato: <strong>tre ore invece di un giorno e mezzo.</strong>',
+s5:'Quando vince il merge — e il rischio reale',
+s5p:'Vince ogni volta che fai qualcosa "allo stesso modo" da anni: è lì che il soffitto è più alto — e invisibile. Il rischio qui non è che l\'AI fallisca senza che te ne accorgi. È il tuo <b>ego</b>: scartare il suo metodo solo perché non è il tuo.',
+egoTag:'Parla l\'ego',egoEx:'Lo faccio così da dieci anni. La mia versione resta.',
+mergeTag:'Merge onesto',mergeEx:'La sua regola di scaling del budget batte la mia — quel pezzo resta. Il mio istinto sul cliente batte il suo — resta anche quello.',
+n2H:'Resta onesto',
+n2P:'Tieni ciò che è <strong>oggettivamente migliore</strong>, non ciò che è tuo. Quella singola disciplina è ciò che separa un guadagno piccolo da un salto di livello.',
+n3H:'Checkpoint — fallo questa settimana',
+n3P:'<strong>Pensa a una cosa</strong> che fai da anni, sempre allo stesso modo, e dai per scontata. La prossima volta, prima di farla, chiedi all\'AI come la rifarebbe da zero. Poi confronta. Quasi sempre te ne vai con almeno un pezzo migliore del tuo.',
+keyP:'Non chiedere all\'AI di fare la cosa come la fai tu. Chiedi come la farebbe lei — e ruba ogni pezzo che batte il tuo.',
+n4H:'Il cuore del corso è completo',
+n4P:'<strong>Foglio bianco</strong> per ciò che non sai, <strong>Confronto / Merge</strong> per ciò che già fai bene. Da qui in avanti, tutto ciò che "non sai fare" non è più un muro: è solo un foglio bianco che non hai ancora aperto.',
+foot:'Morfeus — Confronto &amp; merge tra modelli',
+flow:[
+{t:'Passo 1 — Chiedi il suo metodo, pulito',li:['Vuoi il suo approccio senza i tuoi pre-frame','Non rivelare come lo fai tu — non ancora','Chiedi il percorso E il ragionamento dietro'],bad:'Ecco come lo faccio — miglioralo.',good:'Come raggiungeresti TU questo obiettivo, da zero, senza sapere come lo faccio io?'},
+{t:'Passo 2 — Metti il tuo a fianco',li:['Ora descrivi il tuo metodo, onestamente','Chiedi una critica a doppio senso, non a senso unico','I punti deboli di entrambi devono emergere'],good:'Dove è più debole il mio metodo rispetto al tuo? E dove il tuo è più debole del mio?'},
+{t:'Passo 3 — Fai il merge',li:['Il pezzo migliore del tuo + il pezzo migliore del suo','Qui il validatore sei tu: l\'esperienza decide cosa resta','L\'output è un metodo migliore di entrambi gli originali'],tip:'È questa la mossa: non stai migliorando il tuo vecchio processo — ne stai costruendo un terzo che batte entrambi.'}],
+flowPreTag:'Pre-frame',flowCleanTag:'Richiesta pulita',
+runBtn:'Avvia il merge',runAgain:'Avvialo di nuovo',
+st1:'Il tuo metodo sul tavolo: esperienza, gusto, contesto…',
+st2:'Il suo metodo, da zero: struttura, matematica, nessun pre-frame…',
+st3:'Unito. Tieni ciò che è oggettivamente migliore — da entrambi i lati.'
+},
+en:{
+pdfT:'Download PDF',themeT:'Toggle theme',copyL:'copy',
+eyebrow:'Module 8 · The Plan &amp; Solve method',
+chip:'Capstone · 2 of 2',
+h1:'Compare &amp; merge across models',
+lede:'The most powerful moment is not using <span class="cl">AI</span> for what you can\'t do. It is pointing it at what <span class="you">you believe you do best</span> — and finding a better way.',
+hook:'That is exactly where you have an invisible ceiling: "the way I\'ve always done it." Today you break through it — and you usually gain a level on something you have done for years.',
+s1:'This time, the validator is you',
+wcaT:'Blank Sheet — previous lesson',
+wca1:'You did not know the field',
+wca2:'The AI validated the plan, because you couldn\'t',
+wcbT:'Compare / Merge — now',
+wcb1:'You know the craft — well',
+wcb2:'You have the experience to decide what stays',
+n0H:'The trap of knowing',
+n0P:'Precisely <strong>because</strong> you know the craft, you arrive with an answer already in your head and filter every alternative through your own method. The mistake almost everyone makes — experts included — is <strong>bolting AI on top of the process they already have</strong>. Tiny gain.',
+s2:'The Merge workflow',
+f0T:'Ask its method',f0S:'Clean, no pre-frames',
+f1T:'Compare',f1S:'Yours vs its',
+f2T:'Merge',f2S:'Keep the best of both',
+s3:'Watch the merge',
+mcYouT:'Your method',mcYouS:'experience · taste · context',
+mcAiT:'The AI\'s method',mcAiS:'no pre-frames · raw structure',
+resTxt:'<b>The merged method:</b> the best piece of yours + the best piece of its. Better than either one alone — and the validator is you.',
+statusInit:'Run the merge to see what each side brings.',
+s4:'The demo, live',
+p1Tag:'Prompt 1 — its method',
+p1:'I need to [task you do well]. I\'m not telling you how I do it. First I want YOUR method: if you had to do this from scratch, what is the path — and why?',
+p2Tag:'Prompt 2 — the comparison',
+p2:'Here is how I usually do it: [your method]. Compare the two. Where is mine stronger? Where is yours? Let\'s build the best version by taking the best of both.',
+n1H:'A real case',
+n1P:'Optimizing an ad campaign. The AI is better at <strong>thresholds, kill-switches, budget scaling</strong> — that is math. The human side brings the experience to steer it away from the wall. Result: <strong>three hours instead of a day and a half.</strong>',
+s5:'When the Merge wins — and the real risk',
+s5p:'It wins every time you have done something "the same way" for years: that is where the ceiling is highest — and invisible. The risk here is not the AI failing unnoticed. It is your <b>ego</b>: discarding its method only because it is not yours.',
+egoTag:'Ego talking',egoEx:'I\'ve done it this way for ten years. My version stays.',
+mergeTag:'Honest merge',mergeEx:'Its budget-scaling rule beats mine — that piece stays. My client instinct beats its — that piece stays too.',
+n2H:'Stay honest',
+n2P:'Keep what is <strong>objectively better</strong>, not what is yours. That single discipline is what separates a small gain from a level-up.',
+n3H:'Checkpoint — do it this week',
+n3P:'<strong>Think of one thing</strong> you have done for years, always the same way, and take for granted. Next time, before doing it, ask the AI how it would redo it from scratch. Then compare. You almost always walk away with at least one piece better than yours.',
+keyP:'Don\'t ask the AI to do the thing the way you do it. Ask how it would do it — and steal every piece that beats yours.',
+n4H:'The heart of the course is complete',
+n4P:'<strong>Blank Sheet</strong> for what you don\'t know, <strong>Compare / Merge</strong> for what you already do well. From here on, anything you "can\'t do" is no longer a wall: it is just a blank sheet you haven\'t opened yet.',
+foot:'Morfeus — Compare &amp; merge across models',
+flow:[
+{t:'Step 1 — Ask for its method, clean',li:['You want its approach without your pre-frames','Do not reveal how you do it — not yet','Ask for the path AND the reasoning behind it'],bad:'Here is how I do it — improve it.',good:'How would YOU reach this goal, from scratch, without knowing how I do it?'},
+{t:'Step 2 — Put yours side by side',li:['Now describe your method, honestly','Ask for a two-way critique, not a one-way one','Weak points of both must come out'],good:'Where is my method weaker than yours? And where is yours weaker than mine?'},
+{t:'Step 3 — Do the merge',li:['The best piece of yours + the best piece of its','Here the validator is you: experience decides what stays','The output is a method better than either original'],tip:'This is the move: you are not improving your old process — you are building a third one that beats both.'}],
+flowPreTag:'Pre-framed',flowCleanTag:'Clean ask',
+runBtn:'Run the merge',runAgain:'Run it again',
+st1:'Your method on the table: experience, taste, context…',
+st2:'Its method, from scratch: structure, math, no pre-frames…',
+st3:'Merged. Keep what is objectively better — from both sides.'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=(LANG==='it'?'Confronto & merge tra modelli':'Compare & merge across models')+' — Morfeus';
+  showFlow(curFlow);
+  document.getElementById('runBtnTxt').textContent=mergedOnce?DICT[LANG].runAgain:DICT[LANG].runBtn;
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var curFlow=0;
+function showFlow(i){curFlow=i;var d=DICT[LANG].flow[i];document.querySelectorAll('.fstep').forEach(function(s,k){s.classList.toggle('on',k===i)});
+var h='<h4>'+d.t+'</h4><ul>'+d.li.map(function(x){return '<li><i class="ti ti-point-filled"></i>'+x+'</li>'}).join('')+'</ul>';
+if(d.bad){h+='<div class="ex bad"><span class="tag bad">'+DICT[LANG].flowPreTag+'</span>'+d.bad+'</div>'}
+if(d.good){h+='<div class="ex good"><span class="tag good">'+DICT[LANG].flowCleanTag+'</span>'+d.good+'</div>'}
+if(d.tip){h+='<div class="ex good">'+d.tip+'</div>'}
+document.getElementById('fdetail').innerHTML=h}
+
+var mBusy=false,mergedOnce=false;
+function runMerge(){if(mBusy)return;mBusy=true;
+var y=document.getElementById('mcYou'),a=document.getElementById('mcAi'),r=document.getElementById('mres'),st=document.getElementById('statusln'),btn=document.getElementById('runBtn');
+r.classList.remove('show');y.classList.add('flash');st.textContent=DICT[LANG].st1;
+setTimeout(function(){y.classList.remove('flash');a.classList.add('flash');st.textContent=DICT[LANG].st2},1100);
+setTimeout(function(){a.classList.remove('flash');r.classList.add('show');st.textContent=DICT[LANG].st3;mergedOnce=true;document.getElementById('runBtnTxt').textContent=DICT[LANG].runAgain;mBusy=false},2300)}
+function copyP(btn){var t=btn.parentNode.querySelector('.ex span:last-child').textContent.trim();
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t)}
+var orig=DICT[LANG].copyL;btn.textContent=(LANG==='it'?'copiato ✓':'copied ✓');btn.classList.add('ok');setTimeout(function(){btn.textContent=orig;btn.classList.remove('ok')},1600)}
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

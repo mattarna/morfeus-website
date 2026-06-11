@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Skill già pronte — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* Morfeus v6 lesson template — light theme default, dark via toggle; blueprint grid background, mono technical accents, bracketed section numbers, scroll-reveal, print-expand rules */
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede b{color:var(--accent);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lead-p{font-size:14.5px;color:var(--ink-2);margin-bottom:16px;line-height:1.7}
+.lead-p strong{color:var(--ink);font-weight:600}
+.lead-p code{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);padding:1px 6px;border-radius:4px;color:var(--ink)}
+
+.flow{display:flex;align-items:stretch;gap:0}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:32px;flex-shrink:0;color:var(--ink-3);font-size:20px}
+.fstep{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 12px 20px;text-align:center;cursor:pointer;transition:.2s}
+.fstep:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.fstep.on:nth-child(1){border-color:var(--accent);background:var(--accent-soft)}
+.fstep.on:nth-child(3){border-color:var(--agent);background:var(--agent-soft)}
+.fstep .fn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 12px;transition:.2s}
+.fstep:nth-child(1) .fn{background:var(--accent-soft);color:var(--accent)}
+.fstep:nth-child(3) .fn{background:var(--agent-soft);color:var(--agent)}
+.fstep.on:nth-child(1) .fn{background:var(--accent);color:#fff}
+.fstep.on:nth-child(3) .fn{background:var(--agent);color:#fff}
+.fstep h3{font-size:15px;font-weight:600;margin-bottom:3px}.fstep p{font-size:12.5px;color:var(--ink-3)}
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:13px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:13px}
+.fdetail ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+.fdetail li{display:flex;gap:10px;font-size:14px;color:var(--ink-2)}.fdetail li i{color:var(--accent);font-size:16px;margin-top:2px}
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex+.ex{margin-top:8px}.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:7px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}.tag.good{background:var(--good-soft);color:var(--good)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note p code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.note.warn{background:var(--agent-soft);border-color:var(--agent-line)}
+.note.warn .ni{background:var(--agent)}
+.note.warn h4{color:var(--agent)}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+/* ===== FEATURE ROWS ===== */
+.feat{display:flex;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line)}
+.feat:last-child{border-bottom:none}
+.feat .fi{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--accent-soft);color:var(--accent)}
+.feat .fi.alt{background:var(--agent-soft);color:var(--agent)}
+.feat .ft strong{display:block;font-size:14px;font-weight:600;margin-bottom:2px}
+.feat .ft span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.feat .ft code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);padding:1px 5px;border-radius:4px;color:var(--ink)}
+
+/* ===== SKILLS GALLERY ===== */
+.gtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.gtab{padding:7px 16px;border-radius:30px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink-2);box-shadow:var(--sh);transition:.18s}
+.gtab:hover{border-color:var(--line-2);color:var(--ink)}
+.gtab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.gcards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.gc{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 15px;cursor:pointer;transition:.2s;display:flex;gap:11px;align-items:flex-start}
+.gc:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.gc.on{border-color:var(--accent);background:var(--accent-soft)}
+.gc .gi{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.gc .gn{font-size:13.5px;font-weight:600}
+.gc .gs{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.gc .gt{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:20px;margin-top:6px}
+.gi.g-good{background:var(--good-soft);color:var(--good)} .gt.g-good{background:var(--good-soft);color:var(--good)}
+.gi.g-acc{background:var(--accent-soft);color:var(--accent)} .gt.g-acc{background:var(--accent-soft);color:var(--accent)}
+.gi.g-ag{background:var(--agent-soft);color:var(--agent)} .gt.g-ag{background:var(--agent-soft);color:var(--agent)}
+.gi.g-bad{background:var(--bad-soft);color:var(--bad)} .gt.g-bad{background:var(--bad-soft);color:var(--bad)}
+.gdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.gd-empty{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);padding:18px 0}
+.gd-empty i{display:block;font-size:24px;margin-bottom:8px}
+.gd-h{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.gd-i{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.gd-n{font-size:17px;font-weight:600}
+.gd-t{font-size:12px;color:var(--ink-3)}
+.gd-s{margin-bottom:12px}
+.gd-s h5{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:5px}
+.gd-s p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+/* ===== PROGRESSIVE DISCLOSURE ===== */
+.pd{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px 22px}
+.pd h3{font-size:16px;font-weight:600;margin-bottom:3px}
+.pd .pdh{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:18px}
+.pdl{border:1.5px solid var(--line);border-radius:var(--r-l);overflow:hidden;margin-bottom:10px;transition:border-color .25s}
+.pdl.unlocked{border-color:var(--accent)}
+.pdl-h{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;background:var(--bg-2);transition:.2s;user-select:none}
+.pdl.unlocked .pdl-h{background:var(--accent-soft)}
+.pdl-n{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border:2px solid var(--line-2);color:var(--ink-3);flex-shrink:0;transition:.25s}
+.pdl.unlocked .pdl-n{background:var(--accent);border-color:var(--accent);color:#fff}
+.pdl-t{flex:1}
+.pdl-t strong{font-size:14px;font-weight:600;display:block}
+.pdl-t span{font-size:11.5px;color:var(--ink-3)}
+.pdl.unlocked .pdl-t span{color:var(--accent)}
+.pdl-c{font-size:16px;color:var(--ink-3);transition:transform .25s}
+.pdl.open .pdl-c{transform:rotate(90deg)}
+.pdl-b{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.pdl.open .pdl-b{max-height:640px}
+.pdl-bi{padding:14px 16px;border-top:1px solid var(--line)}
+.pdl-bi p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+.pdl-bi p:last-child{margin-bottom:0}
+.pdl-bi p strong{color:var(--ink)}
+.pdl-bi code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.pd-row{display:flex;justify-content:center;margin-top:16px}
+.runbtn{display:flex;align-items:center;gap:8px;background:var(--agent);color:#fff;border:none;padding:11px 23px;border-radius:30px;font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px var(--agent-line);transition:.2s}
+.runbtn:hover{transform:translateY(-1px)}
+.runbtn:disabled{opacity:.55;cursor:default;transform:none}
+.pd-status{text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:11px}
+
+/* ===== BEFORE / AFTER ===== */
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.wc.no{border-color:var(--bad)}.wc.no h4{color:var(--bad)}
+.wc.yes{border-color:var(--good)}.wc.yes h4{color:var(--good)}
+.wc h4{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;gap:8px;align-items:center}
+.wc .wsub{font-size:12.5px;color:var(--ink-2);margin-bottom:12px;line-height:1.55}
+
+/* ===== MYTH CARDS ===== */
+.myth{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:.18s}
+.myth:hover{border-color:var(--line-2);border-left-color:var(--bad)}
+.myth .mh{display:flex;align-items:center;gap:10px}
+.myth .mi{width:30px;height:30px;border-radius:9px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:.18s}
+.myth .mq{font-size:14px;font-weight:600;flex:1}
+.myth .mq code{font-family:var(--mono);font-size:12px}
+.myth .mc2{font-size:11px;color:var(--ink-3);font-family:var(--mono);white-space:nowrap}
+.myth .mt{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2);font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.myth .mt strong{color:var(--ink)}
+.myth .mt code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);padding:1px 5px;border-radius:4px;color:var(--ink)}
+.myth.open .mt{display:block;animation:fs .25s ease}
+.myth.open{border-left-color:var(--good)}
+.myth.open .mi{background:var(--good-soft);color:var(--good)}
+@keyframes fs{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ===== CHECKPOINT ===== */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:30px 24px;text-align:center}
+.cp i{font-size:38px;color:var(--accent);display:block;margin-bottom:10px}
+.cp .cpt{font-size:16.5px;font-weight:600;margin-bottom:7px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink)}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.wg{grid-template-columns:1fr}.gcards{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.runbtn,.lang{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.pdl-b{max-height:none!important}.pdl.open .pdl-b,.pdl-b{max-height:none!important}.myth .mt{display:block!important}.gd-empty{display:none}.fdetail,.fstep,.note,.gc,.gdetail,.pd,.pdl,.wc,.myth,.cp{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Lezione B6.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 6 — Estendere Claude</div>
+  <h1 class="rv" data-i="h1">Le Skill già pronte</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="whyH">Perché conta</h4><p data-i-html="whyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-book-2"></i><span class="no">01</span><h2 data-i="s1">Cos'è davvero una Skill</h2></div>
+  <p class="lead-p rv" data-i-html="s1p"></p>
+
+  <div class="fdetail rv">
+    <h4><i class="ti ti-file-code" style="color:var(--accent);font-size:17px"></i> <span data-i="structH"></span></h4>
+    <div class="ex" id="structEx"></div>
+  </div>
+
+  <div class="fdetail rv">
+    <div class="feat"><div class="fi"><i class="ti ti-file-text"></i></div><div class="ft"><strong data-i="f1H"></strong><span data-i="f1P"></span></div></div>
+    <div class="feat"><div class="fi"><i class="ti ti-adjustments-alt"></i></div><div class="ft"><strong data-i-html="f2H"></strong><span data-i-html="f2P"></span></div></div>
+    <div class="feat"><div class="fi"><i class="ti ti-circles-relation"></i></div><div class="ft"><strong data-i="f3H"></strong><span data-i="f3P"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">02</span><h2 data-i="s2">Come si attivano le Skill</h2></div>
+  <p class="lead-p rv" data-i="s2p"></p>
+  <div class="flow rv">
+    <div class="fstep on" onclick="showFlow(0)"><div class="fn"><i class="ti ti-slash"></i></div><h3 data-i="flow0t"></h3><p data-i="flow0s"></p></div>
+    <div class="flow-arrow"><i class="ti ti-arrows-left-right"></i></div>
+    <div class="fstep" onclick="showFlow(1)"><div class="fn"><i class="ti ti-sparkles"></i></div><h3 data-i="flow1t"></h3><p data-i="flow1s"></p></div>
+  </div>
+  <div class="fdetail rv" id="fdetail"></div>
+
+  <div class="note warn rv"><div class="ni"><i class="ti ti-info-circle"></i></div><div><h4 data-i="preH">Prerequisito: esecuzione del codice</h4><p data-i-html="preP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">03</span><h2 data-i="s3">Galleria di Skill — esplora e clicca</h2></div>
+  <p class="lead-p rv" data-i="s3p"></p>
+
+  <div class="gtabs rv">
+    <button class="gtab on" onclick="filterG('all',this)" data-i="gAll"></button>
+    <button class="gtab" onclick="filterG('builtin',this)" data-i="gBuiltin"></button>
+    <button class="gtab" onclick="filterG('meta',this)" data-i="gMeta"></button>
+  </div>
+  <div class="gcards rv" id="gcards"></div>
+  <div class="gdetail rv" id="gdetail">
+    <div class="gd-empty" id="gdEmpty"><i class="ti ti-hand-click"></i><span data-i="gEmpty"></span></div>
+    <div id="gdContent" style="display:none"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">04</span><h2 data-i="s4">Progressive disclosure</h2></div>
+  <p class="lead-p rv" data-i-html="s4p"></p>
+
+  <div class="pd rv">
+    <h3 data-i="pdH"></h3>
+    <div class="pdh" data-i="pdSub"></div>
+
+    <div class="pdl unlocked open" id="pdl0">
+      <div class="pdl-h" onclick="togglePd(0)">
+        <div class="pdl-n">1</div>
+        <div class="pdl-t"><strong data-i="pdl0t"></strong><span data-i="pdl0s"></span></div>
+        <i class="ti ti-chevron-right pdl-c"></i>
+      </div>
+      <div class="pdl-b"><div class="pdl-bi">
+        <p data-i-html="pdl0p1"></p>
+        <div class="ex good" id="pdl0ex"></div>
+        <p style="margin-top:10px" data-i="pdl0p2"></p>
+      </div></div>
+    </div>
+
+    <div class="pdl" id="pdl1">
+      <div class="pdl-h" onclick="togglePd(1)">
+        <div class="pdl-n">2</div>
+        <div class="pdl-t"><strong data-i="pdl1t"></strong><span data-i="pdl1s"></span></div>
+        <i class="ti ti-chevron-right pdl-c"></i>
+      </div>
+      <div class="pdl-b"><div class="pdl-bi">
+        <p data-i-html="pdl1p1"></p>
+        <div class="ex" id="pdl1ex"></div>
+        <p style="margin-top:10px" data-i="pdl1p2"></p>
+      </div></div>
+    </div>
+
+    <div class="pdl" id="pdl2">
+      <div class="pdl-h" onclick="togglePd(2)">
+        <div class="pdl-n">3</div>
+        <div class="pdl-t"><strong data-i="pdl2t"></strong><span data-i="pdl2s"></span></div>
+        <i class="ti ti-chevron-right pdl-c"></i>
+      </div>
+      <div class="pdl-b"><div class="pdl-bi">
+        <p data-i-html="pdl2p1"></p>
+        <p data-i-html="pdl2p2"></p>
+        <div class="ex" id="pdl2ex"></div>
+      </div></div>
+    </div>
+
+    <div class="pd-row"><button class="runbtn" id="pdBtn" onclick="unlockPd()"><i class="ti ti-lock-open"></i> <span id="pdBtnTxt"></span></button></div>
+    <div class="pd-status" id="pdStatus"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">05</span><h2 data-i="s5">La differenza nella pratica</h2></div>
+  <p class="lead-p rv" data-i-html="s5p"></p>
+
+  <div class="wg rv">
+    <div class="wc no"><h4><i class="ti ti-x"></i> <span data-i="woutH"></span></h4><div class="wsub" data-i="woutS"></div>
+      <div class="ex bad" id="woutEx"></div>
+    </div>
+    <div class="wc yes"><h4><i class="ti ti-check"></i> <span data-i="wwithH"></span></h4><div class="wsub" data-i="wwithS"></div>
+      <div class="ex good" id="wwithEx"></div>
+    </div>
+  </div>
+
+  <div class="key rv"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-search"></i><span class="no">06</span><h2 data-i="s6">Dove trovare le Skill</h2></div>
+  <div class="fdetail rv">
+    <div class="feat"><div class="fi alt"><i class="ti ti-adjustments"></i></div><div class="ft"><strong data-i="w1H"></strong><span data-i="w1P"></span></div></div>
+    <div class="feat"><div class="fi alt"><i class="ti ti-layout-grid-add"></i></div><div class="ft"><strong data-i="w2H"></strong><span data-i="w2P"></span></div></div>
+    <div class="feat"><div class="fi alt"><i class="ti ti-brand-github"></i></div><div class="ft"><strong data-i="w3H"></strong><span data-i-html="w3P"></span></div></div>
+    <div class="feat"><div class="fi alt"><i class="ti ti-package"></i></div><div class="ft"><strong data-i="w4H"></strong><span data-i="w4P"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">07</span><h2 data-i="s7">Equivoci da evitare</h2></div>
+  <p class="lead-p rv" data-i="s7p"></p>
+  <div class="rv">
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m1q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m1t"></div>
+    </div>
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m2q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m2t"></div>
+    </div>
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m3q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m3t"></div>
+    </div>
+    <div class="myth" onclick="myth(this)">
+      <div class="mh"><div class="mi"><i class="ti ti-x"></i></div><div class="mq" data-i="m4q"></div><div class="mc2" data-mc>reveal &#9662;</div></div>
+      <div class="mt" data-i-html="m4t"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-toggle-right"></i>
+    <div class="cpt" data-i="cpT"></div>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-arrow-right"></i></div><div><h4 data-i="nextH">Prossimo: creare la tua prima Skill</h4><p data-i-html="nextP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Le Skill già pronte</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 6 — Estendere Claude',
+h1:'Le Skill già pronte',
+lede:'Non devi costruire ogni Skill da zero. Tantissime sono <b>già lì</b> — alcune incluse di default nel tuo piano, altre pubblicate da Anthropic o dalla community. Sai dove guardare?',
+whyH:'Perché conta',
+whyP:'Una Skill ben costruita trasforma un\'ora di lavoro in cinque minuti. Non perché Claude diventa improvvisamente più veloce — ma perché <strong>le istruzioni sono già perfette, il formato è già giusto, il contesto è già incluso</strong>.',
+s1:'Cos\'è davvero una Skill',
+s1p:'Una Skill è una <strong>cartella</strong> con al centro un file <code>SKILL.md</code>. Non è codice — è un documento Markdown con le istruzioni che Claude deve seguire per quel tipo di task. Il cuore è il <strong>frontmatter YAML</strong> in cima: due campi essenziali, <code>name</code> e <code>description</code>. Tutto ciò che viene dopo è il corpo delle istruzioni.',
+structH:'Struttura tipica di un SKILL.md',
+f1H:'Non è codice',f1P:'Il cuore di una Skill è testo in linguaggio naturale. Lo puoi leggere, modificare e capire senza saper programmare.',
+f2H:'Il trigger vive nella <code>description</code>',f2P:'Non c\'è un campo "Trigger" separato. La <em>description</em> fa entrambi i lavori: descrive la Skill e dice a Claude le situazioni che dovrebbero attivarla. È il pezzo più importante in assoluto.',
+f3H:'Tre possibili origini',f3P:'Le Skill che hai a disposizione vengono da tre posti: (1) incluse nel tuo piano, (2) impacchettate dentro Plugin installati, (3) create da te.',
+s2:'Come si attivano le Skill',
+s2p:'Ci sono due modi in cui una Skill entra in gioco. Clicca ciascuno per vedere come funziona.',
+flow0t:'Esplicita',flow0s:'Scrivi "/" e la scegli',
+flow1t:'Automatica',flow1s:'La sceglie Claude per te',
+preH:'Prerequisito: esecuzione del codice',
+preP:'Le Skill richiedono <strong>l\'esecuzione del codice</strong> abilitata (Settings → Capabilities su Free/Pro/Max). Sui piani Team/Enterprise è l\'admin ad abilitarla a livello di organizzazione.',
+s3:'Galleria di Skill — esplora e clicca',
+s3p:'Clicca una Skill qualsiasi per vedere cosa fa, cosa la fa attivare e un esempio concreto d\'uso.',
+gAll:'Tutte',gBuiltin:'Incluse',gMeta:'Meta-Skill',
+gEmpty:'Clicca una Skill per vederne i dettagli',
+s4:'Progressive disclosure',
+s4p:'Le Skill non intasano il contesto di Claude, perché si caricano <strong>solo nel momento in cui servono</strong> — e solo per quanto serve. Il meccanismo si chiama <em>progressive disclosure</em>: tre livelli, ognuno caricato su richiesta.',
+pdH:'Come Claude carica una Skill',
+pdSub:'Sblocca i livelli uno alla volta per vedere il meccanismo all\'opera.',
+pdl0t:'name + description',pdl0s:'Sempre in contesto — circa 100 parole',
+pdl0p1:'Il <strong>name</strong> e la <strong>description</strong> di ogni Skill abilitata sono <em>sempre presenti</em> nel contesto di Claude, anche quando quella Skill è inattiva. Occupano pochissimo spazio (~100 parole) e servono a una cosa: permettere a Claude di capire <em>se e a che punto</em> la Skill debba scattare.',
+pdl0p2:'È il "radar" passivo: Claude lo vede sempre, eppure non costa quasi nulla in contesto.',
+pdl1t:'Corpo del SKILL.md',pdl1s:'Caricato solo quando la Skill scatta',
+pdl1p1:'Nel momento in cui Claude riconosce la Skill come rilevante — tramite invocazione diretta o match col task — <strong>carica il corpo completo del SKILL.md</strong>. Qui ci sono tutte le istruzioni operative: passi da seguire, formato di output, criteri di qualità, casi limite.',
+pdl1p2:'Idealmente sotto le 500 righe. Il dettaglio operativo va qui — non nella description.',
+pdl2t:'File extra e script',pdl2s:'Letti o eseguiti solo se serve — praticamente illimitati',
+pdl2p1:'Una Skill può portare con sé una cartella <code>references/</code> con documenti di supporto (linee guida, esempi, tabelle) e una cartella <code>scripts/</code> con codice eseguibile per task deterministici (calcoli, trasformazioni di dati, generazione di file).',
+pdl2p2:'Questi file vengono letti o eseguiti <strong>solo se le istruzioni del corpo li richiamano</strong>. Non entrano mai in contesto di default. Così una stessa Skill può gestire casi molto complessi senza sprecare spazio nelle conversazioni semplici.',
+pdBtnLock:'Sblocca il Livello',pdBtnDone:'Tutti i livelli sbloccati',
+pdStatusFmt:'Livello %1 di %2 sbloccato',pdStatusDone:'Progressive disclosure completa — tre livelli, ognuno caricato su richiesta',
+s5:'La differenza nella pratica',
+s5p:'Lo stesso task — con un prompt grezzo contro con una Skill. La differenza non è la velocità: è <strong>coerenza e prevedibilità</strong>.',
+woutH:'Senza una Skill',woutS:'Diverso a ogni esecuzione. Scrivi tu le istruzioni, scivolano tra una sessione e l\'altra, il formato di output vaga.',
+wwithH:'Con una Skill',wwithS:'Identico a ogni esecuzione — e giusto. Le istruzioni sono pre-ottimizzate. Il formato è fisso. Il risultato è prevedibile.',
+key1:'Una Skill non è un trucco — è un investimento. Il suo costo si ripaga, moltiplicato, ogni singola volta che la usi.',
+s6:'Dove trovare le Skill',
+w1H:'Il pannello Customize → Skills',w1P:'Il tuo punto di partenza. Vedi ogni Skill a tua disposizione e attivi o disattivi ciascuna. Le incluse sono già lì.',
+w2H:'La Directory unificata (il pulsante "+")',w2P:'In Customize, clicca "+" → "Browse": la directory unificata raccoglie Skill, Connettori e Plugin di Anthropic e della community, organizzati per categoria.',
+w3H:'Il repository ufficiale di Anthropic',w3P:'<code>github.com/anthropics/skills</code> — Skill open-source che puoi scaricare e modificare. Ospita anche la Skill ufficiale <code>skill-creator</code>.',
+w4H:'Dentro i Plugin installati',w4P:'Ogni Plugin porta con sé le sue Skill. Installi il Plugin e le sue Skill atterrano nel tuo pannello in automatico.',
+s7:'Equivoci da evitare',
+s7p:'Clicca ogni affermazione per scoprire perché è sbagliata.',
+m1q:'«Una Skill è codice — mi serve uno sviluppatore»',
+m1t:'<strong>No.</strong> Il cuore è Markdown in linguaggio naturale. Una Skill <em>può opzionalmente</em> includere script, ma funziona benissimo anche senza.',
+m2q:'«Devo sempre invocarle a mano»',
+m2t:'<strong>No.</strong> Claude le auto-attiva tramite la description appena riconosce il task. L\'invocazione esplicita con "/" è solo un\'opzione in più per il pieno controllo.',
+m3q:'«C\'è un campo "Trigger" separato»',
+m3t:'<strong>No.</strong> I campi del frontmatter sono <code>name</code> e <code>description</code>. Il trigger vive <em>dentro</em> la description — non è un campo distinto.',
+m4q:'«Più istruzioni nella description, meglio è»',
+m4t:'<strong>No.</strong> La description dovrebbe stare attorno alle 100 parole: deve dire <em>cosa fa la Skill</em> e <em>le situazioni in cui usarla</em>. Il dettaglio operativo va nel corpo della Skill, non nella description.',
+s8:'Checkpoint',
+cpT:'Apri il pannello Customize → Skills.',
+cpP:'Guarda le Skill che hai già a disposizione. Scegline una che sembra rilevante per quello che fai: aprila e leggi la sua <strong>description</strong>. Poi invocala con "/" su un task reale — e confronta il risultato con un prompt scritto a mano.',
+nextH:'Prossimo: creare la tua prima Skill',
+nextP:'Ora sai usare le Skill esistenti. Il passo che separa davvero i power user di Claude è <strong>costruirne di proprie</strong> — modellate esattamente sul tuo workflow. Nella lezione 6.3 ne costruiamo una insieme: struttura, frontmatter, corpo e come caricarla.',
+foot:'Morfeus — Le Skill già pronte',
+mcLabel:'reveal ▾',mcDone:'capito ✓'
+},
+en:{
+pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 6 — Extending Claude',
+h1:'The ready-made Skills',
+lede:'You don\'t have to build every Skill from scratch. Plenty are <b>already there</b> — some bundled into your plan by default, others published by Anthropic or the community. Do you know where to look?',
+whyH:'Why this matters',
+whyP:'A well-built Skill turns an hour of effort into five minutes. Not because Claude suddenly gets faster — but because <strong>the instructions are already perfect, the format is already right, the context is already included</strong>.',
+s1:'What a Skill actually is',
+s1p:'A Skill is a <strong>folder</strong> with a <code>SKILL.md</code> file at its core. It\'s not code — it\'s a Markdown document with the instructions Claude should follow for that type of task. The heart of it is the <strong>YAML frontmatter</strong> at the top: two essential fields, <code>name</code> and <code>description</code>. Everything after that is the body of instructions.',
+structH:'Typical structure of a SKILL.md',
+f1H:'It isn\'t code',f1P:'The core of a Skill is natural-language text. You can read it, edit it and understand it without knowing how to program.',
+f2H:'The trigger lives in the <code>description</code>',f2P:'There is no separate "Trigger" field. The <em>description</em> does both jobs: it describes the Skill and tells Claude the situations that should activate it. It\'s the single most important piece.',
+f3H:'Three possible origins',f3P:'The Skills you have available come from three places: (1) built into your plan, (2) bundled inside installed Plugins, (3) created by you.',
+s2:'How Skills activate',
+s2p:'There are two ways a Skill comes into play. Click each one to see how it works.',
+flow0t:'Explicit',flow0s:'You type "/" and pick it',
+flow1t:'Automatic',flow1s:'Claude picks it for you',
+preH:'Prerequisite: code execution',
+preP:'Skills require <strong>code execution</strong> to be enabled (Settings → Capabilities on Free/Pro/Max). On Team/Enterprise plans your admin enables it at the organisation level.',
+s3:'Skills gallery — explore and click',
+s3p:'Click any Skill to see what it does, what makes it trigger, and a concrete usage example.',
+gAll:'All',gBuiltin:'Built-in',gMeta:'Meta-Skill',
+gEmpty:'Click a Skill to see the details',
+s4:'Progressive disclosure',
+s4p:'Skills don\'t flood Claude\'s context, because they load <strong>only at the moment they\'re needed</strong> — and only as much as is needed. The mechanism is called <em>progressive disclosure</em>: three levels, each loaded on demand.',
+pdH:'How Claude loads a Skill',
+pdSub:'Unlock the levels one at a time to watch the mechanism at work.',
+pdl0t:'name + description',pdl0s:'Always in context — roughly 100 words',
+pdl0p1:'The <strong>name</strong> and <strong>description</strong> of every enabled Skill are <em>always present</em> in Claude\'s context, even while that Skill sits idle. They take very little space (~100 words) and serve one purpose: letting Claude figure out <em>if and at what point</em> the Skill should fire.',
+pdl0p2:'This is the passive "radar": Claude always sees it, yet it costs almost no context.',
+pdl1t:'Body of SKILL.md',pdl1s:'Loaded only once the Skill fires',
+pdl1p1:'The moment Claude recognises the Skill as relevant — through a direct invocation or a match with the task — it <strong>loads the full body of SKILL.md</strong>. This holds all the operating instructions: steps to follow, output format, quality criteria, edge cases.',
+pdl1p2:'Ideally under 500 lines. Operational detail belongs here — not in the description.',
+pdl2t:'Extra files and scripts',pdl2s:'Read or executed only if needed — virtually unlimited',
+pdl2p1:'A Skill can carry a <code>references/</code> folder with supporting documents (guidelines, samples, tables) and a <code>scripts/</code> folder with executable code for deterministic tasks (calculations, data transformations, file generation).',
+pdl2p2:'These files are read or executed <strong>only if the body\'s instructions call for them</strong>. They never enter context by default. That means one Skill can handle very complex cases without wasting space in simple conversations.',
+pdBtnLock:'Unlock Level',pdBtnDone:'All levels unlocked',
+pdStatusFmt:'Level %1 of %2 unlocked',pdStatusDone:'Progressive disclosure complete — three levels, each loaded on demand',
+s5:'The difference in practice',
+s5p:'The same task — with a raw prompt versus with a Skill. The difference isn\'t speed: it\'s <strong>consistency and predictability</strong>.',
+woutH:'Without a Skill',woutS:'Different every run. You write the instructions, they drift between sessions, the output format wanders.',
+wwithH:'With a Skill',wwithS:'Identical every run — and right. The instructions are pre-optimised. The format is fixed. The result is predictable.',
+key1:'A Skill isn\'t a trick — it\'s an investment. Its cost pays itself back, multiplied, every single time you use it.',
+s6:'Where to find Skills',
+w1H:'The Customize → Skills panel',w1P:'Your starting point. See every Skill available to you and toggle each one on or off. The built-ins are already there.',
+w2H:'The Unified Directory (the "+" button)',w2P:'In Customize, click "+" → "Browse": the unified directory gathers Skills, Connectors and Plugins from Anthropic and the community, organised by category.',
+w3H:'Anthropic\'s official repository',w3P:'<code>github.com/anthropics/skills</code> — open-source Skills you can download and modify. It also hosts the official <code>skill-creator</code> Skill.',
+w4H:'Inside installed Plugins',w4P:'Every Plugin ships with its own Skills. Install the Plugin and its Skills land in your panel automatically.',
+s7:'Misconceptions to avoid',
+s7p:'Click each statement to reveal why it\'s wrong.',
+m1q:'"A Skill is code — I need a developer"',
+m1t:'<strong>No.</strong> The core is natural-language Markdown. A Skill <em>can optionally</em> include scripts, but it runs perfectly well without any.',
+m2q:'"I always have to invoke them by hand"',
+m2t:'<strong>No.</strong> Claude auto-activates them via the description once it recognises the task. Explicit invocation with "/" is just an extra option for full control.',
+m3q:'"There\'s a separate \'Trigger\' field"',
+m3t:'<strong>No.</strong> The frontmatter fields are <code>name</code> and <code>description</code>. The trigger lives <em>inside</em> the description — it is not a distinct field.',
+m4q:'"The more instructions in the description, the better"',
+m4t:'<strong>No.</strong> The description should sit around 100 words: it must say <em>what the Skill does</em> and <em>the situations it\'s for</em>. Operational detail belongs in the body of the Skill, not in the description.',
+s8:'Checkpoint',
+cpT:'Open the Customize → Skills panel.',
+cpP:'Look at the Skills you already have available. Pick one that seems relevant to what you do: open it and read its <strong>description</strong>. Then invoke it with "/" on a real task — and compare the result against a hand-written prompt.',
+nextH:'Next: creating your first Skill',
+nextP:'You can now use existing Skills. The step that truly separates Claude power users is <strong>building your own</strong> — shaped exactly around your workflow. In lesson 6.3 we build one together: structure, frontmatter, body, and how to upload it.',
+foot:'Morfeus — The ready-made Skills',
+mcLabel:'reveal ▾',mcDone:'got it ✓'
+}};
+
+/* ===== language-specific code/example blocks ===== */
+var EX={
+it:{
+structEx:'---\nname: nome-skill\ndescription: &gt;\n  Cosa fa questa skill e le situazioni in cui usarla.\n  Claude la legge per decidere se attivarla.\n  (~100 parole — è il vero meccanismo di trigger)\n---\n\n## Istruzioni\n\nPassi dettagliati, formato di output,\ncriteri di qualità, casi limite...\n(lunghezza ideale del corpo: sotto le 500 righe)',
+pdl0ex:'---\nname: analisi-feedback-clienti\ndescription: &gt;\n  Usa questa skill su feedback, recensioni\n  o commenti dei clienti da analizzare. Produce una\n  struttura con sentiment, top 3 punti positivi,\n  top 3 aree da migliorare e azioni suggerite.\n---',
+pdl1ex:'## Processo di analisi\n\n1. Leggi tutto il feedback prima di iniziare\n2. Identifica il sentiment complessivo (positivo / neutro / negativo)\n3. Estrai i temi ricorrenti — raggruppa i simili\n4. Scegli i top 3 positivi e i top 3 problemi per frequenza e impatto\n5. Per ogni problema, suggerisci un\'azione concreta\n\n## Formato di output\n\n**Sentiment:** [Positivo / Neutro / Negativo]\n**Top 3 positivi:** ...\n**Top 3 aree da migliorare:** ...\n**Azioni suggerite:** ...',
+pdl2ex:'nome-skill/\n├── SKILL.md          ← obbligatorio\n├── references/       ← opzionale, letto su richiesta\n│   └── linee-guida.md\n├── scripts/          ← opzionale, eseguito se serve\n│   └── genera-report.py\n└── assets/           ← opzionale (template, icone)',
+woutEx:'<span class="tag bad">Prompt grezzo</span>Tu: analizza questo feedback dei clienti e dimmi cosa salta all\'occhio\n\nClaude: un\'analisi generica…\n(formato diverso a ogni esecuzione,\nprofondità variabile)',
+wwithEx:'<span class="tag good">Skill invocata</span>Tu: /analisi-feedback-clienti [testo]\n\nClaude: Sentiment: Positivo\n▸ Top 3 positivi: …\n▸ Top 3 problemi: …\n▸ Azioni: …'
+},
+en:{
+structEx:'---\nname: skill-name\ndescription: &gt;\n  What this skill does and the situations to use it in.\n  Claude reads this to decide whether to activate it.\n  (~100 words — this is the actual trigger mechanism)\n---\n\n## Instructions\n\nDetailed steps, output format,\nquality criteria, edge cases...\n(ideal body length: under 500 lines)',
+pdl0ex:'---\nname: customer-feedback-analysis\ndescription: &gt;\n  Use this skill on customer feedback, reviews\n  or comments that need analysing. Produces a\n  structure with sentiment, top 3 positives,\n  top 3 areas to improve and suggested actions.\n---',
+pdl1ex:'## Analysis process\n\n1. Read all the feedback before starting\n2. Identify the overall sentiment (positive / neutral / negative)\n3. Extract the recurring themes — group the similar ones\n4. Pick the top 3 positives and top 3 issues by frequency and impact\n5. For every issue, suggest one concrete action\n\n## Output format\n\n**Sentiment:** [Positive / Neutral / Negative]\n**Top 3 positives:** ...\n**Top 3 areas to improve:** ...\n**Suggested actions:** ...',
+pdl2ex:'skill-name/\n├── SKILL.md          ← required\n├── references/       ← optional, read on demand\n│   └── guidelines.md\n├── scripts/          ← optional, executed if needed\n│   └── build-report.py\n└── assets/           ← optional (templates, icons)',
+woutEx:'<span class="tag bad">Raw prompt</span>You: analyse this customer feedback and tell me what stands out\n\nClaude: a generic analysis…\n(different format every run,\nvariable depth)',
+wwithEx:'<span class="tag good">Skill invoked</span>You: /customer-feedback-analysis [text]\n\nClaude: Sentiment: Positive\n▸ Top 3 positives: …\n▸ Top 3 issues: …\n▸ Actions: …'
+}};
+
+/* ===== ACTIVATION FLOW ===== */
+var FLOW={
+it:[
+{t:'Invocazione esplicita con "/"',li:['Scrivi "/" in chat: appare il menu delle Skill disponibili','Scegli quella che vuoi dalla lista','Controllo totale: decidi tu il momento esatto in cui parte'],ex:'Tu: /analisi-feedback-clienti [incolla il feedback]',cls:'good',tag:'Scegli tu'},
+{t:'Attivazione automatica',li:['Descrivi il task in linguaggio naturale','Claude scansiona la description di ogni Skill abilitata','Se il tuo task combacia, carica la Skill da solo — niente richiesto a te'],ex:'Tu: "ecco 40 recensioni del mese scorso, cosa ci dicono?"\nClaude: [riconosce il task → carica analisi-feedback-clienti]',cls:'good',tag:'Sceglie Claude'}],
+en:[
+{t:'Explicit invocation with "/"',li:['Type "/" in chat: the menu of available Skills appears','Pick the one you want from the list','Total control: you decide the exact moment it runs'],ex:'You: /customer-feedback-analysis [paste the feedback]',cls:'good',tag:'You choose'},
+{t:'Automatic activation',li:['Describe the task in natural language','Claude scans the description of every enabled Skill','If your task matches, it loads the Skill on its own — nothing required from you'],ex:'You: "here are 40 reviews from last month, what do they tell us?"\nClaude: [recognises the task → loads customer-feedback-analysis]',cls:'good',tag:'Claude chooses'}]};
+
+/* ===== SKILLS GALLERY ===== */
+var SKILLS={
+it:[
+{id:'excel',cat:'builtin',name:'Excel',sub:'Fogli di calcolo',icon:'ti-file-spreadsheet',cv:'g-good',type:'Skill inclusa — compresa nel tuo piano',what:'Crea, modifica e analizza fogli Excel direttamente dentro Claude. Genera formule, tabelle pivot, grafici e file .xlsx scaricabili.',when:'Si auto-attiva su task che riguardano dati strutturati, calcoli o report — o su qualsiasi menzione di "Excel", "foglio di calcolo", "tabella dati".',ex:'Tu: "Costruisci un tracker mensile delle spese con categorie e totali automatici"\nClaude: [genera un .xlsx con tabella strutturata, formule SOMMA e totali per categoria, pronto da scaricare]'},
+{id:'word',cat:'builtin',name:'Word',sub:'Documenti',icon:'ti-file-word',cv:'g-acc',type:'Skill inclusa — compresa nel tuo piano',what:'Produce documenti Word formattati (.docx) con stili, intestazioni, sezioni e struttura professionale. Non solo testo — veri documenti.',when:'Scatta su richieste di report, lettere, contratti, procedure, o qualsiasi documento che richieda formattazione Word strutturata.',ex:'Tu: "Scrivi una proposta commerciale per un servizio di consulenza — 3 pagine, formattata in modo professionale"\nClaude: [genera un .docx con copertina, indice, sezioni numerate, stili intestazione/corpo]'},
+{id:'ppt',cat:'builtin',name:'PowerPoint',sub:'Presentazioni',icon:'ti-presentation',cv:'g-ag',type:'Skill inclusa — compresa nel tuo piano',what:'Crea presentazioni PowerPoint (.pptx) con slide strutturate, layout coerenti, titoli, punti elenco e note del relatore.',when:'Scatta su menzioni di presentazione, slide, pitch deck, briefing — o qualsiasi richiesta di dare forma proiettabile a dei contenuti.',ex:'Tu: "Crea un pitch deck da 8 slide per presentare un nuovo prodotto SaaS agli investitori"\nClaude: [genera un .pptx: problema / soluzione / mercato / traction / team / roadmap / numeri / call-to-action]'},
+{id:'pdf',cat:'builtin',name:'PDF',sub:'Lettura e analisi',icon:'ti-file-type-pdf',cv:'g-bad',type:'Skill inclusa — compresa nel tuo piano',what:'Legge, analizza, estrae dati, riassume e risponde a domande sui file PDF. Gestisce PDF lunghi e complessi con precisione.',when:'Si auto-attiva nel momento in cui carichi un PDF in chat, o chiedi di analizzare, riassumere o interrogare un documento.',ex:'Tu: [carichi un PDF di un contratto di 40 pagine] "Evidenzia le clausole penali e i termini di recesso"\nClaude: [analizza il PDF, individua e riassume le clausole rilevanti con riferimenti di pagina]'},
+{id:'creator',cat:'meta',name:'skill-creator',sub:'Meta-skill ufficiale Anthropic',icon:'ti-wand',cv:'g-acc',type:'Skill ufficiale Anthropic — github.com/anthropics/skills',what:'Una meta-skill: la abiliti, poi la invochi e descrivi un workflow. skill-creator ti intervista, scrive il SKILL.md completo, crea i test e ti guida nell\'installazione. Anthropic dichiara una Skill funzionante in 15–30 minuti.',when:'Usala ogni volta che vuoi una nuova Skill custom ma non sai da dove partire — o ogni volta che vuoi che Claude trasformi uno dei tuoi workflow ripetitivi in una Skill riutilizzabile.',ex:'Tu: /skill-creator\nClaude: "Descrivi il workflow che vuoi automatizzare…"\nTu: "Ogni settimana rivedo i KPI di progetto e produco un report standard"\nClaude: [ti intervista, poi genera un SKILL.md completo pronto da installare]'}],
+en:[
+{id:'excel',cat:'builtin',name:'Excel',sub:'Spreadsheets',icon:'ti-file-spreadsheet',cv:'g-good',type:'Built-in Skill — included in your plan',what:'Creates, edits and analyses Excel spreadsheets right inside Claude. Generates formulas, pivot tables, charts and downloadable .xlsx files.',when:'Auto-triggers on tasks about structured data, calculations or reports — or on any mention of "Excel", "spreadsheet", "data table".',ex:'You: "Build a monthly expense tracker with categories and automatic totals"\nClaude: [generates an .xlsx with a structured table, SUM formulas and per-category totals, ready to download]'},
+{id:'word',cat:'builtin',name:'Word',sub:'Documents',icon:'ti-file-word',cv:'g-acc',type:'Built-in Skill — included in your plan',what:'Produces formatted Word documents (.docx) with styles, headings, sections and professional structure. Not just text — real documents.',when:'Triggers on requests for reports, letters, contracts, procedures, or any document that needs structured Word formatting.',ex:'You: "Write a sales proposal for a consulting service — 3 pages, professionally formatted"\nClaude: [generates a .docx with cover page, table of contents, numbered sections, heading/body styles]'},
+{id:'ppt',cat:'builtin',name:'PowerPoint',sub:'Presentations',icon:'ti-presentation',cv:'g-ag',type:'Built-in Skill — included in your plan',what:'Creates PowerPoint presentations (.pptx) with structured slides, consistent layouts, titles, bullet points and speaker notes.',when:'Triggers on mentions of a presentation, slides, a pitch deck, a briefing — or any request to shape content into a projectable format.',ex:'You: "Create an 8-slide pitch deck to present a new SaaS product to investors"\nClaude: [generates a .pptx: problem / solution / market / traction / team / roadmap / financials / call-to-action]'},
+{id:'pdf',cat:'builtin',name:'PDF',sub:'Reading & analysis',icon:'ti-file-type-pdf',cv:'g-bad',type:'Built-in Skill — included in your plan',what:'Reads, analyses, extracts data from, summarises and answers questions about PDF files. Handles long, complex PDFs with precision.',when:'Auto-triggers the moment you upload a PDF into the chat, or ask to analyse, summarise or query a document.',ex:'You: [upload a 40-page contract PDF] "Highlight the penalty clauses and the termination terms"\nClaude: [analyses the PDF, locates and summarises the relevant clauses with page references]'},
+{id:'creator',cat:'meta',name:'skill-creator',sub:'Official Anthropic meta-skill',icon:'ti-wand',cv:'g-acc',type:'Official Anthropic Skill — github.com/anthropics/skills',what:'A meta-skill: enable it, then invoke it and describe a workflow. skill-creator interviews you, writes the complete SKILL.md, creates tests and walks you through installing it. Anthropic quotes a working Skill in 15–30 minutes.',when:'Use it whenever you want a new custom Skill but don\'t know where to start — or whenever you want Claude to turn one of your repetitive workflows into a reusable Skill.',ex:'You: /skill-creator\nClaude: "Describe the workflow you want to automate…"\nYou: "Every week I review the project KPIs and produce a standard report"\nClaude: [interviews you, then generates a complete SKILL.md ready to install]'}]};
+var G_LABELS={it:{meta:'Meta-Skill',builtin:'Inclusa'},en:{meta:'Meta-Skill',builtin:'Built-in'}};
+var GD_LABELS={
+it:{what:'Cosa fa',when:'Cosa la fa attivare',ex:'In azione'},
+en:{what:'What it does',when:'What makes it trigger',ex:'In action'}};
+
+var LANG='it';
+
+function applyExBlocks(){
+  var e=EX[LANG];
+  for(var k in e){var el=document.getElementById(k);if(el)el.innerHTML=e[k]}
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.querySelectorAll('.myth').forEach(function(m){var c=m.querySelector('[data-mc]');if(c)c.textContent=m.classList.contains('open')?DICT[LANG].mcDone:DICT[LANG].mcLabel});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  applyExBlocks();
+  showFlow(curFlow);
+  renderG();
+  if(gSel)selG(gSel);
+  updPd();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+/* ===== ACTIVATION FLOW ===== */
+var curFlow=0;
+function showFlow(i){curFlow=i;document.querySelectorAll('.fstep').forEach(function(s,k){s.classList.toggle('on',k===i)});var d=FLOW[LANG][i];var h='<h4>'+d.t+'</h4><ul>'+d.li.map(function(x){return '<li><i class="ti ti-point-filled"></i>'+x+'</li>'}).join('')+'</ul><div class="ex '+d.cls+'"><span class="tag '+d.cls+'">'+d.tag+'</span>'+d.ex+'</div>';document.getElementById('fdetail').innerHTML=h}
+
+/* ===== SKILLS GALLERY ===== */
+var gFilter='all',gSel=null;
+function filterG(cat,btn){gFilter=cat;document.querySelectorAll('.gtab').forEach(function(t){t.classList.remove('on')});btn.classList.add('on');gSel=null;document.getElementById('gdEmpty').style.display='';document.getElementById('gdContent').style.display='none';renderG()}
+function renderG(){
+  var list=SKILLS[LANG].filter(function(s){return gFilter==='all'||s.cat===gFilter});
+  document.getElementById('gcards').innerHTML=list.map(function(s){
+    return '<div class="gc'+(s.id===gSel?' on':'')+'" onclick="selG(\''+s.id+'\')">'+
+      '<div class="gi '+s.cv+'"><i class="ti '+s.icon+'"></i></div>'+
+      '<div><div class="gn">'+s.name+'</div><div class="gs">'+s.sub+'</div>'+
+      '<span class="gt '+s.cv+'">'+(s.cat==='meta'?G_LABELS[LANG].meta:G_LABELS[LANG].builtin)+'</span></div></div>';
+  }).join('');
+}
+function selG(id){
+  gSel=id;renderG();
+  var s=SKILLS[LANG].find(function(x){return x.id===id});if(!s)return;
+  document.getElementById('gdEmpty').style.display='none';
+  var c=document.getElementById('gdContent');c.style.display='';
+  var L=GD_LABELS[LANG];
+  c.innerHTML='<div class="gd-h"><div class="gd-i gi '+s.cv+'"><i class="ti '+s.icon+'"></i></div><div><div class="gd-n">'+s.name+'</div><div class="gd-t">'+s.type+'</div></div></div>'+
+    '<div class="gd-s"><h5>'+L.what+'</h5><p>'+s.what+'</p></div>'+
+    '<div class="gd-s"><h5>'+L.when+'</h5><p>'+s.when+'</p></div>'+
+    '<div class="gd-s"><h5>'+L.ex+'</h5><div class="ex good">'+s.ex+'</div></div>';
+}
+
+/* ===== PROGRESSIVE DISCLOSURE ===== */
+var pdOpen=1,pdTotal=3;
+function togglePd(i){if(i>pdOpen-1)return;document.getElementById('pdl'+i).classList.toggle('open')}
+function unlockPd(){
+  if(pdOpen>=pdTotal)return;
+  document.getElementById('pdl'+pdOpen).classList.add('unlocked','open');
+  pdOpen++;updPd();
+}
+function updPd(){
+  var b=document.getElementById('pdBtn'),bt=document.getElementById('pdBtnTxt'),s=document.getElementById('pdStatus'),D=DICT[LANG];
+  if(pdOpen>=pdTotal){b.disabled=true;b.innerHTML='<i class="ti ti-check"></i> <span>'+D.pdBtnDone+'</span>';s.textContent=D.pdStatusDone}
+  else{b.disabled=false;b.innerHTML='<i class="ti ti-lock-open"></i> <span>'+D.pdBtnLock+' '+(pdOpen+1)+'</span>';s.textContent=D.pdStatusFmt.replace('%1',pdOpen).replace('%2',pdTotal)}
+}
+
+/* ===== MYTHS ===== */
+function myth(el){el.classList.toggle('open');el.querySelector('[data-mc]').textContent=el.classList.contains('open')?DICT[LANG].mcDone:DICT[LANG].mcLabel}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

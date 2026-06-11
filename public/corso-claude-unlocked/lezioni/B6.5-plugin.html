@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Plugin — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lead2{font-size:15px;color:var(--ink-2);margin-bottom:18px}.lead2 b{font-weight:600}
+
+.hk{border-left:3px solid var(--accent);background:var(--card);box-shadow:var(--sh);padding:18px 22px;border-radius:0 var(--r-l) var(--r-l) 0;margin:26px 0 0;font-style:italic;font-size:15px;color:var(--ink-2)}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin:0 0 12px;display:flex;align-items:center;gap:6px}
+.hint i{font-size:15px;color:var(--accent)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warn{background:var(--agent-soft);border-color:var(--agent-line)}
+.note.warn .ni{background:var(--agent)}
+.note.warn h4{color:var(--agent)}
+
+/* taxonomy grid */
+.txg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.txc{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.txc .tic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:10px;background:var(--accent-soft);color:var(--accent)}
+.txc.ag .tic{background:var(--agent-soft);color:var(--agent)}
+.txc.mu .tic{background:var(--bg-2);color:var(--ink-3)}
+.txc h4{font-size:14.5px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.txc p{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.txc.hl{border-color:var(--accent);background:var(--accent-soft)}
+.txc .here{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:var(--accent);color:#fff;padding:2px 8px;border-radius:20px}
+
+/* plugin suitcase */
+.scase{max-width:560px;margin:0 auto}
+.plid{background:var(--accent);color:#fff;border:2px solid var(--accent);border-radius:var(--r-l) var(--r-l) 0 0;padding:16px 22px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none;transition:.2s;box-shadow:var(--sh)}
+.plid:hover{filter:brightness(1.07)}
+.plid .ll{display:flex;align-items:center;gap:11px}
+.plid .ll>i{font-size:24px}
+.plid .lnm{font-family:var(--mono);font-size:14.5px;font-weight:600}
+.plid .lsb{font-size:11.5px;opacity:.85}
+.plid .larr{font-size:18px;transition:transform .3s}
+.plid.open .larr{transform:rotate(180deg)}
+.pbody{background:var(--card);border:2px solid var(--accent);border-top:none;border-radius:0 0 var(--r-l) var(--r-l);overflow:hidden;max-height:0;opacity:0;transition:max-height .45s ease,opacity .35s}
+.pbody.open{max-height:1600px;opacity:1}
+.pbody-in{padding:18px;display:flex;flex-direction:column;gap:10px}
+.prow{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg-2);cursor:pointer;transition:.15s}
+.prow:hover{border-color:var(--accent-line)}
+.prow.dim{opacity:.6}
+.prow.dim:hover{opacity:.85}
+.pic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--accent-soft);color:var(--accent)}
+.prow.ag .pic{background:var(--agent-soft);color:var(--agent)}
+.prow.dim .pic{background:var(--bg-3);color:var(--ink-3)}
+.pinfo{flex:1;min-width:0}
+.pnm{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pds{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin-top:2px}
+.bdg{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:20px}
+.bdg.ev{background:var(--good-soft);color:var(--good)}
+.bdg.cw{background:var(--agent-soft);color:var(--agent)}
+.pdet{display:none;margin-top:9px;padding:11px 13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.pdet.open{display:block}
+.pdet strong{color:var(--ink);font-weight:600}
+.cwnote{margin-top:4px;padding:12px 15px;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);display:flex;align-items:flex-start;gap:9px;line-height:1.55}
+.cwnote i{color:var(--agent);font-size:16px;flex-shrink:0;margin-top:1px}
+.cwnote strong{color:var(--ink);font-weight:600}
+
+/* directory steps */
+.dsteps{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.dstep{display:flex;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);cursor:pointer;transition:.15s;align-items:flex-start;border-left:3px solid transparent}
+.dstep:last-child{border-bottom:none}
+.dstep:hover{background:var(--bg-2)}
+.dstep.on{background:var(--accent-soft);border-left-color:var(--accent)}
+.dnum{width:28px;height:28px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line-2);font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;color:var(--ink-2)}
+.dstep.on .dnum{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dbody{flex:1;min-width:0}
+.dbody strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.dbody>span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.dsd{display:none;margin-top:9px;padding:11px 13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.dstep.on .dsd{display:block}
+.dsd strong{display:inline;font-size:12.5px;color:var(--ink)}
+.dchev{font-size:17px;color:var(--ink-3);flex-shrink:0;margin-top:4px;transition:.2s}
+.dstep.on .dchev{color:var(--accent);transform:rotate(90deg)}
+
+/* category grid */
+.catg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.catc{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 10px;text-align:center;cursor:pointer;transition:.2s}
+.catc:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.catc.on{border-color:var(--accent);background:var(--accent-soft)}
+.catc .ci{width:36px;height:36px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 7px;transition:.2s}
+.catc.on .ci{background:var(--accent);color:#fff}
+.catc span{font-size:13px;font-weight:600}
+.catex{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px;margin-top:12px}
+.catex.open{display:block}
+.catex h4{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.catex h4 i{color:var(--accent);font-size:17px}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);padding:5px 12px;border-radius:20px;color:var(--ink-2)}
+
+/* checklist + progress */
+.chk{display:flex;flex-direction:column;gap:10px}
+.chki{display:flex;align-items:flex-start;gap:13px;padding:15px 17px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);cursor:pointer;transition:.2s;user-select:none}
+.chki:hover{border-color:var(--line-2)}
+.chki.ck{background:var(--good-soft);border-color:var(--good)}
+.cbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;margin-top:1px;color:#fff;font-size:14px}
+.chki.ck .cbox{background:var(--good);border-color:var(--good)}
+.cbox i{display:none}
+.chki.ck .cbox i{display:block}
+.ctxt strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.ctxt span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.xpl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:16px 0 5px}
+.xpbar{height:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;overflow:hidden}
+.xpfill{height:100%;width:0%;background:var(--good);border-radius:30px;transition:width .5s cubic-bezier(.3,.8,.3,1);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 6px,transparent 6px 12px)}
+
+/* comparison table */
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:8px 18px;overflow-x:auto}
+.tb{width:100%;border-collapse:collapse;font-size:13px}
+.tb th{text-align:left;padding:11px 10px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);border-bottom:2px solid var(--line-2);white-space:nowrap}
+.tb td{padding:11px 10px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:middle}
+.tb tr:last-child td{border-bottom:none}
+.tb .fn{font-weight:600;color:var(--ink)}
+.tb .ok{color:var(--good);text-align:center;font-size:16px}
+.tb .pt{color:var(--agent);text-align:center;font-family:var(--mono);font-size:11.5px;font-weight:600}
+.tb .na{color:var(--ink-3);text-align:center}
+.tfoot{font-size:12px;color:var(--ink-3);margin-top:8px;font-family:var(--mono)}
+
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:30px 24px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);margin-bottom:10px;display:block}
+.cp h4{font-size:17px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto}
+.cp p strong{color:var(--ink);font-weight:600}
+
+.bridge{background:var(--card);border:1px dashed var(--line-2);border-radius:var(--r-l);padding:22px;text-align:center;margin-top:36px}
+.bridge .bn{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px}
+.bridge p{font-size:14.5px;font-weight:500;max-width:560px;margin:0 auto}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.txg{grid-template-columns:1fr}.catg{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.pbody{max-height:none!important;opacity:1!important}.pdet,.dsd{display:block!important}.txc,.prow,.dstep,.catc,.chki,.tcard,.note,.cp,.bridge,.hk{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B6.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Estendere Claude · Lezione B6.5</div>
+  <h1 class="rv" data-i="h1">I Plugin</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="hk rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-map-2"></i><span class="no">01</span><h2 data-i="s1">Il Plugin nell'ecosistema</h2></div>
+  <p class="lead2 rv" data-i="s1lead"></p>
+  <div class="txg rv" id="txg"></div>
+
+  <div class="key rv" data-i="key1"></div>
+
+  <div class="sh rv"><i class="ti ti-package-import"></i><span class="no">02</span><h2 data-i="s2">Cosa c'è dentro un Plugin</h2></div>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hint1"></span></div>
+  <div class="scase rv">
+    <div class="plid" id="plid" onclick="togglePlugin()">
+      <div class="ll"><i class="ti ti-package"></i><div><div class="lnm">marketing-plugin</div><div class="lsb" data-i="plidSub"></div></div></div>
+      <i class="ti ti-chevron-down larr"></i>
+    </div>
+    <div class="pbody" id="pbody"><div class="pbody-in" id="pbodyIn"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-search"></i><span class="no">03</span><h2 data-i="s3">Come trovare e installare un Plugin</h2></div>
+  <p class="lead2 rv" data-i-html="s3lead"></p>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hint2"></span></div>
+  <div class="dsteps rv" id="dsteps"></div>
+  <div class="note warn rv"><div class="ni"><i class="ti ti-shield"></i></div><div><h4 data-i="secH"></h4><p data-i-html="secP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-grid-4x4"></i><span class="no">04</span><h2 data-i="s4">I Plugin per categoria</h2></div>
+  <p class="lead2 rv" data-i="s4lead"></p>
+  <div class="catg rv" id="catg"></div>
+  <div class="catex" id="catex"><h4 id="catexTitle"></h4><div class="pills" id="catexPills"></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">05</span><h2 data-i="s5">Come valutare un Plugin prima di installarlo</h2></div>
+  <p class="lead2 rv" data-i="s5lead"></p>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hint3"></span></div>
+  <div class="chk rv" id="chk"></div>
+  <div id="chkProg" style="display:none">
+    <div class="xpl"><span id="chkCount"></span><span id="chkMsg"></span></div>
+    <div class="xpbar"><div class="xpfill" id="chkFill"></div></div>
+  </div>
+
+  <div class="key rv" data-i="key2"></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">06</span><h2 data-i="s6">Plugin vs Skill vs Connector</h2></div>
+  <div class="tcard rv"><table class="tb"><thead id="tbHead"></thead><tbody id="tbBody"></tbody></table></div>
+  <p class="tfoot rv" data-i="tfoot"></p>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-package cpi"></i>
+    <h4 data-i="cpH"></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="bridge rv">
+    <div class="bn" data-i="bridgeN">Prossima lezione →</div>
+    <p data-i-html="bridgeP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — I Plugin</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B6.5',pdfT:'Scarica PDF',themeT:'Cambia tema',
+eyebrow:'Estendere Claude · Lezione B6.5',
+h1:'I Plugin',
+lede:'Skill e Connector sono mattoni potenti. Un <span class="you">Plugin</span> è la valigia già fatta: un <span class="cl">sistema completo per un dominio</span>, pronto all\'uso dal primo click.',
+hook:'"Costruire Skill una per una è potente, ma richiede tempo. I Plugin saltano questo passaggio: ti consegnano un sistema completo di Skill, connessioni e workflow, pre-assemblato per un dominio specifico. Installazione in un click. Uso immediato."',
+s1:'Il Plugin nell\'ecosistema',
+s1lead:'Il Plugin è il contenitore più grande della gerarchia. Impacchetta tutto ciò che abbiamo visto finora — e qualcosa in più.',
+key1:'MCP è il protocollo. Un Connector è una porta. Una Skill è una procedura. Un Plugin è la valigia che li trasporta tutti.',
+s2:'Cosa c\'è dentro un Plugin',
+hint1:'Clicca il Plugin per aprirlo — poi clicca ogni componente per i dettagli',
+plidSub:'caso d\'esempio generico — un bundle verticale',
+s3:'Come trovare e installare un Plugin',
+s3lead:'Il punto d\'ingresso principale è la <b style="color:var(--accent)">Unified Directory</b> nel pannello Customize — un unico catalogo che raccoglie Skill, Connector e Plugin in un solo posto.',
+hint2:'Clicca ogni passo per espandere il dettaglio',
+secH:'Sicurezza: installa solo da fonti affidabili',
+secP:'I Plugin eseguono codice con i tuoi privilegi. Attieniti alla directory ufficiale o a repository verificati. La card <strong>"Will install"</strong> esiste proprio per farti verificare cosa entra nel tuo ambiente prima di accettare.',
+s4:'I Plugin per categoria',
+s4lead:'Il marketplace copre i principali domini professionali. Clicca una categoria per vedere esempi tipici.',
+s5:'Come valutare un Plugin prima di installarlo',
+s5lead:'Non ogni Plugin si merita il suo posto. Quattro criteri filtrano quelli che valgono il tuo tempo.',
+hint3:'Spunta ogni criterio mentre valuti un Plugin reale',
+key2:'Un Plugin ben scelto è uno specialista che arriva già formato. Il test non è "è buono?" — è "risolve qualcosa che faccio spesso?"',
+s6:'Plugin vs Skill vs Connector',
+tfoot:'*In chat: le Skill e i Connector del Plugin funzionano. Hook e sub-agent sono disattivati.',
+s7:'Checkpoint',
+cpH:'Esplora il marketplace. Non installare ancora nulla.',
+cpP:'Apri Customize → Plugins → Browse. Passaci dieci minuti. Cerca un Plugin che copra qualcosa che fai regolarmente. Valutalo con i quattro criteri qui sopra. Poi decidi se installarlo.<br><br><strong>Non cercare il Plugin perfetto. Cerca quello che risolve un problema reale che hai questa settimana.</strong>',
+bridgeN:'Prossima lezione →',
+bridgeP:'Plugin installati. Ora l\'ultimo strato dell\'ecosistema: i Connector MCP — come Claude si collega ai servizi che già usi ogni giorno. Gmail, calendario, Notion, Slack. La Lezione 6.6 chiude il cerchio.',
+foot:'Morfeus — I Plugin'
+},
+en:{
+kicker:'Lesson B6.5',pdfT:'Download PDF',themeT:'Toggle theme',
+eyebrow:'Extending Claude · Lesson B6.5',
+h1:'Plugins',
+lede:'Skills and Connectors are powerful building blocks. A <span class="you">Plugin</span> is the packed suitcase: a <span class="cl">complete system for one domain</span>, ready to use from the first click.',
+hook:'"Building Skills one by one is powerful, but it takes time. Plugins skip that step: they hand you a complete system of Skills, connections and workflows, pre-assembled for a specific domain. One-click install. Immediate use."',
+s1:'The Plugin in the ecosystem',
+s1lead:'The Plugin is the largest container in the hierarchy. It packs everything we\'ve seen so far — and a little more.',
+key1:'MCP is the protocol. A Connector is a door. A Skill is a procedure. A Plugin is the suitcase that carries them all.',
+s2:'What\'s inside a Plugin',
+hint1:'Click the Plugin to open it — then click each component for details',
+plidSub:'generic case study — a vertical bundle',
+s3:'How to find and install a Plugin',
+s3lead:'The main entry point is the <b style="color:var(--accent)">Unified Directory</b> in the Customize panel — one catalog that gathers Skills, Connectors and Plugins in a single place.',
+hint2:'Click each step to expand the detail',
+secH:'Security: install from trusted sources only',
+secP:'Plugins run code with your privileges. Stick to the official directory or verified repositories. The <strong>"Will install"</strong> card exists precisely so you can audit what enters your environment before accepting.',
+s4:'Plugins by category',
+s4lead:'The marketplace covers the main professional domains. Click a category to see typical examples.',
+s5:'How to evaluate a Plugin before installing',
+s5lead:'Not every Plugin earns its place. Four criteria filter the ones worth your time.',
+hint3:'Tick each criterion as you evaluate a real Plugin',
+key2:'A well-chosen Plugin is a specialist who arrives fully trained. The test isn\'t "is it good?" — it\'s "does it solve something I do often?"',
+s6:'Plugin vs Skill vs Connector',
+tfoot:'*In chat: the Plugin\'s Skills and Connectors run. Hooks and sub-agents are disabled.',
+s7:'Checkpoint',
+cpH:'Browse the marketplace. Don\'t install anything yet.',
+cpP:'Open Customize → Plugins → Browse. Spend ten minutes in it. Look for a Plugin that covers something you do regularly. Score it against the four criteria above. Then decide whether to install it.<br><br><strong>Don\'t hunt for the perfect Plugin. Hunt for the one that solves a real problem you have this week.</strong>',
+bridgeN:'Next lesson →',
+bridgeP:'Plugins installed. Now the last layer of the ecosystem: MCP Connectors — how Claude plugs into the services you already use every day. Gmail, calendar, Notion, Slack. Lesson 6.6 closes the loop.',
+foot:'Morfeus — Plugins'
+}};
+
+var TX={it:[
+{cls:'',ic:'ti-bolt',h:'Skill',p:'Una procedura specializzata in Markdown. Claude la carica solo quando serve. L\'unità di capacità più piccola.'},
+{cls:'ag',ic:'ti-plug',h:'Connector',p:'Una porta verso un servizio esterno (Gmail, Notion, Slack…). Implementata via MCP, autenticata con OAuth.'},
+{cls:'mu',ic:'ti-settings-cog',h:'MCP',p:'Il protocollo sotto il cofano. Non lo vedi mai: è il "linguaggio comune" tra Claude e i sistemi esterni.'},
+{cls:'hl',ic:'ti-package',h:'Plugin',here:'sei qui',p:'Un bundle che impacchetta Skill + Connector + sub-agent + hook. Il kit verticale, già montato.'}
+],en:[
+{cls:'',ic:'ti-bolt',h:'Skill',p:'A specialized procedure in Markdown. Claude loads it only when needed. The smallest unit of capability.'},
+{cls:'ag',ic:'ti-plug',h:'Connector',p:'A door to an external service (Gmail, Notion, Slack…). Implemented via MCP, authenticated with OAuth.'},
+{cls:'mu',ic:'ti-settings-cog',h:'MCP',p:'The protocol under the hood. You never see it: it\'s the "common language" between Claude and external systems.'},
+{cls:'hl',ic:'ti-package',h:'Plugin',here:'you are here',p:'A bundle that packs Skills + Connectors + sub-agents + hooks. The vertical kit, fully assembled.'}
+]};
+
+var COMP={it:[
+{cls:'',ic:'ti-bolt',nm:'Skill incluse',bdg:'ev',bt:'Chat + Cowork',ds:'Procedure specializzate già pronte — analisi, creazione contenuti, reportistica…',det:'Le Skill di un Plugin si comportano esattamente come quelle che installeresti a mano. Compaiono in Customize → Skills. Le invochi con <strong>/nome-skill</strong>, oppure lasci che Claude le attivi quando rileva il contesto giusto.<br><br>In un plugin di marketing: <strong>generatore-piano-editoriale</strong>, <strong>analizzatore-campagne</strong>, <strong>scrittore-newsletter</strong>.'},
+{cls:'ag',ic:'ti-plug',nm:'Connector (MCP)',bdg:'ev',bt:'Chat + Cowork',ds:'Porte pre-configurate verso servizi esterni — autenticazione richiesta al primo uso.',det:'Se il Plugin include connector (al tuo CRM, Notion, Slack…), ti verrà chiesto di autenticare ogni connessione dopo l\'installazione. È il classico flusso OAuth: clicca <strong>Connect</strong>, approva i permessi, fatto.<br><br>Un Plugin può anche includere la definizione di un server MCP — compare come connector nel tuo pannello.'},
+{cls:'dim',ic:'ti-webhook',nm:'Hook',bdg:'cw',bt:'Solo Cowork',ds:'Azioni automatiche prima/dopo eventi (es. prima dell\'invio, dopo ogni risposta).',det:'Gli hook sono trigger automatici: eseguono codice o skill in risposta a eventi (avvio sessione, fine di una risposta, upload di un file…). Uno strumento potente per pipeline autonome.<br><br><strong>Importante:</strong> funzionano solo in Cowork. Nella chat web restano grigi e inattivi. Se usi soprattutto la chat, questa capacità non è disponibile.'},
+{cls:'dim',ic:'ti-robot',nm:'Sub-agent',bdg:'cw',bt:'Solo Cowork',ds:'Claude specializzati che lavorano in parallelo su sotto-task del workflow principale.',det:'I sub-agent sono istanze secondarie di Claude orchestrate dal Plugin: il Plugin principale coordina, i sub-agent eseguono parti specifiche (ricerca, scrittura, revisione — in parallelo).<br><br><strong>Importante:</strong> come gli hook, funzionano solo in Cowork. La capacità di agent è esclusiva dell\'ambiente desktop Cowork.'}
+],en:[
+{cls:'',ic:'ti-bolt',nm:'Included Skills',bdg:'ev',bt:'Chat + Cowork',ds:'Ready-made specialized procedures — analysis, content creation, reporting…',det:'A Plugin\'s Skills behave exactly like the ones you\'d install by hand. They show up in Customize → Skills. Invoke them with <strong>/skill-name</strong>, or let Claude trigger them when it detects the right context.<br><br>In a marketing plugin: <strong>editorial-plan-generator</strong>, <strong>campaign-analyzer</strong>, <strong>newsletter-writer</strong>.'},
+{cls:'ag',ic:'ti-plug',nm:'Connectors (MCP)',bdg:'ev',bt:'Chat + Cowork',ds:'Pre-configured doors to external services — authentication required on first use.',det:'If the Plugin ships connectors (to your CRM, Notion, Slack…), you\'ll be asked to authenticate each connection after installing. It\'s the standard OAuth flow: click <strong>Connect</strong>, approve the permissions, done.<br><br>A Plugin can also include the definition of an MCP server — it shows up as a connector in your panel.'},
+{cls:'dim',ic:'ti-webhook',nm:'Hooks',bdg:'cw',bt:'Cowork only',ds:'Automatic actions before/after events (e.g. before sending, after each reply).',det:'Hooks are automatic triggers: they run code or skills in response to events (session start, end of a reply, file upload…). A powerful tool for autonomous pipelines.<br><br><strong>Important:</strong> they only run in Cowork. In the web chat they stay grey and inactive. If you mainly use the chat, this capability isn\'t available.'},
+{cls:'dim',ic:'ti-robot',nm:'Sub-agents',bdg:'cw',bt:'Cowork only',ds:'Specialized Claudes working in parallel on sub-tasks of the main workflow.',det:'Sub-agents are secondary Claude instances the Plugin orchestrates: the main Plugin coordinates, the sub-agents execute specific parts (research, writing, review — in parallel).<br><br><strong>Important:</strong> like hooks, they run only in Cowork. Agent capability is exclusive to the desktop Cowork environment.'}
+]};
+var CWNOTE={it:'<strong>Hook e sub-agent sono attivi solo in Cowork.</strong> Apri lo stesso Plugin nella chat web e quelle funzioni sono disabilitate. Skill e Connector funzionano ovunque.',
+en:'<strong>Hooks and sub-agents are active only in Cowork.</strong> Open the same Plugin in the web chat and those features are disabled. Skills and Connectors run everywhere.'};
+
+var DS={it:[
+['Apri il pannello Customize','Sidebar sinistra in Cowork o Claude Desktop → "Customize"','Il pannello Customize ha tre sezioni principali: <strong>Skills</strong>, <strong>Connectors</strong>, <strong>Plugins</strong>. Clicca "Plugins" per vedere cosa è installato e cosa è disponibile.<br><br>Oppure usa il pulsante globale "+" → Browse per raggiungere la Unified Directory, che mostra tutto insieme.'],
+['Naviga la directory','Cerca per nome o categoria, o filtra per trovare il Plugin giusto','La Unified Directory (lanciata a fine 2025) raccoglie Skill, Connector e Plugin in un\'unica vista navigabile. Filtra per categoria: produttività, marketing, legale, finanza, HR, engineering e altro.<br><br>Ci sono anche Plugin "meta" come <strong>skill-creator</strong> (costruisce nuove Skill) e <strong>plugin-dev</strong> (per sviluppatori). Il catalogo ufficiale vive anche su <strong>claude.com/plugins</strong>.'],
+['Leggi la card del Plugin','Descrizione, componenti inclusi, connessioni richieste, stima del costo in token','Prima di installare, la card mostra una sezione <strong>"Will install"</strong>: elenca esattamente quanti e quali comandi, agent, skill, hook e server MCP vengono aggiunti. Leggi sempre questa lista.<br><br>Hai anche una stima del costo in token di contesto e la data dell\'ultimo aggiornamento. Trasparenza by design: sai cosa entra nel tuo ambiente prima di accettare.'],
+['Clicca "Install" e autentica','Il Plugin si installa in pochi secondi; i connector inclusi chiederanno OAuth','Dopo Install, il Plugin è attivo. Le sue Skill compaiono in Customize → Skills. Se include connector MCP, vedrai un prompt di autenticazione per ogni servizio (es. "Connect Google Drive") — il classico flusso OAuth.<br><br><strong>Nota Claude Code:</strong> nel terminale sono due passaggi separati — prima aggiungi il marketplace (<strong>/plugin marketplace add …</strong>), poi installi (<strong>/plugin install nome@marketplace</strong>). Nel prodotto consumer è un click dalla directory.'],
+['Testalo subito su un task semplice','Invoca una delle Skill del Plugin e verifica che si comporti come promesso','Apri una conversazione nuova e invoca una Skill con <strong>/nome-skill</strong>, oppure descrivi in linguaggio naturale il task che dovrebbe gestire.<br><br>Confronta l\'output con la descrizione del Plugin. Se qualcosa non va, leggi la documentazione del Plugin o i suoi file SKILL.md: di solito basta un piccolo aggiustamento del prompt.']
+],en:[
+['Open the Customize panel','Left sidebar in Cowork or Claude Desktop → "Customize"','The Customize panel has three main sections: <strong>Skills</strong>, <strong>Connectors</strong>, <strong>Plugins</strong>. Click "Plugins" to see what\'s installed and what\'s available.<br><br>Or use the global "+" button → Browse to reach the Unified Directory, which shows everything together.'],
+['Browse the directory','Search by name or category, or filter to find the right Plugin','The Unified Directory (launched late 2025) gathers Skills, Connectors and Plugins in a single navigable view. Filter by category: productivity, marketing, legal, finance, HR, engineering and more.<br><br>There are also "meta" Plugins such as <strong>skill-creator</strong> (builds new Skills) and <strong>plugin-dev</strong> (for developers). The official catalog also lives at <strong>claude.com/plugins</strong>.'],
+['Read the Plugin\'s card','Description, included components, required connections, token cost estimate','Before you install, the card shows a <strong>"Will install"</strong> section: it lists exactly how many and which commands, agents, skills, hooks and MCP servers get added. Always read this list.<br><br>You also get an estimated context-token cost and the last-update date. Transparency by design: you know what enters your environment before you accept.'],
+['Click "Install" and authenticate','The Plugin installs in seconds; bundled connectors will request OAuth','After Install, the Plugin is live. Its Skills appear in Customize → Skills. If it ships MCP connectors, you\'ll see one authentication prompt per service (e.g. "Connect Google Drive") — the standard OAuth flow.<br><br><strong>Claude Code note:</strong> in the terminal it\'s two separate steps — first add the marketplace (<strong>/plugin marketplace add …</strong>), then install (<strong>/plugin install name@marketplace</strong>). In the consumer product it\'s one click from the directory.'],
+['Test it right away on a simple task','Invoke one of the Plugin\'s Skills and confirm it behaves as promised','Open a fresh conversation and invoke a Skill with <strong>/skill-name</strong>, or describe the task it should handle in plain language.<br><br>Check the output against the Plugin\'s description. If something\'s off, read the Plugin docs or its SKILL.md files: a small prompt adjustment is usually all it takes.']
+]};
+
+var CATS={it:{
+marketing:{l:'Marketing & contenuti',i:'ti-speakerphone',ic:'ti-speakerphone',n:'Marketing',x:['marketing-suite','editorial-planner','campaign-analyzer','newsletter-generator','social-scheduler','seo-analyzer']},
+legal:{l:'Legale & contratti',i:'ti-gavel',ic:'ti-gavel',n:'Legale',x:['legal-suite','contract-reviewer','nda-drafter','compliance-checker','risk-analyzer','clause-extractor']},
+finance:{l:'Finanza & reporting',i:'ti-chart-bar',ic:'ti-chart-bar',n:'Finanza',x:['finance-suite','budget-tracker','variance-analyzer','forecast-builder','expense-categorizer','report-generator']},
+hr:{l:'HR & persone',i:'ti-users',ic:'ti-users',n:'HR',x:['hr-suite','job-description-writer','interview-prep','onboarding-flow','performance-review','policy-checker']},
+data:{l:'Analisi dati',i:'ti-database',ic:'ti-database',n:'Dati',x:['data-suite','sql-assistant','chart-builder','data-cleaner','insight-extractor','dashboard-planner']},
+meta:{l:'Plugin meta (strumenti che costruiscono strumenti)',i:'ti-sparkles',ic:'ti-sparkles',n:'Meta',x:['skill-creator','plugin-dev','prompt-optimizer','instruction-reviewer','eval-builder']}},
+en:{
+marketing:{l:'Marketing & content',i:'ti-speakerphone',ic:'ti-speakerphone',n:'Marketing',x:['marketing-suite','editorial-planner','campaign-analyzer','newsletter-generator','social-scheduler','seo-analyzer']},
+legal:{l:'Legal & contracts',i:'ti-gavel',ic:'ti-gavel',n:'Legal',x:['legal-suite','contract-reviewer','nda-drafter','compliance-checker','risk-analyzer','clause-extractor']},
+finance:{l:'Finance & reporting',i:'ti-chart-bar',ic:'ti-chart-bar',n:'Finance',x:['finance-suite','budget-tracker','variance-analyzer','forecast-builder','expense-categorizer','report-generator']},
+hr:{l:'HR & people',i:'ti-users',ic:'ti-users',n:'HR',x:['hr-suite','job-description-writer','interview-prep','onboarding-flow','performance-review','policy-checker']},
+data:{l:'Data analysis',i:'ti-database',ic:'ti-database',n:'Data',x:['data-suite','sql-assistant','chart-builder','data-cleaner','insight-extractor','dashboard-planner']},
+meta:{l:'Meta plugins (tools that build tools)',i:'ti-sparkles',ic:'ti-sparkles',n:'Meta',x:['skill-creator','plugin-dev','prompt-optimizer','instruction-reviewer','eval-builder']}}};
+var CATORDER=['marketing','legal','finance','hr','data','meta'];
+
+var CHK={it:[
+['1. La descrizione è specifica','Un buon Plugin sa esattamente per chi è e cosa fa. "Aiuta col marketing" è vago. "Genera piani editoriali settimanali e analizza la performance delle campagne email" è specifico.'],
+['2. Le Skill incluse corrispondono a ciò che faccio','Leggi i nomi delle Skill nella card "Will install". Sono rilevanti? O cose generiche che già copri in altri modi? Se il 70% è irrilevante, probabilmente non vale la complessità aggiunta.'],
+['3. I connector richiesti sono alla mia portata','Il Plugin si autentica verso servizi che usi davvero? Se richiede Slack e tu non usi Slack, una parte non funzionerà mai. Decidi: imposta la connessione, o scegli un Plugin alternativo.'],
+['4. Risolve qualcosa che faccio spesso','La domanda giusta non è "è tecnicamente buono?" ma "risolve qualcosa che faccio più volte a settimana?". Un Plugin inutilizzato è rumore. La rilevanza batte la qualità astratta.']
+],en:[
+['1. The description is specific','A good Plugin knows exactly who it\'s for and what it does. "Helps with marketing" is vague. "Generates weekly editorial plans and analyzes email campaign performance" is specific.'],
+['2. The included Skills fit what I do','Read the Skill names in the "Will install" card. Are they relevant? Or generic things you already cover other ways? If 70% is irrelevant, it\'s probably not worth the added complexity.'],
+['3. The required connectors are within reach','Does the Plugin authenticate against services you actually use? If it needs Slack and you don\'t use Slack, part of it will never run. Decide: set up the connection, or pick an alternative Plugin.'],
+['4. It solves something I do often','The right question isn\'t "is it technically good?" but "does it solve something I do several times a week?". An unused Plugin is noise. Relevance beats abstract quality.']
+]};
+var MSGS={it:['Spunta tutti e quattro per una valutazione completa.','Buon inizio — continua.','A metà strada.','Quasi! Ancora uno.','Fatto. Questa è una valutazione solida.'],
+en:['Tick all four for a complete evaluation.','Good start — keep going.','Halfway there.','Almost! One more.','Done. That is a solid evaluation.']};
+var CRIT={it:'criteri',en:'criteria'};
+
+var TBL={it:{
+head:['Caratteristica','Skill','Connector','Plugin'],
+rows:[
+['Cosa contiene','Una procedura (SKILL.md)','Una connessione a un servizio','Skill + Connector + sub-agent + hook'],
+['Puoi costruirlo tu?','Sì, facilmente','No — lo attivi','Sì (avanzato) — o ne installi uno'],
+['Dove vive','Customize → Skills','Customize → Connectors','Customize → Plugins'],
+['Funziona nella chat web','ok','ok',['pt','Parzialmente*']],
+['Funziona in Cowork','ok','ok','ok'],
+['Hook & sub-agent attivi',['na','—'],['na','—'],['pt','Solo Cowork']]
+]},en:{
+head:['Feature','Skill','Connector','Plugin'],
+rows:[
+['What it contains','One procedure (SKILL.md)','One connection to a service','Skills + Connectors + sub-agents + hooks'],
+['Can you build it yourself?','Yes, easily','No — you switch it on','Yes (advanced) — or just install one'],
+['Where it lives','Customize → Skills','Customize → Connectors','Customize → Plugins'],
+['Runs in web chat','ok','ok',['pt','Partially*']],
+['Runs in Cowork','ok','ok','ok'],
+['Hooks & sub-agents active',['na','—'],['na','—'],['pt','Cowork only']]
+]}};
+
+var LANG='it',curCat=null;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+function buildTX(){
+  document.getElementById('txg').innerHTML=TX[LANG].map(function(t){
+    var here=t.here?' <span class="here">'+esc(t.here)+'</span>':'';
+    return '<div class="txc '+t.cls+'"><div class="tic"><i class="ti '+t.ic+'"></i></div><h4>'+esc(t.h)+here+'</h4><p>'+esc(t.p)+'</p></div>';
+  }).join('');
+}
+function buildComp(){
+  document.getElementById('pbodyIn').innerHTML=COMP[LANG].map(function(c){
+    return '<div class="prow '+c.cls+'" onclick="toggleComp(this)"><div class="pic"><i class="ti '+c.ic+'"></i></div><div class="pinfo"><div class="pnm">'+esc(c.nm)+' <span class="bdg '+c.bdg+'">'+esc(c.bt)+'</span></div><div class="pds">'+esc(c.ds)+'</div><div class="pdet">'+c.det+'</div></div></div>';
+  }).join('')+'<div class="cwnote"><i class="ti ti-info-circle"></i><span>'+CWNOTE[LANG]+'</span></div>';
+}
+function togglePlugin(){var lid=document.getElementById('plid'),b=document.getElementById('pbody');var open=lid.classList.toggle('open');b.classList.toggle('open',open);if(!open){document.querySelectorAll('.pdet').forEach(function(d){d.classList.remove('open')})}}
+function toggleComp(row){var d=row.querySelector('.pdet');if(d)d.classList.toggle('open')}
+
+function buildDS(){
+  document.getElementById('dsteps').innerHTML=DS[LANG].map(function(d,i){
+    return '<div class="dstep" onclick="toggleStep(this)"><div class="dnum">'+(i+1)+'</div><div class="dbody"><strong>'+esc(d[0])+'</strong><span>'+esc(d[1])+'</span><div class="dsd">'+d[2]+'</div></div><i class="ti ti-chevron-right dchev"></i></div>';
+  }).join('');
+}
+function toggleStep(st){var was=st.classList.contains('on');document.querySelectorAll('.dstep').forEach(function(s){s.classList.remove('on')});if(!was)st.classList.add('on')}
+
+function buildCatg(){
+  document.getElementById('catg').innerHTML=CATORDER.map(function(key){
+    var d=CATS[LANG][key];
+    return '<div class="catc" onclick="pickCat(this,\''+key+'\')"><div class="ci"><i class="ti '+d.ic+'"></i></div><span>'+esc(d.n)+'</span></div>';
+  }).join('');
+  var box=document.getElementById('catex');box.classList.remove('open');curCat=null;
+}
+function pickCat(card,key){document.querySelectorAll('.catc').forEach(function(c){c.classList.remove('on')});var box=document.getElementById('catex');if(curCat===key){box.classList.remove('open');curCat=null;return}card.classList.add('on');curCat=key;var d=CATS[LANG][key];document.getElementById('catexTitle').innerHTML='<i class="ti '+d.i+'"></i> '+esc(d.l);document.getElementById('catexPills').innerHTML=d.x.map(function(p){return '<span class="pill">'+esc(p)+'</span>'}).join('');box.classList.add('open')}
+
+function buildChk(){
+  document.getElementById('chk').innerHTML=CHK[LANG].map(function(c){
+    return '<div class="chki" onclick="toggleCheck(this)"><div class="cbox"><i class="ti ti-check"></i></div><div class="ctxt"><strong>'+esc(c[0])+'</strong><span>'+esc(c[1])+'</span></div></div>';
+  }).join('');
+  document.getElementById('chkProg').style.display='none';
+}
+function toggleCheck(it){it.classList.toggle('ck');var n=document.querySelectorAll('.chki.ck').length,t=document.querySelectorAll('.chki').length;var p=document.getElementById('chkProg');p.style.display='block';document.getElementById('chkCount').textContent=n+'/'+t+' '+CRIT[LANG];document.getElementById('chkFill').style.width=Math.round(n/t*100)+'%';document.getElementById('chkMsg').textContent=MSGS[LANG][n]||''}
+
+function buildTbl(){
+  var d=TBL[LANG];
+  document.getElementById('tbHead').innerHTML='<tr>'+d.head.map(function(h){return '<th>'+esc(h)+'</th>'}).join('')+'</tr>';
+  document.getElementById('tbBody').innerHTML=d.rows.map(function(r){
+    return '<tr>'+r.map(function(cell,ci){
+      if(ci===0)return '<td class="fn">'+esc(cell)+'</td>';
+      if(cell==='ok')return '<td class="ok"><i class="ti ti-check"></i></td>';
+      if(Array.isArray(cell)){if(cell[0]==='na')return '<td class="na">'+esc(cell[1])+'</td>';return '<td class="'+cell[0]+'">'+esc(cell[1])+'</td>'}
+      return '<td>'+esc(cell)+'</td>';
+    }).join('')+'</tr>';
+  }).join('');
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.querySelector('[data-i="key1"]').innerHTML='<p>'+DICT[LANG].key1+'</p>';
+  document.querySelector('[data-i="key2"]').innerHTML='<p>'+DICT[LANG].key2+'</p>';
+  buildTX();buildComp();buildDS();buildCatg();buildChk();buildTbl();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

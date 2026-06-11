@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviewer & sparring partner — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.lede strong{color:var(--ink);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:13px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:13px}
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+
+.hook{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:20px 24px;margin-top:24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+.fr{display:flex;gap:13px;padding:13px 4px;border-bottom:1px dashed var(--line)}
+.fr:last-child{border-bottom:none}
+.fr .fic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.fr .fic.r{background:var(--bad-soft);color:var(--bad)}
+.fr .fic.g{background:var(--good-soft);color:var(--good)}
+.fr .fic.o{background:var(--agent-soft);color:var(--agent)}
+.fr strong{display:block;font-size:14.5px;font-weight:600;margin-bottom:1px}
+.fr span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.tbl{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.tbl table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;padding:11px 16px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);border-bottom:2px solid var(--line-2);background:var(--bg-2)}
+.tbl td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink-2)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .mn{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--ink)}
+.tbl .mi{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ltabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ltab{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 10px;text-align:center;cursor:pointer;transition:.2s}
+.ltab:hover{transform:translateY(-2px);border-color:var(--line-2)}.ltab.on{border-color:var(--accent);background:var(--accent-soft)}
+.ltab .li{width:36px;height:36px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto}
+.ltab.on .li{background:var(--accent);color:#fff}
+.ltab .ll{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-top:7px}.ltab.on .ll{color:var(--accent)}
+.ltab .ln{font-size:14px;font-weight:600;margin-top:2px}
+.mpanel{display:none}.mpanel.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.uw{display:flex;gap:9px;font-size:13.5px;color:var(--ink-2);line-height:1.55;padding:5px 0}
+.uw i{font-size:16px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.pb{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;margin-top:14px}
+.pb-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.pb-h .pl{display:flex;align-items:center;gap:7px}.pb-h .pl i{color:var(--accent);font-size:14px}
+.cp{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;transition:.18s;white-space:nowrap}
+.cp:hover{color:var(--accent);border-color:var(--accent-line)}
+.cp i{font-size:13px}
+.pb-b{padding:14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);white-space:pre-wrap;line-height:1.6}
+.tg{display:flex;width:fit-content;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--sh);margin-bottom:14px}
+.tg button{border:none;background:transparent;padding:9px 18px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;gap:6px;transition:.18s}
+.tg button i{font-size:14px}
+.tg button.on.b1{background:var(--bad);color:#fff}
+.tg button.on.b2{background:var(--good);color:#fff}
+.cmp{display:none}.cmp.on{display:block;animation:fade .3s ease}
+.ba{background:var(--card);border:2px solid;border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.ba.before{border-color:var(--bad)}
+.ba.after{border-color:var(--good)}
+.ba .bh{padding:12px 18px;display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.ba.before .bh{background:var(--bad-soft);color:var(--bad)}
+.ba.after .bh{background:var(--good-soft);color:var(--good)}
+.ba .bb{padding:18px}
+.resp{font-size:13.5px;color:var(--ink-2);line-height:1.65;background:var(--bg-2);border-radius:var(--r);padding:14px 16px;border-left:3px solid var(--line-2);margin-top:10px}
+.ba.before .resp{border-left-color:var(--bad)}
+.ba.after .resp{border-left-color:var(--good)}
+.resp .rl{display:block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.ba.before .resp .rl{color:var(--bad)}
+.ba.after .resp .rl{color:var(--good)}
+.quote{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:32px;text-align:center;position:relative;overflow:hidden}
+.quote::before{content:'"';position:absolute;top:-12px;left:14px;font-size:90px;color:var(--accent);opacity:.14;font-family:Georgia,serif;line-height:1}
+.quote p{font-size:21px;font-weight:600;line-height:1.45;position:relative;z-index:1}
+.quote .qs{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:10px;position:relative;z-index:1}
+.stk{display:flex;flex-direction:column;gap:9px}
+.stp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.2s;user-select:none}
+.stp:hover{border-color:var(--line-2)}
+.stp .sth{display:flex;align-items:center;gap:13px}
+.stp .stn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0;border:2px solid}
+.stp.c1 .stn{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+.stp.c2 .stn{color:var(--agent);border-color:var(--agent-line);background:var(--agent-soft)}
+.stp.c3 .stn{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.stp.c4 .stn{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+.stp .stt strong{display:block;font-size:14.5px;font-weight:600}
+.stp .stt span{font-size:12.5px;color:var(--ink-3)}
+.stp .chv{margin-left:auto;font-size:16px;color:var(--ink-3);transition:transform .25s;flex-shrink:0}
+.stp.open .chv{transform:rotate(90deg);color:var(--accent)}
+.stp .std{display:none;margin-top:13px;padding-top:13px;border-top:1px dashed var(--line-2);font-size:13.5px;color:var(--ink-2);line-height:1.6;cursor:auto}
+.stp.open .std{display:block}
+.scn{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:17px 18px;margin-bottom:10px}
+.scn .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--bad-soft);color:var(--bad)}
+.scn.amber .ic{background:var(--agent-soft);color:var(--agent)}
+.scn strong{display:block;font-size:14.5px;font-weight:600;margin-bottom:2px;color:var(--bad)}
+.scn.amber strong{color:var(--agent)}
+.scn span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.cta{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:32px 26px;text-align:center;margin:20px 0}
+.cta>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cta h4{font-size:17px;font-weight:600;margin-bottom:8px}
+.cta p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cta p strong{color:var(--ink)}
+.bridge{display:flex;gap:16px;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.bridge .ni{width:44px;height:44px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.bridge h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--agent)}
+.bridge p{font-size:14px;color:var(--ink-2)}
+
+@media(max-width:640px){h1{font-size:28px}.ltabs{grid-template-columns:1fr}.quote p{font-size:17px}.tbl{overflow-x:auto}}
+@media print{body{background-image:none}.bar,.ic-btn,.cp,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.mpanel{display:block!important}.cmp{display:block!important}.stp .std{display:block!important}.note,.fdetail,.ltab,.tbl,.ba,.quote,.stp,.scn,.cta,.bridge,.pb,.hook,.fr{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B7.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow"></div>
+  <h1 class="rv" data-i="h1"></h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="hook rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">01</span><h2 data-i="s1"></h2></div>
+  <p class="lede rv" data-i-html="s1intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="fdetail rv" id="frList" style="margin-top:0"></div>
+
+  <div class="sh rv"><i class="ti ti-layout-columns"></i><span class="no">02</span><h2 data-i="s2"></h2></div>
+  <p class="lede rv" data-i="s2intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="tbl rv">
+    <table>
+      <thead><tr><th data-i="thMode"></th><th data-i="thQ"></th><th data-i="thA"></th></tr></thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-hand-click"></i><span class="no">03</span><h2 data-i="s3"></h2></div>
+  <div class="ltabs rv" id="ltabs"></div>
+  <div id="mpanels"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">04</span><h2 data-i="s4"></h2></div>
+  <p class="lede rv" data-i="s4intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="rv">
+    <div class="tg">
+      <button class="b1 on" id="tgb0" onclick="showBA(0)"><i class="ti ti-x"></i> <span data-i="tgWrong"></span></button>
+      <button class="b2" id="tgb1" onclick="showBA(1)"><i class="ti ti-check"></i> <span data-i="tgRight"></span></button>
+    </div>
+    <div class="cmp on" id="cmp0">
+      <div class="ba before">
+        <div class="bh"><i class="ti ti-x"></i> <span data-i="baWrongH"></span></div>
+        <div class="bb">
+          <div class="ex bad" data-i="baWrongP"></div>
+          <div class="resp"><span class="rl" data-i="respL"></span><span data-i-html="baWrongR"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cmp" id="cmp1">
+      <div class="ba after">
+        <div class="bh"><i class="ti ti-check"></i> <span data-i="baRightH"></span></div>
+        <div class="bb">
+          <div class="ex good" data-i="baRightP"></div>
+          <div class="resp"><span class="rl" data-i="respL"></span><span data-i-html="baRightR"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clock-exclamation"></i><span class="no">05</span><h2 data-i="s5"></h2></div>
+  <div class="quote rv">
+    <p data-i="pmQuote"></p>
+    <div class="qs" data-i="pmQuoteS"></div>
+  </div>
+  <p class="lede rv" data-i="pmIntro" style="font-size:15px;margin:16px 0 8px"></p>
+  <div class="pb rv"><div class="pb-h"><span class="pl"><i class="ti ti-file-code"></i> <span data-i="pmLabel"></span></span><button class="cp" onclick="copyPrompt(this,'pr-pm')"><i class="ti ti-copy"></i> <span data-i="copy"></span></button></div><div class="pb-b" id="pr-pm" data-i="pmPrompt"></div></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="pmNoteH"></h4><p data-i-html="pmNoteP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">06</span><h2 data-i="s6"></h2></div>
+  <p class="lede rv" data-i="s6intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="stk rv" id="stk"></div>
+
+  <div class="key rv"><p data-i="keyP"></p></div>
+  <p class="lede rv" data-i="keyAfter" style="font-size:15px;margin:-20px 0 0"></p>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">07</span><h2 data-i="s7"></h2></div>
+  <div class="rv" id="scnList"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8"></h2></div>
+  <div class="cta rv">
+    <i class="ti ti-sword"></i>
+    <h4 data-i="ctaH"></h4>
+    <p data-i-html="ctaP"></p>
+  </div>
+
+  <div class="bridge rv"><div class="ni"><i class="ti ti-flag-check"></i></div><div><h4 data-i="brH"></h4><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot"></span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B7.4',pdfT:'Scarica PDF',themeT:'Cambia tema',copy:'Copia',
+eyebrow:'Modulo 7 · Claude al lavoro',
+h1:'Reviewer & sparring partner',
+lede:'Di default <span class="cl">Claude</span> approva. Con il prompt sbagliato è un validatore compiacente. Con il prompt giusto diventa il critico che <span class="you">tu</span> non hai mai avuto.',
+hook:'"I tuoi colleghi ti dicono quello che vuoi sentire. Claude ti dice quello che hai bisogno di sentire. È la differenza tra un validatore e un collaboratore."',
+s1:'Il problema: la compiacenza di default',
+s1intro:'Una ricerca pubblicata su <em>Nature</em> ha mostrato che <strong>più un modello AI è adulatorio, più le sue risposte diventano soggette a errore</strong>. Di default i modelli tendono ad approvare con piccole note invece di criticare apertamente. Non è un bug casuale — è un pattern di training che devi contrastare attivamente con il design del prompt.',
+s2:'Le tre modalità di review',
+s2intro:'Tre strumenti diversi, tre angoli diversi. Combinare tutti e tre dà la copertura critica più completa.',
+thMode:'Modalità',thQ:'Domanda chiave',thA:'Cosa analizza',
+s3:'Scegli una modalità — template di prompt da copiare',
+s4:'Prima e dopo — prompt sbagliato vs prompt giusto',
+s4intro:'Il momento didattico più forte di tutto il modulo. La stessa richiesta, con due frame diversi, produce output completamente diversi.',
+tgWrong:'Prompt sbagliato',tgRight:'Prompt giusto',
+baWrongH:'Il prompt che innesca la compiacenza',
+baWrongP:'Puoi rivedere questo testo? [testo]',
+respL:'Risposta tipica',
+baWrongR:'Il testo è ben strutturato e comunica chiaramente il tuo punto di vista. Il tono è appropriato e professionale. Qualche piccola nota: nel terzo paragrafo potresti aggiungere un esempio concreto, e la frase finale potrebbe essere un po\' più incisiva. Nel complesso è già forte e pronto da inviare.',
+baRightH:'Il prompt che attiva il critico',
+baRightP:'Sei un editor professionale esigente. Il tuo unico obiettivo è migliorare questo testo, non validarlo. Non dirmi cosa funziona. Dimmi cosa cambieresti, e perché. [testo]',
+baRightR:'<strong>Problemi principali:</strong><br>1. Il punto centrale arriva troppo tardi — sta nel terzo paragrafo, ma dovrebbe aprire il testo. Un lettore veloce non lo trova mai.<br>2. Il secondo paragrafo è ridondante: ripete il primo con parole diverse. Taglialo o fondilo.<br>3. Tre aggettivi generici indeboliscono il testo: "importante", "significativo", "rilevante" — sostituiscili con dati o fatti concreti.<br>4. La call to action finale è ambigua: non è chiaro cosa vuoi che il lettore faccia dopo.',
+s5:'Il pre-mortem: la tecnica più potente',
+pmQuote:'"Questo progetto è fallito. Cosa è successo?"',
+pmQuoteS:'— Il frame che rimuove il segnale sociale di approvazione',
+pmIntro:'Il pre-mortem — usato da Google, Goldman Sachs, P&G — assume che il progetto sia già fallito e chiede di ricostruire perché. Con Claude la formulazione è semplice:',
+pmLabel:'Prompt: pre-mortem',
+pmPrompt:'Questo progetto / piano è fallito. Sono passati 6 mesi dal lancio.\n\nDimmi com\'è andata e cosa non ha funzionato. Sii specifico: quali assunzioni erano sbagliate, cosa non avevamo previsto, dove la realtà è stata sotto le aspettative.\n\n[descrivi il tuo piano o progetto]',
+pmNoteH:'Perché batte "trova i rischi"',
+pmNoteP:'Il pre-mortem rimuove il frame di approvazione. Dentro un contesto post-mortem Claude non ha alcun incentivo ad approvare — <strong>deve solo spiegare il fallimento</strong>. Lo stesso vale per Devil\'s Advocate e Red Team: cambia il frame, cambia la risposta.',
+s6:'Lo stack critico completo — clicca per ogni prompt',
+s6intro:'Per le decisioni importanti, i frame si usano in sequenza. Ogni livello aggiunge un tipo di copertura diverso.',
+keyP:'"Non dirmi cosa funziona. Dimmi cosa cambieresti — e perché."',
+keyAfter:'Il frame della domanda determina il tipo di risposta. "È buono?" attiva la modalità approvazione. "Cosa cambieresti?" attiva la modalità critica. Poche parole di differenza, output radicalmente diverso.',
+s7:'Equivoci comuni',
+s8:'Checkpoint',
+ctaH:'Provalo ora.',
+ctaP:'Prendi qualcosa che hai scritto di recente — un\'email, un report, una proposta. Copia il prompt dell\'editor critico da questa lezione. Poi leggi davvero quello che Claude ti dà — senza difenderti.<br><br><strong>Quello che ottieni è esattamente ciò che ti direbbe un editor a pagamento.</strong>',
+brH:'Modulo B7 completato',
+brP:'Hai imparato a far produrre Claude (documenti, report) e a farlo criticare (reviewer, sparring). Produzione e revisione: il ciclo completo del lavoro professionale con Claude al tuo fianco.',
+foot:'Morfeus — Reviewer & sparring partner'
+},
+en:{
+kicker:'Lesson B7.4',pdfT:'Download PDF',themeT:'Toggle theme',copy:'Copy',
+eyebrow:'Module 7 · Claude at work',
+h1:'Reviewer & sparring partner',
+lede:'By default, <span class="cl">Claude</span> approves. With the wrong prompt it\'s a complacent validator. With the right prompt it becomes the critic <span class="you">you</span> never had.',
+hook:'"Your colleagues tell you what you want to hear. Claude tells you what you need to hear. That\'s the difference between a validator and a collaborator."',
+s1:'The problem: default agreeableness',
+s1intro:'Research published in <em>Nature</em> has shown that <strong>the more sycophantic an AI model is, the more error-prone its answers become</strong>. By default, models tend to approve with small notes instead of criticising openly. It\'s not a random bug — it\'s a training pattern you must actively counter with prompt design.',
+s2:'The three review modes',
+s2intro:'Three different tools, three different angles. Mixing all three gives you the most complete critical coverage.',
+thMode:'Mode',thQ:'Key question',thA:'What it analyses',
+s3:'Pick a mode — prompt templates to copy',
+s4:'Before and after — wrong prompt vs right prompt',
+s4intro:'The strongest teaching moment of the whole module. The same request, with two different frames, produces completely different output.',
+tgWrong:'Wrong prompt',tgRight:'Right prompt',
+baWrongH:'The prompt that triggers agreeableness',
+baWrongP:'Can you review this text? [text]',
+respL:'Typical answer',
+baWrongR:'The text is well structured and communicates your point of view clearly. The tone is appropriate and professional. A few small notes: in the third paragraph you could add a concrete example, and the closing sentence could be slightly punchier. Overall it\'s already strong and ready to send.',
+baRightH:'The prompt that activates the critic',
+baRightP:'You are a demanding professional editor. Your only goal is to improve this text, not to validate it. Don\'t tell me what works. Tell me what you would change, and why. [text]',
+baRightR:'<strong>Main problems:</strong><br>1. The central point arrives too late — it sits in the third paragraph, but it should open the text. A fast reader never finds it.<br>2. The second paragraph is redundant: it restates the first in different words. Cut it or merge it.<br>3. Three generic adjectives weaken the text: "important", "significant", "relevant" — replace them with data or concrete facts.<br>4. The final call to action is ambiguous: it\'s not clear what you want the reader to do next.',
+s5:'The pre-mortem: the most powerful technique',
+pmQuote:'"This project has failed. What happened?"',
+pmQuoteS:'— The frame that removes the social signal of approval',
+pmIntro:'The pre-mortem — used at Google, Goldman Sachs, P&G — assumes the project has already failed and asks to reconstruct why. With Claude the wording is simple:',
+pmLabel:'Prompt: pre-mortem',
+pmPrompt:'This project / plan has failed. It\'s 6 months after launch.\n\nTell me how it went and what didn\'t work. Be specific: which assumptions were wrong, what we didn\'t foresee, where reality fell short of expectations.\n\n[describe your plan or project]',
+pmNoteH:'Why it beats "find the risks"',
+pmNoteP:'The pre-mortem removes the approval frame. Inside a post-mortem context Claude has no incentive to approve — <strong>it only has to explain the failure</strong>. The same goes for Devil\'s Advocate and Red Team: change the frame, change the answer.',
+s6:'The full critical stack — click for each prompt',
+s6intro:'For important decisions, the frames are used in sequence. Each level adds a different kind of coverage.',
+keyP:'"Don\'t tell me what works. Tell me what you would change — and why."',
+keyAfter:'The frame of the question determines the type of answer. "Is this good?" activates approval mode. "What would you change?" activates critical mode. A few words of difference, radically different output.',
+s7:'Common misconceptions',
+s8:'Checkpoint',
+ctaH:'Try it now.',
+ctaP:'Take something you wrote recently — an email, a report, a proposal. Copy the critical editor prompt from this lesson. Then actually read what Claude gives you — without defending yourself.<br><br><strong>What you get is exactly what a paid editor would tell you.</strong>',
+brH:'Module B7 completed',
+brP:'You\'ve learned to make Claude produce (documents, reports) and to make it critique (reviewer, sparring). Production and review: the complete cycle of professional work with Claude at your side.',
+foot:'Morfeus — Reviewer & sparring partner'
+}};
+
+var FR={it:[
+['r','ti-mood-smile','Claude il "yes man"','Chiedi "questo testo è buono?" — Claude tende a dire sì, con piccole note di miglioramento. L\'approvazione è il frame di default.'],
+['g','ti-sword','Claude l\'interlocutore onesto','Con un frame esplicito — critico, avvocato del diavolo, pre-mortem — Claude rompe il bias di approvazione e diventa lo strumento più prezioso che hai.'],
+['o','ti-info-circle','Dire "sii onesto" non basta','Una richiesta generica di onestà non rompe il bias. Serve un frame specifico. Questa lezione ti insegna i tre che funzionano.']
+],en:[
+['r','ti-mood-smile','Claude the "yes man"','Ask "is this text good?" — Claude tends to say yes, with small improvement notes. Approval is the default frame.'],
+['g','ti-sword','Claude the honest interlocutor','With an explicit frame — critic, devil\'s advocate, pre-mortem — Claude breaks the approval bias and becomes the most valuable tool you have.'],
+['o','ti-info-circle','Saying "be honest" is not enough','A generic request for honesty doesn\'t break the bias. You need a specific frame. This lesson teaches you the three that work.']
+]};
+
+/* table rows: [iconColorVarBg, iconColorVar, icon, name, question, analyses] */
+var TBL={it:[
+['accent-soft','accent','ti-pencil','Editor','Come miglioro la scrittura?','Flusso, chiarezza, struttura, stile'],
+['bad-soft','bad','ti-zoom-question','Critico','Cosa non funziona?','Problemi, debolezze, omissioni'],
+['agent-soft','agent','ti-sword','Sparring','L\'idea regge?','Logica, assunzioni, falle, obiezioni']
+],en:[
+['accent-soft','accent','ti-pencil','Editor','How do I improve the writing?','Flow, clarity, structure, style'],
+['bad-soft','bad','ti-zoom-question','Critic','What doesn\'t work?','Problems, weaknesses, omissions'],
+['agent-soft','agent','ti-sword','Sparring','Does the idea hold?','Logic, assumptions, flaws, objections']
+]};
+
+/* modes: [tabLabel, tabName, icon, iconColorVar, title, intro, [uw...], promptLabel, promptText] */
+var MODES={it:[
+['Modalità 1','Editor','ti-pencil','accent','L\'editor critico','Usalo sui testi — email, proposte, articoli, report. Ottieni feedback strutturato sui punti deboli della scrittura, non una lista di complimenti.',['Usalo quando vuoi alzare la qualità di un testo specifico prima di pubblicarlo o inviarlo.','Ideale per email importanti, proposte commerciali, contenuti pubblici.'],'Prompt: editor critico','Sei un editor professionale esigente. Il tuo unico obiettivo è migliorare questo testo, non validarlo.\n\nLeggi il testo qui sotto e dimmi:\n1. I 3 punti più deboli — parti che non funzionano, sono vaghe, o che il lettore salterà\n2. La struttura: l\'ordine delle idee è il più efficace? Dove perdo l\'attenzione del lettore?\n3. Le parole da tagliare: ripetizioni, riempitivi, parole che rendono il testo più generico\n4. Il punto principale: è chiaro nel primo paragrafo, o devo scorrere per capire dove vai a parare?\n\nNon dirmi cosa funziona. Dimmi cosa cambieresti, e perché.\n\n[incolla qui il tuo testo]'],
+['Modalità 2','Critico di piano','ti-zoom-question','bad','Il critico di piano','Usalo su piani, strategie, decisioni importanti. Claude assume che tu stia sopravvalutando la domanda, sottovalutando i costi, e che chi ti si oppone reagirà.',['Usalo prima di inviare una proposta o presentare un piano a qualcuno che non sarà gentile.','Ideale per piani di lancio, proposte commerciali, decisioni strategiche.'],'Prompt: critico di piano (avvocato del diavolo)','Fai l\'avvocato del diavolo su questo piano.\n\nIl tuo compito: trova ogni punto in cui questo piano può fallire.\nAssumi che io stia sopravvalutando la domanda, sottovalutando i costi, e che chi vi si oppone reagirà. Cosa non torna?\n\nNon darmi validazione — dammi le ragioni concrete per cui questo piano potrebbe non funzionare.\nPoi, per ognuna, dimmi: è un problema risolvibile o strutturale?\n\n[descrivi o incolla qui il tuo piano]'],
+['Modalità 3','Sparring','ti-sword','agent','Lo sparring partner','Usalo per sfidare le idee, prepararti a situazioni difficili o simulare una controparte scettica. Claude interpreta la persona che non è d\'accordo.',['Usalo prima di una presentazione importante, una negoziazione, una riunione con chi farà pressione.','Ideale per prep di pitch, colloqui, negoziazioni, presentazioni al board.'],'Prompt: sparring — interpreta una controparte critica','Interpreta [descrivi la tua controparte: es. "un cliente scettico sul prezzo", "un investitore esigente", "un partner non convinto"].\n\nFammi le 5 domande più difficili che potrebbe farmi — quelle che spero non faccia.\nPoi, per ognuna, dammi 2 risposte possibili: una più difensiva, una più proattiva.\n\nContesto: [descrivi brevemente la situazione]']
+],en:[
+['Mode 1','Editor','ti-pencil','accent','The critical editor','Use it on texts — emails, proposals, articles, reports. You get structured feedback on the weak points of the writing, not a list of compliments.',['Use it when you want to raise the quality of a specific text before publishing or sending it.','Ideal for important emails, commercial proposals, public content.'],'Prompt: critical editor','You are a demanding professional editor. Your only goal is to improve this text, not to validate it.\n\nRead the text below and tell me:\n1. The 3 weakest points — parts that don\'t work, are vague, or that the reader will skip\n2. The structure: is the order of ideas the most effective one? Where do I lose the reader\'s attention?\n3. The words to cut: repetitions, fillers, words that make the text more generic\n4. The main point: is it clear in the first paragraph, or do I have to scroll to see where I\'m going?\n\nDon\'t tell me what works. Tell me what you would change, and why.\n\n[paste your text here]'],
+['Mode 2','Plan critic','ti-zoom-question','bad','The plan critic','Use it on plans, strategies, important decisions. Claude assumes you\'re overestimating demand, underestimating costs, and that whoever opposes you will react.',['Use it before sending a proposal or presenting a plan to someone who won\'t be kind.','Ideal for launch plans, commercial proposals, strategic decisions.'],'Prompt: plan critic (devil\'s advocate)','Play devil\'s advocate on this plan.\n\nYour job: find every point where this plan can fail.\nAssume I\'m overestimating demand, underestimating costs, and that whoever opposes it will react. What doesn\'t add up?\n\nDon\'t give me validation — give me the concrete reasons why this plan might not work.\nThen, for each one, tell me: is it a fixable problem or a structural one?\n\n[describe or paste your plan here]'],
+['Mode 3','Sparring','ti-sword','agent','The sparring partner','Use it to challenge ideas, prepare for difficult situations or simulate a sceptical counterpart. Claude plays the person who disagrees.',['Use it before an important presentation, a negotiation, a meeting with someone who will push back.','Ideal for pitch prep, interviews, negotiations, board presentations.'],'Prompt: sparring — roleplay a critical counterpart','Play [describe your counterpart: e.g. "a customer sceptical about the price", "a demanding investor", "a partner who isn\'t convinced"].\n\nAsk me the 5 hardest questions they could ask — the ones I hope they won\'t.\nThen, for each one, give me 2 possible answers: one more defensive, one more proactive.\n\nContext: [briefly describe the situation]']
+]};
+
+/* stack: [class c1..c4, num, title, sub, body, exampleText] */
+var STK={it:[
+['c1','1','Avvocato del diavolo','Trova gli argomenti contro l\'idea','Usalo per sfidare la logica di un\'idea o di una posizione. Claude argomenta il caso opposto in modo costruttivo — non per vincere, ma per esporre le falle.','Fai l\'avvocato del diavolo su questa idea: [idea].\nArgomenta il caso opposto più forte. Non ammorbidirlo e non aggiungere "ma potresti avere ragione". Dammi le obiezioni concrete.'],
+['c2','2','Pre-mortem','Trova i modi concreti in cui il piano fallisce','Diverso dall\'avvocato del diavolo: invece di argomenti contro l\'idea, il pre-mortem trova come fallisce l\'esecuzione. Le assunzioni sbagliate, le sorprese, la realtà che spinge indietro.','Questo piano è fallito. Sono passati 6 mesi.\nDimmi le cause: assunzioni sbagliate, sorprese che non avevamo considerato, reazioni di concorrenti o del mercato.\n[piano]'],
+['c3','3','Red Team','Simula un avversario reale — cliente scettico, concorrente, giornalista critico','Il Red Team differisce dai primi due: non sfida l\'idea o il piano in astratto — simula una persona reale con interessi specifici. Il risultato è più concreto e spesso più fastidioso — che è esattamente ciò che ti serve.','Interpreta [un cliente scettico / un concorrente / un giornalista critico].\nDammi le 5 domande o obiezioni più difficili che solleveresti.\nSii specifico, non generico. Usa il contesto: [breve descrizione della situazione].'],
+['c4','4','Pattern Review','Analisi di corpus: trova le debolezze ricorrenti nel tuo lavoro','Il livello più avanzato: invece di analizzare un singolo documento, carichi un corpus (5-10 dei tuoi testi, email, proposte) e chiedi a Claude di trovare i pattern ricorrenti. È come avere un coach di comunicazione che ha letto tutto ciò che hai scritto.','Analizza questi testi come un corpus.\n\nDimmi:\n- Quali pattern ripetitivi vedi nel mio stile?\n- Qual è la mia debolezza ricorrente come comunicatore?\n- Se dovessi darmi un solo consiglio di sviluppo professionale, quale sarebbe?\n\n[incolla 5-10 dei tuoi testi]']
+],en:[
+['c1','1','Devil\'s Advocate','Finds the arguments against the idea','Use it to challenge the logic of an idea or a position. Claude argues the opposite case constructively — not to win, but to expose the flaws.','Play devil\'s advocate on this idea: [idea].\nArgue the strongest opposite case. Don\'t soften it and don\'t add "but you may be right". Give me the concrete objections.'],
+['c2','2','Pre-Mortem','Finds the concrete ways the plan fails','Different from the Devil\'s Advocate: instead of arguments against the idea, the pre-mortem finds how the execution fails. The wrong assumptions, the surprises, reality pushing back.','This plan has failed. It\'s 6 months later.\nTell me the causes: wrong assumptions, surprises we didn\'t consider, reactions from competitors or the market.\n[plan]'],
+['c3','3','Red Team','Simulates a real adversary — sceptical customer, competitor, critical journalist','The Red Team differs from the first two: it doesn\'t challenge the idea or the plan in the abstract — it simulates a real person with specific interests. The result is more concrete and often more annoying — which is exactly what you need.','Play [a sceptical customer / a competitor / a critical journalist].\nGive me the 5 hardest questions or objections you would raise.\nBe specific, not generic. Use the context: [brief description of the situation].'],
+['c4','4','Pattern Review','Corpus analysis: finds the recurring weaknesses in your work','The most advanced level: instead of analysing a single document, you upload a corpus (5-10 of your texts, emails, proposals) and ask Claude to find recurring patterns. It\'s like having a communication coach who has read everything you\'ve ever written.','Analyse these texts as a corpus.\n\nTell me:\n- Which repetitive patterns do you see in my style?\n- What is my recurring weakness as a communicator?\n- If you had to give me one piece of professional development advice, what would it be?\n\n[paste 5-10 of your texts]']
+]};
+
+var SCN={it:[
+[0,'"Claude è già critico di default"','No: il default è approvazione con note marginali. Devi attivare esplicitamente la modalità critica con un frame specifico.'],
+[0,'"Dire \'sii onesto\' basta"','Non basta. Una richiesta generica di onestà non rompe il bias di approvazione. Serve un frame specifico: critico, avvocato del diavolo, pre-mortem.'],
+[0,'"Il pre-mortem è solo per i grandi progetti"','Funziona su qualsiasi decisione: un\'email importante, una proposta, una scelta strategica. La dimensione non conta — conta il frame.'],
+[1,'"Il feedback di Claude è sempre giusto"','Claude può sbagliare o essere superficiale. Il valore è nella pressione critica che ti costringe a pensare meglio — non nel fatto che Claude abbia ragione.']
+],en:[
+[0,'"Claude is already critical by default"','No: the default is approval with marginal notes. You must explicitly activate the critical mode with a specific frame.'],
+[0,'"Saying \'be honest\' is enough"','Not enough. A generic request for honesty doesn\'t break the approval bias. You need a specific frame: critic, devil\'s advocate, pre-mortem.'],
+[0,'"The pre-mortem is only for big projects"','It works on any decision: an important email, a proposal, a strategic call. Size doesn\'t matter — the frame does.'],
+[1,'"Claude\'s feedback is always right"','Claude can be wrong or shallow. The value is in the critical pressure that forces you to think better — not in Claude being right.']
+]};
+
+var LANG='it',curMode=0;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function buildFR(){
+  document.getElementById('frList').innerHTML=FR[LANG].map(function(f){return '<div class="fr"><div class="fic '+f[0]+'"><i class="ti '+f[1]+'"></i></div><div><strong>'+esc(f[2])+'</strong><span>'+esc(f[3])+'</span></div></div>'}).join('');
+}
+function buildTBL(){
+  document.getElementById('tblBody').innerHTML=TBL[LANG].map(function(r){return '<tr><td><div class="mn"><div class="mi" style="background:var(--'+r[0]+');color:var(--'+r[1]+')"><i class="ti '+r[2]+'"></i></div>'+esc(r[3])+'</div></td><td>'+esc(r[4])+'</td><td>'+esc(r[5])+'</td></tr>'}).join('');
+}
+function buildModes(){
+  document.getElementById('ltabs').innerHTML=MODES[LANG].map(function(m,i){
+    return '<div class="ltab'+(i===curMode?' on':'')+'" id="mt'+i+'" onclick="showMode('+i+')"><div class="li"><i class="ti '+m[2]+'"></i></div><div class="ll">'+esc(m[0])+'</div><div class="ln">'+esc(m[1])+'</div></div>';
+  }).join('');
+  document.getElementById('mpanels').innerHTML=MODES[LANG].map(function(m,i){
+    var uw=m[6].map(function(u){return '<div class="uw"><i class="ti ti-circle-check"></i> '+esc(u)+'</div>'}).join('');
+    return '<div class="mpanel'+(i===curMode?' on':'')+'" id="mp'+i+'"><div class="fdetail"><h4 style="display:flex;align-items:center;gap:8px"><i class="ti '+m[2]+'" style="color:var(--'+m[3]+')"></i> '+esc(m[4])+'</h4><p style="font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:8px">'+esc(m[5])+'</p>'+uw+'<div class="pb"><div class="pb-h"><span class="pl"><i class="ti ti-file-code"></i> '+esc(m[7])+'</span><button class="cp" onclick="copyPrompt(this,\'prm'+i+'\')"><i class="ti ti-copy"></i> '+DICT[LANG].copy+'</button></div><div class="pb-b" id="prm'+i+'">'+esc(m[8])+'</div></div></div></div>';
+  }).join('');
+}
+function showMode(i){curMode=i;for(var k=0;k<MODES[LANG].length;k++){document.getElementById('mt'+k).classList.toggle('on',k===i);document.getElementById('mp'+k).classList.toggle('on',k===i)}}
+function showBA(i){for(var k=0;k<2;k++){document.getElementById('tgb'+k).classList.toggle('on',k===i);document.getElementById('cmp'+k).classList.toggle('on',k===i)}}
+function buildSTK(){
+  document.getElementById('stk').innerHTML=STK[LANG].map(function(s){
+    return '<div class="stp '+s[0]+'" onclick="toggleStk(this)"><div class="sth"><div class="stn">'+s[1]+'</div><div class="stt"><strong>'+esc(s[2])+'</strong><span>'+esc(s[3])+'</span></div><i class="ti ti-chevron-right chv"></i></div><div class="std">'+esc(s[4])+'<div class="ex" style="margin-top:10px">'+esc(s[5])+'</div></div></div>';
+  }).join('');
+}
+function toggleStk(el){var open=el.classList.contains('open');document.querySelectorAll('.stp').forEach(function(s){s.classList.remove('open')});if(!open)el.classList.add('open')}
+function buildSCN(){
+  document.getElementById('scnList').innerHTML=SCN[LANG].map(function(s){var amber=s[0]===1;return '<div class="scn'+(amber?' amber':'')+'"><div class="ic"><i class="ti '+(amber?'ti-info-circle':'ti-x')+'"></i></div><div><strong>'+esc(s[1])+'</strong><span>'+esc(s[2])+'</span></div></div>'}).join('');
+}
+function copyPrompt(btn,id){var el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.innerText||el.textContent).then(function(){var o=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i> '+(LANG==='it'?'Copiato!':'Copied!');btn.style.color='var(--good)';btn.style.borderColor='var(--good)';setTimeout(function(){btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2200)}).catch(function(){})}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  buildFR();buildTBL();buildModes();buildSTK();buildSCN();
+}
+function setLang(l){LANG=l;curMode=0;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

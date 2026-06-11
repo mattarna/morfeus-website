@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extended Thinking — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.legend-item{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:6px 13px;border-radius:30px;box-shadow:var(--sh)}
+.legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.legend-dot.you{background:var(--accent)}.legend-dot.claude{background:var(--agent)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.flow{display:flex;align-items:stretch;gap:0}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:32px;flex-shrink:0;color:var(--ink-3);font-size:20px}
+.fstep{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 12px 20px;text-align:center;cursor:pointer;transition:.2s}
+.fstep:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.fstep.on{border-color:var(--accent);background:var(--accent-soft)}
+.fstep .fn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 12px;transition:.2s;background:var(--accent-soft);color:var(--accent)}
+.fstep.on .fn{background:var(--accent);color:#fff}
+.fstep h3{font-size:15px;font-weight:600;margin-bottom:3px}.fstep p{font-size:12.5px;color:var(--ink-3)}
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:13px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:13px}
+.fdetail ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:13px}
+.fdetail li{display:flex;gap:10px;font-size:14px;color:var(--ink-2)}.fdetail li i{color:var(--accent);font-size:16px;margin-top:2px}
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex+.ex{margin-top:8px}.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:7px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}.tag.good{background:var(--good-soft);color:var(--good)}
+.tag.n{background:var(--accent-soft);color:var(--accent)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px 22px}
+.node{border-radius:13px;padding:13px;text-align:center;max-width:300px;margin:0 auto}
+.node-you{background:var(--accent-soft);border:2px solid var(--accent);color:var(--accent)}
+.node-cl{background:var(--agent-soft);border:2px solid var(--agent);color:var(--agent);max-width:230px}
+.node .nt{font-size:14px;font-weight:600}.node .ns{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.node-cl.think{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--agent-line)}50%{box-shadow:0 0 0 9px transparent}}
+.rail{width:2px;height:20px;margin:11px auto;background-image:repeating-linear-gradient(var(--line-2) 0 4px,transparent 4px 8px)}
+.agents{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
+.sa{background:var(--bg-2);border:1.5px solid var(--line);border-radius:12px;padding:12px 7px;text-align:center;min-height:114px;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0;transform:translateY(-12px) scale(.85);transition:.4s}
+.sa.in{opacity:1;transform:none;border-color:var(--agent-line)}
+.sa.work{border-color:var(--agent);animation:pulse 1.1s infinite}.sa.done{border-color:var(--good)}
+.sa .sic{width:30px;height:30px;border-radius:9px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:16px}
+.sa.done .sic{background:var(--good-soft);color:var(--good)}
+.sa .snm{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--agent)}.sa.done .snm{color:var(--good)}
+.sa .stk{font-size:10px;color:var(--ink-2);line-height:1.3}
+.sa .sst{font-family:var(--mono);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);margin-top:auto}
+.sa.work .sst{color:var(--agent)}.sa.done .sst{color:var(--good)}
+.result{margin-top:10px;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:12px;padding:13px 15px;font-size:13px;display:flex;gap:9px;align-items:center;opacity:0;transition:.5s}
+.result.show{opacity:1}.result i{color:var(--accent);font-size:19px}
+.statusln{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);min-height:18px;margin-top:14px}
+.runbtn{display:flex;align-items:center;gap:8px;margin:16px auto 0;background:var(--agent);color:#fff;border:none;padding:11px 23px;border-radius:30px;font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px var(--agent-line);transition:.2s}
+.runbtn:hover{transform:translateY(-1px)}
+
+.xpl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:5px}
+.xpbar{height:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;overflow:hidden;margin-bottom:18px}
+.xpfill{height:100%;width:25%;background:var(--accent);border-radius:30px;transition:width .7s cubic-bezier(.3,.8,.3,1);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 6px,transparent 6px 12px)}
+.xpfill.d{background-color:var(--agent)}
+.ltabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ltabs.four{grid-template-columns:repeat(4,1fr)}
+.ltab{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 10px;text-align:center;cursor:pointer;transition:.2s}
+.ltab:hover{transform:translateY(-2px);border-color:var(--line-2)}.ltab.on{border-color:var(--accent);background:var(--accent-soft)}
+.ltab .li{width:36px;height:36px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto}
+.ltab.on .li{background:var(--accent);color:#fff}
+.ltab .ll{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-top:7px}.ltab.on .ll{color:var(--accent)}
+.ltab .ln{font-size:14px;font-weight:600;margin-top:2px}
+.lpanel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:12px}
+.lpanel h4{font-size:17px;font-weight:600;margin-bottom:4px}.lpanel .ltg{font-size:13px;color:var(--ink-3);margin-bottom:16px}
+.lm{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.lmc{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:13px;text-align:center}
+.lmv{font-family:var(--mono);font-size:23px;font-weight:700;color:var(--accent)}.lml{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+.lsk{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.lskc{font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.lex{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:16px;display:flex;gap:11px}
+.lex .lei{width:34px;height:34px;border-radius:10px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.lex strong{display:block;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--agent);margin-bottom:3px}.lex span{font-size:13px;color:var(--ink-2)}
+
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.wc.a{background:var(--accent-soft);border-color:var(--accent-line)}.wc.b{background:var(--agent-soft);border-color:var(--agent-line)}
+.wc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.wc.a h4{color:var(--accent)}.wc.b h4{color:var(--agent)}
+.wc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.wc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.wc li i{font-size:14px;margin-top:2px}
+.wc.a li i{color:var(--accent)}.wc.b li i{color:var(--agent)}
+
+.cmp{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.cmp-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:30px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s}
+.cmp-btn:hover{transform:translateY(-1px);border-color:var(--line-2)}
+.cmp-btn.q.on{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.cmp-btn.t.on{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+
+.xlink{display:flex;gap:14px;align-items:center;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;margin:22px 0}
+.xlink i{color:var(--accent);font-size:21px;flex-shrink:0}.xlink p{font-size:13.5px;color:var(--ink-2)}.xlink b{color:var(--accent)}
+.xlink .xc{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);padding:2px 7px;border-radius:5px}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.wg{grid-template-columns:1fr}.agents{grid-template-columns:repeat(2,1fr)}.ltabs.four{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background-image:none}.bar,.runbtn,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.sa{opacity:1!important;transform:none!important}.result{opacity:1!important}.stage,.wc,.note,.lex,.fstep,.ltab,.fdetail,.lpanel,.xlink,.bridge,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B9.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Profondità su richiesta</div>
+  <h1 class="rv" data-i="h1">Extended Thinking: il ragionamento esteso</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="legend rv">
+    <span class="legend-item"><span class="legend-dot you"></span> <span data-i="legYou"></span></span>
+    <span class="legend-item"><span class="legend-dot claude"></span> <span data-i="legCl"></span></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">01</span><h2 data-i="s1"></h2></div>
+  <p class="lede rv" data-i-html="s1p" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="stage rv">
+    <div class="node node-you" id="nYou"><div class="nt" data-i="youT"></div><div class="ns" id="youSub"></div></div>
+    <div class="rail"></div>
+    <div class="node node-cl" id="nCl"><div class="nt">Claude</div><div class="ns" id="clSub"></div></div>
+    <div class="agents" id="agents"></div>
+    <div class="result" id="result"><i class="ti ti-circle-check-filled"></i><span id="resultTxt"></span></div>
+    <div class="statusln" id="statusln"></div>
+    <button class="runbtn" id="runBtn" onclick="runThink()"><i class="ti ti-player-play"></i> <span id="runLbl"></span></button>
+  </div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-eye-off"></i></div><div><h4 data-i="note1H"></h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">02</span><h2 data-i="s2"></h2></div>
+  <p class="lede rv" data-i="s2p" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="ltabs four rv">
+    <div class="ltab on" id="ut0" onclick="showUse(0)"><div class="li"><i class="ti ti-scale"></i></div><div class="ll" data-i="caseL0"></div><div class="ln" data-i="caseN0"></div></div>
+    <div class="ltab" id="ut1" onclick="showUse(1)"><div class="li"><i class="ti ti-math-symbols"></i></div><div class="ll" data-i="caseL1"></div><div class="ln" data-i="caseN1"></div></div>
+    <div class="ltab" id="ut2" onclick="showUse(2)"><div class="li"><i class="ti ti-route"></i></div><div class="ll" data-i="caseL2"></div><div class="ln" data-i="caseN2"></div></div>
+    <div class="ltab" id="ut3" onclick="showUse(3)"><div class="li"><i class="ti ti-zoom-check"></i></div><div class="ll" data-i="caseL3"></div><div class="ln" data-i="caseN3"></div></div>
+  </div>
+  <div class="lpanel rv" id="upanel"></div>
+
+  <div class="sh rv" style="margin-top:34px"><i class="ti ti-hourglass-high"></i><span class="no">—</span><h2 data-i="sWvS"></h2></div>
+  <div class="wg rv">
+    <div class="wc a"><h4><i class="ti ti-hourglass-high"></i> <span data-i="worthH"></span></h4><ul id="worthList"></ul></div>
+    <div class="wc b"><h4><i class="ti ti-bolt"></i> <span data-i="skipH"></span></h4><ul id="skipList"></ul></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-gauge"></i><span class="no">03</span><h2 data-i="s3"></h2></div>
+  <p class="lede rv" data-i="s3p" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="ltabs rv">
+    <div class="ltab" id="mt0" onclick="setMode(0)"><div class="li"><i class="ti ti-bolt"></i></div><div class="ll" data-i="modeL"></div><div class="ln" data-i="mode0"></div></div>
+    <div class="ltab" id="mt1" onclick="setMode(1)"><div class="li"><i class="ti ti-adjustments"></i></div><div class="ll" data-i="modeL2"></div><div class="ln" data-i="mode1"></div></div>
+    <div class="ltab on" id="mt2" onclick="setMode(2)"><div class="li"><i class="ti ti-brain"></i></div><div class="ll" data-i="modeL3"></div><div class="ln" data-i="mode2"></div></div>
+  </div>
+  <div class="lpanel rv">
+    <div class="xpl"><span data-i="spdLbl"></span><span id="spdPct">30%</span></div>
+    <div class="xpbar"><div class="xpfill" id="spdFill" style="width:30%"></div></div>
+    <div class="xpl"><span data-i="dphLbl"></span><span id="dphPct">95%</span></div>
+    <div class="xpbar"><div class="xpfill d" id="dphFill" style="width:95%"></div></div>
+    <div class="lm" id="modeM"></div>
+    <div class="lex"><div class="lei"><i class="ti ti-bulb"></i></div><div><strong id="modeT">Extended</strong><span id="modeV"></span></div></div>
+  </div>
+  <div class="note rv"><div class="ni"><i class="ti ti-scale"></i></div><div><h4 data-i="note2H"></h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="xlink rv"><i class="ti ti-link"></i><p data-i-html="xlinkP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-message-2"></i><span class="no">04</span><h2 data-i="s4"></h2></div>
+  <div class="flow rv">
+    <div class="fstep on" onclick="showFlow(0)"><div class="fn"><i class="ti ti-speakerphone"></i></div><h3 data-i="flowT0"></h3><p data-i="flowS0"></p></div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="fstep" onclick="showFlow(1)"><div class="fn"><i class="ti ti-list-details"></i></div><h3 data-i="flowT1"></h3><p data-i="flowS1"></p></div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="fstep" onclick="showFlow(2)"><div class="fn"><i class="ti ti-package"></i></div><h3 data-i="flowT2"></h3><p data-i="flowS2"></p></div>
+  </div>
+  <div class="fdetail rv" id="fdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-git-compare"></i><span class="no">05</span><h2 data-i="s5"></h2></div>
+  <p class="lede rv" data-i="s5p" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="fdetail rv" style="margin-top:0">
+    <div class="ex" style="margin-bottom:14px"><span class="tag n" data-i="promptTag"></span><span id="promptTxt"></span></div>
+    <div class="cmp">
+      <button class="cmp-btn q on" id="cb0" onclick="showCmp(0)"><i class="ti ti-bolt"></i> <span data-i="cmpBtn0"></span></button>
+      <button class="cmp-btn t" id="cb1" onclick="showCmp(1)"><i class="ti ti-brain"></i> <span data-i="cmpBtn1"></span></button>
+    </div>
+    <div id="cmpPanel"></div>
+  </div>
+  <div class="lex rv" style="margin-top:12px"><div class="lei"><i class="ti ti-microscope"></i></div><div><strong data-i="changedH"></strong><span data-i="changedP"></span></div></div>
+
+  <div class="key rv"><p data-i="keyP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-circle-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Extended Thinking</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B9.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Profondità su richiesta',
+h1:'Extended Thinking: il ragionamento esteso',
+lede:'L\'extended thinking permette a <span class="cl">Claude</span> di ragionare passo dopo passo — in privato, prima di rispondere. <span class="you">Tu</span> decidi quando la profondità batte la velocità, e come chiederla. Questa lezione è quella decisione, resa insegnabile.',
+legYou:'Viola = tu · chi decide la profondità',
+legCl:'Arancio = Claude · chi fa il ragionamento',
+s1:'Cos\'è il ragionamento esteso',
+s1p:'Di default Claude risponde veloce — e per la maggior parte delle richieste, veloce è giusto. Con l\'extended thinking elabora prima il problema in un <b style="color:var(--agent)">blocco di ragionamento privato</b>: inquadra, vincoli, opzioni, verifiche. Solo dopo scrive la risposta. Stesso Claude, più spazio per ragionare.',
+youT:'Tu — fai una domanda difficile',
+youSub:'"Piano annuale al 20% di sconto — sì o no?"',
+clSub:'in attesa della domanda',
+resultTxt:'Una risposta ragionata: i numeri, i rischi, le opzioni scartate — e una raccomandazione che puoi verificare.',
+statusInit:'Premi il pulsante per vedere il ragionamento prendere forma.',
+runLbl:'Guarda Claude ragionare',
+note1H:'Il ragionamento avviene prima della risposta',
+note1P:'L\'extended thinking non è un Claude diverso. È lo stesso modello a cui viene dato <strong>spazio per ragionare in privato</strong> prima di scrivere. I prodotti lo chiamano in modi diversi — extended thinking, modalità ragionamento, thinking mode — ma il meccanismo è sempre lo stesso: <strong>prima ragiona, poi rispondi</strong>.',
+s2:'Quando aiuta — e quando è eccessivo',
+s2p:'Quattro famiglie di problemi ripagano l\'attesa. Clicca ognuna per i segnali d\'allarme e un prompt pronto da rubare.',
+caseL0:'Caso 1',caseN0:'Trade-off',
+caseL1:'Caso 2',caseN1:'Matematica e logica',
+caseL2:'Caso 3',caseN2:'Pianificazione',
+caseL3:'Caso 4',caseN3:'Revisione',
+sWvS:'Vale l\'attesa vs saltala',
+worthH:'Vale l\'attesa',
+skipH:'Saltala — vince la velocità',
+s3:'Il trade-off velocità ↔ qualità',
+s3p:'Ragionare costa tempo. È tutto qui: scambi secondi — a volte minuti — in cambio di rigore. Sposta la leva e guarda cosa ti compra ogni modalità.',
+modeL:'Modalità',mode0:'Rapida',
+modeL2:'Modalità',mode1:'Standard',
+modeL3:'Modalità',mode2:'Estesa',
+spdLbl:'Velocità',dphLbl:'Profondità',
+note2H:'Calibra la profondità sulla posta in gioco',
+note2P:'Gli errori costosi meritano risposte lente; quelli economici meritano risposte veloci. La domanda non è mai "l\'extended thinking è meglio?" — è <strong>"quanto mi costa qui una risposta sbagliata?"</strong>',
+xlinkP:'Concetto agnostico già visto in <span class="xc">A2.8</span>: <b>il ragionamento esteso</b> come capacità del modello, indipendente dallo strumento. Qui non lo riduplichiamo: lo applichiamo come <b>decisione pratica</b> — quando attivarlo e come chiederlo dentro un workflow Claude.',
+s4:'Come chiederlo',
+flowT0:'Dillo',flowS0:'Chiedi profondità in modo esplicito',
+flowT1:'Delimitalo',flowS1:'Indica cosa pesare',
+flowT2:'Modellalo',flowS2:'Chiedi di mostrare il lavoro',
+s5:'Prima / dopo — stesso prompt, due risposte',
+s5p:'Una domanda di business reale, posta due volte. Alterna tra la risposta veloce e quella ragionata — e nota cosa comprano davvero i secondi in più.',
+promptTag:'Il prompt — identico in entrambe le esecuzioni',
+promptTxt:'Aggiungiamo un piano annuale al 20% di sconto, o restiamo solo mensili? Contesto: 400 clienti, 90 €/mese, churn 4%/mese.',
+cmpBtn0:'Risposta rapida',cmpBtn1:'Con extended thinking',
+changedH:'Cosa è cambiato',
+changedP:'Stesso modello, stesso prompt. La risposta rapida ha fatto pattern-matching su "i piani annuali sono buona pratica". La risposta ragionata ha fatto i conti, ha trovato il pareggio sui ricavi, ha nominato il vero beneficio — cash flow e retention bloccata — ha segnalato il rischio reale e ha dimensionato il rollout. Quella differenza è ciò che compri con l\'attesa.',
+keyP:'La profondità è una scelta. Chiedi il ragionamento quando un errore è costoso — prendi la risposta veloce quando non lo è.',
+bridge:'Hai chiuso il <b>Modulo B9</b>. Sai cos\'è l\'extended thinking, quando attivarlo e come chiederlo — calibrando profondità e velocità sulla posta in gioco. Da qui in poi, ogni risposta importante è una decisione consapevole, non un default.',
+foot:'Morfeus — Extended Thinking'
+},
+en:{
+kicker:'Lesson B9.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Depth on demand',
+h1:'Extended Thinking',
+lede:'Extended thinking lets <span class="cl">Claude</span> reason step by step — privately, before it answers. <span class="you">You</span> decide when depth beats speed, and how to ask for it. This lesson is that decision, made teachable.',
+legYou:'Violet = you · who sets the depth',
+legCl:'Orange = Claude · who does the thinking',
+s1:'What extended thinking is',
+s1p:'By default, Claude answers fast — and for most requests, fast is right. With extended thinking, it first works the problem in a <b style="color:var(--agent)">private scratchpad</b>: framing, constraints, options, checks. Only then does it write the reply. Same Claude, more room to reason.',
+youT:'You — ask a hard question',
+youSub:'"Annual plan at 20% off — yes or no?"',
+clSub:'waiting for the question',
+resultTxt:'One reasoned answer: the math, the risks, the rejected options — and a recommendation you can audit.',
+statusInit:'Hit the button to watch the reasoning unfold.',
+runLbl:'Watch Claude think',
+note1H:'The thinking happens before the answer',
+note1P:'Extended thinking is not a different Claude. It is the same model given <strong>room to reason privately</strong> before writing. Products name it differently — extended thinking, thinking mode, reasoning — but the mechanic is always the same: <strong>think first, answer second</strong>.',
+s2:'When it helps — and when it\'s overkill',
+s2p:'Four families of problems repay the wait. Click each one to see the warning signs and a ready-to-steal prompt.',
+caseL0:'Case 1',caseN0:'Trade-offs',
+caseL1:'Case 2',caseN1:'Math & logic',
+caseL2:'Case 3',caseN2:'Planning',
+caseL3:'Case 4',caseN3:'Review',
+sWvS:'Worth the wait vs skip it',
+worthH:'Worth the wait',
+skipH:'Skip it — speed wins',
+s3:'The speed ↔ quality trade-off',
+s3p:'Thinking costs time. That is the whole deal: you trade seconds — sometimes minutes — for rigor. Move the dial and watch what each mode buys you.',
+modeL:'Mode',mode0:'Quick',
+modeL2:'Mode',mode1:'Standard',
+modeL3:'Mode',mode2:'Extended',
+spdLbl:'Speed',dphLbl:'Depth',
+note2H:'Match the depth to the stakes',
+note2P:'Expensive mistakes deserve slow answers; cheap mistakes deserve fast ones. The question is never "is extended thinking better?" — it is <strong>"what does a wrong answer cost me here?"</strong>',
+xlinkP:'Agnostic concept already seen in <span class="xc">A2.8</span>: <b>extended reasoning</b> as a model capability, independent of the tool. We don\'t reduplicate it here: we apply it as a <b>practical decision</b> — when to turn it on and how to ask for it inside a Claude workflow.',
+s4:'How to ask for it',
+flowT0:'Say it',flowS0:'Ask for depth explicitly',
+flowT1:'Scope it',flowS1:'Name what to weigh',
+flowT2:'Shape it',flowS2:'Ask to show the work',
+s5:'Before / after — same prompt, two answers',
+s5p:'One real business question, asked twice. Toggle between the fast reply and the reasoned one — and notice what the extra seconds actually buy.',
+promptTag:'The prompt — identical in both runs',
+promptTxt:'Should we add an annual plan at 20% off, or stay monthly-only? Context: 400 customers, €90/month, churn 4%/month.',
+cmpBtn0:'Quick answer',cmpBtn1:'With extended thinking',
+changedH:'What changed',
+changedP:'Same model, same prompt. The quick reply pattern-matched on "annual plans are good practice". The thinking reply did the math, found the revenue wash, named the real benefit — cash flow and locked-in retention — flagged the real risk, and sized the rollout. That difference is what you buy with the wait.',
+keyP:'Depth is a choice. Ask for thinking when a mistake is expensive — take the fast answer when it isn\'t.',
+bridge:'You\'ve closed <b>Module B9</b>. You know what extended thinking is, when to turn it on and how to ask for it — calibrating depth and speed to the stakes. From here, every important answer is a deliberate decision, not a default.',
+foot:'Morfeus — Extended Thinking'
+}};
+
+var TH={it:[['ti-target','Inquadra','Cosa viene chiesto davvero?'],['ti-list-check','Vincoli','Churn, cash flow, margini'],['ti-arrows-shuffle','Opzioni','Annuale, mensile, ibrido'],['ti-scale','Pesa','Testa ognuna sui numeri'],['ti-shield-check','Verifica','Mette alla prova il vincitore']],
+en:[['ti-target','Frame','What is really being asked?'],['ti-list-check','Constraints','Churn, cash flow, margins'],['ti-arrows-shuffle','Options','Annual, monthly, hybrid'],['ti-scale','Weigh','Tests each against the numbers'],['ti-shield-check','Verify','Stress-tests the winner']]};
+
+var USE={it:[
+{title:'Trade-off multi-vincolo',tag:'Più obiettivi tirano in direzioni diverse e nessuna opzione vince su ogni asse.',m:[['3+','vincoli in gioco'],['alto','guadagno dal ragionare'],['€€€','costo di una scelta sbagliata']],sk:['Obiettivi in conflitto','Nessuna risposta univoca','Costoso sbagliare','Stakeholder da convincere'],ex:'Ragiona a fondo su questo: possiamo finanziare l\'assunzione del sales senior o il revamp del prodotto, non entrambi. Pesa impatto sui ricavi, rischio e tempo di ritorno, poi raccomanda uno e mostra il tuo ragionamento.'},
+{title:'Matematica e logica',tag:'Calcoli a più passi e condizioni concatenate, dove un errore avvelena tutto a valle.',m:[['0','tolleranza agli errori'],['n','passi concatenati'],['1','passo sbagliato rovina tutto']],sk:['Proiezioni e modelli','Matematica di pricing','Logica contrattuale','Casi limite'],ex:'Ragiona passo dopo passo: se alziamo i prezzi dell\'8% e il churn passa dal 4% al 5%, cosa succede ai ricavi a 12 mesi? Mostra prima il calcolo, poi la conclusione.'},
+{title:'Pianificazione e sequenze',tag:'Piani con dipendenze, dove l\'ordine delle mosse può rompere tutto.',m:[['molte','dipendenze'],['1','sola occasione per farlo bene'],['settimane','di lavoro in gioco']],sk:['Rollout e migrazioni','Sequenza di progetto','Allocazione risorse','Mappatura rischi'],ex:'Ragiona su un piano di rollout a 90 giorni per il nuovo CRM: mappa le dipendenze, indica il passo più rischioso, cosa possiamo fare in parallelo e cosa non deve mai partire prima di cos\'altro.'},
+{title:'Revisione attenta',tag:'L\'ultimo passaggio prima che qualcosa di importante esca dall\'azienda.',m:[['finale','passaggio prima dell\'invio'],['alta','posta in gioco'],['piccoli','errori, grandi danni']],sk:['Contratti e proposte','QA finale','Verifica di un\'analisi','Email ad alto rischio'],ex:'Prima che invii questa proposta, ragiona con attenzione e revisionala: numeri che non tornano, promesse che non possiamo mantenere, qualsiasi cosa un lettore ostile possa usarci contro.'}],
+en:[
+{title:'Multi-constraint trade-offs',tag:'Several goals pull in different directions and no option wins on every axis.',m:[['3+','constraints in play'],['high','payoff from thinking'],['€€€','cost of a wrong call']],sk:['Conflicting goals','No single right answer','Expensive to get wrong','Stakeholders to convince'],ex:'Think hard about this: we can fund the senior sales hire or the product revamp, not both. Weigh revenue impact, risk, and time-to-payoff, then recommend one and show your reasoning.'},
+{title:'Math & logic',tag:'Multi-step calculations and chained conditions, where one slip poisons everything downstream.',m:[['0','tolerance for slips'],['n','chained steps'],['1','wrong step ruins all']],sk:['Projections & models','Pricing math','Contract logic','Edge cases'],ex:'Think step by step: if we raise prices 8% and churn moves from 4% to 5%, what happens to 12-month revenue? Show the calculation first, then the conclusion.'},
+{title:'Planning & sequencing',tag:'Plans with dependencies, where the order of moves can break the whole thing.',m:[['many','dependencies'],['1','shot to get it right'],['weeks','of work at stake']],sk:['Rollouts & migrations','Project sequencing','Resource allocation','Risk mapping'],ex:'Think through a 90-day rollout plan for the new CRM: map the dependencies, name the riskiest step, what we can run in parallel, and what must never start before what.'},
+{title:'Careful review',tag:'The last pass before something important leaves the building.',m:[['final','pass before send'],['high','stakes'],['small','errors, big damage']],sk:['Contracts & proposals','Final QA','Checking an analysis','High-stakes email'],ex:'Before I send this proposal, think carefully and review it: numbers that don\'t add up, promises we can\'t keep, anything a hostile reader could use against us.'}]};
+
+var WORTH={it:['Decisioni con soldi o rischio reali in gioco','Problemi con tre o più vincoli in competizione','Matematica a più passi, modelli e proiezioni','Piani in cui l\'ordine può rompere le cose','Revisione finale di documenti ad alto rischio'],
+en:['Decisions with real money or risk attached','Problems with three or more competing constraints','Multi-step math, models and projections','Plans where sequencing can break things','Final review of high-stakes documents']};
+var SKIP={it:['Ricerche e definizioni semplici','Modifiche rapide, riformulazioni, formattazione','Domande informali e brainstorming leggero','Prime bozze che revisionerai comunque','Tutto ciò dove un 90% veloce batte un 100% lento'],
+en:['Simple lookups and definitions','Quick edits, rewording, formatting','Casual questions and light brainstorming','First drafts you will revise anyway','Anything where a fast 90% beats a slow 100%']};
+
+var M={it:[
+{t:'Rapida',spd:95,dph:25,m:[['~1s','alla prima risposta'],['bassa','profondità di ragionamento'],['modifiche','uso tipico']],v:'Risposte istantanee. Giusta quando la risposta è economica da verificare ed economica da sbagliare: ricerche, riformulazioni, formattazione, piccole modifiche.'},
+{t:'Standard',spd:70,dph:55,m:[['secondi','alla prima risposta'],['media','profondità di ragionamento'],['lavoro quotidiano','uso tipico']],v:'Il default di ogni giorno. Ragionamento solido per stesura ordinaria, riepiloghi e analisi che revisionerai comunque.'},
+{t:'Estesa',spd:30,dph:95,m:[['sec→min','alla prima risposta'],['alta','profondità di ragionamento'],['decisioni','uso tipico']],v:'Claude ragiona in privato prima di rispondere. Sceglila quando i vincoli sono in conflitto, la matematica si concatena o un errore è costoso.'}],
+en:[
+{t:'Quick',spd:95,dph:25,m:[['~1s','to first answer'],['low','reasoning depth'],['edits','typical use']],v:'Instant replies. Right when the answer is cheap to verify and cheap to get wrong: lookups, rewording, formatting, small edits.'},
+{t:'Standard',spd:70,dph:55,m:[['secs','to first answer'],['medium','reasoning depth'],['daily work','typical use']],v:'The everyday default. Solid reasoning for routine drafting, summaries and analysis you will review anyway.'},
+{t:'Extended',spd:30,dph:95,m:[['sec→min','to first answer'],['high','reasoning depth'],['decisions','typical use']],v:'Claude reasons privately before replying. Choose it when constraints conflict, the math chains, or a mistake is expensive.'}]};
+
+var FLOW={it:[
+{t:'Passo 1 — Dillo: chiedi la profondità',li:['Usa segnali espliciti: "ragiona a fondo su questo", "ragiona passo dopo passo", "ragionaci prima di rispondere"','Nelle app con uno switch di thinking, attivalo per quel messaggio','Chiedilo per task — la profondità è una decisione per-richiesta, non un default che lasci sempre attivo'],bad:'Quale fornitore scegliamo?',good:'Ragiona a fondo prima di rispondere: confronta i tre fornitori qui sotto su costo totale, rischio di lock-in e qualità del supporto. Poi raccomandane uno.'},
+{t:'Passo 2 — Delimitalo: indica cosa pesare',li:['Elenca i vincoli e i criteri che contano davvero','Mettili in ordine: cosa vince quando due criteri si scontrano?','Includi il contesto che serve al ragionamento — numeri, limiti, scadenze'],tip:'Il ragionamento è buono solo quanto ciò su cui deve ragionare. Un vincolo che dimentichi di menzionare è un vincolo che Claude non può pesare.'},
+{t:'Passo 3 — Modellalo: chiedi di mostrare il lavoro',li:['Chiedi la raccomandazione e il ragionamento dietro di essa','Chiedi quali opzioni sono state scartate, e perché','Chiedi le assunzioni e un livello di confidenza che puoi verificare'],tip:'Una risposta che puoi verificare batte una risposta di cui ti devi fidare. Rendi il ragionamento parte del deliverable.'}],
+en:[
+{t:'Step 1 — Say it: ask for the depth',li:['Use explicit cues: "think hard about this", "think step by step", "reason it through before answering"','In apps with a thinking switch, turn it on for that message','Ask per task — depth is a per-request decision, not a default you leave on'],bad:'Which vendor should we pick?',good:'Think hard about this before answering: compare the three vendors below on total cost, lock-in risk, and support quality. Then recommend one.'},
+{t:'Step 2 — Scope it: say what to weigh',li:['List the constraints and criteria that actually matter','Rank them: what wins when two criteria collide?','Include the context the reasoning needs — numbers, limits, deadlines'],tip:'Thinking is only as good as what it has to think about. A constraint you forget to mention is a constraint Claude cannot weigh.'},
+{t:'Step 3 — Shape it: ask to show the work',li:['Ask for the recommendation and the reasoning behind it','Ask which options were rejected, and why','Ask for the assumptions and a confidence level you can check'],tip:'An answer you can audit beats an answer you must trust. Make the reasoning part of the deliverable.'}]};
+
+var CMP={it:[
+{cls:'bad',tag:'Risposta rapida — plausibile, superficiale',txt:'Sì — fallo. I piani annuali intorno al 20% di sconto sono pratica standard: migliorano il cash flow e riducono il churn, e i clienti si aspettano l\'opzione. La aggiungerei alla pagina prezzi.'},
+{cls:'good',tag:'Con extended thinking — elaborata, verificabile',txt:'Ho ragionato prima di rispondere.\n\n1 · Baseline — con churn 4%/mese, un cliente mensile vale ≈ 871 € nei prossimi 12 mesi.\n2 · Annuale al 20% di sconto = 864 € — ricavi quasi identici, ma incassati in anticipo e blindati dal churn per un anno.\n3 · Quindi non è una leva sui ricavi. È una leva su cash flow e retention — inquadrala così internamente.\n4 · Rischio — lo sconto va anche ai clienti fedeli che non sarebbero mai andati via.\n\nRaccomandazione: lancia l\'annuale al 15–20% di sconto, offrilo dal mese 3 in poi, rivedi l\'adozione dopo un trimestre. Confidenza: media — tutto dipende dalla stima del churn al 4%.'}],
+en:[
+{cls:'bad',tag:'Quick answer — plausible, shallow',txt:'Yes — go for it. Annual plans at around 20% off are standard practice: they improve cash flow and reduce churn, and customers expect the option. I would add it to the pricing page.'},
+{cls:'good',tag:'With extended thinking — worked, auditable',txt:'Worked through it before answering.\n\n1 · Baseline — at 4%/month churn, a monthly customer is worth ≈ €871 over the next 12 months.\n2 · Annual at 20% off = €864 — almost identical revenue, but paid upfront and churn-proof for a year.\n3 · So this is not a revenue play. It is a cash-flow and retention play — frame it that way internally.\n4 · Risk — the discount also goes to loyal customers who were never going to leave.\n\nRecommendation: launch annual at 15–20% off, offer it from month 3 onward, review uptake after one quarter. Confidence: medium — everything hinges on the 4% churn estimate.'}]};
+
+var LANG='it',curFlow=0,curUse=0,curMode=2,curCmp=0;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+function showFlow(i){curFlow=i;var d=FLOW[LANG][i];document.querySelectorAll('.flow .fstep').forEach(function(s,k){s.classList.toggle('on',k===i)});var labels=LANG==='it'?{leave:'Lascia la profondità al caso',asks:'Chiede il ragionamento'}:{leave:'Leaves depth to chance',asks:'Asks for the thinking'};var h='<h4>'+esc(d.t)+'</h4><ul>'+d.li.map(function(x){return '<li><i class="ti ti-point-filled"></i>'+esc(x)+'</li>'}).join('')+'</ul>';if(d.bad){h+='<div class="ex bad"><span class="tag bad">'+labels.leave+'</span>'+esc(d.bad)+'</div><div class="ex good"><span class="tag good">'+labels.asks+'</span>'+esc(d.good)+'</div>'}if(d.tip){h+='<div class="ex good">'+esc(d.tip)+'</div>'}document.getElementById('fdetail').innerHTML=h}
+function showUse(i){curUse=i;var u=USE[LANG][i];for(var k=0;k<4;k++)document.getElementById('ut'+k).classList.toggle('on',k===i);var lbl=LANG==='it'?'Prova questo prompt':'Try this prompt';document.getElementById('upanel').innerHTML='<h4>'+esc(u.title)+'</h4><div class="ltg">'+esc(u.tag)+'</div><div class="lm">'+u.m.map(function(m){return '<div class="lmc"><div class="lmv">'+esc(m[0])+'</div><div class="lml">'+esc(m[1])+'</div></div>'}).join('')+'</div><div class="lsk">'+u.sk.map(function(s){return '<span class="lskc">'+esc(s)+'</span>'}).join('')+'</div><div class="ex good"><span class="tag good">'+lbl+'</span>'+esc(u.ex)+'</div>'}
+function setMode(i){curMode=i;var m=M[LANG][i];for(var k=0;k<3;k++)document.getElementById('mt'+k).classList.toggle('on',k===i);document.getElementById('spdFill').style.width=m.spd+'%';document.getElementById('spdPct').textContent=m.spd+'%';document.getElementById('dphFill').style.width=m.dph+'%';document.getElementById('dphPct').textContent=m.dph+'%';document.getElementById('modeT').textContent=m.t;document.getElementById('modeV').textContent=m.v;document.getElementById('modeM').innerHTML=m.m.map(function(x){return '<div class="lmc"><div class="lmv">'+esc(x[0])+'</div><div class="lml">'+esc(x[1])+'</div></div>'}).join('')}
+function showCmp(i){curCmp=i;var c=CMP[LANG][i];document.getElementById('cb0').classList.toggle('on',i===0);document.getElementById('cb1').classList.toggle('on',i===1);document.getElementById('cmpPanel').innerHTML='<div class="ex '+c.cls+'"><span class="tag '+c.cls+'">'+esc(c.tag)+'</span>'+esc(c.txt)+'</div>'}
+function buildSteps(){document.getElementById('agents').innerHTML=TH[LANG].map(function(s,i){var st=LANG==='it'?'in coda':'queued';return '<div class="sa" data-x="'+i+'"><div class="sic"><i class="ti '+s[0]+'"></i></div><div class="snm">'+esc(s[1])+'</div><div class="stk">'+esc(s[2])+'</div><div class="sst">'+st+'</div></div>'}).join('')}
+var tmr=[];function clr(){tmr.forEach(clearTimeout);tmr=[]}function T(f,m){tmr.push(setTimeout(f,m))}
+function runThink(){clr();buildSteps();var D=DICT[LANG];var L=LANG==='it'?{open:'apre il blocco di ragionamento…',lay:'Claude espone i suoi passi di ragionamento…',reason:'ragiona passo dopo passo',think:'Sta ragionando — in privato, prima di ogni risposta…',thinking:'ragiona',settled:'risolto ✓',write:'scrive la risposta',compose:'Ragionamento finito — compone la risposta…',got:'riceve una risposta ragionata ✓',done:'Fatto: prima la profondità, poi la risposta.',again:'Ragiona di nuovo'}:{open:'opens the scratchpad…',lay:'Claude lays out its reasoning steps…',reason:'reasons step by step',think:'Thinking — privately, before any answer…',thinking:'thinking',settled:'settled ✓',write:'writes the answer',compose:'Reasoning done — composing the reply…',got:'gets a reasoned answer ✓',done:'Done: depth first, answer second.',again:'Think again'};
+var subs=document.querySelectorAll('#agents .sa'),cl=document.getElementById('nCl'),clS=document.getElementById('clSub'),st=document.getElementById('statusln'),btn=document.getElementById('runBtn');btn.disabled=true;btn.style.opacity='.6';document.getElementById('result').classList.remove('show');cl.classList.add('think');clS.textContent=L.open;st.textContent=L.lay;subs.forEach(function(s,i){T(function(){s.classList.add('in')},300+i*180)});var w=300+subs.length*180+250;T(function(){clS.textContent=L.reason;st.textContent=L.think;subs.forEach(function(s){s.classList.add('work');s.querySelector('.sst').textContent=L.thinking})},w);subs.forEach(function(s,i){T(function(){s.classList.remove('work');s.classList.add('done');s.querySelector('.sic').innerHTML='<i class="ti ti-check"></i>';s.querySelector('.sst').textContent=L.settled},w+700+i*360)});var c=w+700+subs.length*360+250;T(function(){cl.classList.remove('think');clS.textContent=L.write;st.textContent=L.compose},c);T(function(){document.getElementById('result').classList.add('show');document.getElementById('youSub').textContent=L.got;st.textContent=L.done;btn.disabled=false;btn.style.opacity='1';btn.querySelector('span').textContent=L.again},c+650)}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var D=DICT[LANG];
+  document.getElementById('youSub').textContent=D.youSub;
+  document.getElementById('clSub').textContent=D.clSub;
+  document.getElementById('resultTxt').textContent=D.resultTxt;
+  document.getElementById('statusln').textContent=D.statusInit;
+  document.getElementById('runLbl').textContent=D.runLbl;
+  document.getElementById('promptTxt').textContent=D.promptTxt;
+  document.getElementById('worthList').innerHTML=WORTH[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+esc(x)+'</li>'}).join('');
+  document.getElementById('skipList').innerHTML=SKIP[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+esc(x)+'</li>'}).join('');
+  showFlow(curFlow);showUse(curUse);setMode(curMode);showCmp(curCmp);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

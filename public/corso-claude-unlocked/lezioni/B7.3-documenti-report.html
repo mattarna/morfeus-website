@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documenti &amp; report — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:13px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:13px}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warn{background:var(--agent-soft);border-color:var(--agent-line)}
+.note.warn .ni{background:var(--agent)}
+.note.warn h4{color:var(--agent)}
+
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.wc.a{background:var(--accent-soft);border-color:var(--accent-line)}.wc.b{background:var(--agent-soft);border-color:var(--agent-line)}
+.wc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.wc.a h4{color:var(--accent)}.wc.b h4{color:var(--agent)}
+.wc .sub{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin:-8px 0 12px}
+.wc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.wc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.wc li i{font-size:14px;margin-top:2px}
+.wc.a li i{color:var(--accent)}.wc.b li i{color:var(--agent)}
+
+.xpl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:5px}
+.xpbar{height:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;overflow:hidden;margin-bottom:18px}
+.xpfill{height:100%;width:0%;background:var(--accent);border-radius:30px;transition:width .7s cubic-bezier(.3,.8,.3,1);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 6px,transparent 6px 12px)}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+
+.hook{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:20px 24px;margin-top:24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+.wb{display:flex;flex-direction:column;gap:9px}
+.wbs{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:border-color .2s}
+.wbs.on{border-color:var(--accent)}
+.wbs.done{border-color:var(--good)}
+.wbs-h{display:flex;align-items:center;gap:13px;padding:14px 18px;cursor:pointer;user-select:none;transition:.15s}
+.wbs-h:hover{background:var(--bg-2)}
+.wbs.on .wbs-h{background:var(--accent-soft)}
+.wbs.done .wbs-h{background:var(--good-soft)}
+.wbn{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12.5px;font-weight:700;flex-shrink:0;background:var(--bg-2);color:var(--ink-3);border:1.5px solid var(--line-2);transition:.2s}
+.wbs.on .wbn{background:var(--accent);color:#fff;border-color:var(--accent)}
+.wbs.done .wbn{background:var(--good);color:#fff;border-color:var(--good)}
+.wbs-h .wbt strong{display:block;font-size:14.5px;font-weight:600;line-height:1.3}
+.wbs-h .wbt span{font-size:12.5px;color:var(--ink-3)}
+.wbs-h .chv{margin-left:auto;font-size:16px;color:var(--ink-3);transition:transform .25s;flex-shrink:0}
+.wbs.on .chv{transform:rotate(90deg);color:var(--accent)}
+.wbs-b{display:none;padding:4px 18px 18px 61px}
+.wbs.on .wbs-b{display:block}
+.wbs-b>p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+.pb{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.pb-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.pb-h .pl{display:flex;align-items:center;gap:7px}.pb-h .pl i{color:var(--accent);font-size:14px}
+.cp{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;transition:.18s;white-space:nowrap}
+.cp:hover{color:var(--accent);border-color:var(--accent-line)}
+.cp i{font-size:13px}
+.pb-b{padding:14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);white-space:pre-wrap;line-height:1.6}
+.wb-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.wbtn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:30px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line);transition:.18s}
+.wbtn i{font-size:14px}
+.wbtn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.wbtn.p:hover{transform:translateY(-1px)}
+.wbtn.s{background:var(--card);color:var(--ink-2)}
+.wbtn.s:hover{border-color:var(--line-2);color:var(--ink)}
+.verd{display:flex;gap:11px;margin-top:12px;padding:13px 15px;border-radius:var(--r-l);font-size:13px;color:var(--ink-2);background:var(--good-soft);border:1px solid var(--good)}
+.verd i{color:var(--good);font-size:18px;flex-shrink:0}
+.done-msg{display:none;background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r-l);padding:22px;text-align:center;margin:14px 0}
+.done-msg i{font-size:34px;color:var(--good);display:block;margin-bottom:8px}
+.done-msg strong{display:block;font-size:15px;margin-bottom:3px}
+.done-msg span{font-size:13.5px;color:var(--ink-2)}
+.ke{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.ke-sec{padding:16px 20px;border-bottom:1px solid var(--line)}
+.ke-sec:last-child{border-bottom:none}
+.ke-lab{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ke-lab .kn{background:var(--accent);color:#fff;padding:1px 8px;border-radius:30px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;font-size:12.5px;color:var(--ink-2);cursor:pointer;transition:.18s;user-select:none}
+.chip i{font-size:15px}
+.chip:hover{border-color:var(--line-2)}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.ksec{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:13.5px;cursor:pointer;transition:.18s;user-select:none;margin-bottom:6px}
+.ksec:last-child{margin-bottom:0}
+.ksec:hover{border-color:var(--line-2)}
+.ksec.on{background:var(--good-soft);border-color:var(--good)}
+.ksec i{font-size:16px;color:var(--ink-3);flex-shrink:0}
+.ksec.on i{color:var(--good)}
+.ksec .kname{font-weight:600;flex:1}
+.ksec .kdesc{font-size:11.5px;color:var(--ink-3)}
+.ke-res{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px;min-height:70px;font-size:13px;color:var(--ink-2);line-height:1.6}
+.ke-res.empty{display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-style:italic;text-align:center}
+.ke-item{padding:8px 0;border-bottom:1px dashed var(--line)}
+.ke-item:last-child{border-bottom:none}
+.ke-item strong{display:block;font-size:13px;color:var(--ink)}
+.runbtn{display:flex;align-items:center;gap:8px;margin:14px auto 0;background:var(--accent);color:#fff;border:none;padding:11px 23px;border-radius:30px;font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px var(--accent-line);transition:.2s}
+.runbtn:hover{transform:translateY(-1px)}
+.runbtn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.dtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dtab{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 8px;text-align:center;cursor:pointer;transition:.2s}
+.dtab:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.dtab.on{border-color:var(--accent);background:var(--accent-soft)}
+.dtab .di{width:38px;height:38px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto}
+.dtab.on .di{background:var(--accent);color:#fff}
+.dtab .dl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-top:7px}
+.dtab.on .dl{color:var(--accent)}
+.dtab .dn{font-size:13px;font-weight:600;margin-top:2px}
+.ditem{display:flex;gap:11px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.ditem:last-child{border-bottom:none}
+.ditem i{font-size:17px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.ditem strong{color:var(--ink)}
+.pr{display:flex;gap:13px;padding:13px 4px;border-bottom:1px dashed var(--line)}
+.pr:last-child{border-bottom:none}
+.pr .pn{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pr strong{display:block;font-size:14.5px;font-weight:600;margin-bottom:1px}
+.pr span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.scn{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:17px 18px;margin-bottom:10px}
+.scn .ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--bad-soft);color:var(--bad)}
+.scn strong{display:block;font-size:14.5px;font-weight:600;margin-bottom:2px;color:var(--bad)}
+.scn span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.cta{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:32px 26px;text-align:center;margin:20px 0}
+.cta>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cta h4{font-size:17px;font-weight:600;margin-bottom:8px}
+.cta p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cta p strong{color:var(--ink)}
+.bridge{display:flex;gap:16px;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.bridge .ni{width:44px;height:44px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.bridge h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--agent)}
+.bridge p{font-size:14px;color:var(--ink-2)}
+
+@media(max-width:640px){h1{font-size:28px}.wg{grid-template-columns:1fr}.dtabs{grid-template-columns:repeat(2,1fr)}.wbs-b{padding-left:18px}}
+@media print{body{background-image:none}.bar,.ic-btn,.cp,.runbtn,.wbtn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.wbs-b{display:block!important}.note,.wc,.fdetail,.wbs,.ke,.dtab,.scn,.cta,.bridge,.pb,.hook,.pr{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B7.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow"></div>
+  <h1 class="rv" data-i="h1"></h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="hook rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">01</span><h2 data-i="s1"></h2></div>
+  <p class="lede rv" data-i="s1intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="rv">
+    <div class="xpl"><span data-i="prog"></span><span id="wbTxt">0 / 5</span></div>
+    <div class="xpbar"><div class="xpfill" id="wbFill"></div></div>
+    <div class="wb" id="wb"></div>
+    <div class="done-msg" id="wbMsg"><i class="ti ti-circle-check"></i><strong data-i="doneH"></strong><span data-i="doneP"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-columns"></i><span class="no">02</span><h2 data-i="s2"></h2></div>
+  <div class="wg rv">
+    <div class="wc a"><h4><i class="ti ti-message-circle"></i> <span data-i="t1n"></span></h4><p class="sub" data-i="t1s"></p><ul id="t1l"></ul></div>
+    <div class="wc b"><h4><i class="ti ti-tool"></i> <span data-i="t2n"></span></h4><p class="sub" data-i="t2s"></p><ul id="t2l"></ul></div>
+  </div>
+  <div class="note warn rv"><div class="ni"><i class="ti ti-palette"></i></div><div><h4 data-i="vdH"></h4><p data-i-html="vdP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-files"></i><span class="no">03</span><h2 data-i="s3"></h2></div>
+  <p class="lede rv" data-i="s3intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="ke rv">
+    <div class="ke-sec">
+      <div class="ke-lab"><i class="ti ti-database-import" style="font-size:15px;color:var(--accent)"></i> <span data-i="keDocs"></span> <span class="kn" id="docCnt">0</span></div>
+      <div class="chips" id="keChips"></div>
+    </div>
+    <div class="ke-sec">
+      <div class="ke-lab"><i class="ti ti-template" style="font-size:15px;color:var(--accent)"></i> <span data-i="keSecs"></span></div>
+      <div id="keSecList"></div>
+    </div>
+    <div class="ke-sec">
+      <div class="ke-lab"><i class="ti ti-file-export" style="font-size:15px;color:var(--accent)"></i> <span data-i="keOut"></span></div>
+      <div class="ke-res empty" id="keRes"></div>
+      <button class="runbtn" id="keBtn" onclick="runKe()" disabled><i class="ti ti-wand"></i> <span data-i="keRun"></span></button>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-world-search"></i><span class="no">04</span><h2 data-i="s4"></h2></div>
+  <p class="lede rv" data-i="s4intro" style="font-size:15px;margin-bottom:18px"></p>
+  <div class="dtabs rv" id="dtabs"></div>
+  <div class="fdetail rv" id="drPanel"></div>
+
+  <div class="key rv"><p data-i="keyP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">05</span><h2 data-i="s5"></h2></div>
+  <div class="fdetail rv" id="prList" style="margin-top:0"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">06</span><h2 data-i="s6"></h2></div>
+  <div class="rv" id="scnList"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7"></h2></div>
+  <div class="cta rv">
+    <i class="ti ti-file-check"></i>
+    <h4 data-i="ctaH"></h4>
+    <p data-i-html="ctaP"></p>
+  </div>
+
+  <div class="bridge rv"><div class="ni"><i class="ti ti-arrow-right"></i></div><div><h4 data-i="brH"></h4><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot"></span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B7.3',pdfT:'Scarica PDF',themeT:'Cambia tema',
+eyebrow:'Modulo 7 · Claude al lavoro',
+h1:'Documenti & report',
+lede:'Dal brief al file consegnabile: prima la struttura, poi il contenuto. Il workflow dove <span class="you">tu</span> sei l\'architetto e <span class="cl">Claude</span> posa i mattoni — senza perdere coerenza.',
+hook:'"Il documento professionale è uno dei compiti che mangiano più tempo. Non perché scrivere sia difficile — perché è difficile organizzare. Claude risolve esattamente questo problema. Non scrive al posto tuo — ti aiuta a costruire l\'architettura. E una volta che l\'architettura è solida, il contenuto viene da sé."',
+s1:'Workflow — costruire il report passo per passo',
+s1intro:'Clicca ogni fase per vedere cosa fare e un prompt pronto da copiare. Completa tutti e cinque i passi per arrivare a un documento finito.',
+prog:'Progresso',
+doneH:'Workflow completato.',
+doneP:'Il documento è pronto per la revisione finale. Tu eri l\'architetto; Claude ha costruito.',
+s2:'Quale strumento per cosa',
+t1n:'claude.ai chat',t1s:'Pianificazione e struttura',
+t2n:'Cowork',t2s:'Produzione del file reale',
+vdH:'Design visivo finale',
+vdP:'Cowork produce lo scheletro strutturato e formattato. Il design visivo finale — colori, layout, immagini — si completa in Word, PowerPoint o Canva. <strong>Due fasi separate.</strong>',
+s3:'Estrazione di conoscenza — da N documenti a un report',
+s3intro:'Seleziona i documenti da analizzare, scegli le sezioni del template, poi avvia l\'estrazione. Ogni sezione segue la stessa struttura — template fisso, contenuto variabile.',
+keDocs:'Documenti caricati',keSecs:'Sezioni del template',keOut:'Output — anteprima struttura',
+keRun:'Avvia estrazione',
+keEmpty:'Seleziona almeno un documento e una sezione, poi avvia l\'estrazione',
+keNote:'Anteprima struttura. In produzione Claude riempie ogni sezione con il contenuto reale dei tuoi documenti.',
+s4:'Deep Research → report consegnabile',
+s4intro:'Clicca ogni fase per vedere cosa succede nel processo. Da una domanda a un documento strutturato pronto per il cliente.',
+keyP:'Un buon documento ha una buona architettura. L\'architettura è tua. Il mattone-su-mattone è di Claude.',
+s5:'Principi da tenere',
+s6:'Errori comuni',
+s7:'Checkpoint',
+ctaH:'Scegli un documento che stai rimandando.',
+ctaP:'Anche qualcosa di piccolo — 3-4 pagine è perfetto. Costruiscilo con questo workflow: prima la struttura in chat, poi la produzione in Cowork, sezione per sezione.<br><br><strong>Confronta il tempo con il tuo metodo abituale.</strong>',
+brH:'Prossima: Claude come reviewer e sparring partner',
+brP:'Abbiamo visto come produrre. La prossima lezione ribalta il tavolo — Claude non produce, critica. Diventa il tuo reviewer più esigente, l\'editor, lo sparring partner che dice ciò che i colleghi non dicono.',
+foot:'Morfeus — Documenti & report'
+},
+en:{
+kicker:'Lesson B7.3',pdfT:'Download PDF',themeT:'Toggle theme',
+eyebrow:'Module 7 · Claude at work',
+h1:'Documents & reports',
+lede:'From brief to deliverable file: structure first, content second. The workflow where <span class="you">you</span> are the architect and <span class="cl">Claude</span> lays the bricks — without losing coherence.',
+hook:'"The professional document is one of the most time-expensive tasks there is. Not because writing is hard — because organising is hard. Claude solves exactly that problem. It doesn\'t write in your place — it helps you build the architecture. And once the architecture is solid, the content follows."',
+s1:'Workflow — build the report step by step',
+s1intro:'Click each phase to see what to do and a ready-to-copy prompt. Complete all five steps to reach a finished document.',
+prog:'Progress',
+doneH:'Workflow completed.',
+doneP:'The document is ready for final review. You were the architect; Claude did the building.',
+s2:'Which tool for what',
+t1n:'claude.ai chat',t1s:'Planning and structure',
+t2n:'Cowork',t2s:'Real file production',
+vdH:'Final visual design',
+vdP:'Cowork produces the structured, formatted skeleton. The final visual design — colours, layout, images — is completed in Word, PowerPoint or Canva. <strong>Two separate phases.</strong>',
+s3:'Knowledge extraction — from N documents to one report',
+s3intro:'Select the documents to analyse, choose the template sections, then run the extraction. Each section follows the same structure — fixed template, variable content.',
+keDocs:'Uploaded documents',keSecs:'Template sections',keOut:'Output — structure preview',
+keRun:'Run extraction',
+keEmpty:'Select at least one document and one section, then run the extraction',
+keNote:'Structure preview. In production Claude fills each section with the real content of your documents.',
+s4:'Deep Research → deliverable report',
+s4intro:'Click each stage to see what happens in the process. From a question to a structured document ready for the client.',
+keyP:'A good document has a good architecture. The architecture is yours. The brick-by-brick is Claude\'s.',
+s5:'Principles to keep',
+s6:'Common mistakes',
+s7:'Checkpoint',
+ctaH:'Pick a document you\'ve been putting off.',
+ctaP:'Even something small — 3-4 pages is perfect. Build it with this workflow: structure first in chat, then production in Cowork, section by section.<br><br><strong>Compare the time against your usual method.</strong>',
+brH:'Next: Claude as reviewer and sparring partner',
+brP:'We\'ve seen how to produce. The next lesson flips the table — Claude doesn\'t produce, it critiques. It becomes your most demanding reviewer, the editor, the sparring partner who says what colleagues won\'t.',
+foot:'Morfeus — Documents & reports'
+}};
+
+/* Workflow steps: [title, sub, body, promptLabel, promptText, doneBtn, (optional verd)] */
+var WB={it:[
+['Brief di struttura','Titoli più una riga per sezione — ancora niente testo','Prima di scrivere una sola parola, chiedi a Claude di proporre la struttura del documento. Descrivi l\'obiettivo, il lettore e la lunghezza target. Ancora nessun contenuto.','Prompt — struttura','Devo scrivere un report [tipo] per un cliente del settore [X].\n\nObiettivo: dargli un quadro chiaro di [tema].\nLettore: [ruolo, livello di competenza].\nLunghezza target: [N] pagine.\n\nProponi la struttura: titoli delle sezioni più\nuna riga su cosa conterrà ognuna.\nNon scrivere ancora nulla — solo struttura.','Struttura proposta',''],
+['Approva e modifica','Aggiungi, togli, riordina le sezioni prima di proseguire','Non passare alla scrittura finché la struttura non è quella che vuoi. Questa è la fase in cui cambiare idea costa meno. Modifica senza esitazione.','Prompt — rivedere la struttura','Buona struttura. Modifiche:\n- Aggiungi una sezione "[titolo]" prima delle conclusioni\n- La sezione [X] deve seguire il formato:\n  posizionamento / punti di forza / debolezze\n- Executive summary: max 1 pagina, in cima\n\nConferma la struttura aggiornata.','Struttura confermata',''],
+['Scheletro con placeholder','Documento formattato, sezioni vuote con indicazioni','Ora hai la struttura approvata. Chiedi lo scheletro: ogni titolo già al suo posto, ogni sezione con un placeholder che dice cosa andrà lì. Il documento esiste già — vuoto, ma esiste.','Prompt — scheletro (in Cowork per un file .docx)','Crea il file [nome].docx con questa struttura:\n[incolla la struttura approvata]\n\nPer ogni sezione: titolo formattato + un\nplaceholder [DA RIEMPIRE] con 2-3 bullet su\ncosa va lì.\n\nFormattazione professionale:\n- Intestazione con data\n- Numerazione pagine\n- Stili H1/H2/H3 coerenti','Scheletro creato',''],
+['Riempi una sezione alla volta','Una sezione = un prompt. Controllo totale sulla coerenza','È il principio chiave: non chiedere mai a Claude di "scrivere tutto il documento". Una sezione, la controlli, poi la successiva. Mantieni il controllo su tutto il testo.','Prompt — singola sezione','Scrivi la sezione "[Titolo sezione]" del report.\n\nContesto rilevante: [inserisci dati, fatti e\nnumeri che hai per questa sezione].\n\nLunghezza: circa [N] parole.\nTono: professionale, diretto — non accademico.\nFormato: paragrafi brevi, max 3 bullet se servono.','Sezioni completate',''],
+['Ancoraggio del contesto','Ogni 3-4 sezioni, ribadisci le convenzioni per tenere la coerenza','Su documenti lunghi la coerenza stilistica può degradare. Prima di ogni nuova sezione importante, "ri-ancora" Claude alle convenzioni decise all\'inizio.','Prompt — ancoraggio del contesto','Prima di continuare con la sezione [X],\nricorda le convenzioni che stiamo usando:\n- Tono: [professionale, diretto, ...]\n- Formato heading: [H2 per sezioni, H3 per sotto-temi]\n- Lunghezza paragrafi: [max 80 parole]\n- Terminologia specifica: [usa sempre X invece di Y]\n\nConfermato? Allora procedi con la sezione [X].','Documento completato','Usalo ogni 3-4 sezioni su documenti di 8+ pagine. Su testi brevi (3-4 pagine) non serve.']
+],en:[
+['Structure brief','Titles plus one line per section — no writing yet','Before writing a single word, ask Claude to propose the document structure. Describe the goal, the reader and the target length. No content yet.','Prompt — structure','I need to write a [type] report for a client in the [X] industry.\n\nGoal: give them a clear picture of [topic].\nReader: [role, level of expertise].\nTarget length: [N] pages.\n\nPropose the structure: section titles plus\none line on what each will contain.\nDon\'t write anything yet — structure only.','Structure proposed',''],
+['Approve and edit','Add, remove, reorder sections before moving on','Don\'t move on to writing until the structure is the one you want. This is the phase where changing your mind is cheapest. Edit without hesitation.','Prompt — revise the structure','Good structure. Changes:\n- Add a section "[title]" before the conclusions\n- Section [X] must follow the format:\n  positioning / strengths / weaknesses\n- Executive summary: max 1 page, at the top\n\nConfirm the updated structure.','Structure confirmed',''],
+['Skeleton with placeholders','Formatted document, empty sections with guidance','Now you have the approved structure. Ask for the skeleton: every title already in place, each section holding a placeholder that says what will go there. The document already exists — empty, but it exists.','Prompt — skeleton (in Cowork for a .docx file)','Create the file [name].docx with this structure:\n[paste the approved structure]\n\nFor each section: formatted title + a\n[TO FILL] placeholder with 2-3 bullets on\nwhat goes there.\n\nProfessional formatting:\n- Header with date\n- Page numbering\n- Consistent H1/H2/H3 styles','Skeleton created',''],
+['Fill one section at a time','One section = one prompt. Total control over coherence','This is the key principle: never ask Claude to "write the whole document". One section, you check it, then the next. You keep control over the entire text.','Prompt — single section','Write the section "[Section title]" of the report.\n\nRelevant context: [insert the data, facts and\nfigures you have for this section].\n\nLength: around [N] words.\nTone: professional, direct — not academic.\nFormat: short paragraphs, max 3 bullets if needed.','Sections completed',''],
+['Context anchoring','Every 3-4 sections, restate the conventions to keep coherence','On long documents, stylistic coherence can degrade. Before each major new section, "re-anchor" Claude to the conventions you set at the start.','Prompt — context anchoring','Before continuing with section [X],\nremember the conventions we\'re using:\n- Tone: [professional, direct, ...]\n- Heading format: [H2 for sections, H3 for sub-topics]\n- Paragraph length: [max 80 words]\n- Specific terminology: [always use X instead of Y]\n\nConfirmed? Then proceed with section [X].','Document completed','Use it every 3-4 sections on documents of 8+ pages. On short texts (3-4 pages) it isn\'t needed.']
+]};
+
+var TOOL1={it:['Proposta di struttura iniziale','Iterazione sulla struttura','Bozze di sezione in testo semplice','Deep Research → report'],
+en:['Initial structure proposal','Iterating on the structure','Section drafts in plain text','Deep Research → report']};
+var TOOL2={it:['File .docx consegnabile','Presentazione .pptx','Foglio di calcolo .xlsx','Esportazione su Google Drive'],
+en:['Deliverable .docx file','.pptx presentation','.xlsx spreadsheet','Export to Google Drive']};
+
+var KEDOCS={it:[['ti-file-type-pdf','Report Q1.pdf'],['ti-file-type-docx','Note riunione marzo.docx'],['ti-file-type-xls','Dati vendite.xlsx'],['ti-file-type-pdf','Feedback clienti.pdf'],['ti-file-type-docx','Piano strategico.docx']],
+en:[['ti-file-type-pdf','Q1 report.pdf'],['ti-file-type-docx','March meeting notes.docx'],['ti-file-type-xls','Sales data.xlsx'],['ti-file-type-pdf','Customer feedback.pdf'],['ti-file-type-docx','Strategic plan.docx']]};
+var KESECS={it:[
+['Numeri chiave','ti-chart-bar','Numeri, metriche, KPI rilevanti'],
+['Temi ricorrenti','ti-repeat','Pattern condivisi tra i documenti'],
+['Criticità emerse','ti-alert-triangle','Problemi, rischi, aree da approfondire'],
+['Azioni raccomandate','ti-arrow-right-circle','Prossimi passi concreti e prioritizzati']
+],en:[
+['Key figures','ti-chart-bar','Numbers, metrics, relevant KPIs'],
+['Recurring themes','ti-repeat','Patterns shared across the documents'],
+['Issues raised','ti-alert-triangle','Problems, risks, areas to investigate'],
+['Recommended actions','ti-arrow-right-circle','Concrete, prioritised next steps']
+]};
+var KEMAP={it:{
+'Numeri chiave':'Numeri, metriche e KPI estratti dai {n} documenti selezionati, organizzati per rilevanza.',
+'Temi ricorrenti':'Pattern condivisi identificati in almeno {m} dei {n} documenti analizzati.',
+'Criticità emerse':'Problemi o rischi segnalati in modo coerente tra le fonti analizzate.',
+'Azioni raccomandate':'Prossimi passi prioritari derivati dall\'analisi cross-documento, ordinati per urgenza.'
+},en:{
+'Key figures':'Numbers, metrics and KPIs extracted from the {n} selected documents, organised by relevance.',
+'Recurring themes':'Shared patterns identified in at least {m} of the {n} documents analysed.',
+'Issues raised':'Problems or risks flagged consistently across the analysed sources.',
+'Recommended actions':'Priority next steps derived from the cross-document analysis, ordered by urgency.'
+}};
+
+var DR={it:[
+{t:'Brief iniziale',i:'ti-question-mark',d:'Definisci il perimetro della ricerca: tema, angolo specifico, per chi è il report e formato desiderato. Più preciso è il brief, più mirato è il risultato.',li:[['ti-bulb','Tema:',' es. "trend del settore retail 2025-2026"'],['ti-target','Angolo:',' es. "focus sull\'adozione di tecnologia mobile"'],['ti-user','Lettore:',' es. "manager non tecnico, vuole implicazioni pratiche"'],['ti-file-text','Formato output:',' es. "report 6 pagine, executive summary + 3 sezioni + azioni"']]},
+{t:'Ricerca web multi-step',i:'ti-world-search',d:'Claude esegue più query, legge le pagine che trova, triangola le fonti e identifica i temi ricorrenti. Non si ferma alla prima risposta — verifica e approfondisce.',li:[['ti-refresh','Query iterative:',' parte da domande generali, poi affina sulle evidenze trovate'],['ti-eye','Lettura delle fonti:',' legge il contenuto reale delle pagine, non solo i titoli'],['ti-git-merge','Triangolazione:',' confronta fonti diverse e segnala dove sono in disaccordo'],['ti-zoom-exclamation','Gap check:',' identifica ciò che non ha trovato o dove il dato è incerto']]},
+{t:'Sintesi strutturata',i:'ti-list',d:'Le informazioni raccolte vengono organizzate nella struttura del report. Una sezione alla volta, con fonti citate e incertezza segnalata dove serve.',li:[['ti-layout-list','Struttura applicata:',' il brief definisce la struttura, la ricerca riempie le sezioni'],['ti-link','Fonti citate:',' ogni affermazione è tracciabile alla fonte originale'],['ti-alert-circle','Incertezza esplicita:',' Claude segnala dove il dato è scarso o contraddittorio']]},
+{t:'Esportazione e consegna',i:'ti-file-download',d:'Il report può essere scaricato come documento o esportato direttamente su Google Drive. Pronto da condividere, o da finalizzare in Cowork.',li:[['ti-file-type-pdf','Download diretto:',' PDF o DOCX dall\'interfaccia claude.ai'],['ti-brand-google-drive','Google Drive:',' integrazione per il salvataggio automatico nella cartella del progetto'],['ti-repeat','Report ricorrente:',' salva il template — la settimana dopo richiede minuti, non ore']]}
+],en:[
+{t:'Initial brief',i:'ti-question-mark',d:'Define the perimeter of the research: topic, specific angle, who the report is for and the desired format. The more precise the brief, the more targeted the result.',li:[['ti-bulb','Topic:',' e.g. "retail industry trends 2025-2026"'],['ti-target','Angle:',' e.g. "focus on mobile technology adoption"'],['ti-user','Reader:',' e.g. "non-technical manager, wants practical implications"'],['ti-file-text','Output format:',' e.g. "6-page report, executive summary + 3 sections + actions"']]},
+{t:'Multi-step web research',i:'ti-world-search',d:'Claude runs multiple queries, reads the pages it finds, triangulates the sources and identifies the recurring themes. It doesn\'t stop at the first answer — it verifies and digs deeper.',li:[['ti-refresh','Iterative queries:',' starts from general questions, then refines on the evidence found'],['ti-eye','Source reading:',' reads the actual content of the pages, not just the titles'],['ti-git-merge','Triangulation:',' compares different sources and flags where they disagree'],['ti-zoom-exclamation','Gap check:',' identifies what it couldn\'t find or where the data is uncertain']]},
+{t:'Structured synthesis',i:'ti-list',d:'The collected information is organised into the report structure. One section at a time, with sources cited and uncertainty flagged where needed.',li:[['ti-layout-list','Structure applied:',' the brief defines the structure, the research fills the sections'],['ti-link','Sources cited:',' every claim is traceable to its original source'],['ti-alert-circle','Explicit uncertainty:',' Claude flags where the data is scarce or contradictory']]},
+{t:'Export and delivery',i:'ti-file-download',d:'The report can be downloaded as a document or exported straight to Google Drive. Ready to share, or to finalise in Cowork.',li:[['ti-file-type-pdf','Direct download:',' PDF or DOCX from the claude.ai interface'],['ti-brand-google-drive','Google Drive:',' integration for automatic saving into the project folder'],['ti-repeat','Recurring report:',' save the template — next week it takes minutes, not hours']]}
+]};
+
+var PR={it:[
+['Struttura prima, sempre','Non iniziare a scrivere contenuto finché la struttura non è approvata. Cambiare idea sulla struttura a metà documento è il modo più rapido per bruciare ore.'],
+['Una sezione = un prompt','Resisti alla tentazione di "scrivi tutto". Si perde la coerenza, si perde il controllo. Sezione per sezione sembra più lento, ma in pratica è più veloce.'],
+['Cowork per i file consegnabili','I documenti per il cliente escono da Cowork come veri file .docx/.pptx. La chat è per pianificare — Cowork è per produrre.'],
+['Ancora ogni 3-4 sezioni','Su documenti lunghi Claude non "ricorda" le convenzioni dall\'inizio alla fine. Ribadirle periodicamente mantiene la coerenza stilistica su tutto il testo.'],
+['Tu sei l\'architetto','Claude esegue la tua visione — non la sua. Il documento è tuo: decidi cosa c\'è dentro, che tono ha, a chi è rivolto. Claude costruisce veloce e preciso.']
+],en:[
+['Structure first, always','Don\'t start writing content until the structure is approved. Changing your mind about the structure halfway through a document is the fastest way to burn hours.'],
+['One section = one prompt','Resist the temptation of "write it all". Coherence is lost, control is lost. Section by section looks slower, but in practice it\'s faster.'],
+['Cowork for deliverable files','Client-facing documents leave Cowork as real .docx/.pptx files. Chat is for planning — Cowork is for producing.'],
+['Anchor every 3-4 sections','On long documents Claude doesn\'t "remember" the conventions end to end. Restating them periodically keeps stylistic coherence across the long text.'],
+['You are the architect','Claude executes your vision — not its own. The document is yours: you decide what\'s in it, what tone it has, who it\'s for. Claude builds fast and precise.']
+]};
+
+var SCN={it:[
+['"Scrivi tutto il documento in un prompt"','Il risultato è lungo ma incoerente, difficile da controllare e quasi sempre da riscrivere. Il workflow sezione-per-sezione è più controllato e alla fine più veloce.'],
+['"Devo già conoscere la struttura prima di iniziare"','Sbagliato: Claude può proporre la struttura da un brief minimo. Descrivi l\'obiettivo e il lettore — la struttura viene dopo, non prima.'],
+['"Cowork fa il design finito"','Produce lo scheletro strutturato. Il design visivo finale — colori, immagini, layout — si completa in Word, PowerPoint o Canva. Due passi separati.'],
+['"Claude ricorda le convenzioni dall\'inizio alla fine"','Su documenti lunghi non lo fa. L\'ancoraggio del contesto non è un workaround — è parte del workflow. Pianificalo dall\'inizio.']
+],en:[
+['"Write the whole document in one prompt"','The result is long but incoherent, hard to control and almost always rewritten. The section-by-section workflow is more controlled and faster in the end.'],
+['"I must already know the structure before starting"','Wrong: Claude can propose the structure from a minimal brief. Describe the goal and the reader — the structure comes after, not before.'],
+['"Cowork does the finished design"','It produces the structured skeleton. The final visual design — colours, images, layout — is completed in Word, PowerPoint or Canva. Two separate steps.'],
+['"Claude remembers the conventions end to end"','On long documents it doesn\'t. Context anchoring is not a workaround — it\'s part of the workflow. Plan it from the start.']
+]};
+
+var LANG='it';
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+var wbDoneArr=[];
+function buildWB(){
+  wbDoneArr=[];
+  document.getElementById('wb').innerHTML=WB[LANG].map(function(s,ix){
+    var n=ix+1;
+    var verd=s[6]?'<div class="verd"><i class="ti ti-bulb"></i><span>'+esc(s[6])+'</span></div>':'';
+    var back=n>1?'<button class="wbtn s" onclick="wbBack('+n+')">'+(LANG==='it'?'Torna indietro':'Go back')+'</button>':'';
+    var reset=n===5?'<button class="wbtn s" onclick="wbReset()" style="margin-left:auto"><i class="ti ti-rotate"></i> '+(LANG==='it'?'Ricomincia':'Restart')+'</button>':'';
+    return '<div class="wbs" id="wb'+n+'"><div class="wbs-h" onclick="wbToggle('+n+')"><div class="wbn" id="wbn'+n+'">'+n+'</div><div class="wbt"><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div><i class="ti ti-chevron-right chv"></i></div><div class="wbs-b"><p>'+esc(s[2])+'</p><div class="pb"><div class="pb-h"><span class="pl"><i class="ti ti-prompt"></i> '+esc(s[3])+'</span><button class="cp" onclick="copyPrompt(this,\'pp'+n+'\')"><i class="ti ti-copy"></i> '+(LANG==='it'?'Copia':'Copy')+'</button></div><div class="pb-b" id="pp'+n+'">'+esc(s[4])+'</div></div>'+verd+'<div class="wb-row"><button class="wbtn p" onclick="wbDone('+n+')"><i class="ti ti-check"></i> '+esc(s[5])+'</button>'+back+reset+'</div></div></div>';
+  }).join('');
+  document.getElementById('wbMsg').style.display='none';
+  wbProg();
+}
+function wbToggle(n){var s=document.getElementById('wb'+n);var open=s.classList.contains('on');for(var i=1;i<=5;i++)document.getElementById('wb'+i).classList.remove('on');if(!open)s.classList.add('on')}
+function wbDone(n){var s=document.getElementById('wb'+n);s.classList.remove('on');s.classList.add('done');document.getElementById('wbn'+n).innerHTML='<i class="ti ti-check"></i>';if(wbDoneArr.indexOf(n)<0)wbDoneArr.push(n);wbProg();if(n<5){var nx=document.getElementById('wb'+(n+1));nx.classList.add('on');nx.scrollIntoView({behavior:'smooth',block:'nearest'})}else{var m=document.getElementById('wbMsg');m.style.display='block';m.scrollIntoView({behavior:'smooth',block:'nearest'})}}
+function wbBack(n){var s=document.getElementById('wb'+n);s.classList.remove('on');if(n>1){var p=document.getElementById('wb'+(n-1));p.classList.remove('done');document.getElementById('wbn'+(n-1)).textContent=(n-1);var ix=wbDoneArr.indexOf(n-1);if(ix>-1)wbDoneArr.splice(ix,1);p.classList.add('on');wbProg()}}
+function wbReset(){buildWB()}
+function wbProg(){var n=wbDoneArr.length;document.getElementById('wbTxt').textContent=n+' / 5';document.getElementById('wbFill').style.width=(n*20)+'%'}
+
+function buildTools(){
+  document.getElementById('t1l').innerHTML=TOOL1[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+esc(x)+'</li>'}).join('');
+  document.getElementById('t2l').innerHTML=TOOL2[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+esc(x)+'</li>'}).join('');
+}
+
+var keD=0,keS={};
+function buildKE(){
+  keD=0;keS={};
+  document.getElementById('keChips').innerHTML=KEDOCS[LANG].map(function(d){return '<span class="chip" onclick="toggleDoc(this)"><i class="ti '+d[0]+'"></i> '+esc(d[1])+'</span>'}).join('');
+  document.getElementById('keSecList').innerHTML=KESECS[LANG].map(function(s){return '<div class="ksec" data-k="'+esc(s[0])+'" onclick="toggleSec(this)"><i class="ti '+s[1]+'"></i><span class="kname">'+esc(s[0])+'</span><span class="kdesc">'+esc(s[2])+'</span></div>'}).join('');
+  document.getElementById('docCnt').textContent='0';
+  var r=document.getElementById('keRes');r.className='ke-res empty';r.textContent=DICT[LANG].keEmpty;
+  document.getElementById('keBtn').disabled=true;
+}
+function toggleDoc(el){el.classList.toggle('on');keD=document.querySelectorAll('.chip.on').length;document.getElementById('docCnt').textContent=keD;keReady()}
+function toggleSec(el){el.classList.toggle('on');var k=el.getAttribute('data-k');if(el.classList.contains('on'))keS[k]=true;else delete keS[k];keReady()}
+function keReady(){var ok=keD>0&&Object.keys(keS).length>0;document.getElementById('keBtn').disabled=!ok;if(!ok){var r=document.getElementById('keRes');r.className='ke-res empty';r.textContent=DICT[LANG].keEmpty}}
+function runKe(){var r=document.getElementById('keRes');r.className='ke-res';var map=KEMAP[LANG];var m=Math.ceil(keD*0.6);var h='';Object.keys(keS).forEach(function(k){h+='<div class="ke-item"><strong>'+esc(k)+'</strong>'+map[k].replace('{n}',keD).replace('{m}',m)+'</div>'});h+='<div style="margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:6px"><i class="ti ti-info-circle"></i> '+esc(DICT[LANG].keNote)+'</div>';r.innerHTML=h}
+
+var curDr=0;
+function buildDtabs(){
+  document.getElementById('dtabs').innerHTML=DR[LANG].map(function(d,i){
+    return '<div class="dtab'+(i===curDr?' on':'')+'" id="dt'+i+'" onclick="showDr('+i+')"><div class="di"><i class="ti '+d.i+'"></i></div><div class="dl">'+(LANG==='it'?'Fase ':'Stage ')+(i+1)+'</div><div class="dn">'+esc(d.t)+'</div></div>';
+  }).join('');
+  showDr(curDr);
+}
+function showDr(i){curDr=i;var d=DR[LANG][i];for(var k=0;k<4;k++){var t=document.getElementById('dt'+k);if(t)t.classList.toggle('on',k===i)}var h='<h4 style="display:flex;align-items:center;gap:9px"><i class="ti '+d.i+'" style="color:var(--accent)"></i> '+esc(d.t)+'</h4><p style="font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:8px">'+esc(d.d)+'</p>'+d.li.map(function(x){return '<div class="ditem"><i class="ti '+x[0]+'"></i><div><strong>'+esc(x[1])+'</strong>'+esc(x[2])+'</div></div>'}).join('');document.getElementById('drPanel').innerHTML=h}
+
+function buildPR(){
+  document.getElementById('prList').innerHTML=PR[LANG].map(function(p,i){return '<div class="pr"><div class="pn">'+(i+1)+'</div><div><strong>'+esc(p[0])+'</strong><span>'+esc(p[1])+'</span></div></div>'}).join('');
+}
+function buildSCN(){
+  document.getElementById('scnList').innerHTML=SCN[LANG].map(function(s){return '<div class="scn"><div class="ic"><i class="ti ti-x"></i></div><div><strong>'+esc(s[0])+'</strong><span>'+esc(s[1])+'</span></div></div>'}).join('');
+}
+
+function copyPrompt(btn,id){var el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.innerText||el.textContent).then(function(){var o=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i> '+(LANG==='it'?'Copiato!':'Copied!');btn.style.color='var(--good)';btn.style.borderColor='var(--good)';setTimeout(function(){btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2200)}).catch(function(){})}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  buildWB();buildTools();buildKE();buildDtabs();buildPR();buildSCN();
+}
+function setLang(l){LANG=l;curDr=0;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

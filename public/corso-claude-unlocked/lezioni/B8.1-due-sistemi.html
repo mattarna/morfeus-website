@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I due sistemi — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* LIGHT (default) */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+/* DARK (via toggle) */
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:600px}
+.lede .you{color:var(--accent);font-weight:600}.lede .cl{color:var(--agent);font-weight:600}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.legend-item{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:6px 13px;border-radius:30px;box-shadow:var(--sh)}
+.legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.legend-dot.you{background:var(--accent)}.legend-dot.claude{background:var(--agent)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.ex{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.55}
+.ex+.ex{margin-top:8px}.ex.bad{border-left-color:var(--bad)}.ex.good{border-left-color:var(--good)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:7px}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}.tag.good{background:var(--good-soft);color:var(--good)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.wc.a{background:var(--accent-soft);border-color:var(--accent-line)}.wc.b{background:var(--agent-soft);border-color:var(--agent-line)}
+.wc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.wc.a h4{color:var(--accent)}.wc.b h4{color:var(--agent)}
+.wc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.wc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.wc li i{font-size:14px;margin-top:2px}
+.wc.a li i{color:var(--accent)}.wc.b li i{color:var(--agent)}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.key .sub{font-size:15px;font-weight:400;color:var(--ink-2);max-width:520px;margin:14px auto 0}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+/* ---- componenti lezione 8.1 ---- */
+.hook{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:18px 22px;border-radius:0 var(--r-l) var(--r-l) 0;margin-top:26px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7;box-shadow:var(--sh)}
+.hook strong{color:var(--ink)}
+.dia{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px 22px}
+.dia-t{text-align:center;font-size:16px;font-weight:600;margin-bottom:16px}
+.dia svg{display:block;margin:0 auto;max-width:100%}
+.dia .wg{margin-top:18px}
+.sys{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sysc{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;cursor:pointer;transition:.2s}
+.sysc:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.sysc.a{border-top:3px solid var(--accent)}.sysc.b{border-top:3px solid var(--agent)}
+.sysc.a.open{border-color:var(--accent)}.sysc.b.open{border-color:var(--agent)}
+.syh{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.syi{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:.2s}
+.sysc.a .syi{background:var(--accent-soft);color:var(--accent)}
+.sysc.b .syi{background:var(--agent-soft);color:var(--agent)}
+.sysc.a.open .syi{background:var(--accent);color:#fff}
+.sysc.b.open .syi{background:var(--agent);color:#fff}
+.syk{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3)}
+.syn{font-size:16px;font-weight:600}
+.sysc.a .syn{color:var(--accent)}.sysc.b .syn{color:var(--agent)}
+.sysub{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:8px}
+.syb{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.syx{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease,margin .3s ease}
+.sysc.open .syx{max-height:560px;opacity:1;margin-top:13px}
+.syx ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.syx li{font-size:13px;color:var(--ink-2);padding:9px 12px;background:var(--bg-2);border-radius:var(--r);border:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.syx li i{font-size:14px;flex-shrink:0}
+.sysc.a .syx li i{color:var(--accent)}.sysc.b .syx li i{color:var(--agent)}
+.syo{margin-top:10px;padding:10px 12px;border-radius:var(--r);font-size:12.5px;font-weight:600;display:flex;align-items:flex-start;gap:8px}
+.syo i{margin-top:2px}
+.sysc.a .syo{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.sysc.b .syo{background:var(--agent-soft);color:var(--agent);border:1px solid var(--agent-line)}
+.syhint{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:center;margin-top:12px;opacity:.75}
+.divrow{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--ink-3);margin-top:22px}
+.divrow .ln{flex:1;border-top:1px dashed var(--line-2)}
+.divrow i{font-size:18px}
+.divrow span{font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.trap{background:var(--card);border:1.5px solid var(--bad);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.trap-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.trap-h .tic{width:42px;height:42px;border-radius:12px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.trap-h h3{font-size:16px;font-weight:600;color:var(--bad)}
+.trap>p{font-size:14px;color:var(--ink-2);line-height:1.7}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.cmp .ex+.ex{margin-top:0}
+.ltabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ltab{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 10px;text-align:center;cursor:pointer;transition:.2s}
+.ltab:hover{transform:translateY(-2px);border-color:var(--line-2)}.ltab.on{border-color:var(--accent);background:var(--accent-soft)}
+.ltab .li{width:36px;height:36px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto}
+.ltab.on .li{background:var(--accent);color:#fff}
+.ltab .ln{font-size:13.5px;font-weight:600;margin-top:7px}
+.scn{display:none}
+.scn.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ctx{font-size:14px;color:var(--ink-2);margin:14px 0;padding:13px 16px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;box-shadow:var(--sh)}
+.app{border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh);background:var(--card)}
+.app .al{padding:9px 14px;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line)}
+.app.bad .al{background:var(--bad-soft);color:var(--bad)}
+.app.good .al{background:var(--good-soft);color:var(--good)}
+.app .ap{padding:14px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.6;white-space:pre-wrap;min-height:110px}
+.app .ar{padding:11px 14px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--line);font-style:italic;background:var(--bg-2)}
+.qprog{display:flex;gap:6px;margin-bottom:16px}
+.qdot{flex:1;max-width:34px;height:4px;border-radius:2px;background:var(--bg-3);border:1px solid var(--line);transition:background .3s}
+.qdot.cur{background:var(--accent)}.qdot.ok{background:var(--good)}.qdot.ko{background:var(--bad)}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.qlab{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:10px}
+.qprompt{font-family:var(--mono);font-size:13px;color:var(--ink);line-height:1.7;padding:16px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);margin-bottom:16px;white-space:pre-wrap}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qbtn{padding:13px 14px;border-radius:var(--r-l);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;border:1.5px solid var(--line);background:var(--card);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:9px;font-family:var(--sans)}
+.qbtn:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.qbtn.ok{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.qbtn.ko{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.qbtn.off{pointer-events:none;opacity:.5}
+.qfb{margin-top:14px;padding:12px 14px;border-radius:var(--r);font-size:13px;line-height:1.6;display:none}
+.qfb.show{display:block}
+.qfb.right{background:var(--good-soft);border:1px solid var(--good);color:var(--good)}
+.qfb.wrong{background:var(--bad-soft);border:1px solid var(--bad);color:var(--bad)}
+.qnext{margin-top:14px;padding:10px 20px;border-radius:30px;font-family:var(--mono);font-size:12.5px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:#fff;display:none;align-items:center;gap:6px}
+.qnext.show{display:inline-flex}
+.qscore{text-align:center;padding:14px 0}
+.qsn{font-family:var(--mono);font-size:44px;font-weight:700;color:var(--accent)}
+.qsl{font-size:13px;color:var(--ink-2)}
+.qsm{font-size:15px;font-weight:600;margin-top:12px}
+.qretry{margin-top:14px;padding:10px 20px;border-radius:30px;font-family:var(--mono);font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.lib{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.libc h3{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.libc.d h3{color:var(--accent)}.libc.c h3{color:var(--agent)}
+.libi{padding:11px 32px 11px 13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);margin-bottom:8px;font-style:italic;line-height:1.5;cursor:pointer;transition:.2s;position:relative;box-shadow:var(--sh)}
+.libi:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.libi .cpd{position:absolute;top:50%;right:11px;transform:translateY(-50%);font-family:var(--mono);font-size:10px;font-weight:700;color:var(--good);opacity:0;transition:opacity .3s}
+.libi .cpd.show{opacity:1}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.wg{grid-template-columns:1fr}.sys{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.qopts{grid-template-columns:1fr}.lib{grid-template-columns:1fr}.ltabs{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.qnext,.qretry{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.syx{max-height:none!important;opacity:1!important;margin-top:13px!important}.scn{display:block!important}.syhint{display:none}.dia,.sysc,.trap,.app,.qcard,.libi,.note,.wc,.ltab,.hook,.ctx{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione B8.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Pensare con Claude</div>
+  <h1 class="rv" data-i="h1">I due sistemi (pianificare ed eseguire)</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+  <div class="legend rv">
+    <span class="legend-item"><span class="legend-dot you"></span> <span data-i="legA">Viola = divergere · esplorare</span></span>
+    <span class="legend-item"><span class="legend-dot claude"></span> <span data-i="legB">Arancio = convergere · valutare</span></span>
+  </div>
+  <div class="hook rv" data-i-html="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">01</span><h2 data-i="s1">Il modello mentale</h2></div>
+  <div class="dia rv">
+    <div class="dia-t" data-i="diaT">Il diamante del pensiero</div>
+    <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="100" x2="260" y2="30" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+      <line x1="60" y1="100" x2="260" y2="170" stroke="var(--accent)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+      <line x1="260" y1="30" x2="540" y2="100" stroke="var(--agent)" stroke-width="2.5" opacity=".7"/>
+      <line x1="260" y1="170" x2="540" y2="100" stroke="var(--agent)" stroke-width="2.5" opacity=".7"/>
+      <polygon points="60,100 260,30 260,170" fill="var(--accent)" opacity=".08"/>
+      <polygon points="260,30 540,100 260,170" fill="var(--agent)" opacity=".08"/>
+      <circle cx="60" cy="100" r="8" fill="var(--ink-3)"/>
+      <circle cx="260" cy="30" r="5" fill="var(--accent)"/>
+      <circle cx="260" cy="100" r="3" fill="var(--ink-3)" opacity=".4"/>
+      <circle cx="260" cy="170" r="5" fill="var(--accent)"/>
+      <circle cx="540" cy="100" r="8" fill="var(--agent)"/>
+      <circle cx="180" cy="55" r="3" fill="var(--accent)" opacity=".5"/>
+      <circle cx="200" cy="80" r="3" fill="var(--accent)" opacity=".4"/>
+      <circle cx="190" cy="130" r="3" fill="var(--accent)" opacity=".5"/>
+      <circle cx="170" cy="150" r="3" fill="var(--accent)" opacity=".4"/>
+      <text x="60" y="84" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink-3)" data-i="diaProblem">Problema</text>
+      <text x="260" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="var(--accent)" data-i="diaOptions">Opzioni</text>
+      <text x="540" y="84" text-anchor="middle" font-size="11" font-weight="600" fill="var(--agent)" data-i="diaDecision">Decisione</text>
+      <text x="150" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)" data-i="diaDiv">DIVERGI</text>
+      <text x="410" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="var(--agent)" data-i="diaConv">CONVERGI</text>
+    </svg>
+    <div class="wg">
+      <div class="wc a"><h4><i class="ti ti-arrows-maximize"></i> <span data-i="ph1H">Fase 1 — Espandi</span></h4><ul>
+        <li><i class="ti ti-point-filled"></i><span data-i="ph1a">Genera opzioni, esplora possibilità, allarga il campo visivo.</span></li>
+        <li><i class="ti ti-point-filled"></i><span data-i="ph1b">Claude eccelle qui: è veloce, ampio e non limitato dai tuoi bias.</span></li>
+      </ul></div>
+      <div class="wc b"><h4><i class="ti ti-arrows-minimize"></i> <span data-i="ph2H">Fase 2 — Valuta</span></h4><ul>
+        <li><i class="ti ti-point-filled"></i><span data-i="ph2a">Analizza trade-off, rischi, conseguenze.</span></li>
+        <li><i class="ti ti-point-filled"></i><span data-i="ph2b">Tu porti il contesto che Claude non ha: valori, relazioni, vincoli, storia.</span></li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-horizontal"></i><span class="no">02</span><h2 data-i="s2">I due sistemi in pratica</h2></div>
+  <div class="sys rv">
+    <div class="sysc a" onclick="togSys(this)">
+      <div class="syh"><div class="syi"><i class="ti ti-arrows-maximize"></i></div><div><div class="syk" data-i="sys1k">Sistema 1</div><div class="syn" data-i="sys1n">Esplorazione del problema</div></div></div>
+      <div class="sysub" data-i="sys1sub">Pensiero divergente · espandere</div>
+      <p class="syb" data-i="sys1b">La fase di esplorazione. Non hai ancora una soluzione. Chiedi a Claude di allargare il campo, fare domande, generare opzioni. Non filtrare ancora: raccogli.</p>
+      <div class="syx">
+        <ul id="sys1list"></ul>
+        <div class="syo"><i class="ti ti-package"></i><span data-i="sys1o">Output: un panorama di possibilità</span></div>
+      </div>
+      <div class="syhint" data-i="hintOpen">Clicca per espandere</div>
+    </div>
+    <div class="sysc b" onclick="togSys(this)">
+      <div class="syh"><div class="syi"><i class="ti ti-arrows-minimize"></i></div><div><div class="syk" data-i="sys2k">Sistema 2</div><div class="syn" data-i="sys2n">Supporto alla decisione</div></div></div>
+      <div class="sysub" data-i="sys2sub">Pensiero convergente · valutare</div>
+      <p class="syb" data-i="sys2b">Hai già le opzioni e vuoi pesarle. Chiedi a Claude di analizzare trade-off, rischi, conseguenze. Tu porti il contesto che Claude non ha.</p>
+      <div class="syx">
+        <ul id="sys2list"></ul>
+        <div class="syo"><i class="ti ti-package"></i><span data-i="sys2o">Output: supporto alla tua decisione — non la decisione presa al posto tuo</span></div>
+      </div>
+      <div class="syhint" data-i="hintOpen">Clicca per espandere</div>
+    </div>
+  </div>
+  <div class="divrow rv"><div class="ln"></div><i class="ti ti-arrow-right"></i><span data-i="divrow">Prima divergi, poi convergi</span><i class="ti ti-arrow-right"></i><div class="ln"></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">03</span><h2 data-i="s3">La trappola cognitiva</h2></div>
+  <div class="trap rv">
+    <div class="trap-h"><div class="tic"><i class="ti ti-alert-triangle"></i></div><h3 data-i="trapH">Convergenza senza divergenza</h3></div>
+    <p data-i-html="trapP"></p>
+    <div class="cmp">
+      <div class="ex bad"><span class="tag bad" data-i="trapBadT">Solo convergenza</span><span data-i="trapBad"></span></div>
+      <div class="ex good"><span class="tag good" data-i="trapGoodT">Divergenza + convergenza</span><span data-i="trapGood"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-device-desktop"></i><span class="no">04</span><h2 data-i="s4">Scenari reali — due approcci a confronto</h2></div>
+  <div class="ltabs rv">
+    <div class="ltab on" id="st0" onclick="showScn(0)"><div class="li"><i class="ti ti-building"></i></div><div class="ln" data-i="tab0">Espandere il mercato</div></div>
+    <div class="ltab" id="st1" onclick="showScn(1)"><div class="li"><i class="ti ti-users"></i></div><div class="ln" data-i="tab1">Assumere o no</div></div>
+    <div class="ltab" id="st2" onclick="showScn(2)"><div class="li"><i class="ti ti-rocket"></i></div><div class="ln" data-i="tab2">Lanciare un prodotto</div></div>
+  </div>
+
+  <div class="scn on" id="sc0">
+    <div class="ctx" data-i="sc0ctx"></div>
+    <div class="cmp">
+      <div class="app bad"><div class="al"><i class="ti ti-x"></i> <span data-i="appBadT">Convergenza prematura</span></div><div class="ap" data-i="sc0bp"></div><div class="ar" data-i="sc0br"></div></div>
+      <div class="app good"><div class="al"><i class="ti ti-check"></i> <span data-i="appGoodT">Prima divergi, poi convergi</span></div><div class="ap" data-i="sc0gp"></div><div class="ar" data-i="sc0gr"></div></div>
+    </div>
+  </div>
+
+  <div class="scn" id="sc1">
+    <div class="ctx" data-i="sc1ctx"></div>
+    <div class="cmp">
+      <div class="app bad"><div class="al"><i class="ti ti-x"></i> <span data-i="appBadT">Convergenza prematura</span></div><div class="ap" data-i="sc1bp"></div><div class="ar" data-i="sc1br"></div></div>
+      <div class="app good"><div class="al"><i class="ti ti-check"></i> <span data-i="appGoodT">Prima divergi, poi convergi</span></div><div class="ap" data-i="sc1gp"></div><div class="ar" data-i="sc1gr"></div></div>
+    </div>
+  </div>
+
+  <div class="scn" id="sc2">
+    <div class="ctx" data-i="sc2ctx"></div>
+    <div class="cmp">
+      <div class="app bad"><div class="al"><i class="ti ti-x"></i> <span data-i="appBadT">Convergenza prematura</span></div><div class="ap" data-i="sc2bp"></div><div class="ar" data-i="sc2br"></div></div>
+      <div class="app good"><div class="al"><i class="ti ti-check"></i> <span data-i="appGoodT">Prima divergi, poi convergi</span></div><div class="ap" data-i="sc2gp"></div><div class="ar" data-i="sc2gr"></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">05</span><h2 data-i="s5">Riconosci il pattern</h2></div>
+  <div class="rv">
+    <div class="qprog" id="qProg"></div>
+    <div class="qcard" id="qCard"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-list"></i><span class="no">06</span><h2 data-i="s6">Libreria di prompt — copia e usa</h2></div>
+  <div class="lib rv">
+    <div class="libc d">
+      <h3><i class="ti ti-arrows-maximize"></i> <span data-i="libDivH">Divergenti (esplorare)</span></h3>
+      <div id="libDiv"></div>
+    </div>
+    <div class="libc c">
+      <h3><i class="ti ti-arrows-minimize"></i> <span data-i="libConvH">Convergenti (valutare)</span></h3>
+      <div id="libConv"></div>
+    </div>
+  </div>
+
+  <div class="note rv" style="margin-top:34px"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="xH">Questo è il metodo applicato a Claude</h4><p data-i-html="xP"></p></div></div>
+
+  <div class="key rv"><p data-i="keyP">Claude allarga il tuo campo visivo. La decisione spetta a chi ha il contesto completo.</p><p class="sub" data-i="keySub">E nella tua vita professionale, quel contesto appartiene a te — e solo a te.</p></div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-arrow-right"></i></div><div><h4 data-i="nextH">Prossimo passo</h4><p data-i-html="nextP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — I due sistemi</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione B8.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Pensare con Claude',
+h1:'I due sistemi (pianificare ed eseguire)',
+lede:'Claude è straordinario nel produrre output. Ma i problemi complessi richiedono un metodo diverso: prima pensiero <span class="you">divergente</span>, poi pensiero <span class="cl">convergente</span>.',
+legA:'Viola = divergere · esplorare',legB:'Arancio = convergere · valutare',
+hook:'C\'è un limite di Claude che nessuno ti racconta. Se chiedi <strong>«cosa dovrei fare?»</strong> ottieni una risposta — ma non è la <em>tua</em> risposta. È quella statisticamente più probabile: la più frequente, la più generica. Questa lezione ti insegna a usare Claude per <strong>pensare meglio</strong>, non per smettere di pensare.',
+s1:'Il modello mentale',
+diaT:'Il diamante del pensiero',
+diaProblem:'Problema',diaOptions:'Opzioni',diaDecision:'Decisione',diaDiv:'DIVERGI',diaConv:'CONVERGI',
+ph1H:'Fase 1 — Espandi',
+ph1a:'Genera opzioni, esplora possibilità, allarga il campo visivo.',
+ph1b:'Claude eccelle qui: è veloce, ampio e non limitato dai tuoi bias.',
+ph2H:'Fase 2 — Valuta',
+ph2a:'Analizza trade-off, rischi, conseguenze.',
+ph2b:'Tu porti il contesto che Claude non ha: valori, relazioni, vincoli, storia.',
+s2:'I due sistemi in pratica',
+sys1k:'Sistema 1',sys1n:'Esplorazione del problema',sys1sub:'Pensiero divergente · espandere',
+sys1b:'La fase di esplorazione. Non hai ancora una soluzione. Chiedi a Claude di allargare il campo, fare domande, generare opzioni. Non filtrare ancora: raccogli.',
+sys1o:'Output: un panorama di possibilità',
+sys2k:'Sistema 2',sys2n:'Supporto alla decisione',sys2sub:'Pensiero convergente · valutare',
+sys2b:'Hai già le opzioni e vuoi pesarle. Chiedi a Claude di analizzare trade-off, rischi, conseguenze. Tu porti il contesto che Claude non ha.',
+sys2o:'Output: supporto alla tua decisione — non la decisione presa al posto tuo',
+hintOpen:'Clicca per espandere',hintClose:'Clicca per chiudere',
+divrow:'Prima divergi, poi convergi',
+s3:'La trappola cognitiva',
+trapH:'Convergenza senza divergenza',
+trapP:'Usare Claude solo per convergere — farsi dire cosa fare — senza il lavoro di divergenza, cioè esplorare davvero il problema, porta a decisioni superficiali. Ottieni la risposta statisticamente più probabile, non la <em>tua</em> risposta.',
+trapBadT:'Solo convergenza',
+trapBad:'«Claude, cosa dovrei fare?» → Una risposta generica e bilanciata che dice «dipende». Non ti aiuta, perché manca tutto il tuo contesto.',
+trapGoodT:'Divergenza + convergenza',
+trapGood:'«Aiutami prima a capire il problema, poi aiutami a valutare.» → Un quadro completo, trade-off chiari, una decisione che è tua — e informata.',
+s4:'Scenari reali — due approcci a confronto',
+tab0:'Espandere il mercato',tab1:'Assumere o no',tab2:'Lanciare un prodotto',
+appBadT:'Convergenza prematura',appGoodT:'Prima divergi, poi convergi',
+sc0ctx:'«Devo decidere se espandere la mia attività in Germania.»',
+sc0bp:'Devo espandere la mia azienda in Germania. È una buona idea?',
+sc0br:'Risultato: una risposta bilanciata e generica. «Dipende da diversi fattori, tra cui…» Non ti aiuta.',
+sc0gp:'Sto valutando di espandere la mia attività in Germania. Prima di giudicare se farlo, aiutami a capire il problema nella sua interezza.\n\nFammi le domande che dovrei farmi prima di prendere questa decisione. Non darmi ancora una risposta.',
+sc0gr:'Risultato: Claude ti aiuta a costruire il problema stesso. Poi converge, con un quadro completo.',
+sc1ctx:'«Il mio team è sovraccarico. Dovrei assumere un\'altra persona?»',
+sc1bp:'Il mio team è sovraccarico, dovrei assumere? Sì o no?',
+sc1br:'Risultato: «Assumere potrebbe essere una buona idea se il budget lo consente.» Ovvio e inutile.',
+sc1gp:'Il mio team di 4 persone è costantemente sovraccarico. Prima di decidere se assumere, aiutami a esplorare il problema.\n\nQuali potrebbero essere tutte le cause del sovraccarico, oltre al numero di persone? Cosa potrei non star vedendo?',
+sc1gr:'Risultato: scopri che il problema può vivere nei processi, nelle priorità o nell\'allocazione — non solo nei numeri.',
+sc2ctx:'«Ho un\'idea per un nuovo prodotto digitale. Dovrei lanciarlo?»',
+sc2bp:'Ho un\'idea per un corso online su [tema]. Pensi che funzionerà?',
+sc2br:'Risultato: «Sì, il mercato dei corsi online è in crescita.» Rassicurante ma vuoto. Nessun vero stress test.',
+sc2gp:'Sto valutando di lanciare un corso online su [tema]. Non voglio che mi dica se è una buona idea.\n\nVoglio che mi faccia le domande scomode: quelle che farebbe un investitore scettico. Quali rischi sto sottovalutando? Quali assunzioni sto facendo?',
+sc2gr:'Risultato: un vero stress test dell\'idea. Trovi i punti deboli prima di investire tempo e denaro.',
+s5:'Riconosci il pattern',
+qLab:'Prompt § di § — divergente o convergente?',
+qDiv:'Divergente',qConv:'Convergente',
+qCorrect:'Esatto! ',qWrong:'Non proprio. ',
+qNext:'Avanti',qScoreL:'risposte corrette',qRetry:'Riprova',
+qMsgPerfect:'Perfetto! Distingui chiaramente i due sistemi.',
+qMsgGood:'Ottimo! Hai colto la differenza fondamentale.',
+qMsgLow:'Rivedi la sezione sui due sistemi e riprova.',
+s6:'Libreria di prompt — copia e usa',
+libDivH:'Divergenti (esplorare)',libConvH:'Convergenti (valutare)',
+copied:'Copiato!',
+xH:'Questo è il metodo applicato a Claude',
+xP:'Qui vedi il <strong>Plan &amp; Solve applicato a Claude</strong>: come usare divergenza e convergenza in pratica. Il metodo concettuale puro — perché divergere prima di convergere — è trattato nella lezione <strong>A8</strong> del percorso metodo.',
+keyP:'Claude allarga il tuo campo visivo. La decisione spetta a chi ha il contesto completo.',
+keySub:'E nella tua vita professionale, quel contesto appartiene a te — e solo a te.',
+nextH:'Prossimo passo',
+nextP:'Ora hai i due sistemi. La prossima lezione entra nelle <strong>regole d\'oro</strong> e nel framework degli <strong>Anti-Goal</strong>: uno degli strumenti di pianificazione più controintuitivi e potenti che esistano.',
+foot:'Morfeus — I due sistemi'
+},
+en:{
+kicker:'Lesson B8.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Thinking with Claude',
+h1:'The two systems (plan and execute)',
+lede:'Claude is extraordinary at producing output. But complex problems need a different method: <span class="you">divergent</span> thinking first, <span class="cl">convergent</span> thinking after.',
+legA:'Violet = diverge · explore',legB:'Orange = converge · evaluate',
+hook:'There is a limit to Claude that nobody tells you about. If you ask <strong>"what should I do?"</strong> you get an answer — but it is not <em>your</em> answer. It is the statistically most probable one: the most frequent, the most generic. This lesson teaches you how to use Claude to <strong>think better</strong>, not to stop thinking.',
+s1:'The mental model',
+diaT:'The thinking diamond',
+diaProblem:'Problem',diaOptions:'Options',diaDecision:'Decision',diaDiv:'DIVERGE',diaConv:'CONVERGE',
+ph1H:'Phase 1 — Expand',
+ph1a:'Generate options, explore possibilities, widen the field of view.',
+ph1b:'Claude excels here: it is fast, broad, and not limited by your biases.',
+ph2H:'Phase 2 — Evaluate',
+ph2a:'Analyze trade-offs, risks, consequences.',
+ph2b:'You bring the context Claude does not have: values, relationships, constraints, history.',
+s2:'The two systems in practice',
+sys1k:'System 1',sys1n:'Problem exploration',sys1sub:'Divergent thinking · expand',
+sys1b:'The exploration phase. You do not have a solution yet. Ask Claude to widen the field, ask questions, generate options. Do not filter yet: collect.',
+sys1o:'Output: a landscape of possibilities',
+sys2k:'System 2',sys2n:'Decision support',sys2sub:'Convergent thinking · evaluate',
+sys2b:'You already have the options and want to weigh them. Ask Claude to analyze trade-offs, risks, consequences. You bring the context Claude does not have.',
+sys2o:'Output: support for your decision — not the decision made for you',
+hintOpen:'Click to expand',hintClose:'Click to close',
+divrow:'Diverge first, then converge',
+s3:'The cognitive trap',
+trapH:'Convergence without divergence',
+trapP:'Using Claude only to converge — getting told what to do — without the divergence work of truly exploring the problem leads to shallow decisions. You get the statistically most probable answer, not <em>your</em> answer.',
+trapBadT:'Convergence only',
+trapBad:'"Claude, what should I do?" → A generic, balanced answer that says "it depends". It does not help you, because all of your context is missing.',
+trapGoodT:'Divergence + convergence',
+trapGood:'"Help me understand the problem first, then help me evaluate." → A complete picture, clear trade-offs, a decision that is yours — and informed.',
+s4:'Real scenarios — two approaches compared',
+tab0:'Market expansion',tab1:'To hire or not',tab2:'Launch a product',
+appBadT:'Premature convergence',appGoodT:'Diverge first, then converge',
+sc0ctx:'"I need to decide whether to expand my business into Germany."',
+sc0bp:'I need to expand my company into Germany. Is it a good idea?',
+sc0br:'Result: a balanced, generic answer. "It depends on several factors, including..." It does not help you.',
+sc0gp:'I am considering expanding my business into Germany. Before judging whether to do it, help me understand the full problem.\n\nAsk me the questions I should be asking myself before making this decision. Do not give me an answer yet.',
+sc0gr:'Result: Claude helps you build the problem itself. Afterwards, you converge with a complete picture.',
+sc1ctx:'"My team is overloaded. Should I hire another person?"',
+sc1bp:'My team is overloaded, should I hire? Yes or no?',
+sc1br:'Result: "Hiring could be a good idea if the budget allows it." Obvious and useless.',
+sc1gp:'My team of 4 people is constantly overloaded. Before deciding whether to hire, help me explore the problem.\n\nWhat could all the causes of the overload be, beyond headcount? What might I not be seeing?',
+sc1gr:'Result: you discover the problem may live in the processes, the priorities, or the allocation — not just in the numbers.',
+sc2ctx:'"I have an idea for a new digital product. Should I launch it?"',
+sc2bp:'I have an idea for an online course about [topic]. Do you think it will work?',
+sc2br:'Result: "Yes, the online course market is growing." Reassuring but empty. No real stress test.',
+sc2gp:'I am considering launching an online course about [topic]. I do not want you to tell me whether it is a good idea.\n\nI want you to ask me the uncomfortable questions: the ones a skeptical investor would ask. Which risks am I underestimating? What assumptions am I making?',
+sc2gr:'Result: a real stress test of the idea. You find the weak points before investing time and money.',
+s5:'Spot the pattern',
+qLab:'Prompt § of § — divergent or convergent?',
+qDiv:'Divergent',qConv:'Convergent',
+qCorrect:'Correct! ',qWrong:'Not quite. ',
+qNext:'Next',qScoreL:'correct answers',qRetry:'Try again',
+qMsgPerfect:'Perfect! You can clearly tell the two systems apart.',
+qMsgGood:'Great! You have grasped the fundamental difference.',
+qMsgLow:'Revisit the two-systems section and try again.',
+s6:'Prompt library — copy and use',
+libDivH:'Divergent (explore)',libConvH:'Convergent (evaluate)',
+copied:'Copied!',
+xH:'This is the method applied to Claude',
+xP:'Here you see <strong>Plan &amp; Solve applied to Claude</strong>: how to use divergence and convergence in practice. The pure conceptual method — why diverge before converging — is covered in lesson <strong>A8</strong> of the method path.',
+keyP:'Claude widens your field of vision. The decision belongs to whoever holds the full context.',
+keySub:'And in your professional life, that context belongs to you — and only you.',
+nextH:'Next step',
+nextP:'You now have the two systems. The next lesson moves into the <strong>golden rules</strong> and the <strong>Anti-Goals framework</strong>: one of the most counterintuitive and powerful planning tools there is.',
+foot:'Morfeus — The two systems'
+}};
+
+var SYS1={
+it:['«Quali sono tutti i modi possibili per…»','«Cosa potrei aver tralasciato?»','«Fammi le domande che dovrei farmi»','«Quali assunzioni sto facendo senza accorgermene?»'],
+en:['"What are all the possible ways to..."','"What might I have missed?"','"Ask me the questions I should be asking myself"','"What assumptions am I making without realizing it?"']};
+var SYS2={
+it:['«Quali sono i 3 argomenti più forti a favore e contro?»','«Analizza i trade-off tra queste opzioni»','«Non decidere per me: aiutami a vedere»','«Quali rischi sto sottovalutando?»'],
+en:['"What are the 3 strongest arguments for and against?"','"Analyze the trade-offs between these options"','"Don\'t decide for me: help me see"','"What risks am I underestimating?"']};
+
+var LIBDIV={
+it:['«Quali sono tutti i modi possibili per affrontare questa cosa?»','«Cosa potrei aver tralasciato?»','«Fammi le domande che dovrei farmi prima di decidere»','«Quali assunzioni sto facendo senza accorgermene?»','«Genera 5 approcci radicalmente diversi a questo problema»','«Se dovessi ripartire da zero, come imposteresti la questione?»'],
+en:['"What are all the possible ways to approach this?"','"What might I have missed?"','"Ask me the questions I should be asking myself before deciding"','"What assumptions am I making without realizing it?"','"Generate 5 radically different approaches to this problem"','"If you had to start over from scratch, how would you frame this?"']};
+var LIBCONV={
+it:['«Quali sono i 3 argomenti più forti a favore e contro?»','«Analizza i trade-off tra queste opzioni»','«Non decidere per me: aiutami a vedere i trade-off»','«Quali rischi sto sottovalutando in questa scelta?»','«Dato questo contesto, quale opzione ha il miglior rapporto rischio/beneficio?»','«Cosa direbbe un consulente scettico su questa decisione?»'],
+en:['"What are the 3 strongest arguments for and against?"','"Analyze the trade-offs between these options"','"Don\'t decide for me: help me see the trade-offs"','"What risks am I underestimating in this choice?"','"Given this context, which option has the best risk/benefit ratio?"','"What would a skeptical consultant say about this decision?"']};
+
+var QUIZ={
+it:[
+{p:'Quali sono tutti gli approcci possibili per ridurre l\'abbandono dei clienti?',a:'div',e:'Divergente: stai esplorando possibilità, senza ancora filtrare.'},
+{p:'Dato il nostro budget di 50K e il target PMI, quale di queste 3 strategie di marketing ha il miglior ROI atteso?',a:'conv',e:'Convergente: le opzioni esistono già e stai pesando quale scegliere.'},
+{p:'Cosa potrei aver trascurato nella mia strategia di pricing?',a:'div',e:'Divergente: stai cercando punti ciechi, allargando la visuale.'},
+{p:'Analizza i trade-off tra assumere un freelancer senior o due junior per questo progetto',a:'conv',e:'Convergente: le opzioni sono definite; ora vanno valutate.'},
+{p:'Se dovessimo ripensare completamente il nostro onboarding, quali direzioni radicalmente diverse potremmo prendere?',a:'div',e:'Divergente: stai chiedendo esplicitamente opzioni nuove e diverse.'},
+{p:'Tra il piano A (lancio rapido) e il piano B (beta chiusa), quale comporta meno rischi dato il nostro contesto?',a:'conv',e:'Convergente: due opzioni definite, un\'analisi di rischio per scegliere.'},
+{p:'Fammi le domande scomode che un investitore scettico farebbe sul mio business plan',a:'div',e:'Divergente: stai facendo emergere le debolezze che non vedi, non chiedi un verdetto.'}
+],
+en:[
+{p:'What are all the possible approaches to reducing customer churn?',a:'div',e:'Divergent: you are exploring possibilities, without filtering yet.'},
+{p:'Given our 50K budget and our SMB target, which of these 3 marketing strategies has the best expected ROI?',a:'conv',e:'Convergent: the options already exist and you are weighing which to pick.'},
+{p:'What might I have overlooked in my pricing strategy?',a:'div',e:'Divergent: you are hunting for blind spots, widening the view.'},
+{p:'Analyze the trade-offs between hiring one senior freelancer or two juniors for this project',a:'conv',e:'Convergent: the options are defined; now they need evaluating.'},
+{p:'If we had to completely rethink our onboarding, what radically different directions could we take?',a:'div',e:'Divergent: you are explicitly asking for new, different options.'},
+{p:'Between plan A (fast launch) and plan B (closed beta), which carries less risk given our context?',a:'conv',e:'Convergent: two defined options, a risk analysis to choose between them.'},
+{p:'Ask the uncomfortable questions a skeptical investor would ask about my business plan',a:'div',e:'Divergent: you are surfacing the weaknesses you cannot see, not asking for a verdict.'}
+]};
+
+var LANG='it';
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('sys1list').innerHTML=SYS1[LANG].map(function(t){return '<li><i class="ti ti-message-question"></i>'+t+'</li>'}).join('');
+  document.getElementById('sys2list').innerHTML=SYS2[LANG].map(function(t){return '<li><i class="ti ti-message-check"></i>'+t+'</li>'}).join('');
+  document.getElementById('libDiv').innerHTML=LIBDIV[LANG].map(function(t){return '<div class="libi" onclick="copyP(this)">'+t+'<span class="cpd">'+DICT[LANG].copied+'</span></div>'}).join('');
+  document.getElementById('libConv').innerHTML=LIBCONV[LANG].map(function(t){return '<div class="libi" onclick="copyP(this)">'+t+'<span class="cpd">'+DICT[LANG].copied+'</span></div>'}).join('');
+  document.querySelectorAll('.syhint').forEach(function(h){var c=h.closest('.sysc');h.textContent=(c&&c.classList.contains('open'))?DICT[LANG].hintClose:DICT[LANG].hintOpen});
+  initQuiz();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+function togSys(card){card.classList.toggle('open');var h=card.querySelector('.syhint');if(h)h.textContent=card.classList.contains('open')?DICT[LANG].hintClose:DICT[LANG].hintOpen}
+
+function showScn(n){for(var i=0;i<3;i++){document.getElementById('st'+i).classList.toggle('on',i===n);document.getElementById('sc'+i).classList.toggle('on',i===n)}}
+
+function copyP(el){var t=el.textContent.replace(DICT[LANG].copied,'').trim();navigator.clipboard.writeText(t).then(function(){var b=el.querySelector('.cpd');b.classList.add('show');setTimeout(function(){b.classList.remove('show')},1500)})}
+
+var qs={cur:0,score:0,done:false};
+function initQuiz(){var Q=QUIZ[LANG];var pg=document.getElementById('qProg');pg.innerHTML='';for(var i=0;i<Q.length;i++){var d=document.createElement('div');d.className='qdot'+(i===0?' cur':'');pg.appendChild(d)}qs={cur:0,score:0,done:false};renderQ()}
+function renderQ(){
+var Q=QUIZ[LANG];
+if(qs.cur>=Q.length){showScore();return}
+var q=Q[qs.cur];
+var lab=DICT[LANG].qLab.replace('§',(qs.cur+1)).replace('§',Q.length);
+document.getElementById('qCard').innerHTML='<div class="qlab">'+lab+'</div>'+
+'<div class="qprompt">'+q.p+'</div>'+
+'<div class="qopts">'+
+'<button class="qbtn" data-v="div" onclick="ans(\'div\')"><i class="ti ti-arrows-maximize"></i> '+DICT[LANG].qDiv+'</button>'+
+'<button class="qbtn" data-v="conv" onclick="ans(\'conv\')"><i class="ti ti-arrows-minimize"></i> '+DICT[LANG].qConv+'</button>'+
+'</div>'+
+'<div class="qfb" id="qFb"></div>'+
+'<button class="qnext" id="qNx" onclick="nextQ()">'+DICT[LANG].qNext+' <i class="ti ti-arrow-right"></i></button>';
+}
+function ans(v){
+if(qs.done)return;qs.done=true;
+var q=QUIZ[LANG][qs.cur],ok=v===q.a;
+if(ok)qs.score++;
+document.querySelectorAll('.qbtn').forEach(function(b){
+var bv=b.getAttribute('data-v');
+if(bv===v)b.classList.add(ok?'ok':'ko');
+if(bv===q.a&&!ok)b.classList.add('ok');
+if(!b.classList.contains('ok')&&!b.classList.contains('ko'))b.classList.add('off');
+});
+var fb=document.getElementById('qFb');
+fb.className='qfb show '+(ok?'right':'wrong');
+fb.innerHTML=(ok?'<i class="ti ti-check"></i> '+DICT[LANG].qCorrect:'<i class="ti ti-x"></i> '+DICT[LANG].qWrong)+q.e;
+document.getElementById('qNx').classList.add('show');
+var dots=document.querySelectorAll('.qdot');
+dots[qs.cur].classList.remove('cur');dots[qs.cur].classList.add(ok?'ok':'ko');
+}
+function nextQ(){qs.cur++;qs.done=false;var Q=QUIZ[LANG];if(qs.cur<Q.length)document.querySelectorAll('.qdot')[qs.cur].classList.add('cur');renderQ()}
+function showScore(){
+var Q=QUIZ[LANG];var pct=Math.round(qs.score/Q.length*100);
+var msg=pct===100?DICT[LANG].qMsgPerfect:pct>=70?DICT[LANG].qMsgGood:DICT[LANG].qMsgLow;
+document.getElementById('qCard').innerHTML='<div class="qscore"><div class="qsn">'+qs.score+'/'+Q.length+'</div><div class="qsl">'+DICT[LANG].qScoreL+'</div><div class="qsm">'+msg+'</div><button class="qretry" onclick="initQuiz()"><i class="ti ti-refresh"></i> '+DICT[LANG].qRetry+'</button></div>';
+}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();showScn(0);
+</script>
+</body>
+</html>

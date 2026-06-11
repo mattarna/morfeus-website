@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le 4 superfici di lavoro di Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+/* Morfeus v6 reference template — light default, dark via toggle; blueprint grid, mono accents, bracketed section numbers, scroll-reveal, print-expand */
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#7bb4ea;--blue-soft:#10283f;--blue-line:#2c5680;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:760px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.lede b{color:var(--accent);font-weight:600}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lead-p{font-size:14.5px;color:var(--ink-2);margin-bottom:16px;line-height:1.7}
+.lead-p strong{color:var(--ink);font-weight:600}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:26px 0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.key{text-align:center;padding:46px 20px;margin:40px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:8px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+/* ===== SURFACE SELECTOR (tabs) ===== */
+.surf{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 18px}
+.surf-hint{text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+.surf-hint i{font-size:14px;color:var(--accent)}
+.surf-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.stab{border-radius:var(--r-l);border:2px solid transparent;padding:14px 8px;cursor:pointer;transition:.2s;text-align:center;font-weight:600;font-size:13.5px;display:flex;flex-direction:column;align-items:center;gap:7px}
+.stab i{font-size:24px}
+.stab:hover{transform:translateY(-2px)}
+.stab .pls{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:1px 7px;border-radius:20px;margin-top:1px}
+.stab.ch{background:var(--accent-soft);color:var(--accent)} .stab.ch.on{border-color:var(--accent)}
+.stab.cw{background:var(--teal-soft);color:var(--teal)} .stab.cw.on{border-color:var(--teal)}
+.stab.cc{background:var(--agent-soft);color:var(--agent)} .stab.cc.on{border-color:var(--agent)}
+.stab.mo{background:var(--blue-soft);color:var(--blue)} .stab.mo.on{border-color:var(--blue)} .stab.mo .pls{background:var(--blue);color:#fff}
+
+.surf-d{display:none;margin-top:14px;border-radius:var(--r-l);padding:18px;border:1px solid var(--line)}
+.surf-d.show{display:block;animation:fs .3s ease}
+@keyframes fs{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sd-ch{background:var(--accent-soft);border-color:var(--accent-line)} .sd-ch .sdt{color:var(--accent)}
+.sd-cw{background:var(--teal-soft);border-color:var(--teal-line)} .sd-cw .sdt{color:var(--teal)}
+.sd-cc{background:var(--agent-soft);border-color:var(--agent-line)} .sd-cc .sdt{color:var(--agent)}
+.sd-mo{background:var(--blue-soft);border-color:var(--blue-line)} .sd-mo .sdt{color:var(--blue)}
+.sdt{font-size:16px;font-weight:600;display:flex;gap:9px;align-items:center;margin-bottom:4px}
+.sdt i{font-size:20px}
+.sd-sub{font-size:12.5px;color:var(--ink-3);font-family:var(--mono);margin-bottom:14px}
+.sdb{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin-bottom:10px}
+.sdb h5{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.sdb h5 i{font-size:13px}
+.sdb p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.sdb p strong{color:var(--ink);font-weight:600}
+.sdb ul{list-style:none;margin:0;padding:0}
+.sdb li{font-size:13.5px;color:var(--ink-2);line-height:1.55;padding-left:18px;position:relative;margin-bottom:5px}
+.sdb li::before{content:'';position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.sd-cw .sdb li::before{background:var(--teal)}.sd-cc .sdb li::before{background:var(--agent)}.sd-mo .sdb li::before{background:var(--blue)}
+.sdb code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.wsplit{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wsplit .sdb{margin-bottom:0}
+.wsplit .yes{border-left:3px solid var(--good)}
+.wsplit .no{border-left:3px solid var(--bad)}
+.wsplit .yes h5{color:var(--good)}.wsplit .no h5{color:var(--bad)}
+
+/* ===== MATRIX TABLE ===== */
+.tblw{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);text-align:left;padding:12px 14px;border-bottom:2px solid var(--line-2)}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top;line-height:1.5}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .one{color:var(--ink);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill i{font-size:14px}
+.pill.p-ch{background:var(--accent-soft);color:var(--accent)}
+.pill.p-cw{background:var(--teal-soft);color:var(--teal)}
+.pill.p-cc{background:var(--agent-soft);color:var(--agent)}
+.pill.p-mo{background:var(--blue-soft);color:var(--blue)}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.surf-tabs{grid-template-columns:repeat(2,1fr)}.wsplit{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.surf-d{display:block!important}.surf,.note,.tblw,.surf-d{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="badge">Scheda 1.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Scheda di riferimento — Modulo 1</div>
+  <h1 class="rv" data-i="h1">Le 4 superfici di lavoro di Claude</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-bookmark"></i></div><div><h4 data-i="goalH">Come usare questa scheda</h4><p data-i-html="goalP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">01</span><h2 data-i="s1">Le quattro superfici</h2></div>
+  <p class="lead-p rv" data-i-html="s1p"></p>
+
+  <div class="surf rv">
+    <div class="surf-hint"><i class="ti ti-pointer"></i> <span data-i="surfHint"></span></div>
+    <div class="surf-tabs">
+      <div class="stab ch" id="tab-ch" onclick="surf('ch')"><i class="ti ti-messages"></i><span data-i="tabCh">Chat</span></div>
+      <div class="stab cw" id="tab-cw" onclick="surf('cw')"><i class="ti ti-folders"></i><span data-i="tabCw">Cowork</span></div>
+      <div class="stab cc" id="tab-cc" onclick="surf('cc')"><i class="ti ti-terminal-2"></i><span data-i="tabCc">Claude Code</span></div>
+      <div class="stab mo" id="tab-mo" onclick="surf('mo')"><i class="ti ti-device-mobile"></i><span data-i="tabMo">App mobile</span><span class="pls" data-i="plusLbl">+1</span></div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="surf-d sd-ch" id="sd-ch">
+      <div class="sdt"><i class="ti ti-messages"></i> <span data-i="chT"></span></div>
+      <div class="sd-sub" data-i="chSub"></div>
+      <div class="sdb"><h5><i class="ti ti-gift"></i> <span data-i="lblGives"></span></h5><ul>
+        <li data-i-html="chG1"></li><li data-i-html="chG2"></li><li data-i-html="chG3"></li>
+        <li data-i-html="chG4"></li><li data-i-html="chG5"></li><li data-i-html="chG6"></li>
+      </ul></div>
+      <div class="wsplit">
+        <div class="sdb yes"><h5><i class="ti ti-circle-check"></i> <span data-i="lblWhen"></span></h5><p data-i-html="chWhen"></p></div>
+        <div class="sdb no"><h5><i class="ti ti-circle-x"></i> <span data-i="lblNot"></span></h5><p data-i-html="chNot"></p></div>
+      </div>
+    </div>
+
+    <!-- COWORK -->
+    <div class="surf-d sd-cw" id="sd-cw">
+      <div class="sdt"><i class="ti ti-folders"></i> <span data-i="cwT"></span></div>
+      <div class="sd-sub" data-i="cwSub"></div>
+      <div class="sdb"><h5><i class="ti ti-gift"></i> <span data-i="lblGives"></span></h5><ul>
+        <li data-i-html="cwG1"></li><li data-i-html="cwG2"></li><li data-i-html="cwG3"></li>
+        <li data-i-html="cwG4"></li><li data-i-html="cwG5"></li><li data-i-html="cwG6"></li>
+      </ul></div>
+      <div class="wsplit">
+        <div class="sdb yes"><h5><i class="ti ti-circle-check"></i> <span data-i="lblWhen"></span></h5><p data-i-html="cwWhen"></p></div>
+        <div class="sdb no"><h5><i class="ti ti-circle-x"></i> <span data-i="lblNot"></span></h5><p data-i-html="cwNot"></p></div>
+      </div>
+    </div>
+
+    <!-- CLAUDE CODE -->
+    <div class="surf-d sd-cc" id="sd-cc">
+      <div class="sdt"><i class="ti ti-terminal-2"></i> <span data-i="ccT"></span></div>
+      <div class="sd-sub" data-i="ccSub"></div>
+      <div class="sdb"><h5><i class="ti ti-gift"></i> <span data-i="lblGives"></span></h5><ul>
+        <li data-i-html="ccG1"></li><li data-i-html="ccG2"></li><li data-i-html="ccG3"></li>
+      </ul></div>
+      <div class="wsplit">
+        <div class="sdb yes"><h5><i class="ti ti-circle-check"></i> <span data-i="lblWhen"></span></h5><p data-i-html="ccWhen"></p></div>
+        <div class="sdb no"><h5><i class="ti ti-circle-x"></i> <span data-i="lblNot"></span></h5><p data-i-html="ccNot"></p></div>
+      </div>
+    </div>
+
+    <!-- MOBILE -->
+    <div class="surf-d sd-mo" id="sd-mo">
+      <div class="sdt"><i class="ti ti-device-mobile"></i> <span data-i="moT"></span></div>
+      <div class="sd-sub" data-i="moSub"></div>
+      <div class="sdb"><h5><i class="ti ti-gift"></i> <span data-i="lblGives"></span></h5><ul>
+        <li data-i-html="moG1"></li><li data-i-html="moG2"></li>
+      </ul></div>
+      <div class="wsplit">
+        <div class="sdb yes"><h5><i class="ti ti-circle-check"></i> <span data-i="lblWhen"></span></h5><p data-i-html="moWhen"></p></div>
+        <div class="sdb no"><h5><i class="ti ti-circle-x"></i> <span data-i="lblNot"></span></h5><p data-i-html="moNot"></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note rv"><div class="ni"><i class="ti ti-route"></i></div><div><h4 data-i="syncH">In sintesi, per questo corso</h4><p data-i-html="syncP"></p></div></div>
+
+  <div class="key rv"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">02</span><h2 data-i="s2">Matrice di confronto</h2></div>
+  <p class="lead-p rv" data-i-html="s2p"></p>
+
+  <div class="tblw rv">
+    <table class="tbl">
+      <thead><tr><th data-i="thSurf"></th><th data-i="thGives"></th><th data-i="thWhen"></th><th data-i="thWhere"></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="pill p-ch"><i class="ti ti-messages"></i> Chat</span></td>
+          <td class="one" data-i="mChGives"></td><td data-i="mChWhen"></td><td data-i="mChWhere"></td>
+        </tr>
+        <tr>
+          <td><span class="pill p-cw"><i class="ti ti-folders"></i> Cowork</span></td>
+          <td class="one" data-i="mCwGives"></td><td data-i="mCwWhen"></td><td data-i="mCwWhere"></td>
+        </tr>
+        <tr>
+          <td><span class="pill p-cc"><i class="ti ti-terminal-2"></i> Claude Code</span></td>
+          <td class="one" data-i="mCcGives"></td><td data-i="mCcWhen"></td><td data-i="mCcWhere"></td>
+        </tr>
+        <tr>
+          <td><span class="pill p-mo"><i class="ti ti-device-mobile"></i> Mobile</span></td>
+          <td class="one" data-i="mMoGives"></td><td data-i="mMoWhen"></td><td data-i="mMoWhere"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Le 4 superfici di lavoro</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+pdfT:'Scarica PDF',themeT:'Cambia tema',
+badge:'Scheda 1.2',
+eyebrow:'Scheda di riferimento — Modulo 1',
+h1:'Le 4 superfici di lavoro di Claude',
+lede:'Claude non è una sola finestra: è <b>quattro superfici di lavoro</b> diverse. Chat, Cowork, Claude Code e l\'app mobile. Ognuna ti dà capacità diverse — e sapere quando usare quale ti fa risparmiare tempo e ti sblocca il potenziale vero.',
+goalH:'Come usare questa scheda',
+goalP:'Questa è una <strong>scheda di riferimento</strong>, non una lezione: tienila a portata di mano. Clicca ogni superficie per vedere cosa ti dà e quando usarla (o quando no). In fondo trovi una matrice di confronto a colpo d\'occhio.',
+s1:'Le quattro superfici',
+s1p:'Claude vive in quattro posti diversi. <strong>Chat</strong> e <strong>Cowork</strong> sono i due principali; <strong>Claude Code</strong> è un livello avanzato; l\'<strong>app mobile</strong> è un plus. Clicca ciascuna per aprirne la scheda.',
+surfHint:'Clicca una superficie per vederne capacità, uso consigliato e dove si attiva',
+tabCh:'Chat',tabCw:'Cowork',tabCc:'Claude Code',tabMo:'App mobile',plusLbl:'+1',
+lblGives:'Cosa ti dà',lblWhen:'Quando usarla',lblNot:'Quando no',
+
+/* CHAT */
+chT:'Chat — claude.ai',
+chSub:'La superficie base: conversazioni nel browser',
+chG1:'<strong>Conversazioni</strong> con Claude e abilitazione di <strong>Projects</strong> e <strong>Artifacts</strong>',
+chG2:'<strong>Projects</strong>: spazi di lavoro persistenti con istruzioni personalizzate e una knowledge base; mantiene il contesto tra le sessioni (fondamentale dal modulo 3 in poi)',
+chG3:'<strong>Artifacts</strong>: piccole app create direttamente dentro la piattaforma',
+chG4:'<strong>Upload file</strong> in vari formati, <strong>ricerca web</strong> e <strong>ragionamento approfondito</strong>',
+chG5:'<strong>Memoria</strong>: Claude ricorda tra sessioni diverse chi sei, cosa fai e le tue preferenze',
+chG6:'<strong>Integrazioni e connettori</strong>, più la <strong>Deep Research</strong> (solo sul piano a pagamento)',
+chWhen:'Per conversazioni veloci, ragionamento, ricerca web e per costruire spazi di lavoro persistenti (Projects) con la tua knowledge base.',
+chNot:'Quando devi lavorare sui file del tuo computer o ti servono le capacità agentiche complete: lì serve Cowork.',
+
+/* COWORK */
+cwT:'Cowork — solo con app desktop',
+cwSub:'Dove si sbloccano le capacità agentiche',
+cwG1:'<strong>Accesso ai file del tuo computer</strong>: Claude legge, crea, modifica e organizza i file',
+cwG2:'Selezioni una <strong>cartella</strong> e Claude lavora SOLO lì dentro',
+cwG3:'<strong>Capacità agentiche</strong>: task multistep in autonomia — pianifica, esegue e verifica (Claude è un sistema agentico in sé, spesso si "ricrea" gli agenti da solo)',
+cwG4:'<strong>Crea file</strong> Word, Excel, PowerPoint, PDF, HTML (le slide di questo corso sono fatte con Cowork) e usa ambienti di sviluppo che non vedi',
+cwG5:'Accesso a <strong>Skill, Plugin e MCP</strong> (i connettori) e <strong>automazioni</strong> con l\'estensione di Google Chrome',
+cwG6:'<strong>Schedula task ricorrenti</strong> — sarà l\'uso più grande che faremo di Claude',
+cwWhen:'Per quasi tutto il lavoro vero: agire sui tuoi file, creare documenti, automatizzare e schedulare task ricorrenti.',
+cwNot:'Non è disponibile da browser: richiede l\'app desktop. Per una semplice chiacchierata o ricerca veloce basta la Chat.',
+
+/* CLAUDE CODE */
+ccT:'Claude Code — linea di comando',
+ccSub:'Livello avanzato, per sviluppare',
+ccG1:'Strumento <strong>a linea di comando</strong> che opera direttamente nella codebase',
+ccG2:'Serve a <strong>sviluppare</strong>: è il livello che sblocca il vero potenziale di Claude',
+ccG3:'Oggi è molto più usabile <strong>direttamente dall\'app</strong>: non serve per forza il terminale',
+ccWhen:'Quando sviluppi software e vuoi che Claude operi direttamente nel codice. Sblocca il livello più avanzato.',
+ccNot:'In questo corso NON lo tratteremo a fondo: è opzionale. Con Cowork si fa già tantissimo.',
+
+/* MOBILE */
+moT:'App mobile — il plus (+1)',
+moSub:'Il tuo telecomando da remoto',
+moG1:'Ti dà accesso ad <strong>alcune funzionalità in più</strong>',
+moG2:'Soprattutto ti permette di <strong>controllare Cowork e Claude</strong> che restano aperti sul tuo PC anche mentre sei via',
+moWhen:'Quando sei fuori e vuoi tenere d\'occhio o pilotare un lavoro che gira sul tuo PC.',
+moNot:'Non è la superficie dove fai il lavoro pesante: è di supporto, un più uno.',
+
+syncH:'In sintesi, per questo corso',
+syncP:'Per la maggior parte del corso lavoreremo su <strong>Chat</strong> e soprattutto <strong>Cowork</strong>. <strong>Claude Code</strong> è opzionale. L\'<strong>app mobile</strong> è di supporto.',
+key1:'Chat per ragionare. Cowork per agire sui tuoi file. Claude Code per sviluppare. Mobile per pilotare da remoto.',
+
+s2:'Matrice di confronto',
+s2p:'Le quattro superfici a confronto: <strong>cosa ti dà</strong> ciascuna, <strong>quando usarla</strong> e <strong>dove si attiva</strong>.',
+thSurf:'Superficie',thGives:'Cosa ti dà',thWhen:'Quando usarla',thWhere:'Dove si attiva',
+mChGives:'Conversazioni, Projects, Artifacts, memoria, ricerca web',mChWhen:'Ragionare, ricercare, spazi persistenti',mChWhere:'claude.ai (browser)',
+mCwGives:'File del tuo PC, capacità agentiche, creazione file, automazioni, schedulazione',mCwWhen:'Quasi tutto il lavoro vero',mCwWhere:'App desktop',
+mCcGives:'Operare nella codebase da linea di comando',mCcWhen:'Sviluppare (avanzato, opzionale)',mCcWhere:'Terminale o dall\'app',
+mMoGives:'Funzioni extra + controllo da remoto',mMoWhen:'Pilotare il PC mentre sei via',mMoWhere:'App mobile (plus)',
+foot:'Morfeus — Le 4 superfici di lavoro'
+},
+en:{
+pdfT:'Download PDF',themeT:'Toggle theme',
+badge:'Reference 1.2',
+eyebrow:'Reference sheet — Module 1',
+h1:'Claude\'s 4 work surfaces',
+lede:'Claude isn\'t a single window: it\'s <b>four different work surfaces</b>. Chat, Cowork, Claude Code and the mobile app. Each gives you different capabilities — and knowing when to reach for which saves you time and unlocks the real potential.',
+goalH:'How to use this sheet',
+goalP:'This is a <strong>reference sheet</strong>, not a lesson: keep it handy. Click each surface to see what it gives you and when to use it (or when not to). At the bottom you\'ll find an at-a-glance comparison matrix.',
+s1:'The four surfaces',
+s1p:'Claude lives in four different places. <strong>Chat</strong> and <strong>Cowork</strong> are the two main ones; <strong>Claude Code</strong> is an advanced layer; the <strong>mobile app</strong> is a plus. Click each one to open its card.',
+surfHint:'Click a surface to see its capabilities, recommended use and where it lives',
+tabCh:'Chat',tabCw:'Cowork',tabCc:'Claude Code',tabMo:'Mobile app',plusLbl:'+1',
+lblGives:'What it gives you',lblWhen:'When to use it',lblNot:'When not to',
+
+/* CHAT */
+chT:'Chat — claude.ai',
+chSub:'The base surface: conversations in the browser',
+chG1:'<strong>Conversations</strong> with Claude, and it enables <strong>Projects</strong> and <strong>Artifacts</strong>',
+chG2:'<strong>Projects</strong>: persistent workspaces with custom instructions and a knowledge base; keeps context across sessions (essential from module 3 onward)',
+chG3:'<strong>Artifacts</strong>: small apps created right inside the platform',
+chG4:'<strong>File upload</strong> in various formats, <strong>web search</strong> and <strong>deep reasoning</strong>',
+chG5:'<strong>Memory</strong>: Claude remembers across different sessions who you are, what you do and your preferences',
+chG6:'<strong>Integrations and connectors</strong>, plus <strong>Deep Research</strong> (paid plan only)',
+chWhen:'For quick conversations, reasoning, web search and to build persistent workspaces (Projects) with your knowledge base.',
+chNot:'When you need to work on the files on your computer or want the full agentic capabilities: that\'s what Cowork is for.',
+
+/* COWORK */
+cwT:'Cowork — desktop app only',
+cwSub:'Where the agentic capabilities unlock',
+cwG1:'<strong>Access to the files on your computer</strong>: Claude reads, creates, edits and organises files',
+cwG2:'You pick a <strong>folder</strong> and Claude works ONLY inside it',
+cwG3:'<strong>Agentic capabilities</strong>: multi-step tasks autonomously — it plans, executes and verifies (Claude is an agentic system in itself, often "re-creating" its own agents)',
+cwG4:'<strong>Creates files</strong> in Word, Excel, PowerPoint, PDF, HTML (this course\'s slides were made with Cowork) and uses development environments you never see',
+cwG5:'Access to <strong>Skills, Plugins and MCP</strong> (the connectors) and <strong>automations</strong> via the Google Chrome extension',
+cwG6:'<strong>Schedules recurring tasks</strong> — this will be our single biggest use of Claude',
+cwWhen:'For almost all the real work: acting on your files, creating documents, automating and scheduling recurring tasks.',
+cwNot:'It isn\'t available in the browser: it requires the desktop app. For a simple chat or quick search, Chat is enough.',
+
+/* CLAUDE CODE */
+ccT:'Claude Code — command line',
+ccSub:'Advanced layer, for development',
+ccG1:'A <strong>command-line</strong> tool that operates directly in the codebase',
+ccG2:'It\'s for <strong>development</strong>: the layer that unlocks Claude\'s real potential',
+ccG3:'Today it\'s far more usable <strong>directly from the app</strong>: you don\'t necessarily need the terminal',
+ccWhen:'When you develop software and want Claude operating directly in the code. It unlocks the most advanced level.',
+ccNot:'In this course we will NOT cover it in depth: it\'s optional. Cowork already does a huge amount.',
+
+/* MOBILE */
+moT:'Mobile app — the plus (+1)',
+moSub:'Your remote control',
+moG1:'It gives you access to <strong>a few extra features</strong>',
+moG2:'Above all it lets you <strong>control Cowork and Claude</strong>, which stay open on your PC even while you\'re away',
+moWhen:'When you\'re out and want to keep an eye on or steer work running on your PC.',
+moNot:'It\'s not the surface for heavy work: it\'s a support layer, a plus one.',
+
+syncH:'In short, for this course',
+syncP:'For most of the course we\'ll work on <strong>Chat</strong> and above all <strong>Cowork</strong>. <strong>Claude Code</strong> is optional. The <strong>mobile app</strong> is a support layer.',
+key1:'Chat to reason. Cowork to act on your files. Claude Code to develop. Mobile to steer from afar.',
+
+s2:'Comparison matrix',
+s2p:'The four surfaces side by side: <strong>what each gives you</strong>, <strong>when to use it</strong> and <strong>where it lives</strong>.',
+thSurf:'Surface',thGives:'What it gives you',thWhen:'When to use it',thWhere:'Where it lives',
+mChGives:'Conversations, Projects, Artifacts, memory, web search',mChWhen:'Reasoning, research, persistent spaces',mChWhere:'claude.ai (browser)',
+mCwGives:'Your PC\'s files, agentic capabilities, file creation, automations, scheduling',mCwWhen:'Almost all the real work',mCwWhere:'Desktop app',
+mCcGives:'Operating in the codebase from the command line',mCcWhen:'Development (advanced, optional)',mCcWhere:'Terminal or from the app',
+mMoGives:'Extra features + remote control',mMoWhen:'Steer your PC while away',mMoWhere:'Mobile app (plus)',
+foot:'Morfeus — Claude\'s 4 work surfaces'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var surfKeys=['ch','cw','cc','mo'],surfCur=null;
+function surf(k){
+  if(surfCur===k){surfClose();return}
+  surfCur=k;
+  surfKeys.forEach(function(x){
+    document.getElementById('tab-'+x).classList.toggle('on',x===k);
+    document.getElementById('sd-'+x).classList.toggle('show',x===k);
+  });
+  var d=document.getElementById('sd-'+k);
+  setTimeout(function(){d.scrollIntoView({behavior:'smooth',block:'nearest'})},120);
+}
+function surfClose(){
+  surfCur=null;
+  surfKeys.forEach(function(x){
+    document.getElementById('tab-'+x).classList.remove('on');
+    document.getElementById('sd-'+x).classList.remove('show');
+  });
+}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+surf('ch');
+</script>
+</body>
+</html>

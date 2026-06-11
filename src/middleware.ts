@@ -57,6 +57,17 @@ export default function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // Schede corso Claude Unlocked: URL pulito → hub statico in public, noindex.
+  // I singoli allegati (.html) hanno un punto nel path → esclusi dal matcher,
+  // serviti direttamente come statici. Ognuno ha gia` <meta noindex> + robots.txt.
+  if (pathname === "/corso-claude-unlocked" || pathname === "/corso-claude-unlocked/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/corso-claude-unlocked/index.html";
+    const response = NextResponse.rewrite(url);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
+  }
+
   const segments = getPathSegments(pathname);
   const firstSegment = segments[0];
 
