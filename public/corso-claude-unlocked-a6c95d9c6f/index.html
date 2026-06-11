@@ -172,6 +172,9 @@ var MODULES=[
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 var TOTAL_EXPECTED=60;
+// Path assoluto della cartella corso (slug con codice): link assoluti così
+// funzionano sia con sia senza slash finale nell'URL dell'indice.
+var BASE='/corso-claude-unlocked-a6c95d9c6f/';
 
 function render(){
   var avail=0,activeMods=0,html='';
@@ -182,7 +185,7 @@ function render(){
     var sub=has?(m.lessons.length+(m.lessons.length===1?' lezione':' lezioni')):'In caricamento';
     var pill=has?'<span class="pill live">Disponibile</span>':'<span class="pill soon">In arrivo</span>';
     var rows=m.lessons.map(function(l){
-      return '<a class="les" href="./lezioni/'+l.f+'"><span class="lid">'+esc(l.id)+'</span><span class="lt">'+esc(l.t)+'</span><i class="ti ti-arrow-right go"></i></a>';
+      return '<a class="les" href="'+BASE+'lezioni/'+l.f+'"><span class="lid">'+esc(l.id)+'</span><span class="lt">'+esc(l.t)+'</span><i class="ti ti-arrow-right go"></i></a>';
     }).join('');
     var body=has
       ? '<div class="mbody"><div class="mbinner"><div class="lessons">'+rows+'</div></div></div>'
