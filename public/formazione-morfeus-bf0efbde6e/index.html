@@ -120,7 +120,7 @@ function renderTrack(){
   var html='';
   t.mods.forEach(function(m,mi){
     var rows=m.lessons.map(function(l){
-      return '<a class="les" href="'+BASE+esc(l.slug)+'.html"><span class="lid">'+esc(l.id)+'</span><span class="lt">'+esc(l.t)+'</span><span class="go">&rarr;</span></a>';
+      return '<a class="les" target="_blank" rel="noopener" href="'+BASE+esc(l.slug)+'.html"><span class="lid">'+esc(l.id)+'</span><span class="lt">'+esc(l.t)+'</span><span class="go">&#8599;</span></a>';
     }).join('');
     html+='<div class="mod'+(mi===0?' open':'')+'">'
       +'<div class="mhead" onclick="this.parentElement.classList.toggle(\'open\')">'
