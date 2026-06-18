@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progetti: isolamento, 3 strati e il file guida — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* isolation visual */
+.iso{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.isoc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;text-align:center}
+.isoc .ii{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto 9px}
+.isoc h4{font-size:13.5px;font-weight:600;margin-bottom:4px}.isoc p{font-size:12px;color:var(--ink-2);line-height:1.5}
+.isobar{text-align:center;font-family:var(--mono);font-size:12px;color:var(--bad);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:7px}
+.isobar i{font-size:15px}
+/* 3-layer stack */
+.stack{display:flex;flex-direction:column;gap:10px}
+.layer{display:flex;align-items:center;gap:14px;border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;cursor:pointer;transition:.18s;border:1.5px solid var(--line);background:var(--card)}
+.layer:hover{border-color:var(--line-2)}
+.layer.on{border-color:var(--accent)}
+.layer .lnum{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;flex-shrink:0}
+.layer.l1 .lnum{background:var(--accent)}.layer.l2 .lnum{background:#7a6cf0}.layer.l3 .lnum{background:var(--agent)}
+.layer.l1.on{background:var(--accent-soft)}.layer.l2.on{background:var(--accent-soft)}.layer.l3.on{background:var(--agent-soft)}
+.layer .ltx h5{font-size:14.5px;font-weight:600}
+.layer .ltx .lp{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.layer .ltag{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:30px;flex-shrink:0}
+.layer.l1 .ltag,.layer.l2 .ltag{background:var(--accent-soft);color:var(--accent)}
+.layer.l3 .ltag{background:var(--agent-soft);color:var(--agent)}
+.layerdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;margin-top:12px}
+.layerdetail .ldh{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.layerdetail .ldh i{color:var(--accent)}
+.layerdetail p{font-size:14.5px;color:var(--ink-2)}.layerdetail p b{color:var(--ink)}
+.hierarchy{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;font-weight:600;margin-top:16px}
+.hierarchy .hpill{padding:7px 14px;border-radius:30px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.hierarchy .hpill.w{background:var(--accent);color:#fff;border-color:var(--accent)}
+.hierarchy i{color:var(--ink-3);font-size:16px}
+/* folder explorer */
+.fx{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px}
+.ftree{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:10px;font-family:var(--mono);font-size:12.5px}
+.frow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);cursor:pointer;transition:.15s;color:var(--ink-2)}
+.frow:hover{background:var(--bg-2)}.frow.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.frow i{font-size:15px;flex-shrink:0}.frow.on i{color:var(--accent)}
+.fdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.fdetail .fdh{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.fdetail p{font-size:14px;color:var(--ink-2)}.fdetail p b{color:var(--ink)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.iso{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.fx{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.layer,.layerdetail,.isoc,.ftree,.fdetail,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A5.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Assistenti &amp; Team</div>
+  <h1 class="rv" data-i="h1">Progetti: isolamento, 3 strati e il file guida</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-box-multiple"></i><span class="no">01</span><h2 data-i="s1">Il principio di isolamento</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-wall"></i></div><div><h4 data-i="note1H">Progetti diversi non si contaminano</h4><p data-i-html="note1P"></p></div></div>
+  <div class="iso rv" style="margin-top:18px">
+    <div class="isoc"><div class="ii"><i class="ti ti-folder"></i></div><h4 data-i="iso1H">Cliente 1</h4><p data-i="iso1P"></p></div>
+    <div class="isoc"><div class="ii"><i class="ti ti-folder"></i></div><h4 data-i="iso2H">Cliente 2</h4><p data-i="iso2P"></p></div>
+    <div class="isoc"><div class="ii"><i class="ti ti-folder"></i></div><h4 data-i="iso3H">Progetto interno</h4><p data-i="iso3P"></p></div>
+  </div>
+  <div class="isobar rv"><i class="ti ti-shield-x"></i><span data-i="isoBar"></span></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">02</span><h2 data-i="s2">I 3 strati di prompt</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stackIntro"></p>
+  <div class="stack rv" id="stack">
+    <div class="layer l1 on" onclick="selLayer(0)"><div class="lnum"><i class="ti ti-settings"></i></div><div class="ltx"><h5 data-i="L0H">Strato 1 · System Instructions</h5><div class="lp" data-i="L0P">chi sei</div></div><div class="ltag" data-i="L0T">persistente</div></div>
+    <div class="layer l2" onclick="selLayer(1)"><div class="lnum"><i class="ti ti-database"></i></div><div class="ltx"><h5 data-i="L1H">Strato 2 · Knowledge Base</h5><div class="lp" data-i="L1P">cosa sai</div></div><div class="ltag" data-i="L1T">persistente</div></div>
+    <div class="layer l3" onclick="selLayer(2)"><div class="lnum"><i class="ti ti-message-2"></i></div><div class="ltx"><h5 data-i="L2H">Strato 3 · Prompt conversazione</h5><div class="lp" data-i="L2P">cosa fai ora</div></div><div class="ltag" data-i="L2T">volatile</div></div>
+  </div>
+  <div class="layerdetail rv" id="layerDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-hierarchy-2"></i><span class="no">03</span><h2 data-i="s3">Chi comanda chi: la gerarchia</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:6px" data-i="hierIntro"></p>
+  <div class="hierarchy rv">
+    <span class="hpill w" data-i="hSys">System</span>
+    <i class="ti ti-chevron-right"></i>
+    <span class="hpill" data-i="hProj">Project</span>
+    <i class="ti ti-chevron-right"></i>
+    <span class="hpill" data-i="hUser">User</span>
+  </div>
+  <p class="lede rv" style="font-size:14px;margin-top:14px;text-align:center;color:var(--ink-3)" data-i-html="hierNote"></p>
+
+  <div class="sh rv"><i class="ti ti-folders"></i><span class="no">04</span><h2 data-i="s4">La struttura di un progetto</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="fxIntro"></p>
+  <div class="fx rv">
+    <div class="ftree" id="ftree"></div>
+    <div class="fdetail" id="fdetail"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-anchor"></i><span class="no">05</span><h2 data-i="s5">Il file guida: l'ancora di contesto</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-file-text"></i></div><div><h4 data-i="note2H">README / PROJECT_CONTEXT</h4><p data-i-html="note2P"></p></div></div>
+  <div class="cards rv" style="margin-top:18px">
+    <div class="card3"><div class="ci"><i class="ti ti-target-arrow"></i></div><h4 data-i="g1H">Spiega l'obiettivo</h4><p data-i="g1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-list-tree"></i></div><h4 data-i="g2H">Indicizza i documenti</h4><p data-i="g2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">06</span><h2 data-i="s6">Stesso assistente, contesto diverso</h2></div>
+  <div class="key rv"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Crea il tuo primo progetto</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Progetti: isolamento, 3 strati e il file guida</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A5.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Assistenti & Team',
+h1:'Progetti: isolamento, 3 strati e il file guida',
+lede:'Un assistente è una cartella: un prompt più una Knowledge Base. Da qui nasce l\'idea di progetto — uno spazio isolato dove lo stesso assistente lavora con il contesto giusto. Capisci i 3 strati di prompt e il file guida, e hai un team che non si perde mai.',
+s1:'Il principio di isolamento',
+note1H:'Progetti diversi non si contaminano',
+note1P:'<strong>Ogni progetto ha il suo spazio separato; progetti diversi non si contaminano.</strong> Il contesto di un cliente non sporca quello di un altro. Vale ovunque tu lavori — Projects, cartelle, repository: l\'importante è che ogni lavoro stia dentro un perimetro chiuso, con la sua memoria e le sue regole.',
+iso1H:'Cliente 1',iso1P:'KB, regole e storia solo sue. Niente entra, niente esce.',
+iso2H:'Cliente 2',iso2P:'Spazio separato: tono, dati e contesto del tutto diversi.',
+iso3H:'Progetto interno',iso3P:'Il tuo lavoro, isolato dai clienti. Nessuna sovrapposizione.',
+isoBar:'le pareti tra i progetti impediscono la contaminazione del contesto',
+s2:'I 3 strati di prompt',
+stackIntro:'Un progetto impila tre strati di istruzioni. Due restano fissi nel tempo, uno cambia a ogni messaggio. L\'errore classico è mettere nello strato volatile ciò che dovrebbe vivere nei due persistenti. Clicca uno strato.',
+L0H:'Strato 1 · System Instructions',L0P:'chi sei',L0T:'persistente',
+L1H:'Strato 2 · Knowledge Base',L1P:'cosa sai',L1T:'persistente',
+L2H:'Strato 3 · Prompt conversazione',L2P:'cosa fai ora',L2T:'volatile',
+s3:'Chi comanda chi: la gerarchia',
+hierIntro:'I tre strati non hanno lo stesso peso. Quando si contraddicono, vince sempre lo stesso:',
+hSys:'System',hProj:'Project',hUser:'User',
+hierNote:'In caso di conflitto, il <b>System</b> batte il Project, e il Project batte lo User. Se le istruzioni di sistema dicono «sempre in italiano», un «rispondi in inglese» nella chat perde.',
+s4:'La struttura di un progetto',
+fxIntro:'Dentro la cartella, una struttura ordinata fa sì che ogni assistente sappia dove cercare. Numerare le cartelle (00 → 07) dà un ordine stabile, dalla fonte di verità all\'archivio. Clicca una cartella.',
+s5:'Il file guida: l\'ancora di contesto',
+note2H:'README / PROJECT_CONTEXT',
+note2P:'Il file guida (un <strong>README</strong> o <strong>PROJECT_CONTEXT</strong>) è il punto d\'ingresso per ogni assistente: l\'<strong>ancora di contesto che ripristina dopo una perdita di memoria</strong>. Quando la finestra si riempie e l\'AI perde il filo, riapre questo file e ritrova in un colpo solo chi è, cosa sta facendo e dove trovare il resto.',
+g1H:'Spiega l\'obiettivo',g1P:'Risponde a: qual è il goal del progetto, il contesto, le regole. Chi lo legge sa subito cosa si sta cercando di ottenere e come comportarsi.',
+g2H:'Indicizza i documenti',g2P:'È la mappa: dove sta cosa, quale file per quale bisogno. L\'assistente non rilegge tutto — va dritto al documento giusto, risparmiando contesto.',
+s6:'Stesso assistente, contesto diverso',
+q1:'«Stesso assistente, contesto diverso per cartella. Creo una cartella con un prompt e una KB — e ho un assistente.»',
+s7:'Checkpoint',
+cpH:'Crea il tuo primo progetto',
+cpP:'Prendi un assistente che già funziona — non legato a un tema, ma a un mestiere («un ottimo ricercatore»). Crea una cartella per un lavoro concreto, mettici una KB di contesto e un file guida che spiega obiettivo e indice.',
+cpQ:'Quale assistente «generalista del mestiere» potresti riusare su più progetti, dando a ciascuno solo una KB di contesto diversa? È lì che lo stesso professionista lavora su clienti diversi senza confondersi.',
+bridge:'Hai chiuso il cerchio: dall\'assistente singolo, ai 4 ruoli e al team virtuale, fino al progetto isolato che dà a ognuno il contesto giusto. <b>Questo chiude il Modulo A5.</b> Da qui in poi non scrivi più prompt: costruisci sistemi.',
+foot:'Morfeus — Progetti: isolamento, 3 strati e il file guida'
+},
+en:{
+kicker:'Lesson A5.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Assistants & Team',
+h1:'Projects: isolation, 3 layers and the guide file',
+lede:'An assistant is a folder: a prompt plus a Knowledge Base. From here comes the idea of a project — an isolated space where the same assistant works with the right context. Understand the 3 prompt layers and the guide file, and you have a team that never loses its way.',
+s1:'The isolation principle',
+note1H:'Different projects don\'t cross-contaminate',
+note1P:'<strong>Every project has its own separate space; different projects don\'t cross-contaminate.</strong> One client\'s context doesn\'t bleed into another\'s. It holds wherever you work — Projects, folders, repositories: what matters is that each job lives inside a closed perimeter, with its own memory and its own rules.',
+iso1H:'Client 1',iso1P:'Its own KB, rules and history. Nothing in, nothing out.',
+iso2H:'Client 2',iso2P:'A separate space: entirely different tone, data and context.',
+iso3H:'Internal project',iso3P:'Your own work, isolated from clients. No overlap.',
+isoBar:'the walls between projects prevent context contamination',
+s2:'The 3 prompt layers',
+stackIntro:'A project stacks three layers of instructions. Two stay fixed over time, one changes with every message. The classic mistake is putting in the volatile layer what should live in the two persistent ones. Click a layer.',
+L0H:'Layer 1 · System Instructions',L0P:'who you are',L0T:'persistent',
+L1H:'Layer 2 · Knowledge Base',L1P:'what you know',L1T:'persistent',
+L2H:'Layer 3 · Conversation prompt',L2P:'what you do now',L2T:'volatile',
+s3:'Who rules whom: the hierarchy',
+hierIntro:'The three layers don\'t carry equal weight. When they contradict each other, the same one always wins:',
+hSys:'System',hProj:'Project',hUser:'User',
+hierNote:'In a conflict, <b>System</b> beats Project, and Project beats User. If the system instructions say "always in Italian", a "reply in English" in the chat loses.',
+s4:'A project\'s structure',
+fxIntro:'Inside the folder, a tidy structure lets every assistant know where to look. Numbering the folders (00 → 07) gives a stable order, from the source of truth to the archive. Click a folder.',
+s5:'The guide file: the context anchor',
+note2H:'README / PROJECT_CONTEXT',
+note2P:'The guide file (a <strong>README</strong> or <strong>PROJECT_CONTEXT</strong>) is the entry point for every assistant: the <strong>context anchor that restores after a memory loss</strong>. When the window fills up and the AI loses the thread, it reopens this file and recovers in one shot who it is, what it\'s doing, and where to find the rest.',
+g1H:'Explains the goal',g1P:'It answers: what\'s the project\'s goal, the context, the rules. Whoever reads it immediately knows what we\'re trying to achieve and how to behave.',
+g2H:'Indexes the documents',g2P:'It\'s the map: where everything is, which file for which need. The assistant doesn\'t reread everything — it goes straight to the right document, saving context.',
+s6:'Same assistant, different context',
+q1:'"Same assistant, different context per folder. I create a folder with a prompt and a KB — and I have an assistant."',
+s7:'Checkpoint',
+cpH:'Create your first project',
+cpP:'Take an assistant that already works — not tied to a topic, but to a craft ("a great researcher"). Create a folder for a concrete job, put in a context KB and a guide file that explains the goal and the index.',
+cpQ:'Which "craft generalist" assistant could you reuse across multiple projects, giving each only a different context KB? That\'s where the same professional works on different clients without getting confused.',
+bridge:'You\'ve closed the loop: from the single assistant, to the 4 roles and the virtual team, to the isolated project that gives each one the right context. <b>This closes Module A5.</b> From here on you no longer write prompts: you build systems.',
+foot:'Morfeus — Projects: isolation, 3 layers and the guide file'
+}};
+
+// 3 layers: [icon, title, body]
+var LAYERS={it:[
+['ti-settings','Strato 1 — System Instructions (chi sei)','<b>Chi è l\'assistente</b>, come ragiona, con quale perimetro. È persistente: non lo riscrivi a ogni chat, vive nel progetto. È la base che definisce il comportamento, sempre uguale finché non lo cambi tu.'],
+['ti-database','Strato 2 — Knowledge Base (cosa sai)','<b>La conoscenza di contesto</b>: processi, esempi, dati, regole del progetto. Anche questa è persistente. Spesso non scrivi tutto nel prompt: dai l\'indice e dici «il tuo contesto lo trovi qui». È la memoria esterna dell\'assistente.'],
+['ti-message-2','Strato 3 — Prompt conversazione (cosa fai ora)','<b>Il compito di oggi</b>: la richiesta volatile della singola chat. Cambia ogni volta. L\'errore tipico è metterci dentro cose che andrebbero nello strato 1 o 2 — così le riscrivi sempre da capo invece di farle vivere nel progetto.']
+],en:[
+['ti-settings','Layer 1 — System Instructions (who you are)','<b>Who the assistant is</b>, how it reasons, within which perimeter. It\'s persistent: you don\'t rewrite it for every chat, it lives in the project. It\'s the base that defines behavior, always the same until you change it.'],
+['ti-database','Layer 2 — Knowledge Base (what you know)','<b>The context knowledge</b>: processes, examples, data, project rules. This is persistent too. Often you don\'t write everything in the prompt: you give the index and say "your context is here". It\'s the assistant\'s external memory.'],
+['ti-message-2','Layer 3 — Conversation prompt (what you do now)','<b>Today\'s task</b>: the volatile request of the single chat. It changes every time. The typical mistake is putting in here things that belong in layer 1 or 2 — so you keep rewriting them from scratch instead of letting them live in the project.']
+]};
+
+// folders: [name, icon, desc]
+var FOLDERS={it:[
+['00_SOURCE_OF_TRUTH','ti-checkbox','La fonte di verità: il file guida (README/PROJECT_CONTEXT), obiettivo, regole, indice. Il primo posto che ogni assistente legge.'],
+['01_CONTEXT','ti-info-circle','Il contesto del progetto: chi è il cliente, il brief, i vincoli. La KB che dà il contesto specifico di questo lavoro.'],
+['02_KNOWLEDGE','ti-books','Il know-how e gli esempi: processi, framework, output approvati. Quello che rende l\'assistente esperto, non generico.'],
+['03_ASSISTANTS','ti-robot','I prompt degli assistenti del progetto: ragionatori, esecutori, validatori, router. Il team che lavora qui dentro.'],
+['04_WORKING','ti-pencil','Il lavoro in corso: bozze, versioni intermedie, materiale che sta maturando prima di diventare definitivo.'],
+['05_OUTPUTS','ti-package','Gli output finali: i deliverable pronti, ciò che esce dal progetto verso il cliente o verso il mondo.'],
+['06_HANDOFF','ti-transfer','I passaggi di consegna fra assistenti: cosa è stato fatto, i risultati, le domande aperte. La memoria del flusso.'],
+['07_ARCHIVE','ti-archive','L\'archivio: ciò che è chiuso e non serve più attivo, ma va tenuto. Tolto di mezzo senza essere perso.']
+],en:[
+['00_SOURCE_OF_TRUTH','ti-checkbox','The source of truth: the guide file (README/PROJECT_CONTEXT), goal, rules, index. The first place every assistant reads.'],
+['01_CONTEXT','ti-info-circle','The project context: who the client is, the brief, the constraints. The KB that gives the specific context of this job.'],
+['02_KNOWLEDGE','ti-books','The know-how and examples: processes, frameworks, approved outputs. What makes the assistant expert, not generic.'],
+['03_ASSISTANTS','ti-robot','The prompts of the project\'s assistants: reasoners, doers, validators, router. The team that works in here.'],
+['04_WORKING','ti-pencil','Work in progress: drafts, intermediate versions, material maturing before it becomes final.'],
+['05_OUTPUTS','ti-package','The final outputs: the ready deliverables, what leaves the project toward the client or the world.'],
+['06_HANDOFF','ti-transfer','The hand-offs between assistants: what was done, the results, the open questions. The memory of the flow.'],
+['07_ARCHIVE','ti-archive','The archive: what\'s closed and no longer needs to be active, but should be kept. Out of the way without being lost.']
+]};
+
+var LANG='it',curLayer=0,curFolder=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('ftree').innerHTML=FOLDERS[LANG].map(function(f,i){return '<div class="frow'+(i===curFolder?' on':'')+'" onclick="selFolder('+i+')"><i class="ti '+f[1]+'"></i><span>'+f[0]+'</span></div>'}).join('');
+  renderLayer();renderFolder();
+}
+function renderLayer(){
+  var t=LAYERS[LANG][curLayer];
+  document.getElementById('layerDetail').innerHTML='<div class="ldh"><i class="ti '+t[0]+'"></i> '+t[1]+'</div><p>'+t[2]+'</p>';
+}
+function renderFolder(){
+  var f=FOLDERS[LANG][curFolder];
+  document.getElementById('fdetail').innerHTML='<div class="fdh"><i class="ti '+f[1]+'"></i> '+f[0]+'</div><p>'+f[2]+'</p>';
+}
+function selLayer(i){curLayer=i;document.querySelectorAll('.layer').forEach(function(x,k){x.classList.toggle('on',k===i)});renderLayer()}
+function selFolder(i){curFolder=i;document.querySelectorAll('.frow').forEach(function(x,k){x.classList.toggle('on',k===i)});renderFolder()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

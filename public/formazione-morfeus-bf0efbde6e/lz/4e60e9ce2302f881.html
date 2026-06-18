@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Chaining — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* chain */
+.chainnav{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.cnode{display:flex;align-items:center;gap:9px;background:var(--card);border:1.5px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:8px 14px 8px 8px;cursor:pointer;transition:.18s}
+.cnode:hover{border-color:var(--line-2)}.cnode.on{border-color:var(--accent);background:var(--accent-soft)}
+.cnode .cn{width:26px;height:26px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.cnode.on .cn{background:var(--accent);color:#fff}
+.cnode .ct{font-size:13px;font-weight:600}
+.cnode .carr{color:var(--ink-3);font-size:14px;margin-left:2px}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.stage .sth{font-size:16px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:4px}.stage .sth i{color:var(--accent)}
+.stage .stsub{font-size:13px;color:var(--ink-3);font-family:var(--mono);margin-bottom:14px}
+.io{display:grid;grid-template-columns:1fr;gap:10px}
+.iobox{border-radius:var(--r);padding:13px 15px;font-size:13.5px}
+.iobox .iolbl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.iobox.in{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--agent)}
+.iobox.in .iolbl{color:var(--agent)}
+.iobox.out{background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent)}
+.iobox.out .iolbl{color:var(--accent)}
+.iobox p{color:var(--ink-2);line-height:1.55}.iobox p b{color:var(--ink)}
+.passchip{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;font-family:var(--mono);color:var(--good);background:var(--good-soft);border:1px solid var(--good);border-radius:30px;padding:5px 12px}
+.handoff{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;margin-top:14px}
+.handoff .hh{font-size:13px;font-weight:600;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);margin-bottom:8px;display:flex;align-items:center;gap:7px}.handoff .hh i{color:var(--accent)}
+.handoff ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.handoff li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px;align-items:flex-start}
+.handoff li i{color:var(--good);font-size:15px;margin-top:2px;flex-shrink:0}
+/* trick */
+.trick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trickc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.trickc .tcn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.trickc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.trickc p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.trickc .q{margin-top:10px;font-family:var(--mono);font-size:12px;background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:10px 12px;color:var(--ink-2)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.trick{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.stage,.trickc,.handoff,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">Prompt Chaining</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-link"></i><span class="no">01</span><h2 data-i="s1">Cos'è una catena</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-arrow-right-bar"></i></div><div><h4 data-i="note1H">L'output di uno diventa l'input dell'altro</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-right"></i><span class="no">02</span><h2 data-i="s2">Una catena reale: il processo commerciale</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="chainIntro"></p>
+  <div class="chainnav rv" id="chainNav"></div>
+  <div class="stage rv" id="stage"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="chainNote"></p>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">03</span><h2 data-i="s3">Il trucco del passaggio di input</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="trickIntro"></p>
+  <div class="trick rv">
+    <div class="trickc"><div class="tcn"><i class="ti ti-arrow-back-up"></i> <span data-i="t1N">Passo 1 · dal secondo</span></div><h4 data-i="t1H">Vai dal prompt che riceve</h4><p data-i="t1P"></p><div class="q" data-i="t1Q"></div></div>
+    <div class="trickc"><div class="tcn"><i class="ti ti-arrow-forward-up"></i> <span data-i="t2N">Passo 2 · al primo</span></div><h4 data-i="t2H">Torna al prompt che produce</h4><p data-i="t2P"></p><div class="q" data-i="t2Q"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="trickOut"></p>
+
+  <div class="sh rv"><i class="ti ti-file-text"></i><span class="no">04</span><h2 data-i="s4">L'hand-off: come si passa il testimone</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-transfer"></i></div><div><h4 data-i="note2H">Un report che passa al prossimo</h4><p data-i-html="note2P"></p></div></div>
+  <div class="handoff rv" id="handoff"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">05</span><h2 data-i="s5">Non spezzare per il gusto di spezzare</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-circle-check"></i></div><h4 data-i="g1H">Quando ha senso</h4><p data-i="g1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-circle-x"></i></div><h4 data-i="g2H">Quando è solo overhead</h4><p data-i="g2P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:20px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-infinity"></i><span class="no">06</span><h2 data-i="s6">L'obiettivo vero</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-clock-hour-4"></i></div><div><h4 data-i="note3H">Delegare il più a lungo possibile</h4><p data-i-html="note3P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Disegna la tua prima catena</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Prompt Chaining</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'Prompt Chaining',
+lede:'Un prompt singolo, per quanto buono, ha un limite. Il salto è smettere di chiedere «tutto in un colpo» e costruire una catena: ogni prompt fa una cosa sola, fatta bene, e passa il suo risultato al successivo. È qui che il prompting smette di essere una tecnica e diventa un sistema che lavora al posto tuo.',
+s1:'Cos\'è una catena',
+note1H:'L\'output di uno diventa l\'input dell\'altro',
+note1P:'«<strong>Un buon sistema prende l\'output del primo e lo usa come input del secondo</strong>»: questo è il prompt chaining. Spezzi un lavoro lungo in più prompt collegati, dove ognuno fa un pezzo e consegna il risultato a chi viene dopo. Il valore non è nei singoli prompt: è nella <strong>decomposizione</strong>.',
+q1:'«Un buon sistema prende l\'output del primo prompt e lo usa come input del secondo.»',
+s2:'Una catena reale: il processo commerciale',
+chainIntro:'Un processo di vendita in cinque step, ognuno un prompt. Ogni stadio prende l\'output del precedente e lo trasforma. Clicca uno stadio per vedere cosa entra, cosa esce e cosa viene passato avanti.',
+chainNote:'Cinque stadi, ma il tuo intervento è minimo: il vero input umano è «<strong>procedi</strong>» e il controllo del lavoro. «<strong>Con 4 punti di contatto faccio una roba che mi avrebbe richiesto giornate.</strong>»',
+s3:'Il trucco del passaggio di input',
+trickIntro:'Il problema di ogni catena è il passaggio: come fa l\'output di un prompt a contenere ESATTAMENTE quello che serve al prossimo? Il trucco è ragionare all\'indietro.',
+t1N:'Passo 1 · dal secondo',
+t1H:'Vai dal prompt che riceve',
+t1P:'Apri il secondo prompt e chiedi a lui: «quali sono tutte le domande a cui vorresti avere risposta per fare un ottimo lavoro?». Lui ti elenca esattamente ciò che gli serve in pasto.',
+t1Q:'→ Quali domande vuoi avere risposte?',
+t2N:'Passo 2 · al primo',
+t2H:'Torna al prompt che produce',
+t2P:'Prendi quelle domande e torni al primo prompt: «il tuo output deve contenere tutte le risposte a queste domande». Ora l\'output del primo è, per costruzione, l\'input completo del secondo.',
+t2Q:'→ Il tuo output deve contenere queste risposte.',
+trickOut:'Risultato: il giunto fra i due prompt è perfetto, e <strong>non devi più rispondere tu alle domande</strong>. La stessa logica si ripete col terzo, il quarto, e così via lungo tutta la catena.',
+s4:'L\'hand-off: come si passa il testimone',
+note2H:'Un report che passa al prossimo',
+note2P:'Fra uno stadio e l\'altro non passi tutto il rumore: passi un <strong>hand-off report</strong>. L\'assistente che finisce produce un riassunto pulito, lo salva, e il prossimo viene richiamato con istruzioni + KB + quel report. È il testimone della staffetta: compatto, leggibile, completo.',
+handoffH:'Cosa contiene un hand-off',
+ho1:'Cosa è stato fatto — il lavoro completato in questo stadio',
+ho2:'Risultati — gli output concreti prodotti',
+ho3:'Domande aperte — cosa resta incerto o da decidere',
+ho4:'Raccomandazioni — cosa dovrebbe fare il prossimo stadio',
+s5:'Non spezzare per il gusto di spezzare',
+g1H:'Quando ha senso',
+g1P:'Quando il singolo prompt non regge la complessità: troppi compiti diversi, finestra troppo carica, qualità che cala. Lì la catena è l\'unica via.',
+g2H:'Quando è solo overhead',
+g2P:'Quando un prompt singolo già fa il lavoro. Cinque prompt che fanno la stessa cosa in più tempo non valgono uno solo fatto bene.',
+q2:'«Un singolo 9/10 batte una catena di 5 che fa lo stesso in più tempo. Non spezzare per il gusto di spezzare.»',
+s6:'L\'obiettivo vero',
+note3H:'Delegare il più a lungo possibile',
+note3P:'La catena non è il fine, è il mezzo. «<strong>Il nostro obiettivo è delegare il lavoro più a lungo possibile.</strong>» Ogni giunto ben fatto è un pezzo di lavoro in più che gira senza di te. Più la catena tiene da sola, più tu sali: da chi esegue a chi progetta il sistema.',
+s7:'Checkpoint',
+cpH:'Disegna la tua prima catena',
+cpP:'Prendi un processo che oggi fai a mano in più passaggi. Scomponilo in stadi e per ogni giunto applica il trucco: vai dallo stadio che riceve, chiedi cosa gli serve, e dillo allo stadio che produce.',
+cpQ:'Dove la tua catena sta davvero risparmiando giornate — e dove invece stai spezzando solo per spezzare, aggiungendo passaggi che un prompt solo farebbe meglio?',
+bridge:'Sai concatenare i prompt e passare l\'output di uno all\'altro. <b>Prossimo:</b> un prompt vs molti — perché NON un mega-prompt che fa tutto, e come specializzare ogni stadio della catena.',
+foot:'Morfeus — Prompt Chaining'
+},
+en:{
+kicker:'Lesson A6.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'Prompt Chaining',
+lede:'A single prompt, however good, has a ceiling. The leap is to stop asking for "everything in one shot" and build a chain: each prompt does one thing, done well, and passes its result to the next. This is where prompting stops being a technique and becomes a system that works for you.',
+s1:'What a chain is',
+note1H:'One\'s output becomes the other\'s input',
+note1P:'"<strong>A good system takes the output of the first and uses it as the input of the second</strong>": that\'s prompt chaining. You break a long job into linked prompts, where each does one piece and hands the result to whoever comes next. The value isn\'t in the individual prompts: it\'s in the <strong>decomposition</strong>.',
+q1:'"A good system takes the output of the first prompt and uses it as the input of the second."',
+s2:'A real chain: the sales process',
+chainIntro:'A sales process in five steps, each a prompt. Every stage takes the previous one\'s output and transforms it. Click a stage to see what goes in, what comes out, and what gets passed forward.',
+chainNote:'Five stages, but your involvement is minimal: the real human input is "<strong>proceed</strong>" and checking the work. "<strong>With 4 touchpoints I do something that would have taken me days.</strong>"',
+s3:'The input-passing trick',
+trickIntro:'The problem of every chain is the handoff: how does one prompt\'s output contain EXACTLY what the next one needs? The trick is to reason backwards.',
+t1N:'Step 1 · from the second',
+t1H:'Go to the prompt that receives',
+t1P:'Open the second prompt and ask it: "what are all the questions you\'d want answered to do an excellent job?". It lists exactly what it needs to be fed.',
+t1Q:'→ What questions do you want answered?',
+t2N:'Step 2 · to the first',
+t2H:'Go back to the prompt that produces',
+t2P:'Take those questions back to the first prompt: "your output must contain all the answers to these questions". Now the first\'s output is, by construction, the second\'s complete input.',
+t2Q:'→ Your output must contain these answers.',
+trickOut:'Result: the joint between the two prompts is perfect, and <strong>you no longer have to answer the questions yourself</strong>. The same logic repeats with the third, the fourth, and so on down the whole chain.',
+s4:'The hand-off: how the baton is passed',
+note2H:'A report that passes to the next',
+note2P:'Between one stage and the next you don\'t pass all the noise: you pass a <strong>hand-off report</strong>. The assistant that finishes produces a clean summary, saves it, and the next one is called with instructions + KB + that report. It\'s the relay baton: compact, readable, complete.',
+handoffH:'What a hand-off contains',
+ho1:'What was done — the work completed in this stage',
+ho2:'Results — the concrete outputs produced',
+ho3:'Open questions — what remains uncertain or to decide',
+ho4:'Recommendations — what the next stage should do',
+s5:'Don\'t split for the sake of splitting',
+g1H:'When it makes sense',
+g1P:'When a single prompt can\'t hold the complexity: too many different tasks, an overloaded window, quality dropping. There the chain is the only way.',
+g2H:'When it\'s just overhead',
+g2P:'When a single prompt already does the job. Five prompts doing the same thing in more time aren\'t worth one done well.',
+q2:'"A single 9/10 beats a chain of 5 doing the same thing in more time. Don\'t split for the sake of splitting."',
+s6:'The real goal',
+note3H:'Delegate as long as possible',
+note3P:'The chain isn\'t the goal, it\'s the means. "<strong>Our goal is to delegate the work as long as possible.</strong>" Every well-built joint is one more piece of work that runs without you. The longer the chain holds on its own, the higher you rise: from the one who executes to the one who designs the system.',
+s7:'Checkpoint',
+cpH:'Sketch your first chain',
+cpP:'Take a process you currently do by hand in several passes. Break it into stages and for each joint apply the trick: go to the stage that receives, ask what it needs, and tell it to the stage that produces.',
+cpQ:'Where is your chain truly saving days — and where are you splitting just to split, adding steps that a single prompt would do better?',
+bridge:'You can chain prompts and pass one\'s output to the next. <b>Next:</b> one prompt vs many — why NOT a mega-prompt that does everything, and how to specialize each stage of the chain.',
+foot:'Morfeus — Prompt Chaining'
+}};
+
+// chain stages: [name, icon, subtitle, inputText, outputText, passText]
+var CHAIN={it:[
+['Chiamata','ti-phone','Stadio 1 · raccolta','La registrazione audio della call commerciale col cliente.','I file audio grezzi, pronti per essere trasformati in testo.','Audio → trascrizione'],
+['Trascrizione','ti-file-text','Stadio 2 · testo','L\'audio dello stadio 1.','Il testo completo della conversazione, pulito e leggibile.','Trascrizione → report'],
+['Report','ti-clipboard-text','Stadio 3 · sintesi','La trascrizione dello stadio 2.','Un report strutturato: esigenze del cliente, punti chiave, prossimi passi.','Report → preventivo'],
+['Preventivo','ti-receipt','Stadio 4 · offerta','Il report dello stadio 3.','Un preventivo coerente con le esigenze emerse, voci e prezzi inclusi.','Preventivo → slide'],
+['Slide','ti-presentation','Stadio 5 · presentazione','Il preventivo dello stadio 4.','La presentazione finale pronta da mostrare al cliente.','Catena completa']
+],en:[
+['Call','ti-phone','Stage 1 · gathering','The audio recording of the sales call with the client.','The raw audio files, ready to be turned into text.','Audio → transcript'],
+['Transcript','ti-file-text','Stage 2 · text','The audio from stage 1.','The full text of the conversation, clean and readable.','Transcript → report'],
+['Report','ti-clipboard-text','Stage 3 · synthesis','The transcript from stage 2.','A structured report: client needs, key points, next steps.','Report → quote'],
+['Quote','ti-receipt','Stage 4 · offer','The report from stage 3.','A quote aligned with the needs that emerged, line items and prices included.','Quote → slides'],
+['Slides','ti-presentation','Stage 5 · presentation','The quote from stage 4.','The final presentation, ready to show the client.','Chain complete']
+]};
+
+var LANG='it',curStage=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var C=CHAIN[LANG];
+  document.getElementById('chainNav').innerHTML=C.map(function(s,i){var arr=i<C.length-1?'<span class="carr">→</span>':'';return '<div class="cnode'+(i===curStage?' on':'')+'" onclick="showStage('+i+')"><div class="cn">'+(i+1)+'</div><div class="ct">'+s[0]+'</div></div>'+arr}).join('');
+  document.getElementById('handoff').innerHTML='<div class="hh"><i class="ti ti-clipboard-check"></i> '+DICT[LANG].handoffH+'</div><ul><li><i class="ti ti-check"></i>'+DICT[LANG].ho1+'</li><li><i class="ti ti-check"></i>'+DICT[LANG].ho2+'</li><li><i class="ti ti-check"></i>'+DICT[LANG].ho3+'</li><li><i class="ti ti-check"></i>'+DICT[LANG].ho4+'</li></ul>';
+  showStage(curStage);
+}
+function showStage(i){curStage=i;var s=CHAIN[LANG][i];document.querySelectorAll('.cnode').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var inLbl=(LANG==='it'?'Input (dallo stadio precedente)':'Input (from the previous stage)');
+  var outLbl=(LANG==='it'?'Output (questo stadio)':'Output (this stage)');
+  var passLbl=(LANG==='it'?'Passa avanti':'Passes forward');
+  document.getElementById('stage').innerHTML='<div class="sth"><i class="ti '+s[1]+'"></i> '+(i+1)+'. '+s[0]+'</div><div class="stsub">'+s[2]+'</div>'+
+    '<div class="io"><div class="iobox in"><div class="iolbl"><i class="ti ti-login-2"></i>'+inLbl+'</div><p>'+s[3]+'</p></div>'+
+    '<div class="iobox out"><div class="iolbl"><i class="ti ti-logout-2"></i>'+outLbl+'</div><p>'+s[4]+'</p></div></div>'+
+    '<div class="passchip"><i class="ti ti-arrow-bounce"></i> '+passLbl+': '+s[5]+'</div>';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

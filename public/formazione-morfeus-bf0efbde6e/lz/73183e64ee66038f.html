@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo: un Plugin in uso reale — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#eccb8d;
+--gray:#5F5E5A;--gray-soft:#eeece4;--gray-line:#cdcabd;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6a4a14;
+--gray:#B4B2A9;--gray-soft:#2c2c2a;--gray-line:#4a4a46;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+.bonus-tag{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:4px 11px;border-radius:30px;margin-bottom:16px}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:640px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+.click-hint{font-size:12px;color:var(--ink-3);margin:0 0 14px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.click-hint i{font-size:15px}
+/* key phrase block */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+.kp.big{font-size:16px}
+/* tip box */
+.tip-box{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px 22px;margin:0}
+.tip-box .tip-title{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:7px;display:flex;align-items:center;gap:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.tip-box p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.tip-box p strong{color:var(--ink);font-weight:600}
+/* warn box */
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* PLUGIN CARDS */
+.plugin-cards{display:flex;flex-direction:column;gap:10px;margin:0}
+.plugin-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);cursor:pointer;transition:border-color .15s,background .15s;user-select:none;overflow:hidden}
+.plugin-card:hover{border-color:var(--accent-line)}
+.plugin-card.open{border-color:var(--accent-line);background:var(--accent-soft)}
+.pc-head{display:flex;align-items:flex-start;gap:14px;padding:16px 18px}
+.pc-icon{width:42px;height:42px;border-radius:10px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--line)}
+.pc-info{flex:1}
+.pc-info .ci-name{font-size:14px;font-weight:600;display:block;margin-bottom:4px;font-family:var(--mono)}
+.pc-src{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:6px;font-family:var(--mono)}
+.pc-src.official{background:var(--teal-soft);color:var(--teal)}
+.pc-src.community{background:var(--accent-soft);color:var(--accent)}
+.pc-info .pc-desc{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.pc-info .pc-desc code{font-family:var(--mono);font-size:11px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--accent)}
+.pc-chevron{font-size:16px;color:var(--ink-3);flex-shrink:0;transition:transform .25s,color .2s;margin-top:2px}
+.plugin-card.open .pc-chevron{transform:rotate(180deg);color:var(--accent)}
+.pc-detail{display:none;margin:0 18px 16px;padding:13px 15px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.pc-detail.open{display:block}
+.pc-detail strong{color:var(--ink);font-weight:600}
+.pc-detail code{font-family:var(--mono);font-size:11px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--accent)}
+.pc-skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.pc-skill-pill{padding:4px 10px;background:var(--bg-2);border:1px solid var(--line);border-radius:20px;font-size:11px;color:var(--ink-2);font-family:var(--mono)}
+/* DEMO FLOW */
+.demo-flow{margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.demo-flow-header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.demo-flow-header .dh-icon{width:42px;height:42px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.demo-flow-header .dh-info strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.demo-flow-header .dh-info span{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.demo-step{display:flex;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s;align-items:flex-start}
+.demo-step:last-child{border-bottom:none}
+.demo-step:hover{background:var(--bg-2)}
+.demo-step.active{background:var(--accent-soft);border-left:3px solid var(--accent)}
+.ds-num{width:30px;height:30px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--mono);flex-shrink:0;transition:all .2s;margin-top:2px}
+.demo-step.active .ds-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ds-content{flex:1}
+.ds-content strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.ds-content strong code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+.ds-content .ds-sub{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.ds-detail{display:none;margin-top:10px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.ds-detail.open{display:block}
+.ds-detail strong{color:var(--ink);font-weight:600}
+.ds-detail em{color:var(--ink-2)}
+.ds-detail code{font-family:var(--mono);font-size:11.5px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+.ds-chevron{font-size:18px;color:var(--ink-3);flex-shrink:0;margin-top:4px;transition:transform .25s,color .2s}
+.demo-step.active .ds-chevron{transform:rotate(90deg);color:var(--accent)}
+/* COMPARE TABS */
+.compare-wrap{margin:0}
+.compare-tabs{display:flex;gap:0;border-radius:var(--r-l) var(--r-l) 0 0;overflow:hidden;border:1px solid var(--line-2);border-bottom:none}
+.compare-tab{flex:1;padding:14px 18px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);transition:background .2s,color .2s;display:flex;align-items:center;justify-content:center;gap:8px;border-right:1px solid var(--line-2)}
+.compare-tab:last-child{border-right:none}
+.compare-tab i{font-size:16px}
+.compare-tab.active{background:var(--card);color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+.compare-panel{display:none;padding:22px;background:var(--card);border:1px solid var(--line-2);border-top:none;border-radius:0 0 var(--r-l) var(--r-l)}
+.compare-panel.active{display:block}
+.cp-title{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cp-title i{font-size:18px}
+.cp-block{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:14px}
+.cp-block:last-of-type{margin-bottom:0}
+.cp-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3);margin-bottom:7px;font-family:var(--mono)}
+.cp-prompt-text{font-size:13px;color:var(--ink-2);line-height:1.65;font-style:italic}
+.cp-prompt-text code{font-family:var(--mono);font-size:11.5px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent);font-style:normal}
+.cp-output-text{font-size:13px;color:var(--ink-2);line-height:1.65}
+.cp-output-text strong{color:var(--ink);font-weight:600}
+.cp-verdict{margin-top:14px;padding:11px 14px;border-radius:var(--r);font-size:12.5px;line-height:1.6;display:flex;align-items:flex-start;gap:9px}
+.cp-verdict i{font-size:16px;flex-shrink:0;margin-top:1px}
+.cp-verdict strong{font-weight:600;color:var(--ink)}
+.cp-verdict.bad{background:var(--bad-soft);border:1px solid var(--bad-line);color:var(--ink-2)}
+.cp-verdict.bad i{color:var(--bad)}
+.cp-verdict.good{background:var(--teal-soft);border:1px solid var(--teal-line);color:var(--ink-2)}
+.cp-verdict.good i{color:var(--teal)}
+/* ACCELERATORE */
+.accel-grid{display:grid;grid-template-columns:1fr 24px 1fr;align-items:start;gap:0;margin:0}
+.accel-col{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.accel-col-head{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.accel-col-head .ach-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.accel-col-head .ach-icon.plugin{background:var(--accent-soft);color:var(--accent)}
+.accel-col-head .ach-icon.user{background:var(--teal-soft);color:var(--teal)}
+.accel-col-head strong{font-size:14px;font-weight:600}
+.accel-col-body{padding:14px 18px}
+.accel-bar{height:10px;border-radius:5px;margin-bottom:8px}
+.accel-bar.purple{background:var(--accent-line)}
+.accel-bar.teal{background:var(--teal-line)}
+.accel-pct{font-size:24px;font-weight:700;margin-bottom:4px;font-family:var(--mono)}
+.accel-pct.purple{color:var(--accent)}
+.accel-pct.teal{color:var(--teal)}
+.accel-desc{font-size:12px;color:var(--ink-2);line-height:1.55}
+.accel-arrow{text-align:center;font-size:18px;color:var(--ink-3);padding-top:60px}
+.accel-items{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.accel-item{display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 11px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg-2);transition:border-color .15s,background .15s;user-select:none}
+.accel-item:hover{border-color:var(--line-2)}
+.accel-item.revealed{border-color:var(--accent-line);background:var(--accent-soft)}
+.accel-item.revealed.teal{border-color:var(--teal-line);background:var(--teal-soft)}
+.accel-item i{font-size:15px;color:var(--ink-3);flex-shrink:0;transition:color .15s}
+.accel-item.revealed i{color:var(--accent)}
+.accel-item.revealed.teal i{color:var(--teal)}
+.accel-item span{font-size:12px;color:var(--ink-2);line-height:1.4}
+.accel-item .ai-hidden{display:none}
+.accel-item.revealed .ai-hidden{display:inline}
+.accel-item .ai-placeholder{color:var(--ink-2);font-weight:600}
+.accel-item.revealed .ai-placeholder{display:none}
+.accel-result{grid-column:1/-1;margin-top:14px;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:16px 20px;display:none}
+.accel-result.show{display:block}
+.accel-result strong{font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:6px;color:var(--amber)}
+.accel-result p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* MINDSET CARDS */
+.mindset-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.mindset-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px}
+.mindset-card .mc-icon{font-size:24px;margin-bottom:10px;display:block}
+.mindset-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.mindset-card p{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.mindset-card.no{border-left:3px solid var(--bad-line)}
+.mindset-card.yes{border-left:3px solid var(--teal)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.accel-grid{grid-template-columns:1fr;gap:12px}.accel-arrow{display:none}.mindset-grid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.pc-detail,.ds-detail{display:block!important}.compare-panel{display:block!important}.accel-result{display:block!important}.plugin-card,.demo-flow,.kp,.warn-box,.tip-box,.compare-wrap,.accel-col,.mindset-card{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Bonus</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="bonus-tag rv"><i class="ti ti-star"></i> <span data-i="bonusTag">Bonus</span></div>
+  <div class="eyebrow rv" data-i="eyebrow">Demo Plugin</div>
+  <h1 class="rv" data-i="h1">Demo: un Plugin in uso reale</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <!-- SEZIONE 1 -->
+  <div class="sh rv"><i class="ti ti-package"></i><span class="no">01</span><h2 data-i="s1">Plugin buoni per la vostra demo</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="p1Intro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="p1Hint"></span></div>
+  <div class="plugin-cards rv" id="plugin-cards">
+
+    <div class="plugin-card" onclick="togglePluginCard(this)">
+      <div class="pc-head">
+        <div class="pc-icon"><i class="ti ti-speakerphone" style="color:var(--teal)"></i></div>
+        <div class="pc-info">
+          <span class="ci-name">plugin-marketing</span>
+          <div><span class="pc-src official" data-i="srcOfficial"></span></div>
+          <div class="pc-desc" data-i-html="pcMktD"></div>
+        </div>
+        <i class="ti ti-chevron-down pc-chevron"></i>
+      </div>
+      <div class="pc-detail">
+        <span data-i-html="pcMktX"></span>
+        <div class="pc-skills">
+          <span class="pc-skill-pill">/campaign-brief</span>
+          <span class="pc-skill-pill">/hook-generator</span>
+          <span class="pc-skill-pill">/ad-copy</span>
+          <span class="pc-skill-pill">/email-sequence</span>
+          <span class="pc-skill-pill">/content-plan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plugin-card" onclick="togglePluginCard(this)">
+      <div class="pc-head">
+        <div class="pc-icon"><i class="ti ti-chart-line" style="color:var(--blue)"></i></div>
+        <div class="pc-info">
+          <span class="ci-name">plugin-sales</span>
+          <div><span class="pc-src official" data-i="srcOfficial"></span></div>
+          <div class="pc-desc" data-i-html="pcSalesD"></div>
+        </div>
+        <i class="ti ti-chevron-down pc-chevron"></i>
+      </div>
+      <div class="pc-detail">
+        <span data-i-html="pcSalesX"></span>
+        <div class="pc-skills">
+          <span class="pc-skill-pill">/call-prep</span>
+          <span class="pc-skill-pill">/draft-outreach</span>
+          <span class="pc-skill-pill">/objection-handler</span>
+          <span class="pc-skill-pill">/pipeline-review</span>
+          <span class="pc-skill-pill">/account-research</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plugin-card" onclick="togglePluginCard(this)">
+      <div class="pc-head">
+        <div class="pc-icon"><i class="ti ti-pencil" style="color:var(--accent)"></i></div>
+        <div class="pc-info">
+          <span class="ci-name">direct-response-copywriting</span>
+          <div><span class="pc-src community" data-i="srcCommunity"></span></div>
+          <div class="pc-desc" data-i-html="pcCopyD"></div>
+        </div>
+        <i class="ti ti-chevron-down pc-chevron"></i>
+      </div>
+      <div class="pc-detail">
+        <span data-i-html="pcCopyX"></span>
+        <div class="pc-skills">
+          <span class="pc-skill-pill">/hook-generator</span>
+          <span class="pc-skill-pill">/headline-generator</span>
+          <span class="pc-skill-pill">/vsl-script</span>
+          <span class="pc-skill-pill">/email-sequence</span>
+          <span class="pc-skill-pill">/ad-copy-generator</span>
+          <span class="pc-skill-pill" data-i="copyMore"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warn-box rv" style="margin-top:18px">
+    <div class="warn-title"><i class="ti ti-test-pipe"></i> <span data-i="pretestH"></span></div>
+    <p data-i="pretestP"></p>
+  </div>
+
+  <!-- SEZIONE 2 -->
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">02</span><h2 data-i="s2">Il flusso della demo — passo per passo</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="p2Intro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="p2Hint"></span></div>
+
+  <div class="demo-flow rv" id="demo-flow">
+    <div class="demo-flow-header">
+      <div class="dh-icon"><i class="ti ti-movie"></i></div>
+      <div class="dh-info">
+        <strong data-i="dfTitle"></strong>
+        <span data-i="dfSub"></span>
+      </div>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">1</div>
+      <div class="ds-content">
+        <strong data-i="st1H"></strong>
+        <div class="ds-sub" data-i="st1S"></div>
+        <div class="ds-detail" data-i-html="st1X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">2</div>
+      <div class="ds-content">
+        <strong data-i="st2H"></strong>
+        <div class="ds-sub" data-i="st2S"></div>
+        <div class="ds-detail" data-i-html="st2X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">3</div>
+      <div class="ds-content">
+        <strong data-i-html="st3H"></strong>
+        <div class="ds-sub" data-i="st3S"></div>
+        <div class="ds-detail" data-i-html="st3X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">4</div>
+      <div class="ds-content">
+        <strong data-i="st4H"></strong>
+        <div class="ds-sub" data-i="st4S"></div>
+        <div class="ds-detail" data-i-html="st4X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">5</div>
+      <div class="ds-content">
+        <strong data-i="st5H"></strong>
+        <div class="ds-sub" data-i="st5S"></div>
+        <div class="ds-detail" data-i-html="st5X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+    <div class="demo-step" onclick="toggleDemoStep(this)">
+      <div class="ds-num">6</div>
+      <div class="ds-content">
+        <strong data-i="st6H"></strong>
+        <div class="ds-sub" data-i="st6S"></div>
+        <div class="ds-detail" data-i-html="st6X"></div>
+      </div>
+      <i class="ti ti-chevron-right ds-chevron"></i>
+    </div>
+
+  </div>
+
+  <!-- SEZIONE 3 -->
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">03</span><h2 data-i="s3">Il punto didattico chiave: contesto = qualità</h2></div>
+  <p class="lede-p rv" data-i="p3Intro"></p>
+
+  <div class="compare-wrap rv">
+    <div class="click-hint"><i class="ti ti-hand-click"></i> <span data-i="cmpHint"></span></div>
+    <div class="compare-tabs">
+      <div class="compare-tab" id="tab-senza" onclick="switchTab('senza')">
+        <i class="ti ti-circle-x" style="color:var(--bad)"></i> <span data-i="tabSenza"></span>
+      </div>
+      <div class="compare-tab" id="tab-con" onclick="switchTab('con')">
+        <i class="ti ti-circle-check" style="color:var(--teal)"></i> <span data-i="tabCon"></span>
+      </div>
+    </div>
+
+    <div class="compare-panel" id="panel-senza">
+      <div class="cp-title"><i class="ti ti-circle-x" style="color:var(--bad)"></i> <span data-i="senzaTitle"></span></div>
+      <div class="cp-block">
+        <div class="cp-label" data-i="lblInvoke"></div>
+        <div class="cp-prompt-text" data-i-html="senzaPrompt"></div>
+      </div>
+      <div class="cp-block">
+        <div class="cp-label" data-i="lblOutput"></div>
+        <div class="cp-output-text" data-i-html="senzaOutput"></div>
+      </div>
+      <div class="cp-verdict bad">
+        <i class="ti ti-alert-circle"></i>
+        <span data-i-html="senzaVerdict"></span>
+      </div>
+    </div>
+
+    <div class="compare-panel" id="panel-con">
+      <div class="cp-title"><i class="ti ti-circle-check" style="color:var(--teal)"></i> <span data-i="conTitle"></span></div>
+      <div class="cp-block">
+        <div class="cp-label" data-i="lblContext"></div>
+        <div class="cp-prompt-text" data-i="conPrompt"></div>
+      </div>
+      <div class="cp-block">
+        <div class="cp-label" data-i="lblSameOutput"></div>
+        <div class="cp-output-text" data-i-html="conOutput"></div>
+      </div>
+      <div class="cp-verdict good">
+        <i class="ti ti-circle-check"></i>
+        <span data-i-html="conVerdict"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="kp big rv" style="margin-top:24px" data-i="key3"></div>
+
+  <!-- SEZIONE 4 -->
+  <div class="sh rv"><i class="ti ti-rocket"></i><span class="no">04</span><h2 data-i="s4">Il mindset: Plugin come acceleratore</h2></div>
+  <p class="lede-p rv" data-i="p4Intro"></p>
+
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="accelHint"></span></div>
+  <div class="accel-grid rv" id="accel-grid">
+
+    <div class="accel-col">
+      <div class="accel-col-head">
+        <div class="ach-icon plugin"><i class="ti ti-package"></i></div>
+        <strong data-i="accelPluginH"></strong>
+      </div>
+      <div class="accel-col-body">
+        <div class="accel-bar purple" style="width:80%"></div>
+        <div class="accel-pct purple">80%</div>
+        <div class="accel-desc" data-i="accelPluginDesc"></div>
+        <div class="accel-items">
+          <div class="accel-item" onclick="revealItem(this,'plugin')">
+            <i class="ti ti-layout-grid"></i>
+            <span><span class="ai-placeholder" data-i="apl1P"></span><span class="ai-hidden" data-i="apl1X"></span></span>
+          </div>
+          <div class="accel-item" onclick="revealItem(this,'plugin')">
+            <i class="ti ti-list-check"></i>
+            <span><span class="ai-placeholder" data-i="apl2P"></span><span class="ai-hidden" data-i="apl2X"></span></span>
+          </div>
+          <div class="accel-item" onclick="revealItem(this,'plugin')">
+            <i class="ti ti-arrows-sort"></i>
+            <span><span class="ai-placeholder" data-i="apl3P"></span><span class="ai-hidden" data-i="apl3X"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accel-arrow"><i class="ti ti-plus"></i></div>
+
+    <div class="accel-col">
+      <div class="accel-col-head">
+        <div class="ach-icon user"><i class="ti ti-user"></i></div>
+        <strong data-i="accelUserH"></strong>
+      </div>
+      <div class="accel-col-body">
+        <div class="accel-bar teal" style="width:20%"></div>
+        <div class="accel-pct teal">20%</div>
+        <div class="accel-desc" data-i="accelUserDesc"></div>
+        <div class="accel-items">
+          <div class="accel-item teal" onclick="revealItem(this,'user')">
+            <i class="ti ti-building"></i>
+            <span><span class="ai-placeholder" data-i="aus1P"></span><span class="ai-hidden" data-i="aus1X"></span></span>
+          </div>
+          <div class="accel-item teal" onclick="revealItem(this,'user')">
+            <i class="ti ti-palette"></i>
+            <span><span class="ai-placeholder" data-i="aus2P"></span><span class="ai-hidden" data-i="aus2X"></span></span>
+          </div>
+          <div class="accel-item teal" onclick="revealItem(this,'user')">
+            <i class="ti ti-brain"></i>
+            <span><span class="ai-placeholder" data-i="aus3P"></span><span class="ai-hidden" data-i="aus3X"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accel-result" id="accel-result">
+      <strong><i class="ti ti-trophy"></i><span data-i="accelResH"></span></strong>
+      <p data-i="accelResP"></p>
+    </div>
+
+  </div>
+
+  <div class="mindset-grid rv" style="margin-top:20px">
+    <div class="mindset-card no">
+      <span class="mc-icon"><i class="ti ti-x" style="color:var(--bad)"></i></span>
+      <h4 data-i="msNoH"></h4>
+      <p data-i-html="msNoP"></p>
+    </div>
+    <div class="mindset-card yes">
+      <span class="mc-icon"><i class="ti ti-check" style="color:var(--teal)"></i></span>
+      <h4 data-i="msYesH"></h4>
+      <p data-i-html="msYesP"></p>
+    </div>
+  </div>
+
+  <div class="kp big rv" style="margin-top:32px" data-i="keyFinal"></div>
+
+  <div class="tip-box rv" style="margin-top:24px">
+    <div class="tip-title"><i class="ti ti-target-arrow"></i> <span data-i="actionH"></span></div>
+    <p data-i-html="actionP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Demo: un Plugin in uso reale</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus',pdfT:'Scarica PDF',themeT:'Cambia tema',bonusTag:'Bonus',eyebrow:'Demo Plugin',
+h1:'Demo: un Plugin in uso reale',
+lede:'Non una descrizione teorica — una sessione live. Vedrete un Plugin professionale in azione dall\'inizio alla fine, con il suo punto didattico più importante: la differenza tra output generico e output contestualizzato.',
+hook:'«Vi ho insegnato come trovare e installare Plugin. Adesso vi faccio vedere cosa succede quando ne usate uno davvero. Plugin reale, task reale, output reale — e vi mostro esattamente perché il contesto fa tutta la differenza.»',
+s1:'Plugin buoni per la vostra demo',
+p1Intro:'Non tutti i Plugin si prestano a una demo efficace. Questi tre sono ideali: output comprensibile, skill visibili, nessuna autenticazione complessa.',
+p1Hint:'Cliccate ogni Plugin per vedere le skill incluse e il caso d\'uso suggerito',
+srcOfficial:'Ufficiale Anthropic',srcCommunity:'Community',
+pcMktD:'Dal repository <code>anthropics/knowledge-work-plugins</code> — skill per campagne, brief, copywriting.',
+pcMktX:'Ideale per marketer e consulenti. Le skill guidano con domande prima di produrre l\'output — mostrate questa fase interattiva: è il valore dell\'architettura, non un limite.<br><br><strong>Perché è buono per la demo:</strong> output immediatamente leggibile da chiunque, processo a step visibile, nessuna autenticazione OAuth richiesta per le skill principali.',
+pcSalesD:'Dal repository <code>anthropics/knowledge-work-plugins</code> — skill per preparare call, outreach, gestire obiezioni.',
+pcSalesX:'Ottimo per chi lavora in contesti commerciali o di consulenza. La skill <code>/call-prep</code> è particolarmente efficace in demo: prende poche informazioni e restituisce un\'agenda strutturata con domande aperte e obiezioni prevedibili.<br><br><strong>Perché è buono per la demo:</strong> task realistico e universale, output strutturato con sezioni visibili, differenza "senza contesto vs con contesto" molto marcata.',
+pcCopyD:'23 skill di copywriting a risposta diretta. Community-made, ma collaudato e molto usato. Ottimo se il target del corso è orientato al copy e al marketing digitale.',
+pcCopyX:'Plugin community con 23 skill specializzate in copywriting DR. L\'output è concreto, testuale e immediatamente valutabile — perfetto per un pubblico di marketer e imprenditori.<br><br><strong>Attenzione:</strong> questo è un Plugin community, non ufficiale Anthropic. Verificate la fonte prima di installarlo in live. Preferitelo a <em>plugin-marketing</em> se volete mostrare la quantità di skill disponibili nella community.',
+copyMore:'+18 altre',
+pretestH:'Pre-testare prima di registrare',
+pretestP:'Qualunque Plugin scegliate, fatelo girare almeno due volte prima della registrazione. Verificate che le skill si attivino, che l\'output sia rappresentativo e che non servano autenticazioni complesse in live.',
+s2:'Il flusso della demo — passo per passo',
+p2Intro:'Una demo efficace ha una struttura precisa. Sei passi, ognuno con un obiettivo didattico specifico.',
+p2Hint:'Cliccate ogni passo per vedere il dettaglio e le note di regia',
+dfTitle:'Struttura della demo live',
+dfSub:'Esempio con plugin-marketing → skill /campaign-brief',
+st1H:'Mostrate le skill installate',
+st1S:'Aprite Customize → Skills — visibilità immediata di cosa ha aggiunto il Plugin',
+st1X:'Prima di toccare la chat, mostrate il pannello Customize → Skills. Evidenziate le skill del Plugin appena installato: i nomi, le descrizioni brevi, il fatto che siano abilitate di default.<br><br><strong>Perché farlo:</strong> ancorate concretamente il Plugin a qualcosa di visibile. Lo studente capisce che "installare un Plugin" non è astratto — ha prodotto oggetti concreti nel suo ambiente.',
+st2H:'Scegliete un task concreto e realistico',
+st2S:'Un problema che il vostro target affronta davvero — non un esempio astratto',
+st2X:'Il task deve essere riconoscibile per chi guarda. Esempi: "devo preparare un brief per una campagna email di lancio prodotto" / "devo scrivere le prime righe di un post LinkedIn" / "devo preparare la call con un potenziale cliente".<br><br><strong>Evitate:</strong> task troppo tecnici, scenari inventati improbabili, o contesti troppo di nicchia. Il task deve far dire "ah sì, lo faccio anch\'io".',
+st3H:'Invocate la skill con <code>/nome-skill</code>',
+st3S:'O descrivendola in linguaggio naturale — entrambi i metodi funzionano',
+st3X:'Mostrate entrambe le modalità di invocazione: il comando esplicito <code>/campaign-brief</code> e la versione naturale "aiutami a creare un brief per questa campagna".<br><br>Claude attiva la skill nel secondo caso perché riconosce il contesto dalla descrizione. Questo è il punto didattico: la skill non richiede che voi ricordiate il nome esatto — Claude fa il collegamento.',
+st4H:'Mostrate il processo interattivo — non saltarlo',
+st4S:'Le domande di Claude sono il valore dell\'architettura, non un ostacolo',
+st4X:'Molte skill iniziano con una fase di "intervista": Claude fa domande prima di produrre l\'output. Non saltare questa fase — commentatela esplicitamente:<br><br><em>"Vedete che mi chiede il target, il canale, il budget — questo è il processo di progressive disclosure. La skill carica progressivamente le istruzioni man mano che raccoglie il contesto. Il risultato finale sarà molto più preciso di un output generico."</em><br><br>Rispondete alle domande di Claude con dati realistici (ma generici) davanti alla camera.',
+st5H:'Mostrate l\'output e commentatelo onestamente',
+st5S:'Cosa ha fatto bene, dove servirà personalizzazione',
+st5X:'Leggete l\'output ad alta voce o scorretelo lentamente. Evidenziate:<br><br>— Cosa è già buono e utilizzabile<br>— Dove avreste bisogno di personalizzarlo con dati reali<br>— Cosa non farebbe mai un Plugin senza il vostro contesto specifico<br><br><strong>Siate onesti:</strong> "Notate che questo paragrafo è un po\' generico — ho dato poco contesto sulla voce del brand. Se avessi usato il mio Project con il brand voice, sarebbe stato molto più specifico." Questa onestà è credibilità.',
+st6H:'Mostrate la differenza con il contesto aggiunto',
+st6S:'Lo stesso task, la stessa skill — ma con un Project e il brand voice attivi',
+st6X:'Questo è <strong>il punto didattico più importante della demo</strong>. Ripetete lo stesso task ma dentro un Project con istruzioni di brand voice già configurate.<br><br>L\'output sarà notevolmente più specifico, coerente con il tono del brand, adattato al contesto. La differenza deve essere evidente e commentata:<br><br><em>"Stessa skill, stesso task — ma il secondo output è immediatamente utilizzabile. La differenza non è nella skill: è nel contesto che ho portato io. Il Plugin è lo strumento; il Project con il brand voice è il contesto che lo rende potente."</em>',
+s3:'Il punto didattico chiave: contesto = qualità',
+p3Intro:'Stessa skill, task identico. L\'unica variabile è il contesto — Project configurato con brand voice e dati del cliente. Cliccate le due tab per vedere la differenza.',
+cmpHint:'Cliccate una tab per vedere l\'esempio',
+tabSenza:'Senza contesto',tabCon:'Con Project + brand voice',
+senzaTitle:'Plugin nudo — nessun contesto',
+lblInvoke:'Invocazione',
+senzaPrompt:'L\'utente scrive: <code>/campaign-brief</code><br>Claude chiede: obiettivo della campagna?<br>Utente risponde: "aumentare le vendite"<br>Claude chiede: target?<br>Utente risponde: "aziende"',
+lblOutput:'Output della skill',
+senzaOutput:'<strong>Brief Campagna — Aumento Vendite</strong><br><br><strong>Obiettivo:</strong> Incrementare le vendite attraverso una campagna multicanale rivolta al segmento B2B.<br><br><strong>Target:</strong> Responsabili acquisti e decision-maker aziendali.<br><br><strong>Messaggio principale:</strong> Il nostro prodotto/servizio offre valore concreto per la vostra organizzazione.<br><br><strong>Canali suggeriti:</strong> Email marketing, LinkedIn, eventi di settore.<br><br><em style="color:var(--ink-3)">[struttura presente, contenuto generico — ogni dettaglio è da riempire]</em>',
+senzaVerdict:'Output valido come <strong>struttura di partenza</strong>, ma inutilizzabile direttamente. Non conosce il settore, il tono, il prodotto, il mercato specifico. Richiede riscrittura quasi completa.',
+conTitle:'Plugin con Project + brand voice attivi',
+lblContext:'Contesto nel Project (già configurato)',
+conPrompt:'Il Project contiene: settore (es. software gestionale per PMI italiane), buyer persona (responsabile IT, 35-50 anni, preoccupato per i costi di migrazione), tono del brand (diretto, concreto, niente jargon), casi di successo di riferimento, obiezioni tipiche del cliente.',
+lblSameOutput:'Output della stessa skill',
+conOutput:'<strong>Brief Campagna — Lancio Modulo Fatturazione Elettronica</strong><br><br><strong>Obiettivo:</strong> Generare 40 demo qualificate nel trimestre Q3 tra PMI manifatturiere del Nord Italia, con focus sui responsabili IT già alle prese con la scadenza normativa di settembre.<br><br><strong>Messaggio principale:</strong> "Migrazione completata in una giornata, senza toccare i dati storici." — risponde direttamente alla preoccupazione principale del buyer.<br><br><strong>Canali prioritari:</strong> LinkedIn (targeting per ruolo + settore), email nurture sui lead esistenti, webinar tecnico in partnership con il commercialista.<br><br><em style="color:var(--ink-3)">[tono e dati specifici del brand — richiede solo revisione minore]</em>',
+conVerdict:'Output <strong>quasi pronto</strong> — specifico, coerente con il brand, ancorato a dati reali. Il salto di qualità non viene dalla skill: viene dal contesto che il Project porta con sé.',
+key3:'«Il Plugin produce la struttura. Il Project con il brand voice porta il contesto. La combinazione dei due è il valore reale. Usare un Plugin senza un Project configurato è come usare uno strumento professionale senza sapere per cosa lo stai usando.»',
+s4:'Il mindset: Plugin come acceleratore',
+p4Intro:'Il fraintendimento più comune: aspettarsi che il Plugin produca l\'output finale. Non funziona così — e capirlo cambia tutto.',
+accelHint:'Cliccate ogni elemento per scoprire cosa porta al risultato finale',
+accelPluginH:'Il Plugin porta',
+accelPluginDesc:'Struttura, framework, draft iniziale — il lavoro di scaffolding.',
+apl1P:'Struttura dell\'output',apl1X:' — sezioni, ordine logico, intestazioni: il contenitore è già fatto.',
+apl2P:'Framework di domande',apl2X:' — le domande giuste da fare per arrivare al dato rilevante, già codificate nella skill.',
+apl3P:'Best practice del settore',apl3X:' — le skill dei Plugin buoni incorporano le pratiche comprovate del dominio (es. struttura di un brief di marketing efficace).',
+accelUserH:'Voi portate',
+accelUserDesc:'Contesto specifico, dati reali, tono del brand — ciò che rende l\'output vostro.',
+aus1P:'Dati specifici del vostro caso',aus1X:' — cliente reale, prodotto specifico, mercato di riferimento: solo voi potete portarlo.',
+aus2P:'Tono e brand voice',aus2X:' — la voce del brand, il registro comunicativo, le parole che usate vs quelle che evitate.',
+aus3P:'Giudizio finale',aus3X:' — la valutazione di cosa funziona e cosa no, la decisione su cosa tenere: questo rimane sempre a voi.',
+accelResH:'Output finale: pronto all\'uso',
+accelResP:'Quando Plugin e contesto si combinano, l\'output è già all\'80–90% del risultato finale. Non una prima bozza da riscrivere, ma qualcosa da rifinire in pochi minuti. Il tempo risparmiato non è nel "scrivere" — è nell\'"impostare correttamente" il problema.',
+msNoH:'Mindset sbagliato',
+msNoP:'"Il Plugin non mi ha dato la risposta perfetta — è inutile."<br><br>Il Plugin non è Oracle. È il punto di partenza, non di arrivo.',
+msYesH:'Mindset giusto',
+msYesP:'"Il Plugin mi ha dato la struttura — ora ci metto il contesto specifico."<br><br>L\'80% è già fatto. Voi fate il 20% che conta davvero.',
+keyFinal:'«Il Plugin più potente è quello che usate ogni giorno, non quello con più funzionalità. Trovate i vostri 2–3 Plugin di riferimento e padroneggiateli. Meglio di averne 20 installati e non sapere cosa fanno.»',
+actionH:'La vostra prossima azione',
+actionP:'Scegliete <strong>un solo Plugin</strong> tra quelli visti. Installatelo. Usatelo su un task reale del vostro lavoro questa settimana. Valutatelo: vi ha dato la struttura? Vi ha fatto risparmiare tempo? Se sì, è il vostro Plugin di riferimento. Se no, provatene un altro — ma provatelo davvero, con contesto reale.',
+foot:'Morfeus — Demo: un Plugin in uso reale'
+},
+en:{
+kicker:'Bonus',pdfT:'Download PDF',themeT:'Toggle theme',bonusTag:'Bonus',eyebrow:'Plugin Demo',
+h1:'Demo: a Plugin in real use',
+lede:'Not a theoretical description — a live session. You\'ll see a professional Plugin in action from start to finish, with its single most important teaching point: the difference between a generic output and a contextualized one.',
+hook:'"I\'ve taught you how to find and install Plugins. Now let me show you what happens when you actually use one. Real Plugin, real task, real output — and I\'ll show you exactly why context makes all the difference."',
+s1:'Good Plugins for your demo',
+p1Intro:'Not every Plugin lends itself to an effective demo. These three are ideal: understandable output, visible skills, no complex authentication.',
+p1Hint:'Click each Plugin to see the included skills and the suggested use case',
+srcOfficial:'Official Anthropic',srcCommunity:'Community',
+pcMktD:'From the <code>anthropics/knowledge-work-plugins</code> repository — skills for campaigns, briefs, copywriting.',
+pcMktX:'Ideal for marketers and consultants. The skills guide you with questions before producing the output — show this interactive phase: it\'s the value of the architecture, not a limitation.<br><br><strong>Why it\'s good for the demo:</strong> output immediately readable by anyone, a visible step-by-step process, no OAuth authentication required for the main skills.',
+pcSalesD:'From the <code>anthropics/knowledge-work-plugins</code> repository — skills to prep calls, do outreach, handle objections.',
+pcSalesX:'Great for anyone working in sales or consulting contexts. The <code>/call-prep</code> skill is particularly effective in a demo: it takes a little information and returns a structured agenda with open questions and predictable objections.<br><br><strong>Why it\'s good for the demo:</strong> a realistic and universal task, structured output with visible sections, a very pronounced "without context vs with context" difference.',
+pcCopyD:'23 direct-response copywriting skills. Community-made, but battle-tested and widely used. Great if the course audience leans toward copy and digital marketing.',
+pcCopyX:'A community Plugin with 23 skills specialized in DR copywriting. The output is concrete, text-based and immediately assessable — perfect for an audience of marketers and entrepreneurs.<br><br><strong>Caution:</strong> this is a community Plugin, not an official Anthropic one. Verify the source before installing it live. Prefer it over <em>plugin-marketing</em> if you want to show the sheer quantity of skills available in the community.',
+copyMore:'+18 more',
+pretestH:'Pre-test before recording',
+pretestP:'Whichever Plugin you choose, run it at least twice before recording. Verify that the skills activate, that the output is representative, and that no complex authentication is needed live.',
+s2:'The demo flow — step by step',
+p2Intro:'An effective demo has a precise structure. Six steps, each with a specific teaching goal.',
+p2Hint:'Click each step to see the detail and the directing notes',
+dfTitle:'Live demo structure',
+dfSub:'Example with plugin-marketing → skill /campaign-brief',
+st1H:'Show the installed skills',
+st1S:'Open Customize → Skills — immediate visibility of what the Plugin added',
+st1X:'Before touching the chat, show the Customize → Skills panel. Highlight the skills of the just-installed Plugin: the names, the short descriptions, the fact that they\'re enabled by default.<br><br><strong>Why do it:</strong> you concretely anchor the Plugin to something visible. The student understands that "installing a Plugin" isn\'t abstract — it produced concrete objects in their environment.',
+st2H:'Pick a concrete, realistic task',
+st2S:'A problem your audience actually faces — not an abstract example',
+st2X:'The task must be recognizable to whoever\'s watching. Examples: "I need to prepare a brief for a product-launch email campaign" / "I need to write the opening lines of a LinkedIn post" / "I need to prep the call with a prospective client".<br><br><strong>Avoid:</strong> tasks that are too technical, far-fetched made-up scenarios, or contexts that are too niche. The task should make people say "ah yes, I do that too".',
+st3H:'Invoke the skill with <code>/skill-name</code>',
+st3S:'Or by describing it in natural language — both methods work',
+st3X:'Show both invocation modes: the explicit command <code>/campaign-brief</code> and the natural version "help me create a brief for this campaign".<br><br>Claude activates the skill in the second case because it recognizes the context from the description. This is the teaching point: the skill doesn\'t require you to remember the exact name — Claude makes the connection.',
+st4H:'Show the interactive process — don\'t skip it',
+st4S:'Claude\'s questions are the value of the architecture, not an obstacle',
+st4X:'Many skills start with an "interview" phase: Claude asks questions before producing the output. Don\'t skip this phase — comment on it explicitly:<br><br><em>"You see it\'s asking me for the target, the channel, the budget — this is the progressive-disclosure process. The skill loads the instructions progressively as it gathers context. The final result will be far more precise than a generic output."</em><br><br>Answer Claude\'s questions with realistic (but generic) data on camera.',
+st5H:'Show the output and comment on it honestly',
+st5S:'What it did well, where personalization will be needed',
+st5X:'Read the output aloud or scroll through it slowly. Highlight:<br><br>— What\'s already good and usable<br>— Where you\'d need to personalize it with real data<br>— What a Plugin would never do without your specific context<br><br><strong>Be honest:</strong> "Notice this paragraph is a bit generic — I gave little context about the brand voice. If I\'d used my Project with the brand voice, it would have been much more specific." This honesty is credibility.',
+st6H:'Show the difference with the added context',
+st6S:'The same task, the same skill — but with a Project and the brand voice active',
+st6X:'This is <strong>the single most important teaching point of the demo</strong>. Repeat the same task but inside a Project with brand-voice instructions already configured.<br><br>The output will be notably more specific, consistent with the brand tone, adapted to the context. The difference must be evident and commented on:<br><br><em>"Same skill, same task — but the second output is immediately usable. The difference isn\'t in the skill: it\'s in the context I brought. The Plugin is the tool; the Project with the brand voice is the context that makes it powerful."</em>',
+s3:'The key teaching point: context = quality',
+p3Intro:'Same skill, identical task. The only variable is context — a Project configured with brand voice and client data. Click the two tabs to see the difference.',
+cmpHint:'Click a tab to see the example',
+tabSenza:'Without context',tabCon:'With Project + brand voice',
+senzaTitle:'Bare Plugin — no context',
+lblInvoke:'Invocation',
+senzaPrompt:'The user types: <code>/campaign-brief</code><br>Claude asks: campaign objective?<br>User answers: "increase sales"<br>Claude asks: target?<br>User answers: "companies"',
+lblOutput:'Skill output',
+senzaOutput:'<strong>Campaign Brief — Sales Increase</strong><br><br><strong>Objective:</strong> Increase sales through a multichannel campaign aimed at the B2B segment.<br><br><strong>Target:</strong> Purchasing managers and corporate decision-makers.<br><br><strong>Main message:</strong> Our product/service offers concrete value for your organization.<br><br><strong>Suggested channels:</strong> Email marketing, LinkedIn, industry events.<br><br><em style="color:var(--ink-3)">[structure present, generic content — every detail still to be filled in]</em>',
+senzaVerdict:'A valid output as a <strong>starting structure</strong>, but unusable as-is. It doesn\'t know the industry, the tone, the product, the specific market. It requires an almost complete rewrite.',
+conTitle:'Plugin with Project + brand voice active',
+lblContext:'Context in the Project (already configured)',
+conPrompt:'The Project contains: industry (e.g. management software for Italian SMEs), buyer persona (IT manager, 35-50 years old, worried about migration costs), brand tone (direct, concrete, no jargon), reference success cases, the client\'s typical objections.',
+lblSameOutput:'Output of the same skill',
+conOutput:'<strong>Campaign Brief — E-Invoicing Module Launch</strong><br><br><strong>Objective:</strong> Generate 40 qualified demos in the Q3 quarter among manufacturing SMEs in Northern Italy, focusing on IT managers already grappling with the September regulatory deadline.<br><br><strong>Main message:</strong> "Migration completed in one day, without touching your historical data." — directly answers the buyer\'s main concern.<br><br><strong>Priority channels:</strong> LinkedIn (targeting by role + industry), email nurture on existing leads, technical webinar in partnership with the accountant.<br><br><em style="color:var(--ink-3)">[brand-specific tone and data — requires only minor review]</em>',
+conVerdict:'An output that\'s <strong>nearly ready</strong> — specific, consistent with the brand, anchored to real data. The leap in quality doesn\'t come from the skill: it comes from the context the Project carries with it.',
+key3:'"The Plugin produces the structure. The Project with the brand voice brings the context. The combination of the two is the real value. Using a Plugin without a configured Project is like using a professional tool without knowing what you\'re using it for."',
+s4:'The mindset: the Plugin as an accelerator',
+p4Intro:'The most common misunderstanding: expecting the Plugin to produce the final output. It doesn\'t work that way — and understanding this changes everything.',
+accelHint:'Click each element to discover what it brings to the final result',
+accelPluginH:'The Plugin brings',
+accelPluginDesc:'Structure, framework, initial draft — the scaffolding work.',
+apl1P:'Output structure',apl1X:' — sections, logical order, headings: the container is already built.',
+apl2P:'Question framework',apl2X:' — the right questions to ask to reach the relevant data, already encoded in the skill.',
+apl3P:'Industry best practices',apl3X:' — the skills of good Plugins incorporate the proven practices of the domain (e.g. the structure of an effective marketing brief).',
+accelUserH:'You bring',
+accelUserDesc:'Specific context, real data, brand tone — what makes the output yours.',
+aus1P:'Data specific to your case',aus1X:' — real client, specific product, target market: only you can bring it.',
+aus2P:'Tone and brand voice',aus2X:' — the brand\'s voice, the communicative register, the words you use vs the ones you avoid.',
+aus3P:'Final judgment',aus3X:' — the assessment of what works and what doesn\'t, the decision on what to keep: that always stays with you.',
+accelResH:'Final output: ready to use',
+accelResP:'When the Plugin and the context combine, the output is already at 80–90% of the final result. Not a first draft to rewrite, but something to refine in a few minutes. The time saved isn\'t in the "writing" — it\'s in "framing the problem correctly".',
+msNoH:'Wrong mindset',
+msNoP:'"The Plugin didn\'t give me the perfect answer — it\'s useless."<br><br>The Plugin is not an oracle. It\'s the starting point, not the finish line.',
+msYesH:'Right mindset',
+msYesP:'"The Plugin gave me the structure — now I add the specific context."<br><br>80% is already done. You do the 20% that really counts.',
+keyFinal:'"The most powerful Plugin is the one you use every day, not the one with the most features. Find your 2–3 go-to Plugins and master them. Better than having 20 installed and not knowing what they do."',
+actionH:'Your next action',
+actionP:'Pick <strong>one single Plugin</strong> from the ones you\'ve seen. Install it. Use it on a real task from your work this week. Evaluate it: did it give you the structure? Did it save you time? If yes, it\'s your go-to Plugin. If not, try another one — but actually try it, with real context.',
+foot:'Morfeus — Demo: a Plugin in real use'
+}};
+
+var LANG='it';
+
+/* PLUGIN CARDS */
+function togglePluginCard(card){
+  var isOpen=card.classList.contains('open');
+  document.querySelectorAll('.plugin-card').forEach(function(c){
+    c.classList.remove('open');
+    var d=c.querySelector('.pc-detail');
+    if(d)d.classList.remove('open');
+  });
+  if(!isOpen){
+    card.classList.add('open');
+    var det=card.querySelector('.pc-detail');
+    if(det)det.classList.add('open');
+  }
+}
+
+/* DEMO FLOW STEPS */
+function toggleDemoStep(step){
+  var isActive=step.classList.contains('active');
+  document.querySelectorAll('.demo-step').forEach(function(s){
+    s.classList.remove('active');
+    var d=s.querySelector('.ds-detail');
+    if(d)d.classList.remove('open');
+  });
+  if(!isActive){
+    step.classList.add('active');
+    var det=step.querySelector('.ds-detail');
+    if(det)det.classList.add('open');
+  }
+}
+
+/* COMPARE TABS */
+function switchTab(key){
+  document.getElementById('tab-senza').classList.remove('active');
+  document.getElementById('tab-con').classList.remove('active');
+  document.getElementById('tab-'+key).classList.add('active');
+  document.getElementById('panel-senza').classList.remove('active');
+  document.getElementById('panel-con').classList.remove('active');
+  document.getElementById('panel-'+key).classList.add('active');
+}
+
+/* ACCELERATORE ITEMS */
+var revealedPlugin=0,revealedUser=0;
+function revealItem(el,col){
+  if(el.classList.contains('revealed'))return;
+  el.classList.add('revealed');
+  if(col==='user')el.classList.add('teal');
+  if(col==='plugin')revealedPlugin++;
+  if(col==='user')revealedUser++;
+  if(revealedPlugin>=3&&revealedUser>=3){
+    document.getElementById('accel-result').classList.add('show');
+  }
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La cultura AI-ready — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note p+p{margin-top:9px}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.step .sn{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step h4{font-size:14.5px;font-weight:600;margin-bottom:3px}.step p{font-size:13.5px;color:var(--ink-2)}
+.pillars{display:flex;flex-direction:column;gap:8px}
+.pl{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.pl:hover{border-color:var(--line-2)}.pl.on{border-color:var(--accent);background:var(--accent-soft)}
+.pl .pli{width:34px;height:34px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:.18s}
+.pl.on .pli{background:var(--accent);color:#fff}
+.pl .plt{font-size:14.5px;font-weight:600}
+.pl .plx{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);margin-left:auto;flex-shrink:0}
+.pldetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px}
+.pldetail p{font-size:14.5px;color:var(--ink-2)}.pldetail p b{color:var(--ink);font-weight:600}
+.pldetail .ex{font-size:13px;background:var(--bg-2);border-radius:var(--r);padding:11px 13px;color:var(--ink-2);margin-top:11px;border-left:2px solid var(--accent-line)}
+.pldetail .ex b{color:var(--accent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc p{font-size:13.5px;color:var(--ink-2)}.cmpc.bad p b{color:var(--bad)}.cmpc.good p b{color:var(--good)}
+.cmpc p+p{margin-top:8px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.cards.two{grid-template-columns:1fr 1fr}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.flow{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.flnode{text-align:center}
+.flnode .fv{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--accent);line-height:1}
+.flnode .fl{font-size:12px;color:var(--ink-2);margin-top:6px}
+.flow .farr{color:var(--agent);font-size:22px}
+.flow .ffree{text-align:center}.flow .ffree .fv{color:var(--agent)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.quote{background:var(--bg-2);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;padding:18px 20px;font-size:15px;color:var(--ink);font-style:italic;line-height:1.55}
+.quote .qa{display:block;margin-top:8px;font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards,.cards.two{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.pl,.pldetail,.flow,.key,.step,.quote{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Prima del tool</div>
+  <h1 class="rv" data-i="h1">La cultura AI-ready</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrow-bear-right"></i><span class="no">01</span><h2 data-i="s1">La rivoluzione che arriva dal basso</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:18px" data-i-html="botIntro"></p>
+  <div class="steps rv">
+    <div class="step"><div class="sn">1</div><div><h4 data-i="bot1H">Qualcuno prova</h4><p data-i="bot1P"></p></div></div>
+    <div class="step"><div class="sn">2</div><div><h4 data-i="bot2H">Vede dei risultati</h4><p data-i="bot2P"></p></div></div>
+    <div class="step"><div class="sn">3</div><div><h4 data-i="bot3H">Se ne parla</h4><p data-i="bot3P"></p></div></div>
+    <div class="step"><div class="sn">4</div><div><h4 data-i="bot4H">Diventa priorità aziendale</h4><p data-i="bot4P"></p></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:18px" data-i-html="botNote"></p>
+
+  <div class="sh rv"><i class="ti ti-rocket"></i><span class="no">02</span><h2 data-i="s2">La postura, non lo strumento</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-rocket"></i></div><div><h4 data-i="note1H">Una cultura «alla Y Combinator»</h4><p data-i-html="note1P"></p><p data-i-html="note1P2"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-columns-3"></i><span class="no">03</span><h2 data-i="s3">I tratti di una cultura AI-ready</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pillIntro"></p>
+  <div class="pillars rv" id="pillars"></div>
+  <div class="pldetail rv" id="pldetail"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">04</span><h2 data-i="s3b">Cultura rigida vs cultura AI-ready</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="rigT">Cultura rigida</span><p data-i-html="rigP1"></p><p data-i-html="rigP2"></p><p data-i-html="rigP3"></p></div>
+    <div class="cmpc good"><span class="cmptag" data-i="readyT">Cultura AI-ready</span><p data-i-html="readyP1"></p><p data-i-html="readyP2"></p><p data-i-html="readyP3"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-flask-2"></i><span class="no">05</span><h2 data-i="s4">Sperimentare bene: 1 su 4</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="expIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc good"><span class="cmptag" data-i="expWinT">L'1 che funziona</span><p data-i-html="expWinP"></p></div>
+    <div class="cmpc bad"><span class="cmptag" data-i="expLoseT">I 3 che falliscono</span><p data-i-html="expLoseP"></p></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="expNote"></p>
+
+  <div class="sh rv"><i class="ti ti-calendar-month"></i><span class="no">06</span><h2 data-i="s5">La riunione mensile: moltiplicare, non sommare</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="multIntro"></p>
+  <div class="key rv"><p data-i="multKey"></p><div class="cap" data-i="multCap"></div></div>
+  <div class="cards rv" style="margin-top:18px">
+    <div class="card3"><div class="ci"><i class="ti ti-speakerphone"></i></div><h4 data-i="m1H">Marketing scopre</h4><p data-i="m1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-code"></i></div><h4 data-i="m2H">Sviluppo riusa</h4><p data-i="m2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-affiliate"></i></div><h4 data-i="m3H">Ecosistema</h4><p data-i="m3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-up"></i><span class="no">07</span><h2 data-i="s6">La scala è leva, non sostituzione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="scaleIntro"></p>
+  <div class="flow rv">
+    <div class="flnode"><div class="fv" data-i="scN1">10</div><div class="fl" data-i="scL1"></div></div>
+    <i class="ti ti-arrow-right farr"></i>
+    <div class="flnode"><div class="fv" data-i="scN2">20</div><div class="fl" data-i="scL2"></div></div>
+    <i class="ti ti-arrow-right farr"></i>
+    <div class="flnode"><div class="fv" data-i="scN3">15-16</div><div class="fl" data-i="scL3"></div></div>
+    <i class="ti ti-arrow-right farr"></i>
+    <div class="flnode ffree"><div class="fv" data-i="scN4">+1-2h</div><div class="fl" data-i="scL4"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="scaleNote"></p>
+  <div class="cards rv" style="margin-top:16px">
+    <div class="card3"><div class="ci"><i class="ti ti-school"></i></div><h4 data-i="sc1H">Migliorare l'azienda</h4><p data-i="sc1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-bulb"></i></div><h4 data-i="sc2H">Studiare le AI</h4><p data-i="sc2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-filter"></i></div><h4 data-i="sc3H">Filtrare il rumore</h4><p data-i="sc3P"></p></div>
+  </div>
+  <div class="note amber rv" style="margin-top:18px"><div class="ni"><i class="ti ti-bulb-filled"></i></div><div><h4 data-i="rdH">L'R&S non è più una unit separata</h4><p data-i-html="rdP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">08</span><h2 data-i="s7">Persone pensanti, non esecutori</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="thinkIntro"></p>
+  <div class="quote rv"><span data-i="thinkQ"></span></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">La cultura viene prima del tool</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La cultura AI-ready</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Prima del tool',
+h1:'La cultura AI-ready',
+lede:'Prima del modello, prima del prompt, viene la cultura. È la postura aziendale — e personale — che decide se l\'AI attecchisce o resta un giocattolo. Puoi avere il miglior strumento sui processi: senza la cultura giusta, tra tre mesi si rompe tutto.',
+s1:'La rivoluzione che arriva dal basso',
+botIntro:'Questa è la <strong>prima rivoluzione tecnologica e industriale che arriva dal basso</strong>. Non è il vertice a imporla: sono le persone a scoprirla per prime, e solo dopo diventa una priorità aziendale. Succede così nel 90% dei casi.',
+bot1H:'Qualcuno prova',bot1P:'Un collaboratore, per curiosità, inizia a usare l\'AI su un pezzo del proprio lavoro. Senza che nessuno glielo abbia chiesto.',
+bot2H:'Vede dei risultati',bot2P:'Funziona. Risparmia tempo, alza la qualità. Non è più un\'impressione: è un beneficio concreto, sotto gli occhi.',
+bot3H:'Se ne parla',bot3P:'Lo racconta ai colleghi, si confronta. La scoperta esce dal cassetto e diventa una conversazione di squadra.',
+bot4H:'Diventa priorità aziendale',bot4P:'A quel punto il vertice se ne accorge: «questa cosa va capita, va messa a terra». Da gioco personale a strategia.',
+botNote:'Per questo non puoi aspettare un ordine dall\'alto. La cultura AI-ready esiste proprio per <strong>non lasciare che quella scintilla dal basso si spenga</strong>: la riconosce, la nutre, la mette a sistema.',
+s2:'La postura, non lo strumento',
+note1H:'Una cultura «alla Y Combinator»',
+note1P:'Cos\'è una cultura pronta a immergersi nell\'AI? È un approccio <strong>«alla Y Combinator»</strong>: molto americano, da startup. È <strong>quasi utopico averlo al 100%</strong>, ma è lì che bisogna puntare.',
+note1P2:'Se non punti lì, integrare l\'AI diventa una fatica continua — il tool da solo non basta mai. Questi tratti non sono un di più «buonista»: sono <strong>una delle cose più importanti per far funzionare l\'AI in un\'azienda</strong>.',
+s3:'I tratti di una cultura AI-ready',
+pillIntro:'Sette tratti compongono una cultura pronta. Non sono optional: sono il terreno in cui l\'AI cresce. Clicca ogni tratto per il dettaglio e l\'esempio Morfeus.',
+s3b:'Cultura rigida vs cultura AI-ready',
+rigT:'Cultura rigida',
+rigP1:'«<b>Non lo dico a nessuno</b>: o mi superano, o mi riempiono di lavoro». La scoperta resta nel cassetto.',
+rigP2:'«No, secondo me non è così». <b>Si chiude</b> davanti all\'evidenza, per difendere la propria opinione.',
+rigP3:'Per paura non ci si forma, si usano solo limitazioni: <b>«si tira il freno»</b> e le persone restano ferme.',
+readyT:'Cultura AI-ready',
+readyP1:'«Faccio una scoperta, <b>la condivido col team</b>»: capisco se serve a un collega e diventa veloce anche lui.',
+readyP2:'«<b>Parliamone e decidiamo assieme</b>»: curiosi, aperti, disposti a cambiare idea davanti ai dati.',
+readyP3:'Ognuno ha tempo per sperimentare e mettersi in gioco: <b>si fa innovazione dall\'interno</b>, senza freni.',
+s4:'Sperimentare bene: 1 su 4',
+expIntro:'Tollerare il fallimento non vuol dire fare test a caso. Vuol dire dare a una persona il permesso di provare — sapendo che <strong>su quattro test, magari uno solo va a segno</strong>. Ma quell\'uno cambia le carte.',
+expWinT:'L\'1 che funziona',
+expWinP:'Su 4 test, magari <b>1 solo funziona</b> — ma quell\'1 porta un <b>ROI importante</b>. Può farti fare in un giorno il lavoro di una settimana. Vale tutti gli altri tre. Per questo si sperimenta.',
+expLoseT:'I 3 che falliscono',
+expLoseP:'I <b>3 test falliti vanno spiegati</b>, non nascosti: «devi dirmi perché non hanno funzionato». È da lì che si impara, si capisce, e non si ripetono gli stessi errori.',
+expNote:'La tolleranza al fallimento non è caos: è metodo. <strong>«Non test a caso»: vanno fatti in maniera precisa.</strong> Chi non sperimenta non scopre mai dove l\'AI fa davvero la differenza — e quel segreto, una volta trovato, è incredibile.',
+s5:'La riunione mensile: moltiplicare, non sommare',
+multIntro:'Se condividi le scoperte col team, si crea <strong>un ecosistema di informazioni</strong>. È qui che la collaborazione diventa un meccanismo concreto, non uno slogan.',
+multKey:'In Morfeus, ogni mese, circa 3 ore di riunione dove ognuno mette sul tavolo le scoperte dei propri esperimenti. Marketing, sviluppo, operations: tutto converge.',
+multCap:'È un fattore moltiplicativo, non una somma: la scoperta di uno diventa il punto di partenza di tutti.',
+m1H:'Marketing scopre',m1P:'Chi segue il marketing trova un modo nuovo di usare l\'AI su un\'attività e lo porta in riunione.',
+m2H:'Sviluppo riusa',m2P:'Chi segue lo sviluppo realizza che quella stessa cosa serve anche a lui: la prova, e spesso funziona.',
+m3H:'Ecosistema',m3P:'Una scoperta, due reparti più veloci. Tutti sulla stessa nave, nella stessa direzione.',
+s6:'La scala è leva, non sostituzione',
+scaleIntro:'«La usiamo per scalare le nostre competenze, non per sostituirci o licenziarci». Un team maturo vede l\'AI come una leva. La differenza è tutta in cosa fai del tempo che liberi.',
+scN1:'10',scL1:'Produzione di partenza',
+scN2:'20',scL2:'Potenziale con l\'AI',
+scN3:'15-16',scL3:'Lavoro che chiedi',
+scN4:'+1-2h',scL4:'Tempo restituito',
+scaleNote:'Se i collaboratori passano <strong>da 10 a 20</strong>, non gli dai 25 — avresti solo collaboratori scontenti e lo stesso sistema di prima. Chiedi <strong>15-16</strong> di lavoro — più produttivo — e restituisci <strong>1-2 ore</strong> per studiare e sperimentare.',
+sc1H:'Migliorare l\'azienda',sc1P:'Tempo per studiare come rendere migliore l\'azienda dall\'interno, mettendoci il cervello.',
+sc2H:'Studiare le AI',sc2P:'Tempo dedicato a ricerca e sviluppo sul proprio lavoro: l\'innovazione nasce da dentro.',
+sc3H:'Filtrare il rumore',sc3P:'Ogni giorno una valanga di notizie sull\'AI: studiarle è un secondo lavoro. Servono strumenti per filtrare.',
+rdH:'L\'R&S non è più una unit separata',
+rdP:'La ricerca e sviluppo non vive più in un reparto a parte. <strong>Ognuno deve avere del tempo, anche piccolo</strong>, per fare test sul proprio lavoro. Così si fa innovazione dall\'interno, senza dipendere sempre dai consulenti: l\'obiettivo è renderti autonomo.',
+s7:'Persone pensanti, non esecutori',
+thinkIntro:'Tutto questo regge su una cosa sola: servono <strong>persone pensanti</strong>, con le idee chiare, non meri esecutori che fanno A e B aspettando la pausa caffè. Perché l\'AI fa una cosa benissimo — prende quello che hai in testa e lo realizza. <strong>Più chiara è l\'idea, più sai spiegarla, più te la realizza identica.</strong>',
+thinkQ:'«Più persone con un\'idea e una direzione, più propositive nel proprio lavoro. È anche più stimolante lavorare così, invece di aspettare le cinque di sera. L\'AI non sostituisce chi sa dirigere: amplifica chi pensa.»',
+s8:'Checkpoint',
+cpH:'La cultura viene prima del tool',
+cpP:'Una cultura AI-ready non si compra: si costruisce. Proattività, sperimentazione, collaborazione, dati, apertura, curiosità, creatività — sono il terreno senza cui nessun modello attecchisce.',
+cpQ:'Quale dei tratti manca di più nel tuo contesto? E qual è una scoperta utile che hai tenuto per te invece di condividerla? Quello è il primo nodo da sciogliere, prima ancora di scegliere lo strumento.',
+cpNote:'Il modello cambia ogni sei mesi. La cultura che lo fa funzionare resta.',
+bridge:'La cultura è pronta. <b>Prossimo:</b> l\'analogia che regge tutto il percorso — l\'AI è un junior che non sa niente, e la regola aurea per delegargli il lavor

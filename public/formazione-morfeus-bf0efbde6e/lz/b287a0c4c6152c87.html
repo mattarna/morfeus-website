@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creare l'Account e Scegliere il Piano — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#b7ddc1;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#f0d9aa;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a9e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--gray:#888780;--gray-soft:#f1efe8;--gray-line:#d3d1c7;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6b4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#18564a;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1a4d7c;
+--gray:#b4b2a9;--gray-soft:#2c2c2a;--gray-line:#4a4a46;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{border-left:3px solid var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-left-width:3px;border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7;margin-top:8px}
+.note{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.note p{font-size:14.5px;color:var(--ink-2);margin-bottom:10px}.note p:last-child{margin-bottom:0}.note p strong{color:var(--ink);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:30px;font-size:13px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+.pill i{font-size:15px}
+/* steps */
+.steps{display:flex;flex-direction:column;gap:8px}
+.stp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:.18s}
+.stp:hover{border-color:var(--line-2)}.stp.on{border-color:var(--accent)}
+.stp-head{display:flex;align-items:flex-start;gap:14px;padding:16px 18px}
+.stp-bub{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s}
+.stp.on .stp-bub{background:var(--accent);color:#fff}
+.stp.done .stp-bub{background:var(--teal);color:#fff}
+.stp-txt{flex:1}
+.stp-txt .st-t{font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.stp-txt .st-t .chev{font-size:18px;color:var(--ink-3);transition:transform .25s}
+.stp.on .chev{transform:rotate(90deg);color:var(--accent)}
+.stp-txt .st-m{font-size:13px;color:var(--ink-3);margin-top:2px}
+.stp-det{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.stp.on .stp-det{max-height:460px}
+.stp-det-in{padding:0 18px 16px 62px}
+.stp-det-in p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:10px}.stp-det-in p:last-child{margin-bottom:0}.stp-det-in strong{color:var(--ink);font-weight:600}
+.tip-in{display:flex;gap:8px;margin-top:10px;padding:10px 14px;border-radius:var(--r);background:var(--amber-soft);border:1px solid var(--amber-line)}
+.tip-in i{font-size:16px;color:var(--amber);flex-shrink:0;margin-top:1px}
+.tip-in span{font-size:12.5px;color:var(--ink-2);line-height:1.55}.tip-in strong{color:var(--ink);font-weight:600}
+/* plan tabs */
+.ptabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ptab{padding:8px 16px;border-radius:30px;border:1px solid var(--line-2);background:var(--card);font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:.18s;display:flex;align-items:center;gap:6px;box-shadow:var(--sh)}
+.ptab:hover{border-color:var(--accent);color:var(--accent)}
+.ptab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.ppanel{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;animation:fade .25s ease}
+.ppanel.vis{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ptop{padding:24px 26px 20px;display:flex;align-items:flex-start;gap:16px;border-bottom:1px solid var(--line)}
+.picon{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:25px;flex-shrink:0}
+.pnameb{flex:1}.pnameb h3{font-size:19px;font-weight:600;margin-bottom:2px}.pnameb .ptag{font-size:13px;color:var(--ink-3)}
+.pbadge{padding:4px 12px;border-radius:30px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-family:var(--mono)}
+.pbody{padding:22px 26px}
+.psect{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.pfeat{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.pfeat:last-of-type{border-bottom:none}
+.pfeat-ic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.pfeat-t{flex:1}.pfeat-t strong{font-size:13.5px;font-weight:600;display:block;margin-bottom:1px;color:var(--ink)}.pfeat-t span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.forwho{margin-top:18px;padding:16px 20px;border-radius:var(--r-l);border:1px dashed var(--line-2)}
+.forwho-t{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.forwho-i{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--ink-2);line-height:1.5}.forwho-i i{font-size:15px;flex-shrink:0;margin-top:2px}
+.key{text-align:center;padding:42px 20px;margin:24px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.45;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* quiz */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.quiz-h{padding:20px 24px 18px;border-bottom:1px solid var(--line)}
+.quiz-h h3{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:3px}.quiz-h h3 i{color:var(--accent)}
+.quiz-h p{font-size:13px;color:var(--ink-3)}
+.quiz-b{padding:22px 24px}
+.quiz-q{font-size:15px;font-weight:600;margin-bottom:14px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.qopt{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:var(--r-l);border:1px solid var(--line-2);background:var(--bg-2);cursor:pointer;transition:.18s;font-size:13.5px;color:var(--ink-2)}
+.qopt:hover{border-color:var(--accent);color:var(--ink)}.qopt i{font-size:18px;flex-shrink:0}
+.qopt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.qres{display:none;margin-top:18px;padding:20px 22px;border-radius:var(--r-l);animation:fade .3s ease}
+.qres.vis{display:block}
+.qres .qri{font-size:34px;margin-bottom:8px;display:block}
+.qres h4{font-size:15.5px;font-weight:600;margin-bottom:6px}.qres p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.qreset{margin-top:12px;padding:7px 16px;border-radius:30px;border:1px solid var(--line-2);background:var(--bg-2);font-family:var(--mono);font-size:12px;color:var(--ink-2);cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.qreset:hover{border-color:var(--ink-3);color:var(--ink)}
+.tipbox{background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px 22px}
+.tipbox h4{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.tipbox p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:16px}
+.cp .cpic{width:44px;height:44px;border-radius:12px;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px}.cp p{font-size:14px;color:var(--ink-2);line-height:1.7}.cp p strong{color:var(--ink);font-weight:600}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ptop{padding:20px 18px 16px}.pbody{padding:18px}.quiz-b{padding:18px}.stp-det-in{padding:0 16px 14px 16px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.stp-det{max-height:none!important}.ppanel{display:block!important}.note,.stp,.ppanel,.quiz,.tipbox,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 1.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Setup</div>
+  <h1 class="rv" data-i="h1">Creare l'Account e Scegliere il Piano</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" data-i="hook" style="margin-top:24px"></div>
+
+  <div class="sh rv"><i class="ti ti-info-circle"></i><span class="no">01</span><h2 data-i="s1">Prima di iniziare</h2></div>
+  <div class="note rv"><div><p data-i-html="ctx1"></p><p data-i="ctx2"></p>
+    <div class="pills">
+      <span class="pill"><i class="ti ti-credit-card-off" style="color:var(--teal)"></i> <span data-i="pill1"></span></span>
+      <span class="pill"><i class="ti ti-refresh" style="color:var(--accent)"></i> <span data-i="pill2"></span></span>
+      <span class="pill"><i class="ti ti-shield-check" style="color:var(--blue)"></i> <span data-i="pill3"></span></span>
+    </div>
+    <p data-i="ctx3" style="margin-bottom:0"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">02</span><h2 data-i="s2">Come si crea l'account — passo per passo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stepsIntro"></p>
+  <div class="steps rv" id="steps"></div>
+
+  <div class="sh rv"><i class="ti ti-layers-difference"></i><span class="no">03</span><h2 data-i="s3">I piani — clicca per esplorare</h2></div>
+  <div class="ptabs rv" id="ptabs"></div>
+  <div class="rv" id="ppanels"></div>
+
+  <div class="key rv" data-i="key"><p data-i="keyP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-help-circle"></i><span class="no">04</span><h2 data-i="s4">Quale piano fa per te?</h2></div>
+  <div class="quiz rv">
+    <div class="quiz-h"><h3><i class="ti ti-list-check"></i> <span data-i="quizH"></span></h3><p data-i="quizSub"></p></div>
+    <div class="quiz-b" id="quizBody">
+      <div id="quizStep1">
+        <div class="quiz-q" data-i="q1q"></div>
+        <div class="quiz-opts">
+          <div class="qopt" onclick="quizStep(1,'new')"><i class="ti ti-star" style="color:var(--amber)"></i> <span data-i="q1a"></span></div>
+          <div class="qopt" onclick="quizStep(1,'sometimes')"><i class="ti ti-clock" style="color:var(--blue)"></i> <span data-i="q1b"></span></div>
+          <div class="qopt" onclick="quizStep(1,'daily')"><i class="ti ti-calendar-check" style="color:var(--teal)"></i> <span data-i="q1c"></span></div>
+        </div>
+      </div>
+      <div id="quizStep2" style="display:none">
+        <div class="quiz-q" data-i="q2q"></div>
+        <div class="quiz-opts">
+          <div class="qopt" onclick="quizStep(2,'light')"><i class="ti ti-message-circle" style="color:var(--accent)"></i> <span data-i="q2a"></span></div>
+          <div class="qopt" onclick="quizStep(2,'heavy')"><i class="ti ti-files" style="color:var(--teal)"></i> <span data-i="q2b"></span></div>
+          <div class="qopt" onclick="quizStep(2,'code')"><i class="ti ti-terminal-2" style="color:var(--blue)"></i> <span data-i="q2c"></span></div>
+        </div>
+      </div>
+      <div id="quizResult" class="qres"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-calculator"></i><span class="no">05</span><h2 data-i="s5">Vale i soldi il piano a pagamento?</h2></div>
+  <div class="tipbox rv"><h4><i class="ti ti-calculator"></i> <span data-i="roiH"></span></h4><p data-i="roiP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">06</span><h2 data-i="s6">Azione adesso</h2></div>
+  <div class="cp rv"><div class="cpic"><i class="ti ti-target"></i></div><div><h4 data-i="cpH"></h4><p data-i-html="cpP"></p></div></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Creare l'Account e Scegliere il Piano</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 1.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Setup',
+h1:'Creare l\'Account e Scegliere il Piano',
+lede:'Due minuti per creare l\'account, qualche minuto per capire i piani. Al termine sai esattamente dove sei e dove andare.',
+hook:'«Questa lezione dura meno di sei minuti. Al termine hai l\'account e sai esattamente su quale piano stare. Anticipo la domanda che mi faranno metà di voi: vale davvero i soldi del piano a pagamento? La risposta è sì — e te lo dimostro mentre ti faccio vedere i piani.»',
+s1:'Prima di iniziare',
+ctx1:'Claude è il modello linguistico di <strong>Anthropic</strong> — non Google, non OpenAI. Un\'azienda fondata nel 2021 con un focus dichiarato su sicurezza e qualità del modello. <strong>claude.ai</strong> è il punto d\'ingresso per tutti, indipendentemente dal piano scelto.',
+ctx2:'Tre cose da sapere prima di aprire il browser:',
+pill1:'Nessuna carta per iniziare',pill2:'Piano cambiabile in qualsiasi momento',pill3:'Il lavoro fatto non si perde mai',
+ctx3:'Il piano gratuito esiste e funziona. Quello che scegli oggi è reversibile — salire o scendere di piano non cancella le conversazioni e i progetti già creati.',
+s2:'Come si crea l\'account — passo per passo',
+stepsIntro:'Signup su claude.ai. Clicca ogni passo per aprire i dettagli.',
+s3:'I piani — clicca per esplorare',
+keyP:'«Free per capire se Claude fa per te. Pro se hai già deciso che Claude entra nel tuo lavoro quotidiano. Max se Claude è diventato il tuo principale strumento di produzione e i limiti del Pro si fanno sentire regolarmente.»',
+s4:'Quale piano fa per te?',
+quizH:'Mini check — due domande',quizSub:'Clicca la risposta che ti descrive meglio',
+q1q:'Come descriveresti il tuo rapporto attuale con Claude?',
+q1a:'Non ho mai usato Claude o ci ho giocato solo un po\'',
+q1b:'Lo uso ogni tanto, quando mi serve qualcosa di specifico',
+q1c:'Lo userei (o lo uso già) ogni giorno nel mio lavoro',
+q2q:'Che tipo di task prevedi di fare principalmente?',
+q2a:'Domande, bozze, ricerche — uso conversazionale',
+q2b:'Analisi di documenti, sessioni lunghe, output strutturati in volume',
+q2c:'Sviluppo software, automazioni, Claude Code',
+s5:'Vale i soldi il piano a pagamento?',
+roiH:'Vale davvero i soldi il piano a pagamento?',
+roiP:'Mettila in prospettiva. Se Claude ti risparmia anche solo due ore di lavoro al mese — ricerche, bozze, analisi, revisioni — sei già in pareggio. Per chi usa Claude come si spiega in questo corso, il risparmio è nell\'ordine delle ore alla settimana, non al mese. Non è una spesa: è un investimento con ritorno immediato.',
+s6:'Azione adesso',
+cpH:'Fermati qui — fai una di queste due cose',
+cpP:'<strong>Se non hai ancora un account:</strong> vai su claude.ai e crealo. Ci vogliono due minuti. Usa Google se hai un account Google — è più veloce.<br><br><strong>Se hai già un account:</strong> vai su Impostazioni e controlla su quale piano sei. Se sei nel Free e hai intenzione di usare Claude seriamente, considera l\'upgrade prima di arrivare al Modulo 2 — inizieremo a usarlo in modo intensivo e i limiti del Free si faranno sentire.',
+bridge:'Account creato, piano scelto. <b>Prossima lezione 1.2:</b> dove usi Claude? Claude non è una sola app — è un ecosistema di superfici diverse, ognuna pensata per un contesto specifico. Usare quella sbagliata è come guidare in autostrada in prima marcia.',
+foot:'Morfeus — Creare l\'Account e Scegliere il Piano'
+},
+en:{
+kicker:'Lesson 1.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Setup',
+h1:'Creating Your Account and Choosing a Plan',
+lede:'Two minutes to create the account, a few more to understand the plans. By the end you know exactly where you are and where to go.',
+hook:'"This lesson takes less than six minutes. By the end you have the account and you know exactly which plan to be on. Let me get ahead of the question half of you will ask: is the paid plan really worth the money? The answer is yes — and I\'ll prove it while I walk you through the plans."',
+s1:'Before you start',
+ctx1:'Claude is the language model from <strong>Anthropic</strong> — not Google, not OpenAI. A company founded in 2021 with a stated focus on safety and model quality. <strong>claude.ai</strong> is the entry point for everyone, regardless of the plan you choose.',
+ctx2:'Three things to know before you open the browser:',
+pill1:'No card to get started',pill2:'Plan changeable at any time',pill3:'Your work is never lost',
+ctx3:'The free plan exists and it works. What you choose today is reversible — moving up or down a plan doesn\'t delete the conversations and projects you\'ve already created.',
+s2:'How to create the account — step by step',
+stepsIntro:'Signup on claude.ai. Click each step to open the details.',
+s3:'The plans — click to explore',
+keyP:'"Free to find out if Claude is for you. Pro once you\'ve decided Claude is part of your daily work. Max once Claude has become your main production tool and Pro\'s limits start to bite regularly."',
+s4:'Which plan is right for you?',
+quizH:'Mini check — two questions',quizSub:'Click the answer that fits you best',
+q1q:'How would you describe your current relationship with Claude?',
+q1a:'I\'ve never used Claude or only played with it a little',
+q1b:'I use it now and then, when I need something specific',
+q1c:'I\'d use it (or already use it) every day in my work',
+q2q:'What kind of tasks do you expect to do mainly?',
+q2a:'Questions, drafts, research — conversational use',
+q2b:'Document analysis, long sessions, structured output at volume',
+q2c:'Software development, automations, Claude Code',
+s5:'Is the paid plan worth the money?',
+roiH:'Is the paid plan really worth the money?',
+roiP:'Put it in perspective. If Claude saves you even just two hours of work a month — research, drafts, analysis, reviews — you\'ve already broken even. For anyone using Claude as taught in this course, the savings are on the order of hours per week, not per month. It\'s not a cost: it\'s an investment with an immediate return.',
+s6:'Act now',
+cpH:'Stop here — do one of these two things',
+cpP:'<strong>If you don\'t have an account yet:</strong> go to claude.ai and create one. It takes two minutes. Use Google if you have a Google account — it\'s faster.<br><br><strong>If you already have an account:</strong> go to Settings and check which plan you\'re on. If you\'re on Free and you intend to use Claude seriously, consider upgrading before you reach Module 2 — we\'ll start using it intensively and the Free limits will start to bite.',
+bridge:'Account created, plan chosen. <b>Next lesson 1.2:</b> where do you use Claude? Claude isn\'t a single app — it\'s an ecosystem of different surfaces, each designed for a specific context. Using the wrong one is like driving on the highway in first gear.',
+foot:'Morfeus — Creating Your Account and Choosing a Plan'
+}};
+
+var STEPS={it:[
+['Vai su claude.ai','Apri il browser e digita claude.ai','Apri un browser qualsiasi (Chrome, Firefox, Safari, Edge) e vai su <strong>claude.ai</strong>. Non serve installare niente: Claude funziona interamente dal web per l\'uso quotidiano.|Nella homepage vedrai un pulsante tipo "Start for free" o "Sign up". Il testo esatto può cambiare nel tempo, ma è sempre in evidenza nella parte alta della pagina.',''],
+['Scegli il metodo di registrazione','Email + password oppure accesso con Google','Hai due opzioni: creare un account con email e password, oppure usare il tuo account Google per accedere direttamente.','<strong>Consiglio:</strong> se hai già un account Google, usalo — è più veloce e hai una password in meno da gestire. Funziona esattamente come "Accedi con Google" su qualsiasi altro sito.'],
+['Conferma l\'email (se non usi Google)','Controlla la casella e clicca il link di verifica','Se hai scelto la registrazione via email, Anthropic ti manderà un link di verifica. Aprilo dalla tua casella — di solito arriva in pochi secondi. Se non lo vedi, controlla la cartella spam.|Chi ha usato Google salta questo passaggio: l\'accesso è immediato.',''],
+['Sei dentro — imposta il nome','Pochi campi, poi sei nell\'interfaccia','Al primo accesso Claude ti chiede un nome e magari qualche informazione iniziale sull\'uso che intendi farne. Compila liberamente — non vincola niente e si può cambiare dopo dalle impostazioni.|Una volta dentro vedrai l\'interfaccia di chat. Nella prossima lezione la esploriamo nel dettaglio. Per adesso, restiamo sul piano.',''],
+['Trova la sezione Billing / Piano','Icona account in alto → Impostazioni → Piano o Billing','Per vedere o cambiare il piano: clicca sulla tua icona o iniziale in alto nell\'interfaccia, poi cerca "Impostazioni" (o Settings) e infine la voce "Piano" o "Billing". Da qui puoi vedere su quale piano sei e, se vuoi, fare l\'upgrade.','Puoi fare l\'upgrade o il downgrade in qualsiasi momento. Se sali a un piano a pagamento nel mezzo del mese, paghi solo il proporzionale. Se scendi, il piano rimane attivo fino alla fine del periodo già pagato.']
+],en:[
+['Go to claude.ai','Open the browser and type claude.ai','Open any browser (Chrome, Firefox, Safari, Edge) and go to <strong>claude.ai</strong>. There\'s nothing to install: Claude runs entirely from the web for everyday use.|On the homepage you\'ll see a button like "Start for free" or "Sign up". The exact wording may change over time, but it\'s always prominent at the top of the page.',''],
+['Choose your sign-up method','Email + password or sign in with Google','You have two options: create an account with email and password, or use your Google account to sign in directly.','<strong>Tip:</strong> if you already have a Google account, use it — it\'s faster and that\'s one less password to manage. It works exactly like "Sign in with Google" on any other site.'],
+['Confirm your email (if not using Google)','Check your inbox and click the verification link','If you chose email signup, Anthropic will send you a verification link. Open it from your inbox — it usually arrives in a few seconds. If you don\'t see it, check the spam folder.|Anyone who used Google skips this step: access is immediate.',''],
+['You\'re in — set your name','A few fields, then you\'re in the interface','On first access Claude asks for a name and maybe some initial info about how you intend to use it. Fill it in freely — it locks nothing and can be changed later in settings.|Once inside you\'ll see the chat interface. We explore it in detail in the next lesson. For now, let\'s stay on the plan.',''],
+['Find the Billing / Plan section','Account icon at top → Settings → Plan or Billing','To view or change the plan: click your icon or initial at the top of the interface, then look for "Settings" and finally the "Plan" or "Billing" entry. From here you can see which plan you\'re on and, if you want, upgrade.','You can upgrade or downgrade at any time. If you move up to a paid plan mid-month, you only pay the prorated amount. If you move down, the plan stays active until the end of the period you\'ve already paid for.']
+]};
+
+var PLANS={it:[
+{id:'free',tab:'Free',tabIc:'ti-sparkles',ic:'ti-sparkles',c:'gray',name:'Piano Gratuito',tag:'Il punto di partenza per provare Claude senza impegno',badge:'$0',
+sect:'Cosa include',feats:[
+['ti-brain','Modello base','Accesso al modello Sonnet — capace, adatto alla maggior parte dei compiti quotidiani. Non include il modello più potente (Opus).'],
+['ti-gauge','Messaggi limitati al giorno','Il numero non è fisso: dipende dalla lunghezza dei messaggi. In pratica, qualche decina di scambi al giorno prima di incontrare il limite.'],
+['ti-check','Funzioni base incluse','Conversazioni, caricamento file, artifacts, memoria. Abbastanza per esplorare Claude e capire come può integrarsi nel tuo lavoro.']],
+who:[['ti-circle-check','good','Stai valutando Claude e vuoi toccarlo con mano prima di decidere'],['ti-circle-check','good','Usi Claude occasionalmente, non tutti i giorni'],['ti-circle-dotted','amber','Non ancora adatto se vuoi fare lavoro serio quotidiano — i limiti si fanno sentire']]},
+{id:'pro',tab:'Pro',tabIc:'ti-crown',ic:'ti-crown',c:'accent',name:'Piano Pro',tag:'Il piano consigliato per chi integra Claude nel lavoro quotidiano',badge:'A pagamento',
+sect:'Cosa aggiunge rispetto al Free',feats:[
+['ti-brain','Accesso a Sonnet e Opus','Puoi scegliere il modello per ogni conversazione. Opus è il modello più capace per ragionamento complesso, analisi profonda, creatività alta.'],
+['ti-bulb','Extended Thinking','Claude può "pensare più a lungo" prima di rispondere. Il ragionamento interno è visibile. Migliora drasticamente la qualità su problemi difficili.'],
+['ti-gauge','Circa 5 volte più messaggi','Rispetto al Free. Priorità durante gli orari di punta: quando i server sono carichi, gli utenti Pro vengono serviti prima.'],
+['ti-bell','Accesso prioritario alle novità','Nuove funzionalità, nuovi modelli, beta feature: gli utenti Pro le ricevono prima degli altri.']],
+who:[['ti-circle-check','good','Hai deciso che Claude entra nel tuo lavoro quotidiano'],['ti-circle-check','good','Usi Claude ogni giorno per ricerche, bozze, analisi, revisioni'],['ti-circle-check','good','Vuoi accedere al modello più potente quando serve'],['ti-circle-dotted','amber','Se ti serve Claude Code (l\'agente da terminale), considera Max — Pro non lo include']]},
+{id:'max',tab:'Max',tabIc:'ti-rocket',ic:'ti-rocket',c:'teal',name:'Piano Max',tag:'Per chi usa Claude in modo intensivo o come strumento principale',badge:'Fascia alta',
+sect:'Cos\'è e cosa include',feats:[
+['ti-layers','Due fasce di utilizzo','Max esiste in due varianti: una con 5 volte i limiti del Pro, una con 20 volte. La scelta dipende dall\'intensità d\'uso. Entrambe includono tutto ciò che c\'è nel Pro.'],
+['ti-terminal-2','Claude Code incluso','L\'agente da terminale che lavora direttamente sulla tua codebase è disponibile a partire da Max. Non incluso nel piano Pro.'],
+['ti-gauge','Volume massiccio di utilizzo','Sessioni lunghe, workflow pesanti, output in volume. Max è pensato per chi ha trasformato Claude nel proprio strumento principale di produzione.']],
+who:[['ti-circle-check','good','Il Pro inizia a mostrarti limiti regolarmente durante la giornata'],['ti-circle-check','good','Usi Claude Code per lo sviluppo software'],['ti-circle-check','good','Sessioni di lavoro multi-ora con molti file e molto contesto'],['ti-circle-dotted','gray','Non necessario se usi Claude in modo standard — il Pro basta per la grande maggioranza']]},
+{id:'team',tab:'Team / Enterprise',tabIc:'ti-users',ic:'ti-users',c:'blue',name:'Team & Enterprise',tag:'Per organizzazioni con più utenti e necessità di governance centralizzata',badge:'Organizzazioni',
+sect:'A chi è rivolto',feats:[
+['ti-building','Billing centralizzato per il team','Un unico account amministrativo gestisce più utenti, i pagamenti e i permessi. Adatto ad aziende con più persone che usano Claude.'],
+['ti-shield-lock','Controlli privacy e sicurezza avanzati','Funzioni di compliance, gestione dati, SSO (Single Sign-On) per Enterprise. I dati del team restano separati e protetti.'],
+['ti-headset','Supporto dedicato','Account manager, onboarding assistito, SLA di risposta. Non è il prodotto self-service standard.']],
+whoT:'Nota per questo corso',who:[['ti-info-circle','blue','Questo corso si concentra sull\'uso individuale — Chat, Cowork, Claude Code. Team ed Enterprise hanno la loro logica di deployment che va concordata direttamente con Anthropic.'],['ti-circle-dotted','gray','Se stai valutando Claude per la tua azienda, la parte formativa di questo corso vale comunque: capisci cosa rende Claude potente prima di decidere come distribuirlo.']]}
+],en:[
+{id:'free',tab:'Free',tabIc:'ti-sparkles',ic:'ti-sparkles',c:'gray',name:'Free Plan',tag:'The starting point to try Claude with no commitment',badge:'$0',
+sect:'What\'s included',feats:[
+['ti-brain','Base model','Access to the Sonnet model — capable, suited to most everyday tasks. Doesn\'t include the most powerful model (Opus).'],
+['ti-gauge','Limited messages per day','The number isn\'t fixed: it depends on message length. In practice, a few dozen exchanges a day before you hit the limit.'],
+['ti-check','Core features included','Conversations, file upload, artifacts, memory. Enough to explore Claude and understand how it can fit into your work.']],
+who:[['ti-circle-check','good','You\'re evaluating Claude and want to try it hands-on before deciding'],['ti-circle-check','good','You use Claude occasionally, not every day'],['ti-circle-dotted','amber','Not yet suited if you want serious daily work — the limits start to bite']]},
+{id:'pro',tab:'Pro',tabIc:'ti-crown',ic:'ti-crown',c:'accent',name:'Pro Plan',tag:'The recommended plan for those integrating Claude into daily work',badge:'Paid',
+sect:'What it adds over Free',feats:[
+['ti-brain','Access to Sonnet and Opus','You can pick the model for each conversation. Opus is the most capable model for complex reasoning, deep analysis, high creativity.'],
+['ti-bulb','Extended Thinking','Claude can "think longer" before answering. The internal reasoning is visible. It dramatically improves quality on hard problems.'],
+['ti-gauge','About 5x more messages','Compared to Free. Priority during peak hours: when servers are loaded, Pro users are served first.'],
+['ti-bell','Priority access to new features','New features, new models, beta features: Pro users get them before others.']],
+who:[['ti-circle-check','good','You\'ve decided Claude is part of your daily work'],['ti-circle-check','good','You use Claude every day for research, drafts, analysis, reviews'],['ti-circle-check','good','You want access to the most powerful model when needed'],['ti-circle-dotted','amber','If you need Claude Code (the terminal agent), consider Max — Pro doesn\'t include it']]},
+{id:'max',tab:'Max',tabIc:'ti-rocket',ic:'ti-rocket',c:'teal',name:'Max Plan',tag:'For those who use Claude intensively or as their main tool',badge:'High tier',
+sect:'What it is and what it includes',feats:[
+['ti-layers','Two usage tiers','Max comes in two variants: one with 5x the Pro limits, one with 20x. The choice depends on usage intensity. Both include everything in Pro.'],
+['ti-terminal-2','Claude Code included','The terminal agent that works directly on your codebase is available starting from Max. Not included in the Pro plan.'],
+['ti-gauge','Massive usage volume','Long sessions, heavy workflows, output at volume. Max is built for those who have turned Claude into their main production tool.']],
+who:[['ti-circle-check','good','Pro starts showing you limits regularly during the day'],['ti-circle-check','good','You use Claude Code for software development'],['ti-circle-check','good','Multi-hour work sessions with many files and a lot of context'],['ti-circle-dotted','gray','Not needed if you use Claude in a standard way — Pro is enough for the vast majority']]},
+{id:'team',tab:'Team / Enterprise',tabIc:'ti-users',ic:'ti-users',c:'blue',name:'Team & Enterprise',tag:'For organizations with multiple users and a need for centralized governance',badge:'Organizations',
+sect:'Who it\'s for',feats:[
+['ti-building','Centralized billing for the team','A single admin account manages multiple users, payments and permissions. Suited to companies with several people using Claude.'],
+['ti-shield-lock','Advanced privacy and security controls','Compliance features, data management, SSO (Single Sign-On) for Enterprise. The team\'s data stays separate and protected.'],
+['ti-headset','Dedicated support','Account manager, assisted onboarding, response SLAs. It\'s not the standard self-service product.']],
+whoT:'Note for this course',who:[['ti-info-circle','blue','This course focuses on individual use — Chat, Cowork, Claude Code. Team and Enterprise have their own deployment logic to be arranged directly with Anthropic.'],['ti-circle-dotted','gray','If you\'re evaluating Claude for your company, the training part of this course still applies: understand what makes Claude powerful before deciding how to roll it out.']]}
+]};
+
+var QRES={it:{
+new:{ic:'ti-sparkles',c:'gray',title:'Inizia con il piano gratuito',text:'Hai bisogno di esplorare Claude prima di impegnarti. Il piano Free ti permette di capire come funziona, cosa sa fare, e se fa per te. Quando inizi a sbatterci contro i limiti ogni giorno, quello è il segnale che è ora di salire.'},
+sometimesLight:{ic:'ti-sparkles',c:'gray',title:'Free o Pro — dipende dalla frequenza',text:'Con uso occasionale, il piano gratuito può bastare. Se noti che ti blocchi spesso sui limiti, o vuoi accedere al modello più capace, il Pro è il salto naturale. Inizia gratis e valuta dopo una settimana di uso reale.'},
+code:{ic:'ti-terminal-2',c:'teal',title:'Pianifica Max dal Modulo dedicato a Claude Code',text:'Se vuoi usare Claude Code — l\'agente da terminale che lavora sulla tua codebase — ti serve il piano Max. Non è incluso nel Pro. Puoi iniziare con Pro per i primi moduli del corso e salire a Max quando arrivi alla parte su Claude Code.'},
+pro:{ic:'ti-crown',c:'accent',title:'Piano Pro — la scelta giusta',text:'Hai già deciso. Claude entra nel tuo workflow quotidiano. Il Pro ti dà accesso al modello più potente, molti più messaggi, e priorità nelle ore di punta. Per la grande maggioranza degli utenti seri, il Pro è più che sufficiente.'},
+proSolid:{ic:'ti-crown',c:'accent',title:'Piano Pro — punto di partenza solido',text:'Per un uso professionale regolare, il Pro è il piano di riferimento. Accesso completo ai modelli, limiti generosi, tutte le funzionalità. Considera Max solo se dopo qualche settimana inizi a incontrare i limiti in modo sistematico.'},
+restart:'Ricomincia'
+},en:{
+new:{ic:'ti-sparkles',c:'gray',title:'Start with the free plan',text:'You need to explore Claude before committing. The Free plan lets you understand how it works, what it can do, and whether it\'s for you. When you start hitting the limits every day, that\'s the signal it\'s time to move up.'},
+sometimesLight:{ic:'ti-sparkles',c:'gray',title:'Free or Pro — depends on frequency',text:'With occasional use, the free plan can be enough. If you notice you often get stuck on limits, or you want access to the more capable model, Pro is the natural jump. Start free and reassess after a week of real use.'},
+code:{ic:'ti-terminal-2',c:'teal',title:'Plan for Max from the Claude Code module',text:'If you want to use Claude Code — the terminal agent that works on your codebase — you need the Max plan. It\'s not included in Pro. You can start with Pro for the first modules of the course and move up to Max when you reach the Claude Code part.'},
+pro:{ic:'ti-crown',c:'accent',title:'Pro Plan — the right choice',text:'You\'ve already decided. Claude is part of your daily workflow. Pro gives you access to the most powerful model, many more messages, and priority during peak hours. For the vast majority of serious users, Pro is more than enough.'},
+proSolid:{ic:'ti-crown',c:'accent',title:'Pro Plan — a solid starting point',text:'For regular professional use, Pro is the reference plan. Full access to the models, generous limits, all the features. Consider Max only if after a few weeks you start hitting the limits systematically.'},
+restart:'Restart'
+}};
+
+var LANG='it',quizAnswers={};
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSteps();renderPlans();
+}
+function renderSteps(){
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s,i){
+    var paras=s[2].split('|').map(function(p){return '<p>'+p+'</p>'}).join('');
+    var tip=s[3]?'<div class="tip-in"><i class="ti ti-bulb"></i><span>'+s[3]+'</span></div>':'';
+    return '<div class="stp" onclick="toggleStep(this,'+i+')"><div class="stp-head"><div class="stp-bub">'+(i+1)+'</div><div class="stp-txt"><div class="st-t">'+s[0]+'<i class="ti ti-chevron-right chev"></i></div><div class="st-m">'+s[1]+'</div></div></div><div class="stp-det"><div class="stp-det-in">'+paras+tip+'</div></div></div>';
+  }).join('');
+}
+function toggleStep(el,idx){
+  var was=el.classList.contains('on');
+  var items=Array.from(document.querySelectorAll('#steps .stp'));
+  items.forEach(function(s){s.classList.remove('on')});
+  if(!was){
+    el.classList.add('on');
+    items.forEach(function(s,i){if(i<idx)s.classList.add('done');else s.classList.remove('done')});
+  }
+}
+function renderPlans(){
+  var ps=PLANS[LANG];
+  document.getElementById('ptabs').innerHTML=ps.map(function(p,i){
+    return '<button class="ptab'+(i===0?' on':'')+'" onclick="showPlan(\''+p.id+'\',this)"><i class="ti '+p.tabIc+'"></i> '+p.tab+'</button>';
+  }).join('');
+  document.getElementById('ppanels').innerHTML=ps.map(function(p,i){
+    var feats=p.feats.map(function(f){
+      return '<div class="pfeat"><div class="pfeat-ic" style="background:var(--'+p.c+'-soft);color:var(--'+p.c+')"><i class="ti '+f[0]+'"></i></div><div class="pfeat-t"><strong>'+f[1]+'</strong><span>'+f[2]+'</span></div></div>';
+    }).join('');
+    var who=p.who.map(function(w){
+      return '<div class="forwho-i"><i class="ti '+w[0]+'" style="color:var(--'+w[1]+')"></i> '+w[2]+'</div>';
+    }).join('');
+    var whoTitle=p.whoT||'Per chi è';if(LANG==='en'&&!p.whoT)whoTitle='Who it\'s for';
+    return '<div class="ppanel'+(i===0?' vis':'')+'" id="plan-'+p.id+'"><div class="ptop"><div class="picon" style="background:var(--'+p.c+'-soft);color:var(--'+p.c+')"><i class="ti '+p.ic+'"></i></div><div class="pnameb"><h3>'+p.name+'</h3><div class="ptag">'+p.tag+'</div></div><div class="pbadge" style="background:var(--'+p.c+'-soft);color:var(--'+p.c+')">'+p.badge+'</div></div><div class="pbody"><div class="psect"><i class="ti ti-list"></i> '+p.sect+'</div>'+feats+'<div class="forwho"><div class="forwho-t" style="color:var(--'+p.c+')"><i class="ti ti-target"></i> '+whoTitle+'</div>'+who+'</div></div></div>';
+  }).join('');
+}
+function showPlan(id,btn){
+  document.querySelectorAll('.ppanel').forEach(function(p){p.classList.remove('vis')});
+  document.querySelectorAll('.ptab').forEach(function(t){t.classList.remove('on')});
+  document.getElementById('plan-'+id).classList.add('vis');
+  btn.classList.add('on');
+}
+function quizStep(step,answer){
+  quizAnswers['q'+step]=answer;
+  var stepEl=document.getElementById('quizStep'+step);
+  stepEl.querySelectorAll('.qopt').forEach(function(o){o.classList.remove('sel')});
+  event.currentTarget.classList.add('sel');
+  setTimeout(function(){
+    if(step===1){document.getElementById('quizStep1').style.display='none';document.getElementById('quizStep2').style.display='block';}
+    else if(step===2){showQuizResult();}
+  },320);
+}
+function showQuizResult(){
+  var q1=quizAnswers['q1'],q2=quizAnswers['q2'],r=QRES[LANG];var key;
+  if(q1==='new')key='new';
+  else if(q1==='sometimes'&&q2==='light')key='sometimesLight';
+  else if(q2==='code')key='code';
+  else if(q1==='daily'||q2==='heavy')key='pro';
+  else key='proSolid';
+  var res=r[key];
+  var el=document.getElementById('quizResult');
+  el.innerHTML='<i class="ti '+res.ic+' qri" style="color:var(--'+res.c+')"></i><h4>'+res.title+'</h4><p>'+res.text+'</p><button class="qreset" onclick="resetQuiz()"><i class="ti ti-refresh"></i> '+r.restart+'</button>';
+  el.style.background='var(--'+res.c+'-soft)';el.style.border='1px solid var(--'+res.c+'-line)';
+  el.classList.add('vis');
+  document.getElementById('quizStep2').style.display='none';
+}
+function resetQuiz(){
+  quizAnswers={};
+  document.getElementById('quizStep1').style.display='block';
+  document.getElementById('quizStep2').style.display='none';
+  var el=document.getElementById('quizResult');el.classList.remove('vis');el.innerHTML='';
+  document.querySelectorAll('.qopt').forEach(function(o){o.classList.remove('sel')});
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n();resetQuiz();}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

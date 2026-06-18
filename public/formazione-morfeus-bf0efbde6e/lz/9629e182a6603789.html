@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da Projects Isolati a Sistema — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* before/after cards */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bac{border-radius:var(--r-l);padding:20px;border:1.5px solid var(--line);box-shadow:var(--sh)}
+.bac.bad{background:var(--bad-soft);border-color:var(--bad-line)}
+.bac.good{background:var(--good-soft);border-color:var(--green-line)}
+.bac .bat{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.bac.bad .bat{color:var(--bad)}.bac.good .bat{color:var(--good)}
+.bac h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.bac p{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+/* tree */
+.treehint{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:0 0 10px;display:flex;align-items:center;gap:7px}
+.treehint i{font-size:14px;color:var(--accent)}
+.tree{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;font-family:var(--mono);font-size:13px}
+.tnode{user-select:none}
+.trow{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:var(--r);cursor:pointer;transition:background .15s}
+.trow:hover{background:var(--bg-2)}
+.trow .tw{width:13px;flex-shrink:0;text-align:center;color:var(--ink-3);font-size:12px;transition:transform .2s}
+.trow.open .tw{transform:rotate(90deg)}
+.trow .ic{font-size:15px;flex-shrink:0}
+.trow .nm{font-weight:600;color:var(--ink)}
+.trow.sys .ic{color:var(--accent)}
+.trow.vert .ic{color:var(--agent)}
+.trow.leaf{cursor:default}.trow.leaf:hover{background:transparent}
+.trow .lock{margin-left:auto;font-size:11px;color:var(--ink-3);font-style:italic;font-family:var(--sans);font-weight:400}
+.tdesc{margin:2px 0 6px 30px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);line-height:1.55;display:none}
+.tdesc.open{display:block}
+.tchild{margin-left:16px;border-left:1px solid var(--line);padding-left:6px;overflow:hidden;max-height:0;opacity:0;transition:max-height .28s ease,opacity .2s}
+.tchild.open{max-height:600px;opacity:1}
+/* principles */
+.pr{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px}
+.pr .prn{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;flex-shrink:0}
+.pr .prt{flex:1}.pr .prt strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px}.pr .prt span{font-size:13px;color:var(--ink-2);line-height:1.55}
+.pr .prt code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+/* router */
+.router{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.rpanel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.rq{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin:0 0 4px;display:flex;align-items:center;gap:7px}
+.rq .qn{background:var(--accent);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+.rq.q2{margin-top:18px}.rq.q2 .qn{background:var(--agent)}.rq.dim{opacity:.42}
+.ropts{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.opt{text-align:left;padding:9px 12px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);font-family:var(--sans);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s}
+.opt i{font-size:15px;color:var(--ink-3);transition:color .15s}
+.opt:hover{border-color:var(--accent)}.opt:hover i{color:var(--accent)}
+.opt.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}.opt.active i{color:var(--accent)}
+.opt.p.active{background:var(--agent-soft);border-color:var(--agent);color:var(--agent)}.opt.p.active i{color:var(--agent)}
+.opt.p:hover{border-color:var(--agent)}.opt.p:hover i{color:var(--agent)}
+.opt.locked{opacity:.4;pointer-events:none}
+.ropts.q2-opts{display:none}.ropts.q2-opts.show{display:flex}
+.rmap{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;font-family:var(--mono);font-size:13px}
+.rmap .rmt{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:12px;font-weight:600}
+.rmi{padding:7px 10px;border-radius:var(--r);margin-bottom:3px;display:flex;align-items:center;gap:8px;color:var(--ink-2);transition:all .2s;border:1px solid transparent}
+.rmi i{font-size:15px;color:var(--ink-3);transition:color .2s}
+.rmi.lit{background:var(--accent-soft);color:var(--accent);font-weight:600;border-color:var(--accent)}.rmi.lit i{color:var(--accent)}
+.rmsub{margin-left:18px}.rmsub .rmi{font-size:12px}
+.rmsub .rmi.lit{background:var(--agent-soft);color:var(--agent);border-color:var(--agent)}.rmsub .rmi.lit i{color:var(--agent)}
+.rmres{margin-top:14px;padding:12px 14px;border-radius:var(--r);background:var(--card);border:1px dashed var(--line-2);font-family:var(--mono);font-size:13px;color:var(--ink-3);min-height:44px;display:flex;align-items:center;gap:8px;transition:all .2s}
+.rmres.done{border-style:solid;border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.rmres i{font-size:16px}
+.rreset{margin-top:14px;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);transition:.18s}
+.rreset:hover{border-color:var(--accent);color:var(--accent)}
+/* code */
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.75;overflow-x:auto}
+.code .hh{color:var(--accent);font-weight:700}.code .hp{color:var(--agent);font-weight:700}
+/* tip */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px}
+.tip i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px}
+.warn i{color:var(--amber);font-size:21px;flex-shrink:0}.warn h4{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:4px}.warn p{font-size:13.5px;color:var(--ink-2)}
+/* prompt */
+.prompt{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.prompt .ph{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.prompt .phl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}.prompt .phl i{font-size:16px;color:var(--accent)}
+.copy-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);transition:.18s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pbody{padding:18px;font-size:11.5px;font-family:var(--mono);color:var(--ink-2);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto}
+/* advanced */
+.adv{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:18px 20px;margin-bottom:10px}
+.adv .at{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.adv p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.65}.cp p strong{color:var(--ink);font-weight:600}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;display:flex;align-items:center;gap:18px}
+.bridge>i{font-size:26px;color:var(--agent);flex-shrink:0}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:6px}
+.bridge p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ba{grid-template-columns:1fr}.router{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tchild{max-height:none!important;opacity:1!important}.tdesc{display:block!important}.note,.bac,.tree,.pr,.router,.code,.tip,.warn,.prompt,.adv,.cp,.bridge,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 5.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Workspace avanzato</div>
+  <h1 class="rv" data-i="h1">Da Projects Isolati a Sistema</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-trending-up"></i><span class="no">01</span><h2 data-i="s1">Il salto di livello</h2></div>
+  <div class="ba rv">
+    <div class="bac bad"><div class="bat"><i class="ti ti-folders"></i> <span data-i="jumpBadTag">Livello Projects</span></div><h3 data-i="jumpBadH"></h3><p data-i="jumpBadP"></p></div>
+    <div class="bac good"><div class="bat"><i class="ti ti-building-arch"></i> <span data-i="jumpGoodTag">Livello Sistema</span></div><h3 data-i="jumpGoodH"></h3><p data-i="jumpGoodP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">02</span><h2 data-i="s2">Il principio fondamentale</h2></div>
+  <div class="key rv"><p data-i="key1"></p></div>
+  <p class="lede rv" style="font-size:14.5px;margin:20px 0" data-i="prinP"></p>
+  <div class="ba rv">
+    <div class="bac bad"><div class="bat"><i class="ti ti-x"></i> <span data-i="prinBadTag">Per tipo (non scala)</span></div><h3 data-i="prinBadH"></h3><p data-i="prinBadP"></p></div>
+    <div class="bac good"><div class="bat"><i class="ti ti-check"></i> <span data-i="prinGoodTag">Per owner (scala)</span></div><h3 data-i="prinGoodH"></h3><p data-i="prinGoodP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">03</span><h2 data-i="s3">Lo Skeleton: la struttura replicabile</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="skelIntro"></p>
+  <div class="treehint rv"><i class="ti ti-hand-finger"></i> <span data-i="treeHint"></span></div>
+  <div class="tree rv" id="skeleton-tree"></div>
+  <div class="tip rv" style="margin-top:14px"><i class="ti ti-bulb"></i><div><h4 data-i="skelTipH"></h4><p data-i="skelTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">04</span><h2 data-i="s4">Le 3 regole che tengono in piedi il sistema</h2></div>
+  <div class="rv" id="principles"></div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">05</span><h2 data-i="s5">Il Router: dove vanno le cose</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="routerIntro"></p>
+  <div class="treehint rv"><i class="ti ti-hand-finger"></i> <span data-i="routerHint"></span></div>
+  <div class="router rv" id="router-widget">
+    <div class="rpanel">
+      <div class="rq" id="rq1"><span class="qn">1</span> <span data-i="rqOwner"></span></div>
+      <div class="ropts" id="r-owners"></div>
+      <div class="rq q2 dim" id="rq2"><span class="qn">2</span> <span data-i="rqType"></span></div>
+      <div class="ropts q2-opts" id="r-types"></div>
+    </div>
+    <div class="rmap">
+      <div class="rmt" data-i="rmTitle"></div>
+      <div class="rmi" data-v="az"><i class="ti ti-folder"></i> 01_AZIENDA</div>
+      <div class="rmi" data-v="cli"><i class="ti ti-folder"></i> 02_CLIENTI/[Cliente]</div>
+      <div class="rmi" data-v="pb"><i class="ti ti-folder"></i> 03_PERSONAL_BRAND</div>
+      <div class="rmi" data-v="form"><i class="ti ti-folder"></i> 04_FORMAZIONE</div>
+      <div class="rmi" data-v="pers"><i class="ti ti-folder"></i> 06_PERSONALE</div>
+      <div class="rmsub" id="rm-sub" style="display:none">
+        <div class="rmi" data-s="04_CONTENT"><i class="ti ti-corner-down-right"></i> 04_CONTENT</div>
+        <div class="rmi" data-s="05_MARKETING"><i class="ti ti-corner-down-right"></i> 05_MARKETING</div>
+        <div class="rmi" data-s="06_PROJECTS/[nome]"><i class="ti ti-corner-down-right"></i> 06_PROJECTS/[nome]</div>
+        <div class="rmi" data-s="99_ARCHIVE"><i class="ti ti-corner-down-right"></i> 99_ARCHIVE</div>
+      </div>
+      <div class="rmres" id="rm-result"><i class="ti ti-map-pin"></i> <span data-i="rmStart"></span></div>
+      <button class="rreset" onclick="resetRouter()"><i class="ti ti-rotate"></i> <span data-i="rmReset"></span></button>
+    </div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin:16px 0" data-i="routerP"></p>
+  <div class="code rv" id="routerCode"></div>
+
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">06</span><h2 data-i="s6">Meta-creazione: Claude costruisce il sistema per voi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="metaP"></p>
+  <div class="key rv" style="margin-bottom:24px"><p data-i="key2"></p></div>
+  <div class="prompt rv">
+    <div class="ph"><div class="phl"><i class="ti ti-sparkles"></i> <span data-i="promptLbl"></span></div><button class="copy-btn" onclick="copyPrompt(this)"><i class="ti ti-copy"></i> <span data-i="copyLbl">Copia</span></button></div>
+    <div class="pbody" id="meta-prompt"></div>
+  </div>
+  <div class="tip rv" style="margin-top:14px"><i class="ti ti-bulb"></i><div><h4 data-i="metaTipH"></h4><p data-i="metaTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-rocket"></i><span class="no">07</span><h2 data-i="s7">Livello successivo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="advP"></p>
+  <div class="rv" id="advanced"></div>
+  <div class="warn rv" style="margin-top:14px"><i class="ti ti-alert-triangle"></i><div><h4 data-i="advWarnH"></h4><p data-i="advWarnP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-sparkles cpi"></i>
+    <h4 data-i="cpH"></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">09</span><h2 data-i="s9">Prossima lezione</h2></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right"></i><div><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Da Projects Isolati a Sistema</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 5.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Workspace avanzato',
+h1:'Da Projects Isolati a Sistema',
+lede:'Fino a qui avete imparato a creare singoli Projects. Adesso costruiamo l\'infrastruttura: una workspace organizzata dove Claude non è un assistente occasionale, ma il vostro sistema operativo.',
+hookH:'L\'idea',
+hookP:'La differenza tra chi usa Claude bene e chi lo usa davvero non è il prompt. È l\'infrastruttura intorno. E la cosa migliore? L\'infrastruttura la fa costruire a Claude stesso.',
+s1:'Il salto di livello',
+jumpBadTag:'Livello Projects',jumpBadH:'Projects isolati',jumpBadP:'5-10 Projects separati. Ognuno funziona, ma non parlano tra loro. File sparsi. Naming inconsistente. Quando cercate qualcosa, non sapete dove guardare.',
+jumpGoodTag:'Livello Sistema',jumpGoodH:'Workspace strutturata',jumpGoodP:'Un\'architettura unica che organizza tutto per owner. Claude sa dove trovare ogni cosa. Naming consistente. Un Router governa dove vanno le cose nuove.',
+s2:'Il principio fondamentale',
+key1:'Organizza per proprietario, non per tipo.',
+prinP:'L\'errore più comune: creare cartelle per tipo (Documenti, Immagini, Progetti, Template). Sembra ordinato ma diventa ingestibile. La struttura che scala è per owner: chi possiede quel lavoro?',
+prinBadTag:'Per tipo (non scala)',prinBadH:'Tutto mischiato',prinBadP:'Documenti / Immagini / Progetti / Template / Archivio. Dove va la proposta per il cliente A? In "Documenti" o in "Progetti"?',
+prinGoodTag:'Per owner (scala)',prinGoodH:'Ogni cosa al suo posto',prinGoodP:'Azienda / Clienti / Personal Brand / Formazione / Personale. La proposta per il cliente A sta in Clienti/ClienteA. Zero ambiguità.',
+s3:'Lo Skeleton: la struttura replicabile',
+skelIntro:'Questa è la struttura di una workspace professionale. Non è rigida: è uno skeleton che si adatta. Le cartelle si creano quando servono, non prima.',
+treeHint:'Cliccate una cartella per vedere a cosa serve e cosa contiene.',
+skelTipH:'Non serve tutto subito',
+skelTipP:'Non create tutte le cartelle il primo giorno. Create 00_SYSTEM e le 2-3 verticali che usate di più. Il resto nasce quando arriva il lavoro. Lo scaffolding speculativo è la causa numero uno del disordine.',
+s4:'Le 3 regole che tengono in piedi il sistema',
+s5:'Il Router: dove vanno le cose',
+routerIntro:'Il Router è un file in 00_SYSTEM che risponde a: "quando arriva un lavoro nuovo, dove lo metto?" Due domande risolvono quasi tutto:',
+routerHint:'Provatelo: scegliete un owner, poi un tipo. Guardate la mappa illuminarsi e portare la richiesta a casa sua.',
+rqOwner:'Di chi è il lavoro?',rqType:'Che tipo è?',rmTitle:'La workspace',
+rmStart:'La richiesta atterra qui…',rmReset:'Reset',
+routerP:'Scrivete il Router come tabella semplice. Ogni volta che Claude non sa dove mettere qualcosa, aggiungete la regola. Nel tempo copre il 95% dei casi.',
+s6:'Meta-creazione: Claude costruisce il sistema per voi',
+metaP:'Ecco il punto chiave di tutta la lezione. Non dovete costruire questa infrastruttura a mano. Descrivete chi siete e cosa fate, e Claude crea tutto: cartelle, CLAUDE.md, Router, File Rules, system map. Poi voi raffinate.',
+key2:'L\'infrastruttura migliore è quella che l\'AI costruisce per voi e voi affinate nel tempo. Non serve essere architetti: serve saper briefare.',
+promptLbl:'Prompt: Costruisci il mio sistema operativo',copyLbl:'Copia',
+metaTipH:'Come funziona il processo',
+metaTipP:'Aprite CoWork (o una chat Claude con accesso ai file). Incollate il prompt. Claude vi intervista in profondità, adattando le domande alle vostre risposte. Se non sapete qualcosa, decide lui e vi spiega perché. Poi vi presenta 2 opzioni di struttura con pro/contro e la sua raccomandazione. Solo dopo la vostra approvazione genera i file. Il tutto richiede 30-60 minuti ma produce un sistema che vi fa risparmiare mesi.',
+s7:'Livello successivo',
+advP:'Una volta che il sistema base funziona, ci sono pattern avanzati che lo rendono ancora più potente. Non implementateli subito: tornateci quando il vostro sistema è maturo.',
+advWarnH:'Non partite da qui',
+advWarnP:'Questi pattern hanno senso quando il sistema base è solido e lo usate da almeno un mese. Partire da INBOX e cockpit senza skeleton e CLAUDE.md è come mettere il tetto prima delle fondamenta.',
+s8:'Checkpoint',
+cpH:'Costruite il vostro sistema. Adesso.',
+cpP:'Copiate il prompt qui sopra. Aprite CoWork. Rispondete alle domande. In 30 minuti avrete: struttura cartelle, CLAUDE.md, Router, File Rules.<br><br><strong>Non aspettate di avere il sistema perfetto in testa. Briefate Claude, lasciate che costruisca, poi raffinate.</strong>',
+s9:'Prossima lezione',
+brK:'Prossima lezione →',
+brP:'Il sistema è costruito. Adesso lo facciamo evolvere: il loop di miglioramento continuo e il Blocco di Contesto Compresso per le sessioni lunghe.',
+foot:'Morfeus — Da Projects Isolati a Sistema'
+},
+en:{
+kicker:'Lesson 5.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced workspace',
+h1:'From Isolated Projects to a System',
+lede:'So far you\'ve learned to create individual Projects. Now we build the infrastructure: an organized workspace where Claude isn\'t an occasional assistant, but your operating system.',
+hookH:'The idea',
+hookP:'The difference between those who use Claude well and those who use it for real isn\'t the prompt. It\'s the infrastructure around it. And the best part? You let Claude itself build that infrastructure.',
+s1:'The level-up',
+jumpBadTag:'Projects level',jumpBadH:'Isolated Projects',jumpBadP:'5-10 separate Projects. Each one works, but they don\'t talk to each other. Scattered files. Inconsistent naming. When you look for something, you don\'t know where to look.',
+jumpGoodTag:'System level',jumpGoodH:'Structured workspace',jumpGoodP:'A single architecture that organizes everything by owner. Claude knows where to find each thing. Consistent naming. A Router governs where new things go.',
+s2:'The fundamental principle',
+key1:'Organize by owner, not by type.',
+prinP:'The most common mistake: creating folders by type (Documents, Images, Projects, Templates). It looks tidy but becomes unmanageable. The structure that scales is by owner: who owns that work?',
+prinBadTag:'By type (doesn\'t scale)',prinBadH:'Everything mixed up',prinBadP:'Documents / Images / Projects / Templates / Archive. Where does the proposal for client A go? In "Documents" or in "Projects"?',
+prinGoodTag:'By owner (scales)',prinGoodH:'Everything in its place',prinGoodP:'Company / Clients / Personal Brand / Education / Personal. The proposal for client A lives in Clients/ClientA. Zero ambiguity.',
+s3:'The Skeleton: the replicable structure',
+skelIntro:'This is the structure of a professional workspace. It\'s not rigid: it\'s a skeleton that adapts. Folders are created when needed, not before.',
+treeHint:'Click a folder to see what it\'s for and what it contains.',
+skelTipH:'You don\'t need it all at once',
+skelTipP:'Don\'t create all the folders on day one. Create 00_SYSTEM and the 2-3 verticals you use most. The rest is born when the work arrives. Speculative scaffolding is the number one cause of clutter.',
+s4:'The 3 rules that hold the system together',
+s5:'The Router: where things go',
+routerIntro:'The Router is a file in 00_SYSTEM that answers: "when new work comes in, where do I put it?" Two questions solve almost everything:',
+routerHint:'Try it: pick an owner, then a type. Watch the map light up and take the request home.',
+rqOwner:'Whose work is it?',rqType:'What type is it?',rmTitle:'The workspace',
+rmStart:'The request lands here…',rmReset:'Reset',
+routerP:'Write the Router as a simple table. Every time Claude doesn\'t know where to put something, add the rule. Over time it covers 95% of cases.',
+s6:'Meta-creation: Claude builds the system for you',
+metaP:'This is the key point of the whole lesson. You don\'t have to build this infrastructure by hand. Describe who you are and what you do, and Claude creates everything: folders, CLAUDE.md, Router, File Rules, system map. Then you refine.',
+key2:'The best infrastructure is the one the AI builds for you and you refine over time. You don\'t need to be an architect: you need to know how to brief.',
+promptLbl:'Prompt: Build my operating system',copyLbl:'Copy',
+metaTipH:'How the process works',
+metaTipP:'Open CoWork (or a Claude chat with file access). Paste the prompt. Claude interviews you in depth, adapting the questions to your answers. If you don\'t know something, it decides for you and explains why. Then it presents 2 structure options with pros/cons and its recommendation. Only after your approval does it generate the files. The whole thing takes 30-60 minutes but produces a system that saves you months.',
+s7:'Next level',
+advP:'Once the base system works, there are advanced patterns that make it even more powerful. Don\'t implement them right away: come back when your system is mature.',
+advWarnH:'Don\'t start here',
+advWarnP:'These patterns make sense when the base system is solid and you\'ve been using it for at least a month. Starting from INBOX and cockpit without a skeleton and CLAUDE.md is like putting the roof up before the foundations.',
+s8:'Checkpoint',
+cpH:'Build your system. Now.',
+cpP:'Copy the prompt above. Open CoWork. Answer the questions. In 30 minutes you\'ll have: folder structure, CLAUDE.md, Router, File Rules.<br><br><strong>Don\'t wait to have the perfect system in your head. Brief Claude, let it build, then refine.</strong>',
+s9:'Next lesson',
+brK:'Next lesson →',
+brP:'The system is built. Now we make it evolve: the continuous improvement loop and the Compressed Context Block for long sessions.',
+foot:'Morfeus — From Isolated Projects to a System'
+}};
+
+/* ===== Skeleton tree data ===== */
+var TREE={it:[
+{type:'leaf-root',ic:'ti-file-text',nm:'CLAUDE.md',lock:'root · istruzioni master (lezione 5.5)'},
+{type:'sys',ic:'ti-folder',nm:'00_SYSTEM/',lock:'il governo',desc:'Il centro di controllo del sistema. Qui vivono le regole che dicono a Claude come orientarsi: routing, naming, mappa di tutto ciò che esiste. Senza questa cartella, il sistema non funziona.',children:[
+  {ic:'ti-file',nm:'ROUTER.md',lock:'da una richiesta, dove va a finire'},
+  {ic:'ti-file',nm:'FILE_RULES.md',lock:'naming e posizionamento'},
+  {ic:'ti-file',nm:'SYSTEM_MAP.md',lock:'catalogo di tutto ciò che esiste'}
+]},
+{type:'vert',ic:'ti-folder',nm:'01_AZIENDA/',lock:'la vostra attività principale',desc:'Tutto ciò che riguarda la vostra azienda. Internamente si organizza per tipo di lavoro: brand, content, marketing, progetti attivi e archivio.',children:[
+  {ic:'ti-folder',nm:'01_BRAND/',lock:'identità, asset, company info'},
+  {ic:'ti-folder',nm:'04_CONTENT/',lock:'content engine'},
+  {ic:'ti-folder',nm:'05_MARKETING/',lock:'funnel, ads, campagne'},
+  {ic:'ti-folder',nm:'06_PROJECTS/',lock:'progetti attivi (uno per cartella)'},
+  {ic:'ti-folder',nm:'99_ARCHIVE/',lock:'lavoro completato'}
+]},
+{type:'vert',ic:'ti-folder',nm:'02_CLIENTI/',lock:'un sotto-folder per ogni cliente',desc:'Un contenitore con una sotto-cartella per cliente. Ogni cliente è un mondo a sé: tutto il suo lavoro vive lì dentro, mai sparso altrove.',children:[
+  {ic:'ti-folder',nm:'Cliente_A/'},
+  {ic:'ti-folder',nm:'Cliente_B/'},
+  {ic:'ti-folder',nm:'Cliente_C/'}
+]},
+{type:'vert',ic:'ti-folder',nm:'03_PERSONAL_BRAND/',desc:'Newsletter, LinkedIn, contenuti personali. Tutto ciò che costruisce la vostra presenza pubblica come persona, distinta dall\'azienda.'},
+{type:'vert',ic:'ti-folder',nm:'04_FORMAZIONE/',desc:'Corsi che vendete o che seguite. Materiali, script, slide, moduli.'},
+{type:'vert',ic:'ti-folder',nm:'05_REFERENCE/',desc:'Il sapere studiato di valore: playbook, framework, note di libri. La biblioteca a cui Claude attinge quando serve contesto.'},
+{type:'vert',ic:'ti-folder',nm:'06_PERSONALE/',desc:'Task, vita, progetti non lavorativi. La parte privata del sistema: gestione del tempo e cose che non riguardano il lavoro.'},
+{type:'vert',ic:'ti-archive',nm:'99_ARCHIVE/',lock:'sedimenti',desc:'Dove finisce tutto ciò che ha chiuso il suo ciclo. Non si elimina mai: si archivia. L\'archivio è reversibile e dà a Claude uno storico consultabile.'}
+],en:[
+{type:'leaf-root',ic:'ti-file-text',nm:'CLAUDE.md',lock:'root · master instructions (lesson 5.5)'},
+{type:'sys',ic:'ti-folder',nm:'00_SYSTEM/',lock:'the governance',desc:'The control center of the system. Here live the rules that tell Claude how to orient itself: routing, naming, a map of everything that exists. Without this folder, the system doesn\'t work.',children:[
+  {ic:'ti-file',nm:'ROUTER.md',lock:'from a request, where it ends up'},
+  {ic:'ti-file',nm:'FILE_RULES.md',lock:'naming and placement'},
+  {ic:'ti-file',nm:'SYSTEM_MAP.md',lock:'catalog of everything that exists'}
+]},
+{type:'vert',ic:'ti-folder',nm:'01_AZIENDA/',lock:'your main business',desc:'Everything related to your company. Internally it\'s organized by type of work: brand, content, marketing, active projects and archive.',children:[
+  {ic:'ti-folder',nm:'01_BRAND/',lock:'identity, assets, company info'},
+  {ic:'ti-folder',nm:'04_CONTENT/',lock:'content engine'},
+  {ic:'ti-folder',nm:'05_MARKETING/',lock:'funnels, ads, campaigns'},
+  {ic:'ti-folder',nm:'06_PROJECTS/',lock:'active projects (one per folder)'},
+  {ic:'ti-folder',nm:'99_ARCHIVE/',lock:'completed work'}
+]},
+{type:'vert',ic:'ti-folder',nm:'02_CLIENTI/',lock:'a subfolder for each client',desc:'A container with a subfolder per client. Each client is a world of its own: all their work lives in there, never scattered elsewhere.',children:[
+  {ic:'ti-folder',nm:'Client_A/'},
+  {ic:'ti-folder',nm:'Client_B/'},
+  {ic:'ti-folder',nm:'Client_C/'}
+]},
+{type:'vert',ic:'ti-folder',nm:'03_PERSONAL_BRAND/',desc:'Newsletter, LinkedIn, personal content. Everything that builds your public presence as a person, distinct from the company.'},
+{type:'vert',ic:'ti-folder',nm:'04_FORMAZIONE/',desc:'Courses you sell or follow. Materials, scripts, slides, modules.'},
+{type:'vert',ic:'ti-folder',nm:'05_REFERENCE/',desc:'Valuable studied knowledge: playbooks, frameworks, book notes. The library Claude draws on when context is needed.'},
+{type:'vert',ic:'ti-folder',nm:'06_PERSONALE/',desc:'Tasks, life, non-work projects. The private part of the system: time management and things that don\'t concern work.'},
+{type:'vert',ic:'ti-archive',nm:'99_ARCHIVE/',lock:'sediments',desc:'Where everything that has closed its cycle ends up. It\'s never deleted: it\'s archived. The archive is reversible and gives Claude a consultable history.'}
+]};
+
+/* ===== 3 principles ===== */
+var PRIN={it:[
+['Per origine, non per tipo','Un asset va dove vive il suo proprietario. L\'immagine del progetto cliente A sta nel folder di Cliente A, non in una cartella "Immagini" globale. Mai duplicare: se serve altrove, si linka.'],
+['Naming consistente','Cartelle top-level: <code>NN_NOME</code> (prefisso numerico = ordine intenzionale). File: kebab-case o Titolo Leggibile. Date sempre ISO: <code>2026-06-02</code>, mai "ieri" o "oggi". Chiunque deve capire cosa contiene un file senza aprirlo.'],
+['Archivia, non eliminare','Tutto ciò che ha finito il suo ciclo va in <code>99_ARCHIVE</code>. Non si cancella mai (tranne cache e file temporanei). L\'archivio è reversibile e dà a Claude uno storico consultabile.']
+],en:[
+['By origin, not by type','An asset goes where its owner lives. The image from client A\'s project lives in Client A\'s folder, not in a global "Images" folder. Never duplicate: if you need it elsewhere, you link it.'],
+['Consistent naming','Top-level folders: <code>NN_NAME</code> (numeric prefix = intentional order). Files: kebab-case or Readable Title. Dates always ISO: <code>2026-06-02</code>, never "yesterday" or "today". Anyone should understand what a file contains without opening it.'],
+['Archive, don\'t delete','Everything that has finished its cycle goes to <code>99_ARCHIVE</code>. It\'s never deleted (except cache and temporary files). The archive is reversible and gives Claude a consultable history.']
+]};
+
+/* ===== Router widget data ===== */
+var ROWNERS={it:[
+['az','01_AZIENDA','cont,mkt,proj,arch','ti-building','La mia azienda'],
+['cli','02_CLIENTI/[Cliente]','proj,mkt,arch','ti-users','Un cliente specifico'],
+['pb','03_PERSONAL_BRAND','cont,arch','ti-user-star','Il mio personal brand'],
+['form','04_FORMAZIONE','cont,proj,arch','ti-school','Formazione / corsi'],
+['pers','06_PERSONALE','proj,arch','ti-heart','Vita personale']
+],en:[
+['az','01_AZIENDA','cont,mkt,proj,arch','ti-building','My company'],
+['cli','02_CLIENTI/[Cliente]','proj,mkt,arch','ti-users','A specific client'],
+['pb','03_PERSONAL_BRAND','cont,arch','ti-user-star','My personal brand'],
+['form','04_FORMAZIONE','cont,proj,arch','ti-school','Education / courses'],
+['pers','06_PERSONALE','proj,arch','ti-heart','Personal life']
+]};
+var RTYPES={it:[
+['cont','04_CONTENT','ti-edit','Contenuto / post / social'],
+['mkt','05_MARKETING','ti-speakerphone','Marketing / funnel / ads'],
+['proj','06_PROJECTS/[nome]','ti-folder-bolt','Progetto attivo'],
+['arch','99_ARCHIVE','ti-archive','Roba finita / vecchia']
+],en:[
+['cont','04_CONTENT','ti-edit','Content / post / social'],
+['mkt','05_MARKETING','ti-speakerphone','Marketing / funnel / ads'],
+['proj','06_PROJECTS/[name]','ti-folder-bolt','Active project'],
+['arch','99_ARCHIVE','ti-archive','Finished / old stuff']
+]};
+
+var ROUTERCODE={it:'<span class="hh">## ROUTER — Da una richiesta, dove va a finire</span>\n\n<span class="hp">Asse 1: DI CHI è il lavoro?</span>\n| Owner                    | Cartella              |\n| La mia azienda           | 01_AZIENDA            |\n| Un cliente specifico     | 02_CLIENTI/[Cliente]  |\n| Il mio personal brand    | 03_PERSONAL_BRAND     |\n| Formazione/corsi         | 04_FORMAZIONE         |\n| Vita personale           | 06_PERSONALE          |\n\n<span class="hp">Asse 2: CHE TIPO è?</span>\n| Tipo di lavoro           | Sotto-cartella        |\n| Contenuto/post/social    | 04_CONTENT            |\n| Marketing/funnel/ads     | 05_MARKETING          |\n| Progetto attivo          | 06_PROJECTS/[nome]    |\n| Roba finita/vecchia      | 99_ARCHIVE            |',
+en:'<span class="hh">## ROUTER — From a request, where it ends up</span>\n\n<span class="hp">Axis 1: WHOSE work is it?</span>\n| Owner                    | Folder                |\n| My company               | 01_AZIENDA            |\n| A specific client        | 02_CLIENTI/[Cliente]  |\n| My personal brand        | 03_PERSONAL_BRAND     |\n| Education/courses        | 04_FORMAZIONE         |\n| Personal life            | 06_PERSONALE          |\n\n<span class="hp">Axis 2: WHAT TYPE is it?</span>\n| Type of work             | Sub-folder            |\n| Content/post/social      | 04_CONTENT            |\n| Marketing/funnel/ads     | 05_MARKETING          |\n| Active project           | 06_PROJECTS/[name]    |\n| Finished/old stuff       | 99_ARCHIVE            |'};
+
+var METAPROMPT={it:`Aiutami a costruire il mio sistema operativo personale per lavorare con Claude. Non generare nulla finché non hai capito bene come lavoro. Il processo ha 4 fasi con approvazione tra una e l'altra.
+
+FASE 1 — Assessment profondo
+
+Intervistami. Fai domande una alla volta o in piccoli gruppi (max 3). Adatta le domande successive alle mie risposte. Copri queste aree:
+
+A) LAVORO: cosa faccio, ruolo, settore, se ho un'azienda, se lavoro con clienti (quanti, che tipo), se creo contenuti, se vendo formazione, se ho side project.
+B) FLUSSI: quali sono le 3-5 attività dove passo più tempo ogni settimana. Cosa è ricorrente vs una tantum.
+C) STRUMENTI: cosa uso già per organizzarmi (cartelle, app, nulla). Se ho già file sparsi che dovremmo incorporare.
+D) DOLORI: cosa non funziona oggi. Dove perdo tempo. Dove non trovo le cose.
+
+REGOLA CRITICA: se non so rispondere a una domanda o dico "non so", decidi tu per me basandoti su quello che hai capito, e spiega brevemente perché. Non bloccarti mai su una mia non-risposta. Proponi la scelta migliore e vai avanti. Posso sempre correggere dopo.
+
+Continua a fare domande finché non hai un quadro completo. Quando hai abbastanza, dillo e passa alla Fase 2.
+
+FASE 2 — Proposta di architettura (NON generare file ancora)
+
+Presentami 2 opzioni di struttura:
+- OPZIONE A: struttura essenziale (il minimo per partire, 4-6 cartelle top-level)
+- OPZIONE B: struttura completa (per chi ha un lavoro più complesso, 7-10 cartelle)
+
+Per ogni opzione mostra: l'albero cartelle, una riga di spiegazione per ogni cartella, e i pro/contro di quell'approccio.
+
+Includi la tua raccomandazione esplicita: "Per il tuo caso specifico, consiglio l'Opzione X perché..."
+
+Aspetta la mia scelta prima di procedere.
+
+FASE 3 — Generazione completa
+
+Dopo la mia approvazione dell'architettura, genera in questo ordine:
+
+PRIMA DI TUTTO: crea la cartella 00_SYSTEM/ nella root della workspace. È il centro di governo del sistema. Tutti i file di regole vivono qui. Senza questa cartella il sistema non funziona.
+
+Poi genera questi file, tutti dentro 00_SYSTEM/:
+
+1. STRUTTURA CARTELLE — L'albero completo con 00_SYSTEM/ come prima cartella, poi le verticali per owner. Spiegazione per ogni cartella. Principio: organizza per owner, non per tipo. Prefissi numerici. Solo cartelle utili ora. Crea fisicamente tutte le cartelle.
+
+2. CLAUDE.md — Va nella ROOT della workspace (non in 00_SYSTEM). Chi sono, come lavoro, mappa workspace, convenzioni naming, note importanti. Deve puntare a 00_SYSTEM per le regole dettagliate. Leggibile in 2 minuti.
+
+3. 00_SYSTEM/ROUTER.md — Tabella a 2 assi: "di chi è il lavoro?" → cartella verticale, "che tipo è?" → sotto-cartella. Copri tutti i casi emersi nell'assessment.
+
+4. 00_SYSTEM/FILE_RULES.md — Naming (cartelle, file, date), posizionamento, regola "archivia non eliminare", cosa va dove.
+
+5. 00_SYSTEM/SYSTEM_MAP.md — Catalogo di tutto: cosa esiste, a cosa serve, come si connette. La mappa che Claude legge per orientarsi nel sistema.
+
+Presenta ogni file in un blocco di codice markdown separato, pronto da copiare. Se la workspace è su CoWork, crea i file e le cartelle direttamente.
+
+FASE 4 — Review e iterazione
+
+Mostrami tutto. Io correggo, aggiungo, tolgo. Tu rigeneri la versione aggiornata. Iteriamo finché il sistema riflette come lavoro davvero.
+
+Principi non negoziabili:
+— Per owner, non per tipo (un asset va dove vive il suo proprietario)
+— Minimalismo: meglio 5 cartelle giuste che 20 vuote
+— Mai duplicare contenuti tra cartelle
+— 99_ARCHIVE sempre presente (si archivia, non si elimina)
+— Naming: prefissi numerici NN_ per top-level, date ISO AAAA-MM-GG, niente mix casuale
+— Se qualcosa non è chiaro, decidi tu e spiega. Non chiedere conferma su ogni dettaglio minore.`,
+en:`Help me build my personal operating system for working with Claude. Don't generate anything until you've clearly understood how I work. The process has 4 phases with approval between each one.
+
+PHASE 1 — Deep assessment
+
+Interview me. Ask questions one at a time or in small groups (max 3). Adapt the following questions to my answers. Cover these areas:
+
+A) WORK: what I do, role, industry, whether I have a company, whether I work with clients (how many, what type), whether I create content, whether I sell training, whether I have side projects.
+B) FLOWS: what are the 3-5 activities where I spend the most time each week. What is recurring vs one-off.
+C) TOOLS: what I already use to organize myself (folders, apps, nothing). Whether I already have scattered files we should incorporate.
+D) PAINS: what doesn't work today. Where I lose time. Where I can't find things.
+
+CRITICAL RULE: if I can't answer a question or I say "I don't know", decide for me based on what you've understood, and briefly explain why. Never get stuck on a non-answer from me. Propose the best choice and move on. I can always correct it later.
+
+Keep asking questions until you have a complete picture. When you have enough, say so and move to Phase 2.
+
+PHASE 2 — Architecture proposal (do NOT generate files yet)
+
+Present me with 2 structure options:
+- OPTION A: essential structure (the minimum to start, 4-6 top-level folders)
+- OPTION B: complete structure (for those with more complex work, 7-10 folders)
+
+For each option show: the folder tree, one line of explanation for each folder, and the pros/cons of that approach.
+
+Include your explicit recommendation: "For your specific case, I recommend Option X because..."
+
+Wait for my choice before proceeding.
+
+PHASE 3 — Full generation
+
+After my approval of the architecture, generate in this order:
+
+FIRST OF ALL: create the 00_SYSTEM/ folder in the root of the workspace. It's the governance center of the system. All the rule files live here. Without this folder the system doesn't work.
+
+Then generate these files, all inside 00_SYSTEM/:
+
+1. FOLDER STRUCTURE — The complete tree with 00_SYSTEM/ as the first folder, then the verticals by owner. Explanation for each folder. Principle: organize by owner, not by type. Numeric prefixes. Only useful folders for now. Physically create all the folders.
+
+2. CLAUDE.md — Goes in the ROOT of the workspace (not in 00_SYSTEM). Who I am, how I work, workspace map, naming conventions, important notes. It must point to 00_SYSTEM for the detailed rules. Readable in 2 minutes.
+
+3. 00_SYSTEM/ROUTER.md — A 2-axis table: "whose work is it?" → vertical folder, "what type is it?" → sub-folder. Cover all the cases that emerged in the assessment.
+
+4. 00_SYSTEM/FILE_RULES.md — Naming (folders, files, dates), placement, the "archive don't delete" rule, what goes where.
+
+5. 00_SYSTEM/SYSTEM_MAP.md — A catalog of everything: what exists, what it's for, how it connects. The map Claude reads to orient itself in the system.
+
+Present each file in a separate markdown code block, ready to copy. If the workspace is on CoWork, create the files and folders directly.
+
+PHASE 4 — Review and iteration
+
+Show me everything. I correct, add, remove. You regenerate the updated version. We iterate until the system reflects how I really work.
+
+Non-negotiable principles:
+— By owner, not by type (an asset goes where its owner lives)
+— Minimalism: better 5 right folders than 20 empty ones
+— Never duplicate content between folders
+— 99_ARCHIVE always present (you archive, you don't delete)
+— Naming: numeric prefixes NN_ for top-level, ISO dates YYYY-MM-DD, no random mix
+— If something isn't clear, decide and explain. Don't ask for confirmation on every minor detail.`};
+
+var ADV={it:[
+['ti-inbox','INBOX + Triage','Un file INBOX.md dove "scaricate" pensieri grezzi senza doverli smistare. Poi periodicamente fate triage: ogni pensiero viene classificato e smistato nella sua destinazione corretta. L\'inbox è il buffer tra il vostro cervello e il sistema.'],
+['ti-refresh','Derivato vs Canonico','Alcuni file si auto-rigenerano (report, dashboard, indici). Altri cambiano solo con la vostra conferma (regole, decisioni, piani). Separare queste due categorie evita che un\'automazione sovrascriva una decisione umana.'],
+['ti-calendar-repeat','Manutenzione automatica','Task schedulati che puliscono, archiviano, e verificano la salute del sistema. Un "janitor" settimanale che controlla file orfani, naming inconsistente, cartelle vuote, documenti obsoleti. Claude lo fa da solo, voi approvate.'],
+['ti-layout-dashboard','Cockpit','Una dashboard live che mostra: task attivi, scadenze, inbox da smistare, salute del sistema, agenda, follow-up aperti. Un artifact che si aggiorna in tempo reale pescando dai vostri file di governo. Il centro di comando.']
+],en:[
+['ti-inbox','INBOX + Triage','An INBOX.md file where you "dump" raw thoughts without having to sort them. Then periodically you do triage: each thought is classified and routed to its correct destination. The inbox is the buffer between your brain and the system.'],
+['ti-refresh','Derived vs Canonical','Some files self-regenerate (reports, dashboards, indexes). Others change only with your confirmation (rules, decisions, plans). Separating these two categories prevents an automation from overwriting a human decision.'],
+['ti-calendar-repeat','Automatic maintenance','Scheduled tasks that clean up, archive, and check the health of the system. A weekly "janitor" that checks for orphan files, inconsistent naming, empty folders, obsolete documents. Claude does it on its own, you approve.'],
+['ti-layout-dashboard','Cockpit','A live dashboard that shows: active tasks, deadlines, inbox to sort, system health, agenda, open follow-ups. An artifact that updates in real time by drawing from your governance files. The command center.']
+]};
+
+var LANG='it';
+/* router state */
+var rOwner=null,rOwnerPath='',rType=null,rTypePath='',rAllowed=[];
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+
+  /* tree */
+  document.getElementById('skeleton-tree').innerHTML=TREE[LANG].map(function(n){
+    var lock=n.lock?'<span class="lock">'+n.lock+'</span>':'';
+    if(n.type==='leaf-root'){
+      return '<div class="tnode"><div class="trow leaf sys"><span class="tw"></span><i class="ti '+n.ic+' ic"></i><span class="nm">'+n.nm+'</span>'+lock+'</div></div>';
+    }
+    var cls=n.type==='sys'?'sys':'vert';
+    var hasChildren=n.children&&n.children.length;
+    var hasDesc=n.desc;
+    var twi=(hasChildren||hasDesc)?'<i class="ti ti-chevron-right"></i>':'';
+    var head='<div class="trow '+cls+'"'+((hasChildren||hasDesc)?' onclick="toggleNode(this)"':'')+'><span class="tw">'+twi+'</span><i class="ti '+n.ic+' ic"></i><span class="nm">'+n.nm+'</span>'+lock+'</div>';
+    var desc=hasDesc?'<div class="tdesc">'+n.desc+'</div>':'';
+    var children='';
+    if(hasChildren){
+      children='<div class="tchild">'+n.children.map(function(c){
+        var clk=c.lock?'<span class="lock">'+c.lock+'</span>':'';
+        return '<div class="trow leaf"><span class="tw"></span><i class="ti '+c.ic+' ic"></i><span class="nm">'+c.nm+'</span>'+clk+'</div>';
+      }).join('')+'</div>';
+    }
+    return '<div class="tnode">'+head+desc+children+'</div>';
+  }).join('');
+
+  /* principles */
+  document.getElementById('principles').innerHTML=PRIN[LANG].map(function(p,i){
+    return '<div class="pr"><div class="prn">'+(i+1)+'</div><div class="prt"><strong>'+p[0]+'</strong><span>'+p[1]+'</span></div></div>';
+  }).join('');
+
+  /* router owners */
+  document.getElementById('r-owners').innerHTML=ROWNERS[LANG].map(function(o){
+    return '<button class="opt" onclick="pickOwner(this,\''+o[0]+'\',\''+o[1]+'\',\''+o[2]+'\')"><i class="ti '+o[3]+'"></i> '+o[4]+'</button>';
+  }).join('');
+  document.getElementById('r-types').innerHTML=RTYPES[LANG].map(function(t){
+    return '<button class="opt p" data-t="'+t[0]+'" onclick="pickType(this,\''+t[1]+'\')"><i class="ti '+t[2]+'"></i> '+t[3]+'</button>';
+  }).join('');
+
+  /* router code */
+  document.getElementById('routerCode').innerHTML=ROUTERCODE[LANG];
+
+  /* meta prompt */
+  document.getElementById('meta-prompt').textContent=METAPROMPT[LANG];
+
+  /* advanced */
+  document.getElementById('advanced').innerHTML=ADV[LANG].map(function(a){
+    return '<div class="adv"><div class="at"><i class="ti '+a[0]+'"></i> '+a[1]+'</div><p>'+a[2]+'</p></div>';
+  }).join('');
+
+  resetRouter();
+}
+
+function toggleNode(row){
+  var node=row.parentElement;
+  var desc=node.querySelector('.tdesc');
+  var children=node.querySelector('.tchild');
+  var open=row.classList.toggle('open');
+  if(desc)desc.classList.toggle('open',open);
+  if(children)children.classList.toggle('open',open);
+}
+
+function pickOwner(btn,key,path,allowedStr){
+  var allowed=allowedStr.split(',');
+  rOwner=key;rOwnerPath=path;rAllowed=allowed;rType=null;rTypePath='';
+  document.querySelectorAll('#r-owners .opt').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.rmap .rmi[data-v]').forEach(function(it){it.classList.toggle('lit',it.getAttribute('data-v')===key);});
+  document.getElementById('rq2').classList.remove('dim');
+  document.getElementById('r-types').classList.add('show');
+  document.querySelectorAll('#r-types .opt').forEach(function(b){
+    b.classList.remove('active');
+    b.classList.toggle('locked',allowed.indexOf(b.getAttribute('data-t'))===-1);
+  });
+  document.getElementById('rm-sub').style.display='block';
+  document.querySelectorAll('#rm-sub .rmi').forEach(function(it){it.classList.remove('lit');});
+  updateResult();
+}
+function pickType(btn,path){
+  if(btn.classList.contains('locked'))return;
+  rType=btn.getAttribute('data-t');rTypePath=path;
+  document.querySelectorAll('#r-types .opt').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('#rm-sub .rmi').forEach(function(it){it.classList.toggle('lit',it.getAttribute('data-s')===path);});
+  updateResult();
+}
+function updateResult(){
+  var res=document.getElementById('rm-result');
+  if(rOwner&&rType){
+    res.classList.add('done');
+    res.innerHTML='<i class="ti ti-map-pin-filled"></i> '+rOwnerPath+'/'+rTypePath;
+  }else if(rOwner){
+    res.classList.remove('done');
+    res.innerHTML='<i class="ti ti-map-pin"></i> '+rOwnerPath+'/ … '+(LANG==='it'?'scegli il tipo':'pick the type');
+  }else{
+    res.classList.remove('done');
+    res.innerHTML='<i class="ti ti-map-pin"></i> '+DICT[LANG].rmStart;
+  }
+}
+function resetRouter(){
+  rOwner=null;rOwnerPath='';rType=null;rTypePath='';rAllowed=[];
+  document.querySelectorAll('#r-owners .opt').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('#r-types .opt').forEach(function(b){b.classList.remove('active','locked');});
+  document.querySelectorAll('.rmap .rmi').forEach(function(it){it.classList.remove('lit');});
+  document.getElementById('rq2').classList.add('dim');
+  document.getElementById('r-types').classList.remove('show');
+  document.getElementById('rm-sub').style.display='none';
+  updateResult();
+}
+
+function copyPrompt(btn){
+  var el=document.getElementById('meta-prompt');
+  navigator.clipboard.writeText(el.innerText).then(function(){
+    var lbl=LANG==='it'?'Copiato!':'Copied!';
+    btn.innerHTML='<i class="ti ti-check"></i> '+lbl;btn.style.color='var(--teal)';btn.style.borderColor='var(--teal)';
+    setTimeout(function(){btn.innerHTML='<i class="ti ti-copy"></i> '+DICT[LANG].copyLbl;btn.style.color='';btn.style.borderColor='';},2500);
+  });
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

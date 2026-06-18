@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Loop di Miglioramento Continuo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+/* cycle */
+.cycle{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:32px;text-align:center}
+.cycle h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.cycle-hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:22px}
+.csteps{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap}
+.cstep{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 18px;border-radius:var(--r-l);transition:background .3s,transform .35s}
+.cicon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;transition:transform .35s,box-shadow .35s}
+.clabel{font-size:13px;font-weight:600;transition:color .3s}
+.cdesc{font-size:11px;color:var(--ink-3);max-width:120px;line-height:1.4}
+.carrow{font-size:20px;color:var(--ink-3);padding:0 4px;align-self:center;margin-top:20px;transition:color .3s,transform .35s}
+.cstep.is-active{background:var(--bg-2);transform:translateY(-4px)}
+.cstep.is-active .cicon{transform:scale(1.12);box-shadow:0 0 0 6px var(--accent-soft)}
+.cstep.is-active .cicon::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid currentColor;opacity:.55;animation:ringPulse 1.1s ease-out infinite}
+@keyframes ringPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.4);opacity:0}}
+.carrow.is-active{color:var(--accent);transform:translateX(3px) scale(1.25)}
+.cctrl{display:inline-flex;align-items:center;gap:6px;margin-top:22px;padding:8px 16px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);transition:.18s}
+.cctrl:hover{border-color:var(--accent);color:var(--accent)}.cctrl i{font-size:16px}
+@media(prefers-reduced-motion:reduce){.cstep.is-active .cicon::after{animation:none}}
+/* classifier */
+.clf{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px;margin-bottom:14px}
+.clf-q{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.clf-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:var(--accent-soft);color:var(--accent)}
+.clf-quote{flex:1;font-size:14.5px;font-weight:600;line-height:1.5}
+.clf-quote span{display:block;font-size:12.5px;font-weight:400;color:var(--ink-3);margin-top:3px}
+.clf-opts{display:flex;flex-wrap:wrap;gap:8px}
+.clf-opt{padding:7px 14px;border-radius:20px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);transition:.18s}
+.clf-opt:hover{border-color:var(--accent);color:var(--ink)}
+.clf-opt.correct{background:var(--teal-soft);border-color:var(--teal-line);color:var(--teal);cursor:default}
+.clf-opt.wrong{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad);cursor:default}
+.clf-opt.dim{opacity:.45;cursor:default}
+.clf-fb{margin-top:14px;border-radius:var(--r);padding:0 16px;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s,padding .4s}
+.clf-fb.show{max-height:260px;opacity:1;padding:14px 16px}
+.clf-fb.ok{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.clf-fb.no{background:var(--bad-soft);border:1px solid var(--bad-line)}
+.clf-fb-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.clf-fb.ok .clf-fb-title{color:var(--teal)}.clf-fb.no .clf-fb-title{color:var(--bad)}
+.clf-fb-body{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.clf-fix{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 12px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:600;background:var(--bg-2);border:1px solid var(--line-2);color:var(--ink)}
+.clf-fix i{font-size:14px;color:var(--accent)}
+.clf-score{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:center;margin-top:4px}
+/* review questions */
+.feat{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.feat-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700}
+.feat-text{flex:1}.feat-text strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px}.feat-text span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* prompt */
+.prompt{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.prompt .ph{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.prompt .phl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}.prompt .phl i{font-size:16px;color:var(--teal)}
+.copy-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);transition:.18s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pbody{padding:18px;font-size:11.5px;font-family:var(--mono);color:var(--ink-2);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:320px;overflow-y:auto}
+/* compressed block preview */
+.cblock{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.cblock-head{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.cblock-head i{font-size:16px;color:var(--teal)}
+.cblock-body{padding:18px 20px}
+.cblock-sec{padding:10px 0;border-bottom:1px dashed var(--line)}.cblock-sec:last-child{border-bottom:none}
+.cb-tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 9px;border-radius:6px;margin-bottom:7px}
+.cb-tag i{font-size:13px}
+.cblock-sec ul{list-style:none;margin:0;padding:0}
+.cblock-sec li{font-size:12.5px;color:var(--ink-2);line-height:1.6;padding-left:16px;position:relative;font-family:var(--mono)}
+.cblock-sec li::before{content:"–";position:absolute;left:0;color:var(--ink-3)}
+.cb-decisi .cb-tag{background:var(--teal-soft);color:var(--teal)}
+.cb-stato .cb-tag{background:var(--blue-soft);color:var(--blue)}
+.cb-escluso .cb-tag{background:var(--bad-soft);color:var(--bad)}
+.cb-aperte .cb-tag{background:var(--amber-soft);color:var(--amber)}
+/* benefit rows */
+.brow{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.brow:last-child{border-bottom:none}
+.brow-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--teal-soft);color:var(--teal)}
+.brow-text{flex:1}.brow-text strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px}.brow-text span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* tip */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px}
+.tip i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.65}.cp p strong{color:var(--ink);font-weight:600}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;display:flex;align-items:center;gap:18px}
+.bridge>i{font-size:26px;color:var(--agent);flex-shrink:0}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:6px}
+.bridge p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.csteps{flex-direction:column}.carrow{transform:rotate(90deg);margin-top:0}.carrow.is-active{transform:rotate(90deg) translateX(3px) scale(1.25)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.cctrl{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.clf-fb{max-height:none!important;opacity:1!important;padding:14px 16px!important}.note,.cycle,.clf,.prompt,.cblock,.tip,.cp,.bridge,.key,.feat,.brow{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 5.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Workspace avanzato</div>
+  <h1 class="rv" data-i="h1">Il Loop di Miglioramento Continuo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-rotate-clockwise-2"></i><span class="no">01</span><h2 data-i="s1">Le tre fasi del loop</h2></div>
+  <div class="cycle rv" id="cycleWrap">
+    <h3 data-i="cycleTitle"></h3>
+    <div class="cycle-hint" data-i="cycleHint"></div>
+    <div class="csteps" id="csteps">
+      <div class="cstep" data-step="0">
+        <div class="cicon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-player-play"></i></div>
+        <div class="clabel" style="color:var(--blue)" data-i="cs0L"></div>
+        <div class="cdesc" data-i="cs0D"></div>
+      </div>
+      <div class="carrow" data-arrow="0"><i class="ti ti-chevron-right"></i></div>
+      <div class="cstep" data-step="1">
+        <div class="cicon" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-eye"></i></div>
+        <div class="clabel" style="color:var(--amber)" data-i="cs1L"></div>
+        <div class="cdesc" data-i="cs1D"></div>
+      </div>
+      <div class="carrow" data-arrow="1"><i class="ti ti-chevron-right"></i></div>
+      <div class="cstep" data-step="2">
+        <div class="cicon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-settings"></i></div>
+        <div class="clabel" style="color:var(--teal)" data-i="cs2L"></div>
+        <div class="cdesc" data-i="cs2D"></div>
+      </div>
+      <div class="carrow" data-arrow="2"><i class="ti ti-chevron-right"></i></div>
+      <div class="cstep" data-step="3">
+        <div class="cicon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-repeat"></i></div>
+        <div class="clabel" style="color:var(--accent)" data-i="cs3L"></div>
+        <div class="cdesc" data-i="cs3D"></div>
+      </div>
+    </div>
+    <button class="cctrl" id="cycleCtrl" onclick="toggleCycle()"><i class="ti ti-player-pause"></i> <span id="cycleCtrlLabel"></span></button>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-eye"></i><span class="no">02</span><h2 data-i="s2">Fase 2: cosa osservare</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="obsIntro"></p>
+  <div class="rv" id="classifier"><div class="clf-score" id="clfScore"></div></div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">03</span><h2 data-i="s3">Fase 3: la review (10 minuti)</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="revIntro"></p>
+  <div class="rv" id="review"></div>
+  <div class="key rv" style="margin-top:20px"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-file-zip"></i><span class="no">04</span><h2 data-i="s4">Il Blocco di Contesto Compresso</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cbP1"></p>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cbP2"></p>
+  <div class="prompt rv">
+    <div class="ph"><div class="phl"><i class="ti ti-file-zip"></i> <span data-i="promptLbl"></span></div><button class="copy-btn" onclick="copyPrompt(this)"><i class="ti ti-copy"></i> <span data-i="copyLbl">Copia</span></button></div>
+    <div class="pbody" id="compress-prompt"></div>
+  </div>
+  <p class="rv" style="font-size:13px;color:var(--ink-3);margin:18px 0 8px;line-height:1.7" data-i="cbExLead"></p>
+  <div class="cblock rv">
+    <div class="cblock-head"><i class="ti ti-clipboard-text"></i> <span data-i="cbHead"></span></div>
+    <div class="cblock-body" id="cblockBody"></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin:16px 0" data-i="cbAfter"></p>
+  <div class="rv" id="benefits"></div>
+  <div class="tip rv" style="margin-top:14px"><i class="ti ti-bulb"></i><div><h4 data-i="cbTipH"></h4><p data-i="cbTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">05</span><h2 data-i="s5">La mentalità giusta</h2></div>
+  <div class="key rv"><p data-i="key2"></p></div>
+  <p class="lede rv" style="font-size:14.5px;margin:20px 0" data-i="mindP"></p>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-calendar-event cpi"></i>
+    <h4 data-i="cpH"></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">07</span><h2 data-i="s7">Prossima lezione</h2></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right"></i><div><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Loop di Miglioramento Continuo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 5.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Workspace avanzato',
+h1:'Il Loop di Miglioramento Continuo',
+lede:'Nessun sistema nasce perfetto. La differenza è avere un processo per farlo evolvere. Tre fasi, dieci minuti al mese, un Claude che sbaglia sempre meno.',
+hookH:'L\'idea',
+hookP:'Nessuno costruisce il sistema perfetto al primo tentativo. Non perché mancano le istruzioni giuste, ma perché non le conoscete ancora. Le scoprite lavorando.',
+s1:'Le tre fasi del loop',
+cycleTitle:'Usa → Osserva → Raffina → Ripeti',
+cycleHint:'Il sistema gira da solo: ogni giro lo lascia migliore di prima.',
+cs0L:'1. Usa',cs0D:'Lavorate normalmente col sistema che avete',
+cs1L:'2. Osserva',cs1D:'Notate dove Claude sbaglia o dove correggete',
+cs2L:'3. Raffina',cs2D:'Aggiornate le istruzioni e la KB',
+cs3L:'Ripeti',cs3D:'Ogni mese il sistema è migliore',
+cyclePause:'Pausa',cyclePlay:'Avvia',
+s2:'Fase 2: cosa osservare',
+obsIntro:'Ogni correzione che fate a Claude è un segnale. Ma osservare bene non basta: dovete saper <strong>classificare</strong> il problema, perché ogni tipo si corregge in un posto diverso. Provateci: per ogni errore ricorrente, scegliete il tipo.',
+s3:'Fase 3: la review (10 minuti)',
+revIntro:'Periodicamente (ogni settimana se usate Claude intensamente, ogni mese altrimenti) aprite le istruzioni e fatevi queste 4 domande:',
+key1:'Venti minuti di review al mese. Il risultato: un Claude che sbaglia sempre meno. Non perché è diventato più intelligente, ma perché voi gli avete dato istruzioni migliori.',
+s4:'Il Blocco di Contesto Compresso',
+cbP1:'Il loop risolve il miglioramento delle istruzioni nel tempo. Ma c\'è un problema diverso: le sessioni lunghe. Dopo 40 minuti di lavoro complesso, il contesto inizia a sfumare. Claude perde il filo delle decisioni prese all\'inizio. Voi stessi perdete traccia di cosa è stato stabilito.',
+cbP2:'La soluzione: a fine di ogni fase di lavoro significativa, chiedete a Claude di generare un blocco di handoff compresso.',
+promptLbl:'Prompt: Blocco di Contesto Compresso',copyLbl:'Copia',
+cbExLead:'Ecco come appare il blocco che Claude vi restituisce — un esempio generico di handoff a fine fase:',
+cbHead:'Blocco di handoff — fine Fase 1',
+cbAfter:'Questo blocco diventa il primo messaggio della sessione successiva. Lo incollate all\'inizio della nuova chat e Claude riparte con il contesto completo.',
+cbTipH:'Quando usarlo',
+cbTipP:'Non serve per chat brevi. Usatelo quando: lavorate sullo stesso progetto per più di 30-40 minuti, state prendendo decisioni che impattano le fasi successive, o sapete che dovrete riprendere in un\'altra sessione.',
+s5:'La mentalità giusta',
+key2:'Un sistema di contesto non si costruisce. Si coltiva. Come qualsiasi relazione di lavoro: più lavorate insieme, più diventa efficiente. Il loop non è manutenzione, è investimento.',
+mindP:'Il loop di miglioramento non è il segnale che qualcosa non funziona. È il segnale che state usando il sistema nel modo corretto. Dopo tre mesi, avete un Claude che vi conosce davvero. Dopo sei, la differenza rispetto a un Claude senza contesto è abissale.',
+s6:'Checkpoint',
+cpH:'Mettete in calendario la prima review.',
+cpP:'Non una riunione. Dieci minuti nel calendario con un promemoria: "Review istruzioni Claude". È l\'azione più piccola con il ritorno più alto nel vostro sistema.<br><br><strong>E la prossima volta che finite una sessione lunga, copiate il prompt del Blocco Compresso e salvatelo.</strong>',
+s7:'Prossima lezione',
+brK:'Prossima lezione →',
+brP:'Il sistema evolve. L\'ultimo pezzo: il CLAUDE.md avanzato, il front matter nei documenti, e la memoria che Claude accumula su di voi. Il capstone del modulo.',
+foot:'Morfeus — Il Loop di Miglioramento Continuo'
+},
+en:{
+kicker:'Lesson 5.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced workspace',
+h1:'The Continuous Improvement Loop',
+lede:'No system is born perfect. The difference is having a process to make it evolve. Three phases, ten minutes a month, a Claude that makes fewer and fewer mistakes.',
+hookH:'The idea',
+hookP:'No one builds the perfect system on the first try. Not because the right instructions are missing, but because you don\'t know them yet. You discover them by working.',
+s1:'The three phases of the loop',
+cycleTitle:'Use → Observe → Refine → Repeat',
+cycleHint:'The system runs on its own: every cycle leaves it better than before.',
+cs0L:'1. Use',cs0D:'You work normally with the system you have',
+cs1L:'2. Observe',cs1D:'You notice where Claude is wrong or where you correct it',
+cs2L:'3. Refine',cs2D:'You update the instructions and the KB',
+cs3L:'Repeat',cs3D:'Every month the system is better',
+cyclePause:'Pause',cyclePlay:'Play',
+s2:'Phase 2: what to observe',
+obsIntro:'Every correction you make to Claude is a signal. But observing well isn\'t enough: you have to know how to <strong>classify</strong> the problem, because each type is corrected in a different place. Try it: for each recurring error, pick the type.',
+s3:'Phase 3: the review (10 minutes)',
+revIntro:'Periodically (every week if you use Claude intensively, every month otherwise) open the instructions and ask yourself these 4 questions:',
+key1:'Twenty minutes of review a month. The result: a Claude that makes fewer and fewer mistakes. Not because it has become smarter, but because you have given it better instructions.',
+s4:'The Compressed Context Block',
+cbP1:'The loop solves the improvement of instructions over time. But there\'s a different problem: long sessions. After 40 minutes of complex work, context starts to fade. Claude loses track of the decisions made at the start. You yourself lose track of what was established.',
+cbP2:'The solution: at the end of every significant work phase, ask Claude to generate a compressed handoff block.',
+promptLbl:'Prompt: Compressed Context Block',copyLbl:'Copy',
+cbExLead:'Here is what the block Claude gives you back looks like — a generic example of an end-of-phase handoff:',
+cbHead:'Handoff block — end of Phase 1',
+cbAfter:'This block becomes the first message of the next session. You paste it at the start of the new chat and Claude restarts with full context.',
+cbTipH:'When to use it',
+cbTipP:'It\'s not needed for short chats. Use it when: you work on the same project for more than 30-40 minutes, you\'re making decisions that impact the following phases, or you know you\'ll have to resume in another session.',
+s5:'The right mindset',
+key2:'A context system isn\'t built. It\'s cultivated. Like any working relationship: the more you work together, the more efficient it becomes. The loop isn\'t maintenance, it\'s investment.',
+mindP:'The improvement loop isn\'t the sign that something isn\'t working. It\'s the sign that you\'re using the system the right way. After three months, you have a Claude that really knows you. After six, the difference compared to a Claude without context is abysmal.',
+s6:'Checkpoint',
+cpH:'Put the first review on your calendar.',
+cpP:'Not a meeting. Ten minutes on the calendar with a reminder: "Review Claude instructions". It\'s the smallest action with the highest return in your system.<br><br><strong>And the next time you finish a long session, copy the Compressed Block prompt and save it.</strong>',
+s7:'Next lesson',
+brK:'Next lesson →',
+brP:'The system evolves. The last piece: advanced CLAUDE.md, front matter in documents, and the memory Claude builds up about you. The capstone of the module.',
+foot:'Morfeus — The Continuous Improvement Loop'
+}};
+
+var COMPRESSPROMPT={it:`Siamo arrivati alla fine di questa fase. Prima di procedere, genera un blocco di handoff compresso che includa:
+
+1. DECISIONI PRESE — Cosa abbiamo deciso (non discusso, deciso). Solo le conclusioni.
+2. STATO ATTUALE — Cosa è attivo ora, qual è il focus della prossima fase.
+3. ESCLUSO — Cosa abbiamo escluso esplicitamente, e perché.
+4. DOMANDE APERTE — Se ce ne sono, elencale.
+
+Formato: conciso, massimo 20 righe. Questo blocco sarà il primo input della prossima sessione.`,
+en:`We've reached the end of this phase. Before we proceed, generate a compressed handoff block that includes:
+
+1. DECISIONS MADE — What we decided (not discussed, decided). Only the conclusions.
+2. CURRENT STATE — What is active now, what the focus of the next phase is.
+3. EXCLUDED — What we explicitly excluded, and why.
+4. OPEN QUESTIONS — If there are any, list them.
+
+Format: concise, maximum 20 lines. This block will be the first input of the next session.`};
+
+/* compressed block example */
+var CBLOCK={it:[
+['cb-decisi','ti-circle-check','Decisioni prese',['Struttura confermata: 3 sezioni, in quest\'ordine.','Tono: diretto, niente preamboli.','Esempi sempre prima della teoria.']],
+['cb-stato','ti-player-play','Stato attuale',['Sezione 1 scritta e approvata.','Prossima fase: bozza della sezione 2.']],
+['cb-escluso','ti-circle-minus','Escluso',['Niente intro storica — troppo lunga, fuori scope.','Scartato il formato a tabella: poco leggibile qui.']],
+['cb-aperte','ti-help-circle','Domande aperte',['La sezione 3 va divisa in due? Da decidere dopo la 2.']]
+],en:[
+['cb-decisi','ti-circle-check','Decisions made',['Structure confirmed: 3 sections, in this order.','Tone: direct, no preambles.','Examples always before the theory.']],
+['cb-stato','ti-player-play','Current state',['Section 1 written and approved.','Next phase: draft of section 2.']],
+['cb-escluso','ti-circle-minus','Excluded',['No historical intro — too long, out of scope.','Dropped the table format: not readable here.']],
+['cb-aperte','ti-help-circle','Open questions',['Should section 3 be split in two? To decide after section 2.']]
+]};
+
+/* benefits */
+var BENEFITS={it:[
+['ti-check','Nessun drift nelle sessioni lunghe','Le decisioni restano decisioni. Non vengono rivisitate o contraddette 20 messaggi dopo.'],
+['ti-check','Ripresa senza perdita di contesto','Potete riprendere il giorno dopo, la settimana dopo. Il blocco compresso è il ponte.'],
+['ti-check','Archivio leggibile delle scelte','Ogni blocco è anche un log. Tra un mese potete rileggere cosa avevate deciso e perché.']
+],en:[
+['ti-check','No drift in long sessions','Decisions stay decisions. They\'re not revisited or contradicted 20 messages later.'],
+['ti-check','Resume without loss of context','You can resume the next day, the next week. The compressed block is the bridge.'],
+['ti-check','Readable archive of choices','Every block is also a log. A month later you can reread what you had decided and why.']
+]};
+
+/* review questions */
+var REVIEW={it:[
+['Quante volte ho corretto Claude per la stessa cosa?','Se più di due volte → entra nelle istruzioni. La correzione ripetuta è tempo sprecato.'],
+['C\'è qualcosa che Claude continua a non sapere?','→ Serve un file di contesto o un aggiornamento della KB. Claude non può sapere ciò che non gli avete dato.'],
+['Le istruzioni riflettono ancora la realtà del progetto?','Se il progetto è cambiato, le istruzioni devono cambiare. Istruzioni obsolete producono risposte obsolete.'],
+['Ci sono cose nelle istruzioni che non valgono più?','Togliete il rumore. Istruzioni vecchie che non servono più confondono Claude e occupano spazio.']
+],en:[
+['How many times have I corrected Claude for the same thing?','If more than twice → it goes into the instructions. Repeated correction is wasted time.'],
+['Is there something Claude keeps not knowing?','→ You need a context file or a KB update. Claude can\'t know what you haven\'t given it.'],
+['Do the instructions still reflect the reality of the project?','If the project has changed, the instructions must change. Obsolete instructions produce obsolete answers.'],
+['Are there things in the instructions that no longer hold?','Remove the noise. Old instructions that are no longer needed confuse Claude and take up space.']
+]};
+
+/* classifier */
+var CLFDATA={it:[
+{icon:'ti-ruler-2',quote:'Claude risponde sempre troppo lungo su questo tipo di task.',sub:'Lo correggete a mano accorciando, ogni volta.',type:'lunghezza',fixIcon:'ti-file-text',fix:'Nelle ISTRUZIONI del progetto',why:'È un problema di calibrazione dell’output. Aggiungete nelle istruzioni la lunghezza attesa per quel tipo di task ("max 5 righe per le risposte operative").'},
+{icon:'ti-mood-neutral',quote:'Il tono è troppo formale, non suona come noi.',sub:'Riscrivete voi per renderlo più diretto.',type:'tono',fixIcon:'ti-file-text',fix:'Nelle ISTRUZIONI del progetto',why:'Il tono è una preferenza stabile: vive nelle istruzioni permanenti, non va ripetuto a ogni chat. Aggiungete una riga sullo stile e un mini-esempio.'},
+{icon:'ti-file-unknown',quote:'Non conosce la nostra procedura interna, la inventa.',sub:'Gli rispiegate il processo ogni volta.',type:'conoscenza',fixIcon:'ti-database',fix:'Nella KNOWLEDGE BASE',why:'Non è uno stile da correggere: è informazione che manca. Caricate la procedura come file nella knowledge base, così Claude la consulta invece di inventarla.'},
+{icon:'ti-repeat',quote:'Ripete lo stesso disclaimer in cima a ogni documento.',sub:'Lo cancellate a mano dai file generati.',type:'ripetizione',fixIcon:'ti-file-code',fix:'Nel CLAUDE.md / front matter del documento',why:'È un comportamento di default da spegnere nel punto giusto: una regola "non aggiungere disclaimer" nel CLAUDE.md (o nel front matter del template) lo elimina alla radice.'}
+],en:[
+{icon:'ti-ruler-2',quote:'Claude always answers too long on this kind of task.',sub:'You correct it by hand by shortening, every time.',type:'lunghezza',fixIcon:'ti-file-text',fix:'In the project INSTRUCTIONS',why:'It’s a problem of output calibration. Add the expected length for that type of task to the instructions ("max 5 lines for operational answers").'},
+{icon:'ti-mood-neutral',quote:'The tone is too formal, it doesn\'t sound like us.',sub:'You rewrite it yourself to make it more direct.',type:'tono',fixIcon:'ti-file-text',fix:'In the project INSTRUCTIONS',why:'Tone is a stable preference: it lives in the permanent instructions, it shouldn’t be repeated in every chat. Add a line about style and a mini-example.'},
+{icon:'ti-file-unknown',quote:'It doesn\'t know our internal procedure, it makes it up.',sub:'You re-explain the process every time.',type:'conoscenza',fixIcon:'ti-database',fix:'In the KNOWLEDGE BASE',why:'It’s not a style to correct: it’s information that’s missing. Upload the procedure as a file into the knowledge base, so Claude consults it instead of inventing it.'},
+{icon:'ti-repeat',quote:'It repeats the same disclaimer at the top of every document.',sub:'You delete it by hand from the generated files.',type:'ripetizione',fixIcon:'ti-file-code',fix:'In the CLAUDE.md / document front matter',why:'It’s a default behavior to switch off in the right place: a rule "don\'t add disclaimers" in CLAUDE.md (or in the template’s front matter) eliminates it at the root.'}
+]};
+var CLFOPTIONS=['lunghezza','tono','conoscenza','ripetizione'];
+var CLFLABELS={it:{lunghezza:'Lunghezza',tono:'Tono',conoscenza:'Conoscenza mancante',ripetizione:'Ripetizione'},en:{lunghezza:'Length',tono:'Tone',conoscenza:'Missing knowledge',ripetizione:'Repetition'}};
+var CLFTEXT={it:{score:function(d,t){return d+' / '+t+' classificati'},exact:'Esatto: è un problema di ',actual:'In realtà è un problema di ',fixL:'Si corregge: '},
+en:{score:function(d,t){return d+' / '+t+' classified'},exact:'Correct: it’s a problem of ',actual:'Actually it’s a problem of ',fixL:'Fixed: '}};
+
+var LANG='it';
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+
+  /* review */
+  document.getElementById('review').innerHTML=REVIEW[LANG].map(function(q,i){
+    return '<div class="feat"><div class="feat-icon">'+(i+1)+'</div><div class="feat-text"><strong>'+q[0]+'</strong><span>'+q[1]+'</span></div></div>';
+  }).join('');
+
+  /* compressed prompt */
+  document.getElementById('compress-prompt').textContent=COMPRESSPROMPT[LANG];
+
+  /* compressed block example */
+  document.getElementById('cblockBody').innerHTML=CBLOCK[LANG].map(function(s){
+    return '<div class="cblock-sec '+s[0]+'"><span class="cb-tag"><i class="ti '+s[1]+'"></i> '+s[2]+'</span><ul>'+s[3].map(function(li){return '<li>'+li+'</li>'}).join('')+'</ul></div>';
+  }).join('');
+
+  /* benefits */
+  document.getElementById('benefits').innerHTML=BENEFITS[LANG].map(function(b){
+    return '<div class="brow"><div class="brow-icon"><i class="ti '+b[0]+'"></i></div><div class="brow-text"><strong>'+b[1]+'</strong><span>'+b[2]+'</span></div></div>';
+  }).join('');
+
+  /* cycle ctrl label */
+  document.getElementById('cycleCtrlLabel').textContent=cyclePlaying?DICT[LANG].cyclePause:DICT[LANG].cyclePlay;
+
+  buildClassifier();
+}
+
+/* ===== Cycle animation ===== */
+var cycleSteps,cycleArrows,cycleIdx=0,cycleTimer=null,cyclePlaying=false;
+function cycleTick(){
+  cycleSteps.forEach(function(s){s.classList.remove('is-active');});
+  cycleArrows.forEach(function(a){a.classList.remove('is-active');});
+  cycleSteps[cycleIdx].classList.add('is-active');
+  if(cycleArrows[cycleIdx]) cycleArrows[cycleIdx].classList.add('is-active');
+  cycleIdx=(cycleIdx+1)%cycleSteps.length;
+}
+function startCycle(){if(cyclePlaying)return;cyclePlaying=true;setCtrl(true);cycleTick();cycleTimer=setInterval(cycleTick,1300);}
+function stopCycle(){cyclePlaying=false;setCtrl(false);if(cycleTimer){clearInterval(cycleTimer);cycleTimer=null;}}
+function toggleCycle(){cyclePlaying?stopCycle():startCycle();}
+function setCtrl(playing){
+  var btn=document.getElementById('cycleCtrl');
+  btn.innerHTML=playing
+    ? '<i class="ti ti-player-pause"></i> <span id="cycleCtrlLabel">'+DICT[LANG].cyclePause+'</span>'
+    : '<i class="ti ti-player-play"></i> <span id="cycleCtrlLabel">'+DICT[LANG].cyclePlay+'</span>';
+}
+
+/* ===== Classifier ===== */
+var clfDone=0,clfLocked={};
+function buildClassifier(){
+  var host=document.getElementById('classifier');
+  var scoreEl=document.getElementById('clfScore');
+  /* remove existing cards */
+  Array.prototype.slice.call(host.querySelectorAll('.clf')).forEach(function(c){c.remove();});
+  clfDone=0;clfLocked={};
+  CLFDATA[LANG].forEach(function(item,i){
+    var card=document.createElement('div');
+    card.className='clf';
+    var opts=CLFOPTIONS.map(function(opt){
+      return '<button class="clf-opt" data-i="'+i+'" data-opt="'+opt+'" onclick="classify(this)">'+CLFLABELS[LANG][opt]+'</button>';
+    }).join('');
+    card.innerHTML=
+      '<div class="clf-q">'+
+        '<div class="clf-icon"><i class="ti '+item.icon+'"></i></div>'+
+        '<div class="clf-quote">“'+item.quote+'”<span>'+item.sub+'</span></div>'+
+      '</div>'+
+      '<div class="clf-opts" data-opts="'+i+'">'+opts+'</div>'+
+      '<div class="clf-fb" id="clf-fb-'+i+'"></div>';
+    host.insertBefore(card,scoreEl);
+  });
+  scoreEl.textContent=CLFTEXT[LANG].score(clfDone,CLFDATA[LANG].length);
+}
+function classify(btn){
+  var i=parseInt(btn.getAttribute('data-i'),10);
+  var chosen=btn.getAttribute('data-opt');
+  var item=CLFDATA[LANG][i];
+  var optsWrap=document.querySelector('.clf-opts[data-opts="'+i+'"]');
+  if(clfLocked[i])return;
+  var correct=(chosen===item.type);
+  Array.prototype.slice.call(optsWrap.querySelectorAll('.clf-opt')).forEach(function(b){
+    var o=b.getAttribute('data-opt');
+    if(o===item.type){b.classList.add('correct');}
+    else if(o===chosen){b.classList.add('wrong');}
+    else{b.classList.add('dim');}
+  });
+  clfLocked[i]=true;
+  var fb=document.getElementById('clf-fb-'+i);
+  fb.className='clf-fb '+(correct?'ok':'no');
+  var lbl=CLFLABELS[LANG][item.type].toLowerCase();
+  var title=correct
+    ? '<i class="ti ti-circle-check"></i> '+CLFTEXT[LANG].exact+lbl
+    : '<i class="ti ti-info-circle"></i> '+CLFTEXT[LANG].actual+lbl;
+  fb.innerHTML=
+    '<div class="clf-fb-title">'+title+'</div>'+
+    '<div class="clf-fb-body">'+item.why+
+      '<br><span class="clf-fix"><i class="ti '+item.fixIcon+'"></i> '+CLFTEXT[LANG].fixL+item.fix+'</span>'+
+    '</div>';
+  void fb.offsetWidth;
+  fb.classList.add('show');
+  clfDone++;
+  document.getElementById('clfScore').textContent=CLFTEXT[LANG].score(clfDone,CLFDATA[LANG].length);
+}
+
+function copyPrompt(btn){
+  var el=document.getElementById('compress-prompt');
+  navigator.clipboard.writeText(el.innerText).then(function(){
+    var lbl=LANG==='it'?'Copiato!':'Copied!';
+    btn.innerHTML='<i class="ti ti-check"></i> '+lbl;btn.style.color='var(--teal)';btn.style.borderColor='var(--teal)';
+    setTimeout(function(){btn.innerHTML='<i class="ti ti-copy"></i> '+DICT[LANG].copyLbl;btn.style.color='';btn.style.borderColor='';},2500);
+  });
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+applyI18n();
+
+/* cycle setup + auto-start in viewport */
+cycleSteps=Array.prototype.slice.call(document.querySelectorAll('#csteps .cstep'));
+cycleArrows=Array.prototype.slice.call(document.querySelectorAll('#csteps .carrow'));
+var cycleStarted=false;
+var cycleObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting&&!cycleStarted){cycleStarted=true;startCycle();}});
+},{threshold:0.4});
+cycleObs.observe(document.getElementById('cycleWrap'));
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+</script>
+</body>
+</html>

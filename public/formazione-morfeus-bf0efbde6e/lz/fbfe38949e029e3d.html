@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Prompt Generator (meta-prompting applicato) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.8;overflow-x:auto}
+.code .tg{color:var(--accent)}
+/* rounds */
+.rounds{display:flex;flex-direction:column;gap:8px}
+.rnd{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.rnd:hover{border-color:var(--line-2)}.rnd.on{border-color:var(--accent);background:var(--accent-soft)}
+.rnd .rn{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.rnd.on .rn{background:var(--accent);color:#fff}
+.rnd .rb{flex:1}.rnd .rt{font-size:14.5px;font-weight:600}.rnd .rd{font-size:13px;color:var(--ink-2);margin-top:3px}
+.rnd .ri{color:var(--accent);font-size:17px;margin-top:1px;flex-shrink:0}
+.rnddetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.rnddetail p{font-size:14.5px;color:var(--ink-2)}.rnddetail p b{color:var(--ink)}
+.rnddetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+/* generator simulator */
+.gen{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;overflow:hidden}
+.genlbl{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.genlbl i{color:var(--accent);font-size:15px}
+.seedrow{display:flex;flex-direction:column;gap:8px}
+.seed{text-align:left;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13.5px;color:var(--ink);cursor:pointer;transition:.15s;font-family:var(--mono);line-height:1.5}
+.seed:hover{border-color:var(--accent);transform:translateX(2px)}
+.seed.on{border-color:var(--accent);background:var(--accent-soft)}
+.seed .sq{color:var(--ink-3);font-style:italic}
+.genbar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--sh);transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);color:var(--ink)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.pri:hover{color:#fff;opacity:.92}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.stage{margin-top:16px}
+.stagehd{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.qlist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.qlist li{display:flex;gap:10px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:10px 13px;font-size:13.5px;color:var(--ink-2)}
+.qlist li i{color:var(--accent);font-size:15px;margin-top:2px;flex-shrink:0}
+.genprompt{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--good);border-left:3px solid var(--good);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;color:var(--ink-2);white-space:pre-wrap;line-height:1.7}
+.genprompt .ph{color:var(--agent);font-weight:700}
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.axis{display:flex;align-items:center;gap:9px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:9px 12px;font-size:13px;color:var(--ink);font-weight:600}
+.axis i{color:var(--accent);font-size:16px}
+.fade{animation:fadein .4s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.axes{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.rnd,.rnddetail,.key,.code,.gen,.seed{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A4.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Meta-prompting applicato</div>
+  <h1 class="rv" data-i="h1">Il Prompt Generator (meta-prompting applicato)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-recycle"></i><span class="no">01</span><h2 data-i="s1">Un prompt che crea altri prompt</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-wand"></i></div><div><h4 data-i="note1H">Non sai come chiedere? Fai chiedere a lei.</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-id-badge-2"></i><span class="no">02</span><h2 data-i="s2">L'anatomia del generator</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="anatIntro"></p>
+  <div class="code rv" id="anat"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:14px" data-i="anatP"></p>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">03</span><h2 data-i="s3">Tre round, un prompt che funziona</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="rndIntro"></p>
+  <div class="rounds rv" id="rounds"></div>
+  <div class="rnddetail rv" id="rndDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-shield-x"></i><span class="no">04</span><h2 data-i="s4">«Non inventare i numeri»</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="note2H">L'AI è premiata se risponde</h4><p data-i-html="note2P"></p></div></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">05</span><h2 data-i="s5">Prova il generator</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="genIntro"></p>
+  <div class="gen rv">
+    <div class="genlbl"><i class="ti ti-message-2"></i> <span data-i="seedH">1 · Dai il tuo grezzo</span></div>
+    <div class="seedrow" id="seeds"></div>
+    <div class="genbar">
+      <button class="btn pri" id="genAsk" onclick="genAsk()" data-i="askB">Genera le domande →</button>
+      <button class="btn" onclick="genReset()" data-i="resetB">Ricomincia</button>
+    </div>
+    <div id="genOut"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">06</span><h2 data-i="s6">Perché si apre un mondo</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-brain"></i></div><h4 data-i="w1H">Conosce sé stessa</h4><p data-i="w1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-stairs-up"></i></div><h4 data-i="w2H">Pietra miliare</h4><p data-i="w2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-repeat"></i></div><h4 data-i="w3H">Iterabile</h4><p data-i="w3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Crea il tuo prompt architect</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Prompt Generator</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A4.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Meta-prompting applicato',
+h1:'Il Prompt Generator (meta-prompting applicato)',
+lede:'Il salto più grande del corso non è scrivere prompt migliori: è smettere di scriverli tu. Costruisci un prompt il cui unico scopo è generare gli altri prompt che userai — e da lì si apre un mondo.',
+s1:'Un prompt che crea altri prompt',
+note1H:'Non sai come chiedere? Fai chiedere a lei.',
+note1P:'Il meta-prompting è la pietra miliare del metodo: <strong>non hai un prompt che ti crea un\'analisi di mercato — hai un prompt il cui scopo è crearti altri prompt da usare.</strong> Esiste un prompt generator per ogni modello. L\'AI riconosce e replica pattern: un prompt è un pattern, quindi può scriverne uno migliore di te.',
+q1:'«Prompt che crea altri prompt: si apre un mondo. Non sai come chiedere? Fai chiedere a lei — nessuno conosce il modello meglio del modello stesso.»',
+s2:'L\'anatomia del generator',
+anatIntro:'Il cuore del generator è il ruolo che gli dai. Non è un assistente gentile: è un architetto a cui hai chiesto un solo risultato, un prompt che funziona.',
+anatP:'Nota la frase chiave: «non sei qui per essere gentile». Stai disattivando la tendenza del modello a compiacere e accontentarsi della prima risposta plausibile. Gli chiedi rigore, non cortesia.',
+s3:'Tre round, un prompt che funziona',
+rndIntro:'Il generator non sputa fuori il prompt al primo colpo. Lavora a round: prima capisce, poi costruisce, infine si autovaluta. Clicca ogni round.',
+s4:'«Non inventare i numeri»',
+note2H:'L\'AI è premiata se risponde',
+note2P:'Il modello «viene premiato se risponde»: piuttosto che ammettere di non sapere, può inventare un dato. <strong>Non lo fa il 99% delle volte — ma ti capita quella volta in cui stai chiudendo il deal da mezzo milione.</strong> Per questo nel prompt generato va sempre scritto: se un dato non è disponibile, metti un placeholder, non un numero inventato.',
+q2:'«Non inventare i numeri: se un dato non è disponibile, costruisci un [placeholder]. Lo scrivi una volta nel generator, lo erediti in ogni prompt che produce.»',
+s5:'Prova il generator',
+genIntro:'Simuliamo il flusso. Scegli un grezzo come lo diresti a voce, premi per generare le domande del Round 1, poi rivela il prompt del Round 2 e la valutazione del Round 3.',
+seedH:'1 · Dai il tuo grezzo',
+askB:'Genera le domande →',resetB:'Ricomincia',
+s6:'Perché si apre un mondo',
+w1H:'Conosce sé stessa',w1P:'Nessuno fa prompting per un modello meglio del modello: ha visto milioni di prompt, sa cosa lo fa rendere.',
+w2H:'Pietra miliare',w2P:'Smetti di produrre output e inizi a produrre strumenti che producono output. Il valore cresce a ogni iterazione.',
+w3H:'Iterabile',w3P:'Puoi chiudere il loop: l\'AI raffina da sola finché il prompt non è solido. Solo quando serve davvero — consuma token.',
+s7:'Checkpoint',
+cpH:'Crea il tuo prompt architect',
+cpP:'Prendi un task che rifai spesso e, invece di scrivere il prompt, costruisci il generator: dagli il ruolo di prompt architect, l\'ordine di farti domande nel Round 1, di generare nel Round 2, di valutarsi nel Round 3.',
+cpQ:'Hai dato il ruolo «prompt architect, non sei qui per essere gentile»? Hai detto di non procedere finché non ha tutto il contesto? Hai inserito la regola «non inventare i numeri, metti un placeholder»? Se manca uno dei tre, il generator ti darà un prompt mediocre.',
+bridge:'Sai far scrivere all\'AI i tuoi prompt. <b>Prossimo:</b> il few-shot — come dosare il numero di esempi per controllare quanto l\'output è creativo o sempre identico.',
+foot:'Morfeus — Il Prompt Generator'
+},
+en:{
+kicker:'Lesson A4.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Applied meta-prompting',
+h1:'The Prompt Generator (applied meta-prompting)',
+lede:'The biggest leap in the course isn\'t writing better prompts: it\'s no longer writing them yourself. You build a prompt whose only job is to generate the other prompts you\'ll use — and from there a whole world opens up.',
+s1:'A prompt that creates other prompts',
+note1H:'Don\'t know how to ask? Have it ask.',
+note1P:'Meta-prompting is the cornerstone of the method: <strong>you don\'t have a prompt that builds a market analysis — you have a prompt whose job is to build the other prompts you\'ll use.</strong> There\'s a prompt generator for every model. AI recognizes and replicates patterns: a prompt is a pattern, so it can write a better one than you.',
+q1:'"A prompt that creates other prompts: a whole world opens up. Don\'t know how to ask? Have it ask — nobody knows the model better than the model itself."',
+s2:'The anatomy of the generator',
+anatIntro:'The heart of the generator is the role you give it. It isn\'t a polite assistant: it\'s an architect you\'ve asked for one outcome — a prompt that works.',
+anatP:'Notice the key line: "you\'re not here to be nice." You\'re switching off the model\'s tendency to please and settle for the first plausible answer. You\'re asking for rigor, not courtesy.',
+s3:'Three rounds, one prompt that works',
+rndIntro:'The generator doesn\'t spit out the prompt on the first try. It works in rounds: first it understands, then it builds, finally it self-assesses. Click each round.',
+s4:'"Don\'t invent the numbers"',
+note2H:'AI is rewarded for answering',
+note2P:'The model "is rewarded for answering": rather than admit it doesn\'t know, it may invent a figure. <strong>It doesn\'t do it 99% of the time — but it happens that one time you\'re closing the half-million deal.</strong> That\'s why the generated prompt must always say: if a figure isn\'t available, use a placeholder, not an invented number.',
+q2:'"Don\'t invent the numbers: if a figure isn\'t available, build a [placeholder]. You write it once in the generator, you inherit it in every prompt it produces."',
+s5:'Try the generator',
+genIntro:'Let\'s simulate the flow. Pick a raw request the way you\'d say it out loud, hit generate for the Round 1 questions, then reveal the Round 2 prompt and the Round 3 assessment.',
+seedH:'1 · Give your raw request',
+askB:'Generate the questions →',resetB:'Start over',
+s6:'Why a world opens up',
+w1H:'It knows itself',w1P:'Nobody does prompting for a model better than the model: it has seen millions of prompts, it knows what makes it perform.',
+w2H:'A milestone',w2P:'You stop producing outputs and start producing tools that produce outputs. Value compounds with every iteration.',
+w3H:'Iterable',w3P:'You can close the loop: the AI refines on its own until the prompt is solid. Only when it truly matters — it burns tokens.',
+s7:'Checkpoint',
+cpH:'Build your prompt architect',
+cpP:'Take a task you redo often and, instead of writing the prompt, build the generator: give it the prompt-architect role, the order to ask you questions in Round 1, to generate in Round 2, to assess itself in Round 3.',
+cpQ:'Did you give it the role "prompt architect, you\'re not here to be nice"? Did you tell it not to proceed until it has the full context? Did you add the rule "don\'t invent numbers, use a placeholder"? If one of the three is missing, the generator will hand you a mediocre prompt.',
+bridge:'You can make AI write your prompts. <b>Next:</b> few-shot — how to dose the number of examples to control whether the output is creative or always identical.',
+foot:'Morfeus — The Prompt Generator'
+}};
+
+var ANAT={
+it:'<ruolo> Sei il mio prompt architect. Il tuo compito è\ncostruire il miglior prompt possibile per Claude a\npartire dalla mia richiesta.\nNon sei qui per essere gentile: sei qui per\nprodurre un prompt che funziona. </ruolo>',
+en:'<role> You are my prompt architect. Your task is to\nbuild the best possible prompt for Claude starting\nfrom my request.\nYou\'re not here to be nice: you\'re here to\nproduce a prompt that works. </role>'};
+
+var ROUNDS={it:[
+['Round 1 — Solo domande','Non genera niente: fa solo le domande che gli mancano per arrivare al 95% del contesto. Se la richiesta è già chiara, salta direttamente al Round 2.','Cosa deve fare Claude esattamente?\nChi leggerà l\'output?\nCome deve apparire il risultato?\nC\'è qualcosa che NON deve fare o includere?\nCi sono informazioni che ti servono e che non ho fornito?'],
+['Round 2 — Genera il prompt','Con le risposte in mano, costruisce il prompt vero, strutturato col Metodo A5. Per Claude il prompt parte dal task diretto. Qui dentro mette le regole permanenti — inclusa quella sui numeri.','Agisci come un analista strategico...\nPerimetro: solo segmento professionale, escludi il consumer.\nNon inventare i numeri: se un dato non è disponibile, metti un [placeholder].'],
+['Round 3 — Valuta su 5 assi','Non si ferma al prompt: lo giudica su cinque assi e ti fa le ultime domande per affinarlo. «Il prompt è già buono, ma rispondendo a queste lo rendiamo migliore.»','Chiarezza · Specificità · Formato\nCompetenza · Completezza\n→ individua l\'asse più debole e fa 1-3 domande mirate.']
+],en:[
+['Round 1 — Questions only','It generates nothing: it just asks the questions it\'s missing to reach 95% of the context. If the request is already clear, it skips straight to Round 2.','What exactly must Claude do?\nWho will read the output?\nHow should the result look?\nIs there anything it must NOT do or include?\nIs there information you need that I haven\'t provided?'],
+['Round 2 — Generate the prompt','With the answers in hand, it builds the real prompt, structured with the A5 Method. For Claude the prompt starts from the direct task. This is where it puts the permanent rules — including the one about numbers.','Act as a strategic analyst...\nScope: professional segment only, exclude consumer.\nDon\'t invent the numbers: if a figure isn\'t available, use a [placeholder].'],
+['Round 3 — Score on 5 axes','It doesn\'t stop at the prompt: it judges it on five axes and asks the final questions to refine it. "The prompt is already good, but answering these makes it better."','Clarity · Specificity · Format\nExpertise · Completeness\n→ spots the weakest axis and asks 1-3 targeted questions.']
+]};
+
+// generator simulator data: raw -> questions -> prompt -> axes
+var SEEDS={it:[
+{raw:'«Mi serve un\'analisi del mercato dei forni professionali, segmento italiano.»',
+ q:['Lo scopo dell\'analisi: investimento, go-to-market, acquisizione o vendita?','Quale segmento esatto: pasticceria, panificazione, combinati-ibridi?','I forni domestici/consumer vanno inclusi o esclusi?','In che forma vuoi il risultato: report, tabella, executive summary?'],
+ prompt:'Agisci come un analista strategico nel mercato\ndei forni professionali, segmento italiano.\nPerimetro: pasticceria, panificazione, ibridi —\nescludi i forni domestici/consumer.\nProcesso: 1. dimensione e trend  2. attori e\nquote  3. opportunità e rischi.\nOutput: executive summary + tabella.\n<<NON inventare i numeri: se un dato non è\ndisponibile, metti un [placeholder].>>'},
+{raw:'«Voglio un post LinkedIn che mi dia visibilità, ho lanciato un SaaS AI.»',
+ q:['A chi parla il post: founder, marketer, investitori?','Qual è l\'obiettivo: visibilità, lead, autorevolezza?','Quanti utenti/numeri reali posso citare?','Che tono vuoi: tecnico, ispirazionale, dietro le quinte?'],
+ prompt:'Scrivi un post LinkedIn per il founder di un\nnuovo SaaS AI appena lanciato (~100 utenti).\nObiettivo: visibilità e coinvolgimento costante.\nTono: dietro le quinte, onesto, niente hype.\nStruttura: hook → tensione reale → lezione → CTA.\n<<NON inventare metriche: usa solo i numeri che\nti fornisco, altrimenti metti un [placeholder].>>'}
+],en:[
+{raw:'"I need an analysis of the professional oven market, Italian segment."',
+ q:['The purpose of the analysis: investment, go-to-market, acquisition or sale?','Which exact segment: pastry, bakery, hybrid-combi?','Should domestic/consumer ovens be included or excluded?','In what form do you want the result: report, table, executive summary?'],
+ prompt:'Act as a strategic analyst in the professional\noven market, Italian segment.\nScope: pastry, bakery, hybrids —\nexclude domestic/consumer ovens.\nProcess: 1. size and trend  2. players and\nshare  3. opportunities and risks.\nOutput: executive summary + table.\n<<DON\'T invent the numbers: if a figure isn\'t\navailable, use a [placeholder].>>'},
+{raw:'"I want a LinkedIn post that gives me visibility, I launched an AI SaaS."',
+ q:['Who is the post talking to: founders, marketers, investors?','What\'s the goal: visibility, leads, authority?','How many real users/numbers can I cite?','What tone do you want: technical, inspirational, behind-the-scenes?'],
+ prompt:'Write a LinkedIn post for the founder of a\nnewly launched AI SaaS (~100 users).\nGoal: visibility and consistent engagement.\nTone: behind-the-scenes, honest, no hype.\nStructure: hook → real tension → lesson → CTA.\n<<DON\'T invent metrics: use only the numbers I\ngive you, otherwise use a [placeholder].>>'}
+]};
+var AXES={it:['Chiarezza','Specificità','Formato','Competenza'],en:['Clarity','Specificity','Format','Expertise']};
+var STAGE_TXT={it:{r1:'Round 1 · Le domande',r2:'Round 2 · Il prompt generato',r3:'Round 3 · Valutazione su 5 assi',next:'Rivela il prompt →',axesB:'Valuta su 5 assi →'},
+en:{r1:'Round 1 · The questions',r2:'Round 2 · The generated prompt',r3:'Round 3 · Score on 5 axes',next:'Reveal the prompt →',axesB:'Score on 5 axes →'}};
+
+var LANG='it',curRnd=0,curSeed=0,genStep=0;
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function tagColor(s){return esc(s).replace(/(&lt;\/?[a-z]+&gt;)/g,'<span class="tg">$1</span>')}
+function phColor(s){return esc(s).replace(/(\[placeholder\])/g,'<span class="ph">$1</span>')}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('anat').innerHTML=tagColor(ANAT[LANG]);
+  document.getElementById('rounds').innerHTML=ROUNDS[LANG].map(function(r,i){return '<div class="rnd'+(i===curRnd?' on':'')+'" onclick="showRnd('+i+')"><div class="rn">'+(i+1)+'</div><div class="rb"><div class="rt">'+r[0]+'</div><div class="rd">'+r[1]+'</div></div><i class="ti ti-chevron-right ri"></i></div>'}).join('');
+  showRnd(curRnd);
+  renderSeeds();renderGen();
+}
+function showRnd(i){curRnd=i;document.querySelectorAll('#rounds .rnd').forEach(function(x,k){x.classList.toggle('on',k===i)});var r=ROUNDS[LANG][i];document.getElementById('rndDetail').innerHTML='<p><b>'+r[0]+'.</b> '+r[1]+'</p><div class="ex">'+r[2]+'</div>'}
+function renderSeeds(){
+  document.getElementById('seeds').innerHTML=SEEDS[LANG].map(function(s,i){return '<div class="seed'+(i===curSeed?' on':'')+'" onclick="pickSeed('+i+')">'+s.raw+'</div>'}).join('');
+}
+function pickSeed(i){curSeed=i;genStep=0;renderSeeds();renderGen()}
+function genAsk(){if(genStep<1)genStep=1;renderGen()}
+function genNext(){genStep++;renderGen()}
+function genReset(){genStep=0;renderGen()}
+function renderGen(){
+  var out=document.getElementById('genOut'),s=SEEDS[LANG][curSeed],t=STAGE_TXT[LANG];
+  var html='';
+  if(genStep>=1){
+    html+='<div class="stage fade"><div class="stagehd"><i class="ti ti-help-circle"></i> '+t.r1+'</div><ul class="qlist">'+s.q.map(function(q){return '<li><i class="ti ti-point"></i>'+q+'</li>'}).join('')+'</ul></div>';
+    if(genStep===1)html+='<div class="genbar"><button class="btn pri" onclick="genNext()">'+t.next+'</button></div>';
+  }
+  if(genStep>=2){
+    html+='<div class="stage fade"><div class="stagehd"><i class="ti ti-file-text"></i> '+t.r2+'</div><div class="genprompt">'+phColor(s.prompt)+'</div></div>';
+    if(genStep===2)html+='<div class="genbar"><button class="btn pri" onclick="genNext()">'+t.axesB+'</button></div>';
+  }
+  if(genStep>=3){
+    html+='<div class="stage fade"><div class="stagehd"><i class="ti ti-checkup-list"></i> '+t.r3+'</div><div class="axes">'+AXES[LANG].map(function(a){return '<div class="axis"><i class="ti ti-circle-check"></i>'+a+'</div>'}).join('')+'</div></div>';
+  }
+  out.innerHTML=html;
+  document.getElementById('genAsk').disabled=(genStep>=1);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

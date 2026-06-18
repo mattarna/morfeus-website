@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup CoWork — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* ===== REQUISITI CARDS ===== */
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.req-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 18px 15px;cursor:pointer;transition:.2s}
+.req-card:hover{border-color:var(--line-2)}
+.req-card.open{border-color:var(--accent-line)}
+.req-head{display:flex;align-items:center;gap:12px}
+.req-ic{width:40px;height:40px;border-radius:11px;background:var(--bg-2);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:.2s}
+.req-card.open .req-ic{background:var(--accent);color:#fff}
+.req-title{font-size:14.5px;font-weight:600}
+.req-sub{font-size:11.5px;color:var(--ink-3);margin-top:1px}
+.req-arrow{margin-left:auto;font-size:16px;color:var(--ink-3);transition:transform .25s}
+.req-card.open .req-arrow{transform:rotate(90deg);color:var(--accent)}
+.req-detail{max-height:0;overflow:hidden;transition:max-height .35s ease,margin-top .25s}
+.req-card.open .req-detail{max-height:340px;margin-top:14px}
+.req-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.req-list li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--ink-2);line-height:1.5}
+.req-list li i{font-size:15px;color:var(--good);margin-top:2px;flex-shrink:0}
+.req-list li i.warn{color:var(--warn)}
+.req-list li strong{color:var(--ink);font-weight:600}
+/* ===== SETUP STEPS ===== */
+.progress-wrap{background:var(--bg-2);border:1px solid var(--line);border-radius:30px;height:8px;margin:0 0 24px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent-line),var(--accent));border-radius:30px;transition:width .5s cubic-bezier(.3,.8,.3,1)}
+.setup-steps{display:flex;flex-direction:column;gap:0;position:relative}
+.setup-steps::before{content:'';position:absolute;left:23px;top:30px;bottom:30px;width:2px;background:var(--line);z-index:0}
+.step-row{display:flex;gap:16px;align-items:flex-start;position:relative;z-index:1}
+.step-row+.step-row{margin-top:12px}
+.step-num{width:48px;height:48px;border-radius:50%;border:2px solid var(--line-2);background:var(--card);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink-3);flex-shrink:0;cursor:pointer;transition:.25s}
+.step-row.done .step-num{border-color:var(--accent);background:var(--accent);color:#fff}
+.step-row.active .step-num{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.step-body{flex:1;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;cursor:pointer;transition:.25s}
+.step-body:hover{border-color:var(--line-2)}
+.step-row.active .step-body,.step-row.done .step-body{border-color:var(--accent-line)}
+.step-row.active .step-body{background:var(--accent-soft)}
+.step-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.step-title{font-size:14.5px;font-weight:600}
+.step-icon{font-size:18px;color:var(--ink-3);flex-shrink:0}
+.step-row.active .step-icon,.step-row.done .step-icon{color:var(--accent)}
+.step-content{max-height:0;overflow:hidden;transition:max-height .35s ease,margin-top .25s}
+.step-row.active .step-content,.step-row.done .step-content{max-height:520px;margin-top:11px}
+.step-content p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.step-content p strong{color:var(--ink);font-weight:600}
+.step-note{background:var(--bg-2);border-radius:var(--r);padding:11px 14px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);margin-top:10px;line-height:1.6}
+.note-label{font-family:var(--sans);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.note-label.a{color:var(--accent)}.note-label.b{color:var(--blue)}
+.step-note.a{border-left:3px solid var(--accent)}.step-note.b{border-left:3px solid var(--blue)}
+.step-actions{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.step-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border-radius:20px;font-size:12.5px;font-weight:600;font-family:var(--sans);cursor:pointer;border:none;transition:.18s}
+.step-btn.primary{background:var(--accent);color:#fff}
+.step-btn.primary:hover{filter:brightness(1.07)}
+.step-btn.ghost{background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line-2)}
+.step-btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+/* ===== ARCH ===== */
+.arch-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px}
+.arch-row{display:flex;align-items:center;gap:12px}
+.arch-node{flex:1;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r-l);padding:16px;text-align:center}
+.arch-node.remote{border-color:var(--accent-line);background:var(--accent-soft)}
+.arch-node.local{border-color:var(--teal-line);background:var(--teal-soft)}
+.arch-node>i{font-size:28px;display:block;margin-bottom:6px}
+.arch-node.remote>i{color:var(--accent)}.arch-node.local>i{color:var(--teal)}
+.an-title{font-size:13px;font-weight:700}
+.an-sub{font-size:11.5px;color:var(--ink-3);margin-top:3px;line-height:1.4}
+.an-sub strong{color:var(--ink-2);font-weight:600}
+.arch-arrow{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--ink-3);font-size:10.5px;font-family:var(--mono);flex-shrink:0}
+.arch-arrow i{font-size:20px}
+.arch-cap{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:16px;line-height:1.6}
+/* ===== CUSTOMIZE ===== */
+.cust-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cust-tab{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l) var(--r-l) 0 0;padding:14px 10px;text-align:center;cursor:pointer;transition:.25s;border-bottom:none}
+.cust-tab:hover{border-color:var(--line-2)}
+.cust-tab.active{border-color:var(--accent-line);background:var(--accent-soft)}
+.cust-tab i{font-size:22px;color:var(--ink-3);display:block;margin-bottom:6px;transition:color .2s}
+.cust-tab.active i{color:var(--accent)}
+.ct-name{font-size:12.5px;font-weight:600}
+.ct-badge{font-size:10px;color:var(--ink-3);margin-top:2px;font-family:var(--mono)}
+.cust-panel{background:var(--card);border:1px solid var(--line);border-top:1.5px solid var(--accent-line);border-radius:0 0 var(--r-l) var(--r-l);box-shadow:var(--sh);padding:22px 24px;min-height:120px}
+.cust-panel h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent);display:flex;align-items:center;gap:8px}
+.cust-panel p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.cust-panel p strong{color:var(--ink);font-weight:600}
+.cust-panel .ex{background:var(--bg-2);border-radius:var(--r);padding:10px 14px;font-size:12.5px;color:var(--ink-3);margin-top:11px;line-height:1.6;border-left:2px solid var(--accent-line)}
+/* ===== MYTHS ===== */
+.myth-list{display:flex;flex-direction:column;gap:10px}
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer}
+.myth-head{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.myth-x{width:30px;height:30px;border-radius:8px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.myth-q{font-size:13.5px;font-weight:600;flex:1}
+.myth-tog{font-size:16px;color:var(--ink-3);transition:transform .25s}
+.myth.open .myth-tog{transform:rotate(45deg);color:var(--accent)}
+.myth-ans{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.myth.open .myth-ans{max-height:180px}
+.myth-ans-inner{padding:0 16px 14px 58px;font-size:13px;color:var(--ink-2);line-height:1.7}
+.myth-ans-inner strong{color:var(--accent);font-weight:600}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.req-grid{grid-template-columns:1fr}.cust-tabs{grid-template-columns:repeat(2,1fr)}.arch-row{flex-direction:column}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.req-card,.step-body,.arch-box,.cust-panel,.myth,.key{break-inside:avoid;box-shadow:none!important}.req-card .req-detail,.step-content{max-height:none!important;margin-top:11px!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 4 — CoWork</div>
+  <h1 class="rv" data-i="h1">Setup CoWork</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- ===== 01 REQUISITI ===== -->
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">01</span><h2 data-i="s1">Prima di cominciare — requisiti</h2></div>
+  <p class="lede-p rv" data-i="reqIntro"></p>
+  <div class="req-grid rv">
+    <div class="req-card" id="reqPlan" onclick="toggleReq('reqPlan')">
+      <div class="req-head">
+        <div class="req-ic"><i class="ti ti-credit-card"></i></div>
+        <div><div class="req-title" data-i="reqPlanT"></div><div class="req-sub" data-i="reqPlanS"></div></div>
+        <i class="ti ti-chevron-right req-arrow"></i>
+      </div>
+      <div class="req-detail"><ul class="req-list">
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqPlan1"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqPlan2"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqPlan3"></span></li>
+        <li><i class="ti ti-circle-x warn"></i><span data-i-html="reqPlan4"></span></li>
+      </ul></div>
+    </div>
+    <div class="req-card" id="reqDesk" onclick="toggleReq('reqDesk')">
+      <div class="req-head">
+        <div class="req-ic"><i class="ti ti-device-laptop"></i></div>
+        <div><div class="req-title" data-i="reqDeskT"></div><div class="req-sub" data-i="reqDeskS"></div></div>
+        <i class="ti ti-chevron-right req-arrow"></i>
+      </div>
+      <div class="req-detail"><ul class="req-list">
+        <li><i class="ti ti-brand-apple" style="color:var(--ink-2)"></i><span data-i-html="reqDesk1"></span></li>
+        <li><i class="ti ti-brand-windows" style="color:var(--ink-2)"></i><span data-i-html="reqDesk2"></span></li>
+        <li><i class="ti ti-circle-x warn"></i><span data-i-html="reqDesk3"></span></li>
+        <li><i class="ti ti-circle-x warn"></i><span data-i-html="reqDesk4"></span></li>
+      </ul></div>
+    </div>
+    <div class="req-card" id="reqNet" onclick="toggleReq('reqNet')">
+      <div class="req-head">
+        <div class="req-ic"><i class="ti ti-wifi"></i></div>
+        <div><div class="req-title" data-i="reqNetT"></div><div class="req-sub" data-i="reqNetS"></div></div>
+        <i class="ti ti-chevron-right req-arrow"></i>
+      </div>
+      <div class="req-detail"><ul class="req-list">
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqNet1"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqNet2"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqNet3"></span></li>
+        <li><i class="ti ti-info-circle warn"></i><span data-i-html="reqNet4"></span></li>
+      </ul></div>
+    </div>
+    <div class="req-card" id="reqSec" onclick="toggleReq('reqSec')">
+      <div class="req-head">
+        <div class="req-ic"><i class="ti ti-shield-lock"></i></div>
+        <div><div class="req-title" data-i="reqSecT"></div><div class="req-sub" data-i="reqSecS"></div></div>
+        <i class="ti ti-chevron-right req-arrow"></i>
+      </div>
+      <div class="req-detail"><ul class="req-list">
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqSec1"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqSec2"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqSec3"></span></li>
+        <li><i class="ti ti-circle-check"></i><span data-i-html="reqSec4"></span></li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- ===== 02 SETUP STEP BY STEP ===== -->
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">02</span><h2 data-i="s2">Setup passo per passo</h2></div>
+  <div class="progress-wrap rv"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="setup-steps rv">
+    <div class="step-row" id="step0" onclick="activateStep(0)">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-head"><div class="step-title" data-i="st1T"></div><i class="ti ti-download step-icon"></i></div>
+        <div class="step-content">
+          <p data-i-html="st1P"></p>
+          <div class="step-note a"><div class="note-label a" data-i="st1aL"></div><span data-i="st1aB"></span></div>
+          <div class="step-note b" style="margin-top:8px"><div class="note-label b" data-i="st1bL"></div><span data-i="st1bB"></span></div>
+          <div class="step-actions"><button class="step-btn primary" onclick="markDone(0,event)"><i class="ti ti-check"></i> <span data-i="btnDone"></span></button></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row" id="step1" onclick="activateStep(1)">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-head"><div class="step-title" data-i="st2T"></div><i class="ti ti-login step-icon"></i></div>
+        <div class="step-content">
+          <p data-i-html="st2P"></p>
+          <div class="step-note a"><div class="note-label a" data-i="st2aL"></div><span data-i="st2aB"></span></div>
+          <div class="step-actions"><button class="step-btn primary" onclick="markDone(1,event)"><i class="ti ti-check"></i> <span data-i="btnDone"></span></button><button class="step-btn ghost" onclick="activateStep(0,event)"><i class="ti ti-arrow-left"></i> <span data-i="btnBack"></span></button></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row" id="step2" onclick="activateStep(2)">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-head"><div class="step-title" data-i="st3T"></div><i class="ti ti-folder-open step-icon"></i></div>
+        <div class="step-content">
+          <p data-i-html="st3P"></p>
+          <div class="step-note a"><div class="note-label a" data-i="st3aL"></div><span data-i="st3aB"></span></div>
+          <div class="step-note b" style="margin-top:8px"><div class="note-label b" data-i="st3bL"></div><span data-i="st3bB"></span></div>
+          <p style="margin-top:10px" data-i="st3End"></p>
+          <div class="step-actions"><button class="step-btn primary" onclick="markDone(2,event)"><i class="ti ti-check"></i> <span data-i="btnFolder"></span></button><button class="step-btn ghost" onclick="activateStep(1,event)"><i class="ti ti-arrow-left"></i> <span data-i="btnBack"></span></button></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-row" id="step3" onclick="activateStep(3)">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-head"><div class="step-title" data-i="st4T"></div><i class="ti ti-file-check step-icon"></i></div>
+        <div class="step-content">
+          <p data-i="st4P"></p>
+          <div class="step-note a"><div class="note-label a" data-i="st4aL"></div><span data-i="st4aB"></span></div>
+          <p style="margin-top:10px" data-i="st4End"></p>
+          <div class="step-actions"><button class="step-btn primary" onclick="markDone(3,event)"><i class="ti ti-check"></i> <span data-i="btnSetup"></span></button><button class="step-btn ghost" onclick="activateStep(2,event)"><i class="ti ti-arrow-left"></i> <span data-i="btnBack"></span></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 03 DOVE GIRA COSA ===== -->
+  <div class="sh rv"><i class="ti ti-server"></i><span class="no">03</span><h2 data-i="s3">Dove gira cosa</h2></div>
+  <div class="arch-box rv">
+    <div class="arch-row">
+      <div class="arch-node remote">
+        <i class="ti ti-cloud"></i>
+        <div class="an-title" data-i="archRemoteT"></div>
+        <div class="an-sub" data-i-html="archRemoteS"></div>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrows-exchange"></i><span data-i="archNet"></span></div>
+      <div class="arch-node local">
+        <i class="ti ti-device-desktop"></i>
+        <div class="an-title" data-i="archLocalT"></div>
+        <div class="an-sub" data-i-html="archLocalS"></div>
+      </div>
+    </div>
+    <p class="arch-cap" data-i-html="archCap"></p>
+  </div>
+
+  <!-- ===== 04 CUSTOMIZE ===== -->
+  <div class="sh rv"><i class="ti ti-sliders"></i><span class="no">04</span><h2 data-i="s4">Il pannello Customize</h2></div>
+  <p class="lede-p rv" data-i-html="custIntro"></p>
+  <div class="rv">
+    <div class="cust-tabs">
+      <div class="cust-tab active" onclick="showCust(0)"><i class="ti ti-bolt"></i><div class="ct-name" data-i="ct0N"></div><div class="ct-badge" data-i="ct0B"></div></div>
+      <div class="cust-tab" onclick="showCust(1)"><i class="ti ti-puzzle"></i><div class="ct-name" data-i="ct1N"></div><div class="ct-badge" data-i="ct1B"></div></div>
+      <div class="cust-tab" onclick="showCust(2)"><i class="ti ti-plug"></i><div class="ct-name" data-i="ct2N"></div><div class="ct-badge" data-i="ct2B"></div></div>
+      <div class="cust-tab" onclick="showCust(3)"><i class="ti ti-folder-star"></i><div class="ct-name" data-i="ct3N"></div><div class="ct-badge" data-i="ct3B"></div></div>
+    </div>
+    <div class="cust-panel" id="custPanel"></div>
+  </div>
+
+  <!-- ===== 05 EQUIVOCI ===== -->
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">05</span><h2 data-i="s5">Equivoci comuni</h2></div>
+  <div class="myth-list rv">
+    <div class="myth" id="myth0" onclick="toggleMyth('myth0')">
+      <div class="myth-head"><div class="myth-x"><i class="ti ti-x"></i></div><div class="myth-q" data-i="m0Q"></div><i class="ti ti-plus myth-tog"></i></div>
+      <div class="myth-ans"><div class="myth-ans-inner" data-i-html="m0A"></div></div>
+    </div>
+    <div class="myth" id="myth1" onclick="toggleMyth('myth1')">
+      <div class="myth-head"><div class="myth-x"><i class="ti ti-x"></i></div><div class="myth-q" data-i="m1Q"></div><i class="ti ti-plus myth-tog"></i></div>
+      <div class="myth-ans"><div class="myth-ans-inner" data-i-html="m1A"></div></div>
+    </div>
+    <div class="myth" id="myth2" onclick="toggleMyth('myth2')">
+      <div class="myth-head"><div class="myth-x"><i class="ti ti-x"></i></div><div class="myth-q" data-i="m2Q"></div><i class="ti ti-plus myth-tog"></i></div>
+      <div class="myth-ans"><div class="myth-ans-inner" data-i-html="m2A"></div></div>
+    </div>
+    <div class="myth" id="myth3" onclick="toggleMyth('myth3')">
+      <div class="myth-head"><div class="myth-x"><i class="ti ti-x"></i></div><div class="myth-q" data-i="m3Q"></div><i class="ti ti-plus myth-tog"></i></div>
+      <div class="myth-ans"><div class="myth-ans-inner" data-i-html="m3A"></div></div>
+    </div>
+    <div class="myth" id="myth4" onclick="toggleMyth('myth4')">
+      <div class="myth-head"><div class="myth-x"><i class="ti ti-x"></i></div><div class="myth-q" data-i="m4Q"></div><i class="ti ti-plus myth-tog"></i></div>
+      <div class="myth-ans"><div class="myth-ans-inner" data-i-html="m4A"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== 06 IN UNA FRASE ===== -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Setup CoWork</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 4 — CoWork',
+h1:'Setup CoWork',
+lede:'Il setup si fa una volta sola. Dieci minuti. Al termine hai uno spazio di lavoro dove Claude opera in autonomia — e che puoi espandere nel tempo.',
+s1:'Prima di cominciare — requisiti',
+reqIntro:'CoWork non è disponibile ovunque. Clicca per vedere cosa serve sul tuo sistema.',
+reqPlanT:'Piano a pagamento',reqPlanS:'Pro, Max, Team, Enterprise',
+reqPlan1:'Pro — accesso completo a CoWork',
+reqPlan2:'Max — CoWork + computer use',
+reqPlan3:'Team / Enterprise — CoWork senza computer use',
+reqPlan4:'Piano Free — CoWork <strong>non disponibile</strong>',
+reqDeskT:'App Desktop',reqDeskS:'macOS o Windows',
+reqDesk1:'macOS — scarica da claude.ai',
+reqDesk2:'Windows — scarica da claude.ai (serve Virtual Machine Platform abilitata)',
+reqDesk3:'Web (claude.ai nel browser) — CoWork <strong>non disponibile</strong>',
+reqDesk4:'App mobile — CoWork <strong>non disponibile</strong>',
+reqNetT:'Computer attivo + connesso',reqNetS:'Mentre i task girano',
+reqNet1:'Connessione internet attiva (il modello gira sui server)',
+reqNet2:'App desktop aperta mentre CoWork lavora',
+reqNet3:'Computer sveglio (non in sospensione)',
+reqNet4:'I file sono <strong>locali</strong> sul tuo PC — il cloud vede solo le istruzioni',
+reqSecT:'Ambiente sicuro',reqSecS:'VM sandbox isolata',
+reqSec1:'Code execution gira in una VM Linux isolata',
+reqSec2:'Claude vede solo la workspace folder che scegli',
+reqSec3:'Non naviga nel file system generale del PC',
+reqSec4:'Tu controlli cosa Claude può vedere e toccare',
+s2:'Setup passo per passo',
+btnDone:'Fatto',btnBack:'Indietro',btnFolder:'Cartella selezionata',btnSetup:'File creato — setup completo',
+st1T:'Scarica e installa l’app desktop',
+st1P:'Vai su <strong>claude.ai</strong> dal browser e cerca il link per scaricare l’app desktop. Il file è un installer standard — scarica, installa, lancia.',
+st1aL:'macOS',st1aB:'File .dmg — trascina nell’applicazioni. Apri dal Launchpad.',
+st1bL:'Windows',st1bB:'File .exe — esegui come amministratore. Assicurati che Virtual Machine Platform sia abilitata nelle funzionalità Windows.',
+st2T:'Accedi e apri CoWork',
+st2P:'Al primo avvio accedi con il tuo account Claude. Poi individua il <strong>selettore di modalità</strong> in alto — trovi la tab CoWork. Cliccaci sopra per entrare nel workspace.',
+st2aL:'Dove si trova',st2aB:'Nella sidebar o nella barra in alto dell’app, vedrai le modalità disponibili: Chat, CoWork (e altri). CoWork si distingue per l’icona a razzo o con il nome esplicito.',
+st3T:'Scegli la workspace folder',
+st3P:'Al primo accesso a CoWork ti viene chiesto di selezionare una <strong>cartella di lavoro</strong> — la casa di CoWork sul tuo computer. Tutto quello che Claude crea, modifica e organizza vive lì.',
+st3aL:'Opzione A — Cartella dedicata',st3aB:'Desktop/CLAUDE/ oppure Documenti/CoWork/ — tutto il lavoro CoWork vive qui, separato dal resto.',
+st3bL:'Opzione B — Integrata nel tuo sistema',st3bB:'Documenti/Lavoro/CoWork/ — dentro la struttura che già usi.',
+st3End:'L’importante: un posto che controlli regolarmente e che non dimentichi.',
+st4T:'Test di verifica — primo file',
+st4P:'CoWork è configurato. Prima di procedere, verifica che funzioni davvero: nella chat di CoWork digita questo comando e invialo.',
+st4aL:'Comando di test',st4aB:'Crea un file di testo nella cartella selezionata che si chiama "benvenuto.txt" e scrivi dentro: "CoWork configurato correttamente il [data di oggi]"',
+st4End:'Poi apri la tua workspace folder nel Finder/Esplora risorse e verifica che il file ci sia. Se c’è — sei a posto.',
+s3:'Dove gira cosa',
+archRemoteT:'Modello AI',archRemoteS:'Gira sui server Anthropic<br>Le istruzioni viaggiano in rete',
+archNet:'rete',
+archLocalT:'File e dati',archLocalS:'Rimangono <strong>locali</strong> sul tuo PC<br>Nella workspace folder che hai scelto',
+archCap:'Il modello non vede i tuoi file: riceve solo il contenuto che Claude gli passa durante il task.<br>I file non vanno nel cloud — restano sul tuo computer.',
+s4:'Il pannello Customize',
+custIntro:'Nell’app desktop trovi una sezione <strong>Customize</strong> — il pannello di controllo delle capacità di Claude in CoWork. Clicca su ciascuna voce per capire cosa fa.',
+ct0N:'Skills',ct0B:'procedure',
+ct1N:'Plugin',ct1B:'pacchetti',
+ct2N:'Connettori',ct2B:'servizi esterni',
+ct3N:'Project',ct3B:'contesto persistente',
+s5:'Equivoci comuni',
+m0Q:'"CoWork funziona anche su web o dal telefono"',
+m0A:'No. CoWork è disponibile <strong>solo nell’app desktop</strong> per macOS e Windows. Su claude.ai nel browser e sull’app mobile non compare. Il telefono può però "messaggiare" il desktop mentre CoWork lavora.',
+m1Q:'"Va bene anche col piano gratuito"',
+m1A:'No. CoWork richiede <strong>un piano a pagamento</strong> — Pro, Max, Team o Enterprise. Il piano Free non include CoWork.',
+m2Q:'"I file che crea finiscono nel cloud di Anthropic"',
+m2A:'No. I file rimangono <strong>locali sul tuo computer</strong>, nella workspace folder che hai scelto. Solo le istruzioni e il testo viaggiano in rete verso il modello. I tuoi documenti non vanno da nessuna parte.',
+m3Q:'"Può lavorare anche a PC spento o in sospensione"',
+m3A:'No. L’<strong>app deve essere aperta</strong> e il computer <strong>sveglio</strong> mentre CoWork esegue i task. Se il PC va in sospensione, il task si interrompe.',
+m4Q:'"CoWork è la stessa cosa di Claude Code"',
+m4A:'Concetto simile (capacità agentiche), uso diverso. Claude Code è per sviluppatori da terminale. CoWork è per il <strong>knowledge work senza terminale</strong> — documenti, file, dati, automazioni quotidiane.',
+s6:'In una frase',
+keyPhrase:'«La workspace folder è la casa di CoWork. Sceglila bene — poi non ci pensi più. Il lavoro inizia.»',
+foot:'Morfeus — Setup CoWork',
+cust:[
+{name:'Skills',icon:'ti-bolt',desc:'Procedure specializzate che Claude può eseguire in CoWork — come comandi riutilizzabili. Esempio: <strong>/schedule</strong> per creare un task programmato guidato passo per passo.',ex:'Esempio: digiti /schedule nella chat e CoWork ti guida nella creazione di un task ricorrente.'},
+{name:'Plugin',icon:'ti-puzzle',desc:'Pacchetti che raggruppano più Skills e connettori correlati in un unico blocco installabile. Estendono le capacità di CoWork senza configurare ogni componente singolarmente.',ex:'Esempio: un plugin per la gestione documentale che include Skills per archiviare, rinominare e indicizzare file.'},
+{name:'Connettori',icon:'ti-plug',desc:'Integrazioni a servizi esterni — Calendar, Slack, Gmail, Google Drive e altri — via protocollo MCP. Sono la via più veloce per Claude: accede ai dati direttamente invece di navigare lo schermo.',ex:'Esempio: con il connettore Calendar, Claude legge i tuoi appuntamenti senza aprire il browser.'},
+{name:'Project',icon:'ti-folder-star',desc:'Organizzano task correlati con file e contesto persistente. Ogni Project ha le sue istruzioni, i suoi file e la memoria delle sessioni precedenti. Utile per lavori multi-step su un tema specifico.',ex:'Esempio: un Project "Report Mensile" con le istruzioni su formato e tono — Claude le ricorda a ogni sessione.'}
+]
+},
+en:{
+kicker:'Lesson 4.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 4 — CoWork',
+h1:'CoWork Setup',
+lede:'You set it up once. Ten minutes. When you’re done you have a workspace where Claude operates autonomously — and that you can expand over time.',
+s1:'Before you begin — requirements',
+reqIntro:'CoWork isn’t available everywhere. Click to see what you need on your system.',
+reqPlanT:'Paid plan',reqPlanS:'Pro, Max, Team, Enterprise',
+reqPlan1:'Pro — full access to CoWork',
+reqPlan2:'Max — CoWork + computer use',
+reqPlan3:'Team / Enterprise — CoWork without computer use',
+reqPlan4:'Free plan — CoWork <strong>not available</strong>',
+reqDeskT:'Desktop App',reqDeskS:'macOS or Windows',
+reqDesk1:'macOS — download from claude.ai',
+reqDesk2:'Windows — download from claude.ai (Virtual Machine Platform must be enabled)',
+reqDesk3:'Web (claude.ai in the browser) — CoWork <strong>not available</strong>',
+reqDesk4:'Mobile app — CoWork <strong>not available</strong>',
+reqNetT:'Computer on + connected',reqNetS:'While tasks are running',
+reqNet1:'Active internet connection (the model runs on the servers)',
+reqNet2:'Desktop app open while CoWork is working',
+reqNet3:'Computer awake (not in sleep)',
+reqNet4:'Files are <strong>local</strong> on your PC — the cloud only sees the instructions',
+reqSecT:'Secure environment',reqSecS:'Isolated VM sandbox',
+reqSec1:'Code execution runs in an isolated Linux VM',
+reqSec2:'Claude only sees the workspace folder you choose',
+reqSec3:'It doesn’t browse the PC’s general file system',
+reqSec4:'You control what Claude can see and touch',
+s2:'Step-by-step setup',
+btnDone:'Done',btnBack:'Back',btnFolder:'Folder selected',btnSetup:'File created — setup complete',
+st1T:'Download and install the desktop app',
+st1P:'Go to <strong>claude.ai</strong> in your browser and look for the link to download the desktop app. The file is a standard installer — download, install, launch.',
+st1aL:'macOS',st1aB:'.dmg file — drag it into Applications. Open it from Launchpad.',
+st1bL:'Windows',st1bB:'.exe file — run it as administrator. Make sure Virtual Machine Platform is enabled in Windows features.',
+st2T:'Sign in and open CoWork',
+st2P:'On first launch, sign in with your Claude account. Then find the <strong>mode selector</strong> at the top — you’ll find the CoWork tab. Click it to enter the workspace.',
+st2aL:'Where to find it',st2aB:'In the sidebar or the top bar of the app, you’ll see the available modes: Chat, CoWork (and others). CoWork stands out by its rocket icon or its explicit name.',
+st3T:'Choose the workspace folder',
+st3P:'The first time you open CoWork, you’re asked to select a <strong>working folder</strong> — CoWork’s home on your computer. Everything Claude creates, edits and organizes lives there.',
+st3aL:'Option A — Dedicated folder',st3aB:'Desktop/CLAUDE/ or Documents/CoWork/ — all CoWork work lives here, separate from the rest.',
+st3bL:'Option B — Integrated into your system',st3bB:'Documents/Work/CoWork/ — inside the structure you already use.',
+st3End:'What matters: a place you check regularly and won’t forget.',
+st4T:'Verification test — first file',
+st4P:'CoWork is configured. Before moving on, verify it really works: in the CoWork chat, type this command and send it.',
+st4aL:'Test command',st4aB:'Create a text file in the selected folder called "welcome.txt" and write inside: "CoWork configured correctly on [today’s date]"',
+st4End:'Then open your workspace folder in Finder/File Explorer and check that the file is there. If it is — you’re all set.',
+s3:'Where everything runs',
+archRemoteT:'AI model',archRemoteS:'Runs on Anthropic’s servers<br>The instructions travel over the network',
+archNet:'network',
+archLocalT:'Files and data',archLocalS:'Stay <strong>local</strong> on your PC<br>In the workspace folder you chose',
+archCap:'The model doesn’t see your files: it only receives the content Claude passes to it during the task.<br>The files don’t go to the cloud — they stay on your computer.',
+s4:'The Customize panel',
+custIntro:'In the desktop app you’ll find a <strong>Customize</strong> section — the control panel for Claude’s capabilities in CoWork. Click each item to understand what it does.',
+ct0N:'Skills',ct0B:'procedures',
+ct1N:'Plugin',ct1B:'packages',
+ct2N:'Connectors',ct2B:'external services',
+ct3N:'Project',ct3B:'persistent context',
+s5:'Common misconceptions',
+m0Q:'"CoWork also works on web or from your phone"',
+m0A:'No. CoWork is available <strong>only in the desktop app</strong> for macOS and Windows. It doesn’t appear on claude.ai in the browser or in the mobile app. The phone can, however, "message" the desktop while CoWork is working.',
+m1Q:'"The free plan works fine too"',
+m1A:'No. CoWork requires <strong>a paid plan</strong> — Pro, Max, Team or Enterprise. The Free plan doesn’t include CoWork.',
+m2Q:'"The files it creates end up in Anthropic’s cloud"',
+m2A:'No. The files stay <strong>local on your computer</strong>, in the workspace folder you chose. Only the instructions and the text travel over the network to the model. Your documents don’t go anywhere.',
+m3Q:'"It can work even with the PC off or in sleep"',
+m3A:'No. The <strong>app must be open</strong> and the computer <strong>awake</strong> while CoWork runs the tasks. If the PC goes to sleep, the task stops.',
+m4Q:'"CoWork is the same thing as Claude Code"',
+m4A:'Similar concept (agentic capabilities), different use. Claude Code is for developers in the terminal. CoWork is for <strong>knowledge work without a terminal</strong> — documents, files, data, everyday automations.',
+s6:'In one sentence',
+keyPhrase:'"The workspace folder is CoWork’s home. Choose it well — then you never think about it again. The work begins."',
+foot:'Morfeus — CoWork Setup',
+cust:[
+{name:'Skills',icon:'ti-bolt',desc:'Specialized procedures Claude can run in CoWork — like reusable commands. Example: <strong>/schedule</strong> to create a scheduled task, guided step by step.',ex:'Example: you type /schedule in the chat and CoWork guides you through creating a recurring task.'},
+{name:'Plugin',icon:'ti-puzzle',desc:'Packages that bundle several related Skills and connectors into a single installable block. They extend CoWork’s capabilities without configuring each component individually.',ex:'Example: a plugin for document management that includes Skills to archive, rename and index files.'},
+{name:'Connectors',icon:'ti-plug',desc:'Integrations with external services — Calendar, Slack, Gmail, Google Drive and others — via the MCP protocol. They’re the fastest path for Claude: it accesses the data directly instead of navigating the screen.',ex:'Example: with the Calendar connector, Claude reads your appointments without opening the browser.'},
+{name:'Project',icon:'ti-folder-star',desc:'They organize related tasks with files and persistent context. Each Project has its own instructions, its own files and the memory of previous sessions. Useful for multi-step work on a specific theme.',ex:'Example: a "Monthly Report" Project with instructions on format and tone — Claude remembers them every session.'}
+]
+}};
+
+var LANG='it';
+
+/* ===== REQUISITI ===== */
+function toggleReq(id){
+  var el=document.getElementById(id);var was=el.classList.contains('open');
+  document.querySelectorAll('.req-card').forEach(function(c){c.classList.remove('open')});
+  if(!was)el.classList.add('open');
+}
+
+/* ===== STEPS ===== */
+var totalSteps=4,stepStates=[false,false,false,false],activeStep=0;
+function updateProgress(){var done=stepStates.filter(Boolean).length;document.getElementById('progressFill').style.width=(done/totalSteps*100)+'%'}
+function renderSteps(){for(var i=0;i<totalSteps;i++){var row=document.getElementById('step'+i);row.classList.remove('active','done');if(stepStates[i])row.classList.add('done');else if(i===activeStep)row.classList.add('active')}updateProgress()}
+function activateStep(idx,ev){if(ev)ev.stopPropagation();activeStep=(activeStep===idx&&!stepStates[idx])?-1:idx;renderSteps()}
+function markDone(idx,ev){if(ev)ev.stopPropagation();stepStates[idx]=true;var next=-1;for(var i=idx+1;i<totalSteps;i++){if(!stepStates[i]){next=i;break}}activeStep=next;renderSteps()}
+
+/* ===== CUSTOMIZE ===== */
+var activeCust=0;
+function showCust(idx){
+  activeCust=idx;
+  document.querySelectorAll('.cust-tab').forEach(function(t,i){t.classList.toggle('active',i===idx)});
+  var d=DICT[LANG].cust[idx];
+  document.getElementById('custPanel').innerHTML='<h4><i class="ti '+d.icon+'"></i> '+d.name+'</h4><p>'+d.desc+'</p><div class="ex">'+d.ex+'</div>';
+}
+
+/* ===== MYTHS ===== */
+function toggleMyth(id){var el=document.getElementById(id);var was=el.classList.contains('open');document.querySelectorAll('.myth').forEach(function(m){m.classList.remove('open')});if(!was)el.classList.add('open')}
+
+/* ===== I18N ===== */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  showCust(activeCust);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+renderSteps();
+applyI18n();
+</script>
+</body>
+</html>

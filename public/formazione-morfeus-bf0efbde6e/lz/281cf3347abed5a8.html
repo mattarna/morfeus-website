@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude come partner di pensiero — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#b7dcc0;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#0F9E83;--teal-soft:#e1f5ef;--teal-line:#a9e3d4;
+--amber:#B57814;--amber-soft:#faf0db;--amber-line:#ecd7a6;
+--red:#C23A2E;--red-soft:#fbe9e6;--red-line:#f0c4bd;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#54c9ad;--teal-soft:#143a32;--teal-line:#2c5a4f;
+--amber:#e3b15a;--amber-soft:#3a2c12;--amber-line:#6a5226;
+--red:#ee8a80;--red-soft:#412420;--red-line:#7a3a32;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:760px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:660px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.amber{background:var(--amber-soft);border-color:var(--amber-line)}.note.amber .ni{background:var(--amber)}.note.amber h4{color:var(--amber)}
+.note.teal{background:var(--teal-soft);border-color:var(--teal-line)}.note.teal .ni{background:var(--teal)}.note.teal h4{color:var(--teal)}
+/* hook big number */
+.hook{text-align:center;padding:30px 0 6px}
+.hook .bignum{font-size:104px;font-weight:600;line-height:.9;letter-spacing:-.03em;color:var(--accent);display:inline-flex;align-items:flex-start}
+.hook .bignum .pct{font-size:54px;margin-top:10px}
+.hook .htitle{font-size:26px;font-weight:600;letter-spacing:-.015em;margin:14px 0 10px}
+.hook .htitle .strike{color:var(--ink-3);text-decoration:line-through}
+.hook .hsub{font-size:15px;color:var(--ink-2);max-width:480px;margin:0 auto 22px}
+.pill{display:inline-flex;flex-direction:column;gap:3px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:50px;padding:12px 26px;font-size:14.5px;color:var(--accent);font-weight:500}
+.pill .pacc{color:var(--agent);font-size:17px;font-weight:600}
+/* vs compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.exec{background:var(--bg-2);border-color:var(--line-2)}
+.cmpc.partner{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmptag{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.cmpc.exec .cmptag{color:var(--ink-3)}.cmpc.partner .cmptag{color:var(--accent)}
+.cmpc .pr{font-family:var(--mono);font-size:12.5px;color:var(--ink);line-height:1.6;background:var(--card);border-radius:var(--r);padding:11px 13px;border-left:3px solid}
+.cmpc.exec .pr{border-color:var(--ink-3)}.cmpc.partner .pr{border-color:var(--accent)}
+.cmpc .said{font-size:13px;color:var(--ink-2);margin-top:7px}
+.respill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;margin-top:12px}
+.cmpc.exec .respill{background:var(--bg-3);color:var(--ink-2)}.cmpc.partner .respill{background:var(--accent);color:#fff}
+.outbar{margin-top:16px;padding:14px 20px;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);text-align:center}
+.outbar p{font-size:15px;font-weight:600;color:var(--amber)}
+/* mode blocks (interactive) */
+.blocks{display:flex;flex-direction:column;gap:8px}
+.blk{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.blk:hover{border-color:var(--line-2)}.blk.on{border-color:var(--accent);background:var(--accent-soft)}
+.blk .bi{width:34px;height:34px;border-radius:10px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.blk.on .bi{background:var(--accent);color:#fff}
+.blk .bt{font-size:14.5px;font-weight:600}
+.blkdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.blkdetail p{font-size:14.5px;color:var(--ink-2)}
+.blkdetail .ex{font-family:var(--mono);font-size:12.5px;font-style:italic;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+/* two phases flow */
+.flow{display:flex;align-items:stretch;gap:0;margin:4px 0}
+.flowbox{flex:1;border-radius:var(--r-l);padding:22px 18px;text-align:center}
+.flowbox.ana{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.flowbox.act{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.flowbox .fi{font-size:26px;margin-bottom:6px}.flowbox.ana .fi{color:var(--accent)}.flowbox.act .fi{color:var(--teal)}
+.flowbox .ftag{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.flowbox.ana .ftag{color:var(--accent)}.flowbox.act .ftag{color:var(--teal)}
+.flowbox h4{font-size:15px;font-weight:600;margin-bottom:6px}.flowbox p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.flowmid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 12px}
+.flowmid i{color:var(--ink-3);font-size:18px}
+.chkpill{display:inline-flex;align-items:center;gap:6px;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:30px;padding:6px 13px;font-size:12px;font-weight:600;color:var(--amber);white-space:nowrap}
+/* code block */
+.code{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:18px 20px;color:var(--ink);white-space:pre-wrap;line-height:1.85;overflow-x:auto;position:relative}
+.code .label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--accent);font-weight:600;display:block;margin-bottom:12px;text-transform:uppercase}
+.code .cmt{color:var(--ink-3);font-style:italic}
+.code .v{color:var(--accent);font-weight:600}.code .a{color:var(--amber);font-weight:600}.code .p{color:var(--red);font-weight:600}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.chkitem{display:flex;align-items:flex-start;gap:9px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);font-size:13px;line-height:1.5;color:var(--ink-2)}
+.chkitem i{color:var(--teal);flex-shrink:0;font-size:15px;margin-top:1px}
+.metaphor{margin-top:14px;padding:13px 16px;background:var(--amber-soft);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.metaphor b{color:var(--amber)}
+/* 4 types cards */
+.types{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;position:relative;overflow:hidden}
+.tcard .tnum{position:absolute;top:10px;right:16px;font-family:var(--mono);font-size:34px;font-weight:700;opacity:.07;line-height:1}
+.tcard.reason{border-top:2px solid var(--accent)}
+.tcard.exe{border-top:2px solid var(--teal)}
+.tcard.valid{border-top:2px solid var(--amber)}
+.tcard.manag{border-top:2px solid var(--red)}
+.tcard .tic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:12px}
+.tcard.reason .tic{background:var(--accent-soft);color:var(--accent)}
+.tcard.exe .tic{background:var(--teal-soft);color:var(--teal)}
+.tcard.valid .tic{background:var(--amber-soft);color:var(--amber)}
+.tcard.manag .tic{background:var(--red-soft);color:var(--red)}
+.tcard h4{font-size:15px;font-weight:600;margin-bottom:2px}
+.tcard.reason h4{color:var(--accent)}.tcard.exe h4{color:var(--teal)}.tcard.valid h4{color:var(--amber)}.tcard.manag h4{color:var(--red)}
+.tcard .talt{font-size:11.5px;color:var(--ink-3);margin-bottom:9px}
+.tcard p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.ttags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.ttag{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px}
+.tcard.reason .ttag{background:var(--accent-soft);color:var(--accent)}
+.tcard.exe .ttag{background:var(--teal-soft);color:var(--teal)}
+.tcard.valid .ttag{background:var(--amber-soft);color:var(--amber)}
+.tcard.manag .ttag{background:var(--red-soft);color:var(--red)}
+/* context pills */
+.ctxpills{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.ctxpill{text-align:center;padding:16px 12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh)}
+.ctxpill i{font-size:22px;margin-bottom:6px}
+.ctxpill.c1 i{color:var(--accent)}.ctxpill.c2 i{color:var(--amber)}.ctxpill.c3 i{color:var(--teal)}
+.ctxpill span{display:block;font-size:13px;font-weight:600;color:var(--ink-2)}
+/* key + checkpoint */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px 26px;text-align:center;position:relative;margin-top:8px}
+.cp .cpd{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--bg);padding:0 12px;color:var(--accent);font-size:20px}
+.cp .cptag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:12px}
+.cp h3{font-size:21px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;line-height:1.3}
+.cp p{font-size:14.5px;color:var(--ink-2);max-width:500px;margin:0 auto}
+.cp p .sub{display:block;font-size:13px;color:var(--ink-3);margin-top:6px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge .blab{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}.bridge .btit{font-size:14.5px;font-weight:600}.bridge .bdsc{font-size:13px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp,.types,.checks{grid-template-columns:1fr}.ctxpills{grid-template-columns:1fr}.flow{flex-direction:column;gap:10px}.flowmid{flex-direction:row;padding:4px 0}.hook .bignum{font-size:82px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.tcard,.blk,.blkdetail,.code,.key,.cp,.flowbox,.ctxpill,.chkitem{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il gap che quasi nessuno vede</div>
+  <h1 class="rv" data-i="h1">Claude come partner di pensiero</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- 01 HOOK -->
+  <div class="sh rv"><i class="ti ti-eye-off"></i><span class="no">01</span><h2 data-i="s1">Il gap che quasi nessuno vede</h2></div>
+  <div class="hook rv">
+    <div class="bignum">90<span class="pct">%</span></div>
+    <div class="htitle" data-i-html="hookTitle"></div>
+    <p class="hsub" data-i-html="hookSub"></p>
+    <div class="pill"><span data-i="hookPill1"></span><span class="pacc" data-i="hookPill2"></span></div>
+  </div>
+
+  <!-- 02 ESECUTORE VS PARTNER -->
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">02</span><h2 data-i="s2">Esecutore vs Partner di pensiero</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc exec">
+      <div class="cmptag"><i class="ti ti-square"></i><span data-i="execT">Esecutore</span></div>
+      <div class="pr" data-i="execPr"></div>
+      <div class="said" data-i="execSaid"></div>
+      <div class="respill"><i class="ti ti-mail"></i><span data-i="execRes"></span></div>
+    </div>
+    <div class="cmpc partner">
+      <div class="cmptag"><i class="ti ti-diamond"></i><span data-i="partT">Partner di pensiero</span></div>
+      <div class="pr" data-i="partPr"></div>
+      <div class="respill"><i class="ti ti-target"></i><span data-i="partRes"></span></div>
+    </div>
+  </div>
+  <div class="outbar rv"><p data-i="outbar"></p></div>
+
+  <!-- 03 LE 4 MODALITA -->
+  <div class="sh rv"><i class="ti ti-sword"></i><span class="no">03</span><h2 data-i="s3">Le 4 modalità dello sparring partner</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="modesIntro"></p>
+  <div class="blocks rv" id="modes"></div>
+  <div class="blkdetail rv" id="modedetail"></div>
+
+  <!-- 04 REGOLA DELLE DUE FASI -->
+  <div class="sh rv"><i class="ti ti-git-fork"></i><span class="no">04</span><h2 data-i="s4">La regola delle due fasi</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="twoPhH"></h4><p data-i="twoPhP"></p></div></div>
+  <div class="flow rv" style="margin-top:18px">
+    <div class="flowbox ana">
+      <div class="fi"><i class="ti ti-brain"></i></div>
+      <div class="ftag" data-i="phase1Tag">Fase 1</div>
+      <h4 data-i="phase1H">Analisi</h4>
+      <p data-i="phase1P"></p>
+    </div>
+    <div class="flowmid">
+      <i class="ti ti-arrow-right"></i>
+      <div class="chkpill"><i class="ti ti-hand-stop"></i><span data-i="checkpoint">Checkpoint umano</span></div>
+      <i class="ti ti-arrow-right"></i>
+    </div>
+    <div class="flowbox act">
+      <div class="fi"><i class="ti ti-bolt"></i></div>
+      <div class="ftag" data-i="phase2Tag">Fase 2</div>
+      <h4 data-i="phase2H">Esecuzione</h4>
+      <p data-i="phase2P"></p>
+    </div>
+  </div>
+  <div class="note teal rv" style="margin-top:16px"><div class="ni"><i class="ti ti-arrows-split-2"></i></div><div><p data-i="twoPhFoot"></p></div></div>
+
+  <!-- 05 CHALLENGE ME -->
+  <div class="sh rv"><i class="ti ti-shield-bolt"></i><span class="no">05</span><h2 data-i="s5">AI Should Challenge Me</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="chIntro"></p>
+  <div class="code rv" id="chCode"></div>
+  <div class="checks rv">
+    <div class="chkitem"><i class="ti ti-check"></i><span data-i="ch1"></span></div>
+    <div class="chkitem"><i class="ti ti-check"></i><span data-i="ch2"></span></div>
+    <div class="chkitem"><i class="ti ti-check"></i><span data-i="ch3"></span></div>
+    <div class="chkitem"><i class="ti ti-check"></i><span data-i="ch4"></span></div>
+  </div>
+  <div class="metaphor rv" data-i-html="chMeta"></div>
+
+  <!-- 06 I 4 TIPI -->
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">06</span><h2 data-i="s6">I 4 tipi di assistenti AI</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="typesIntro"></p>
+  <div class="types rv">
+    <div class="tcard reason">
+      <div class="tnum">01</div>
+      <div class="tic"><i class="ti ti-brain"></i></div>
+      <h4 data-i="t1H">Ragionatori</h4>
+      <div class="talt" data-i="t1Alt"></div>
+      <p data-i="t1P"></p>
+      <div class="ttags" data-tags="t1"></div>
+    </div>
+    <div class="tcard exe">
+      <div class="tnum">02</div>
+      <div class="tic"><i class="ti ti-bolt"></i></div>
+      <h4 data-i="t2H">Esecutori</h4>
+      <div class="talt" data-i="t2Alt"></div>
+      <p data-i="t2P"></p>
+      <div class="ttags" data-tags="t2"></div>
+    </div>
+    <div class="tcard valid">
+      <div class="tnum">03</div>
+      <div class="tic"><i class="ti ti-circle-check"></i></div>
+      <h4 data-i="t3H">Validatori</h4>
+      <div class="talt" data-i="t3Alt"></div>
+      <p data-i="t3P"></p>
+      <div class="ttags" data-tags="t3"></div>
+    </div>
+    <div class="tcard manag">
+      <div class="tnum">04</div>
+      <div class="tic"><i class="ti ti-layout-distribute-horizontal"></i></div>
+      <h4 data-i="t4H">Manager / Router</h4>
+      <div class="talt" data-i="t4Alt"></div>
+      <p data-i="t4P"></p>
+      <div class="ttags" data-tags="t4"></div>
+    </div>
+  </div>
+
+  <!-- 07 CONTESTO EMOTIVO -->
+  <div class="sh rv"><i class="ti ti-mood-heart"></i><span class="no">07</span><h2 data-i="s7">Dai contesto emotivo, non solo logico</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="ctxIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc exec">
+      <div class="cmptag"><i class="ti ti-x"></i><span data-i="ctxBadT">Senza contesto</span></div>
+      <div class="pr" data-i="ctxBadPr"></div>
+      <div class="said" data-i="ctxBadRes"></div>
+    </div>
+    <div class="cmpc partner">
+      <div class="cmptag"><i class="ti ti-check"></i><span data-i="ctxGoodT">Con contesto emotivo</span></div>
+      <div class="pr" data-i="ctxGoodPr"></div>
+      <div class="said" data-i="ctxGoodRes"></div>
+    </div>
+  </div>
+  <div class="ctxpills rv">
+    <div class="ctxpill c1"><i class="ti ti-target"></i><span data-i="ctxP1"></span></div>
+    <div class="ctxpill c2"><i class="ti ti-bolt"></i><span data-i="ctxP2"></span></div>
+    <div class="ctxpill c3"><i class="ti ti-compass"></i><span data-i="ctxP3"></span></div>
+  </div>
+  <div class="note rv" style="margin-top:16px"><div class="ni"><i class="ti ti-tool"></i></div><div><p data-i="ctxKey"></p></div></div>
+
+  <!-- 08 CHECKPOINT + BRIDGE -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s8">Checkpoint riflessivo</h2></div>
+  <div class="cp rv">
+    <span class="cpd"><i class="ti ti-diamond"></i></span>
+    <span class="cptag" data-i="cpTag">Checkpoint riflessivo</span>
+    <h3 data-i-html="cpH"></h3>
+    <p data-i-html="cpP"></p>
+  </div>
+  <div class="note amber rv" style="margin-top:18px"><div class="ni"><i class="ti ti-quote"></i></div><div><p data-i="cpQuote"></p></div></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><div><div class="blab" data-i="bridgeLab">Prossima lezione</div><div class="btit" data-i="bridgeTit"></div><div class="bdsc" data-i="bridgeDsc"></div></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Claude come partner di pensiero</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il gap che quasi nessuno vede',
+h1:'Claude come partner di pensiero',
+lede:'C\'è un uso completamente diverso di Claude che quasi nessuno sfrutta: non usarlo per FARE cose, ma per PENSARE. È la differenza tra un esecutore e un partner che ti rende le decisioni migliori.',
+s1:'Il gap che quasi nessuno vede',
+hookTitle:'delle persone usa Claude solo per <span class="strike">FARE</span> cose.',
+hookSub:'Scrivere. Formattare. Riassumere. Tradurre.<br>Utilissimo, ma è solo la superficie.',
+hookPill1:'C\'è un uso completamente diverso',
+hookPill2:'usare Claude per PENSARE',
+s2:'La differenza fondamentale',
+execT:'Esecutore',
+execPr:'"Scrivi una email di follow-up."',
+execSaid:'Claude la scrive.',
+execRes:'Output: un\'email',
+partT:'Partner di pensiero',
+partPr:'"Ho questa decisione da prendere. Ho tre opzioni. Prima di scegliere, quali domande dovrei farmi? Cosa mi sfugge?"',
+partRes:'Output: una decisione migliore',
+outbar:'Le decisioni migliori valgono più di qualsiasi email.',
+s3:'Come funziona nella pratica',
+modesIntro:'Claude è un interlocutore infinitamente paziente, senza ego, senza agenda. Non si offende. Non si protegge. Clicca ogni modalità.',
+s4:'La regola più importante',
+twoPhH:'Separa sempre ragionamento ed esecuzione',
+twoPhP:'"Non chiedere mai a Claude di fare e ragionare insieme. Prima: \'Analizza questo, non fare niente.\' Poi, dopo aver valutato l\'analisi: \'Ok, procedi.\' I checkpoint umani tra analisi e azione producono output 10x migliori."',
+phase1Tag:'Fase 1',phase1H:'Analisi',
+phase1P:'Fai domande. Spingi. Contraddici. Aggiungi contesto. Chiedi alternative.',
+checkpoint:'Checkpoint umano',
+phase2Tag:'Fase 2',phase2H:'Esecuzione',
+phase2P:'Solo quando sei soddisfatto dell\'analisi, dai il via all\'esecuzione.',
+twoPhFoot:'Questo vale per qualsiasi task complesso. Separa sempre ragionamento ed esecuzione.',
+s5:'La tecnica avanzata',
+chIntro:'Problema di default: Claude è addestrato ad essere utile, e questo lo rende <strong>naturalmente accomodante</strong>. Di fronte a richieste vaghe, tende a scegliere un\'interpretazione e procedere. La soluzione: dagli il permesso esplicito di sfidarti.',
+ch1:'Claude smette di procedere con richieste ambigue senza segnalartelo',
+ch2:'Mostra le assunzioni che sta per fare, puoi correggerle prima',
+ch3:'Segnala i problemi nell\'approccio a monte, non a valle',
+ch4:'Risultato: meno correzioni, meno rilavorazioni, decisioni migliori',
+chMeta:'<b>Metafora:</b> Non stai cercando un assistente che esegue tutto senza fare domande. Stai cercando un collaboratore che ti dice quando stai per fare un errore.',
+s6:'Il quadro completo',
+typesIntro:'Non tutti gli assistenti sono uguali. Capire le categorie ti permette di scegliere lo strumento giusto per ogni contesto.',
+t1H:'Ragionatori',t1Alt:'Brainstorming · Strategia cognitiva',
+t1P:'Servono a ragionare, prendere decisioni migliori, fare pianificazioni strategiche, stress-test di idee, pre-mortem. Questa lezione è dedicata a loro.',
+t2H:'Esecutori',t2Alt:'Doer · Produttori',
+t2P:'Producono cose: testi, codice, report, presentazioni, email. Il 90% dell\'uso attuale. Potenti, ma usati da soli lasciano valore sul tavolo.',
+t3H:'Validatori',t3Alt:'Revisionatori · Gate di qualità',
+t3P:'Validano i lavori e creano dei gate, porte dove si verifica che il lavoro sia di qualità prima di procedere al passo successivo.',
+t4H:'Manager / Router',t4Alt:'Orchestratori · Decisori',
+t4P:'Si occupano di decidere quali assistenti attivare di volta in volta. L\'intelligenza che coordina gli altri, la mente dell\'ecosistema.',
+s7:'Il dettaglio che cambia l\'output',
+ctxIntro:'Claude risponde meglio quando capisce il contesto umano, non solo quello tecnico. Non stai confessando sentimenti a una macchina. Stai dando <strong>dati utili</strong> per un output migliore.',
+ctxBadT:'Senza contesto',
+ctxBadPr:'"Scrivi una proposta commerciale."',
+ctxBadRes:'Output generico, tono neutro, struttura standard.',
+ctxGoodT:'Con contesto emotivo',
+ctxGoodPr:'"Ho una call con un cliente difficile domani. Devo scrivere una proposta. È il terzo tentativo dopo due rifiuti."',
+ctxGoodRes:'Tono calibrato, urgenza percepita, priorità giuste.',
+ctxP1:'Calibra il tono',ctxP2:'Percepisce l\'urgenza',ctxP3:'Ordina le priorità',
+ctxKey:'Il contesto emotivo aiuta Claude a calibrare tono, urgenza, priorità. Non è sentimentalismo. È ingegneria del prompt.',
+s8:'Checkpoint riflessivo',
+cpTag:'Checkpoint riflessivo',
+cpH:'Pensa all\'ultima decisione importante<br>che hai preso da solo.',
+cpP:'Come sarebbe andata se avessi usato Claude come sparring partner prima?<span class="sub">Questo non è un esercizio retorico. È il costo-opportunità di non usarlo così.</span>',
+cpQuote:'"Se la mia richiesta è vaga, dimmi esattamente cosa ti manca prima di rispondere. Non procedere mai con assunzioni — fermati e chiedi." Questa frase nelle istruzioni trasforma Claude da esecutore compiacente a partner che ti protegge dai tuoi stessi punti ciechi.',
+bridgeLab:'Prossima lezione',
+bridgeTit:'Quando NON usare Claude',
+bridgeDsc:'Capirlo è importante tanto quanto capire cosa usare.',
+foot:'Morfeus — Claude come partner di pensiero'
+},
+en:{
+kicker:'Lesson 0.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The gap almost no one sees',
+h1:'Claude as a thinking partner',
+lede:'There\'s a completely different way to use Claude that almost no one taps into: not to DO things, but to THINK. It\'s the difference between an executor and a partner that makes your decisions better.',
+s1:'The gap almost no one sees',
+hookTitle:'of people use Claude only to <span class="strike">DO</span> things.',
+hookSub:'Writing. Formatting. Summarizing. Translating.<br>Hugely useful, but it\'s only the surface.',
+hookPill1:'There\'s a completely different use',
+hookPill2:'using Claude to THINK',
+s2:'The fundamental difference',
+execT:'Executor',
+execPr:'"Write a follow-up email."',
+execSaid:'Claude writes it.',
+execRes:'Output: an email',
+partT:'Thinking partner',
+partPr:'"I have this decision to make. I have three options. Before I choose, what questions should I be asking myself? What am I missing?"',
+partRes:'Output: a better decision',
+outbar:'Better decisions are worth more than any email.',
+s3:'How it works in practice',
+modesIntro:'Claude is an infinitely patient interlocutor, with no ego, no agenda. It doesn\'t take offense. It doesn\'t protect itself. Click each mode.',
+s4:'The most important rule',
+twoPhH:'Always separate reasoning and execution',
+twoPhP:'"Never ask Claude to do and reason at the same time. First: \'Analyze this, do nothing.\' Then, after you\'ve assessed the analysis: \'OK, proceed.\' Human checkpoints between analysis and action produce output that\'s 10x better."',
+phase1Tag:'Phase 1',phase1H:'Analysis',
+phase1P:'Ask questions. Push. Contradict. Add context. Ask for alternatives.',
+checkpoint:'Human checkpoint',
+phase2Tag:'Phase 2',phase2H:'Execution',
+phase2P:'Only when you\'re satisfied with the analysis do you greenlight execution.',
+twoPhFoot:'This applies to any complex task. Always separate reasoning and execution.',
+s5:'The advanced technique',
+chIntro:'The default problem: Claude is trained to be helpful, and that makes it <strong>naturally accommodating</strong>. Faced with vague requests, it tends to pick an interpretation and proceed. The fix: give it explicit permission to challenge you.',
+ch1:'Claude stops proceeding on ambiguous requests without flagging it',
+ch2:'It surfaces the assumptions it\'s about to make, so you can correct them first',
+ch3:'It flags problems in the approach upstream, not downstream',
+ch4:'Result: fewer corrections, less rework, better decisions',
+chMeta:'<b>Metaphor:</b> You\'re not looking for an assistant that executes everything without asking. You\'re looking for a collaborator that tells you when you\'re about to make a mistake.',
+s6:'The full picture',
+typesIntro:'Not all assistants are the same. Understanding the categories lets you pick the right tool for each context.',
+t1H:'Reasoners',t1Alt:'Brainstorming · Cognitive strategy',
+t1P:'They help you reason, make better decisions, do strategic planning, stress-test ideas, run pre-mortems. This lesson is dedicated to them.',
+t2H:'Executors',t2Alt:'Doers · Producers',
+t2P:'They produce things: text, code, reports, presentations, emails. 90% of current use. Powerful, but used alone they leave value on the table.',
+t3H:'Validators',t3Alt:'Reviewers · Quality gates',
+t3P:'They validate the work and create gates — doors where you verify the work is up to standard before moving to the next step.',
+t4H:'Manager / Router',t4Alt:'Orchestrators · Deciders',
+t4P:'They decide which assistants to activate each time. The intelligence that coordinates the others, the mind of the ecosystem.',
+s7:'The detail that changes the output',
+ctxIntro:'Claude responds better when it understands the human context, not just the technical one. You\'re not confessing feelings to a machine. You\'re giving <strong>useful data</strong> for a better output.',
+ctxBadT:'Without context',
+ctxBadPr:'"Write a business proposal."',
+ctxBadRes:'Generic output, neutral tone, standard structure.',
+ctxGoodT:'With emotional context',
+ctxGoodPr:'"I have a call with a difficult client tomorrow. I need to write a proposal. It\'s the third attempt after two rejections."',
+ctxGoodRes:'Calibrated tone, perceived urgency, the right priorities.',
+ctxP1:'Calibrates the tone',ctxP2:'Perceives the urgency',ctxP3:'Orders the priorities',
+ctxKey:'Emotional context helps Claude calibrate tone, urgency, priorities. It\'s not sentimentality. It\'s prompt engineering.',
+s8:'Reflective checkpoint',
+cpTag:'Reflective checkpoint',
+cpH:'Think about the last important decision<br>you made on your own.',
+cpP:'How would it have gone if you\'d used Claude as a sparring partner first?<span class="sub">This isn\'t a rhetorical exercise. It\'s the opportunity cost of not using it this way.</span>',
+cpQuote:'"If my request is vague, tell me exactly what you\'re missing before answering. Never proceed on assumptions — stop and ask." This sentence in the instructions turns Claude from a compliant executor into a partner that protects you from your own blind spots.',
+bridgeLab:'Next lesson',
+bridgeTit:'When NOT to use Claude',
+bridgeDsc:'Understanding this matters just as much as understanding what to use.',
+foot:'Morfeus — Claude as a thinking partner'
+}};
+
+var MODES={it:[
+['ti-hammer','Stress-Test','Attacca il tuo piano. Trova le falle. Non essere gentile. Claude vede i problemi che tu non vedi perché sei troppo dentro al progetto.','"Ho questa strategia. Attaccala. Trova le falle."'],
+['ti-hourglass','Pre-Mortem','Immagina il fallimento prima che accada. Questo esercizio da solo ha salvato più aziende di qualsiasi consulente.','"Questo progetto fallisce tra 6 mesi. Quali sono le cause più probabili?"'],
+['ti-target','Sounding Board','Descrivi le opzioni. Chiedi cosa ti sfugge logicamente, non quale scegliere. Il contesto emotivo e relazionale rimane tuo.','"Ho tre opzioni per X. Dimmi cosa mi sfugge, non quale scegliere."'],
+['ti-help-circle','Le domande giuste','Quando non sai nemmeno cosa chiedere, Claude spesso produce le domande più utili che non ti saresti fatto da solo.','"Non so cosa chiederti, ma ho questo problema. Fammi le domande giuste."']
+],en:[
+['ti-hammer','Stress-Test','Attack your plan. Find the flaws. Don\'t be nice. Claude sees the problems you don\'t because you\'re too deep inside the project.','"I have this strategy. Attack it. Find the flaws."'],
+['ti-hourglass','Pre-Mortem','Imagine the failure before it happens. This exercise alone has saved more companies than any consultant.','"This project fails 6 months from now. What are the most likely causes?"'],
+['ti-target','Sounding Board','Describe the options. Ask what you\'re missing logically, not which to pick. The emotional and relational context stays yours.','"I have three options for X. Tell me what I\'m missing, not which one to choose."'],
+['ti-help-circle','The right questions','When you don\'t even know what to ask, Claude often produces the most useful questions you wouldn\'t have asked yourself.','"I don\'t know what to ask you, but I have this problem. Ask me the right questions."']
+]};
+
+var TAGS={it:{t1:['Decisioni','Strategia','Brainstorming','Pianificazione'],t2:['Scrittura','Codice','Produzione','Automazione'],t3:['Review','QA','Validazione','Qualità'],t4:['Routing','Coordinamento','Orchestrazione']},
+en:{t1:['Decisions','Strategy','Brainstorming','Planning'],t2:['Writing','Code','Production','Automation'],t3:['Review','QA','Validation','Quality'],t4:['Routing','Coordination','Orchestration']}};
+
+var CH={it:'<span class="label">// Aggiungilo al System Prompt del tuo Project</span>Se la mia richiesta è <span class="v">vaga o incompleta</span>, dimmi esattamente cosa ti manca prima di rispondere.\nSe stai facendo <span class="a">assunzioni</span> per procedere, elencale esplicitamente.\nSe il mio approccio ha un <span class="p">problema</span>, dimmelo prima di eseguire — non dopo.',
+en:'<span class="label">// Add it to your Project\'s System Prompt</span>If my request is <span class="v">vague or incomplete</span>, tell me exactly what you\'re missing before answering.\nIf you\'re making <span class="a">assumptions</span> to proceed, list them explicitly.\nIf my approach has a <span class="p">problem</span>, tell me before executing — not after.'};
+
+var LANG='it',curMode=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('modes').innerHTML=MODES[LANG].map(function(m,i){return '<div class="blk'+(i===curMode?' on':'')+'" onclick="showMode('+i+')"><div class="bi"><i class="ti '+m[0]+'"></i></div><div class="bt">'+m[1]+'</div></div>'}).join('');
+  document.getElementById('chCode').innerHTML=CH[LANG];
+  document.querySelectorAll('[data-tags]').forEach(function(e){var k=e.getAttribute('data-tags');e.innerHTML=TAGS[LANG][k].map(function(t){return '<span class="ttag">'+t+'</span>'}).join('')});
+  showMode(curMode);
+}
+function showMode(i){curMode=i;var m=MODES[LANG][i];document.querySelectorAll('#modes .blk').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('modedetail').innerHTML='<p>'+m[2]+'</p><div class="ex">'+m[3]+'</div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

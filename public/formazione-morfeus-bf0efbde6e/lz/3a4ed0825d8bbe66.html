@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualità come vincolo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+/* triangle */
+.tri{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.tric{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.tric .ci{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px}
+.tric h4{font-size:14.5px;font-weight:600;margin-bottom:4px}.tric p{font-size:13px;color:var(--ink-2);line-height:1.5}
+.triNote{text-align:center;font-size:13.5px;color:var(--ink-2);margin-top:14px}.triNote b{color:var(--ink)}
+/* archer split 60/20/20 */
+.seg-bar{display:flex;gap:4px;height:48px;margin-bottom:0}
+.seg{border:1px solid transparent;cursor:pointer;color:#fff;font-family:var(--mono);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.2s;opacity:.8;border-radius:var(--r)}
+.seg:hover,.seg.on{opacity:1;transform:translateY(-1px)}
+.seg.s1{background:var(--accent)}.seg.s2{background:var(--agent)}.seg.s3{background:var(--good)}
+.seg-detail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-size:14.5px;color:var(--ink-2)}
+.seg-detail b{color:var(--ink);font-weight:600}
+/* checklist 9/10 */
+.chk{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:8px}
+.chk-row{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:var(--r);cursor:pointer;transition:.16s;border:1px solid transparent}
+.chk-row:hover{background:var(--bg-2)}
+.chk-box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line-2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;transition:.16s}
+.chk-row.on .chk-box{background:var(--good);border-color:var(--good)}
+.chk-txt{font-size:14px;color:var(--ink-2)}.chk-row.on .chk-txt{color:var(--ink)}
+.chk-verdict{margin-top:12px;padding:16px 18px;border-radius:var(--r-l);font-size:14.5px;text-align:center;font-weight:600;transition:.2s}
+.chk-verdict.no{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad)}
+.chk-verdict.yes{background:var(--good-soft);color:var(--good);border:1px solid var(--good)}
+.chk-verdict small{display:block;font-weight:400;font-size:12.5px;margin-top:4px;opacity:.85}
+/* simulator */
+.sim{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.sim-toggle{display:flex;gap:8px;margin-bottom:16px}
+.sim-toggle button{flex:1;padding:12px 10px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink-2);font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center;gap:7px}
+.sim-toggle button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.sim-toggle button.danger.on{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.sim-flow{display:flex;flex-direction:column;gap:8px}
+.sim-step{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.sim-step i{font-size:17px;flex-shrink:0}
+.sim-step.skip{opacity:.45;text-decoration:line-through;border-style:dashed}
+.sim-step.ok i{color:var(--good)}.sim-step.warn i{color:var(--bad)}
+.sim-out{margin-top:14px;padding:16px 18px;border-radius:var(--r-l);font-size:14px}
+.sim-out.good{background:var(--good-soft);border:1px solid var(--good);color:var(--ink-2)}
+.sim-out.bad{background:var(--bad-soft);border:1px solid var(--bad);color:var(--ink-2)}
+.sim-out b{color:var(--ink)}
+.sim-out .tag{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 9px;border-radius:5px;margin-bottom:8px;color:#fff}
+.sim-out.good .tag{background:var(--good)}.sim-out.bad .tag{background:var(--bad)}
+/* automation levels */
+.lvls{display:flex;flex-direction:column;gap:8px}
+.lvl{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;cursor:pointer;transition:.18s}
+.lvl:hover{border-color:var(--line-2)}.lvl.on{border-color:var(--accent);background:var(--accent-soft)}
+.lvl .ln{width:32px;height:32px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lvl.on .ln{background:var(--accent);color:#fff}
+.lvl .lc h4{font-size:14.5px;font-weight:600;margin-bottom:2px}.lvl .lc p{font-size:13.5px;color:var(--ink-2)}
+/* kaizen kairyo */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.cmpc h4{font-size:15px;font-weight:600;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.cmpc.kz h4{color:var(--good)}.cmpc.kr h4{color:var(--agent)}
+.cmpc.kz{background:var(--good-soft);border-color:var(--good)}
+.cmpc.kr{background:var(--agent-soft);border-color:var(--agent-line)}
+.cmpc p{font-size:13.5px;color:var(--ink-2)}.cmpc .ml{font-size:12.5px;color:var(--ink-3);margin-top:8px;font-style:italic}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.tri{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.seg{font-size:12px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.tric,.chk,.sim,.lvl,.cmpc,.cp,.seg-detail,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A3.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo Morfeus</div>
+  <h1 class="rv" data-i="h1">Qualità come vincolo (9/10) & i 3 livelli di automazione</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">01</span><h2 data-i="s1">Il vincolo non negoziabile</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-lock"></i></div><div><h4 data-i="note1H">9/10, o non si procede</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-triangle"></i><span class="no">02</span><h2 data-i="s2">Il triangolo Tempo / Qualità / Delega</h2></div>
+  <div class="tri rv">
+    <div class="tric"><div class="ci"><i class="ti ti-clock"></i></div><h4 data-i="t1H">Tempo</h4><p data-i="t1P"></p></div>
+    <div class="tric"><div class="ci"><i class="ti ti-star"></i></div><h4 data-i="t2H">Qualità</h4><p data-i="t2P"></p></div>
+    <div class="tric"><div class="ci"><i class="ti ti-share"></i></div><h4 data-i="t3H">Delega</h4><p data-i="t3P"></p></div>
+  </div>
+  <p class="triNote rv" data-i-html="triNote"></p>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">03</span><h2 data-i="s3">La metafora dell'Arciere</h2></div>
+  <div class="key rv"><p data-i="archer"></p><div class="cap" data-i="archerCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-chart-pie"></i><span class="no">04</span><h2 data-i="s4">La regola 60 / 20 / 20</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="segIntro"></p>
+  <div class="rv">
+    <div class="seg-bar">
+      <button class="seg s1 on" style="flex:60" onclick="showSeg(0)">60%</button>
+      <button class="seg s2" style="flex:20" onclick="showSeg(1)">20%</button>
+      <button class="seg s3" style="flex:20" onclick="showSeg(2)">20%</button>
+    </div>
+    <div class="seg-detail" id="segDetail"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">05</span><h2 data-i="s5">Checklist: è davvero un 9/10?</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="chkIntro"></p>
+  <div class="chk rv" id="chk"></div>
+  <div class="chk-verdict no rv" id="chkVerdict"></div>
+
+  <div class="sh rv"><i class="ti ti-mood-empty"></i><span class="no">06</span><h2 data-i="s6">La trappola della pigrizia umana</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="simIntro"></p>
+  <div class="sim rv">
+    <div class="sim-toggle">
+      <button id="simV" class="on" onclick="setSim(false)"><i class="ti ti-circle-check"></i><span data-i="simBtnV">Validi i 30 min</span></button>
+      <button id="simS" class="danger" onclick="setSim(true)"><i class="ti ti-player-skip-forward"></i><span data-i="simBtnS">Salti la validazione</span></button>
+    </div>
+    <div class="sim-flow" id="simFlow"></div>
+    <div class="sim-out" id="simOut"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">07</span><h2 data-i="s7">I 3 livelli di automazione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="lvlIntro"></p>
+  <div class="lvls rv" id="lvls"></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="autoKey"></p></div>
+
+  <div class="sh rv"><i class="ti ti-filter"></i><span class="no">08</span><h2 data-i="s8">La regola 70 / 30</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-arrows-split"></i></div><div><h4 data-i="r70H">Cosa automatizzi, cosa no</h4><p data-i-html="r70P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">09</span><h2 data-i="s9">Kaizen o Kairyo?</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="kkIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc kz"><h4><i class="ti ti-adjustments"></i> <span data-i="kzH">Kaizen — ottimizzare</span></h4><p data-i="kzP"></p><div class="ml" data-i="kzM"></div></div>
+    <div class="cmpc kr"><h4><i class="ti ti-bulb"></i> <span data-i="krH">Kairyo — ripensare</span></h4><p data-i="krP"></p><div class="ml" data-i="krM"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">10</span><h2 data-i="s10">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Non saltare i 30 minuti</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Qualità come vincolo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A3.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo Morfeus',
+h1:'Qualità come vincolo (9/10) & i 3 livelli di automazione',
+lede:'Velocità senza qualità non è produttività: è solo sbagliare più in fretta. Qui la qualità non è un obiettivo da raggiungere — è una soglia da rispettare prima di poter andare avanti.',
+s1:'Il vincolo non negoziabile',
+note1H:'9/10, o non si procede',
+note1P:'La regola è netta: <strong>se il prompt non produce 9/10, non si passa al livello successivo, non si automatizza, non si scala.</strong> La qualità non è la ciliegina finale: è il cancello. Output rapido non significa output buono — e un sistema costruito su un 7/10 propaga quel 7 ovunque, all’infinito.',
+s2:'Il triangolo Tempo / Qualità / Delega',
+t1H:'Tempo',t1P:'Liberare ore: l’AI deve togliere tempo al task, non aggiungerne.',
+t2H:'Qualità',t2P:'Mantenuta o alzata. Mai sotto la soglia: minimo 90%, ideale 100%+.',
+t3H:'Delega',t3P:'Una porzione reale del lavoro passa alla macchina, non finta.',
+triNote:'I tre parametri sono <b>inseparabili</b>: se ne ottimizzi solo uno, il sistema fallisce. Tempo ridotto + qualità alta + delega reale = leva. Togli un vertice e crolla tutto.',
+s3:'La metafora dell\'Arciere',
+archer:'La qualità si misura dal bersaglio, non dall’arco. Se il bersaglio non è centrato, cambi la mira — non l’arco.',
+archerCap:'Il prompt è la mira, la KB è la stabilità del tiro, la validazione è il controllo. L’arco (il tool) raramente è il problema.',
+s4:'La regola 60 / 20 / 20',
+segIntro:'Da dove arriva la qualità di un sistema AI? Non da un solo posto. Si distribuisce così — clicca ogni fascia.',
+s5:'Checklist: è davvero un 9/10?',
+chkIntro:'Prima di automatizzare, un output deve superare ogni voce. Spunta solo ciò che è davvero vero per il tuo caso: bastano un paio di caselle vuote e non sei pronto.',
+s6:'La trappola della pigrizia umana',
+simIntro:'Il rischio non è l’AI che sbaglia: è l’umano che smette di controllare. 25 ore di lavoro diventano 5 ore di AI + 30 minuti di validazione. Cosa succede quando saltano quei 30 minuti? Prova entrambe le strade.',
+simBtnV:'Validi i 30 min',simBtnS:'Salti la validazione',
+s7:'I 3 livelli di automazione',
+lvlIntro:'Non si parte automatizzando: ci si arriva. Ogni livello richiede che il precedente produca 9/10 in modo consistente. Clicca ognuno.',
+autoKey:'L’automazione è la fine del percorso, non l’inizio.',
+s8:'La regola 70 / 30',
+r70H:'Cosa automatizzi, cosa no',
+r70P:'Filtro rapido prima di ogni decisione: circa il <strong>70%</strong> dei task è ripetitivo e a basso giudizio — candidato all’automazione. Il restante <strong>30%</strong> richiede giudizio: l’AI supporta, ma l’umano decide. Mai invertire le proporzioni.',
+s9:'Kaizen o Kairyo?',
+kkIntro:'Quando un sistema non rende più, la domanda è una sola: va ottimizzato o ripensato da zero?',
+kzH:'Kaizen — ottimizzare',kzP:'Miglioramento incrementale: aggiusti, raffini, alzi di poco un sistema che funziona già. Piccoli passi continui.',
+kzM:'Quando l’impianto è giusto e basta limarlo.',
+krH:'Kairyo — ripensare',krP:'Ripensare il processo da zero. Non si lima: si butta l’impianto e si ricostruisce con una logica nuova.',
+krM:'Quando ottimizzare non basta più: il problema è la struttura.',
+s10:'Checkpoint',
+cpH:'Non saltare i 30 minuti',
+cpP:'La trappola non è tecnologica, è umana: quando l’AI fa quasi tutto bene, smetti di controllare. E lì la qualità crolla senza che te ne accorgi.',
+cpQ:'Pensa all’ultimo output AI che hai usato senza rileggerlo davvero. Era un vero 9/10 — o ti sei fidato perché eri di fretta?',
+cpNote:'I 30 minuti di validazione sono il prezzo delle 19,5 ore risparmiate. Saltarli te le restituisce indietro tutte.',
+foot:'Morfeus — Qualità come vincolo'
+},
+en:{
+kicker:'Lesson A3.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The Morfeus method',
+h1:'Quality as a constraint (9/10) & the 3 automation levels',
+lede:'Speed without quality isn’t productivity: it’s just being wrong faster. Here quality isn’t a goal to reach — it’s a threshold to clear before you’re allowed to move on.',
+s1:'The non-negotiable constraint',
+note1H:'9/10, or you don’t proceed',
+note1P:'The rule is sharp: <strong>if the prompt doesn’t produce 9/10, you don’t move to the next level, you don’t automate, you don’t scale.</strong> Quality isn’t the final cherry: it’s the gate. Fast output doesn’t mean good output — and a system built on a 7/10 propagates that 7 everywhere, forever.',
+s2:'The Time / Quality / Delegation triangle',
+t1H:'Time',t1P:'Free up hours: AI must take time off the task, not add it.',
+t2H:'Quality',t2P:'Kept or raised. Never below threshold: minimum 90%, ideal 100%+.',
+t3H:'Delegation',t3P:'A real share of the work passes to the machine, not a fake one.',
+triNote:'The three parameters are <b>inseparable</b>: optimize only one and the system fails. Less time + high quality + real delegation = leverage. Remove one vertex and it all collapses.',
+s3:'The Archer metaphor',
+archer:'Quality is measured by the target, not the bow. If the target isn’t hit, you change your aim — not the bow.',
+archerCap:'The prompt is the aim, the KB is the steadiness of the shot, validation is the control. The bow (the tool) is rarely the problem.',
+s4:'The 60 / 20 / 20 rule',
+segIntro:'Where does an AI system’s quality come from? Not from one place. It splits like this — click each band.',
+s5:'Checklist: is it really a 9/10?',
+chkIntro:'Before automating, an output must pass every line. Check only what’s genuinely true for your case: a couple of empty boxes and you’re not ready.',
+s6:'The trap of human laziness',
+simIntro:'The risk isn’t AI making mistakes: it’s the human who stops checking. 25 hours of work become 5 hours of AI + 30 minutes of validation. What happens when those 30 minutes get skipped? Try both paths.',
+simBtnV:'You validate the 30 min',simBtnS:'You skip validation',
+s7:'The 3 automation levels',
+lvlIntro:'You don’t start by automating: you arrive there. Each level requires the previous one to produce 9/10 consistently. Click each one.',
+autoKey:'Automation is the end of the journey, not the beginning.',
+s8:'The 70 / 30 rule',
+r70H:'What you automate, what you don’t',
+r70P:'A quick filter before any decision: about <strong>70%</strong> of tasks are repetitive and low-judgment — candidates for automation. The remaining <strong>30%</strong> needs judgment: AI supports, but the human decides. Never invert the proportions.',
+s9:'Kaizen or Kairyo?',
+kkIntro:'When a system stops delivering, there’s one question: optimize it, or rethink it from scratch?',
+kzH:'Kaizen — optimize',kzP:'Incremental improvement: you adjust, refine, slightly raise a system that already works. Small continuous steps.',
+kzM:'When the setup is right and just needs tuning.',
+krH:'Kairyo — rethink',krP:'Rethink the process from zero. You don’t tune: you scrap the setup and rebuild with new logic.',
+krM:'When optimizing isn’t enough: the problem is the structure.',
+s10:'Checkpoint',
+cpH:'Don’t skip the 30 minutes',
+cpP:'The trap isn’t technological, it’s human: when AI does almost everything well, you stop checking. And that’s where quality collapses without you noticing.',
+cpQ:'Think of the last AI output you used without really re-reading it. Was it a true 9/10 — or did you trust it because you were in a hurry?',
+cpNote:'The 30 minutes of validation are the price of the 19.5 hours saved. Skip them and you hand them all back.',
+foot:'Morfeus — Quality as a constraint'
+}};
+
+var SEG={it:[
+['60% — Il prompt','<b>60% nel prompt.</b> La fetta più grande della qualità sta qui: conoscenza umana, istruzioni chiare, contesto, esempi. Smonta il mito «basta un buon modello».'],
+['20% — Il sistema','<b>20% nel sistema.</b> KB, configurazione, assistente: la struttura stabile che rende l’output ripetibile e non dipendente dalla giornata.'],
+['20% — La validazione','<b>20% nella validazione umana.</b> Il controllo finale. Smonta il mito opposto: «l’AI fa tutto da sola». Senza questo 20%, gli altri 80% non bastano.']
+],en:[
+['60% — The prompt','<b>60% in the prompt.</b> The biggest slice of quality lives here: human knowledge, clear instructions, context, examples. It kills the myth “a good model is enough.”'],
+['20% — The system','<b>20% in the system.</b> KB, configuration, assistant: the stable structure that makes the output repeatable and not dependent on the day.'],
+['20% — Validation','<b>20% in human validation.</b> The final check. It kills the opposite myth: “AI does it all by itself.” Without this 20%, the other 80% isn’t enough.']
+]};
+
+var CHK={it:[
+'Ho creato lo stesso risultato 10 volte e la qualità è rimasta al 100%',
+'Ho ridotto gli errori rispetto a prima',
+'Ho ridotto il tempo rispetto a prima',
+'Ho mantenuto o alzato la qualità rispetto a quando lo facevo a mano',
+'Ho forzato l’AI a elencare almeno 3 criticità del suo output',
+'L’ho validato io: non mi sono fidato del primo colpo'
+],en:[
+'I created the same result 10 times and quality stayed at 100%',
+'I reduced errors compared to before',
+'I reduced time compared to before',
+'I kept or raised quality versus doing it by hand',
+'I forced the AI to list at least 3 weaknesses in its output',
+'I validated it myself: I didn’t trust the first shot'
+]};
+var CHKV={it:['Non è un 9/10. Non si automatizza, non si scala.','Consistenza non provata: ripeti finché tutte le caselle reggono.','9/10 raggiunto. Ora — e solo ora — puoi salire di livello.'],
+en:['Not a 9/10. Don’t automate, don’t scale.','Consistency unproven: repeat until every box holds.','9/10 reached. Now — and only now — you can move up a level.']};
+var CHKVS={it:'Spuntate <b>%</b> / 6.',en:'<b>%</b> / 6 checked.'};
+
+var SIM={it:{
+flowV:[['ok','ti-robot','5h di lavoro AI — bozza pronta'],['ok','ti-checkbox','30 min di validazione — rileggi, correggi, verifichi'],['ok','ti-circle-check','Output consegnato a 9/10']],
+flowS:[['ok','ti-robot','5h di lavoro AI — bozza pronta'],['skip','ti-checkbox','30 min di validazione — SALTATI'],['warn','ti-alert-triangle','Output consegnato senza controllo']],
+outV:['Validato','<b>19,5 ore risparmiate, qualità intatta.</b> Hai pagato i 30 minuti e incassato il risparmio. Questa è leva reale: tempo giù, qualità su, delega vera.'],
+outS:['La trappola','<b>Errore invisibile in produzione.</b> Le allucinazioni non arrivano segnalate: un dato inventato, un numero sbagliato, e nessuno l’ha visto. Hai risparmiato 30 minuti per pagarne le conseguenze a valle. L’AI non ha sbagliato: hai smesso di controllare tu.']
+},en:{
+flowV:[['ok','ti-robot','5h of AI work — draft ready'],['ok','ti-checkbox','30 min of validation — re-read, correct, verify'],['ok','ti-circle-check','Output delivered at 9/10']],
+flowS:[['ok','ti-robot','5h of AI work — draft ready'],['skip','ti-checkbox','30 min of validation — SKIPPED'],['warn','ti-alert-triangle','Output delivered with no check']],
+outV:['Validated','<b>19.5 hours saved, quality intact.</b> You paid the 30 minutes and banked the saving. This is real leverage: time down, quality up, true delegation.'],
+outS:['The trap','<b>Invisible error in production.</b> Hallucinations don’t come flagged: a made-up fact, a wrong number, and no one saw it. You saved 30 minutes to pay the consequences downstream. The AI didn’t fail: you stopped checking.']
+}};
+
+var LVL={it:[
+['1','Manuale con validazione','L’AI propone, tu validi ogni output. Il punto di partenza: massimo controllo, nessun automatismo.'],
+['2','Semi-automatico (copilot)','Umano + AI in coppia. Si automatizza il flusso ma resta un human-in-the-loop sui punti critici.'],
+['3','Automazione completa','Gira da sola — ma solo con certezza quasi matematica e processo collaudato. È la fine, non l’inizio.']
+],en:[
+['1','Manual with validation','AI proposes, you validate every output. The starting point: maximum control, no automation.'],
+['2','Semi-automatic (copilot)','Human + AI paired. The flow gets automated but a human-in-the-loop stays on the critical points.'],
+['3','Full automation','Runs on its own — but only with near-mathematical certainty and a battle-tested process. It’s the end, not the start.']
+]};
+
+var LANG='it',curSeg=0,curLvl=0,checks=[false,false,false,false,false,false],simSkip=false;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1.split('&')[0].trim()+' — Morfeus';
+  document.getElementById('chk').innerHTML=CHK[LANG].map(function(x,i){return '<div class="chk-row'+(checks[i]?' on':'')+'" onclick="toggleChk('+i+')"><div class="chk-box"><i class="ti ti-check"></i></div><div class="chk-txt">'+x+'</div></div>'}).join('');
+  document.getElementById('lvls').innerHTML=LVL[LANG].map(function(l,i){return '<div class="lvl'+(i===curLvl?' on':'')+'" onclick="showLvl('+i+')"><div class="ln">'+l[0]+'</div><div class="lc"><h4>'+l[1]+'</h4><p>'+l[2]+'</p></div></div>'}).join('');
+  showSeg(curSeg);showLvl(curLvl);updateChk();renderSim();
+}
+function showSeg(i){curSeg=i;document.querySelectorAll('.seg').forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('segDetail').innerHTML=SEG[LANG][i][1]}
+function showLvl(i){curLvl=i;document.querySelectorAll('.lvl').forEach(function(x,k){x.classList.toggle('on',k===i)})}
+function toggleChk(i){checks[i]=!checks[i];var r=document.querySelectorAll('.chk-row')[i];r.classList.toggle('on',checks[i]);updateChk()}
+function updateChk(){var n=checks.filter(Boolean).length;var v=document.getElementById('chkVerdict');var msg;var cls;
+  if(n===6){cls='yes';msg=CHKV[LANG][2]}else if(n>=3){cls='no';msg=CHKV[LANG][1]}else{cls='no';msg=CHKV[LANG][0]}
+  v.className='chk-verdict '+cls+' rv show';
+  v.innerHTML=msg+'<small>'+CHKVS[LANG].replace('%',n)+'</small>'}
+function setSim(s){simSkip=s;document.getElementById('simV').classList.toggle('on',!s);document.getElementById('simS').classList.toggle('on',s);renderSim()}
+function renderSim(){var d=SIM[LANG];var flow=simSkip?d.flowS:d.flowV;var out=simSkip?d.outS:d.outV;
+  document.getElementById('simFlow').innerHTML=flow.map(function(f){return '<div class="sim-step '+f[0]+'"><i class="ti '+f[1]+'"></i><span>'+f[2]+'</span></div>'}).join('');
+  document.getElementById('simOut').className='sim-out '+(simSkip?'bad':'good');
+  document.getElementById('simOut').innerHTML='<span class="tag">'+out[0]+'</span><div>'+out[1]+'</div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

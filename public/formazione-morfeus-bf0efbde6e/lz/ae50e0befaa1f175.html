@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Verification Loop — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#bfe2cb;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#f0d6a4;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#f2c4bd;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5641;
+--warn:#EF9F27;--warn-soft:#3f2a09;--warn-line:#6a4a16;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6b3a33;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+/* Hook */
+.hook{display:flex;gap:16px;background:var(--bad-soft);border:1px solid var(--bad-line);border-left:3px solid var(--bad);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin-top:6px}
+.hook .hi{font-size:22px;color:var(--bad);flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2)}
+
+/* Calculator card */
+.calc-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.calc-layout{display:grid;grid-template-columns:1fr 210px;gap:22px;align-items:start;margin-bottom:18px}
+.controls{display:flex;flex-direction:column;gap:18px}
+.sl-group label{display:block;font-size:13px;color:var(--ink-2);margin-bottom:7px}
+.sl-row{display:flex;align-items:center;gap:12px}
+.sl-row input[type=range]{flex:1;height:6px;-webkit-appearance:none;appearance:none;background:var(--bg-2);border-radius:3px;outline:none}
+.sl-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--bad);cursor:pointer;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.sl-row input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--bad);cursor:pointer;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.sl-val{font-size:14px;font-weight:600;color:var(--ink);min-width:72px;text-align:right;font-family:var(--mono)}
+.formula-line{font-size:13px;color:var(--ink-2);padding:10px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-family:var(--mono);margin-top:4px}
+.formula-line strong{color:var(--ink);font-weight:600}
+
+/* Big result */
+.result-box{text-align:center;padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:190px;transition:background .3s}
+.res-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;font-family:var(--mono)}
+.res-num{font-size:62px;font-weight:600;line-height:1;margin-bottom:10px;transition:color .35s;font-family:var(--mono)}
+.res-sub{font-size:12px;color:var(--ink-2);line-height:1.5;font-family:var(--mono)}
+.res-verdict{font-size:12px;font-weight:600;margin-top:10px;padding:3px 12px;border-radius:99px;display:inline-block;font-family:var(--mono)}
+
+/* Step dots */
+.steps-viz{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px;min-height:34px}
+.s-dot{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;transition:all .3s;cursor:default;position:relative;font-family:var(--mono)}
+.s-dot:hover::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--line-2);color:var(--ink);font-size:11px;padding:3px 8px;border-radius:4px;white-space:nowrap;margin-bottom:4px;pointer-events:none;z-index:10;font-family:var(--mono)}
+
+/* Chart */
+.chart-area{height:180px;position:relative}
+
+/* Key phrase */
+.key{text-align:center;padding:40px 20px;margin-top:24px;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--warn);max-width:600px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+
+/* Automation card */
+.auto-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.auto-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.auto-header h3{font-size:16px;font-weight:600;color:var(--ink)}
+.auto-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;padding:6px 14px;border-radius:99px;border:1px solid var(--line-2);background:var(--bg-2);transition:all .25s}
+.auto-toggle:hover{border-color:var(--good)}
+.auto-toggle.on{border-color:var(--good);background:var(--good-soft)}
+.auto-toggle .toggle-track{width:36px;height:20px;border-radius:10px;background:var(--ink-3);position:relative;transition:background .25s}
+.auto-toggle.on .toggle-track{background:var(--good)}
+.auto-toggle .toggle-knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left .25s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.auto-toggle.on .toggle-knob{left:18px}
+.auto-toggle .toggle-label{font-size:13px;font-weight:600;color:var(--ink-2);transition:color .2s;display:flex;align-items:center;gap:6px}
+.auto-toggle.on .toggle-label{color:var(--good)}
+.auto-chart-area{height:300px;position:relative;margin-bottom:16px}
+.auto-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.auto-controls .sl-group label{display:block;font-size:12px;color:var(--ink-2);margin-bottom:6px}
+.auto-controls .sl-row{display:flex;align-items:center;gap:10px}
+.auto-controls .sl-row .sl-val{font-size:13px;font-weight:600;color:var(--ink);min-width:66px;text-align:right;font-family:var(--mono)}
+.sl-auto{flex:1;height:6px;-webkit-appearance:none;appearance:none;background:var(--bg-2);border-radius:3px;outline:none}
+.sl-auto::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--good);cursor:pointer;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.sl-auto::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--good);cursor:pointer;border:3px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.auto-legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+.auto-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2)}
+.auto-legend-dot{width:12px;height:3px;border-radius:2px}
+.auto-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.auto-stat{text-align:center;padding:12px 8px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);transition:background .3s}
+.auto-stat-val{font-size:22px;font-weight:600;font-family:var(--mono);margin-bottom:2px;transition:color .3s}
+.auto-stat-label{font-size:11px;color:var(--ink-2);line-height:1.3}
+.auto-insight{margin-top:16px;padding:12px 16px;border-radius:var(--r);font-size:13px;line-height:1.7;transition:all .3s}
+.auto-insight.no-val{background:var(--bad-soft);border-left:3px solid var(--bad);color:var(--ink-2)}
+.auto-insight.with-val{background:var(--good-soft);border-left:3px solid var(--good);color:var(--ink-2)}
+.auto-insight strong{font-weight:600;color:var(--ink)}
+.validator-markers{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.v-marker{font-size:11px;padding:3px 10px;border-radius:99px;font-weight:600;font-family:var(--mono)}
+.v-marker.check{background:var(--good-soft);color:var(--good);border:1px solid var(--good-line)}
+
+/* Loop diagram */
+.loop-diagram{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.loop-flow{display:flex;align-items:center;gap:0;margin-bottom:14px}
+.loop-node{flex:1;background:var(--bg-2);border-radius:var(--r);padding:14px 10px;text-align:center;transition:all .3s;cursor:pointer;border:2px solid transparent;user-select:none}
+.loop-node:hover{border-color:var(--line-2)}
+.loop-node.active{border-color:var(--good);background:var(--good-soft)}
+.loop-n-icon{font-size:24px;color:var(--ink-3);margin-bottom:6px;transition:color .3s}
+.loop-node.active .loop-n-icon{color:var(--good)}
+.loop-n-name{font-size:13px;font-weight:600;color:var(--ink)}
+.loop-n-sub{font-size:11px;color:var(--ink-2);margin-top:2px}
+.loop-arr{display:flex;align-items:center;padding:0 8px;color:var(--ink-3);font-size:20px;flex-shrink:0}
+.loop-detail{padding:12px 16px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:13px;line-height:1.7;color:var(--ink-2);min-height:60px;transition:opacity .2s}
+.loop-return{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bad-soft);border:1px solid var(--bad-line);border-radius:var(--r);font-size:12px;color:var(--bad);margin-top:10px}
+.loop-return i{font-size:16px;flex-shrink:0}
+
+/* Verification modes */
+.verif-modes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;transition:border-color .2s}
+.mode-card:hover{border-color:var(--line-2)}
+.mode-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:12px}
+.mode-card.human .mode-icon{background:var(--accent-soft);color:var(--accent)}
+.mode-card.ai .mode-icon{background:var(--good-soft);color:var(--good)}
+.mode-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.mode-card p{font-size:13.5px;line-height:1.62;color:var(--ink-2)}
+.mode-card code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);padding:6px 10px;border-radius:6px;color:var(--ink);display:block;margin-top:8px}
+
+/* Apply grid */
+.apply-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.apply-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.apply-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14px;font-weight:600}
+.apply-yes .apply-hdr{color:var(--good)}
+.apply-no .apply-hdr{color:var(--ink-3)}
+.apply-list{list-style:none}
+.apply-list li{font-size:13.5px;line-height:1.6;padding:5px 0 5px 22px;position:relative;color:var(--ink-2)}
+.apply-yes .apply-list li::before{content:'\2713';position:absolute;left:0;color:var(--good);font-size:12px;top:7px;font-weight:700}
+.apply-no .apply-list li::before{content:'\00d7';position:absolute;left:2px;color:var(--ink-3);font-size:14px;top:6px}
+
+/* Checkpoint */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:12px;font-weight:600;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:flex;gap:8px;align-items:center;color:var(--ink-2)}
+.cp h4 i{color:var(--bad);font-size:15px}
+.cp p{font-size:14.5px;color:var(--ink-2)}.cp p strong{color:var(--bad);font-weight:600}
+
+/* Bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .calc-layout{grid-template-columns:1fr}
+  .result-box{min-height:auto;padding:18px}
+  .res-num{font-size:48px}
+  .verif-modes,.apply-grid{grid-template-columns:1fr}
+  .loop-n-sub{display:none}
+  .auto-controls{grid-template-columns:1fr}
+  .auto-stats{grid-template-columns:1fr}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.calc-card,.auto-card,.loop-diagram,.mode-card,.apply-card,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Affidabilità</div>
+  <h1 class="rv" data-i="h1">Il Verification Loop</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv"><i class="ti ti-quote hi"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-calculator"></i><span class="no">01</span><h2 data-i="s1">Il calcolo che cambia tutto</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="calcIntro"></p>
+
+  <div class="calc-card rv">
+    <div class="calc-layout">
+      <div class="controls">
+        <div class="sl-group">
+          <label data-i="accLbl">Accuratezza per singolo output</label>
+          <div class="sl-row">
+            <input type="range" id="acc" min="50" max="99" value="95" step="1">
+            <div class="sl-val"><span id="acc-v">95</span>%</div>
+          </div>
+        </div>
+        <div class="sl-group">
+          <label data-i="stpLbl">Passaggi consecutivi senza verifica</label>
+          <div class="sl-row">
+            <input type="range" id="stp" min="1" max="20" value="10" step="1">
+            <div class="sl-val"><span id="stp-v">10</span> <span data-i="stepWord">step</span></div>
+          </div>
+        </div>
+        <div class="formula-line" id="fml">0.95<sup>10</sup> = <strong>0.5987</strong></div>
+      </div>
+      <div class="result-box" id="res-box">
+        <div class="res-label" data-i="resLbl">Affidabilità finale</div>
+        <div class="res-num" id="res-n">59%</div>
+        <div class="res-sub" id="res-s">95% &rarr; 59%</div>
+        <div class="res-verdict" id="res-v"></div>
+      </div>
+    </div>
+    <div class="steps-viz" id="sv"></div>
+    <div class="chart-area"><canvas id="ch"></canvas></div>
+  </div>
+
+  <div class="key rv"><p data-i="kp"></p></div>
+
+  <div class="sh rv"><i class="ti ti-chart-line"></i><span class="no">02</span><h2 data-i="s2">Nella realtà — automazione multi-step</h2></div>
+
+  <div class="auto-card rv">
+    <div class="auto-header">
+      <h3 data-i="autoH">Rischio cumulativo su scala reale</h3>
+      <div class="auto-toggle" id="valToggle" onclick="toggleValidator()">
+        <div class="toggle-track"><div class="toggle-knob"></div></div>
+        <span class="toggle-label"><i class="ti ti-shield-check" style="font-size:15px"></i> <span data-i="valToggleLbl">Attiva Validatore AI</span></span>
+      </div>
+    </div>
+
+    <div class="auto-controls">
+      <div class="sl-group">
+        <label data-i="autoAccLbl">Accuratezza per singolo step</label>
+        <div class="sl-row">
+          <input type="range" id="autoAcc" min="9990" max="9999" value="9995" step="1" class="sl-auto">
+          <div class="sl-val"><span id="autoAcc-v">99.95</span>%</div>
+        </div>
+      </div>
+      <div class="sl-group">
+        <label data-i="autoStepsLbl">Step totali dell'automazione</label>
+        <div class="sl-row">
+          <input type="range" id="autoSteps" min="10" max="150" value="80" step="5" class="sl-auto">
+          <div class="sl-val"><span id="autoSteps-v">80</span> <span data-i="stepWord2">step</span></div>
+        </div>
+      </div>
+      <div class="sl-group" id="valIntervalGroup" style="opacity:0.35;pointer-events:none;transition:opacity .3s">
+        <label data-i="autoValIntLbl">Validatore ogni N step</label>
+        <div class="sl-row">
+          <input type="range" id="autoValInt" min="5" max="50" value="25" step="5" class="sl-auto">
+          <div class="sl-val"><span id="autoValInt-v">25</span> <span data-i="stepWord3">step</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auto-legend">
+      <div class="auto-legend-item"><div class="auto-legend-dot" style="background:var(--bad)"></div> <span data-i="legNoVal">Senza validatore</span></div>
+      <div class="auto-legend-item" id="legendVal" style="display:none"><div class="auto-legend-dot" style="background:var(--good)"></div> <span data-i="legWithVal">Con validatore</span> &mdash; <span id="legendValLabel"></span></div>
+    </div>
+    <div class="auto-chart-area"><canvas id="autoChart"></canvas></div>
+    <div class="validator-markers" id="valMarkers"></div>
+    <div class="auto-stats" id="autoStats">
+      <div class="auto-stat">
+        <div class="auto-stat-val" id="asSingle">99.95%</div>
+        <div class="auto-stat-label" data-i="asSingleLbl">Per singolo step</div>
+      </div>
+      <div class="auto-stat">
+        <div class="auto-stat-val" id="asEnd" style="color:var(--bad)">96.08%</div>
+        <div class="auto-stat-label" data-i="asEndLbl">All'ultimo step</div>
+      </div>
+      <div class="auto-stat">
+        <div class="auto-stat-val" id="asMin" style="color:var(--bad)">96.08%</div>
+        <div class="auto-stat-label" data-i="asMinLbl">Punto più basso</div>
+      </div>
+    </div>
+    <div class="auto-insight no-val" id="autoInsight"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">03</span><h2 data-i="s3">Il Verification Loop</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="loopIntro"></p>
+
+  <div class="loop-diagram rv">
+    <div class="loop-flow">
+      <div class="loop-node active" onclick="showNode(0)" id="ln0">
+        <div class="loop-n-icon"><i class="ti ti-message-dots"></i></div>
+        <div class="loop-n-name" data-i="ln0name">Output</div>
+        <div class="loop-n-sub" data-i="ln0sub">Claude genera</div>
+      </div>
+      <div class="loop-arr"><i class="ti ti-chevron-right"></i></div>
+      <div class="loop-node" onclick="showNode(1)" id="ln1">
+        <div class="loop-n-icon"><i class="ti ti-eye-check"></i></div>
+        <div class="loop-n-name" data-i="ln1name">Verifica</div>
+        <div class="loop-n-sub" data-i="ln1sub">Tu o Claude stesso</div>
+      </div>
+      <div class="loop-arr"><i class="ti ti-chevron-right"></i></div>
+      <div class="loop-node" onclick="showNode(2)" id="ln2">
+        <div class="loop-n-icon"><i class="ti ti-circle-check"></i></div>
+        <div class="loop-n-name" data-i="ln2name">Accetti</div>
+        <div class="loop-n-sub" data-i="ln2sub">Output confermato</div>
+      </div>
+    </div>
+    <div class="loop-detail" id="loop-desc"></div>
+    <div class="loop-return">
+      <i class="ti ti-arrow-back-up"></i>
+      <span data-i="loopReturn"></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">04</span><h2 data-i="s4">Due modalità di verifica</h2></div>
+
+  <div class="verif-modes rv">
+    <div class="mode-card human">
+      <div class="mode-icon"><i class="ti ti-user-scan"></i></div>
+      <div class="mode-title" data-i="m1title">Verifica umana</div>
+      <p data-i="m1p"></p>
+    </div>
+    <div class="mode-card ai">
+      <div class="mode-icon"><i class="ti ti-robot"></i></div>
+      <div class="mode-title" data-i="m2title">Auto-verifica Claude</div>
+      <p data-i="m2p"></p>
+      <code data-i="m2c1"></code>
+      <code data-i="m2c2"></code>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">05</span><h2 data-i="s5">Quando applicarlo</h2></div>
+
+  <div class="apply-grid rv">
+    <div class="apply-card apply-yes">
+      <div class="apply-hdr"><i class="ti ti-check"></i> <span data-i="applyYesH">Applica il loop</span></div>
+      <ul class="apply-list" id="applyYesList"></ul>
+    </div>
+    <div class="apply-card apply-no">
+      <div class="apply-hdr"><i class="ti ti-minus"></i> <span data-i="applyNoH">Non necessario</span></div>
+      <ul class="apply-list" id="applyNoList"></ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-map-pin"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-map-pin"></i> <span data-i="cpLbl">checkpoint</span></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Verification Loop</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Affidabilità',
+h1:'Il Verification Loop',
+lede:'Perché non fidarsi mai del primo output — e come catturare gli errori prima che diventino problemi.',
+hook:'«Claude sbaglia. Non spesso — ma sbaglia. E il problema non è il singolo errore: è che gli errori si moltiplicano quando incateni output senza verificare. Ti mostro un calcolo che non dimenticherai.»',
+s1:'Il calcolo che cambia tutto',
+calcIntro:'Muovi i cursori e guarda cosa succede all\'affidabilità quando concateni più passaggi senza verificare.',
+accLbl:'Accuratezza per singolo output',
+stpLbl:'Passaggi consecutivi senza verifica',
+stepWord:'step',
+resLbl:'Affidabilità finale',
+kp:'«La concatenazione senza verifica trasforma un sistema affidabile in un sistema inaffidabile. Non è Claude che sbaglia di più — sei tu che hai smesso di fare il tuo lavoro.»',
+s2:'Nella realtà — automazione multi-step',
+autoH:'Rischio cumulativo su scala reale',
+valToggleLbl:'Attiva Validatore AI',
+autoAccLbl:'Accuratezza per singolo step',
+autoStepsLbl:'Step totali dell\'automazione',
+autoValIntLbl:'Validatore ogni N step',
+stepWord2:'step',stepWord3:'step',
+legNoVal:'Senza validatore',legWithVal:'Con validatore',
+asSingleLbl:'Per singolo step',asEndLbl:'All\'ultimo step',asMinLbl:'Punto più basso',
+s3:'Il Verification Loop',
+loopIntro:'Clicca ogni nodo per capire cosa succede in ciascuna fase del ciclo.',
+ln0name:'Output',ln0sub:'Claude genera',
+ln1name:'Verifica',ln1sub:'Tu o Claude stesso',
+ln2name:'Accetti',ln2sub:'Output confermato',
+loopReturn:'Se trovi un problema → chiedi revisione a Claude → torna al nodo Verifica → ripeti fino a OK',
+s4:'Due modalità di verifica',
+m1title:'Verifica umana',
+m1p:'Rileggi da avvocato del diavolo. Cosa c\'è di sbagliato? Cosa manca? Cosa è impreciso? Per task critici: usa una conversazione separata. Contesto fresco = analisi senza bias.',
+m2title:'Auto-verifica Claude',
+m2p:'Funziona sorprendentemente bene. Prompt:',
+m2c1:'«Rileggi e dimmi se c\'è qualcosa che non torna»',
+m2c2:'«Fai l\'avvocato del diavolo: trova le falle.»',
+s5:'Quando applicarlo',
+applyYesH:'Applica il loop',applyNoH:'Non necessario',
+s6:'Checkpoint',cpLbl:'checkpoint',
+cpP:'Da oggi, ogni volta che usi un output di Claude direttamente — senza modificarlo — chiediti: <strong>l\'ho verificato?</strong> Se la risposta è no, fallo. Questo è il singolo cambiamento con il maggior impatto immediato.',
+bridge:'Claude come <b>partner di pensiero</b>, non solo esecutore — l\'uso con il leverage più alto di tutto il corso.',
+foot:'Morfeus — Il Verification Loop'
+},
+en:{
+kicker:'Lesson 0.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Reliability',
+h1:'The Verification Loop',
+lede:'Why you should never trust the first output — and how to catch errors before they turn into problems.',
+hook:'"Claude makes mistakes. Not often — but it does. And the problem isn\'t the single error: it\'s that errors multiply when you chain outputs without verifying. Let me show you a calculation you won\'t forget."',
+s1:'The calculation that changes everything',
+calcIntro:'Move the sliders and watch what happens to reliability when you chain several steps without verifying.',
+accLbl:'Accuracy per single output',
+stpLbl:'Consecutive steps without verification',
+stepWord:'steps',
+resLbl:'Final reliability',
+kp:'"Chaining without verification turns a reliable system into an unreliable one. It\'s not that Claude makes more mistakes — it\'s that you stopped doing your job."',
+s2:'In the real world — multi-step automation',
+autoH:'Cumulative risk at real scale',
+valToggleLbl:'Enable AI Validator',
+autoAccLbl:'Accuracy per single step',
+autoStepsLbl:'Total automation steps',
+autoValIntLbl:'Validator every N steps',
+stepWord2:'steps',stepWord3:'steps',
+legNoVal:'Without validator',legWithVal:'With validator',
+asSingleLbl:'Per single step',asEndLbl:'At the last step',asMinLbl:'Lowest point',
+s3:'The Verification Loop',
+loopIntro:'Click each node to understand what happens at every stage of the cycle.',
+ln0name:'Output',ln0sub:'Claude generates',
+ln1name:'Verify',ln1sub:'You or Claude itself',
+ln2name:'Accept',ln2sub:'Output confirmed',
+loopReturn:'If you find a problem → ask Claude for a revision → return to the Verify node → repeat until OK',
+s4:'Two modes of verification',
+m1title:'Human verification',
+m1p:'Reread as a devil\'s advocate. What\'s wrong? What\'s missing? What\'s imprecise? For critical tasks: use a separate conversation. Fresh context = analysis without bias.',
+m2title:'Claude self-check',
+m2p:'It works surprisingly well. Prompt:',
+m2c1:'"Reread this and tell me if anything doesn\'t add up"',
+m2c2:'"Play devil\'s advocate: find the flaws."',
+s5:'When to apply it',
+applyYesH:'Apply the loop',applyNoH:'Not necessary',
+s6:'Checkpoint',cpLbl:'checkpoint',
+cpP:'From today, every time you use a Claude output directly — without changing it — ask yourself: <strong>did I verify it?</strong> If the answer is no, do it. This is the single change with the biggest immediate impact.',
+bridge:'Claude as a <b>thinking partner</b>, not just an executor — the highest-leverage use in the whole course.',
+foot:'Morfeus — The Verification Loop'
+}};
+
+var NODE_DESCS={
+it:[
+'Claude genera un output. Ricorda: anche al 95% di accuratezza, 1 output su 20 contiene un errore. Il tuo lavoro inizia qui, non finisce.',
+'Verifica con occhio critico. Due opzioni: rileggi tu da avvocato del diavolo, oppure chiedi a Claude stesso di trovare le falle nel suo output. Per task critici, usa una conversazione separata.',
+'L\'output supera la verifica. Ora puoi usarlo con fiducia. Se non supera: chiedi revisione a Claude e torna al nodo Verifica.'
+],
+en:[
+'Claude generates an output. Remember: even at 95% accuracy, 1 output out of 20 contains an error. Your job starts here — it doesn\'t end here.',
+'Verify with a critical eye. Two options: reread it yourself as a devil\'s advocate, or ask Claude itself to find the flaws in its output. For critical tasks, use a separate conversation.',
+'The output passes verification. Now you can use it with confidence. If it doesn\'t pass: ask Claude for a revision and return to the Verify node.'
+]};
+
+var APPLY_YES={
+it:['Output usati direttamente senza modifiche','Task dove la qualità è critica','Contenuti per clienti o pubblicati','Calcoli, numeri, dati fattuali'],
+en:['Outputs used directly without changes','Tasks where quality is critical','Content for clients or published','Calculations, numbers, factual data']};
+var APPLY_NO={
+it:['Bozze interne che rivedi comunque','Brainstorming dove l\'imprecisione è ok','Task esplorativi per raccogliere idee'],
+en:['Internal drafts you\'ll review anyway','Brainstorming where imprecision is fine','Exploratory tasks to gather ideas']};
+
+/* Insight templates with placeholders */
+function autoInsightNoVal(perStep,steps,errorProb){
+  if(LANG==='en')return 'Each step is <strong>'+perStep+'%</strong> accurate. Looks perfect. But after '+steps+' steps, the probability that <strong>at least one error</strong> slipped in is <strong>'+errorProb+'%</strong>. Without checkpoints, you don\'t know where.';
+  return 'Ogni step ha il <strong>'+perStep+'%</strong> di accuratezza. Sembra perfetto. Ma dopo '+steps+' step, la probabilità che <strong>almeno un errore</strong> si sia infilato è del <strong>'+errorProb+'%</strong>. Senza checkpoint, non sai dove.';
+}
+function autoInsightWithVal(interval,minVal,endVal,endNoVal){
+  if(LANG==='en')return 'With an <strong>AI validator every '+interval+' steps</strong>, confidence never drops below <strong>'+minVal+'%</strong>. At the last step you\'re at <strong>'+endVal+'%</strong> instead of '+endNoVal+'%. The checkpoint system keeps quality high <strong>even on long automations</strong>.';
+  return 'Con un <strong>validatore AI ogni '+interval+' step</strong>, la confidence non scende mai sotto il <strong>'+minVal+'%</strong>. All\'ultimo step sei al <strong>'+endVal+'%</strong> invece del '+endNoVal+'%. Il sistema di checkpoint tiene la qualità alta <strong>anche su automazioni lunghe</strong>.';
+}
+function legendValText(interval){return (LANG==='en'?'every ':'ogni ')+interval+(LANG==='en'?' steps':' step');}
+function startWord(){return LANG==='en'?'Start':'Inizio';}
+function startWordShort(){return LANG==='en'?'Start':'Start';}
+function relLabel(v){return Math.round(v)+(LANG==='en'?'% reliability':'% affidabilità');}
+function tipStartTitle(){return LANG==='en'?'Start':'Partenza';}
+function tipStepTitle(i){return (LANG==='en'?'Step ':'Step ')+i;}
+
+/* ===== THEME ===== */
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light');
+  if(chartInst){rebuildChart();}
+  if(autoChartInst){autoChartInst.destroy();autoChartInst=null;}
+  updAuto();
+}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+/* ===== LOOP NODES ===== */
+var curNode=0;
+function showNode(idx){
+  curNode=idx;
+  for(var i=0;i<3;i++){document.getElementById('ln'+i).classList.toggle('active',i===idx);}
+  document.getElementById('loop-desc').textContent=NODE_DESCS[LANG][idx];
+}
+
+/* ===== CALCULATOR ===== */
+var chartInst=null;
+function gcRaw(p){
+  var isDark=document.documentElement.classList.contains('dark');
+  if(p>80)return isDark?'#86d098':'#3b9e57';
+  if(p>60)return isDark?'#EF9F27':'#BA7517';
+  return isDark?'#ee8a80':'#d44a3e';
+}
+function gdBg(p){
+  var isDark=document.documentElement.classList.contains('dark');
+  if(p>80)return isDark?'#22382a':'#e6f4ea';
+  if(p>60)return isDark?'#3f2a09':'#faeeda';
+  return isDark?'#412420':'#fbe9e6';
+}
+function gdFg(p){
+  var isDark=document.documentElement.classList.contains('dark');
+  if(p>80)return isDark?'#86d098':'#2a5238';
+  if(p>60)return isDark?'#EF9F27':'#633806';
+  return isDark?'#ee8a80':'#791f1f';
+}
+function verdict(p){
+  if(LANG==='en'){
+    if(p>80)return{t:'Safe'};
+    if(p>60)return{t:'Caution'};
+    return{t:'Dangerous'};
+  }
+  if(p>80)return{t:'Sicuro'};
+  if(p>60)return{t:'Attenzione'};
+  return{t:'Pericoloso'};
+}
+
+function upd(){
+  var acc=+document.getElementById('acc').value,steps=+document.getElementById('stp').value;
+  var fin=Math.pow(acc/100,steps)*100,finR=Math.round(fin);
+  document.getElementById('acc-v').textContent=acc;
+  document.getElementById('stp-v').textContent=steps;
+  var rn=document.getElementById('res-n');
+  rn.textContent=finR+'%';
+  rn.style.color=gcRaw(finR);
+  document.getElementById('res-s').innerHTML=acc+'% &rarr; '+finR+'%';
+  document.getElementById('fml').innerHTML=(acc/100).toFixed(2)+'<sup>'+steps+'</sup> = <strong>'+(fin/100).toFixed(4)+'</strong>';
+  var v=verdict(finR);
+  var rv=document.getElementById('res-v');
+  rv.textContent=v.t;
+  rv.style.background=gdBg(finR);
+  rv.style.color=gdFg(finR);
+  document.getElementById('res-box').style.background=gdBg(finR);
+
+  var sv=document.getElementById('sv');sv.innerHTML='';
+  for(var i=1;i<=steps;i++){
+    var p=Math.pow(acc/100,i)*100,d=document.createElement('div');
+    d.className='s-dot';d.style.background=gdBg(p);d.style.color=gdFg(p);
+    d.textContent=i;d.setAttribute('data-tip',Math.round(p)+'%');sv.appendChild(d);
+  }
+
+  if(chartInst){
+    var lbls=[startWord()],dat=[acc];
+    for(var j=1;j<=steps;j++){lbls.push('Step '+j);dat.push(+(Math.pow(acc/100,j)*100).toFixed(1));}
+    chartInst.data.labels=lbls;
+    chartInst.data.datasets[0].data=dat;
+    var ec=gcRaw(finR);
+    chartInst.data.datasets[0].borderColor=ec;
+    chartInst.data.datasets[0].backgroundColor=ec+'18';
+    chartInst.data.datasets[0].pointBackgroundColor=dat.map(function(v){return gcRaw(v);});
+    chartInst.update('none');
+  }
+}
+
+function rebuildChart(){
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  initChart();
+  upd();
+}
+
+function initChart(){
+  var ctx=document.getElementById('ch').getContext('2d');
+  var acc=+document.getElementById('acc').value,steps=+document.getElementById('stp').value;
+  var lbls=[startWord()],dat=[acc];
+  for(var i=1;i<=steps;i++){lbls.push('Step '+i);dat.push(+(Math.pow(acc/100,i)*100).toFixed(1));}
+  var ec=gcRaw(Math.pow(acc/100,steps)*100);
+  var isDark=document.documentElement.classList.contains('dark');
+  var gridC=isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  var tickC=isDark?'#928f82':'#84847e';
+
+  chartInst=new Chart(ctx,{
+    type:'line',
+    data:{labels:lbls,datasets:[{data:dat,borderColor:ec,backgroundColor:ec+'18',borderWidth:2.5,fill:true,tension:.35,pointRadius:5,pointBackgroundColor:dat.map(function(v){return gcRaw(v);}),pointBorderWidth:0,pointHoverRadius:8}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      animation:{duration:400},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:isDark?'#232320':'#fffdf9',titleColor:isDark?'#f5f4ed':'#1a1a18',bodyColor:isDark?'#c6c4b8':'#52524e',borderColor:isDark?'rgba(255,255,255,0.14)':'rgba(0,0,0,0.10)',borderWidth:1,cornerRadius:8,padding:10,callbacks:{label:function(c){return relLabel(c.parsed.y);}}}},
+      scales:{
+        x:{grid:{color:gridC},ticks:{font:{size:11},color:tickC}},
+        y:{min:0,max:100,grid:{color:gridC},ticks:{font:{size:11},color:tickC,callback:function(v){return v+'%';},stepSize:20}}
+      }
+    }
+  });
+}
+
+document.getElementById('acc').addEventListener('input',upd);
+document.getElementById('stp').addEventListener('input',upd);
+
+/* ===== REALISTIC AUTOMATION CHART ===== */
+var autoChartInst=null;
+var validatorOn=false;
+var VAL_CATCH_RATE=0.92;
+
+function getAutoParams(){
+  return{
+    perStep:+document.getElementById('autoAcc').value/10000,
+    totalSteps:+document.getElementById('autoSteps').value,
+    valInterval:+document.getElementById('autoValInt').value
+  };
+}
+
+function calcNoValidator(p){
+  var pts=[];
+  for(var i=0;i<=p.totalSteps;i++){pts.push(Math.pow(p.perStep,i)*100);}
+  return pts;
+}
+
+function calcWithValidator(p){
+  var pts=[];
+  var cumAcc=1.0;
+  for(var i=0;i<=p.totalSteps;i++){
+    if(i>0){
+      cumAcc=cumAcc*p.perStep;
+      if(i%p.valInterval===0){
+        var err=1-cumAcc;
+        cumAcc=cumAcc+err*VAL_CATCH_RATE;
+      }
+    }
+    pts.push(cumAcc*100);
+  }
+  return pts;
+}
+
+function getAutoColors(){
+  var d=document.documentElement.classList.contains('dark');
+  return{
+    red:d?'#ee8a80':'#d44a3e',redBg:d?'rgba(238,138,128,0.08)':'rgba(212,74,62,0.08)',
+    teal:d?'#86d098':'#3b9e57',tealBg:d?'rgba(134,208,152,0.12)':'rgba(59,158,87,0.12)',
+    grid:d?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',tick:d?'#928f82':'#84847e',
+    tipBg:d?'#232320':'#fffdf9',tipTitle:d?'#f5f4ed':'#1a1a18',
+    tipBody:d?'#c6c4b8':'#52524e',tipBorder:d?'rgba(255,255,255,0.14)':'rgba(0,0,0,0.10)'
+  };
+}
+
+function buildAutoChart(){
+  if(autoChartInst){autoChartInst.destroy();autoChartInst=null;}
+  var p=getAutoParams(),c=getAutoColors();
+  var noVal=calcNoValidator(p);
+  var lbls=[];
+  for(var i=0;i<=p.totalSteps;i++){lbls.push(i===0?startWordShort():''+i);}
+
+  var yFloor=noVal[noVal.length-1];
+  var yMin=Math.floor(yFloor*2)/2-0.5;
+  if(yMin<90)yMin=90;
+
+  var datasets=[{
+    label:DICT[LANG].legNoVal,data:noVal,
+    borderColor:c.red,backgroundColor:c.redBg,borderWidth:2,fill:true,tension:.3,
+    pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:c.red,pointHoverBorderWidth:0,
+    borderDash:validatorOn?[6,4]:[]
+  }];
+
+  if(validatorOn){
+    var withVal=calcWithValidator(p);
+    datasets.push({
+      label:DICT[LANG].legWithVal,data:withVal,
+      borderColor:c.teal,backgroundColor:c.tealBg,borderWidth:2.5,fill:true,tension:.3,
+      pointRadius:0,pointHoverRadius:5,pointHoverBackgroundColor:c.teal,pointHoverBorderWidth:0
+    });
+    datasets[0].borderWidth=1.5;
+  }
+
+  var tickInterval=p.totalSteps<=40?5:p.totalSteps<=80?10:15;
+  var ctx=document.getElementById('autoChart').getContext('2d');
+  autoChartInst=new Chart(ctx,{
+    type:'line',
+    data:{labels:lbls,datasets:datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      animation:{duration:400},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:c.tipBg,titleColor:c.tipTitle,bodyColor:c.tipBody,
+          borderColor:c.tipBorder,borderWidth:1,cornerRadius:8,padding:10,
+          callbacks:{
+            title:function(items){var idx=items[0].dataIndex;return idx===0?tipStartTitle():tipStepTitle(idx);},
+            label:function(ctx){return ctx.dataset.label+': '+ctx.parsed.y.toFixed(3)+'%';}
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:c.grid},ticks:{font:{size:10},color:c.tick,maxTicksLimit:20,
+          callback:function(val,idx){if(idx===0)return startWordShort();if(idx%tickInterval===0)return idx;return '';}}},
+        y:{min:yMin,max:100.05,grid:{color:c.grid},ticks:{
+          font:{size:11,family:'SF Mono, Fira Code, monospace'},color:c.tick,
+          callback:function(v){return v.toFixed(1)+'%';},stepSize:0.5}}
+      }
+    }
+  });
+}
+
+function updAuto(){
+  var p=getAutoParams();
+  document.getElementById('autoAcc-v').textContent=(p.perStep*100).toFixed(2);
+  document.getElementById('autoSteps-v').textContent=p.totalSteps;
+  document.getElementById('autoValInt-v').textContent=p.valInterval;
+  document.getElementById('asSingle').textContent=(p.perStep*100).toFixed(2)+'%';
+  document.getElementById('legendValLabel').textContent=legendValText(p.valInterval);
+
+  buildAutoChart();
+
+  var noVal=calcNoValidator(p);
+  var endNoVal=noVal[noVal.length-1];
+  var asEnd=document.getElementById('asEnd');
+  var asMin=document.getElementById('asMin');
+  var insight=document.getElementById('autoInsight');
+
+  if(validatorOn){
+    var withVal=calcWithValidator(p);
+    var endWithVal=withVal[withVal.length-1];
+    var minWithVal=100;
+    for(var i=0;i<withVal.length;i++){if(withVal[i]<minWithVal)minWithVal=withVal[i];}
+    asEnd.textContent=endWithVal.toFixed(2)+'%';
+    asEnd.style.color='var(--good)';
+    asMin.textContent=minWithVal.toFixed(2)+'%';
+    asMin.style.color='var(--warn)';
+    insight.className='auto-insight with-val';
+    insight.innerHTML=autoInsightWithVal(p.valInterval,minWithVal.toFixed(2),endWithVal.toFixed(2),endNoVal.toFixed(2));
+  }else{
+    asEnd.textContent=endNoVal.toFixed(2)+'%';
+    asEnd.style.color='var(--bad)';
+    asMin.textContent=endNoVal.toFixed(2)+'%';
+    asMin.style.color='var(--bad)';
+    insight.className='auto-insight no-val';
+    var errorProb=(100-endNoVal).toFixed(2);
+    insight.innerHTML=autoInsightNoVal((p.perStep*100).toFixed(2),p.totalSteps,errorProb);
+  }
+
+  var container=document.getElementById('valMarkers');
+  container.innerHTML='';
+  if(validatorOn){
+    var withVal2=calcWithValidator(p);
+    for(var j=p.valInterval;j<=p.totalSteps;j+=p.valInterval){
+      var pre=withVal2[j-1]!==undefined?withVal2[j-1]:withVal2[j];
+      var post=withVal2[j];
+      var mk=document.createElement('span');
+      mk.className='v-marker check';
+      mk.innerHTML='<i class="ti ti-shield-check" style="font-size:12px"></i> Step '+j+': '+pre.toFixed(2)+'% &rarr; '+post.toFixed(2)+'%';
+      container.appendChild(mk);
+    }
+  }
+}
+
+function toggleValidator(){
+  validatorOn=!validatorOn;
+  document.getElementById('valToggle').classList.toggle('on',validatorOn);
+  document.getElementById('legendVal').style.display=validatorOn?'flex':'none';
+  var vig=document.getElementById('valIntervalGroup');
+  vig.style.opacity=validatorOn?'1':'0.35';
+  vig.style.pointerEvents=validatorOn?'auto':'none';
+  updAuto();
+}
+
+document.getElementById('autoAcc').addEventListener('input',updAuto);
+document.getElementById('autoSteps').addEventListener('input',updAuto);
+document.getElementById('autoValInt').addEventListener('input',updAuto);
+
+/* ===== I18N ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('applyYesList').innerHTML=APPLY_YES[LANG].map(function(t){return '<li>'+t+'</li>'}).join('');
+  document.getElementById('applyNoList').innerHTML=APPLY_NO[LANG].map(function(t){return '<li>'+t+'</li>'}).join('');
+  showNode(curNode);
+  if(chartInst){rebuildChart();}
+  updAuto();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+window.addEventListener('load',function(){
+  applyI18n();
+  initChart();
+  upd();
+  updAuto();
+});
+</script>
+</body>
+</html>

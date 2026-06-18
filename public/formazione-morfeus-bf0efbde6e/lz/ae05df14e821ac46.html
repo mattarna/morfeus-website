@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avanzato: Master + Sprint — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+.adv-badge{display:inline-flex;align-items:center;gap:6px;background:var(--warn-soft);border:1px solid var(--warn-line);color:var(--warn);font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:5px 12px;border-radius:30px;margin-bottom:14px}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.lede em{font-style:italic;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* hook */
+.hook{display:flex;gap:16px;background:var(--warn-soft);border:1px solid var(--warn-line);border-left:3px solid var(--warn);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--warn);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+/* when box */
+.whenbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.7}
+.whenbox b{color:var(--ink);font-weight:600}
+.whenbox.with-icon{display:flex;gap:14px;align-items:flex-start}
+.whenbox.with-icon>i{font-size:22px;color:var(--accent);flex-shrink:0;margin-top:2px}
+/* three levels recap */
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.lvl{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 14px;text-align:center}
+.lvl i{font-size:22px;display:block;margin-bottom:7px}
+.lvl .lvl-t{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.lvl .lvl-s{font-size:12px;color:var(--ink-3);line-height:1.45}
+.lvl.l1{border-top:3px solid var(--teal)}.lvl.l1 i,.lvl.l1 .lvl-t{color:var(--teal)}
+.lvl.l2{border-top:3px solid var(--accent)}.lvl.l2 i,.lvl.l2 .lvl-t{color:var(--accent)}
+.lvl.l3{border-top:3px solid var(--warn)}.lvl.l3 i,.lvl.l3 .lvl-t{color:var(--warn)}
+/* folder tree */
+.tree{background:#1a1a18;border:1px solid var(--line-2);border-radius:var(--r-l);padding:22px 24px;font-family:var(--mono);font-size:13px;line-height:1.95;margin:0 0 14px;color:#d3d1c7;overflow-x:auto;box-shadow:var(--sh)}
+.tree .dir{color:#EF9F27}
+.tree .file{color:#5DCAA5}
+.tree .cm{color:#6e6e68}
+/* master + sprints map */
+.ms{display:grid;grid-template-columns:1fr;gap:14px;margin:0}
+.ms-master{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.ms-master .h{font-weight:600;font-size:14.5px;color:var(--warn);display:flex;align-items:center;gap:8px;margin-bottom:4px;font-family:var(--mono)}
+.ms-master p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.ms-sprints{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ms-sp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px;text-align:center}
+.ms-sp i{font-size:21px;color:var(--accent);display:block;margin-bottom:6px}
+.ms-sp .t{font-size:12px;font-weight:600;font-family:var(--mono)}
+.ms-sp .s{font-size:11px;color:var(--ink-3);margin-top:2px}
+/* steps timeline */
+.hint{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;margin-bottom:14px;letter-spacing:.04em}
+.steps{display:flex;flex-direction:column;gap:0;margin:0}
+.step{display:flex;gap:16px;position:relative;padding-bottom:20px;cursor:pointer}
+.step:not(:last-child)::before{content:'';position:absolute;left:19px;top:44px;bottom:-2px;width:2px;background:var(--line-2)}
+.step-num{width:40px;height:40px;border-radius:11px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:16px;flex-shrink:0;z-index:1;font-family:var(--mono);transition:.2s}
+.step.stop .step-num{background:var(--bad)}
+.step-body{padding-top:6px;flex:1}
+.step-body h4{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.step.stop .step-body h4{color:var(--bad)}
+.step-body p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.step-body .detail{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.step.open .step-body .detail{max-height:200px}
+.step-body .detail p{margin-top:8px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--r);padding:10px 13px;font-size:13px;color:var(--ink-2)}
+.step.stop.open .step-body .detail p{border-left-color:var(--bad)}
+.step-chev{color:var(--ink-3);font-size:18px;flex-shrink:0;align-self:flex-start;margin-top:9px;transition:transform .3s}
+.step.open .step-chev{transform:rotate(180deg)}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--warn);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+.key .key-sub{display:block;font-size:14px;font-weight:400;color:var(--ink-2);margin-top:14px;font-style:italic}
+/* module-complete bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:24px;flex-shrink:0}
+.bridge .bt h4{font-size:13px;font-weight:600;color:var(--agent);margin-bottom:3px}
+.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .levels{grid-template-columns:1fr}
+  .ms-sprints{grid-template-columns:1fr}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.step .detail{max-height:none!important}.whenbox,.lvl,.tree,.ms-master,.ms-sp,.key,.bridge,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Master + Sprint</div>
+  <span class="adv-badge rv"><i class="ti ti-star"></i> <span data-i="advBadge">Livello avanzato</span></span>
+  <h1 class="rv" data-i="h1">Master + un documento Sprint per milestone</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- 01 HOOK -->
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Hook</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <!-- 02 QUANDO SERVE -->
+  <div class="sh rv"><i class="ti ti-ruler-2"></i><span class="no">02</span><h2 data-i="s1">Quando serve</h2></div>
+  <div class="levels rv">
+    <div class="lvl l1"><i class="ti ti-bolt"></i><div class="lvl-t" data-i="lvl1t">Lite</div><div class="lvl-s" data-i="lvl1s"></div></div>
+    <div class="lvl l2"><i class="ti ti-list-check"></i><div class="lvl-t" data-i="lvl2t">Full</div><div class="lvl-s" data-i="lvl2s"></div></div>
+    <div class="lvl l3"><i class="ti ti-stack-2"></i><div class="lvl-t" data-i="lvl3t">Avanzato</div><div class="lvl-s" data-i="lvl3s"></div></div>
+  </div>
+  <div class="whenbox rv" data-i-html="whenP"></div>
+
+  <!-- 03 LA STRUTTURA MULTI-DOCUMENTO -->
+  <div class="sh rv"><i class="ti ti-folder"></i><span class="no">03</span><h2 data-i="s2">La struttura multi-documento</h2></div>
+  <div class="tree rv">
+<span class="dir">/progetto</span><br>
+&nbsp;&nbsp;<span class="file">MASTER_PLAN.md</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm" data-i="tc1"></span><br>
+&nbsp;&nbsp;<span class="dir">/sprint</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SPRINT_01.md</span>&nbsp;&nbsp;<span class="cm" data-i="tc2"></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SPRINT_02.md</span>&nbsp;&nbsp;<span class="cm" data-i="tc3"></span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">SPRINT_03.md</span>&nbsp;&nbsp;<span class="cm" data-i="tc4"></span>
+  </div>
+  <div class="ms rv">
+    <div class="ms-master"><div class="h"><i class="ti ti-map"></i> MASTER_PLAN.md</div><p data-i="msMaster"></p></div>
+    <div class="ms-sprints">
+      <div class="ms-sp"><i class="ti ti-file-text"></i><div class="t">SPRINT_01</div><div class="s" data-i="msSp1"></div></div>
+      <div class="ms-sp"><i class="ti ti-file-text"></i><div class="t">SPRINT_02</div><div class="s" data-i="msSp2"></div></div>
+      <div class="ms-sp"><i class="ti ti-file-text"></i><div class="t">SPRINT_03</div><div class="s" data-i="msSp3"></div></div>
+    </div>
+  </div>
+
+  <!-- 04 IL FLUSSO -->
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">04</span><h2 data-i="s3">Il flusso, passo per passo</h2></div>
+  <div class="hint rv" data-i="hint"></div>
+  <div class="steps rv">
+    <div class="step open" onclick="togStep(this)">
+      <div class="step-num">1</div>
+      <div class="step-body"><h4 data-i="st1h"></h4><p data-i="st1p"></p><div class="detail"><p data-i="st1d"></p></div></div>
+      <i class="ti ti-chevron-down step-chev"></i>
+    </div>
+    <div class="step" onclick="togStep(this)">
+      <div class="step-num">2</div>
+      <div class="step-body"><h4 data-i="st2h"></h4><p data-i="st2p"></p><div class="detail"><p data-i="st2d"></p></div></div>
+      <i class="ti ti-chevron-down step-chev"></i>
+    </div>
+    <div class="step stop" onclick="togStep(this)">
+      <div class="step-num"><i class="ti ti-hand-stop"></i></div>
+      <div class="step-body"><h4 data-i="st3h"></h4><p data-i="st3p"></p><div class="detail"><p data-i="st3d"></p></div></div>
+      <i class="ti ti-chevron-down step-chev"></i>
+    </div>
+    <div class="step" onclick="togStep(this)">
+      <div class="step-num">4</div>
+      <div class="step-body"><h4 data-i="st4h"></h4><p data-i="st4p"></p><div class="detail"><p data-i="st4d"></p></div></div>
+      <i class="ti ti-chevron-down step-chev"></i>
+    </div>
+    <div class="step" onclick="togStep(this)">
+      <div class="step-num">5</div>
+      <div class="step-body"><h4 data-i="st5h"></h4><p data-i="st5p"></p><div class="detail"><p data-i="st5d"></p></div></div>
+      <i class="ti ti-chevron-down step-chev"></i>
+    </div>
+  </div>
+
+  <!-- 05 IN COWORK -->
+  <div class="sh rv"><i class="ti ti-brand-databricks"></i><span class="no">05</span><h2 data-i="s4">In Cowork</h2></div>
+  <div class="whenbox with-icon rv"><i class="ti ti-brand-databricks"></i><div data-i-html="coworkP"></div></div>
+
+  <!-- 06 IN UNA FRASE -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s5">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyP"></p><span class="key-sub" data-i="keySub"></span></div>
+
+  <!-- bridge -->
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><div class="bt"><h4 data-i="bridgeH"></h4><p data-i="bridgeP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Avanzato: Master + Sprint</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Master + Sprint',
+advBadge:'Livello avanzato',
+h1:'Master + un documento Sprint per milestone',
+lede:'Per i progetti enormi: un master che fa da mappa, e un documento separato per ogni fase. Così un lavoro grande resta governabile fino all\'ultima riga.',
+s0:'Hook',
+hook:'«Questa è la lezione dei professionisti. Quando un progetto è davvero enorme, tenere tutto in un file solo diventa ingestibile: il piano diventa un muro di testo che nessuno aggiorna più. Qui vi mostro come orchestrare un lavoro grande come fanno i team seri. Nessun corso ve lo insegna.»',
+s1:'Quando serve',
+lvl1t:'Lite',lvl1s:'per lavori lineari',
+lvl2t:'Full',lvl2s:'per progetti seri multi-tappa',
+lvl3t:'Avanzato',lvl3s:'quando un singolo documento non regge',
+whenP:'Richiamo dai tre livelli: <b>Lite</b> per lavori lineari, <b>Full</b> per progetti seri multi-tappa, <b>Avanzato</b> quando il lavoro è enorme e un singolo documento non regge più. Non usatelo per tutto: spaventa e rallenta. Usatelo quando il piano in un file solo diventerebbe illeggibile.',
+s2:'La struttura multi-documento',
+tc1:'# solo le milestone, con [ ]/[x]. La mappa.',
+tc2:'# tutti i task della Milestone 1',
+tc3:'# tutti i task della Milestone 2',
+tc4:'# ...',
+msMaster:'La mappa generale: solo milestone con output verificabili. Si aggiorna a ogni sprint chiuso.',
+msSp1:'task Milestone 1',msSp2:'task Milestone 2',msSp3:'task Milestone 3',
+s3:'Il flusso, passo per passo',
+hint:'Clicca ogni passo per il dettaglio',
+st1h:'Crea il Master Plan',
+st1p:'Solo milestone e sotto-milestone con output verificabile. La mappa generale, niente task ancora.',
+st1d:'Il Master Plan è solo la mappa: milestone e sotto-milestone con un output verificabile ciascuna. Nessun task di dettaglio a questo livello.',
+st2h:'Valida il Master Plan',
+st2p:'Chat nuova, revisore critico. Sistema i problemi prima di scendere nel dettaglio.',
+st2d:'Apri una chat nuova e fai da revisore critico. Sistemi i problemi della mappa prima di scendere nel dettaglio dei singoli sprint.',
+st3h:'STOP — non iniziare a lavorare',
+st3p:'Prima, per ogni milestone crea un documento Sprint dedicato. 5 milestone = 5 documenti sprint.',
+st3d:'Non iniziare a costruire. Prima, per ogni milestone crei un documento Sprint dedicato: 5 milestone = 5 documenti sprint.',
+st4h:'Valida gli sprint a cascata',
+st4p:'Ogni sprint, uno per uno. Solo quando sono tutti validati, inizi a costruire.',
+st4d:'Validi ogni sprint, uno per uno. Solo quando sono tutti validati, inizi a costruire davvero.',
+st5h:'Esegui sprint per sprint',
+st5p:'Chiudi SPRINT_01 → aggiorna il MASTER_PLAN (Milestone 1 ✓) → passa a SPRINT_02. Il master resta sempre una mappa pulita che si aggiorna da sola.',
+st5d:'Chiudi SPRINT_01 → aggiorni il MASTER_PLAN (Milestone 1 ✓) → passi a SPRINT_02. Il master resta sempre una mappa pulita che si aggiorna da sola.',
+s4:'In Cowork',
+coworkP:'<b>In Cowork è ancora più naturale:</b> il MASTER_PLAN e la cartella /sprint sono file veri sul vostro computer, che Claude legge e aggiorna. È esattamente il modo in cui gestireste un progetto reale.',
+s5:'In una frase',
+keyP:'Un file solo per un progetto enorme muore. Un master che fa da mappa, più uno sprint per fase: così un progetto grande resta governabile fino all\'ultima riga.',
+keySub:'Questo è il livello con cui si costruiscono cose vere.',
+bridgeH:'Modulo 8 completo',
+bridgeP:'Sapete usare Claude per pensare e per costruire: dalla singola decisione al progetto enorme. Nel Modulo 9 chiudiamo il cerchio: sicurezza, privacy e cultura AI.',
+foot:'Morfeus — Avanzato: Master + Sprint'
+},
+en:{
+kicker:'Lesson 8.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Master + Sprint',
+advBadge:'Advanced level',
+h1:'Master + one Sprint document per milestone',
+lede:'For huge projects: a master that acts as the map, and a separate document for each phase. This way a big job stays governable down to the last line.',
+s0:'Hook',
+hook:'"This is the professionals\' lesson. When a project is truly huge, keeping everything in a single file becomes unmanageable: the plan turns into a wall of text that no one updates anymore. Here I show you how to orchestrate a big job the way serious teams do. No course teaches you this."',
+s1:'When you need it',
+lvl1t:'Lite',lvl1s:'for linear work',
+lvl2t:'Full',lvl2s:'for serious multi-stage projects',
+lvl3t:'Advanced',lvl3s:'when a single document can\'t hold',
+whenP:'A recap of the three levels: <b>Lite</b> for linear work, <b>Full</b> for serious multi-stage projects, <b>Advanced</b> when the job is huge and a single document can no longer hold it. Don\'t use it for everything: it intimidates and slows you down. Use it when the plan in a single file would become unreadable.',
+s2:'The multi-document structure',
+tc1:'# only the milestones, with [ ]/[x]. The map.',
+tc2:'# all the tasks of Milestone 1',
+tc3:'# all the tasks of Milestone 2',
+tc4:'# ...',
+msMaster:'The general map: only milestones with verifiable output. It\'s updated after each closed sprint.',
+msSp1:'Milestone 1 tasks',msSp2:'Milestone 2 tasks',msSp3:'Milestone 3 tasks',
+s3:'The flow, step by step',
+hint:'Click each step for the detail',
+st1h:'Create the Master Plan',
+st1p:'Only milestones and sub-milestones with verifiable output. The general map, no tasks yet.',
+st1d:'The Master Plan is just the map: milestones and sub-milestones, each with a verifiable output. No detailed tasks at this level.',
+st2h:'Validate the Master Plan',
+st2p:'New chat, critical reviewer. Fix the problems before going into detail.',
+st2d:'Open a new chat and act as a critical reviewer. You fix the map\'s problems before going down into the detail of the individual sprints.',
+st3h:'STOP — don\'t start working',
+st3p:'First, for each milestone create a dedicated Sprint document. 5 milestones = 5 sprint documents.',
+st3d:'Don\'t start building. First, for each milestone you create a dedicated Sprint document: 5 milestones = 5 sprint documents.',
+st4h:'Validate the sprints in cascade',
+st4p:'Each sprint, one by one. Only when they\'re all validated do you start building.',
+st4d:'You validate each sprint, one by one. Only when they\'re all validated do you actually start building.',
+st5h:'Execute sprint by sprint',
+st5p:'Close SPRINT_01 → update the MASTER_PLAN (Milestone 1 ✓) → move to SPRINT_02. The master always stays a clean map that updates itself.',
+st5d:'Close SPRINT_01 → update the MASTER_PLAN (Milestone 1 ✓) → move to SPRINT_02. The master always stays a clean map that updates itself.',
+s4:'In Cowork',
+coworkP:'<b>In Cowork it\'s even more natural:</b> the MASTER_PLAN and the /sprint folder are real files on your computer, which Claude reads and updates. It\'s exactly the way you\'d manage a real project.',
+s5:'In one sentence',
+keyP:'A single file for a huge project dies. A master that acts as the map, plus one sprint per phase: this way a big project stays governable down to the last line.',
+keySub:'This is the level at which real things get built.',
+bridgeH:'Module 8 complete',
+bridgeP:'You know how to use Claude to think and to build: from the single decision to the huge project. In Module 9 we close the loop: security, privacy and AI culture.',
+foot:'Morfeus — Advanced: Master + Sprint'
+}};
+
+var LANG='it';
+
+/* ---- step accordion ---- */
+function togStep(el){el.classList.toggle('open');}
+
+/* ---- i18n / theme ---- */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+applyI18n();
+</script>
+</body>
+</html>

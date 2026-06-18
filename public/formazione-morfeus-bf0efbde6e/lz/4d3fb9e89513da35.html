@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Mindset — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.target{display:flex;gap:14px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;margin-top:22px}
+.target i{color:var(--accent);font-size:20px;flex-shrink:0;margin-top:1px}.target p{font-size:14px;color:var(--ink-2)}.target b{color:var(--ink)}
+.hook{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r-l) var(--r-l) 0;padding:18px 20px;margin-top:20px}
+.hook .hl{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.hook p{font-style:italic;font-size:15px;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.blk{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.blk:hover{border-color:var(--line-2)}.blk.on{border-color:var(--accent);background:var(--accent-soft)}
+.blk .bi{width:34px;height:34px;border-radius:10px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.blk.on .bi{background:var(--accent);color:#fff}
+.blk .bt{font-size:14px;font-weight:600}
+.blkdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.blkdetail p{font-size:14.5px;color:var(--ink-2)}
+.blkdetail .ex{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;font-style:italic;color:var(--ink);font-weight:500}
+.contract{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin-top:8px}
+.contract .topbar{height:3px;background:linear-gradient(90deg,var(--accent),var(--good))}
+.contract-in{padding:22px}
+.contract h3{font-size:17px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:9px}.contract h3 i{color:var(--accent)}
+.contract .csub{font-size:14px;color:var(--ink-2);margin-bottom:16px}
+.commit{display:flex;flex-direction:column;gap:9px}
+.crow{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);background:var(--bg-2);border-radius:var(--r);cursor:pointer;transition:.18s;user-select:none}
+.crow:hover{border-color:var(--line-2);background:var(--card)}
+.crow.signed{border-color:var(--good);background:var(--good-soft)}
+.cchk{width:24px;height:24px;border-radius:6px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:transparent;transition:.18s}
+.crow.signed .cchk{border-color:var(--good);background:var(--good);color:#fff}
+.ctxt{font-size:14px;color:var(--ink)}
+.ccounter{margin-top:16px;display:flex;align-items:center;gap:12px}
+.cbar{flex:1;height:6px;background:var(--bg-3);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.cfill{height:100%;border-radius:3px;background:var(--good);width:0;transition:width .4s ease}
+.clabel{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.cstamp{display:none;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:13px;border-radius:var(--r);background:var(--good-soft);border:1px solid var(--good)}
+.cstamp.visible{display:flex}.cstamp i{color:var(--good);font-size:20px}.cstamp span{font-size:14px;font-weight:600;color:var(--good)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);font-style:italic}.bridge b{color:var(--agent);font-style:normal}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.pillars{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.blk,.blkdetail,.contract,.key,.bridge,.target,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.0</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Mindset</div>
+  <h1 class="rv" data-i="h1">Il Mindset: come affrontare questo corso e l'AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="target rv"><i class="ti ti-target"></i><p data-i-html="target"></p></div>
+
+  <div class="hook rv"><div class="hl"><i class="ti ti-quote"></i><span data-i="hookL">Hook</span></div><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">01</span><h2 data-i="s1">I quattro pilastri del mindset</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pillIntro"></p>
+  <div class="pillars rv" id="pillars"></div>
+  <div class="blkdetail rv" id="pilldetail"></div>
+
+  <div class="sh rv"><i class="ti ti-signature"></i><span class="no">02</span><h2 data-i="s2">Il tuo contratto</h2></div>
+  <div class="contract rv">
+    <div class="topbar"></div>
+    <div class="contract-in">
+      <h3><i class="ti ti-file-pencil"></i> <span data-i="contractH"></span></h3>
+      <p class="csub" data-i="contractSub"></p>
+      <div class="commit" id="commit"></div>
+      <div class="ccounter"><div class="cbar"><div class="cfill" id="cfill"></div></div><div class="clabel" id="clabel"></div></div>
+      <div class="cstamp" id="cstamp"><i class="ti ti-circle-check-filled"></i><span data-i="stamp"></span></div>
+    </div>
+  </div>
+
+  <div class="key rv"><p data-i="closing"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Mindset</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.0',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Mindset',
+h1:'Il Mindset: come affrontare questo corso e l\'AI',
+lede:'Prima di entrare nel contenuto, il contratto psicologico che fa la differenza.',
+target:'<b>Obiettivo:</b> Firmare un contratto psicologico con te stesso prima di entrare nel contenuto. Uscire con un\'aspettativa chiara su cosa serve da te.',
+hookL:'Hook',
+hook:'"Benvenuto in Claude Unlocked. Prima di entrare nel contenuto, devo dirti una cosa che la maggior parte dei corsi non ti dice mai — e che fa tutta la differenza tra chi finisce questo corso e cambia come lavora, e chi lo guarda e rimane esattamente dov\'era."',
+s1:'I quattro pilastri del mindset',
+pillIntro:'Clicca ogni pilastro per aprirlo.',
+s2:'Il tuo contratto',
+contractH:'Il tuo contratto',
+contractSub:'Clicca su ogni impegno per firmarlo. Non è un esercizio: è la differenza tra chi cambia e chi resta fermo.',
+stamp:'Contratto firmato. Adesso inizia il contenuto.',
+closing:'Mindset chiaro. Contratto fatto. Adesso si parte.',
+bridge:'"Nella prossima lezione smonto tre illusioni che probabilmente hai su Claude — e che, finché rimangono, ti impediscono di usarlo al suo potenziale. Si parte."',
+foot:'Morfeus — Il Mindset'
+},
+en:{
+kicker:'Lesson 0.0',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Mindset',
+h1:'The Mindset: how to approach this course and AI',
+lede:'Before we get into the content, the psychological contract that makes the difference.',
+target:'<b>Goal:</b> Sign a psychological contract with yourself before getting into the content. Walk out with a clear expectation of what\'s required from you.',
+hookL:'Hook',
+hook:'"Welcome to Claude Unlocked. Before we get into the content, I have to tell you something most courses never tell you — and it makes all the difference between those who finish this course and change how they work, and those who watch it and stay exactly where they were."',
+s1:'The four pillars of the mindset',
+pillIntro:'Click each pillar to open it.',
+s2:'Your contract',
+contractH:'Your contract',
+contractSub:'Click each commitment to sign it. This isn\'t an exercise: it\'s the difference between those who change and those who stay stuck.',
+stamp:'Contract signed. Now the content begins.',
+closing:'Clear mindset. Contract done. Now we begin.',
+bridge:'"In the next lesson I dismantle three illusions you probably have about Claude — and that, as long as they remain, keep you from using it to its potential. Let\'s go."',
+foot:'Morfeus — The Mindset'
+}};
+
+var PILL={it:[
+['ti-device-tv-old','Questo non è Netflix','La maggior parte delle persone guarda i corsi passivamente, aspettando che le cose entrino per osmosi. Claude è uno strumento: si impara usandolo, non guardando qualcuno usarlo. Puoi guardare tutte le lezioni e non cambiare niente, o guardarne metà e trasformare come lavori entro 30 giorni.','"Il corso dura ore. La tua pratica dura mesi. Quelle ore valgono qualcosa solo se le metti al servizio di questa pratica."'],
+['ti-alert-triangle','L\'implementation gap','C\'è una distanza precisa tra "ho capito come funziona" e "ho cambiato come lavoro". Si chiama implementation gap. È lì che si perde il 90% delle persone. Non per mancanza di intelligenza, per mancanza di sistema. Il sistema: ogni lezione ha un checkpoint. Una cosa da fare prima di andare avanti. Non opzionale.',''],
+['ti-rocket','Sperimentazione senza paura','I primi prompt saranno brutti. Va bene. È normale. Claude non ti giudica, non si stanca, non perde la pazienza. Puoi sbagliare mille volte senza conseguenze. L\'unico errore reale è non provare per paura di sbagliare. La mentalità giusta: cade, si rialza, riprova.','"Con Claude non esiste il prompt sbagliato. Esiste solo il prompt che non hai ancora migliorato."'],
+['ti-heart-handshake','Il contratto reciproco','Ho costruito questo corso da centinaia di ore di pratica reale. Ogni lezione è progettata per il massimo nel minor tempo possibile. Nessun filler. Ora tocca a te: applicare subito, anche in modo imperfetto. I risultati sono proporzionali al lavoro di applicazione, non all\'intelligenza.','']
+],en:[
+['ti-device-tv-old','This is not Netflix','Most people watch courses passively, waiting for things to sink in by osmosis. Claude is a tool: you learn it by using it, not by watching someone use it. You can watch every lesson and change nothing, or watch half and transform how you work within 30 days.','"The course lasts hours. Your practice lasts months. Those hours are worth something only if you put them at the service of that practice."'],
+['ti-alert-triangle','The implementation gap','There\'s a precise distance between "I understood how it works" and "I changed how I work." It\'s called the implementation gap. That\'s where 90% of people are lost. Not for lack of intelligence, for lack of a system. The system: every lesson has a checkpoint. One thing to do before moving on. Not optional.',''],
+['ti-rocket','Experimentation without fear','Your first prompts will be bad. That\'s fine. It\'s normal. Claude doesn\'t judge you, doesn\'t get tired, doesn\'t lose patience. You can fail a thousand times with no consequences. The only real mistake is not trying out of fear of getting it wrong. The right mindset: fall, get up, try again.','"With Claude there is no wrong prompt. There\'s only the prompt you haven\'t improved yet."'],
+['ti-heart-handshake','The mutual contract','I built this course from hundreds of hours of real practice. Every lesson is designed for the maximum in the least time possible. No filler. Now it\'s your turn: apply immediately, even imperfectly. Results are proportional to the work of applying, not to intelligence.','']
+]};
+
+var COMMIT={it:[
+'Dopo ogni lezione, applico almeno UNA cosa prima di andare avanti.',
+'Accetto che i primi risultati saranno imperfetti. Miglioro iterando.',
+'Non guardo passivamente. Sperimento attivamente con Claude.',
+'Mi do 30 giorni per integrare Claude nel mio lavoro quotidiano.'
+],en:[
+'After each lesson, I apply at least ONE thing before moving on.',
+'I accept that the first results will be imperfect. I improve by iterating.',
+'I don\'t watch passively. I actively experiment with Claude.',
+'I give myself 30 days to integrate Claude into my daily work.'
+]};
+
+var LANG='it',curP=0,signed=[false,false,false,false];
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('pillars').innerHTML=PILL[LANG].map(function(p,i){return '<div class="blk'+(i===curP?' on':'')+'" onclick="showP('+i+')"><div class="bi"><i class="ti '+p[0]+'"></i></div><div class="bt">'+p[1]+'</div></div>'}).join('');
+  showP(curP);
+  document.getElementById('commit').innerHTML=COMMIT[LANG].map(function(t,i){return '<div class="crow'+(signed[i]?' signed':'')+'" onclick="toggleCommit('+i+')"><div class="cchk"><i class="ti ti-check"></i></div><div class="ctxt">'+t+'</div></div>'}).join('');
+  updateCounter();
+}
+function showP(i){curP=i;var p=PILL[LANG][i];document.querySelectorAll('.pillars .blk').forEach(function(x,k){x.classList.toggle('on',k===i)});var h='<p>'+p[2]+'</p>';if(p[3])h+='<div class="ex">'+p[3]+'</div>';document.getElementById('pilldetail').innerHTML=h}
+function toggleCommit(i){signed[i]=!signed[i];applyI18n()}
+function updateCounter(){
+  var n=signed.filter(Boolean).length,total=signed.length,pct=Math.round(n/total*100);
+  document.getElementById('cfill').style.width=pct+'%';
+  document.getElementById('clabel').textContent=n+' / '+total+(LANG==='it'?' firmati':' signed');
+  document.getElementById('cstamp').classList.toggle('visible',n===total);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

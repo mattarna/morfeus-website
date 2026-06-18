@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regole d'Oro e Anti-Goals — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+
+/* Rules accordion */
+.rules-progress{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.rules-progress .rp-text{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.rules-progress .rp-text strong{color:var(--accent);font-weight:600}
+.rp-track{flex:1;height:6px;background:var(--bg-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.rp-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .5s ease;width:0}
+.rules-grid{display:flex;flex-direction:column;gap:10px}
+.rule-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:border-color .25s}
+.rule-card:hover{border-color:var(--line-2)}
+.rule-card.active{border-color:var(--accent)}
+.rule-header{display:flex;align-items:center;gap:15px;padding:17px 20px}
+.rule-num{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0;font-family:var(--mono);transition:.3s}
+.rule-card:nth-child(1) .rule-num{background:var(--accent-soft);color:var(--accent)}
+.rule-card:nth-child(2) .rule-num{background:var(--blue-soft);color:var(--blue)}
+.rule-card:nth-child(3) .rule-num{background:var(--teal-soft);color:var(--teal)}
+.rule-card:nth-child(4) .rule-num{background:var(--bad-soft);color:var(--bad)}
+.rule-card:nth-child(5) .rule-num{background:var(--warn-soft);color:var(--warn)}
+.rule-card.active:nth-child(1) .rule-num{background:var(--accent);color:#fff}
+.rule-card.active:nth-child(2) .rule-num{background:var(--blue);color:#fff}
+.rule-card.active:nth-child(3) .rule-num{background:var(--teal);color:#fff}
+.rule-card.active:nth-child(4) .rule-num{background:var(--bad);color:#fff}
+.rule-card.active:nth-child(5) .rule-num{background:var(--warn);color:#fff}
+.rule-title{flex:1;font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.rule-chevron{font-size:18px;color:var(--ink-3);transition:transform .3s;flex-shrink:0}
+.rule-card.active .rule-chevron{transform:rotate(180deg);color:var(--accent)}
+.rule-body{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.rule-card.active .rule-body{max-height:640px}
+.rule-content{padding:0 20px 22px;padding-left:73px}
+.rule-content p{color:var(--ink-2);font-size:14px;line-height:1.7;margin-bottom:11px}
+.rule-content p.italic{font-style:italic;color:var(--ink-3)}
+.demo-box{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.7;white-space:pre-wrap;margin-top:8px}
+.demo-box+.demo-box{margin-top:10px}
+.demo-label{display:inline-block;padding:2px 10px;border-radius:20px;font-family:var(--mono);font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px}
+.demo-label.bad{background:var(--bad-soft);color:var(--bad)}
+.demo-label.good{background:var(--good-soft);color:var(--good)}
+.demo-box.highlight{border-left:3px solid var(--warn);background:var(--warn-soft)}
+.demo-box.highlight .demo-label{font-family:var(--mono);color:var(--warn);background:transparent;padding:0}
+.demo-box.highlight .hl-body{display:block;margin-top:8px;font-family:var(--sans);color:var(--ink);font-style:italic;white-space:normal}
+.ctx-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.ctx-list li{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.ctx-list li i{color:var(--blue);font-size:16px;margin-top:2px;flex-shrink:0}
+
+/* Stop Gate */
+.stopgate{background:var(--card);border:1px solid var(--bad-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;position:relative;overflow:hidden}
+.stopgate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--bad) 0,var(--bad) 20px,transparent 20px,transparent 40px)}
+.sg-icon{width:52px;height:52px;border-radius:14px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:14px}
+.stopgate h3{font-size:18px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.stopgate>p{color:var(--ink-2);font-size:14px;line-height:1.7;margin-bottom:16px}
+.sg-examples{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.sg-example{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:var(--r);padding:13px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.7;white-space:pre-wrap}
+.sg-when{margin-top:22px}
+.sg-when-label{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px}
+.sg-when-item{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.55;padding:4px 0}
+.sg-when-item i{color:var(--bad);font-size:17px;margin-top:1px;flex-shrink:0}
+
+/* Anti-Goals compare */
+.ag-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ag-card{border-radius:var(--r-l);padding:22px;box-shadow:var(--sh)}
+.ag-card.without{background:var(--bad-soft);border:1.5px solid var(--bad-line)}
+.ag-card.with{background:var(--good-soft);border:1.5px solid var(--good-line)}
+.ag-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;margin-bottom:12px}
+.ag-card.without .ag-card-icon{background:var(--bad)}
+.ag-card.with .ag-card-icon{background:var(--good)}
+.ag-card h4{font-size:14.5px;font-weight:600;margin-bottom:5px;color:var(--ink)}
+.ag-card .ag-goal{font-family:var(--mono);font-size:13px;font-weight:600;margin-bottom:13px}
+.ag-card.without .ag-goal{color:var(--bad)}
+.ag-card.with .ag-goal{color:var(--good)}
+.ag-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ag-card ul li{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.ag-card ul li i{font-size:13px;margin-top:2px;flex-shrink:0}
+.ag-card.without ul li i{color:var(--bad)}
+.ag-card.with ul li i{color:var(--good)}
+
+/* Anti-Goals builder */
+.ag-builder{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:18px}
+.ag-builder h3{font-size:16.5px;font-weight:600;margin-bottom:4px;color:var(--ink)}
+.ag-builder .ag-sub{color:var(--ink-2);font-size:13px;line-height:1.6;margin-bottom:18px}
+.ag-dims{display:flex;flex-direction:column;gap:10px}
+.ag-dim{display:flex;align-items:flex-start;gap:13px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:.3s}
+.ag-dim:hover{border-color:var(--line-2)}
+.ag-dim.revealed{border-color:var(--warn);background:var(--warn-soft)}
+.ag-dim-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ag-dim:nth-child(1) .ag-dim-icon{background:var(--accent-soft);color:var(--accent)}
+.ag-dim:nth-child(2) .ag-dim-icon{background:var(--blue-soft);color:var(--blue)}
+.ag-dim:nth-child(3) .ag-dim-icon{background:var(--teal-soft);color:var(--teal)}
+.ag-dim:nth-child(4) .ag-dim-icon{background:var(--warn-soft);color:var(--warn)}
+.ag-dim:nth-child(5) .ag-dim-icon{background:var(--bad-soft);color:var(--bad)}
+.ag-dim-text{flex:1}
+.ag-dim-title{font-size:13.5px;font-weight:600;color:var(--ink)}
+.ag-dim-anti{font-size:13px;color:var(--ink-2);margin-top:0;max-height:0;overflow:hidden;transition:max-height .3s,margin-top .3s,opacity .3s;opacity:0;line-height:1.6}
+.ag-dim-anti strong{color:var(--warn);font-weight:600}
+.ag-dim.revealed .ag-dim-anti{max-height:120px;opacity:1;margin-top:6px}
+.ag-dim-arrow{font-size:17px;color:var(--ink-3);transition:transform .3s;margin-top:8px;flex-shrink:0}
+.ag-dim.revealed .ag-dim-arrow{transform:rotate(90deg);color:var(--warn)}
+.ag-reveal-count{text-align:center;margin-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.ag-reveal-count strong{color:var(--warn)}
+.ag-result{margin-top:14px;padding:18px 20px;background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r);max-height:0;overflow:hidden;opacity:0;transition:all .45s;padding-top:0;padding-bottom:0}
+.ag-result.visible{max-height:220px;opacity:1;padding-top:18px;padding-bottom:18px}
+.ag-result p{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.ag-result p strong{color:var(--warn);font-weight:600}
+
+/* Key phrase */
+.key{text-align:center;padding:42px 20px;margin-top:8px;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.45;color:var(--warn);max-width:600px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .ag-compare{grid-template-columns:1fr}
+  .rule-content{padding-left:20px}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.rule-body{max-height:none!important}.ag-dim-anti{max-height:none!important;opacity:1!important;margin-top:6px!important}.ag-result{max-height:none!important;opacity:1!important;padding-top:18px!important;padding-bottom:18px!important}.rule-card,.stopgate,.ag-card,.ag-builder,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Pensare meglio con Claude</div>
+  <h1 class="rv" data-i="h1">Regole d'Oro e Anti-Goals</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-crown"></i><span class="no">01</span><h2 data-i="s1">Le 5 regole d'oro</h2></div>
+
+  <div class="rules-progress rv">
+    <span class="rp-text"><span data-i="rpLabel">Esplorate</span>: <strong id="ruleCount">0</strong>/5</span>
+    <div class="rp-track"><div class="rp-fill" id="ruleFill"></div></div>
+  </div>
+
+  <div class="rules-grid rv">
+
+    <div class="rule-card" onclick="toggleRule(this,0)">
+      <div class="rule-header">
+        <div class="rule-num">1</div>
+        <div class="rule-title" data-i="r1t">Definisci il problema prima di chiedere la soluzione</div>
+        <i class="ti ti-chevron-down rule-chevron"></i>
+      </div>
+      <div class="rule-body"><div class="rule-content">
+        <p data-i="r1p">Prima di aprire Claude, scrivi 2-3 righe sul problema: cos'è, qual è il vero nodo, cosa hai già provato. Questo atto stesso risolve il 30% dei casi.</p>
+        <div class="demo-box"><span class="demo-label bad" data-i="r1lblBad">Problema mal definito</span><span data-i="r1bad">Ho un problema con il mio team. Cosa faccio?</span></div>
+        <div class="demo-box"><span class="demo-label good" data-i="r1lblGood">Problema ben definito</span><span data-i="r1good">Ho un problema di allineamento con il mio team: le priorità che do io non vengono percepite come tali da loro. Risultato: lavorano tanto ma sui task sbagliati. Ho già provato meeting settimanali — non ha risolto. Il nodo è comunicativo o strutturale?</span></div>
+        <p class="italic" data-i="r1note">Claude non è più bravo nella seconda domanda. È che la seconda domanda è migliore.</p>
+      </div></div>
+    </div>
+
+    <div class="rule-card" onclick="toggleRule(this,1)">
+      <div class="rule-header">
+        <div class="rule-num">2</div>
+        <div class="rule-title" data-i="r2t">Porta il contesto che Claude non ha</div>
+        <i class="ti ti-chevron-down rule-chevron"></i>
+      </div>
+      <div class="rule-body"><div class="rule-content">
+        <p data-i="r2p">Claude non sa chi sei, cosa hai già provato, quali sono i tuoi vincoli reali. I 5 elementi di contesto che quasi sempre mancano:</p>
+        <ul class="ctx-list">
+          <li><i class="ti ti-circle-x"></i><span data-i="r2c1">Cosa hai già provato e perché non ha funzionato</span></li>
+          <li><i class="ti ti-lock"></i><span data-i="r2c2">I vincoli non negoziabili (budget, tempo, relazioni, valori)</span></li>
+          <li><i class="ti ti-target"></i><span data-i="r2c3">Il successo come appare: come sarà diversa la situazione?</span></li>
+          <li><i class="ti ti-users"></i><span data-i="r2c4">Le parti coinvolte: chi è toccato da questa decisione?</span></li>
+          <li><i class="ti ti-clock"></i><span data-i="r2c5">Il timeframe: deve essere risolto entro quando?</span></li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="rule-card" onclick="toggleRule(this,2)">
+      <div class="rule-header">
+        <div class="rule-num">3</div>
+        <div class="rule-title" data-i="r3t">Chiedi il ragionamento, non solo la risposta</div>
+        <i class="ti ti-chevron-down rule-chevron"></i>
+      </div>
+      <div class="rule-body"><div class="rule-content">
+        <p data-i="r3p">"Qual è la risposta?" ti dà una risposta. "Qual è il tuo ragionamento?" ti dà la risposta più la logica che puoi esaminare e sfidare.</p>
+        <div class="demo-box"><span class="demo-label good" data-i="r3lbl">Prompt pratico</span><span data-i="r3demo">Prima di darmi una raccomandazione, spiegami come ci sei arrivato. Quali assunzioni stai facendo? Cosa cambierebbe se quelle assunzioni fossero sbagliate?</span></div>
+        <p data-i="r3note">Questo ti permette di identificare dove Claude ha fatto assunzioni che non condividi.</p>
+      </div></div>
+    </div>
+
+    <div class="rule-card" onclick="toggleRule(this,3)">
+      <div class="rule-header">
+        <div class="rule-num">4</div>
+        <div class="rule-title" data-i="r4t">Cerca il disaccordo, non la conferma</div>
+        <i class="ti ti-chevron-down rule-chevron"></i>
+      </div>
+      <div class="rule-body"><div class="rule-content">
+        <p data-i="r4p">Il bias di conferma è il nemico del buon problem solving. Claude tende a concordare con il framing che gli dai — è addestrato ad essere utile. Soluzione: chiedi esplicitamente la posizione opposta.</p>
+        <div class="demo-box"><span class="demo-label good" data-i="r4lbl">Anti-conferma</span><span data-i="r4demo">Sono convinto che la soluzione migliore sia X. Prima di procedere: fammi l'argomento più forte contro questa scelta. Cosa direbbe chi pensa che X sia sbagliato?</span></div>
+      </div></div>
+    </div>
+
+    <div class="rule-card" onclick="toggleRule(this,4)">
+      <div class="rule-header">
+        <div class="rule-num">5</div>
+        <div class="rule-title" data-i="r5t">La decisione finale è sempre tua</div>
+        <i class="ti ti-chevron-down rule-chevron"></i>
+      </div>
+      <div class="rule-body"><div class="rule-content">
+        <p data-i="r5p">Claude non ha skin in the game. Tu sì. Claude non conosce le tue relazioni reali, la tua storia, i tuoi valori profondi. Usa Claude per vedere più chiaro — non per evitare la responsabilità di decidere.</p>
+        <div class="demo-box highlight"><span class="demo-label" data-i="r5lbl">La regola pratica</span><span class="hl-body" data-i="r5demo">Dopo ogni sessione con Claude su una decisione importante, chiudo il computer e dormo su di essa. La mattina dopo decido io.</span></div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="sh rv"><i class="ti ti-hand-stop"></i><span class="no">02</span><h2 data-i="s2">Lo Stop Gate</h2></div>
+
+  <div class="stopgate rv">
+    <div class="sg-icon"><i class="ti ti-hand-stop"></i></div>
+    <h3 data-i="sgH">Condizione di blocco esplicita</h3>
+    <p data-i="sgP">Claude è fluente — tende a passare da una fase alla successiva senza fermarsi. Lo Stop Gate è una regola operativa nel prompt: Claude non può procedere finché una condizione specifica non è soddisfatta e tu l'hai approvata.</p>
+    <div class="sg-examples">
+      <div class="sg-example" data-i="sgEx1">Prima di scrivere la bozza, elenca i 3 punti chiave che devono essere presenti. Non scrivere la bozza finché non li ho approvati esplicitamente.</div>
+      <div class="sg-example" data-i="sgEx2">Prima di passare alla fase di implementazione, dimmi quali assunzioni stai facendo sul contesto. Aspetta la mia conferma prima di procedere.</div>
+    </div>
+    <div class="sg-when">
+      <div class="sg-when-label" data-i="sgWhenLbl">Quando usarlo</div>
+      <div class="sg-when-item"><i class="ti ti-file-text"></i><span data-i="sgW1">Prima di qualsiasi draft long-form (bozze, piani, analisi estese)</span></div>
+      <div class="sg-when-item"><i class="ti ti-alert-triangle"></i><span data-i="sgW2">Prima di raccomandazioni che implicano azioni irreversibili</span></div>
+      <div class="sg-when-item"><i class="ti ti-arrows-split-2"></i><span data-i="sgW3">Prima del passaggio tra macro-fasi di un progetto complesso</span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">03</span><h2 data-i="s3">Il framework degli Anti-Goals</h2></div>
+
+  <div class="ag-compare rv">
+    <div class="ag-card without">
+      <div class="ag-card-icon"><i class="ti ti-target-off"></i></div>
+      <h4 data-i="agW0H">Solo obiettivo</h4>
+      <div class="ag-goal" data-i="agW0G">"+30% fatturato"</div>
+      <ul>
+        <li><i class="ti ti-x"></i><span data-i="agW0a">80 ore a settimana</span></li>
+        <li><i class="ti ti-x"></i><span data-i="agW0b">Clienti migliori persi</span></li>
+        <li><i class="ti ti-x"></i><span data-i="agW0c">Team esaurito</span></li>
+        <li><i class="ti ti-x"></i><span data-i="agW0d">Cash flow negativo</span></li>
+      </ul>
+    </div>
+    <div class="ag-card with">
+      <div class="ag-card-icon"><i class="ti ti-shield-check"></i></div>
+      <h4 data-i="agW1H">Obiettivo + Anti-Goals</h4>
+      <div class="ag-goal" data-i="agW1G">"+30% con guardrail"</div>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="agW1a">Max 45h/settimana</span></li>
+        <li><i class="ti ti-check"></i><span data-i="agW1b">Retention clienti &gt;90%</span></li>
+        <li><i class="ti ti-check"></i><span data-i="agW1c">Team satisfaction alta</span></li>
+        <li><i class="ti ti-check"></i><span data-i="agW1d">Margine operativo &gt;20%</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ag-builder rv">
+    <h3 data-i="agbH">Costruisci i tuoi Anti-Goals</h3>
+    <p class="ag-sub" data-i="agbSub">Clicca ogni dimensione per rivelare l'Anti-Goal corrispondente all'obiettivo "+30% fatturato"</p>
+    <div class="ag-dims">
+      <div class="ag-dim" onclick="revealDim(this)">
+        <div class="ag-dim-icon"><i class="ti ti-heart"></i></div>
+        <div class="ag-dim-text">
+          <div class="ag-dim-title" data-i="d1t">Qualità della vita</div>
+          <div class="ag-dim-anti" data-i-html="d1a"><strong>Anti-Goal:</strong> Non superare mai le 45 ore settimanali. Nessun weekend lavorativo per più di 2 settimane consecutive.</div>
+        </div>
+        <i class="ti ti-chevron-right ag-dim-arrow"></i>
+      </div>
+      <div class="ag-dim" onclick="revealDim(this)">
+        <div class="ag-dim-icon"><i class="ti ti-star"></i></div>
+        <div class="ag-dim-text">
+          <div class="ag-dim-title" data-i="d2t">Qualità del servizio</div>
+          <div class="ag-dim-anti" data-i-html="d2a"><strong>Anti-Goal:</strong> Il Net Promoter Score non deve scendere sotto 8. Nessun cliente esistente deve sentirsi trascurato per acquisirne di nuovi.</div>
+        </div>
+        <i class="ti ti-chevron-right ag-dim-arrow"></i>
+      </div>
+      <div class="ag-dim" onclick="revealDim(this)">
+        <div class="ag-dim-icon"><i class="ti ti-users-group"></i></div>
+        <div class="ag-dim-text">
+          <div class="ag-dim-title" data-i="d3t">Cultura del team</div>
+          <div class="ag-dim-anti" data-i-html="d3a"><strong>Anti-Goal:</strong> Zero turnover forzato. Nessuna assunzione affrettata solo per coprire il volume. Il team deve crescere per competenza, non per pressione.</div>
+        </div>
+        <i class="ti ti-chevron-right ag-dim-arrow"></i>
+      </div>
+      <div class="ag-dim" onclick="revealDim(this)">
+        <div class="ag-dim-icon"><i class="ti ti-chart-line"></i></div>
+        <div class="ag-dim-text">
+          <div class="ag-dim-title" data-i="d4t">Solidità finanziaria</div>
+          <div class="ag-dim-anti" data-i-html="d4a"><strong>Anti-Goal:</strong> Cash flow positivo ogni trimestre. Margine operativo mai sotto il 20%. Nessun debito per finanziare la crescita.</div>
+        </div>
+        <i class="ti ti-chevron-right ag-dim-arrow"></i>
+      </div>
+      <div class="ag-dim" onclick="revealDim(this)">
+        <div class="ag-dim-icon"><i class="ti ti-award"></i></div>
+        <div class="ag-dim-text">
+          <div class="ag-dim-title" data-i="d5t">Reputazione</div>
+          <div class="ag-dim-anti" data-i-html="d5a"><strong>Anti-Goal:</strong> Nessuna tattica di vendita aggressiva. Zero promesse che non possiamo mantenere. La crescita deve rafforzare il brand, non consumarlo.</div>
+        </div>
+        <i class="ti ti-chevron-right ag-dim-arrow"></i>
+      </div>
+    </div>
+    <p class="ag-reveal-count"><strong id="dimCount">0</strong>/5 <span data-i="agbCount">dimensioni esplorate</span></p>
+    <div class="ag-result" id="agResult">
+      <p data-i-html="agbResult">Il campo si restringe. Non tutte le strade verso +30% sono percorribili. <strong>Quello che rimane è il vero spazio d'azione</strong> — un piano molto più solido di un semplice obiettivo numerico.</p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">04</span><h2 data-i="s4">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Regole d'Oro e Anti-Goals</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Pensare meglio con Claude',
+h1:'Regole d\'Oro e Anti-Goals',
+lede:'Cinque abitudini operative che separano chi pensa meglio con Claude da chi si affida ciecamente. Più uno strumento di pianificazione che cambia tutto.',
+s1:'Le 5 regole d\'oro',
+rpLabel:'Esplorate',
+r1t:'Definisci il problema prima di chiedere la soluzione',
+r1p:'Prima di aprire Claude, scrivi 2-3 righe sul problema: cos\'è, qual è il vero nodo, cosa hai già provato. Questo atto stesso risolve il 30% dei casi.',
+r1lblBad:'Problema mal definito',
+r1bad:'Ho un problema con il mio team. Cosa faccio?',
+r1lblGood:'Problema ben definito',
+r1good:'Ho un problema di allineamento con il mio team: le priorità che do io non vengono percepite come tali da loro. Risultato: lavorano tanto ma sui task sbagliati. Ho già provato meeting settimanali — non ha risolto. Il nodo è comunicativo o strutturale?',
+r1note:'Claude non è più bravo nella seconda domanda. È che la seconda domanda è migliore.',
+r2t:'Porta il contesto che Claude non ha',
+r2p:'Claude non sa chi sei, cosa hai già provato, quali sono i tuoi vincoli reali. I 5 elementi di contesto che quasi sempre mancano:',
+r2c1:'Cosa hai già provato e perché non ha funzionato',
+r2c2:'I vincoli non negoziabili (budget, tempo, relazioni, valori)',
+r2c3:'Il successo come appare: come sarà diversa la situazione?',
+r2c4:'Le parti coinvolte: chi è toccato da questa decisione?',
+r2c5:'Il timeframe: deve essere risolto entro quando?',
+r3t:'Chiedi il ragionamento, non solo la risposta',
+r3p:'"Qual è la risposta?" ti dà una risposta. "Qual è il tuo ragionamento?" ti dà la risposta più la logica che puoi esaminare e sfidare.',
+r3lbl:'Prompt pratico',
+r3demo:'Prima di darmi una raccomandazione, spiegami come ci sei arrivato. Quali assunzioni stai facendo? Cosa cambierebbe se quelle assunzioni fossero sbagliate?',
+r3note:'Questo ti permette di identificare dove Claude ha fatto assunzioni che non condividi.',
+r4t:'Cerca il disaccordo, non la conferma',
+r4p:'Il bias di conferma è il nemico del buon problem solving. Claude tende a concordare con il framing che gli dai — è addestrato ad essere utile. Soluzione: chiedi esplicitamente la posizione opposta.',
+r4lbl:'Anti-conferma',
+r4demo:'Sono convinto che la soluzione migliore sia X. Prima di procedere: fammi l\'argomento più forte contro questa scelta. Cosa direbbe chi pensa che X sia sbagliato?',
+r5t:'La decisione finale è sempre tua',
+r5p:'Claude non ha skin in the game. Tu sì. Claude non conosce le tue relazioni reali, la tua storia, i tuoi valori profondi. Usa Claude per vedere più chiaro — non per evitare la responsabilità di decidere.',
+r5lbl:'La regola pratica',
+r5demo:'Dopo ogni sessione con Claude su una decisione importante, chiudo il computer e dormo su di essa. La mattina dopo decido io.',
+s2:'Lo Stop Gate',
+sgH:'Condizione di blocco esplicita',
+sgP:'Claude è fluente — tende a passare da una fase alla successiva senza fermarsi. Lo Stop Gate è una regola operativa nel prompt: Claude non può procedere finché una condizione specifica non è soddisfatta e tu l\'hai approvata.',
+sgEx1:'Prima di scrivere la bozza, elenca i 3 punti chiave che devono essere presenti. Non scrivere la bozza finché non li ho approvati esplicitamente.',
+sgEx2:'Prima di passare alla fase di implementazione, dimmi quali assunzioni stai facendo sul contesto. Aspetta la mia conferma prima di procedere.',
+sgWhenLbl:'Quando usarlo',
+sgW1:'Prima di qualsiasi draft long-form (bozze, piani, analisi estese)',
+sgW2:'Prima di raccomandazioni che implicano azioni irreversibili',
+sgW3:'Prima del passaggio tra macro-fasi di un progetto complesso',
+s3:'Il framework degli Anti-Goals',
+agW0H:'Solo obiettivo',agW0G:'"+30% fatturato"',
+agW0a:'80 ore a settimana',agW0b:'Clienti migliori persi',agW0c:'Team esaurito',agW0d:'Cash flow negativo',
+agW1H:'Obiettivo + Anti-Goals',agW1G:'"+30% con guardrail"',
+agW1a:'Max 45h/settimana',agW1b:'Retention clienti &gt;90%',agW1c:'Team satisfaction alta',agW1d:'Margine operativo &gt;20%',
+agbH:'Costruisci i tuoi Anti-Goals',
+agbSub:'Clicca ogni dimensione per rivelare l\'Anti-Goal corrispondente all\'obiettivo "+30% fatturato"',
+d1t:'Qualità della vita',
+d1a:'<strong>Anti-Goal:</strong> Non superare mai le 45 ore settimanali. Nessun weekend lavorativo per più di 2 settimane consecutive.',
+d2t:'Qualità del servizio',
+d2a:'<strong>Anti-Goal:</strong> Il Net Promoter Score non deve scendere sotto 8. Nessun cliente esistente deve sentirsi trascurato per acquisirne di nuovi.',
+d3t:'Cultura del team',
+d3a:'<strong>Anti-Goal:</strong> Zero turnover forzato. Nessuna assunzione affrettata solo per coprire il volume. Il team deve crescere per competenza, non per pressione.',
+d4t:'Solidità finanziaria',
+d4a:'<strong>Anti-Goal:</strong> Cash flow positivo ogni trimestre. Margine operativo mai sotto il 20%. Nessun debito per finanziare la crescita.',
+d5t:'Reputazione',
+d5a:'<strong>Anti-Goal:</strong> Nessuna tattica di vendita aggressiva. Zero promesse che non possiamo mantenere. La crescita deve rafforzare il brand, non consumarlo.',
+agbCount:'dimensioni esplorate',
+agbResult:'Il campo si restringe. Non tutte le strade verso +30% sono percorribili. <strong>Quello che rimane è il vero spazio d\'azione</strong> — un piano molto più solido di un semplice obiettivo numerico.',
+s4:'In una frase',
+keyPhrase:'«Un obiettivo senza Anti-Goals è un desiderio. Un obiettivo con Anti-Goals è un piano.»',
+foot:'Morfeus — Regole d\'Oro e Anti-Goals'
+},
+en:{
+kicker:'Lesson 8.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Thinking better with Claude',
+h1:'Golden Rules and Anti-Goals',
+lede:'Five operating habits that separate those who think better with Claude from those who rely on it blindly. Plus a planning tool that changes everything.',
+s1:'The 5 golden rules',
+rpLabel:'Explored',
+r1t:'Define the problem before asking for the solution',
+r1p:'Before you open Claude, write 2-3 lines about the problem: what it is, where the real knot is, what you\'ve already tried. This act alone solves 30% of cases.',
+r1lblBad:'Poorly defined problem',
+r1bad:'I have a problem with my team. What do I do?',
+r1lblGood:'Well-defined problem',
+r1good:'I have an alignment problem with my team: the priorities I set aren\'t perceived as such by them. The result: they work hard but on the wrong tasks. I\'ve already tried weekly meetings — it didn\'t fix it. Is the knot one of communication or structure?',
+r1note:'Claude isn\'t better at the second question. It\'s that the second question is better.',
+r2t:'Bring the context Claude doesn\'t have',
+r2p:'Claude doesn\'t know who you are, what you\'ve already tried, what your real constraints are. The 5 context elements that are almost always missing:',
+r2c1:'What you\'ve already tried and why it didn\'t work',
+r2c2:'The non-negotiable constraints (budget, time, relationships, values)',
+r2c3:'What success looks like: how will the situation be different?',
+r2c4:'The parties involved: who is affected by this decision?',
+r2c5:'The timeframe: by when does it need to be solved?',
+r3t:'Ask for the reasoning, not just the answer',
+r3p:'"What\'s the answer?" gives you an answer. "What\'s your reasoning?" gives you the answer plus the logic you can examine and challenge.',
+r3lbl:'Practical prompt',
+r3demo:'Before giving me a recommendation, explain how you got there. What assumptions are you making? What would change if those assumptions were wrong?',
+r3note:'This lets you identify where Claude made assumptions you don\'t share.',
+r4t:'Look for disagreement, not confirmation',
+r4p:'Confirmation bias is the enemy of good problem solving. Claude tends to agree with the framing you give it — it\'s trained to be helpful. The fix: explicitly ask for the opposite position.',
+r4lbl:'Anti-confirmation',
+r4demo:'I\'m convinced the best solution is X. Before proceeding: make the strongest case against this choice. What would someone who thinks X is wrong say?',
+r5t:'The final decision is always yours',
+r5p:'Claude has no skin in the game. You do. Claude doesn\'t know your real relationships, your history, your deep values. Use Claude to see more clearly — not to dodge the responsibility of deciding.',
+r5lbl:'The practical rule',
+r5demo:'After every session with Claude on an important decision, I close the computer and sleep on it. The next morning, I decide.',
+s2:'The Stop Gate',
+sgH:'An explicit blocking condition',
+sgP:'Claude is fluent — it tends to move from one phase to the next without stopping. The Stop Gate is an operating rule in the prompt: Claude can\'t proceed until a specific condition is met and you\'ve approved it.',
+sgEx1:'Before writing the draft, list the 3 key points that must be present. Don\'t write the draft until I\'ve explicitly approved them.',
+sgEx2:'Before moving to the implementation phase, tell me what assumptions you\'re making about the context. Wait for my confirmation before proceeding.',
+sgWhenLbl:'When to use it',
+sgW1:'Before any long-form draft (drafts, plans, extended analyses)',
+sgW2:'Before recommendations that imply irreversible actions',
+sgW3:'Before the transition between macro-phases of a complex project',
+s3:'The Anti-Goals framework',
+agW0H:'Goal only',agW0G:'"+30% revenue"',
+agW0a:'80 hours a week',agW0b:'Best clients lost',agW0c:'Burned-out team',agW0d:'Negative cash flow',
+agW1H:'Goal + Anti-Goals',agW1G:'"+30% with guardrails"',
+agW1a:'Max 45h/week',agW1b:'Client retention &gt;90%',agW1c:'High team satisfaction',agW1d:'Operating margin &gt;20%',
+agbH:'Build your own Anti-Goals',
+agbSub:'Click each dimension to reveal the Anti-Goal matching the "+30% revenue" goal',
+d1t:'Quality of life',
+d1a:'<strong>Anti-Goal:</strong> Never exceed 45 hours a week. No working weekends for more than 2 consecutive weeks.',
+d2t:'Quality of service',
+d2a:'<strong>Anti-Goal:</strong> The Net Promoter Score must not drop below 8. No existing client should feel neglected in order to acquire new ones.',
+d3t:'Team culture',
+d3a:'<strong>Anti-Goal:</strong> Zero forced turnover. No rushed hiring just to cover volume. The team must grow through competence, not pressure.',
+d4t:'Financial solidity',
+d4a:'<strong>Anti-Goal:</strong> Positive cash flow every quarter. Operating margin never below 20%. No debt to finance growth.',
+d5t:'Reputation',
+d5a:'<strong>Anti-Goal:</strong> No aggressive sales tactics. Zero promises we can\'t keep. Growth must strengthen the brand, not consume it.',
+agbCount:'dimensions explored',
+agbResult:'The field narrows. Not all roads to +30% are passable. <strong>What remains is the real space for action</strong> — a far more solid plan than a simple numeric goal.',
+s4:'In one sentence',
+keyPhrase:'"A goal without Anti-Goals is a wish. A goal with Anti-Goals is a plan."',
+foot:'Morfeus — Golden Rules and Anti-Goals'
+}};
+
+var LANG='it';
+
+/* ===== RULES ACCORDION ===== */
+var rulesExplored={};
+function toggleRule(el,idx){
+  var wasActive=el.classList.contains('active');
+  document.querySelectorAll('.rule-card').forEach(function(c){c.classList.remove('active')});
+  if(!wasActive){el.classList.add('active');rulesExplored[idx]=true;updateRuleProgress()}
+}
+function updateRuleProgress(){
+  var c=0;for(var k in rulesExplored){if(rulesExplored[k])c++}
+  document.getElementById('ruleCount').textContent=c;
+  document.getElementById('ruleFill').style.width=(c/5*100)+'%';
+}
+
+/* ===== ANTI-GOALS BUILDER ===== */
+var dimsRevealed=0;
+function revealDim(el){
+  if(el.classList.contains('revealed'))return;
+  el.classList.add('revealed');
+  dimsRevealed++;
+  document.getElementById('dimCount').textContent=dimsRevealed;
+  if(dimsRevealed===5){document.getElementById('agResult').classList.add('visible')}
+}
+
+/* ===== i18n / theme ===== */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

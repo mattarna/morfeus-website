@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concatenare output tra Projects — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+/* stack visual */
+.stack{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin:0}
+.stack-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);text-align:center;margin-bottom:16px}
+.stack-layers{max-width:440px;margin:0 auto}
+.stack-layer{border-radius:var(--r);padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:13px;transition:.3s}
+.stack-layer:last-child{margin-bottom:0}
+.stack-layer i{font-size:20px;flex-shrink:0}
+.sl-name{font-weight:600;font-size:14px}
+.sl-desc{font-size:12px;opacity:.75;margin-top:2px}
+.layer-active{background:var(--accent);color:#fff;border:1.5px solid var(--accent)}
+.layer-done{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+/* tip */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--good-soft);border:1px solid var(--good-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--good)}.tip.warn .ti-i{background:var(--warn)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--good)}.tip.warn h4{color:var(--warn)}
+.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+/* chain demo */
+.chain{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;margin:0}
+.chain-title{font-size:13px;font-weight:600;color:var(--ink-2);text-align:center;margin-bottom:4px}
+.chain-sub{font-size:12px;color:var(--ink-3);text-align:center;margin-bottom:22px}
+.chain-nodes{display:flex;align-items:stretch;gap:0}
+.chain-node{flex:1;position:relative;cursor:pointer;user-select:none}
+.chain-node-inner{background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r);padding:15px 12px;text-align:center;transition:.3s;height:100%}
+.chain-node.active .chain-node-inner{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 12%,transparent)}
+.chain-node.done .chain-node-inner{border-color:var(--accent-line);background:var(--accent-soft)}
+.chain-node.locked .chain-node-inner{opacity:.45;cursor:default}
+.chain-node-icon{font-size:21px;color:var(--ink-3);margin-bottom:8px;display:block;transition:.3s}
+.chain-node.active .chain-node-icon,.chain-node.done .chain-node-icon{color:var(--accent)}
+.chain-node-label{font-size:11px;font-weight:600;color:var(--ink-2);margin-bottom:5px;line-height:1.3}
+.chain-node.active .chain-node-label{color:var(--accent)}
+.chain-node-project{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);background:var(--bg-3);border:1px solid var(--line);border-radius:20px;padding:2px 8px;margin-bottom:6px}
+.chain-node.active .chain-node-project,.chain-node.done .chain-node-project{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chain-node-status{font-size:10px;min-height:15px;display:flex;align-items:center;justify-content:center;gap:3px}
+.chain-node.active .chain-node-status{color:var(--accent)}
+.chain-node.done .chain-node-status{color:var(--good)}
+.chain-arrow{display:flex;align-items:center;justify-content:center;width:26px;flex-shrink:0;padding-top:4px}
+.chain-arrow i{font-size:17px;color:var(--line-2);transition:.3s}
+.chain-arrow.active i{color:var(--accent);animation:pulse-arrow .8s ease infinite}
+@keyframes pulse-arrow{0%,100%{opacity:.5;transform:translateX(0)}50%{opacity:1;transform:translateX(2px)}}
+.chain-output{margin-top:18px;border-radius:var(--r);border:1.5px dashed var(--line-2);padding:18px;min-height:84px;transition:.4s;background:var(--bg-2);display:flex;align-items:flex-start;gap:12px}
+.chain-output.has-content{border-style:solid;border-color:var(--accent-line);background:var(--accent-soft)}
+.chain-output-icon{font-size:21px;color:var(--ink-3);flex-shrink:0;margin-top:2px;transition:.3s}
+.chain-output.has-content .chain-output-icon{color:var(--accent)}
+.chain-output-body{flex:1}
+.chain-output-label{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3);margin-bottom:4px}
+.chain-output.has-content .chain-output-label{color:var(--accent)}
+.chain-output-text{font-size:13px;color:var(--ink-2);line-height:1.6;font-style:italic}
+.chain-output.has-content .chain-output-text{color:var(--ink)}
+.chain-output-note{font-size:11px;color:var(--accent);margin-top:8px;font-weight:600;display:none}
+.chain-output.has-content .chain-output-note{display:block}
+.chain-hint{text-align:center;margin-top:14px}
+.chain-hint p{font-size:12px;color:var(--ink-3)}
+.chain-hint span{color:var(--accent);font-weight:600}
+.chain-reset{background:none;border:1px solid var(--line);color:var(--ink-3);font-family:var(--mono);font-size:11px;padding:5px 14px;border-radius:20px;cursor:pointer;margin-top:10px;transition:.18s}
+.chain-reset:hover{border-color:var(--accent);color:var(--accent)}
+/* compare toggle */
+.cmp-toggle{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:3px;gap:3px;margin:0 auto 16px;max-width:420px;width:100%}
+.cmp-tab{flex:1;padding:9px 12px;border-radius:26px;border:none;cursor:pointer;font-size:13px;font-weight:600;background:none;color:var(--ink-2);transition:.25s;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:6px}
+.cmp-tab.on{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+.cmp-tab i{font-size:15px}
+.cmp-panel{display:none;animation:fade-in .3s ease}
+.cmp-panel.on{display:block}
+@keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.cmp-card{border-radius:var(--r-l);padding:22px;margin:0 0 14px;box-shadow:var(--sh)}
+.cmp-card.mega{background:var(--bad-soft);border:1.5px solid var(--bad-line)}
+.cmp-card.chain{background:var(--good-soft);border:1.5px solid var(--good-line)}
+.cmp-tag{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:11px}
+.mega .cmp-tag{color:var(--bad)}.chain .cmp-tag{color:var(--good)}
+.cmp-card h3{font-size:15.5px;font-weight:600;margin-bottom:9px}
+.cmp-card>p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:12px}
+.mock-prompt{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;font-size:12px;font-family:var(--mono);color:var(--ink-2);line-height:1.6}
+.mock-prompt .label{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px;color:var(--ink-3)}
+.mock-prompt .user{color:var(--ink);font-weight:500}
+.mock-prompt .note{font-style:italic;color:var(--ink-3);font-size:11px;margin-top:6px}
+.cmp-issues{margin-top:14px}
+.issue-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--ink-2);line-height:1.5}
+.issue-row i{font-size:15px;flex-shrink:0;margin-top:2px}
+/* handoff */
+.handoff{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.handoff-steps{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.handoff-steps::-webkit-scrollbar{display:none}
+.handoff-tab{flex:1;min-width:96px;padding:13px 8px;cursor:pointer;text-align:center;border:none;background:none;font-family:var(--sans);transition:.2s;border-bottom:2px solid transparent;color:var(--ink-3)}
+.handoff-tab.on{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-soft)}
+.handoff-tab .ht-num{font-family:var(--mono);font-size:10.5px;font-weight:600;display:block;margin-bottom:3px}
+.handoff-tab .ht-label{font-size:10px;line-height:1.2}
+.handoff-tab.on .ht-num{color:var(--accent)}
+.handoff-panels{padding:22px}
+.handoff-panel{display:none;animation:fade-in .3s ease}
+.handoff-panel.on{display:block}
+.handoff-content{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.hc-block{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:15px}
+.hc-block-label{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.hc-block-label i{font-size:13px;color:var(--accent)}
+.hc-block p{font-size:12px;color:var(--ink-2);line-height:1.6}
+.hc-block .hc-tag{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;padding:2px 9px;border-radius:20px;margin-bottom:8px}
+.handoff-arrow{text-align:center;padding:11px 0;color:var(--ink-2);font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;line-height:1.5}
+.handoff-arrow i{font-size:19px;color:var(--accent)}
+.handoff-foot{font-size:13px;color:var(--ink-2);line-height:1.6}
+.handoff-nav{display:flex;justify-content:space-between;align-items:center;padding:0 22px 20px}
+.hn-btn{background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2);font-family:var(--sans);font-size:13px;padding:7px 15px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
+.hn-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.hn-btn:disabled{opacity:.3;cursor:default}
+.hn-dots{display:flex;gap:6px}
+.hn-dot{width:8px;height:8px;border-radius:50%;background:var(--line-2);transition:.2s}
+.hn-dot.on{background:var(--accent)}
+/* pattern list */
+.pattern-grid{display:flex;flex-direction:column;gap:10px}
+.pattern-row{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;transition:.2s}
+.pattern-row:hover{border-color:var(--line-2)}
+.pattern-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.pattern-text{flex:1}
+.pattern-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:3px}
+.pattern-text>span{font-size:12.5px;color:var(--ink-2);line-height:1.55;display:block}
+.pattern-arrow{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);display:block;margin-top:5px}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+/* bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.chain-nodes{flex-direction:column;gap:8px}.chain-arrow{width:100%;height:18px;padding:0}.chain-arrow i{transform:rotate(90deg)}.handoff-content{grid-template-columns:1fr}.cmp-toggle{max-width:100%}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.cmp-panel{display:block!important}.stack,.chain,.handoff,.cmp-card,.pattern-row,.tip,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 3.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Projects come sistema</div>
+  <h1 class="rv" data-i="h1">Concatenare output tra Projects</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Hook</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">02</span><h2 data-i="s1">Cosa stiamo costruendo</h2></div>
+  <div class="stack rv">
+    <div class="stack-label" data-i="stackLabel"></div>
+    <div class="stack-layers">
+      <div class="stack-layer layer-active"><i class="ti ti-link"></i><div><div class="sl-name" data-i="sl1n"></div><div class="sl-desc" data-i="sl1d"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-arrows-split-2"></i><div><div class="sl-name" data-i="sl2n"></div><div class="sl-desc" data-i="sl2d"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-files"></i><div><div class="sl-name" data-i="sl3n"></div><div class="sl-desc" data-i="sl3d"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-folder"></i><div><div class="sl-name" data-i="sl4n"></div><div class="sl-desc" data-i="sl4d"></div></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-info-circle"></i><span class="no">03</span><h2 data-i="s2">Il concetto base</h2></div>
+  <p class="lede-p rv" data-i="conceptP"></p>
+  <div class="tip good rv"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="whyH"></h4><p data-i="whyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">04</span><h2 data-i="s3">Una catena in azione</h2></div>
+  <div class="chain rv">
+    <div class="chain-title" data-i="chainTitle"></div>
+    <div class="chain-sub" data-i="chainSub"></div>
+    <div class="chain-nodes" id="chainNodes">
+      <div class="chain-node active" id="node0" onclick="activateNode(0)">
+        <div class="chain-node-inner">
+          <i class="ti ti-search chain-node-icon"></i>
+          <div class="chain-node-label" data-i="n0label"></div>
+          <div class="chain-node-project" data-i="n0proj"></div>
+          <div class="chain-node-status"></div>
+        </div>
+      </div>
+      <div class="chain-arrow" id="arrow0"><i class="ti ti-arrow-right"></i></div>
+      <div class="chain-node locked" id="node1" onclick="activateNode(1)">
+        <div class="chain-node-inner">
+          <i class="ti ti-pencil chain-node-icon"></i>
+          <div class="chain-node-label" data-i="n1label"></div>
+          <div class="chain-node-project" data-i="n1proj"></div>
+          <div class="chain-node-status"></div>
+        </div>
+      </div>
+      <div class="chain-arrow" id="arrow1"><i class="ti ti-arrow-right"></i></div>
+      <div class="chain-node locked" id="node2" onclick="activateNode(2)">
+        <div class="chain-node-inner">
+          <i class="ti ti-check chain-node-icon"></i>
+          <div class="chain-node-label" data-i="n2label"></div>
+          <div class="chain-node-project" data-i="n2proj"></div>
+          <div class="chain-node-status"></div>
+        </div>
+      </div>
+    </div>
+    <div class="chain-output" id="chainOutput">
+      <i class="ti ti-file-text chain-output-icon"></i>
+      <div class="chain-output-body">
+        <div class="chain-output-label" data-i="outLabel"></div>
+        <div class="chain-output-text" id="chainOutputText"></div>
+        <div class="chain-output-note" id="chainOutputNote"></div>
+      </div>
+    </div>
+    <div class="chain-hint">
+      <p id="chainHintText"></p>
+      <button class="chain-reset" onclick="resetChain()" id="chainResetBtn" style="display:none" data-i="chainReset"></button>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">05</span><h2 data-i="s4">Mega-prompt vs catena</h2></div>
+  <div class="cmp-toggle rv">
+    <button class="cmp-tab on" id="tab-mega" onclick="switchCompare('mega')"><i class="ti ti-bolt"></i> <span data-i="tabMega"></span></button>
+    <button class="cmp-tab" id="tab-chain" onclick="switchCompare('chain')"><i class="ti ti-link"></i> <span data-i="tabChain"></span></button>
+  </div>
+  <div class="cmp-panel on" id="panel-mega">
+    <div class="cmp-card mega">
+      <div class="cmp-tag"><i class="ti ti-x"></i> <span data-i="megaTag"></span></div>
+      <h3 data-i="megaH"></h3>
+      <p data-i="megaP"></p>
+      <div class="mock-prompt">
+        <div class="label" data-i="megaPromptLabel"></div>
+        <div class="user" data-i="megaPromptUser"></div>
+        <div class="note" data-i="megaPromptNote"></div>
+      </div>
+    </div>
+    <div class="cmp-issues">
+      <div class="issue-row"><i class="ti ti-alert-circle" style="color:var(--bad)"></i> <span data-i="megaI1"></span></div>
+      <div class="issue-row"><i class="ti ti-alert-circle" style="color:var(--bad)"></i> <span data-i="megaI2"></span></div>
+      <div class="issue-row"><i class="ti ti-alert-circle" style="color:var(--bad)"></i> <span data-i="megaI3"></span></div>
+      <div class="issue-row"><i class="ti ti-alert-circle" style="color:var(--bad)"></i> <span data-i="megaI4"></span></div>
+    </div>
+  </div>
+  <div class="cmp-panel" id="panel-chain">
+    <div class="cmp-card chain">
+      <div class="cmp-tag"><i class="ti ti-check"></i> <span data-i="chTag"></span></div>
+      <h3 data-i="chH"></h3>
+      <p data-i="chP"></p>
+      <div class="mock-prompt">
+        <div class="label" data-i="ch1Label"></div>
+        <div class="user" data-i="ch1User"></div>
+        <div class="note" data-i="ch1Note"></div>
+      </div>
+      <div class="mock-prompt" style="margin-top:10px">
+        <div class="label" data-i="ch2Label"></div>
+        <div class="user" data-i="ch2User"></div>
+        <div class="note" data-i="ch2Note"></div>
+      </div>
+    </div>
+    <div class="cmp-issues">
+      <div class="issue-row"><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="chI1"></span></div>
+      <div class="issue-row"><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="chI2"></span></div>
+      <div class="issue-row"><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="chI3"></span></div>
+      <div class="issue-row"><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="chI4"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-transfer-down"></i><span class="no">06</span><h2 data-i="s5">L'hand-off in pratica</h2></div>
+  <div class="handoff rv">
+    <div class="handoff-steps" id="handoffTabs">
+      <button class="handoff-tab on" onclick="switchHandoff(0)"><span class="ht-num" data-i="hf0num"></span><span class="ht-label" data-i="hf0label"></span></button>
+      <button class="handoff-tab" onclick="switchHandoff(1)"><span class="ht-num" data-i="hf1num"></span><span class="ht-label" data-i="hf1label"></span></button>
+      <button class="handoff-tab" onclick="switchHandoff(2)"><span class="ht-num" data-i="hf2num"></span><span class="ht-label" data-i="hf2label"></span></button>
+      <button class="handoff-tab" onclick="switchHandoff(3)"><span class="ht-num" data-i="hf3num"></span><span class="ht-label" data-i="hf3label"></span></button>
+    </div>
+    <div class="handoff-panels">
+      <div class="handoff-panel on" id="hp0">
+        <div class="handoff-content">
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-folder"></i> <span data-i="hp0aL"></span></div>
+            <div class="hc-tag" style="background:var(--teal-soft);color:var(--teal)" data-i="hp0aTag"></div>
+            <p data-i="hp0aP"></p>
+          </div>
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-file-export"></i> <span data-i="hp0bL"></span></div>
+            <p style="font-style:italic;color:var(--ink-3)" data-i="hp0bP"></p>
+          </div>
+        </div>
+        <div class="handoff-foot" data-i="hp0foot"></div>
+      </div>
+      <div class="handoff-panel" id="hp1">
+        <div class="handoff-content">
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-copy"></i> <span data-i="hp1aL"></span></div>
+            <p data-i="hp1aP"></p>
+          </div>
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-eye"></i> <span data-i="hp1bL"></span></div>
+            <p style="font-style:italic;color:var(--ink-3)" data-i="hp1bP"></p>
+          </div>
+        </div>
+        <div class="handoff-arrow"><i class="ti ti-arrow-down"></i> <span data-i="hp1arrow"></span></div>
+      </div>
+      <div class="handoff-panel" id="hp2">
+        <div class="handoff-content">
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-switch-horizontal"></i> <span data-i="hp2aL"></span></div>
+            <p data-i="hp2aP"></p>
+          </div>
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-brain"></i> <span data-i="hp2bL"></span></div>
+            <p style="font-style:italic;color:var(--ink-3)" data-i="hp2bP"></p>
+          </div>
+        </div>
+        <div class="handoff-foot" data-i="hp2foot"></div>
+      </div>
+      <div class="handoff-panel" id="hp3">
+        <div class="handoff-content">
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-code"></i> <span data-i="hp3aL"></span></div>
+            <div class="hc-tag" style="background:var(--blue-soft);color:var(--blue)" data-i="hp3aTag"></div>
+            <p style="font-family:var(--mono);font-size:11px;color:var(--ink-2);line-height:1.7" data-i-html="hp3aP"></p>
+          </div>
+          <div class="hc-block">
+            <div class="hc-block-label"><i class="ti ti-sparkles"></i> <span data-i="hp3bL"></span></div>
+            <p style="font-style:italic;color:var(--ink-3)" data-i="hp3bP"></p>
+          </div>
+        </div>
+        <div class="handoff-foot" data-i="hp3foot"></div>
+      </div>
+    </div>
+    <div class="handoff-nav">
+      <button class="hn-btn" id="handoffPrev" onclick="handoffNav(-1)" disabled><i class="ti ti-arrow-left"></i> <span data-i="hnPrev"></span></button>
+      <div class="hn-dots" id="handoffDots">
+        <div class="hn-dot on"></div><div class="hn-dot"></div><div class="hn-dot"></div><div class="hn-dot"></div>
+      </div>
+      <button class="hn-btn" id="handoffNext" onclick="handoffNav(1)"><span data-i="hnNext"></span> <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-list"></i><span class="no">07</span><h2 data-i="s6">Altri pattern di concatenazione</h2></div>
+  <div class="pattern-grid rv">
+    <div class="pattern-row">
+      <div class="pattern-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-calendar-event"></i></div>
+      <div class="pattern-text"><strong data-i="p1H"></strong><span data-i="p1D"></span><span class="pattern-arrow" data-i="p1A"></span></div>
+    </div>
+    <div class="pattern-row">
+      <div class="pattern-icon" style="background:var(--warn-soft);color:var(--warn)"><i class="ti ti-table"></i></div>
+      <div class="pattern-text"><strong data-i="p2H"></strong><span data-i="p2D"></span><span class="pattern-arrow" data-i="p2A"></span></div>
+    </div>
+    <div class="pattern-row">
+      <div class="pattern-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-bulb"></i></div>
+      <div class="pattern-text"><strong data-i="p3H"></strong><span data-i="p3D"></span><span class="pattern-arrow" data-i="p3A"></span></div>
+    </div>
+    <div class="pattern-row">
+      <div class="pattern-icon" style="background:var(--good-soft);color:var(--good)"><i class="ti ti-user-check"></i></div>
+      <div class="pattern-text"><strong data-i="p4H"></strong><span data-i="p4D"></span><span class="pattern-arrow" data-i="p4A"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s7">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="tip warn rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-info-circle"></i></div><div><h4 data-i="principleH"></h4><p data-i="principleP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-git-branch"></i><div class="cph" data-i="cpH"></div><p data-i="cpP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Concatenare output tra Projects</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 3.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Projects come sistema',
+h1:'Concatenare output tra Projects',
+lede:'L\'output di un Project diventa l\'input del successivo. Non è magia tecnica — è una scelta di workflow. Ed è quello che trasforma Projects singoli in un sistema.',
+s0:'Hook',
+hook:'«Il lavoro vero raramente è un\'unica fase. È una catena: ricerca → analisi → bozza → revisione → pubblicazione. I Projects possono coprire ogni fase di questa catena — ognuno specializzato su quello che fa meglio. Quando li connettete, Claude diventa non più uno strumento ma un sistema.»',
+s1:'Cosa stiamo costruendo',
+stackLabel:'Anatomia di un Project — Livello 4 di 4',
+sl1n:'Concatenare output tra Projects',sl1d:'Questa lezione',
+sl2n:'Più Projects in parallelo',sl2d:'Lezione 3.4 ✓',
+sl3n:'File di contesto',sl3d:'Lezione 3.3 ✓',
+sl4n:'Project + Istruzioni',sl4d:'Lezioni 3.1–3.2 ✓',
+s2:'Il concetto base',
+conceptP:'I Projects non comunicano automaticamente tra loro — la connessione è manuale e intenzionale. "Concatenare" significa: prendere l\'output del Project A e usarlo come input nel Project B. Non è complicato tecnicamente. È una scelta di workflow.',
+whyH:'Perché funziona bene',
+whyP:'Ogni Project è esperto nel suo dominio. Il Project Ricerca è bravo a trovare e organizzare informazioni. Il Project Contenuti è bravo a scrivere nel tuo stile. Farli fare entrambe le cose nello stesso Project è come chiedere a un analista di scrivere anche il copy. Funziona, ma non è il massimo per nessuno dei due.',
+s3:'Una catena in azione — clicca ogni passo',
+chainTitle:'Workflow: Ricerca → Contenuto → Revisione',
+chainSub:'Clicca ogni nodo per vedere come l\'output fluisce nel passo successivo',
+n0label:'Passo 1 — Ricerca',n0proj:'Project: Ricerca',
+n1label:'Passo 2 — Contenuto',n1proj:'Project: Contenuti',
+n2label:'Passo 3 — Revisione',n2proj:'Project: Contenuti',
+outLabel:'Output del passo',chainReset:'Ricomincia',
+s4:'Un mega-prompt vs una catena di passi',
+tabMega:'Un mega-prompt',tabChain:'Catena di passi',
+megaTag:'Approccio: un mega-prompt',
+megaH:'Tutto in una volta',
+megaP:'Scrivi un\'unica istruzione lunghissima che chiede a Claude di fare tutto: ricercare, analizzare, scrivere, revisionare, formattare — in un solo turno.',
+megaPromptLabel:'Prompt',
+megaPromptUser:'Analizza le tendenze del mercato nel settore X, identifica i 5 trend principali, trasformali in un articolo di 600 parole con tono professionale ma accessibile, ottimizzato per i social, con hook iniziale forte, 3 punti chiave evidenziati, call to action finale, e suggerisci anche 3 titoli alternativi.',
+megaPromptNote:'→ Claude cerca di fare tutto, ma ogni parte è meno curata',
+megaI1:'La ricerca e la scrittura competono per l\'attenzione — una penalizza l\'altra',
+megaI2:'Non puoi fermarti e controllare la ricerca prima di passare alla bozza',
+megaI3:'Se l\'output non va bene, devi riscrivere tutto da capo',
+megaI4:'Il contesto del Project non è ottimizzato per entrambe le fasi',
+chTag:'Approccio: catena di passi',
+chH:'Fase per fase, Project per Project',
+chP:'Ogni fase ha il suo prompt pulito, nel Project giusto. L\'output di ogni passo viene revisionato prima di passare avanti — e ogni Project è ottimizzato per quello che fa.',
+ch1Label:'Passo 1 — Project Ricerca',
+ch1User:'Analizza le tendenze del mercato nel settore X. Dammi i 5 trend principali con dati concreti. Formato: report strutturato.',
+ch1Note:'→ Leggi, approva, poi porti l\'output al passo successivo',
+ch2Label:'Passo 2 — Project Contenuti',
+ch2User:'[Incolla il report del passo 1] → Trasformalo in un articolo di 600 parole nel mio stile.',
+ch2Note:'→ Il Project Contenuti conosce già il tuo stile — non devi rispiegarlo',
+chI1:'Puoi controllare e correggere ogni passo prima di procedere',
+chI2:'Ogni Project è specializzato nella sua fase — output migliori',
+chI3:'Se qualcosa non va, aggiungi solo quel passo — non tutto',
+chI4:'Il contesto (tono, stile, linee guida) è già nelle istruzioni del Project',
+s5:'Come funziona l\'hand-off in pratica',
+hf0num:'Fase 1',hf0label:'Produci output',
+hf1num:'Fase 2',hf1label:'Copia l\'output',
+hf2num:'Fase 3',hf2label:'Passa al Project B',
+hf3num:'Fase 4',hf3label:'Prompt nel nuovo contesto',
+hp0aL:'Project A — Ricerca',hp0aTag:'Specializzato: analisi e dati',
+hp0aP:'Fai girare il tuo prompt di ricerca nel Project dedicato. Il Claude di questo Project conosce le fonti, il formato, il livello di dettaglio che vuoi.',
+hp0bL:'Output prodotto',
+hp0bP:'Report strutturato, dati organizzati, punti chiave identificati — esattamente nel formato che hai configurato nelle istruzioni del Project.',
+hp0foot:'Lascia che il Project A faccia il suo lavoro al meglio. Leggi l\'output, verifica che sia quello che ti serve. Solo quando sei soddisfatto passi al passo successivo.',
+hp1aL:'Copia il testo',
+hp1aP:'Seleziona e copia il testo dell\'output dal Project A. Puoi copiare tutto o solo la parte che serve al passo successivo. Non serve esportare in un file — basta il testo.',
+hp1bL:'Cosa passa',
+hp1bP:'Il contenuto del report, le analisi, i dati strutturati. Non passano le istruzioni del Project, non la knowledge base — solo il contenuto che hai selezionato.',
+hp1arrow:'Il testo che copi diventa il "ponte" tra i due Projects',
+hp2aL:'Apri il Project B',
+hp2aP:'Vai al secondo Project nella sidebar. Claude "dimentica" il Project A — ma non ha bisogno di ricordarlo. Porta tu il contenuto utile, esplicitamente.',
+hp2bL:'Contesto già attivo',
+hp2bP:'Il Project B ha già le sue istruzioni: il tono, lo stile, le linee guida. Non devi rispiegare nulla. Il Claude di questo Project sa già come deve risponderti.',
+hp2foot:'Questo è il vantaggio della specializzazione: apri il Project B e trovi già un Claude configurato per quella fase del lavoro.',
+hp3aL:'Prompt di hand-off',hp3aTag:'Struttura base',
+hp3aP:'Ho questa [tipo di contenuto]:<br><br>[incolla output del passo precedente]<br><br>[istruzione per il passo corrente]',
+hp3bL:'Cosa succede',
+hp3bP:'Claude del Project B riceve il contenuto + la nuova istruzione + il suo contesto specializzato. L\'output sarà già calibrato sul tono, lo stile e le linee guida di questo Project.',
+hp3foot:'Non devi rispiegare chi sei, che tono usare, quali linee guida seguire. Tutto quello è già nelle istruzioni del Project B. Tu porti solo il contenuto da trasformare.',
+hnPrev:'Indietro',hnNext:'Avanti',
+s6:'Altri pattern di concatenazione',
+p1H:'Riunione → Report',p1D:'Project "Riunioni" trascrive e organizza le note → Project "Reporting" trasforma in report formale per il management',p1A:'Note caotiche → Documento strutturato',
+p2H:'Dati → Analisi → Comunicazione',p2D:'Project "Dati" interpreta il CSV e identifica i trend → Project "Comunicazione" trasforma in slide per il management',p2A:'Numeri grezzi → Narrativa comprensibile',
+p3H:'Brainstorming → Selezione → Esecuzione',p3D:'Project "Idee" genera opzioni → scegli manualmente quella giusta → Project "Esecuzione" la sviluppa in dettaglio',p3A:'Creatività libera → Piano concreto',
+p4H:'Brief cliente → Proposta → Documento finale',p4D:'Project dedicato al cliente riceve il brief e produce una proposta → Project "Template ufficiali" la formatta nella versione definitiva',p4A:'Input informale → Documento professionale',
+s7:'In una frase',
+keyPhrase:'«Un Project solo è uno strumento. Projects che si parlano sono un sistema. E un sistema lavora per voi — anche quando non state attivamente guidando ogni passo.»',
+principleH:'Il principio chiave dell\'hand-off',
+principleP:'Non state "insegnando" al Project B chi siete e come lavorate — lui lo sa già. State solo portando il materiale da elaborare. Più le istruzioni dei vostri Projects sono curate, meno dovrete spiegare a ogni passaggio.',
+s8:'Checkpoint',
+cpH:'Mappa il tuo primo workflow a catena',
+cpP:'Identifica un workflow nel tuo lavoro che ha almeno due fasi distinte — dove una fase produce il materiale per la fase successiva. Disegna mentalmente (o su carta) come si mappano sui Projects. Quale Project fa cosa? Cosa passa da uno all\'altro? Non serve implementarlo oggi — ma avere la mappa nella testa è il primo passo.',
+bridge:'<b>Prossimo livello: CoWork — Modulo 4.</b> I Projects vi danno un Claude specializzato per ogni contesto. Ma c\'è ancora un livello più potente — quello in cui Claude opera nel vostro computer, gestisce file, esegue task in autonomia, e lavora mentre voi fate altro.',
+foot:'Morfeus — Concatenare output tra Projects'
+},
+en:{
+kicker:'Lesson 3.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Projects as a system',
+h1:'Chaining output between Projects',
+lede:'The output of one Project becomes the input of the next. It\'s not technical magic — it\'s a workflow choice. And it\'s what turns single Projects into a system.',
+s0:'Hook',
+hook:'"Real work is rarely a single phase. It\'s a chain: research → analysis → draft → review → publication. Projects can cover every phase of this chain — each specialized in what it does best. When you connect them, Claude stops being a tool and becomes a system."',
+s1:'What we\'re building',
+stackLabel:'Anatomy of a Project — Level 4 of 4',
+sl1n:'Chaining output between Projects',sl1d:'This lesson',
+sl2n:'Multiple Projects in parallel',sl2d:'Lesson 3.4 ✓',
+sl3n:'Context files',sl3d:'Lesson 3.3 ✓',
+sl4n:'Project + Instructions',sl4d:'Lessons 3.1–3.2 ✓',
+s2:'The basic concept',
+conceptP:'Projects don\'t talk to each other automatically — the connection is manual and intentional. "Chaining" means: take the output of Project A and use it as input in Project B. It isn\'t technically complicated. It\'s a workflow choice.',
+whyH:'Why it works well',
+whyP:'Every Project is an expert in its domain. The Research Project is good at finding and organizing information. The Content Project is good at writing in your style. Making them do both things in the same Project is like asking an analyst to also write the copy. It works, but it\'s not ideal for either.',
+s3:'A chain in action — click each step',
+chainTitle:'Workflow: Research → Content → Review',
+chainSub:'Click each node to see how the output flows into the next step',
+n0label:'Step 1 — Research',n0proj:'Project: Research',
+n1label:'Step 2 — Content',n1proj:'Project: Content',
+n2label:'Step 3 — Review',n2proj:'Project: Content',
+outLabel:'Step output',chainReset:'Start over',
+s4:'One mega-prompt vs a chain of steps',
+tabMega:'One mega-prompt',tabChain:'Chain of steps',
+megaTag:'Approach: one mega-prompt',
+megaH:'All at once',
+megaP:'You write one extremely long instruction asking Claude to do everything: research, analyze, write, review, format — in a single turn.',
+megaPromptLabel:'Prompt',
+megaPromptUser:'Analyze the market trends in sector X, identify the 5 main trends, turn them into a 600-word article with a professional but accessible tone, optimized for social, with a strong opening hook, 3 highlighted key points, a final call to action, and also suggest 3 alternative titles.',
+megaPromptNote:'→ Claude tries to do everything, but each part is less polished',
+megaI1:'Research and writing compete for attention — one penalizes the other',
+megaI2:'You can\'t stop and check the research before moving to the draft',
+megaI3:'If the output isn\'t good, you have to rewrite everything from scratch',
+megaI4:'The Project context isn\'t optimized for both phases',
+chTag:'Approach: chain of steps',
+chH:'Phase by phase, Project by Project',
+chP:'Each phase has its own clean prompt, in the right Project. The output of each step is reviewed before moving forward — and each Project is optimized for what it does.',
+ch1Label:'Step 1 — Research Project',
+ch1User:'Analyze the market trends in sector X. Give me the 5 main trends with concrete data. Format: structured report.',
+ch1Note:'→ You read, approve, then carry the output to the next step',
+ch2Label:'Step 2 — Content Project',
+ch2User:'[Paste the report from step 1] → Turn it into a 600-word article in my style.',
+ch2Note:'→ The Content Project already knows your style — you don\'t have to re-explain it',
+chI1:'You can check and correct each step before proceeding',
+chI2:'Each Project is specialized in its phase — better output',
+chI3:'If something\'s off, you only fix that step — not everything',
+chI4:'The context (tone, style, guidelines) is already in the Project instructions',
+s5:'How the hand-off works in practice',
+hf0num:'Phase 1',hf0label:'Produce output',
+hf1num:'Phase 2',hf1label:'Copy the output',
+hf2num:'Phase 3',hf2label:'Switch to Project B',
+hf3num:'Phase 4',hf3label:'Prompt in the new context',
+hp0aL:'Project A — Research',hp0aTag:'Specialized: analysis and data',
+hp0aP:'Run your research prompt in the dedicated Project. This Project\'s Claude knows the sources, the format, the level of detail you want.',
+hp0bL:'Output produced',
+hp0bP:'Structured report, organized data, key points identified — exactly in the format you configured in the Project instructions.',
+hp0foot:'Let Project A do its job at its best. Read the output, check that it\'s what you need. Only when you\'re satisfied do you move to the next step.',
+hp1aL:'Copy the text',
+hp1aP:'Select and copy the output text from Project A. You can copy all of it or just the part the next step needs. No need to export to a file — the text is enough.',
+hp1bL:'What carries over',
+hp1bP:'The report content, the analysis, the structured data. The Project instructions don\'t carry over, neither does the knowledge base — only the content you selected.',
+hp1arrow:'The text you copy becomes the "bridge" between the two Projects',
+hp2aL:'Open Project B',
+hp2aP:'Go to the second Project in the sidebar. Claude "forgets" Project A — but it doesn\'t need to remember it. You bring the useful content over, explicitly.',
+hp2bL:'Context already active',
+hp2bP:'Project B already has its instructions: the tone, the style, the guidelines. You don\'t have to re-explain anything. This Project\'s Claude already knows how to respond to you.',
+hp2foot:'This is the advantage of specialization: you open Project B and you already find a Claude configured for that phase of the work.',
+hp3aL:'Hand-off prompt',hp3aTag:'Base structure',
+hp3aP:'I have this [type of content]:<br><br>[paste output from the previous step]<br><br>[instruction for the current step]',
+hp3bL:'What happens',
+hp3bP:'Project B\'s Claude receives the content + the new instruction + its specialized context. The output will already be calibrated to this Project\'s tone, style and guidelines.',
+hp3foot:'You don\'t have to re-explain who you are, what tone to use, which guidelines to follow. All of that is already in Project B\'s instructions. You only bring the content to transform.',
+hnPrev:'Back',hnNext:'Next',
+s6:'Other chaining patterns',
+p1H:'Meeting → Report',p1D:'"Meetings" Project transcribes and organizes the notes → "Reporting" Project turns them into a formal report for management',p1A:'Chaotic notes → Structured document',
+p2H:'Data → Analysis → Communication',p2D:'"Data" Project interprets the CSV and identifies the trends → "Communication" Project turns them into slides for management',p2A:'Raw numbers → Understandable narrative',
+p3H:'Brainstorming → Selection → Execution',p3D:'"Ideas" Project generates options → you manually pick the right one → "Execution" Project develops it in detail',p3A:'Free creativity → Concrete plan',
+p4H:'Client brief → Proposal → Final document',p4D:'A Project dedicated to the client receives the brief and produces a proposal → "Official templates" Project formats it into the definitive version',p4A:'Informal input → Professional document',
+s7:'In one sentence',
+keyPhrase:'"A single Project is a tool. Projects that talk to each other are a system. And a system works for you — even when you\'re not actively guiding every step."',
+principleH:'The key principle of the hand-off',
+principleP:'You\'re not "teaching" Project B who you are and how you work — it already knows. You\'re just bringing the material to process. The more carefully crafted your Projects\' instructions are, the less you\'ll have to explain at each handover.',
+s8:'Checkpoint',
+cpH:'Map your first chained workflow',
+cpP:'Identify a workflow in your work that has at least two distinct phases — where one phase produces the material for the next. Map out mentally (or on paper) how they map onto Projects. Which Project does what? What passes from one to the other? You don\'t need to implement it today — but having the map in your head is the first step.',
+bridge:'<b>Next level: CoWork — Module 4.</b> Projects give you a specialized Claude for every context. But there\'s an even more powerful level — the one where Claude operates inside your computer, manages files, executes tasks autonomously, and works while you do something else.',
+foot:'Morfeus — Chaining output between Projects'
+}};
+
+var LANG='it';
+
+/* ---- Chain demo ---- */
+var chainMeta={
+it:[
+ {status:'Attivo',outputText:'Analisi completata: 5 trend identificati, dati concreti per ciascuno, formato report strutturato pronto. Questo è l\'output che passa al passo successivo.',outputNote:'→ Copia questo output e aprilo nel Project Contenuti',hintText:'Clicca <span>Passo 2</span> per vedere come l\'output viene trasformato'},
+ {status:'Riceve l\'output del Passo 1',outputText:'Bozza articolo prodotta: il report di ricerca è stato trasformato nel tuo stile — tono diretto, hook iniziale forte, 3 punti chiave, call to action. Il Project Contenuti sapeva già come farlo.',outputNote:'→ Leggi e approva la bozza. Se serve, rivedi solo questa fase',hintText:'Clicca <span>Passo 3</span> per la revisione finale'},
+ {status:'Output finale',outputText:'Revisione completata: testo rileggibile, miglioramenti suggeriti, versione finale pronta per la pubblicazione. Il workflow è chiuso.',outputNote:'→ Il testo è pronto. Ogni fase ha fatto la sua parte al meglio.',hintText:'Workflow completato.'}
+],
+en:[
+ {status:'Active',outputText:'Analysis complete: 5 trends identified, concrete data for each, structured report format ready. This is the output that passes to the next step.',outputNote:'→ Copy this output and open it in the Content Project',hintText:'Click <span>Step 2</span> to see how the output is transformed'},
+ {status:'Receives the output of Step 1',outputText:'Article draft produced: the research report has been transformed into your style — direct tone, strong opening hook, 3 key points, call to action. The Content Project already knew how to do it.',outputNote:'→ Read and approve the draft. If needed, revise only this phase',hintText:'Click <span>Step 3</span> for the final review'},
+ {status:'Final output',outputText:'Review complete: re-readable text, suggested improvements, final version ready for publication. The workflow is closed.',outputNote:'→ The text is ready. Each phase did its part at its best.',hintText:'Workflow complete.'}
+]};
+var chainStartText={it:{output:'Clicca il Passo 1 per iniziare la catena',hint:'Clicca <span>Passo 1</span> per vedere l\'output del primo Project'},en:{output:'Click Step 1 to start the chain',hint:'Click <span>Step 1</span> to see the output of the first Project'}};
+var chainStatusDone={it:'Completato',en:'Completed'};
+
+var chainStep=0,chainMaxReached=0;
+function activateNode(idx){if(idx>chainMaxReached+1)return;if(idx>chainMaxReached)chainMaxReached=idx;chainStep=idx;renderChain()}
+function renderChain(){
+  var meta=chainMeta[LANG];
+  var nodes=document.querySelectorAll('.chain-node');
+  var arrows=document.querySelectorAll('.chain-arrow');
+  nodes.forEach(function(n,i){
+    n.classList.remove('active','done','locked');
+    if(i<chainStep)n.classList.add('done');
+    else if(i===chainStep)n.classList.add('active');
+    else if(i<=chainMaxReached+1)n.classList.remove('locked');
+    else n.classList.add('locked');
+    var st=n.querySelector('.chain-node-status');
+    if(i<chainStep)st.innerHTML='<i class="ti ti-check"></i> '+chainStatusDone[LANG];
+    else if(i===chainStep)st.innerHTML='<i class="ti ti-circle-dot"></i> '+meta[i].status;
+    else st.innerHTML='';
+  });
+  arrows.forEach(function(a,i){a.classList.remove('active');if(i===chainStep&&chainStep<2)a.classList.add('active')});
+  var d=meta[chainStep];
+  var out=document.getElementById('chainOutput');
+  out.classList.add('has-content');
+  document.getElementById('chainOutputText').textContent=d.outputText;
+  document.getElementById('chainOutputNote').textContent=d.outputNote;
+  document.getElementById('chainHintText').innerHTML=d.hintText;
+  document.getElementById('chainResetBtn').style.display=chainStep===2?'inline-block':'none';
+}
+function resetChain(){
+  chainStep=0;chainMaxReached=0;
+  var meta=chainMeta[LANG];
+  document.querySelectorAll('.chain-node').forEach(function(n,i){
+    n.classList.remove('active','done','locked');
+    if(i===0)n.classList.add('active');else n.classList.add('locked');
+    n.querySelector('.chain-node-status').innerHTML=i===0?'<i class="ti ti-circle-dot"></i> '+meta[0].status:'';
+  });
+  document.querySelectorAll('.chain-arrow').forEach(function(a){a.classList.remove('active')});
+  document.getElementById('chainOutput').classList.remove('has-content');
+  document.getElementById('chainOutputText').textContent=chainStartText[LANG].output;
+  document.getElementById('chainOutputNote').textContent='';
+  document.getElementById('chainHintText').innerHTML=chainStartText[LANG].hint;
+  document.getElementById('chainResetBtn').style.display='none';
+}
+
+/* ---- Compare ---- */
+function switchCompare(which){
+  document.getElementById('tab-mega').classList.toggle('on',which==='mega');
+  document.getElementById('tab-chain').classList.toggle('on',which==='chain');
+  document.getElementById('panel-mega').classList.toggle('on',which==='mega');
+  document.getElementById('panel-chain').classList.toggle('on',which==='chain');
+}
+
+/* ---- Hand-off ---- */
+var handoffCurrent=0,handoffTotal=4;
+function switchHandoff(idx){
+  document.querySelectorAll('.handoff-tab').forEach(function(t,i){t.classList.toggle('on',i===idx)});
+  document.querySelectorAll('.handoff-panel').forEach(function(p,i){p.classList.toggle('on',i===idx)});
+  document.querySelectorAll('.hn-dot').forEach(function(d,i){d.classList.toggle('on',i===idx)});
+  handoffCurrent=idx;
+  document.getElementById('handoffPrev').disabled=idx===0;
+  document.getElementById('handoffNext').disabled=idx===handoffTotal-1;
+}
+function handoffNav(dir){var next=handoffCurrent+dir;if(next<0||next>=handoffTotal)return;switchHandoff(next)}
+
+/* ---- i18n / theme ---- */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  if(chainStep===0&&chainMaxReached===0&&!document.getElementById('chainOutput').classList.contains('has-content')){
+    document.getElementById('chainOutputText').textContent=chainStartText[LANG].output;
+    document.getElementById('chainHintText').innerHTML=chainStartText[LANG].hint;
+    var st0=document.querySelector('#node0 .chain-node-status');if(st0)st0.innerHTML='<i class="ti ti-circle-dot"></i> '+chainMeta[LANG][0].status;
+  } else { renderChain(); }
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

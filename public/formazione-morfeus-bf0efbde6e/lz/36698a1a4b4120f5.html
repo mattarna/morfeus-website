@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'AI è un junior che non sa niente — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.tool{background:var(--bg-2)}
+.cmpc.method{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.cmpc.tool h4{color:var(--ink-2)}.cmpc.method h4{color:var(--accent)}
+.cmpc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.cmpc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.cmpc li i{font-size:14px;margin-top:2px}
+.cmpc.tool li i{color:var(--ink-3)}.cmpc.method li i{color:var(--accent)}
+.tog{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--sh);width:max-content;margin:0 auto 14px}
+.tog button{background:transparent;border:none;color:var(--ink-3);padding:9px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:600;transition:.18s}
+.tog button.on{background:var(--accent);color:#fff}
+.simbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.simbox .sq{font-size:13px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.simbox .sp{font-size:15px;color:var(--ink);background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:13px 15px;margin-bottom:14px}
+.simbox .sr{display:flex;gap:12px;align-items:flex-start}
+.simbox .sri{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;color:#fff}
+.simbox.miss .sri{background:var(--bad)}.simbox.clear .sri{background:var(--good)}
+.simbox .srt{font-size:14px;color:var(--ink-2)}.simbox .srt b{color:var(--ink);font-weight:600}
+.simbox.miss .srt .verdict{color:var(--bad);font-weight:600}.simbox.clear .srt .verdict{color:var(--good);font-weight:600}
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:18px;align-items:flex-start}
+.story .si{width:48px;height:48px;border-radius:12px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.story h4{font-size:15px;font-weight:600;margin-bottom:6px}.story p{font-size:14px;color:var(--ink-2)}.story p b{color:var(--ink);font-weight:600}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.story{flex-direction:column}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.tog{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.simbox,.story,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">L'analogia fondante</div>
+  <h1 class="rv" data-i="h1">L'AI è un junior che non sa niente</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-user-question"></i><span class="no">01</span><h2 data-i="s1">Il junior più potente del mondo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-bulb"></i></div><div><h4 data-i="note1H">Genio, ma da indirizzare</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="goldKey"></p><div class="cap" data-i="goldCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-microphone-2"></i><span class="no">02</span><h2 data-i="s2">Il test: spiegalo a chi non fa il tuo lavoro</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="simIntro"></p>
+  <div class="tog rv">
+    <button class="on" onclick="showSim(0)" data-i="togA">Istruzione vaga</button>
+    <button onclick="showSim(1)" data-i="togB">Spiegata bene</button>
+  </div>
+  <div class="rv" id="simWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-school"></i><span class="no">03</span><h2 data-i="s3">Il ragazzo di 17 anni</h2></div>
+  <div class="story rv"><div class="si"><i class="ti ti-device-laptop"></i></div><div><h4 data-i="storyH">Un software senza una riga di codice</h4><p data-i-html="storyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-replace"></i><span class="no">04</span><h2 data-i="s4">Perché formare gli esperti è più difficile</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc method"><h4><i class="ti ti-sparkles"></i> <span data-i="novH">Chi parte da zero</span></h4><ul id="novL"></ul></div>
+    <div class="cmpc tool"><h4><i class="ti ti-lock"></i> <span data-i="expH">Chi ha 20 anni di esperienza</span></h4><ul id="expL"></ul></div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="paraKey"></p></div>
+
+  <div class="sh rv"><i class="ti ti-cpu"></i><span class="no">05</span><h2 data-i="s5">L'obiettivo: un cyborg, non un atrofizzato</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-bolt"></i></div><h4 data-i="cy1H">Renderti un cyborg</h4><p data-i="cy1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-brain"></i></div><h4 data-i="cy2H">Senza atrofizzarti il cervello</h4><p data-i="cy2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Applica la regola aurea</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — L'AI è un junior che non sa niente</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'L\'analogia fondante',
+h1:'L\'AI è un junior che non sa niente',
+lede:'È l\'analogia che regge tutto il percorso. Pensa sempre di avere davanti un junior che non sa niente: un genio, ma da indirizzare. Tutto il modo in cui deleghi all\'AI discende da qui.',
+s1:'Il junior più potente del mondo',
+note1H:'Genio, ma da indirizzare',
+note1P:'Pensate sempre di avere davanti un <strong>junior che non sa niente</strong>. Un genio, ma lento, e all\'inizio senza esperienza nel <em>vostro</em> contesto. Più dati e procedure gli dai, più diventa bravo — «dopo un mese più bravo di voi». Ma non sa ancora cosa deve fare: <strong>siete voi a indirizzarlo e a guidarlo</strong>.',
+goldKey:'La regola aurea: «Se sai spiegare a una persona che non fa il tuo lavoro quello che deve fare, lo capisce anche l\'AI.»',
+goldCap:'La chiarezza che useresti con un estraneo competente è esattamente la chiarezza che serve all\'AI.',
+s2:'Il test: spiegalo a chi non fa il tuo lavoro',
+simIntro:'La regola aurea è anche un test pratico. Prendi una richiesta e prova a immaginarla nelle mani di chi non conosce il tuo mestiere. Confronta le due versioni.',
+togA:'Istruzione vaga',togB:'Spiegata bene',
+s3:'Il ragazzo di 17 anni',
+storyH:'Un software senza una riga di codice',
+storyP:'Dopo un intervento in una scuola superiore, un <b>ragazzo di 17 anni</b> ha costruito un software senza aver mai scritto una riga di codice. «Non era un genio»: aveva semplicemente le idee chiare e sapeva spiegarle. <strong>«Una roba che gente con 10 anni di sviluppo non mi ha saputo far vedere.»</strong> L\'AI prende quello che hai in testa: più chiaro ce l\'hai, più te lo realizza identico.',
+s4:'Perché formare gli esperti è più difficile',
+novH:'Chi parte da zero',expH:'Chi ha 20 anni di esperienza',
+paraKey:'«Più difficile formare chi ha 20 anni di esperienza: prima devo distruggerti dei paradigmi.»',
+s5:'L\'obiettivo: un cyborg, non un atrofizzato',
+cy1H:'Renderti un cyborg',cy1P:'Molto più produttivo: l\'AI amplifica quello che già sai fare, non lo rimpiazza. Tu dirigi, lei esegue alla tua velocità moltiplicata.',
+cy2H:'Senza atrofizzarti il cervello',cy2P:'Usare l\'AI per imparare, non solo per farsi fare il lavoro. Il ragazzo di 17 anni ci è riuscito perché l\'ha usata per capire, non per saltare il pensiero.',
+s6:'Checkpoint',
+cpH:'Applica la regola aurea',
+cpP:'Prima di delegare un compito all\'AI, fai il test: sapresti spiegarlo a una persona che non fa il tuo lavoro? Se sì, l\'AI lo capirà. Se no, il problema è nella tua chiarezza, non nel modello.',
+cpQ:'Prendi un\'attività che vuoi delegare e spiegala come la spiegheresti a un estraneo competente al primo giorno. Quello che ti resta poco chiaro è esattamente ciò che confonderà l\'AI.',
+cpNote:'Non parti da «come uso l\'AI». Parti da «so spiegare quello che voglio?».',
+bridge:'Hai l\'analogia fondante. <b>Prossimo:</b> persone pensanti, non esecutori — perché l\'AI ti compiace e come usarla per pensare meglio invece di atrofizzarti.',
+foot:'Morfeus — L\'AI è un junior che non sa niente'
+},
+en:{
+kicker:'Lesson A1.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The founding analogy',
+h1:'AI is a junior who knows nothing',
+lede:'It\'s the analogy that holds up the whole path. Always picture a junior who knows nothing in front of you: a genius, but one you have to steer. Everything about how you delegate to AI flows from here.',
+s1:'The most powerful junior in the world',
+note1H:'A genius, but one to steer',
+note1P:'Always picture a <strong>junior who knows nothing</strong>. A genius, but slow, and at first with no experience in <em>your</em> context. The more data and procedures you give it, the better it gets — "after a month, better than you." But it still doesn\'t know what to do: <strong>it\'s you who steers and guides it</strong>.',
+goldKey:'The golden rule: "If you can explain to someone who doesn\'t do your job what they need to do, AI will understand it too."',
+goldCap:'The clarity you\'d use with a competent outsider is exactly the clarity AI needs.',
+s2:'The test: explain it to someone outside your job',
+simIntro:'The golden rule is also a practical test. Take a request and imagine it in the hands of someone who doesn\'t know your trade. Compare the two versions.',
+togA:'Vague instruction',togB:'Explained well',
+s3:'The 17-year-old',
+storyH:'Software without a single line of code',
+storyP:'After a talk at a high school, a <b>17-year-old</b> built a piece of software without ever writing a line of code. "He wasn\'t a genius": he simply had clear ideas and knew how to explain them. <strong>"Something people with 10 years of development couldn\'t show me."</strong> AI takes what you have in your head: the clearer it is, the more faithfully it builds it.',
+s4:'Why training experts is harder',
+novH:'Starting from zero',expH:'20 years of experience',
+paraKey:'"Harder to train someone with 20 years of experience: first I have to break your paradigms."',
+s5:'The goal: a cyborg, not an atrophied mind',
+cy1H:'Make you a cyborg',cy1P:'Far more productive: AI amplifies what you already do well, it doesn\'t replace it. You direct, it executes at your multiplied speed.',
+cy2H:'Without atrophying your brain',cy2P:'Use AI to learn, not just to get the work done. The 17-year-old pulled it off because he used it to understand, not to skip the thinking.',
+s6:'Checkpoint',
+cpH:'Apply the golden rule',
+cpP:'Before delegating a task to AI, run the test: could you explain it to someone who doesn\'t do your job? If yes, AI will understand it. If no, the problem is in your clarity, not in the model.',
+cpQ:'Take a task you want to delegate and explain it the way you would to a competent outsider on their first day. Whatever stays unclear to you is exactly what will confuse AI.',
+cpNote:'You don\'t start from "how do I use AI." You start from "can I explain what I want?".',
+bridge:'You have the founding analogy. <b>Next:</b> thinking people, not executors — why AI flatters you and how to use it to think better instead of atrophying.',
+foot:'Morfeus — AI is a junior who knows nothing'
+}};
+
+var SIM={it:[
+['miss','«Sistemami il report.»','ti-x','<b>Il junior si blocca.</b> Quale report? In che formato? Per chi? <span class="verdict">Manca tutto: l\'AI riempie i vuoti con assunzioni, e quasi mai sono le tue.</span>'],
+['clear','«Prendi il report vendite del trimestre, raggruppa i ricavi per canale, evidenzia i tre canali in crescita e scrivimi due righe di sintesi per il management.»','ti-check','<b>Il junior sa esattamente cosa fare.</b> Compito, dati, output, destinatario. <span class="verdict">Lo capirebbe chiunque, anche fuori dal tuo settore — e per questo lo capisce anche l\'AI.</span>']
+],en:[
+['miss','"Sort out the report."','ti-x','<b>The junior freezes.</b> Which report? In what format? For whom? <span class="verdict">Everything is missing: AI fills the gaps with assumptions, and almost never yours.</span>'],
+['clear','"Take the quarterly sales report, group revenue by channel, highlight the three growing channels and write me a two-line summary for management."','ti-check','<b>The junior knows exactly what to do.</b> Task, data, output, recipient. <span class="verdict">Anyone would understand it, even outside your field — and that\'s why AI does too.</span>']
+]};
+var NOV={it:['Nessun paradigma cristallizzato da smontare','Usa l\'AI per imparare, non per saltare il pensiero','Idee chiare → l\'AI le realizza identiche'],en:['No crystallized paradigm to dismantle','Uses AI to learn, not to skip the thinking','Clear ideas → AI builds them faithfully']};
+var EXP={it:['Prima devo distruggerti dei paradigmi','«L\'AI è più brava di te. Punto.»','Niente «sono più bravo io»: serve apertura'],en:['First I have to break your paradigms','"AI is better than you. Period."','No "I\'m better than it": you need openness']};
+
+var LANG='it',curSim=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('novL').innerHTML=NOV[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+x+'</li>'}).join('');
+  document.getElementById('expL').innerHTML=EXP[LANG].map(function(x){return '<li><i class="ti ti-alert-triangle"></i>'+x+'</li>'}).join('');
+  showSim(curSim);
+}
+function showSim(i){curSim=i;var s=SIM[LANG][i];document.querySelectorAll('.tog button').forEach(function(b,k){b.classList.toggle('on',k===i)});document.getElementById('simWrap').innerHTML='<div class="simbox '+s[0]+'"><div class="sq">'+(LANG==='it'?'La richiesta':'The request')+'</div><div class="sp">'+s[1]+'</div><div class="sr"><div class="sri"><i class="ti '+s[2]+'"></i></div><div class="srt">'+s[3]+'</div></div></div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

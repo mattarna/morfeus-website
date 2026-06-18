@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy e Sicurezza con Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--amber:#BA7517;--amber-soft:#faf0db;--amber-line:#ecd3a0;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--amber:#EF9F27;--amber-soft:#3a2a0d;--amber-line:#6a4d1a;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* plan tabs */
+.plan-tabs{display:flex;gap:8px;margin:0}
+.plan-tab{flex:1;padding:12px 10px;border:1px solid var(--line-2);border-radius:var(--r-l) var(--r-l) 0 0;background:var(--bg-2);color:var(--ink-2);cursor:pointer;font-family:var(--mono);font-size:12px;font-weight:600;text-align:center;transition:.18s;border-bottom:none}
+.plan-tab:hover{background:var(--bg-3)}
+.plan-tab.active{background:var(--card);color:var(--accent);border-color:var(--accent);border-bottom-color:var(--card);z-index:1;position:relative}
+.plan-panels{border:1px solid var(--line-2);border-radius:0 var(--r-l) var(--r-l) var(--r-l);background:var(--card);box-shadow:var(--sh);padding:26px 22px;margin:0}
+.plan-panel{display:none}
+.plan-panel.active{display:block}
+.plan-panel h4{font-size:15px;font-weight:600;margin-bottom:16px;color:var(--ink)}
+.plan-row{display:grid;grid-template-columns:180px 1fr;gap:8px 16px;align-items:start;padding:9px 0;border-bottom:1px dashed var(--line)}
+.plan-row:last-child{border-bottom:none}
+.plan-key{font-size:12.5px;font-weight:600;color:var(--ink-3);font-family:var(--mono)}
+.plan-val{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.plan-val em{font-style:italic}
+.plan-val code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);padding:2px 6px;border-radius:4px;color:var(--ink-2)}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;font-family:var(--mono)}
+.pill-green{background:var(--good-soft);color:var(--good);border:1px solid var(--good-line)}
+.pill-blue{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+/* training toggle */
+.toggle-widget{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px 24px;margin:0}
+.toggle-widget h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.toggle-widget>p{font-size:13px;color:var(--ink-2);margin-bottom:20px}
+.toggle-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.toggle-label{font-size:14px;font-weight:600;flex:1}
+.toggle-switch{width:48px;height:26px;border-radius:13px;background:var(--line-2);cursor:pointer;position:relative;transition:background .3s;border:none;flex-shrink:0}
+.toggle-switch.on{background:var(--teal)}
+.toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .3s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.toggle-switch.on::after{left:25px}
+.toggle-effect{border-radius:var(--r);padding:18px 20px;transition:all .3s}
+.toggle-effect.off{background:var(--good-soft);border:1px solid var(--good-line)}
+.toggle-effect.on{background:var(--amber-soft);border:1px solid var(--amber-line)}
+.toggle-effect-title{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-family:var(--mono)}
+.toggle-effect.off .toggle-effect-title{color:var(--good)}
+.toggle-effect.on .toggle-effect-title{color:var(--amber)}
+.toggle-effect ul{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.toggle-effect li{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.toggle-effect li i{font-size:15px;flex-shrink:0;margin-top:1px}
+.toggle-effect.off li i{color:var(--good)}
+.toggle-effect.on li i.ti-alert-triangle{color:var(--amber)}
+.toggle-effect.on li i.ti-check{color:var(--good)}
+/* warn / tip */
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.warn-box strong{color:var(--ink);font-weight:600}
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0;background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:var(--teal)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--teal)}.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+/* retention table */
+.comp-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);margin:0}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:11px 14px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.comp td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:top}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+/* checklist cards */
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.checklist-card{border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden;background:var(--card)}
+.checklist-card-head{padding:16px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.checklist-card-head h4{font-size:14px;font-weight:600;flex:1}
+.checklist-card-head .head-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.checklist-card.ok .checklist-card-head{background:var(--good-soft)}
+.checklist-card.ok .head-icon{background:var(--card);color:var(--good);border:1px solid var(--good-line)}
+.checklist-card.ok h4{color:var(--good)}
+.checklist-card.warn .checklist-card-head{background:var(--amber-soft)}
+.checklist-card.warn .head-icon{background:var(--card);color:var(--amber);border:1px solid var(--amber-line)}
+.checklist-card.warn h4{color:var(--amber)}
+.checklist-card.bad .checklist-card-head{background:var(--bad-soft)}
+.checklist-card.bad .head-icon{background:var(--card);color:var(--bad);border:1px solid var(--bad-line)}
+.checklist-card.bad h4{color:var(--bad)}
+.checklist-card.blue{border-color:var(--blue-line)}
+.checklist-card.blue .checklist-card-head{background:var(--blue-soft)}
+.checklist-card.blue .head-icon{background:var(--card);color:var(--blue);border:1px solid var(--blue-line)}
+.checklist-card.blue h4{color:var(--blue)}
+.checklist-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.checklist-card.open .checklist-body{max-height:340px}
+.checklist-list{padding:12px 18px 16px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line)}
+.cl-item{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.cl-item i{font-size:14px;flex-shrink:0;margin-top:2px}
+.checklist-card.ok .cl-item i{color:var(--good)}
+.checklist-card.warn .cl-item i{color:var(--amber)}
+.checklist-card.bad .cl-item i{color:var(--bad)}
+.checklist-card.blue .cl-item i{color:var(--blue)}
+.chev{font-size:16px;color:var(--ink-3);transition:transform .3s;flex-shrink:0}
+.checklist-card.open .chev{transform:rotate(180deg)}
+/* myths accordion */
+.myths{display:flex;flex-direction:column;gap:10px;margin:0}
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:border-color .2s}
+.myth:hover{border-color:var(--line-2)}
+.myth.open{border-color:var(--bad)}
+.myth-q{display:flex;align-items:center;gap:12px;padding:16px 20px}
+.myth-q i.ico{color:var(--bad);font-size:18px;flex-shrink:0}
+.myth-q span{flex:1;font-size:14px;font-weight:600;font-style:italic}
+.myth-q .myth-chev{font-size:16px;color:var(--ink-3);transition:transform .3s;flex-shrink:0}
+.myth.open .myth-chev{transform:rotate(180deg)}
+.myth-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.myth.open .myth-a{max-height:320px}
+.myth-a-inner{padding:0 20px 16px 50px;font-size:13px;color:var(--ink-2);line-height:1.6}
+.myth-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:600;background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad-line);margin-bottom:8px;font-family:var(--mono)}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.bridge .br-i{width:48px;height:48px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge strong{font-weight:600;font-size:15px;display:block;margin-bottom:4px;color:var(--agent)}
+.bridge span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.checklist-grid{grid-template-columns:1fr}.plan-row{grid-template-columns:1fr}.plan-key{font-size:12px}.plan-tab{font-size:11px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.checklist-card.open .checklist-body,.checklist-body{max-height:none!important}.myth-a{max-height:none!important}.plan-panel{display:block!important}.toggle-widget,.warn-box,.tip,.comp-wrap,.checklist-card,.myth,.key,.bridge,.plan-panels,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 9.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Privacy &amp; Sicurezza</div>
+  <h1 class="rv" data-i="h1">Privacy e Sicurezza con Claude</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-credit-card"></i><span class="no">01</span><h2 data-i="s1">Privacy per piano</h2></div>
+  <p class="lede-p rv" data-i="planIntro"></p>
+  <div class="rv">
+    <div class="plan-tabs">
+      <div class="plan-tab active" data-plan="consumer" onclick="showPlan('consumer',this)" data-i="tabConsumer">Free / Pro / Max</div>
+      <div class="plan-tab" data-plan="team" onclick="showPlan('team',this)" data-i="tabTeam">Team / Enterprise</div>
+      <div class="plan-tab" data-plan="api" onclick="showPlan('api',this)" data-i="tabApi">API</div>
+    </div>
+    <div class="plan-panels">
+      <div class="plan-panel active" id="plan-consumer"></div>
+      <div class="plan-panel" id="plan-team"></div>
+      <div class="plan-panel" id="plan-api"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-toggle-right"></i><span class="no">02</span><h2 data-i="s2">L'impatto del toggle training</h2></div>
+  <p class="lede-p rv" data-i-html="toggleIntro"></p>
+  <div class="toggle-widget rv">
+    <h4 data-i="toggleWH"></h4>
+    <p data-i="toggleWP"></p>
+    <div class="toggle-row">
+      <span class="toggle-label" id="toggleLabel"></span>
+      <button class="toggle-switch" id="trainToggle" onclick="flipToggle()" aria-label="training"></button>
+    </div>
+    <div class="toggle-effect off" id="toggleEffect">
+      <div class="toggle-effect-title"><i class="ti ti-shield-check"></i> <span id="effectTitle"></span></div>
+      <ul id="effectList"></ul>
+    </div>
+  </div>
+  <div class="warn-box rv" style="margin-top:16px">
+    <div class="warn-title"><i class="ti ti-info-circle"></i> <span data-i="noteH"></span></div>
+    <p data-i-html="noteP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clock"></i><span class="no">03</span><h2 data-i="s3">Quanto tempo vengono conservati i dati</h2></div>
+  <div class="comp-wrap rv">
+    <table class="comp">
+      <thead><tr><th data-i="retSit"></th><th data-i="retRet"></th></tr></thead>
+      <tbody id="ret-body"></tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-ghost"></i><span class="no">04</span><h2 data-i="s4">Modalità Incognito</h2></div>
+  <div class="tip rv"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="incoH"></h4><p data-i="incoP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">05</span><h2 data-i="s5">Cosa caricare (e cosa no) su Claude</h2></div>
+  <p class="lede-p rv" data-i="clIntro"></p>
+  <div class="checklist-grid rv" id="checklist"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">06</span><h2 data-i="s6">Equivoci comuni da correggere</h2></div>
+  <div class="myths rv" id="myths"></div>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">07</span><h2 data-i="s7">In sintesi</h2></div>
+  <div class="key rv"><p data-i="keyP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">08</span><h2 data-i="s8">Prossimo passo</h2></div>
+  <div class="bridge rv"><div class="br-i"><i class="ti ti-arrow-right"></i></div><div><strong data-i="brH"></strong><span data-i="brP"></span></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Privacy e Sicurezza con Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 9.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Privacy & Sicurezza',
+h1:'Privacy e Sicurezza con Claude',
+lede:'I fatti precisi su cosa fa Anthropic con i vostri dati — differenziati per piano, con i controlli reali a vostra disposizione.',
+hook:'«Prima di usare qualsiasi strumento AI per il lavoro professionale, bisogna capire esattamente cosa succede ai propri dati. Non le rassicurazioni marketing: i fatti. Questa lezione ve li dà — precisi, verificati, senza drammatizzare ma senza minimizzare.»',
+s1:'Privacy per piano',
+planIntro:'Le regole sulla privacy non sono le stesse per tutti i piani. Seleziona il tuo piano per vedere i dettagli.',
+tabConsumer:'Free / Pro / Max',tabTeam:'Team / Enterprise',tabApi:'API',
+s2:'L’impatto del toggle training',
+toggleIntro:'Per i piani consumer (Free/Pro/Max), il toggle "Help Improve Claude" è <strong>disattivato per default</strong>. Capire cosa cambia se lo attivi.',
+toggleWH:'Toggle "Help Improve Claude" — piani consumer',
+toggleWP:'Simula l’effetto del toggle nelle tue impostazioni privacy di claude.ai',
+noteH:'Nota importante',
+noteP:'Il toggle ON si applica solo alle conversazioni <strong>nuove o riprese dopo</strong> l’attivazione. Le conversazioni storiche non vengono retroattivamente incluse nel training.',
+s3:'Quanto tempo vengono conservati i dati',
+retSit:'Situazione',retRet:'Retention',
+s4:'Modalità Incognito',
+incoH:'Cos’è e come si usa',
+incoP:'Si attiva con l’icona del fantasma (top-right nell’interfaccia). La conversazione Incognito non viene salvata nella cronologia e non è mai usata per training — indipendentemente dal toggle globale. Utile ogni volta che si vuole discutere di qualcosa di sensibile senza che quella conversazione rimanga.',
+s5:'Cosa caricare (e cosa no) su Claude',
+clIntro:'Clicca su ogni categoria per espandere i dettagli pratici.',
+s6:'Equivoci comuni da correggere',
+s7:'In sintesi',
+keyP:'Privacy non significa paranoia. Significa capire le regole del gioco e giocare consapevolmente.',
+s8:'Prossimo passo',
+brH:'Prossimo passo: come restare aggiornati',
+brP:'Avete la mappa della privacy. La prossima lezione è su come restare aggiornati — perché quello che sapete oggi su Claude sarà parzialmente obsoleto tra 6 mesi. Vi do il sistema per tenere il passo senza essere sommersi.',
+foot:'Morfeus — Privacy e Sicurezza con Claude'
+},
+en:{
+kicker:'Lesson 9.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Privacy & Security',
+h1:'Privacy and Security with Claude',
+lede:'The precise facts on what Anthropic does with your data — broken down by plan, with the real controls at your disposal.',
+hook:'"Before using any AI tool for professional work, you need to understand exactly what happens to your data. Not the marketing reassurances: the facts. This lesson gives them to you — precise, verified, without dramatizing but without minimizing."',
+s1:'Privacy by plan',
+planIntro:'The privacy rules are not the same for every plan. Select your plan to see the details.',
+tabConsumer:'Free / Pro / Max',tabTeam:'Team / Enterprise',tabApi:'API',
+s2:'The impact of the training toggle',
+toggleIntro:'For consumer plans (Free/Pro/Max), the "Help Improve Claude" toggle is <strong>off by default</strong>. Understand what changes if you turn it on.',
+toggleWH:'"Help Improve Claude" toggle — consumer plans',
+toggleWP:'Simulate the effect of the toggle in your claude.ai privacy settings',
+noteH:'Important note',
+noteP:'The toggle ON applies only to conversations that are <strong>new or resumed after</strong> activation. Historical conversations are not retroactively included in training.',
+s3:'How long data is kept',
+retSit:'Situation',retRet:'Retention',
+s4:'Incognito mode',
+incoH:'What it is and how to use it',
+incoP:'It\'s activated with the ghost icon (top-right in the interface). The Incognito conversation is not saved in your history and is never used for training — regardless of the global toggle. Useful whenever you want to discuss something sensitive without that conversation sticking around.',
+s5:'What to upload (and what not) to Claude',
+clIntro:'Click on each category to expand the practical details.',
+s6:'Common misconceptions to correct',
+s7:'In summary',
+keyP:'Privacy doesn\'t mean paranoia. It means understanding the rules of the game and playing consciously.',
+s8:'Next step',
+brH:'Next step: how to stay up to date',
+brP:'You have the privacy map. The next lesson is about how to stay up to date — because what you know about Claude today will be partly obsolete in 6 months. I give you the system to keep pace without being overwhelmed.',
+foot:'Morfeus — Privacy and Security with Claude'
+}};
+
+/* ===== PLAN PANELS ===== */
+var PLANS={
+it:{
+consumer:{h:'Piani consumer — Free, Pro, Max',rows:[
+['Training sui dati','<span class="pill pill-green"><i class="ti ti-toggle-left"></i> Opt-in</span> — disattivato per default. Anthropic <em>non</em> usa i dati senza il tuo consenso esplicito.'],
+['Come attivarlo','<code>Avatar → Privacy Settings → "Help Improve Claude"</code> — toggle ON per contribuire, OFF (default) per non farlo.'],
+['Retention — training OFF','30 giorni dalla conversazione.'],
+['Retention — training ON','Fino a 5 anni (dati de-identificati). Si applica solo alle conversazioni <em>nuove o riprese dopo</em> l’attivazione, non alle storiche.'],
+['Modalità Incognito','Non salvata, mai usata per training — indipendentemente dal toggle globale.'],
+['Conversazioni cancellate','Rimosse dal backend entro 30 gg. Escluse da qualsiasi pipeline di training futuro.'],
+['Accesso dipendenti Anthropic','Non di default. Solo se il sistema di sicurezza flagga contenuti — per revisione safety, non per training.']
+]},
+team:{h:'Piani commerciali — Team ed Enterprise',rows:[
+['Training sui dati','<span class="pill pill-blue"><i class="ti ti-shield-check"></i> Zero per default</span> — Anthropic non usa mai le conversazioni per il training, senza azioni richieste.'],
+['Eccezione','Il cliente può scegliere di contribuire dati per il training, ma deve farlo esplicitamente. Non è una scelta individuale: è una decisione aziendale.'],
+['Controlli admin','Controlli a livello organizzazione. Enterprise aggiunge audit log, SSO, SCIM, IP allowlisting, data retention configurabile.'],
+['Compliance GDPR','DPA (Data Processing Addendum) con SCCs incluso automaticamente nei Commercial Terms. Data controller EEA: Anthropic Ireland.'],
+['Enterprise HIPAA','Disponibile da gennaio 2026 su richiesta — per settori regolamentati (sanità, ecc.).'],
+['Quando sceglierlo','Quando si lavora regolarmente con dati sensibili aziendali, dati di terzi o documenti sotto NDA.']
+]},
+api:{h:'API — accesso developer',rows:[
+['Training sui dati','<span class="pill pill-blue"><i class="ti ti-shield-check"></i> Zero per default</span> — stessa policy dei piani commerciali.'],
+['Zero Data Retention','Accordo speciale disponibile su richiesta — elimina completamente la retention. Pensato per applicazioni con dati molto sensibili.'],
+['DPA','Disponibile con gli Commercial Terms. Garanzie GDPR incluse.'],
+['Data residency','Parametro <code>inference_geo</code> per specificare la regione di elaborazione.']
+]}
+},
+en:{
+consumer:{h:'Consumer plans — Free, Pro, Max',rows:[
+['Data training','<span class="pill pill-green"><i class="ti ti-toggle-left"></i> Opt-in</span> — off by default. Anthropic does <em>not</em> use your data without your explicit consent.'],
+['How to enable it','<code>Avatar → Privacy Settings → "Help Improve Claude"</code> — toggle ON to contribute, OFF (default) not to.'],
+['Retention — training OFF','30 days from the conversation.'],
+['Retention — training ON','Up to 5 years (de-identified data). It applies only to conversations that are <em>new or resumed after</em> activation, not to historical ones.'],
+['Incognito mode','Not saved, never used for training — regardless of the global toggle.'],
+['Deleted conversations','Removed from the backend within 30 days. Excluded from any future training pipeline.'],
+['Anthropic employee access','Not by default. Only if the safety system flags content — for safety review, not for training.']
+]},
+team:{h:'Commercial plans — Team and Enterprise',rows:[
+['Data training','<span class="pill pill-blue"><i class="ti ti-shield-check"></i> Zero by default</span> — Anthropic never uses conversations for training, with no action required.'],
+['Exception','The customer can choose to contribute data for training, but must do so explicitly. It\'s not an individual choice: it\'s a company decision.'],
+['Admin controls','Organization-level controls. Enterprise adds audit logs, SSO, SCIM, IP allowlisting, configurable data retention.'],
+['GDPR compliance','DPA (Data Processing Addendum) with SCCs included automatically in the Commercial Terms. EEA data controller: Anthropic Ireland.'],
+['Enterprise HIPAA','Available from January 2026 on request — for regulated sectors (healthcare, etc.).'],
+['When to choose it','When you regularly work with sensitive company data, third-party data or documents under NDA.']
+]},
+api:{h:'API — developer access',rows:[
+['Data training','<span class="pill pill-blue"><i class="ti ti-shield-check"></i> Zero by default</span> — same policy as the commercial plans.'],
+['Zero Data Retention','Special agreement available on request — completely eliminates retention. Designed for applications with highly sensitive data.'],
+['DPA','Available with the Commercial Terms. GDPR guarantees included.'],
+['Data residency','<code>inference_geo</code> parameter to specify the processing region.']
+]}
+}};
+
+/* ===== TOGGLE EFFECT STATES ===== */
+var TOGGLE={
+it:{
+labelOff:'Training disattivato (default)',labelOn:'Training attivato (opt-in)',
+titleOff:'Stato attuale: Training OFF',titleOn:'Stato attuale: Training ON',
+off:[
+['check','Anthropic non usa le tue conversazioni per migliorare i modelli'],
+['check','Retention: 30 giorni dalla conversazione'],
+['check','Comportamento invariato per conversazioni Incognito (sempre escluse)'],
+['check','Comportamento invariato per conversazioni cancellate (sempre escluse)']
+],
+on:[
+['alert','Anthropic può usare le conversazioni nuove per migliorare i modelli'],
+['alert','Retention: fino a 5 anni per i dati de-identificati'],
+['check','Si applica solo a conversazioni nuove o riprese dopo l’attivazione'],
+['check','Incognito e conversazioni cancellate rimangono sempre escluse']
+]
+},
+en:{
+labelOff:'Training off (default)',labelOn:'Training on (opt-in)',
+titleOff:'Current state: Training OFF',titleOn:'Current state: Training ON',
+off:[
+['check','Anthropic does not use your conversations to improve the models'],
+['check','Retention: 30 days from the conversation'],
+['check','Behavior unchanged for Incognito conversations (always excluded)'],
+['check','Behavior unchanged for deleted conversations (always excluded)']
+],
+on:[
+['alert','Anthropic may use new conversations to improve the models'],
+['alert','Retention: up to 5 years for de-identified data'],
+['check','It applies only to conversations that are new or resumed after activation'],
+['check','Incognito and deleted conversations always remain excluded']
+]
+}};
+
+/* ===== RETENTION TABLE ===== */
+var RET={
+it:[
+['Consumer (Free/Pro/Max) — training OFF (default)','30 giorni dalla conversazione'],
+['Consumer — training ON (opt-in attivato)','Fino a 5 anni (de-identificati) — solo conversazioni nuove/riprese dopo attivazione'],
+['Conversazione cancellata dall’utente','Rimossa entro 30 gg, esclusa da training futuro'],
+['Conversazione in modalità Incognito','Retention più breve, mai usata per training'],
+['Team / Enterprise / API','Configurabile; Enterprise con data retention controls custom'],
+['Feedback esplicito (thumbs up/down)','Fino a 5 anni'],
+['Violazioni policy (safety flag)','Input/output: 2 anni; trust & safety score: 7 anni']
+],
+en:[
+['Consumer (Free/Pro/Max) — training OFF (default)','30 days from the conversation'],
+['Consumer — training ON (opt-in enabled)','Up to 5 years (de-identified) — only new/resumed conversations after activation'],
+['Conversation deleted by the user','Removed within 30 days, excluded from future training'],
+['Conversation in Incognito mode','Shorter retention, never used for training'],
+['Team / Enterprise / API','Configurable; Enterprise with custom data retention controls'],
+['Explicit feedback (thumbs up/down)','Up to 5 years'],
+['Policy violations (safety flag)','Input/output: 2 years; trust & safety score: 7 years']
+]};
+
+/* ===== CHECKLIST ===== */
+var CHECK={
+it:[
+['ok','ti ti-check','Si — generalmente appropriato',[
+'Testi e documenti senza dati personali di terzi',
+'Informazioni di business generiche (settore, sfide, obiettivi)',
+'Draft di email, presentazioni, report',
+'Analisi di mercato con nomi anonimizzati ("Cliente A")',
+'Problemi da risolvere descritti senza identificatori reali'
+]],
+['warn','ti ti-alert-triangle','Attenzione — anonimizza prima',[
+'Documenti con nomi reali di clienti o fornitori',
+'Informazioni finanziarie specifiche dell’azienda',
+'Email con dati di contatto di persone reali',
+'Strategia aziendale con dettagli competitivi',
+'Documenti sotto NDA — usa incognito o Team/Enterprise'
+]],
+['bad','ti ti-x','No — su piano consumer personale',[
+'CV o dati anagrafici di candidati o dipendenti',
+'Codice fiscale, IBAN, dati bancari di terzi',
+'Cartelle cliniche o dati sanitari identificabili',
+'Documenti con segreti industriali espliciti',
+'Dati GDPR di clienti senza accordo di trattamento'
+]],
+['blue','ti ti-building','Usa Team/Enterprise se...',[
+'Lavori regolarmente con dati sensibili aziendali',
+'Il tuo team HR usa Claude con dati di candidati',
+'Hai clienti in settori regolamentati (sanità, finanza)',
+'Serve un DPA per obblighi contrattuali o compliance'
+]]
+],
+en:[
+['ok','ti ti-check','Yes — generally appropriate',[
+'Texts and documents without third-party personal data',
+'Generic business information (sector, challenges, goals)',
+'Drafts of emails, presentations, reports',
+'Market analysis with anonymized names ("Client A")',
+'Problems to solve described without real identifiers'
+]],
+['warn','ti ti-alert-triangle','Caution — anonymize first',[
+'Documents with real names of clients or suppliers',
+'Company-specific financial information',
+'Emails with contact details of real people',
+'Business strategy with competitive details',
+'Documents under NDA — use incognito or Team/Enterprise'
+]],
+['bad','ti ti-x','No — on a personal consumer plan',[
+'CVs or personal data of candidates or employees',
+'Tax codes, IBANs, third-party banking data',
+'Medical records or identifiable health data',
+'Documents with explicit trade secrets',
+'GDPR client data without a processing agreement'
+]],
+['blue','ti ti-building','Use Team/Enterprise if...',[
+'You regularly work with sensitive company data',
+'Your HR team uses Claude with candidate data',
+'You have clients in regulated sectors (healthcare, finance)',
+'You need a DPA for contractual obligations or compliance'
+]]
+]};
+
+/* ===== MYTHS ===== */
+var MYTHS={
+it:[
+['"Con Claude ho più privacy che con ChatGPT"','Parzialmente falso','La differenza non è drammatica tra i player principali: tutti hanno policy simili. La vera differenza di privacy radicale è tra cloud (Claude/ChatGPT/Gemini) e modelli locali (Llama via Ollama). Per il 95% degli usi professionali Claude con le impostazioni configurate correttamente è appropriato.'],
+['"Se pago Pro, i miei dati sono automaticamente protetti dal training"','Falso','Pro è un piano consumer: il training è opt-in (default disattivato), ma se l’utente lo ha attivato i dati vengono usati. La protezione automatica e garantita dal training è nei piani Team/Enterprise/API — non in Pro.'],
+['"Anthropic vende i miei dati a terzi"','Falso','La policy Anthropic non prevede la vendita di dati a terzi. I dati sono usati internamente per training (solo se opt-in attivo) o per revisione safety in caso di flag. Nessuna cessione commerciale a parti terze.'],
+['"Cancellare una conversazione non serve a nulla per la privacy"','Falso','Se cancelli una conversazione, Anthropic la rimuove dal backend entro 30 giorni e la esclude da qualsiasi pipeline di training futuro. Cancellare ha effetti reali — non è un’azione puramente estetica.'],
+['"Il toggle training ON vale anche per le conversazioni passate"','Parzialmente falso','Il toggle si applica solo alle conversazioni nuove o riprese dopo l’attivazione. Le conversazioni storiche senza attività successiva non vengono retroattivamente incluse nel training.']
+],
+en:[
+['"With Claude I have more privacy than with ChatGPT"','Partly false','The difference isn\'t dramatic between the main players: they all have similar policies. The real radical privacy difference is between cloud (Claude/ChatGPT/Gemini) and local models (Llama via Ollama). For 95% of professional uses, Claude with the settings configured correctly is appropriate.'],
+['"If I pay for Pro, my data is automatically protected from training"','False','Pro is a consumer plan: training is opt-in (off by default), but if the user has enabled it the data is used. Automatic and guaranteed protection from training is in the Team/Enterprise/API plans — not in Pro.'],
+['"Anthropic sells my data to third parties"','False','The Anthropic policy does not provide for the sale of data to third parties. Data is used internally for training (only if opt-in is active) or for safety review in case of a flag. No commercial transfer to third parties.'],
+['"Deleting a conversation does nothing for privacy"','False','If you delete a conversation, Anthropic removes it from the backend within 30 days and excludes it from any future training pipeline. Deleting has real effects — it\'s not a purely cosmetic action.'],
+['"The training toggle ON also applies to past conversations"','Partly false','The toggle applies only to conversations that are new or resumed after activation. Historical conversations with no subsequent activity are not retroactively included in training.']
+]};
+
+var TAGLBL={it:'Cosa caricare',en:'What to upload'};
+var LANG='it',trainingOn=false,curPlan='consumer';
+
+function renderPlans(){
+  ['consumer','team','api'].forEach(function(k){
+    var p=PLANS[LANG][k];
+    document.getElementById('plan-'+k).innerHTML='<h4>'+p.h+'</h4>'+p.rows.map(function(r){
+      return '<div class="plan-row"><div class="plan-key">'+r[0]+'</div><div class="plan-val">'+r[1]+'</div></div>';
+    }).join('');
+  });
+}
+function showPlan(id,el){
+  curPlan=id;
+  document.querySelectorAll('.plan-tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.plan-panel').forEach(function(p){p.classList.remove('active')});
+  el.classList.add('active');
+  document.getElementById('plan-'+id).classList.add('active');
+}
+function renderToggle(){
+  var t=TOGGLE[LANG];
+  var lbl=document.getElementById('toggleLabel');
+  var eff=document.getElementById('toggleEffect');
+  var title=document.getElementById('effectTitle');
+  var list=document.getElementById('effectList');
+  var sw=document.getElementById('trainToggle');
+  var data=trainingOn?t.on:t.off;
+  sw.classList.toggle('on',trainingOn);
+  lbl.textContent=trainingOn?t.labelOn:t.labelOff;
+  eff.className='toggle-effect '+(trainingOn?'on':'off');
+  title.textContent=trainingOn?t.titleOn:t.titleOff;
+  list.innerHTML=data.map(function(it){
+    var ic=it[0]==='alert'?'ti ti-alert-triangle':'ti ti-check';
+    return '<li><i class="'+ic+'"></i> '+it[1]+'</li>';
+  }).join('');
+}
+function flipToggle(){trainingOn=!trainingOn;renderToggle()}
+function renderRet(){
+  document.getElementById('ret-body').innerHTML=RET[LANG].map(function(r){
+    return '<tr><td class="fn">'+r[0]+'</td><td>'+r[1]+'</td></tr>';
+  }).join('');
+}
+function renderChecklist(){
+  document.getElementById('checklist').innerHTML=CHECK[LANG].map(function(c){
+    return '<div class="checklist-card '+c[0]+'" onclick="toggleChecklist(this)">'+
+    '<div class="checklist-card-head"><div class="head-icon"><i class="'+c[1]+'"></i></div>'+
+    '<h4>'+c[2]+'</h4><i class="ti ti-chevron-down chev"></i></div>'+
+    '<div class="checklist-body"><div class="checklist-list">'+
+    c[3].map(function(x){return '<div class="cl-item"><i class="'+c[1]+'"></i>'+x+'</div>'}).join('')+
+    '</div></div></div>';
+  }).join('');
+}
+function toggleChecklist(el){
+  var wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.checklist-card').forEach(function(c){c.classList.remove('open')});
+  if(!wasOpen)el.classList.add('open');
+}
+function renderMyths(){
+  document.getElementById('myths').innerHTML=MYTHS[LANG].map(function(m){
+    return '<div class="myth" onclick="toggleMyth(this)">'+
+    '<div class="myth-q"><i class="ti ti-alert-circle ico"></i><span>'+m[0]+'</span><i class="ti ti-chevron-down myth-chev"></i></div>'+
+    '<div class="myth-a"><div class="myth-a-inner"><div class="myth-tag"><i class="ti ti-x"></i> '+m[1]+'</div><p>'+m[2]+'</p></div></div>'+
+    '</div>';
+  }).join('');
+}
+function toggleMyth(el){
+  var wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.myth').forEach(function(m){m.classList.remove('open')});
+  if(!wasOpen)el.classList.add('open');
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderPlans();renderToggle();renderRet();renderChecklist();renderMyths();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

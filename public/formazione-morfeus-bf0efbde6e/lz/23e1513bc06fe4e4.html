@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algoritmo & glossario — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.recipe{display:flex;align-items:stretch;gap:8px;margin-top:4px}
+.rstep{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 12px;text-align:center}
+.rstep .ri{width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 9px}
+.rstep h4{font-size:13.5px;font-weight:600;margin-bottom:3px}.rstep p{font-size:12px;color:var(--ink-2);line-height:1.4}
+.rarrow{display:flex;align-items:center;color:var(--accent);font-size:20px}
+.exline{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px;margin-top:14px}
+.exline .exi{width:40px;height:40px;border-radius:11px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.exline h4{font-size:14px;font-weight:600;margin-bottom:4px}.exline p{font-size:14px;color:var(--ink-2)}.exline p strong{color:var(--ink)}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.steps span{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px 11px;color:var(--ink-2)}
+.steps i{color:var(--accent);font-size:12px}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.scale{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin-top:22px}
+.scalec{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.scalec .si{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto 9px}
+.scalec.a .si{background:var(--accent-soft);color:var(--accent)}.scalec.b .si{background:var(--agent-soft);color:var(--agent)}
+.scalec h4{font-size:14px;font-weight:600;margin-bottom:4px}.scalec p{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.scalearr{color:var(--agent);font-size:22px;display:flex;align-items:center;justify-content:center}
+.chain{display:flex;flex-direction:column;gap:8px}
+.clink{display:flex;align-items:center;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s;position:relative}
+.clink:hover{border-color:var(--line-2)}.clink.on{border-color:var(--accent);background:var(--accent-soft)}
+.clink .cn{width:30px;height:30px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.clink.on .cn{background:var(--accent);color:#fff}
+.clink .ct{font-size:14.5px;font-weight:600}.clink .cs{font-size:12px;color:var(--ink-3);margin-left:9px;font-weight:400}.clink.on .cs{color:var(--accent)}
+.clink .cy{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:600}
+.clink .nest{position:absolute;left:30px;bottom:-8px;width:1px;height:8px;background:var(--accent-line)}
+.cdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.cdetail h4{font-size:15px;font-weight:600;margin-bottom:8px;color:var(--accent)}
+.cdetail p{font-size:14.5px;color:var(--ink-2);margin-bottom:8px}.cdetail p:last-of-type{margin-bottom:0}.cdetail p strong{color:var(--ink)}
+.cdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border-radius:var(--r);padding:10px 12px;color:var(--ink-2);margin-top:10px;line-height:1.6;display:flex;gap:9px}
+.cdetail .ex i{color:var(--accent);font-size:14px;margin-top:1px;flex-shrink:0}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.recipe{flex-direction:column}.rarrow{transform:rotate(90deg);justify-content:center}.scale{grid-template-columns:1fr}.scalearr{transform:rotate(90deg)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.rstep,.card3,.cp,.clink,.cdetail,.key,.exline,.scalec{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Cultura dell'AI</div>
+  <h1 class="rv" data-i="h1">Algoritmo & glossario: la torta della nonna</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-cake"></i><span class="no">01</span><h2 data-i="s1">L'algoritmo è la ricetta</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-tools-kitchen-2"></i></div><div><h4 data-i="note1H">La torta della nonna</h4><p data-i-html="note1P"></p></div></div>
+  <div class="recipe rv" style="margin-top:16px">
+    <div class="rstep"><div class="ri"><i class="ti ti-basket"></i></div><h4 data-i="r1H"></h4><p data-i="r1P"></p></div>
+    <div class="rarrow"><i class="ti ti-plus"></i></div>
+    <div class="rstep"><div class="ri"><i class="ti ti-list-numbers"></i></div><h4 data-i="r2H"></h4><p data-i="r2P"></p></div>
+    <div class="rarrow"><i class="ti ti-arrow-right"></i></div>
+    <div class="rstep"><div class="ri"><i class="ti ti-checkbox"></i></div><h4 data-i="r3H"></h4><p data-i="r3P"></p></div>
+  </div>
+  <div class="exline rv"><div class="exi"><i class="ti ti-face-id"></i></div><div><h4 data-i="exH"></h4><p data-i-html="exP"></p>
+    <div class="steps">
+      <span data-i="ex1"></span><i class="ti ti-chevron-right"></i>
+      <span data-i="ex2"></span><i class="ti ti-chevron-right"></i>
+      <span data-i="ex3"></span><i class="ti ti-chevron-right"></i>
+      <span data-i="ex4"></span>
+    </div>
+  </div></div>
+
+  <div class="sh rv"><i class="ti ti-rotate-clockwise-2"></i><span class="no">02</span><h2 data-i="s2">Ogni tua procedura è un algoritmo</h2></div>
+  <div class="key rv"><p data-i="q1"></p><div class="cap" data-i="q1cap"></div></div>
+  <p class="lede rv" style="font-size:15px;margin:22px 0 0" data-i-html="autoIntro"></p>
+  <div class="scale rv">
+    <div class="scalec a"><div class="si"><i class="ti ti-user"></i></div><h4 data-i="scAH"></h4><p data-i="scAP"></p></div>
+    <div class="scalearr"><i class="ti ti-arrow-right"></i></div>
+    <div class="scalec b"><div class="si"><i class="ti ti-building-factory-2"></i></div><h4 data-i="scBH"></h4><p data-i="scBP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">03</span><h2 data-i="s3">Il glossario: una catena annidata</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="chainIntro"></p>
+  <div class="chain rv" id="chain"></div>
+  <div class="cdetail rv" id="cdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">04</span><h2 data-i="s4">Perché il 2017 cambia tutto</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-table-row"></i></div><h4 data-i="t1H"></h4><p data-i="t1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-affiliate"></i></div><h4 data-i="t2H"></h4><p data-i="t2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-message-chatbot"></i></div><h4 data-i="t3H"></h4><p data-i="t3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-clipboard-list"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Algoritmo & glossario</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Cultura dell\'AI',
+h1:'Algoritmo & glossario: la torta della nonna',
+lede:'I "paroloni" dell\'AI — algoritmo, machine learning, deep learning, reti neurali, Transformer — fanno paura solo finché restano astratti. Smontati uno per uno con una ricetta di cucina diventano una catena semplice: un anello dentro l\'altro, ognuno spiegato a fondo.',
+s1:'L\'algoritmo è la ricetta',
+note1H:'La torta della nonna',
+note1P:'Un algoritmo è un <strong>insieme finito di istruzioni</strong> — regole precise — che descrivono come eseguire un compito in modo sistematico. <strong>Io lo chiamo la torta della nonna. La ricetta.</strong> Cos\'è una ricetta? Ogni passaggio dice esattamente quali ingredienti, in che quantità, per quanto tempo: un\'istruzione che, seguita alla lettera, porta sempre allo stesso piatto. La nonna fa la torta sempre nello stesso modo, quindi il risultato è <strong>consistente nel tempo</strong>. Non "viene bene a volte": viene uguale ogni volta.',
+r1H:'Ingredienti',r1P:'Gli input di partenza. I tuoi dati, le materie prime.',
+r2H:'Istruzioni',r2P:'Le regole: ogni passo con quantità e tempi, sempre uguali.',
+r3H:'Risultato',r3P:'Il piatto finale, consistente ogni singola volta.',
+exH:'Un esempio che hai in tasca',
+exP:'Lo <strong>sblocco col volto</strong> del telefono è un algoritmo: una serie finita di step che, eseguiti nell\'ordine giusto, portano sempre allo stesso risultato — lo schermo che si apre. Non c\'è magia, c\'è una sequenza.',
+ex1:'Inquadra il viso',ex2:'Mappa i punti del volto',ex3:'Confronta col modello salvato',ex4:'Sblocca',
+s2:'Ogni tua procedura è un algoritmo',
+q1:'«Ogni singola procedura che fai durante la giornata è un algoritmo.»',
+q1cap:'Rispondere a una mail-tipo, controllare un report, preparare un preventivo: tutte ricette. E l\'AI è la cosa più forte al mondo a replicare un algoritmo ben definito, sempre con la stessa qualità.',
+autoIntro:'Qui entra l\'<strong>automazione</strong>: prendere la "ricetta della nonna" e portarla su <strong>scala industriale</strong>. La nonna sforna una torta alla volta; la fabbrica ne sforna mille identiche. Stesso identico procedimento, solo moltiplicato. Con un avvertimento netto:',
+scAH:'La nonna',scAP:'Una ricetta, fatta a mano, una torta alla volta. Tu segui i passi.',
+scBH:'La fabbrica',scBP:'La stessa ricetta data alla macchina: mille torte identiche. Se la ricetta è buona, lo sono tutte. Se fa schifo, fanno schifo tutte — a maggior ragione.',
+s3:'Il glossario: una catena annidata',
+chainIntro:'Questi termini non sono cinque cose separate: sono un anello dentro l\'altro, ognuno più specifico del precedente. Clicca ogni concetto per aprire il livello successivo e leggerne la spiegazione completa.',
+s4:'Perché il 2017 cambia tutto',
+t1H:'Prima: parola per parola',t1P:'Prima del Transformer i sistemi leggevano il testo in sequenza, una parola dopo l\'altra: lenti, e fragili sul contesto lungo. Un dettaglio: lo vediamo in A2.',
+t2H:'Dopo: tutto sul tavolo',t2P:'Il Transformer "sparge le parole sul tavolo" e le fa parlare tra loro: ognuna guarda tutte le altre e capisce con quali ha un legame forte.',
+t3H:'Il risultato',t3P:'È la tecnologia per cui esistono ChatGPT, Claude, Perplexity. Senza il 2017, modelli così erano semplicemente impossibili.',
+s5:'Checkpoint',
+cpH:'Smonta un tuo processo',
+cpP:'Capire l\'algoritmo serve a una cosa pratica: se sai descrivere una tua procedura come una ricetta, puoi delegarla. L\'AI eccelle proprio nel replicare ricette ben scritte — e nel portarle su scala.',
+cpQ:'Prendi un\'attività che ripeti ogni settimana (un report, una risposta tipo, un controllo). Scrivila come una ricetta: ingredienti, istruzioni passo-passo, risultato atteso. È il primo passo verso la delega.',
+bridge:'Sai cos\'è un algoritmo, da dove arrivano gli LLM e cosa significa portarli su scala. <b>Prossimo:</b> i dati — il carburante senza cui anche la migliore ricetta resta solo carta.',
+foot:'Morfeus — Algoritmo & glossario'
+},
+en:{
+kicker:'Lesson A1.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'AI culture',
+h1:'Algorithm & glossary: grandma\'s cake recipe',
+lede:'The AI "big words" — algorithm, machine learning, deep learning, neural networks, Transformer — only scare you while they stay abstract. Broken down one by one with a cooking recipe they become a simple chain: one ring inside the next, each explained in depth.',
+s1:'The algorithm is the recipe',
+note1H:'Grandma\'s cake',
+note1P:'An algorithm is a <strong>finite set of instructions</strong> — precise rules — that describe how to carry out a task systematically. <strong>I call it grandma\'s cake. The recipe.</strong> What is a recipe? Every step states exactly which ingredients, in what amount, for how long: an instruction that, followed to the letter, always leads to the same dish. Grandma bakes the cake the same way every time, so the result stays <strong>consistent over time</strong>. Not "good sometimes": the same every single time.',
+r1H:'Ingredients',r1P:'The starting inputs. Your data, the raw materials.',
+r2H:'Instructions',r2P:'The rules: each step with amounts and times, always the same.',
+r3H:'Result',r3P:'The final dish, consistent every single time.',
+exH:'An example in your pocket',
+exP:'Your phone\'s <strong>face unlock</strong> is an algorithm: a finite series of steps that, run in the right order, always reach the same result — the screen opening. No magic, just a sequence.',
+ex1:'Frame the face',ex2:'Map the facial points',ex3:'Compare to the stored model',ex4:'Unlock',
+s2:'Every routine of yours is an algorithm',
+q1:'"Every single thing you do during the day is an algorithm."',
+q1cap:'Answering a stock email, checking a report, preparing a quote: all recipes. And AI is the best thing in the world at replicating a well-defined algorithm, always at the same quality.',
+autoIntro:'This is where <strong>automation</strong> comes in: taking "grandma\'s recipe" and bringing it to <strong>industrial scale</strong>. Grandma bakes one cake at a time; the factory bakes a thousand identical ones. The exact same procedure, just multiplied. With a blunt warning:',
+scAH:'Grandma',scAP:'One recipe, by hand, one cake at a time. You follow the steps.',
+scBH:'The factory',scBP:'The same recipe handed to the machine: a thousand identical cakes. If the recipe is good, they all are. If it\'s bad, they\'re all bad — all the more so.',
+s3:'The glossary: a nested chain',
+chainIntro:'These terms aren\'t five separate things: they\'re one ring inside the next, each more specific than the last. Click each concept to open the next level and read its full explanation.',
+s4:'Why 2017 changes everything',
+t1H:'Before: word by word',t1P:'Before the Transformer, systems read text in sequence, one word after another: slow, and fragile on long context. A detail: we cover it in A2.',
+t2H:'After: all on the table',t2P:'The Transformer "spreads the words on the table" and lets them talk to each other: each one looks at all the others and learns which it has a strong link with.',
+t3H:'The result',t3P:'It\'s the technology that makes ChatGPT, Claude and Perplexity possible. Without 2017, models like these were simply impossible.',
+s5:'Checkpoint',
+cpH:'Break down one of your processes',
+cpP:'Understanding the algorithm serves one practical purpose: if you can describe a routine of yours as a recipe, you can delegate it. AI excels precisely at replicating well-writt

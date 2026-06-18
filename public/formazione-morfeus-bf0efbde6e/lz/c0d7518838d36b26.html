@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le istruzioni: il Prompting (il reveal) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.reveal{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;margin:0}
+.reveal .word{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink-3)}
+.reveal .arr{color:var(--accent);font-size:20px}
+.reveal .term{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)}
+.reveal .txt{font-size:14px;color:var(--ink-2);margin-left:auto;text-align:right;max-width:320px}
+
+/* control panel: the 3 we don't control + window */
+.ctrl{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ctrlc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card);position:relative}
+.ctrlc .lock{position:absolute;top:14px;right:14px;font-size:17px;color:var(--bad)}
+.ctrlc.lever{border-color:var(--accent-line);background:var(--accent-soft)}
+.ctrlc.lever .lock{color:var(--accent)}
+.ctrlc h4{font-size:14.5px;font-weight:600;margin-bottom:4px;padding-right:24px}
+.ctrlc.lever h4{color:var(--accent)}
+.ctrlc p{font-size:13px;color:var(--ink-2)}
+.ctrltag{font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--bad);margin-bottom:8px;display:block}
+.ctrlc.lever .ctrltag{color:var(--accent)}
+
+/* THE REVEAL MACHINE */
+.rmbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.rmbtn{display:flex;justify-content:center;margin-bottom:18px}
+.rmbtn button{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;border:none;border-radius:30px;padding:11px 22px;font-family:var(--mono);font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s}
+.rmbtn button:hover{filter:brightness(1.07)}
+.rmbtn button i{font-size:17px}
+.rmgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flip{perspective:900px;cursor:pointer;height:96px}
+.flipin{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip.on .flipin{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r-l);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px;text-align:center}
+.front{background:var(--bg-2);border:1px dashed var(--line-2)}
+.front .fw{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--ink-3)}
+.front .fh{font-size:11px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.back{background:var(--accent-soft);border:1px solid var(--accent-line);transform:rotateY(180deg)}
+.back i{font-size:20px;color:var(--accent)}
+.back .bw{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--accent);line-height:1.1}
+.back .bh{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.rmhint{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:16px}
+.rmhint b{color:var(--ink)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px;align-items:flex-start}
+.card .ci{width:44px;height:44px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.card.violet .ci{background:var(--accent)}
+.card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--agent)}
+.card.violet h4{color:var(--accent)}
+.card p{font-size:14.5px;color:var(--ink-2)}.card p strong{color:var(--ink);font-weight:600}
+
+/* bridge */
+.bridge{display:flex;align-items:center;gap:16px;background:linear-gradient(90deg,var(--accent-soft),var(--card));border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px}
+.bridge .bi{width:46px;height:46px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge h4{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:3px}
+.bridge p{font-size:14px;color:var(--ink-2)}.bridge p strong{color:var(--ink);font-weight:600}
+.bridge .next{font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--card);border:1px solid var(--accent-line);padding:3px 10px;border-radius:20px;margin-left:auto;white-space:nowrap;flex-shrink:0}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.reveal{flex-wrap:wrap}.reveal .txt{margin-left:0;text-align:left;max-width:100%}.ctrl,.rmgrid{grid-template-columns:1fr}.bridge{flex-wrap:wrap}.bridge .next{margin-left:0}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.rmbtn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.flip{height:auto}.flipin{transform:none!important}.front{display:none!important}.back{position:relative;transform:none!important;height:auto;padding:14px}.flip .flipin .back{backface-visibility:visible}.note,.reveal,.ctrlc,.rmbox,.card,.bridge,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A2.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Come funziona un LLM</div>
+  <h1 class="rv" data-i="h1">Le istruzioni: il Prompting (il reveal)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-lock"></i><span class="no">01</span><h2 data-i="s1">Le 3 cose che non controlliamo</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="ctrlIntro"></p>
+  <div class="ctrl rv">
+    <div class="ctrlc"><i class="ti ti-lock lock"></i><span class="ctrltag" data-i="ctrlTag">Non lo decidi tu</span><h4 data-i="c1H">I token</h4><p data-i="c1P"></p></div>
+    <div class="ctrlc"><i class="ti ti-lock lock"></i><span class="ctrltag" data-i="ctrlTag2">Non lo decidi tu</span><h4 data-i="c2H">I dati di addestramento</h4><p data-i="c2P"></p></div>
+    <div class="ctrlc"><i class="ti ti-lock lock"></i><span class="ctrltag" data-i="ctrlTag3">Non lo decidi tu</span><h4 data-i="c3H">La probabilità</h4><p data-i="c3P"></p></div>
+    <div class="ctrlc"><i class="ti ti-lock lock"></i><span class="ctrltag" data-i="ctrlTag4">Non lo decidi tu</span><h4 data-i="c4H">La finestra di contesto</h4><p data-i="c4P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-bolt"></i><span class="no">02</span><h2 data-i="s2">L'unica leva governabile</h2></div>
+  <div class="ctrl rv" style="grid-template-columns:1fr">
+    <div class="ctrlc lever"><i class="ti ti-hand-finger lock"></i><span class="ctrltag" data-i="leverTag">Questo sì, è tuo</span><h4 data-i="leverH">L'input / il prompt</h4><p data-i-html="leverP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">03</span><h2 data-i="s3">Il reveal: 4 parole → 4 termini</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="rmIntro"></p>
+  <div class="rmbox rv">
+    <div class="rmbtn"><button id="revealBtn" onclick="revealAll()"><i class="ti ti-wand"></i> <span data-i="revealAllBtn">Rivela tutti</span></button></div>
+    <div class="rmgrid">
+      <div class="flip" onclick="flipOne(this)">
+        <div class="flipin">
+          <div class="face front"><span class="fh" data-i="fLetto">la parola</span><span class="fw">"il letto"</span></div>
+          <div class="face back"><i class="ti ti-bed"></i><span class="bh" data-i="tLetto">il termine</span><span class="bw">embedding</span></div>
+        </div>
+      </div>
+      <div class="flip" onclick="flipOne(this)">
+        <div class="flipin">
+          <div class="face front"><span class="fh" data-i="fFin">la parola</span><span class="fw" data-i="fFinW">"la finestra"</span></div>
+          <div class="face back"><i class="ti ti-blackboard"></i><span class="bh" data-i="tFin">il termine</span><span class="bw" data-i="tFinW">finestra di contesto</span></div>
+        </div>
+      </div>
+      <div class="flip" onclick="flipOne(this)">
+        <div class="flipin">
+          <div class="face front"><span class="fh" data-i="fVal">la parola</span><span class="fw" data-i="fValW">"la valuta"</span></div>
+          <div class="face back"><i class="ti ti-coin"></i><span class="bh" data-i="tVal">il termine</span><span class="bw">token</span></div>
+        </div>
+      </div>
+      <div class="flip" onclick="flipOne(this)">
+        <div class="flipin">
+          <div class="face front"><span class="fh" data-i="fIst">la parola</span><span class="fw" data-i="fIstW">"le istruzioni"</span></div>
+          <div class="face back"><i class="ti ti-message-2-cog"></i><span class="bh" data-i="tIst">il termine</span><span class="bw">prompting</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="rmhint" data-i-html="rmHint"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-language"></i><span class="no">04</span><h2 data-i="s4">"Ho iniziato a parlare cinese"</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-message-language"></i></div><div><h4 data-i="chinaH">Non è il lavoro del futuro: è saper parlare la lingua</h4><p data-i-html="chinaP"></p></div></div>
+
+  <div class="key rv"><p data-i="keyP"></p><div class="cap" data-i="keyCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">05</span><h2 data-i="s5">Senza questi concetti</h2></div>
+  <div class="card rv"><div class="ci"><i class="ti ti-plug-off"></i></div><div><h4 data-i="castH">Uno strumento castrato — non di poco, di tantissimo</h4><p data-i-html="castP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-ramp-right"></i><span class="no">06</span><h2 data-i="s6">Il ponte: la lingua</h2></div>
+  <div class="bridge rv"><div class="bi"><i class="ti ti-arrow-right"></i></div><div><h4 data-i="bridgeH">Conosci la cultura. Ora impari la lingua.</h4><p data-i-html="bridgeP"></p></div><span class="next" data-i="bridgeNext">→ Modulo A4 · Prompting</span></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Governa l'unica leva che hai</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Le istruzioni: il Prompting</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A2.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Come funziona un LLM',
+h1:'Le istruzioni: il Prompting (il reveal)',
+lede:'Chiudiamo il cerchio. Abbiamo conosciuto la macchina con quattro parole semplici — letto, finestra, valuta, istruzioni. Ora scopriamo i loro veri nomi tecnici, e capiamo qual è l\'unica cosa che possiamo davvero governare.',
+s1:'Le 3 cose che non controlliamo',
+ctrlIntro:'Di tutto quello che fa funzionare un LLM, quasi nulla è nelle tue mani. Tre cose le decide chi costruisce il modello (OpenAI, Anthropic). E poi c\'è un quarto vincolo che già conosci.',
+ctrlTag:'Non lo decidi tu',ctrlTag2:'Non lo decidi tu',ctrlTag3:'Non lo decidi tu',ctrlTag4:'Non lo decidi tu',
+c1H:'I token',c1P:'Quanto costa e come viene spezzato il testo lo decide chi fa il modello. Tu lo subisci.',
+c2H:'I dati di addestramento',c2P:'Su cosa è stato addestrato — lo "scibile" che ha dentro — è già stato deciso. Non lo cambi.',
+c3H:'La probabilità',c3P:'È un modello probabilistico: sceglie la parola più probabile. Questo meccanismo non lo spegni.',
+c4H:'La finestra di contesto',c4P:'Quanta memoria di lavoro hai a disposizione è un limite del modello, non una tua scelta.',
+s2:'L\'unica leva governabile',
+leverTag:'Questo sì, è tuo',
+leverH:'L\'input / il prompt',
+leverP:'C\'è una sola cosa su cui hai pieno controllo: <strong>quello che scrivi tu</strong>. L\'input, il prompt — il cosiddetto <strong>"front engineering"</strong>. Tutto il resto è dato; questa è la leva. Ed è per questo che imparare a scrivere bene cambia tutto.',
+s3:'Il reveal: 4 parole → 4 termini',
+rmIntro:'Le quattro parole semplici con cui abbiamo capito la macchina avevano un nome tecnico fin dall\'inizio. Clicca una carta per girarla — o rivela tutto in un colpo.',
+revealAllBtn:'Rivela tutti',
+fLetto:'la parola',tLetto:'il termine',
+fFin:'la parola',fFinW:'"la finestra"',tFin:'il termine',tFinW:'finestra di contesto',
+fVal:'la parola',fValW:'"la valuta"',tVal:'il termine',
+fIst:'la parola',fIstW:'"le istruzioni"',tIst:'il termine',
+rmHint:'<b>letto → embedding · finestra → finestra di contesto · valuta → token · istruzioni → prompting.</b> Stesse cose, da oggi le chiami col loro nome.',
+s4:'"Ho iniziato a parlare cinese"',
+chinaH:'Non è il lavoro del futuro: è saper parlare la lingua',
+chinaP:'Tutti parlano di <strong>prompt engineering</strong> come se fosse il lavoro del futuro. Non lo è: <strong>sono io che ho iniziato a parlare cinese</strong>, quindi sono in grado di farmi capire dalla macchina. Conosci la cultura (come funziona) e parli la lingua (il prompt): è tutto qui.',
+keyP:'Quattro parole semplici, quattro termini tecnici. Ora sai com\'è fatta la macchina — e sai dov\'è la tua leva.',
+keyCap:'embedding · finestra di contesto · token · prompting',
+s5:'Senza questi concetti',
+castH:'Uno strumento castrato — non di poco, di tantissimo',
+castP:'Senza capire questi concetti, usi l\'AI a caso. È come avere uno <strong>strumento castrato nelle performance — non di poco, di tantissimo</strong>. Buon prompting significa: meno costi, più qualità, più informazioni ricordate, meno ambito da esplorare. È la differenza tra usare l\'AI e <strong>governarla</strong>.',
+s6:'Il ponte: la lingua',
+bridgeH:'Conosci la cultura. Ora impari la lingua.',
+bridgeP:'Questa era la <strong>cultura</strong> della macchina — come è fatta dentro. Da qui in avanti impariamo la <strong>lingua</strong>: come scrivere il prompt per ottenere davvero quello che vuoi. È l\'unica leva che hai, e ora la lavoriamo a fondo.',
+bridgeNext:'→ Modulo A4 · Prompting',
+s7:'Checkpoint',
+cpH:'Governa l\'unica leva che hai',
+cpP:'Token, dati, probabilità, finestra: dati di fatto. Il prompt: tuo. Concentrare l\'attenzione lì è il modo più veloce per migliorare i risultati.',
+cpQ:'Fermati un attimo: quando un output non ti soddisfa, dai la colpa alla macchina o ti chiedi se il problema è nel tuo prompt?',
+cpNote:'La macchina è data. Il prompt è la tua leva. È lì che si gioca tutto: il prossimo modulo è dedicato a questo.',
+foot:'Morfeus — Le istruzioni: il Prompting'
+},
+en:{
+kicker:'Lesson A2.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'How an LLM works',
+h1:'Instructions: Prompting (the reveal)',
+lede:'Let\'s close the loop. We got to know the machine through four simple words — bed, window, currency, instructions. Now we uncover their real technical names, and we figure out the one thing we can actually govern.',
+s1:'The 3 things we don\'t control',
+ctrlIntro:'Of everything that makes an LLM work, almost none of it is in your hands. Three things are decided by whoever builds the model (OpenAI, Anthropic). And then there\'s a fourth constraint you already know.',
+ctrlTag:'Not your call',ctrlTag2:'Not your call',ctrlTag3:'Not your call',ctrlTag4:'Not your call',
+c1H:'The tokens',c1P:'How much it costs and how the text is split is decided by whoever makes the model. You just live with it.',
+c2H:'The training data',c2P:'What it was trained on — the "knowledge" inside it — is already set. You can\'t change it.',
+c3H:'The probability',c3P:'It\'s a probabilistic model: it picks the most likely word. You can\'t switch that mechanism off.',
+c4H:'The context window',c4P:'How much working memory you get is a limit of the model, not a choice of yours.',
+s2:'The one governable lever',
+leverTag:'This one is yours',
+leverH:'The input / the prompt',
+leverP:'There\'s only one thing you fully control: <strong>what you write</strong>. The input, the prompt — so-called <strong>"front engineering"</strong>. Everything else is a given; this is the lever. And that\'s exactly why learning to write well changes everything.',
+s3:'The reveal: 4 words → 4 terms',
+rmIntro:'The four simple words we used to understand the machine had a technical name all along. Click a card to flip it — or reveal them all at once.',
+revealAllBtn:'Reveal all',
+fLetto:'the word',tLetto:'the term',
+fFin:'the word',fFinW:'"the window"',tFin:'the term',tFinW:'context window',
+fVal:'the word',fValW:'"the currency"',tVal:'the term',
+fIst:'the word',fIstW:'"the instructions"',tIst:'the term',
+rmHint:'<b>bed → embedding · window → context window · currency → token · instructions → prompting.</b> Same things — from today, you call them by their name.',
+s4:'"I started speaking Chinese"',
+chinaH:'It\'s not the job of the future: it\'s knowing the language',
+chinaP:'Everyone talks about <strong>prompt engineering</strong> as if it were the job of the future. It isn\'t: <strong>I\'m simply the one who started speaking Chinese</strong>, so I can make myself understood by the machine. Know the culture (how it works) and speak the language (the prompt): that\'s all there is to it.',
+keyP:'Four simple words, four technical terms. Now you know how the machine is built — and you know where your lever is.',
+keyCap:'embedding · context window · token · prompting',
+s5:'Without these concepts',
+castH:'A crippled tool — not by a little, by a lot',
+castP:'Without understanding these concepts, you use AI at random. It\'s like having a <strong>tool crippled in performance — not by a little, by a lot</strong>. Good prompting means: lower cost, higher quality, more information remembered, less ground to search. It\'s the difference between using AI and <strong>governing it</strong>.',
+s6:'The bridge: the language',
+bridgeH:'You know the culture. Now you learn the language.',
+bridgeP:'That was the <strong>culture</strong> of the machine — how it\'s built inside. From here on we learn the <strong>language</strong>: how to write the prompt to actually get what you want. It\'s the only lever you have, and now we work it thoroughly.',
+bridgeNext:'→ Module A4 · Prompting',
+s7:'Checkpoint',
+cpH:'Govern the only lever you have',
+cpP:'Tokens, data, probability, window: facts of life. The prompt: yours. Focusing your attention there is the fastest way to improve your results.',
+cpQ:'Pause for a second: when an output disappoints you, do you blame the machine, or do you ask whether the problem is in your prompt?',
+cpNote:'The machine is a given. The prompt is your lever. That\'s where it all happens: the next module is dedicated to exactly this.',
+foot:'Morfeus — Instructions: Prompting'
+}};
+
+var LANG='it';
+function flipOne(el){el.classList.toggle('on');syncBtn()}
+function revealAll(){
+  var flips=document.querySelectorAll('.flip');
+  var anyOff=Array.prototype.some.call(flips,function(f){return !f.classList.contains('on')});
+  flips.forEach(function(f,i){
+    setTimeout(function(){f.classList.toggle('on',anyOff)},i*140);
+  });
+  setTimeout(syncBtn,flips.length*140+50);
+}
+function syncBtn(){
+  var flips=document.querySelectorAll('.flip');
+  var allOn=Array.prototype.every.call(flips,function(f){return f.classList.contains('on')});
+  var b=document.getElementById('revealBtn');
+  b.innerHTML=allOn?'<i class="ti ti-rotate"></i> <span>'+(LANG==='it'?'Ripristina':'Reset')+'</span>'
+                   :'<i class="ti ti-wand"></i> <span>'+DICT[LANG].revealAllBtn+'</span>';
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-i')];if(val!=null)e.textContent=val});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-i-html')];if(val!=null)e.innerHTML=val});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-ti')];if(val!=null)e.title=val});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  syncBtn();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

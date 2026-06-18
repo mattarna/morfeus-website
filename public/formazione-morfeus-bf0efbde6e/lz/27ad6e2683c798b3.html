@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il piano vivente & il livello avanzato — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* living plan */
+.plan{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px;font-family:var(--mono)}
+.plan .ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--line-2)}
+.plan .pf{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);font-weight:600}
+.plan .pf i{color:var(--accent);font-size:16px}
+.plan .prog{font-size:11.5px;color:var(--ink-3)}.plan .prog b{color:var(--good)}
+.task{display:flex;align-items:flex-start;gap:11px;padding:9px 0;font-size:13.5px;color:var(--ink-2);line-height:1.45;transition:.25s}
+.task:not(:last-child){border-bottom:1px solid var(--line)}
+.task .box{width:19px;height:19px;border-radius:5px;border:2px solid var(--line-2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:.25s;position:relative}
+.task .box i{font-size:13px;color:#fff;opacity:0;transform:scale(.4);transition:.25s}
+.task.done .box{background:var(--good);border-color:var(--good)}
+.task.done .box i{opacity:1;transform:scale(1)}
+.task.done .tlabel{text-decoration:line-through;color:var(--ink-3)}
+.task .tcrit{display:block;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.task.active{background:var(--accent-soft);margin:0 -10px;padding:9px 10px;border-radius:var(--r);border-bottom-color:transparent!important}
+.planbtns{display:flex;gap:9px;margin-top:16px}
+.pbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:9px 16px;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer;box-shadow:var(--sh);transition:.16s}
+.pbtn i{font-size:16px;color:var(--accent)}
+.pbtn:hover{border-color:var(--line-2);color:var(--ink)}
+.pbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.pbtn.primary i{color:#fff}
+.pbtn:disabled{opacity:.45;cursor:default}
+.planmsg{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:12px;min-height:16px}
+.planmsg b{color:var(--accent)}
+/* cards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .cci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.card3 p b{color:var(--ink)}
+/* cascade flow */
+.casc{display:flex;flex-direction:column;gap:9px}
+.cstep{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.cstep .cn{width:28px;height:28px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cstep .ct{font-size:13.5px;color:var(--ink-2);line-height:1.5}.cstep .ct b{color:var(--ink);font-weight:600}
+/* file explorer */
+.explorer{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:14px;align-items:start}
+.tree{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 12px;font-family:var(--mono);font-size:12.5px}
+.tnode{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:var(--r);color:var(--ink-2);cursor:pointer;transition:.15s;line-height:1.3}
+.tnode:hover{background:var(--bg-3)}.tnode.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.tnode i{font-size:15px;flex-shrink:0}.tnode.dir{color:var(--ink);font-weight:600;cursor:default}.tnode.dir:hover{background:transparent}
+.tnode.dir i{color:var(--agent)}
+.tchild{padding-left:14px}
+.tnode .tcheck{margin-left:auto;font-size:11px;color:var(--good)}
+.fpanel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;border-left:3px solid var(--accent)}
+.fpanel .fp-name{font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.fpanel .fp-name i{font-size:15px}
+.fpanel h4{font-size:15px;font-weight:600;margin-bottom:7px}
+.fpanel p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.fpanel .fp-role{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-top:11px;background:var(--accent-soft);color:var(--accent)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.explorer{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.planbtns{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.plan,.card3,.cstep,.tree,.fpanel,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A8.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Metodo</div>
+  <h1 class="rv" data-i="h1">Il piano vivente & il livello avanzato</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-checkbox"></i><span class="no">01</span><h2 data-i="s1">Un solo file = unica fonte di verità</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-file-check"></i></div><div><h4 data-i="note1H">Il piano non è un documento da archiviare</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-checkup-list"></i><span class="no">02</span><h2 data-i="s2">Il piano che si spunta da solo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="planIntro"></p>
+  <div class="plan rv" id="plan">
+    <div class="ph">
+      <div class="pf"><i class="ti ti-file-text"></i> <span id="planFile">SPRINT_03.md</span></div>
+      <div class="prog" id="planProg"></div>
+    </div>
+    <div id="tasklist"></div>
+    <div class="planbtns">
+      <button class="pbtn primary" id="execBtn" onclick="execStep()"><i class="ti ti-player-play"></i> <span data-i="execBtn"></span></button>
+      <button class="pbtn" onclick="resetPlan()"><i class="ti ti-refresh"></i> <span data-i="resetBtn"></span></button>
+    </div>
+    <div class="planmsg" id="planMsg"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-metaphor"></i><span class="no">03</span><h2 data-i="s3">Due immagini per ricordarlo</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="cci"><i class="ti ti-dashboard"></i></div><h4 data-i="m1H"></h4><p data-i-html="m1P"></p></div>
+    <div class="card3"><div class="cci"><i class="ti ti-shopping-cart"></i></div><h4 data-i="m2H"></h4><p data-i-html="m2P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">04</span><h2 data-i="s4">Il livello avanzato: Master + Sprint</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="advIntro"></p>
+  <div class="casc rv" id="casc"></div>
+
+  <div class="sh rv"><i class="ti ti-folder"></i><span class="no">05</span><h2 data-i="s5">La struttura sul disco</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="explIntro"></p>
+  <div class="explorer rv">
+    <div class="tree" id="tree"></div>
+    <div class="fpanel" id="fpanel"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il piano vivente & il livello avanzato</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A8.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Metodo',
+h1:'Il piano vivente & il livello avanzato',
+lede:'Il piano non è un documento che scrivi una volta e dimentichi. È vivo: un solo file a checkbox che l\'AI aggiorna da sola mano a mano che lavora. E quando il lavoro diventa enorme, lo stesso principio scala in due livelli — Master e Sprint.',
+s1:'Un solo file = unica fonte di verità',
+note1H:'Il piano non è un documento da archiviare',
+note1P:'Un solo file, a checkbox <strong>[ ]</strong> / <strong>[x]</strong>, è l\'<strong>unica fonte di verità</strong> del lavoro. Niente versioni sparse, niente "dov\'eravamo rimasti": chi vuole sapere lo stato apre quel file e lo legge a colpo d\'occhio. Tu e l\'AI guardate sempre lo stesso quadro.',
+s2:'Il piano che si spunta da solo',
+planIntro:'La regola d\'oro: l\'AI aggiorna il piano da sola — ma <strong>niente [x] senza criterio soddisfatto</strong>. Esegui un task alla volta: si spunta solo quando il suo criterio è verificato. Premi "Esegui" e guarda.',
+execBtn:'Esegui prossimo task',resetBtn:'Ricomincia',
+s3:'Due immagini per ricordarlo',
+m1H:'Il cruscotto dell\'auto',
+m1P:'Non guidi guardando il motore: guardi il cruscotto, che ti dice tutto a colpo d\'occhio. Il piano vivente è quello: <b>uno sguardo e sai dove sei</b>, senza ricostruire nulla.',
+m2H:'La lista della spesa che si cancella da sola',
+m2P:'Metti una cosa nel carrello, sparisce dalla lista. Nessuno la spunta a mano: <b>si aggiorna mentre fai</b>. Il piano vivente funziona uguale, ma è l\'AI a tirare la riga.',
+q1:'«Il piano vivente non è un report che scrivi a fine giornata: è il cruscotto che ti guida mentre lavori.»',
+s4:'Il livello avanzato: Master + Sprint',
+advIntro:'Per i lavori enormi, un solo file non basta. Si sale di livello: un <strong>Master Plan</strong> con le sole milestone, e un documento <strong>Sprint</strong> per ciascuna. Si validano a cascata, poi si esegue uno sprint alla volta.',
+s5:'La struttura sul disco',
+explIntro:'Una cartella di progetto, due ordini di file. Clicca un file per vedere cos\'è e che ruolo ha.',
+s6:'Checkpoint',
+cpH:'Apri un piano vivente sul tuo prossimo lavoro',
+cpP:'Prendi un lavoro multi-step. Fai scrivere all\'AI un solo file a checkbox [ ]/[x], un task per riga, ognuno col suo criterio. Aggiungi la regola esplicita: «aggiorna tu il piano, ma non spuntare nulla finché il criterio non è verificato». Poi esegui un task alla volta e osserva il file aggiornarsi.',
+cpQ:'A fine sessione: il file riflette davvero lo stato reale, o ci sono [x] messi "perché sembrava fatto"? Ogni spunta senza criterio verificato è esattamente il punto in cui il piano smette di essere fonte di verità.',
+bridge:'Hai il piano vivente e sai scalare con Master + Sprint. <b>Prossimo:</b> le 8 regole di qualità e gli anti-pattern — cosa rende il metodo affidabile e dove le persone lo rompono.',
+foot:'Morfeus — Il piano vivente & il livello avanzato'
+},
+en:{
+kicker:'Lesson A8.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Method',
+h1:'The living plan & the advanced level',
+lede:'The plan isn\'t a document you write once and forget. It\'s alive: a single checkbox file that the AI updates by itself as it works. And when the work gets huge, the same principle scales into two levels — Master and Sprint.',
+s1:'One file = single source of truth',
+note1H:'The plan isn\'t a document to file away',
+note1P:'A single file, with <strong>[ ]</strong> / <strong>[x]</strong> checkboxes, is the work\'s <strong>single source of truth</strong>. No scattered versions, no "where were we": whoever wants the status opens that file and reads it at a glance. You and the AI always look at the same picture.',
+s2:'The plan that checks itself off',
+planIntro:'The golden rule: the AI updates the plan itself — but <strong>no [x] without the criterion met</strong>. You execute one task at a time: it gets checked only when its criterion is verified. Press "Execute" and watch.',
+execBtn:'Execute next task',resetBtn:'Restart',
+s3:'Two images to remember it',
+m1H:'The car dashboard',
+m1P:'You don\'t drive by looking at the engine: you look at the dashboard, which tells you everything at a glance. The living plan is that: <b>one glance and you know where you are</b>, no reconstruction needed.',
+m2H:'The shopping list that clears itself',
+m2P:'You put something in the cart, it vanishes from the list. Nobody ticks it by hand: <b>it updates as you go</b>. The living plan works the same, but it\'s the AI drawing the line.',
+q1:'"The living plan isn\'t a report you write at the end of the day: it\'s the dashboard that guides you while you work."',
+s4:'The advanced level: Master + Sprint',
+advIntro:'For huge jobs, one file isn\'t enough. You level up: a <strong>Master Plan</strong> with milestones only, and one <strong>Sprint</strong> document for each. You validate them in cascade, then execute one sprint at a time.',
+s5:'The structure on disk',
+explIntro:'One project folder, two orders of files. Click a file to see what it is and the role it plays.',
+s6:'Checkpoint',
+cpH:'Open a living plan on your next job',
+cpP:'Take a multi-step job. Have the AI write a single checkbox file [ ]/[x], one task per line, each with its criterion. Add the explicit rule: "you update the plan, but don\'t check anything off until the criterion is verified." Then execute one task at a time and watch the file update.',
+cpQ:'At the end of the session: does the file really reflect the real state, or are there [x]\'s put there "because it looked done"? Every check without a verified criterion is exactly where the plan stops being the source of truth.',
+bridge:'You have the living plan and you can scale with Master + Sprint. <b>Next:</b> the 8 quality rules and the anti-patterns — what makes the method reliable and where people break it.',
+foot:'Morfeus — The living plan & the advanced level'
+}};
+
+// living plan tasks: label[it,en], criterion[it,en]
+var TASKS=[
+{label:['Redigere la bozza del comunicato','Draft the press release'],crit:['criterio: 1 pagina, 3 messaggi chiave','criterion: 1 page, 3 key messages']},
+{label:['Validare i dati citati con la fonte','Validate the cited data against the source'],crit:['criterio: ogni numero ha un link','criterion: every number has a link']},
+{label:['Far rivedere il tono a un secondo LLM','Have a second LLM review the tone'],crit:['criterio: nessuna frase iper-promozionale','criterion: no over-promotional sentence']},
+{label:['Impaginare la versione finale','Lay out the final version'],crit:['criterio: PDF esportato e leggibile','criterion: PDF exported and readable']}
+];
+
+// cascade steps
+var CASC=[
+['1',['<b>Master Plan</b> — scrivi solo le milestone, senza i task. È la mappa: dove arriva il lavoro, in che ordine.',
+      '<b>Master Plan</b> — write only the milestones, no tasks. It\'s the map: where the work lands, in what order.']],
+['2',['<b>Validi il Master</b> — cross-validazione prima di scendere nel dettaglio. Se la mappa è storta, ogni sprint eredita l\'errore.',
+      '<b>Validate the Master</b> — cross-validation before going into detail. If the map is crooked, every sprint inherits the error.']],
+['3',['<b>Uno Sprint per milestone</b> — ogni milestone si apre nel suo documento di task atomici, con i criteri.',
+      '<b>One Sprint per milestone</b> — each milestone opens into its own document of atomic tasks, with criteria.']],
+['4',['<b>Validi a cascata</b> — passi ogni Sprint alla cross-validazione, uno dopo l\'altro, prima di eseguire.',
+      '<b>Validate in cascade</b> — you run each Sprint through cross-validation, one after another, before executing.']],
+['5',['<b>Esegui sprint per sprint</b> — uno alla volta. A ogni milestone chiusa, aggiorni il Master: il quadro generale resta sempre vero.',
+      '<b>Execute sprint by sprint</b> — one at a time. At each closed milestone, you update the Master: the big picture stays always true.']]
+];
+
+// file tree: id, name, type(dir/master/sprint), desc[it,en], role[it,en]
+var FILES=[
+{id:'master',name:'MASTER_PLAN.md',type:'master',
+ desc:['Il quadro generale: solo le milestone, ognuna con il suo output verificabile. Si aggiorna quando una milestone chiude.',
+       'The big picture: milestones only, each with its verifiable output. It updates when a milestone closes.'],
+ role:['Unica fonte di verità — livello strategico','Single source of truth — strategic level']},
+{id:'s1',name:'SPRINT_01.md',type:'sprint',
+ desc:['I task atomici della prima milestone, ognuno col suo criterio osservabile. È un piano vivente a sé: si spunta mentre esegui.',
+       'The atomic tasks of the first milestone, each with its observable criterion. It\'s a living plan in itself: it checks off as you execute.'],
+ role:['Dettaglio operativo — milestone 1','Operational detail — milestone 1']},
+{id:'s2',name:'SPRINT_02.md',type:'sprint',
+ desc:['Stessa struttura dello Sprint 01, ma per la seconda milestone. Si esegue solo dopo aver chiuso e aggiornato il Master.',
+       'Same structure as Sprint 01, but for the second milestone. You execute it only after closing and updating the Master.'],
+ role:['Dettaglio operativo — milestone 2','Operational detail — milestone 2']},
+{id:'s3',name:'SPRINT_03.md',type:'sprint',
+ desc:['L\'ultima milestone. Quando i suoi task sono tutti verificati, il lavoro è finito e il Master è completo.',
+       'The last milestone. When its tasks are all verified, the work is done and the Master is complete.'],
+ role:['Dettaglio operativo — milestone 3','Operational detail — milestone 3']}
+];
+
+var LANG='it',STEP=0,curFile='master';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderPlan();renderCasc();renderTree();renderFile();
+}
+function renderPlan(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('tasklist').innerHTML=TASKS.map(function(t,i){
+    var done=i<STEP,active=i===STEP;
+    return '<div class="task'+(done?' done':'')+(active?' active':'')+'"><div class="box"><i class="ti ti-check"></i></div><div><span class="tlabel">'+t.label[j]+'</span><span class="tcrit">'+t.crit[j]+'</span></div></div>';
+  }).join('');
+  document.getElementById('planProg').innerHTML='<b>'+STEP+'</b>/'+TASKS.length;
+  var btn=document.getElementById('execBtn');btn.disabled=(STEP>=TASKS.length);
+  var msg=document.getElementById('planMsg');
+  if(STEP===0){msg.innerHTML=LANG==='it'?'Tutti i task sono [ ] — nessuno ancora verificato.':'All tasks are [ ] — none verified yet.';}
+  else if(STEP<TASKS.length){msg.innerHTML=(LANG==='it'?'Criterio soddisfatto → l\'AI segna ':'Criterion met → the AI marks ')+'<b>[x]</b>'+(LANG==='it'?' da sola.':' on its own.');}
+  else{msg.innerHTML=(LANG==='it'?'Sprint completo. ':'Sprint complete. ')+'<b>'+(LANG==='it'?'Master aggiornato.':'Master updated.')+'</b>';}
+}
+function execStep(){if(STEP<TASKS.length){STEP++;renderPlan();}}
+function resetPlan(){STEP=0;renderPlan();}
+function renderCasc(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('casc').innerHTML=CASC.map(function(c){
+    return '<div class="cstep"><div class="cn">'+c[0]+'</div><div class="ct">'+c[1][j]+'</div></div>';
+  }).join('');
+}
+function renderTree(){
+  var j=LANG==='it'?0:1;
+  var master=FILES[0];
+  var sprints=FILES.slice(1);
+  var html='<div class="tnode dir"><i class="ti ti-folder"></i> /progetto/</div>';
+  html+='<div class="tchild"><div class="tnode'+(curFile==='master'?' on':'')+'" onclick="setFile(\'master\')"><i class="ti ti-file-text"></i> '+master.name+'</div>';
+  html+='<div class="tnode dir"><i class="ti ti-folder"></i> /sprint/</div><div class="tchild">';
+  html+=sprints.map(function(f){return '<div class="tnode'+(curFile===f.id?' on':'')+'" onclick="setFile(\''+f.id+'\')"><i class="ti ti-file"></i> '+f.name+'</div>'}).join('');
+  html+='</div></div>';
+  document.getElementById('tree').innerHTML=html;
+}
+function renderFile(){
+  var j=LANG==='it'?0:1;
+  var f=FILES.filter(function(x){return x.id===curFile})[0];
+  var ic=f.type==='master'?'ti-file-text':'ti-file';
+  document.getElementById('fpanel').innerHTML='<div class="fp-name"><i class="ti '+ic+'"></i> '+f.name+'</div><p>'+f.desc[j]+'</p><span class="fp-role">'+f.role[j]+'</span>';
+}
+function setFile(id){curFile=id;renderTree();renderFile();}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

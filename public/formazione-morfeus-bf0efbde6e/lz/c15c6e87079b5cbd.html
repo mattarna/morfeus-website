@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Superfici di Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#b7ddc1;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eab8b2;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#f0d9aa;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a9e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6b4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#18564a;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1a4d7c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{border-left:3px solid var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-left-width:3px;border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7;margin-top:8px}
+.key{text-align:center;padding:42px 20px;margin:24px 0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.45;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* map */
+.mapwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px}
+.mapwrap h3{font-size:16px;font-weight:600;margin-bottom:20px;text-align:center}
+.mapgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.mapcol{text-align:center;padding:20px 12px;border-radius:var(--r-l)}
+.mapcol .mi{font-size:34px;margin-bottom:10px;display:block}
+.mapcol h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.mapcol .mm{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+.mapcol .md{font-size:13px;color:var(--ink-2);line-height:1.5}
+.mapcol .mt{display:inline-block;margin-top:10px;padding:3px 12px;border-radius:30px;font-size:11px;font-weight:600}
+.mapplus{margin-top:14px;max-width:280px;margin-left:auto;margin-right:auto}
+/* surface cards */
+.surf{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:16px;overflow:hidden;transition:.3s}
+.surf-h{padding:24px 26px;display:flex;align-items:flex-start;gap:16px;cursor:pointer}
+.surf-ic{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:25px;flex-shrink:0}
+.surf-ht{flex:1}.surf-ht h2{font-size:19px;font-weight:600;margin-bottom:2px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.surf-ht .sub{font-size:14px;color:var(--ink-3)}
+.surf-tag{display:inline-block;padding:2px 10px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-family:var(--mono)}
+.surf-chev{color:var(--ink-3);font-size:20px;margin-top:6px;transition:transform .3s;flex-shrink:0}
+.surf.open .surf-chev{transform:rotate(90deg);color:var(--accent)}
+.surf-b{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.surf.open .surf-b{max-height:5000px}
+.surf-in{padding:0 26px 26px}
+.surf-in>.intro{font-size:14px;color:var(--ink-2);margin-bottom:16px;line-height:1.7}.surf-in>.intro strong{color:var(--ink);font-weight:600}
+.feat{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feat:last-of-type{border-bottom:none}
+.feat-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.feat-t{flex:1}.feat-t strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px;color:var(--ink)}.feat-t span{font-size:13px;color:var(--ink-2);line-height:1.6}
+.whenbox{margin-top:18px;padding:16px 20px;border-radius:var(--r-l);border:1px dashed var(--line-2)}
+.when-t{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.when-i{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13px;color:var(--ink-2);line-height:1.5}.when-i i{font-size:16px;flex-shrink:0;margin-top:1px;color:var(--teal)}
+.notbox{margin-top:12px;padding:16px 20px;border-radius:var(--r-l);background:var(--bad-soft);border:1px solid var(--bad-line)}
+.not-t{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:var(--bad)}
+.not-i{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13px;color:var(--ink-2);line-height:1.5}.not-i i{color:var(--bad);font-size:16px;flex-shrink:0;margin-top:1px}
+.planreq{margin-top:16px;padding:14px 18px;border-radius:var(--r);background:var(--amber-soft);border:1px solid var(--amber-line)}
+.planreq .pq-t{font-size:12px;font-weight:600;color:var(--amber);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.planreq .pq-p{font-size:13px;color:var(--ink-2);line-height:1.6}.planreq strong{color:var(--ink);font-weight:600}
+/* comparison */
+.compwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.comp-scroll{overflow-x:auto}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:10px 12px;font-family:var(--mono);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);border-bottom:2px solid var(--line-2);white-space:nowrap}
+.comp td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+.comp .yes{color:var(--teal)}.comp .no{color:var(--ink-3)}.comp .partial{color:var(--amber)}
+.complegend{font-size:12px;color:var(--ink-3);margin-top:12px}
+/* sync */
+.sync{background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:var(--r-l);padding:20px 24px}
+.sync h4{font-size:14px;font-weight:600;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sync p{font-size:13px;color:var(--ink-2);line-height:1.7}.sync p+p{margin-top:8px}.sync strong{color:var(--ink);font-weight:600}
+/* scenarios */
+.scen-grid{display:flex;flex-direction:column;gap:12px}
+.scen{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px;cursor:pointer;transition:.18s}
+.scen:hover{border-color:var(--line-2)}
+.scen .sc-h{display:flex;align-items:center;gap:10px}
+.scen .sc-h i{font-size:20px;flex-shrink:0}.scen .sc-h span{font-size:14px;font-weight:600}
+.scen .sc-b{font-size:13px;color:var(--ink-2);line-height:1.6;display:none;margin-top:10px}
+.scen.open .sc-b{display:block}
+.scen .sc-a{margin-top:10px;padding:10px 14px;border-radius:var(--r);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+/* course usage */
+.coursewrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px}
+.coursewrap>.cintro{font-size:14px;color:var(--ink-2);line-height:1.8;margin-bottom:16px}.coursewrap>.cintro strong{color:var(--ink);font-weight:600}
+.course-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.course-c{padding:16px;border-radius:var(--r-l)}
+.course-c .cc-t{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.course-c .cc-d{font-size:13px;color:var(--ink-2);line-height:1.6}
+.course-note{font-size:13px;color:var(--ink-3);margin-top:16px;line-height:1.6}.course-note strong{color:var(--amber);font-weight:600}
+/* checkpoint */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:16px}
+.cp .cpic{width:44px;height:44px;border-radius:12px;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px}.cp p{font-size:14px;color:var(--ink-2);line-height:1.7}.cp strong{color:var(--ink);font-weight:600}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:700px){.mapgrid,.course-grid{grid-template-columns:1fr}.surf-h{padding:20px}.surf-in{padding:0 20px 22px}.comp{font-size:11px}.comp th,.comp td{padding:8px 6px}}
+@media(max-width:640px){h1{font-size:28px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.surf-b{max-height:none!important}.scen .sc-b{display:block!important}.mapwrap,.surf,.compwrap,.sync,.scen,.coursewrap,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 1.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Setup</div>
+  <h1 class="rv" data-i="h1">Le Superfici di Claude</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" data-i="hook" style="margin-top:24px"></div>
+
+  <div class="sh rv"><i class="ti ti-map-2"></i><span class="no">01</span><h2 data-i="s1">Le quattro superfici a colpo d'occhio</h2></div>
+  <div class="mapwrap rv">
+    <h3 data-i="mapTitle"></h3>
+    <div class="mapgrid">
+      <div class="mapcol" style="background:var(--accent-soft);border:1px solid var(--accent-line)">
+        <i class="ti ti-browser mi" style="color:var(--accent)"></i>
+        <h4 style="color:var(--accent)">Chat</h4><div class="mm">claude.ai</div>
+        <div class="md" data-i="mapChat"></div>
+        <div class="mt" style="background:var(--accent);color:#fff" data-i="primary"></div>
+      </div>
+      <div class="mapcol" style="background:var(--teal-soft);border:1px solid var(--teal-line)">
+        <i class="ti ti-app-window mi" style="color:var(--teal)"></i>
+        <h4 style="color:var(--teal)">Cowork</h4><div class="mm" data-i="mapCoworkM"></div>
+        <div class="md" data-i="mapCowork"></div>
+        <div class="mt" style="background:var(--teal);color:#fff" data-i="primary2"></div>
+      </div>
+      <div class="mapcol" style="background:var(--blue-soft);border:1px solid var(--blue-line)">
+        <i class="ti ti-terminal-2 mi" style="color:var(--blue)"></i>
+        <h4 style="color:var(--blue)">Claude Code</h4><div class="mm" data-i="mapCodeM"></div>
+        <div class="md" data-i="mapCode"></div>
+        <div class="mt" style="background:var(--blue);color:#fff" data-i="primary3"></div>
+      </div>
+    </div>
+    <div class="mapplus">
+      <div class="mapcol" style="background:var(--amber-soft);border:1px solid var(--amber-line);padding:16px 12px">
+        <div style="display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:6px">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.08em;text-transform:uppercase">+1</span>
+          <i class="ti ti-device-mobile" style="font-size:28px;color:var(--amber)"></i>
+        </div>
+        <h4 style="color:var(--amber);font-size:14px">Mobile</h4><div class="mm">iOS + Android</div>
+        <div class="md" data-i="mapMobile"></div>
+        <div class="mt" style="background:var(--amber);color:#fff" data-i="complementary"></div>
+      </div>
+    </div>
+  </div>
+  <div class="key rv"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layers-subtract"></i><span class="no">02</span><h2 data-i="s2">Le superfici nel dettaglio</h2></div>
+  <div id="surfaces" class="rv"></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">03</span><h2 data-i="s3">Confronto funzionalità</h2></div>
+  <div class="compwrap rv">
+    <div class="comp-scroll"><table class="comp" id="compTable"></table></div>
+    <p class="complegend"><i class="ti ti-info-circle"></i> <span class="yes"><i class="ti ti-check"></i></span> <span data-i="legYes"></span> &nbsp; <span class="partial"><i class="ti ti-minus"></i></span> <span data-i="legPartial"></span> &nbsp; <span class="no"><i class="ti ti-x"></i></span> <span data-i="legNo"></span></p>
+  </div>
+
+  <div class="sync rv" style="margin-top:24px">
+    <h4><i class="ti ti-refresh"></i> <span data-i="syncH"></span></h4>
+    <p data-i="syncP1"></p><p data-i-html="syncP2"></p><p data-i-html="syncP3"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">04</span><h2 data-i="s4">Scenari pratici — quale uso?</h2></div>
+  <div class="scen-grid rv" id="scenarios"></div>
+
+  <div class="sh rv"><i class="ti ti-school"></i><span class="no">05</span><h2 data-i="s5">Come le usiamo in questo corso</h2></div>
+  <div class="coursewrap rv">
+    <p class="cintro" data-i-html="courseIntro"></p>
+    <div class="course-grid">
+      <div class="course-c" style="background:var(--accent-soft);border:1px solid var(--accent-line)">
+        <div class="cc-t" style="color:var(--accent)"><i class="ti ti-browser"></i> Chat</div>
+        <div class="cc-d" data-i="courseChat"></div>
+      </div>
+      <div class="course-c" style="background:var(--teal-soft);border:1px solid var(--teal-line)">
+        <div class="cc-t" style="color:var(--teal)"><i class="ti ti-app-window"></i> Cowork</div>
+        <div class="cc-d" data-i="courseCowork"></div>
+      </div>
+      <div class="course-c" style="background:var(--blue-soft);border:1px solid var(--blue-line)">
+        <div class="cc-t" style="color:var(--blue)"><i class="ti ti-terminal-2"></i> Claude Code</div>
+        <div class="cc-d" data-i="courseCode"></div>
+      </div>
+    </div>
+    <p class="course-note" data-i-html="courseNote"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv"><div class="cpic"><i class="ti ti-target"></i></div><div><h4 data-i="cpH"></h4><p data-i-html="cpP"></p></div></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Le Superfici di Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 1.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Setup',
+h1:'Le Superfici di Claude',
+lede:'Quattro modi di accedere a Claude. Ognuno ha capacità diverse. Scegliere quello giusto cambia radicalmente cosa riesci a fare.',
+hook:'«La maggior parte delle persone usa Claude solo dal browser. Questo è come avere uno strumento potente e usarne il dieci percento.»',
+s1:'Le quattro superfici a colpo d\'occhio',
+mapTitle:'Un Claude, quattro modi di usarlo',
+mapChat:'Projects, Artifacts, file upload, ricerca web, Research. La scrivania operativa.',
+mapCoworkM:'Desktop App',mapCowork:'Claude opera sul tuo file system, crea file, esegue task multi-step. L\'assistente autonomo.',
+mapCodeM:'CLI / Terminale',mapCode:'Agente coding nel terminale. Legge, scrive, esegue codice. Lo strumento per sviluppatori.',
+mapMobile:'Voice, fotocamera, domande veloci in movimento. Il taccuino intelligente.',
+primary:'Superficie primaria',primary2:'Superficie primaria',primary3:'Superficie primaria',complementary:'Complementare',
+key1:'«La chat è la tua scrivania. Cowork è il tuo assistente autonomo. Claude Code è il tuo developer agent nel terminale. Il mobile è il +1 che hai sempre in tasca.»',
+s2:'Le superfici nel dettaglio',
+s3:'Confronto funzionalità',
+legYes:'= disponibile',legPartial:'= parziale',legNo:'= non disponibile',
+syncH:'Chat, Cowork e Mobile sono sincronizzati',
+syncP1:'Le conversazioni e i Projects sono accessibili dalla chat, da Cowork e dal mobile. Puoi iniziare una conversazione nella chat, continuarla dal mobile in treno, e ritrovarla intatta quando torni a Cowork. Il contesto non si perde mai.',
+syncP2:'La <strong>Memory</strong> è condivisa tra queste superfici: quello che Claude impara nella chat, lo sa anche su mobile e in Cowork.',
+syncP3:'<strong>Claude Code è separato.</strong> Usa il suo sistema di memoria (CLAUDE.md) e non condivide conversazioni con le altre superfici. È un tool a sé stante, pensato per un workflow diverso.',
+s4:'Scenari pratici — quale uso?',
+s5:'Come le usiamo in questo corso',
+courseIntro:'In questo corso userai <strong>Chat, Cowork e Claude Code</strong> come strumenti primari. Li alterni in base a quello che devi fare — ognuno ha il suo momento.',
+courseChat:'Moduli 0, 2, 3, 5, 6, 7, 8, 9 — conversazioni, Projects, prompt engineering, strategie',
+courseCowork:'Modulo 4 intensivo, poi ovunque serva creare file, automatizzare task, documenti reali',
+courseCode:'Modulo dedicato al coding agentico, automazioni avanzate, sviluppo software',
+courseNote:'<i class="ti ti-device-mobile" style="color:var(--amber)"></i> <strong>+1 Mobile</strong> — utile come complemento per catturare idee e domande veloci in movimento, ma non richiesto per seguire il corso.',
+s6:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Fai questo adesso: vai su <strong>claude.ai</strong> e cerca il link per scaricare l\'app desktop. Non serve installarla subito — ma sappi dove si trova. La userai dal Modulo 4 in poi, e avere l\'app già installata ti risparmia friction nel momento in cui ne avrai bisogno.',
+bridge:'Sai quali superfici esistono e quando usarle. <b>Prossimo passo:</b> entriamo dentro quella che userai di più per la parte conversazionale — il web — e ti faccio un tour completo dell\'interfaccia.',
+foot:'Morfeus — Le Superfici di Claude'
+},
+en:{
+kicker:'Lesson 1.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Setup',
+h1:'The Surfaces of Claude',
+lede:'Four ways to access Claude. Each has different capabilities. Choosing the right one radically changes what you can do.',
+hook:'"Most people only use Claude from the browser. That\'s like having a powerful tool and using ten percent of it."',
+s1:'The four surfaces at a glance',
+mapTitle:'One Claude, four ways to use it',
+mapChat:'Projects, Artifacts, file upload, web search, Research. The operational desk.',
+mapCoworkM:'Desktop App',mapCowork:'Claude operates on your file system, creates files, runs multi-step tasks. The autonomous assistant.',
+mapCodeM:'CLI / Terminal',mapCode:'Coding agent in the terminal. Reads, writes, runs code. The tool for developers.',
+mapMobile:'Voice, camera, quick questions on the go. The smart notebook.',
+primary:'Primary surface',primary2:'Primary surface',primary3:'Primary surface',complementary:'Complementary',
+key1:'"Chat is your desk. Cowork is your autonomous assistant. Claude Code is your developer agent in the terminal. Mobile is the +1 you always have in your pocket."',
+s2:'The surfaces in detail',
+s3:'Feature comparison',
+legYes:'= available',legPartial:'= partial',legNo:'= not available',
+syncH:'Chat, Cowork and Mobile are synced',
+syncP1:'Conversations and Projects are accessible from chat, from Cowork and from mobile. You can start a conversation in chat, continue it from mobile on the train, and find it intact when you return to Cowork. The context is never lost.',
+syncP2:'<strong>Memory</strong> is shared across these surfaces: what Claude learns in chat, it also knows on mobile and in Cowork.',
+syncP3:'<strong>Claude Code is separate.</strong> It uses its own memory system (CLAUDE.md) and doesn\'t share conversations with the other surfaces. It\'s a standalone tool, built for a different workflow.',
+s4:'Practical scenarios — which one do I use?',
+s5:'How we use them in this course',
+courseIntro:'In this course you\'ll use <strong>Chat, Cowork and Claude Code</strong> as primary tools. You alternate between them based on what you need to do — each has its moment.',
+courseChat:'Modules 0, 2, 3, 5, 6, 7, 8, 9 — conversations, Projects, prompt engineering, strategies',
+courseCowork:'Module 4 intensively, then anywhere you need to create files, automate tasks, real documents',
+courseCode:'Module dedicated to agentic coding, advanced automations, software development',
+courseNote:'<i class="ti ti-device-mobile" style="color:var(--amber)"></i> <strong>+1 Mobile</strong> — useful as a complement to capture ideas and quick questions on the go, but not required to follow the course.',
+s6:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Do this now: go to <strong>claude.ai</strong> and find the link to download the desktop app. You don\'t need to install it right away — but know where it is. You\'ll use it from Module 4 onward, and having the app already installed saves you friction the moment you need it.',
+bridge:'You know which surfaces exist and when to use them. <b>Next step:</b> we go inside the one you\'ll use most for the conversational part — the web — and I\'ll give you a full tour of the interface.',
+foot:'Morfeus — The Surfaces of Claude'
+}};
+
+var SURFACES={it:[
+{c:'accent',ic:'ti-browser',title:'Chat — claude.ai',tag:'Primaria',sub:'Funziona su qualsiasi browser, qualsiasi computer, senza installare niente',
+intro:'La chat web su claude.ai è il punto di partenza per la maggior parte del lavoro interattivo: conversazioni, analisi, scrittura, ragionamento, gestione progetti.',
+feats:[
+['ti-message-circle','Conversazioni','Chat libera con Claude. Ogni conversazione ha il suo contesto. Puoi tornare a conversazioni precedenti e Claude ricorda il filo.'],
+['ti-folder','Projects','Spazi di lavoro persistenti con istruzioni personalizzate e knowledge base. Claude mantiene contesto tra le sessioni. Fondamentale dal Modulo 3 in poi.'],
+['ti-layout-dashboard','Artifacts','Output strutturati che compaiono in un pannello separato: codice, documenti, tabelle, visualizzazioni interattive. Si possono copiare, scaricare, iterare.'],
+['ti-upload','File Upload','Carica PDF, immagini, CSV, documenti Word, codice. Claude li legge, li analizza, risponde su di essi. Fino a 30+ file per conversazione.'],
+['ti-world-search','Ricerca web','Claude può cercare informazioni aggiornate in tempo reale. Si attiva automaticamente quando serve o su richiesta.'],
+['ti-brain','Extended Thinking','Claude ragiona passo per passo prima di rispondere. Visibile nel pannello di pensiero. Migliora drasticamente la qualità su problemi complessi.'],
+['ti-database','Memory','Claude ricorda informazioni tra sessioni diverse: chi sei, cosa fai, le tue preferenze. Si costruisce col tempo.'],
+['ti-puzzle','Connectors e Integrazioni','Collegati a Google Drive, Notion, Zapier e altri strumenti. Claude può leggere e interagire con i tuoi dati esterni.'],
+['ti-microscope','Research (solo Pro+)','Claude fa ricerche approfondite autonomamente: naviga, legge, sintetizza. Restituisce un report strutturato con fonti.']],
+whenT:'Quando usare la Chat',
+when:['Conversazioni interattive, Q&A, brainstorming','Lavoro su Projects con knowledge base','Analisi di documenti, PDF, immagini','Scrittura assistita: copy, email, report, strategia','Generazione di Artifacts (codice, tabelle, visualizzazioni)','Ricerca web e Research approfondita'],
+notT:'Quando NON basta',
+not:['Quando hai bisogno che Claude operi direttamente sui tuoi file locali (usa Cowork)','Quando vuoi delegare task multi-step che Claude esegue in autonomia (usa Cowork)','Quando il workflow richiede creazione automatica di file — docx, xlsx, pptx (usa Cowork)','Quando devi lavorare su una codebase, scrivere codice, fare refactoring (usa Claude Code)']},
+{c:'teal',ic:'ti-app-window',title:'Desktop — Cowork',tag:'Primaria',sub:'Non è una finestra del browser con un\'icona diversa. È qualcosa di fondamentalmente diverso.',
+intro:'L\'app desktop sblocca <strong>Cowork</strong> — la modalità agentica di Claude. Qui Claude non si limita a rispondere: opera nel tuo ambiente di lavoro reale.',
+feats:[
+['ti-folder-open','Accesso al file system','Claude può leggere, creare, modificare e organizzare file sul tuo computer. Selezioni tu la cartella — Claude lavora solo lì dentro.'],
+['ti-robot','Esecuzione agentica','Task multi-step in autonomia: "Prendi questi 5 PDF, estraili, fai un riassunto per ciascuno, crea un Excel con i dati chiave." Claude pianifica, esegue, verifica.'],
+['ti-file-type-docx','Creazione file','Claude genera direttamente file Word (.docx), Excel (.xlsx), PowerPoint (.pptx), PDF, HTML e qualsiasi altro formato. I file appaiono nella tua cartella, pronti da usare.'],
+['ti-terminal-2','Shell Linux integrata','Un ambiente sandbox dove Claude può eseguire codice Python, Node.js, comandi bash. Utile per analisi dati, elaborazione file, automazioni.'],
+['ti-puzzle','Skills e Plugin','Competenze specializzate che Claude attiva automaticamente: creazione documenti professionali, analisi dati, copywriting, design system. Espandono enormemente le capacità.'],
+['ti-plug-connected','MCP Connectors','Claude si collega a servizi esterni (Slack, Google Drive, Notion, GitHub e decine di altri) per leggere dati e compiere azioni. Non è solo chat — è integrazione reale.'],
+['ti-world','Browser automation','Con Claude in Chrome, Claude può navigare pagine web, compilare form, estrarre dati da siti. Opera nel browser come faresti tu.'],
+['ti-clock-hour-4','Task schedulati','Puoi programmare task ricorrenti: "Ogni lunedì mattina, genera il report settimanale." Claude esegue in background.']],
+whenT:'Quando usare Cowork',
+when:['Creare documenti professionali (Word, Excel, PowerPoint, PDF)','Delegare task che richiedono più passi','Lavorare direttamente sui tuoi file locali','Automazioni ricorrenti e task schedulati','Analisi dati con codice Python/Node.js','Interagire con servizi esterni via MCP'],
+notT:'Quando NON è necessario',
+not:['Domande veloci, brainstorming, conversazioni esplorative — il web basta','Se hai solo bisogno di leggere un file (caricalo nel web via upload)']},
+{c:'blue',ic:'ti-terminal-2',title:'Claude Code — CLI',tag:'Primaria',sub:'Un agente coding che vive nel tuo terminale. Non è una chat — è un developer che lavora sul tuo codice.',
+intro:'Claude Code è uno strumento a linea di comando (CLI) che opera direttamente dentro la tua codebase. Legge file, scrive codice, esegue test, fa commit. Un agente sviluppatore che vive nel terminale.',
+feats:[
+['ti-code','Agentic coding','Claude legge la tua codebase, capisce l\'architettura, scrive codice nuovo, modifica file esistenti, fa refactoring. Non suggerisce — esegue.'],
+['ti-files','Contesto di progetto intero','Claude Code vede l\'intero progetto: struttura cartelle, dipendenze, configurazioni. Capisce il "perché" dietro il codice, non solo il "cosa".'],
+['ti-test-pipe','Esecuzione e test','Esegue comandi shell, lancia test, verifica che il codice funzioni. Quando trova un errore, lo corregge e ri-testa. Loop autonomo fino al risultato.'],
+['ti-git-branch','Git integrato','Fa commit, crea branch, gestisce il flusso di lavoro git. Può operare su branch isolati per non toccare il tuo lavoro in corso.'],
+['ti-users','Sub-agenti paralleli','Può lanciare più agenti che lavorano in parallelo su task diversi. Uno scrive il codice, l\'altro i test, un altro la documentazione.'],
+['ti-plug-connected','MCP e Hooks','Si collega a servizi esterni via MCP (GitHub, database, API). Gli hooks permettono di automatizzare azioni prima e dopo ogni operazione.']],
+planreqT:'Requisito piano',
+planreq:'Claude Code richiede il piano <strong>Max 5x</strong> o superiore. Non è disponibile con il piano Pro (rimosso da aprile 2026). Ha limiti settimanali separati per ore Sonnet e ore Opus.',
+whenT:'Quando usare Claude Code',
+when:['Sviluppo software: scrivere, modificare, fare refactoring di codice','Debugging: Claude trova il bug, lo corregge, verifica con i test','Task ripetitivi su codebase: migrazioni, aggiornamenti, batch edit','Prototyping rapido: da idea a codice funzionante in minuti','CI/CD e automazioni di sviluppo'],
+notT:'Quando NON è lo strumento giusto',
+not:['Non sei uno sviluppatore e non lavori con codice (usa Chat o Cowork)','Devi creare documenti Word, Excel, presentazioni (usa Cowork)','Brainstorming, strategia, analisi non tecnica (usa la Chat)']},
+{c:'amber',ic:'ti-device-mobile',title:'Mobile — iOS e Android',tag:'+1 Complementare',sub:'Non è una versione ridotta — ha le stesse capacità di ragionamento della chat',
+intro:'L\'app mobile è Claude in tasca. Stesse capacità di ragionamento, visione e accesso ai modelli del web, con in più l\'input vocale e la fotocamera.',
+feats:[
+['ti-microphone','Voice input','Parla con Claude — trascrive e risponde. Molto più veloce che scrivere su schermo piccolo. Ideale per catturare idee, dettare testi, fare domande mentre cammini.'],
+['ti-camera','Fotocamera','Inquadra un documento, una lavagna, uno schermo, un prodotto, un\'etichetta — Claude vede e analizza. Trascrizione, traduzione, spiegazione, tutto istantaneo.'],
+['ti-message-circle','Chat completa','Stesse conversazioni del web. Puoi iniziare una conversazione sul telefono e continuarla dal computer — il contesto resta sincronizzato.'],
+['ti-bolt','Accesso rapido','L\'app è sempre pronta. Nessun login ripetuto, nessun browser da aprire. Dal momento in cui hai l\'idea al momento in cui Claude risponde: 3 secondi.']],
+whenT:'Quando usare il Mobile',
+when:['Sei in movimento e hai una domanda veloce','Vuoi dettare un\'idea o un testo a voce','Devi fotografare qualcosa e farlo analizzare','Continui una conversazione iniziata dal computer'],
+notT:'Quando NON è la scelta giusta',
+not:['Lavoro profondo che richiede concentrazione e schermo grande','Gestione Projects con knowledge base complessa','Qualsiasi cosa che coinvolga file locali (usa Cowork)']}
+],en:[
+{c:'accent',ic:'ti-browser',title:'Chat — claude.ai',tag:'Primary',sub:'Works on any browser, any computer, with nothing to install',
+intro:'The web chat on claude.ai is the starting point for most interactive work: conversations, analysis, writing, reasoning, project management.',
+feats:[
+['ti-message-circle','Conversations','Free chat with Claude. Each conversation has its own context. You can return to previous conversations and Claude remembers the thread.'],
+['ti-folder','Projects','Persistent workspaces with custom instructions and a knowledge base. Claude keeps context across sessions. Essential from Module 3 onward.'],
+['ti-layout-dashboard','Artifacts','Structured outputs that appear in a separate panel: code, documents, tables, interactive visualizations. You can copy, download, iterate.'],
+['ti-upload','File Upload','Upload PDFs, images, CSVs, Word documents, code. Claude reads them, analyzes them, answers about them. Up to 30+ files per conversation.'],
+['ti-world-search','Web search','Claude can look up up-to-date information in real time. It activates automatically when needed or on request.'],
+['ti-brain','Extended Thinking','Claude reasons step by step before answering. Visible in the thinking panel. It dramatically improves quality on complex problems.'],
+['ti-database','Memory','Claude remembers information across different sessions: who you are, what you do, your preferences. It builds up over time.'],
+['ti-puzzle','Connectors and Integrations','Connect to Google Drive, Notion, Zapier and other tools. Claude can read and interact with your external data.'],
+['ti-microscope','Research (Pro+ only)','Claude does in-depth research autonomously: it browses, reads, synthesizes. It returns a structured report with sources.']],
+whenT:'When to use Chat',
+when:['Interactive conversations, Q&A, brainstorming','Working on Projects with a knowledge base','Analyzing documents, PDFs, images','Assisted writing: copy, email, reports, strategy','Generating Artifacts (code, tables, visualizations)','Web search and in-depth Research'],
+notT:'When it\'s not enough',
+not:['When you need Claude to operate directly on your local files (use Cowork)','When you want to delegate multi-step tasks Claude runs autonomously (use Cowork)','When the workflow requires automatic file creation — docx, xlsx, pptx (use Cowork)','When you need to work on a codebase, write code, refactor (use Claude Code)']},
+{c:'teal',ic:'ti-app-window',title:'Desktop — Cowork',tag:'Primary',sub:'It\'s not a browser window with a different icon. It\'s something fundamentally different.',
+intro:'The desktop app unlocks <strong>Cowork</strong> — Claude\'s agentic mode. Here Claude doesn\'t just answer: it operates in your real work environment.',
+feats:[
+['ti-folder-open','File system access','Claude can read, create, modify and organize files on your computer. You select the folder — Claude works only inside it.'],
+['ti-robot','Agentic execution','Multi-step tasks autonomously: "Take these 5 PDFs, extract them, summarize each, create an Excel with the key data." Claude plans, executes, verifies.'],
+['ti-file-type-docx','File creation','Claude directly generates Word (.docx), Excel (.xlsx), PowerPoint (.pptx), PDF, HTML and any other format. The files appear in your folder, ready to use.'],
+['ti-terminal-2','Built-in Linux shell','A sandbox environment where Claude can run Python, Node.js, bash commands. Useful for data analysis, file processing, automations.'],
+['ti-puzzle','Skills and Plugins','Specialized skills Claude activates automatically: professional document creation, data analysis, copywriting, design systems. They expand the capabilities enormously.'],
+['ti-plug-connected','MCP Connectors','Claude connects to external services (Slack, Google Drive, Notion, GitHub and dozens of others) to read data and take actions. It\'s not just chat — it\'s real integration.'],
+['ti-world','Browser automation','With Claude in Chrome, Claude can navigate web pages, fill in forms, extract data from sites. It operates in the browser as you would.'],
+['ti-clock-hour-4','Scheduled tasks','You can schedule recurring tasks: "Every Monday morning, generate the weekly report." Claude runs it in the background.']],
+whenT:'When to use Cowork',
+when:['Creating professional documents (Word, Excel, PowerPoint, PDF)','Delegating tasks that require multiple steps','Working directly on your local files','Recurring automations and scheduled tasks','Data analysis with Python/Node.js code','Interacting with external services via MCP'],
+notT:'When it\'s not necessary',
+not:['Quick questions, brainstorming, exploratory conversations — the web is enough','If you only need to read a file (upload it to the web)']},
+{c:'blue',ic:'ti-terminal-2',title:'Claude Code — CLI',tag:'Primary',sub:'A coding agent that lives in your terminal. It\'s not a chat — it\'s a developer working on your code.',
+intro:'Claude Code is a command-line tool (CLI) that operates directly inside your codebase. It reads files, writes code, runs tests, commits. A developer agent that lives in the terminal.',
+feats:[
+['ti-code','Agentic coding','Claude reads your codebase, understands the architecture, writes new code, modifies existing files, refactors. It doesn\'t suggest — it executes.'],
+['ti-files','Whole-project context','Claude Code sees the entire project: folder structure, dependencies, configurations. It understands the "why" behind the code, not just the "what".'],
+['ti-test-pipe','Execution and testing','It runs shell commands, launches tests, verifies the code works. When it finds an error, it fixes it and re-tests. An autonomous loop until the result.'],
+['ti-git-branch','Git integrated','It commits, creates branches, manages the git workflow. It can operate on isolated branches so it doesn\'t touch your work in progress.'],
+['ti-users','Parallel sub-agents','It can launch multiple agents working in parallel on different tasks. One writes the code, another the tests, another the documentation.'],
+['ti-plug-connected','MCP and Hooks','It connects to external services via MCP (GitHub, databases, APIs). Hooks let you automate actions before and after each operation.']],
+planreqT:'Plan requirement',
+planreq:'Claude Code requires the <strong>Max 5x</strong> plan or higher. It\'s not available with the Pro plan (removed as of April 2026). It has separate weekly limits for Sonnet hours and Opus hours.',
+whenT:'When to use Claude Code',
+when:['Software development: writing, modifying, refactoring code','Debugging: Claude finds the bug, fixes it, verifies with the tests','Repetitive codebase tasks: migrations, updates, batch edits','Rapid prototyping: from idea to working code in minutes','CI/CD and development automations'],
+notT:'When it\'s not the right tool',
+not:['You\'re not a developer and don\'t work with code (use Chat or Cowork)','You need to create Word, Excel, presentation documents (use Cowork)','Brainstorming, strategy, non-technical analysis (use Chat)']},
+{c:'amber',ic:'ti-device-mobile',title:'Mobile — iOS and Android',tag:'+1 Complementary',sub:'It\'s not a reduced version — it has the same reasoning capabilities as chat',
+intro:'The mobile app is Claude in your pocket. Same reasoning, vision and model access as the web, plus voice input and the camera.',
+feats:[
+['ti-microphone','Voice input','Talk to Claude — it transcribes and answers. Much faster than typing on a small screen. Ideal for capturing ideas, dictating text, asking questions while walking.'],
+['ti-camera','Camera','Point at a document, a whiteboard, a screen, a product, a label — Claude sees and analyzes. Transcription, translation, explanation, all instant.'],
+['ti-message-circle','Full chat','Same conversations as the web. You can start a conversation on the phone and continue it on the computer — the context stays synced.'],
+['ti-bolt','Quick access','The app is always ready. No repeated login, no browser to open. From the moment you have the idea to the moment Claude answers: 3 seconds.']],
+whenT:'When to use Mobile',
+when:['You\'re on the move and have a quick question','You want to dictate an idea or text by voice','You need to photograph something and have it analyzed','You continue a conversation started on the computer'],
+notT:'When it\'s not the right choice',
+not:['Deep work that requires focus and a big screen','Managing Projects with a complex knowledge base','Anything involving local files (use Cowork)']}
+]};
+
+var COMP={it:{
+head:['Funzionalità','Chat','Cowork','Code','Mobile'],
+rows:[
+['Chat / Conversazioni','y','y','y','y'],
+['Projects','y','y','n','y'],
+['File upload','y','y','n','y'],
+['Extended thinking','y','y','y','y'],
+['Ricerca web','y','y','y','y'],
+['Memory','y','y','p:CLAUDE.md','y'],
+['Artifacts','y','p:Diverso','n','n'],
+['Research','y','n','n','n'],
+['Accesso file locali','n','y','y','n'],
+['Esecuzione agentica','n','y','y','n'],
+['Crea file (docx, xlsx...)','n','y','n','n'],
+['Scrive/modifica codice','n','p:Limitato','y','n'],
+['Git integrato','n','n','y','n'],
+['Shell / codice','n','y','y','n'],
+['Skills e Plugin','p:Limitato','y','y','n'],
+['MCP Connectors','p:Base','y','y','n'],
+['Browser automation','n','y','n','n'],
+['Task schedulati','n','y','n','n'],
+['Sub-agenti paralleli','n','n','y','n'],
+['Voice input','n','n','n','y'],
+['Fotocamera diretta','n','n','n','y']]
+},en:{
+head:['Feature','Chat','Cowork','Code','Mobile'],
+rows:[
+['Chat / Conversations','y','y','y','y'],
+['Projects','y','y','n','y'],
+['File upload','y','y','n','y'],
+['Extended thinking','y','y','y','y'],
+['Web search','y','y','y','y'],
+['Memory','y','y','p:CLAUDE.md','y'],
+['Artifacts','y','p:Different','n','n'],
+['Research','y','n','n','n'],
+['Local file access','n','y','y','n'],
+['Agentic execution','n','y','y','n'],
+['Create files (docx, xlsx...)','n','y','n','n'],
+['Write/edit code','n','p:Limited','y','n'],
+['Git integrated','n','n','y','n'],
+['Shell / code','n','y','y','n'],
+['Skills and Plugins','p:Limited','y','y','n'],
+['MCP Connectors','p:Basic','y','y','n'],
+['Browser automation','n','y','n','n'],
+['Scheduled tasks','n','y','n','n'],
+['Parallel sub-agents','n','n','y','n'],
+['Voice input','n','n','n','y'],
+['Direct camera','n','n','n','y']]
+}};
+
+var SCEN={it:[
+['ti-pencil','accent','"Devo scrivere un\'email importante a un cliente"','Hai bisogno di una conversazione interattiva: spieghi il contesto, Claude propone una bozza, iterate insieme. Non servono file locali né automazioni.','ti-browser','Usa la Chat'],
+['ti-file-spreadsheet','teal','"Devo creare un report Excel da questi dati"','Claude deve accedere ai tuoi file, elaborarli con Python, e produrre un file .xlsx nella tua cartella. Serve l\'ambiente agentico.','ti-app-window','Usa Cowork (Desktop)'],
+['ti-bulb','amber','"Sono in treno e mi è venuta un\'idea per il progetto"','Vuoi catturare l\'idea velocemente, magari dettandola a voce. Non hai bisogno di funzionalità avanzate, solo di Claude che ascolta e risponde.','ti-device-mobile','Usa il Mobile'],
+['ti-search','accent','"Devo fare una ricerca approfondita su un topic"','Research è una funzionalità del web: Claude naviga decine di fonti, legge, sintetizza, e produce un report con citazioni. Tutto automatico.','ti-browser','Usa la Chat (Research)'],
+['ti-code','blue','"Devo fare refactoring di un modulo e aggiornare i test"','Task tecnico su una codebase: Claude Code legge il modulo, capisce le dipendenze, riscrive il codice, aggiorna i test e verifica che passino. Tutto nel terminale.','ti-terminal-2','Usa Claude Code'],
+['ti-presentation','teal','"Devo preparare un pitch deck in PowerPoint"','Claude deve generare un file .pptx reale con slide formattate. Questo richiede l\'accesso al file system e le skill di creazione documenti.','ti-app-window','Usa Cowork (Desktop)'],
+['ti-camera','amber','"Sono al supermercato e voglio che Claude legga un\'etichetta"','Fotocamera + visione di Claude. Inquadri, Claude legge e analizza. Niente di più veloce.','ti-device-mobile','Usa il Mobile'],
+['ti-brain','accent','"Devo ragionare su una decisione strategica complessa"','Conversazione profonda con Extended Thinking attivo. Vai e vieni, fai domande, Claude ragiona. La chat è perfetta per questo tipo di dialogo.','ti-browser','Usa la Chat'],
+['ti-folders','teal','"Devo organizzare 50 file in cartelle e rinominarli"','Task ripetitivo che richiede accesso al file system e esecuzione multi-step. Claude lo fa in un minuto, tu ci metteresti un\'ora.','ti-app-window','Usa Cowork (Desktop)']
+],en:[
+['ti-pencil','accent','"I have to write an important email to a client"','You need an interactive conversation: you explain the context, Claude proposes a draft, you iterate together. No local files or automations needed.','ti-browser','Use Chat'],
+['ti-file-spreadsheet','teal','"I have to create an Excel report from this data"','Claude needs to access your files, process them with Python, and produce a .xlsx file in your folder. The agentic environment is required.','ti-app-window','Use Cowork (Desktop)'],
+['ti-bulb','amber','"I\'m on the train and I just had an idea for the project"','You want to capture the idea quickly, maybe dictating it by voice. You don\'t need advanced features, just Claude listening and answering.','ti-device-mobile','Use Mobile'],
+['ti-search','accent','"I have to do in-depth research on a topic"','Research is a web feature: Claude browses dozens of sources, reads, synthesizes, and produces a report with citations. All automatic.','ti-browser','Use Chat (Research)'],
+['ti-code','blue','"I have to refactor a module and update the tests"','A technical task on a codebase: Claude Code reads the module, understands the dependencies, rewrites the code, updates the tests and verifies they pass. All in the terminal.','ti-terminal-2','Use Claude Code'],
+['ti-presentation','teal','"I have to prepare a pitch deck in PowerPoint"','Claude needs to generate a real .pptx file with formatted slides. This requires file system access and document-creation skills.','ti-app-window','Use Cowork (Desktop)'],
+['ti-camera','amber','"I\'m at the supermarket and I want Claude to read a label"','Camera + Claude\'s vision. You point, Claude reads and analyzes. Nothing is faster.','ti-device-mobile','Use Mobile'],
+['ti-brain','accent','"I have to reason through a complex strategic decision"','A deep conversation with Extended Thinking on. Back and forth, you ask questions, Claude reasons. Chat is perfect for this kind of dialogue.','ti-browser','Use Chat'],
+['ti-folders','teal','"I have to organize 50 files into folders and rename them"','A repetitive task that requires file system access and multi-step execution. Claude does it in a minute, you\'d take an hour.','ti-app-window','Use Cowork (Desktop)']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSurfaces();renderComp();renderScen();
+}
+function renderSurfaces(){
+  document.getElementById('surfaces').innerHTML=SURFACES[LANG].map(function(s){
+    var feats=s.feats.map(function(f){return '<div class="feat"><div class="feat-ic" style="background:var(--'+s.c+'-soft);color:var(--'+s.c+')"><i class="ti '+f[0]+'"></i></div><div class="feat-t"><strong>'+f[1]+'</strong><span>'+f[2]+'</span></div></div>'}).join('');
+    var planreq=s.planreq?'<div class="planreq"><div class="pq-t"><i class="ti ti-alert-triangle"></i> '+s.planreqT+'</div><div class="pq-p">'+s.planreq+'</div></div>':'';
+    var when=s.when.map(function(w){return '<div class="when-i"><i class="ti ti-circle-check"></i> '+w+'</div>'}).join('');
+    var not=s.not.map(function(n){return '<div class="not-i"><i class="ti ti-x"></i> '+n+'</div>'}).join('');
+    return '<div class="surf" onclick="toggleSurf(this)"><div class="surf-h"><div class="surf-ic" style="background:var(--'+s.c+'-soft);color:var(--'+s.c+')"><i class="ti '+s.ic+'"></i></div><div class="surf-ht"><h2>'+s.title+' <span class="surf-tag" style="background:var(--'+s.c+'-soft);color:var(--'+s.c+')">'+s.tag+'</span></h2><div class="sub">'+s.sub+'</div></div><i class="ti ti-chevron-right surf-chev"></i></div><div class="surf-b"><div class="surf-in"><p class="intro">'+s.intro+'</p>'+feats+planreq+'<div class="whenbox" style="border-color:var(--'+s.c+'-line)"><div class="when-t" style="color:var(--'+s.c+')"><i class="ti ti-check"></i> '+s.whenT+'</div>'+when+'</div><div class="notbox"><div class="not-t"><i class="ti ti-x"></i> '+s.notT+'</div>'+not+'</div></div></div></div>';
+  }).join('');
+}
+function toggleSurf(el){el.classList.toggle('open')}
+function cell(v){
+  if(v==='y')return '<td class="yes"><i class="ti ti-check"></i></td>';
+  if(v==='n')return '<td class="no"><i class="ti ti-x"></i></td>';
+  if(v.indexOf('p:')===0)return '<td class="partial"><i class="ti ti-minus"></i> '+v.slice(2)+'</td>';
+  return '<td>'+v+'</td>';
+}
+function renderComp(){
+  var d=COMP[LANG];
+  var ic=['','ti-browser','ti-app-window','ti-terminal-2','ti-device-mobile'];
+  var col=['','accent','teal','blue','amber'];
+  var thead='<thead><tr>'+d.head.map(function(h,i){return i===0?'<th>'+h+'</th>':'<th><i class="ti '+ic[i]+'" style="color:var(--'+col[i]+')"></i> '+h+'</th>'}).join('')+'</tr></thead>';
+  var tbody='<tbody>'+d.rows.map(function(r){return '<tr><td class="fn">'+r[0]+'</td>'+cell(r[1])+cell(r[2])+cell(r[3])+cell(r[4])+'</tr>'}).join('')+'</tbody>';
+  document.getElementById('compTable').innerHTML=thead+tbody;
+}
+function renderScen(){
+  document.getElementById('scenarios').innerHTML=SCEN[LANG].map(function(s){
+    return '<div class="scen" onclick="toggleScen(this)"><div class="sc-h"><i class="ti '+s[0]+'" style="color:var(--'+s[1]+')"></i> <span>'+s[2]+'</span></div><div class="sc-b"><p>'+s[3]+'</p><div class="sc-a" style="background:var(--'+s[1]+'-soft);color:var(--'+s[1]+')"><i class="ti '+s[4]+'"></i> '+s[5]+'</div></div></div>';
+  }).join('');
+}
+function toggleScen(el){el.classList.toggle('open')}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

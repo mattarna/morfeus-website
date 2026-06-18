@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formazione Morfeus — Libreria</title>
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#533DFC;
+--accent-soft:color-mix(in srgb,var(--accent) 11%,var(--card));
+--accent-line:color-mix(in srgb,var(--accent) 32%,transparent);
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#14131c;--bg-2:#1b1a26;--bg-3:#232234;--card:#1a1925;
+--ink:#f3f2fb;--ink-2:#c4c2d6;--ink-3:#8c8aa3;
+--line:rgba(255,255,255,.1);--line-2:rgba(255,255,255,.18);--grid:rgba(140,165,247,.05);
+--accent-soft:color-mix(in srgb,var(--accent) 24%,var(--card));
+--accent-line:color-mix(in srgb,var(--accent) 45%,transparent);
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;min-height:100vh}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent);transition:color .3s}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em;transition:background .3s}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.wrap{max-width:860px;margin:0 auto;padding:92px 24px 64px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;transition:color .3s}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1.06;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:660px}
+.tabs{display:flex;gap:4px;margin-top:34px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{appearance:none;border:0;background:transparent;font:inherit;cursor:pointer;padding:13px 18px;font-size:15.5px;font-weight:600;color:var(--ink-3);border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:10px;transition:color .18s,border-color .18s}
+.tab:hover{color:var(--ink-2)}
+.tab .tn{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--bg-3);color:var(--ink-3);border-radius:30px;padding:2px 9px;transition:.18s}
+.tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+.tab.on .tn{background:var(--accent);color:#fff}
+.tab.ghost{color:var(--ink-3);opacity:.5;cursor:default;font-weight:500}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.stat{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:8px 16px;font-size:13px;color:var(--ink-2)}
+.stat .sn{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:15px;transition:color .3s}
+.mods{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:border-color .18s}
+.mod.open{border-color:var(--accent-line)}
+.mhead{display:flex;align-items:center;gap:16px;padding:18px 20px;cursor:pointer;user-select:none}
+.mnum{min-width:50px;height:46px;padding:0 10px;flex-shrink:0;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:15px;box-shadow:0 2px 8px color-mix(in srgb,var(--accent) 35%,transparent);transition:background .3s}
+.minfo{flex:1;min-width:0}
+.mtitle{font-size:16.5px;font-weight:600;letter-spacing:-.01em}
+.msub{font-size:12.5px;color:var(--ink-3);font-family:var(--mono);margin-top:3px}
+.chev{color:var(--ink-3);flex-shrink:0;transition:transform .3s cubic-bezier(.2,.7,.2,1),color .3s}
+.mod.open .chev{transform:rotate(180deg);color:var(--accent)}
+.mbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.2,.7,.2,1)}
+.mod.open .mbody{grid-template-rows:1fr}
+.mbinner{overflow:hidden}
+.lessons{padding:2px 14px 16px 14px;display:flex;flex-direction:column;gap:2px}
+a.les{display:flex;align-items:center;gap:14px;text-decoration:none;padding:12px 14px;border-radius:var(--r);transition:background .15s;color:inherit}
+a.les:hover{background:var(--accent-soft)}
+.lid{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:7px;padding:5px 8px;min-width:54px;text-align:center;flex-shrink:0;transition:color .3s}
+.lt{flex:1;min-width:0;font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.4}
+.go{color:var(--ink-3);font-size:18px;flex-shrink:0;transition:transform .15s,color .15s}
+a.les:hover .go{color:var(--accent);transform:translateX(2px)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.mf-legal{max-width:920px;margin:28px auto 0;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3);background:var(--bg-2)}
+.mf-legal p{margin:0 0 8px}.mf-legal p:last-child{margin:0}
+@media(max-width:640px){.wrap{padding:84px 16px 48px}h1{font-size:30px}.mhead{padding:15px 15px;gap:13px}.tab{padding:11px 13px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Formazione</span>
+  </div>
+  <button class="ic-btn" onclick="toggleTheme()" title="Cambia tema">&#9680;</button>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Libreria · Formazione Morfeus</div>
+  <h1>Formazione Morfeus</h1>
+  <p class="lede">Tutti i percorsi formativi Morfeus in un unico posto. Scegli un corso dalle schede qui sotto, apri un modulo e accedi alle lezioni. La libreria cresce nel tempo: ogni nuovo corso diventa una nuova scheda.</p>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="stats" id="stats"></div>
+  <div class="mods" id="mods"></div>
+
+  <div class="foot"><span>Morfeus — Formazione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal">
+    <p>&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p>
+    <p>&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p>
+  </div>
+</div>
+
+<script>
+var BASE='/formazione-morfeus-bf0efbde6e/lz/';
+var TRACKS=[{"id":"metodo_morfeus","label":"Metodo Morfeus","accentL":"#533DFC","accentD":"#8b7dff","total":65,"mods":[{"badge":"A0","title":"Pedagogia (formatori)","lessons":[{"id":"A0.1","t":"Anatomia di una lezione","slug":"ebc918dcf5651ea4"},{"id":"A0.2","t":"Tecniche di delivery","slug":"5c16c6dc503de401"}]},{"badge":"A1","title":"Cultura dell'AI","lessons":[{"id":"A1.1","t":"Cos'è l'AI","slug":"684dd7157ada5d72"},{"id":"A1.1b","t":"I benefici concreti dell'AI","slug":"8e0daf5e84446170"},{"id":"A1.2","t":"Algoritmo & glossario","slug":"23e1513bc06fe4e4"},{"id":"A1.3","t":"I dati: il carburante dell'AI","slug":"63150a560f39ff4b"},{"id":"A1.4","t":"I 4 pilastri dell'adozione AI","slug":"9a03291c133ba50c"},{"id":"A1.5","t":"La cultura AI-ready","slug":"8899ad6f36a5d55b"},{"id":"A1.6","t":"L'AI è un junior che non sa niente","slug":"36698a1a4b4120f5"},{"id":"A1.7","t":"Persone pensanti, non esecutori","slug":"44efe49e978d7efe"}]},{"badge":"A2","title":"Come funziona un LLM","lessons":[{"id":"A2.1","t":"Perché conoscere la macchina","slug":"48b03573f592c5e3"},{"id":"A2.2","t":"Il Transformer: la svolta del 2017","slug":"3ebcbebefd4de67c"},{"id":"A2.3","t":"L'embedding: il \"letto\"","slug":"02f9991def78d7a4"},{"id":"A2.4","t":"I token: la \"valuta\"","slug":"c4fb5133a4aa3ca2"},{"id":"A2.5","t":"La finestra di contesto: la \"lavagna\"","slug":"2d8de78c0a28a65e"},{"id":"A2.6","t":"Le istruzioni: il Prompting (il reveal)","slug":"c0d7518838d36b26"},{"id":"A2.7","t":"Modello probabilistico, non un oracolo","slug":"e2fd6933d9c8b4cc"},{"id":"A2.8","t":"Il ragionamento esteso (thinking)","slug":"50ac3d13a1f42d4d"}]},{"badge":"A3","title":"Il Metodo","lessons":[{"id":"A3.1","t":"Il metodo prima dello strumento","slug":"0cc95ada5c30af7b"},{"id":"A3.2","t":"Prompting = delega a un junior","slug":"9c12a08d7a576f81"},{"id":"A3.3","t":"Pensiero da architetto & scomposizione","slug":"f38e7756be4b966e"},{"id":"A3.4","t":"La meta-creazione","slug":"b677a6b54711bdc9"},{"id":"A3.5","t":"Qualità come vincolo","slug":"3a4ed0825d8bbe66"},{"id":"A3.6","t":"La curva di apprendimento & il percorso progressivo","slug":"585658a6c3d80329"}]},{"badge":"A4","title":"Architettura del prompting","lessons":[{"id":"A4.1","t":"Dal linguaggio naturale allo strutturato","slug":"a3f4b72ac0965a33"},{"id":"A4.2","t":"La struttura del prompt (i 5 elementi)","slug":"7319887b3b727a7d"},{"id":"A4.3","t":"Il prompt a 3 fasi","slug":"a76000075c6af0d5"},{"id":"A4.4","t":"Iterazione, versioning e la voce","slug":"f6659bc0ec7dc10d"},{"id":"A4.5","t":"Il Prompt Generator (meta-prompting applicato)","slug":"fbfe38949e029e3d"},{"id":"A4.6","t":"Few-shot: gli esempi come leva di controllo","slug":"f28f511574c346b7"},{"id":"A4.7","t":"La fusione umano + AI (framework T/Q/D)","slug":"8719b3f6d01a0882"},{"id":"A4.8","t":"Cross-validazione tra modelli","slug":"9fc4547eae8e76c8"}]},{"badge":"A5","title":"Knowledge Base & Assistenti","lessons":[{"id":"A5.1","t":"La Knowledge Base + la tassonomia (4 tipi)","slug":"fe5ef370691ed29e"},{"id":"A5.2","t":"Creare la KB con l'AI + formati e leggibilità","slug":"3cff2ecf956bccd9"},{"id":"A5.3","t":"RAG e il bibliotecario","slug":"7af6d2e2f6f512e1"},{"id":"A5.4","t":"I 3 elementi dell'assistente","slug":"f75553ad2ea98a55"},{"id":"A5.5","t":"I 4 tipi di assistente & il team virtuale","slug":"727154faa9827813"},{"id":"A5.6","t":"Progetti: isolamento, 3 strati e il file guida","slug":"df992b5f424941a7"}]},{"badge":"A6","title":"Sistema","lessons":[{"id":"A6.1","t":"La tassonomia del prompting","slug":"ae30dd60282651dd"},{"id":"A6.2","t":"Prompt Chaining","slug":"4e60e9ce2302f881"},{"id":"A6.3","t":"Un prompt vs molti","slug":"c4f2a0607d4302ae"},{"id":"A6.4","t":"Validatori e accumulo dell'errore","slug":"858d66c4e374b03d"},{"id":"A6.5","t":"Il Ponte: connettori, API, MCP","slug":"d730f7c701122615"},{"id":"A6.6","t":"L'infrastruttura AI aziendale","slug":"2f35ae5d88104173"}]},{"badge":"A7","title":"Organizzazione & Agenti","lessons":[{"id":"A7.1","t":"Da Assistente ad Agente","slug":"473dc827c7e0b091"},{"id":"A7.1b","t":"La tassonomia degli agenti","slug":"44b16cdf2dfc241c"},{"id":"A7.2","t":"Progettare l'agente con la meta-creazione","slug":"b50e08ebc16f80dd"},{"id":"A7.3","t":"Il Cervello Aziendale","slug":"0b81408cd9f114d8"},{"id":"A7.4","t":"Architettura dei Team AI","slug":"812c11763be7eba1"},{"id":"A7.5","t":"Dipendenti AI persistenti","slug":"2e89fd3e8edfe893"},{"id":"A7.6","t":"Governance e Scala","slug":"a512f17888df947f"},{"id":"A7.7","t":"L'AI Champion e il modello organizzativo","slug":"4fd14d5582d18af8"}]},{"badge":"A8","title":"Plan & Solve","lessons":[{"id":"A8.1","t":"Plan &amp; Solve","slug":"38acbfa46db5b3f0"},{"id":"A8.2","t":"I tre livelli e i due ruoli","slug":"5f4ffef155b26d90"},{"id":"A8.3","t":"Le fasi del metodo","slug":"d51e5a2f3012b2d8"},{"id":"A8.4","t":"La cross-validazione (il cuore del metodo)","slug":"2f20dbe95cc0a408"},{"id":"A8.5","t":"Il piano vivente & il livello avanzato","slug":"27ad6e2683c798b3"},{"id":"A8.6","t":"Le 8 regole di qualità & gli anti-pattern","slug":"d3f3742d428425fd"}]},{"badge":"A9","title":"Sicurezza, Governance, Normative & Etica","lessons":[{"id":"A9.1","t":"Classificazione dei dati & le 10 regole minime","slug":"3a2eeb6fc38f2b18"},{"id":"A9.2","t":"Prompt injection & caratteri nascosti","slug":"b4eee008f07fe23e"},{"id":"A9.3","t":"Etica operativa: i confini vanno scritti","slug":"efbab714a6258282"},{"id":"A9.4","t":"Governance dell'AI in azienda (i 5 principi)","slug":"a53cec0c482125a8"},{"id":"A9.5","t":"Il quadro normativo: AI Act","slug":"b287dd03bd7b1921"},{"id":"A9.6","t":"GDPR e AI","slug":"f822b15947ce49e1"},{"id":"A9.7","t":"Etica dell'AI & il framework di valutazione modelli","slug":"bbd653c3963d7075"}]}]},{"id":"corso_claude","label":"Corso Claude","accentL":"#E8650A","accentD":"#f5915c","total":69,"mods":[{"badge":"00","title":"Fondamenti","lessons":[{"id":"0.0-mindset","t":"Il Mindset","slug":"4d3fb9e89513da35"},{"id":"0.1-cosa-e-un-llm","t":"Cos'è davvero un LLM","slug":"0aea0e28e3c5bdd0"},{"id":"0.2-cinque-livelli","t":"I cinque livelli di utilizzo dell'AI","slug":"47f88a1e664e3239"},{"id":"0.3-framework-tqd","t":"Framework TQD","slug":"d3c151b8ba032fbe"},{"id":"0.4-verification-loop","t":"Il Verification Loop","slug":"ae50e0befaa1f175"},{"id":"0.5-partner-pensiero","t":"Claude come partner di pensiero","slug":"281cf3347abed5a8"},{"id":"0.5b-foglio-bianco","t":"Il Foglio Bianco","slug":"7758d4ba9a79294d"},{"id":"0.6-quando-non-usare","t":"Quando NON usare Claude","slug":"1800afbc5d769483"}]},{"badge":"01","title":"Setup","lessons":[{"id":"1.1-creare-account","t":"Creare l'Account e Scegliere il Piano","slug":"b287a0c4c6152c87"},{"id":"1.2-superfici-claude","t":"Le Superfici di Claude","slug":"c15c6e87079b5cbd"},{"id":"1.3-interfaccia","t":"Orientarsi nell'interfaccia","slug":"8a3e993d4a91046c"},{"id":"piani-claude","t":"Quale Piano Claude fa per Te?","slug":"29567f97a4a2b7a3"},{"id":"token-e-limiti-claude","t":"Token e limiti — Come Claude misura l'utilizzo","slug":"0225190be4242ef7"}]},{"badge":"02","title":"Uso quotidiano","lessons":[{"id":"2.1-input-vocale","t":"Input vocale","slug":"735c6e8ba79f4b25"},{"id":"2.2-come-parlare-a-claude","t":"Come parlare a Claude","slug":"efc99e0447a32d56"},{"id":"2.3-gestione-conversazioni","t":"Gestione delle conversazioni","slug":"02f46c62bc8bec9b"},{"id":"2.4-artifacts","t":"Artifacts: output strutturati","slug":"77ba470f718b09e3"},{"id":"2.5-analisi-immagini-pdf","t":"Analisi Immagini e PDF","slug":"3ac530e1d2b23dc0"},{"id":"2.5c-modalita-diagnosi","t":"Modalità Diagnosi","slug":"6630117c9b2b81b3"},{"id":"2.6-analisi-dati","t":"Analisi dati con Claude","slug":"069efef924fb328e"},{"id":"2.7-custom-styles-design","t":"Custom Styles + Claude Design","slug":"02fa771ce8bbcafc"},{"id":"2.7-istruzioni-e-memoria","t":"Istruzioni e Memoria: Il Tuo Claude Personale","slug":"4258394b4e4d4993"},{"id":"B2-prompt-generator","t":"Prompt Generator","slug":"0a518a1dda6c7759"}]},{"badge":"03","title":"Projects","lessons":[{"id":"3.1-cosa-sono-i-projects","t":"Cosa sono i Projects e perché cambiano tutto","slug":"5c1670020c6a3324"},{"id":"3.2-istruzioni-personalizzate","t":"Istruzioni Personalizzate","slug":"46de24111e5c183c"},{"id":"3.3-file-contesto","t":"File di Contesto e Knowledge Base","slug":"abe717495e367a23"},{"id":"3.4-piu-progetti-parallelo","t":"Gestire Più Projects in Parallelo","slug":"b99e3c8e75fddf9e"},{"id":"3.5-concatenare-output","t":"Concatenare output tra Projects","slug":"52952b0055659ec8"}]},{"badge":"04","title":"CoWork","lessons":[{"id":"4.1-cos-e-cowork","t":"Cos'è CoWork","slug":"fc0960db2de67341"},{"id":"4.2-setup-cowork","t":"Setup CoWork","slug":"04e7e3d704677e39"},{"id":"4.3-struttura-cartelle","t":"Struttura Cartelle","slug":"be0d09bc1025fedd"},{"id":"4.4-flusso-quotidiano","t":"Il flusso quotidiano","slug":"13fbcba1b854a2dc"},{"id":"4.5-file-office","t":"File Office","slug":"41f945562a40b12c"},{"id":"4.6-task-programmate","t":"Task Programmate + Claude nel Browser","slug":"2c76b39e21502937"}]},{"badge":"05","title":"Workspace avanzato","lessons":[{"id":"5.1-istruzioni-stratificate","t":"Il principio delle istruzioni stratificate","slug":"66481c6bc61465c4"},{"id":"5.2-funzioni-contesto","t":"Le quattro funzioni del contesto persistente","slug":"6b8aa71f5ec978c2"},{"id":"5.3-istruzioni-efficaci","t":"Da Projects Isolati a Sistema","slug":"9629e182a6603789"},{"id":"5.4-loop-miglioramento","t":"Il Loop di Miglioramento Continuo","slug":"ec333e32a1456887"},{"id":"5.5-memoria-claude-md","t":"CLAUDE.md, Front Matter e Memoria","slug":"49fc2e876d68f33a"}]},{"badge":"06","title":"Estensibilità: Skills/Plugin/MCP","lessons":[{"id":"6.1-mappa-ecosistema","t":"La mappa dell'ecosistema di estensibilità di Claude","slug":"10317c638974c19d"},{"id":"6.2-skills-esistenti","t":"Le Skills esistenti","slug":"61ab82bbc8523127"},{"id":"6.3-creare-skill","t":"Creare una Skill da zero","slug":"15881bf219e000e8"},{"id":"6.4-meta-creazione","t":"Meta-creazione: lo strumento che crea lo strumento","slug":"57dcec58a471a412"},{"id":"6.5-plugin","t":"Plugin: la valigia già pronta","slug":"563bdf765e8c1f4f"},{"id":"6.6-mcp-connettori","t":"MCP e Connettori","slug":"16daa5e41d1962c8"}]},{"badge":"07","title":"Casi d'uso","lessons":[{"id":"7.1-ricerca-analisi","t":"Ricerca e Analisi con Claude","slug":"16046c9d16281d5f"},{"id":"7.2-creazione-contenuti","t":"Creazione Contenuti con Claude","slug":"14710361cd72ff6d"},{"id":"7.3-documenti-report","t":"Documenti e Report","slug":"5dd9acc263f7795e"},{"id":"7.4-reviewer-sparring","t":"Reviewer e Sparring Partner","slug":"4f81cabbead72972"}]},{"badge":"08","title":"Plan & Solve su Claude","lessons":[{"id":"8.1-due-sistemi","t":"Il Principio dei Due Sistemi","slug":"ca6c4bffe8a76e6a"},{"id":"8.2-regole-doro-anti-goals","t":"Regole d'Oro e Anti-Goals","slug":"66061eac92762c5e"},{"id":"8.3-perche-scala-due-ruoli","t":"Cos'è davvero Plan &amp; Solve","slug":"f4750e7def5c2eaa"},{"id":"8.4-framework-full-piano-vivente","t":"Il metodo completo, passo per passo","slug":"7ca1df5927a8dee2"},{"id":"8.5-demo-business-reale","t":"Demo reale end-to-end","slug":"6b75f4fbaf3919db"},{"id":"8.6-avanzato-master-sprint","t":"Avanzato: Master + Sprint","slug":"ae05df14e821ac46"},{"id":"8.7-foglio-bianco-imparare","t":"Plan &amp; Solve per Imparare: il Modo Foglio Bianco","slug":"27caf848c6c4546b"},{"id":"8.8-confronto-merge","t":"Plan &amp; Solve per Imparare: il Modo Confronto / Merge","slug":"d9fec7cedeb6d6e5"}]},{"badge":"09","title":"Chiusura","lessons":[{"id":"9.1-privacy-sicurezza","t":"Privacy e Sicurezza con Claude","slug":"a1c7ad6b7c3d7ac7"},{"id":"9.2-restare-aggiornati","t":"Restare aggiornati su Claude","slug":"f8ed315335f60302"},{"id":"9.3-team-ai","t":"Costruire il vostro Team AI","slug":"733a842302af587a"}]},{"badge":"BONUS","title":"Bonus","lessons":[{"id":"bonus-conversare","t":"Conversare invece di Comandare","slug":"304c10c6f3ea19e8"},{"id":"bonus-demo-plugin","t":"Demo: un Plugin in uso reale","slug":"73183e64ee66038f"},{"id":"bonus-dictate","t":"Dictate: Parlare invece di Scrivere","slug":"8621cd18c0785fc7"},{"id":"bonus-installare-plugin","t":"Installare un Plugin: dal marketplace al primo uso","slug":"1816e14bd8baa279"},{"id":"bonus-trovare-plugin","t":"Come trovare Skills e Plugin già pronti","slug":"82fc4983937617c4"}]},{"badge":"STACK","title":"Stack","lessons":[{"id":"stack-1-obsidian","t":"Obsidian, il secondo cervello","slug":"014bfd811debd3f4"},{"id":"stack-2-vault-memoria","t":"Il vault come memoria lunga dell'AI","slug":"e2578765f0afe317"},{"id":"stack-3-workflow","t":"Workflow Quotidiano","slug":"146371d0853a297d"},{"id":"stack-4-sistema-log","t":"Il Sistema LOG: la memoria che compone","slug":"2827dea6ca4a4729"}]}]}];
+var active=0;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function applyAccent(){var t=TRACKS[active],dark=document.documentElement.classList.contains('dark');document.documentElement.style.setProperty('--accent',dark?t.accentD:t.accentL);}
+function renderTabs(){
+  var h='';
+  TRACKS.forEach(function(t,i){h+='<button class="tab'+(i===active?' on':'')+'" onclick="setTab('+i+')">'+esc(t.label)+'<span class="tn">'+t.total+'</span></button>';});
+  h+='<span class="tab ghost">+ Altri corsi in arrivo</span>';
+  document.getElementById('tabs').innerHTML=h;
+}
+function renderTrack(){
+  var t=TRACKS[active];
+  document.getElementById('stats').innerHTML='<div class="stat"><span class="sn">'+t.total+'</span> lezioni</div><div class="stat"><span class="sn">'+t.mods.length+'</span> moduli</div>';
+  var html='';
+  t.mods.forEach(function(m,mi){
+    var rows=m.lessons.map(function(l){
+      return '<a class="les" href="'+BASE+esc(l.slug)+'.html"><span class="lid">'+esc(l.id)+'</span><span class="lt">'+esc(l.t)+'</span><span class="go">&rarr;</span></a>';
+    }).join('');
+    html+='<div class="mod'+(mi===0?' open':'')+'">'
+      +'<div class="mhead" onclick="this.parentElement.classList.toggle(\'open\')">'
+      +'<div class="mnum">'+esc(m.badge)+'</div>'
+      +'<div class="minfo"><div class="mtitle">'+esc(m.title)+'</div><div class="msub">'+m.lessons.length+(m.lessons.length===1?' lezione':' lezioni')+'</div></div>'
+      +'<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+      +'</div><div class="mbody"><div class="mbinner"><div class="lessons">'+rows+'</div></div></div></div>';
+  });
+  document.getElementById('mods').innerHTML=html;
+}
+function setTab(i){active=i;applyAccent();renderTabs();renderTrack();window.scrollTo({top:0,behavior:'smooth'});}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light');applyAccent();}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+applyAccent();renderTabs();renderTrack();
+</script>
+</body>
+</html>

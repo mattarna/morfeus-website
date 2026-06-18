@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un prompt vs molti — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:5px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;white-space:pre-wrap}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+/* simulator */
+.sim{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.simtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.simtab{display:flex;align-items:center;gap:9px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:9px 16px;cursor:pointer;transition:.18s;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.simtab:hover{border-color:var(--line-2)}
+.simtab.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.simtab i{font-size:16px}
+.simbody h4{font-size:16px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.simbody h4 i{color:var(--accent)}
+.simsub{font-size:13px;color:var(--ink-3);font-family:var(--mono);margin-bottom:14px}
+.specs{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.spec{display:flex;align-items:center;gap:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 14px}
+.spec .si{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--accent-soft);color:var(--accent)}
+.spec.neg .si{background:var(--bad-soft);color:var(--bad)}
+.spec.pos .si{background:var(--good-soft);color:var(--good)}
+.spec .stx{font-size:13.5px;color:var(--ink-2)}.spec .stx b{color:var(--ink)}
+.qbar{margin-top:6px}
+.qbar .qlbl{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:7px}
+.qbar .qlbl .qval{font-size:20px;color:var(--accent)}
+.qbar.lo .qlbl .qval{color:var(--bad)}
+.qtrack{height:13px;background:var(--bg-3);border-radius:30px;overflow:hidden;border:1px solid var(--line)}
+.qfill{height:100%;border-radius:30px;background:var(--good);transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.qbar.lo .qfill{background:var(--bad)}
+/* prompt grid */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.pcell{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px}
+.pcell .pcn{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:5px}
+.pcell .pct{font-size:13px;color:var(--ink-2);line-height:1.5}.pcell .pct b{color:var(--ink)}
+.mono1{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:0 var(--r) var(--r) 0;padding:13px 15px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:16px}
+/* priority */
+.prio{display:flex;flex-direction:column;gap:10px}
+.prc{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.prc .prn{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prc.win{border-color:var(--good);background:var(--good-soft)}.prc.win .prn{background:var(--good)}
+.prc.lose{border-color:var(--bad);background:var(--bad-soft)}.prc.lose .prn{background:var(--bad)}
+.prc h4{font-size:14.5px;font-weight:600;margin-bottom:2px}.prc p{font-size:13px;color:var(--ink-2);line-height:1.5}
+.prc .prtag{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:5px;flex-shrink:0;white-space:nowrap}
+.prc.win .prtag{background:var(--good);color:#fff}.prc.lose .prtag{background:var(--bad);color:#fff}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.pgrid{grid-template-columns:1fr}.prc .prtag{display:none}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.sim,.prc,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">Un prompt vs molti: la specializzazione</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-help-octagon"></i><span class="no">01</span><h2 data-i="s1">La domanda che tutti fanno</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-box"></i></div><div><h4 data-i="note1H">«Posso fare un solo prompt che fa tutto?»</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">02</span><h2 data-i="s2">Sì, ma: i tre prezzi del mega-prompt</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="costsIntro"></p>
+  <div class="cards rv" id="costs"></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-versions"></i><span class="no">03</span><h2 data-i="s3">Mega-prompt vs 4 prompt specializzati</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="simIntro"></p>
+  <div class="sim rv">
+    <div class="simtabs" id="simTabs"></div>
+    <div class="simbody" id="simBody"></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="simNote"></p>
+
+  <div class="sh rv"><i class="ti ti-focus-2"></i><span class="no">04</span><h2 data-i="s4">Il principio: una cosa sola, fatta benissimo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-target-arrow"></i></div><div><h4 data-i="note2H">La compartimentalizzazione</h4><p data-i-html="note2P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-sort"></i><span class="no">05</span><h2 data-i="s5">L'ordine di priorità: chi vince, chi si sacrifica</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="prioIntro"></p>
+  <div class="prio rv" id="prio"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="prioOut"></p>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Spezza il tuo mega-prompt</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Un prompt vs molti</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'Un prompt vs molti: la specializzazione',
+lede:'Ora che sai concatenare i prompt, arriva la tentazione: «se devo fare quattro cose, perché non scriverne uno solo che le fa tutte?». La risposta è sì, puoi — ma paghi tre prezzi nascosti. E quasi sempre conviene la strada opposta: tanti prompt, ognuno iperspecializzato su una cosa sola.',
+s1:'La domanda che tutti fanno',
+note1H:'«Posso fare un solo prompt che fa tutto?»',
+note1P:'Hai un processo in quattro fasi — ricerca di mercato, ricerca aziende, analisi approfondita, raccomandazione finale. La tentazione è ovvia: <strong>un unico mega-prompt che le fa tutte</strong>, in un colpo solo. La risposta tecnica è «sì, si può». Ma «si può» non vuol dire «conviene».',
+costsIntro:'Mettere tutto in un prompt solo ha sempre lo stesso effetto: il modello si carica di troppo. Ecco i tre prezzi che paghi, ogni volta.',
+c1H:'Tempo + info inutili',c1P:'Il prompt si gonfia di istruzioni e contesto che servono solo a una fase su quattro. Il modello deve leggere e «tenere a mente» roba che per il task del momento è puro rumore.',
+c2H:'Finestra enorme → errore alto',c2P:'Più carichi la finestra di contesto, più sale la probabilità di errore. Tutto insieme significa una finestra gigante: la qualità crolla proprio dove ti serve di più.',
+c3H:'Generalista debole',c3P:'«È come essere esperto di sport, musica e finanza insieme.» Chiedere a un solo prompt di eccellere in quattro mestieri diversi lo rende mediocre in tutti. La specificità che l\'AI richiede è altissima.',
+q1:'«L\'AI è estremamente brava a fare UNA sola cosa iperspecifica.»',
+s2:'Sì, ma: i tre prezzi del mega-prompt',
+s3:'Mega-prompt vs 4 prompt specializzati',
+simIntro:'Stesso lavoro — un processo in quattro fasi — costruito in due modi. Clicca per confrontare come si comportano su tempo di costruzione e, soprattutto, su qualità dell\'output.',
+mega_tab:'1 mega-prompt',spec_tab:'4 prompt specializzati',
+mega_h:'Tutto in un prompt solo',mega_sub:'una chiamata · quattro mestieri insieme',
+mega_promptN:'Il prompt unico',
+mega_promptT:'«Fai la ricerca di mercato, poi cerca le aziende, poi l\'analisi approfondita, poi dammi la raccomandazione finale.» — quattro task, una finestra, un generalista.',
+mega_s1:'Veloce da scrivere: un solo prompt da costruire.',
+mega_s2:'Finestra di contesto enorme: tutte le istruzioni insieme.',
+mega_s3:'Generalista debole: nessuna fase fatta davvero bene.',
+spec_h:'Quattro prompt, ognuno iperspecifico',spec_sub:'quattro chiamate · un esperto per fase',
+spec_p1N:'Prompt 1',spec_p1T:'<b>Ricerca di mercato.</b> Sa solo questo, lo fa benissimo.',
+spec_p2N:'Prompt 2',spec_p2T:'<b>Ricerca aziende.</b> Riceve l\'output del primo, niente altro.',
+spec_p3N:'Prompt 3',spec_p3T:'<b>Analisi approfondita.</b> Una sola finestra pulita, un solo compito.',
+spec_p4N:'Prompt 4',spec_p4T:'<b>Raccomandazione finale.</b> Specializzato sulla sintesi, non distratto dal resto.',
+spec_s1:'Più lento da costruire: 4× il lavoro iniziale.',
+spec_s2:'Finestra ridotta per ogni fase: meno rumore, meno errore.',
+spec_s3:'Ogni prompt è un esperto: qualità alta dove conta.',
+qlbl:'Qualità dell\'output',
+simNote:'Il mega-prompt vince sul tempo di costruzione — ma è l\'unica cosa che vince. Sulla <strong>qualità</strong>, dove conta davvero, i quattro prompt specializzati lo battono in modo netto.',
+s4:'Il principio: una cosa sola, fatta benissimo',
+note2H:'La compartimentalizzazione',
+note2P:'È il principio chiave: <strong>un assistente che fa una cosa sola la fa benissimo; uno che fa tutto fa tutto male</strong>. Spezzare il lavoro in prompt distinti non è disordine, è specializzazione: ogni prompt diventa un esperto del suo pezzo, con una finestra pulita e un obiettivo solo.',
+q2:'«Un assistente che fa una cosa sola la fa benissimo.»',
+s5:'L\'ordine di priorità: chi vince, chi si sacrifica',
+prioIntro:'Quattro prompt costano più tempo a costruirli e abbassano la delega (più passaggi da gestire). Allora perché conviene? Perché c\'è un ordine di priorità chiaro su cosa difendere e cosa sacrificare.',
+pr1H:'Qualità',pr1P:'Prevale su tutto. È il criterio che non si sacrifica mai: se l\'output non supera la soglia, niente conta.',pr1T:'Si difende',
+pr2H:'Tempo',pr2P:'Conta, ma viene dopo la qualità. Costruire quattro prompt costa 4× — un costo una tantum che ripaghi nella qualità.',pr2T:'Sta nel mezzo',
+pr3H:'Delega',pr3P:'È la prima cosa che si sacrifica. Più prompt = più passaggi da supervisionare, ma la cediamo volentieri per guadagnare qualità.',pr3T:'Si sacrifica',
+prioOut:'La regola dichiarata: <strong>«Prima il tempo, poi la qualità, e la delega è l\'ultima cosa»</strong> — nel senso che la qualità prevale e la delega è la prima a essere sacrificata. Quattro prompt specializzati battono un mega-prompt proprio perché alzano la qualità, pagando in tempo e delega.',
+s6:'Checkpoint',
+cpH:'Spezza il tuo mega-prompt',
+cpP:'Prendi un prompt che oggi prova a fare troppe cose insieme. Elenca i «mestieri» diversi che gli stai chiedendo. Ognuno è un candidato a diventare un prompt iperspecifico a sé.',
+cpQ:'Quante cose distinte stai chiedendo a un prompt solo — e se le separassi in esperti dedicati, dove guadagneresti più qualità di quanta delega perderesti?',
+bridge:'Sai perché NON un mega-prompt e come specializzare ogni stadio. <b>Prossimo:</b> i validatori e l\'accumulo dell\'errore — come l\'errore cresce lungo gli step e come tenere la qualità sopra soglia.',
+foot:'Morfeus — Un prompt vs molti'
+},
+en:{
+kicker:'Lesson A6.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'One prompt vs many: specialization',
+lede:'Now that you can chain prompts, the temptation kicks in: "if I have four things to do, why not write a single prompt that does them all?". The answer is yes, you can — but you pay three hidden prices. And almost always the opposite road wins: many prompts, each hyper-specialized on one single thing.',
+s1:'The question everyone asks',
+note1H:'"Can I make a single prompt that does everything?"',
+note1P:'You have a four-stage process — market research, company research, deep analysis, final recommendation. The temptation is obvious: <strong>one mega-prompt that does them all</strong>, in one shot. The technical answer is "yes, you can". But "you can" doesn\'t mean "you should".',
+costsIntro:'Putting everything into one prompt always has the same effect: the model gets overloaded. Here are the three prices you pay, every single time.',
+c1H:'Time + useless info',c1P:'The prompt bloats with instructions and context that only serve one stage out of four. The model has to read and "hold in mind" stuff that, for the task at hand, is pure noise.',
+c2H:'Huge window → high error',c2P:'The more you load the context window, the higher the probability of error. Everything at once means a giant window: quality collapses exactly where you need it most.',
+c3H:'Weak generalist',c3P:'"It\'s like being an expert in sport, music and finance all at once." Asking a single prompt to excel at four different crafts makes it mediocre at all of them. The specificity AI demands is extremely high.',
+q1:'"AI is extremely good at doing ONE single hyper-specific thing."',
+s2:'Yes, but: the mega-prompt\'s three prices',
+s3:'Mega-prompt vs 4 specialized prompts',
+simIntro:'Same job — a four-stage process — built two ways. Click to compare how they behave on build time and, above all, on output quality.',
+mega_tab:'1 mega-prompt',spec_tab:'4 specialized prompts',
+mega_h:'Everything in one prompt',mega_sub:'one call · four crafts at once',
+mega_promptN:'The single prompt',
+mega_promptT:'"Do the market research, then find the companies, then the deep analysis, then give me the final recommendation." — four tasks, one window, one generalist.',
+mega_s1:'Fast to write: just one prompt to build.',
+mega_s2:'Huge context window: all instructions together.',
+mega_s3:'Weak generalist: no stage done truly well.',
+spec_h:'Four prompts, each hyper-specific',spec_sub:'four calls · one expert per stage',
+spec_p1N:'Prompt 1',spec_p1T:'<b>Market research.</b> It knows only this, and does it brilliantly.',
+spec_p2N:'Prompt 2',spec_p2T:'<b>Company research.</b> It receives the first one\'s output, nothing else.',
+spec_p3N:'Prompt 3',spec_p3T:'<b>Deep analysis.</b> One clean window, one single task.',
+spec_p4N:'Prompt 4',spec_p4T:'<b>Final recommendation.</b> Specialized on the synthesis, undistracted by the rest.',
+spec_s1:'Slower to build: 4× the upfront work.',
+spec_s2:'Smaller window per stage: less noise, less error.',
+spec_s3:'Each prompt is an expert: high quality where it counts.',
+qlbl:'Output quality',
+simNote:'The mega-prompt wins on build time — but that\'s the only thing it wins. On <strong>quality</strong>, where it really matters, the four specialized prompts beat it clearly.',
+s4:'The principle: one thing, done brilliantly',
+note2H:'Compartmentalization',
+note2P:'This is the key principle: <strong>an assistant that does one single thing does it brilliantly; one that does everything does everything badly</strong>. Splitting work into separate prompts isn\'t disorder, it\'s specialization: each prompt becomes an expert on its piece, with a clean window and a single goal.',
+q2:'"An assistant that does one single thing does it brilliantly."',
+s5:'The priority order: who wins, who gets sacrificed',
+prioIntro:'Four prompts cost more time to build and lower delegation (more handoffs to manage). So why are they worth it? Because there\'s a clear priority order on what to defend and what to sacrifice.',
+pr1H:'Quality',pr1P:'It prevails over everything. It\'s the criterion you never sacrifice: if the output doesn\'t clear the bar, nothing else counts.',pr1T:'Defended',
+pr2H:'Time',pr2P:'It matters, but comes after quality. Building four prompts costs 4× — a one-time cost you repay in quality.',pr2T:'In the middle',
+pr3H:'Delegation',pr3P:'It\'s the first thing sacrificed. More prompts = more handoffs to supervise, but we give it up gladly to gain quality.',pr3T:'Sacrificed',
+prioOut:'The stated rule: <strong>"First time, then quality, and delegation is the last thing"</strong> — meaning quality prevails and delegation is the first to be sacrificed. Four specialized prompts beat a mega-prompt precisely because they raise quality, paying in time and delegation.',
+s6:'Checkpoint',
+cpH:'Split your mega-prompt',
+cpP:'Take a prompt that today tries to do too many things at once. List the different "crafts" you\'re asking of it. Each one is a candidate to become a hyper-specific prompt of its own.',
+cpQ:'How many distinct things are you asking of a single prompt — and if you split them into dedicated experts, where would you gain more quality than the delegation you\'d lose?',
+bridge:'You know why NOT a mega-prompt and how to specialize each stage. <b>Next:</b> validators and error accumulation — how error grows across steps and how to keep quality above the bar.',
+foot:'Morfeus — One prompt vs many'
+}};
+
+// costs cards: [icon, Hkey, Pkey]
+var COSTS=[
+['ti-clock-x','c1H','c1P'],
+['ti-windsock','c2H','c2P'],
+['ti-mood-confuzed','c3H','c3P']
+];
+
+var LANG='it',curSim='mega';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var D=DICT[LANG];
+  document.getElementById('costs').innerHTML=COSTS.map(function(c){return '<div class="card3"><div class="ci"><i class="ti '+c[0]+'"></i></div><h4>'+D[c[1]]+'</h4><p>'+D[c[2]]+'</p></div>'}).join('');
+  document.getElementById('simTabs').innerHTML=
+    '<div class="simtab'+(curSim==='mega'?' on':'')+'" onclick="showSim(\'mega\')"><i class="ti ti-box"></i>'+D.mega_tab+'</div>'+
+    '<div class="simtab'+(curSim==='spec'?' on':'')+'" onclick="showSim(\'spec\')"><i class="ti ti-layout-grid"></i>'+D.spec_tab+'</div>';
+  document.getElementById('prio').innerHTML=
+    '<div class="prc win"><div class="prn">1</div><div><h4>'+D.pr1H+'</h4><p>'+D.pr1P+'</p></div><span class="prtag">'+D.pr1T+'</span></div>'+
+    '<div class="prc"><div class="prn">2</div><div><h4>'+D.pr2H+'</h4><p>'+D.pr2P+'</p></div><span class="prtag" style="background:var(--accent-soft);color:var(--accent)">'+D.pr2T+'</span></div>'+
+    '<div class="prc lose"><div class="prn">3</div><div><h4>'+D.pr3H+'</h4><p>'+D.pr3P+'</p></div><span class="prtag">'+D.pr3T+'</span></div>';
+  showSim(curSim);
+}
+function showSim(which){curSim=which;var D=DICT[LANG];
+  document.querySelectorAll('.simtab').forEach(function(t,i){t.classList.toggle('on',(which==='mega')===(i===0))});
+  var html='';
+  if(which==='mega'){
+    html='<h4><i class="ti ti-box"></i> '+D.mega_h+'</h4><div class="simsub">'+D.mega_sub+'</div>'+
+      '<div class="mono1"><div style="font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--bad);margin-bottom:6px">'+D.mega_promptN+'</div>'+D.mega_promptT+'</div>'+
+      '<div class="specs">'+
+        '<div class="spec pos"><div class="si"><i class="ti ti-check"></i></div><div class="stx">'+D.mega_s1+'</div></div>'+
+        '<div class="spec neg"><div class="si"><i class="ti ti-x"></i></div><div class="stx">'+D.mega_s2+'</div></div>'+
+        '<div class="spec neg"><div class="si"><i class="ti ti-x"></i></div><div class="stx">'+D.mega_s3+'</div></div>'+
+      '</div>'+
+      '<div class="qbar lo"><div class="qlbl"><span>'+D.qlbl+'</span><span class="qval">55%</span></div><div class="qtrack"><div class="qfill" style="width:0"></div></div></div>';
+  }else{
+    html='<h4><i class="ti ti-layout-grid"></i> '+D.spec_h+'</h4><div class="simsub">'+D.spec_sub+'</div>'+
+      '<div class="pgrid">'+
+        '<div class="pcell"><div class="pcn">'+D.spec_p1N+'</div><div class="pct">'+D.spec_p1T+'</div></div>'+
+        '<div class="pcell"><div class="pcn">'+D.spec_p2N+'</div><div class="pct">'+D.spec_p2T+'</div></div>'+
+        '<div class="pcell"><div class="pcn">'+D.spec_p3N+'</div><div class="pct">'+D.spec_p3T+'</div></div>'+
+        '<div class="pcell"><div class="pcn">'+D.spec_p4N+'</div><div class="pct">'+D.spec_p4T+'</div></div>'+
+      '</div>'+
+      '<div class="specs">'+
+        '<div class="spec neg"><div class="si"><i class="ti ti-clock-hour-4"></i></div><div class="stx">'+D.spec_s1+'</div></div>'+
+        '<div class="spec pos"><div class="si"><i class="ti ti-check"></i></div><div class="stx">'+D.spec_s2+'</div></div>'+
+        '<div class="spec pos"><div class="si"><i class="ti ti-check"></i></div><div class="stx">'+D.spec_s3+'</div></div>'+
+      '</div>'+
+      '<div class="qbar"><div class="qlbl"><span>'+D.qlbl+'</span><span class="qval">94%</span></div><div class="qtrack"><div class="qfill" style="width:0"></div></div></div>';
+  }
+  document.getElementById('simBody').innerHTML=html;
+  var f=document.querySelector('#simBody .qfill');
+  if(f){var target=(which==='mega')?'55%':'94%';requestAnimationFrame(function(){requestAnimationFrame(function(){f.style.width=target})})}
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

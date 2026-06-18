@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quale Piano Claude fa per Te? — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--blue:#2d72c8;--blue-soft:#e6f0fb;--blue-line:#b6d2f0;
+--teal:#0f9b78;--teal-soft:#e2f4ef;--teal-line:#aee0d2;
+--amber:#bd7a16;--amber-soft:#faf0db;--amber-line:#eccf95;
+--gray:#7a7872;--gray-soft:#eceae3;--gray-line:#cfccc2;
+--red:#cf4233;--red-soft:#fbe9e6;--red-line:#f0c2bb;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--blue:#7db1ec;--blue-soft:#16304f;--blue-line:#2f5680;
+--teal:#73cdb1;--teal-soft:#103830;--teal-line:#2c6356;
+--amber:#e6b35e;--amber-soft:#3d2c10;--amber-line:#7a5a25;
+--gray:#a9a69c;--gray-soft:#2e2d2a;--gray-line:#4a4843;
+--red:#ee8a80;--red-soft:#412420;--red-line:#7a3830;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* Compare table */
+.cwrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px}
+.compare{width:100%;border-collapse:collapse;font-size:13px}
+.compare th{text-align:left;padding:10px 12px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);border-bottom:2px solid var(--line-2);white-space:nowrap;font-family:var(--mono)}
+.compare td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.compare tr:last-child td{border-bottom:none}
+.compare .pn{font-weight:600;color:var(--ink);white-space:nowrap}
+
+/* Plan cards */
+.plan{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden;transition:border-color .18s}
+.plan:hover{border-color:var(--line-2)}
+.phead{padding:22px 22px;cursor:pointer;display:flex;align-items:flex-start;gap:16px}
+.pic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.phtext{flex:1}
+.phtext h3{font-size:19px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.phtext .price{font-size:13.5px;color:var(--ink-2)}
+.phtext .tagline{font-size:13.5px;color:var(--ink-3);margin-top:3px}
+.ptoggle{color:var(--ink-3);font-size:20px;margin-top:4px;transition:.3s;flex-shrink:0}
+.plan.open .ptoggle{transform:rotate(90deg)}
+.pbody{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.plan.open .pbody{max-height:4000px}
+.pinner{padding:0 22px 24px}
+.pintro{font-size:14px;color:var(--ink-2);margin-bottom:14px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink-2);line-height:1.5}
+.feat i{color:var(--teal);font-size:16px;margin-top:1px;flex-shrink:0}
+.hl{font-weight:600;color:var(--ink)}
+.divider{border:none;border-top:1px solid var(--line);margin:16px 0}
+.limits{font-size:13px;color:var(--ink-3);margin-bottom:6px}.limits strong{font-weight:600;color:var(--ink-2)}
+.perchi{margin-top:18px;padding:18px;border-radius:var(--r-l);border:1px dashed var(--line-2)}
+.pctitle{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.profile{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:13.5px;color:var(--ink)}
+.profile i{font-size:16px;flex-shrink:0;color:var(--teal);margin-top:2px}
+.pcnote{margin-top:8px;font-size:13.5px;color:var(--ink-2)}.pcnote strong{font-weight:600;color:var(--ink)}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:.05em;font-family:var(--mono)}
+.tag.free{background:var(--gray-soft);color:var(--gray)}
+.tag.pro{background:var(--accent-soft);color:var(--accent)}
+.tag.max{background:var(--amber-soft);color:var(--amber)}
+.tag.team{background:var(--teal-soft);color:var(--teal)}
+.tag.ent{background:var(--blue-soft);color:var(--blue)}
+.tag.api{background:var(--red-soft);color:var(--red)}
+.rec{background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
+.seatgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.seat{padding:16px;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line)}
+.seat .sl{font-size:12.5px;font-weight:600;margin-bottom:4px}
+.seat .sp{font-size:18px;font-weight:600;margin-bottom:6px}.seat .sp small{font-size:12px;color:var(--ink-3);font-weight:400}
+.seat .sa{font-size:12px;color:var(--ink-3)}
+.seat .sd{font-size:13px;color:var(--ink-2);margin-top:8px}
+.api-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+.api-table th{text-align:left;padding:8px 12px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);border-bottom:2px solid var(--line-2);font-family:var(--mono)}
+.api-table td{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.api-table .mn{font-weight:600;color:var(--ink);font-family:var(--mono);font-size:12px}
+.apinote{font-size:13px;color:var(--ink-3);margin:8px 0}
+
+/* Decision tree */
+.decision{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.decision h3{font-size:17px;font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:8px}.decision h3 i{color:var(--accent)}
+.dstep{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.dstep:last-child{border-bottom:none}
+.dnum{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;font-family:var(--mono)}
+.dstep .q{font-size:14px;font-weight:600;margin-bottom:4px}
+.dstep .a{font-size:13.5px;color:var(--ink-2)}.dstep .a strong{font-weight:600;color:var(--ink)}
+
+.bridge{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px;margin-top:40px}
+.bridge i{color:var(--teal);font-size:22px;flex-shrink:0}.bridge .bt{font-size:13px;font-weight:600;color:var(--teal);margin-bottom:5px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}.bridge p{font-size:14px;color:var(--ink-2)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.fgrid{grid-template-columns:1fr}.seatgrid{grid-template-columns:1fr}.compare{font-size:11px}.compare th,.compare td{padding:8px 6px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.plan,.note,.cwrap,.decision{break-inside:avoid;box-shadow:none!important}.pbody{max-height:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Modulo 1 · Piani</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Piani Claude — Maggio 2025</div>
+  <h1 class="rv" data-i="h1">Quale Piano Claude fa per Te?</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Il piano giusto</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">01</span><h2 data-i="s1">Confronto rapido</h2></div>
+  <div class="cwrap rv">
+    <table class="compare">
+      <thead><tr><th data-i="cH1">Piano</th><th data-i="cH2">Prezzo</th><th data-i="cH3">Uso</th><th data-i="cH4">Target</th></tr></thead>
+      <tbody id="cbody"></tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layers-subtract"></i><span class="no">02</span><h2 data-i="s2">I piani nel dettaglio</h2></div>
+
+  <!-- FREE -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--gray-soft);color:var(--gray)"><i class="ti ti-user"></i></div>
+      <div class="phtext"><h3>Free <span class="tag free" data-i="freeTag"></span></h3><div class="price" data-i="freePrice"></div><div class="tagline" data-i="freeTagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free1"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free2"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free3"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free4"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free5"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free6"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free7"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="free8"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="limits" data-i-html="freeLimits"></div>
+      <div class="perchi">
+        <div class="pctitle" style="color:var(--gray)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="freeP1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="freeP2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="freeP3"></span></div>
+        <div class="pcnote" data-i-html="freeNo"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PRO -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-bolt"></i></div>
+      <div class="phtext"><h3>Pro <span class="rec" data-i="proRec"></span></h3><div class="price" data-i="proPrice"></div><div class="tagline" data-i="proTagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="proIntro"></p>
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="pro1"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="pro2"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="pro3"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="pro4"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="pro5"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="pro6"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="pro7"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="pro8"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--accent-line)">
+        <div class="pctitle" style="color:var(--accent)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="proP1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="proP2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="proP3"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="proP4"></span></div>
+        <div class="pcnote" data-i-html="proNote"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- MAX 5x -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-flame"></i></div>
+      <div class="phtext"><h3>Max 5x <span class="tag max" data-i="m5Tag"></span></h3><div class="price" data-i="m5Price"></div><div class="tagline" data-i="m5Tagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="m5Intro"></p>
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="m51"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="m52"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="m53"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="m54"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--amber-line)">
+        <div class="pctitle" style="color:var(--amber)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m5P1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m5P2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m5P3"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m5P4"></span></div>
+        <div class="pcnote" data-i-html="m5Note"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- MAX 20x -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-rocket"></i></div>
+      <div class="phtext"><h3>Max 20x <span class="tag max" data-i="m20Tag"></span></h3><div class="price" data-i="m20Price"></div><div class="tagline" data-i="m20Tagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="m20Intro"></p>
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="m201"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="m202"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="m203"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--amber-line)">
+        <div class="pctitle" style="color:var(--amber)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m20P1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m20P2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="m20P3"></span></div>
+        <div class="pcnote" data-i-html="m20Note"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-users-group"></i></div>
+      <div class="phtext"><h3>Team <span class="tag team" data-i="teamTag"></span></h3><div class="price" data-i="teamPrice"></div><div class="tagline" data-i="teamTagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="teamIntro"></p>
+      <div class="seatgrid">
+        <div class="seat"><div class="sl" style="color:var(--teal)" data-i="seatSL"></div><div class="sp">$25<small data-i="seatPer"></small></div><div class="sa" data-i="seatSA"></div><div class="sd" data-i="seatSD"></div></div>
+        <div class="seat"><div class="sl" style="color:var(--amber)" data-i="seatPL"></div><div class="sp">$125<small data-i="seatPer"></small></div><div class="sa" data-i="seatPA"></div><div class="sd" data-i="seatPD"></div></div>
+      </div>
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="team1"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="team2"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="team3"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="team4"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="team5"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="team6"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--teal-line)">
+        <div class="pctitle" style="color:var(--teal)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="teamP1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="teamP2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="teamP3"></span></div>
+        <div class="pcnote" data-i-html="teamNote"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ENTERPRISE -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-building"></i></div>
+      <div class="phtext"><h3>Enterprise <span class="tag ent" data-i="entTag"></span></h3><div class="price" data-i="entPrice"></div><div class="tagline" data-i="entTagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="entIntro"></p>
+      <div class="fgrid">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="ent1"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="ent2"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="ent3"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i-html="ent4"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="ent5"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="ent6"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="ent7"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="ent8"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--blue-line)">
+        <div class="pctitle" style="color:var(--blue)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="entP1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="entP2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="entP3"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="entP4"></span></div>
+        <div class="pcnote" data-i-html="entNote"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- API -->
+  <div class="plan rv" onclick="togglePlan(this)">
+    <div class="phead">
+      <div class="pic" style="background:var(--red-soft);color:var(--red)"><i class="ti ti-code"></i></div>
+      <div class="phtext"><h3>API <span class="tag api" data-i="apiTag"></span></h3><div class="price" data-i="apiPrice"></div><div class="tagline" data-i="apiTagline"></div></div>
+      <i class="ti ti-chevron-right ptoggle"></i>
+    </div>
+    <div class="pbody"><div class="pinner">
+      <p class="pintro" data-i="apiIntro"></p>
+      <table class="api-table">
+        <thead><tr><th data-i="apiTH1">Modello</th><th data-i="apiTH2">Input</th><th data-i="apiTH3">Output</th></tr></thead>
+        <tbody>
+          <tr><td class="mn">claude-opus-4-6</td><td>$15 / MTok</td><td>$75 / MTok</td></tr>
+          <tr><td class="mn">claude-sonnet-4-6</td><td>$3 / MTok</td><td>$15 / MTok</td></tr>
+          <tr><td class="mn">claude-haiku-4-5</td><td>$0.80 / MTok</td><td>$4 / MTok</td></tr>
+        </tbody>
+      </table>
+      <p class="apinote" data-i="apiNote1"></p>
+      <div class="fgrid" style="margin-top:16px">
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api1"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api2"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api3"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api4"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api5"></span></div>
+        <div class="feat"><i class="ti ti-check"></i> <span data-i="api6"></span></div>
+      </div>
+      <hr class="divider">
+      <div class="perchi" style="border-color:var(--red-line)">
+        <div class="pctitle" style="color:var(--red)"><i class="ti ti-target"></i> <span data-i="pcTitle"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="apiP1"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="apiP2"></span></div>
+        <div class="profile"><i class="ti ti-circle-check"></i> <span data-i="apiP3"></span></div>
+        <div class="pcnote" data-i-html="apiNote2"></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-git-branch"></i><span class="no">03</span><h2 data-i="s3">Quale scegliere? Guida rapida</h2></div>
+  <div class="decision rv">
+    <h3><i class="ti ti-route"></i> <span data-i="dTitle"></span></h3>
+    <div class="dstep"><div class="dnum" style="background:var(--gray-soft);color:var(--gray)">1</div><div><div class="q" data-i="dq1"></div><div class="a" data-i-html="da1"></div></div></div>
+    <div class="dstep"><div class="dnum" style="background:var(--accent-soft);color:var(--accent)">2</div><div><div class="q" data-i="dq2"></div><div class="a" data-i-html="da2"></div></div></div>
+    <div class="dstep"><div class="dnum" style="background:var(--amber-soft);color:var(--amber)">3</div><div><div class="q" data-i="dq3"></div><div class="a" data-i-html="da3"></div></div></div>
+    <div class="dstep"><div class="dnum" style="background:var(--teal-soft);color:var(--teal)">4</div><div><div class="q" data-i="dq4"></div><div class="a" data-i-html="da4"></div></div></div>
+    <div class="dstep"><div class="dnum" style="background:var(--blue-soft);color:var(--blue)">5</div><div><div class="q" data-i="dq5"></div><div class="a" data-i-html="da5"></div></div></div>
+    <div class="dstep"><div class="dnum" style="background:var(--red-soft);color:var(--red)">6</div><div><div class="q" data-i="dq6"></div><div class="a" data-i-html="da6"></div></div></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-bulb"></i><div><div class="bt" data-i="adviceT"></div><p data-i="adviceP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Quale Piano Claude fa per Te?</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Modulo 1 · Piani',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Piani Claude — Maggio 2025',
+h1:'Quale Piano Claude fa per Te?',
+lede:'Tutti i piani nel dettaglio, con prezzi aggiornati e consigli pratici su quale scegliere in base al tuo profilo di utilizzo.',
+hookH:'Il piano giusto',
+hookP:'«Non esiste il piano migliore in assoluto. Esiste il piano giusto per come lavori tu oggi e per dove vuoi arrivare domani.»',
+s1:'Confronto rapido',
+cH1:'Piano',cH2:'Prezzo',cH3:'Uso',cH4:'Target',
+s2:'I piani nel dettaglio',
+pcTitle:'Per chi ha senso',
+freeTag:'GRATIS',freePrice:'$0 per sempre',freeTagline:'Tutto il necessario per esplorare Claude',
+free1:'Chat su web, iOS, Android e desktop',free2:'Generazione di codice',free3:'Ricerca web integrata',free4:'Memory (Claude ricorda tra sessioni)',free5:'Connectors per app esterne',free6:'Extended thinking',free7:'Caricamento file e immagini',free8:'Projects (limitati)',
+freeLimits:'<strong>Limiti principali:</strong> messaggi limitati al giorno, niente Claude Code, niente Cowork, niente Research, accesso solo al modello base.',
+freeP1:'Chi vuole provare Claude per la prima volta e capire se fa al caso suo',
+freeP2:'Chi usa l\'AI occasionalmente, qualche domanda al giorno',
+freeP3:'Studenti e curiosi che vogliono sperimentare senza spendere',
+freeNo:'<strong>Non ha senso se:</strong> usi Claude ogni giorno per lavoro. Finirai i messaggi a metà mattina e la frustrazione supererà il risparmio.',
+proRec:'Consigliato',proPrice:'$20/mese (oppure $200/anno, risparmi $40)',proTagline:'Il piano giusto per chi lavora con Claude ogni giorno',
+proIntro:'Tutto ciò che include Free, più:',
+pro1:'<span class="hl">Molto più utilizzo</span> rispetto a Free',pro2:'<span class="hl">Claude Code</span> — agente coding da terminale',pro3:'<span class="hl">Cowork</span> — automazione desktop',pro4:'<span class="hl">Research</span> — ricerca approfondita autonoma',pro5:'Projects illimitati',pro6:'Accesso a più modelli (Opus, Sonnet, Haiku)',pro7:'Claude per Microsoft 365 e Outlook',pro8:'Priorità nei momenti di picco',
+proP1:'Professionisti che usano Claude come strumento quotidiano',proP2:'Chi scrive copy, email, documenti, strategie con l\'AI',proP3:'Freelancer e consulenti che vogliono Claude Code + Cowork',proP4:'Chiunque abbia finito i messaggi nel piano Free più di 2 volte',
+proNote:'<strong>Il rapporto qualità-prezzo migliore.</strong> $20/mese per avere accesso a Claude Code, Cowork, Research e Projects illimitati è un salto enorme rispetto al Free. Per la maggior parte delle persone, questo è il piano giusto.',
+m5Tag:'POWER',m5Price:'$100/mese',m5Tagline:'5 volte l\'utilizzo del piano Pro',
+m5Intro:'Tutto ciò che include Pro, più:',
+m51:'<span class="hl">5x l\'utilizzo</span> del piano Pro',m52:'<span class="hl">Limiti di output più alti</span> (risposte più lunghe)',m53:'<span class="hl">Accesso anticipato</span> a nuove funzionalità',m54:'<span class="hl">Accesso prioritario</span> in ogni momento',
+m5P1:'Chi raggiunge il limite del Pro almeno 2-3 volte a settimana',m5P2:'Chi usa Claude Code per sessioni di sviluppo prolungate',m5P3:'Chi genera grandi volumi di contenuto (copy, report, analisi)',m5P4:'Chi vuole testare funzionalità nuove prima di tutti',
+m5Note:'<strong>Regola pratica:</strong> se con il Pro ti trovi spesso a "dosare" i messaggi per non finirli, il Max 5x elimina quel vincolo. Se invece arrivi a fine giornata con messaggi avanzati, resta sul Pro.',
+m20Tag:'ULTRA',m20Price:'$200/mese',m20Tagline:'20 volte l\'utilizzo del Pro — essenzialmente illimitato',
+m20Intro:'Identico al Max 5x, ma con:',
+m201:'<span class="hl">20x l\'utilizzo</span> del piano Pro',m202:'Tutti i vantaggi del Max 5x',m203:'Praticamente impossibile raggiungere il limite',
+m20P1:'Chi lavora con Claude 8+ ore al giorno, tutti i giorni',m20P2:'Sviluppatori che fanno sessioni Claude Code da mezza giornata',m20P3:'Chi gestisce più clienti/progetti e non può permettersi interruzioni',
+m20Note:'<strong>Il test decisivo:</strong> se il Max 5x non basta, questo è l\'unica opzione. Se il 5x ti basta con margine, stai sprecando $100/mese. Non c\'è via di mezzo — o ne hai bisogno o no.',
+teamTag:'COLLABORATIVO',teamPrice:'Da $25/seat/mese (Standard) a $125/seat/mese (Premium)',teamTagline:'Per team da 5 a 150 persone, con controlli admin',
+teamIntro:'Due tipi di seat, mixabili nello stesso team:',
+seatSL:'Standard Seat',seatPer:'/seat/mese',seatSA:'$20/seat con piano annuale',seatSD:'Equivalente al piano Pro individuale',
+seatPL:'Premium Seat',seatPA:'$100/seat con piano annuale',seatPD:'Equivalente al piano Max individuale',
+team1:'<span class="hl">SSO</span> (Single Sign-On)',team2:'<span class="hl">Console admin</span> centralizzata',team3:'I dati <span class="hl">non vengono usati per training</span> (default)',team4:'Mix & match di seat Standard e Premium',team5:'Fatturazione centralizzata',team6:'Deploy enterprise-grade',
+teamP1:'Team di 5+ persone che usano Claude regolarmente',teamP2:'Aziende che hanno bisogno di SSO e gestione centralizzata',teamP3:'Agenzie e studi professionali con livelli di utilizzo diversi nel team',
+teamNote:'<strong>Il vantaggio chiave:</strong> puoi dare seat Standard ai collaboratori che usano Claude saltuariamente e seat Premium ai power user. Non devi pagare il massimo per tutti. Inoltre, i dati non vengono usati per il training — fondamentale per le aziende.',
+entTag:'CORPORATE',entPrice:'$20/seat + utilizzo a tariffe API',entTagline:'Sicurezza, compliance e controllo per organizzazioni grandi',
+entIntro:'Tutto ciò che include Team, più:',
+ent1:'<span class="hl">SCIM</span> — provisioning automatico utenti',ent2:'<span class="hl">Audit log</span> — tracciamento completo',ent3:'<span class="hl">Compliance API</span>',ent4:'<span class="hl">HIPAA-ready</span>',ent5:'Data retention personalizzabile',ent6:'Accesso basato su ruoli (RBAC)',ent7:'IP allowlisting',ent8:'Claude Security (beta)',
+entP1:'Organizzazioni con 150+ utenti',entP2:'Aziende in settori regolamentati (sanità, finanza, legale)',entP3:'Chi deve rispettare standard di compliance (HIPAA, SOC 2)',entP4:'Chi ha bisogno di audit trail e controllo granulare sugli accessi',
+entNote:'<strong>Nota sul pricing:</strong> la base è $20/seat/mese, ma l\'utilizzo viene fatturato a tariffe API. Questo significa che paghi in base a quanto il tuo team usa effettivamente Claude, il che può essere più economico del Team per organizzazioni grandi con utilizzo variabile.',
+apiTag:'DEVELOPER',apiPrice:'A consumo per token (pay-as-you-go)',apiTagline:'Per chi integra Claude nei propri prodotti e workflow',
+apiIntro:'Prezzi per milione di token (MTok):',
+apiTH1:'Modello',apiTH2:'Input',apiTH3:'Output',
+apiNote1:'Prompt caching: fino a 90% di sconto sull\'input. Batch processing: 50% di sconto. Web search: $10/1.000 ricerche. Code execution: $0.05/ora.',
+api1:'Accesso a tutti i modelli (Opus, Sonnet, Haiku)',api2:'Tool use, vision, extended thinking',api3:'Batch processing con sconto 50%',api4:'Prompt caching per ridurre i costi',api5:'Web search e code execution',api6:'Agenti gestiti ($0.08/session-hour)',
+apiP1:'Sviluppatori che integrano Claude nelle proprie app',apiP2:'Aziende SaaS che offrono funzionalità AI ai clienti',apiP3:'Chi costruisce automazioni, bot, pipeline di elaborazione',
+apiNote2:'<strong>Nota importante:</strong> l\'API non è un\'alternativa ai piani consumer. Serve per accesso programmatico, non per usare la chat. Se vuoi usare Claude come chat, scegli uno dei piani sopra.',
+s3:'Quale scegliere? Guida rapida',
+dTitle:'L\'albero decisionale',
+dq1:'Vuoi solo provare Claude?',da1:'Sì → <strong>Free.</strong> Parti da qui, zero rischi. Se ti basta, ottimo. Se inizi a finire i messaggi, passa al Pro.',
+dq2:'Usi Claude per lavoro tutti i giorni?',da2:'Sì → <strong>Pro.</strong> Il rapporto qualità-prezzo imbattibile. Claude Code, Cowork, Research, Projects illimitati. Parti da qui e sali solo se necessario.',
+dq3:'Finisci i messaggi del Pro regolarmente?',da3:'Sì, 2-3 volte a settimana → <strong>Max 5x.</strong> Se li finisci ogni giorno → <strong>Max 20x.</strong>',
+dq4:'Siete un team di 5+ persone?',da4:'Sì → <strong>Team.</strong> SSO, admin, fatturazione centralizzata, dati protetti. Mix & match tra Standard ($25) e Premium ($125) in base all\'utilizzo di ciascuno.',
+dq5:'Siete 150+ persone con esigenze di compliance?',da5:'Sì → <strong>Enterprise.</strong> SCIM, audit log, HIPAA, RBAC, data retention custom. Contattate il commerciale Anthropic.',
+dq6:'Devi integrare Claude nel tuo software?',da6:'Sì → <strong>API.</strong> Pay-as-you-go, accesso a tutti i modelli. Può coesistere con qualsiasi piano consumer.',
+adviceT:'Consiglio pratico',
+adviceP:'Parti sempre dal piano più basso che potrebbe bastarti e sali se serve. Il passaggio da Free a Pro è il salto più grande in termini di funzionalità. Da Pro a Max cambia solo la quantità di utilizzo, non le features. Non comprare "per sicurezza" — usa per un mese e valuta.',
+foot:'Morfeus — Quale Piano Claude fa per Te?'
+},
+en:{
+kicker:'Module 1 · Plans',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Claude plans — May 2025',
+h1:'Which Claude Plan is right for You?',
+lede:'Every plan in detail, with up-to-date prices and practical advice on which to choose based on your usage profile.',
+hookH:'The right plan',
+hookP:'"There\'s no single best plan in absolute terms. There\'s the right plan for how you work today and for where you want to get tomorrow."',
+s1:'Quick comparison',
+cH1:'Plan',cH2:'Price',cH3:'Usage',cH4:'Target',
+s2:'The plans in detail',
+pcTitle:'Who it makes sense for',
+freeTag:'FREE',freePrice:'$0 forever',freeTagline:'Everything you need to explore Claude',
+free1:'Chat on web, iOS, Android and desktop',free2:'Code generation',free3:'Built-in web search',free4:'Memory (Claude remembers across sessions)',free5:'Connectors for external apps',free6:'Extended thinking',free7:'File and image upload',free8:'Projects (limited)',
+freeLimits:'<strong>Main limits:</strong> limited messages per day, no Claude Code, no Cowork, no Research, access only to the base model.',
+freeP1:'Those who want to try Claude for the first time and see if it suits them',
+freeP2:'Those who use AI occasionally, a few questions a day',
+freeP3:'Students and curious people who want to experiment without spending',
+freeNo:'<strong>It doesn\'t make sense if:</strong> you use Claude every day for work. You\'ll run out of messages by mid-morning and the frustration will outweigh the savings.',
+proRec:'Recommended',proPrice:'$20/month (or $200/year, you save $40)',proTagline:'The right plan for those who work with Claude every day',
+proIntro:'Everything Free includes, plus:',
+pro1:'<span class="hl">Much more usage</span> than Free',pro2:'<span class="hl">Claude Code</span> — terminal coding agent',pro3:'<span class="hl">Cowork</span> — desktop automation',pro4:'<span class="hl">Research</span> — autonomous in-depth research',pro5:'Unlimited Projects',pro6:'Access to multiple models (Opus, Sonnet, Haiku)',pro7:'Claude for Microsoft 365 and Outlook',pro8:'Priority during peak times',
+proP1:'Professionals who use Claude as a daily tool',proP2:'Those who write copy, email, documents, strategies with AI',proP3:'Freelancers and consultants who want Claude Code + Cowork',proP4:'Anyone who has run out of messages on the Free plan more than 2 times',
+proNote:'<strong>The best value for money.</strong> $20/month for access to Claude Code, Cowork, Research and unlimited Projects is a huge leap over Free. For most people, this is the right plan.',
+m5Tag:'POWER',m5Price:'$100/month',m5Tagline:'5 times the usage of the Pro plan',
+m5Intro:'Everything Pro includes, plus:',
+m51:'<span class="hl">5x the usage</span> of the Pro plan',m52:'<span class="hl">Higher output limits</span> (longer answers)',m53:'<span class="hl">Early access</span> to new features',m54:'<span class="hl">Priority access</span> at all times',
+m5P1:'Those who hit the Pro limit at least 2-3 times a week',m5P2:'Those who use Claude Code for prolonged development sessions',m5P3:'Those who generate large volumes of content (copy, reports, analysis)',m5P4:'Those who want to test new features before everyone else',
+m5Note:'<strong>Rule of thumb:</strong> if on Pro you often find yourself "rationing" messages so as not to run out, Max 5x removes that constraint. If instead you reach the end of the day with messages to spare, stay on Pro.',
+m20Tag:'ULTRA',m20Price:'$200/month',m20Tagline:'20 times the usage of Pro — essentially unlimited',
+m20Intro:'Identical to Max 5x, but with:',
+m201:'<span class="hl">20x the usage</span> of the Pro plan',m202:'All the benefits of Max 5x',m203:'Practically impossible to reach the limit',
+m20P1:'Those who work with Claude 8+ hours a day, every day',m20P2:'Developers who do half-day Claude Code sessions',m20P3:'Those who manage multiple clients/projects and can\'t afford interruptions',
+m20Note:'<strong>The decisive test:</strong> if Max 5x isn\'t enough, this is the only option. If 5x is enough with margin to spare, you\'re wasting $100/month. There\'s no middle ground — either you need it or you don\'t.',
+teamTag:'COLLABORATIVE',teamPrice:'From $25/seat/month (Standard) to $125/seat/month (Premium)',teamTagline:'For teams of 5 to 150 people, with admin controls',
+teamIntro:'Two types of seat, mixable within the same team:',
+seatSL:'Standard Seat',seatPer:'/seat/month',seatSA:'$20/seat with the annual plan',seatSD:'Equivalent to the individual Pro plan',
+seatPL:'Premium Seat',seatPA:'$100/seat with the annual plan',seatPD:'Equivalent to the individual Max plan',
+team1:'<span class="hl">SSO</span> (Single Sign-On)',team2:'Centralized <span class="hl">admin console</span>',team3:'Data is <span class="hl">not used for training</span> (default)',team4:'Mix & match of Standard and Premium seats',team5:'Centralized billing',team6:'Enterprise-grade deployment',
+teamP1:'Teams of 5+ people who use Claude regularly',teamP2:'Companies that need SSO and centralized management',teamP3:'Agencies and professional firms with different usage levels across the team',
+teamNote:'<strong>The key advantage:</strong> you can give Standard seats to collaborators who use Claude occasionally and Premium seats to power users. You don\'t have to pay the maximum for everyone. Plus, the data isn\'t used for training — essential for companies.',
+entTag:'CORPORATE',entPrice:'$20/seat + usage at API rates',entTagline:'Security, compliance and control for large organizations',
+entIntro:'Everything Team includes, plus:',
+ent1:'<span class="hl">SCIM</span> — automatic user provisioning',ent2:'<span class="hl">Audit log</span> — complete tracking',ent3:'<span class="hl">Compliance API</span>',ent4:'<span class="hl">HIPAA-ready</span>',ent5:'Customizable data retention',ent6:'Role-based access control (RBAC)',ent7:'IP allowlisting',ent8:'Claude Security (beta)',
+entP1:'Organizations with 150+ users',entP2:'Companies in regulated sectors (healthcare, finance, legal)',entP3:'Those who must meet compliance standards (HIPAA, SOC 2)',entP4:'Those who need audit trails and granular control over access',
+entNote:'<strong>A note on pricing:</strong> the base is $20/seat/month, but usage is billed at API rates. This means you pay based on how much your team actually uses Claude, which can be cheaper than Team for large organizations with variable usage.',
+apiTag:'DEVELOPER',apiPrice:'Pay-as-you-go per token',apiTagline:'For those who integrate Claude into their own products and workflows',
+apiIntro:'Prices per million tokens (MTok):',
+apiTH1:'Model',apiTH2:'Input',apiTH3:'Output',
+apiNote1:'Prompt caching: up to 90% discount on input. Batch processing: 50% discount. Web search: $10/1,000 searches. Code execution: $0.05/hour.',
+api1:'Access to all models (Opus, Sonnet, Haiku)',api2:'Tool use, vision, extended thinking',api3:'Batch processing with 50% discount',api4:'Prompt caching to reduce costs',api5:'Web search and code execution',api6:'Managed agents ($0.08/session-hour)',
+apiP1:'Developers who integrate Claude into their own apps',apiP2:'SaaS companies that offer AI features to their customers',apiP3:'Those who build automations, bots, processing pipelines',
+apiNote2:'<strong>Important note:</strong> the API is not an alternative to the consumer plans. It\'s for programmatic access, not for using the chat. If you want to use Claude as a chat, choose one of the plans above.',
+s3:'Which to choose? Quick guide',
+dTitle:'The decision tree',
+dq1:'Just want to try Claude?',da1:'Yes → <strong>Free.</strong> Start here, zero risk. If it\'s enough, great. If you start running out of messages, move to Pro.',
+dq2:'Do you use Claude for work every day?',da2:'Yes → <strong>Pro.</strong> Unbeatable value for money. Claude Code, Cowork, Research, unlimited Projects. Start here and go up only if necessary.',
+dq3:'Do you run out of Pro messages regularly?',da3:'Yes, 2-3 times a week → <strong>Max 5x.</strong> If you run out every day → <strong>Max 20x.</strong>',
+dq4:'Are you a team of 5+ people?',da4:'Yes → <strong>Team.</strong> SSO, admin, centralized billing, protected data. Mix & match between Standard ($25) and Premium ($125) based on each person\'s usage.',
+dq5:'Are you 150+ people with compliance needs?',da5:'Yes → <strong>Enterprise.</strong> SCIM, audit log, HIPAA, RBAC, custom data retention. Contact Anthropic sales.',
+dq6:'Do you need to integrate Claude into your software?',da6:'Yes → <strong>API.</strong> Pay-as-you-go, access to all models. It can coexist with any consumer plan.',
+adviceT:'Practical advice',
+adviceP:'Always start from the lowest plan that might be enough and go up if needed. The move from Free to Pro is the biggest leap in terms of features. From Pro to Max only the amount of usage changes, not the features. Don\'t buy "just in case" — use it for a month and assess.',
+foot:'Morfeus — Which Claude Plan is right for You?'
+}};
+
+var ROWS={it:[
+['Free','$0','Limitato','Provare Claude'],
+['Pro','$20/mese','Standard','Uso quotidiano serio'],
+['Max 5x','$100/mese','5x vs Pro','Power user'],
+['Max 20x','$200/mese','20x vs Pro','Uso intensivo tutto il giorno'],
+['Team Standard','$25/seat/mese','Come Pro','Team 5-150 persone'],
+['Team Premium','$125/seat/mese','Come Max','Team con utenti avanzati'],
+['Enterprise','$20/seat + uso API','Illimitato (a consumo)','Aziende 150+'],
+['API','A consumo per token','Programmatico','Sviluppatori']
+],en:[
+['Free','$0','Limited','Try Claude'],
+['Pro','$20/month','Standard','Serious daily use'],
+['Max 5x','$100/month','5x vs Pro','Power user'],
+['Max 20x','$200/month','20x vs Pro','Intensive use all day'],
+['Team Standard','$25/seat/month','Like Pro','Teams of 5-150 people'],
+['Team Premium','$125/seat/month','Like Max','Teams with advanced users'],
+['Enterprise','$20/seat + API usage','Unlimited (pay-as-you-go)','Companies 150+'],
+['API','Pay-as-you-go per token','Programmatic','Developers']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('cbody').innerHTML=ROWS[LANG].map(function(r){return '<tr><td class="pn">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
+}
+function togglePlan(el){el.classList.toggle('open')}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

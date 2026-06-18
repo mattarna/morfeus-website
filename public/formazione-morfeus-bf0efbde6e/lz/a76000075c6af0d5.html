@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il prompt a 3 fasi — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;white-space:pre-wrap}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.8;overflow-x:auto}
+.code .tg{color:var(--accent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* 3 phases */
+.phases{display:flex;flex-direction:column;gap:8px}
+.ph{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.ph:hover{border-color:var(--line-2)}.ph.on{border-color:var(--accent);background:var(--accent-soft)}
+.ph .pn{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ph.on .pn{background:var(--accent);color:#fff}
+.ph .pb{flex:1}
+.ph .pt{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ph .pd{font-size:13px;color:var(--ink-2);margin-top:3px}
+.ph .pi{color:var(--accent);font-size:17px;margin-top:1px;flex-shrink:0}
+.phtag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:4px;background:var(--agent-soft);color:var(--agent)}
+.phdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.phdetail p{font-size:14.5px;color:var(--ink-2)}.phdetail p b{color:var(--ink)}
+.phdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+/* simulator */
+.sim{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.simhead{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.simhead .sd{display:flex;gap:6px}.simhead .sd span{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.simhead .stt{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-left:4px}
+.simstage{display:flex;border-bottom:1px solid var(--line)}
+.simstep{flex:1;text-align:center;padding:11px 6px;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);border-right:1px solid var(--line);transition:.2s}
+.simstep:last-child{border-right:none}
+.simstep.act{background:var(--accent-soft);color:var(--accent)}
+.simstep.done{color:var(--good)}
+.simbody{padding:18px;min-height:200px}
+.msg{display:flex;gap:11px;margin-bottom:14px;opacity:0;transform:translateY(8px);animation:msgIn .4s forwards}
+@keyframes msgIn{to{opacity:1;transform:none}}
+.msg .av{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff}
+.msg.u .av{background:var(--ink-3)}.msg.a .av{background:var(--accent)}
+.msg .bub{flex:1;font-size:13.5px;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;line-height:1.55}
+.msg.a .bub{border-left:3px solid var(--accent)}
+.msg .bub b{color:var(--ink)}
+.msg .bub .lbl{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:block;margin-bottom:5px}
+.msg.u .bub .lbl{color:var(--ink-3)}
+.simbar{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--line);background:var(--bg-2);flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--sh);transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);color:var(--ink)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.pri:hover{color:#fff;opacity:.92}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.simhint{font-size:13px;color:var(--ink-3);font-family:var(--mono)}
+/* 5 axes */
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.axis{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:12px 14px}
+.axis .ax-i{width:32px;height:32px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.axis .ax-t{font-size:14px;font-weight:600}.axis .ax-d{font-size:12.5px;color:var(--ink-2);margin-top:1px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.axes{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.ph,.phdetail,.key,.axis,.sim,.code{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A4.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Architettura del prompting</div>
+  <h1 class="rv" data-i="h1">Il prompt a 3 fasi (Gathering → Azione → Output)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">01</span><h2 data-i="s1">Le tre fasi del prompt evoluto</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="phIntro"></p>
+  <div class="phases rv" id="phases"></div>
+  <div class="phdetail rv" id="phDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-message-question"></i><span class="no">02</span><h2 data-i="s2">«Fammi domande prima»: il singolo miglioramento più impattante</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-help-hexagon"></i></div><div><h4 data-i="note1H">Due righe da aggiungere a qualsiasi prompt</h4><p data-i-html="note1P"></p></div></div>
+  <div class="code rv" id="gatherCode" style="margin-top:16px"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i="note1Why"></p>
+
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">03</span><h2 data-i="s3">Con domande, contro senza</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="badT">Parte subito</span><div class="pr" data-i="badP"></div><div class="res" data-i-html="badR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="goodT">Chiede prima</span><div class="pr" data-i="goodP"></div><div class="res" data-i-html="goodR"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-checkup-list"></i><span class="no">04</span><h2 data-i="s4">L'autocritica: il junior genio si valuta da solo</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-zoom-scan"></i></div><div><h4 data-i="note2H">«Ecco il lavoro, ma ha queste criticità»</h4><p data-i-html="note2P"></p></div></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-chart-radar"></i><span class="no">05</span><h2 data-i="s5">La valutazione su 5 assi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="axIntro"></p>
+  <div class="axes rv" id="axes"></div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">06</span><h2 data-i="s6">Simulatore: il ciclo a 3 fasi in azione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="simIntro"></p>
+  <div class="sim rv">
+    <div class="simhead"><div class="sd"><span></span><span></span><span></span></div><span class="stt" id="simTitle">prompt-a-3-fasi</span></div>
+    <div class="simstage">
+      <div class="simstep act" id="st0" data-i="simStep1">Gathering</div>
+      <div class="simstep" id="st1" data-i="simStep2">Azione</div>
+      <div class="simstep" id="st2" data-i="simStep3">Output</div>
+    </div>
+    <div class="simbody" id="simBody"></div>
+    <div class="simbar">
+      <button class="btn pri" id="simNext" onclick="simNext()" data-i="simNextB">Avanti</button>
+      <button class="btn" onclick="simReset()" data-i="simResetB">Ricomincia</button>
+      <span class="simhint" id="simHint"></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-language"></i><span class="no">07</span><h2 data-i="s7">«Rispiegami a parole tue»</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-microphone-2"></i></div><h4 data-i="r1H">Anti-fraintendimento</h4><p data-i="r1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-ruler-2"></i></div><h4 data-i="r2H">Sotto 200 caratteri</h4><p data-i="r2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-shield-check"></i></div><h4 data-i="r3H">Una garanzia</h4><p data-i="r3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Aggiungi le 3 fasi a un prompt che usi</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il prompt a 3 fasi</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A4.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Architettura del prompting',
+h1:'Il prompt a 3 fasi (Gathering → Azione → Output)',
+lede:'Un prompt strutturato dà a Claude tutto in un colpo solo. Il prompt evoluto fa qualcosa di più potente: prima ti fa domande finché non ha capito davvero, poi lavora, infine si autovaluta. Tre fasi che alzano la qualità senza chiederti più fatica.',
+s1:'Le tre fasi del prompt evoluto',
+phIntro:'Il prompt evoluto non è una formula nuova: è il prompt strutturato avvolto in due strati. Prima il modello raccoglie il contesto che gli manca, poi esegue, poi controlla il proprio lavoro. Clicca ogni fase.',
+s2:'«Fammi domande prima»: il singolo miglioramento più impattante',
+note1H:'Due righe da aggiungere a qualsiasi prompt',
+note1P:'Aggiungi in coda al prompt l\'istruzione di <strong>fare domande prima di lavorare</strong>. È il singolo miglioramento più impattante: due righe che cambiano la qualità di qualunque task, senza riscrivere nulla. Senza, il modello «deve arrivare all\'output comunque» — e lavora con informazioni insufficienti.',
+note1Why:'È quello che farebbe un junior perfetto: prima di partire, fa le domande giuste. Così eviti il lavoro da rifare. La regola è puntare al 95% del contesto prima che Claude scriva una sola riga di risposta.',
+s3:'Con domande, contro senza',
+badT:'Parte subito',goodT:'Chiede prima',
+badP:'Scrivimi la pagina di vendita per il mio nuovo corso.',
+badR:'<b>Claude parte e indovina tutto.</b> Pubblico, prezzo, promessa, tono: inventa la versione più probabile. Spesso plausibile, quasi mai quella giusta — e te ne accorgi solo a lavoro finito.',
+goodP:'Scrivimi la pagina di vendita per il mio nuovo corso. Prima di iniziare, fammi tutte le domande che ti servono per avere il contesto sufficiente.',
+goodR:'<b>Claude chiede prima: a chi è rivolto? Quale prezzo? Quale promessa centrale?</b> Quando lavora, lo fa col tuo contesto, non con la media del mondo. Due righe, un output diverso.',
+s4:'L\'autocritica: il junior genio si valuta da solo',
+note2H:'«Ecco il lavoro, ma ha queste criticità»',
+note2P:'Dopo l\'output, chiedi a Claude di <strong>elencare i problemi del proprio lavoro</strong>: «guarda, questo è il risultato, ma secondo me ci sono queste criticità, che ne pensi?». Forzare ≥3 criticità è un layer di autocritica che alza la qualità — e spesso il modello affina ulteriormente da solo.',
+q1:'«Il junior perfetto fa domande prima di partire. Il junior genio, dopo, si autovaluta il lavoro: ecco il risultato, ma ha questi problemi 1-2-3-4, che ne pensi?»',
+s5:'La valutazione su 5 assi',
+axIntro:'Quando Claude si autovaluta, non lo fa a caso: gli chiedi di giudicare il proprio output su assi precisi, trovare il punto più debole e fare le domande per rifinirlo.',
+s6:'Simulatore: il ciclo a 3 fasi in azione',
+simIntro:'Segui un task reale che attraversa le tre fasi. Premi «Avanti» per vedere come Claude prima chiede, poi lavora, poi si critica.',
+simStep1:'Gathering',simStep2:'Azione',simStep3:'Output',
+simNextB:'Avanti',simResetB:'Ricomincia',
+s7:'«Rispiegami a parole tue»',
+r1H:'Anti-fraintendimento',r1P:'«Prima di iniziare, rispiegami a parole tue quello che ti sto chiedendo, così sono sicuro che tu abbia capito.» Verifichi la comprensione prima che lavori.',
+r2H:'Sotto 200 caratteri',r2P:'Il vincolo di lunghezza forza una sintesi: se Claude sa riassumere la richiesta in poche righe, l\'ha capita. Se annaspa, mancava contesto.',
+r3H:'Una garanzia',r3P:'Vale soprattutto quando detti a voce: la dettatura è veloce ma imprecisa. Questa riga è la rete di sicurezza contro i fraintendimenti.',
+s8:'Checkpoint',
+cpH:'Aggiungi le 3 fasi a un prompt che usi',
+cpP:'Prendi un prompt strutturato che usi spesso e avvolgilo nelle tre fasi: in coda «fammi domande prima», e dopo l\'output «elencami 3 criticità del tuo lavoro».',
+cpQ:'Hai chiesto a Claude di fare domande prima di partire? Hai puntato al 95% del contesto, non all\'80%? Dopo l\'output, gli hai chiesto di trovarsi da solo i punti deboli? Se salti uno dei tre, stai lasciando qualità sul tavolo.',
+bridge:'Sai costruire il prompt che chiede prima e si critica dopo. <b>Prossimo:</b> nessun prompt nasce perfetto — iterazione, versioning e la voce per arrivare alla risposta giusta in 2-3 cicli.',
+foot:'Morfeus — Il prompt a 3 fasi'
+},
+en:{
+kicker:'Lesson A4.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The architecture of prompting',
+h1:'The 3-phase prompt (Gathering → Action → Output)',
+lede:'A structured prompt gives Claude everything at once. The evolved prompt does something more powerful: first it asks you questions until it truly understands, then it works, then it self-assesses. Three phases that raise quality without asking more effort from you.',
+s1:'The three phases of the evolved prompt',
+phIntro:'The evolved prompt isn\'t a new formula: it\'s the structured prompt wrapped in two layers. First the model gathers the context it\'s missing, then it executes, then it checks its own work. Click each phase.',
+s2:'"Ask me questions first": the single most impactful improvement',
+note1H:'Two lines to add to any prompt',
+note1P:'Add at the end of the prompt the instruction to <strong>ask questions before working</strong>. It\'s the single most impactful improvement: two lines that change the quality of any task, without rewriting anything. Without it, the model "must reach the output anyway" — and works with insufficient information.',
+note1Why:'It\'s what a perfect junior would do: before starting, they ask the right questions. That\'s how you avoid redone work. The rule is to aim for 95% of the context before Claude writes a single line of reply.',
+s3:'With questions, against without',
+badT:'Starts immediately',goodT:'Asks first',
+badP:'Write the sales page for my new course.',
+badR:'<b>Claude starts and guesses everything.</b> Audience, price, promise, tone: it invents the most likely version. Often plausible, almost never the right one — and you only notice once the work is done.',
+goodP:'Write the sales page for my new course. Before you start, ask me all the questions you need to have enough context.',
+goodR:'<b>Claude asks first: who is it for? What price? What core promise?</b> When it works, it does so with your context, not with the world\'s average. Two lines, a different output.',
+s4:'Self-critique: the genius junior assesses itself',
+note2H:'"Here\'s the work, but it has these weaknesses"',
+note2P:'After the output, ask Claude to <strong>list the problems with its own work</strong>: "look, this is the result, but I think it has these weaknesses, what do you think?". Forcing ≥3 weaknesses is a self-critique layer that raises quality — and often the model refines further on its own.',
+q1:'"The perfect junior asks questions before starting. The genius junior, afterward, self-assesses the work: here\'s the result, but it has these problems 1-2-3-4, what do you think?"',
+s5:'The 5-axis evaluation',
+axIntro:'When Claude self-assesses, it doesn\'t do it randomly: you ask it to judge its own output on precise axes, find the weakest point, and ask the questions to refine it.',
+s6:'Simulator: the 3-phase cycle in action',
+simIntro:'Follow a real task moving through the three phases. Press "Next" to see how Claude first asks, then works, then critiques itself.',
+simStep1:'Gathering',simStep2:'Action',simStep3:'Output',
+simNextB:'Next',simResetB:'Start over',
+s7:'"Re-explain it in your own words"',
+r1H:'Anti-misunderstanding',r1P:'"Before you start, re-explain in your own words what I\'m asking you, so I\'m sure you understood." You verify comprehension before it works.',
+r2H:'Under 200 characters',r2P:'The length limit forces a synthesis: if Claude can summarize the request in a few lines, it understood it. If it struggles, context was missing.',
+r3H:'A guarantee',r3P:'It matters most when you dictate by voice: dictation is fast but imprecise. This line is the safety net against misunderstandings.',
+s8:'Checkpoint',
+cpH:'Add the 3 phases to a prompt you use',
+cpP:'Take a structured prompt you use often and wrap it in the three phases: at the end "ask me questions first", and after the output "list 3 weaknesses of your work".',
+cpQ:'Did you ask Claude to ask questions before starting? Did you aim for 95% of the context, not 80%? After the output, did you ask it to find the weak points itself? Skip one of the three and you\'re leaving quality on the table.',
+bridge:'You know how to build the prompt that asks first and critiques after. <b>Next:</b> no prompt is born perfect — iteration, versioning and voice to reach the right answer in 2-3 cycles.',
+foot:'Morfeus — The 3-phase prompt'
+}};
+
+var PHASES={it:[
+['Gathering — le domande prima','Claude raccoglie il contesto che gli manca facendo domande, fino ad arrivare al 95% delle informazioni. Non parte finché non ha capito.','Prima di iniziare a lavorare, fammi tutte le domande che ti servono per avere il contesto sufficiente a fare il miglior lavoro possibile.','95% del contesto'],
+['Azione — il lavoro','La parte centrale, il prompt strutturato che già conosci: ruolo, contesto, istruzioni, output. Qui Claude esegue il task, ma ora con tutte le informazioni in mano.','Ora che hai il contesto, esegui il task seguendo l\'ordine: analizza, struttura, scrivi.',''],
+['Output — consegna + autocritica','Claude consegna il risultato e poi si autovaluta: elenca le criticità del proprio lavoro e propone come migliorarlo.','Ecco il lavoro. Ora elenca almeno 3 criticità di quello che hai prodotto e dimmi che ne pensi.','Autocritica']
+],en:[
+['Gathering — the questions first','Claude gathers the context it\'s missing by asking questions, until it reaches 95% of the information. It doesn\'t start until it has understood.','Before you start working, ask me all the questions you need to have enough context to do the best possible job.','95% of context'],
+['Action — the work','The central part, the structured prompt you already know: role, context, instructions, output. Here Claude executes the task — but now with all the information in hand.','Now that you have the context, execute the task in this order: analyze, structure, write.',''],
+['Output — delivery + self-critique','Claude delivers the result and then self-assesses: it lists the weaknesses of its own work and proposes how to improve it.','Here\'s the work. Now list at least 3 weaknesses of what you produced and tell me what you think.','Self-critique']
+]};
+
+var GATHER={it:'<prompt> ...il tuo prompt strutturato (ruolo, contesto, istruzioni, output)... </prompt>\n\nPrima di iniziare a lavorare: non procedere finché non hai\ntutto il contesto sufficiente. Fammi tutte le domande che ti servono.',
+en:'<prompt> ...your structured prompt (role, context, instructions, output)... </prompt>\n\nBefore you start working: do not proceed until you have\nenough context. Ask me all the questions you need.'};
+
+var AXES={it:[
+['ti-eye','Chiarezza','La richiesta è priva di ambiguità?'],
+['ti-focus-2','Specificità','Il task è abbastanza ristretto e preciso?'],
+['ti-forms','Formato','La forma dell\'output è quella giusta?'],
+['ti-award','Competenza','Il ruolo e il dominio sono ben definiti?'],
+['ti-search','Punto debole','Qual è l\'asse più fragile? Lì fa domande.']
+],en:[
+['ti-eye','Clarity','Is the request free of ambiguity?'],
+['ti-focus-2','Specificity','Is the task narrow and precise enough?'],
+['ti-forms','Format','Is the output shape the right one?'],
+['ti-award','Competence','Are the role and domain well defined?'],
+['ti-search','Weak point','Which axis is most fragile? It asks there.']
+]};
+
+var SIM={it:[
+[['u','Tu','Scrivimi una proposta commerciale per un cliente. Prima di lavorare, fammi le domande che ti servono.'],
+ ['a','Claude','<span class="lbl">Fase 1 · Gathering</span>Per centrare la proposta: 1) chi è il cliente e che problema ha? 2) qual è il tuo prezzo e cosa include? 3) c\'è una scadenza o un budget noto? 4) che tono vuoi, formale o diretto?']],
+[['u','Tu','1) PMI manifatturiera, perde tempo nel reporting · 2) 4.000€, include audit + 2 automazioni · 3) decisione entro fine mese · 4) diretto ma professionale.'],
+ ['a','Claude','<span class="lbl">Fase 2 · Azione</span>Ora ho il contesto. Scrivo la proposta: problema → soluzione in 3 punti → prezzo e cosa include → prossimo passo con la scadenza. Tono diretto, professionale.']],
+[['a','Claude','<span class="lbl">Fase 3 · Output + autocritica</span>Ecco la proposta. Tre criticità che vedo: 1) la sezione prezzo non giustifica il valore percepito; 2) manca una prova/caso concreto; 3) la scadenza suona come pressione, non come urgenza utile. Vuoi che le sistemi?']]
+],en:[
+[['u','You','Write me a commercial proposal for a client. Before working, ask me the questions you need.'],
+ ['a','Claude','<span class="lbl">Phase 1 · Gathering</span>To nail the proposal: 1) who is the client and what problem do they have? 2) what\'s your price and what does it include? 3) is there a known deadline or budget? 4) what tone — formal or direct?']],
+[['u','You','1) Manufacturing SMB, wastes time on reporting · 2) €4,000, includes audit + 2 automations · 3) decision by month-end · 4) direct but professional.'],
+ ['a','Claude','<span class="lbl">Phase 2 · Action</span>Now I have the context. I\'ll write the proposal: problem → solution in 3 points → price and inclusions → next step with the deadline. Direct, professional tone.']],
+[['a','Claude','<span class="lbl">Phase 3 · Output + self-critique</span>Here\'s the proposal. Three weaknesses I see: 1) the price section doesn\'t justify the perceived value; 2) it lacks a proof/concrete case; 3) the deadline reads as pressure, not useful urgency. Want me to fix them?']]
+]};
+
+var LANG='it',curPh=0,simStage=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('phases').innerHTML=PHASES[LANG].map(function(p,i){var tag=p[3]?'<span class="phtag">'+p[3]+'</span>':'';return '<div class="ph'+(i===curPh?' on':'')+'" onclick="showPh('+i+')"><div class="pn">'+(i+1)+'</div><div class="pb"><div class="pt">'+p[0]+' '+tag+'</div><div class="pd">'+p[1]+'</div></div><i class="ti ti-chevron-right pi"></i></div>'}).join('');
+  showPh(curPh);
+  document.getElementById('gatherCode').innerHTML=tagColor(GATHER[LANG]);
+  document.getElementById('axes').innerHTML=AXES[LANG].map(function(a){return '<div class="axis"><div class="ax-i"><i class="ti '+a[0]+'"></i></div><div><div class="ax-t">'+a[1]+'</div><div class="ax-d">'+a[2]+'</div></div></div>'}).join('');
+  simRender();
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function tagColor(s){return esc(s).replace(/(&lt;\/?[a-z]+&gt;)/g,'<span class="tg">$1</span>')}
+function showPh(i){curPh=i;document.querySelectorAll('#phases .ph').forEach(function(x,k){x.classList.toggle('on',k===i)});var p=PHASES[LANG][i];document.getElementById('phDetail').innerHTML='<p><b>'+p[0]+'.</b> '+p[1]+'</p><div class="ex">'+p[2]+'</div>'}
+function simRender(){
+  var body=document.getElementById('simBody');var html='';
+  for(var s=0;s<=simStage;s++){SIM[LANG][s].forEach(function(m){html+='<div class="msg '+m[0]+'"><div class="av"><i class="ti '+(m[0]==='u'?'ti-user':'ti-sparkles')+'"></i></div><div class="bub">'+m[2]+'</div></div>'})}
+  body.innerHTML=html;
+  ['st0','st1','st2'].forEach(function(id,k){var el=document.getElementById(id);el.classList.toggle('act',k===simStage);el.classList.toggle('done',k<simStage)});
+  var hint=document.getElementById('simHint');var nb=document.getElementById('simNext');
+  if(simStage>=2){nb.disabled=true;hint.textContent=LANG==='it'?'Ciclo completo: il prompt si è criticato da solo.':'Cycle complete: the prompt critiqued itself.'}
+  else{nb.disabled=false;hint.textContent=LANG==='it'?'Fase '+(simStage+1)+' di 3':'Phase '+(simStage+1)+' of 3'}
+}
+function simNext(){if(simStage<2){simStage++;simRender()}}
+function simReset(){simStage=0;simRender()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

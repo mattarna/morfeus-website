@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Sistema LOG: la memoria che compone — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note / hook */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* feature rows */
+.feat{display:flex;flex-direction:column;gap:8px}
+.feat-row{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.feat-row .fi{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feat-row .fi.a{background:var(--accent-soft);color:var(--accent)}
+.feat-row .fi.t{background:var(--teal-soft);color:var(--teal)}
+.feat-row .fi.m{background:var(--amber-soft);color:var(--amber)}
+.feat-row .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.feat-row .ft span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.feat-row .ft em{font-style:italic;color:var(--ink)}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em}
+/* tip / warn */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.tip>i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.warn>i{color:var(--amber);font-size:21px;flex-shrink:0}.warn h4{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:4px}.warn p{font-size:13.5px;color:var(--ink-2)}
+/* scenario */
+.scen{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px}
+.scen .si{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.scen.bad{border-color:var(--bad-line)}.scen.bad .si{background:var(--bad-soft);color:var(--bad)}
+.scen h4{font-size:14px;font-weight:600;margin-bottom:3px}.scen p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+/* ===== ANATOMIA VOCE LOG (click-per-rivelare) ===== */
+.log-anatomy{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.log-anatomy-title{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.log-entry-line{display:flex;gap:0;flex-wrap:wrap;align-items:stretch;font-family:var(--mono);font-size:13px;line-height:1;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;cursor:default}
+.log-field{padding:14px 16px;display:flex;flex-direction:column;gap:5px;border-right:1px solid var(--line);cursor:pointer;transition:background .18s,border-color .18s;position:relative;flex-shrink:0}
+.log-field:last-child{border-right:none;flex:1}
+.log-field:hover{background:var(--card)}
+.log-field.active{background:var(--accent-soft);border-color:var(--accent)}
+.log-field .lf-label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-3);font-family:var(--sans);font-weight:600;transition:color .18s}
+.log-field.active .lf-label{color:var(--accent)}
+.log-field .lf-value{font-weight:600;color:var(--ink);white-space:nowrap}
+.log-field.f-data .lf-value{color:var(--teal)}
+.log-field.f-tipo .lf-value{color:var(--amber)}
+.log-field.f-testo .lf-value{white-space:normal;color:var(--ink-2);font-family:var(--sans);font-size:13px;font-weight:400}
+.log-tooltip{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s ease;background:var(--card);border-top:1px solid transparent}
+.log-field.active .log-tooltip{max-height:240px;padding:12px 0 4px;border-top-color:var(--line)}
+.log-tooltip p{font-size:12.5px;color:var(--ink-2);line-height:1.6;font-family:var(--sans);white-space:normal;margin-top:6px}
+.log-tooltip p strong{color:var(--ink);font-weight:600}
+.log-tooltip .tt-head{font-size:11px;font-weight:700;color:var(--accent);font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px}
+.log-hint{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px;display:flex;align-items:center;gap:6px}
+.log-hint i{font-size:14px;color:var(--accent)}
+/* ===== APPEND-ONLY vs SOVRASCRITTURA (click-per-rivelare) ===== */
+.ao-toggle{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.ao-side{background:var(--card);padding:20px;cursor:pointer;transition:background .18s;position:relative}
+.ao-side:hover{background:var(--bg-2)}
+.ao-side.selected{background:var(--accent-soft)}
+.ao-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.ao-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ao-side.ao-bad .ao-icon{background:var(--bad-soft);color:var(--bad)}
+.ao-side.ao-good .ao-icon{background:var(--teal-soft);color:var(--teal)}
+.ao-header h4{font-size:14px;font-weight:600}
+.ao-side.ao-bad h4{color:var(--bad)}
+.ao-side.ao-good h4{color:var(--teal)}
+.ao-sub{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.ao-file{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:13px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:var(--ink-2);min-height:130px;white-space:pre-wrap}
+.ao-file .ao-old{text-decoration:line-through;opacity:.5}
+.ao-file .ao-new{color:var(--teal);font-weight:600}
+.ao-file .ao-locked{color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.ao-file .ao-locked i{font-size:12px}
+.ao-detail{font-size:13px;color:var(--ink-2);line-height:1.6;max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ao-side.selected .ao-detail{max-height:280px;margin-top:12px}
+.ao-hint{text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px}
+.ao-hint i{font-size:14px;color:var(--accent)}
+/* ===== COME L'AI USA IL LOG (accordion) ===== */
+.ai-use-grid{display:flex;flex-direction:column;gap:10px}
+.ai-use-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:border-color .18s}
+.ai-use-card:hover{border-color:var(--line-2)}
+.ai-use-card.open{border-color:var(--accent)}
+.ai-use-header{display:flex;align-items:center;gap:14px;padding:16px 18px}
+.ai-use-num{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0;border:1px solid var(--accent-line);transition:background .2s,color .2s}
+.ai-use-card.open .ai-use-num{background:var(--accent);color:#fff}
+.ai-use-header .auh-text{flex:1}
+.ai-use-header .auh-text strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.ai-use-header .auh-text span{font-size:12.5px;color:var(--ink-3)}
+.ai-use-header .auh-chevron{color:var(--ink-3);font-size:18px;transition:transform .25s}
+.ai-use-card.open .auh-chevron{transform:rotate(180deg)}
+.ai-use-body{max-height:0;overflow:hidden;transition:max-height .38s ease}
+.ai-use-card.open .ai-use-body{max-height:500px}
+.ai-use-body-inner{padding:0 18px 18px;border-top:1px solid var(--line)}
+.ai-use-body-inner p{font-size:13.5px;color:var(--ink-2);line-height:1.65;padding-top:14px}
+.ai-use-body-inner p code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+.ai-use-body-inner .ai-dialog{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-top:12px;font-size:12.5px;line-height:1.65}
+.ai-dialog .d-user{color:var(--ink);font-weight:600;margin-bottom:8px;display:flex;align-items:flex-start;gap:7px}
+.ai-dialog .d-ai{color:var(--ink-2);font-style:italic;display:flex;align-items:flex-start;gap:7px}
+.ai-dialog .d-user i,.ai-dialog .d-ai i{font-size:14px;margin-top:2px;flex-shrink:0;color:var(--accent)}
+.ai-dialog .d-ai i{color:var(--teal)}
+/* ===== TIMELINE LOG (demo visiva) ===== */
+.tl-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.timeline{position:relative;margin:0 0 4px;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line-2)}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-dot{position:absolute;left:-20px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--line-2);transition:all .4s}
+.tl-item.new .tl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tl-item.locked .tl-dot{background:var(--card);border-color:var(--line-2)}
+.tl-date{font-size:11px;color:var(--ink-3);margin-bottom:4px;font-family:var(--mono)}
+.tl-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;font-size:13px;line-height:1.6;color:var(--ink-2);transition:border-color .4s,background .4s}
+.tl-card strong{color:var(--ink);font-weight:600}
+.tl-item.new .tl-card{border-color:var(--accent-line);background:var(--accent-soft)}
+.tl-item.locked .tl-card{opacity:.65}
+.tl-card .tl-lock{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-3);margin-top:6px;font-style:normal}
+.tl-card .tl-lock i{font-size:12px}
+.tl-btn{background:var(--accent);color:#fff;border:none;border-radius:var(--r);padding:11px 22px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:filter .2s,transform .1s;margin-top:4px}
+.tl-btn:hover{filter:brightness(1.08)}
+.tl-btn:active{transform:scale(.97)}
+.tl-btn:disabled{opacity:.55;cursor:default}
+.tl-controls{text-align:center;padding-top:8px}
+.tl-count{margin-top:10px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+/* ===== STEP SCALINO ===== */
+.step-ladder{display:flex;flex-direction:column}
+.step-rung{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+.step-rung:last-child{border-bottom:none}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0}
+.step-text{flex:1}
+.step-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.step-text span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.step-text code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+.step-badge{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:20px;align-self:flex-start;margin-top:2px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em}
+.step-badge.base{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.step-badge.pro{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:10px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}.cp p strong{color:var(--ink);font-weight:700}
+.cp p code{font-family:var(--mono);font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+.done{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:22px;text-align:center;margin-top:14px}
+.done .dk{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:6px}
+.done p{font-size:14.5px;color:var(--ink);font-weight:500;max-width:580px;margin:0 auto;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .ao-toggle{grid-template-columns:1fr}
+  .log-entry-line{flex-direction:column}
+  .log-field{border-right:none;border-bottom:1px solid var(--line)}
+  .log-field:last-child{border-bottom:none}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.log-tooltip,.ai-use-body,.ao-detail{max-height:none!important}.log-tooltip{padding:12px 0 4px!important}.ai-use-body-inner{border-top:1px solid var(--line)}.note,.feat-row,.key,.tip,.warn,.scen,.log-anatomy,.ao-toggle,.ai-use-card,.tl-wrap,.step-rung,.cp,.done{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Stack</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Stack AI</div>
+  <h1 class="rv" data-i="h1">Il Sistema LOG: la memoria che compone</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <!-- 01 — COS'E' UN LOG -->
+  <div class="sh rv"><i class="ti ti-book-2"></i><span class="no">01</span><h2 data-i="s1">Cos'è un sistema LOG</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="logIntro"></p>
+  <div class="feat rv" id="logFeat"></div>
+  <div class="key rv" style="margin-top:28px"><p data-i="keyPhrase"></p></div>
+
+  <!-- 02 — ANATOMIA DI UNA VOCE -->
+  <div class="sh rv"><i class="ti ti-components"></i><span class="no">02</span><h2 data-i="s2">Anatomia di una voce di LOG</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="anatIntro"></p>
+  <div class="log-anatomy rv">
+    <div class="log-anatomy-title"><i class="ti ti-list-details"></i> <span data-i="anatTitle"></span></div>
+    <div class="log-entry-line" id="logLine"></div>
+    <div class="log-hint"><i class="ti ti-hand-click"></i> <span data-i="anatHint"></span></div>
+  </div>
+
+  <!-- 03 — APPEND-ONLY -->
+  <div class="sh rv"><i class="ti ti-lock"></i><span class="no">03</span><h2 data-i="s3">Append-only vs sovrascrittura</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="aoIntro"></p>
+  <div class="ao-toggle rv">
+    <div class="ao-side ao-bad" onclick="selectAO(this)">
+      <div class="ao-header">
+        <div class="ao-icon"><i class="ti ti-pencil"></i></div>
+        <div><h4 data-i="aoBadH">Sovrascrittura</h4><p class="ao-sub" data-i="aoBadSub"></p></div>
+      </div>
+      <div class="ao-file" id="aoBadFile"></div>
+      <div class="ao-detail"><p data-i="aoBadDetail"></p></div>
+    </div>
+    <div class="ao-side ao-good" onclick="selectAO(this)">
+      <div class="ao-header">
+        <div class="ao-icon"><i class="ti ti-lock"></i></div>
+        <div><h4 data-i="aoGoodH">Append-only</h4><p class="ao-sub" data-i="aoGoodSub"></p></div>
+      </div>
+      <div class="ao-file" id="aoGoodFile"></div>
+      <div class="ao-detail"><p data-i="aoGoodDetail"></p></div>
+    </div>
+  </div>
+  <div class="ao-hint rv"><i class="ti ti-hand-click"></i> <span data-i="aoHint"></span></div>
+
+  <!-- 04 — COME L'AI USA IL LOG -->
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">04</span><h2 data-i="s4">Come l'AI usa il LOG</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="aiUseIntro"></p>
+  <div class="ai-use-grid rv" id="aiUseGrid"></div>
+
+  <!-- 05 — DEMO TIMELINE -->
+  <div class="sh rv"><i class="ti ti-timeline"></i><span class="no">05</span><h2 data-i="s5">La memoria che si accumula</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="tlIntro"></p>
+  <div class="tl-wrap rv">
+    <div class="timeline" id="timeline"></div>
+    <div class="tl-controls">
+      <button class="tl-btn" id="addLogBtn" onclick="addLogEntry()"><i class="ti ti-plus"></i> <span data-i="tlBtn">Aggiungi voce di LOG</span></button>
+    </div>
+    <div class="tl-count" id="tlCount"></div>
+  </div>
+
+  <!-- 06 — I TRE GRADINI -->
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">06</span><h2 data-i="s6">Come iniziare: i tre gradini</h2></div>
+  <div class="step-ladder rv" id="stepLadder"></div>
+  <div class="warn rv"><i class="ti ti-alert-triangle"></i><div><h4 data-i="warnH">Errore comune: partire dall'automazione</h4><p data-i="warnP"></p></div></div>
+
+  <!-- 07 — EQUIVOCI -->
+  <div class="sh rv"><i class="ti ti-x"></i><span class="no">07</span><h2 data-i="s7">Equivoci da smontare</h2></div>
+  <div class="rv" id="scenarios"></div>
+
+  <!-- 08 — CHECKPOINT -->
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-checklist cpi"></i>
+    <h4 data-i="cpH">Tre azioni dopo questa lezione.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+  <div class="done rv">
+    <div class="dk"><i class="ti ti-circle-check"></i> <span data-i="doneK">Modulo Stack completato</span></div>
+    <p data-i="doneP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Sistema LOG: la memoria che compone</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Stack',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Stack AI',
+h1:'Il Sistema LOG: la memoria che compone',
+lede:'Un vault senza LOG è uno scatto fotografico. Con il LOG diventa un diario: ogni decisione lascia una traccia che l\'AI può rileggere — e il sistema migliora da solo nel tempo.',
+hookH:'L\'idea',
+hookP:'Tra tre mesi riaprirai un progetto e chiederai: perché avevamo scelto quella direzione? Senza LOG non c\'è risposta. Con il LOG, l\'AI risponde in dieci secondi, citando esattamente cosa avevi scritto quella sera.',
+s1:'Cos\'è un sistema LOG',
+logIntro:'Un LOG è un diario strutturato di decisioni, ragionamenti e avanzamenti — scritto in markdown e abbinato all\'AI. Non è un diario personale: è un <strong>registro operativo</strong> che cresce nel tempo, sempre in coda, mai sovrascritto. Ogni voce dice <em>cosa è successo</em> e soprattutto <em>perché</em>.',
+keyPhrase:'Il LOG è ottimizzato per essere riletto dall\'AI. Non è un diario sentimentale: è un registro di decisioni e ragionamenti che aiuta te e l\'AI a ricostruire il contesto senza perdere tempo.',
+s2:'Anatomia di una voce di LOG — clicca ogni campo',
+anatIntro:'Una voce di LOG ha una struttura minima ma precisa. Clicca su ogni campo per vedere a cosa serve e perché è importante per l\'AI.',
+anatTitle:'Esempio: voce di log.md',
+anatHint:'Clicca ogni campo per scoprire il suo ruolo nel sistema',
+s3:'Append-only vs sovrascrittura — clicca per vedere la differenza',
+aoIntro:'La regola fondamentale del LOG: si aggiunge sempre in coda, non si modifica il passato. Clicca su entrambi i pannelli per capire perché questo è importante.',
+aoBadH:'Sovrascrittura',
+aoBadSub:'Modifico il passato per "correggere"',
+aoBadDetail:'Il passato non esiste più nella sua forma originale. Non sai cosa pensavi il 3 giugno. Non puoi capire perché hai cambiato idea. L\'AI non riesce a ricostruire l\'evoluzione — vede solo l\'ultima versione, non il percorso. L\'audit trail è distrutto.',
+aoGoodH:'Append-only',
+aoGoodSub:'Aggiungo in coda, non tocco il passato',
+aoGoodDetail:'Il 1 e il 3 giugno restano intatti, con un lucchetto. Il 7 aggiungi una nuova voce che spiega l\'evoluzione. L\'AI ora può leggere: "al 3 giugno pensavamo X fosse ottimo, al 7 abbiamo scoperto un vincolo e cambiato rotta". Il ragionamento è completo, verificabile, tracciabile.',
+aoHint:'Clicca i pannelli per espandere il dettaglio',
+s4:'Come l\'AI usa il LOG — clicca per espandere',
+aiUseIntro:'Il LOG non è solo per te. È la struttura che permette all\'AI di ripristinare il contesto in modo preciso. Tre casi d\'uso concreti:',
+s5:'La memoria che si accumula',
+tlIntro:'Ogni voce aggiunta al LOG non scompare: si accumula. In 30 giorni hai una memoria che l\'AI può rileggere per ricostruire l\'intero percorso. Premi il bottone per simulare l\'aggiunta di una nuova entry.',
+tlBtn:'Aggiungi voce di LOG',
+tlBtnDone:'LOG completo',
+tlConverging:'Confluiscono…',
+s6:'Come iniziare: i tre gradini',
+warnH:'Errore comune: partire dall\'automazione',
+warnP:'L\'automazione schedulata è potente, ma non è il punto di partenza. Prima scrivi il LOG a mano per qualche settimana: capisci cosa vale la pena registrare, qual è il formato giusto per il tuo lavoro. Poi automatizzi. Un LOG mal strutturato automatizzato scala il problema, non lo risolve.',
+s7:'Equivoci da smontare',
+s8:'Checkpoint',
+cpH:'Tre azioni dopo questa lezione.',
+cpP:'<strong>1.</strong> Crea un file <code>log.md</code> nel tuo vault (o in una cartella di progetto). Aggiungi tre voci di oggi in formato: <code>data · tipo · cosa · perché</code>.<br><br><strong>2.</strong> Crea <code>DECISIONS.md</code> con l\'ultima decisione importante che hai preso. Scrivi anche l\'alternativa scartata e il motivo.<br><br><strong>3.</strong> Tra due settimane, apri una nuova chat con l\'AI, allega i due file e chiedi: "dove eravamo rimasti?" Vedrai la differenza.',
+doneK:'Modulo Stack completato',
+doneP:'Hai un vault come secondo cervello, sai come collegarlo all\'AI, come mantenerlo nel workflow quotidiano e come costruire una memoria che si accumula nel tempo. Il sistema è completo.',
+foot:'Morfeus — Il Sistema LOG: la memoria che compone'
+},
+en:{
+kicker:'Stack',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'AI Stack',
+h1:'The LOG System: the memory that compounds',
+lede:'A vault without a LOG is a snapshot. With a LOG it becomes a journal: every decision leaves a trace the AI can re-read — and the system improves on its own over time.',
+hookH:'The idea',
+hookP:'Three months from now you\'ll reopen a project and ask: why did we choose that direction? Without a LOG there\'s no answer. With the LOG, the AI answers in ten seconds, quoting exactly what you wrote that evening.',
+s1:'What a LOG system is',
+logIntro:'A LOG is a structured journal of decisions, reasoning and progress — written in markdown and paired with the AI. It\'s not a personal diary: it\'s an <strong>operational record</strong> that grows over time, always appended, never overwritten. Every entry says <em>what happened</em> and above all <em>why</em>.',
+keyPhrase:'The LOG is optimized to be re-read by the AI. It\'s not a sentimental diary: it\'s a record of decisions and reasoning that helps you and the AI rebuild context without wasting time.',
+s2:'Anatomy of a LOG entry — click each field',
+anatIntro:'A LOG entry has a minimal but precise structure. Click on each field to see what it\'s for and why it matters to the AI.',
+anatTitle:'Example: log.md entry',
+anatHint:'Click each field to discover its role in the system',
+s3:'Append-only vs overwriting — click to see the difference',
+aoIntro:'The fundamental rule of the LOG: you always append, you never modify the past. Click on both panels to understand why this matters.',
+aoBadH:'Overwriting',
+aoBadSub:'I edit the past to "fix" it',
+aoBadDetail:'The past no longer exists in its original form. You don\'t know what you thought on June 3. You can\'t understand why you changed your mind. The AI can\'t reconstruct the evolution — it only sees the latest version, not the path. The audit trail is destroyed.',
+aoGoodH:'Append-only',
+aoGoodSub:'I append, I don\'t touch the past',
+aoGoodDetail:'June 1 and June 3 stay intact, locked. On the 7th you add a new entry explaining the evolution. The AI can now read: "on June 3 we thought X was great, on the 7th we discovered a constraint and changed course". The reasoning is complete, verifiable, traceable.',
+aoHint:'Click the panels to expand the detail',
+s4:'How the AI uses the LOG — click to expand',
+aiUseIntro:'The LOG isn\'t just for you. It\'s the structure that lets the AI restore context precisely. Three concrete use cases:',
+s5:'The memory that compounds',
+tlIntro:'Every entry added to the LOG doesn\'t disappear: it accumulates. In 30 days you have a memory the AI can re-read to reconstruct the entire path. Press the button to simulate adding a new entry.',
+tlBtn:'Add a LOG entry',
+tlBtnDone:'LOG complete',
+tlConverging:'Appending…',
+s6:'How to start: the three rungs',
+warnH:'Common mistake: starting from automation',
+warnP:'Scheduled automation is powerful, but it\'s not the starting point. First write the LOG by hand for a few weeks: you learn what\'s worth recording, what the right format is for your work. Then you automate. A poorly structured LOG, automated, scales the problem — it doesn\'t solve it.',
+s7:'Misconceptions to dismantle',
+s8:'Checkpoint',
+cpH:'Three actions after this lesson.',
+cpP:'<strong>1.</strong> Create a <code>log.md</code> file in your vault (or in a project folder). Add three of today\'s entries in the format: <code>date · type · what · why</code>.<br><br><strong>2.</strong> Create <code>DECISIONS.md</code> with the last important decision you made. Also write the discarded alternative and the reason.<br><br><strong>3.</strong> In two weeks, open a new chat with the AI, attach the two files and ask: "where were we?" You\'ll see the difference.',
+doneK:'Stack module completed',
+doneP:'You have a vault as a second brain, you know how to connect it to the AI, how to maintain it in your daily workflow, and how to build a memory that compounds over time. The system is complete.',
+foot:'Morfeus — The LOG System: the memory that compounds'
+}};
+
+/* ===== 01 — feature rows ===== */
+var LOGFEAT={it:[
+['a','ti-clock-record','Audit trail','Traccia verificabile di come la conoscenza è evoluta. Sai esattamente cosa è stato deciso, quando, e su quale base.'],
+['t','ti-message-2-check','Decision log','Registro delle scelte chiave con il <em>perché</em>. "Abbiamo scelto X, scartato Y perché…" — il ragionamento che di solito si perde.'],
+['m','ti-robot','Contesto persistente per l\'AI','Ogni volta che riapri una sessione, l\'AI legge il LOG e sa dove eravate rimasti. Nessun briefing da zero.']
+],en:[
+['a','ti-clock-record','Audit trail','A verifiable trace of how knowledge evolved. You know exactly what was decided, when, and on what basis.'],
+['t','ti-message-2-check','Decision log','A record of key choices with the <em>why</em>. "We chose X, discarded Y because…" — the reasoning that usually gets lost.'],
+['m','ti-robot','Persistent context for the AI','Every time you reopen a session, the AI reads the LOG and knows where you left off. No briefing from scratch.']
+]};
+
+/* ===== 02 — anatomia voce (3 campi) ===== */
+var LOGFIELDS={it:[
+{cls:'f-data',label:'Data',value:'2026-06-09',head:'Perché la data?',body:'Il LOG è una timeline. La data ISO (anno-mese-giorno) è il solo ancoraggio temporale che funziona senza ambiguità per l\'AI: "ieri", "la settimana scorsa" non significano nulla tra 6 mesi.'},
+{cls:'f-tipo',label:'Tipo',value:'[DECISIONE]',head:'Perché il tipo?',body:'Classificare la voce permette all\'AI di filtrare. "Mostrami solo le decisioni degli ultimi 30 giorni" funziona perché il tipo è esplicito. Tipi comuni: <strong>[DECISIONE]</strong> · <strong>[APPRENDIMENTO]</strong> · <strong>[INGEST]</strong> · <strong>[PROBLEMA]</strong>.'},
+{cls:'f-testo',label:'Voce',value:'Scelto approccio A per il deliverable. Scartato B: troppo fragile su dati incompleti. Prossimo step: validare con test reale.',head:'Cosa scrivere',body:'Tre elementi: <strong>cosa</strong> è stato deciso, <strong>cosa</strong> è stato scartato (e perché), <strong>dove si va</strong> dopo. Il "perché scartato" è il dato che di solito si perde — ed è il più utile al rilancio di contesto.'}
+],en:[
+{cls:'f-data',label:'Date',value:'2026-06-09',head:'Why the date?',body:'The LOG is a timeline. The ISO date (year-month-day) is the only temporal anchor that works unambiguously for the AI: "yesterday", "last week" mean nothing 6 months from now.'},
+{cls:'f-tipo',label:'Type',value:'[DECISION]',head:'Why the type?',body:'Classifying the entry lets the AI filter. "Show me only the decisions from the last 30 days" works because the type is explicit. Common types: <strong>[DECISION]</strong> · <strong>[LEARNING]</strong> · <strong>[INGEST]</strong> · <strong>[PROBLEM]</strong>.'},
+{cls:'f-testo',label:'Entry',value:'Chose approach A for the deliverable. Discarded B: too fragile on incomplete data. Next step: validate with a real test.',head:'What to write',body:'Three elements: <strong>what</strong> was decided, <strong>what</strong> was discarded (and why), <strong>where you go</strong> next. The "why discarded" is the data that usually gets lost — and it\'s the most useful when re-establishing context.'}
+]};
+
+/* ===== 03 — append-only files ===== */
+var AOBAD={it:'<span class="ao-old">2026-06-01 · Scelta architettura X</span>\n<span class="ao-old">2026-06-03 · X funziona bene</span>\n<span>2026-06-07 · <em>(voce sostituita con nuova versione)</em></span>',
+en:'<span class="ao-old">2026-06-01 · Chosen architecture X</span>\n<span class="ao-old">2026-06-03 · X works well</span>\n<span>2026-06-07 · <em>(entry replaced with new version)</em></span>'};
+var AOGOOD={it:'<span class="ao-locked"><i class="ti ti-lock-square"></i> 2026-06-01 · Scelta architettura X</span>\n<span class="ao-locked"><i class="ti ti-lock-square"></i> 2026-06-03 · X funziona bene</span>\n<span class="ao-new">→ 2026-06-07 · [REVISIONE] X ha un limite: cambia approccio. Motivo: nuovo vincolo scoperto.</span>',
+en:'<span class="ao-locked"><i class="ti ti-lock-square"></i> 2026-06-01 · Chosen architecture X</span>\n<span class="ao-locked"><i class="ti ti-lock-square"></i> 2026-06-03 · X works well</span>\n<span class="ao-new">→ 2026-06-07 · [REVISION] X has a limit: change approach. Reason: new constraint discovered.</span>'};
+
+/* ===== 04 — come l'AI usa il LOG (3 card) ===== */
+var AIUSE={it:[
+{n:1,t:'Ripristino del contesto dopo una pausa',s:'Riapri un progetto dopo settimane. L\'AI legge il LOG e ti fa un briefing.',
+p:'Prima del LOG: rispiegare tutto, rileggere note sparse, ricostruire il thread di pensiero. Con il LOG: dai all\'AI il file e chiedi un riassunto. Risponde con le decisioni chiave, i problemi aperti, il prossimo step — esattamente come tu li avevi scritti.',
+du:'"Rileggi log.md degli ultimi 30 giorni e dimmi dove eravamo rimasti sul progetto X."',
+da:'"Il 4 giugno avete scelto approccio A scartando B (troppo fragile). Il 12 avete incontrato un blocco su dati incompleti — ancora aperto. Prossimo step scritto: validare con un test reale prima di procedere."',uIcon:'ti-user'},
+{n:2,t:'Risposta alla domanda "perché avevamo scelto X?"',s:'Il decision log conserva il ragionamento, non solo l\'esito.',
+p:'Senza LOG, le decisioni restano nei file finali ma il ragionamento sparisce. Con un <code>DECISIONS.md</code> append-only (data · decisione · alternativa scartata · motivo), l\'AI risponde in modo preciso anche mesi dopo.',
+du:'"Perché abbiamo scelto il fornitore A invece del B?"',
+da:'"Secondo DECISIONS.md del 15 maggio: B era più economico ma richiedeva integrazione manuale stimata a 3 settimane. A aveva supporto nativo — priorità velocità sul risparmio in quel momento."',uIcon:'ti-user'},
+{n:3,t:'Generazione automatica della voce di LOG (livello pro)',s:'Un task schedulato legge l\'attività del giorno e scrive lui stesso il journal.',
+p:'Il livello avanzato: non sei tu a scrivere il LOG manualmente. Un agente schedulato a fine giornata analizza sessioni, note e file modificati, poi appende una voce strutturata al LOG. Tu approvi (o lasci girare in automatico). La mattina trovi il contesto pronto.',
+du:'<em>Task serale — 21:00 — trigger automatico:</em>',
+da:'"2026-06-09 · [AUTO-LOG] Sessioni di oggi: modificato brief progetto X (v3), deciso posticipo deliverable al 20/6 per review interna, aperto problema QA ancora senza soluzione. Prossimo: assegnare owner al problema QA."',uIcon:'ti-clock'}
+],en:[
+{n:1,t:'Restoring context after a break',s:'You reopen a project after weeks. The AI reads the LOG and gives you a briefing.',
+p:'Before the LOG: re-explaining everything, re-reading scattered notes, reconstructing the thread of thought. With the LOG: you give the AI the file and ask for a summary. It answers with the key decisions, the open problems, the next step — exactly as you wrote them.',
+du:'"Re-read log.md from the last 30 days and tell me where we left off on project X."',
+da:'"On June 4 you chose approach A, discarding B (too fragile). On the 12th you hit a blocker on incomplete data — still open. Written next step: validate with a real test before proceeding."',uIcon:'ti-user'},
+{n:2,t:'Answering "why did we choose X?"',s:'The decision log preserves the reasoning, not just the outcome.',
+p:'Without a LOG, decisions live on in the final files but the reasoning vanishes. With an append-only <code>DECISIONS.md</code> (date · decision · discarded alternative · reason), the AI answers precisely even months later.',
+du:'"Why did we choose supplier A instead of B?"',
+da:'"According to DECISIONS.md from May 15: B was cheaper but required manual integration estimated at 3 weeks. A had native support — speed prioritized over savings at that moment."',uIcon:'ti-user'},
+{n:3,t:'Automatic generation of the LOG entry (pro level)',s:'A scheduled task reads the day\'s activity and writes the journal itself.',
+p:'The advanced level: you\'re not the one writing the LOG manually. An agent scheduled at the end of the day analyzes sessions, notes and modified files, then appends a structured entry to the LOG. You approve (or let it run automatically). In the morning you find the context ready.',
+du:'<em>Evening task — 21:00 — automatic trigger:</em>',
+da:'"2026-06-09 · [AUTO-LOG] Today\'s sessions: modified project X brief (v3), decided to postpone deliverable to June 20 for internal review, opened a QA problem still without a solution. Next: assign an owner to the QA problem."',uIcon:'ti-clock'}
+]};
+
+/* ===== 05 — timeline (3 di partenza + 4 da aggiungere) ===== */
+var TLSTART={it:[
+{date:'2026-05-28',tipo:'DECISIONE',text:'Scelto approccio modulare per il progetto. Scartato monolitico: difficile da manutenere.'},
+{date:'2026-06-02',tipo:'APPRENDIMENTO',text:'Il modulo A funziona, ma richiede dati pre-processati. Aggiornato template ingestion.'},
+{date:'2026-06-07',tipo:'PROBLEMA',text:'Blocco su dati incompleti nel set di test. Owner: da assegnare. Scadenza: prima del 15.'}
+],en:[
+{date:'2026-05-28',tipo:'DECISION',text:'Chosen a modular approach for the project. Discarded monolithic: hard to maintain.'},
+{date:'2026-06-02',tipo:'LEARNING',text:'Module A works, but requires pre-processed data. Updated the ingestion template.'},
+{date:'2026-06-07',tipo:'PROBLEM',text:'Blocker on incomplete data in the test set. Owner: to be assigned. Deadline: before the 15th.'}
+]};
+var TLADD={it:[
+{date:'2026-06-09',tipo:'DECISIONE',text:'Adottato sistema LOG append-only per il vault. Primo test: log manuale per 2 settimane, poi valuto automazione.'},
+{date:'2026-06-12',tipo:'APPRENDIMENTO',text:'Tre righe al giorno bastano. Tentativi di scrivere troppo rallentano; meglio breve e consistente.'},
+{date:'2026-06-15',tipo:'AUTO-LOG',text:'Sessione di oggi: completato DECISIONS.md, risolto problema QA (owner assegnato). Sistema LOG attivo da 6 giorni senza mancanze.'},
+{date:'2026-06-20',tipo:'DECISIONE',text:'Avviato task schedulato serale. Bozze di LOG auto-generate: qualità accettabile con revisione di 2 minuti.'}
+],en:[
+{date:'2026-06-09',tipo:'DECISION',text:'Adopted an append-only LOG system for the vault. First test: manual log for 2 weeks, then evaluate automation.'},
+{date:'2026-06-12',tipo:'LEARNING',text:'Three lines a day are enough. Attempts to write too much slow you down; better short and consistent.'},
+{date:'2026-06-15',tipo:'AUTO-LOG',text:'Today\'s session: completed DECISIONS.md, solved the QA problem (owner assigned). LOG system active for 6 days without gaps.'},
+{date:'2026-06-20',tipo:'DECISION',text:'Started the evening scheduled task. Auto-generated LOG drafts: acceptable quality with a 2-minute review.'}
+]};
+var TLLOCK={it:'immutabile',en:'immutable'};
+var TLCOUNT={it:function(n){return n+' voci nel LOG — la memoria cresce ad ogni entry'},en:function(n){return n+' entries in the LOG — the memory grows with every entry'}};
+
+/* ===== 06 — tre gradini ===== */
+var STEPS={it:[
+['LOG a mano (3 righe/sera)','Ogni sera: cosa ho deciso, cosa ho imparato, cosa resta aperto. Un file <code>log.md</code> in append-only. In 30 giorni hai una memoria concreta che l\'AI può rileggere.','base','Oggi'],
+['DECISIONS.md separato','Un file dedicato alle sole decisioni importanti, con il formato: <code>data · decisione · alternativa scartata · motivo</code>. Diventa la memoria delle scelte strategiche, navigabile dall\'AI anche a distanza di mesi.','base','Settimana 2'],
+['LOG automatico via task schedulato','Un agente a fine giornata analizza l\'attività e scrive lui stesso la voce di LOG. Tu approvi o lasci girare. Il vault si aggiorna da solo — il livello "pro" del sistema.','pro','Livello pro']
+],en:[
+['Manual LOG (3 lines/evening)','Every evening: what I decided, what I learned, what stays open. A <code>log.md</code> file, append-only. In 30 days you have a concrete memory the AI can re-read.','base','Today'],
+['Separate DECISIONS.md','A file dedicated only to important decisions, in the format: <code>date · decision · discarded alternative · reason</code>. It becomes the memory of strategic choices, navigable by the AI even months later.','base','Week 2'],
+['Automatic LOG via scheduled task','An agent at the end of the day analyzes the activity and writes the LOG entry itself. You approve or let it run. The vault updates on its own — the "pro" level of the system.','pro','Pro level']
+]};
+var STEPBADGE={base:'base',pro:'pro'};
+
+/* ===== 07 — equivoci (4) ===== */
+var SCEN={it:[
+['"Il LOG è un diario sentimentale"','No. Non interessa come ti sei sentito: interessa cosa hai deciso, cosa hai scartato e perché. Ogni voce deve essere utile a chiunque la rilegga — inclusa l\'AI — per ricostruire un ragionamento.'],
+['"Posso riscrivere il LOG per correggerlo"','No. L\'append-only non è un\'opzione stilistica: è la garanzia di un audit trail reale. Se hai sbagliato una valutazione, aggiungi una nuova voce che lo spiega. Non cancellare mai la voce originale.'],
+['"Logging = overhead"','Al contrario. Senza LOG paghi il costo di ricostruzione del contesto ogni volta che riapri un progetto. Con 3 righe al giorno lo azzeri. L\'overhead è nel non loggare.'],
+['"L\'automazione sostituisce il mio ragionamento"','No. L\'AI redige la bozza della voce, tu approvi prima che venga appendata. Le decisioni restano umane; l\'AI automatizza solo la scrittura, non il giudizio.']
+],en:[
+['"The LOG is a sentimental diary"','No. How you felt doesn\'t matter: what matters is what you decided, what you discarded and why. Every entry must be useful to anyone re-reading it — including the AI — to reconstruct a line of reasoning.'],
+['"I can rewrite the LOG to correct it"','No. Append-only isn\'t a stylistic option: it\'s the guarantee of a real audit trail. If you got an assessment wrong, add a new entry that explains it. Never delete the original entry.'],
+['"Logging = overhead"','On the contrary. Without a LOG you pay the cost of reconstructing context every time you reopen a project. With 3 lines a day you zero it out. The overhead is in not logging.'],
+['"Automation replaces my reasoning"','No. The AI drafts the entry, you approve before it\'s appended. Decisions stay human; the AI automates only the writing, not the judgment.']
+]};
+
+var LANG='it';
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* timeline runtime state */
+var tlIdx=0,tlCount=3;
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+
+  // 01 — feature rows
+  document.getElementById('logFeat').innerHTML=LOGFEAT[LANG].map(function(f){
+    return '<div class="feat-row"><div class="fi '+f[0]+'"><i class="ti '+f[1]+'"></i></div><div class="ft"><strong>'+f[2]+'</strong><span>'+f[3]+'</span></div></div>';
+  }).join('');
+
+  // 02 — anatomia voce
+  document.getElementById('logLine').innerHTML=LOGFIELDS[LANG].map(function(f){
+    var extra=f.cls==='f-testo'?' style="min-width:200px"':'';
+    return '<div class="log-field '+f.cls+'" onclick="toggleField(this)"'+extra+'>'+
+      '<span class="lf-label">'+f.label+'</span>'+
+      '<span class="lf-value">'+f.value+'</span>'+
+      '<div class="log-tooltip"><span class="tt-head">'+f.head+'</span><p>'+f.body+'</p></div>'+
+    '</div>';
+  }).join('');
+
+  // 03 — append-only files
+  document.getElementById('aoBadFile').innerHTML=AOBAD[LANG];
+  document.getElementById('aoGoodFile').innerHTML=AOGOOD[LANG];
+
+  // 04 — AI use cards
+  document.getElementById('aiUseGrid').innerHTML=AIUSE[LANG].map(function(c){
+    return '<div class="ai-use-card" onclick="toggleAICard(this)">'+
+      '<div class="ai-use-header"><div class="ai-use-num">'+c.n+'</div>'+
+        '<div class="auh-text"><strong>'+c.t+'</strong><span>'+c.s+'</span></div>'+
+        '<i class="ti ti-chevron-down auh-chevron"></i></div>'+
+      '<div class="ai-use-body"><div class="ai-use-body-inner">'+
+        '<p>'+c.p+'</p>'+
+        '<div class="ai-dialog">'+
+          '<div class="d-user"><i class="ti '+c.uIcon+'"></i> <span>'+c.du+'</span></div>'+
+          '<div class="d-ai"><i class="ti ti-robot"></i> <span>'+c.da+'</span></div>'+
+        '</div>'+
+      '</div></div>'+
+    '</div>';
+  }).join('');
+
+  // 05 — timeline (rebuild da start + entries già aggiunte)
+  renderTimeline();
+
+  // 06 — gradini
+  document.getElementById('stepLadder').innerHTML=STEPS[LANG].map(function(s,i){
+    return '<div class="step-rung"><div class="step-num">'+(i+1)+'</div>'+
+      '<div class="step-text"><strong>'+s[0]+'</strong><span>'+s[1]+'</span></div>'+
+      '<span class="step-badge '+s[2]+'">'+s[3]+'</span></div>';
+  }).join('');
+
+  // 07 — equivoci
+  document.getElementById('scenarios').innerHTML=SCEN[LANG].map(function(s){
+    return '<div class="scen bad"><div class="si"><i class="ti ti-x"></i></div><div><h4>'+s[0]+'</h4><p>'+s[1]+'</p></div></div>';
+  }).join('');
+}
+
+/* ===== 02 anatomia: click field ===== */
+function toggleField(el){
+  var fields=document.querySelectorAll('.log-field');
+  fields.forEach(function(f){if(f!==el)f.classList.remove('active')});
+  el.classList.toggle('active');
+}
+
+/* ===== 03 append-only: select side ===== */
+function selectAO(el){
+  document.querySelectorAll('.ao-side').forEach(function(s){s.classList.remove('selected')});
+  el.classList.add('selected');
+}
+
+/* ===== 04 AI use: accordion ===== */
+function toggleAICard(card){
+  var isOpen=card.classList.contains('open');
+  document.querySelectorAll('.ai-use-card').forEach(function(c){c.classList.remove('open')});
+  if(!isOpen)card.classList.add('open');
+}
+
+/* ===== 05 timeline render + add ===== */
+function buildTLCard(e,locked){
+  var lock=locked?'<div class="tl-lock"><i class="ti ti-lock-square"></i> '+TLLOCK[LANG]+'</div>':'';
+  return '<div class="tl-dot"></div><div class="tl-date">'+e.date+'</div>'+
+    '<div class="tl-card"><strong>['+e.tipo+']</strong> '+e.text+lock+'</div>';
+}
+function renderTimeline(){
+  var tl=document.getElementById('timeline');
+  var html='';
+  // 3 voci di partenza: sempre locked
+  TLSTART[LANG].forEach(function(e){
+    html+='<div class="tl-item locked">'+buildTLCard(e,true)+'</div>';
+  });
+  // voci aggiunte finora: tutte locked tranne l'ultima (new)
+  for(var i=0;i<tlIdx;i++){
+    var isLast=(i===tlIdx-1);
+    html+='<div class="tl-item '+(isLast?'new':'locked')+'">'+buildTLCard(TLADD[LANG][i],!isLast)+'</div>';
+  }
+  tl.innerHTML=html;
+  document.getElementById('tlCount').textContent=TLCOUNT[LANG](tlCount);
+  // bottone
+  var btn=document.getElementById('addLogBtn');
+  if(tlIdx>=TLADD[LANG].length){
+    btn.disabled=true;
+    btn.innerHTML='<i class="ti ti-check"></i> '+DICT[LANG].tlBtnDone;
+  }else{
+    btn.disabled=false;
+    btn.innerHTML='<i class="ti ti-plus"></i> '+DICT[LANG].tlBtn;
+  }
+}
+function addLogEntry(){
+  if(tlIdx>=TLADD[LANG].length)return;
+  tlIdx++;tlCount++;
+  renderTimeline();
+  var items=document.querySelectorAll('#timeline .tl-item');
+  if(items.length)items[items.length-1].scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ===== lang + theme ===== */
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+/* ===== scroll reveal ===== */
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+applyI18n();
+</script>
+</body>
+</html>

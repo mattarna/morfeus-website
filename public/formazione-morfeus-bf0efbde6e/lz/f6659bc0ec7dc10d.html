@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iterazione, versioning e la voce — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* cycle ring */
+.cycle{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.cyc{display:flex;align-items:center;gap:9px;background:var(--card);border:1.5px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:9px 16px;font-size:13.5px;font-weight:600;transition:.2s;cursor:default}
+.cyc.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.cyc .cn{width:24px;height:24px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cyc.on .cn{background:var(--accent);color:#fff}
+.cycarr{color:var(--ink-3);font-size:16px}
+.cycarr.loop{color:var(--agent)}
+/* versioning loop */
+.loop{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.loophead{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.loophead .ttl{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.vtabs{display:flex;gap:8px;margin-left:auto}
+.vtab{font-family:var(--mono);font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--ink-3);border-radius:20px;padding:4px 12px;transition:.18s}
+.vtab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vtab.future{opacity:.4}
+.loopbody{padding:18px}
+.vprompt{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;white-space:pre-wrap;min-height:96px}
+.vprompt .add{background:var(--good-soft);color:var(--good);border-radius:3px;padding:0 3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.vprompt .del{background:var(--bad-soft);color:var(--bad);text-decoration:line-through;border-radius:3px;padding:0 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.vmeta{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.vscore{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink-2)}
+.vbar{width:120px;height:7px;border-radius:4px;background:var(--bg-3);overflow:hidden}
+.vbar i{display:block;height:100%;background:var(--accent);border-radius:4px;transition:width .5s}
+.vdiff{font-size:13.5px;color:var(--ink-2);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:11px 14px;margin-top:12px}
+.vdiff b{color:var(--accent)}
+.loopbar{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--line);background:var(--bg-2);flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--sh);transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);color:var(--ink)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.pri:hover{color:#fff;opacity:.92}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.loophint{font-size:13px;color:var(--ink-3);font-family:var(--mono)}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc p{font-size:13.5px;color:var(--ink-2)}.cmpc.bad p b{color:var(--bad)}.cmpc.good p b{color:var(--good)}
+/* steps */
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.step .sn{width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step .stt{font-size:14.5px;font-weight:600}.step .sde{font-size:13px;color:var(--ink-2);margin-top:2px}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.step,.key,.loop,.cmpc,.cyc{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A4.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Architettura del prompting</div>
+  <h1 class="rv" data-i="h1">Iterazione, versioning e la voce</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">01</span><h2 data-i="s1">La prima risposta non è mai quella giusta</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-rotate-2"></i></div><div><h4 data-i="note1H">Il prompting è un processo circolare</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-shuffle"></i><span class="no">02</span><h2 data-i="s2">Il ciclo dell'iterazione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:18px" data-i="cycIntro"></p>
+  <div class="cycle rv" id="cycle"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:18px;text-align:center" data-i="cycNote"></p>
+
+  <div class="sh rv"><i class="ti ti-versions"></i><span class="no">03</span><h2 data-i="s3">Versioning: la qualità che compone</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="recT">Ricreare da zero</span><p data-i-html="recP"></p></div>
+    <div class="cmpc good"><span class="cmptag" data-i="verT">Versionare</span><p data-i-html="verP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-git-compare"></i><span class="no">04</span><h2 data-i="s4">Il loop v1 → v2 → v3</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="loopIntro"></p>
+  <div class="loop rv">
+    <div class="loophead"><i class="ti ti-versions" style="color:var(--accent)"></i><span class="ttl" id="loopTitle">prompt · changelog</span>
+      <div class="vtabs"><button class="vtab on" id="vt0" onclick="goV(0)">v1</button><button class="vtab future" id="vt1" onclick="goV(1)">v2</button><button class="vtab future" id="vt2" onclick="goV(2)">v3</button></div>
+    </div>
+    <div class="loopbody">
+      <div class="vprompt" id="vPrompt"></div>
+      <div class="vmeta"><span class="vscore"><i class="ti ti-star-filled" style="color:var(--accent)"></i> <span id="vScoreLbl"></span></span><span class="vbar"><i id="vBar"></i></span></div>
+      <div class="vdiff" id="vDiff"></div>
+    </div>
+    <div class="loopbar">
+      <button class="btn pri" id="loopNext" onclick="loopNext()" data-i="loopNextB">Itera (v+1)</button>
+      <button class="btn" onclick="loopReset()" data-i="loopResetB">Torna a v1</button>
+      <span class="loophint" id="loopHint"></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-alt"></i><span class="no">05</span><h2 data-i="s5">Il workflow di ottimizzazione in 5 step</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="wfIntro"></p>
+  <div class="steps rv" id="steps"></div>
+
+  <div class="sh rv"><i class="ti ti-microphone-2"></i><span class="no">06</span><h2 data-i="s6">La voce: dettare è più veloce che scrivere</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-wave-sine"></i></div><div><h4 data-i="note2H">Usa la voce se puoi</h4><p data-i-html="note2P"></p></div></div>
+  <div class="cards rv" style="margin-top:20px">
+    <div class="card3"><div class="ci"><i class="ti ti-bolt"></i></div><h4 data-i="v1H">Estremamente più rapida</h4><p data-i="v1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-message-2"></i></div><h4 data-i="v2H">Rispiegami a parole tue</h4><p data-i="v2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-target-arrow"></i></div><h4 data-i="v3H">Basta un buon prompt iniziale</h4><p data-i="v3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Itera un prompt fino a v3</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Iterazione, versioning e la voce</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A4.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Architettura del prompting',
+h1:'Iterazione, versioning e la voce',
+lede:'Nessun prompt nasce perfetto, nemmeno per gli esperti. La differenza non è scrivere il prompt giusto al primo colpo: è saperlo migliorare in pochi cicli, conservare i progressi e dettare invece di digitare. Qui impari il metodo.',
+s1:'La prima risposta non è mai quella giusta',
+note1H:'Il prompting è un processo circolare',
+note1P:'La prima risposta dell\'AI <strong>non è mai per forza quella giusta</strong>. Anche gli esperti iterano: scrivono, usano, valutano, ottimizzano, ripetono. La 9 su 10 non si scrive, si <strong>raggiunge</strong> — un ciclo alla volta.',
+q1:'«Quando ti bastano 2-3 cicli per arrivare al risultato che vuoi, sei già tra i migliori. L\'obiettivo non è zero iterazioni: è ridurle, non eliminarle.»',
+s2:'Il ciclo dell\'iterazione',
+cycIntro:'Ogni prompt efficace passa per lo stesso anello. Non è lineare: l\'ultimo passo riporta al primo, e ogni giro stringe la qualità verso il punto che vuoi.',
+cycNote:'L\'iterazione trasforma il prompting da gesto casuale a metodo. Si costruisce un\'ipotesi, si testa, si misura, si migliora.',
+s3:'Versioning: la qualità che compone',
+recT:'Ricreare da zero',recP:'Ogni volta riparti da capo. <b>La qualità riparte da zero</b>: perdi quello che avevi già aggiustato, rifai gli stessi errori, non sai mai cosa ha funzionato davvero.',
+verT:'Versionare',verP:'Salvi v1, v2, v3 con lo storico. <b>La qualità compone</b>: ogni versione parte da dove era arrivata la precedente, puoi tornare indietro e capire esattamente cosa ha migliorato.',
+s4:'Il loop v1 → v2 → v3',
+loopIntro:'Stesso prompt, tre versioni. Premi «Itera» per vedere cosa cambia a ogni giro: in verde quello che aggiungi, barrato quello che togli. Il punteggio sale perché la qualità compone, non riparte.',
+loopNextB:'Itera (v+1)',loopResetB:'Torna a v1',
+s5:'Il workflow di ottimizzazione in 5 step',
+wfIntro:'Quando l\'AI genera un output verboso o impreciso, non riscrivi tutto: lo ottimizzi per gradi. Cinque passi che rendono il prompt progressivamente più snello.',
+s6:'La voce: dettare è più veloce che scrivere',
+note2H:'Usa la voce se puoi',
+note2P:'La dettatura è <strong>estremamente più rapida che scrivere a mano</strong>. Non serve un prompt perfetto al carattere: con un buon prompt iniziale, la voce funziona benissimo. È il modo più veloce per alimentare il ciclo di iterazione.',
+v1H:'Estremamente più rapida',v1P:'Detti in pochi secondi quello che digiteresti in un minuto. La velocità del ciclo di iterazione dipende anche da questo.',
+v2H:'Rispiegami a parole tue',v2P:'«Prima di iniziare, rispiegami a parole tue sotto 200 caratteri quello che ti sto chiedendo.» La garanzia contro i fraintendimenti del dettato.',
+v3H:'Basta un buon prompt iniziale',v3P:'Non serve sempre un prompt «fotonico»: con una base solida la voce diventa il tuo input naturale, veloce e affidabile.',
+s7:'Checkpoint',
+cpH:'Itera un prompt fino a v3',
+cpP:'Prendi un prompt che ti dà un output 7/10. Salvalo come v1. Migliora una cosa sola, salvalo come v2. Ripeti una volta: v3. Conserva tutte le versioni.',
+cpQ:'In quanti cicli sei arrivato al risultato che volevi? Se sono più di 3, il problema è quasi sempre nel contesto o nel formato. Hai conservato le versioni o hai ricominciato da zero ogni volta — perdendo i progressi?',
+bridge:'Sai iterare e versionare un prompt. <b>Prossimo:</b> il Prompt Generator — far scrivere all\'AI i prompt che userai, con un generatore a round.',
+foot:'Morfeus — Iterazione, versioning e la voce'
+},
+en:{
+kicker:'Lesson A4.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The architecture of prompting',
+h1:'Iteration, versioning and voice',
+lede:'No prompt is born perfect, not even for experts. The difference isn\'t writing the right prompt on the first try: it\'s knowing how to improve it in a few cycles, keeping your progress, and dictating instead of typing. Here you learn the method.',
+s1:'The first answer is never the right one',
+note1H:'Prompting is a circular process',
+note1P:'The AI\'s first answer <strong>is never necessarily the right one</strong>. Even experts iterate: they write, use, evaluate, optimize, repeat. The 9-out-of-10 isn\'t written, it\'s <strong>reached</strong> — one cycle at a time.',
+q1:'"When 2-3 cycles are enough to reach the result you want, you\'re already among the best. The goal isn\'t zero iterations: it\'s to reduce them, not eliminate them."',
+s2:'The iteration cycle',
+cycIntro:'Every effective prompt goes through the same ring. It\'s not linear: the last step loops back to the first, and each lap tightens quality toward the point you want.',
+cycNote:'Iteration turns prompting from a random gesture into a method. Build a hypothesis, test it, measure it, improve it.',
+s3:'Versioning: quality that compounds',
+recT:'Recreate from scratch',recP:'Each time you start over. <b>Quality restarts from zero</b>: you lose what you\'d already fixed, repeat the same mistakes, and never know what actually worked.',
+verT:'Version it',verP:'You save v1, v2, v3 with history. <b>Quality compounds</b>: each version starts where the previous one ended, you can roll back and understand exactly what improved.',
+s4:'The v1 → v2 → v3 loop',
+loopIntro:'Same prompt, three versions. Press "Iterate" to see what changes each lap: in green what you add, struck through what you remove. The score rises because quality compounds, it doesn\'t restart.',
+loopNextB:'Iterate (v+1)',loopResetB:'Back to v1',
+s5:'The 5-step optimization workflow',
+wfIntro:'When the AI generates a verbose or imprecise output, you don\'t rewrite everything: you optimize it in steps. Five moves that make the prompt progressively leaner.',
+s6:'Voice: dictating is faster than typing',
+note2H:'Use voice if you can',
+note2P:'Dictation is <strong>extremely faster than typing by hand</strong>. You don\'t need a character-perfect prompt: with a good initial prompt, voice works great. It\'s the fastest way to feed the iteration cycle.',
+v1H:'Extremely faster',v1P:'You dictate in seconds what you\'d type in a minute. The speed of your iteration cycle depends on this too.',
+v2H:'Re-explain in your own words',v2P:'"Before you start, re-explain in your own words, under 200 characters, what I\'m asking you." The guarantee against dictation misunderstandings.',
+v3H:'A good initial prompt is enough',v3P:'You don\'t always need a "laser-perfect" prompt: with a solid base, voice becomes your natural input — fast and reliable.',
+s7:'Checkpoint',
+cpH:'Iterate a prompt to v3',
+cpP:'Take a prompt that gives you a 7/10 output. Save it as v1. Improve one single thing, save it as v2. Repeat once: v3. Keep all versions.',
+cpQ:'How many cycles did it take to reach the result you wanted? If more than 3, the problem is almost always in the context or the format. Did you keep the versions, or restart from scratch each time — losing your progress?',
+bridge:'You know how to iterate and version a prompt. <b>Next:</b> the Prompt Generator — make the AI write the prompts you\'ll use, with a round-based generator.',
+foot:'Morfeus — Iteration, versioning and voice'
+}};
+
+var CYCLE={it:['Scrivi','Usa','Valuta','Ottimizza','Ripeti'],en:['Write','Use','Evaluate','Optimize','Repeat']};
+
+var STEPS={it:[
+['L\'AI genera un output verboso','La prima versione è spesso lunga, ridondante, piena di passaggi che non ti servono.'],
+['«Rispiegami a parole tue»','Chiedi a Claude di riformulare la richiesta: verifichi che abbia capito e crei un auto-prompt più pulito.'],
+['Verifico la comprensione','Leggi la riformulazione. Se è giusta, vai avanti; se manca qualcosa, sai dov\'era il buco.'],
+['Disattivo il ragionamento esteso','Per i task ormai chiari non serve il ragionamento lungo: spegnerlo rende l\'output più diretto.'],
+['«Taglia all\'osso»','Chiedi la versione minima essenziale. Il prompt diventa progressivamente più snello, senza perdere qualità.']
+],en:[
+['The AI generates a verbose output','The first version is often long, redundant, full of steps you don\'t need.'],
+['"Re-explain it in your own words"','Ask Claude to rephrase the request: you verify it understood and create a cleaner auto-prompt.'],
+['I verify comprehension','Read the rephrasing. If it\'s right, move on; if something\'s missing, you know where the gap was.'],
+['I turn off extended thinking','For tasks that are now clear you don\'t need long reasoning: turning it off makes the output more direct.'],
+['"Cut it to the bone"','Ask for the minimal essential version. The prompt becomes progressively leaner, without losing quality.']
+]};
+
+var LOOP={it:[
+{html:'Scrivimi un post LinkedIn sul nostro nuovo servizio.',score:'5/10',pct:50,diff:'<b>v1 — la base.</b> Funziona, ma è generico: nessun pubblico, nessun tono, nessun formato. È il punto di partenza, non l\'arrivo.'},
+{html:'Scrivimi un post LinkedIn sul nostro nuovo servizio. <span class="add">Pubblico: titolari di PMI. Tono diretto, niente gergo.</span>',score:'7/10',pct:70,diff:'<b>v2 — aggiungo contesto.</b> In verde quello che ho aggiunto: pubblico e tono. Non riparto da zero — costruisco su v1. La qualità sale.'},
+{html:'Scrivimi un post LinkedIn sul nostro nuovo servizio. Pubblico: titolari di PMI. Tono diretto, niente gergo. <span class="add">Apri con un problema concreto, chiudi con una domanda. Max 120 parole.</span>',score:'9/10',pct:90,diff:'<b>v3 — affino il formato.</b> Aggiungo struttura e lunghezza. Tre cicli, qualità composta: da 5 a 9. E ho lo storico di cosa ha funzionato.'}
+],en:[
+{html:'Write me a LinkedIn post about our new service.',score:'5/10',pct:50,diff:'<b>v1 — the base.</b> It works, but it\'s generic: no audience, no tone, no format. It\'s the starting point, not the finish.'},
+{html:'Write me a LinkedIn post about our new service. <span class="add">Audience: SMB owners. Direct tone, no jargon.</span>',score:'7/10',pct:70,diff:'<b>v2 — I add context.</b> In green what I added: audience and tone. I don\'t restart from zero — I build on v1. Quality rises.'},
+{html:'Write me a LinkedIn post about our new service. Audience: SMB owners. Direct tone, no jargon. <span class="add">Open with a concrete problem, close with a question. Max 120 words.</span>',score:'9/10',pct:90,diff:'<b>v3 — I refine the format.</b> I add structure and length. Three cycles, compounded quality: from 5 to 9. And I have the history of what worked.'}
+]};
+
+var LANG='it',curV=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // cycle ring
+  document.getElementById('cycle').innerHTML=CYCLE[LANG].map(function(c,i){var arrow=i<CYCLE[LANG].length-1?'<i class="ti ti-arrow-right cycarr"></i>':'<i class="ti ti-arrow-back-up cycarr loop" title="ripeti"></i>';return '<div class="cyc'+(i===0?' on':'')+'"><span class="cn">'+(i+1)+'</span>'+c+'</div>'+arrow}).join('');
+  // steps
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s,i){return '<div class="step"><div class="sn">'+(i+1)+'</div><div><div class="stt">'+s[0]+'</div><div class="sde">'+s[1]+'</div></div></div>'}).join('');
+  loopRender();
+}
+function loopRender(){
+  var v=LOOP[LANG][curV];
+  document.getElementById('vPrompt').innerHTML=v.html;
+  document.getElementById('vScoreLbl').textContent=v.score;
+  document.getElementById('vBar').style.width=v.pct+'%';
+  document.getElementById('vDiff').innerHTML=v.diff;
+  for(var k=0;k<3;k++){var t=document.getElementById('vt'+k);t.classList.toggle('on',k===curV);t.classList.toggle('future',k>curV)}
+  var nb=document.getElementById('loopNext'),h=document.getElementById('loopHint');
+  if(curV>=2){nb.disabled=true;h.textContent=LANG==='it'?'9/10 in 3 cicli. Sei tra i migliori.':'9/10 in 3 cycles. You\'re among the best.'}
+  else{nb.disabled=false;h.textContent=LANG==='it'?'Versione '+(curV+1)+' di 3':'Version '+(curV+1)+' of 3'}
+}
+function goV(i){if(i<=curV){curV=i;loopRender()}}
+function loopNext(){if(curV<2){curV++;loopRender()}}
+function loopReset(){curV=0;loopRender()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

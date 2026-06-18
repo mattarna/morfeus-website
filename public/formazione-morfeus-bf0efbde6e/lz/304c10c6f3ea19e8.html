@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversare invece di Comandare — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#185FA5;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--gray:#5F5E5A;--gray-soft:#f1efe8;--gray-line:#d3d1c7;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--gray:#b4b2a9;--gray-soft:#2c2c2a;--gray-line:#444441;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* compare command vs conversation */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.gr{background:var(--gray-soft);border-color:var(--gray-line)}
+.cmpc.ac{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmpc h4{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.cmpc.gr h4 i{color:var(--gray)}.cmpc.ac h4 i{color:var(--accent)}
+.cmpc .sub{font-size:12.5px;color:var(--ink-3);margin-bottom:12px}
+.cmpc ul{list-style:none}.cmpc li{font-size:13px;color:var(--ink-2);padding:5px 0;display:flex;gap:8px;line-height:1.45}
+.cmpc.gr li i{color:var(--gray);flex-shrink:0;margin-top:2px}.cmpc.ac li i{color:var(--accent);flex-shrink:0;margin-top:2px}
+.cmpmid{display:none}
+/* turni counter */
+.turni{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.turni h3{font-size:15px;font-weight:600;margin-bottom:5px;text-align:center}
+.turni .tsub{font-size:13px;color:var(--ink-3);text-align:center;margin-bottom:22px}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tcol{text-align:center}
+.tcl{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:12px}
+.tbarw{height:12px;background:var(--bg-2);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.tbar{height:100%;border-radius:6px;width:0;transition:width 1s ease}
+.tcount{font-size:30px;font-weight:700;line-height:1;font-family:var(--mono)}
+.tdesc{font-size:12px;color:var(--ink-3);margin-top:8px;line-height:1.5}
+.tverdict{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:14px 18px;margin-top:20px;text-align:center;font-size:13.5px;color:var(--ink-2);line-height:1.6}.tverdict b{color:var(--accent)}
+/* pattern cards */
+.pat{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin-bottom:12px;cursor:pointer;transition:.2s}
+.pat:hover{border-color:var(--line-2)}.pat.on{border-color:var(--accent)}
+.path{padding:18px 20px;display:flex;align-items:center;gap:14px}
+.patn{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:16px;font-weight:700;flex-shrink:0;transition:.2s}
+.pat.on .patn{background:var(--accent);color:#fff}
+.patt{flex:1}.patt strong{font-size:15px;font-weight:600;display:block;margin-bottom:1px}.patt span{font-size:13px;color:var(--ink-3)}
+.patchev{font-size:18px;color:var(--ink-3);transition:transform .3s}
+.pat.on .patchev{transform:rotate(180deg);color:var(--accent)}
+.patbody{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.pat.on .patbody{max-height:520px;opacity:1}
+.patin{padding:0 20px 20px}
+.patprompt{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;color:var(--ink-2);white-space:pre-wrap;line-height:1.7;margin-bottom:12px}
+.copybtn{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:var(--r);font-family:var(--mono);font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);transition:.18s;margin-bottom:12px}
+.copybtn:hover{border-color:var(--accent);color:var(--accent)}
+.patex{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:14px 16px}
+.patex .exl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.patex p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* when block */
+.when{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.whenh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;cursor:pointer;transition:background .2s}
+.whenh:hover{background:var(--bg-2)}
+.whenl{display:flex;align-items:center;gap:12px}
+.wheni{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.whent strong{font-size:14.5px;font-weight:600;display:block}.whent span{font-size:13px;color:var(--ink-3)}
+.whenarr{font-size:18px;color:var(--ink-3);transition:transform .3s}
+.when.on .whenarr{transform:rotate(180deg)}
+.whenc{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.when.on .whenc{max-height:700px;opacity:1}
+.whenin{padding:0 20px 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.whencol h5{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.wi{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--ink-2);line-height:1.45}.wi i{flex-shrink:0;margin-top:2px}
+.whencol.ac h5{color:var(--accent)}.whencol.ac .wi i{color:var(--accent)}
+.whencol.gr h5{color:var(--gray)}.whencol.gr .wi i{color:var(--gray)}
+/* voice note */
+.vnote{background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:var(--r-l);padding:18px 20px}
+.vnote .vt{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.vnote p{font-size:13.5px;color:var(--ink-2);line-height:1.6}.vnote strong{color:var(--ink)}
+/* flow steps */
+.flow{margin-top:4px}
+.fstep{display:flex;align-items:flex-start;gap:16px;padding:14px 0;position:relative}
+.fstep:not(:last-child)::after{content:'';position:absolute;left:19px;top:52px;bottom:-2px;width:2px;background:var(--line)}
+.fnum{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;flex-shrink:0;position:relative;z-index:1;background:var(--accent-soft);color:var(--accent)}
+.fnum.tl{background:var(--teal-soft);color:var(--teal)}
+.fstx{flex:1;padding-top:7px}.fstx strong{font-size:14px;font-weight:600;display:block;margin-bottom:3px}.fstx span{font-size:13px;color:var(--ink-2);line-height:1.5}
+/* feat rows */
+.frow{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.frow:last-child{border-bottom:none}
+.frow .fi{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.frow .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.frow .ft span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* myths */
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px}
+.myth .mi{width:36px;height:36px;border-radius:10px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.myth .mt{flex:1}
+.myth .mw{font-size:13px;color:var(--bad);font-style:italic;margin-bottom:5px;display:flex;align-items:flex-start;gap:6px}.myth .mw i{flex-shrink:0;margin-top:2px}
+.myth .mr{font-size:13px;color:var(--ink-2);line-height:1.5;display:flex;align-items:flex-start;gap:6px}.myth .mr i{color:var(--teal);flex-shrink:0;margin-top:2px}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp i.cpi{font-size:36px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:700;margin-bottom:10px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.65}.cp strong{color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.tgrid{grid-template-columns:1fr;gap:14px}.whenin{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.copybtn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tbar{transition:none!important}.pat .patbody,.when .whenc{max-height:none!important;opacity:1!important}.note,.cmpc,.turni,.pat,.when,.vnote,.cp,.myth,.frow,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Bonus</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Bonus</div>
+  <h1 class="rv" data-i="h1">Conversare invece di Comandare</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:32px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Un interlocutore, non un distributore</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">01</span><h2 data-i="s1">Due approcci, due risultati</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc gr">
+      <h4><i class="ti ti-terminal"></i> <span data-i="cmdH">Approccio comando</span></h4>
+      <div class="sub" data-i="cmdSub"></div>
+      <ul>
+        <li><i class="ti ti-minus"></i><span data-i="cmd1"></span></li>
+        <li><i class="ti ti-minus"></i><span data-i="cmd2"></span></li>
+        <li><i class="ti ti-minus"></i><span data-i="cmd3"></span></li>
+        <li><i class="ti ti-minus"></i><span data-i="cmd4"></span></li>
+      </ul>
+    </div>
+    <div class="cmpc ac">
+      <h4><i class="ti ti-message-2-heart"></i> <span data-i="convH">Approccio conversazionale</span></h4>
+      <div class="sub" data-i="convSub"></div>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="conv1"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="conv2"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="conv3"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="conv4"></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-scale-outline"></i><span class="no">02</span><h2 data-i="s2">Il paradosso della conversazione</h2></div>
+  <div class="turni rv" id="turniWrap">
+    <h3 data-i="turniH"></h3>
+    <div class="tsub" data-i="turniSub"></div>
+    <div class="tgrid">
+      <div class="tcol">
+        <div class="tcl" style="color:var(--gray)" data-i="tCmdLabel"></div>
+        <div class="tbarw"><div class="tbar" id="barCmd" style="background:var(--gray)"></div></div>
+        <div class="tcount" style="color:var(--gray)" id="countCmd">0</div>
+        <div class="tdesc" data-i-html="tCmdDesc"></div>
+      </div>
+      <div class="tcol">
+        <div class="tcl" style="color:var(--accent)" data-i="tConvLabel"></div>
+        <div class="tbarw"><div class="tbar" id="barConv" style="background:var(--accent)"></div></div>
+        <div class="tcount" style="color:var(--accent)" id="countConv">0</div>
+        <div class="tdesc" data-i-html="tConvDesc"></div>
+      </div>
+    </div>
+    <div class="tverdict" data-i-html="tVerdict"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-cards"></i><span class="no">03</span><h2 data-i="s3">I 3 pattern conversazionali</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="patIntro"></p>
+  <div id="patterns"></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">04</span><h2 data-i="s4">Quando conversare, quando scrivere</h2></div>
+  <div class="when rv" id="whenBlock">
+    <div class="whenh" onclick="toggleWhen()">
+      <div class="whenl">
+        <div class="wheni"><i class="ti ti-help-circle"></i></div>
+        <div class="whent"><strong data-i="whenT"></strong><span data-i="whenSub"></span></div>
+      </div>
+      <i class="ti ti-chevron-down whenarr"></i>
+    </div>
+    <div class="whenc">
+      <div class="whenin">
+        <div class="whencol ac">
+          <h5><i class="ti ti-message-2"></i> <span data-i="whenConvT"></span></h5>
+          <div class="wi"><i class="ti ti-puzzle"></i><span data-i="wc1"></span></div>
+          <div class="wi"><i class="ti ti-target"></i><span data-i="wc2"></span></div>
+          <div class="wi"><i class="ti ti-brain"></i><span data-i="wc3"></span></div>
+          <div class="wi"><i class="ti ti-refresh"></i><span data-i="wc4"></span></div>
+          <div class="wi"><i class="ti ti-microphone"></i><span data-i="wc5"></span></div>
+        </div>
+        <div class="whencol gr">
+          <h5><i class="ti ti-terminal-2"></i> <span data-i="whenCmdT"></span></h5>
+          <div class="wi"><i class="ti ti-circle-check"></i><span data-i="wd1"></span></div>
+          <div class="wi"><i class="ti ti-template"></i><span data-i="wd2"></span></div>
+          <div class="wi"><i class="ti ti-clock"></i><span data-i="wd3"></span></div>
+          <div class="wi"><i class="ti ti-code"></i><span data-i="wd4"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vnote rv" style="margin-top:24px">
+    <div class="vt"><i class="ti ti-wave-square"></i> <span data-i="vnoteT"></span></div>
+    <p data-i-html="vnoteP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">05</span><h2 data-i="s5">Flusso di una sessione conversazionale</h2></div>
+  <div class="flow rv">
+    <div class="fstep"><div class="fnum">1</div><div class="fstx"><strong data-i="fl1T"></strong><span data-i="fl1S"></span></div></div>
+    <div class="fstep"><div class="fnum">2</div><div class="fstx"><strong data-i="fl2T"></strong><span data-i="fl2S"></span></div></div>
+    <div class="fstep"><div class="fnum">3</div><div class="fstx"><strong data-i="fl3T"></strong><span data-i="fl3S"></span></div></div>
+    <div class="fstep"><div class="fnum">4</div><div class="fstx"><strong data-i="fl4T"></strong><span data-i="fl4S"></span></div></div>
+    <div class="fstep"><div class="fnum tl">5</div><div class="fstx"><strong data-i="fl5T"></strong><span data-i="fl5S"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-cpu"></i><span class="no">06</span><h2 data-i="s6">Perché funziona (la base tecnica)</h2></div>
+  <div class="rv">
+    <div class="frow"><div class="fi"><i class="ti ti-history"></i></div><div class="ft"><strong data-i="tech1T"></strong><span data-i="tech1S"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-brain"></i></div><div class="ft"><strong data-i="tech2T"></strong><span data-i="tech2S"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-list-search"></i></div><div class="ft"><strong data-i="tech3T"></strong><span data-i="tech3S"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">07</span><h2 data-i="s7">Equivoci comuni</h2></div>
+  <div class="rv">
+    <div class="myth"><div class="mi"><i class="ti ti-clock"></i></div><div class="mt"><div class="mw"><i class="ti ti-x"></i><span data-i="m1w"></span></div><div class="mr"><i class="ti ti-check"></i><span data-i="m1r"></span></div></div></div>
+    <div class="myth"><div class="mi"><i class="ti ti-brain"></i></div><div class="mt"><div class="mw"><i class="ti ti-x"></i><span data-i="m2w"></span></div><div class="mr"><i class="ti ti-check"></i><span data-i="m2r"></span></div></div></div>
+    <div class="myth"><div class="mi"><i class="ti ti-microphone"></i></div><div class="mt"><div class="mw"><i class="ti ti-x"></i><span data-i="m3w"></span></div><div class="mr"><i class="ti ti-check"></i><span data-i="m3r"></span></div></div></div>
+  </div>
+
+  <div class="key rv" style="margin-top:40px"><p data-i="keyQuote"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-messages cpi"></i>
+    <h4 data-i="cpH"></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Conversare invece di Comandare</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Bonus',
+h1:'Conversare invece di Comandare',
+lede:'C\'è un pattern che distingue gli utenti avanzati dagli utenti principianti. Non è la lunghezza dei prompt. Non è il piano abbonamento. È questo: i principianti danno comandi. Gli avanzati conversano.',
+hookH:'Un interlocutore, non un distributore',
+hookP:'«Claude non è un distributore automatico. È un interlocutore. Trattalo come tale e ti stupirà ogni volta.»',
+s1:'Due approcci, due risultati',
+cmdH:'Approccio comando',
+cmdSub:'Query breve, risposta generica, poi si itera',
+cmd1:'Prompt vago, contesto minimo',
+cmd2:'Output generico, non calibrato',
+cmd3:'5–8 correzioni per arrivare al risultato',
+cmd4:'Claude indovina invece di capire',
+convH:'Approccio conversazionale',
+convSub:'Dialogo, Claude chiede, contesto emerge',
+conv1:'Claude fa le domande giuste prima',
+conv2:'Output calibrato sul tuo caso reale',
+conv3:'1–2 iterazioni, già buono al primo round',
+conv4:'Il contesto si accumula, ogni turno aggiunge valore',
+s2:'Il paradosso della conversazione',
+turniH:'Più scambi upfront = meno iterazioni',
+turniSub:'Più scambi upfront = meno iterazioni di correzione. Il totale è sempre a favore del dialogo.',
+tCmdLabel:'Approccio comando',
+tCmdDesc:'turni totali<br><span style="font-size:11px">(1 richiesta + ~7 correzioni)</span>',
+tConvLabel:'Approccio conversazionale',
+tConvDesc:'turni totali<br><span style="font-size:11px">(2–3 domande + 1 bozza + 1 affinamento)</span>',
+tVerdict:'<b>Il paradosso:</b> l\'approccio conversazionale richiede più messaggi all\'inizio, ma meno tempo totale — perché il risultato è già buono invece di richiedere cinque iterazioni di correzione.',
+s3:'I 3 pattern conversazionali',
+patIntro:'Tre pattern che trasformano un comando in un dialogo. Clicca ogni pattern per espandere prompt ed esempio.',
+patCopy:'Copia prompt',patCopied:'Copiato!',patExLabel:'Esempio in pratica',
+s4:'Quando conversare, quando scrivere',
+whenT:'Approccio conversazionale vs prompt diretto',
+whenSub:'Clicca per vedere quando conviene quale approccio',
+whenConvT:'Conversa quando',
+wc1:'Il problema è sfumato o non hai ancora chiarezza su cosa vuoi',
+wc2:'L\'output deve essere preciso su un caso specifico (persona reale, contesto reale)',
+wc3:'Stai ragionando su una decisione importante e vuoi esplorarla',
+wc4:'Hai bisogno di iterare ma non sai ancora in quale direzione',
+wc5:'Stai usando Voice Mode: la voce favorisce naturalmente il dialogo',
+whenCmdT:'Vai diretto con un prompt quando',
+wd1:'Il task è ben definito e ripetitivo (stessa struttura ogni volta)',
+wd2:'Hai già un template o un prompt che sai funziona',
+wd3:'La velocità è prioritaria e il risultato "abbastanza buono" è accettabile',
+wd4:'Il task richiede input precisi: codice, numeri, dati strutturati',
+vnoteT:'Voice Mode e mindset conversazionale',
+vnoteP:'Voice Mode (disponibile su tutti i piani, gratuita da inizio 2026) potenzia questo approccio in modo naturale: la voce riduce il freno cognitivo dello scrivere e rende il dialogo più fluido. Con push-to-talk (beta maggio 2026) puoi pensare prima di rispondere, poi tenere il tasto mentre parli. Ma il valore è nel <strong>pattern mentale</strong>, non nel mezzo: i 3 pattern sopra funzionano identicamente in testo puro.',
+s5:'Flusso di una sessione conversazionale',
+fl1T:'Apri il task, non la soluzione',
+fl1S:'Descrivi la situazione e cosa ti serve — senza chiedere ancora l\'output finale. Dai contesto, non comandi.',
+fl2T:'Invita Claude a chiedere (Pattern 1 o 2)',
+fl2S:'"Prima di rispondere, fai le domande che ti servono" — oppure "Aiutami a capire bene il problema prima di cercare soluzioni."',
+fl3T:'Rispondi alle domande di Claude',
+fl3S:'Il contesto si accumula. Ogni risposta che dai arricchisce la finestra di contesto (fino a 200K token — Claude ricorda tutto il dialogo).',
+fl4T:'Chiedi l\'output (ora Claude è pronto)',
+fl4S:'Dopo il dialogo diagnostico, l\'output è calibrato. Invece di un template generico, ottieni qualcosa di vicino a ciò che serve davvero.',
+fl5T:'Affina con una sola iterazione',
+fl5S:'Se qualcosa non torna, spiega perché — a voce o per iscritto. Claude mantiene il contesto: non devi ricominciare da zero.',
+s6:'Perché funziona (la base tecnica)',
+tech1T:'Claude non dimentica i turni precedenti',
+tech1S:'La finestra di contesto (fino a 200K token in Claude Sonnet 4) mantiene tutto il dialogo. Solo aprire una nuova chat azzera la memoria.',
+tech2T:'Addestrato per la conversazione multi-turno',
+tech2S:'Claude è progettato per elaborare ogni messaggio insieme a tutto il contesto del dialogo — non come query indipendenti. Il dialogo non è un workaround, è il modo in cui funziona meglio.',
+tech3T:'Chain-of-thought esplicito (Pattern 3)',
+tech3S:'Chiedere a Claude di descrivere il ragionamento è supportato dall\'architettura dei modelli con extended thinking — produce ragionamenti verificabili, non solo conclusioni.',
+s7:'Equivoci comuni',
+m1w:'"L\'approccio conversazionale è più lento"',
+m1r:'Richiede più scambi iniziali, ma meno iterazioni di correzione. Il totale è sempre a favore del dialogo per task complessi.',
+m2w:'"Claude dimentica i turni precedenti nelle conversazioni lunghe"',
+m2r:'Falso: la finestra di contesto mantiene tutto (fino a 200K token). Solo aprire una nuova chat azzera la memoria.',
+m3w:'"Voice Mode è indispensabile per conversare bene"',
+m3r:'Il mindset conversazionale vale identicamente in testo puro. La voce aiuta, non è obbligatoria.',
+keyQuote:'«Claude non è un distributore automatico. È un interlocutore. Trattalo come tale e ti stupirà ogni volta.»',
+s8:'Checkpoint',
+cpH:'Prossima volta che apri Claude, prova il Pattern 1.',
+cpP:'Qualsiasi task stai per assegnare, aggiungi: <strong>"Prima di rispondere, fai le 3 domande più importanti che ti aiuterebbero a darmi una risposta migliore."</strong><br><br>Poi rispondi alle domande. Poi chiedi l\'output. Confronta con ciò che avresti ottenuto con un prompt diretto.',
+foot:'Morfeus — Conversare invece di Comandare'
+},
+en:{
+kicker:'Bonus',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Bonus',
+h1:'Conversing Instead of Commanding',
+lede:'There\'s a pattern that separates advanced users from beginners. It\'s not the length of the prompts. It\'s not the subscription plan. It\'s this: beginners give commands. Advanced users converse.',
+hookH:'An interlocutor, not a vending machine',
+hookP:'"Claude isn\'t a vending machine. It\'s an interlocutor. Treat it as such and it will surprise you every time."',
+s1:'Two approaches, two results',
+cmdH:'Command approach',
+cmdSub:'Short query, generic answer, then you iterate',
+cmd1:'Vague prompt, minimal context',
+cmd2:'Generic output, not calibrated',
+cmd3:'5–8 corrections to reach the result',
+cmd4:'Claude guesses instead of understanding',
+convH:'Conversational approach',
+convSub:'Dialogue, Claude asks, context emerges',
+conv1:'Claude asks the right questions first',
+conv2:'Output calibrated to your real case',
+conv3:'1–2 iterations, already good on the first round',
+conv4:'Context accumulates, every turn adds value',
+s2:'The paradox of conversation',
+turniH:'More exchanges upfront = fewer iterations',
+turniSub:'More upfront exchanges = fewer correction iterations. The total is always in favor of dialogue.',
+tCmdLabel:'Command approach',
+tCmdDesc:'total turns<br><span style="font-size:11px">(1 request + ~7 corrections)</span>',
+tConvLabel:'Conversational approach',
+tConvDesc:'total turns<br><span style="font-size:11px">(2–3 questions + 1 draft + 1 refinement)</span>',
+tVerdict:'<b>The paradox:</b> the conversational approach requires more messages at the start, but less total time — because the result is already good instead of requiring five correction iterations.',
+s3:'The 3 conversational patterns',
+patIntro:'Three patterns that turn a command into a dialogue. Click each pattern to expand the prompt and example.',
+patCopy:'Copy prompt',patCopied:'Copied!',patExLabel:'In practice',
+s4:'When to converse, when to write',
+whenT:'Conversational approach vs direct prompt',
+whenSub:'Click to see when each approach is worth it',
+whenConvT:'Converse when',
+wc1:'The problem is fuzzy or you don\'t yet have clarity on what you want',
+wc2:'The output must be precise on a specific case (real person, real context)',
+wc3:'You\'re reasoning about an important decision and want to explore it',
+wc4:'You need to iterate but don\'t yet know in which direction',
+wc5:'You\'re using Voice Mode: voice naturally favors dialogue',
+whenCmdT:'Go straight to a prompt when',
+wd1:'The task is well-defined and repetitive (same structure every time)',
+wd2:'You already have a template or a prompt you know works',
+wd3:'Speed is the priority and a "good enough" result is acceptable',
+wd4:'The task requires precise input: code, numbers, structured data',
+vnoteT:'Voice Mode and the conversational mindset',
+vnoteP:'Voice Mode (available on all plans, free since early 2026) amplifies this approach naturally: voice reduces the cognitive brake of writing and makes dialogue more fluid. With push-to-talk (beta May 2026) you can think before answering, then hold the key while you speak. But the value is in the <strong>mental pattern</strong>, not the medium: the 3 patterns above work identically in plain text.',
+s5:'The flow of a conversational session',
+fl1T:'Open the task, not the solution',
+fl1S:'Describe the situation and what you need — without asking for the final output yet. Give context, not commands.',
+fl2T:'Invite Claude to ask (Pattern 1 or 2)',
+fl2S:'"Before answering, ask the questions you need" — or "Help me understand the problem well before looking for solutions."',
+fl3T:'Answer Claude\'s questions',
+fl3S:'Context accumulates. Every answer you give enriches the context window (up to 200K tokens — Claude remembers the whole dialogue).',
+fl4T:'Ask for the output (now Claude is ready)',
+fl4S:'After the diagnostic dialogue, the output is calibrated. Instead of a generic template, you get something close to what you actually need.',
+fl5T:'Refine with a single iteration',
+fl5S:'If something\'s off, explain why — by voice or in writing. Claude keeps the context: you don\'t have to start from scratch.',
+s6:'Why it works (the technical basis)',
+tech1T:'Claude doesn\'t forget previous turns',
+tech1S:'The context window (up to 200K tokens in Claude Sonnet 4) keeps the whole dialogue. Only opening a new chat resets the memory.',
+tech2T:'Trained for multi-turn conversation',
+tech2S:'Claude is designed to process each message together with the whole context of the dialogue — not as independent queries. Dialogue isn\'t a workaround, it\'s how it works best.',
+tech3T:'Explicit chain-of-thought (Pattern 3)',
+tech3S:'Asking Claude to describe its reasoning is supported by the architecture of models with extended thinking — it produces verifiable reasoning, not just conclusions.',
+s7:'Common misconceptions',
+m1w:'"The conversational approach is slower"',
+m1r:'It requires more initial exchanges, but fewer correction iterations. The total is always in favor of dialogue for complex tasks.',
+m2w:'"Claude forgets previous turns in long conversations"',
+m2r:'False: the context window keeps everything (up to 200K tokens). Only opening a new chat resets the memory.',
+m3w:'"Voice Mode is indispensable for conversing well"',
+m3r:'The conversational mindset applies identically in plain text. Voice helps, it isn\'t mandatory.',
+keyQuote:'"Claude isn\'t a vending machine. It\'s an interlocutor. Treat it as such and it will surprise you every time."',
+s8:'Checkpoint',
+cpH:'Next time you open Claude, try Pattern 1.',
+cpP:'Whatever task you\'re about to assign, add: <strong>"Before answering, ask the 3 most important questions that would help you give me a better answer."</strong><br><br>Then answer the questions. Then ask for the output. Compare it with what you would have gotten from a direct prompt.',
+foot:'Morfeus — Conversing Instead of Commanding'
+}};
+
+var PATTERNS={it:[
+['"Prima di rispondere, chiedimi..."','Fai lavorare Claude prima di farlo scrivere','Prima di rispondere, fai le 3 domande più importanti\nche ti aiuterebbero a darmi una risposta migliore.','Devi scrivere una proposta commerciale. Invece di chiedere direttamente, usi questo pattern: Claude risponde con "Chi è il destinatario? Qual è il suo problema principale? C\'è qualcosa di sensibile da navigare?" — tre domande che non avresti pensato di includere nel prompt originale. La proposta che ne esce è molto più precisa.'],
+['"Parliamo del problema, non della soluzione"','Diagnostica prima di prescrivere','Non voglio ancora la soluzione. Voglio che tu mi aiuti\na capire bene il problema. Fammi le domande giuste.','Hai un problema con il tasso di abbandono del tuo servizio. Invece di chiedere subito "come lo risolvo?", usi questo pattern. Claude avvia un dialogo diagnostico: esplora cause, segmenti di clienti, momenti critici. Quando arriva la soluzione, è basata su una diagnosi vera, non su assunzioni.'],
+['"Mostrami il ragionamento"','Verifica il percorso, non solo l\'arrivo','Prima di darmi la risposta, spiegami come ci sei arrivato.\nVoglio capire il ragionamento, non solo la conclusione.','Stai valutando una decisione strategica. Claude ti dà una raccomandazione — ma vuoi capire se il ragionamento regge. Con questo pattern, Claude descrive i passaggi intermedi. Puoi vedere se ha fatto un salto logico, se ha considerato un\'ipotesi sbagliata, se la conclusione è solida. È ispezione, non fiducia cieca.']
+],en:[
+['"Before answering, ask me..."','Make Claude work before making it write','Before answering, ask the 3 most important questions\nthat would help you give me a better answer.','You have to write a business proposal. Instead of asking directly, you use this pattern: Claude replies with "Who is the recipient? What is their main problem? Is there anything sensitive to navigate?" — three questions you wouldn\'t have thought to include in the original prompt. The proposal that comes out is much more precise.'],
+['"Let\'s talk about the problem, not the solution"','Diagnose before you prescribe','I don\'t want the solution yet. I want you to help me\nunderstand the problem well. Ask me the right questions.','You have a problem with the churn rate of your service. Instead of asking right away "how do I fix it?", you use this pattern. Claude starts a diagnostic dialogue: it explores causes, customer segments, critical moments. When the solution arrives, it\'s based on a real diagnosis, not on assumptions.'],
+['"Show me the reasoning"','Verify the path, not just the arrival','Before giving me the answer, explain how you got there.\nI want to understand the reasoning, not just the conclusion.','You\'re evaluating a strategic decision. Claude gives you a recommendation — but you want to understand whether the reasoning holds. With this pattern, Claude describes the intermediate steps. You can see if it made a logical jump, if it considered a wrong assumption, if the conclusion is solid. It\'s inspection, not blind trust.']
+]};
+
+var LANG='it',openPat=-1;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderPatterns();
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function renderPatterns(){
+  var d=DICT[LANG];
+  document.getElementById('patterns').innerHTML=PATTERNS[LANG].map(function(p,i){
+    return '<div class="pat rv show'+(i===openPat?' on':'')+'" id="pat'+i+'">'
+      +'<div class="path" onclick="togglePat('+i+')">'
+      +'<div class="patn">'+(i+1)+'</div>'
+      +'<div class="patt"><strong>'+p[0]+'</strong><span>'+p[1]+'</span></div>'
+      +'<i class="ti ti-chevron-down patchev"></i></div>'
+      +'<div class="patbody"><div class="patin">'
+      +'<button class="copybtn" onclick="copyPat(event,'+i+')"><i class="ti ti-copy"></i> '+d.patCopy+'</button>'
+      +'<div class="patprompt" id="patprompt'+i+'">'+esc(p[2])+'</div>'
+      +'<div class="patex"><div class="exl"><i class="ti ti-bulb"></i> '+d.patExLabel+'</div><p>'+p[3]+'</p></div>'
+      +'</div></div></div>';
+  }).join('');
+}
+function togglePat(i){openPat=(openPat===i?-1:i);document.querySelectorAll('.pat').forEach(function(c,k){c.classList.toggle('on',k===openPat)})}
+function copyPat(e,i){
+  e.stopPropagation();
+  var txt=PATTERNS[LANG][i][2];var btn=e.currentTarget;var d=DICT[LANG];
+  navigator.clipboard.writeText(txt).then(function(){
+    btn.innerHTML='<i class="ti ti-check"></i> '+d.patCopied;btn.style.color='var(--teal)';btn.style.borderColor='var(--teal)';
+    setTimeout(function(){btn.innerHTML='<i class="ti ti-copy"></i> '+d.patCopy;btn.style.color='';btn.style.borderColor=''},2000);
+  });
+}
+function toggleWhen(){document.getElementById('whenBlock').classList.toggle('on')}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+/* turni counter animated */
+var turniAnimated=false;
+function animateTurni(){
+  if(turniAnimated)return;turniAnimated=true;
+  var targetCmd=8,targetConv=4,cur=0;
+  var interval=setInterval(function(){
+    cur++;
+    document.getElementById('barCmd').style.width=(cur<=targetCmd?(cur/targetCmd*100):100)+'%';
+    document.getElementById('barConv').style.width=(cur<=targetConv?(cur/targetConv*100):100)+'%';
+    if(cur<=targetCmd)document.getElementById('countCmd').textContent=cur;
+    if(cur<=targetConv)document.getElementById('countConv').textContent=cur;
+    if(cur>=targetCmd)clearInterval(interval);
+  },180);
+}
+var tObs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)animateTurni()})},{threshold:.4});
+var tw=document.getElementById('turniWrap');if(tw)tObs.observe(tw);
+/* reveal on scroll */
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

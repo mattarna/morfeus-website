@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompting = delega a un junior — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;white-space:pre-wrap}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.metaf{display:flex;flex-direction:column;gap:8px}
+.mc{display:flex;align-items:center;gap:14px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 16px;cursor:pointer;transition:.18s}
+.mc:hover{border-color:var(--line-2)}.mc.on{border-color:var(--accent);background:var(--accent-soft)}
+.mc .mi{width:42px;height:42px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;transition:.18s}
+.mc.on .mi{background:var(--accent);color:#fff}
+.mc .mt{font-size:15px;font-weight:600}
+.mc .mq{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin-top:2px}
+.mcdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.mcdetail p{font-size:14.5px;color:var(--ink-2)}.mcdetail p strong{color:var(--ink)}
+.mcdetail .quote{font-style:italic;font-size:14.5px;color:var(--accent);margin-top:10px;padding-left:12px;border-left:2px solid var(--accent-line)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modec{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.modec .mh{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;margin-bottom:8px}.modec .mh i{color:var(--accent);font-size:18px}
+.modec p{font-size:13.5px;color:var(--ink-2)}.modec .tag{font-family:var(--mono);font-size:11px;color:var(--accent);display:block;margin-top:8px;font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.modes{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.mc,.mcdetail,.modec,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A3.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo Morfeus</div>
+  <h1 class="rv" data-i="h1">Prompting = delega a un junior</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-user-share"></i><span class="no">01</span><h2 data-i="s1">Il prompt è una delega</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-user-plus"></i></div><div><h4 data-i="note1H">Un genio senza esperienza nel tuo contesto</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">02</span><h2 data-i="s2">Stesso compito, due deleghe</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="vagueT">Ordine vago</span><div class="pr" data-i="vagueP"></div><div class="res" data-i-html="vagueR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="delegT">Delega ben fatta</span><div class="pr" data-i="delegP"></div><div class="res" data-i-html="delegR"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i="cmpNote"></p>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">03</span><h2 data-i="s3">Le tre metafore della delega</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="metafIntro"></p>
+  <div class="metaf rv" id="metaf"></div>
+  <div class="mcdetail rv" id="mcdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-git-fork"></i><span class="no">04</span><h2 data-i="s4">Due modi di delegare</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="modesIntro"></p>
+  <div class="modes rv">
+    <div class="modec"><div class="mh"><i class="ti ti-repeat"></i> <span data-i="mode1H">Processo ripetibile</span></div><p data-i="mode1P"></p><span class="tag" data-i="mode1T"></span></div>
+    <div class="modec"><div class="mh"><i class="ti ti-sparkles"></i> <span data-i="mode2H">Qualità massima</span></div><p data-i="mode2P"></p><span class="tag" data-i="mode2T"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-robot"></i><span class="no">05</span><h2 data-i="s5">Dove sta andando: gli agenti</h2></div>
+  <div class="key rv"><p data-i="agentKey"></p></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="agentP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Quanto preciso sei stato davvero?</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Prompting = delega a un junior</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A3.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo Morfeus',
+h1:'Prompting = delega a un junior',
+lede:'Smetti di pensare al prompt come a una «frase magica». Pensalo come a una delega: stai affidando un compito a un collaboratore junior. Quanto bene lo istruisci decide quanto bene lavora.',
+s1:'Il prompt è una delega',
+note1H:'Un genio senza esperienza nel tuo contesto',
+note1P:'Il modello è come un <strong>collaboratore junior geniale</strong>: capacità enormi, ma zero esperienza nel <strong>tuo</strong> contesto. Da solo non sa come lavori, cosa conta per te, in che forma vuoi le cose. Con le istruzioni giuste può performare meglio di te. Senza, tira a indovinare — e indovina la direzione più probabile, non la tua.',
+s2:'Stesso compito, due deleghe',
+vagueT:'Ordine vago',delegT:'Delega ben fatta',
+vagueP:'Scrivimi un preventivo per questo cliente.',
+vagueR:'<b>Esce un preventivo generico</b>, nel formato che sceglie lui, con voci e tono che non sono i tuoi. Devi rifarlo da capo.',
+delegP:'Sei il mio responsabile commerciale. Scrivi un preventivo seguendo i 10 esempi allegati: stesso formato, stesse voci, stesso tono. Cliente: [dati]. Se mancano informazioni, chiedimele.',
+delegR:'<b>Esce un preventivo nel tuo stile</b>, pronto da validare. La delega era chiara, l\'output è utile al primo colpo.',
+cmpNote:'Stesso modello, stesso cliente. Cambia solo quanto bene hai delegato. Il junior non legge nella tua testa: legge quello che gli scrivi.',
+s3:'Le tre metafore della delega',
+metafIntro:'Tre immagini ti dicono tre cose diverse sulla delega: PERCHÉ servono le istruzioni, COME devono essere, QUANTO devono essere precise. Clicca ognuna.',
+s4:'Due modi di delegare',
+modesIntro:'Non deleghi sempre allo stesso modo. Dipende da cosa ti serve: un processo ripetibile o la qualità massima di un singolo output.',
+mode1H:'Processo ripetibile',
+mode1P:'Vuoi lo stesso risultato consistente, ogni volta. Allora gli dici tu il COME: passo per passo, ordine preciso, esempi da imitare. Tu controlli il processo.',
+mode1T:'→ Io dico il COME',
+mode2H:'Qualità massima',
+mode2P:'Vuoi il miglior output possibile su un caso unico. Allora gli dai l\'obiettivo e lo spazio di muoversi: lasci fare a lui, poi validi. Lui propone, tu giudichi.',
+mode2T:'→ Lascio fare a lui',
+s5:'Dove sta andando: gli agenti',
+agentKey:'Più che dirgli COME lavorare, dargli gli strumenti e un obiettivo.',
+agentP:'È il passaggio dall\'assistente all\'<b>agente</b>: oggi gli detti i passi, domani gli dai un obiettivo e gli strumenti per raggiungerlo — e sceglie lui la strada. <b>Ne riparleremo</b>, ma il seme è già qui: la delega per obiettivo.',
+s6:'Checkpoint',
+cpH:'Quanto preciso sei stato davvero?',
+cpP:'La metafora della missione di soccorso (SAR) è la più dura: dai coordinate precise, o la squadra non trova nessuno. Vale per ogni delega all\'AI. Quando un output esce sbagliato, quasi sempre il problema non è il modello: sono le coordinate.',
+cpQ:'Pensa all\'ultimo prompt che ti ha deluso. Avevi davvero dato le coordinate? O ti aspettavi che il junior indovinasse il resto?',
+foot:'Morfeus — Prompting = delega a un junior'
+},
+en:{
+kicker:'Lesson A3.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The Morfeus method',
+h1:'Prompting = delegating to a junior',
+lede:'Stop thinking of a prompt as a "magic phrase." Think of it as delegation: you\'re handing a task to a junior collaborator. How well you brief them decides how well they work.',
+s1:'A prompt is delegation',
+note1H:'A genius with no experience in your context',
+note1P:'The model is like a <strong>brilliant junior collaborator</strong>: huge capabilities, but zero experience in <strong>your</strong> context. On its own it doesn\'t know how you work, what matters to you, what form you want things in. With the right brief it can outperform you. Without it, it guesses — and it guesses the most likely direction, not yours.',
+s2:'Same task, two briefs',
+vagueT:'Vague order',delegT:'Proper delegation',
+vagueP:'Write a quote for this client.',
+vagueR:'<b>You get a generic quote</b>, in the format it picks, with line items and a tone that aren\'t yours. You have to redo it from scratch.',
+delegP:'You are my head of sales. Write a quote following the 10 attached examples: same format, same line items, same tone. Client: [data]. If anything is missing, ask me.',
+delegR:'<b>You get a quote in your own style</b>, ready to validate. The brief was clear, the output is useful on the first try.',
+cmpNote:'Same model, same client. Only the quality of your delegation changed. The junior doesn\'t read your mind: it reads what you write.',
+s3:'The three metaphors of delegation',
+metafIntro:'Three images tell you three different things about delegation: WHY instructions are needed, HOW they should be, HOW precise they must be. Click each one.',
+s4:'Two ways to delegate',
+modesIntro:'You don\'t always delegate the same way. It depends on what you need: a repeatable process, or the maximum quality of a single output.',
+mode1H:'Repeatable process',
+mode1P:'You want the same consistent result, every time. So you spell out the HOW: step by step, exact order, examples to imitate. You control the process.',
+mode1T:'→ I dictate the HOW',
+mode2H:'Maximum quality',
+mode2P:'You want the best possible output on a one-off case. So you give the objective and room to move: you let it work, then validate. It proposes, you judge.',
+mode2T:'→ I let it run',
+s5:'Where it\'s heading: agents',
+agentKey:'Rather than telling it HOW to work, give it the tools and an objective.',
+agentP:'This is the shift from assistant to <b>agent</b>: today you dictate the steps, tomorrow you give an objective and the tools to reach it — and it picks the path. <b>More on this later</b>, but the seed is already here: delegating by objective.',
+s6:'Checkpoint',
+cpH:'How precise were you really?',
+cpP:'The search-and-rescue (SAR) metaphor is the harshest: give precise coordinates, or the team finds no one. It holds for every delegation to AI. When an output comes out wrong, the problem is almost never the model: it\'s the coordinates.',
+cpQ:'Think of the last prompt that disappointed you. Did you really give the coordinates? Or did you expect the junior to guess the rest?',
+foot:'Morfeus — Prompting = delegating to a junior'
+}};
+
+var METAF={it:[
+['ti ti-school','Lo Stagista','PERCHÉ servono le istruzioni','Uno stagista geniale arriva il primo giorno: bravissimo, ma non sa nulla di come funzioni tu. Se gli «vomiti» informazioni a caso, senza dargli un foglio dove segnarsi le cose, va in tilt e perde il filo.','Da solo non sa cosa conta per te: ecco perché ogni delega parte da istruzioni esplicite.'],
+['ti ti-mood-empty','Il Collega Pigro','COME devono essere','Immagina un collega capace ma pigrissimo: fa solo ed esattamente quello che è scritto, niente di più. Non riempie i buchi a tuo favore, non «capisce al volo». Se lasci spazio all\'interpretazione, sceglie la strada più comoda.','Le istruzioni devono essere chiuse: cosa fare, come, in che ordine — e cosa NON fare.'],
+['ti ti-map-pin','La Missione SAR','QUANTO devono essere precise','Search and Rescue: una squadra di soccorso parte per trovare un disperso. Se dai coordinate precise, lo trovano. Se le dai vaghe, cercano nel posto sbagliato e non trovano nessuno.','«Coordinate precise o la squadra non trova nessuno.» La precisione non è un dettaglio: è la differenza tra trovare e non trovare.']
+],en:[
+['ti ti-school','The Intern','WHY instructions are needed','A brilliant intern shows up on day one: super capable, but knows nothing about how you operate. If you "dump" information at random, with no sheet to note things down, they freeze and lose the thread.','On their own they don\'t know what matters to you: that\'s why every delegation starts with explicit instructions.'],
+['ti ti-mood-empty','The Lazy Colleague','HOW they should be','Picture a capable but very lazy colleague: they do only and exactly what\'s written, nothing more. They won\'t fill gaps in your favor or "get it" intuitively. Leave room for interpretation and they take the easy path.','Instructions must be closed: what to do, how, in what order — and what NOT to do.'],
+['ti ti-map-pin','The SAR Mission','HOW precise they must be','Search and Rescue: a rescue team sets out to find a missing person. Give precise coordinates and they find them. Give vague ones and they search the wrong spot and find no one.','"Precise coordinates or the team finds no one." Precision isn\'t a detail: it\'s the difference between finding and not finding.']
+]};
+
+var LANG='it',curM=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('metaf').innerHTML=METAF[LANG].map(function(m,i){return '<div class="mc'+(i===curM?' on':'')+'" onclick="showM('+i+')"><div class="mi"><i class="'+m[0]+'"></i></div><div><div class="mt">'+m[1]+'</div><div class="mq">'+m[2]+'</div></div></div>'}).join('');
+  showM(curM);
+}
+function showM(i){curM=i;var m=METAF[LANG][i];document.querySelectorAll('.mc').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('mcdetail').innerHTML='<p>'+m[3]+'</p><p class="quote">'+m[4]+'</p>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

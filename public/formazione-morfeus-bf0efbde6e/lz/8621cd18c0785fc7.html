@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dictate: Parlare invece di Scrivere — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#2D7DD2;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+/* ===== COMPARE: tab toggle Dictate vs Voice ===== */
+.cmpwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.cmpwrap h3{font-size:15px;font-weight:600;text-align:center;margin-bottom:4px}
+.cmphint{text-align:center;font-size:12px;color:var(--ink-3);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:5px}
+.cmptabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.cmptab{padding:14px 12px;border-radius:var(--r-l);border:2px solid var(--line);background:var(--bg-2);cursor:pointer;text-align:center;transition:.18s;font-family:var(--sans)}
+.cmptab:hover{border-color:var(--line-2)}
+.cmptab.on-d{border-color:var(--accent);background:var(--accent-soft)}
+.cmptab.on-v{border-color:var(--teal);background:var(--teal-soft)}
+.cmptab .ti-icon{font-size:24px;display:block;margin-bottom:6px}
+.cmptab.on-d .ti-icon,.cmptab .ti-icon.d{color:var(--accent)}
+.cmptab.on-v .ti-icon,.cmptab .ti-icon.v{color:var(--teal)}
+.cmptab .tl{font-size:13.5px;font-weight:600;color:var(--ink)}
+.cmptab .ts{font-size:11px;color:var(--ink-3);margin-top:2px}
+.cmppanel{display:none}.cmppanel.show{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.cmpinner{border-radius:var(--r-l);padding:18px}
+.cmpinner.d{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.cmpinner.v{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.crow{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.crow:last-child{border-bottom:none}
+.crow .cl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;width:110px;flex-shrink:0;padding-top:2px}
+.cmpinner.d .crow .cl{color:var(--accent)}.cmpinner.v .crow .cl{color:var(--teal)}
+.crow .cv{font-size:13px;color:var(--ink-2);line-height:1.5;flex:1}.crow .cv strong{color:var(--ink);font-weight:600}
+.cmpdiv{text-align:center;padding-top:14px;margin-top:4px;font-size:12px;color:var(--ink-3);line-height:1.5}
+/* ===== FLOW ===== */
+.flow{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.flow h3{font-size:14px;font-weight:600;text-align:center;margin-bottom:18px}
+.frow{display:flex;align-items:center;gap:10px;margin-bottom:14px}.frow:last-child{margin-bottom:0}
+.flabel{width:84px;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);text-align:right;flex-shrink:0}
+.fsteps{display:flex;align-items:center;gap:6px;flex:1;flex-wrap:wrap}
+.fstep{padding:7px 12px;border-radius:var(--r);font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
+.fstep i{font-size:14px}
+.farr{color:var(--ink-3);font-size:14px}
+.fstep.d{background:var(--accent-soft);color:var(--accent)}
+.fstep.v{background:var(--teal-soft);color:var(--teal)}
+.fdiv{border-top:1px dashed var(--line-2);margin:16px 0}
+/* ===== USE CASES grid ===== */
+.ucg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.uc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;cursor:pointer;transition:.18s;font-family:var(--sans)}
+.uc:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.uc.on{border-color:var(--accent);background:var(--accent-soft)}
+.uc .uci{font-size:25px;display:block;margin-bottom:8px}
+.uc .uct{font-size:13px;font-weight:600;color:var(--ink)}
+.uc .ucd{display:none;font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.5;border-top:1px solid var(--line);padding-top:8px}
+.uc.on .ucd{display:block;animation:fade .25s ease}
+/* ===== SURFACES ===== */
+.surfwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.surfwrap h3{font-size:15px;font-weight:600;text-align:center;margin-bottom:4px}
+.surfhint{text-align:center;font-size:12px;color:var(--ink-3);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:5px}
+.surftabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;justify-content:center}
+.st{padding:8px 15px;border-radius:30px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);transition:.18s;display:flex;align-items:center;gap:6px}
+.st i{font-size:15px}
+.st:hover{border-color:var(--ink-3);color:var(--ink)}
+.st.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.sp{display:none}.sp.show{display:block;animation:fade .3s ease}
+.spcard{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:20px}
+.spt{font-size:15px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sps{font-size:12.5px;color:var(--ink-3);margin-bottom:16px}
+.sblk{margin-bottom:16px}.sblk:last-child{margin-bottom:0}
+.sblk h4{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:var(--ink-3);margin-bottom:8px}
+.sitem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.sitem:last-child{border-bottom:none}
+.skeys{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.kbd{display:inline-flex;align-items:center;justify-content:center;gap:4px;background:var(--card);border:1px solid var(--line-2);border-bottom-width:2px;border-radius:6px;padding:5px 11px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.ksep{font-size:11px;color:var(--ink-3)}
+.sdesc{font-size:13px;color:var(--ink-2);line-height:1.45;flex:1}
+.sbadge{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.03em;padding:3px 9px;border-radius:20px;flex-shrink:0;text-transform:uppercase}
+.b-app{background:var(--accent-soft);color:var(--accent)}
+.b-sys{background:var(--blue-soft);color:var(--blue)}
+.sinline{font-size:12px;color:var(--ink-3);margin-top:10px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);line-height:1.5}
+.sinline i{color:var(--accent)}
+/* ===== LANG PILLS ===== */
+.langs{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.langs h3{font-size:14px;font-weight:600;margin-bottom:3px}
+.langs .lsub{font-size:12.5px;color:var(--ink-3);margin-bottom:16px}
+.lpills{display:flex;flex-wrap:wrap;gap:9px}
+.lpill{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line);font-size:13px;color:var(--ink-2);transition:.18s}
+.lpill:hover{border-color:var(--accent);color:var(--accent)}
+.lpill .fl{font-size:17px}
+.lpill.it{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft);font-weight:600}
+/* ===== FEAT rows ===== */
+.frw{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.frw:last-child{border-bottom:none}
+.frw .fi{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.frw .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.frw .ft span{font-size:13px;color:var(--ink-2)}
+/* ===== WHEN grid ===== */
+.wheng{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.whenb{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.whenb.go{background:var(--teal-soft);border-color:var(--teal-line)}.whenb.no{background:var(--bad-soft);border-color:var(--bad)}
+.whent{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.whenb.go .whent{color:var(--teal)}.whenb.no .whent{color:var(--bad)}
+.wi{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--ink-2);line-height:1.45}.wi i{flex-shrink:0;margin-top:2px}
+.whenb.go .wi i{color:var(--teal)}.whenb.no .wi i{color:var(--bad)}
+/* ===== MYTHS ===== */
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:13px}
+.myth:last-child{margin-bottom:0}
+.myth .mx{width:30px;height:30px;border-radius:8px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.myth .mt .wrong{font-size:13px;color:var(--bad);text-decoration:line-through;margin-bottom:5px;display:block}
+.myth .mt .right{font-size:13px;color:var(--ink-2);line-height:1.5;display:block}
+.myth .mt .right strong{color:var(--ink);font-weight:600}
+/* ===== CHECKPOINT ===== */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp i.cpi{font-size:36px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:500px;margin:0 auto}.cp p strong{color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmptabs{grid-template-columns:1fr}.ucg{grid-template-columns:1fr 1fr}.wheng{grid-template-columns:1fr}.frow{flex-direction:column;align-items:flex-start}.flabel{width:auto;text-align:left}}
+@media(max-width:420px){.ucg{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.cmppanel,.sp{display:block!important}.note,.cmpwrap,.cmpinner,.flow,.uc,.surfwrap,.spcard,.langs,.whenb,.myth,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Bonus</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Bonus</div>
+  <h1 class="rv" data-i="h1">Dictate: Parlare invece di Scrivere</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:32px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Dal bancone</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">01</span><h2 data-i="s1">Due cose diverse: clicca per scoprire</h2></div>
+  <div class="cmpwrap rv">
+    <h3 data-i="cmpH">Dictate vs Voice Mode</h3>
+    <p class="cmphint"><i class="ti ti-hand-click"></i> <span data-i="cmpHint">Clicca su una delle due schede per vedere i dettagli</span></p>
+    <div class="cmptabs">
+      <button class="cmptab" id="tab-d" onclick="showCmp('d')">
+        <span class="ti-icon d"><i class="ti ti-keyboard"></i></span>
+        <div class="tl" data-i="tabDt">Dictate (Dettatura)</div>
+        <div class="ts" data-i="tabDs">Tu parli → Claude risponde in testo</div>
+      </button>
+      <button class="cmptab" id="tab-v" onclick="showCmp('v')">
+        <span class="ti-icon v"><i class="ti ti-messages"></i></span>
+        <div class="tl" data-i="tabVt">Voice Mode</div>
+        <div class="ts" data-i="tabVs">Dialogo bidirezionale: Claude parla</div>
+      </button>
+    </div>
+    <div class="cmppanel" id="panel-d">
+      <div class="cmpinner d">
+        <div class="crow"><span class="cl" data-i="cdL1">Cosa fa</span><span class="cv" data-i-html="cdV1"></span></div>
+        <div class="crow"><span class="cl" data-i="cdL2">Claude parla?</span><span class="cv" data-i="cdV2"></span></div>
+        <div class="crow"><span class="cl" data-i="cdL3">Dove funziona</span><span class="cv" data-i="cdV3"></span></div>
+        <div class="crow"><span class="cl" data-i="cdL4">Lingue</span><span class="cv" data-i-html="cdV4"></span></div>
+        <div class="crow"><span class="cl" data-i="cdL5">Uso ideale</span><span class="cv" data-i="cdV5"></span></div>
+        <div class="crow"><span class="cl" data-i="cdL6">Piani</span><span class="cv" data-i="cdV6"></span></div>
+      </div>
+      <div class="cmpdiv" data-i="cdDiv"></div>
+    </div>
+    <div class="cmppanel" id="panel-v">
+      <div class="cmpinner v">
+        <div class="crow"><span class="cl" data-i="cvL1">Cosa fa</span><span class="cv" data-i-html="cvV1"></span></div>
+        <div class="crow"><span class="cl" data-i="cvL2">Claude parla?</span><span class="cv" data-i="cvV2"></span></div>
+        <div class="crow"><span class="cl" data-i="cvL3">Dove funziona</span><span class="cv" data-i="cvV3"></span></div>
+        <div class="crow"><span class="cl" data-i="cvL4">Lingue</span><span class="cv" data-i="cvV4"></span></div>
+        <div class="crow"><span class="cl" data-i="cvL5">Uso ideale</span><span class="cv" data-i="cvV5"></span></div>
+        <div class="crow"><span class="cl" data-i="cvL6">Piani</span><span class="cv" data-i="cvV6"></span></div>
+      </div>
+      <div class="cmpdiv" data-i="cvDiv"></div>
+    </div>
+  </div>
+
+  <div class="flow rv" style="margin-top:16px">
+    <h3 data-i="flowH">Come funziona il flusso nei due casi</h3>
+    <div class="frow">
+      <div class="flabel" data-i="flowLd">Dictate</div>
+      <div class="fsteps">
+        <span class="fstep d"><i class="ti ti-microphone"></i> <span data-i="fd1">Parli</span></span>
+        <span class="farr">→</span>
+        <span class="fstep d"><i class="ti ti-keyboard"></i> <span data-i="fd2">Testo nel prompt</span></span>
+        <span class="farr">→</span>
+        <span class="fstep d"><i class="ti ti-send"></i> <span data-i="fd3">Invii</span></span>
+        <span class="farr">→</span>
+        <span class="fstep d"><i class="ti ti-file-text"></i> <span data-i="fd4">Claude risponde in testo</span></span>
+      </div>
+    </div>
+    <div class="fdiv"></div>
+    <div class="frow">
+      <div class="flabel">Voice Mode</div>
+      <div class="fsteps">
+        <span class="fstep v"><i class="ti ti-microphone"></i> <span data-i="fv1">Parli</span></span>
+        <span class="farr">→</span>
+        <span class="fstep v"><i class="ti ti-cpu"></i> <span data-i="fv2">Claude elabora</span></span>
+        <span class="farr">→</span>
+        <span class="fstep v"><i class="ti ti-volume"></i> <span data-i="fv3">Claude risponde a voce</span></span>
+        <span class="farr">→</span>
+        <span class="fstep v"><i class="ti ti-repeat"></i> <span data-i="fv4">Dialogo continua</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">02</span><h2 data-i="s2">Quando conviene dettare — clicca sui casi</h2></div>
+  <div class="ucg rv">
+    <div class="uc" id="uc1" onclick="toggleUc('uc1')">
+      <span class="uci"><i class="ti ti-file-text" style="color:var(--accent)"></i></span>
+      <div class="uct" data-i="uc1t">Brief e contesti complessi</div>
+      <div class="ucd" data-i="uc1d"></div>
+    </div>
+    <div class="uc" id="uc2" onclick="toggleUc('uc2')">
+      <span class="uci"><i class="ti ti-calendar-event" style="color:var(--accent)"></i></span>
+      <div class="uct" data-i="uc2t">Riassunti post-meeting</div>
+      <div class="ucd" data-i="uc2d"></div>
+    </div>
+    <div class="uc" id="uc3" onclick="toggleUc('uc3')">
+      <span class="uci"><i class="ti ti-walk" style="color:var(--accent)"></i></span>
+      <div class="uct" data-i="uc3t">Idee in movimento</div>
+      <div class="ucd" data-i="uc3d"></div>
+    </div>
+    <div class="uc" id="uc4" onclick="toggleUc('uc4')">
+      <span class="uci"><i class="ti ti-refresh" style="color:var(--accent)"></i></span>
+      <div class="uct" data-i="uc4t">Iterazioni e correzioni</div>
+      <div class="ucd" data-i="uc4d"></div>
+    </div>
+    <div class="uc" id="uc5" onclick="toggleUc('uc5')">
+      <span class="uci"><i class="ti ti-brain" style="color:var(--accent)"></i></span>
+      <div class="uct" data-i="uc5t">Brainstorming a flusso libero</div>
+      <div class="ucd" data-i="uc5d"></div>
+    </div>
+    <div class="uc" id="uc6" onclick="toggleUc('uc6')">
+      <span class="uci"><i class="ti ti-x" style="color:var(--bad)"></i></span>
+      <div class="uct" data-i="uc6t">Quando NON usare la voce</div>
+      <div class="ucd" data-i="uc6d"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-keyboard"></i><span class="no">03</span><h2 data-i="s3">Scorciatoie per superficie — clicca la tua piattaforma</h2></div>
+  <div class="surfwrap rv">
+    <h3 data-i="surfH">Come attivare la dettatura</h3>
+    <p class="surfhint"><i class="ti ti-hand-click"></i> <span data-i="surfHint">Seleziona la superficie per vedere il metodo di attivazione</span></p>
+    <div class="surftabs">
+      <button class="st" id="st-mobile" onclick="showSurf('mobile')"><i class="ti ti-device-mobile"></i> <span data-i="stMob">Mobile</span></button>
+      <button class="st" id="st-mac" onclick="showSurf('mac')"><i class="ti ti-brand-apple"></i> <span data-i="stMac">Mac Desktop</span></button>
+      <button class="st" id="st-windows" onclick="showSurf('windows')"><i class="ti ti-brand-windows"></i> Windows</button>
+      <button class="st" id="st-office" onclick="showSurf('office')"><i class="ti ti-apps"></i> Office Agents</button>
+    </div>
+
+    <div class="sp" id="sp-mobile">
+      <div class="spcard">
+        <div class="spt"><i class="ti ti-device-mobile" style="color:var(--teal)"></i> <span data-i="moTitle">App Claude — iOS e Android</span></div>
+        <div class="sps" data-i="moSub">Dettatura nativa integrata nell'app · 12 lingue supportate incluso italiano</div>
+        <div class="sblk">
+          <h4 data-i="moB1">Dettatura (Dictate)</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd"><i class="ti ti-microphone" style="font-size:13px"></i> <span data-i="kMic">Microfono</span></span></div>
+            <div class="sdesc" data-i="moD1"></div>
+            <span class="sbadge b-app" data-i="bgInApp">In-App</span>
+          </div>
+        </div>
+        <div class="sblk">
+          <h4 data-i="moB2">Voice Mode (bidirezionale — per B.3)</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd"><i class="ti ti-wave-sine" style="font-size:13px"></i> <span data-i="kWave">Onda sonora</span></span></div>
+            <div class="sdesc" data-i="moD2"></div>
+            <span class="sbadge b-app">Voice Mode</span>
+          </div>
+        </div>
+        <div class="sinline"><i class="ti ti-info-circle"></i> <span data-i="moNote"></span></div>
+      </div>
+    </div>
+
+    <div class="sp" id="sp-mac">
+      <div class="spcard">
+        <div class="spt"><i class="ti ti-brand-apple" style="color:var(--ink)"></i> <span data-i="maTitle">Mac — Claude Desktop e Web</span></div>
+        <div class="sps" data-i="maSub">Due metodi: scorciatoia Claude Desktop (Quick Entry) o dettatura di sistema macOS</div>
+        <div class="sblk">
+          <h4 data-i="maB1">Claude Desktop — Quick Entry (scorciatoia Claude)</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd">Caps Lock</span></div>
+            <div class="sdesc" data-i="maD1"></div>
+            <span class="sbadge b-app">Claude Desktop</span>
+          </div>
+        </div>
+        <div class="sblk">
+          <h4 data-i="maB2">macOS — Dettatura di sistema (funziona su web e ovunque)</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd">Fn</span><span class="ksep">+</span><span class="kbd">Fn</span></div>
+            <div class="sdesc" data-i="maD2"></div>
+            <span class="sbadge b-sys" data-i="bgSysMac">Sistema macOS</span>
+          </div>
+        </div>
+        <div class="sinline"><i class="ti ti-alert-triangle" style="color:var(--agent)"></i> <span data-i-html="maNote"></span></div>
+      </div>
+    </div>
+
+    <div class="sp" id="sp-windows">
+      <div class="spcard">
+        <div class="spt"><i class="ti ti-brand-windows" style="color:var(--blue)"></i> <span data-i="wiTitle">Windows — Dettatura di sistema</span></div>
+        <div class="sps" data-i="wiSub">Dettatura di sistema Windows · funziona su claude.ai web e app desktop</div>
+        <div class="sblk">
+          <h4 data-i="wiB1">Dettatura Windows (qualsiasi campo testo)</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd"><i class="ti ti-brand-windows" style="font-size:13px"></i> Win</span><span class="ksep">+</span><span class="kbd">H</span></div>
+            <div class="sdesc" data-i="wiD1"></div>
+            <span class="sbadge b-sys" data-i="bgSysWin">Sistema Windows</span>
+          </div>
+        </div>
+        <div class="sinline"><i class="ti ti-info-circle"></i> <span data-i="wiNote"></span></div>
+      </div>
+    </div>
+
+    <div class="sp" id="sp-office">
+      <div class="spcard">
+        <div class="spt"><i class="ti ti-apps" style="color:var(--blue)"></i> <span data-i="ofTitle">Office Agents (Microsoft 365)</span></div>
+        <div class="sps" data-i="ofSub">Claude integrato in Word, Excel, Outlook, Teams tramite Office Agents</div>
+        <div class="sblk">
+          <h4 data-i="ofB1">Dettatura nel compositore Office Agent</h4>
+          <div class="sitem">
+            <div class="skeys"><span class="kbd"><i class="ti ti-microphone" style="font-size:13px"></i> <span data-i="kMic2">Microfono</span></span></div>
+            <div class="sdesc" data-i="ofD1"></div>
+            <span class="sbadge b-app">Office Agents</span>
+          </div>
+        </div>
+        <div class="sinline"><i class="ti ti-info-circle"></i> <span data-i="ofNote"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="langs rv" style="margin-top:16px">
+    <h3 data-i="langsH">Lingue supportate dalla dettatura mobile</h3>
+    <div class="lsub" data-i="langsSub">12 lingue disponibili nell'app Claude (iOS e Android)</div>
+    <div class="lpills">
+      <div class="lpill"><span class="fl">🇬🇧</span> <span data-i="lgEn">Inglese</span></div>
+      <div class="lpill it"><span class="fl">🇮🇹</span> <span data-i="lgIt">Italiano</span></div>
+      <div class="lpill"><span class="fl">🇫🇷</span> <span data-i="lgFr">Francese</span></div>
+      <div class="lpill"><span class="fl">🇩🇪</span> <span data-i="lgDe">Tedesco</span></div>
+      <div class="lpill"><span class="fl">🇪🇸</span> <span data-i="lgEs">Spagnolo</span></div>
+      <div class="lpill"><span class="fl">🇵🇹</span> <span data-i="lgPt">Portoghese</span></div>
+      <div class="lpill"><span class="fl">🇯🇵</span> <span data-i="lgJa">Giapponese</span></div>
+      <div class="lpill"><span class="fl">🇰🇷</span> <span data-i="lgKo">Coreano</span></div>
+      <div class="lpill"><span class="fl">🇷🇺</span> <span data-i="lgRu">Russo</span></div>
+      <div class="lpill"><span class="fl">🇺🇦</span> <span data-i="lgUk">Ucraino</span></div>
+      <div class="lpill"><span class="fl">🇹🇷</span> <span data-i="lgTr">Turco</span></div>
+      <div class="lpill"><span class="fl">🇮🇳</span> <span data-i="lgHi">Hindi</span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">04</span><h2 data-i="s4">Perché la voce produce prompt migliori</h2></div>
+  <div class="key rv"><p data-i="keyWhy"></p></div>
+  <div class="rv" style="margin-top:20px">
+    <div class="frw"><div class="fi"><i class="ti ti-writing"></i></div><div class="ft"><strong data-i="why1T"></strong><span data-i="why1S"></span></div></div>
+    <div class="frw"><div class="fi"><i class="ti ti-microphone"></i></div><div class="ft"><strong data-i="why2T"></strong><span data-i="why2S"></span></div></div>
+    <div class="frw"><div class="fi"><i class="ti ti-clock-bolt"></i></div><div class="ft"><strong data-i="why3T"></strong><span data-i="why3S"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">05</span><h2 data-i="s5">Quando usare la voce</h2></div>
+  <div class="wheng rv">
+    <div class="whenb go">
+      <div class="whent"><i class="ti ti-circle-check"></i> <span data-i="useT">Usa la voce quando</span></div>
+      <div class="wi"><i class="ti ti-file-description"></i><span data-i="use1"></span></div>
+      <div class="wi"><i class="ti ti-bulb"></i><span data-i="use2"></span></div>
+      <div class="wi"><i class="ti ti-walk"></i><span data-i="use3"></span></div>
+      <div class="wi"><i class="ti ti-calendar-event"></i><span data-i="use4"></span></div>
+      <div class="wi"><i class="ti ti-refresh"></i><span data-i="use5"></span></div>
+    </div>
+    <div class="whenb no">
+      <div class="whent"><i class="ti ti-circle-x"></i> <span data-i="notT">Non conviene la voce quando</span></div>
+      <div class="wi"><i class="ti ti-code"></i><span data-i="not1"></span></div>
+      <div class="wi"><i class="ti ti-numbers"></i><span data-i="not2"></span></div>
+      <div class="wi"><i class="ti ti-volume-off"></i><span data-i="not3"></span></div>
+      <div class="wi"><i class="ti ti-copy"></i><span data-i="not4"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-octagon"></i><span class="no">06</span><h2 data-i="s6">Equivoci da sfatare</h2></div>
+  <div class="rv">
+    <div class="myth"><div class="mx"><i class="ti ti-ban"></i></div><div class="mt"><span class="wrong" data-i="m1w"></span><span class="right" data-i-html="m1r"></span></div></div>
+    <div class="myth"><div class="mx"><i class="ti ti-ban"></i></div><div class="mt"><span class="wrong" data-i="m2w"></span><span class="right" data-i-html="m2r"></span></div></div>
+    <div class="myth"><div class="mx"><i class="ti ti-ban"></i></div><div class="mt"><span class="wrong" data-i="m3w"></span><span class="right" data-i-html="m3r"></span></div></div>
+    <div class="myth"><div class="mx"><i class="ti ti-ban"></i></div><div class="mt"><span class="wrong" data-i="m4w"></span><span class="right" data-i-html="m4r"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Fallo adesso</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-microphone cpi"></i>
+    <h4 data-i="cpH">Non rimandare a domani.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Dictate: Parlare invece di Scrivere</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Bonus',
+h1:'Dictate: Parlare invece di Scrivere',
+lede:'I prompt dettati sono più ricchi di quelli scritti. Non perché la voce sia magica — ma perché quando parli non ti auto-censuri. Il pensiero esce completo. Claude lavora meglio con pensieri completi.',
+hookH:'Dal bancone',
+hookP:'«Ho notato dopo mesi di uso intensivo: i prompt che scrivo sono peggiori dei prompt che parlo. Quando scrivo mi autocensuro, semplifico, accorcio. Quando parlo, spiego davvero quello che voglio. E Claude risponde meglio.»',
+s1:'Due cose diverse: clicca per scoprire',
+cmpH:'Dictate vs Voice Mode',
+cmpHint:'Clicca su una delle due schede per vedere i dettagli',
+tabDt:'Dictate (Dettatura)',tabDs:'Tu parli → Claude risponde in testo',
+tabVt:'Voice Mode',tabVs:'Dialogo bidirezionale: Claude parla',
+cdL1:'Cosa fa',cdV1:'Converte la tua voce in testo nel campo di input. Claude legge il testo e risponde <strong>per iscritto</strong>.',
+cdL2:'Claude parla?',cdV2:'No. Claude risponde solo in testo. Puoi leggere, copiare, modificare la risposta.',
+cdL3:'Dove funziona',cdV3:'Mobile (app Claude, iOS/Android) · Desktop Mac (Claude Desktop: Caps Lock) · Windows (Win+H, dettatura di sistema) · Office Agents (icona microfono)',
+cdL4:'Lingue',cdV4:'12 lingue su mobile, incluso <strong>italiano</strong>: EN, FR, DE, HI, IT, JA, KO, PT, RU, ES, TR, UK.',
+cdL5:'Uso ideale',cdV5:'Brief complessi · prompt ricchi di contesto · catturare idee in movimento · riassunti post-meeting.',
+cdL6:'Piani',cdV6:'Disponibile su tutti i piani Claude.',
+cdDiv:'Il testo dettato entra nel campo prompt. Claude lo riceve come testo puro — non sa se è stato scritto o dettato.',
+cvL1:'Cosa fa',cvV1:'Conversazione bidirezionale: tu parli, Claude risponde <strong>a voce</strong> con sintesi vocale. Come parlare con un collega.',
+cvL2:'Claude parla?',cvV2:'Sì. Claude ha una voce sintetica (5 voci: Mellow, Airy, Buttery, Glassy, Rounded). La risposta è vocale, non testuale.',
+cvL3:'Dove funziona',cvV3:'Mobile (app Claude iOS/Android) · Claude.ai web. Non disponibile su Claude Desktop.',
+cvL4:'Lingue',cvV4:'Inglese (5 voci). Espansione a 18+ lingue in beta (maggio 2026) — rollout non ancora completato a giugno 2026.',
+cvL5:'Uso ideale',cvV5:'Conversazioni in movimento · brainstorming hands-free · ragionare su un problema senza aprire il laptop.',
+cvL6:'Piani',cvV6:'Disponibile su tutti i piani Claude (da inizio 2026; era solo Pro in beta). Le conversazioni vocali contano verso i limiti del piano.',
+cvDiv:'Voice Mode è oggetto del Bonus B.3 — qui ci concentriamo sulla dettatura.',
+flowH:'Come funziona il flusso nei due casi',
+flowLd:'Dictate',
+fd1:'Parli',fd2:'Testo nel prompt',fd3:'Invii',fd4:'Claude risponde in testo',
+fv1:'Parli',fv2:'Claude elabora',fv3:'Claude risponde a voce',fv4:'Dialogo continua',
+s2:'Quando conviene dettare — clicca sui casi',
+uc1t:'Brief e contesti complessi',
+uc1d:'Invece di scrivere "Scrivimi un\'email di proposta" (5 secondi, prompt povero), detti per 60 secondi tutto il contesto: cliente, situazione, obiettivo, tono preferito. Il prompt risultante è 10x più ricco.',
+uc2t:'Riassunti post-meeting',
+uc2d:'Appena finisci una riunione, detti il riassunto mentre lo ricordi ancora vivo: chi ha detto cosa, le decisioni prese, i prossimi passi. Claude come "registratore intelligente che struttura".',
+uc3t:'Idee in movimento',
+uc3d:'In camminata, in macchina ferma, tra un impegno e l\'altro: apri Claude su mobile, tocca il microfono e detti l\'idea prima che svanisca. Claude la riceve come testo strutturato.',
+uc4t:'Iterazioni e correzioni',
+uc4d:'Spiegare a voce perché un output non va è più rapido che scrivere. "Non è questo che intendevo, il tono è troppo formale e manca il punto X" — 5 secondi parlati vs 30 secondi scritti.',
+uc5t:'Brainstorming a flusso libero',
+uc5d:'Hai un\'idea confusa per un progetto? Parla senza filtri: tutto quello che hai in testa, come viene. Claude organizza il caos in struttura. Funziona meglio se non editi mentre parli.',
+uc6t:'Quando NON usare la voce',
+uc6d:'Evita la dettatura per: codice e URL da incollare · numeri precisi e dati strutturati · copia-incolla da altra fonte · ambienti con rumore di fondo elevato.',
+s3:'Scorciatoie per superficie — clicca la tua piattaforma',
+surfH:'Come attivare la dettatura',
+surfHint:'Seleziona la superficie per vedere il metodo di attivazione',
+stMob:'Mobile',stMac:'Mac Desktop',
+moTitle:'App Claude — iOS e Android',
+moSub:'Dettatura nativa integrata nell\'app · 12 lingue supportate incluso italiano',
+moB1:'Dettatura (Dictate)',kMic:'Microfono',
+moD1:'Tocca l\'icona microfono nella barra di input → parla → il testo appare in tempo reale → invia normalmente.',
+bgInApp:'In-App',
+moB2:'Voice Mode (bidirezionale — per B.3)',kWave:'Onda sonora',
+moD2:'Icona onda sonora in basso a destra → Claude ascolta e risponde a voce. Modalità hands-free o push-to-talk (beta).',
+moNote:'Puoi passare da testo a voce e viceversa nella stessa conversazione senza perdere il contesto.',
+maTitle:'Mac — Claude Desktop e Web',
+maSub:'Due metodi: scorciatoia Claude Desktop (Quick Entry) o dettatura di sistema macOS',
+maB1:'Claude Desktop — Quick Entry (scorciatoia Claude)',
+maD1:'Premi Caps Lock → inizia a dettare → Caps Lock di nuovo per fermare. Trascrizione in tempo reale nel campo testo di Claude Desktop.',
+maB2:'macOS — Dettatura di sistema (funziona su web e ovunque)',
+maD2:'Doppio click sul tasto Fn → attiva la dettatura di sistema macOS. Funziona in qualsiasi campo testo, incluso claude.ai nel browser.',
+bgSysMac:'Sistema macOS',
+maNote:'<strong>Caps Lock</strong> è la scorciatoia ufficiale di Claude Desktop (Quick Entry feature). <strong>Fn+Fn</strong> è la dettatura di sistema macOS — sono due cose distinte. Entrambe funzionano.',
+wiTitle:'Windows — Dettatura di sistema',
+wiSub:'Dettatura di sistema Windows · funziona su claude.ai web e app desktop',
+wiB1:'Dettatura Windows (qualsiasi campo testo)',
+wiD1:'Windows + H apre il pannello dettatura di Windows. Posiziona il cursore nel campo di input di Claude, poi attiva la dettatura.',
+bgSysWin:'Sistema Windows',
+wiNote:'Claude riceve solo il testo trascritto dal sistema operativo — non sa se l\'hai scritto o dettato. La qualità del riconoscimento dipende dal microfono e dall\'ambiente.',
+ofTitle:'Office Agents (Microsoft 365)',
+ofSub:'Claude integrato in Word, Excel, Outlook, Teams tramite Office Agents',
+ofB1:'Dettatura nel compositore Office Agent',kMic2:'Microfono',
+ofD1:'Icona microfono nel compositore dell\'Office Agent → parla → il testo compare live nel campo prompt.',
+ofNote:'Il flusso è identico al mobile: parli, il testo appare, poi invii. Claude risponde in testo all\'interno del documento o del pannello Office Agent.',
+langsH:'Lingue supportate dalla dettatura mobile',
+langsSub:'12 lingue disponibili nell\'app Claude (iOS e Android)',
+lgEn:'Inglese',lgIt:'Italiano',lgFr:'Francese',lgDe:'Tedesco',lgEs:'Spagnolo',lgPt:'Portoghese',lgJa:'Giapponese',lgKo:'Coreano',lgRu:'Russo',lgUk:'Ucraino',lgTr:'Turco',lgHi:'Hindi',
+s4:'Perché la voce produce prompt migliori',
+keyWhy:'«Parlate a Claude come parlereste a un collega intelligente che deve capire il contesto completo. Scrivete a Claude come scrivete a Google. La differenza nell\'output è enorme.»',
+why1T:'Digitando ti auto-censuri',why1S:'Quando scrivi, il cervello fa editing in tempo reale. Semplifichi, tagli, riduci. Il prompt è più breve ma meno ricco di contesto per Claude.',
+why2T:'Parlando pensi a flusso libero',why2S:'Il pensiero esce nella sua completezza. Aggiungi sfumature, contesto, dettagli che scrivendo avresti saltato. Claude ha più materiale su cui lavorare.',
+why3T:'~120 wpm vs ~40 wpm',why3S:'La dettatura è circa 3x più veloce della digitazione. In 30 secondi a voce dici quello che in 2 minuti non avresti finito di scrivere.',
+s5:'Quando usare la voce',
+useT:'Usa la voce quando',
+use1:'Il prompt è lungo e richiede molto contesto da spiegare',
+use2:'Stai facendo brainstorming e vuoi uscire idee velocemente',
+use3:'Sei in movimento e vuoi catturare un\'idea prima che svanisca',
+use4:'Vuoi dettare un riassunto di riunione mentre lo ricordi',
+use5:'Devi spiegare perché un output non ti convince',
+notT:'Non conviene la voce quando',
+not1:'Il prompt contiene codice, URL o dati strutturati precisi',
+not2:'Servono numeri esatti, date, nomi da non sbagliare',
+not3:'Sei in un ambiente rumoroso o non puoi parlare',
+not4:'Devi incollare testo da un\'altra fonte nel prompt',
+s6:'Equivoci da sfatare',
+m1w:'"Parlare a Claude significa usare Voice Mode"',
+m1r:'No: puoi dettare un prompt e ricevere risposta scritta (Dictate). <strong>Voice Mode aggiunge la risposta vocale di Claude</strong> — sono due feature separate con casi d\'uso diversi.',
+m2w:'"La dettatura funziona solo in inglese"',
+m2r:'Falso: <strong>12 lingue su mobile, incluso italiano</strong>. Su Mac con Claude Desktop la scorciatoia è Caps Lock; Fn+Fn è la dettatura di sistema macOS (anch\'essa funziona).',
+m3w:'"Con Windows + H, Claude \'sa\' che sto dettando"',
+m3r:'No: <strong>Claude riceve solo il testo trascritto</strong> dal sistema operativo. Non ha modo di sapere se il testo è stato scritto o dettato.',
+m4w:'"Su Mac la scorciatoia per Claude Desktop è Fn+Fn"',
+m4r:'Attenzione: <strong>Caps Lock</strong> è la scorciatoia della funzione Quick Entry di Claude Desktop. <strong>Fn+Fn</strong> è la dettatura di sistema macOS — entrambe funzionano, ma sono cose diverse.',
+s7:'Fallo adesso',
+cpH:'Non rimandare a domani.',
+cpP:'Se hai il telefono a portata, apri Claude, tocca il microfono e detta una domanda qualsiasi. L\'obiettivo è fare la prima volta <strong>adesso</strong>.<br><br>Se sei al desktop, apri Claude Desktop (Mac: Caps Lock) o claude.ai web (Windows: Win+H) e detti la prossima cosa che scriveresti.',
+foot:'Morfeus — Dictate: Parlare invece di Scrivere'
+},
+en:{
+kicker:'Bonus',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Bonus',
+h1:'Dictate: Speaking Instead of Writing',
+lede:'Dictated prompts are richer than written ones. Not because voice is magic — but because when you speak, you don\'t self-censor. The thought comes out complete. Claude works better with complete thoughts.',
+hookH:'From the counter',
+hookP:'"After months of heavy use I noticed: the prompts I write are worse than the prompts I speak. When I write I self-censor, simplify, shorten. When I speak, I actually explain what I want. And Claude responds better."',
+s1:'Two different things: click to discover',
+cmpH:'Dictate vs Voice Mode',
+cmpHint:'Click one of the two tabs to see the details',
+tabDt:'Dictate',tabDs:'You speak → Claude replies in text',
+tabVt:'Voice Mode',tabVs:'Two-way dialogue: Claude speaks',
+cdL1:'What it does',cdV1:'Converts your voice into text in the input field. Claude reads the text and replies <strong>in writing</strong>.',
+cdL2:'Does Claude speak?',cdV2:'No. Claude replies only in text. You can read, copy and edit the answer.',
+cdL3:'Where it works',cdV3:'Mobile (Claude app, iOS/Android) · Mac Desktop (Claude Desktop: Caps Lock) · Windows (Win+H, system dictation) · Office Agents (microphone icon)',
+cdL4:'Languages',cdV4:'12 languages on mobile, including <strong>Italian</strong>: EN, FR, DE, HI, IT, JA, KO, PT, RU, ES, TR, UK.',
+cdL5:'Best for',cdV5:'Complex briefs · context-rich prompts · capturing ideas on the move · post-meeting summaries.',
+cdL6:'Plans',cdV6:'Available on all Claude plans.',
+cdDiv:'The dictated text enters the prompt field. Claude receives it as plain text — it doesn\'t know whether it was typed or dictated.',
+cvL1:'What it does',cvV1:'Two-way conversation: you speak, Claude replies <strong>aloud</strong> with speech synthesis. Like talking to a colleague.',
+cvL2:'Does Claude speak?',cvV2:'Yes. Claude has a synthetic voice (5 voices: Mellow, Airy, Buttery, Glassy, Rounded). The answer is spoken, not written.',
+cvL3:'Where it works',cvV3:'Mobile (Claude app iOS/Android) · Claude.ai web. Not available on Claude Desktop.',
+cvL4:'Languages',cvV4:'English (5 voices). Expansion to 18+ languages in beta (May 2026) — rollout not yet completed as of June 2026.',
+cvL5:'Best for',cvV5:'Conversations on the move · hands-free brainstorming · reasoning through a problem without opening the laptop.',
+cvL6:'Plans',cvV6:'Available on all Claude plans (since early 2026; it was Pro-only in beta). Voice conversations count toward your plan limits.',
+cvDiv:'Voice Mode is covered in Bonus B.3 — here we focus on dictation.',
+flowH:'How the flow works in the two cases',
+flowLd:'Dictate',
+fd1:'You speak',fd2:'Text in the prompt',fd3:'You send',fd4:'Claude replies in text',
+fv1:'You speak',fv2:'Claude processes',fv3:'Claude replies aloud',fv4:'Dialogue continues',
+s2:'When dictating is worth it — click the cases',
+uc1t:'Briefs and complex contexts',
+uc1d:'Instead of writing "Write me a proposal email" (5 seconds, poor prompt), you dictate the whole context for 60 seconds: client, situation, goal, preferred tone. The resulting prompt is 10x richer.',
+uc2t:'Post-meeting summaries',
+uc2d:'As soon as a meeting ends, you dictate the summary while it\'s still fresh: who said what, the decisions made, the next steps. Claude as an "intelligent recorder that structures".',
+uc3t:'Ideas on the move',
+uc3d:'While walking, parked in the car, between commitments: open Claude on mobile, tap the microphone and dictate the idea before it fades. Claude receives it as structured text.',
+uc4t:'Iterations and corrections',
+uc4d:'Explaining aloud why an output is off is faster than writing. "That\'s not what I meant, the tone is too formal and point X is missing" — 5 seconds spoken vs 30 seconds written.',
+uc5t:'Free-flow brainstorming',
+uc5d:'Got a fuzzy idea for a project? Speak with no filters: everything in your head, as it comes. Claude organizes the chaos into structure. It works better if you don\'t edit while you speak.',
+uc6t:'When NOT to use voice',
+uc6d:'Avoid dictation for: code and URLs to paste · precise numbers and structured data · copy-paste from another source · environments with high background noise.',
+s3:'Shortcuts by surface — click your platform',
+surfH:'How to activate dictation',
+surfHint:'Select the surface to see the activation method',
+stMob:'Mobile',stMac:'Mac Desktop',
+moTitle:'Claude App — iOS and Android',
+moSub:'Native dictation built into the app · 12 supported languages including Italian',
+moB1:'Dictation (Dictate)',kMic:'Microphone',
+moD1:'Tap the microphone icon in the input bar → speak → the text appears in real time → send normally.',
+bgInApp:'In-App',
+moB2:'Voice Mode (two-way — for B.3)',kWave:'Sound wave',
+moD2:'Sound-wave icon at the bottom right → Claude listens and replies aloud. Hands-free or push-to-talk mode (beta).',
+moNote:'You can switch from text to voice and back within the same conversation without losing context.',
+maTitle:'Mac — Claude Desktop and Web',
+maSub:'Two methods: Claude Desktop shortcut (Quick Entry) or macOS system dictation',
+maB1:'Claude Desktop — Quick Entry (Claude shortcut)',
+maD1:'Press Caps Lock → start dictating → Caps Lock again to stop. Real-time transcription in the Claude Desktop text field.',
+maB2:'macOS — System dictation (works on web and everywhere)',
+maD2:'Double-press the Fn key → activates macOS system dictation. Works in any text field, including claude.ai in the browser.',
+bgSysMac:'macOS System',
+maNote:'<strong>Caps Lock</strong> is the official Claude Desktop shortcut (Quick Entry feature). <strong>Fn+Fn</strong> is macOS system dictation — they are two distinct things. Both work.',
+wiTitle:'Windows — System dictation',
+wiSub:'Windows system dictation · works on claude.ai web and the desktop app',
+wiB1:'Windows dictation (any text field)',
+wiD1:'Windows + H opens the Windows dictation panel. Place the cursor in Claude\'s input field, then activate dictation.',
+bgSysWin:'Windows System',
+wiNote:'Claude only receives the text transcribed by the operating system — it doesn\'t know whether you typed it or dictated it. Recognition quality depends on the microphone and the environment.',
+ofTitle:'Office Agents (Microsoft 365)',
+ofSub:'Claude integrated into Word, Excel, Outlook, Teams via Office Agents',
+ofB1:'Dictation in the Office Agent composer',kMic2:'Microphone',
+ofD1:'Microphone icon in the Office Agent composer → speak → the text appears live in the prompt field.',
+ofNote:'The flow is identical to mobile: you speak, the text appears, then you send. Claude replies in text within the document or the Office Agent panel.',
+langsH:'Languages supported by mobile dictation',
+langsSub:'12 languages available in the Claude app (iOS and Android)',
+lgEn:'English',lgIt:'Italian',lgFr:'French',lgDe:'German',lgEs:'Spanish',lgPt:'Portuguese',lgJa:'Japanese',lgKo:'Korean',lgRu:'Russian',lgUk:'Ukrainian',lgTr:'Turkish',lgHi:'Hindi',
+s4:'Why voice produces better prompts',
+keyWhy:'"Talk to Claude the way you\'d talk to an intelligent colleague who needs to understand the full context. Write to Claude the way you write to Google. The difference in output is enormous."',
+why1T:'Typing, you self-censor',why1S:'When you write, the brain edits in real time. You simplify, cut, trim. The prompt is shorter but poorer in context for Claude.',
+why2T:'Speaking, you think free-flow',why2S:'The thought comes out in full. You add nuance, context, details you would have skipped while writing. Claude has more material to work with.',
+why3T:'~120 wpm vs ~40 wpm',why3S:'Dictation is roughly 3x faster than typing. In 30 seconds aloud you say what you wouldn\'t have finished writing in 2 minutes.',
+s5:'When to use voice',
+useT:'Use voice when',
+use1:'The prompt is long and requires a lot of context to explain',
+use2:'You\'re brainstorming and want to get ideas out fast',
+use3:'You\'re on the move and want to capture an idea before it fades',
+use4:'You want to dictate a meeting summary while you remember it',
+use5:'You need to explain why an output doesn\'t convince you',
+notT:'Voice isn\'t worth it when',
+not1:'The prompt contains code, URLs or precise structured data',
+not2:'You need exact numbers, dates, names you can\'t get wrong',
+not3:'You\'re in a noisy environment or you can\'t speak',
+not4:'You need to paste text from another source into the prompt',
+s6:'Myths to bust',
+m1w:'"Talking to Claude means using Voice Mode"',
+m1r:'No: you can dictate a prompt and get a written reply (Dictate). <strong>Voice Mode adds Claude\'s spoken reply</strong> — they\'re two separate features with different use cases.',
+m2w:'"Dictation only works in English"',
+m2r:'False: <strong>12 languages on mobile, including Italian</strong>. On Mac with Claude Desktop the shortcut is Caps Lock; Fn+Fn is macOS system dictation (which also works).',
+m3w:'"With Windows + H, Claude \'knows\' I\'m dictating"',
+m3r:'No: <strong>Claude only receives the transcribed text</strong> from the operating system. It has no way of knowing whether the text was typed or dictated.',
+m4w:'"On Mac the Claude Desktop shortcut is Fn+Fn"',
+m4r:'Careful: <strong>Caps Lock</strong> is the shortcut for Claude Desktop\'s Quick Entry feature. <strong>Fn+Fn</strong> is macOS system dictation — both work, but they\'re different things.',
+s7:'Do it now',
+cpH:'Don\'t put it off to tomorrow.',
+cpP:'If your phone is within reach, open Claude, tap the microphone and dictate any question. The goal is to do it for the first time <strong>now</strong>.<br><br>If you\'re at the desktop, open Claude Desktop (Mac: Caps Lock) or claude.ai web (Windows: Win+H) and dictate the next thing you would have written.',
+foot:'Morfeus — Dictate: Speaking Instead of Writing'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+function showCmp(m){
+  ['d','v'].forEach(function(k){
+    var panel=document.getElementById('panel-'+k),tab=document.getElementById('tab-'+k);
+    if(k===m){
+      if(panel.classList.contains('show')&&tab.classList.contains('on-'+k)){panel.classList.remove('show');tab.classList.remove('on-'+k);}
+      else{panel.classList.add('show');tab.classList.add('on-'+k);}
+    }else{panel.classList.remove('show');tab.classList.remove('on-d','on-v');}
+  });
+}
+function toggleUc(id){
+  var card=document.getElementById(id),wasOpen=card.classList.contains('on');
+  document.querySelectorAll('.uc').forEach(function(c){c.classList.remove('on')});
+  if(!wasOpen)card.classList.add('on');
+}
+function showSurf(id){
+  ['mobile','mac','windows','office'].forEach(function(s){
+    var panel=document.getElementById('sp-'+s),tab=document.getElementById('st-'+s);
+    if(s===id){
+      if(panel.classList.contains('show')){panel.classList.remove('show');tab.classList.remove('on');}
+      else{panel.classList.add('show');tab.classList.add('on');}
+    }else{panel.classList.remove('show');tab.classList.remove('on');}
+  });
+}
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

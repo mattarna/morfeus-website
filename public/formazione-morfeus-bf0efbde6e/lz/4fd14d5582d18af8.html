@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'AI Champion e il modello organizzativo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* who is the champion: compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmpc .rh{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;margin-bottom:12px}
+.cmpc .rh i{font-size:20px}
+.cmpc.bad .rh{color:var(--bad)}.cmpc.good .rh{color:var(--good)}
+.cmpc p{font-size:13.5px;color:var(--ink-2);line-height:1.55}.cmpc p strong{color:var(--ink)}
+
+/* org chart: innovation vs execution */
+.org{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.org-champ{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;margin-bottom:8px}
+.org-champ .oc{width:64px;height:64px;border-radius:16px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:var(--sh)}
+.org-champ .ocn{font-size:14px;font-weight:700;color:var(--agent)}
+.org-champ .ocr{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.org-flow{display:flex;flex-direction:column;align-items:center}
+.org-arrow{color:var(--ink-3);font-size:22px;margin:2px 0}
+.org-arrow .albl{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;color:var(--agent);display:block;text-align:center;margin-top:-2px}
+.org-team{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;margin-top:6px}
+.org-mem{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:13px 8px;text-align:center}
+.org-mem .omi{width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px}
+.org-mem .omn{font-size:11.5px;font-weight:600;color:var(--ink-2);line-height:1.2}
+.org-mem .omr{font-family:var(--mono);font-size:9.5px;color:var(--ink-3)}
+.orgswitch{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px;gap:4px;max-width:460px;margin:0 auto 20px}
+.orgswitch button{flex:1;background:transparent;border:none;border-radius:30px;padding:10px 8px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink-3);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.orgswitch button i{font-size:15px}
+.orgswitch button.on{color:#fff}
+.orgswitch button[data-or="innovation"].on{background:var(--agent)}
+.orgswitch button[data-or="execution"].on{background:var(--accent)}
+.orgcap{font-size:14px;color:var(--ink-2);text-align:center;margin-top:16px;line-height:1.55;max-width:560px;margin-left:auto;margin-right:auto}
+.orgcap strong{color:var(--ink)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+
+/* time allocation slider-style bar */
+.time{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.timeq{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.timeq button{flex:1;min-width:200px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r-l);padding:14px 16px;cursor:pointer;transition:.18s;text-align:left;font-family:inherit}
+.timeq button:hover{border-color:var(--line-2)}
+.timeq button.on[data-tm="extra"]{border-color:var(--bad);background:var(--bad-soft)}
+.timeq button.on[data-tm="balance"]{border-color:var(--good);background:var(--good-soft)}
+.timeq .tqt{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.timeq button[data-tm="extra"] .tqt i{color:var(--bad)}
+.timeq button[data-tm="balance"] .tqt i{color:var(--good)}
+.timeq .tqs{font-size:12.5px;color:var(--ink-2)}
+.timebar{display:flex;height:46px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);margin-bottom:12px}
+.timeseg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;transition:.4s;white-space:nowrap;overflow:hidden}
+.timeseg.work{background:var(--ink-3)}
+.timeseg.extra{background:var(--bad)}
+.timeseg.bal{background:var(--good)}
+.timeseg.study{background:var(--accent)}
+.timeout{font-size:14px;color:var(--ink-2);line-height:1.55;padding:14px 16px;border-radius:var(--r);background:var(--bg-2);border-left:3px solid var(--accent)}
+.timeout.warn{border-left-color:var(--bad)}
+.timeout strong{color:var(--ink)}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:20px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:24px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.org-team{grid-template-columns:repeat(2,1fr)}.timeq button{min-width:100%}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.orgswitch,.timeq{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.org,.time,.card3,.cp,.key,.timeout{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A7.7</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Organizzazione intelligente</div>
+  <h1 class="rv" data-i="h1">L'AI Champion e il modello organizzativo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-user-star"></i><span class="no">01</span><h2 data-i="s1">Chi guida l'adozione: non l'IT</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="champIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad">
+      <div class="rh"><i class="ti ti-x"></i> <span data-i="badH">Non è questo</span></div>
+      <p data-i-html="badP"></p>
+    </div>
+    <div class="cmpc good">
+      <div class="rh"><i class="ti ti-check"></i> <span data-i="goodH">È questo</span></div>
+      <p data-i-html="goodP"></p>
+    </div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-sitemap"></i><span class="no">02</span><h2 data-i="s2">L'organigramma AI: innovazione vs esecuzione</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="orgIntro"></p>
+  <div class="org rv">
+    <div class="orgswitch">
+      <button data-or="innovation" class="on" onclick="setOrg('innovation')"><i class="ti ti-bulb"></i> <span data-i="orgInnBtn">Innovazione</span></button>
+      <button data-or="execution" onclick="setOrg('execution')"><i class="ti ti-checklist"></i> <span data-i="orgExeBtn">Esecuzione</span></button>
+    </div>
+    <div class="org-flow">
+      <div class="org-champ">
+        <div class="oc"><i class="ti ti-user-star"></i></div>
+        <div class="ocn" data-i="orgChampN">AI Champion</div>
+        <div class="ocr" data-i="orgChampR">uno per reparto</div>
+      </div>
+      <div class="org-arrow"><i class="ti ti-arrow-down"></i><span class="albl" id="orgArrowLbl"></span></div>
+      <div class="org-team" id="orgTeam"></div>
+    </div>
+    <p class="orgcap" id="orgCap"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clock-hour-4"></i><span class="no">03</span><h2 data-i="s3">Il tempo risparmiato: dove va davvero</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="timeIntro"></p>
+  <div class="time rv">
+    <div class="timeq">
+      <button data-tm="extra" onclick="setTime('extra')"><div class="tqt"><i class="ti ti-pile"></i> <span data-i="tqExtraT">Lo carico di lavoro extra</span></div><div class="tqs" data-i="tqExtraS">"Hanno più tempo, gli do più task"</div></button>
+      <button data-tm="balance" class="on" onclick="setTime('balance')"><div class="tqt"><i class="ti ti-heart-handshake"></i> <span data-i="tqBalT">Lo restituisco alla persona</span></div><div class="tqs" data-i="tqBalS">"Work-life balance + studio AI"</div></button>
+    </div>
+    <div class="timebar" id="timeBar"></div>
+    <div class="timeout" id="timeOut"></div>
+  </div>
+  <div class="note amber rv" style="margin-top:14px"><div class="ni"><i class="ti ti-flame"></i></div><div><h4 data-i="burnH">La trappola che uccide l'adozione</h4><p data-i-html="burnP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-school"></i><span class="no">04</span><h2 data-i="s4">Le 4 ore a settimana che alimentano il sistema</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-flask"></i></div><h4 data-i="h1H">Sperimenta</h4><p data-i="h1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-book"></i></div><h4 data-i="h2H">Studia</h4><p data-i="h2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-refresh"></i></div><h4 data-i="h3H">Aggiorna le procedure</h4><p data-i="h3P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-share"></i></div><h4 data-i="h4H">Distribuisce</h4><p data-i="h4P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Chi sperimenta, chi esegue</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — L'AI Champion e il modello organizzativo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A7.7',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Organizzazione intelligente',
+h1:'L\'AI Champion e il modello organizzativo',
+lede:'Hai gli agenti, i team, i dipendenti persistenti e la governance per scalarli. Resta la domanda più umana di tutte: chi, nelle persone in carne e ossa, guida questo cambiamento ogni giorno — e cosa succede al tempo che l\'AI libera. È qui che il Modulo A7 si chiude.',
+s1:'Chi guida l\'adozione: non l\'IT',
+champIntro:'L\'errore classico è affidare l\'AI al reparto IT, o lasciare che "tutti provino tutto". Il modello che funziona è un altro: una figura precisa, per ogni reparto, che fa da ponte tra ciò che l\'AI può fare e ciò che il reparto fa ogni giorno.',
+badH:'Non è questo',
+badP:'<strong>Non l\'IT</strong> a cui delegare tutto, e <strong>non "tutti provano tutto"</strong>. Se ogni persona sperimenta da sola, hai duplicazione, caos di metodi e nessuna procedura condivisa: l\'energia si disperde e l\'adozione si ferma.',
+goodH:'È questo',
+goodP:'Una persona <strong>"smanettone" per reparto</strong>: chi ha già naturale curiosità per gli strumenti. Sperimenta, capisce cosa funziona, <strong>aggiorna le procedure AI</strong> e le distribuisce ai colleghi, che le eseguono.',
+q1:'«L\'AI Champion non è l\'IT: è una persona smanettone per reparto che sperimenta, aggiorna le procedure e le passa ai colleghi che le eseguono.»',
+s2:'L\'organigramma AI: innovazione vs esecuzione',
+orgIntro:'Il modello separa <strong>due funzioni</strong> che spesso vengono confuse: chi <strong>innova</strong> (cerca, prova, sbaglia, scopre) e chi <strong>esegue</strong> (applica procedure già validate). Usa lo switch per vedere i due lati.',
+orgInnBtn:'Innovazione',orgExeBtn:'Esecuzione',
+orgChampN:'AI Champion',orgChampR:'uno per reparto',
+s3:'Il tempo risparmiato: dove va davvero',
+timeIntro:'L\'AI libera ore di lavoro. Qui si gioca il successo o il fallimento dell\'adozione, e dipende da una sola scelta del management. Prova le due strade.',
+tqExtraT:'Lo carico di lavoro extra',tqExtraS:'"Hanno più tempo, gli do più task"',
+tqBalT:'Lo restituisco alla persona',tqBalS:'"Work-life balance + studio AI"',
+burnH:'La trappola che uccide l\'adozione',
+burnP:'Caricare il tempo risparmiato come lavoro extra è la mossa più intuitiva e la più sbagliata: <strong>brucia le persone</strong> e uccide l\'adozione. Chi vede che "essere più efficiente con l\'AI = più carico" smette di esserlo. L\'efficienza punita non si ripete.',
+s4:'Le 4 ore a settimana che alimentano il sistema',
+h1H:'Sperimenta',h1P:'Prova nuovi tool, nuovi prompt, nuovi flussi. È il laboratorio dove nascono le procedure che poi tutti useranno.',
+h2H:'Studia',h2P:'Si tiene aggiornato su un campo che cambia ogni settimana. Senza studio continuo, le procedure invecchiano in fretta.',
+h3H:'Aggiorna le procedure',h3P:'Trasforma ciò che funziona in una procedura chiara e ripetibile — pronta perché i colleghi la eseguano senza dover reinventare.',
+h4H:'Distribuisce',h4P:'Porta il metodo agli altri: forma, condivide, risponde alle domande. L\'innovazione di uno diventa esecuzione di tutti.',
+s5:'Checkpoint',
+cpH:'Chi sperimenta, chi esegue',
+cpP:'Il modello organizzativo AI sta in due regole: una persona per reparto innova e distribuisce, gli altri eseguono; e il tempo che l\'AI libera torna alla persona, non al carico. Rompi una delle due e l\'adozione si spegne.',
+cpQ:'Nel tuo reparto, chi è già lo "smanettone" naturale — quello che prova le cose per curiosità? E quando l\'AI ti farà risparmiare le prime ore, dove andranno: a più task, o a studio e respiro?',
+cpNote:'Regola d\'oro: separa innovazione da esecuzione, e non punire mai l\'efficienza caricandola di lavoro.',
+bridge:'Con questo si chiude il <b>Modulo A7</b>: dall\'agente singolo ai team, ai dipendenti persistenti, alla governance che li scala, fino alle persone che li guidano. Hai il quadro completo dell\'organizzazione intelligente — <b>la macchina e chi la conduce</b>.',
+foot:'Morfeus — L\'AI Champion e il modello organizzativo'
+},
+en:{
+kicker:'Lesson A7.7',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Intelligent organization',
+h1:'The AI Champion and the org model',
+lede:'You have the agents, the teams, the persistent employees and the governance to scale them. The most human question remains: who, among real people, leads this change every day — and what happens to the time AI frees up. This is where Module A7 closes.',
+s1:'Who leads adoption: not IT',
+champIntro:'The classic mistake is to hand AI to the IT department, or to let "everyone try everything". The model that works is different: one precise figure, per department, bridging what AI can do and what the department does every day.',
+badH:'Not this',
+badP:'<strong>Not IT</strong> to delegate everything to, and <strong>not "everyone tries everything"</strong>. If each person experiments alone, you get duplication, a chaos of methods and no shared procedure: energy scatters and adoption stalls.',
+goodH:'This',
+goodP:'A <strong>"tinkerer" per department</strong>: someone with a natural curiosity for tools. They experiment, figure out what works, <strong>update the AI procedures</strong> and distribute them to colleagues, who execute them.',
+q1:'"The AI Champion isn\'t IT: it\'s a tinkerer per department who experiments, updates the procedures and hands them to colleagues who execute them."',
+s2:'The AI org chart: innovation vs execution',
+orgIntro:'The model separates <strong>two functions</strong> often confused: those who <strong>innovate</strong> (search, try, fail, discover) and those who <strong>execute</strong> (apply already-validated procedures). Use the switch to see both sides.',
+orgInnBtn:'Innovation',orgExeBtn:'Execution',
+orgChampN:'AI Champion',orgChampR:'one per department',
+s3:'The time saved: where it really goes',
+timeIntro:'AI frees up hours of work. This is where adoption succeeds or fails, and it hinges on a single management choice. Try both paths.',
+tqExtraT:'Load it as extra work',tqExtraS:'"They have more time, I give more tasks"',
+tqBalT:'Give it back to the person',tqBalS:'"Work-life balance + AI study"',
+burnH:'The trap that kills adoption',
+burnP:'Loading the saved time as extra work is the most intuitive move and the most wrong: it <strong>burns people out</strong> and kills adoption. Anyone who sees "being more efficient with AI = more load" stops being efficient. Punished efficiency doesn\'t repeat.',
+s4:'The 4 hours a week that feed the system',
+h1H:'Experiments',h1P:'Tries new tools, new prompts, new flows. It\'s the lab where the procedures everyone will later use are born.',
+h2H:'Studies',h2P:'Stays current in a field that changes every week. Without continuous study, procedures age fast.',
+h3H:'Updates procedures',h3P:'Turns what works into a clear, repeatable procedure — ready for colleagues to execute without reinventing it.',
+h4H:'Distributes',h4P:'Brings the method to the others: trains, shares, answers questions. One person\'s innovation becomes everyone\'s execution.',
+s5:'Checkpoint',
+cpH:'Who experiments, who executes',
+cpP:'The AI org model rests on two rules: one person per department innovates and distributes, the others execute; and the time AI frees goes back to the person, not to the workload. Break either and adoption dies.',
+cpQ:'In your department, who is already the natural "tinkerer" — the one who tries things out of curiosity? And when AI saves you those first hours, where will they go: into more tasks, or into study and breathing room?',
+cpNote:'Golden rule: separate innovation from execution, and never punish efficiency by loading it with more work.',
+bridge:'This closes <b>Module A7</b>: from the single agent to teams, to persistent employees, to the governance that scales them, all the way to the people who lead them. You now have the full picture of the intelligent organization — <b>the machine and who drives it</b>.',
+foot:'Morfeus — The AI Champion and the org model'
+}};
+
+/* ===== org chart innovation vs execution ===== */
+var ORG={it:{
+innovation:{arrow:'sperimenta, poi distribuisce',team:[
+['ti-flask','Prova i tool','champion'],['ti-bulb','Scopre i flussi','champion'],['ti-refresh','Scrive le procedure','champion'],['ti-share','Le condivide','champion']
+],cap:'Lato <strong>innovazione</strong>: è il lavoro dell\'AI Champion. Cerca, prova, sbaglia, scopre cosa funziona e lo trasforma in procedura. È una sola persona per reparto — non tutto il team.'},
+execution:{arrow:'esegue le procedure',team:[
+['ti-user','Collega','esegue'],['ti-user','Collega','esegue'],['ti-user','Collega','esegue'],['ti-user','Collega','esegue']
+],cap:'Lato <strong>esecuzione</strong>: i colleghi non sperimentano ognuno per conto suo. <strong>Eseguono le procedure</strong> già validate dal Champion. Niente "tutti provano tutto": un metodo, applicato da tutti.'}
+},en:{
+innovation:{arrow:'experiments, then distributes',team:[
+['ti-flask','Tries tools','champion'],['ti-bulb','Finds the flows','champion'],['ti-refresh','Writes procedures','champion'],['ti-share','Shares them','champion']
+],cap:'<strong>Innovation</strong> side: this is the AI Champion\'s work. Searches, tries, fails, discovers what works and turns it into a procedure. It\'s one person per department — not the whole team.'},
+execution:{arrow:'executes the procedures',team:[
+['ti-user','Colleague','executes'],['ti-user','Colleague','executes'],['ti-user','Colleague','executes'],['ti-user','Colleague','executes']
+],cap:'<strong>Execution</strong> side: colleagues don\'t each experiment on their own. They <strong>execute the procedures</strong> already validated by the Champion. No "everyone tries everything": one method, applied by all.'}
+}};
+var curOrg='innovation';
+function setOrg(k){
+  curOrg=k;
+  document.querySelectorAll('.orgswitch button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-or')===k)});
+  renderOrg();
+}
+function renderOrg(){
+  var d=ORG[LANG][curOrg];
+  document.getElementById('orgArrowLbl').textContent=d.arrow;
+  document.getElementById('orgTeam').innerHTML=d.team.map(function(m){
+    return '<div class="org-mem"><div class="omi"><i class="ti '+m[0]+'"></i></div><div class="omn">'+m[1]+'</div><div class="omr">'+m[2]+'</div></div>';
+  }).join('');
+  document.getElementById('orgCap').innerHTML=d.cap;
+}
+
+/* ===== time allocation ===== */
+var TIME={it:{
+extra:{segs:[['work',60,'lavoro'],['extra',40,'+ task extra']],warn:true,out:'<strong>Risultato: burnout.</strong> La persona vede che l\'efficienza viene punita con più carico. Smette di cercare scorciatoie, nasconde il tempo risparmiato, e l\'adozione si spegne. Hai vinto una battaglia (più output oggi) e perso la guerra (l\'adozione di domani).'},
+balance:{segs:[['work',60,'lavoro'],['bal',30,'work-life balance'],['study',10,'studio AI']],warn:false,out:'<strong>Risultato: adozione che cresce.</strong> Parte del tempo torna alla persona (respiro, vita), parte va a <strong>studio e sperimentazione AI — circa 4 ore a settimana</strong>. Chi è efficiente viene premiato, continua a cercarne, e alimenta le procedure che fanno risparmiare gli altri.'}
+},en:{
+extra:{segs:[['work',60,'work'],['extra',40,'+ extra tasks']],warn:true,out:'<strong>Result: burnout.</strong> The person sees efficiency punished with more load. They stop looking for shortcuts, hide the time saved, and adoption dies. You won a battle (more output today) and lost the war (tomorrow\'s adoption).'},
+balance:{segs:[['work',60,'work'],['bal',30,'work-life balance'],['study',10,'AI study']],warn:false,out:'<strong>Result: adoption that grows.</strong> Part of the time returns to the person (breathing room, life), part goes to <strong>AI study and experimentation — about 4 hours a week</strong>. The efficient are rewarded, keep seeking efficiency, and feed the procedures that save everyone else time.'}
+}};
+var curTime='balance';
+function setTime(k){
+  curTime=k;
+  document.querySelectorAll('.timeq button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-tm')===k)});
+  renderTime();
+}
+function renderTime(){
+  var d=TIME[LANG][curTime];
+  document.getElementById('timeBar').innerHTML=d.segs.map(function(s){
+    return '<div class="timeseg '+s[0]+'" style="width:'+s[1]+'%">'+s[2]+'</div>';
+  }).join('');
+  var out=document.getElementById('timeOut');
+  out.className='timeout'+(d.warn?' warn':'');
+  out.innerHTML=d.out;
+}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderOrg();renderTime();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})()

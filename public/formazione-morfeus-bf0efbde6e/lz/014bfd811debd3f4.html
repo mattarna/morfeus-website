@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obsidian, il secondo cervello — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note / hook */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2);font-style:italic}.note p strong{color:var(--ink);font-weight:600}
+/* before/after cards */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bac{border-radius:var(--r-l);padding:22px 20px;border:1.5px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.bac.bad{background:var(--bad-soft);border-color:var(--bad-line)}
+.bac.good{background:var(--good-soft);border-color:var(--green-line)}
+.bac .bat{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.bac.bad .bat{color:var(--bad)}.bac.good .bat{color:var(--good)}
+.bac h3{font-size:16px;font-weight:600;margin-bottom:7px}
+.bac p{font-size:13px;color:var(--ink-2);line-height:1.55;margin-bottom:12px}
+.bac .mock{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:12px;font-family:var(--mono);color:var(--ink-2);line-height:1.7}
+.bac .mock .ml{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:4px}
+.bac.bad .mock .ml{color:var(--bad)}.bac.good .mock .ml{color:var(--good)}
+.bac .mock .ml+.ml{margin-top:12px}
+/* intro paragraph */
+.para{font-size:14.5px;color:var(--ink-2);line-height:1.68;margin-bottom:16px}.para strong{color:var(--ink);font-weight:600}
+.para code,.feat-row code,.acc-body code,.key code,.cp code,.bp-text code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--ink)}
+/* feature rows */
+.feat{display:flex;flex-direction:column;gap:9px}
+.feat-row{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.feat-row .fi{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feat-row.purple .fi{background:var(--accent-soft);color:var(--accent)}
+.feat-row .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.feat-row .ft span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+/* tip / warn */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.tip>i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}.tip p strong{color:var(--ink);font-weight:600}
+/* code block */
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.78;overflow-x:auto;margin-bottom:14px}
+.code .hh{color:var(--accent);font-weight:700}.code .ht{color:var(--teal);font-weight:600}.code .hd{color:var(--ink-3);font-style:italic}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* ===== interactive 1 — why cards (accordion grid) ===== */
+.why-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.why-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 15px;cursor:pointer;transition:border-color .2s,background .2s;overflow:hidden}
+.why-card:hover{border-color:var(--line-2)}
+.why-card.open{border-color:var(--accent);background:var(--accent-soft)}
+.why-head{display:flex;align-items:center;gap:10px}
+.why-ic{width:34px;height:34px;border-radius:9px;background:var(--bg-2);color:var(--accent);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:.2s}
+.why-card.open .why-ic{background:var(--accent);color:#fff;border-color:var(--accent)}
+.why-head h4{font-size:13px;font-weight:600;flex:1;line-height:1.3}
+.why-chev{font-size:16px;color:var(--ink-3);transition:transform .22s;flex-shrink:0}
+.why-card.open .why-chev{transform:rotate(90deg);color:var(--accent)}
+.why-body{max-height:0;overflow:hidden;transition:max-height .35s ease,opacity .3s,margin-top .2s;opacity:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.why-card.open .why-body{max-height:280px;opacity:1;margin-top:12px}
+/* ===== interactive 2 — vault tree ===== */
+.vault{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px}
+.vault-t{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:7px;margin-bottom:14px}
+.vault-t i{font-size:15px;color:var(--accent)}
+.vtree{font-family:var(--mono);font-size:13px;user-select:none}
+.vt-row{display:flex;align-items:center;gap:0;padding:6px 6px;border-radius:var(--r);cursor:pointer;transition:background .15s;border:1px solid transparent}
+.vt-row:hover{background:var(--bg-2)}
+.vt-row.sel{background:var(--accent-soft);border-color:var(--accent-line)}
+.vt-ind{width:18px;flex-shrink:0}
+.vt-ic{font-size:15px;flex-shrink:0;margin-right:7px}
+.vt-ic.folder{color:var(--accent)}.vt-ic.teal{color:var(--teal)}.vt-ic.file{color:var(--ink-3)}.vt-ic.cmd{color:var(--accent)}
+.vt-nm{font-size:13px;color:var(--ink);flex:1}
+.vt-row.sel .vt-nm{color:var(--accent);font-weight:600}
+.vt-bd{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--bg-2);color:var(--ink-3);border:1px solid var(--line);white-space:nowrap}
+.vt-bd.cmd{border-color:var(--accent-line);color:var(--accent)}
+.vault-detail{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2);min-height:56px}
+.vault-detail .vd-h{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.vault-detail .vd-d{font-size:13px;color:var(--ink-2);line-height:1.6}
+.vault-detail .vd-e{font-size:13px;color:var(--ink-3);font-style:italic}
+/* ===== interactive 3 — brain tabs ===== */
+.brain-tabs{display:flex;gap:8px}
+.btab{flex:1;padding:11px 12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-2);text-align:center;transition:.2s;border-bottom:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.btab i{font-size:15px}
+.btab.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.bpanel{display:none;border:1px solid var(--line);border-radius:0 var(--r-l) var(--r-l) var(--r-l);padding:18px 20px;background:var(--card);box-shadow:var(--sh)}
+.bpanel.on{display:block}
+.bp-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line)}
+.bp-item:last-child{border-bottom:none}
+.bp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.bpanel[data-id="human"] .bp-dot{background:var(--bad)}
+.bpanel[data-id="vault"] .bp-dot{background:var(--green)}
+.bpanel[data-id="combo"] .bp-dot{background:var(--accent)}
+.bpanel[data-id="combo"]{border-color:var(--accent-line);background:var(--accent-soft)}
+.bp-text{flex:1;font-size:13px;color:var(--ink-2);line-height:1.55}.bp-text strong{color:var(--ink);font-weight:600}
+/* ===== myth accordion ===== */
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.myth:hover{border-color:var(--line-2)}
+.myth.open{border-color:var(--accent-line)}
+.myth-head{display:flex;align-items:center;gap:12px;padding:15px 18px}
+.myth-ic{font-size:17px;flex-shrink:0;color:var(--amber)}
+.myth-q{flex:1;font-size:14px;font-weight:600;font-style:italic;color:var(--ink)}
+.myth-arr{font-size:16px;color:var(--ink-3);transition:transform .22s;flex-shrink:0}
+.myth.open .myth-arr{transform:rotate(90deg);color:var(--accent)}
+.myth-body{max-height:0;overflow:hidden;transition:max-height .35s ease,opacity .3s;opacity:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.myth.open .myth-body{max-height:200px;opacity:1}
+.myth-body-in{padding:0 18px 15px;margin:0 18px;border-top:1px dashed var(--line);padding-top:12px}
+.myth-body-in strong{color:var(--ink);font-weight:600}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:10px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}.cp p strong{color:var(--ink);font-weight:700}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;display:flex;align-items:flex-start;gap:18px}
+.bridge>i{font-size:26px;color:var(--agent);flex-shrink:0;margin-top:2px}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:6px;font-weight:700}
+.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ba{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.brain-tabs{flex-direction:column}.btab{border-radius:var(--r);border-bottom:1px solid var(--line)}.bpanel{border-radius:var(--r-l)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.why-body{max-height:none!important;opacity:1!important;margin-top:12px!important}.myth-body{max-height:none!important;opacity:1!important}.bpanel{display:block!important;border-radius:var(--r-l)!important;margin-bottom:10px}.note,.bac,.feat-row,.tip,.code,.key,.why-card,.vault,.bpanel,.myth,.cp,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Stack 1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Stack reale · secondo cervello</div>
+  <h1 class="rv" data-i="h1">Obsidian, il secondo cervello</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <!-- 01 — il problema e la soluzione -->
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">01</span><h2 data-i="s1">Il problema e la soluzione</h2></div>
+  <div class="ba rv">
+    <div class="bac bad">
+      <div class="bat"><i class="ti ti-brain-off"></i> <span data-i="baBadTag">Claude senza memoria</span></div>
+      <h3 data-i="baBadH">Ogni sessione, da zero</h3>
+      <p data-i="baBadP"></p>
+      <div class="mock">
+        <div class="ml" data-i="baBadL1">Sessione 1</div>
+        <span data-i="baBadM1">Contesto: progetto X, obiettivo Y, cliente Z…</span>
+        <div class="ml" data-i="baBadL2">Sessione 2</div>
+        <span data-i="baBadM2">Contesto: progetto X, obiettivo Y, cliente Z…</span>
+      </div>
+    </div>
+    <div class="bac good">
+      <div class="bat"><i class="ti ti-database"></i> <span data-i="baGoodTag">Claude con vault</span></div>
+      <h3 data-i="baGoodH">La memoria c'è già</h3>
+      <p data-i="baGoodP"></p>
+      <div class="mock">
+        <div class="ml" data-i="baGoodL1">Sessione 1</div>
+        <span data-i="baGoodM1">Claude legge il vault → conosce il contesto</span>
+        <div class="ml" data-i="baGoodL2">Sessione 2</div>
+        <span data-i="baGoodM2">Claude legge il vault → conosce il contesto</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 — cos'è Obsidian -->
+  <div class="sh rv"><i class="ti ti-app-window"></i><span class="no">02</span><h2 data-i="s2">Cos'è Obsidian</h2></div>
+  <p class="para rv" data-i-html="obsIntro"></p>
+  <div class="feat rv" id="obsFeat"></div>
+  <div class="tip rv"><i class="ti ti-currency-euro"></i><div><h4 data-i="freeH">Gratuito e senza abbonamento obbligatorio</h4><p data-i="freeP"></p></div></div>
+
+  <!-- 03 — perché queste proprietà contano -->
+  <div class="sh rv"><i class="ti ti-hand-click"></i><span class="no">03</span><h2 data-i="s3">Perché queste tre proprietà contano</h2></div>
+  <p class="para rv" data-i="whyIntro"></p>
+  <div class="why-grid rv" id="whyGrid"></div>
+
+  <!-- 04 — anatomia di un vault -->
+  <div class="sh rv"><i class="ti ti-folder-open"></i><span class="no">04</span><h2 data-i="s4">Anatomia di un vault</h2></div>
+  <p class="para rv" data-i="vaultIntro"></p>
+  <div class="vault rv">
+    <div class="vault-t"><i class="ti ti-folder-filled"></i> vault-esempio/</div>
+    <div class="vtree" id="vtree"></div>
+    <div class="vault-detail" id="vaultDetail"><div class="vd-e" data-i="vdEmpty"></div></div>
+  </div>
+  <div class="tip rv"><i class="ti ti-bulb"></i><div><h4 data-i="ownerH">Organizza per proprietario, non per tipo</h4><p data-i-html="ownerP"></p></div></div>
+
+  <!-- 05 — secondo cervello e PKM -->
+  <div class="sh rv"><i class="ti ti-database"></i><span class="no">05</span><h2 data-i="s5">Secondo cervello e PKM</h2></div>
+  <p class="para rv" data-i-html="pkmIntro"></p>
+  <div class="key rv"><p data-i="pkmKey"></p></div>
+  <div class="feat rv" id="pkmFeat" style="margin-top:20px"></div>
+
+  <!-- 06 — cervello, vault, combinazione -->
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">06</span><h2 data-i="s6">Cervello umano, vault, combinazione</h2></div>
+  <p class="para rv" data-i="brainIntro"></p>
+  <div class="brain-tabs rv">
+    <div class="btab on" id="tab-human" onclick="switchTab('human')"><i class="ti ti-brain"></i> <span data-i="tabHuman">Cervello solo</span></div>
+    <div class="btab" id="tab-vault" onclick="switchTab('vault')"><i class="ti ti-database"></i> <span data-i="tabVault">Vault solo</span></div>
+    <div class="btab" id="tab-combo" onclick="switchTab('combo')"><i class="ti ti-sparkles"></i> <span data-i="tabCombo">Cervello + Vault + AI</span></div>
+  </div>
+  <div class="bpanel on" data-id="human" id="panel-human"></div>
+  <div class="bpanel" data-id="vault" id="panel-vault"></div>
+  <div class="bpanel" data-id="combo" id="panel-combo"></div>
+
+  <!-- 07 — come si usa in pratica -->
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">07</span><h2 data-i="s7">Come si usa in pratica</h2></div>
+  <div class="code rv" id="ex1Code"></div>
+  <div class="code rv" id="ex2Code"></div>
+  <div class="tip rv"><i class="ti ti-stairs"></i><div><h4 data-i="firstH">Il primo passo è sempre piccolo</h4><p data-i="firstP"></p></div></div>
+
+  <!-- 08 — equivoci da smontare -->
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">08</span><h2 data-i="s8">Equivoci da smontare</h2></div>
+  <div class="rv" id="myths"></div>
+
+  <!-- key phrase -->
+  <div class="key rv" style="margin-top:40px"><p data-i="finalKey"></p></div>
+
+  <!-- 09 — checkpoint -->
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-arrow-big-right-lines cpi"></i>
+    <h4 data-i="cpH">Il tuo primo vault in tre minuti.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <!-- bridge -->
+  <div class="bridge rv">
+    <i class="ti ti-arrow-right"></i>
+    <div>
+      <div class="br-k" data-i="brK">Prossimo</div>
+      <p data-i="brP"></p>
+    </div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Obsidian, il secondo cervello</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Stack 1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Stack reale · secondo cervello',
+h1:'Obsidian, il secondo cervello',
+lede:'Claude è brillante. Ma ha un limite strutturale: non ricorda niente tra una conversazione e l\'altra. Obsidian risolve questo problema alla radice — diventando la memoria esterna che rende Claude un collaboratore che cresce con te.',
+hookH:'L\'idea',
+hookP:'Claude è come un consulente brillante con amnesia totale. Ogni sessione, gli rispieghi chi sei, cosa stai facendo, dove eravate rimasti. Obsidian è la memoria che gli manca. Con un vault, smetti di ricominciare da zero.',
+s1:'Il problema e la soluzione',
+baBadTag:'Claude senza memoria',baBadH:'Ogni sessione, da zero',
+baBadP:'Ogni conversazione è isolata. Claude non ricorda niente delle precedenti. Devi rispiegare il contesto, i materiali, chi sei — ogni volta.',
+baBadL1:'Sessione 1',baBadM1:'Contesto: progetto X, obiettivo Y, cliente Z…',
+baBadL2:'Sessione 2',baBadM2:'Contesto: progetto X, obiettivo Y, cliente Z…',
+baGoodTag:'Claude con vault',baGoodH:'La memoria c\'è già',
+baGoodP:'Il vault è la memoria esterna. Claude legge i tuoi file, capisce la struttura e risponde già sapendo dove sei rimasto — senza rispiegare niente.',
+baGoodL1:'Sessione 1',baGoodM1:'Claude legge il vault → conosce il contesto',
+baGoodL2:'Sessione 2',baGoodM2:'Claude legge il vault → conosce il contesto',
+s2:'Cos\'è Obsidian',
+obsIntro:'Obsidian è un editor di note <strong>locale e markdown-first</strong>. Non è un SaaS, non è un cloud: i file vivono sul tuo computer, sono testo puro, possono essere letti da qualsiasi AI senza frizioni. È costruito attorno al "linked thinking": note collegate da link bidirezionali e un grafo visuale delle connessioni.',
+freeH:'Gratuito e senza abbonamento obbligatorio',
+freeP:'Il core di Obsidian è completamente gratuito e locale. Non serve nessun piano a pagamento per usarlo come secondo cervello integrato con l\'AI.',
+s3:'Perché queste tre proprietà contano',
+whyIntro:'Markdown, file locali e struttura a cartelle non sono dettagli tecnici: sono esattamente ciò che rende un vault perfetto per lavorare con l\'AI. Clicca ogni card per scoprire il perché.',
+s4:'Anatomia di un vault',
+vaultIntro:'Un vault è una cartella sul tuo PC. Dentro, sottocartelle organizzate per dominio e un file speciale che fa da schema per l\'AI. Clicca una cartella o un file per vedere a cosa serve.',
+vdEmpty:'Clicca una cartella o un file per vedere a cosa serve.',
+ownerH:'Organizza per proprietario, non per tipo',
+ownerP:'La struttura vincente non separa i file per "tipo" (documenti, immagini, note) ma per <strong>proprietario o dominio</strong>: clienti, progetti, biblioteca, personale. Claude naviga meglio un vault con questa logica.',
+s5:'Secondo cervello e PKM',
+pkmIntro:'Un <strong>secondo cervello</strong> è un sistema esterno che tiene traccia di ciò che sai, così che l\'informazione sia utile e accessibile quando serve. Il campo si chiama <strong>PKM — Personal Knowledge Management</strong>. Il vault Obsidian è l\'implementazione concreta di questo concetto.',
+pkmKey:'Il vault non sostituisce la tua testa — la estende. Come un quaderno che non dimentica mai niente, non si perde, e può essere letto dall\'AI in un secondo.',
+s6:'Cervello umano, vault, combinazione',
+brainIntro:'Tre configurazioni a confronto. Esplora le tre colonne per vedere cosa cambia tra tenere tutto in testa, affidarsi solo al vault, e unire memoria esterna e intelligenza dell\'AI.',
+tabHuman:'Cervello solo',tabVault:'Vault solo',tabCombo:'Cervello + Vault + AI',
+s7:'Come si usa in pratica',
+firstH:'Il primo passo è sempre piccolo',
+firstP:'Non serve un vault perfetto per iniziare. Una sola cartella con tre file markdown per il tuo progetto principale è già un secondo cervello funzionante. Si affina con l\'uso, non prima di iniziare.',
+s8:'Equivoci da smontare',
+finalKey:'Obsidian non è un\'alternativa a Claude — è l\'infrastruttura che lo rende utile nel tempo. Claude senza memoria è brillante ma volatile. Claude con un vault è un collaboratore che cresce con te.',
+s9:'Checkpoint',
+cpH:'Il tuo primo vault in tre minuti.',
+cpP:'Apri Obsidian (se non ce l\'hai, è gratuito su obsidian.md).<br>Crea una nuova cartella sul tuo computer — anche solo "vault-test".<br>Aprila come vault in Obsidian.<br>Crea un file per il tuo progetto principale: <code>progetto.md</code>.<br><br><strong>Questo è il primo passo. Il secondo — nella prossima lezione — è capire come strutturare quel vault perché Claude lo sappia navigare.</strong>',
+brK:'Prossimo',
+brP:'Il vault come memoria lunga dell\'AI. Hai capito cos\'è Obsidian e perché si sposa con l\'AI. Nella prossima lezione vediamo come collegare concretamente il vault a Claude — le tre vie tecniche, il pattern del vault come working directory, e perché questo approccio batte la RAG per il caso personale.',
+foot:'Morfeus — Obsidian, il secondo cervello'
+},
+en:{
+kicker:'Stack 1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Real stack · second brain',
+h1:'Obsidian, your second brain',
+lede:'Claude is brilliant. But it has a structural limit: it remembers nothing between one conversation and the next. Obsidian solves this problem at the root — becoming the external memory that turns Claude into a collaborator who grows with you.',
+hookH:'The idea',
+hookP:'Claude is like a brilliant consultant with total amnesia. Every session, you re-explain who you are, what you\'re working on, where you left off. Obsidian is the memory it lacks. With a vault, you stop starting from scratch.',
+s1:'The problem and the solution',
+baBadTag:'Claude without memory',baBadH:'Every session, from scratch',
+baBadP:'Every conversation is isolated. Claude remembers nothing from previous ones. You have to re-explain the context, the materials, who you are — every time.',
+baBadL1:'Session 1',baBadM1:'Context: project X, goal Y, client Z…',
+baBadL2:'Session 2',baBadM2:'Context: project X, goal Y, client Z…',
+baGoodTag:'Claude with a vault',baGoodH:'The memory is already there',
+baGoodP:'The vault is the external memory. Claude reads your files, understands the structure and answers already knowing where you left off — without re-explaining anything.',
+baGoodL1:'Session 1',baGoodM1:'Claude reads the vault → knows the context',
+baGoodL2:'Session 2',baGoodM2:'Claude reads the vault → knows the context',
+s2:'What Obsidian is',
+obsIntro:'Obsidian is a <strong>local, markdown-first</strong> note editor. It\'s not a SaaS, not a cloud: the files live on your computer, they\'re plain text, and any AI can read them without friction. It\'s built around "linked thinking": notes connected by bidirectional links and a visual graph of the connections.',
+freeH:'Free, with no mandatory subscription',
+freeP:'The core of Obsidian is completely free and local. You don\'t need any paid plan to use it as a second brain integrated with AI.',
+s3:'Why these three properties matter',
+whyIntro:'Markdown, local files and a folder structure aren\'t technical details: they\'re exactly what makes a vault perfect for working with AI. Click each card to find out why.',
+s4:'Anatomy of a vault',
+vaultIntro:'A vault is a folder on your PC. Inside, subfolders organized by domain and a special file that acts as the schema for the AI. Click a folder or a file to see what it\'s for.',
+vdEmpty:'Click a folder or a file to see what it\'s for.',
+ownerH:'Organize by owner, not by type',
+ownerP:'The winning structure doesn\'t separate files by "type" (documents, images, notes) but by <strong>owner or domain</strong>: clients, projects, library, personal. Claude navigates a vault with this logic better.',
+s5:'Second brain and PKM',
+pkmIntro:'A <strong>second brain</strong> is an external system that keeps track of what you know, so that information is useful and accessible when you need it. The field is called <strong>PKM — Personal Knowledge Management</strong>. The Obsidian vault is the concrete implementation of this concept.',
+pkmKey:'The vault doesn\'t replace your head — it extends it. Like a notebook that never forgets anything, never gets lost, and can be read by AI in a second.',
+s6:'Human brain, vault, combination',
+brainIntro:'Three configurations compared. Explore the three columns to see what changes between keeping everything in your head, relying on the vault alone, and combining external memory with the AI\'s intelligence.',
+tabHuman:'Brain only',tabVault:'Vault only',tabCombo:'Brain + Vault + AI',
+s7:'How it works in practice',
+firstH:'The first step is always small',
+firstP:'You don\'t need a perfect vault to start. A single folder with three markdown files for your main project is already a working second brain. It gets refined through use, not before you begin.',
+s8:'Misconceptions to dismantle',
+finalKey:'Obsidian isn\'t an alternative to Claude — it\'s the infrastructure that makes it useful over time. Claude without memory is brilliant but volatile. Claude with a vault is a collaborator who grows with you.',
+s9:'Checkpoint',
+cpH:'Your first vault in three minutes.',
+cpP:'Open Obsidian (if you don\'t have it, it\'s free at obsidian.md).<br>Create a new folder on your computer — even just "vault-test".<br>Open it as a vault in Obsidian.<br>Create a file for your main project: <code>project.md</code>.<br><br><strong>This is the first step. The second — in the next lesson — is understanding how to structure that vault so Claude can navigate it.</strong>',
+brK:'Next',
+brP:'The vault as the AI\'s long-term memory. You\'ve understood what Obsidian is and why it pairs with AI. In the next lesson we\'ll see how to concretely connect the vault to Claude — the three technical paths, the pattern of the vault as working directory, and why this approach beats RAG for the personal use case.',
+foot:'Morfeus — Obsidian, your second brain'
+}};
+
+/* ===== cos'è Obsidian — features ===== */
+var OBSFEAT={it:[
+['ti-markdown','Markdown nativo','Tutto è testo puro con marcatori leggeri (<code>#</code>, <code>-</code>, <code>[[link]]</code>). Leggibile da qualsiasi strumento, oggi e tra dieci anni.'],
+['ti-link','Wikilink e backlink','Scrivi <code>[[Nome Nota]]</code> per collegare due note. Obsidian crea automaticamente il backlink nell\'altra direzione — pensiero non-lineare e connessioni che emergono.'],
+['ti-device-desktop-off','Local-first','I dati vivono sul tuo disco. Nessun lock-in, nessuna API da pagare. Oggi usi i file con Claude, domani con qualsiasi altro modello.'],
+['ti-folder-open','Un vault = una cartella','Un vault è semplicemente una cartella sul tuo PC che contiene tutte le note, sottocartelle e allegati. Chi sa usare le cartelle del computer sa già il 70% di Obsidian.']
+],en:[
+['ti-markdown','Native markdown','Everything is plain text with lightweight markers (<code>#</code>, <code>-</code>, <code>[[link]]</code>). Readable by any tool, today and ten years from now.'],
+['ti-link','Wikilinks and backlinks','Write <code>[[Note Name]]</code> to connect two notes. Obsidian automatically creates the backlink in the other direction — non-linear thinking and connections that emerge.'],
+['ti-device-desktop-off','Local-first','The data lives on your disk. No lock-in, no API to pay for. Today you use the files with Claude, tomorrow with any other model.'],
+['ti-folder-open','One vault = one folder','A vault is simply a folder on your PC that contains all the notes, subfolders and attachments. If you can use your computer\'s folders, you already know 70% of Obsidian.']
+]};
+
+/* ===== interactive 1 — why cards ===== */
+var WHY={it:[
+['ti-markdown','Markdown = formato nativo dell\'AI','Il markdown è testo puro con struttura leggera. Claude lo legge e lo scrive fluentemente, senza conversioni né API. Headings, liste e link portano già significato strutturale che l\'AI interpreta direttamente. Non ci sono parser speciali, non ci sono integrazioni da mantenere: funziona e basta.'],
+['ti-lock-open','File locali = zero lock-in','I file <code>.md</code> vivono sul tuo computer. Sono portabili, leggibili da qualsiasi modello e non dipendono da nessun cloud altrui. La tua conoscenza è tua — oggi con Claude, domani con qualsiasi altro strumento, senza dover migrare niente.'],
+['ti-sitemap','Struttura a cartelle = contesto già pronto','Un vault ordinato è già un sistema di contesto navigabile. Ogni cartella è un dominio, ogni file è un pezzo di conoscenza. Claude naviga questa struttura come un collaboratore che conosce l\'archivio dell\'ufficio — senza dover spiegare dove si trova ogni cosa.']
+],en:[
+['ti-markdown','Markdown = the AI\'s native format','Markdown is plain text with light structure. Claude reads and writes it fluently, with no conversions or APIs. Headings, lists and links already carry structural meaning the AI interprets directly. No special parsers, no integrations to maintain: it just works.'],
+['ti-lock-open','Local files = zero lock-in','The <code>.md</code> files live on your computer. They\'re portable, readable by any model and dependent on no one else\'s cloud. Your knowledge is yours — today with Claude, tomorrow with any other tool, with nothing to migrate.'],
+['ti-sitemap','Folder structure = context ready to go','A tidy vault is already a navigable context system. Each folder is a domain, each file is a piece of knowledge. Claude navigates this structure like a collaborator who knows the office archive — without having to explain where everything is.']
+]};
+
+/* ===== interactive 2 — vault tree ===== */
+var VTREE=[
+{id:'system',ind:1,ic:'folder',cls:'folder',nm:'00_sistema/',bd:'governance'},
+{id:'clienti',ind:1,ic:'folder',cls:'folder',nm:'01_clienti/',bd:'lavoro'},
+{id:'cliente_a',ind:2,ic:'folder',cls:'teal',nm:'cliente-alpha/',bd:''},
+{id:'brief',ind:3,ic:'file-text',cls:'file',nm:'brief.md',bd:''},
+{id:'note_call',ind:3,ic:'file-text',cls:'file',nm:'note-call-2026-06-05.md',bd:''},
+{id:'biblioteca',ind:1,ic:'folder',cls:'folder',nm:'02_biblioteca/',bd:'sapere'},
+{id:'corsi',ind:1,ic:'folder',cls:'folder',nm:'03_corsi/',bd:'formazione'},
+{id:'personale',ind:1,ic:'folder',cls:'folder',nm:'04_personale/',bd:'vita'},
+{id:'claudemd',ind:1,ic:'file-code',cls:'cmd',nm:'CLAUDE.md',bd:'schema AI',bdcls:'cmd'}
+];
+var VAULT_DATA={it:{
+system:{icon:'ti-settings',label:'00_sistema/',desc:'Il cuore del vault: regole di funzionamento, router (dove va ogni tipo di file), mappa della struttura. Claude legge questo prima di tutto il resto per capire come funziona il sistema.'},
+clienti:{icon:'ti-users',label:'01_clienti/',desc:'Una sottocartella per ogni cliente o progetto. Ogni cartella contiene il brief, le note delle call, le analisi. Claude carica questa cartella come knowledge base di un Project e non devi più rispiegare nulla.'},
+cliente_a:{icon:'ti-folder',label:'cliente-alpha/',desc:'Ogni cliente ha la sua cartella dedicata. Dentro: brief, note call, analisi competitor, decisioni prese. Tutto ciò che serve a Claude per rispondere come se conoscesse il cliente da anni.'},
+brief:{icon:'ti-file-text',label:'brief.md',desc:'Il documento fondante di un cliente: chi è, cosa vuole, settore, vincoli. Si scrive una volta, si aggiorna raramente, si usa in ogni conversazione. Claude lo legge all\'inizio di ogni chat nel Project.'},
+note_call:{icon:'ti-microphone',label:'note-call-2026-06-05.md',desc:'La trascrizione o il riassunto di una call, con data nel nome file. Col tempo diventa un archivio di decisioni prese, promesse fatte, contesto accumulato. Claude può rispondere "nella call del 5 giugno avete deciso X".'},
+biblioteca:{icon:'ti-books',label:'02_biblioteca/',desc:'Sapere studiato, playbook, learnings da libri e corsi, framework utili. Non è un archivio passivo — è una base di conoscenza che Claude può consultare quando lavori su problemi simili.'},
+corsi:{icon:'ti-school',label:'03_corsi/',desc:'Note di studio organizzate per materia. Ogni concetto è collegato agli altri con wikilink. Con il tempo emerge una mappa di conoscenza navigabile — e Claude la usa per rispondere a domande complesse.'},
+personale:{icon:'ti-user',label:'04_personale/',desc:'Vita personale, obiettivi, riflessioni. Separata dal lavoro ma nello stesso vault. Permette a Claude di capire il contesto più ampio senza mescolare tutto insieme.'},
+claudemd:{icon:'ti-file-code',label:'CLAUDE.md',desc:'Lo schema del vault: struttura, naming, regole, workflow. Claude lo legge per orientarsi — come un manuale operativo dell\'ufficio. Con questo file, non devi spiegare come funziona il tuo sistema ogni volta.'}
+},en:{
+system:{icon:'ti-settings',label:'00_sistema/',desc:'The heart of the vault: operating rules, router (where each type of file goes), structure map. Claude reads this before everything else to understand how the system works.'},
+clienti:{icon:'ti-users',label:'01_clienti/',desc:'A subfolder for each client or project. Each folder contains the brief, call notes, analyses. Claude loads this folder as the knowledge base of a Project and you no longer have to re-explain anything.'},
+cliente_a:{icon:'ti-folder',label:'cliente-alpha/',desc:'Each client has its own dedicated folder. Inside: brief, call notes, competitor analysis, decisions made. Everything Claude needs to respond as if it had known the client for years.'},
+brief:{icon:'ti-file-text',label:'brief.md',desc:'A client\'s founding document: who they are, what they want, sector, constraints. Written once, rarely updated, used in every conversation. Claude reads it at the start of every chat in the Project.'},
+note_call:{icon:'ti-microphone',label:'note-call-2026-06-05.md',desc:'The transcript or summary of a call, with the date in the file name. Over time it becomes an archive of decisions made, promises kept, accumulated context. Claude can answer "in the call on June 5 you decided X".'},
+biblioteca:{icon:'ti-books',label:'02_biblioteca/',desc:'Studied knowledge, playbooks, learnings from books and courses, useful frameworks. It\'s not a passive archive — it\'s a knowledge base Claude can consult when you work on similar problems.'},
+corsi:{icon:'ti-school',label:'03_corsi/',desc:'Study notes organized by subject. Each concept is connected to the others with wikilinks. Over time a navigable knowledge map emerges — and Claude uses it to answer complex questions.'},
+personale:{icon:'ti-user',label:'04_personale/',desc:'Personal life, goals, reflections. Separate from work but in the same vault. It lets Claude understand the broader context without mixing everything together.'},
+claudemd:{icon:'ti-file-code',label:'CLAUDE.md',desc:'The vault\'s schema: structure, naming, rules, workflow. Claude reads it to orient itself — like an office operating manual. With this file, you don\'t have to explain how your system works every time.'}
+}};
+
+/* ===== PKM features ===== */
+var PKMFEAT={it:[
+['ti-brain','PKM','Personal Knowledge Management — il sistema per catturare, collegare e ritrovare la conoscenza personale.'],
+['ti-folder','Vault','La cartella radice del secondo cervello — contiene tutte le note, sottocartelle e allegati.'],
+['ti-link','Wikilink','La sintassi <code>[[NomeNota]]</code> per collegare note tra loro — l\'infrastruttura del pensiero connesso.']
+],en:[
+['ti-brain','PKM','Personal Knowledge Management — the system for capturing, connecting and retrieving personal knowledge.'],
+['ti-folder','Vault','The root folder of the second brain — it contains all the notes, subfolders and attachments.'],
+['ti-link','Wikilink','The <code>[[NoteName]]</code> syntax for linking notes together — the infrastructure of connected thinking.']
+]};
+
+/* ===== interactive 3 — brain panels ===== */
+var BRAIN={it:{
+human:[
+['<strong>Dimentica.</strong> I dettagli di un progetto da tre mesi fa sono nebulosi. Le decisioni prese "perché pareva ovvio" non sono più recuperabili.'],
+['<strong>Non scala.</strong> Più lavori crescono in parallelo, più il carico cognitivo aumenta. Tenere tutto in testa ha un costo reale.'],
+['<strong>Non è cercabile.</strong> Sai di sapere qualcosa ma non riesci a recuperarlo. L\'informazione c\'è ma non è accessibile al momento giusto.'],
+['<strong>Non trasferisce.</strong> Ogni nuova sessione con Claude riparte da zero — devi ricostruire il contesto ogni volta.']
+],
+vault:[
+['<strong>Non dimentica mai.</strong> Tutto ciò che scrivi rimane accessibile, cercabile, collegabile. Il vault non ha memoria a breve termine.'],
+['<strong>Struttura emergente.</strong> I link tra note rivelano connessioni che non avevi visto. La conoscenza si auto-organizza nel tempo.'],
+['<strong>Leggibile dall\'AI.</strong> I file markdown sono il formato che Claude preferisce — nessuna conversione, nessuna API, lettura diretta.'],
+['<strong>Limite: da solo non ragiona.</strong> Il vault è memoria, non intelligenza. Sa tenere traccia ma non sa interpretare, sintetizzare o decidere.']
+],
+combo:[
+['<strong>Memoria + intelligenza.</strong> Il vault ricorda tutto. Claude ragiona su tutto. Insieme: un collaboratore che non dimentica e sa pensare.'],
+['<strong>Nessun briefing ripetuto.</strong> Claude legge il vault all\'inizio di ogni sessione e sa già dove eravate rimasti, chi sono i clienti, quali sono le priorità.'],
+['<strong>La conoscenza cresce.</strong> Ogni nota aggiunta arricchisce il contesto. Col tempo il vault diventa una knowledge base su misura che rende Claude più utile — non più generico.'],
+['<strong>Il dato è tuo.</strong> Nessun lock-in. Puoi cambiare modello AI, cambiare strumento, cambiare tutto — i file markdown rimangono e funzionano sempre.']
+]
+},en:{
+human:[
+['<strong>It forgets.</strong> The details of a project from three months ago are foggy. Decisions made "because it seemed obvious" are no longer recoverable.'],
+['<strong>It doesn\'t scale.</strong> The more projects grow in parallel, the more the cognitive load increases. Keeping everything in your head has a real cost.'],
+['<strong>It\'s not searchable.</strong> You know you know something but you can\'t retrieve it. The information is there but it\'s not accessible at the right moment.'],
+['<strong>It doesn\'t transfer.</strong> Every new session with Claude starts from scratch — you have to rebuild the context every time.']
+],
+vault:[
+['<strong>It never forgets.</strong> Everything you write stays accessible, searchable, linkable. The vault has no short-term memory.'],
+['<strong>Emergent structure.</strong> The links between notes reveal connections you hadn\'t seen. Knowledge self-organizes over time.'],
+['<strong>AI-readable.</strong> Markdown files are the format Claude prefers — no conversion, no API, direct reading.'],
+['<strong>Limit: on its own it doesn\'t reason.</strong> The vault is memory, not intelligence. It can keep track but it can\'t interpret, synthesize or decide.']
+],
+combo:[
+['<strong>Memory + intelligence.</strong> The vault remembers everything. Claude reasons over everything. Together: a collaborator that doesn\'t forget and knows how to think.'],
+['<strong>No repeated briefing.</strong> Claude reads the vault at the start of every session and already knows where you left off, who the clients are, what the priorities are.'],
+['<strong>Knowledge grows.</strong> Every note added enriches the context. Over time the vault becomes a tailored knowledge base that makes Claude more useful — not more generic.'],
+['<strong>The data is yours.</strong> No lock-in. You can change AI model, change tool, change everything — the markdown files remain and always work.']
+]
+}};
+
+/* ===== code examples ===== */
+var EX1={it:'<span class="hh">Esempio 1 — Freelance con clienti multipli</span>\n<span class="hd">Cartella vault:</span>\nclienti/\n  cliente-alpha/\n    brief.md           <span class="hd">→ chi è, cosa vuole, settore</span>\n    note-call.md       <span class="hd">→ trascrizioni delle call</span>\n    competitor.md      <span class="hd">→ analisi fatta in passato</span>\n\n<span class="hd">Risultato:</span> carica i file come KB di un Project Claude\n→ ogni chat parte già sapendo tutto sul cliente\n→ zero rispiegazioni, zero contesto perso',
+en:'<span class="hh">Example 1 — Freelancer with multiple clients</span>\n<span class="hd">Vault folder:</span>\nclients/\n  client-alpha/\n    brief.md           <span class="hd">→ who they are, what they want, sector</span>\n    call-notes.md      <span class="hd">→ call transcripts</span>\n    competitor.md      <span class="hd">→ analysis done in the past</span>\n\n<span class="hd">Result:</span> load the files as the KB of a Claude Project\n→ every chat starts already knowing everything about the client\n→ zero re-explaining, zero lost context'};
+var EX2={it:'<span class="hh">Esempio 2 — Studente o ricercatore</span>\n<span class="hd">Cartella vault:</span>\ncorsi/\n  marketing/           <span class="hd">→ note per materia</span>\n  strategia/\n  finanza/\n\n<span class="hd">Risultato:</span> colleghi concetti tra materie con [[wikilink]]\n→ il grafo mostra connessioni tra aree diverse\n→ Claude può rispondere su qualsiasi argomento\n   leggendo le note rilevanti',
+en:'<span class="hh">Example 2 — Student or researcher</span>\n<span class="hd">Vault folder:</span>\ncourses/\n  marketing/           <span class="hd">→ notes by subject</span>\n  strategy/\n  finance/\n\n<span class="hd">Result:</span> you connect concepts across subjects with [[wikilink]]\n→ the graph shows connections between different areas\n→ Claude can answer on any topic\n   by reading the relevant notes'};
+
+/* ===== myths ===== */
+var MYTHS={it:[
+['"Obsidian è un\'alternativa a Claude"','Obsidian non compete con Claude — è l\'<strong>infrastruttura di memoria</strong> attorno a Claude. Claude senza memoria è brillante ma volatile; con un vault diventa un collaboratore che cresce. Sono complementari, non alternativi.'],
+['"Devo essere tecnico o saper programmare"','Un vault Obsidian è semplicemente una cartella con file di testo. Chi sa usare le cartelle del PC sa già il 70%. Il markdown base si impara in dieci minuti. Non serve nessuna competenza tecnica.'],
+['"Più note scrivo, meglio funziona"','Il valore sta nei <strong>collegamenti</strong> e nella struttura, non nel volume. Un vault con 20 note ben collegate è più utile di uno con 2.000 note scollegate. L\'accumulo senza struttura crea rumore, non conoscenza.'],
+['"Mi serve il piano a pagamento o il cloud sync"','Il core di Obsidian è completamente gratuito e locale. Tutto ciò che serve per integrarlo con Claude — leggere, scrivere, organizzare file markdown — funziona senza nessun abbonamento.']
+],en:[
+['"Obsidian is an alternative to Claude"','Obsidian doesn\'t compete with Claude — it\'s the <strong>memory infrastructure</strong> around Claude. Claude without memory is brilliant but volatile; with a vault it becomes a collaborator that grows. They\'re complementary, not alternatives.'],
+['"I have to be technical or know how to code"','An Obsidian vault is simply a folder with text files. If you can use your PC\'s folders, you already know 70%. Basic markdown is learned in ten minutes. No technical skill is needed.'],
+['"The more notes I write, the better it works"','The value is in the <strong>connections</strong> and the structure, not in the volume. A vault with 20 well-connected notes is more useful than one with 2,000 disconnected notes. Accumulation without structure creates noise, not knowledge.'],
+['"I need the paid plan or cloud sync"','The core of Obsidian is completely free and local. Everything needed to integrate it with Claude — reading, writing, organizing markdown files — works without any subscription.']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // obs features
+  document.getElementById('obsFeat').innerHTML=OBSFEAT[LANG].map(function(f){
+    return '<div class="feat-row"><div class="fi"><i class="ti '+f[0]+'"></i></div><div class="ft"><strong>'+f[1]+'</strong><span>'+f[2]+'</span></div></div>';
+  }).join('');
+  // why cards
+  document.getElementById('whyGrid').innerHTML=WHY[LANG].map(function(w,i){
+    return '<div class="why-card" data-w="'+i+'" onclick="toggleWhy('+i+')"><div class="why-head"><div class="why-ic"><i class="ti '+w[0]+'"></i></div><h4>'+w[1]+'</h4><i class="ti ti-chevron-right why-chev"></i></div><div class="why-body">'+w[2]+'</div></div>';
+  }).join('');
+  // vault tree
+  document.getElementById('vtree').innerHTML=VTREE.map(function(n){
+    var inds='';for(var k=0;k<n.ind;k++){inds+='<div class="vt-ind"></div>';}
+    var bd=n.bd?'<span class="vt-bd'+(n.bdcls?' '+n.bdcls:'')+'">'+n.bd+'</span>':'';
+    return '<div class="vt-row" data-id="'+n.id+'" onclick="selectVault(\''+n.id+'\')">'+inds+'<i class="ti ti-'+n.ic+' vt-ic '+n.cls+'"></i><span class="vt-nm">'+n.nm+'</span>'+bd+'</div>';
+  }).join('');
+  resetVaultDetail();
+  // PKM features
+  document.getElementById('pkmFeat').innerHTML=PKMFEAT[LANG].map(function(f){
+    return '<div class="feat-row purple"><div class="fi"><i class="ti '+f[0]+'"></i></div><div class="ft"><strong>'+f[1]+'</strong><span>'+f[2]+'</span></div></div>';
+  }).join('');
+  // brain panels
+  ['human','vault','combo'].forEach(function(k){
+    document.getElementById('panel-'+k).innerHTML=BRAIN[LANG][k].map(function(it){
+      return '<div class="bp-item"><div class="bp-dot"></div><div class="bp-text">'+it[0]+'</div></div>';
+    }).join('');
+  });
+  // code examples
+  document.getElementById('ex1Code').innerHTML=EX1[LANG];
+  document.getElementById('ex2Code').innerHTML=EX2[LANG];
+  // myths
+  document.getElementById('myths').innerHTML=MYTHS[LANG].map(function(m,i){
+    return '<div class="myth" data-m="'+i+'" onclick="toggleMyth('+i+')"><div class="myth-head"><i class="ti ti-alert-triangle myth-ic"></i><span class="myth-q">'+m[0]+'</span><i class="ti ti-chevron-right myth-arr"></i></div><div class="myth-body"><div class="myth-body-in">'+m[1]+'</div></div></div>';
+  }).join('');
+}
+function resetVaultDetail(){
+  document.getElementById('vaultDetail').innerHTML='<div class="vd-e">'+DICT[LANG].vdEmpty+'</div>';
+}
+/* why cards */
+function toggleWhy(i){
+  var card=document.querySelector('.why-card[data-w="'+i+'"]');
+  var was=card.classList.contains('open');
+  document.querySelectorAll('.why-card').forEach(function(c){c.classList.remove('open')});
+  if(!was)card.classList.add('open');
+}
+/* vault tree */
+function selectVault(id){
+  document.querySelectorAll('.vt-row').forEach(function(r){r.classList.remove('sel')});
+  document.querySelector('.vt-row[data-id="'+id+'"]').classList.add('sel');
+  var d=VAULT_DATA[LANG][id];
+  document.getElementById('vaultDetail').innerHTML='<div class="vd-h"><i class="ti '+d.icon+'"></i> '+d.label+'</div><div class="vd-d">'+d.desc+'</div>';
+}
+/* brain tabs */
+function switchTab(id){
+  ['human','vault','combo'].forEach(function(k){
+    document.getElementById('tab-'+k).classList.remove('on');
+    document.getElementById('panel-'+k).classList.remove('on');
+  });
+  document.getElementById('tab-'+id).classList.add('on');
+  document.getElementById('panel-'+id).classList.add('on');
+}
+/* myths */
+function toggleMyth(i){
+  var el=document.querySelector('.myth[data-m="'+i+'"]');
+  var was=el.classList.contains('open');
+  document.querySelectorAll('.myth').forEach(function(m){m.classList.remove('open')});
+  if(!was)el.classList.add('open');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

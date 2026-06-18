@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Quotidiano — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-sm{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+/* note / hook */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* OVERHEAD BARS */
+.over{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.over h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.over .over-p{font-size:13.5px;color:var(--ink-2);margin-bottom:20px;line-height:1.6}
+.bar-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.bar-label{font-size:13px;font-weight:600;min-width:120px;color:var(--ink-2)}
+.bar-track{flex:1;height:20px;background:var(--bg-3);border:1px solid var(--line);border-radius:30px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:30px;transition:width 1s cubic-bezier(.3,.8,.3,1)}
+.bar-fill.before{background:linear-gradient(90deg,var(--bad-line),var(--bad));width:0}
+.bar-fill.after{background:linear-gradient(90deg,var(--teal-line),var(--teal));width:0}
+.bar-pct{font-size:13px;font-weight:700;min-width:46px;text-align:right;font-family:var(--mono)}
+.bar-pct.before{color:var(--bad)}
+.bar-pct.after{color:var(--teal)}
+.bar-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:.2s;margin-top:8px;box-shadow:0 2px 10px rgba(107,95,229,.22)}
+.bar-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.bar-btn:active{transform:translateY(0)}
+/* LOOP 4 FASI */
+.loop{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.loop h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.loop-hint{font-size:12.5px;color:var(--ink-3);margin-bottom:20px}
+.loop-steps{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:nowrap}
+.loop-step{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 10px;border-radius:var(--r-l);cursor:pointer;transition:background .25s,transform .3s;flex:1;min-width:0;border:2px solid transparent}
+.loop-step:hover:not(.on){background:var(--bg-2)}
+.loop-step.on{background:var(--accent-soft);border-color:var(--accent-line);transform:translateY(-3px)}
+.loop-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;transition:.3s;position:relative}
+.loop-step.on .loop-icon{transform:scale(1.1)}
+.loop-step.on .loop-icon::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid currentColor;opacity:.4;animation:ringPulse 1.1s ease-out infinite}
+@keyframes ringPulse{0%{transform:scale(1);opacity:.45}100%{transform:scale(1.5);opacity:0}}
+.loop-step-label{font-size:12.5px;font-weight:700;text-align:center;line-height:1.25}
+.loop-step-sub{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.25}
+.loop-step[data-step="0"] .loop-icon{background:var(--blue-soft);color:var(--blue)}
+.loop-step[data-step="1"] .loop-icon{background:var(--agent-soft);color:var(--agent)}
+.loop-step[data-step="2"] .loop-icon{background:var(--amber-soft);color:var(--amber)}
+.loop-step[data-step="3"] .loop-icon{background:var(--teal-soft);color:var(--teal)}
+.loop-arrow{font-size:18px;color:var(--ink-3);align-self:center;margin-top:18px;flex-shrink:0}
+.loop-detail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:22px;margin-top:14px;min-height:140px}
+.loop-detail h4{font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.loop-detail h4 i{font-size:19px}
+.loop-detail ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0}
+.loop-detail li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.loop-detail li i{font-size:15px;margin-top:2px;flex-shrink:0}
+.loop-detail .ai-role{display:inline-flex;align-items:center;gap:8px;background:var(--agent-soft);color:var(--agent);border:1px solid var(--agent-line);border-radius:var(--r);padding:9px 13px;font-size:13px;margin-top:14px;line-height:1.5}
+.loop-detail .ai-role i{font-size:16px;flex-shrink:0}
+/* BEFORE / AFTER */
+.ba-hint{font-size:13px;color:var(--ink-3);text-align:center;margin-bottom:14px}
+.ba-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ba-card{border-radius:var(--r-l);padding:18px;border:1px solid var(--line);box-shadow:var(--sh)}
+.ba-card.before{border-color:var(--bad-line);background:var(--bad-soft)}
+.ba-card.after{border-color:var(--teal-line);background:var(--teal-soft)}
+.ba-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:5px;margin-bottom:12px}
+.ba-card.before .ba-tag{background:var(--bad);color:#fff}
+.ba-card.after .ba-tag{background:var(--teal);color:#fff}
+.ba-card pre{font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:pre-wrap;line-height:1.65;margin:0}
+.ba-card pre b{color:var(--ink);font-weight:700}
+/* AI ROLES ROWS */
+.ai-roles{display:flex;flex-direction:column;gap:10px}
+.ai-role-row{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;cursor:pointer;transition:border-color .2s,background .2s}
+.ai-role-row:hover{border-color:var(--line-2)}
+.ai-role-row.open{border-color:var(--accent);background:var(--accent-soft)}
+.ai-role-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ai-role-main{flex:1}
+.ai-role-phase{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.ai-role-title{font-size:14px;font-weight:600}
+.ai-role-chevron{font-size:16px;color:var(--ink-3);align-self:center;transition:transform .25s;flex-shrink:0}
+.ai-role-row.open .ai-role-chevron{transform:rotate(90deg)}
+.ai-role-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s,padding .35s}
+.ai-role-row.open .ai-role-detail{max-height:260px;opacity:1;padding-top:12px}
+.ai-role-detail p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.ai-role-detail .example-chip{display:inline-flex;align-items:flex-start;gap:7px;background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line);padding:9px 13px;border-radius:var(--r);font-family:var(--mono);font-size:12px;line-height:1.55;margin-top:11px}
+.ai-role-detail .example-chip i{font-size:14px;color:var(--agent);margin-top:2px;flex-shrink:0}
+/* NOTE TYPE TOGGLE */
+.toggle-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.toggle-wrap h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.toggle-wrap .tw-p{font-size:13.5px;color:var(--ink-2);margin-bottom:18px;line-height:1.6}
+.seg-ctrl{display:inline-flex;background:var(--bg-2);border-radius:30px;padding:4px;border:1px solid var(--line);margin-bottom:20px}
+.seg-btn{padding:7px 18px;border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--ink-2);font-family:var(--sans);transition:.2s}
+.seg-btn.on{background:var(--accent);color:#fff}
+.note-preview{border-radius:var(--r-l);overflow:hidden;border:1px solid var(--line-2)}
+.note-header{background:var(--bg-2);padding:10px 16px;font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+.note-header i{font-size:14px;color:var(--accent)}
+.note-body{padding:16px 18px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.7;white-space:pre-wrap;background:var(--bg-2)}
+.note-pros{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.note-pro{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px}
+.note-pro.good{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.note-pro.bad{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad-line)}
+.note-pro i{font-size:13px}
+/* MOC CARD */
+.moc-card{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;display:flex;gap:18px;align-items:flex-start}
+.moc-icon{width:46px;height:46px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.moc-card h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.moc-card p{font-size:14px;color:var(--ink-2);line-height:1.7}.moc-card p strong{color:var(--ink);font-weight:600}
+/* MYTHS */
+.myths{display:flex;flex-direction:column;gap:10px}
+.myth{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.myth-q{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;transition:background .2s}
+.myth-q:hover{background:var(--bg-2)}
+.myth-q i.myth-icon{font-size:18px;color:var(--bad);flex-shrink:0}
+.myth-q span{font-size:14px;flex:1;font-style:italic;color:var(--ink-2)}
+.myth-q i.myth-chev{font-size:16px;color:var(--ink-3);transition:transform .25s}
+.myth.open .myth-q i.myth-chev{transform:rotate(180deg)}
+.myth-answer{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s,padding .35s}
+.myth.open .myth-answer{max-height:220px;opacity:1;padding:0 18px 16px}
+.myth-answer p{font-size:13.5px;color:var(--ink-2);line-height:1.65;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r);padding:12px 16px;margin:0}
+.myth-answer p strong{color:var(--teal);font-weight:700}
+/* HABIT */
+.habit{background:var(--amber-soft);border:1px solid var(--amber);border-radius:var(--r-l);padding:24px;display:flex;gap:18px;align-items:flex-start;box-shadow:var(--sh)}
+.habit-icon{width:46px;height:46px;border-radius:12px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.habit h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.habit p{font-size:14px;color:var(--ink-2);line-height:1.7}.habit p em{font-style:italic;color:var(--ink);font-weight:500}
+/* KEY */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.42;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key p em{font-style:italic;color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ba-cols{grid-template-columns:1fr}.loop-steps{flex-wrap:wrap}.loop-arrow{display:none}.loop-step{flex:1 1 40%}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.bar-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.over,.loop,.loop-detail,.ba-card,.ai-role-row,.toggle-wrap,.moc-card,.myth,.habit,.key{break-inside:avoid;box-shadow:none!important}.ai-role-detail{max-height:none!important;opacity:1!important;padding-top:12px!important}.myth-answer{max-height:none!important;opacity:1!important;padding:0 18px 16px!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Stack</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Stack AI</div>
+  <h1 class="rv" data-i="h1">Workflow Quotidiano</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- 01 — IL PROBLEMA -->
+  <div class="sh rv"><i class="ti ti-chart-bar"></i><span class="no">01</span><h2 data-i="s1">Il problema da risolvere</h2></div>
+  <div class="over rv">
+    <h3 data-i="overH">Il costo nascosto del knowledge management</h3>
+    <p class="over-p" data-i="overP"></p>
+    <div class="bar-row">
+      <span class="bar-label" data-i="barLab1">Senza sistema</span>
+      <div class="bar-track"><div class="bar-fill before" id="barBefore"></div></div>
+      <span class="bar-pct before">30–40%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label" data-i="barLab2">Con il loop AI</span>
+      <div class="bar-track"><div class="bar-fill after" id="barAfter"></div></div>
+      <span class="bar-pct after">&lt;10%</span>
+    </div>
+    <button class="bar-btn" id="barBtn" onclick="animateBars()"></button>
+  </div>
+
+  <!-- 02 — IL LOOP -->
+  <div class="sh rv"><i class="ti ti-rotate-clockwise-2"></i><span class="no">02</span><h2 data-i="s2">Il loop quotidiano</h2></div>
+  <div class="loop rv">
+    <h3>Capture &rarr; Connect &rarr; Decide &rarr; Ship</h3>
+    <div class="loop-hint" data-i="loopHint"></div>
+    <div class="loop-steps" id="loopSteps">
+      <div class="loop-step on" data-step="0" onclick="showLoopStep(0)">
+        <div class="loop-icon"><i class="ti ti-pencil"></i></div>
+        <div class="loop-step-label" style="color:var(--blue)">Capture</div>
+        <div class="loop-step-sub" data-i="lsSub0">Catturi veloce</div>
+      </div>
+      <div class="loop-arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="loop-step" data-step="1" onclick="showLoopStep(1)">
+        <div class="loop-icon"><i class="ti ti-link"></i></div>
+        <div class="loop-step-label" style="color:var(--agent)">Connect</div>
+        <div class="loop-step-sub" data-i="lsSub1">L'AI struttura</div>
+      </div>
+      <div class="loop-arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="loop-step" data-step="2" onclick="showLoopStep(2)">
+        <div class="loop-icon"><i class="ti ti-checks"></i></div>
+        <div class="loop-step-label" style="color:var(--amber)">Decide</div>
+        <div class="loop-step-sub" data-i="lsSub2">Approvi tu</div>
+      </div>
+      <div class="loop-arrow"><i class="ti ti-chevron-right"></i></div>
+      <div class="loop-step" data-step="3" onclick="showLoopStep(3)">
+        <div class="loop-icon"><i class="ti ti-send"></i></div>
+        <div class="loop-step-label" style="color:var(--teal)">Ship</div>
+        <div class="loop-step-sub" data-i="lsSub3">Archivia e agisci</div>
+      </div>
+    </div>
+    <div class="loop-detail" id="loopDetail"></div>
+  </div>
+
+  <!-- 03 — PRIMA E DOPO -->
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">03</span><h2 data-i="s3">Prima e dopo</h2></div>
+  <p class="lede-sm rv" data-i="baLede"></p>
+  <div class="rv">
+    <div class="ba-hint" data-i="baHint"></div>
+    <div class="ba-cols">
+      <div class="ba-card before">
+        <div class="ba-tag"><i class="ti ti-pencil"></i> <span data-i="baTagBefore">Note grezze (input)</span></div>
+        <pre data-i-html="baBefore"></pre>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-tag"><i class="ti ti-sparkles"></i> <span data-i="baTagAfter">Output AI (strutturato)</span></div>
+        <pre data-i-html="baAfter"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 — RUOLO DELL'AI -->
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">04</span><h2 data-i="s4">Il ruolo dell'AI in ogni fase</h2></div>
+  <p class="lede-sm rv" data-i="rolesLede"></p>
+  <div class="ai-roles rv" id="aiRoles"></div>
+
+  <!-- 05 — NOTE ATOMICHE VS CONTENITORE -->
+  <div class="sh rv"><i class="ti ti-atom"></i><span class="no">05</span><h2 data-i="s5">Note atomiche vs note contenitore</h2></div>
+  <div class="toggle-wrap rv">
+    <h3 data-i="twH">Come scrivi le note cambia tutto</h3>
+    <p class="tw-p" data-i="twP"></p>
+    <div class="seg-ctrl">
+      <button class="seg-btn on" id="segAtom" onclick="showNoteType('atom')" data-i="segAtom">Nota atomica</button>
+      <button class="seg-btn" id="segMono" onclick="showNoteType('mono')" data-i="segMono">Nota contenitore</button>
+    </div>
+    <div class="note-preview" id="notePreview"></div>
+    <div class="note-pros" id="notePros"></div>
+  </div>
+
+  <!-- 06 — MOC -->
+  <div class="sh rv"><i class="ti ti-map"></i><span class="no">06</span><h2 data-i="s6">MOC — Map of Content</h2></div>
+  <div class="moc-card rv">
+    <div class="moc-icon"><i class="ti ti-map"></i></div>
+    <div>
+      <h4 data-i="mocH">MOC — Map of Content</h4>
+      <p data-i-html="mocP"></p>
+    </div>
+  </div>
+
+  <!-- 07 — EQUIVOCI -->
+  <div class="sh rv"><i class="ti ti-shield-x"></i><span class="no">07</span><h2 data-i="s7">Equivoci da smontare</h2></div>
+  <div class="myths rv" id="myths"></div>
+
+  <!-- 08 — ABITUDINE -->
+  <div class="sh rv"><i class="ti ti-sunrise"></i><span class="no">08</span><h2 data-i="s8">L'abitudine da costruire</h2></div>
+  <div class="habit rv">
+    <div class="habit-icon"><i class="ti ti-sunrise"></i></div>
+    <div>
+      <h4 data-i="habitH">L'abitudine da costruire</h4>
+      <p data-i-html="habitP"></p>
+    </div>
+  </div>
+
+  <!-- 09 — FRASE CHIAVE -->
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">09</span><h2 data-i="s9">La frase da ricordare</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i-html="keyphrase"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Workflow Quotidiano</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Stack',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Stack AI',
+h1:'Workflow Quotidiano',
+lede:'Come catturare ogni giorno in modo leggero — e usare l\'AI per trasformare il grezzo in note strutturate, decisioni e task.',
+s1:'Il problema da risolvere',
+overH:'Il costo nascosto del knowledge management',
+overP:'Senza un sistema, organizzare appunti, rileggere note e ricostruire contesto occupa tra il 30 e il 40% del tempo di lavoro. Con un loop quotidiano supportato dall\'AI, scende sotto il 10%.',
+barLab1:'Senza sistema',barLab2:'Con il loop AI',
+barBtnPlay:'Visualizza',barBtnReset:'Azzera',
+s2:'Il loop quotidiano',
+loopHint:'Clicca su ogni fase per vedere cosa succede — e dove entra l\'AI.',
+lsSub0:'Catturi veloce',lsSub1:'L\'AI struttura',lsSub2:'Approvi tu',lsSub3:'Archivia e agisci',
+s3:'Prima e dopo',
+baLede:'Una nota grezza a fine giornata — e cosa produce l\'AI quando gliela passi.',
+baHint:'Stessa informazione, due forme diverse.',
+baTagBefore:'Note grezze (input)',baTagAfter:'Output AI (strutturato)',
+baBefore:'- call con team, discusso budget\n- forse tagliamo il terzo modulo\n- mario dice che il cliente aspetta\n- ricordarsi di rispondere alla mail\n- deadline? boh, venerd&igrave; forse\n- idea: fare una versione lite\n- ancora da capire la parte tecnica',
+baAfter:'<b>Decisioni prese</b>\n&ndash; Revisione budget avviata\n&ndash; Modulo 3 in valutazione taglio\n\n<b>Task con owner</b>\n&ndash; Risposta mail al cliente (tu, oggi)\n&ndash; Chiarire deadline con Mario (tu)\n\n<b>Aperto / Da decidere</b>\n&ndash; Versione lite: da valutare\n&ndash; Parte tecnica: non definita\n\n<b>Rischi</b>\n&ndash; Cliente in attesa: urgenza media',
+s4:'Il ruolo dell\'AI in ogni fase',
+rolesLede:'L\'AI non cattura al posto tuo — cattura sei tu, veloce e senza forma. L\'AI interviene dopo, come processore del grezzo. Clicca ogni fase per vedere cosa fa concretamente.',
+s5:'Note atomiche vs note contenitore',
+twH:'Come scrivi le note cambia tutto',
+twP:'Una nota atomica = una sola idea, autonoma, collegabile. Una nota contenitore è un documento che raccoglie tutto. Entrambe hanno un posto nel sistema, ma confonderle è l\'errore più comune.',
+segAtom:'Nota atomica',segMono:'Nota contenitore',
+s6:'MOC — Map of Content',
+mocH:'MOC — Map of Content',
+mocP:'Quando hai accumulato molte note sullo stesso tema e il vault inizia a essere difficile da navigare, emerge il bisogno di una <strong>nota-indice</strong> che le collega tutte. Quella è una MOC. <strong>Non si crea a priori</strong>: emerge dall\'uso, quando serve. Puoi chiederla all\'AI: "ho 12 note su X, genera una MOC che le linka".',
+s7:'Equivoci da smontare',
+s8:'L\'abitudine da costruire',
+habitH:'L\'abitudine da costruire',
+habitP:'Ogni giorno: butti tutto nella daily note (anche sciatto, anche incompleto). A fine giornata, pochi minuti con l\'AI per strutturare il grezzo. Non serve che le note siano belle — serve che siano <em>fatte</em>. La pulizia è il lavoro dell\'AI, non tuo.',
+s9:'La frase da ricordare',
+keyphrase:'La cattura è <em>tua</em>. La struttura è dell\'AI. Il vault è la memoria che cresce.',
+foot:'Morfeus — Workflow Quotidiano'
+},
+en:{
+kicker:'Stack',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'AI Stack',
+h1:'Daily Workflow',
+lede:'How to capture every day in a lightweight way — and use AI to turn the raw into structured notes, decisions and tasks.',
+s1:'The problem to solve',
+overH:'The hidden cost of knowledge management',
+overP:'Without a system, organizing notes, re-reading them and rebuilding context takes between 30 and 40% of your working time. With a daily AI-supported loop, it drops below 10%.',
+barLab1:'Without a system',barLab2:'With the AI loop',
+barBtnPlay:'Visualize',barBtnReset:'Reset',
+s2:'The daily loop',
+loopHint:'Click each phase to see what happens — and where AI comes in.',
+lsSub0:'You capture fast',lsSub1:'AI structures',lsSub2:'You approve',lsSub3:'Archive and act',
+s3:'Before and after',
+baLede:'A raw note at the end of the day — and what AI produces when you hand it over.',
+baHint:'Same information, two different shapes.',
+baTagBefore:'Raw notes (input)',baTagAfter:'AI output (structured)',
+baBefore:'- call with team, discussed budget\n- maybe we cut the third module\n- mario says the client is waiting\n- remember to reply to the email\n- deadline? dunno, friday maybe\n- idea: make a lite version\n- still to figure out the technical part',
+baAfter:'<b>Decisions made</b>\n&ndash; Budget review started\n&ndash; Module 3 under evaluation for cutting\n\n<b>Tasks with owner</b>\n&ndash; Reply email to the client (you, today)\n&ndash; Clarify deadline with Mario (you)\n\n<b>Open / To decide</b>\n&ndash; Lite version: to be evaluated\n&ndash; Technical part: undefined\n\n<b>Risks</b>\n&ndash; Client waiting: medium urgency',
+s4:'The role of AI in each phase',
+rolesLede:'AI doesn\'t capture for you — capturing is you, fast and formless. AI steps in afterwards, as the processor of the raw. Click each phase to see what it concretely does.',
+s5:'Atomic notes vs container notes',
+twH:'How you write notes changes everything',
+twP:'An atomic note = a single idea, self-contained, linkable. A container note is a document that collects everything. Both have a place in the system, but confusing them is the most common mistake.',
+segAtom:'Atomic note',segMono:'Container note',
+s6:'MOC — Map of Content',
+mocH:'MOC — Map of Content',
+mocP:'When you\'ve accumulated many notes on the same topic and the vault starts becoming hard to navigate, the need emerges for an <strong>index note</strong> that links them all together. That\'s a MOC. <strong>You don\'t create it up front</strong>: it emerges from use, when it\'s needed. You can ask the AI for it: "I have 12 notes on X, generate a MOC that links them".',
+s7:'Misconceptions to dismantle',
+s8:'The habit to build',
+habitH:'The habit to build',
+habitP:'Every day: dump everything into the daily note (even sloppy, even incomplete). At the end of the day, a few minutes with AI to structure the raw. The notes don\'t need to be pretty — they need to be <em>made</em>. The cleanup is AI\'s job, not yours.',
+s9:'The phrase to remember',
+keyphrase:'Capture is <em>yours</em>. Structure is AI\'s. The vault is the memory that grows.',
+foot:'Morfeus — Daily Workflow'
+}};
+
+/* LOOP DATA */
+var LOOP={it:[
+{color:'var(--blue)',icon:'ti-pencil',title:'Capture — cattura veloce e senza forma',
+ items:[['ti-clock','Durante la giornata butti tutto nella daily note: bullet veloci, anche incompleti.'],['ti-brain','Non cercare di strutturare mentre catturi: rallenteresti e ti bloccheresti.'],['ti-keyboard','Frammenti di meeting, idee, link, todo: tutto finisce nello stesso posto.']],
+ aiRole:'In questa fase l\'AI non interviene. Sei tu, veloce e libero.'},
+{color:'var(--agent)',icon:'ti-sparkles',title:'Connect — l\'AI struttura il grezzo',
+ items:[['ti-clipboard-list','Passi la daily note all\'AI: "estrai decisioni, task con owner, rischi".'],['ti-tag','L\'AI classifica ogni frammento: decisione, task, nota permanente, o rumore.'],['ti-arrows-split','Propone dove archiviare ogni elemento — tu approvi prima che scriva.']],
+ aiRole:'Qui l\'AI è il processore: trasforma il grezzo in struttura senza che tu ci pensi.'},
+{color:'var(--amber)',icon:'ti-checks',title:'Decide — il gate umano',
+ items:[['ti-eye','Leggi l\'output dell\'AI: decisioni estratte, task candidati, note proposte.'],['ti-thumb-up','Approvi, modifichi o scarti ogni elemento prima che venga archiviato.'],['ti-alert-triangle','Il gate umano è fondamentale: non lasciare che l\'AI archivi senza supervisione.']],
+ aiRole:'L\'AI ha preparato tutto. Tu hai l\'ultima parola: cosa entra nel sistema, cosa no.'},
+{color:'var(--teal)',icon:'ti-send',title:'Ship — archivia e agisci',
+ items:[['ti-folder-plus','L\'AI scrive le note permanenti nei file giusti, lasciando link dalla daily.'],['ti-list-check','I task approvati entrano nella tua lista di lavoro con owner e scadenza.'],['ti-repeat','Il giorno dopo, la daily è pulita e il vault è un po\' più ricco di prima.']],
+ aiRole:'L\'AI esegue l\'archiviazione. Il sistema si auto-alimenta: ogni giorno il vault cresce.'}
+],en:[
+{color:'var(--blue)',icon:'ti-pencil',title:'Capture — fast and formless capture',
+ items:[['ti-clock','During the day you dump everything into the daily note: quick bullets, even incomplete.'],['ti-brain','Don\'t try to structure while capturing: you\'d slow down and get stuck.'],['ti-keyboard','Meeting fragments, ideas, links, todos: it all ends up in the same place.']],
+ aiRole:'In this phase AI doesn\'t step in. It\'s you, fast and free.'},
+{color:'var(--agent)',icon:'ti-sparkles',title:'Connect — AI structures the raw',
+ items:[['ti-clipboard-list','You hand the daily note to the AI: "extract decisions, tasks with owner, risks".'],['ti-tag','AI classifies every fragment: decision, task, permanent note, or noise.'],['ti-arrows-split','It proposes where to archive each element — you approve before it writes.']],
+ aiRole:'Here AI is the processor: it turns the raw into structure without you having to think about it.'},
+{color:'var(--amber)',icon:'ti-checks',title:'Decide — the human gate',
+ items:[['ti-eye','You read the AI output: extracted decisions, candidate tasks, proposed notes.'],['ti-thumb-up','You approve, edit or discard each element before it gets archived.'],['ti-alert-triangle','The human gate is essential: don\'t let AI archive without supervision.']],
+ aiRole:'AI has prepared everything. You have the final word: what enters the system, what doesn\'t.'},
+{color:'var(--teal)',icon:'ti-send',title:'Ship — archive and act',
+ items:[['ti-folder-plus','AI writes the permanent notes into the right files, leaving links from the daily.'],['ti-list-check','The approved tasks enter your work list with owner and due date.'],['ti-repeat','The next day, the daily is clean and the vault is a little richer than before.']],
+ aiRole:'AI executes the archiving. The system feeds itself: every day the vault grows.'}
+]};
+
+/* AI ROLES DATA */
+var ROLES={it:[
+{phase:'Capture',icon:'ti-pencil',color:'var(--blue-soft)',iconColor:'var(--blue)',title:'Non interviene — cattura sei tu',
+ detail:'La fase di cattura è deliberatamente senza AI. Interrompere il flusso per strutturare rallenta e blocca. L\'AI entra solo dopo, sul materiale grezzo già raccolto.',example:''},
+{phase:'Connect',icon:'ti-sparkles',color:'var(--agent-soft)',iconColor:'var(--agent)',title:'Processa e classifica il grezzo',
+ detail:'Passi la daily note: l\'AI estrae decisioni, identifica task con owner, segnala rischi e propone dove archiviare ogni frammento. Il risultato è una struttura pronta per il tuo ok.',example:'"Leggi queste note di giornata: estrai decisioni prese, task con owner, rischi. Proponi dove archiviare ognuno."'},
+{phase:'Decide',icon:'ti-user-check',color:'var(--amber-soft)',iconColor:'var(--amber)',title:'Aspetta il tuo gate prima di scrivere',
+ detail:'L\'AI non archivia nulla finché non approvi. Ogni nota proposta, ogni task estratto, ogni link suggerito passa per te. Questo gate previene errori e mantieni il controllo del sistema.',example:''},
+{phase:'Ship',icon:'ti-folder-symlink',color:'var(--teal-soft)',iconColor:'var(--teal)',title:'Esegue l\'archiviazione approvata',
+ detail:'Una volta che approvi, l\'AI scrive le note permanenti nei file giusti e lascia link bidirezionali dalla daily. Il vault si aggiorna senza che tu copi-incolli nulla a mano.',example:'"Scrivi una nota permanente su [tema] nella cartella note/, con link dalla daily di oggi."'}
+],en:[
+{phase:'Capture',icon:'ti-pencil',color:'var(--blue-soft)',iconColor:'var(--blue)',title:'Doesn\'t step in — capturing is you',
+ detail:'The capture phase is deliberately AI-free. Interrupting the flow to structure slows you down and blocks you. AI only steps in afterwards, on the raw material already collected.',example:''},
+{phase:'Connect',icon:'ti-sparkles',color:'var(--agent-soft)',iconColor:'var(--agent)',title:'Processes and classifies the raw',
+ detail:'You hand over the daily note: AI extracts decisions, identifies tasks with owner, flags risks and proposes where to archive each fragment. The result is a structure ready for your ok.',example:'"Read these daily notes: extract decisions made, tasks with owner, risks. Propose where to archive each one."'},
+{phase:'Decide',icon:'ti-user-check',color:'var(--amber-soft)',iconColor:'var(--amber)',title:'Waits for your gate before writing',
+ detail:'AI archives nothing until you approve. Every proposed note, every extracted task, every suggested link passes through you. This gate prevents errors and keeps you in control of the system.',example:''},
+{phase:'Ship',icon:'ti-folder-symlink',color:'var(--teal-soft)',iconColor:'var(--teal)',title:'Executes the approved archiving',
+ detail:'Once you approve, AI writes the permanent notes into the right files and leaves bidirectional links from the daily. The vault updates without you copy-pasting anything by hand.',example:'"Write a permanent note on [topic] in the note/ folder, with links from today\'s daily."'}
+]};
+
+/* NOTE TYPES */
+var NOTES={it:{
+atom:{filename:'pricing-valore-percepito.md',
+ body:'# Pricing — valore percepito\n\nIl prezzo segnala il valore: alzarlo può\naumentare la percezione del prodotto.\n\n→ [[psicologia-prezzi]]\n→ [[caso-lancio-2024]]',
+ pros:[['good','ti-link','Collegabile ad altre note'],['good','ti-search','Trovabile per concetto'],['good','ti-refresh','Riutilizzabile in contesti diversi'],['bad','ti-files','Richiede più file separati']]},
+mono:{filename:'riunione-prodotto-2024-06.md',
+ body:'# Riunione prodotto — Giugno 2024\n\n## Pricing\nIl prezzo segnala il valore...\n\n## Roadmap\nFunzione X entro Q3...\n\n## Team\nMario entra nel progetto...\n\n## Budget\n...',
+ pros:[['good','ti-file-text','Tutto in un posto solo'],['good','ti-calendar','Utile come archivio temporale'],['bad','ti-link-off','Difficile da collegare ad altri temi'],['bad','ti-search','I concetti sono sepolti nel documento']]}
+},en:{
+atom:{filename:'pricing-perceived-value.md',
+ body:'# Pricing — perceived value\n\nPrice signals value: raising it can\nincrease the perception of the product.\n\n→ [[pricing-psychology]]\n→ [[launch-case-2024]]',
+ pros:[['good','ti-link','Linkable to other notes'],['good','ti-search','Findable by concept'],['good','ti-refresh','Reusable in different contexts'],['bad','ti-files','Requires more separate files']]},
+mono:{filename:'product-meeting-2024-06.md',
+ body:'# Product meeting — June 2024\n\n## Pricing\nPrice signals value...\n\n## Roadmap\nFeature X by Q3...\n\n## Team\nMario joins the project...\n\n## Budget\n...',
+ pros:[['good','ti-file-text','Everything in one place'],['good','ti-calendar','Useful as a temporal archive'],['bad','ti-link-off','Hard to link to other topics'],['bad','ti-search','The concepts are buried in the document']]}
+}};
+
+/* MYTHS */
+var MYTHS={it:[
+{q:'"Devo scrivere note belle e complete subito."',
+ a:'<strong>No.</strong> La cattura è sporca e veloce per design. Interrompere il flusso per sistemare rallenta e alla lunga fa abbandonare il sistema. La struttura arriva dopo, con l\'AI.'},
+{q:'"Più sistema = più produttività."',
+ a:'<strong>Falso.</strong> Un sistema troppo elaborato si abbandona in due settimane. L\'obiettivo è un loop <em>leggero</em> che regge nel tempo. Meno frizione, più abitudine.'},
+{q:'"Creo i MOC e la struttura prima di iniziare a prendere note."',
+ a:'<strong>No.</strong> Le MOC emergono dall\'uso, quando il vault diventa difficile da navigare. Crearle a priori è sovra-ingegnerizzazione: spendi energia su struttura che non serve ancora.'},
+{q:'"L\'AI archivia da sola, io non devo fare niente."',
+ a:'<strong>Meglio un gate umano.</strong> L\'AI propone, tu approvi prima che scriva. Decisioni e supervisione restano umane. Il sistema è automatizzato nel lavoro meccanico, non nel giudizio.'}
+],en:[
+{q:'"I have to write pretty, complete notes right away."',
+ a:'<strong>No.</strong> Capture is dirty and fast by design. Interrupting the flow to tidy up slows you down and in the long run makes you abandon the system. Structure comes later, with AI.'},
+{q:'"More system = more productivity."',
+ a:'<strong>False.</strong> A system that\'s too elaborate gets abandoned in two weeks. The goal is a <em>lightweight</em> loop that holds up over time. Less friction, more habit.'},
+{q:'"I create the MOCs and the structure before I start taking notes."',
+ a:'<strong>No.</strong> MOCs emerge from use, when the vault becomes hard to navigate. Creating them up front is over-engineering: you spend energy on structure that isn\'t needed yet.'},
+{q:'"AI archives by itself, I don\'t have to do anything."',
+ a:'<strong>A human gate is better.</strong> AI proposes, you approve before it writes. Decisions and supervision stay human. The system is automated in the mechanical work, not in the judgment.'}
+]};
+
+var LANG='it',curLoop=0,curNote='atom',barsAnimated=false;
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  resetBars();
+  showLoopStep(curLoop);
+  buildAiRoles();
+  showNoteType(curNote);
+  buildMyths();
+}
+
+/* OVERHEAD BARS */
+function animateBars(){
+  if(barsAnimated){resetBars();return;}
+  barsAnimated=true;
+  setTimeout(function(){
+    document.getElementById('barBefore').style.width='37%';
+    document.getElementById('barAfter').style.width='8%';
+    var b=document.getElementById('barBtn');b.innerHTML='<i class="ti ti-refresh"></i> '+DICT[LANG].barBtnReset;
+  },100);
+}
+function resetBars(){
+  barsAnimated=false;
+  document.getElementById('barBefore').style.width='0';
+  document.getElementById('barAfter').style.width='0';
+  document.getElementById('barBtn').innerHTML='<i class="ti ti-player-play"></i> '+DICT[LANG].barBtnPlay;
+}
+
+/* LOOP STEPS */
+function showLoopStep(idx){
+  curLoop=idx;
+  document.querySelectorAll('.loop-step').forEach(function(s){s.classList.toggle('on',s.getAttribute('data-step')==String(idx))});
+  var d=LOOP[LANG][idx];
+  var items=d.items.map(function(it){return '<li><i class="ti '+it[0]+'" style="color:'+d.color+'"></i>'+it[1]+'</li>'}).join('');
+  document.getElementById('loopDetail').innerHTML=
+    '<h4><i class="ti '+d.icon+'" style="color:'+d.color+'"></i> '+d.title+'</h4>'+
+    '<ul>'+items+'</ul>'+
+    '<div class="ai-role"><i class="ti ti-sparkles"></i> '+d.aiRole+'</div>';
+}
+
+/* AI ROLES */
+function buildAiRoles(){
+  var host=document.getElementById('aiRoles');host.innerHTML='';
+  var exLabel=LANG==='it'?'Esempio: ':'Example: ';
+  ROLES[LANG].forEach(function(d){
+    var row=document.createElement('div');row.className='ai-role-row';
+    var exHtml=d.example?'<div class="example-chip"><i class="ti ti-terminal"></i> <span>'+exLabel+d.example+'</span></div>':'';
+    row.innerHTML=
+      '<div class="ai-role-icon" style="background:'+d.color+';color:'+d.iconColor+'"><i class="ti '+d.icon+'"></i></div>'+
+      '<div class="ai-role-main">'+
+        '<div class="ai-role-phase" style="color:'+d.iconColor+'">'+d.phase+'</div>'+
+        '<div class="ai-role-title">'+d.title+'</div>'+
+        '<div class="ai-role-detail"><p>'+d.detail+'</p>'+exHtml+'</div>'+
+      '</div>'+
+      '<i class="ti ti-chevron-right ai-role-chevron"></i>';
+    row.addEventListener('click',function(){
+      var isOpen=row.classList.contains('open');
+      document.querySelectorAll('.ai-role-row').forEach(function(r){r.classList.remove('open')});
+      if(!isOpen)row.classList.add('open');
+    });
+    host.appendChild(row);
+  });
+}
+
+/* NOTE TYPE */
+function showNoteType(type){
+  curNote=type;
+  document.getElementById('segAtom').classList.toggle('on',type==='atom');
+  document.getElementById('segMono').classList.toggle('on',type==='mono');
+  var d=NOTES[LANG][type];
+  document.getElementById('notePreview').innerHTML=
+    '<div class="note-header"><i class="ti ti-file-text"></i> '+d.filename+'</div>'+
+    '<div class="note-body">'+escHtml(d.body)+'</div>';
+  var pros=d.pros.map(function(p){return '<span class="note-pro '+p[0]+'"><i class="ti '+p[1]+'"></i>'+p[2]+'</span>'}).join('');
+  document.getElementById('notePros').innerHTML=pros;
+}
+
+/* MYTHS */
+function buildMyths(){
+  var host=document.getElementById('myths');host.innerHTML='';
+  MYTHS[LANG].forEach(function(m,i){
+    var el=document.createElement('div');el.className='myth';
+    el.innerHTML=
+      '<div class="myth-q">'+
+        '<i class="ti ti-alert-triangle myth-icon"></i>'+
+        '<span>'+m.q+'</span>'+
+        '<i class="ti ti-chevron-down myth-chev"></i>'+
+      '</div>'+
+      '<div class="myth-answer"><p>'+m.a+'</p></div>';
+    el.querySelector('.myth-q').addEventListener('click',function(){
+      var isOpen=el.classList.contains('open');
+      document.querySelectorAll('.myth').forEach(function(x){x.classList.remove('open')});
+      if(!isOpen)el.classList.add('open');
+    });
+    host.appendChild(el);
+  });
+}
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

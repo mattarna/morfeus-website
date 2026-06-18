@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cos'è CoWork — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.45;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+/* compare */
+.compare-tabs{display:flex;gap:0;border-radius:var(--r-l) var(--r-l) 0 0;overflow:hidden;border:1px solid var(--line);border-bottom:none}
+.compare-tab{flex:1;padding:15px;text-align:center;cursor:pointer;font-size:14px;font-weight:600;transition:.3s;background:var(--bg-2);color:var(--ink-2);border:none;font-family:var(--sans)}
+.compare-tab.active-chat{background:var(--blue-soft);color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+.compare-tab.active-cowork{background:var(--teal-soft);color:var(--teal);box-shadow:inset 0 -3px 0 var(--teal)}
+.compare-tab i{display:block;font-size:23px;margin-bottom:6px}
+.compare-panel{border:1px solid var(--line);border-radius:0 0 var(--r-l) var(--r-l);padding:30px;background:var(--card);box-shadow:var(--sh);min-height:300px}
+.mock-flow{display:flex;flex-direction:column;gap:15px;max-width:520px;margin:0 auto}
+.mock-step{display:flex;align-items:flex-start;gap:14px}
+.mock-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0}
+.mock-step.chat .mock-num{background:var(--blue-soft);color:var(--blue)}
+.mock-step.cowork .mock-num{background:var(--teal-soft);color:var(--teal)}
+.mock-text{flex:1}
+.mock-text .action{font-size:14px;font-weight:600;margin-bottom:2px}
+.mock-text .detail{font-size:13px;color:var(--ink-3)}
+.mock-arrow{text-align:center;color:var(--ink-3);font-size:18px}
+/* metaphor */
+.metaphor{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;margin:0;display:flex;gap:22px;align-items:center}
+.metaphor-icon{width:60px;height:60px;border-radius:15px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
+.metaphor-text h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.metaphor-text p{font-size:15px;color:var(--ink-2);line-height:1.6}
+/* security */
+.security{background:var(--good-soft);border:1px solid var(--good-line);border-radius:var(--r-l);padding:26px;margin:0;display:flex;gap:18px;align-items:flex-start}
+.security-icon{width:46px;height:46px;border-radius:12px;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.security h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--good)}
+.security p{font-size:14px;color:var(--ink-2);line-height:1.65}
+/* personas */
+.personas-sub{font-size:14.5px;color:var(--ink-2);max-width:620px;margin:0 auto 20px;text-align:center;line-height:1.65}
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.persona{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;text-align:center;cursor:pointer;transition:.25s}
+.persona:hover{border-color:var(--teal-line);transform:translateY(-2px)}
+.persona.active{border-color:var(--teal);background:var(--teal-soft)}
+.persona i{font-size:27px;color:var(--teal);display:block;margin-bottom:10px}
+.persona h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.persona p{font-size:12px;color:var(--ink-3)}
+.persona-detail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-top:16px;font-size:14px;color:var(--ink-2);text-align:center;min-height:52px;transition:opacity .3s;line-height:1.55}
+.personas-foot{font-size:14px;color:var(--ink-2);text-align:center;margin:18px auto 0;line-height:1.65;max-width:620px}
+.personas-foot strong{color:var(--teal)}
+/* tasks */
+.task-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.task{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.task i{font-size:20px;color:var(--teal);flex-shrink:0;margin-top:2px}
+.task .t{font-size:14px;font-weight:600;margin-bottom:2px}
+.task .d{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+/* trigger */
+.trigger{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:20px 24px;margin:0;text-align:center;font-size:15px;color:var(--ink-2);font-style:italic;line-height:1.6}
+.trigger strong{color:var(--warn);font-style:normal}
+.center-h{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center;color:var(--ink-2)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:600px){h1{font-size:28px}.task-grid{grid-template-columns:1fr}.persona-grid{grid-template-columns:1fr}.metaphor{flex-direction:column;text-align:center}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.metaphor,.security,.persona,.task,.trigger,.key,.compare-panel{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Da usare a delegare</div>
+  <h1 class="rv" data-i="h1">Cos'è CoWork</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">01</span><h2 data-i="s1">Chat vs CoWork</h2></div>
+  <div class="compare-tabs rv">
+    <div class="compare-tab active-chat" id="tabChat" onclick="showPanel('chat')"><i class="ti ti-message-circle"></i><span data-i="tabChatLabel"></span></div>
+    <div class="compare-tab" id="tabCowork" onclick="showPanel('cowork')"><i class="ti ti-rocket"></i><span data-i="tabCoworkLabel"></span></div>
+  </div>
+  <div class="compare-panel rv" id="panelContent">
+    <div class="mock-flow" id="flowChat">
+      <div class="mock-step chat"><div class="mock-num">1</div><div class="mock-text"><div class="action" data-i="cha1"></div><div class="detail" data-i="chd1"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step chat"><div class="mock-num">2</div><div class="mock-text"><div class="action" data-i="cha2"></div><div class="detail" data-i="chd2"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step chat"><div class="mock-num">3</div><div class="mock-text"><div class="action" data-i="cha3"></div><div class="detail" data-i="chd3"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step chat"><div class="mock-num">4</div><div class="mock-text"><div class="action" data-i="cha4"></div><div class="detail" data-i="chd4"></div></div></div>
+    </div>
+    <div class="mock-flow" id="flowCowork" style="display:none">
+      <div class="mock-step cowork"><div class="mock-num">1</div><div class="mock-text"><div class="action" data-i="cwa1"></div><div class="detail" data-i="cwd1"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step cowork"><div class="mock-num">2</div><div class="mock-text"><div class="action" data-i="cwa2"></div><div class="detail" data-i="cwd2"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step cowork"><div class="mock-num">3</div><div class="mock-text"><div class="action" data-i="cwa3"></div><div class="detail" data-i="cwd3"></div></div></div>
+      <div class="mock-arrow"><i class="ti ti-arrow-down"></i></div>
+      <div class="mock-step cowork"><div class="mock-num">4</div><div class="mock-text"><div class="action" data-i="cwa4"></div><div class="detail" data-i="cwd4"></div></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-replace"></i><span class="no">02</span><h2 data-i="s2">Un cambio di paradigma</h2></div>
+  <div class="metaphor rv">
+    <div class="metaphor-icon"><i class="ti ti-replace"></i></div>
+    <div class="metaphor-text">
+      <h3 data-i="metaH"></h3>
+      <p data-i="metaP"></p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-shield-lock"></i><span class="no">03</span><h2 data-i="s3">Ambiente isolato e sicuro</h2></div>
+  <div class="security rv">
+    <div class="security-icon"><i class="ti ti-shield-lock"></i></div>
+    <div>
+      <h4 data-i="secH"></h4>
+      <p data-i="secP"></p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-users-group"></i><span class="no">04</span><h2 data-i="s4">CoWork è per tutti</h2></div>
+  <p class="personas-sub rv" data-i="personasSub"></p>
+  <div class="persona-grid rv">
+    <div class="persona active" onclick="showPersona(0,this)">
+      <i class="ti ti-chart-dots-3"></i>
+      <h4 data-i="per0h"></h4>
+      <p data-i="per0p"></p>
+    </div>
+    <div class="persona" onclick="showPersona(1,this)">
+      <i class="ti ti-briefcase"></i>
+      <h4 data-i="per1h"></h4>
+      <p data-i="per1p"></p>
+    </div>
+    <div class="persona" onclick="showPersona(2,this)">
+      <i class="ti ti-pencil"></i>
+      <h4 data-i="per2h"></h4>
+      <p data-i="per2p"></p>
+    </div>
+  </div>
+  <div class="persona-detail rv" id="personaDetail"></div>
+  <p class="personas-foot rv" data-i-html="personasFoot"></p>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">05</span><h2 data-i="s5">Cosa gli affidi</h2></div>
+  <div class="center-h rv" data-i="tasksH"></div>
+  <div class="task-grid rv">
+    <div class="task"><i class="ti ti-file-spreadsheet"></i><div><div class="t" data-i="task0t"></div><div class="d" data-i="task0d"></div></div></div>
+    <div class="task"><i class="ti ti-file-text"></i><div><div class="t" data-i="task1t"></div><div class="d" data-i="task1d"></div></div></div>
+    <div class="task"><i class="ti ti-presentation"></i><div><div class="t" data-i="task2t"></div><div class="d" data-i="task2d"></div></div></div>
+    <div class="task"><i class="ti ti-folders"></i><div><div class="t" data-i="task3t"></div><div class="d" data-i="task3d"></div></div></div>
+  </div>
+
+  <div class="trigger rv" style="margin-top:32px" data-i-html="trigger"></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Cos'è CoWork</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Da usare a delegare',
+h1:'Cos\'è CoWork',
+lede:'Il salto da "usare Claude" a "delegare a Claude". Non gli chiedete cosa fare: gli affidate il lavoro.',
+s1:'Chat vs CoWork',
+tabChatLabel:'Claude Chat',tabCoworkLabel:'Claude CoWork',
+cha1:'Chiedete qualcosa',chd1:'"Scrivimi un report sulle vendite Q1"',
+cha2:'Claude risponde con testo',chd2:'Il report appare nella chat come messaggio',
+cha3:'Copiate, incollate, formattate',chd3:'Aprite Word, incollate, sistemate i font, salvate...',
+cha4:'Claude vive dentro la chat',chd4:'Non vede i vostri file, non crea documenti reali',
+cwa1:'Affidate un task',cwd1:'"Crea un report .docx delle vendite Q1 dalla cartella dati"',
+cwa2:'Claude lo esegue sul vostro computer',cwd2:'Legge i file, elabora, crea il documento',
+cwa3:'Il file appare nella vostra cartella',cwd3:'report_vendite_Q1.docx — pronto, formattato, reale',
+cwa4:'Claude vive nel vostro file system',cwd4:'Vede i file, li crea, li modifica — lavoro vero',
+s2:'Un cambio di paradigma',
+metaH:'Non è un\'evoluzione della chat. È un cambio di paradigma.',
+metaP:'La differenza è tra avere un consulente che vi dice cosa fare e avere un collega che lo fa mentre voi fate altro.',
+s3:'Ambiente isolato e sicuro',
+secH:'Ambiente isolato e sicuro',
+secP:'CoWork opera in una virtual machine sandboxed. Ha accesso solo alla cartella di lavoro che voi scegliete di condividere. Non naviga nel file system, non accede ai file personali. Voi controllate cosa Claude può vedere e toccare.',
+s4:'CoWork è per tutti',
+personasSub:'Non è uno strumento da specialisti. Se nel tuo lavoro produci documenti, dati o contenuti — e chi non lo fa? — CoWork lavora per te. Questi sono solo tre esempi: clicca per vedere cosa cambia.',
+per0h:'Ricercatori e analisti',per0p:'Dati, report, analisi',
+per1h:'Manager e consulenti',per1p:'Documenti, presentazioni',
+per2h:'Content creator',per2p:'Articoli, copy, contenuti',
+personasFoot:'…e chiunque altro: <strong>studenti, freelance, imprenditori, segreterie, insegnanti, team interi.</strong> Il punto non è il ruolo che hai — è che lavori con dei file. E con i file, CoWork fa il lavoro al posto tuo.',
+s5:'Cosa gli affidi',
+tasksH:'Qualche esempio concreto di cosa gli affidi',
+task0t:'Pulire e analizzare un Excel',task0d:'Gli dai il foglio: pulisce i dati, calcola, e ti restituisce il file pronto.',
+task1t:'Trasformare appunti in un documento',task1d:'Da note sparse a un .docx impaginato, con titoli e indice.',
+task2t:'Montare una presentazione',task2d:'Dai i contenuti, lui costruisce una bozza di slide .pptx già strutturata.',
+task3t:'Mettere ordine in una cartella',task3d:'Rinomina, riorganizza e crea un indice dei file che hai.',
+trigger:'Se vi siete mai detti <strong>"ci vogliono due ore per questo ma è ripetitivo e meccanico"</strong> — quello è esattamente il lavoro che CoWork può fare per voi.',
+s6:'In una frase',
+keyPhrase:'La chat è un consulente che vi consiglia. CoWork è un collega che esegue.',
+foot:'Morfeus — Cos\'è CoWork'
+},
+en:{
+kicker:'Lesson 4.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'From using to delegating',
+h1:'What CoWork is',
+lede:'The leap from "using Claude" to "delegating to Claude". You don\'t ask it what to do: you hand it the work.',
+s1:'Chat vs CoWork',
+tabChatLabel:'Claude Chat',tabCoworkLabel:'Claude CoWork',
+cha1:'You ask for something',chd1:'"Write me a report on Q1 sales"',
+cha2:'Claude responds with text',chd2:'The report appears in the chat as a message',
+cha3:'You copy, paste, format',chd3:'You open Word, paste, fix the fonts, save...',
+cha4:'Claude lives inside the chat',chd4:'It doesn\'t see your files, it doesn\'t create real documents',
+cwa1:'You hand over a task',cwd1:'"Create a .docx report of Q1 sales from the data folder"',
+cwa2:'Claude executes it on your computer',cwd2:'It reads the files, processes, creates the document',
+cwa3:'The file appears in your folder',cwd3:'q1_sales_report.docx — ready, formatted, real',
+cwa4:'Claude lives in your file system',cwd4:'It sees the files, creates them, edits them — real work',
+s2:'A paradigm shift',
+metaH:'It\'s not an evolution of the chat. It\'s a paradigm shift.',
+metaP:'The difference is between having a consultant who tells you what to do and having a colleague who does it while you do something else.',
+s3:'Isolated and secure environment',
+secH:'Isolated and secure environment',
+secP:'CoWork operates in a sandboxed virtual machine. It only has access to the working folder you choose to share. It doesn\'t browse the file system, it doesn\'t access personal files. You control what Claude can see and touch.',
+s4:'CoWork is for everyone',
+personasSub:'It\'s not a tool for specialists. If your work produces documents, data or content — and who doesn\'t? — CoWork works for you. These are just three examples: click to see what changes.',
+per0h:'Researchers and analysts',per0p:'Data, reports, analysis',
+per1h:'Managers and consultants',per1p:'Documents, presentations',
+per2h:'Content creators',per2p:'Articles, copy, content',
+personasFoot:'…and anyone else: <strong>students, freelancers, entrepreneurs, admin staff, teachers, whole teams.</strong> The point isn\'t the role you have — it\'s that you work with files. And with files, CoWork does the work for you.',
+s5:'What you hand over',
+tasksH:'A few concrete examples of what you hand over',
+task0t:'Clean and analyze an Excel',task0d:'You give it the sheet: it cleans the data, calculates, and hands the file back ready.',
+task1t:'Turn notes into a document',task1d:'From scattered notes to a laid-out .docx, with titles and a table of contents.',
+task2t:'Assemble a presentation',task2d:'You provide the content, it builds an already-structured .pptx slide draft.',
+task3t:'Tidy up a folder',task3d:'It renames, reorganizes and creates an index of the files you have.',
+trigger:'If you\'ve ever told yourself <strong>"this takes two hours but it\'s repetitive and mechanical"</strong> — that\'s exactly the work CoWork can do for you.',
+s6:'In one sentence',
+keyPhrase:'The chat is a consultant who advises you. CoWork is a colleague who executes.',
+foot:'Morfeus — What CoWork is'
+}};
+
+var LANG='it';
+
+var personaTexts={
+it:[
+'Elaborare dataset, generare report automatici, confrontare fonti — tutto prodotto come file reali nella cartella di lavoro.',
+'Creare presentazioni, documenti strategici, analisi competitive — Claude li costruisce mentre voi vi concentrate sulle decisioni.',
+'Scrivere articoli, newsletter, copy per social — Claude produce i file pronti per la pubblicazione, non solo testo in chat.'
+],
+en:[
+'Process datasets, generate automatic reports, compare sources — all produced as real files in the working folder.',
+'Create presentations, strategic documents, competitive analyses — Claude builds them while you focus on the decisions.',
+'Write articles, newsletters, social copy — Claude produces the files ready for publication, not just text in chat.'
+]};
+var personaIdx=0;
+
+function showPanel(mode){
+  var tc=document.getElementById('tabChat'),tw=document.getElementById('tabCowork');
+  var fc=document.getElementById('flowChat'),fw=document.getElementById('flowCowork');
+  tc.className='compare-tab';tw.className='compare-tab';
+  if(mode==='chat'){tc.classList.add('active-chat');fc.style.display='';fw.style.display='none';}
+  else{tw.classList.add('active-cowork');fc.style.display='none';fw.style.display='';}
+}
+function showPersona(idx,el){
+  personaIdx=idx;
+  document.querySelectorAll('.persona').forEach(function(p){p.classList.remove('active')});
+  el.classList.add('active');
+  document.getElementById('personaDetail').textContent=personaTexts[LANG][idx];
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('personaDetail').textContent=personaTexts[LANG][personaIdx];
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I dati: il carburante dell'AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+/* two-axis component */
+.axisintro{font-size:14.5px;color:var(--ink-2);margin-bottom:18px}
+.axis{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;margin-bottom:14px}
+.axis .ah{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.axis .ahn{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--accent);color:#fff;padding:3px 9px;border-radius:30px;letter-spacing:.03em;flex-shrink:0}
+.axis .aht{font-size:15.5px;font-weight:600;letter-spacing:-.01em}
+.seg-bar{display:flex;gap:6px;margin-bottom:0}
+.seg{flex:1;border:1px solid transparent;cursor:pointer;color:#fff;font-family:var(--mono);font-weight:700;font-size:12.5px;padding:11px 8px;display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s;opacity:.78;border-radius:var(--r)}
+.seg i{font-size:15px}
+.seg:hover,.seg.on{opacity:1;transform:translateY(-1px)}
+.seg.s-a{background:var(--accent)}.seg.s-b{background:var(--agent)}
+.seg-detail{margin-top:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:15px 16px;font-size:14.5px;color:var(--ink-2)}
+.seg-detail.bdet{border-left-color:var(--agent)}
+.seg-detail b{color:var(--ink);font-weight:600}
+.seg-detail .ex{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-top:10px;color:var(--ink-2);line-height:1.6}
+.axisboth{display:flex;gap:12px;align-items:center;background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r-l);padding:14px 16px;margin-top:4px}
+.axisboth i{color:var(--good);font-size:20px;flex-shrink:0}.axisboth p{font-size:13.5px;color:var(--ink-2)}.axisboth b{color:var(--good)}
+/* requirements selector */
+.reqs{display:flex;flex-direction:column;gap:8px}
+.req{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.req:hover{border-color:var(--line-2)}.req.on{border-color:var(--accent);background:var(--accent-soft)}
+.req .ri{width:32px;height:32px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.req.on .ri{background:var(--accent);color:#fff}
+.req .rt{font-size:14.5px;font-weight:600}
+.reqdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px}
+.reqdetail p{font-size:14.5px;color:var(--ink-2)}.reqdetail p b{color:var(--ink)}
+.reqdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.7;white-space:pre-wrap}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:8px 14px;font-size:13.5px;font-weight:500;color:var(--ink-2)}
+.chip i{font-size:15px;color:var(--good)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.seg{font-size:11.5px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.req,.reqdetail,.key,.chip,.axis,.seg-detail,.axisboth{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo</div>
+  <h1 class="rv" data-i="h1">I dati: il carburante dell'AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">01</span><h2 data-i="s1">Senza dati non vai da nessuna parte</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-paperclip"></i></div><div><h4 data-i="note1H">Un ottimo fermacarte</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">02</span><h2 data-i="s2">Due assi distinti — non confonderli</h2></div>
+  <p class="axisintro rv" data-i="axisIntro"></p>
+
+  <div class="axis rv">
+    <div class="ah"><span class="ahn" data-i="ax1N">Asse 1</span><span class="aht" data-i="ax1T">Quantità vs Qualità</span></div>
+    <div class="seg-bar">
+      <button class="seg s-a on" onclick="showAx(1,0)"><i class="ti ti-stack-2"></i><span data-i="ax1aT">Quantità</span></button>
+      <button class="seg s-a" onclick="showAx(1,1)"><i class="ti ti-sparkles"></i><span data-i="ax1bT">Qualità</span></button>
+    </div>
+    <div class="seg-detail" id="ax1Detail"></div>
+    <div class="axisboth"><i class="ti ti-plus"></i><p data-i-html="ax1Both"></p></div>
+  </div>
+
+  <div class="axis rv">
+    <div class="ah"><span class="ahn" style="background:var(--agent)" data-i="ax2N">Asse 2</span><span class="aht" data-i="ax2T">Quantitativi vs Qualitativi</span></div>
+    <div class="seg-bar">
+      <button class="seg s-b on" onclick="showAx(2,0)"><i class="ti ti-123"></i><span data-i="ax2aT">Quantitativi</span></button>
+      <button class="seg s-b" onclick="showAx(2,1)"><i class="ti ti-file-text"></i><span data-i="ax2bT">Qualitativi</span></button>
+    </div>
+    <div class="seg-detail bdet" id="ax2Detail"></div>
+    <div class="axisboth"><i class="ti ti-target-arrow"></i><p data-i-html="ax2Both"></p></div>
+  </div>
+
+  <div class="key rv" style="margin-top:24px"><p data-i="axisKey"></p></div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-check"></i><span class="no">03</span><h2 data-i="s3">I requisiti dei dati</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="reqsIntro"></p>
+  <div class="reqs rv" id="reqs"></div>
+  <div class="reqdetail rv" id="reqdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-language"></i><span class="no">04</span><h2 data-i="s4">Strutturati, o non li legge</h2></div>
+  <div class="key rv"><p data-i="chineseKey"></p><div class="cap" data-i="chineseCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-equal"></i><span class="no">05</span><h2 data-i="s5">Coerenza semantica</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cohIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="cohBadT">Incoerente</span><div class="pr" data-i="cohBad"></div><div class="res" data-i-html="cohBadR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="cohGoodT">Coerente</span><div class="pr" data-i="cohGood"></div><div class="res" data-i-html="cohGoodR"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">06</span><h2 data-i="s6">Gli altri requisiti di qualità</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="qualReqsIntro"></p>
+  <div class="chips rv" id="qchips"></div>
+
+  <div class="sh rv"><i class="ti ti-wash"></i><span class="no">07</span><h2 data-i="s7">Da dati sporchi a dati puliti</h2></div>
+  <div class="cards rv" id="cleanCards"></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Guarda i tuoi dati con gli occhi di un junior</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — I dati: il carburante dell'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo',
+h1:'I dati: il carburante dell\'AI',
+lede:'Il modello è il motore. Ma un motore senza carburante non va da nessuna parte. I dati sono il carburante dell\'AI: senza, anche il modello migliore resta fermo.',
+s1:'Senza dati non vai da nessuna parte',
+note1H:'Un ottimo fermacarte',
+note1P:'Senza dati l\'intelligenza artificiale è <strong>un ottimo fermacarte, un ottimo fermaporte</strong>, ma non serve a nulla. L\'obiettivo è prendere quello che sai fare — la tua "ricetta della nonna" — e portarlo su scala industriale. Ma servono i dati giusti per farlo.',
+q1:'«La qualità dell\'output non dipende solo dal modello: dipende dai dati che gli dai. Carburante sporco, motore che si inceppa.»',
+s2:'Due assi distinti — non confonderli',
+axisIntro:'Quando si parla di dati per l\'AI ci sono due assi che vivono su piani diversi e non vanno mescolati. Uno riguarda quanti e quanto puliti sono i dati; l\'altro riguarda di che natura sono. Esplora ciascun asse cliccando i due lati.',
+ax1N:'Asse 1',ax1T:'Quantità vs Qualità',
+ax1aT:'Quantità',ax1bT:'Qualità',
+ax1Both:'<b>Servono entrambe.</b> Tanti dati ma sporchi = output confuso. Pochi dati ma perfetti = l\'AI non ha abbastanza esempi per restare fedele. Quantità e qualità si moltiplicano, non si sommano.',
+ax2N:'Asse 2',ax2T:'Quantitativi vs Qualitativi',
+ax2aT:'Quantitativi',ax2bT:'Qualitativi',
+ax2Both:'<b>Pensa all\'obiettivo, non alla forma.</b> Un report, un contratto, una procedura sono dati esattamente come una tabella di numeri. La domanda giusta non è «che forma ha?», ma «a che obiettivo serve?».',
+axisKey:'I due assi sono indipendenti: un report (qualitativo) può essere abbondante e pulito o scarso e sporco. Tieni le due domande separate.',
+s3:'I requisiti dei dati',
+reqsIntro:'Non basta avere dati: devono avere certe caratteristiche operative che ritornano sempre. Clicca ognuna.',
+s4:'Strutturati, o non li legge',
+chineseKey:'È come un testo in cinese organizzato benissimo: tu capisci qualcosa? No. Devi dare i dati nel formato che la macchina legge meglio.',
+chineseCap:'Dati non leggibili dall\'AI sono dati inutili, per quanto ordinati ti sembrino.',
+s5:'Coerenza semantica',
+cohIntro:'Lo stesso campo deve chiamarsi sempre allo stesso modo, in tutti i documenti. Se lo cambi, l\'AI si confonde.',
+cohBadT:'Incoerente',cohGoodT:'Coerente',
+cohBad:'doc 1 → "product"\ndoc 2 → "prodotto"\ndoc 3 → "articolo"\n\netà · Età · anni · age',
+cohBadR:'<b>L\'AI si confonde:</b> non capisce che sono lo stesso campo. Tratta "product" e "prodotto" come due cose diverse.',
+cohGood:'doc 1 → "prodotto"\ndoc 2 → "prodotto"\ndoc 3 → "prodotto"\n\netà · età · età · età',
+cohGoodR:'<b>L\'AI collega tutto:</b> «età si scrive sempre età». Uno standard unico = nessuna ambiguità.',
+s6:'Gli altri requisiti di qualità',
+qualReqsIntro:'Oltre a quantità e struttura, un buon dataset rispetta altri criteri. "Rilevanti" significa pertinenti al problema: per l\'ultimo bilancio non metti dati di tre anni prima. Togli il rumore.',
+s7:'Da dati sporchi a dati puliti',
+s8:'Checkpoint',
+cpH:'Guarda i tuoi dati con gli occhi di un junior',
+cpP:'L\'AI è un junior geniale ma lento: se voi siete in grado di leggere e capire i vostri dati, li capisce anche l\'AI. Il problema è quasi sempre a monte, nei dati.',
+cpQ:'Prendi una cartella di lavoro che useresti con l\'AI. Un nuovo collaboratore, al primo giorno, ci capirebbe qualcosa? Nomi file chiari, formati uniformi, campi coerenti?',
+cpNote:'Immagazzinare i dati in modo intelligente, con un metodo univoco per tutti, aumenta l\'efficienza e riduce i costi nel tempo.',
+bridge:'Hai il carburante. <b>Prossimo:</b> i 4 pilastri dell\'adozione AI — cosa va messo a posto in azienda prima ancora di scegliere il modello.',
+foot:'Morfeus — I dati: il carburante dell\'AI'
+},
+en:{
+kicker:'Lesson A1.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The method',
+h1:'Data: the fuel of AI',
+lede:'The model is the engine. But an engine without fuel goes nowhere. Data is the fuel of AI: without it, even the best model stays parked.',
+s1:'No data, no movement',
+note1H:'An excellent paperweight',
+note1P:'Without data, artificial intelligence is <strong>an excellent paperweight, an excellent doorstop</strong> — useless. The goal is to take what you know how to do — your "grandma\'s recipe" — and bring it to industrial scale. But you need the right data to do it.',
+q1:'"Output quality doesn\'t depend only on the model: it depends on the data you feed it. Dirty fuel, stalling engine."',
+s2:'Two distinct axes — don\'t mix them',
+axisIntro:'When we talk about data for AI there are two axes that live on different planes and must not be blended. One is about how much data you have and how clean it is; the other is about its nature. Explore each axis by clicking its two sides.',
+ax1N:'Axis 1',ax1T:'Quantity vs Quality',
+ax1aT:'Quantity',ax1bT:'Quality',
+ax1Both:'<b>You need both.</b> Lots of data but dirty = confused output. Little data but perfect = the AI lacks enough examples to stay faithful. Quantity and quality multiply, they don\'t add up.',
+ax2N:'Axis 2',ax2T:'Quantitative vs Qualitative',
+ax2aT:'Quantitative',ax2bT:'Qualitative',
+ax2Both:'<b>Think of the goal, not the form.</b> A report, a contract, a procedure are data exactly like a table of numbers. The right question isn\'t "what shape is it?", but "what goal does it serve?".',
+axisKey:'The two axes are independent: a report (qualitative) can be abundant and clean, or scarce and dirty. Keep the two questions separate.',
+s3:'The data requirements',
+reqsIntro:'Having data isn\'t enough: it must have certain operational qualities that always come back. Click each one.',
+s4:'Structured, or it won\'t read it',
+chineseKey:'It\'s like a text in Chinese, beautifully organized: do you understand anything? No. You have to give the data in the format the machine reads best.',
+chineseCap:'Data the AI can\'t read is useless data, no matter how tidy it looks to you.',
+s5:'Semantic consistency',
+cohIntro:'The same field must always be called the same way, across every document. Change it and the AI gets confused.',
+cohBadT:'Inconsistent',cohGoodT:'Consistent',
+cohBad:'doc 1 → "product"\ndoc 2 → "prodotto"\ndoc 3 → "item"\n\nage · Age · years · età',
+cohBadR:'<b>The AI gets confused:</b> it doesn\'t see they\'re the same field. It treats "product" and "prodotto" as two different things.',
+cohGood:'doc 1 → "product"\ndoc 2 → "product"\ndoc 3 → "product"\n\nage · age · age · age',
+cohGoodR:'<b>The AI connects everything:</b> "age is always written age." One standard = zero ambiguity.',
+s6:'The other quality requirements',
+qualReqsIntro:'Beyond quantity and structure, a good dataset meets further criteria. "Relevant" means pertinent to the problem: for the latest balance sheet you don\'t add data from three years ago. Cut the noise.',
+s7:'From dirty data to clean data',
+s8:'Checkpoint',
+cpH:'Look at your data with a junior\'s eyes',
+cpP:'AI is a brilliant but slow junior: if you can read and understand your data, the AI can too. The problem is almost always upstream, in the data.',
+cpQ:'Take a working folder you\'d use with AI. Would a new collaborator, on day one, make sense of it? Clear file names, uniform formats, consistent fields?',
+cpNote:'Storing data intelligently, with one method for everyone, raises efficiency and lowers costs over time.',
+bridge:'You\'ve got the fuel. <b>Next:</b> the 4 pillars of AI adoption — what to fix in the company before you even pick a model.',
+foot:'Morfeus — Data: the fuel of AI'
+}};
+
+// Asse 1 = Quantità vs Qualità ; Asse 2 = Quantitativi vs Qualitativi
+var AX={it:{
+'1':[
+ ['Quantità','Più dati ed esempi dai all\'AI, più l\'output migliora e <b>resta fedele</b> agli esempi. Senza esempi «fa quello che vuole»: poco contesto, più libertà di sbagliare.','più esempi dai → più resta fedele\nzero esempi → fa quello che vuole'],
+ ['Qualità','Non conta solo quanti dati sono, ma <b>come</b> sono: puliti, strutturati, aggiornati. Dati di qualità sono leggibili dalla macchina e privi di rumore e contraddizioni.','puliti · strutturati · aggiornati\nniente rumore, niente contraddizioni']
+],
+'2':[
+ ['Quantitativi','I dati misurabili: numeri, tabelle, metriche, importi. È l\'immagine classica di "dato"

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricerca e Analisi con Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p em{font-style:italic;color:var(--ink)}
+/* distinction grid */
+.dist{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.distc{border-radius:var(--r-l);border:1.5px solid var(--line);padding:18px;box-shadow:var(--sh)}
+.distc.a{background:var(--blue-soft);border-color:var(--blue-line)}
+.distc.b{background:var(--warn-soft);border-color:var(--warn-line)}
+.distc-head{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.distc-head i{font-size:20px}.distc.a .distc-head i{color:var(--blue)}.distc.b .distc-head i{color:var(--warn)}
+.distc-head strong{font-size:13.5px;font-weight:600}
+.distc.a .distc-head strong{color:var(--blue)}.distc.b .distc-head strong{color:var(--warn)}
+.distc ul{list-style:none}
+.distc li{font-size:12.5px;color:var(--ink-2);line-height:1.55;padding:4px 0 4px 16px;position:relative}
+.distc.a li::before{content:'\2713';position:absolute;left:0;color:var(--blue);font-size:11px;font-weight:700}
+.distc.b li::before{content:'\2713';position:absolute;left:0;color:var(--warn);font-size:11px;font-weight:700}
+/* protocol steps */
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:.18s}
+.step.on{border-color:var(--accent)}
+.shead{display:flex;align-items:center;gap:14px;padding:15px 18px;cursor:pointer;user-select:none}
+.snum{width:38px;height:38px;border-radius:11px;font-family:var(--mono);font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s}
+.stitle{flex:1}.stitle strong{font-size:14.5px;font-weight:600;display:block}.stitle span{font-size:12.5px;color:var(--ink-3)}
+.stag{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);display:block;margin-bottom:2px}
+.schev{font-size:18px;color:var(--ink-3);transition:transform .25s}
+.step.on .schev{transform:rotate(180deg);color:var(--accent)}
+.sbody{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.step.on .sbody{max-height:900px}
+.sbin{padding:0 18px 18px 70px}
+.sbin>p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:12px}
+.pbox{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:10px}
+.pbox-head{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid var(--line)}
+.pbox-head .pl{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600}
+.pbox-head .pl i{color:var(--accent);font-size:13px}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-family:var(--mono);font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);transition:.18s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pbox-body{padding:13px;font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.snote{display:flex;align-items:flex-start;gap:9px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:11px 14px;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.snote i{color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px}
+/* compare toggle */
+.cmp-toggle{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:3px;gap:3px;margin:0 auto 16px;max-width:480px;width:100%}
+.cmp-tab{flex:1;padding:9px 12px;border-radius:26px;border:none;cursor:pointer;font-size:12.5px;font-weight:600;background:none;color:var(--ink-2);transition:.25s;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:6px}
+.cmp-tab.on.bad{background:var(--card);color:var(--bad);box-shadow:var(--sh)}
+.cmp-tab.on.good{background:var(--card);color:var(--good);box-shadow:var(--sh)}
+.cmp-tab i{font-size:15px}
+.cmp-panel{display:none;animation:fade-in .3s ease}
+.cmp-panel.on{display:block}
+@keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.cmp-card{border-radius:var(--r-l);padding:22px;box-shadow:var(--sh)}
+.cmp-card.bad{background:var(--bad-soft);border:1.5px solid var(--bad-line)}
+.cmp-card.good{background:var(--good-soft);border:1.5px solid var(--good-line)}
+.cmp-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:11px;padding:3px 10px;border-radius:20px}
+.bad .cmp-tag{color:var(--bad);background:var(--card);border:1px solid var(--bad-line)}
+.good .cmp-tag{color:var(--good);background:var(--card);border:1px solid var(--good-line)}
+.cmp-card h3{font-size:15.5px;font-weight:600;margin-bottom:9px}
+.cmp-card>p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:14px}
+.chatmock{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;font-family:var(--mono);font-size:12px;line-height:1.7}
+.chat-ctx{margin-bottom:11px;padding:9px 12px;background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;color:var(--ink-3);font-size:11.5px;line-height:1.6}
+.chat-ctx .cl{color:var(--accent);font-weight:700;display:block;margin-bottom:3px;font-size:10px;letter-spacing:.05em}
+.chat-user{color:var(--ink);font-weight:500;margin-bottom:9px}
+.chat-user .cl{color:var(--ink-3);font-weight:700;font-size:10px;letter-spacing:.05em;display:block;margin-bottom:2px}
+.chat-ai{color:var(--ink-2);font-style:italic}
+.chat-ai .cl{color:var(--ink-3);font-weight:700;font-size:10px;letter-spacing:.05em;display:block;margin-bottom:2px;font-style:normal}
+.cmp-res{margin-top:13px;display:flex;align-items:flex-start;gap:9px;padding:12px 14px;border-radius:var(--r);font-size:13px;line-height:1.55}
+.cmp-res.bad{background:var(--card);border:1px solid var(--bad-line);color:var(--ink-2)}
+.cmp-res.good{background:var(--card);border:1px solid var(--good-line);color:var(--ink-2)}
+.cmp-res i{font-size:17px;flex-shrink:0;margin-top:1px}.cmp-res.bad i{color:var(--bad)}.cmp-res.good i{color:var(--good)}
+/* triangulation */
+.tri{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.tri-head{padding:17px 20px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.tri-head h3{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.tri-head h3 i{color:var(--accent)}
+.tri-head p{font-size:12.5px;color:var(--ink-3);line-height:1.5}
+.tri-srcs{display:grid;grid-template-columns:repeat(3,1fr)}
+.tri-src{padding:16px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;transition:.2s;text-align:center}
+.tri-src:last-child{border-right:none}
+.tri-src:hover{background:var(--bg-2)}
+.tri-src.on{background:var(--accent-soft)}
+.tri-src-ic{font-size:23px;margin-bottom:6px;display:block}
+.tri-src-name{font-size:12.5px;font-weight:600;color:var(--ink)}
+.tri-src-sub{font-size:11px;color:var(--ink-3);margin-top:2px;line-height:1.4}
+.tri-src-dot{width:8px;height:8px;border-radius:50%;background:var(--line-2);margin:8px auto 0;transition:.2s}
+.tri-src.on .tri-src-dot{background:var(--accent)}
+.tri-content{padding:20px}
+.tri-intro{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.tri-intro .hint{font-size:12px;color:var(--ink-3);margin-bottom:12px}
+.tri-find{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.tri-find:last-child{border-bottom:none}
+.tri-find-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.tri-find strong{font-size:13px;font-weight:600;display:block;margin-bottom:2px}
+.tri-find span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.tri-synth-btn{display:inline-flex;align-items:center;gap:7px;margin-top:16px;padding:9px 16px;border-radius:30px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);transition:.18s}
+.tri-synth-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tri-synth{display:none;margin-top:18px;padding:18px 20px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l)}
+.tri-synth.on{display:block}
+.tri-synth-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.tri-synth ul{list-style:none}
+.tri-synth li{font-size:13px;color:var(--ink-2);line-height:1.6;padding:5px 0 5px 18px;position:relative}
+.tri-synth li::before{content:'\2192';position:absolute;left:0;color:var(--accent);font-weight:700}
+.tri-synth li strong{color:var(--ink);font-weight:600}
+/* tip */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--good-soft);border:1px solid var(--good-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--good)}.tip.warn .ti-i{background:var(--warn)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--good)}.tip.warn h4{color:var(--warn)}
+.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}.tip p em{font-style:italic;color:var(--ink)}
+/* scenarios */
+.scn{margin:4px 0}
+.scn-row{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;margin-bottom:10px}
+.scn-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.scn-txt strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.scn-txt span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* myth */
+.myths{display:flex;flex-direction:column;gap:10px}
+.myth{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.myth-w,.myth-r{border-radius:var(--r-l);padding:13px 15px}
+.myth-w{background:var(--bad-soft);border:1px solid var(--bad-line)}
+.myth-r{background:var(--good-soft);border:1px solid var(--good-line)}
+.myth-lab{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.myth-w .myth-lab{color:var(--bad)}.myth-r .myth-lab{color:var(--good)}
+.myth-t{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.myth-vs{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:600}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink);font-weight:600}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.dist{grid-template-columns:1fr}.tri-srcs{grid-template-columns:1fr}.tri-src{border-right:none}.cmp-toggle{max-width:100%}.myth{grid-template-columns:1fr}.myth-vs{text-align:center}.sbin{padding-left:18px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.copy-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.sbody,.step.on .sbody{max-height:none!important}.cmp-panel{display:block!important}.tri-synth{display:block!important}.step,.distc,.cmp-card,.tri,.tip,.scn-row,.myth-w,.myth-r,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 7.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Casi d'uso</div>
+  <h1 class="rv" data-i="h1">Ricerca e Analisi con Claude</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Hook</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">02</span><h2 data-i="s1">Il cambio di paradigma</h2></div>
+  <p class="lede-p rv" data-i-html="paradigmP"></p>
+  <div class="dist rv">
+    <div class="distc a"><div class="distc-head"><i class="ti ti-cpu"></i><strong data-i="caH"></strong></div><ul id="caList"></ul></div>
+    <div class="distc b"><div class="distc-head"><i class="ti ti-wand"></i><strong data-i="cbH"></strong></div><ul id="cbList"></ul></div>
+  </div>
+  <div class="key rv" style="margin-top:26px"><p data-i="key1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">03</span><h2 data-i="s2">Il protocollo di ricerca in 5 step</h2></div>
+  <p class="lede-p rv" data-i="protoP"></p>
+  <div class="steps rv" id="steps"></div>
+
+  <div class="sh rv"><i class="ti ti-switch-horizontal"></i><span class="no">04</span><h2 data-i="s3">Context architecture vs. prompt cleverness</h2></div>
+  <p class="lede-p rv" data-i="cmpP"></p>
+  <div class="cmp-toggle rv">
+    <button class="cmp-tab bad on" id="tab-bad" onclick="switchCompare('bad')"><i class="ti ti-x"></i> <span data-i="tabBad"></span></button>
+    <button class="cmp-tab good" id="tab-good" onclick="switchCompare('good')"><i class="ti ti-check"></i> <span data-i="tabGood"></span></button>
+  </div>
+  <div class="cmp-panel on" id="panel-bad">
+    <div class="cmp-card bad">
+      <div class="cmp-tag"><i class="ti ti-x"></i> <span data-i="badTag"></span></div>
+      <h3 data-i="badH"></h3>
+      <p data-i="badP"></p>
+      <div class="chatmock">
+        <div class="chat-user"><span class="cl" data-i="lblYou"></span><span data-i="badUser"></span></div>
+        <div class="chat-ai"><span class="cl" data-i="lblClaude"></span><span data-i="badAi"></span></div>
+      </div>
+      <div class="cmp-res bad"><i class="ti ti-alert-circle"></i><span data-i="badRes"></span></div>
+    </div>
+  </div>
+  <div class="cmp-panel" id="panel-good">
+    <div class="cmp-card good">
+      <div class="cmp-tag"><i class="ti ti-check"></i> <span data-i="goodTag"></span></div>
+      <h3 data-i="goodH"></h3>
+      <p data-i="goodP"></p>
+      <div class="chatmock">
+        <div class="chat-ctx"><span class="cl" data-i="lblCtx"></span><span data-i="goodCtx"></span></div>
+        <div class="chat-user"><span class="cl" data-i="lblYou"></span><span data-i="goodUser"></span></div>
+        <div class="chat-ai"><span class="cl" data-i="lblClaude"></span><span data-i="goodAi"></span></div>
+      </div>
+      <div class="cmp-res good"><i class="ti ti-circle-check"></i><span data-i="goodRes"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-triangle"></i><span class="no">05</span><h2 data-i="s4">Triangolazione multi-fonte</h2></div>
+  <p class="lede-p rv" data-i="triP"></p>
+  <div class="tri rv">
+    <div class="tri-head">
+      <h3><i class="ti ti-triangle"></i> <span data-i="triHeadH"></span></h3>
+      <p data-i="triHeadP"></p>
+    </div>
+    <div class="tri-srcs">
+      <div class="tri-src" id="triSrc0" onclick="showTri(0)">
+        <span class="tri-src-ic">&#128218;</span>
+        <div class="tri-src-name" data-i="src0n"></div>
+        <div class="tri-src-sub" data-i="src0s"></div>
+        <div class="tri-src-dot"></div>
+      </div>
+      <div class="tri-src" id="triSrc1" onclick="showTri(1)">
+        <span class="tri-src-ic">&#128188;</span>
+        <div class="tri-src-name" data-i="src1n"></div>
+        <div class="tri-src-sub" data-i="src1s"></div>
+        <div class="tri-src-dot"></div>
+      </div>
+      <div class="tri-src" id="triSrc2" onclick="showTri(2)">
+        <span class="tri-src-ic">&#128100;</span>
+        <div class="tri-src-name" data-i="src2n"></div>
+        <div class="tri-src-sub" data-i="src2s"></div>
+        <div class="tri-src-dot"></div>
+      </div>
+    </div>
+    <div class="tri-content">
+      <div id="triPanel">
+        <p class="tri-intro hint" data-i="triHint"></p>
+        <p class="tri-intro" data-i="triIntro"></p>
+      </div>
+      <div style="margin-top:4px">
+        <button class="tri-synth-btn" id="triSynthBtn" onclick="showTriSynth()" style="display:none"><i class="ti ti-triangle"></i> <span data-i="triSynthBtn"></span></button>
+        <div class="tri-synth" id="triSynth">
+          <div class="tri-synth-title"><i class="ti ti-triangle"></i> <span data-i="triSynthTitle"></span></div>
+          <ul id="triSynthList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tip good rv" style="margin-top:18px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="triTipH"></h4><p data-i-html="triTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">06</span><h2 data-i="s5">Claude per struttura — Fonti esterne per dati</h2></div>
+  <p class="lede-p rv" data-i="splitP"></p>
+  <div class="dist rv">
+    <div class="distc a"><div class="distc-head"><i class="ti ti-cpu"></i><strong data-i="claH"></strong></div><ul id="claList"></ul></div>
+    <div class="distc b"><div class="distc-head"><i class="ti ti-world"></i><strong data-i="extH"></strong></div><ul id="extList"></ul></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-briefcase"></i><span class="no">07</span><h2 data-i="s6">Quando usarlo — casi concreti</h2></div>
+  <div class="scn rv" id="scn"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">08</span><h2 data-i="s7">Equivoci comuni</h2></div>
+  <div class="myths rv" id="myths"></div>
+
+  <div class="key rv" style="margin-top:32px"><p data-i="key2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-search"></i><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Ricerca e Analisi con Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 7.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Casi d\'uso',
+h1:'Ricerca e Analisi con Claude',
+lede:'Un protocollo strutturato in 5 step per trasformare la ricerca da raccolta passiva di informazioni a conversazione attiva con un analista.',
+s0:'Hook',
+hook:'«Quanto tempo ci vuole per capire davvero un argomento che non conoscete? Un mercato nuovo, una tecnologia, un tema tecnico fuori dal vostro campo. Normalmente: ore. Con Claude, il processo è diverso — non perché Claude sappia tutto, ma perché trasforma la ricerca in conversazione strutturata.»',
+s1:'Il cambio di paradigma',
+paradigmP:'Nel 2026 il leverage non sta nel <em>come si formula</em> la domanda, ma in <em>cosa si carica prima</em> di farla. Il materiale di contesto — documenti, briefing, framework — determina l\'80% della qualità dell\'output.',
+caH:'Context Architecture',
+cbH:'Prompt Cleverness',
+key1:'«Claude non è una biblioteca. È un analista che conosce migliaia di biblioteche. Usatelo per capire la struttura, non per collezionare citazioni.»',
+s2:'Il protocollo di ricerca in 5 step',
+protoP:'Clicca su ogni step per vedere cosa fa, perché funziona e un esempio di prompt da usare.',
+s3:'Context architecture vs. prompt cleverness',
+cmpP:'Lo stesso obiettivo di ricerca, due approcci diversi. Vedi la differenza concreta nell\'output.',
+tabBad:'Solo prompt (senza contesto)',tabGood:'Contesto caricato prima',
+lblYou:'Tu',lblClaude:'Claude',lblCtx:'Contesto caricato',
+badTag:'Approccio debole',
+badH:'Prompt diretto senza contesto',
+badP:'L\'utente fa la domanda senza aver caricato nessun materiale, senza aver definito il suo punto di vista, senza aver comunicato il perché della ricerca.',
+badUser:'Analizzami il mercato della formazione online in Italia.',
+badAi:'Il mercato della formazione online in Italia è in crescita. I principali attori includono piattaforme nazionali e internazionali. I trend principali sono la digitalizzazione accelerata dalla pandemia, la crescente domanda di upskilling professionale e l\'espansione del B2B…',
+badRes:'Output generico, non calibrato sui tuoi obiettivi. Claude non sa se stai valutando un investimento, preparando una presentazione, o studiando per curiosità. Il risultato è una risposta da Wikipedia, non da un analista.',
+goodTag:'Approccio forte',
+goodH:'Contesto caricato prima della domanda',
+goodP:'Prima di fare la domanda, l\'utente ha definito: chi è, cosa sta cercando di decidere, il perché della ricerca, e le dimensioni che contano per lui.',
+goodCtx:'Sono un consulente che sta valutando se entrare nel mercato della formazione online B2C in Italia. Ho esperienza nel settore finanziario. Voglio capire i rischi di ingresso, non una panoramica generica. Il mio orizzonte temporale è 18 mesi.',
+goodUser:'Analizzami il mercato della formazione online in Italia.',
+goodAi:'Dato il tuo profilo e orizzonte di 18 mesi, i rischi di ingresso nel B2C che contano di più sono: la saturazione del segmento generico (dove non hai vantaggio competitivo), il costo di acquisizione cliente elevato senza una lista esistente, e la difficoltà di posizionamento senza credenziali visibili nel settore…',
+goodRes:'Stessa domanda, output radicalmente diverso. Claude risponde alla tua situazione specifica, non alla domanda astratta. Il contesto precaricato vale più di qualsiasi formulazione sofisticata del prompt.',
+s4:'Triangolazione multi-fonte',
+triP:'Una ricerca robusta non si fida di un\'unica fonte. Clicca sulle fonti per vedere cosa porta ciascuna all\'analisi finale — poi sintetizza.',
+triHeadH:'Analisi di un tema da tre angoli diversi',
+triHeadP:'Esempio: "Quali sono le implicazioni dell\'automazione AI sui ruoli professionali nei prossimi 5 anni?"',
+src0n:'Fonte A',src0s:'Report di settore / ricerca accademica',
+src1n:'Fonte B',src1s:'Prospettiva aziendale / HR',
+src2n:'Fonte C',src2s:'Esperienza di chi lavora nel campo',
+triHint:'Clicca su una fonte per vedere cosa porta all\'analisi.',
+triIntro:'Il prompt di triangolazione multi-fonte chiede a Claude di confrontare esplicitamente angoli diversi — non solo di elencare punti di vista, ma di identificare dove concordano, dove divergono e dove nessuno risponde.',
+triSynthBtn:'Vedi la sintesi di triangolazione',
+triSynthTitle:'Sintesi multi-fonte — cosa emerge dal confronto',
+triTipH:'Il prompt di sintesi multi-fonte',
+triTipP:'Dopo aver raccolto angoli diversi, usa questo schema: <em>"Confronta queste fonti/risposte su [tema] e dimmi: punti di consenso, disaccordi principali e possibili ragioni, gaps che nessuna fonte copre, quale fonte è più solida su quale sotto-tema."</em>',
+s5:'Claude per struttura — Fonti esterne per dati',
+splitP:'La distinzione più importante da tenere sempre in mente durante una ricerca.',
+claH:'Claude eccelle in',
+extH:'Fonti esterne per',
+s6:'Quando usarlo — casi concreti',
+s7:'Equivoci comuni',
+key2:'«Non partire mai con il drill-down. Prima la mappa. Sapere cosa non sai è il punto di partenza di ogni ricerca seria.»',
+s8:'Checkpoint',
+cpH:'Applica il protocollo oggi.',
+cpP:'Prendi un tema che stai studiando in questo periodo — un mercato, una tecnologia, un concetto. Apri Claude e fai i 5 step: mappa, drill-down, gap, avvocato del diavolo, sintesi. Misura quanto tempo ci metti.<br><br><strong>La differenza rispetto alla ricerca tradizionale la sentirete già al secondo step.</strong>',
+bridge:'<b>Prossimo passo: Creazione Contenuti.</b> Sai ricercare con Claude. La prossima lezione prende tutto questo e lo applica alla creazione di contenuti — post, articoli, newsletter. Ricercare è il primo passo. Comunicare quello che hai trovato è il secondo.',
+foot:'Morfeus — Ricerca e Analisi con Claude'
+},
+en:{
+kicker:'Lesson 7.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Use cases',
+h1:'Research and Analysis with Claude',
+lede:'A structured 5-step protocol that turns research from passive information gathering into an active conversation with an analyst.',
+s0:'Hook',
+hook:'"How long does it take you to truly understand a subject you don\'t know? A new market, a technology, a technical topic outside your field. Normally: hours. With Claude the process is different — not because Claude knows everything, but because it turns research into a structured conversation."',
+s1:'The paradigm shift',
+paradigmP:'In 2026 the leverage isn\'t in <em>how you phrase</em> the question, but in <em>what you load before</em> asking it. The context material — documents, briefings, frameworks — determines 80% of the output quality.',
+caH:'Context Architecture',
+cbH:'Prompt Cleverness',
+key1:'"Claude is not a library. It\'s an analyst who knows thousands of libraries. Use it to understand the structure, not to collect citations."',
+s2:'The 5-step research protocol',
+protoP:'Click each step to see what it does, why it works, and an example prompt to use.',
+s3:'Context architecture vs. prompt cleverness',
+cmpP:'The same research goal, two different approaches. See the concrete difference in the output.',
+tabBad:'Prompt only (no context)',tabGood:'Context loaded first',
+lblYou:'You',lblClaude:'Claude',lblCtx:'Context loaded',
+badTag:'Weak approach',
+badH:'Direct prompt with no context',
+badP:'The user asks the question without having loaded any material, without having defined their point of view, without having communicated the why of the research.',
+badUser:'Analyze the online education market in Italy for me.',
+badAi:'The online education market in Italy is growing. The main players include national and international platforms. The main trends are digitalization accelerated by the pandemic, growing demand for professional upskilling, and B2B expansion…',
+badRes:'Generic output, not calibrated to your goals. Claude doesn\'t know whether you\'re evaluating an investment, preparing a presentation, or studying out of curiosity. The result is a Wikipedia-style answer, not an analyst\'s.',
+goodTag:'Strong approach',
+goodH:'Context loaded before the question',
+goodP:'Before asking the question, the user has defined: who they are, what they\'re trying to decide, the why of the research, and the dimensions that matter to them.',
+goodCtx:'I\'m a consultant evaluating whether to enter the B2C online education market in Italy. I have experience in the financial sector. I want to understand the risks of entry, not a generic overview. My time horizon is 18 months.',
+goodUser:'Analyze the online education market in Italy for me.',
+goodAi:'Given your profile and an 18-month horizon, the B2C entry risks that matter most are: saturation of the generic segment (where you have no competitive advantage), high customer acquisition cost without an existing list, and the difficulty of positioning without visible credentials in the sector…',
+goodRes:'Same question, radically different output. Claude answers your specific situation, not the abstract question. Pre-loaded context is worth more than any sophisticated phrasing of the prompt.',
+s4:'Multi-source triangulation',
+triP:'Robust research doesn\'t trust a single source. Click the sources to see what each one brings to the final analysis — then synthesize.',
+triHeadH:'Analyzing a topic from three different angles',
+triHeadP:'Example: "What are the implications of AI automation on professional roles over the next 5 years?"',
+src0n:'Source A',src0s:'Industry report / academic research',
+src1n:'Source B',src1s:'Corporate / HR perspective',
+src2n:'Source C',src2s:'Experience of those working in the field',
+triHint:'Click a source to see what it brings to the analysis.',
+triIntro:'The multi-source triangulation prompt asks Claude to explicitly compare different angles — not just to list points of view, but to identify where they agree, where they diverge, and where no one answers.',
+triSynthBtn:'See the triangulation synthesis',
+triSynthTitle:'Multi-source synthesis — what emerges from the comparison',
+triTipH:'The multi-source synthesis prompt',
+triTipP:'After collecting different angles, use this schema: <em>"Compare these sources/answers on [topic] and tell me: points of consensus, main disagreements and possible reasons, gaps that no source covers, which source is most solid on which sub-topic."</em>',
+s5:'Claude for structure — External sources for data',
+splitP:'The most important distinction to keep in mind throughout any research.',
+claH:'Claude excels at',
+extH:'External sources for',
+s6:'When to use it — concrete cases',
+s7:'Common misconceptions',
+key2:'"Never start with the drill-down. The map first. Knowing what you don\'t know is the starting point of any serious research."',
+s8:'Checkpoint',
+cpH:'Apply the protocol today.',
+cpP:'Take a topic you\'re studying right now — a market, a technology, a concept. Open Claude and run the 5 steps: map, drill-down, gap, devil\'s advocate, synthesis. Measure how long it takes you.<br><br><strong>You\'ll feel the difference from traditional research as early as the second step.</strong>',
+bridge:'<b>Next step: Content Creation.</b> You know how to research with Claude. The next lesson takes all of this and applies it to content creation — posts, articles, newsletters. Researching is the first step. Communicating what you found is the second.',
+foot:'Morfeus — Research and Analysis with Claude'
+}};
+
+/* distinction lists */
+var CA={it:['Carica documenti e materiali rilevanti','Definisci il contesto prima della domanda','Usa Projects con knowledge base dedicata','Leva principale: cosa c\'è prima del prompt'],
+en:['Load relevant documents and materials','Define the context before the question','Use Projects with a dedicated knowledge base','Main lever: what comes before the prompt']};
+var CB={it:['Formulazione sofisticata del singolo prompt','Poca attenzione al contesto precaricato','Ogni sessione riparte da zero','Risultati inconsistenti e dipendenti dalla fortuna'],
+en:['Sophisticated phrasing of the single prompt','Little attention to pre-loaded context','Every session starts from scratch','Inconsistent results that depend on luck']};
+var CLA={it:['Framework e strutture di analisi','Interpretazione e connessioni tra concetti','Sintesi e organizzazione delle informazioni','Identificare domande che non avevi considerato','Avvocato del diavolo e pensiero critico'],
+en:['Frameworks and analysis structures','Interpretation and connections between concepts','Synthesis and organization of information','Identifying questions you hadn\'t considered','Devil\'s advocate and critical thinking']};
+var EXT={it:['Dati aggiornati post-knowledge cutoff','Statistiche e numeri precisi citabili','Fatti recenti (mercati, leggi, eventi)','Citazioni verificabili in documenti formali','Dati primari da ricerche specifiche'],
+en:['Updated data post-knowledge cutoff','Precise, citable statistics and numbers','Recent facts (markets, laws, events)','Verifiable citations in formal documents','Primary data from specific research']};
+
+/* protocol steps */
+var STEPS={it:[
+{ic:'ti-map',col:'var(--blue)',bg:'var(--blue-soft)',tag:'Step 1 · Initial Exploration',t:'Mappa',s:'Orientati prima di scendere nei dettagli',
+ p:'Il primo prompt non deve rispondere a una domanda specifica — deve darti la struttura del terreno. Chiedi a Claude di disegnare la mappa prima di guidarti in un percorso. Questo ti permette di capire cosa non sai e dove vuoi andare.',
+ pl:'Esempio di prompt — Mappa',
+ px:'Devo capire [argomento/settore/tema]. Non sono esperto. Ho bisogno di un orientamento iniziale:\n- Quali sono le principali segmentazioni o sottocategorie?\n- Chi sono gli attori principali (persone, aziende, istituzioni)?\n- Quali sono le dinamiche e i trend principali?\n- Quali sono i modelli o meccanismi fondamentali?\n\nNon ho bisogno di dati precisi adesso — voglio capire la struttura.',
+ note:'L\'output di questo step non è una risposta: è una mappa. Saprai cosa non sai. Da lì scegli dove andare.'},
+{ic:'ti-zoom-in',col:'var(--teal)',bg:'var(--teal-soft)',tag:'Step 2 · Preliminary Synthesis',t:'Drill-Down',s:'Scendi esattamente dove ti interessa',
+ p:'Dopo la mappa, scegli il segmento o l\'angolo che conta di più per te. Non approfondire tutto: vai in profondità esattamente dove serve. Usare Claude come analista significa dirigerlo, non seguirlo.',
+ pl:'Esempio di prompt — Drill-Down',
+ px:'Interessante. Voglio approfondire [segmento specifico dalla mappa].\nQuali sono le leve principali in questo sotto-tema?\nCosa guida le decisioni degli attori coinvolti?\nElenca i fattori in ordine di importanza percepita.',
+ note:'Questo step trasforma la mappa piatta in profondità selettiva. Non chiedere tutto — scegli dove scendere.'},
+{ic:'ti-needle',col:'var(--warn)',bg:'var(--warn-soft)',tag:'Step 3 · Gap Identification',t:'Gap',s:'Trova i buchi nell\'analisi',
+ p:'Questo step è il più sottovalutato. Chiedere "cosa manca" è più potente di chiedere "cosa c\'è". Applicabile sia alle risposte di Claude che a qualsiasi documento analizzato. La domanda sui gap attiva un tipo di pensiero diverso — critico, non descrittivo.',
+ pl:'Esempio di prompt — Gap',
+ px:'Guarda l\'analisi che abbiamo costruito finora. Dimmi:\n- Cosa manca? Dove la mappa ha buchi evidenti?\n- Quali domande non ho ancora fatto ma dovrei fare?\n- Quali aspetti ho trascurato che potrebbero essere rilevanti?\n- Cosa avrei voluto trovare in questa analisi e non c\'è?',
+ note:'Step aggiunto nel 2026: la letteratura ha dimostrato che identificare esplicitamente i gap prima di continuare migliora drasticamente la qualità dell\'analisi finale.'},
+{ic:'ti-shield-half',col:'var(--bad)',bg:'var(--bad-soft)',tag:'Step 4 · Follow-up Research',t:'Avvocato del Diavolo',s:'Sfida le tue ipotesi, non confermarle',
+ p:'I principianti chiedono a Claude di confermare le loro ipotesi. I professionisti chiedono a Claude di sfidarle. L\'avvocato del diavolo è il prompt che la maggior parte degli utenti non usa — ed è uno dei più potenti.',
+ pl:'Esempio di prompt — Avvocato del Diavolo',
+ px:'Gioca l\'avvocato del diavolo. Quali sono:\n- I problemi strutturali di questa analisi/settore/idea?\n- I rischi che la maggior parte delle analisi sottovaluta?\n- Le assunzioni implicite che stiamo facendo e che potrebbero essere sbagliate?\n- Gli scenari in cui tutto quello che abbiamo detto è sbagliato?',
+ note:'Il default di Claude è collaborativo. Per avere vera critica, devi chiederla esplicitamente con un frame specifico come questo.'},
+{ic:'ti-file-text',col:'var(--good)',bg:'var(--good-soft)',tag:'Step 5 · Comprehensive Analysis',t:'Sintesi',s:'Trasforma la conversazione in documento operativo',
+ p:'L\'ultimo step trasforma una conversazione in un documento utilizzabile. Non è un riassunto: è una sintesi strutturata con una sezione di domande aperte che ti indica dove la ricerca deve continuare su fonti esterne.',
+ pl:'Esempio di prompt — Sintesi',
+ px:'Sintetizza tutto quello che abbiamo discusso in un documento di 2 pagine massimo.\nStruttura:\n- Executive Summary (5 righe)\n- Mappa del tema (punti principali)\n- Insight chiave emersi\n- Rischi o problemi strutturali identificati\n- 3-5 domande aperte che richiedono fonti esterne per risposta definitiva\n\nIncludi le domande aperte: sono il bridge verso la ricerca su fonti primarie.',
+ note:'Il documento non è la fonte — è il punto di partenza. Le domande aperte nella sintesi ti dicono dove cercare dati aggiornati e citazioni verificabili.'}
+],en:[
+{ic:'ti-map',col:'var(--blue)',bg:'var(--blue-soft)',tag:'Step 1 · Initial Exploration',t:'Map',s:'Get oriented before going into detail',
+ p:'The first prompt shouldn\'t answer a specific question — it should give you the structure of the terrain. Ask Claude to draw the map before it guides you down a path. This lets you understand what you don\'t know and where you want to go.',
+ pl:'Example prompt — Map',
+ px:'I need to understand [topic/sector/subject]. I\'m not an expert. I need an initial orientation:\n- What are the main segments or sub-categories?\n- Who are the main players (people, companies, institutions)?\n- What are the main dynamics and trends?\n- What are the fundamental models or mechanisms?\n\nI don\'t need precise data right now — I want to understand the structure.',
+ note:'The output of this step isn\'t an answer: it\'s a map. You\'ll know what you don\'t know. From there you choose where to go.'},
+{ic:'ti-zoom-in',col:'var(--teal)',bg:'var(--teal-soft)',tag:'Step 2 · Preliminary Synthesis',t:'Drill-Down',s:'Go in exactly where it matters to you',
+ p:'After the map, choose the segment or angle that matters most to you. Don\'t dig into everything: go deep exactly where you need to. Using Claude as an analyst means directing it, not following it.',
+ pl:'Example prompt — Drill-Down',
+ px:'Interesting. I want to dig into [specific segment from the map].\nWhat are the main levers in this sub-topic?\nWhat drives the decisions of the players involved?\nList the factors in order of perceived importance.',
+ note:'This step turns the flat map into selective depth. Don\'t ask for everything — choose where to go deeper.'},
+{ic:'ti-needle',col:'var(--warn)',bg:'var(--warn-soft)',tag:'Step 3 · Gap Identification',t:'Gap',s:'Find the holes in the analysis',
+ p:'This step is the most underrated. Asking "what\'s missing" is more powerful than asking "what\'s there". It applies both to Claude\'s answers and to any document analyzed. The gap question activates a different kind of thinking — critical, not descriptive.',
+ pl:'Example prompt — Gap',
+ px:'Look at the analysis we\'ve built so far. Tell me:\n- What\'s missing? Where does the map have obvious holes?\n- What questions haven\'t I asked yet but should?\n- What aspects have I overlooked that could be relevant?\n- What would I have wanted to find in this analysis that isn\'t there?',
+ note:'Step added in 2026: the literature has shown that explicitly identifying gaps before continuing dramatically improves the quality of the final analysis.'},
+{ic:'ti-shield-half',col:'var(--bad)',bg:'var(--bad-soft)',tag:'Step 4 · Follow-up Research',t:'Devil\'s Advocate',s:'Challenge your assumptions, don\'t confirm them',
+ p:'Beginners ask Claude to confirm their assumptions. Professionals ask Claude to challenge them. The devil\'s advocate is the prompt most users don\'t use — and it\'s one of the most powerful.',
+ pl:'Example prompt — Devil\'s Advocate',
+ px:'Play devil\'s advocate. What are:\n- The structural problems of this analysis/sector/idea?\n- The risks that most analyses underestimate?\n- The implicit assumptions we\'re making that could be wrong?\n- The scenarios in which everything we\'ve said is wrong?',
+ note:'Claude\'s default is collaborative. To get real criticism, you have to ask for it explicitly with a specific frame like this one.'},
+{ic:'ti-file-text',col:'var(--good)',bg:'var(--good-soft)',tag:'Step 5 · Comprehensive Analysis',t:'Synthesis',s:'Turn the conversation into an operational document',
+ p:'The last step turns a conversation into a usable document. It\'s not a summary: it\'s a structured synthesis with a section of open questions that tells you where research must continue on external sources.',
+ pl:'Example prompt — Synthesis',
+ px:'Synthesize everything we\'ve discussed into a document of 2 pages maximum.\nStructure:\n- Executive Summary (5 lines)\n- Map of the topic (main points)\n- Key insights that emerged\n- Risks or structural problems identified\n- 3-5 open questions that require external sources for a definitive answer\n\nInclude the open questions: they\'re the bridge to research on primary sources.',
+ note:'The document isn\'t the source — it\'s the starting point. The open questions in the synthesis tell you where to look for updated data and verifiable citations.'}
+]};
+
+/* triangulation findings */
+var TRI={it:[
+[['ti-trending-up','var(--blue)','var(--blue-soft)','Trend di sostituzione','I modelli accademici stimano 15-30% dei task ripetitivi automatizzabili entro 5 anni. I ruoli più esposti: data entry, analisi standardizzata, reportistica.'],
+['ti-tools','var(--teal)','var(--teal-soft)','Comparsa di ruoli nuovi','Per ogni ruolo eliminato, la ricerca storica mostra emersione di 1.5-2 ruoli nuovi. Ma il mismatch di competenze è il vero problema, non il numero totale di posti.'],
+['ti-clock','var(--warn)','var(--warn-soft)','Timing incerto','Le stime variano molto: da 2 a 10 anni per le stesse previsioni. La velocità di adozione aziendale è il fattore più imprevedibile.']],
+[['ti-users','var(--blue)','var(--blue-soft)','Aumento delle aspettative','Le aziende non riducono il personale — alzano le aspettative. Chi prima gestiva 10 account ora ne gestisce 30, con AI che copre le attività ripetitive.'],
+['ti-certificate','var(--teal)','var(--teal-soft)','Gap di competenze AI','Il 70% delle aziende intervistate segnala difficoltà nel trovare figure che sappiano integrare AI nei workflow. La domanda supera l\'offerta per ruoli "AI-augmented".'],
+['ti-building','var(--warn)','var(--warn-soft)','Velocità di adozione disomogenea','PMI e grandi aziende vivono realtà diverse. L\'automazione AI nelle PMI italiane è ancora agli inizi; nelle multinazionali già in fase di consolidamento.']],
+[['ti-mood-smile','var(--blue)','var(--blue-soft)','La realtà quotidiana','Chi usa AI sul campo la vive come acceleratore, non come sostituto. Il tempo risparmiato viene usato per attività ad alto valore, non per il riposo.'],
+['ti-alert-circle','var(--bad)','var(--bad-soft)','Anxiety gap','La distanza tra chi usa AI attivamente e chi non la usa ancora si amplia mese dopo mese. Il rischio non è la sostituzione, è l\'obsolescenza per inazione.'],
+['ti-star','var(--teal)','var(--teal-soft)','Valore relazionale e contestuale','Le competenze che non si automatizzano facilmente: fiducia, giudizio in situazioni ambigue, gestione delle relazioni, creatività applicata a problemi non strutturati.']]
+],en:[
+[['ti-trending-up','var(--blue)','var(--blue-soft)','Substitution trend','Academic models estimate 15-30% of repetitive tasks are automatable within 5 years. The most exposed roles: data entry, standardized analysis, reporting.'],
+['ti-tools','var(--teal)','var(--teal-soft)','Emergence of new roles','For every role eliminated, historical research shows the emergence of 1.5-2 new roles. But the skills mismatch is the real problem, not the total number of positions.'],
+['ti-clock','var(--warn)','var(--warn-soft)','Uncertain timing','Estimates vary widely: from 2 to 10 years for the same predictions. The speed of corporate adoption is the most unpredictable factor.']],
+[['ti-users','var(--blue)','var(--blue-soft)','Rising expectations','Companies don\'t cut staff — they raise expectations. Someone who used to manage 10 accounts now manages 30, with AI covering the repetitive tasks.'],
+['ti-certificate','var(--teal)','var(--teal-soft)','AI skills gap','70% of companies surveyed report difficulty finding people who can integrate AI into workflows. Demand exceeds supply for "AI-augmented" roles.'],
+['ti-building','var(--warn)','var(--warn-soft)','Uneven adoption speed','SMEs and large companies live in different realities. AI automation in Italian SMEs is still in its early stages; in multinationals it\'s already in a consolidation phase.']],
+[['ti-mood-smile','var(--blue)','var(--blue-soft)','The daily reality','Those who use AI in the field experience it as an accelerator, not a replacement. The time saved is used for high-value activities, not for rest.'],
+['ti-alert-circle','var(--bad)','var(--bad-soft)','Anxiety gap','The distance between those actively using AI and those who don\'t yet widens month after month. The risk isn\'t replacement, it\'s obsolescence through inaction.'],
+['ti-star','var(--teal)','var(--teal-soft)','Relational and contextual value','The skills that don\'t automate easily: trust, judgment in ambiguous situations, relationship management, creativity applied to unstructured problems.']]
+]};
+var TRISYNTH={it:[
+'<strong>Consenso:</strong> l\'automazione accelera, il timing esatto rimane incerto. L\'upskilling è inevitabile.',
+'<strong>Divergenza:</strong> i modelli teorici vedono sostituzione; chi lavora sul campo vive più accelerazione che sostituzione.',
+'<strong>Gap non coperto da nessuna fonte:</strong> l\'impatto specifico per settore e per dimensione aziendale in Italia — dato che richiederebbe ricerca locale aggiornata.',
+'<strong>Fonte più solida per il timing:</strong> la prospettiva aziendale (Fonte B), che lavora su dati di adozione reale, non proiezioni.'
+],en:[
+'<strong>Consensus:</strong> automation accelerates, the exact timing remains uncertain. Upskilling is inevitable.',
+'<strong>Divergence:</strong> theoretical models see substitution; those working in the field experience more acceleration than substitution.',
+'<strong>Gap covered by no source:</strong> the specific impact by sector and by company size in Italy — data that would require updated local research.',
+'<strong>Most solid source for timing:</strong> the corporate perspective (Source B), which works on real adoption data, not projections.'
+]};
+
+/* scenarios */
+var SCN={it:[
+['ti-map-2','var(--blue)','var(--blue-soft)','Nuovo mercato da esplorare','Devi valutare se entrare in un settore che non conosci. Con il protocollo 5 step, in 30 minuti hai una mappa del mercato, le leve principali, i rischi e le domande che devi fare a chi lavora nel campo.'],
+['ti-cpu','var(--teal)','var(--teal-soft)','Tecnologia fuori dal tuo campo','Devi capire una tecnologia o un framework tecnico per un meeting, una proposta o una decisione. Claude ti dà la struttura concettuale senza richiedere anni di studio specialistico.'],
+['ti-users','var(--warn)','var(--warn-soft)','Preparazione a un incontro con un esperto','Prima di parlare con un esperto del settore, usa Claude per costruire le domande giuste. Chi arriva preparato ottiene 5x il valore dalla stessa conversazione.'],
+['ti-chart-arrows-vertical','var(--accent)','var(--accent-soft)','Decisione strategica con dati incerti','Quando devi decidere con informazioni incomplete, il protocollo ti aiuta a mappare le assunzioni implicite, trovare i punti deboli nel tuo ragionamento e identificare cosa devi sapere per ridurre il rischio.']
+],en:[
+['ti-map-2','var(--blue)','var(--blue-soft)','A new market to explore','You need to assess whether to enter a sector you don\'t know. With the 5-step protocol, in 30 minutes you have a map of the market, the main levers, the risks, and the questions you need to ask those working in the field.'],
+['ti-cpu','var(--teal)','var(--teal-soft)','Technology outside your field','You need to understand a technology or technical framework for a meeting, a proposal, or a decision. Claude gives you the conceptual structure without requiring years of specialist study.'],
+['ti-users','var(--warn)','var(--warn-soft)','Preparing for a meeting with an expert','Before talking to an industry expert, use Claude to build the right questions. Those who arrive prepared get 5x the value from the same conversation.'],
+['ti-chart-arrows-vertical','var(--accent)','var(--accent-soft)','Strategic decision with uncertain data','When you have to decide with incomplete information, the protocol helps you map the implicit assumptions, find the weak points in your reasoning, and identify what you need to know to reduce the risk.']
+]};
+
+/* myths */
+var MYTHS={it:[
+['"Claude sa tutto quello che è successo di recente"','Il knowledge cutoff è reale. Per dati post-cutoff, statistiche aggiornate e fatti recenti servono fonti esterne verificate.'],
+['"Basta un mega-prompt con tutto dentro"','La ricerca è conversazione, non interrogazione. I prompt progressivi producono analisi molto più profonde di un singolo prompt lungo.'],
+['"Più lungo il prompt, meglio la risposta"','Il contesto di qualità conta più della lunghezza. Un prompt breve con contesto ben caricato batte un prompt lungo senza contesto.']
+],en:[
+['"Claude knows everything that happened recently"','The knowledge cutoff is real. For post-cutoff data, updated statistics, and recent facts you need verified external sources.'],
+['"A single mega-prompt with everything in it is enough"','Research is a conversation, not an interrogation. Progressive prompts produce far deeper analysis than a single long prompt.'],
+['"The longer the prompt, the better the answer"','Quality context matters more than length. A short prompt with well-loaded context beats a long prompt with no context.']
+]};
+
+var LANG='it',openStep=-1,triActive=-1,triSeen={};
+function txt(k){return DICT[LANG][k]}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderList('caList',CA);renderList('cbList',CB);renderList('claList',CLA);renderList('extList',EXT);
+  renderSteps();renderTri();renderScn();renderMyths();renderSynth();
+}
+function renderList(id,data){document.getElementById(id).innerHTML=data[LANG].map(function(t){return '<li>'+t+'</li>'}).join('')}
+function renderSteps(){
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s,i){
+    var body='<p>'+s.p+'</p>'+
+      '<div class="pbox"><div class="pbox-head"><div class="pl"><i class="ti ti-prompt"></i> '+s.pl+'</div>'+
+      '<button class="copy-btn" onclick="copyText(this,\'px'+i+'\')"><i class="ti ti-copy"></i> '+(LANG==='it'?'Copia':'Copy')+'</button></div>'+
+      '<div class="pbox-body" id="px'+i+'">'+s.px.replace(/</g,'&lt;')+'</div></div>'+
+      '<div class="snote"><i class="ti ti-bulb"></i><span>'+s.note+'</span></div>';
+    return '<div class="step'+(i===openStep?' on':'')+'" id="st'+i+'">'+
+      '<div class="shead" onclick="toggleStep('+i+')"><div class="snum" style="color:'+s.col+';background:'+s.bg+'"><i class="ti '+s.ic+'"></i></div>'+
+      '<div class="stitle"><span class="stag">'+s.tag+'</span><strong>'+s.t+'</strong><span>'+s.s+'</span></div><i class="ti ti-chevron-down schev"></i></div>'+
+      '<div class="sbody"><div class="sbin">'+body+'</div></div></div>';
+  }).join('');
+}
+function toggleStep(i){openStep=(openStep===i?-1:i);renderSteps()}
+function renderTri(){
+  var p=document.getElementById('triPanel');
+  if(triActive<0){p.innerHTML='<p class="tri-intro hint">'+txt('triHint')+'</p><p class="tri-intro">'+txt('triIntro')+'</p>';return}
+  p.innerHTML=TRI[LANG][triActive].map(function(f){
+    return '<div class="tri-find"><div class="tri-find-ic" style="color:'+f[1]+';background:'+f[2]+'"><i class="ti '+f[0]+'"></i></div>'+
+      '<div><strong>'+f[3]+'</strong><span>'+f[4]+'</span></div></div>';
+  }).join('');
+}
+function showTri(idx){
+  document.querySelectorAll('.tri-src').forEach(function(s){s.classList.remove('on')});
+  document.getElementById('triSrc'+idx).classList.add('on');
+  triActive=idx;triSeen[idx]=true;renderTri();
+  if(Object.keys(triSeen).length===3){var b=document.getElementById('triSynthBtn');if(b&&!document.getElementById('triSynth').classList.contains('on'))b.style.display='inline-flex'}
+}
+function renderSynth(){document.getElementById('triSynthList').innerHTML=TRISYNTH[LANG].map(function(t){return '<li>'+t+'</li>'}).join('')}
+function showTriSynth(){document.getElementById('triSynth').classList.add('on');document.getElementById('triSynthBtn').style.display='none'}
+function renderScn(){
+  document.getElementById('scn').innerHTML=SCN[LANG].map(function(s){
+    return '<div class="scn-row"><div class="scn-ic" style="color:'+s[1]+';background:'+s[2]+'"><i class="ti '+s[0]+'"></i></div>'+
+      '<div class="scn-txt"><strong>'+s[3]+'</strong><span>'+s[4]+'</span></div></div>';
+  }).join('');
+}
+function renderMyths(){
+  var vs=LANG==='it'?'vs':'vs';var wl=LANG==='it'?'Falso':'False';var rl=LANG==='it'?'Reale':'Real';
+  document.getElementById('myths').innerHTML=MYTHS[LANG].map(function(m){
+    return '<div class="myth"><div class="myth-w"><div class="myth-lab"><i class="ti ti-x"></i> '+wl+'</div><div class="myth-t">'+m[0]+'</div></div>'+
+      '<div class="myth-vs">'+vs+'</div>'+
+      '<div class="myth-r"><div class="myth-lab"><i class="ti ti-check"></i> '+rl+'</div><div class="myth-t">'+m[1]+'</div></div></div>';
+  }).join('');
+}
+function switchCompare(which){
+  document.getElementById('tab-bad').classList.toggle('on',which==='bad');
+  document.getElementById('tab-good').classList.toggle('on',which==='good');
+  document.getElementById('panel-bad').classList.toggle('on',which==='bad');
+  document.getElementById('panel-good').classList.toggle('on',which==='good');
+}
+function copyText(btn,elId){
+  var el=document.getElementById(elId);if(!el)return;
+  var text=el.innerText||el.textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    var orig=btn.innerHTML;btn.innerHTML='<i class="ti ti-check"></i> '+(LANG==='it'?'Copiato!':'Copied!');btn.style.color='var(--good)';btn.style.borderColor='var(--good)';
+    setTimeout(function(){btn.innerHTML=orig;btn.style.color='';btn.style.borderColor=''},2200);
+  }).catch(function(){});
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

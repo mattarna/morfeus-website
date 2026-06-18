@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La tassonomia degli agenti — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* ===== 6-level ladder ===== */
+.ladder{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.autobar{display:flex;align-items:center;gap:10px;margin-bottom:16px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+.autotrack{flex:1;height:8px;border-radius:30px;background:linear-gradient(90deg,var(--bg-3),var(--agent));position:relative}
+.autodot{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--agent);border:2px solid var(--card);box-shadow:var(--sh);transform:translate(-50%,-50%);transition:left .35s ease}
+.rungs{display:flex;flex-direction:column-reverse;gap:7px}
+.rung{display:flex;align-items:center;gap:13px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r-l);padding:12px 15px;cursor:pointer;transition:.2s}
+.rung:hover{border-color:var(--line-2)}
+.rung.on{border-color:var(--agent);background:var(--agent-soft)}
+.rung .rn{width:30px;height:30px;border-radius:50%;background:var(--bg-3);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rung.on .rn{background:var(--agent);color:#fff}
+.rung .ri{font-size:20px;color:var(--ink-3);flex-shrink:0}
+.rung.on .ri{color:var(--agent)}
+.rung .rt{font-size:14.5px;font-weight:600;flex:1}
+.rung .rmem{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--bg-3);color:var(--ink-3);white-space:nowrap}
+.rung.on .rmem{background:var(--agent);color:#fff}
+.detail{margin-top:13px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.detail .dh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.detail .dhi{width:38px;height:38px;border-radius:11px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.detail .dht{font-size:16px;font-weight:600}
+.detail .dhs{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:block}
+.detail p{font-size:14.5px;color:var(--ink-2)}.detail p strong{color:var(--ink);font-weight:600}
+.detail .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.detail .tg{font-family:var(--mono);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+
+/* ===== stateless<->memory axis ===== */
+.axis{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.axisbar{display:flex;height:48px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.axisbar .ax-s{width:34%;background:var(--bg-3);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:12.5px;gap:7px}
+.axisbar .ax-t{width:33%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:12.5px;gap:7px;border-left:1px solid var(--line)}
+.axisbar .ax-p{width:33%;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:12.5px;gap:7px;border-left:1px solid var(--line)}
+.axisleg{display:flex;justify-content:space-between;margin-top:12px;font-size:13px;color:var(--ink-2)}
+.axisleg b{color:var(--ink)}
+.axisnote{font-size:14px;color:var(--ink-2);margin-top:14px}.axisnote strong{color:var(--ink)}
+
+/* ===== GPT vs assistant cmp ===== */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc .ch{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;margin-bottom:4px}
+.cmpc .ch i{font-size:20px}
+.cmpc.gpt .ch{color:var(--accent)}.cmpc.ass .ch{color:var(--agent)}
+.cmpc .csub{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:12px}
+.crow{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);padding:8px 0;border-top:1px dashed var(--line-2)}
+.crow b{color:var(--ink);font-weight:600;display:block;font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.crow i{flex-shrink:0;font-size:15px;margin-top:1px}
+.cmpc.gpt .crow i{color:var(--accent)}.cmpc.ass .crow i{color:var(--agent)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.rung .rt{font-size:13.5px}.axisbar .ax-s,.axisbar .ax-t,.axisbar .ax-p{font-size:10.5px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.ladder,.rung,.detail,.axis,.cmpc,.card3,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A7.1b</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Organizzazione intelligente</div>
+  <h1 class="rv" data-i="h1">La tassonomia degli agenti</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">01</span><h2 data-i="s1">Sei livelli, una scala di autonomia</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="ladIntro"></p>
+  <div class="ladder rv">
+    <div class="autobar">
+      <span data-i="autoLow">meno autonomia</span>
+      <div class="autotrack"><div class="autodot" id="autodot" style="left:8%"></div></div>
+      <span data-i="autoHigh">più autonomia</span>
+    </div>
+    <div class="rungs" id="rungs"></div>
+  </div>
+  <div class="detail rv" id="detail"></div>
+
+  <div class="sh rv"><i class="ti ti-database"></i><span class="no">02</span><h2 data-i="s2">L'asse che taglia tutto: stateless ↔ memoria</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="axIntro"></p>
+  <div class="axis rv">
+    <div class="axisbar">
+      <div class="ax-s"><i class="ti ti-circle-off"></i> <span data-i="axS">stateless</span></div>
+      <div class="ax-t"><i class="ti ti-clock"></i> <span data-i="axT">memoria temporanea</span></div>
+      <div class="ax-p"><i class="ti ti-infinity"></i> <span data-i="axP">memoria persistente</span></div>
+    </div>
+    <div class="axisleg"><span data-i-html="axLegL"></span><span data-i-html="axLegR"></span></div>
+    <p class="axisnote" data-i-html="axNote"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-git-compare"></i><span class="no">03</span><h2 data-i="s3">GPT (modello) ≠ assistente AI (sistema)</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-alert-circle"></i></div><div><h4 data-i="confH">Due parole che la gente confonde ogni giorno</h4><p data-i-html="confP"></p></div></div>
+  <div class="cmp rv" style="margin-top:14px">
+    <div class="cmpc gpt">
+      <div class="ch"><i class="ti ti-cpu"></i> <span data-i="gptH">GPT — il modello</span></div>
+      <div class="csub" data-i="gptSub">il motore</div>
+      <div class="crow"><i class="ti ti-target-arrow"></i><span><b data-i="rScopo">Scopo</b><span data-i="gptScopo"></span></span></div>
+      <div class="crow"><i class="ti ti-message-off"></i><span><b data-i="rInter">Interazione</b><span data-i="gptInter"></span></span></div>
+      <div class="crow"><i class="ti ti-plug-off"></i><span><b data-i="rInteg">Integrazione</b><span data-i="gptInteg"></span></span></div>
+    </div>
+    <div class="cmpc ass">
+      <div class="ch"><i class="ti ti-robot"></i> <span data-i="assH">Assistente AI — il sistema</span></div>
+      <div class="csub" data-i="assSub">il veicolo intero</div>
+      <div class="crow"><i class="ti ti-target-arrow"></i><span><b data-i="rScopo2">Scopo</b><span data-i="assScopo"></span></span></div>
+      <div class="crow"><i class="ti ti-messages"></i><span><b data-i="rInter2">Interazione</b><span data-i="assInter"></span></span></div>
+      <div class="crow"><i class="ti ti-plug-connected"></i><span><b data-i="rInteg2">Integrazione</b><span data-i="assInteg"></span></span></div>
+    </div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p><p class="cap" data-i="q1cap"></p></div>
+
+  <div class="sh rv"><i class="ti ti-map-2"></i><span class="no">04</span><h2 data-i="s4">Perché ti serve la mappa</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-ruler-measure"></i></div><h4 data-i="w1H">Misuri cosa hai</h4><p data-i="w1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-arrow-up-right"></i></div><h4 data-i="w2H">Sai dove salire</h4><p data-i="w2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-shield-half"></i></div><h4 data-i="w3H">Più sali, più governi</h4><p data-i="w3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Non "AI sì / AI no": a che livello</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La tassonomia degli agenti</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A7.1b',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Organizzazione intelligente',
+h1:'La tassonomia degli agenti (6 livelli)',
+lede:'"Agente" non è una categoria sola: è una scala. Dal modello che risponde e dimentica tutto, fino a squadre di agenti che collaborano o competono. Conoscere i sei livelli ti dice a che altezza sei e dove puoi salire.',
+s1:'Sei livelli, una scala di autonomia',
+ladIntro:'Ogni livello aggiunge una capacità al precedente. Più sali, <strong>più l\'agente è autonomo</strong> — e più decisioni prende senza che tu lo guardi. Clicca un gradino per salire.',
+autoLow:'meno autonomia',autoHigh:'più autonomia',
+s2:'L\'asse che taglia tutto: stateless ↔ memoria',
+axIntro:'C\'è una dimensione che attraversa tutta la tassonomia e cambia radicalmente il comportamento di un agente: <strong>se ricorda o no</strong>. È l\'asse stateless ↔ memoria.',
+axS:'stateless',axT:'memoria temporanea',axP:'memoria persistente',
+axLegL:'<b>Livello 1</b> · GPT base',axLegR:'<b>Livelli 4+</b> · dipendenti AI',
+axNote:'<strong>Stateless</strong> = nessuna memoria delle interazioni precedenti: ogni richiesta riparte da zero. La <strong>memoria temporanea</strong> dura quanto la sessione. La <strong>memoria persistente</strong> resta nel tempo: l\'agente ricorda i dettagli, dà risposte personalizzate e diventa più simile a un dipendente che a uno strumento usa-e-getta.',
+s3:'GPT (modello) ≠ assistente AI (sistema)',
+confH:'Due parole che la gente confonde ogni giorno',
+confP:'Si dice "il GPT" per dire "l\'assistente", ma <strong>non sono la stessa cosa</strong>. Il GPT è il modello (il motore). L\'assistente AI è il sistema che lo usa (il veicolo intero), e può integrare più modelli. Distinguerli è il primo passo per leggere bene la tassonomia.',
+gptH:'GPT — il modello',gptSub:'il motore',
+rScopo:'Scopo',rInter:'Interazione',rInteg:'Integrazione',
+gptScopo:': genera contenuti basati sul testo. È un modello di IA, può stare dentro un assistente o essere usato da solo.',
+gptInter:': non implica per forza dialogo diretto con l\'utente; può essere usato in molti modi "dietro le quinte".',
+gptInteg:': è esso stesso il componente che altri sistemi integrano.',
+assH:'Assistente AI — il sistema',assSub:'il veicolo intero',
+rScopo2:'Scopo',rInter2:'Interazione',rInteg2:'Integrazione',
+assScopo:': aiuta l\'utente su compiti specifici, orchestrando modello, istruzioni, conoscenza e azioni.',
+assInter:': progettato per dialogare con l\'utente, in modo interattivo.',
+assInteg:': può integrare vari modelli (anche GPT) per migliorare comprensione e generazione.',
+q1:'Il GPT è il motore. L\'assistente è il veicolo. L\'agente è il veicolo che guida da solo.',
+q1cap:'Stesso motore, sistemi molto diversi: la potenza del modello non basta a definire cosa hai davanti.',
+s4:'Perché ti serve la mappa',
+w1H:'Misuri cosa hai',w1P:'Davanti a un sistema AI, la domanda non è "è intelligente?" ma "a che livello sta?". La scala ti dà il righello.',
+w2H:'Sai dove salire',w2P:'Ogni gradino è un upgrade concreto: aggiungi tool, poi memoria, poi pianificazione. Sai qual è il prossimo passo, non sali a caso.',
+w3H:'Più sali, più governi',w3P:'Salire di livello significa più autonomia — e più autonomia richiede più confini, escalation e supervisione. La scala è anche una scala di responsabilità.',
+s5:'Checkpoint',
+cpH:'Non "AI sì / AI no": a che livello',
+cpP:'La domanda matura non è se usare l\'AI, ma a quale livello della scala posizionare ogni compito. Un FAQ vive bene al livello 1; un dipendente AI che lavora ogni giorno serve al livello 4 o 5; un\'orchestrazione complessa è multi-agente.',
+cpQ:'Prendi un\'attività che vorresti affidare all\'AI: a quale dei sei livelli la collocheresti? Le serve memoria? Strumenti esterni? Pianificazione autonoma? La risposta ti dice quanta governance dovrai mettere intorno.',
+cpNote:'Regola d\'oro: scegli il livello più basso che risolve davvero il problema — ogni gradino in più è potenza, ma anche governance in più.',
+bridge:'Sai leggere la scala degli agenti, dal GPT base al multi-agente. <b>Prossimo:</b> come si progetta un agente con la meta-creazione — l\'AI che disegna obiettivi, confini, tool ed escalation, e l\'umano che valida.',
+foot:'Morfeus — La tassonomia degli agenti'
+},
+en:{
+kicker:'Lesson A7.1b',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Intelligent organization',
+h1:'The agent taxonomy (6 levels)',
+lede:'"Agent" isn\'t a single category: it\'s a scale. From a model that answers and forgets everything, up to teams of agents that collaborate or compete. Knowing the six levels tells you where you stand and where you can climb.',
+s1:'Six levels, a ladder of autonomy',
+ladIntro:'Each level adds a capability to the one below. The higher you go, <strong>the more autonomous the agent</strong> — and the more decisions it makes without you watching. Click a rung to climb.',
+autoLow:'less autonomy',autoHigh:'more autonomy',
+s2:'The axis that cuts across it all: stateless ↔ memory',
+axIntro:'One dimension runs through the whole taxonomy and radically changes how an agent behaves: <strong>whether it remembers or not</strong>. It\'s the stateless ↔ memory axis.',
+axS:'stateless',axT:'temporary memory',axP:'persistent memory',
+axLegL:'<b>Level 1</b> · base GPT',axLegR:'<b>Levels 4+</b> · AI employees',
+axNote:'<strong>Stateless</strong> = no memory of previous interactions: every request starts from zero. <strong>Temporary memory</strong> lasts as long as the session. <strong>Persistent memory</strong> survives over time: the agent remembers details, gives personalized answers, and becomes more like an employee than a throwaway tool.',
+s3:'GPT (model) ≠ AI assistant (system)',
+confH:'Two words people mix up every day',
+confP:'People say "the GPT" to mean "the assistant", but <strong>they\'re not the same thing</strong>. The GPT is the model (the engine). The AI assistant is the system that uses it (the whole vehicle), and it can integrate several models. Telling them apart is the first step to reading the taxonomy well.',
+gptH:'GPT — the model',gptSub:'the engine',
+rScopo:'Purpose',rInter:'Interaction',rInteg:'Integration',
+gptScopo:': generates text-based content. It\'s an AI model — it can sit inside an assistant or be used on its own.',
+gptInter:": doesn't necessarily imply direct dialogue with the user; it can be used in many ways behind the scenes.",
+gptInteg:': it is itself the component that other systems integrate.',
+assH:'AI assistant — the system',assSub:'the whole vehicle',
+rScopo2:'Purpose',rInter2:'Interaction',rInteg2:'Integration',
+assScopo:': helps the user with specific tasks, orchestrating model, instructions, knowledge and actions.',
+assInter:': designed to converse with the user, interactively.',
+assInteg:': can integrate various models (GPT included) to improve understanding and generation.',
+q1:'The GPT is the engine. The assistant is the vehicle. The agent is the vehicle that drives itself.',
+q1cap:'Same engine, very different systems: the model\'s power alone doesn\'t define what you\'re looking at.',
+s4:'Why you need the map',
+w1H:'You measure what you have',w1P:'Facing an AI system, the question isn\'t "is it smart?" but "what level is it at?". The scale gives you the ruler.',
+w2H:'You know where to climb',w2P:'Each rung is a concrete upgrade: add tools, then memory, then planning. You know the next step, you don\'t climb at random.',
+w3H:'The higher you climb, the more you govern',w3P:'Climbing a level means more autonomy — and more autonomy demands more boundaries, escalation and supervision. The ladder is also a ladder of responsibility.',
+s5:'Checkpoint',
+cpH:'Not "AI yes / AI no": at what level',
+cpP:"The mature question isn't whether to use AI, but at which level of the scale to place each task. A FAQ lives well at level 1; an AI employee that works every day belongs at level 4 or 5; a complex orchestration is multi-agent.",
+cpQ:'Take a task you\'d like to hand to AI: which of the six levels would you place it at? Does it need memory? External tools? Autonomous planning? The answer tells you how much governance you\'ll need around it.',
+cpNote:'Golden rule: pick the lowest level that actually solves the problem — every extra rung is power, but also more governance.',
+bridge:'You can read the agent ladder, from the base GPT to multi-agent. <b>Next:</b> how to design an agent through meta-creation — the AI drafting goals, boundaries, tools and escalation, and the human validating.',
+foot:'Morfeus — The agent taxonomy'
+}};
+
+/* ===== 6-level ladder data ===== */
+/* [icon, title, memTag, subtitle, body, [feature tags]] */
+var LV={it:[
+['ti-robot','1 · GPT base','stateless','Il livello base degli agenti AI','Risponde agli input in base al suo addestramento, <strong>senza adattarsi dinamicamente né accedere a risorse esterne</strong>. Opera in modalità stateless: non conserva memoria delle interazioni precedenti. Semplice per natura — ideale per generare testo, rispondere a FAQ, assistenza di base.',['testo generico','FAQ','no memoria','no strumenti']],
+['ti-list-search','2 · Prompt-Driven','stateless','Ragiona, ma resta legato al prompt','GPT avanzati che usano tecniche come <strong>Chain of Thought (CoT)</strong> e <strong>ReAct</strong> per affrontare compiti più complessi: scompongono il problema in passi logici e ragionano in modo iterativo. Restano però legati all\'input fornito — niente accesso esterno, niente memoria.',['Chain of Thought','ReAct','passi logici','no tool']],
+['ti-tools','3 · Tool-Using','stateless / variabile','Mette le mani fuori dal modello','Possono interagire con <strong>strumenti esterni: API, database, motori di ricerca, linguaggi di programmazione</strong>. Questo li rende dinamici: recuperano informazioni aggiornate, eseguono calcoli complessi, accedono a dati specifici per risposte più contestuali e utili.',['API','database','ricerca','dati aggiornati']],
+['ti-database','4 · Con Memoria','memoria','Ricorda, quindi personalizza','La memoria può essere integrata in più tipi di agente. Può essere <strong>temporanea (limitata alla sessione) o persistente (conservata nel tempo)</strong>. Migliora la continuità e offre risposte personalizzate e contestuali, ricordando i dettagli delle conversazioni precedenti.',['memoria temporanea','memoria persistente','continuità','personalizzazione']],
+['ti-cpu','5 · Cognitivi / Autonomi','memoria','Pianifica e si autogestisce','Un livello avanzato: <strong>pianificano, suddividono compiti complessi in sotto-task e li completano senza supervisione diretta</strong>. Grazie all\'adattabilità prendono decisioni dinamiche sui dati disponibili e reagiscono a scenari nuovi.',['pianificazione','sotto-task','no supervisione','decisioni dinamiche']],
+['ti-users-group','6 · Multi-Agente','memoria','Una squadra che si parla','Più agenti AI che <strong>collaborano o competono</strong> per obiettivi comuni. Ognuno ha competenze specifiche e un ruolo definito, ma tutti interagiscono tramite <strong>protocolli di comunicazione</strong> per condividere informazioni e risolvere problemi in modo coordinato.',['collaborano o competono','ruoli definiti','protocolli di comunicazione','coordinamento']]
+],en:[
+['ti-robot','1 · Base GPT','stateless','The base level of AI agents','It answers inputs based on its training, <strong>without adapting dynamically or accessing external resources</strong>. It runs stateless: it keeps no memory of previous interactions. Simple by nature — ideal for generating text, answering FAQs, basic assistance.',['generic text','FAQ','no memory','no tools']],
+['ti-list-search','2 · Prompt-Driven','stateless','Reasons, but stays tied to the prompt','Advanced GPTs that use techniques like <strong>Chain of Thought (CoT)</strong> and <strong>ReAct</strong> to tackle more complex tasks: they break the problem into logical steps and reason iteratively. They stay tied to the input provided, though — no external access, no memory.',['Chain of Thought','ReAct','logical steps','no tools']],
+['ti-tools','3 · Tool-Using','stateless / variable','Reaches beyond the model','They can interact with <strong>external tools: APIs, databases, search engines, programming languages</strong>. This makes them dynamic: they retrieve up-to-date information, run complex calculations, access specific data for more contextual, useful answers.',['API','database','search','fresh data']],
+['ti-database','4 · With Memory','memory','Remembers, so it personalizes','Memory can be added to several agent types. It can be <strong>temporary (limited to the session) or persistent (kept over time)</strong>. It improves continuity and offers personalized, contextual answers, remembering details from previous conversations.',['temporary memory','persistent memory','continuity','personalization']],
+['ti-cpu','5 · Cognitive / Autonomous','memory','Plans and self-manages','An advanced level: they <strong>plan, break complex tasks into sub-tasks and complete them without direct supervision</strong>. Thanks to adaptability they make dynamic decisions on available data and react to new scenarios.',['planning','sub-tasks','no supervision','dynamic decisions']],
+['ti-users-group','6 · Multi-Agent','memory','A team that talks to itself','Several AI agents that <strong>collaborate or compete</strong> toward shared goals. Each has specific skills and a defined role, but all interact through <strong>communication protocols</strong> to share information and solve problems in a coordinated way.',['collaborate or compete','defined roles','communication protocols','coordination']]
+]};
+var curLv=0;
+function showLv(i){
+  curLv=i;
+  document.querySelectorAll('#rungs .rung').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  document.getElementById('autodot').style.left=(8+i*(84/5))+'%';
+  var l=LV[LANG][i];
+  document.getElementById('detail').innerHTML=
+    '<div class="dh"><div class="dhi"><i class="ti '+l[0]+'"></i></div><div><div class="dht">'+l[1]+'</div><span class="dhs">'+l[3]+'</span></div></div>'+
+    '<p>'+l[4]+'</p><div class="tags">'+l[5].map(function(t){return '<span class="tg">'+t+'</span>'}).join('')+'</div>';
+}
+function buildLad(){
+  document.getElementById('rungs').innerHTML=LV[LANG].map(function(l,i){
+    return '<div class="rung'+(i===curLv?' on':'')+'" onclick="showLv('+i+')"><div class="rn">'+(i+1)+'</div><i class="ti '+l[0]+' ri"></i><div class="rt">'+l[1].split(' · ')[1]+'</div><div class="rmem">'+l[2]+'</div></div>';
+  }).join('');
+  showLv(curLv);
+}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  buildLad();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

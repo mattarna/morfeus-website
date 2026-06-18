@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le 8 regole di qualità & gli anti-pattern — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* rules gates grid */
+.gates{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.gate{border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh);padding:13px 11px;cursor:pointer;transition:.18s;text-align:left;user-select:none;border-radius:var(--r);position:relative;min-height:96px;display:flex;flex-direction:column;gap:7px}
+.gate:hover{background:var(--bg-2);border-color:var(--line-2)}
+.gate.on{border-color:var(--accent);background:var(--accent-soft);z-index:2}
+.gate .gno{width:25px;height:25px;border-radius:7px;background:var(--bg-3);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;transition:.18s}
+.gate.on .gno{background:var(--accent);color:#fff}
+.gate h4{font-size:12.5px;font-weight:600;line-height:1.22;color:var(--ink)}
+.gatepanel{border:1px solid var(--accent-line);background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;border-left:3px solid var(--accent)}
+.gatepanel .gpn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.gatepanel h3{font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.gatepanel .gpd{font-size:14.5px;color:var(--ink-2);margin-bottom:14px}
+.gpwhy{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 15px;font-size:13.5px;color:var(--ink-2);line-height:1.55;display:flex;gap:11px;align-items:flex-start}
+.gpwhy i{color:var(--accent);font-size:17px;flex-shrink:0;margin-top:1px}.gpwhy b{color:var(--ink);font-weight:600}
+.gpwhy.bad{background:var(--bad-soft);border-color:var(--bad)}.gpwhy.bad i{color:var(--bad)}.gpwhy.bad b{color:var(--bad)}
+/* prompt library */
+.plist{display:flex;flex-direction:column;gap:8px}
+.prow{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:13px 16px}
+.prow .pidx{width:26px;height:26px;border-radius:7px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;flex-shrink:0}
+.prow .pbody{flex:1}
+.prow .ptt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.prow .pds{font-size:13px;color:var(--ink-2);line-height:1.5}.prow .pds b{color:var(--ink);font-weight:600}
+.prow .prole{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:4px;background:var(--bg-3);color:var(--ink-3);flex-shrink:0;align-self:flex-start;margin-top:2px}
+.prow .prole.pl{background:var(--accent-soft);color:var(--accent)}
+.prow .prole.ex{background:var(--agent-soft);color:var(--agent)}
+.prow .prole.va{background:var(--good-soft);color:var(--good)}
+/* domain translator */
+.domtabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.domtab{flex:1;min-width:120px;border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh);padding:13px 12px;cursor:pointer;transition:.18s;border-radius:var(--r);display:flex;align-items:center;gap:10px;user-select:none}
+.domtab:hover{background:var(--bg-2)}
+.domtab.on{border-color:var(--accent);background:var(--accent-soft)}
+.domtab i{font-size:19px;color:var(--ink-3)}.domtab.on i{color:var(--accent)}
+.domtab span{font-size:14px;font-weight:600;color:var(--ink)}
+.skel{display:flex;align-items:center;gap:10px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:11px 16px;margin-bottom:14px;font-size:13.5px;color:var(--ink-2)}
+.skel i{color:var(--accent);font-size:18px}.skel b{color:var(--accent)}
+.dtable{border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;box-shadow:var(--sh)}
+.drow{display:grid;grid-template-columns:0.85fr 1.4fr;border-bottom:1px solid var(--line)}
+.drow:last-child{border-bottom:none}
+.drow .dk{background:var(--bg-2);padding:12px 16px;font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:9px;border-right:1px solid var(--line)}
+.drow .dk i{color:var(--accent);font-size:16px;flex-shrink:0}
+.drow .dv{background:var(--card);padding:12px 16px;font-size:13.5px;color:var(--ink-2);line-height:1.5}.drow .dv b{color:var(--ink);font-weight:600}
+/* anti-patterns */
+.aplist{display:flex;flex-direction:column;gap:9px}
+.apitem{display:flex;gap:13px;align-items:flex-start;background:var(--bad-soft);border:1px solid var(--bad);border-radius:var(--r);padding:13px 16px}
+.apitem i{color:var(--bad);font-size:18px;flex-shrink:0;margin-top:1px}
+.apitem .apt{font-size:13.5px;color:var(--ink-2);line-height:1.5}.apitem .apt b{color:var(--bad);font-weight:600}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.gates{grid-template-columns:repeat(2,1fr)}.drow{grid-template-columns:1fr}.drow .dk{border-right:none;border-bottom:1px solid var(--line)}.domtab{min-width:0;flex:1 1 45%}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.gate,.gatepanel,.key,.prow,.apitem,.dtable,.domtab,.gpwhy{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A8.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Metodo</div>
+  <h1 class="rv" data-i="h1">Le 8 regole di qualità & gli anti-pattern</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">01</span><h2 data-i="s1">Le 8 regole, come gate</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-door"></i></div><div><h4 data-i="note1H">Otto cancelli, non otto consigli</h4><p data-i-html="note1P"></p></div></div>
+  <p class="lede rv" style="font-size:14.5px;margin:16px 0" data-i="gatesIntro"></p>
+  <div class="gates rv" id="gates"></div>
+  <div class="gatepanel rv" id="gatepanel"></div>
+
+  <div class="sh rv"><i class="ti ti-library"></i><span class="no">02</span><h2 data-i="s2">La libreria dei 9 prompt</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="plIntro"></p>
+  <div class="plist rv" id="plist"></div>
+
+  <div class="sh rv"><i class="ti ti-transform"></i><span class="no">03</span><h2 data-i="s3">Il traduttore per dominio</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="domIntro"></p>
+  <div class="skel rv"><i class="ti ti-skull"></i><span data-i-html="skelLine"></span></div>
+  <div class="domtabs rv" id="domtabs"></div>
+  <div class="dtable rv" id="dtable"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">04</span><h2 data-i="s4">Gli anti-pattern</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="apIntro"></p>
+  <div class="aplist rv" id="aplist"></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Le 8 regole di qualità & gli anti-pattern</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A8.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Metodo',
+h1:'Le 8 regole di qualità & gli anti-pattern',
+lede:'Hai imparato le fasi, la cross-validazione, il piano vivente. Questa lezione chiude il modulo: comprime tutto in 8 regole non negoziabili, ti dà la cassetta degli attrezzi (9 prompt pronti), ti mostra che lo stesso scheletro vale per qualsiasi lavoro — e ti elenca gli errori che fanno tutti.',
+s1:'Le 8 regole, come gate',
+note1H:'Otto cancelli, non otto consigli',
+note1P:'Queste non sono buone pratiche da seguire «se hai tempo». Sono <strong>gate</strong>: se una non è verde, non passi alla fase dopo. Il metodo regge proprio perché ognuna chiude la porta a un tipo preciso di errore prima che si propaghi. Cliccale una a una.',
+gatesIntro:'Clicca ogni regola per vedere cosa significa in pratica e quale errore disinnesca.',
+s2:'La libreria dei 9 prompt',
+plIntro:'Il metodo non è teoria: è una sequenza di prompt che puoi copiare. Sono universali — sostituisci le parti tra [parentesi] con il tuo lavoro. Ogni prompt ha un ruolo preciso nella spina.',
+s3:'Il traduttore per dominio',
+domIntro:'La domanda più frequente: «funziona anche per il MIO lavoro?». Sì. Lo scheletro è sempre lo stesso; cambia solo come chiami le cose. Scegli un dominio e guarda come le stesse cinque parole-chiave si traducono.',
+skelLine:'<b>Lo scheletro non cambia, cambiano le parole.</b> Esecutore, Regole, Output verificabile, Milestone e Audit esistono in ogni lavoro: hanno solo nomi diversi.',
+s4:'Gli anti-pattern',
+apIntro:'Gli errori che annullano il metodo. Non sono varianti esotiche: sono le scorciatoie che fa chiunque ha fretta. Riconoscerli è metà del lavoro.',
+q1:'«Il costo non è pianificare. Il costo è riscrivere.»',
+s5:'Checkpoint',
+cpH:'Passa il tuo ultimo lavoro ai gate',
+cpP:'Prendi l\'ultimo lavoro grande che hai fatto con l\'AI. Scorri le 8 regole una a una e chiediti, onestamente, quante erano davvero verdi. La prima che era rossa è probabilmente il punto dove il lavoro ha cominciato a sbandare.',
+cpQ:'Su quel lavoro: avevi validato il piano in una chat diversa, o nella stessa? E i criteri dei task erano verificabili sì/no, o erano «mi sembra ok»? Le due risposte ti dicono quanto eri vicino agli anti-pattern.',
+bridge:'Questo chiude il <b>Modulo A8 — Plan &amp; Solve</b>. Hai il principio, le fasi, la cross-validazione, il piano vivente, le 8 regole e la cassetta dei prompt. Da qui in poi non è più una tecnica che impari: è il modo in cui affronti ogni lavoro grande. Il costo del metodo è una frazione del costo di riscrivere.',
+foot:'Morfeus — Le 8 regole di qualità & gli anti-pattern'
+},
+en:{
+kicker:'Lesson A8.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Method',
+h1:'The 8 quality rules & the anti-patterns',
+lede:'You\'ve learned the phases, cross-validation, the living plan. This lesson closes the module: it compresses everything into 8 non-negotiable rules, hands you the toolkit (9 ready-made prompts), shows you the same skeleton works for any job — and lists the mistakes everyone makes.',
+s1:'The 8 rules, as gates',
+note1H:'Eight gates, not eight tips',
+note1P:'These aren\'t best practices to follow «if you have time». They\'re <strong>gates</strong>: if one isn\'t green, you don\'t move to the next phase. The method holds precisely because each one shuts the door on a specific kind of error before it spreads. Click them one by one.',
+gatesIntro:'Click each rule to see what it means in practice and which error it defuses.',
+s2:'The library of 9 prompts',
+plIntro:'The method isn\'t theory: it\'s a sequence of prompts you can copy. They\'re universal — replace the parts in [brackets] with your own job. Each prompt plays a precise role in the chain.',
+s3:'The domain translator',
+domIntro:'The most common question: «does it work for MY kind of work too?». Yes. The skeleton is always the same; only what you call things changes. Pick a domain and watch the same five key words translate.',
+skelLine:'<b>The skeleton doesn\'t change, the words change.</b> Executor, Rules, Verifiable output, Milestone and Audit exist in every job: they just have different names.',
+s4:'The anti-patterns',
+apIntro:'The mistakes that cancel out the method. They\'re not exotic variants: they\'re the shortcuts anyone in a hurry takes. Recognizing them is half the battle.',
+q1:'“The cost isn\'t planning. The cost is rewriting.”',
+s5:'Checkpoint',
+cpH:'Run your last job through the gates',
+cpP:'Take the last big job you did with AI. Walk through the 8 rules one by one and ask yourself, honestly, how many were truly green. The first one that was red is probably where the work started to drift.',
+cpQ:'On that job: did you validate the plan in a different chat, or in the same one? And were the task criteria verifiable yes/no, or were they «looks fine to me»? Those two answers tell you how close you were to the anti-patterns.',
+bridge:'This closes <b>Module A8 — Plan &amp; Solve</b>. You have the principle, the phases, cross-validation, the living plan, the 8 rules and the prompt toolkit. From here on it\'s no longer a technique you learn: it\'s how you face every big job. The cost of the method is a fraction of the cost of rewriting.',
+foot:'Morfeus — The 8 quality rules & the anti-patterns'
+}};
+
+// 8 rules: no, title[it,en], desc[it,en], why{type,it,en}
+var RULES=[
+{no:'1',
+ title:['Nessuna esecuzione prima del piano cross-validato','No execution before the plan is cross-validated'],
+ desc:['Non si comincia a costruire finché il piano non è stato messo alla prova da una seconda testa. La generazione viene sempre dopo la validazione.',
+       'You don\'t start building until the plan has been tested by a second mind. Generation always comes after validation.'],
+ why:{type:'ok',it:'Disinnesca il <b>debito istantaneo</b>: un piano non validato porta errori che si scoprono solo a lavoro fatto.',
+       en:'Defuses <b>instant debt</b>: an unvalidated plan carries errors you only discover once the work is done.'}},
+{no:'2',
+ title:['Un task alla volta','One task at a time'],
+ desc:['L\'Esecutore lavora su un solo task, lo chiude, si verifica il criterio, poi si passa al successivo. Mai una milestone «in un colpo solo».',
+       'The Executor works on a single task, closes it, the criterion is checked, then you move to the next. Never a milestone «in one shot».'],
+ why:{type:'ok',it:'Tiene gli errori <b>isolati e risalibili</b>: se qualcosa rompe, sai esattamente quale task.',
+       en:'Keeps errors <b>isolated and traceable</b>: if something breaks, you know exactly which task.'}},
+{no:'3',
+ title:['Output sempre verificabile','Output always verifiable'],
+ desc:['Ogni task e ogni milestone finisce con qualcosa che puoi toccare, vedere o testare. Se non sai come controllarlo, è scritto male.',
+       'Every task and every milestone ends with something you can touch, see or test. If you don\'t know how to check it, it\'s badly written.'],
+ why:{type:'ok',it:'Senza un output verificabile non c\'è audit possibile: «<b>fatto</b>» diventa un\'opinione invece di un fatto.',
+       en:'Without a verifiable output there\'s no possible audit: «<b>done</b>» becomes an opinion instead of a fact.'}},
+{no:'4',
+ title:['Contesto sempre esplicito','Context always explicit'],
+ desc:['L\'Esecutore riceve sempre il contesto che gli serve: Brief + Sprint corrente + Regole Operative. Non si dà mai per scontato che «si ricordi».',
+       'The Executor always receives the context it needs: Brief + current Sprint + Operating Rules. You never assume it «remembers».'],
+ why:{type:'ok',it:'Il contesto implicito è la fonte numero uno di derive: l\'AI riempie i vuoti <b>a modo suo</b>.',
+       en:'Implicit context is the number-one source of drift: the AI fills the gaps <b>its own way</b>.'}},
+{no:'5',
+ title:['Validazione specifica e tecnica','Specific, technical validation'],
+ desc:['Chi valida cerca i punti di rottura concreti, non impressioni generiche. «Trova le falle», non «dimmi se ti piace».',
+       'The validator hunts for concrete breaking points, not generic impressions. «Find the cracks», not «tell me if you like it».'],
+ why:{type:'ok',it:'Una validazione vaga produce un «<b>ok va bene</b>» che non ti protegge da niente.',
+       en:'A vague validation produces an «<b>ok, fine</b>» that protects you from nothing.'}},
+{no:'6',
+ title:['Deviazioni documentate','Deviations documented'],
+ desc:['Se durante l\'esecuzione emerge qualcosa che cambia il piano, lo si scrive prima di continuare. Il piano vivente registra ogni scostamento.',
+       'If something that changes the plan emerges during execution, you write it down before continuing. The living plan records every deviation.'],
+ why:{type:'ok',it:'Una deviazione non documentata si dimentica e <b>rompe il piano a valle</b> senza che tu sappia perché.',
+       en:'An undocumented deviation gets forgotten and <b>breaks the plan downstream</b> without you knowing why.'}},
+{no:'7',
+ title:['Fermati quando qualcosa non torna','Stop when something doesn\'t add up'],
+ desc:['Se emerge un imprevisto, non si tira dritto: ci si ferma, si aggiorna il piano, si ri-valida. La fretta qui costa il triplo dopo.',
+       'If something unexpected comes up, you don\'t push on: you stop, update the plan, re-validate. Rushing here costs triple later.'],
+ why:{type:'ok',it:'Continuare su un piano che non torna significa <b>costruire sopra un errore</b>: ogni passo dopo è da rifare.',
+       en:'Continuing on a plan that doesn\'t add up means <b>building on top of an error</b>: every step after has to be redone.'}},
+{no:'8',
+ title:['La validazione è un audit, non una review','Validation is an audit, not a review'],
+ desc:['A fine milestone, per ogni task: il criterio è soddisfatto sì/no, e perché. Un verdetto secco e motivato, non un\'occhiata d\'insieme.',
+       'At the end of a milestone, for each task: is the criterion met yes/no, and why. A sharp, justified verdict, not an overall glance.'],
+ why:{type:'bad',it:'Una review che si riduce a «<b>mi sembra ok</b>» è l\'anti-pattern più subdolo: sembra controllo, non lo è.',
+       en:'A review that boils down to «<b>looks fine to me</b>» is the sneakiest anti-pattern: it looks like control, it isn\'t.'}}
+];
+
+// 9 prompts: idx, title[it,en], desc[it,en], role(pl/ex/va), roleLabel[it,en]
+var PROMPTS=[
+{idx:'1',role:'pl',rl:['Pianificatore','Planner'],
+ title:['Il Brief','The Brief'],
+ desc:['Genera la base condivisa: obiettivo, contesto, definizione di «finito» verificabile e <b>Anti-Goal</b>.',
+       'Generates the shared base: objective, context, a verifiable definition of «done» and <b>Anti-Goals</b>.']},
+{idx:'2',role:'pl',rl:['Pianificatore','Planner'],
+ title:['Analisi Rischi (Report)','Risk Analysis (Report)'],
+ desc:['Pre-mortem: «è già fallito, perché?». Produce l\'<b>Output A — Report Rischi & Vincoli</b>.',
+       'Pre-mortem: «it already failed, why?». Produces <b>Output A — Risks & Constraints Report</b>.']},
+{idx:'3',role:'pl',rl:['Pianificatore','Planner'],
+ title:['Regole Operative','Operating Rules'],
+ desc:['Trasforma i rischi nell\'<b>Output B — Regole Operative</b>: standard, obbligatori, vietati, criteri di accettazione.',
+       'Turns the risks into <b>Output B — Operating Rules</b>: standards, must-haves, forbidden items, acceptance criteria.']},
+{idx:'4',role:'pl',rl:['Pianificatore','Planner'],
+ title:['Master Plan','Master Plan'],
+ desc:['Scompone il lavoro in <b>milestone</b>, ognuna con output verificabile, dipendenze e rischi specifici.',
+       'Breaks the work into <b>milestones</b>, each with a verifiable output, dependencies and specific risks.']},
+{idx:'5',role:'pl',rl:['Pianificatore','Planner'],
+ title:['Sprint','Sprint'],
+ desc:['Apre una milestone in <b>task atomici</b>, ognuno con un criterio di successo osservabile.',
+       'Opens a milestone into <b>atomic tasks</b>, each with an observable success criterion.']},
+{idx:'6',role:'va',rl:['Validatore (LLM B)','Validator (LLM B)'],
+ title:['Trova le falle (a B)','Find the cracks (to B)'],
+ desc:['Dai il piano a un <b>secondo LLM</b> come esperto indipendente: «trova i punti di rottura», non «dimmi se ti piace».',
+       'Hand the plan to a <b>second LLM</b> as an independent expert: «find the breaking points», not «tell me if you like it».']},
+{idx:'7',role:'pl',rl:['Pianificatore (LLM A)','Planner (LLM A)'],
+ title:['Giudica le critiche (ad A)','Judge the critiques (to A)'],
+ desc:['Torni da <b>A</b> con le critiche di B: A <b>filtra</b> quali sono reali e aggiorna. B accusa, A filtra, tu arbitri.',
+       'Back to <b>A</b> with B\'s critiques: A <b>filters</b> which are real and updates. B accuses, A filters, you arbitrate.']},
+{idx:'8',role:'ex',rl:['Esecutore','Executor'],
+ title:['Briefing Esecutore + piano vivente','Executor briefing + living plan'],
+ desc:['Dai all\'<b>Esecutore</b> Brief + Sprint + Regole, un task alla volta, e il piano a checkbox che aggiorna da solo.',
+       'Give the <b>Executor</b> Brief + Sprint + Rules, one task at a time, and the checkbox plan it updates by itself.']},
+{idx:'9',role:'va',rl:['Audit','Audit'],
+ title:['Audit fine milestone','End-of-milestone audit'],
+ desc:['A milestone chiusa: per ogni task il <b>criterio è soddisfatto sì/no e perché</b>. Audit, non review.',
+       'When a milestone closes: for each task the <b>criterion is met yes/no and why</b>. Audit, not review.']}
+];
+
+// domain translator: skeleton row keys, then per-domain values
+var SKEL=[
+ {icon:'ti-user-cog',k:['Esecutore','Executor']},
+ {icon:'ti-list-details',k:['Regole Operative','Operating Rules']},
+ {icon:'ti-circle-check',k:['Output verificabile','Verifiable output']},
+ {icon:'ti-flag',k:['Milestone','Milestone']},
+ {icon:'ti-clipboard-check',k:['Audit','Audit']}
+];
+var DOMAINS=[
+{icon:'ti-code',name:['Software','Software'],
+ rows:[
+  ['Lo sviluppatore (o l\'agente che scrive codice).','The developer (or the agent writing code).'],
+  ['Standard di codice, librerie ammesse, cosa non toccare.','Code standards, allowed libraries, what not to touch.'],
+  ['Una feature che gira e passa i test.','A feature that runs and passes the tests.'],
+  ['«Login funzionante con sessione persistente».','«Working login with a persistent session».'],
+  ['Per ogni test: passa sì/no, e perché.','For each test: passes yes/no, and why.']
+ ]},
+{icon:'ti-user-search',name:['Assunzione','Hiring'],
+ rows:[
+  ['Chi conduce la ricerca e gli screening.','Whoever runs the search and the screening.'],
+  ['Requisiti obbligatori, red flag, cosa scarta subito.','Must-have requirements, red flags, instant disqualifiers.'],
+  ['Una shortlist che puoi convocare a colloquio.','A shortlist you can call in for interview.'],
+  ['«Shortlist di 5 candidati validati».','«Shortlist of 5 validated candidates».'],
+  ['Per ogni candidato: requisiti soddisfatti sì/no, e perché.','For each candidate: requirements met yes/no, and why.']
+ ]},
+{icon:'ti-rocket',name:['Lancio','Launch'],
+ rows:[
+  ['Chi produce gli asset del lancio (copy, pagine, email).','Whoever produces the launch assets (copy, pages, emails).'],
+  ['Tono di voce, promesse ammesse, claim vietati.','Tone of voice, allowed promises, forbidden claims.'],
+  ['Un asset pronto a pubblicare e misurabile.','An asset ready to publish and measurable.'],
+  ['«Sales page approvata e online».','«Sales page approved and live».'],
+  ['Per ogni asset: criterio di qualità soddisfatto sì/no, e perché.','For each asset: quality criterion met yes/no, and why.']
+ ]}
+];
+
+// anti-patterns
+var ANTI=[
+ {it:'<b>Saltare gli Anti-Goal.</b> Senza «cosa NON deve succedere», l\'AI aggiunge da sola e circa il 30% dello scope diventa rumore.',
+  en:'<b>Skipping the Anti-Goals.</b> Without «what must NOT happen», the AI adds on its own and about 30% of the scope becomes noise.'},
+ {it:'<b>Validare nella stessa chat.</b> Chiedere alla stessa testa che ha generato di criticarsi: stessi punti ciechi, monocultura cognitiva.',
+  en:'<b>Validating in the same chat.</b> Asking the same mind that generated to critique itself: same blind spots, cognitive monoculture.'},
+ {it:'<b>Criteri vaghi.</b> Task e milestone senza un criterio verificabile sì/no: non sai mai davvero quando è finita.',
+  en:'<b>Vague criteria.</b> Tasks and milestones with no yes/no verifiable criterion: you never really know when it\'s done.'},
+ {it:'<b>Audit ridotto a «mi sembra ok».</b> L\'audit non è un\'impressione: è un verdetto secco, criterio per criterio, con il perché.',
+  en:'<b>Audit reduced to «looks fine to me».</b> An audit isn\'t an impression: it\'s a sharp verdict, criterion by criterion, with the why.'}
+];
+
+var LANG='it',CURG=0,CURD=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderGates();renderPrompts();renderDomains();renderAnti();
+}
+function renderGates(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('gates').innerHTML=RULES.map(function(r,i){
+    return '<div class="gate'+(i===CURG?' on':'')+'" onclick="setG('+i+')"><div class="gno">'+r.no+'</div><h4>'+r.title[j]+'</h4></div>';
+  }).join('');
+  var r=RULES[CURG];var w=r.why;var wc=w.type==='bad'?'bad':'';var wi=w.type==='bad'?'ti-alert-triangle':'ti-shield-check';
+  document.getElementById('gatepanel').innerHTML='<div class="gpn"><i class="ti ti-lock-open"></i>'+(LANG==='it'?'Regola':'Rule')+' '+r.no+'</div><h3>'+r.title[j]+'</h3><div class="gpd">'+r.desc[j]+'</div><div class="gpwhy '+wc+'"><i class="ti '+wi+'"></i><div>'+w[LANG]+'</div></div>';
+}
+function setG(i){CURG=i;renderGates()}
+function renderPrompts(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('plist').innerHTML=PROMPTS.map(function(p){
+    var rc=p.role;
+    return '<div class="prow"><div class="pidx">'+p.idx+'</div><div class="pbody"><div class="ptt">'+p.title[j]+'</div><div class="pds">'+p.desc[j]+'</div></div><span class="prole '+rc+'">'+p.rl[j]+'</span></div>';
+  }).join('');
+}
+function renderDomains(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('domtabs').innerHTML=DOMAINS.map(function(d,i){
+    return '<div class="domtab'+(i===CURD?' on':'')+'" onclick="setD('+i+')"><i class="ti '+d.icon+'"></i><span>'+d.name[j]+'</span></div>';
+  }).join('');
+  var d=DOMAINS[CURD];
+  document.getElementById('dtable').innerHTML=SKEL.map(function(s,k){
+    return '<div class="drow"><div class="dk"><i class="ti '+s.icon+'"></i>'+s.k[j]+'</div><div class="dv">'+d.rows[k][j]+'</div></div>';
+  }).join('');
+}
+function setD(i){CURD=i;renderDomains()}
+function renderAnti(){
+  document.getElementById('aplist').innerHTML=ANTI.map(function(a){
+    return '<div class="apitem"><i class="ti ti-circle-x"></i><div class="apt">'+a[LANG]+'</div></div>';
+  }).join('');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

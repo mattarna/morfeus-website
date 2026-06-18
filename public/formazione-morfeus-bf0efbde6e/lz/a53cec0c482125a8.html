@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governance dell'AI in azienda (i 5 principi) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--warn:#d99a14;--warn-soft:#fbf2dd;--warn-line:#ecd596;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--warn:#e8c069;--warn-soft:#3a3016;--warn-line:#6e5a24;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.bad{background:var(--bad-soft);border-color:var(--bad)}.note.bad .ni{background:var(--bad)}.note.bad h4{color:var(--bad)}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* 5 principles map */
+.pmap{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.pp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 10px;cursor:pointer;transition:.18s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.pp:hover{border-color:var(--line-2)}.pp.on{border-color:var(--accent);background:var(--accent-soft)}
+.pp .ppi{width:38px;height:38px;border-radius:11px;background:var(--bg-2);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:19px;transition:.18s}
+.pp.on .ppi{background:var(--accent);color:#fff}
+.pp .ppn{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-3)}
+.pp .ppt{font-size:12px;font-weight:600;line-height:1.25}
+.pdetail{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:15px;align-items:flex-start;min-height:96px}
+.pdetail .pdi{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px}
+.pdetail .pdn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
+.pdetail .pdt{font-size:16px;font-weight:600;margin-bottom:5px}
+.pdetail .pdd{font-size:14px;color:var(--ink-2);line-height:1.55}.pdetail .pdd b{color:var(--ink)}
+/* 3 roles */
+.roles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.role{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;cursor:pointer;transition:.18s}
+.role:hover{border-color:var(--line-2)}.role.on{border-color:var(--agent)}
+.role .ri{width:36px;height:36px;border-radius:10px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.role h4{font-size:14.5px;font-weight:600;margin-bottom:4px}
+.role .rwho{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3)}
+.role .rdo{display:none;font-size:13px;color:var(--ink-2);line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.role.on .rdo{display:block}.role .rdo b{color:var(--ink);font-weight:600}
+/* questions checklist */
+.qlist{display:flex;flex-direction:column;gap:8px}
+.qi{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:13px 16px}
+.qi .qn{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qi .qt{font-size:14px;color:var(--ink-2);line-height:1.45}.qi .qt b{color:var(--ink);font-weight:600}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.pmap{grid-template-columns:1fr 1fr}.roles{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.role .rdo{display:block!important}.note,.cp,.pp,.pdetail,.role,.qi,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A9.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sicurezza & Governance</div>
+  <h1 class="rv" data-i="h1">Governance dell'AI in azienda (i 5 principi)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-door-enter"></i><span class="no">01</span><h2 data-i="s1">La domanda non è "se", è "come"</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-building"></i></div><div><h4 data-i="note1H">L'AI è già in azienda</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-compass"></i><span class="no">02</span><h2 data-i="s2">I cinque principi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pmapIntro"></p>
+  <div class="pmap rv" id="pmap"></div>
+  <div class="pdetail rv" id="pdetail">
+    <div class="pdi"><i class="ti ti-pointer" id="pdicon"></i></div>
+    <div><div class="pdn" id="pdn"></div><div class="pdt" id="pdt"></div><div class="pdd" id="pdd"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-users"></i><span class="no">03</span><h2 data-i="s3">I tre ruoli: chi fa cosa</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="rolesIntro"></p>
+  <div class="roles rv" id="roles"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-octagon"></i><span class="no">04</span><h2 data-i="s4">Quando manca la governance: Samsung 2023</h2></div>
+  <div class="note bad rv"><div class="ni"><i class="ti ti-source-code"></i></div><div><h4 data-i="samsungH">Codice sorgente in un tool pubblico</h4><p data-i-html="samsungP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">05</span><h2 data-i="s5">Le 5 domande prima di integrare</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="qIntro"></p>
+  <div class="qlist rv" id="qlist"></div>
+
+  <div class="sh rv"><i class="ti ti-school"></i><span class="no">06</span><h2 data-i="s6">La formazione è un investimento</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Governance dell'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A9.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sicurezza & Governance',
+h1:'Governance dell\'AI in azienda (i 5 principi)',
+lede:'L\'AI non aspetta che tu decida come usarla: è già dentro l\'azienda, in mille usi non tracciati. La governance non è un freno, è il modo per trasformare quell\'uso disordinato in valore controllato — con principi chiari, ruoli definiti e una persona responsabile per ogni sistema.',
+s1:'La domanda non è "se", è "come"',
+note1H:'L\'AI è già in azienda',
+note1P:'Quando ci si pone il problema, l\'AI è <strong>già in uso</strong>: spesso non si sa nemmeno quanti tool stiano girando. La domanda non è <strong>"se"</strong> introdurla, ma <strong>"come"</strong> crearne valore. Governarla bene porta tre risultati: più controllo sui dati, output più affidabili, una base solida per espandere.',
+q1:'«Non decidere come usare l\'AI non significa non usarla: significa usarla male, senza saperlo. La governance è ciò che trasforma lo "shadow AI" in una scelta.»',
+s2:'I cinque principi',
+pmapIntro:'Sono i cinque principi che guidano ogni scelta sull\'AI in azienda. Non sono slogan: sono i criteri con cui si decide cosa adottare, come e con quali cautele. Clicca ogni principio.',
+s3:'I tre ruoli: chi fa cosa',
+rolesIntro:'I principi reggono solo se qualcuno li presidia. Tre ruoli si dividono il lavoro: dalla strategia all\'uso quotidiano. Clicca ogni ruolo per vedere cosa fa.',
+s4:'Quando manca la governance: Samsung 2023',
+samsungH:'Codice sorgente in un tool pubblico',
+samsungP:'Nel 2023, alcuni ingegneri Samsung inseriscono <strong>codice sorgente riservato in ChatGPT</strong> per farsi aiutare. L\'azienda blocca l\'uso del tool <strong>entro 24 ore</strong> — ma è tardi: i dati ormai usciti sono <strong>irrecuperabili</strong>. Una fuga in un modello pubblico non si annulla: non c\'è un "ctrl-Z" per i dati già fuori.',
+s5:'Le 5 domande prima di integrare',
+qIntro:'Prima di collegare un tool AI ai tuoi sistemi, queste cinque domande vanno risposte. Affrontarle prima — e non dopo l\'incidente — ti dà anche una posizione negoziale migliore col fornitore.',
+s6:'La formazione è un investimento',
+q2:'«La formazione sull\'AI è un investimento, non un adempimento. E ha una data di scadenza: una formazione fatta una volta è obsoleta dopo 12 mesi.»',
+s7:'Checkpoint',
+cpH:'Chi risponde, nella tua azienda?',
+cpP:'Pensa ai tool AI in uso oggi nella tua organizzazione. Per ognuno, prova a dire a voce alta il nome della persona responsabile — quella che ne risponde se qualcosa va storto.',
+cpQ:'Se per qualche sistema non hai un nome, hai trovato un buco di governance: responsabilità diffusa significa responsabilità di nessuno. Inizia da lì, assegnando una persona per sistema.',
+bridge:'Hai i principi e i ruoli per governare l\'AI in azienda. <b>Prossimo:</b> il quadro normativo — l\'AI Act, la logica del rischio e gli obblighi per chi usa AI di terzi.',
+foot:'Morfeus — Governance dell\'AI'
+},
+en:{
+kicker:'Lesson A9.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Security & Governance',
+h1:'AI governance in the company (the 5 principles)',
+lede:'AI doesn\'t wait for you to decide how to use it: it\'s already inside the company, in a thousand untracked uses. Governance isn\'t a brake, it\'s how you turn that disorderly use into controlled value — with clear principles, defined roles, and one accountable person per system.',
+s1:'The question isn\'t "whether", it\'s "how"',
+note1H:'AI is already in the company',
+note1P:'By the time you face the problem, AI is <strong>already in use</strong>: often you don\'t even know how many tools are running. The question isn\'t <strong>"whether"</strong> to introduce it, but <strong>"how"</strong> to create value from it. Governing it well brings three results: more control over data, more reliable outputs, a solid base to expand on.',
+q1:'"Not deciding how to use AI doesn\'t mean not using it: it means using it badly, without knowing. Governance is what turns shadow AI into a choice."',
+s2:'The five principles',
+pmapIntro:'These are the five principles that guide every AI choice in the company. They\'re not slogans: they\'re the criteria for deciding what to adopt, how, and with what care. Click each principle.',
+s3:'The three roles: who does what',
+rolesIntro:'The principles only hold if someone owns them. Three roles split the work: from strategy to daily use. Click each role to see what it does.',
+s4:'When governance is missing: Samsung 2023',
+samsungH:'Source code in a public tool',
+samsungP:'In 2023, some Samsung engineers paste <strong>confidential source code into ChatGPT</strong> to get help. The company blocks the tool <strong>within 24 hours</strong> — but it\'s too late: the data that left is now <strong>unrecoverable</strong>. A leak into a public model can\'t be undone: there\'s no "ctrl-Z" for data already out.',
+s5:'The 5 questions before integrating',
+qIntro:'Before connecting an AI tool to your systems, these five questions must be answered. Facing them up front — not after the incident — also gives you a better negotiating position with the vendor.',
+s6:'Training is an investment',
+q2:'"AI training is an investment, not a compliance box to tick. And it has an expiry date: training done once is obsolete after 12 months."',
+s7:'Checkpoint',
+cpH:'Who is accountable, in your company?',
+cpP:'Think of the AI tools in use today across your organization. For each one, try to say out loud the name of the accountable person — the one who answers if something goes wrong.',
+cpQ:'If for some system you don\'t have a name, you\'ve found a governance gap: diffuse responsibility means nobody\'s responsibility. Start there, by assigning one person per system.',
+bridge:'You have the principles and roles to govern AI in the company. <b>Next:</b> the regulatory framework — the AI Act, the logic of risk, and the obligations for those who use third-party AI.',
+foot:'Morfeus — AI governance'
+}};
+
+// 5 principles: icon, short[it,en], name[it,en], desc[it,en]
+var PRIN=[
+{ic:'ti-eye-check',short:['Supervisione','Supervision'],
+ name:['Supervisione umana','Human supervision'],
+ desc:['Un essere umano resta nel ciclo e ha l\'ultima parola, soprattutto sulle decisioni che hanno effetti su persone o processi. L\'AI propone, l\'umano dispone.','A human stays in the loop and has the last word, especially on decisions that affect people or processes. AI proposes, the human decides.']},
+{ic:'ti-eye',short:['Trasparenza','Transparency'],
+ name:['Trasparenza interna','Internal transparency'],
+ desc:['Dentro l\'azienda si sa quali tool sono in uso, da chi e per cosa. Niente uso nascosto: ogni adozione è visibile e tracciata.','Inside the company it\'s known which tools are in use, by whom and for what. No hidden use: every adoption is visible and tracked.']},
+{ic:'ti-scale',short:['Proporzionalità','Proportionality'],
+ name:['Proporzionalità','Proportionality'],
+ desc:['<b>Si calibra l\'attenzione sul rischio:</b> più un uso tocca dati o decisioni sensibili, più controlli servono. Non lo stesso rigore ovunque, ma il rigore giusto dove conta.','<b>Attention is calibrated to risk:</b> the more a use touches sensitive data or decisions, the more controls it needs. Not the same rigor everywhere, but the right rigor where it matters.']},
+{ic:'ti-database-cog',short:['Dati mirati','Targeted data'],
+ name:['Uso mirato dei dati','Targeted use of data'],
+ desc:['Si dà al sistema solo il <b>minimo necessario</b> per il compito. Meno dati esposti, meno superficie di rischio: non si versa tutto "per sicurezza".','Give the system only the <b>minimum necessary</b> for the task. Less data exposed, less risk surface: you don\'t dump everything "just in case".']},
+{ic:'ti-user-check',short:['Responsabilità','Accountability'],
+ name:['Responsabilità nominativa','Named accountability'],
+ desc:['<b>Una persona di riferimento per ogni sistema.</b> Non una responsabilità diffusa che è di tutti e quindi di nessuno: un nome preciso che risponde se qualcosa va storto.','<b>One reference person per system.</b> Not diffuse responsibility that belongs to everyone and so to no one: a precise name that answers if something goes wrong.']}
+];
+
+// 3 roles: icon, name[it,en], who[it,en], do[it,en]
+var ROLES=[
+{ic:'ti-building-bank',name:['Comitato AI','AI Committee'],
+ who:['CdA + Direzione','Board + Management'],
+ do:['Definisce la <b>strategia</b> e i <b>criteri</b> di adozione, e fa la <b>revisione</b> periodica dei sistemi in uso. È il livello che decide cosa l\'azienda farà e non farà con l\'AI.','Sets the <b>strategy</b> and adoption <b>criteria</b>, and runs the periodic <b>review</b> of systems in use. It\'s the level that decides what the company will and won\'t do with AI.']},
+{ic:'ti-user-cog',name:['Referente AI per funzione','AI lead per function'],
+ who:['Uno per reparto','One per department'],
+ do:['Conosce i <b>tool del proprio reparto</b> ed è il <b>primo contatto</b> per chi ha dubbi o problemi. Fa da ponte tra l\'uso quotidiano e il comitato.','Knows the <b>tools of their department</b> and is the <b>first point of contact</b> for anyone with doubts or problems. Acts as a bridge between daily use and the committee.']},
+{ic:'ti-user',name:['Utilizzatore','User'],
+ who:['Chiunque usi l\'AI','Anyone using AI'],
+ do:['<b>Usa con consapevolezza</b>, segnala anomalie e partecipa alla formazione. È il presidio quotidiano: la maggior parte dei rischi nasce o si ferma qui.','<b>Uses with awareness</b>, flags anomalies and takes part in training. It\'s the everyday safeguard: most risks start or stop here.']}
+];
+
+var QUEST=[
+['Quali dati transitano nel sistema?','What data passes through the system?'],
+['Il fornitore ha certificazioni adeguate?','Does the vendor have adequate certifications?'],
+['È firmato un DPA con il fornitore?','Is a DPA signed with the vendor?'],
+['È stato testato con dati fittizi prima dei dati reali?','Was it tested with dummy data before real data?'],
+['Chi è responsabile in caso di anomalia?','Who is responsible if something goes wrong?']
+];
+
+var LANG='it',CURP=-1,CURR=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderPrin();renderPDetail();renderRoles();renderQuest();
+}
+function renderPrin(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('pmap').innerHTML=PRIN.map(function(p,i){
+    return '<div class="pp'+(i===CURP?' on':'')+'" onclick="setP('+i+')"><div class="ppi"><i class="ti '+p.ic+'"></i></div><span class="ppn">P'+(i+1)+'</span><span class="ppt">'+p.short[j]+'</span></div>';
+  }).join('');
+}
+function setP(i){CURP=i;renderPrin();renderPDetail()}
+function renderPDetail(){
+  var j=LANG==='it'?0:1,d=document.getElementById('pdetail');
+  if(CURP<0){
+    document.getElementById('pdicon').className='ti ti-pointer';
+    document.getElementById('pdn').textContent='';
+    document.getElementById('pdt').textContent='';
+    document.getElementById('pdd').innerHTML=LANG==='it'?'Scegli un principio qui sopra per vedere cosa significa nella pratica.':'Pick a principle above to see what it means in practice.';return;
+  }
+  var p=PRIN[CURP];
+  document.getElementById('pdicon').className='ti '+p.ic;
+  document.getElementById('pdn').textContent='P'+(CURP+1);
+  document.getElementById('pdt').textContent=p.name[j];
+  document.getElementById('pdd').innerHTML=p.desc[j];
+}
+function renderRoles(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('roles').innerHTML=ROLES.map(function(r,i){
+    return '<div class="role'+(i===CURR?' on':'')+'" onclick="setR('+i+')"><div class="ri"><i class="ti '+r.ic+'"></i></div><h4>'+r.name[j]+'</h4><div class="rwho">'+r.who[j]+'</div><div class="rdo">'+r.do[j]+'</div></div>';
+  }).join('');
+}
+function setR(i){CURR=i;renderRoles()}
+function renderQuest(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('qlist').innerHTML=QUEST.map(function(q,i){
+    return '<div class="qi"><div class="qn">'+(i+1)+'</div><div class="qt">'+q[j]+'</div></div>';
+  }).join('');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>
+      

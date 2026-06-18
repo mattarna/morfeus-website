@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cos'è davvero un LLM — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.target{display:flex;gap:14px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;margin-top:22px}
+.target i{color:var(--accent);font-size:20px;flex-shrink:0;margin-top:1px}.target p{font-size:14px;color:var(--ink-2)}.target b{color:var(--ink)}
+.hook{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--r-l) var(--r-l) 0;padding:18px 20px;margin-top:20px}
+.hook .hl{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.hook p{font-style:italic;font-size:15px;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.score{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.dots{display:flex;gap:6px}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;transition:.3s}
+.dot.on{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.scoretxt{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.blocks{display:flex;flex-direction:column;gap:8px}
+.blk{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.blk:hover{border-color:var(--line-2)}.blk.on{border-color:var(--accent);background:var(--accent-soft)}
+.blk .bn{width:30px;height:30px;border-radius:50%;background:var(--bad-soft);color:var(--bad);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.blk.on .bn{background:var(--accent);color:#fff}
+.blk .bt{font-size:14px;font-weight:600}
+.blk .btag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--bad);margin-left:auto;flex-shrink:0}
+.blkdetail{margin-top:12px}
+.flipgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flipc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;overflow:hidden}
+.flipc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.flipc.good{background:var(--good-soft);border-color:var(--good)}
+.flagtag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.flipc.bad .flagtag{background:var(--bad);color:#fff}.flipc.good .flagtag{background:var(--good);color:#fff}
+.flipc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.flipc p{font-size:13.5px;color:var(--ink-2)}
+.flipc .fq{margin-top:12px;padding:10px 12px;border-left:3px solid var(--good);background:var(--card);border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:13px;color:var(--ink);font-weight:500}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.alist{list-style:none;padding:0;margin-top:6px}
+.alist li{position:relative;padding-left:22px;margin-bottom:9px;font-size:14.5px;color:var(--ink-2)}
+.alist li::before{content:'\2192';position:absolute;left:0;color:var(--agent);font-weight:700}
+.mot{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.mot .topbar{height:3px;background:var(--agent)}
+.mot-in{padding:20px 22px}
+.mot h3{font-size:16px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:9px}.mot h3 i{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:19px;font-weight:600;line-height:1.45;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);font-style:italic}.bridge b{color:var(--agent);font-style:normal}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.flipgrid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.blk,.flipc,.note,.mot,.key,.cp,.bridge,.target,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modello mentale</div>
+  <h1 class="rv" data-i="h1">Cos'è davvero un LLM (e cosa NON è)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="target rv"><i class="ti ti-target"></i><p data-i-html="target"></p></div>
+
+  <div class="hook rv"><div class="hl"><i class="ti ti-quote"></i><span data-i="hookL">Hook</span></div><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-alert-octagon"></i><span class="no">01</span><h2 data-i="s1">I tre errori di aspettativa</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:14px" data-i="illIntro"></p>
+  <div class="score rv">
+    <div class="dots"><div class="dot" id="d0"><i class="ti ti-check"></i></div><div class="dot" id="d1"><i class="ti ti-check"></i></div><div class="dot" id="d2"><i class="ti ti-check"></i></div></div>
+    <div class="scoretxt" id="scoretxt"></div>
+  </div>
+  <div class="blocks rv" id="blocks"></div>
+  <div class="blkdetail rv" id="blkdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">02</span><h2 data-i="s2">Il modello mentale corretto</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-flask"></i></div><div><h4 data-i="modelH">Il nerd del laboratorio</h4><p data-i-html="modelP"></p></div></div>
+  <ul class="alist rv" style="margin-top:16px" id="modelList"></ul>
+
+  <div class="sh rv"><i class="ti ti-flame"></i><span class="no">03</span><h2 data-i="s3">Perché questo cambia tutto</h2></div>
+  <div class="mot rv">
+    <div class="topbar"></div>
+    <div class="mot-in">
+      <h3><i class="ti ti-flame"></i> <span data-i="motH"></span></h3>
+      <ul class="alist" id="motList"></ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-flag"></i><span class="no">04</span><h2 data-i="s4">Chiusura</h2></div>
+  <div class="cp rv"><h4><i class="ti ti-circle-check"></i> <span data-i="closeH"></span></h4><p data-i="closeP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Cos'è davvero un LLM</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modello mentale',
+h1:'Cos\'è davvero un LLM (e cosa NON è)',
+lede:'Tre illusioni da smontare prima di toccare qualsiasi funzione.',
+target:'<b>Obiettivo:</b> Capire perché le tue aspettative attuali su Claude producono risultati mediocri, e sostituirle con un modello mentale corretto.',
+hookL:'Hook',
+hook:'"Probabilmente hai già un\'idea sbagliata di cosa sia un LLM. E quella idea sbagliata è esattamente il motivo per cui, se hai già usato Claude, non hai ancora visto i risultati che ti aspettavi."',
+s1:'I tre errori di aspettativa',
+illIntro:'Clicca su ogni illusione per rivelare la realtà dietro di essa.',
+s2:'Il modello mentale corretto',
+modelH:'Il nerd del laboratorio',
+modelP:'<strong>Il nerd del laboratorio.</strong> Sa tutto. Letteralmente tutto ciò che è stato scritto. Ma non esce mai dal laboratorio. Non capisce il contesto sociale, non sente i trend. Tu porti il mondo reale dentro. Insieme siete imbattibili.',
+s3:'Perché questo cambia tutto',
+motH:'Perché questo cambia tutto',
+s4:'Chiusura',
+closeH:'Chiusura',
+closeP:'Tre illusioni smontate. Il modello corretto: consulente brillante al primo giorno, con tutto il sapere del mondo, che lavora nella direzione che tu gli dai.',
+bridge:'"Nella prossima lezione vediamo qualcosa che cambia completamente l\'approccio: esistono cinque livelli di utilizzo dell\'AI. La maggior parte delle persone è bloccata al primo. <b>Ti mostro come salire.</b>"',
+foot:'Morfeus — Cos\'è davvero un LLM',
+scoreUnit:' illusioni smontate'
+},
+en:{
+kicker:'Lesson 0.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Mental model',
+h1:'What an LLM really is (and what it is NOT)',
+lede:'Three illusions to dismantle before touching any feature.',
+target:'<b>Goal:</b> Understand why your current expectations of Claude produce mediocre results, and replace them with a correct mental model.',
+hookL:'Hook',
+hook:'"You probably already have a wrong idea of what an LLM is. And that wrong idea is exactly why, if you\'ve already used Claude, you haven\'t yet seen the results you expected."',
+s1:'The three expectation mistakes',
+illIntro:'Click each illusion to reveal the reality behind it.',
+s2:'The correct mental model',
+modelH:'The lab nerd',
+modelP:'<strong>The lab nerd.</strong> Knows everything. Literally everything that has been written. But never leaves the lab. Doesn\'t understand the social context, doesn\'t feel the trends. You bring the real world in. Together you\'re unbeatable.',
+s3:'Why this changes everything',
+motH:'Why this changes everything',
+s4:'Closing',
+closeH:'Closing',
+closeP:'Three illusions dismantled. The correct model: a brilliant consultant on day one, with all the knowledge in the world, working in the direction you give it.',
+bridge:'"In the next lesson we look at something that completely changes the approach: there are five levels of using AI. Most people are stuck at the first. <b>I\'ll show you how to climb up.</b>"',
+foot:'Morfeus — What an LLM really is',
+scoreUnit:' illusions dismantled'
+}};
+
+var ILL={it:[
+['"Claude è un motore di ricerca migliore"','La maggior parte delle persone usa Claude come Google: domanda, risposta, chiudi. Ma Google cerca informazioni esistenti. Claude genera risposte dai pattern appresi. Se chiedi "miglior ristorante a Milano" non ti dà la risposta giusta, ti dà la più probabile.','Claude ragiona, non cerca','Google recupera. Claude costruisce. Sono processi completamente diversi. Quando serve certezza su fatti specifici e aggiornati, usa la ricerca web. Claude è per ragionare, analizzare, creare.','"Claude non cerca. Ragiona. E questa differenza cambia completamente come devi usarlo."'],
+['"Claude è un dipendente che capisce il contesto"','Le persone scrivono "scrivimi un post per LinkedIn" aspettandosi qualcosa di buono. Ma Claude non sa chi sei, il tuo settore, il tuo tono, i tuoi clienti. È come dare un brief vuoto al miglior consulente del mondo.','Consulente brillante, primo giorno','Claude sa tutto ma non ti conosce. Il contesto è il carburante. Senza contesto, output medi. Con contesto specifico, output eccezionali. Sta a te portare il mondo reale dentro al laboratorio.','"Non è un dipendente che ti conosce. È un consulente brillante al primo giorno. Dagli il contesto."'],
+['"Claude è un genio magico che fa tutto da solo"','Alcune persone si aspettano output perfetti al primo tentativo. Ma "sa tutto su tutto" significa che senza direzione, mischia tutto e produce qualcosa di medio. Come un cuoco che conosce mille ricette ma senza un ordine ti porta una zuppa con tutto dentro.','Tu sei il direttore creativo','Claude ha pattern statistici, non opinioni vere. Il tuo giudizio umano rimane insostituibile. Claude amplifica la tua competenza, non la sostituisce. Per output destinati a persone reali, sei tu che guidi.','"Il nerd più preparato del mondo. Ma non ha gusto, prospettiva, o trend sociali. Tu sei il direttore."']
+],en:[
+['"Claude is a better search engine"','Most people use Claude like Google: question, answer, close. But Google searches for existing information. Claude generates answers from learned patterns. If you ask "best restaurant in Milan" it doesn\'t give you the right answer, it gives you the most probable one.','Claude reasons, it doesn\'t search','Google retrieves. Claude builds. They are completely different processes. When you need certainty on specific, up-to-date facts, use web search. Claude is for reasoning, analyzing, creating.','"Claude doesn\'t search. It reasons. And this difference completely changes how you have to use it."'],
+['"Claude is an employee who understands the context"','People write "write me a LinkedIn post" expecting something good. But Claude doesn\'t know who you are, your sector, your tone, your clients. It\'s like giving an empty brief to the best consultant in the world.','Brilliant consultant, day one','Claude knows everything but doesn\'t know you. Context is the fuel. Without context, average outputs. With specific context, exceptional outputs. It\'s up to you to bring the real world into the lab.','"It\'s not an employee who knows you. It\'s a brilliant consultant on day one. Give it the context."'],
+['"Claude is a magic genius that does everything on its own"','Some people expect perfect outputs on the first try. But "knows everything about everything" means that without direction, it mixes everything and produces something average. Like a cook who knows a thousand recipes but, with no order, brings you a soup with everything in it.','You are the creative director','Claude has statistical patterns, not real opinions. Your human judgment remains irreplaceable. Claude amplifies your competence, it doesn\'t replace it. For outputs destined for real people, you\'re the one who guides.','"The most prepared nerd in the world. But it has no taste, perspective, or social trends. You are the director."']
+]};
+
+var MODEL={it:[
+'Non è un limite. È la natura dello strumento. Un martello non è difettoso perché non avvita le viti.',
+'Claude usato con il contesto giusto, la direzione giusta, e la verifica umana produce risultati che da solo non potresti mai produrre in quel tempo.'
+],en:[
+'It\'s not a limit. It\'s the nature of the tool. A hammer isn\'t defective because it doesn\'t drive in screws.',
+'Claude used with the right context, the right direction, and human verification produces results you could never produce alone in that time.'
+]};
+
+var MOT={it:[
+'Non stai usando un chatbot. Stai usando il sistema di ragionamento più potente mai esistito, accessibile per meno di un caffè al giorno.',
+'Ogni professionista che lo usa correttamente ha un vantaggio competitivo strutturale.',
+'La finestra è aperta adesso. Man mano che diventa la norma, il vantaggio si riduce.',
+'La domanda non è "dovrei imparare?" ma "quanto velocemente voglio farlo?"'
+],en:[
+'You\'re not using a chatbot. You\'re using the most powerful reasoning system that has ever existed, accessible for less than a coffee a day.',
+'Every professional who uses it correctly has a structural competitive advantage.',
+'The window is open now. As it becomes the norm, the advantage shrinks.',
+'The question isn\'t "should I learn?" but "how fast do I want to do it?"'
+]};
+
+var LANG='it',curI=0,revealed=[false,false,false];
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var illLabel=LANG==='it'?'Illusione':'Illusion';
+  document.getElementById('blocks').innerHTML=ILL[LANG].map(function(c,i){return '<div class="blk'+(i===curI?' on':'')+'" onclick="showI('+i+')"><div class="bn">'+(i+1)+'</div><div class="bt">'+c[0]+'</div><div class="btag">'+illLabel+'</div></div>'}).join('');
+  showI(curI);
+  document.getElementById('modelList').innerHTML=MODEL[LANG].map(function(t){return '<li>'+t+'</li>'}).join('');
+  document.getElementById('motList').innerHTML=MOT[LANG].map(function(t){return '<li>'+t+'</li>'}).join('');
+  updateScore();
+}
+function showI(i){
+  curI=i;var c=ILL[LANG][i];
+  document.querySelectorAll('#blocks .blk').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var illLabel=LANG==='it'?'Illusione':'Illusion',realLabel=LANG==='it'?'Realtà':'Reality';
+  document.getElementById('blkdetail').innerHTML='<div class="flipgrid"><div class="flipc bad"><span class="flagtag">'+illLabel+'</span><h4>'+c[0]+'</h4><p>'+c[1]+'</p></div><div class="flipc good"><span class="flagtag">'+realLabel+'</span><h4>'+c[2]+'</h4><p>'+c[3]+'</p><div class="fq">'+c[4]+'</div></div></div>';
+  if(!revealed[i]){revealed[i]=true;updateScore()}
+}
+function updateScore(){
+  var n=revealed.filter(Boolean).length;
+  for(var i=0;i<3;i++)document.getElementById('d'+i).classList.toggle('on',revealed[i]);
+  document.getElementById('scoretxt').textContent=n+' / 3'+DICT[LANG].scoreUnit;
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

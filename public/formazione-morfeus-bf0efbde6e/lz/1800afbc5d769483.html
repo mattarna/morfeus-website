@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quando NON usare Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#bfe0c8;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#f1c4bd;
+--amber:#BA7517;--amber-soft:#faf0db;--amber-line:#ecd3a0;
+--teal:#0F6E56;--teal-soft:#e1f5ee;--teal-line:#9ed7c4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#345840;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a33;
+--amber:#EF9F27;--amber-soft:#3a2a0d;--amber-line:#6a4d1a;
+--teal:#5DCAA5;--teal-soft:#0c352b;--teal-line:#1d6b56;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+h1 .x{color:var(--bad)}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.metaphor{display:flex;gap:14px;align-items:center;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:20px 24px}
+.metaphor i{font-size:22px;color:var(--amber);flex-shrink:0}
+.metaphor p{font-size:15px;color:var(--ink-2);font-style:italic}
+.hint{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 16px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.hint i{color:var(--accent)}.hint span#flipCount{color:var(--accent);font-weight:700}
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.zone{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;cursor:pointer;transition:.2s;position:relative}
+.zone:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.zone.open{border-color:var(--accent)}
+.zone .z-num{position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.zone .z-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:12px}
+.zone h3{font-size:16px;font-weight:600;margin-bottom:3px}
+.zone .z-sub{font-size:12.5px;color:var(--ink-3);font-family:var(--mono)}
+.zone .z-toggle{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--accent);display:flex;align-items:center;gap:5px;font-weight:600}
+.zone .z-toggle i{transition:transform .2s}
+.zone.open .z-toggle i{transform:rotate(180deg)}
+.zone .z-body{max-height:0;overflow:hidden;transition:max-height .35s ease;margin-top:0}
+.zone.open .z-body{max-height:420px;margin-top:14px}
+.zone .dont,.zone .doo{border-radius:var(--r);padding:12px 14px}
+.zone .dont{background:var(--bad-soft);border:1px solid var(--bad-line);margin-bottom:10px}
+.zone .doo{background:var(--good-soft);border:1px solid var(--good-line)}
+.zone .lbl{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.zone .dont .lbl{color:var(--bad)}.zone .doo .lbl{color:var(--good)}
+.zone .z-body p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.zone[data-zone="emotion"] .z-icon{background:var(--accent-soft);color:var(--accent)}
+.zone[data-zone="accuracy"] .z-icon{background:var(--amber-soft);color:var(--amber)}
+.zone[data-zone="joy"] .z-icon{background:var(--teal-soft);color:var(--teal)}
+.zone[data-zone="data"] .z-icon{background:var(--bad-soft);color:var(--bad)}
+.golden{background:var(--amber-soft);border:2px solid var(--amber-line);border-radius:var(--r-l);padding:30px;text-align:center}
+.golden i{font-size:30px;color:var(--amber);margin-bottom:12px;display:block}
+.golden h3{font-size:18px;font-weight:600;margin-bottom:12px}
+.golden blockquote{font-size:15.5px;color:var(--ink-2);line-height:1.75;max-width:600px;margin:0 auto;font-style:italic}
+.modc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px}
+.modc h3{font-size:18px;font-weight:600;text-align:center;margin-bottom:22px;display:flex;align-items:center;justify-content:center;gap:8px}
+.modc h3 i{color:var(--good)}
+.lessons-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.les-item{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:10px}
+.les-check{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--good-soft);color:var(--good);border:1px solid var(--good-line);flex-shrink:0}
+.les-info{display:flex;flex-direction:column;min-width:0}
+.les-num{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:600}
+.les-name{font-size:13px;color:var(--ink);font-weight:600}
+.modc>p{text-align:center;font-size:14px;color:var(--ink-2)}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.bridge h4{font-size:15px;font-weight:600;margin-bottom:3px}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.zones{grid-template-columns:1fr}.lessons-grid{grid-template-columns:1fr 1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.hint{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.zone .z-body{max-height:none!important;margin-top:14px!important}.zone,.metaphor,.golden,.modc,.les-item{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Mindset</div>
+  <h1 class="rv" data-i-html="h1"></h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv" style="margin-top:38px"><i class="ti ti-cut"></i><span class="no">00</span><h2 data-i="sMeta">La metafora</h2></div>
+  <div class="metaphor rv"><i class="ti ti-cut"></i><p data-i="metaphor"></p></div>
+
+  <div class="sh rv"><i class="ti ti-alert-octagon"></i><span class="no">01</span><h2 data-i="sZones">Le quattro zone da evitare</h2></div>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hintText">Clicca le card per scoprire la sfumatura</span> &mdash; <span id="flipCount">0</span>/4 <span data-i="hintExpl">esplorate</span></div>
+  <div class="zones rv" id="zones"></div>
+
+  <div class="sh rv"><i class="ti ti-compass"></i><span class="no">02</span><h2 data-i="sGold">La regola generale</h2></div>
+  <div class="golden rv">
+    <i class="ti ti-compass"></i>
+    <h3 data-i="goldH">La regola generale</h3>
+    <blockquote data-i="goldQ"></blockquote>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-circle-check"></i><span class="no">03</span><h2 data-i="sMod">Modulo 0 completato</h2></div>
+  <div class="modc rv">
+    <h3><i class="ti ti-circle-check"></i> <span data-i="modH">Modulo 0 completato</span></h3>
+    <div class="lessons-grid" id="lessonsGrid"></div>
+    <p data-i="modP"></p>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-rocket"></i><div class="bridge-text"><h4 data-i="bridgeH">Prossima lezione</h4><p data-i="bridgeP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Quando NON usare Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Mindset',
+h1:'Quando <span class="x">NON</span> usare Claude',
+lede:'Ogni strumento ha il suo contesto. La padronanza non sta solo nel sapere cosa fare, ma nel sapere quando fermarsi.',
+sMeta:'La metafora',
+metaphor:'Un bisturi è lo strumento sbagliato per avvitare una vite. Claude è potente, ma usarlo nel posto sbagliato produce risultati sbagliati, o peggio, danni.',
+sZones:'Le quattro zone da evitare',
+hintText:'Clicca le card per scoprire la sfumatura',hintExpl:'esplorate',
+sGold:'La regola generale',
+goldH:'La regola generale',
+goldQ:'Non cercare usi per Claude partendo dallo strumento. Parti sempre dal problema. Hai un problema? Chiedi: può Claude aiutarmi qui? Se sì, come? Se la risposta non è chiara, probabilmente c\'è uno strumento migliore.',
+sMod:'Modulo 0 completato',
+modH:'Modulo 0 completato',
+modP:'Hai le fondamenta. Modello mentale corretto. Framework. Verifiche. Pensiero critico. Limiti. Tutto il resto del corso costruisce su di esse.',
+bridgeH:'Prossima lezione',
+bridgeP:'Inizia la parte pratica: setup del tuo account, scelta del piano, le superfici su cui lavorerai. Schermo aperto, mani in pasta.',
+foot:'Morfeus — Quando NON usare Claude'
+},
+en:{
+kicker:'Lesson 0.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Mindset',
+h1:'When <span class="x">NOT</span> to use Claude',
+lede:'Every tool has its context. Mastery isn\'t only in knowing what to do, but in knowing when to stop.',
+sMeta:'The metaphor',
+metaphor:'A scalpel is the wrong tool to drive a screw. Claude is powerful, but using it in the wrong place produces wrong results, or worse, damage.',
+sZones:'The four zones to avoid',
+hintText:'Click the cards to reveal the nuance',hintExpl:'explored',
+sGold:'The general rule',
+goldH:'The general rule',
+goldQ:'Don\'t look for uses for Claude starting from the tool. Always start from the problem. Got a problem? Ask: can Claude help me here? If yes, how? If the answer isn\'t clear, there\'s probably a better tool.',
+sMod:'Module 0 completed',
+modH:'Module 0 completed',
+modP:'You have the foundations. Correct mental model. Framework. Verifications. Critical thinking. Limits. Everything else in the course builds on them.',
+bridgeH:'Next lesson',
+bridgeP:'The practical part begins: setting up your account, choosing the plan, the surfaces you\'ll work on. Screen open, hands on.',
+foot:'Morfeus — When NOT to use Claude'
+}};
+
+var ZONES={it:[
+['emotion','ti ti-heart-broken','01','Decisioni emotive importanti','Relazioni, valori, scelte di vita','Decisioni emotive','Prendere la decisione finale su relazioni, valori personali, scelte di vita. Claude non ha empatia reale.','Chiarire le opzioni logiche e strutturare il pensiero. Poi parla con chi ti conosce davvero.'],
+['accuracy','ti ti-gavel','02','Accuratezza 100% richiesta','Legale, fiscale, medico, finanziario','Domini specializzati','Sostituire l\'esperto. Claude si sbaglia e lo fa con sicurezza. Mai fonte finale.','Capire il territorio, fare le domande giuste, prepararti alla conversazione con il professionista.'],
+['joy','ti ti-sparkles','03','Task che ami fare','Non automatizzare la gioia','La gioia del processo','Sostituire il processo creativo che ti dà energia. Delegare la gioia non è efficienza.','I task che non vuoi fare, che richiedono troppo tempo, che sono ripetitivi e ti tolgono energia.'],
+['data','ti ti-lock','04','Dati sensibili senza policy','Privacy, sicurezza, compliance','Dati e privacy','Caricare dati personali, documenti riservati o informazioni confidenziali senza aver verificato le policy.','Se hai dubbi, approfondisci prima. Il Modulo 9 tratterà sicurezza e privacy in dettaglio.']
+],en:[
+['emotion','ti ti-heart-broken','01','Important emotional decisions','Relationships, values, life choices','Emotional decisions','Making the final decision on relationships, personal values, life choices. Claude has no real empathy.','Clarifying the logical options and structuring your thinking. Then talk to someone who truly knows you.'],
+['accuracy','ti ti-gavel','02','100% accuracy required','Legal, tax, medical, financial','Specialized domains','Replacing the expert. Claude gets it wrong and does so with confidence. Never the final source.','Understanding the terrain, asking the right questions, preparing for the conversation with the professional.'],
+['joy','ti ti-sparkles','03','Tasks you love doing','Don\'t automate the joy','The joy of the process','Replacing the creative process that gives you energy. Delegating joy isn\'t efficiency.','The tasks you don\'t want to do, that take too much time, that are repetitive and drain your energy.'],
+['data','ti ti-lock','04','Sensitive data without policy','Privacy, security, compliance','Data and privacy','Uploading personal data, confidential documents or sensitive information without having checked the policies.','If in doubt, look into it first. Module 9 will cover security and privacy in detail.']
+]};
+
+var LESSONS={it:[
+['0.0','Mindset'],['0.1','Cosa è un LLM'],['0.2','Cinque livelli'],['0.3','Framework T/Q/D'],['0.4','Verification Loop'],['0.5','Partner di pensiero']
+],en:[
+['0.0','Mindset'],['0.1','What an LLM is'],['0.2','Five levels'],['0.3','T/Q/D Framework'],['0.4','Verification Loop'],['0.5','Thinking partner']
+]};
+
+var LANG='it',opened=new Set();
+var DLABEL={it:['Non usare per','Usa per'],en:['Don\'t use for','Use for']};
+function renderZones(){
+  document.getElementById('zones').innerHTML=ZONES[LANG].map(function(z){
+    var isOpen=opened.has(z[0]);
+    return '<div class="zone'+(isOpen?' open':'')+'" data-zone="'+z[0]+'" onclick="toggleZone(this)">'+
+    '<span class="z-num">'+z[2]+'</span>'+
+    '<div class="z-icon"><i class="'+z[1]+'"></i></div>'+
+    '<h3>'+z[3]+'</h3><div class="z-sub">'+z[4]+'</div>'+
+    '<div class="z-toggle"><i class="ti ti-chevron-down"></i> '+z[5]+'</div>'+
+    '<div class="z-body">'+
+    '<div class="dont"><div class="lbl"><i class="ti ti-x"></i> '+DLABEL[LANG][0]+'</div><p>'+z[6]+'</p></div>'+
+    '<div class="doo"><div class="lbl"><i class="ti ti-check"></i> '+DLABEL[LANG][1]+'</div><p>'+z[7]+'</p></div>'+
+    '</div></div>';
+  }).join('');
+}
+function toggleZone(el){
+  var z=el.getAttribute('data-zone');
+  el.classList.toggle('open');
+  if(el.classList.contains('open'))opened.add(z);
+  document.getElementById('flipCount').textContent=opened.size;
+}
+function renderLessons(){
+  document.getElementById('lessonsGrid').innerHTML=LESSONS[LANG].map(function(l){
+    return '<div class="les-item"><div class="les-check"><i class="ti ti-check"></i></div>'+
+    '<div class="les-info"><span class="les-num">'+l[0]+'</span><span class="les-name">'+l[1]+'</span></div></div>';
+  }).join('');
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=(LANG==='it'?'Quando NON usare Claude':'When NOT to use Claude')+' — Morfeus';
+  renderZones();renderLessons();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

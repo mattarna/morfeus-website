@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Framework TQD — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* Axis cards */
+.axis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.axis-card{background:var(--card);border:1px solid var(--line);border-top:3px solid;border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.axis-card.t{border-top-color:var(--accent)}.axis-card.q{border-top-color:var(--teal)}.axis-card.d{border-top-color:var(--warn)}
+.axis-label{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.axis-letter{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:18px;font-weight:700;flex-shrink:0}
+.t .axis-letter{background:var(--accent-soft);color:var(--accent)}.q .axis-letter{background:var(--teal-soft);color:var(--teal)}.d .axis-letter{background:var(--warn-soft);color:var(--warn)}
+.axis-name{font-size:15px;font-weight:600}.axis-sub{font-size:12px;color:var(--ink-3)}
+.axis-question{font-size:13.5px;color:var(--ink-2);line-height:1.5;margin-bottom:12px;font-weight:600}
+.axis-detail{font-size:12.5px;color:var(--ink-3);line-height:1.6;border-top:1px dashed var(--line-2);padding-top:10px}
+/* Evaluator */
+.evaluator{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.eval-sec{margin-bottom:20px}
+.eval-label{font-size:13.5px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.eval-label i{font-size:16px;color:var(--accent)}
+.eval-sub{font-size:12px;color:var(--ink-3);margin-bottom:11px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:64px;padding:9px 6px;font-size:12px;border:1.5px solid var(--line);border-radius:var(--r);background:var(--bg-2);color:var(--ink-2);cursor:pointer;font-family:var(--sans);font-weight:600;transition:.18s;text-align:center;line-height:1.3}
+.seg button:hover{border-color:var(--line-2)}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.delega-seg button.on{border-color:transparent}
+.delega-seg button{padding:11px 8px}
+.delega-seg button i{font-size:18px;display:block;margin-bottom:5px}
+.delega-seg button .sub{font-size:10px;opacity:.7;display:block;margin-top:3px;font-weight:500}
+.delega-seg button.on.ap{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.delega-seg button.on.cp{background:var(--teal-soft);color:var(--teal);border-color:var(--teal-line)}
+.delega-seg button.on.lc{background:var(--bad-soft);color:var(--bad);border-color:var(--bad-line)}
+.result-box{border-radius:var(--r-l);padding:20px;border:1.5px solid;transition:.3s;margin-top:20px}
+.result-box.go{background:var(--good-soft);border-color:var(--good-line);color:var(--good)}
+.result-box.caution{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
+.result-box.stop{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad)}
+.result-emoji{font-size:26px;margin-bottom:6px}
+.result-title{font-size:17px;font-weight:700;margin-bottom:6px}
+.result-desc{font-size:13.5px;line-height:1.6;margin-bottom:10px;opacity:.92;color:var(--ink-2)}
+.result-type{font-size:12px;font-family:var(--mono);opacity:.85}.result-type strong{font-weight:700}
+/* Examples */
+.examples-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.example-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;cursor:pointer;transition:.18s}
+.example-card:hover{border-color:var(--accent-line);transform:translateY(-1px)}
+.example-card h4{font-size:14px;font-weight:600;margin-bottom:9px}
+.example-meta{display:flex;gap:6px;flex-wrap:wrap}
+.ex-tag{font-family:var(--mono);font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:600}
+.ex-tag.t{background:var(--accent-soft);color:var(--accent)}.ex-tag.q{background:var(--teal-soft);color:var(--teal)}.ex-tag.d{background:var(--warn-soft);color:var(--warn)}
+.ex-result{font-size:12px;margin-top:11px;color:var(--ink-3);font-weight:600}
+/* Matrix */
+.matrix-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh)}
+.matrix-table{width:100%;border-collapse:collapse;font-size:13px}
+.matrix-table th{text-align:left;font-family:var(--mono);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);padding:11px 14px;background:var(--bg-2);border-bottom:1px solid var(--line)}
+.matrix-table td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:middle}
+.matrix-table tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:4px 11px;border-radius:20px;font-family:var(--mono);font-size:11px;font-weight:600}
+.badge.go{background:var(--good-soft);color:var(--good)}.badge.stop{background:var(--bad-soft);color:var(--bad)}
+.badge.build{background:var(--blue-soft);color:var(--blue)}.badge.warn{background:var(--warn-soft);color:var(--warn)}
+/* Step flow */
+.step-flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.step-pill{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:20px;padding:8px 15px}
+.step-pill.active{background:var(--accent-soft);border-color:var(--accent-line)}
+.step-pill span{font-size:13px;color:var(--ink-2)}.step-pill.active span{color:var(--accent);font-weight:600}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3);flex-shrink:0}
+.step-pill.active .step-num{background:var(--accent);color:#fff}
+.step-arrow{color:var(--ink-3);font-size:14px}
+.step-note{font-size:14px;color:var(--ink-2);line-height:1.6;margin-top:12px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.axis-grid{grid-template-columns:1fr}.examples-grid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.axis-card,.evaluator,.example-card,.matrix-wrap,.key,.step-pill{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il criterio decisionale</div>
+  <h1 class="rv" data-i="h1">Framework TQD</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">01</span><h2 data-i="s0">Obiettivo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-target"></i></div><div><h4 data-i="objH">Un metodo oggettivo</h4><p data-i-html="objP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">02</span><h2 data-i="s1b">Hook</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">03</span><h2 data-i="s1">I tre assi</h2></div>
+  <div class="axis-grid rv">
+    <div class="axis-card t">
+      <div class="axis-label"><div class="axis-letter">T</div><div><div class="axis-name" data-i="tName"></div><div class="axis-sub" data-i="tSub"></div></div></div>
+      <div class="axis-question" data-i="tQ"></div>
+      <div class="axis-detail" data-i="tD"></div>
+    </div>
+    <div class="axis-card q">
+      <div class="axis-label"><div class="axis-letter">Q</div><div><div class="axis-name" data-i="qName"></div><div class="axis-sub" data-i="qSub"></div></div></div>
+      <div class="axis-question" data-i="qQ"></div>
+      <div class="axis-detail" data-i-html="qD"></div>
+    </div>
+    <div class="axis-card d">
+      <div class="axis-label"><div class="axis-letter">D</div><div><div class="axis-name" data-i="dName"></div><div class="axis-sub" data-i="dSub"></div></div></div>
+      <div class="axis-question" data-i="dQ"></div>
+      <div class="axis-detail" data-i="dD"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-calculator"></i><span class="no">04</span><h2 data-i="s2">Valuta il tuo task</h2></div>
+  <div class="evaluator rv">
+    <div class="eval-sec">
+      <div class="eval-label"><i class="ti ti-clock"></i> <span data-i="evTempo"></span></div>
+      <div class="eval-sub" data-i="evTempoSub"></div>
+      <div class="seg" id="seg-tempo"></div>
+    </div>
+    <div class="eval-sec">
+      <div class="eval-label"><i class="ti ti-star"></i> <span data-i="evQual"></span></div>
+      <div class="eval-sub" data-i="evQualSub"></div>
+      <div class="seg" id="seg-qual"></div>
+    </div>
+    <div class="eval-sec" style="margin-bottom:0">
+      <div class="eval-label"><i class="ti ti-user-check"></i> <span data-i="evDelega"></span></div>
+      <div class="eval-sub" data-i="evDelegaSub"></div>
+      <div class="seg delega-seg" id="seg-delega"></div>
+    </div>
+    <div class="result-box go" id="result-box">
+      <div class="result-emoji" id="result-emoji">&#128640;</div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-desc" id="result-desc"></div>
+      <div class="result-type" id="result-type"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">05</span><h2 data-i="s3">Esempi pratici</h2></div>
+  <p class="lede rv" style="font-size:13px;color:var(--ink-3);margin-bottom:14px" data-i="exHint"></p>
+  <div class="examples-grid rv" id="examples"></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">06</span><h2 data-i="s4">Matrice decisionale</h2></div>
+  <div class="matrix-wrap rv">
+    <table class="matrix-table">
+      <thead><tr><th data-i="mhT"></th><th data-i="mhQ"></th><th data-i="mhD"></th><th data-i="mhDec"></th></tr></thead>
+      <tbody id="matrix-body"></tbody>
+    </table>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">07</span><h2 data-i="s5">Posizione nel metodo operativo</h2></div>
+  <div class="step-flow rv" id="stepflow"></div>
+  <p class="step-note rv" data-i="stepNote"></p>
+
+  <div class="key rv" style="margin-top:20px"><p data-i="key"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Framework TQD</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il criterio decisionale',
+h1:'Framework TQD',
+lede:'Il criterio decisionale per valutare qualsiasi applicazione AI al lavoro. Tre assi simultanei: tempo, qualità, delega.',
+s0:'Obiettivo',
+objH:'Un metodo oggettivo',
+objP:'Avere un metodo oggettivo per decidere <strong>se delegare un task all\'AI, come delegarlo, o se conviene farlo manualmente</strong>.',
+s1b:'Hook',
+hook:'«Hai presente quando provi a usare Claude su qualcosa, e perdi mezz\'ora per ottenere un risultato mediocre? Il problema non era Claude. Era che non avevi un criterio per decidere se quel task andava delegato.»',
+s1:'I tre assi',
+tName:'Tempo',tSub:'Quanto ci metti?',
+tQ:'L\'AI lo fa più veloce, sull\'intero ciclo?',
+tD:'Si misura su: prompt + output AI + revisione umana. Non solo sull\'output grezzo. Se il setup è pesante, il guadagno svanisce.',
+qName:'Qualità',qSub:'A che livello esce?',
+qQ:'L\'output supera la soglia minima accettabile?',
+qD:'Soglia minima: ~90% per output pubblici. Draft interno: 70&ndash;75% tollerabile. Decisione strategica: l\'AI supporta, l\'umano chiude sempre.',
+dName:'Delega',dSub:'Puoi staccarti?',
+dQ:'Quanto puoi davvero toglierti le mani?',
+dD:'Autopilot: vedi solo il risultato. Copilot: validi ogni step. Loop chiuso: sei dentro ogni micro-passaggio. Il terzo non è delega: è overhead.',
+s2:'Valuta il tuo task',
+evTempo:'Tempo',evTempoSub:'Risparmio di tempo sul ciclo completo (prompt + output + revisione)',
+evQual:'Qualità',evQualSub:'Percentuale di qualità rispetto allo standard che produci da solo',
+evDelega:'Delega',evDelegaSub:'Livello di autonomia che puoi concedere al sistema AI',
+s3:'Esempi pratici',
+exHint:'Clicca su un esempio per caricarlo nell\'evaluator',
+s4:'Matrice decisionale',
+mhT:'Tempo',mhQ:'Qualità',mhD:'Delega',mhDec:'Decisione',
+s5:'Posizione nel metodo operativo',
+stepNote:'TQD è lo step 2: prima di costruire qualsiasi cosa, passi da qui per capire se vale la pena e che tipo di sistema serve.',
+key:'«Non automatizzare tutto. Automatizza le cose giuste. TQD ti dice quali sono.»',
+bridge:'Sai decidere cosa delegare. <b>Prossimo:</b> il Verification Loop — perché più step deleghi, più il rischio di errore cresce in modo esponenziale.',
+foot:'Morfeus — Framework TQD'
+},
+en:{
+kicker:'Lesson 0.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The decision criterion',
+h1:'The TQD Framework',
+lede:'The decision criterion for evaluating any AI application at work. Three simultaneous axes: time, quality, delegation.',
+s0:'Goal',
+objH:'An objective method',
+objP:'Have an objective method to decide <strong>whether to delegate a task to AI, how to delegate it, or whether it\'s better done manually</strong>.',
+s1b:'Hook',
+hook:'"You know that feeling when you try to use Claude on something, and you lose half an hour to get a mediocre result? The problem wasn\'t Claude. It was that you had no criterion to decide whether that task should be delegated."',
+s1:'The three axes',
+tName:'Time',tSub:'How long does it take?',
+tQ:'Does AI do it faster, across the whole cycle?',
+tD:'Measured on: prompt + AI output + human review. Not just on the raw output. If the setup is heavy, the gain vanishes.',
+qName:'Quality',qSub:'What level does it come out at?',
+qQ:'Does the output clear the minimum acceptable threshold?',
+qD:'Minimum threshold: ~90% for public output. Internal draft: 70&ndash;75% tolerable. Strategic decision: AI supports, the human always closes.',
+dName:'Delegation',dSub:'Can you step away?',
+dQ:'How far can you really take your hands off?',
+dD:'Autopilot: you only see the result. Copilot: you validate every step. Closed loop: you\'re inside every micro-step. The third isn\'t delegation: it\'s overhead.',
+s2:'Evaluate your task',
+evTempo:'Time',evTempoSub:'Time saved over the full cycle (prompt + output + review)',
+evQual:'Quality',evQualSub:'Quality percentage relative to the standard you produce on your own',
+evDelega:'Delegation',evDelegaSub:'Level of autonomy you can grant the AI system',
+s3:'Practical examples',
+exHint:'Click an example to load it into the evaluator',
+s4:'Decision matrix',
+mhT:'Time',mhQ:'Quality',mhD:'Delegation',mhDec:'Decision',
+s5:'Position in the operating method',
+stepNote:'TQD is step 2: before building anything, you pass through here to understand whether it\'s worth it and what kind of system you need.',
+key:'"Don\'t automate everything. Automate the right things. TQD tells you which ones."',
+bridge:'You know how to decide what to delegate. <b>Next:</b> the Verification Loop — why the more steps you delegate, the more the risk of error grows exponentially.',
+foot:'Morfeus — The TQD Framework'
+}};
+
+var SEG={
+it:{
+tempo:[['-2','Molto più lento'],['-1','Più lento'],['0','Pari'],['1','Più veloce'],['2','Molto più veloce']],
+qual:[['50','50%'],['70','70% bozze'],['90','90% soglia'],['100','100%']],
+delega:[['ap','ti-robot','Autopilot','vedi solo il risultato'],['cp','ti-users','Copilot','validi ogni step'],['lc','ti-lock','Loop chiuso','sei dentro tutto']]
+},
+en:{
+tempo:[['-2','Much slower'],['-1','Slower'],['0','Even'],['1','Faster'],['2','Much faster']],
+qual:[['50','50%'],['70','70% drafts'],['90','90% threshold'],['100','100%']],
+delega:[['ap','ti-robot','Autopilot','you only see the result'],['cp','ti-users','Copilot','you validate every step'],['lc','ti-lock','Closed loop','you\'re inside everything']]
+}};
+
+var EXAMPLES={
+it:[
+['Riassumere un documento',[['t','T: molto più veloce'],['q','Q: 95%'],['d','D: Autopilot']],'→ Automatizza senza riserve',2,95,'ap'],
+['Bozza proposta cliente',[['t','T: più veloce'],['q','Q: 92%'],['d','D: Copilot']],'→ Copilot: validi prima di inviare',1,90,'cp'],
+['Brainstorming interno',[['t','T: più veloce'],['q','Q: 75%'],['d','D: Autopilot']],'→ Ok per uso interno, non pubblico',1,70,'ap'],
+['Decisione strategica',[['t','T: più lento'],['q','Q: 80%'],['d','D: Loop chiuso']],'→ Non delegare: fai manualmente',-1,90,'lc']
+],
+en:[
+['Summarize a document',[['t','T: much faster'],['q','Q: 95%'],['d','D: Autopilot']],'→ Automate without reservations',2,95,'ap'],
+['Draft client proposal',[['t','T: faster'],['q','Q: 92%'],['d','D: Copilot']],'→ Copilot: validate before sending',1,90,'cp'],
+['Internal brainstorming',[['t','T: faster'],['q','Q: 75%'],['d','D: Autopilot']],'→ Ok for internal use, not public',1,70,'ap'],
+['Strategic decision',[['t','T: slower'],['q','Q: 80%'],['d','D: Closed loop']],'→ Don\'t delegate: do it manually',-1,90,'lc']
+]};
+
+var MATRIX={
+it:[
+['AI più veloce','Output ≥ 90%','Autopilot','build','Automatizza'],
+['AI più veloce','Output ≥ 90%','Solo Copilot','build','Copilot strutturato'],
+['AI più veloce','70–89% (bozze)','Autopilot / Copilot','warn','Solo uso interno'],
+['Qualsiasi','Output < 70%','Qualsiasi','stop','Non automatizzare'],
+['AI più lenta','Qualsiasi','Qualsiasi','stop','Non delegare'],
+['Qualsiasi','Qualsiasi','Loop chiuso','stop','Overhead: fai manualmente']
+],
+en:[
+['AI faster','Output ≥ 90%','Autopilot','build','Automate'],
+['AI faster','Output ≥ 90%','Copilot only','build','Structured copilot'],
+['AI faster','70–89% (drafts)','Autopilot / Copilot','warn','Internal use only'],
+['Any','Output < 70%','Any','stop','Don\'t automate'],
+['AI slower','Any','Any','stop','Don\'t delegate'],
+['Any','Any','Closed loop','stop','Overhead: do it manually']
+]};
+
+var FLOW={
+it:['Identifica il processo','Valuta con TQD','Scegli il sistema','Costruisci','Itera e ottimizza'],
+en:['Identify the process','Evaluate with TQD','Choose the system','Build','Iterate and optimize']
+};
+
+// Result texts keyed by branch
+var RESULTS={
+it:{
+slowEmoji:'❌',slowTitle:'Non delegare',slowDesc:'L\'AI richiede più tempo sull\'intero ciclo. Non conviene delegare, almeno non nella forma attuale. Semplifica il prompt o trova un task più adatto.',slowType:'Azione → <strong>Fai manualmente</strong>',
+lcEmoji:'🛑',lcTitle:'Overhead travestito da efficienza',lcDesc:'Sei dentro ogni micro-passaggio: il guadagno sul tempo è quasi zero. Il loop chiuso non è delega. Cerca un flusso copilot o autopilot, oppure fai manualmente.',lcType:'Azione → <strong>Ridisegna il processo o fai manualmente</strong>',
+lowEmoji:'❌',lowTitle:'Non automatizzare',lowDesc:'La qualità è troppo bassa. La revisione umana costerà più di quanto si risparmia. Non vale la pena costruire un flusso in queste condizioni.',lowType:'Azione → <strong>Scarta o riformula il task</strong>',
+midEmoji:'⚠️',midTitle:'Solo per materiale interno',midDesc:'Qualità accettabile per bozze e brainstorming (70–89%), non per output pubblici o proposte cliente. Usa con cautela e sempre con revisione.',midTypeAp:'Tipo di sistema → <strong>Autopilot (task interni)</strong>',midTypeOther:'Tipo di sistema → <strong>Copilot supervisionato</strong>',
+cpEmoji:'✅',cpTitle:'Costruisci un copilot',cpDesc:'Qualità alta e risparmio di tempo. La delega è parziale: lavori insieme all\'AI, validi ogni step. Costruisci un flusso copilot strutturato.',cpType:'Tipo di sistema → <strong>Copilot</strong>',
+goEmoji:'🚀',goTitle:'Automatizza',goDesc:'Condizioni ottime su tutti e tre gli assi. L\'AI esegue, tu vedi solo il risultato finale. Costruisci un flusso automatizzato e scalabile.',goType:'Tipo di sistema → <strong>Autopilot</strong>'
+},
+en:{
+slowEmoji:'❌',slowTitle:'Don\'t delegate',slowDesc:'AI takes more time over the whole cycle. It\'s not worth delegating, at least not in its current form. Simplify the prompt or find a more suitable task.',slowType:'Action → <strong>Do it manually</strong>',
+lcEmoji:'🛑',lcTitle:'Overhead disguised as efficiency',lcDesc:'You\'re inside every micro-step: the time gain is nearly zero. The closed loop isn\'t delegation. Look for a copilot or autopilot flow, or do it manually.',lcType:'Action → <strong>Redesign the process or do it manually</strong>',
+lowEmoji:'❌',lowTitle:'Don\'t automate',lowDesc:'Quality is too low. Human review will cost more than it saves. It\'s not worth building a flow under these conditions.',lowType:'Action → <strong>Discard or reframe the task</strong>',
+midEmoji:'⚠️',midTitle:'Internal material only',midDesc:'Quality acceptable for drafts and brainstorming (70–89%), not for public output or client proposals. Use with caution and always with review.',midTypeAp:'System type → <strong>Autopilot (internal tasks)</strong>',midTypeOther:'System type → <strong>Supervised copilot</strong>',
+cpEmoji:'✅',cpTitle:'Build a copilot',cpDesc:'High quality and time saved. Delegation is partial: you work alongside the AI, validating every step. Build a structured copilot flow.',cpType:'System type → <strong>Copilot</strong>',
+goEmoji:'🚀',goTitle:'Automate',goDesc:'Optimal conditions on all three axes. The AI executes, you only see the final result. Build an automated, scalable flow.',goType:'System type → <strong>Autopilot</strong>'
+}};
+
+var LANG='it';
+var stateT=1,stateQ=90,stateD='ap';
+
+function renderSeg(){
+  var s=SEG[LANG];
+  document.getElementById('seg-tempo').innerHTML=s.tempo.map(function(o){return '<button data-v="'+o[0]+'" class="'+(parseInt(o[0])===stateT?'on':'')+'" onclick="setT('+o[0]+')">'+o[1]+'</button>'}).join('');
+  document.getElementById('seg-qual').innerHTML=s.qual.map(function(o){return '<button data-v="'+o[0]+'" class="'+(parseInt(o[0])===stateQ?'on':'')+'" onclick="setQ('+o[0]+')">'+o[1]+'</button>'}).join('');
+  document.getElementById('seg-delega').innerHTML=s.delega.map(function(o){return '<button data-v="'+o[0]+'" class="'+o[0]+(o[0]===stateD?' on':'')+'" onclick="setD(\''+o[0]+'\')"><i class="ti '+o[1]+'"></i>'+o[2]+'<span class="sub">'+o[3]+'</span></button>'}).join('');
+}
+function setT(v){stateT=v;renderSeg();update()}
+function setQ(v){stateQ=v;renderSeg();update()}
+function setD(v){stateD=v;renderSeg();update()}
+
+function loadExample(t,q,d){
+  stateT=t;stateQ=q;stateD=d;renderSeg();update();
+  document.querySelector('.evaluator').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function renderExamples(){
+  document.getElementById('examples').innerHTML=EXAMPLES[LANG].map(function(e){
+    var tags=e[1].map(function(t){return '<span class="ex-tag '+t[0]+'">'+t[1]+'</span>'}).join('');
+    return '<div class="example-card" onclick="loadExample('+e[3]+','+e[4]+',\''+e[5]+'\')"><h4>'+e[0]+'</h4><div class="example-meta">'+tags+'</div><div class="ex-result">'+e[2]+'</div></div>';
+  }).join('');
+}
+function renderMatrix(){
+  document.getElementById('matrix-body').innerHTML=MATRIX[LANG].map(function(r){
+    return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td><span class="badge '+r[3]+'">'+r[4]+'</span></td></tr>';
+  }).join('');
+}
+function renderFlow(){
+  document.getElementById('stepflow').innerHTML=FLOW[LANG].map(function(f,i){
+    var pill='<div class="step-pill'+(i===1?' active':'')+'"><div class="step-num">'+(i+1)+'</div><span>'+f+'</span></div>';
+    var arrow=i<FLOW[LANG].length-1?'<div class="step-arrow"><i class="ti ti-arrow-right"></i></div>':'';
+    return pill+arrow;
+  }).join('');
+}
+function update(){
+  var R=RESULTS[LANG];
+  var box=document.getElementById('result-box');
+  var emoji=document.getElementById('result-emoji');
+  var title=document.getElementById('result-title');
+  var desc=document.getElementById('result-desc');
+  var type=document.getElementById('result-type');
+  box.className='result-box';
+  if(stateT<=0){
+    box.classList.add('stop');emoji.innerHTML=R.slowEmoji;title.textContent=R.slowTitle;desc.textContent=R.slowDesc;type.innerHTML=R.slowType;
+  }else if(stateD==='lc'){
+    box.classList.add('stop');emoji.innerHTML=R.lcEmoji;title.textContent=R.lcTitle;desc.textContent=R.lcDesc;type.innerHTML=R.lcType;
+  }else if(stateQ<70){
+    box.classList.add('stop');emoji.innerHTML=R.lowEmoji;title.textContent=R.lowTitle;desc.textContent=R.lowDesc;type.innerHTML=R.lowType;
+  }else if(stateQ<90){
+    box.classList.add('caution');emoji.innerHTML=R.midEmoji;title.textContent=R.midTitle;desc.textContent=R.midDesc;type.innerHTML=(stateD==='ap'?R.midTypeAp:R.midTypeOther);
+  }else{
+    if(stateD==='cp'){
+      box.classList.add('go');emoji.innerHTML=R.cpEmoji;title.textContent=R.cpTitle;desc.textContent=R.cpDesc;type.innerHTML=R.cpType;
+    }else{
+      box.classList.add('go');emoji.innerHTML=R.goEmoji;title.textContent=R.goTitle;desc.textContent=R.goDesc;type.innerHTML=R.goType;
+    }
+  }
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSeg();renderExamples();renderMatrix();renderFlow();update();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

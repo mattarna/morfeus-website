@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creazione Contenuti con Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--gray:#5F5E5A;--gray-soft:#f1efe8;--gray-line:#cdcbc2;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--gray:#B4B2A9;--gray-soft:#2c2c2a;--gray-line:#4a4945;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}.lede-p em{font-style:italic;color:var(--ink)}
+/* workflow 3 fasi */
+.wf{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.wf-phase{flex:1;padding:22px 18px;text-align:center}
+.wf-phase:not(:last-child){border-right:1px solid var(--line)}
+.wf-num{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;margin:0 auto 12px}
+.wf-phase h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.wf-phase p{font-size:12px;color:var(--ink-2);line-height:1.55}
+/* tip */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--good-soft);border:1px solid var(--good-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip.info{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--good)}.tip.warn .ti-i{background:var(--warn)}.tip.info .ti-i{background:var(--teal)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--good)}.tip.warn h4{color:var(--warn)}.tip.info h4{color:var(--teal)}
+.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}.tip p strong{color:var(--ink)}
+/* negative brand guide checklist */
+.nbg{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.nbg-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.nbg-head-l{display:flex;align-items:center;gap:10px}
+.nbg-head h3{font-size:15px;font-weight:600}
+.nbg-head i{font-size:20px;color:var(--bad)}
+.nbg-badge{font-family:var(--mono);font-size:10px;font-weight:600;background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad-line);padding:3px 10px;border-radius:30px;white-space:nowrap}
+.nbg-body{padding:18px 20px}
+.nbg-intro{font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+.nbg-item{display:flex;align-items:flex-start;gap:12px;padding:11px 8px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;transition:.15s;border-radius:var(--r)}
+.nbg-item:last-of-type{border-bottom:none}
+.nbg-item:hover{background:var(--bg-2)}
+.nbg-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--line-2);background:var(--card);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:.2s;color:#fff;font-size:13px}
+.nbg-item.on .nbg-check{background:var(--bad);border-color:var(--bad)}
+.nbg-item.on .nbg-label strong{text-decoration:line-through;color:var(--ink-3)}
+.nbg-label{flex:1}
+.nbg-label strong{font-size:13px;font-weight:600;display:block;margin-bottom:2px}
+.nbg-label span{font-size:12px;color:var(--ink-2);line-height:1.5}
+.nbg-counter{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:12px;text-align:right}
+/* voice extraction toggle */
+.voice{margin:0}
+.voice-tabs{display:flex;gap:8px;margin-bottom:14px}
+.voice-tab{padding:8px 18px;border-radius:30px;border:1px solid var(--line);background:var(--card);font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink-2);transition:.2s;display:inline-flex;align-items:center;gap:6px;box-shadow:var(--sh)}
+.voice-tab i{font-size:14px}
+.voice-tab.on.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.voice-tab.on.good{background:var(--good);border-color:var(--good);color:#fff}
+.voice-panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;animation:fade-in .3s ease}
+.voice-panel.on{display:block}
+@keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.voice-ph{padding:12px 20px;border-bottom:1px solid var(--line);font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px}
+.voice-panel.bad .voice-ph{color:var(--bad)}.voice-panel.good .voice-ph{color:var(--good)}
+.voice-pb{padding:18px 20px}
+.voice-prompt{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;margin-bottom:12px}
+.voice-prompt .vl{font-family:var(--sans);font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:6px;display:block}
+.voice-prompt .vl.user{color:var(--accent)}
+.voice-prompt .vl.claude{color:var(--teal);margin-top:12px}
+.voice-result{font-size:13px;color:var(--ink);line-height:1.7;padding:13px 15px;border-radius:var(--r)}
+.voice-panel.bad .voice-result{background:var(--bad-soft);border:1px solid var(--bad-line)}
+.voice-panel.good .voice-result{background:var(--good-soft);border:1px solid var(--good-line)}
+.voice-note{font-size:11.5px;margin-top:9px;padding:8px 12px;border-radius:var(--r);display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.voice-note i{font-size:13px;flex-shrink:0;margin-top:1px}
+.voice-panel.bad .voice-note{color:var(--bad);background:var(--bad-soft)}
+.voice-panel.good .voice-note{color:var(--good);background:var(--good-soft)}
+/* repurposing */
+.rep{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.rep-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.rep-head h3{font-size:15px;font-weight:600}.rep-head i{font-size:20px;color:var(--accent)}
+.rep-master{margin:18px 20px 0;background:var(--accent-soft);border:1.5px solid var(--accent-line);border-radius:var(--r-l);padding:16px 18px;display:flex;align-items:center;gap:14px}
+.rep-master-ic{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.rep-master h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.rep-master p{font-size:12px;color:var(--ink-2);line-height:1.5}
+.rep-arrow{text-align:center;padding:12px 0;color:var(--ink-3);font-size:22px}
+.rep-formats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 20px}
+.rf{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:14px 16px;cursor:pointer;transition:.2s}
+.rf:hover{border-color:var(--accent-line);transform:translateY(-1px)}
+.rf.on{border-color:var(--accent);background:var(--accent-soft)}
+.rf-top{display:flex;align-items:center;gap:10px}
+.rf-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.rf-name{font-size:13px;font-weight:600}
+.rf-len{font-size:11px;color:var(--ink-3)}
+.rf-chev{margin-left:auto;color:var(--ink-3);font-size:16px;transition:transform .25s}
+.rf.on .rf-chev{transform:rotate(180deg);color:var(--accent)}
+.rf-detail{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.rf.on .rf-detail{max-height:340px}
+.rf-detail-in{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2);line-height:1.65}
+.rf-detail-in strong{color:var(--ink);font-weight:600}
+.rf-detail-in .pp{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);line-height:1.6;margin-top:6px;display:block}
+/* project tree */
+.tree{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px;margin:0}
+.tree h3{font-size:14px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}.tree h3 i{color:var(--accent)}
+.tree-item{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.tree-item:last-child{border-bottom:none}
+.tree-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.tree-tx strong{font-size:13px;font-weight:600;display:block;margin-bottom:1px}.tree-tx span{font-size:12px;color:var(--ink-2);line-height:1.5}
+/* myth rows */
+.myrows{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:6px 20px;margin:0}
+.myrow{display:flex;align-items:flex-start;gap:13px;padding:15px 0;border-bottom:1px solid var(--line)}
+.myrow:last-child{border-bottom:none}
+.myx{width:30px;height:30px;border-radius:50%;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1px solid var(--bad-line)}
+.mytx strong{font-size:13px;font-weight:600;color:var(--bad);display:block;margin-bottom:3px}
+.mytx span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.wf{flex-direction:column}.wf-phase:not(:last-child){border-right:none;border-bottom:1px solid var(--line)}.rep-formats{grid-template-columns:1fr}.voice-tabs{flex-wrap:wrap}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.voice-panel{display:block!important}.rf-detail,.rf.on .rf-detail{max-height:none!important}.wf,.nbg,.voice-panel,.rep,.tree,.myrows,.tip,.cp,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 7.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Casi d'uso</div>
+  <h1 class="rv" data-i="h1">Il sistema Claude per produrre contenuti con la tua voce</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Hook</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">02</span><h2 data-i="s1">Il principio cardine</h2></div>
+  <div class="key rv"><p data-i="cardine"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-right"></i><span class="no">03</span><h2 data-i="s2">Il workflow in 3 fasi</h2></div>
+  <p class="lede-p rv" data-i="wfP"></p>
+  <div class="wf rv">
+    <div class="wf-phase"><div class="wf-num">1</div><h3 data-i="wf1H"></h3><p data-i="wf1P"></p></div>
+    <div class="wf-phase"><div class="wf-num">2</div><h3 data-i="wf2H"></h3><p data-i="wf2P"></p></div>
+    <div class="wf-phase"><div class="wf-num">3</div><h3 data-i="wf3H"></h3><p data-i="wf3P"></p></div>
+  </div>
+  <div class="tip info rv" style="margin-top:16px"><div class="ti-i"><i class="ti ti-info-circle"></i></div><div><h4 data-i="briefTestH"></h4><p data-i="briefTestP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-ban"></i><span class="no">04</span><h2 data-i="s3">Negative Brand Guide — cosa NON inserire</h2></div>
+  <p class="lede-p rv" data-i-html="nbgP"></p>
+  <div class="nbg rv">
+    <div class="nbg-head">
+      <div class="nbg-head-l"><i class="ti ti-ban"></i><h3 data-i="nbgTitle"></h3></div>
+      <span class="nbg-badge" data-i="nbgBadge"></span>
+    </div>
+    <div class="nbg-body">
+      <p class="nbg-intro" data-i="nbgIntro"></p>
+      <div id="nbgList"></div>
+      <div class="nbg-counter" id="nbgCounter"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-fingerprint"></i><span class="no">05</span><h2 data-i="s4">Voice Extraction — prima e dopo</h2></div>
+  <p class="lede-p rv" data-i="voiceP"></p>
+  <div class="voice rv">
+    <div class="voice-tabs">
+      <button class="voice-tab bad on" id="vtab-bad" onclick="switchVoice('bad')"><i class="ti ti-x"></i> <span data-i="vTabBad"></span></button>
+      <button class="voice-tab good" id="vtab-good" onclick="switchVoice('good')"><i class="ti ti-check"></i> <span data-i="vTabGood"></span></button>
+    </div>
+    <div class="voice-panel bad on" id="vpanel-bad">
+      <div class="voice-ph"><i class="ti ti-x"></i> <span data-i="vBadHead"></span></div>
+      <div class="voice-pb">
+        <div class="voice-prompt"><span class="vl user" data-i="vLblPrompt"></span><span data-i="vBadPrompt"></span></div>
+        <div class="voice-result" data-i-html="vBadResult"></div>
+        <p class="voice-note"><i class="ti ti-alert-circle"></i> <span data-i="vBadNote"></span></p>
+      </div>
+    </div>
+    <div class="voice-panel good" id="vpanel-good">
+      <div class="voice-ph"><i class="ti ti-check"></i> <span data-i="vGoodHead"></span></div>
+      <div class="voice-pb">
+        <div class="voice-prompt"><span class="vl user" data-i="vLblPromptId"></span><span data-i="vGoodPrompt"></span><span class="vl claude" data-i="vLblInstr"></span><span data-i="vGoodInstr"></span></div>
+        <div class="voice-result" data-i-html="vGoodResult"></div>
+        <p class="voice-note"><i class="ti ti-check"></i> <span data-i="vGoodNote"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-copy-plus"></i><span class="no">06</span><h2 data-i="s5">Content Repurposing — 1 master → N formati</h2></div>
+  <p class="lede-p rv" data-i="repP"></p>
+  <div class="rep rv">
+    <div class="rep-head"><i class="ti ti-copy-plus"></i><h3 data-i="repTitle"></h3></div>
+    <div class="rep-master">
+      <div class="rep-master-ic"><i class="ti ti-file-text"></i></div>
+      <div><h4 data-i="repMasterH"></h4><p data-i="repMasterP"></p></div>
+    </div>
+    <div class="rep-arrow"><i class="ti ti-arrows-split-2"></i></div>
+    <div class="rep-formats" id="repFormats"></div>
+  </div>
+  <div class="tip warn rv" style="margin-top:16px"><div class="ti-i"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="repWarnH"></h4><p data-i="repWarnP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-folder"></i><span class="no">07</span><h2 data-i="s6">Come strutturare il Project per i contenuti</h2></div>
+  <div class="tree rv">
+    <h3><i class="ti ti-folder"></i> <span data-i="treeTitle"></span></h3>
+    <div id="treeList"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">08</span><h2 data-i="s7">Gli equivoci da evitare</h2></div>
+  <div class="myrows rv" id="myrows"></div>
+
+  <div class="key rv" style="margin-top:32px"><p data-i="key2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-pencil-plus"></i><div class="cph" data-i="cpH"></div><p data-i="cpP"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Creazione Contenuti con Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 7.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Casi d\'uso',
+h1:'Il sistema Claude per produrre contenuti con la tua voce',
+lede:'Post, articoli, newsletter, email. Il problema non è la mancanza di idee — è il collo di bottiglia tra l\'idea e il risultato pubblicabile. Questo è il sistema per eliminarlo.',
+s0:'Hook',
+hook:'«Il problema con la creazione di contenuti non è la mancanza di idee. È il collo di bottiglia tra l\'idea e il risultato pubblicabile. Claude non sostituisce la vostra voce. Ma elimina il collo di bottiglia.»',
+s1:'Il principio cardine',
+cardine:'Senza un Project con le tue istruzioni di stile, ogni output di Claude è contenuto che potrebbe essere di chiunque. Con un Project configurato, Claude produce contenuti riconoscibili come tuoi.',
+s2:'Il workflow in 3 fasi',
+wfP:'Ogni contenuto — dal post LinkedIn alla newsletter mensile — segue lo stesso flusso. Tre fasi, massimo 3 iterazioni nella terza.',
+wf1H:'Brief',wf1P:'Cosa voglio dire, a chi, perché adesso, che tono. Le tue idee — Claude amplifica ciò che gli dai.',
+wf2H:'Bozza',wf2P:'Claude scrive la prima versione completa del contenuto, calibrata sulle tue istruzioni di stile.',
+wf3H:'Revisione',wf3P:'Iterazione rapida: dai 2-3 aggiustamenti precisi per ciclo. Massimo 3 round prima di ripensare il brief.',
+briefTestH:'Il brief test',
+briefTestP:'Se non riesci a scrivere il brief in 5 minuti, hai un problema di chiarezza sull\'idea — non un problema di Claude. La qualità del brief determina la qualità dell\'output molto più del prompt stesso.',
+s3:'Negative Brand Guide — cosa NON inserire nel tuo Project',
+nbgP:'La <strong>Negative Brand Guide</strong> è la lista di parole, toni e costruzioni che Claude deve <em>evitare</em>. È il componente più spesso dimenticato — ed è quello che previene il "tone drift": la deriva progressiva verso contenuti generici. Clicca su ogni voce per segnare cosa va nel tuo Project.',
+nbgTitle:'Negative Brand Guide',
+nbgBadge:'Componente del Project',
+nbgIntro:'Spunta ogni elemento che vuoi includere nel tuo Project come "cosa NON fare". Più è specifico, più Claude resterà nella tua voce.',
+s4:'Voice Extraction — prima e dopo',
+voiceP:'La tecnica: carica 10-15 tuoi scritti migliori nel Project e chiedi a Claude di estrarne lo stile. Il risultato diventa parte delle custom instructions. Confronta cosa cambia nello stesso prompt.',
+vTabBad:'Senza voice extraction',vTabGood:'Con voice extraction',
+vLblPrompt:'Prompt',vLblPromptId:'Prompt (identico)',vLblInstr:'Istruzioni estratte nei custom instructions',
+vBadHead:'Project senza istruzioni di stile',
+vBadPrompt:'Scrivi un post LinkedIn sul tema della delega efficace. Max 1200 caratteri.',
+vBadResult:'"La delega è una delle competenze più importanti per un manager. Molti professionisti faticano a delegare perché temono di perdere il controllo. In realtà, delegare bene significa:<br><br>✅ Scegliere le persone giuste<br>✅ Comunicare aspettative chiare<br>✅ Dare fiducia e autonomia<br><br>Il risultato? Un team più motivato e più tempo per le attività strategiche.<br><br>Qual è la tua esperienza con la delega? Scrivimi nei commenti."',
+vBadNote:'Potrebbe essere scritto da chiunque. Tono generico, struttura da template, domanda finale intercambiabile.',
+vGoodHead:'Project con voice extraction attiva',
+vGoodPrompt:'Scrivi un post LinkedIn sul tema della delega efficace. Max 1200 caratteri.',
+vGoodInstr:'Stile diretto, osservazione concreta in apertura, max 3 punti forti, chiusura con prospettiva non con domanda generica. Evitare: liste con emoji, "qual è la tua esperienza", tono da manuale HR.',
+vGoodResult:'"Ho impiegato tre anni a capire che delegare non significa \'dare compiti\'.<br><br>Significa dare un problema — e non il metodo per risolverlo.<br><br>La differenza è enorme. Chi riceve un compito esegue. Chi riceve un problema pensa.<br><br>Il momento in cui ho smesso di spiegare \'come\' e ho iniziato a spiegare \'perché\' e \'cosa\', i miei collaboratori hanno cominciato a portare soluzioni che non avrei trovato da solo.<br><br>La delega peggiore che ho visto: ottimo manager, pessimo istruttore. La delega migliore: nessuna istruzione — solo contesto e fiducia."',
+vGoodNote:'Riconoscibile. Tono personale, struttura propria, punto di vista specifico — non un template.',
+s5:'Content Repurposing — 1 contenuto master → N formati',
+repP:'Un contenuto ben scritto è la fonte per molti formati. Stessa voce, registro nativo per ogni piattaforma. Clicca su ogni formato per vedere cosa Claude produce a partire dallo stesso articolo master.',
+repTitle:'Da 1 articolo a 5 formati',
+repMasterH:'Contenuto Master',
+repMasterP:'Articolo lungo (800-1200 parole) su un tema professionale specifico. Questo è il punto di partenza.',
+repWarnH:'Stessa voce, registro diverso per piattaforma',
+repWarnP:'Cross-postare lo stesso testo su piattaforme diverse è controproducente. La voce deve essere coerente, ma il registro deve essere nativo al feed. Un contenuto LinkedIn non funziona su Instagram — e viceversa.',
+s6:'Come strutturare il Project per i contenuti',
+treeTitle:'Project "Comunicazione & Contenuti" — struttura tipo',
+s7:'Gli equivoci da evitare',
+key2:'«Claude scrive veloce. Tu pensi meglio. Il contenuto straordinario viene dal tuo pensiero + la velocità di Claude. Separati, siete metà ciascuno. Insieme, siete più della somma.»',
+s8:'Checkpoint',
+cpH:'Fallo adesso.',
+cpP:'Prendi un contenuto che stai rimandando da settimane — quel post, quell\'email, quella newsletter. Apri il tuo Project contenuti, scrivi il brief in 5 minuti, chiedi la bozza. Non deve essere perfetta — deve esistere. Poi iteri.',
+bridge:'<b>Prossimo passo: documenti, presentazioni e report.</b> Post, articoli, newsletter: contenuti brevi e medi. La prossima lezione scala il workflow ai formati lunghi e strutturati — report professionali, presentazioni, documenti complessi. Dove il problema non è solo scrivere, ma organizzare.',
+foot:'Morfeus — Creazione Contenuti con Claude'
+},
+en:{
+kicker:'Lesson 7.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Use cases',
+h1:'The Claude system for producing content in your voice',
+lede:'Posts, articles, newsletters, emails. The problem isn\'t a lack of ideas — it\'s the bottleneck between the idea and the publishable result. This is the system to remove it.',
+s0:'Hook',
+hook:'"The problem with content creation isn\'t a lack of ideas. It\'s the bottleneck between the idea and the publishable result. Claude doesn\'t replace your voice. But it removes the bottleneck."',
+s1:'The cardinal principle',
+cardine:'Without a Project carrying your style instructions, every Claude output is content that could belong to anyone. With a configured Project, Claude produces content recognizable as yours.',
+s2:'The 3-phase workflow',
+wfP:'Every piece of content — from the LinkedIn post to the monthly newsletter — follows the same flow. Three phases, maximum 3 iterations in the third.',
+wf1H:'Brief',wf1P:'What I want to say, to whom, why now, what tone. Your ideas — Claude amplifies what you give it.',
+wf2H:'Draft',wf2P:'Claude writes the first complete version of the content, calibrated to your style instructions.',
+wf3H:'Review',wf3P:'Fast iteration: give 2-3 precise adjustments per cycle. Maximum 3 rounds before rethinking the brief.',
+briefTestH:'The brief test',
+briefTestP:'If you can\'t write the brief in 5 minutes, you have a clarity problem about the idea — not a Claude problem. The quality of the brief determines the quality of the output far more than the prompt itself.',
+s3:'Negative Brand Guide — what NOT to put in your Project',
+nbgP:'The <strong>Negative Brand Guide</strong> is the list of words, tones and constructions Claude must <em>avoid</em>. It\'s the most often forgotten component — and it\'s the one that prevents "tone drift": the progressive slide toward generic content. Click each entry to mark what goes in your Project.',
+nbgTitle:'Negative Brand Guide',
+nbgBadge:'Project component',
+nbgIntro:'Check each element you want to include in your Project as "what NOT to do". The more specific it is, the more Claude will stay in your voice.',
+s4:'Voice Extraction — before and after',
+voiceP:'The technique: load 10-15 of your best pieces of writing into the Project and ask Claude to extract the style. The result becomes part of the custom instructions. Compare what changes with the same prompt.',
+vTabBad:'Without voice extraction',vTabGood:'With voice extraction',
+vLblPrompt:'Prompt',vLblPromptId:'Prompt (identical)',vLblInstr:'Instructions extracted into the custom instructions',
+vBadHead:'Project without style instructions',
+vBadPrompt:'Write a LinkedIn post on the topic of effective delegation. Max 1200 characters.',
+vBadResult:'"Delegation is one of the most important skills for a manager. Many professionals struggle to delegate because they fear losing control. In reality, delegating well means:<br><br>✅ Choosing the right people<br>✅ Communicating clear expectations<br>✅ Giving trust and autonomy<br><br>The result? A more motivated team and more time for strategic activities.<br><br>What\'s your experience with delegation? Write to me in the comments."',
+vBadNote:'It could be written by anyone. Generic tone, template structure, interchangeable closing question.',
+vGoodHead:'Project with voice extraction active',
+vGoodPrompt:'Write a LinkedIn post on the topic of effective delegation. Max 1200 characters.',
+vGoodInstr:'Direct style, concrete observation in the opening, max 3 strong points, closing with a perspective not a generic question. Avoid: lists with emoji, "what\'s your experience", HR-manual tone.',
+vGoodResult:'"It took me three years to understand that delegating doesn\'t mean \'handing out tasks\'.<br><br>It means handing over a problem — and not the method to solve it.<br><br>The difference is enormous. Whoever receives a task executes. Whoever receives a problem thinks.<br><br>The moment I stopped explaining \'how\' and started explaining \'why\' and \'what\', my colleagues began bringing solutions I wouldn\'t have found on my own.<br><br>The worst delegation I\'ve seen: great manager, terrible instructor. The best delegation: no instructions — just context and trust."',
+vGoodNote:'Recognizable. Personal tone, its own structure, a specific point of view — not a template.',
+s5:'Content Repurposing — 1 master content → N formats',
+repP:'A well-written piece of content is the source for many formats. Same voice, native register for each platform. Click each format to see what Claude produces starting from the same master article.',
+repTitle:'From 1 article to 5 formats',
+repMasterH:'Master Content',
+repMasterP:'Long article (800-1200 words) on a specific professional topic. This is the starting point.',
+repWarnH:'Same voice, different register per platform',
+repWarnP:'Cross-posting the same text across different platforms is counterproductive. The voice must be consistent, but the register must be native to the feed. A LinkedIn piece doesn\'t work on Instagram — and vice versa.',
+s6:'How to structure the Project for content',
+treeTitle:'Project "Communication & Content" — typical structure',
+s7:'The misconceptions to avoid',
+key2:'"Claude writes fast. You think better. Extraordinary content comes from your thinking + Claude\'s speed. Apart, you\'re each half. Together, you\'re more than the sum."',
+s8:'Checkpoint',
+cpH:'Do it now.',
+cpP:'Take a piece of content you\'ve been putting off for weeks — that post, that email, that newsletter. Open your content Project, write the brief in 5 minutes, ask for the draft. It doesn\'t have to be perfect — it has to exist. Then you iterate.',
+bridge:'<b>Next step: documents, presentations and reports.</b> Posts, articles, newsletters: short and medium content. The next lesson scales the workflow to long, structured formats — professional reports, presentations, complex documents. Where the problem isn\'t just writing, but organizing.',
+foot:'Morfeus — Content Creation with Claude'
+}};
+
+/* negative brand guide items */
+var NBG={it:[
+['Parole da evitare','Es. "eccezionale", "rivoluzionario", "game-changer", "innovativo". Parole logorate dall\'uso massiccio che azzerano la credibilità.'],
+['Aperture da evitare','Es. domande retoriche ("Ti sei mai chiesto…?"), affermazioni ovvie ("Nel mondo di oggi…"), aggettivi generici in apertura. Partire sempre da un\'osservazione concreta.'],
+['Strutture da evitare','Es. liste di 10 punti generici, paragrafi con più di 4 righe, bullet point ridondanti. Specificare la struttura preferita invece.'],
+['Toni da evitare','Es. troppo motivazionale, accademico, formale/burocratico, condiscendente. Indicare esattamente quale tono è fuori dal proprio registro.'],
+['Chiusure da evitare','Es. "Spero che questo articolo ti sia stato utile", call to action generiche, frasi che suonano come template. Definire come si chiudono i propri contenuti.'],
+['Claim da evitare','Es. statistiche senza fonte, generalizzazioni ("tutti i professionisti sanno che…"), affermazioni assolute non supportabili. Calibrare il livello di certezza.']
+],en:[
+['Words to avoid','E.g. "exceptional", "revolutionary", "game-changer", "innovative". Words worn out by massive use that wipe out credibility.'],
+['Openings to avoid','E.g. rhetorical questions ("Have you ever wondered…?"), obvious statements ("In today\'s world…"), generic adjectives in the opening. Always start from a concrete observation.'],
+['Structures to avoid','E.g. lists of 10 generic points, paragraphs longer than 4 lines, redundant bullet points. Specify the preferred structure instead.'],
+['Tones to avoid','E.g. too motivational, academic, formal/bureaucratic, condescending. Indicate exactly which tone is outside your register.'],
+['Closings to avoid','E.g. "I hope this article was useful to you", generic calls to action, sentences that sound like a template. Define how you close your content.'],
+['Claims to avoid','E.g. statistics without a source, generalizations ("every professional knows that…"), unsupportable absolute statements. Calibrate the level of certainty.']
+]};
+
+/* repurposing formats */
+var REP={it:[
+['ti-brand-linkedin','var(--blue)','var(--blue-soft)','Post LinkedIn','max 1200 caratteri',
+ 'professionale ma personale, prima persona, osservazione concreta in apertura.',
+ '"Da questo articolo, estrai il punto più forte e scrivilo come post LinkedIn. Max 1200 caratteri. Mantieni la mia voce, adatta al feed professionale."',false],
+['ti-mail','var(--warn)','var(--warn-soft)','Newsletter excerpt','250–350 parole',
+ 'più intimo, diretto con il lettore storico, può aggiungere contesto personale.',
+ '"Da questo articolo, scrivi l\'excerpt per la mia newsletter. 250-350 parole. Tono: come se scrivessi a qualcuno che mi conosce già."',false],
+['ti-brand-x','var(--gray)','var(--gray-soft)','Thread X/Twitter','6–8 tweet',
+ 'più diretto e incisivo, ogni tweet deve stare in piedi da solo, hook forte nel primo.',
+ '"Da questo articolo, costruisci un thread di 7 tweet. Il primo tweet è il hook — deve funzionare come post standalone. Ogni tweet max 280 caratteri."',false],
+['ti-send','var(--teal)','var(--teal-soft)','Email ai subscriber','120–180 parole',
+ 'più breve e diretto, link all\'articolo completo, un solo punto forte, una call to action.',
+ '"Da questo articolo, scrivi l\'email di annuncio ai subscriber. Max 150 parole. Obiettivo: spingere a leggere l\'articolo. Una sola CTA."',false],
+['ti-brand-instagram','var(--bad)','var(--bad-soft)','Caption Instagram','70–90 parole + 5 hashtag',
+ 'più visivo e narrativo, la prima riga è il hook visibile prima del "leggi altro", tono personale.',
+ '"Da questo articolo, scrivi una caption Instagram. La prima riga è il hook (max 125 caratteri, visible prima del \'more\'). Corpo: 70-90 parole. Chiudi con 5 hashtag rilevanti, non generici."',true]
+],en:[
+['ti-brand-linkedin','var(--blue)','var(--blue-soft)','LinkedIn post','max 1200 characters',
+ 'professional but personal, first person, concrete observation in the opening.',
+ '"From this article, extract the strongest point and write it as a LinkedIn post. Max 1200 characters. Keep my voice, adapt to the professional feed."',false],
+['ti-mail','var(--warn)','var(--warn-soft)','Newsletter excerpt','250–350 words',
+ 'more intimate, direct with the long-time reader, can add personal context.',
+ '"From this article, write the excerpt for my newsletter. 250-350 words. Tone: as if I were writing to someone who already knows me."',false],
+['ti-brand-x','var(--gray)','var(--gray-soft)','X/Twitter thread','6–8 tweets',
+ 'more direct and incisive, each tweet must stand on its own, strong hook in the first.',
+ '"From this article, build a thread of 7 tweets. The first tweet is the hook — it must work as a standalone post. Each tweet max 280 characters."',false],
+['ti-send','var(--teal)','var(--teal-soft)','Email to subscribers','120–180 words',
+ 'shorter and more direct, link to the full article, a single strong point, one call to action.',
+ '"From this article, write the announcement email to subscribers. Max 150 words. Goal: push them to read the article. One single CTA."',false],
+['ti-brand-instagram','var(--bad)','var(--bad-soft)','Instagram caption','70–90 words + 5 hashtags',
+ 'more visual and narrative, the first line is the hook visible before "read more", personal tone.',
+ '"From this article, write an Instagram caption. The first line is the hook (max 125 characters, visible before the \'more\'). Body: 70-90 words. Close with 5 relevant, non-generic hashtags."',true]
+]};
+var REP_LABELS={it:['Registro:','Prompt base:'],en:['Register:','Base prompt:']};
+
+/* project tree */
+var TREE={it:[
+['ti-settings','var(--accent)','var(--accent-soft)','Custom Instructions — tono, stile, target','Chi sei, a chi ti rivolgi, che tono usare, lunghezze preferite per formato, costruzioni ricorrenti della tua scrittura.'],
+['ti-book','var(--warn)','var(--warn-soft)','Brand Voice / Voice Extraction','Il documento estratto dall\'analisi dei tuoi scritti: 5-8 attributi chiave, vocabolario ricorrente, 3 pattern stilistici distintivi.'],
+['ti-ban','var(--bad)','var(--bad-soft)','Negative Brand Guide — cosa NON fare','Parole, toni, strutture, aperture e chiusure da evitare. Previene la deriva verso contenuti generici nel tempo.'],
+['ti-star','var(--teal)','var(--teal-soft)','5–10 esempi "best of" già pubblicati','I tuoi contenuti che hanno funzionato meglio. Claude li usa come ancoraggio per capire cosa suona come te.'],
+['ti-template','var(--blue)','var(--blue-soft)','Template per ogni formato','Struttura base per post, newsletter, email, thread. Non devono essere rigidi — solo abbastanza specifici da evitare output troppo generici.']
+],en:[
+['ti-settings','var(--accent)','var(--accent-soft)','Custom Instructions — tone, style, target','Who you are, who you address, what tone to use, preferred lengths per format, the recurring constructions of your writing.'],
+['ti-book','var(--warn)','var(--warn-soft)','Brand Voice / Voice Extraction','The document extracted from the analysis of your writing: 5-8 key attributes, recurring vocabulary, 3 distinctive stylistic patterns.'],
+['ti-ban','var(--bad)','var(--bad-soft)','Negative Brand Guide — what NOT to do','Words, tones, structures, openings and closings to avoid. Prevents the slide toward generic content over time.'],
+['ti-star','var(--teal)','var(--teal-soft)','5–10 already-published "best of" examples','Your content that performed best. Claude uses them as an anchor to understand what sounds like you.'],
+['ti-template','var(--blue)','var(--blue-soft)','Template for each format','Base structure for posts, newsletters, emails, threads. They don\'t have to be rigid — just specific enough to avoid overly generic output.']
+]};
+
+/* myths */
+var MY={it:[
+['"Claude scrive al posto mio"','Claude amplifica quello che gli dai. Se il brief è vuoto, l\'output è generico. L\'esperienza reale, il punto di vista specifico, l\'aneddoto vissuto — quelle le hai solo tu.'],
+['"La prima bozza è pubblicabile"','Raramente. Il valore è nella velocità delle iterazioni, non nell\'eliminazione delle iterazioni. Con Claude, arrivare alla versione finale richiede ore invece di giorni.'],
+['"Basta fare prova"','Senza un Project con brand voice, ogni sessione riparte da zero. Claude non ricorda le conversazioni precedenti — il contesto deve essere caricato nel Project.'],
+['"Stessa voce = stesso testo su tutte le piattaforme"','Sbagliato. Stessa voce, registro nativo per piattaforma. Un post LinkedIn efficace è diverso da una caption Instagram efficace — anche se vengono dallo stesso contenuto master.']
+],en:[
+['"Claude writes for me"','Claude amplifies what you give it. If the brief is empty, the output is generic. Real experience, the specific point of view, the lived anecdote — only you have those.'],
+['"The first draft is publishable"','Rarely. The value is in the speed of iterations, not in eliminating iterations. With Claude, reaching the final version takes hours instead of days.'],
+['"Just give it a try"','Without a Project carrying a brand voice, every session starts from scratch. Claude doesn\'t remember previous conversations — the context must be loaded into the Project.'],
+['"Same voice = same text on all platforms"','Wrong. Same voice, native register per platform. An effective LinkedIn post is different from an effective Instagram caption — even if they come from the same master content.']
+]};
+
+var LANG='it',openRf=-1,nbgChecked={};
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderNbg();renderRep();renderTree();renderMyths();
+}
+function renderNbg(){
+  document.getElementById('nbgList').innerHTML=NBG[LANG].map(function(n,i){
+    var on=nbgChecked[i]?' on':'';
+    return '<div class="nbg-item'+on+'" onclick="toggleNbg('+i+')"><div class="nbg-check"><i class="ti ti-x" style="'+(nbgChecked[i]?'':'display:none')+'"></i></div>'+
+      '<div class="nbg-label"><strong>'+n[0]+'</strong><span>'+n[1]+'</span></div></div>';
+  }).join('');
+  updateNbgCounter();
+}
+function toggleNbg(i){nbgChecked[i]=!nbgChecked[i];renderNbg()}
+function updateNbgCounter(){
+  var cnt=Object.keys(nbgChecked).filter(function(k){return nbgChecked[k]}).length;
+  var tot=NBG[LANG].length;
+  document.getElementById('nbgCounter').textContent=cnt+' / '+tot+' '+(LANG==='it'?'selezionati':'selected');
+}
+function renderRep(){
+  var lab=REP_LABELS[LANG];
+  document.getElementById('repFormats').innerHTML=REP[LANG].map(function(r,i){
+    var span=r[7]?' style="grid-column:span 2"':'';
+    var on=i===openRf?' on':'';
+    return '<div class="rf'+on+'"'+span+' onclick="toggleRf('+i+')">'+
+      '<div class="rf-top"><div class="rf-ic" style="color:'+r[1]+';background:'+r[2]+'"><i class="ti '+r[0]+'"></i></div>'+
+      '<div><div class="rf-name">'+r[3]+'</div><div class="rf-len">'+r[4]+'</div></div>'+
+      '<i class="ti ti-chevron-down rf-chev"></i></div>'+
+      '<div class="rf-detail"><div class="rf-detail-in"><strong>'+lab[0]+'</strong> '+r[5]+
+      '<br><br><strong>'+lab[1]+'</strong><span class="pp">'+r[6]+'</span></div></div></div>';
+  }).join('');
+}
+function toggleRf(i){openRf=(openRf===i?-1:i);renderRep()}
+function renderTree(){
+  document.getElementById('treeList').innerHTML=TREE[LANG].map(function(t){
+    return '<div class="tree-item"><div class="tree-ic" style="color:'+t[1]+';background:'+t[2]+'"><i class="ti '+t[0]+'"></i></div>'+
+      '<div class="tree-tx"><strong>'+t[3]+'</strong><span>'+t[4]+'</span></div></div>';
+  }).join('');
+}
+function renderMyths(){
+  document.getElementById('myrows').innerHTML=MY[LANG].map(function(m){
+    return '<div class="myrow"><div class="myx"><i class="ti ti-x"></i></div>'+
+      '<div class="mytx"><strong>'+m[0]+'</strong><span>'+m[1]+'</span></div></div>';
+  }).join('');
+}
+function switchVoice(which){
+  document.getElementById('vtab-bad').classList.toggle('on',which==='bad');
+  document.getElementById('vtab-good').classList.toggle('on',which==='good');
+  document.getElementById('vpanel-bad').classList.toggle('on',which==='bad');
+  document.getElementById('vpanel-good').classList.toggle('on',which==='good');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

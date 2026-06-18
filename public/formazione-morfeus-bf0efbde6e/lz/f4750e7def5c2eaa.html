@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cos'è davvero Plan &amp; Solve — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* Hook */
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.hook p b{color:var(--ink);font-style:normal;font-weight:600}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p b{color:var(--ink);font-weight:600}
+/* Two traps */
+.traps-intro{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:0 auto 18px;text-align:center;max-width:640px}
+.traps-intro b{color:var(--ink);font-weight:600}
+.traps{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.trap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.trap.t1{border-top:3px solid var(--bad)}
+.trap.t2{border-top:3px solid var(--warn)}
+.trap-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:13px}
+.trap.t1 .trap-ic{background:var(--bad-soft);color:var(--bad)}
+.trap.t2 .trap-ic{background:var(--warn-soft);color:var(--warn)}
+.trap h3{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.trap>p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:13px}
+.trap>p em{font-style:italic;color:var(--ink)}
+.trap-eg{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.trap-eg .tag{display:flex;align-items:center;gap:6px;color:var(--ink-3);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;font-family:var(--mono)}
+.trap-eg .tag i{font-size:13px}
+.trap-eg b{color:var(--ink);font-weight:600}
+/* Idea */
+.idea{background:var(--accent-soft);border:1.5px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px;text-align:center;margin:0}
+.idea .big{font-size:20px;font-weight:600;color:var(--accent);line-height:1.5;margin-bottom:16px}
+.idea .big .a{color:var(--teal)}.idea .big .c{color:var(--blue)}.idea .big .b{color:var(--warn)}
+.idea .meta{font-size:14px;color:var(--ink-2);line-height:1.7;max-width:560px;margin:0 auto;display:flex;gap:11px;align-items:flex-start;text-align:left}
+.idea .meta i{color:var(--accent);font-size:20px;flex-shrink:0;margin-top:2px}
+/* Demo: toggle bad/good */
+.task-label{font-size:13.5px;color:var(--ink-2);margin-bottom:16px;padding:13px 16px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);box-shadow:var(--sh)}
+.task-label b{color:var(--ink);font-weight:600}
+.cmp-toggle{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:3px;gap:3px;margin:0 0 16px;max-width:440px;width:100%}
+.cmp-tab{flex:1;padding:9px 12px;border-radius:26px;border:none;cursor:pointer;font-size:13px;font-weight:600;background:none;color:var(--ink-2);transition:.25s;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:6px}
+.cmp-tab.on.bad{background:var(--bad);color:#fff;box-shadow:var(--sh)}
+.cmp-tab.on.good{background:var(--good);color:#fff;box-shadow:var(--sh)}
+.cmp-tab i{font-size:15px}
+.cmp-panel{display:none;animation:fade-in .3s ease}
+.cmp-panel.on{display:block}
+@keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.chat{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;margin-bottom:6px}
+.msg{display:flex;gap:11px;margin-bottom:12px;align-items:flex-start}
+.msg:last-child{margin-bottom:0}
+.av{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff}
+.msg.user .av{background:var(--ink-3)}
+.msg.a .av{background:var(--accent)}
+.msg.b .av{background:var(--warn)}
+.bub{flex:1;border-radius:var(--r);padding:11px 14px;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.msg.user .bub{background:var(--bg-2);border:1px solid var(--line)}
+.msg.a .bub,.msg.b .bub{background:var(--bg-2);border:1px solid var(--line)}
+.bub .who{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:5px;font-weight:600;font-family:var(--mono)}
+.bub .mono{font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+.bub ul{list-style:none;margin:3px 0 0}
+.bub li{font-size:13px;color:var(--ink-2);padding:3px 0;display:flex;gap:8px;align-items:center}
+.bub li .cb{color:var(--ink-3)}
+.stepnote{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin:14px 0 7px 2px;display:flex;align-items:center;gap:7px;font-family:var(--mono)}
+.stepnote.s1{color:var(--accent)}.stepnote.s2{color:var(--warn)}.stepnote.s3{color:var(--teal)}
+.bad-out{background:var(--bad-soft);border:1px solid var(--bad-line);border-radius:var(--r);padding:14px 16px;font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-top:4px}
+.bad-out .tag{color:var(--bad);font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.switch-note{font-size:11.5px;color:var(--ink-3);text-align:center;padding:7px 0;font-style:italic}
+/* 3 moves */
+.moves{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:8px;margin:0 0 16px}
+.move{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 12px;text-align:center}
+.move i{font-size:27px;margin-bottom:9px;display:block}
+.move.m1{border-top:3px solid var(--accent)}.move.m1 i{color:var(--accent)}
+.move.m2{border-top:3px solid var(--warn)}.move.m2 i{color:var(--warn)}
+.move.m3{border-top:3px solid var(--teal)}.move.m3 i{color:var(--teal)}
+.move h4{font-size:15px;font-weight:600;margin-bottom:5px}
+.move p{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.move-arrow{color:var(--ink-3);font-size:20px;display:flex;align-items:center;justify-content:center}
+.diff-note{font-size:14px;color:var(--ink-2);line-height:1.7}
+.diff-note b{color:var(--ink);font-weight:600}
+/* checklist */
+.checklist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0}
+.checklist li{font-size:13.5px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;gap:11px}
+.checklist li i{color:var(--accent);font-size:17px;flex-shrink:0}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.key .emphasis{display:block;margin-top:14px;font-size:14.5px;color:var(--ink-2);font-weight:500;font-style:normal}
+/* bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}.bridge b{color:var(--agent)}
+.bridge .bt{display:block;font-weight:600;color:var(--ink);margin-bottom:2px}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .traps{grid-template-columns:1fr}
+  .moves{grid-template-columns:1fr}.move-arrow{transform:rotate(90deg)}
+  .checklist{grid-template-columns:1fr}
+  .cmp-toggle{max-width:100%}
+  .idea .meta{flex-direction:column;text-align:center;align-items:center}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.cmp-panel{display:block!important}.trap,.idea,.chat,.move,.checklist li,.key,.hook,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve</div>
+  <h1 class="rv" data-i="h1">Cos'è davvero Plan &amp; Solve</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:20px"><i class="ti ti-quote"></i><p data-i-html="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">01</span><h2 data-i="s1">Le due trappole</h2></div>
+  <p class="traps-intro rv" data-i-html="trapsIntro"></p>
+  <div class="traps rv">
+    <div class="trap t1">
+      <div class="trap-ic"><i class="ti ti-clock-bolt"></i></div>
+      <h3 data-i="trap1H"></h3>
+      <p data-i-html="trap1P"></p>
+      <div class="trap-eg"><span class="tag"><i class="ti ti-point"></i> <span data-i="inPractice"></span></span><span data-i-html="trap1Eg"></span></div>
+    </div>
+    <div class="trap t2">
+      <div class="trap-ic"><i class="ti ti-eye-off"></i></div>
+      <h3 data-i="trap2H"></h3>
+      <p data-i-html="trap2P"></p>
+      <div class="trap-eg"><span class="tag"><i class="ti ti-point"></i> <span data-i="inPractice2"></span></span><span data-i-html="trap2Eg"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">02</span><h2 data-i="s2">L'idea, in una frase</h2></div>
+  <div class="idea rv">
+    <div class="big" data-i-html="ideaBig"></div>
+    <div class="meta"><i class="ti ti-tools"></i><span data-i="ideaMeta"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">03</span><h2 data-i="s3">Guardiamolo succedere</h2></div>
+  <div class="task-label rv" data-i-html="taskLabel"></div>
+  <div class="cmp-toggle rv">
+    <button class="cmp-tab on bad" id="tab-bad" onclick="switchDemo('bad')"><i class="ti ti-x"></i> <span data-i="tabBad"></span></button>
+    <button class="cmp-tab good" id="tab-good" onclick="switchDemo('good')"><i class="ti ti-check"></i> <span data-i="tabGood"></span></button>
+  </div>
+
+  <!-- BAD -->
+  <div class="cmp-panel on" id="panel-bad">
+    <div class="chat">
+      <div class="msg user"><div class="av"><i class="ti ti-user"></i></div><div class="bub"><div class="who" data-i="youLbl"></div><span class="mono" data-i="badUser"></span></div></div>
+      <div class="msg a"><div class="av"><i class="ti ti-robot"></i></div><div class="bub"><div class="who">Claude</div>
+        <div class="bad-out"><span class="tag"><i class="ti ti-pile"></i> <span data-i="badTag"></span></span><span data-i="badOut"></span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- GOOD -->
+  <div class="cmp-panel" id="panel-good">
+    <div class="stepnote s1"><i class="ti ti-map-2"></i> <span data-i="move1Note"></span></div>
+    <div class="chat">
+      <div class="msg user"><div class="av"><i class="ti ti-user"></i></div><div class="bub"><div class="who" data-i="youToClaude"></div><span class="mono" data-i="g1User"></span></div></div>
+      <div class="msg a"><div class="av"><i class="ti ti-robot"></i></div><div class="bub"><div class="who">Claude</div>
+        <ul>
+          <li><i class="ti ti-square cb"></i> <span data-i="g1l1"></span></li>
+          <li><i class="ti ti-square cb"></i> <span data-i="g1l2"></span></li>
+          <li><i class="ti ti-square cb"></i> <span data-i="g1l3"></span></li>
+          <li><i class="ti ti-square cb"></i> <span data-i="g1l4"></span></li>
+          <li><i class="ti ti-square cb"></i> <span data-i="g1l5"></span></li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="switch-note" data-i="g1switch"></div>
+    <div class="stepnote s2"><i class="ti ti-eye-check"></i> <span data-i="move2Note"></span></div>
+    <div class="chat">
+      <div class="msg user"><div class="av"><i class="ti ti-user"></i></div><div class="bub"><div class="who" data-i="g2who"></div><span class="mono" data-i="g2User"></span></div></div>
+      <div class="msg b"><div class="av"><i class="ti ti-shield-search"></i></div><div class="bub"><div class="who" data-i="g2bWho"></div><span data-i="g2bMsg"></span></div></div>
+    </div>
+    <div class="switch-note" data-i="g2switch"></div>
+    <div class="chat">
+      <div class="msg user"><div class="av"><i class="ti ti-user"></i></div><div class="bub"><div class="who" data-i="youToClaude2"></div><span class="mono" data-i="g3User"></span></div></div>
+      <div class="msg a"><div class="av"><i class="ti ti-robot"></i></div><div class="bub"><div class="who">Claude</div><span data-i="g3Msg"></span></div></div>
+    </div>
+    <div class="stepnote s3"><i class="ti ti-hammer"></i> <span data-i="move3Note"></span></div>
+    <div class="chat">
+      <div class="msg user"><div class="av"><i class="ti ti-user"></i></div><div class="bub"><div class="who" data-i="youToClaude3"></div><span class="mono" data-i="g4User"></span></div></div>
+      <div class="msg a"><div class="av"><i class="ti ti-robot"></i></div><div class="bub"><div class="who">Claude</div><span data-i="g4Msg"></span></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">04</span><h2 data-i="s4">Le 3 mosse</h2></div>
+  <div class="moves rv">
+    <div class="move m1"><i class="ti ti-map-2"></i><h4 data-i="mv1H"></h4><p data-i="mv1P"></p></div>
+    <div class="move-arrow"><i class="ti ti-arrow-right"></i></div>
+    <div class="move m2"><i class="ti ti-eye-check"></i><h4 data-i="mv2H"></h4><p data-i="mv2P"></p></div>
+    <div class="move-arrow"><i class="ti ti-arrow-right"></i></div>
+    <div class="move m3"><i class="ti ti-hammer"></i><h4 data-i="mv3H"></h4><p data-i="mv3P"></p></div>
+  </div>
+  <p class="diff-note rv" data-i-html="diffNote"></p>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">05</span><h2 data-i="s5">Quando usarlo</h2></div>
+  <p class="lede-p rv" data-i-html="whenIntro"></p>
+  <ul class="checklist rv">
+    <li><i class="ti ti-clock"></i> <span data-i="w1"></span></li>
+    <li><i class="ti ti-list-numbers"></i> <span data-i="w2"></span></li>
+    <li><i class="ti ti-currency-euro"></i> <span data-i="w3"></span></li>
+    <li><i class="ti ti-checks"></i> <span data-i="w4"></span></li>
+    <li><i class="ti ti-users"></i> <span data-i="w5"></span></li>
+    <li><i class="ti ti-target"></i> <span data-i="w6"></span></li>
+  </ul>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="key rv">
+    <p data-i="kp"></p>
+    <span class="emphasis" data-i="kpEmph"></span>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Cos'è davvero Plan &amp; Solve</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve',
+h1:'Cos\'è davvero Plan & Solve',
+lede:'Fin qui abbiamo parlato di come pensare con Claude. Adesso vediamo, concretamente, come fargli portare a termine un lavoro grande. Senza teoria: guardiamolo succedere.',
+hook:'Avete mai chiesto a Claude una cosa grande tipo <em>"organizzami il lancio del corso"</em> e ricevuto un muro di roba generica che a guardarlo bene non sta in piedi? <b>Il problema non è Claude. È che gli avete chiesto di costruire senza prima fargli un progetto, e senza far controllare quel progetto da nessuno.</b> Plan & Solve sistema esattamente questo.',
+s1:'Le due trappole',
+trapsIntro:'Quando chiedi a Claude una cosa <b>grande</b> "a briglia sciolta", caschi sempre in due trappole precise. Riconoscerle è già metà del lavoro: il metodo serve esattamente a disinnescarle.',
+inPractice:'In pratica',inPractice2:'In pratica',
+trap1H:'Il debito istantaneo',
+trap1P:'Claude ti sforna in due minuti tutto quello che chiedi. A prima vista funziona. Ma le parti non si parlano, i casi limite mancano, e un pezzo si scopre rotto solo alla fine — quando non sai più nemmeno dove l\'errore è nato.',
+trap1Eg:'Chiedi il piano di un lancio. Sembra perfetto. Parti, e a metà scopri che <b>manca la pagina di vendita</b> e che le email promettono cose che il prodotto non fa. Rifai tutto.',
+trap2H:'La monocultura cognitiva',
+trap2P:'Se la stessa AI pianifica <em>e</em> esegue, vedi sempre il mondo da un solo punto di vista, con gli stessi punti ciechi. Un piano che nessuno mette in discussione si porta dietro tutti i difetti di chi l\'ha scritto — e finiscono dritti nel risultato.',
+trap2Eg:'Claude propone un piano e tu lo fai eseguire a Claude. Nessuno dei due ti dirà mai <b>"questo pezzo è debole"</b>: è lo stesso che l\'ha pensato. Serve una seconda testa che non l\'ha scritto.',
+s2:'L\'idea, in una frase',
+ideaBig:'Fai fare il <span class="a">PIANO</span> a Claude. Lo fai <span class="c">CONTROLLARE</span> da una seconda testa. <span class="b">Poi</span> lo fai eseguire.',
+ideaMeta:'È come costruire una casa: prima si fa il progetto, poi un secondo ingegnere lo rilegge per trovare gli errori, e solo dopo si posano i mattoni. Nessuno costruisce su un progetto che non ha controllato.',
+s3:'Guardiamolo succedere',
+taskLabel:'Stesso compito reale: <b>"Devo assumere un responsabile marketing."</b> Due modi di chiederlo a Claude.',
+tabBad:'Senza Plan & Solve',tabGood:'Con Plan & Solve',
+youLbl:'Tu',youToClaude:'Tu → Claude',youToClaude2:'Tu → Claude',youToClaude3:'Tu → Claude',
+badUser:'"Aiutami ad assumere un responsabile marketing."',
+badTag:'Un muro di roba tutto insieme',
+badOut:'Ti scrive subito annuncio, 30 domande di colloquio, consigli sullo stipendio, un piano di onboarding... tutto in un blocco. Sembra utile. Ma è generico, non sai da dove partire, nessuno l\'ha controllato, e quando lo usi scopri che metà non c\'entra con la tua azienda.',
+move1Note:'Mossa 1 · gli chiedi il PIANO (Claude)',
+g1User:'"Prima di fare qualsiasi cosa, fammi il PIANO a tappe per assumere un responsabile marketing in 90 giorni. Solo le tappe, ognuna con il risultato concreto."',
+g1l1:'1. Definire il ruolo → annuncio + criteri',
+g1l2:'2. Trovare candidati → 20 in lista',
+g1l3:'3. Selezione → 5 finalisti',
+g1l4:'4. Decidere → offerta firmata',
+g1l5:'5. Inserimento → operativa in 90 giorni',
+g1switch:'↓ copi il piano e lo porti a una seconda testa ↓',
+move2Note:'Mossa 2 · lo fai CONTROLLARE da un secondo LLM',
+g2who:'Tu → un altro LLM (es. ChatGPT)',
+g2User:'"Fai l\'esperto di recruiting. Devo assumere un responsabile marketing in 90 giorni. Trova le falle di questo piano. [incolli il piano]"',
+g2bWho:'Il secondo LLM',
+g2bMsg:'"Rischio grosso: stai per assumere dopo soli colloqui. Senza una prova pratica rischi di scegliere chi parla bene ma non sa fare. Aggiungi una prova pagata prima della decisione."',
+g2switch:'↓ riporti la falla a Claude, che decide se è valida e corregge ↓',
+g3User:'"Un esperto dice che manca una prova pratica prima di assumere. È un problema reale? Se sì, correggi il piano."',
+g3Msg:'"Sì, è un rischio reale. Aggiungo la Tappa 4 \'prova pratica pagata\' prima dell\'offerta." → piano corretto e più solido.',
+move3Note:'Mossa 3 · solo ora ESEGUI, una tappa per volta',
+g4User:'"Perfetto. Adesso fai la tappa 1: scrivimi l\'annuncio e i criteri."',
+g4Msg:'Produce solo la tappa 1, fatta bene. La controlli, la spunti, passi alla 2. Niente muro: un pezzo solido alla volta, su un piano già validato.',
+s4:'Le 3 mosse che hai appena visto',
+mv1H:'1. PIANO',mv1P:'Claude scrive le tappe, prima di costruire.',
+mv2H:'2. CONTROLLO',mv2P:'Una seconda testa (un altro LLM) cerca le falle. Claude le valuta e corregge.',
+mv3H:'3. ESECUZIONE',mv3P:'Claude costruisce una tappa alla volta, su un piano validato.',
+diffNote:'<b>Il pezzo che fa la differenza è la Mossa 2:</b> non controlli il piano da solo a occhio, lo fai criticare da una seconda intelligenza e poi lasci che Claude — che conosce tutto il contesto — decida cosa correggere davvero. È questo che trasforma un piano "che sembra buono" in un piano solido.',
+s5:'Quando usarlo',
+whenIntro:'Non per ogni cosa: per una mail veloce è troppo. Usalo quando il lavoro ha almeno <b>due</b> di questi segnali:',
+w1:'Dura più di una sessione',
+w2:'Ha più tappe distinte',
+w3:'Sbagliare costa caro',
+w4:'Va controllato prima di lanciarlo',
+w5:'Coinvolge più persone',
+w6:'È un progetto, non un compito',
+s6:'In una frase',
+kp:'Senza piano, Claude costruisce in fretta la cosa sbagliata. Con un piano controllato da una seconda testa, costruisce la cosa giusta un pezzo alla volta.',
+kpEmph:'Piano → controllo con una seconda testa → esecuzione. Questa è tutta l\'idea.',
+bridge:'<span class="bt">Prossima lezione</span>Adesso vediamo il metodo completo, e soprattutto <b>come si fa il controllo con due LLM</b> nel dettaglio: i prompt esatti da copiare per passare il piano da uno all\'altro.',
+foot:'Morfeus — Cos\'è davvero Plan & Solve'
+},
+en:{
+kicker:'Lesson 8.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve',
+h1:'What Plan & Solve really is',
+lede:'So far we\'ve talked about how to think with Claude. Now let\'s see, concretely, how to make it carry a big job through to the end. No theory: let\'s watch it happen.',
+hook:'Have you ever asked Claude something big like <em>"organize the launch of my course"</em> and gotten back a wall of generic stuff that, looked at closely, doesn\'t hold together? <b>The problem isn\'t Claude. It\'s that you asked it to build without first having it make a plan, and without having anyone check that plan.</b> Plan & Solve fixes exactly this.',
+s1:'The two traps',
+trapsIntro:'When you ask Claude something <b>big</b> "off the leash", you always fall into two specific traps. Recognizing them is already half the work: the method exists precisely to defuse them.',
+inPractice:'In practice',inPractice2:'In practice',
+trap1H:'Instant debt',
+trap1P:'Claude churns out everything you ask for in two minutes. At first glance it works. But the parts don\'t talk to each other, the edge cases are missing, and one piece turns out to be broken only at the end — when you no longer even know where the error started.',
+trap1Eg:'You ask for a launch plan. It looks perfect. You set off, and halfway through you discover that <b>the sales page is missing</b> and that the emails promise things the product doesn\'t do. You redo everything.',
+trap2H:'Cognitive monoculture',
+trap2P:'If the same AI plans <em>and</em> executes, you always see the world from a single point of view, with the same blind spots. A plan that no one challenges carries over all the flaws of whoever wrote it — and they end up straight in the result.',
+trap2Eg:'Claude proposes a plan and you have Claude execute it. Neither of the two will ever tell you <b>"this piece is weak"</b>: it\'s the same one that thought it up. You need a second head that didn\'t write it.',
+s2:'The idea, in one sentence',
+ideaBig:'Have Claude make the <span class="a">PLAN</span>. Have it <span class="c">CHECKED</span> by a second head. <span class="b">Then</span> have it executed.',
+ideaMeta:'It\'s like building a house: first you make the design, then a second engineer reviews it to find the errors, and only afterwards do you lay the bricks. No one builds on a design they haven\'t checked.',
+s3:'Let\'s watch it happen',
+taskLabel:'Same real task: <b>"I have to hire a marketing manager."</b> Two ways of asking Claude.',
+tabBad:'Without Plan & Solve',tabGood:'With Plan & Solve',
+youLbl:'You',youToClaude:'You → Claude',youToClaude2:'You → Claude',youToClaude3:'You → Claude',
+badUser:'"Help me hire a marketing manager."',
+badTag:'A wall of stuff all at once',
+badOut:'It immediately writes you a job ad, 30 interview questions, salary advice, an onboarding plan... all in one block. It looks useful. But it\'s generic, you don\'t know where to start, no one has checked it, and when you use it you discover that half of it has nothing to do with your company.',
+move1Note:'Move 1 · you ask it for the PLAN (Claude)',
+g1User:'"Before doing anything, make me the step-by-step PLAN to hire a marketing manager in 90 days. Just the steps, each with its concrete result."',
+g1l1:'1. Define the role → job ad + criteria',
+g1l2:'2. Find candidates → 20 on the list',
+g1l3:'3. Selection → 5 finalists',
+g1l4:'4. Decide → signed offer',
+g1l5:'5. Onboarding → operational in 90 days',
+g1switch:'↓ you copy the plan and bring it to a second head ↓',
+move2Note:'Move 2 · you have it CHECKED by a second LLM',
+g2who:'You → another LLM (e.g. ChatGPT)',
+g2User:'"Act as a recruiting expert. I have to hire a marketing manager in 90 days. Find the flaws in this plan. [you paste the plan]"',
+g2bWho:'The second LLM',
+g2bMsg:'"Big risk: you\'re about to hire after interviews only. Without a practical test you risk choosing someone who talks well but can\'t do the job. Add a paid trial before the decision."',
+g2switch:'↓ you bring the flaw back to Claude, which decides whether it\'s valid and corrects ↓',
+g3User:'"An expert says a practical test is missing before hiring. Is it a real problem? If so, fix the plan."',
+g3Msg:'"Yes, it\'s a real risk. I\'m adding Step 4 \'paid practical test\' before the offer." → plan corrected and more solid.',
+move3Note:'Move 3 · only now do you EXECUTE, one step at a time',
+g4User:'"Perfect. Now do step 1: write me the job ad and the criteria."',
+g4Msg:'It produces only step 1, done well. You check it, tick it off, move to step 2. No wall: one solid piece at a time, on an already validated plan.',
+s4:'The 3 moves you just saw',
+mv1H:'1. PLAN',mv1P:'Claude writes the steps, before building.',
+mv2H:'2. CHECK',mv2P:'A second head (another LLM) looks for the flaws. Claude evaluates them and corrects.',
+mv3H:'3. EXECUTION',mv3P:'Claude builds one step at a time, on a validated plan.',
+diffNote:'<b>The piece that makes the difference is Move 2:</b> you don\'t check the plan on your own by eye, you have it criticized by a second intelligence and then you let Claude — which knows the whole context — decide what to actually correct. That\'s what turns a plan "that looks good" into a solid plan.',
+s5:'When to use it',
+whenIntro:'Not for everything: for a quick email it\'s too much. Use it when the job has at least <b>two</b> of these signals:',
+w1:'It lasts more than one session',
+w2:'It has several distinct steps',
+w3:'Getting it wrong is costly',
+w4:'It needs to be checked before launching it',
+w5:'It involves several people',
+w6:'It\'s a project, not a task',
+s6:'In one sentence',
+kp:'Without a plan, Claude quickly builds the wrong thing. With a plan checked by a second head, it builds the right thing one piece at a time.',
+kpEmph:'Plan → check with a second head → execution. That\'s the whole idea.',
+bridge:'<span class="bt">Next lesson</span>Now we\'ll see the complete method, and above all <b>how to do the check with two LLMs</b> in detail: the exact prompts to copy to pass the plan from one to the other.',
+foot:'Morfeus — What Plan & Solve really is'
+}};
+
+var LANG='it';
+
+function switchDemo(which){
+  document.getElementById('tab-bad').classList.toggle('on',which==='bad');
+  document.getElementById('tab-good').classList.toggle('on',which==='good');
+  document.getElementById('panel-bad').classList.toggle('on',which==='bad');
+  document.getElementById('panel-good').classList.toggle('on',which==='good');
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

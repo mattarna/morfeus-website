@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestire Più Projects in Parallelo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* progress arc */
+.progress-arc{display:flex;align-items:flex-start;justify-content:center;gap:0;margin:0 auto;max-width:520px}
+.arc-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative}
+.arc-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border:2px solid var(--line);color:var(--ink-3);background:var(--card);box-shadow:var(--sh);z-index:1}
+.arc-dot.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.arc-dot.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.arc-label{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.3;max-width:86px}
+.arc-label.active{color:var(--accent);font-weight:600}
+.arc-label.done{color:var(--accent)}
+.arc-line{position:absolute;top:19px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;background:var(--line);z-index:0}
+.arc-step:last-child .arc-line{display:none}
+.arc-line.done{background:var(--accent-line)}
+/* stack visual */
+.stack-visual{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px 26px;margin:0;text-align:center}
+.stack-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:16px}
+.stack-layers{max-width:420px;margin:0 auto}
+.stack-layer{border-radius:var(--r);padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:12px;text-align:left;font-size:13px;transition:.3s}
+.stack-layer:last-child{margin-bottom:0}
+.stack-layer i{font-size:20px;flex-shrink:0}
+.stack-layer .sl-name{font-weight:600;font-size:14px}
+.stack-layer .sl-desc{font-size:12px;opacity:.7;margin-top:2px}
+.layer-active{background:var(--accent);color:#fff;border:2px solid var(--accent);transform:scale(1.02)}
+.layer-done{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.layer-base{background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+/* principle */
+.principle{background:var(--card);border:2px solid var(--accent);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;margin:0;text-align:center}
+.principle-icon{font-size:32px;color:var(--accent);margin-bottom:12px;display:block}
+.principle h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.principle p{font-size:14px;color:var(--ink-2);line-height:1.7;max-width:520px;margin:0 auto}
+/* yes/no */
+.yn-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.yn-col{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.yn-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:12px}
+.yn-col ul{list-style:none;padding:0}
+.yn-col ul li{font-size:13px;color:var(--ink-2);padding:5px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.5}
+.yn-col ul li i{font-size:15px;flex-shrink:0;margin-top:2px}
+/* arch cards */
+.arch-grid{display:grid;gap:18px;margin:0}
+.arch-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:.18s}
+.arch-card:hover{border-color:var(--line-2)}
+.arch-header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.arch-avatar{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.arch-header h3{font-size:15px;font-weight:600}
+.arch-header span{font-size:12px;color:var(--ink-3);display:block;margin-top:2px}
+.arch-body{padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px}
+.arch-project{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;flex:1;min-width:140px;display:flex;align-items:center;gap:8px}
+.arch-project i{font-size:18px;color:var(--accent);flex-shrink:0}
+.arch-project .ap-name{font-size:13px;font-weight:600}
+.arch-project .ap-desc{font-size:11px;color:var(--ink-3);margin-top:1px}
+/* routine */
+.routine{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin:0}
+.routine h3{font-size:15px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.routine h3 i{color:var(--accent)}
+.r-steps{display:flex;flex-direction:column;gap:12px}
+.r-step{display:flex;align-items:flex-start;gap:12px}
+.r-num{width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;flex-shrink:0}
+.r-step p{font-size:13px;color:var(--ink-2);line-height:1.6;padding-top:4px}
+.r-step strong{color:var(--ink);font-weight:600}
+/* tips */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--teal)}.tip.warn .ti-i{background:var(--warn)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--teal)}.tip.warn h4{color:var(--warn)}.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+/* key phrase */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:17px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0;text-align:center}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:8px}
+.bridge p{font-size:15px;color:var(--ink);font-weight:600;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.yn-grid{grid-template-columns:1fr}.arch-body{flex-direction:column}.arch-project{min-width:auto}.arc-label{font-size:9px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.stack-visual,.principle,.yn-col,.arch-card,.routine,.tip,.kp,.cp,.bridge,.progress-arc,.r-step{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 3.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Projects</div>
+  <h1 class="rv" data-i="h1">Gestire Più Projects in Parallelo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="progress-arc rv" style="margin-top:34px">
+    <div class="arc-step"><div class="arc-dot done">3.2</div><div class="arc-label done" data-i="arc1"></div><div class="arc-line done"></div></div>
+    <div class="arc-step"><div class="arc-dot done">3.3</div><div class="arc-label done" data-i="arc2"></div><div class="arc-line done"></div></div>
+    <div class="arc-step"><div class="arc-dot active">3.4</div><div class="arc-label active" data-i="arc3"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.5</div><div class="arc-label" data-i="arc4"></div></div>
+  </div>
+
+  <div class="hook rv" style="margin-top:34px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">01</span><h2 data-i="s1">Cosa stiamo costruendo</h2></div>
+  <div class="stack-visual rv">
+    <div class="stack-label" data-i="stackLabel"></div>
+    <div class="stack-layers">
+      <div class="stack-layer layer-active"><i class="ti ti-arrows-split-2"></i><div><div class="sl-name" data-i="sl1N"></div><div class="sl-desc" data-i="sl1D"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-files"></i><div><div class="sl-name" data-i="sl2N"></div><div class="sl-desc" data-i="sl2D"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-settings"></i><div><div class="sl-name" data-i="sl3N"></div><div class="sl-desc" data-i="sl3D"></div></div></div>
+      <div class="stack-layer layer-base"><i class="ti ti-folder"></i><div><div class="sl-name" data-i="sl4N"></div><div class="sl-desc" data-i="sl4D"></div></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-compass"></i><span class="no">02</span><h2 data-i="s2">Il principio guida</h2></div>
+  <div class="principle rv">
+    <i class="ti ti-compass principle-icon"></i>
+    <h3 data-i="prH"></h3>
+    <p data-i="prP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-filter"></i><span class="no">03</span><h2 data-i="s3">Cosa merita un Project separato</h2></div>
+  <div class="yn-grid rv">
+    <div class="yn-col">
+      <div class="yn-tag" style="background:var(--good-soft);color:var(--good)"><i class="ti ti-check" style="font-size:11px"></i> <span data-i="ynYesTag"></span></div>
+      <ul>
+        <li><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="ynY1"></span></li>
+        <li><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="ynY2"></span></li>
+        <li><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="ynY3"></span></li>
+        <li><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="ynY4"></span></li>
+        <li><i class="ti ti-check" style="color:var(--good)"></i> <span data-i="ynY5"></span></li>
+      </ul>
+    </div>
+    <div class="yn-col">
+      <div class="yn-tag" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x" style="font-size:11px"></i> <span data-i="ynNoTag"></span></div>
+      <ul>
+        <li><i class="ti ti-x" style="color:var(--bad)"></i> <span data-i="ynN1"></span></li>
+        <li><i class="ti ti-x" style="color:var(--bad)"></i> <span data-i="ynN2"></span></li>
+        <li><i class="ti ti-x" style="color:var(--bad)"></i> <span data-i="ynN3"></span></li>
+        <li><i class="ti ti-x" style="color:var(--bad)"></i> <span data-i="ynN4"></span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip warn rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="riskH"></h4><p data-i="riskP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">04</span><h2 data-i="s4">Architetture per profilo</h2></div>
+  <p class="lede-p rv" data-i="archIntro"></p>
+  <div class="arch-grid rv">
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-avatar" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-briefcase"></i></div>
+        <div><h3 data-i="a1H"></h3><span data-i="a1S"></span></div>
+      </div>
+      <div class="arch-body">
+        <div class="arch-project"><i class="ti ti-user"></i><div><div class="ap-name" data-i="a1p1N"></div><div class="ap-desc" data-i="a1p1D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-user"></i><div><div class="ap-name" data-i="a1p2N"></div><div class="ap-desc" data-i="a1p2D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-user"></i><div><div class="ap-name" data-i="a1p3N"></div><div class="ap-desc" data-i="a1p3D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-tool"></i><div><div class="ap-name" data-i="a1p4N"></div><div class="ap-desc" data-i="a1p4D"></div></div></div>
+      </div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-avatar" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-pencil"></i></div>
+        <div><h3 data-i="a2H"></h3><span data-i="a2S"></span></div>
+      </div>
+      <div class="arch-body">
+        <div class="arch-project"><i class="ti ti-mail"></i><div><div class="ap-name" data-i="a2p1N"></div><div class="ap-desc" data-i="a2p1D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-brand-instagram"></i><div><div class="ap-name" data-i="a2p2N"></div><div class="ap-desc" data-i="a2p2D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-bulb"></i><div><div class="ap-name" data-i="a2p3N"></div><div class="ap-desc" data-i="a2p3D"></div></div></div>
+      </div>
+    </div>
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-avatar" style="background:var(--warn-soft);color:var(--warn)"><i class="ti ti-users-group"></i></div>
+        <div><h3 data-i="a3H"></h3><span data-i="a3S"></span></div>
+      </div>
+      <div class="arch-body">
+        <div class="arch-project"><i class="ti ti-list-check"></i><div><div class="ap-name" data-i="a3p1N"></div><div class="ap-desc" data-i="a3p1D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-chart-line"></i><div><div class="ap-name" data-i="a3p2N"></div><div class="ap-desc" data-i="a3p2D"></div></div></div>
+        <div class="arch-project"><i class="ti ti-notebook"></i><div><div class="ap-name" data-i="a3p3N"></div><div class="ap-desc" data-i="a3p3D"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">05</span><h2 data-i="s5">Mantenere i Projects aggiornati</h2></div>
+  <p class="lede-p rv" data-i="maintIntro"></p>
+  <div class="routine rv">
+    <h3><i class="ti ti-calendar-repeat"></i> <span data-i="routineH"></span></h3>
+    <div class="r-steps">
+      <div class="r-step"><div class="r-num">1</div><p data-i-html="r1"></p></div>
+      <div class="r-step"><div class="r-num">2</div><p data-i-html="r2"></p></div>
+      <div class="r-step"><div class="r-num">3</div><p data-i-html="r3"></p></div>
+      <div class="r-step"><div class="r-num">4</div><p data-i-html="r4"></p></div>
+    </div>
+  </div>
+  <div class="tip good rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="cleanH"></h4><p data-i="cleanP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="kp rv" data-i="keyPhrase"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-rocket"></i><div class="cph" data-i="cpH"></div><p data-i="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">08</span><h2 data-i="s8">Prossimo livello</h2></div>
+  <div class="bridge rv"><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Gestire Più Projects in Parallelo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 3.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Projects',
+h1:'Gestire Più Projects in Parallelo',
+lede:'Un Project è utile. Più Projects che si completano senza interferire — questo è dove Claude diventa un sistema di lavoro vero.',
+arc1:'Istruzioni',arc2:'File di contesto',arc3:'Più Projects',arc4:'Concatenare output',
+hook:'«Cinque Projects che si parlano, si completano, e restano separati quando devono restare separati — questo è dove Claude diventa un sistema di lavoro vero. Vi mostro come strutturarli senza impazzire.»',
+s1:'Cosa stiamo costruendo',
+stackLabel:'Anatomia di un Project — Livello 3 di 4',
+sl1N:'Più Projects in parallelo',sl1D:'Questa lezione',
+sl2N:'File di contesto',sl2D:'Lezione 3.3 ✓',
+sl3N:'Istruzioni personalizzate',sl3D:'Lezione 3.2 ✓',
+sl4N:'Project (contenitore)',sl4D:'Lezione 3.1 ✓',
+s2:'Il principio guida',
+prH:'Un Project per contesto, non per task',
+prP:'Un contesto è un insieme di conoscenza, tono e obiettivi che rimangono stabili nel tempo. Un task è una cosa che fate una volta o periodicamente dentro un contesto. I Projects contengono contesti — i task vivono nelle conversazioni.',
+s3:'Cosa merita un Project separato',
+ynYesTag:'Merita un Project',
+ynY1:'Cliente con cui lavorate regolarmente',ynY2:'Newsletter o produzione contenuti continua',ynY3:'Progetto aziendale che dura mesi',ynY4:'Strumenti interni (procedure, template, FAQ)',ynY5:'Ricerca personale e studio continuo',
+ynNoTag:'Non merita un Project',
+ynN1:'Un\'email una tantum — usate la chat normale',ynN2:'Un\'analisi veloce — idem',ynN3:'Task che fate una volta al mese — troppo poco',ynN4:'Qualsiasi cosa di cui non riuserete il contesto',
+riskH:'I due rischi opposti',
+riskP:'Troppi Projects: dispersione, difficile tenerli tutti aggiornati. Troppo pochi: un Project unico con tutto dentro diventa generico. L\'obiettivo è trovare la granularità giusta per come lavorate voi. Iniziate con 2-3 e aggiungete quando serve.',
+s4:'Architetture per profilo',
+archIntro:'Non esiste l\'architettura perfetta — esiste quella che funziona per come lavorate voi. Tre esempi concreti per iniziare:',
+a1H:'Consulente con 3 clienti attivi',a1S:'4 Projects — uno per cliente + strumenti interni',
+a1p1N:'Cliente A',a1p1D:'Brief, storico, deliverable',
+a1p2N:'Cliente B',a1p2D:'Brief, storico, deliverable',
+a1p3N:'Cliente C',a1p3D:'Brief, storico, deliverable',
+a1p4N:'Strumenti interni',a1p4D:'Template, procedure, presentazioni',
+a2H:'Content creator / newsletter',a2S:'3 Projects — produzione, distribuzione, ricerca',
+a2p1N:'Newsletter',a2p1D:'Stile, archivio, calendario',
+a2p2N:'Social content',a2p2D:'Format, toni, programmazione',
+a2p3N:'Ricerca e brainstorming',a2p3D:'Idee, fonti, spunti',
+a3H:'Manager con più team',a3S:'3 Projects — operativo, strategico, personale',
+a3p1N:'Team operativo',a3p1D:'Riunioni, task, comunicazioni',
+a3p2N:'Strategia',a3p2D:'Pianificazione, reporting',
+a3p3N:'Personale',a3p3D:'Sviluppo, note, riflessioni',
+s5:'Mantenere i Projects aggiornati',
+maintIntro:'Un rischio reale: si creano Projects e poi si dimenticano di aggiornarli. Le istruzioni devono riflettere la realtà attuale, non quella di tre mesi fa.',
+routineH:'Routine di manutenzione',
+r1:'<strong>Scegliete una cadenza</strong> — settimanale o mensile, dipende dal ritmo del vostro lavoro. L\'importante è che sia costante.',
+r2:'<strong>Rileggete le istruzioni</strong> — il cliente ha cambiato obiettivi? Il progetto ha preso una direzione diversa? Aggiornate ciò che non è più vero.',
+r3:'<strong>Controllate i file</strong> — rimuovete quelli obsoleti, aggiungete quelli nuovi. Un knowledge base pulito funziona meglio di uno enorme e disordinato.',
+r4:'<strong>Chiedetevi: serve ancora?</strong> — se un Project non lo usate da più di un mese, forse il contesto è finito. Va bene archiviarlo.',
+cleanH:'Un Project pulito batte un Project pieno',
+cleanP:'Meglio tre Projects con istruzioni aggiornate e file pertinenti che otto Projects abbandonati. Claude funziona con ciò che gli date — se le informazioni sono vecchie, le risposte saranno vecchie.',
+s6:'In una frase',
+keyPhrase:'«Gestire più Projects non è avere più posti dove cercare le cose. È avere un Claude diverso per ogni contesto — ognuno specializzato, ognuno focalizzato, ognuno che non interferisce con gli altri. È il modo in cui l\'assistente diventa un team.»',
+s7:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Prendi carta e penna e scrivi i 3-5 contesti del tuo lavoro che usano di più Claude — o che dovrebbero usarlo. Quelli sono i candidati per diventare Projects. Poi scegli il più importante e costruiscilo questa settimana.',
+s8:'Prossimo livello',
+brK:'Prossimo livello →',
+brP:'Avete Projects separati che funzionano. L\'ultimo livello è connettere questi Projects — fare in modo che l\'output di uno diventi l\'input di un altro.',
+foot:'Morfeus — Gestire Più Projects in Parallelo'
+},
+en:{
+kicker:'Lesson 3.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Projects',
+h1:'Managing Multiple Projects in Parallel',
+lede:'One Project is useful. Multiple Projects that complement each other without interfering — that\'s where Claude becomes a real work system.',
+arc1:'Instructions',arc2:'Context files',arc3:'Multiple Projects',arc4:'Chaining output',
+hook:'"Five Projects that talk to each other, complement each other, and stay separate when they need to stay separate — that\'s where Claude becomes a real work system. I\'ll show you how to structure them without going crazy."',
+s1:'What we\'re building',
+stackLabel:'Anatomy of a Project — Layer 3 of 4',
+sl1N:'Multiple Projects in parallel',sl1D:'This lesson',
+sl2N:'Context files',sl2D:'Lesson 3.3 ✓',
+sl3N:'Custom instructions',sl3D:'Lesson 3.2 ✓',
+sl4N:'Project (container)',sl4D:'Lesson 3.1 ✓',
+s2:'The guiding principle',
+prH:'One Project per context, not per task',
+prP:'A context is a set of knowledge, tone and objectives that stay stable over time. A task is something you do once or periodically inside a context. Projects contain contexts — tasks live in conversations.',
+s3:'What deserves a separate Project',
+ynYesTag:'Deserves a Project',
+ynY1:'A client you work with regularly',ynY2:'Newsletter or ongoing content production',ynY3:'A company project that lasts months',ynY4:'Internal tools (procedures, templates, FAQs)',ynY5:'Personal research and ongoing study',
+ynNoTag:'Doesn\'t deserve a Project',
+ynN1:'A one-off email — use the normal chat',ynN2:'A quick analysis — same',ynN3:'A task you do once a month — too little',ynN4:'Anything whose context you won\'t reuse',
+riskH:'The two opposite risks',
+riskP:'Too many Projects: scattering, hard to keep them all updated. Too few: a single Project with everything in it becomes generic. The goal is to find the right granularity for how you work. Start with 2-3 and add when needed.',
+s4:'Architectures by profile',
+archIntro:'There\'s no perfect architecture — there\'s the one that works for how you work. Three concrete examples to get started:',
+a1H:'Consultant with 3 active clients',a1S:'4 Projects — one per client + internal tools',
+a1p1N:'Client A',a1p1D:'Brief, history, deliverables',
+a1p2N:'Client B',a1p2D:'Brief, history, deliverables',
+a1p3N:'Client C',a1p3D:'Brief, history, deliverables',
+a1p4N:'Internal tools',a1p4D:'Templates, procedures, presentations',
+a2H:'Content creator / newsletter',a2S:'3 Projects — production, distribution, research',
+a2p1N:'Newsletter',a2p1D:'Style, archive, calendar',
+a2p2N:'Social content',a2p2D:'Formats, tones, scheduling',
+a2p3N:'Research and brainstorming',a2p3D:'Ideas, sources, prompts',
+a3H:'Manager with multiple teams',a3S:'3 Projects — operational, strategic, personal',
+a3p1N:'Operational team',a3p1D:'Meetings, tasks, communications',
+a3p2N:'Strategy',a3p2D:'Planning, reporting',
+a3p3N:'Personal',a3p3D:'Development, notes, reflections',
+s5:'Keeping Projects updated',
+maintIntro:'A real risk: you create Projects and then forget to update them. The instructions must reflect the current reality, not the one from three months ago.',
+routineH:'Maintenance routine',
+r1:'<strong>Choose a cadence</strong> — weekly or monthly, depending on the pace of your work. What matters is that it\'s consistent.',
+r2:'<strong>Re-read the instructions</strong> — has the client changed objectives? Has the project taken a different direction? Update what\'s no longer true.',
+r3:'<strong>Check the files</strong> — remove the obsolete ones, add the new ones. A clean knowledge base works better than a huge, messy one.',
+r4:'<strong>Ask yourself: is it still needed?</strong> — if you haven\'t used a Project in over a month, maybe the context is over. It\'s fine to archive it.',
+cleanH:'A clean Project beats a full Project',
+cleanP:'Better three Projects with updated instructions and relevant files than eight abandoned Projects. Claude works with what you give it — if the information is old, the answers will be old.',
+s6:'In one sentence',
+keyPhrase:'"Managing multiple Projects isn\'t having more places to look for things. It\'s having a different Claude for each context — each specialized, each focused, each not interfering with the others. It\'s how the assistant becomes a team."',
+s7:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Grab pen and paper and write down the 3-5 contexts of your work that use Claude the most — or that should use it. Those are the candidates to become Projects. Then pick the most important one and build it this week.',
+s8:'Next level',
+brK:'Next level →',
+brP:'You have separate Projects that work. The last level is connecting these Projects — making the output of one become the input of another.',
+foot:'Morfeus — Managing Multiple Projects in Parallel'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

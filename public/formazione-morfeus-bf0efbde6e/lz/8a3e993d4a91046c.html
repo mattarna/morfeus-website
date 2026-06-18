@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orientarsi nell'interfaccia — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--blue:#2d72c8;--blue-soft:#e6f0fb;--blue-line:#b6d2f0;
+--teal:#0f9b78;--teal-soft:#e2f4ef;--teal-line:#aee0d2;
+--amber:#bd7a16;--amber-soft:#faf0db;--amber-line:#eccf95;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--blue:#7db1ec;--blue-soft:#16304f;--blue-line:#2f5680;
+--teal:#73cdb1;--teal-soft:#103830;--teal-line:#2c6356;
+--amber:#e6b35e;--amber-soft:#3d2c10;--amber-line:#7a5a25;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+
+/* Interface map */
+.iface{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.iface .imt{font-size:14px;font-weight:600;text-align:center;margin-bottom:4px}
+.iface .ims{font-size:12.5px;color:var(--ink-3);text-align:center;margin-bottom:18px}
+.frame{border:1.5px solid var(--line-2);border-radius:var(--r-l);overflow:hidden;user-select:none}
+.chrome{background:var(--bg-2);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;align-items:center;gap:8px}
+.dots{display:flex;gap:5px}.dot{width:10px;height:10px;border-radius:50%}
+.url{flex:1;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.applay{display:grid;grid-template-columns:200px 1fr;min-height:320px}
+.side{background:var(--bg-2);border-right:1px solid var(--line);padding:12px 10px;display:flex;flex-direction:column;gap:5px}
+.main{background:var(--card);display:flex;flex-direction:column}
+.zone{border-radius:var(--r);padding:8px 10px;cursor:pointer;transition:.18s;border:2px solid transparent}
+.zone:hover,.zone.on{border-color:var(--accent);background:var(--accent-soft)}
+.zone .zl{font-size:11.5px;font-weight:600;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+.zone .zl i{font-size:14px;color:var(--accent)}
+.zone .zs{font-size:10px;color:var(--ink-3);margin-top:2px;padding-left:20px}
+.zdiv{border:none;border-top:1px solid var(--line);margin:4px 0}
+.mtop{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.minput{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.mz{display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg-2);border:2px solid transparent;border-radius:20px;font-size:11px;cursor:pointer;transition:.18s;color:var(--ink-2)}
+.mz:hover,.mz.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.mz i{font-size:13px}
+.imock{background:var(--bg-2);border:2px solid transparent;border-radius:var(--r-l);padding:12px 14px;cursor:pointer;transition:.18s}
+.imock:hover,.imock.on{border-color:var(--accent);background:var(--accent-soft)}
+.imrow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}.imrow span{flex:1}
+.imicons{display:flex;gap:6px}
+.imbtn{width:26px;height:26px;border-radius:6px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-3);cursor:pointer;transition:.18s}
+.imbtn:hover,.imbtn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.tip{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:16px 18px;margin-top:14px;min-height:80px}
+.tip.empty{display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:13px;font-style:italic;border-left-color:var(--line-2)}
+.tip .th{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tip .ti2{width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tip .tt{font-size:14px;font-weight:600}
+.tip .tb{font-size:13.5px;color:var(--ink-2)}
+.tip .tg{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--accent-soft);color:var(--accent);font-family:var(--mono)}
+
+/* Step tour */
+.tprog{display:flex;gap:4px;margin-bottom:16px}
+.tdot{flex:1;height:3px;border-radius:2px;background:var(--line-2);transition:.3s}.tdot.done{background:var(--accent)}
+.tnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tcount{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.tbtns{display:flex;gap:8px}
+.tbtn{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:.18s;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);font-family:var(--sans)}
+.tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.tbtn.primary:hover{opacity:.9;color:#fff}
+.tbtn:disabled{opacity:.4;cursor:default;pointer-events:none}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.thead{padding:22px 24px 18px;display:flex;align-items:flex-start;gap:14px}
+.tnum{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0;font-family:var(--mono)}
+.tcontent h3{font-size:17px;font-weight:600;margin-bottom:3px}
+.tcontent .tsub{font-size:12.5px;color:var(--ink-3);margin-bottom:8px;font-family:var(--mono)}
+.tcontent p{font-size:14px;color:var(--ink-2)}
+.tvis{padding:0 24px 22px}
+.flist{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.fitem{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line)}
+.fii{width:28px;height:28px;border-radius:6px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.fit strong{font-weight:600;font-size:13px;display:block}.fit span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.tnote{margin-top:14px;padding:12px 16px;border-radius:var(--r);background:var(--amber-soft);border:1px solid var(--amber-line);font-size:13px;color:var(--ink-2);display:flex;gap:8px;align-items:flex-start}
+.tnote i{color:var(--amber);flex-shrink:0;margin-top:2px}
+
+/* Artifacts feature rows */
+.abox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.ahead{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.ahead .ai{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.ahead .at{font-size:16px;font-weight:600;margin-bottom:3px}.ahead .ad{font-size:13px;color:var(--ink-2)}
+.frow{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.frow:last-of-type{border-bottom:none}
+.frow .fi{width:32px;height:32px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.frow .ft strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}.frow .ft span{font-size:13px;color:var(--ink-2);line-height:1.55}
+.akey{margin-top:18px;padding:16px 18px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;font-style:italic;color:var(--ink);line-height:1.6}
+
+/* Diff rows */
+.dintro{font-size:14px;color:var(--ink-2);margin-bottom:16px}
+.drows{display:flex;flex-direction:column;gap:10px}
+.drow{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;cursor:pointer;transition:.18s}
+.drow:hover{border-color:var(--line-2)}
+.dh{display:flex;align-items:center;gap:12px}
+.dh>i{font-size:20px;color:var(--accent)}
+.dh .dt{font-size:14.5px;font-weight:600;flex:1}
+.dh .dchev{color:var(--ink-3);font-size:16px;transition:.3s}.drow.open .dchev{transform:rotate(90deg)}
+.dbody{font-size:13.5px;color:var(--ink-2);margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:none}
+.drow.open .dbody{display:block}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 10px}
+.dcard{padding:16px;border-radius:var(--r);border:1px solid var(--line)}
+.dcard.gpt{background:var(--blue-soft);border-color:var(--blue-line)}
+.dcard.cla{background:var(--teal-soft);border-color:var(--teal-line)}
+.dtag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.dcard.gpt .dtag{color:var(--blue)}.dcard.cla .dtag{color:var(--teal)}
+.dcard h4{font-size:13.5px;font-weight:600;margin-bottom:5px}.dcard p{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+
+/* Checkpoint */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;align-items:flex-start;gap:16px}
+.cp .cpi{width:42px;height:42px;border-radius:11px;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:5px}.cp p{font-size:14px;color:var(--ink-2)}
+.cplist{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.cli{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2);padding:8px 12px;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line)}
+.cln{width:20px;height:20px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:var(--mono)}
+.cpnote{margin-top:12px;font-size:13px;color:var(--ink-3)}
+
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.applay{grid-template-columns:150px 1fr}.dgrid{grid-template-columns:1fr}}
+@media(max-width:480px){.applay{grid-template-columns:1fr}.side{border-right:none;border-bottom:1px solid var(--line)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.iface,.tcard,.abox,.drow,.cp,.key{break-inside:avoid;box-shadow:none!important}.dbody{display:block!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 1.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Setup</div>
+  <h1 class="rv" data-i="h1">Orientarsi nell'interfaccia</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Due notizie</h4><p data-i-html="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-map-pin"></i><span class="no">01</span><h2 data-i="s1">Mappa dell'interfaccia</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="mapIntro"></p>
+  <div class="iface rv">
+    <div class="imt" data-i="mapTitle"></div>
+    <div class="ims" data-i="mapSub"></div>
+    <div class="frame">
+      <div class="chrome">
+        <div class="dots"><div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#febc2e"></div><div class="dot" style="background:#28c840"></div></div>
+        <div class="url">claude.ai</div>
+      </div>
+      <div class="applay">
+        <div class="side">
+          <div class="zone" id="z-newchat" onclick="selZone('newchat')"><div class="zl"><i class="ti ti-edit"></i> <span data-i="zNewchat"></span></div></div>
+          <div class="zdiv"></div>
+          <div class="zone" id="z-history" onclick="selZone('history')"><div class="zl"><i class="ti ti-clock"></i> <span data-i="zHistory"></span></div><div class="zs" data-i="zHistorySub"></div></div>
+          <div class="zone" id="z-projects" onclick="selZone('projects')"><div class="zl"><i class="ti ti-folder"></i> <span data-i="zProjects"></span></div><div class="zs" data-i="zProjectsSub"></div></div>
+          <div style="flex:1"></div>
+          <div class="zdiv"></div>
+          <div class="zone" id="z-settings" onclick="selZone('settings')"><div class="zl"><i class="ti ti-settings"></i> <span data-i="zSettings"></span></div></div>
+        </div>
+        <div class="main">
+          <div class="mtop">
+            <div class="mz" id="z-model" onclick="selZone('model')"><i class="ti ti-sparkles"></i><span style="font-size:11px">Sonnet</span><i class="ti ti-chevron-down" style="font-size:10px;color:var(--ink-3)"></i></div>
+            <div style="flex:1"></div>
+            <div class="mz" id="z-customize" onclick="selZone('customize')"><i class="ti ti-adjustments-horizontal"></i><span style="font-size:11px">Customize</span></div>
+          </div>
+          <div class="minput">
+            <div style="flex:1;display:flex;align-items:center;justify-content:center"><div style="text-align:center;color:var(--ink-3)"><i class="ti ti-message-circle" style="font-size:30px;margin-bottom:6px;display:block;opacity:.45"></i><div style="font-size:11.5px;opacity:.6" data-i="chatArea"></div></div></div>
+            <div class="imock" id="z-inputbar" onclick="selZone('inputbar')">
+              <div class="imrow">
+                <span data-i="typeMsg"></span>
+                <div class="imicons">
+                  <div class="imbtn" id="btn-attach" onclick="event.stopPropagation();selZone('attach')"><i class="ti ti-paperclip"></i></div>
+                  <div class="imbtn" id="btn-mic" onclick="event.stopPropagation();selZone('mic')"><i class="ti ti-microphone"></i></div>
+                  <div class="imbtn" id="btn-artifact" onclick="event.stopPropagation();selZone('artifact')"><i class="ti ti-layout-sidebar-right-expand"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tip empty" id="tip"><span><i class="ti ti-hand-click" style="margin-right:6px"></i><span data-i="tipEmpty"></span></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">02</span><h2 data-i="s2">Tour guidato delle aree principali</h2></div>
+  <div class="tprog rv" id="tprog"><div class="tdot done"></div><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>
+  <div class="tnav rv">
+    <div class="tcount" id="tcount"></div>
+    <div class="tbtns"><button class="tbtn" id="btn-prev" onclick="tourNav(-1)" disabled data-i="prev"></button><button class="tbtn primary" id="btn-next" onclick="tourNav(1)" data-i="next"></button></div>
+  </div>
+  <div class="tcard rv" id="tcard"></div>
+
+  <div class="sh rv"><i class="ti ti-layout-sidebar-right-expand"></i><span class="no">03</span><h2 data-i="s3">Gli Artifacts: il risultato separato dal processo</h2></div>
+  <div class="abox rv">
+    <div class="ahead"><div class="ai"><i class="ti ti-layout-sidebar-right-expand"></i></div><div><div class="at" data-i="artH"></div><div class="ad" data-i="artD"></div></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-code"></i></div><div class="ft"><strong data-i="art1H"></strong><span data-i="art1P"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-table"></i></div><div class="ft"><strong data-i="art2H"></strong><span data-i="art2P"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-file-text"></i></div><div class="ft"><strong data-i="art3H"></strong><span data-i="art3P"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-browser"></i></div><div class="ft"><strong data-i="art4H"></strong><span data-i="art4P"></span></div></div>
+    <div class="akey" data-i="artKey"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">04</span><h2 data-i="s4">Per chi viene da ChatGPT — le differenze chiave</h2></div>
+  <p class="dintro rv" data-i="diffIntro"></p>
+  <div class="drows rv">
+    <div class="drow" onclick="toggleDiff(this)">
+      <div class="dh"><i class="ti ti-folder"></i><div class="dt" data-i="d1T"></div><i class="ti ti-chevron-right dchev"></i></div>
+      <div class="dbody">
+        <div class="dgrid">
+          <div class="dcard gpt"><div class="dtag"><i class="ti ti-brand-openai"></i> ChatGPT</div><h4 data-i="d1gH"></h4><p data-i="d1gP"></p></div>
+          <div class="dcard cla"><div class="dtag"><i class="ti ti-sparkles"></i> Claude</div><h4 data-i="d1cH"></h4><p data-i="d1cP"></p></div>
+        </div>
+        <p data-i="d1F"></p>
+      </div>
+    </div>
+    <div class="drow" onclick="toggleDiff(this)">
+      <div class="dh"><i class="ti ti-brain"></i><div class="dt" data-i="d2T"></div><i class="ti ti-chevron-right dchev"></i></div>
+      <div class="dbody">
+        <div class="dgrid">
+          <div class="dcard gpt"><div class="dtag"><i class="ti ti-brand-openai"></i> ChatGPT</div><h4 data-i="d2gH"></h4><p data-i="d2gP"></p></div>
+          <div class="dcard cla"><div class="dtag"><i class="ti ti-sparkles"></i> Claude</div><h4 data-i="d2cH"></h4><p data-i="d2cP"></p></div>
+        </div>
+        <p data-i="d2F"></p>
+      </div>
+    </div>
+    <div class="drow" onclick="toggleDiff(this)">
+      <div class="dh"><i class="ti ti-puzzle"></i><div class="dt" data-i="d3T"></div><i class="ti ti-chevron-right dchev"></i></div>
+      <div class="dbody">
+        <div class="dgrid">
+          <div class="dcard gpt"><div class="dtag"><i class="ti ti-brand-openai"></i> ChatGPT</div><h4 data-i="d3gH"></h4><p data-i="d3gP"></p></div>
+          <div class="dcard cla"><div class="dtag"><i class="ti ti-sparkles"></i> Claude</div><h4 data-i="d3cH"></h4><p data-i="d3cP"></p></div>
+        </div>
+        <p data-i="d3F"></p>
+      </div>
+    </div>
+    <div class="drow" onclick="toggleDiff(this)">
+      <div class="dh"><i class="ti ti-message-dots"></i><div class="dt" data-i="d4T"></div><i class="ti ti-chevron-right dchev"></i></div>
+      <div class="dbody"><p style="margin-bottom:12px" data-i="d4P1"></p><p data-i="d4P2"></p></div>
+    </div>
+    <div class="drow" onclick="toggleDiff(this)">
+      <div class="dh"><i class="ti ti-photo"></i><div class="dt" data-i="d5T"></div><i class="ti ti-chevron-right dchev"></i></div>
+      <div class="dbody"><p style="margin-bottom:12px" data-i="d5P1"></p><p data-i="d5P2"></p></div>
+    </div>
+  </div>
+
+  <div class="key rv" style="margin-top:40px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv">
+    <div class="cpi"><i class="ti ti-target"></i></div>
+    <div>
+      <h4 data-i="cpH"></h4>
+      <p data-i="cpP"></p>
+      <div class="cplist">
+        <div class="cli"><div class="cln">1</div><span data-i="cp1"></span></div>
+        <div class="cli"><div class="cln">2</div><span data-i="cp2"></span></div>
+        <div class="cli"><div class="cln">3</div><span data-i="cp3"></span></div>
+      </div>
+      <div class="cpnote" data-i="cpNote"></div>
+    </div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Orientarsi nell'interfaccia</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 1.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Setup',
+h1:'Orientarsi nell\'interfaccia',
+lede:'Un tour degli elementi chiave della chat web: cosa fa ogni zona, dove si trovano le funzioni, come si muove chi sa quello che cerca.',
+hookH:'Due notizie',
+hookP:'«Se vieni da ChatGPT, ho due notizie. La cattiva: alcune abitudini che hai costruito lì non funzionano allo stesso modo qui. La buona: l\'interfaccia di Claude è strutturata in modo più potente di quanto sembri a prima vista, e in cinque minuti sei già orientato meglio del novanta percento degli utenti nuovi.»',
+s1:'Mappa dell\'interfaccia',
+mapIntro:'Clicca una zona per scoprirla.',
+mapTitle:'La chat web — principali aree funzionali',
+mapSub:'Clicca su qualsiasi zona per vedere cosa fa',
+zNewchat:'Nuova conversazione',
+zHistory:'Conversazioni recenti',zHistorySub:'Ieri · 3 gg fa · Sett. scorsa',
+zProjects:'Projects',zProjectsSub:'I tuoi ambienti di lavoro',
+zSettings:'Impostazioni & account',
+chatArea:'Area conversazione',
+typeMsg:'Scrivi un messaggio...',
+tipEmpty:'Clicca su una zona per vedere la descrizione',
+s2:'Tour guidato delle aree principali',
+prev:'Indietro',next:'Avanti',
+s3:'Gli Artifacts: il risultato separato dal processo',
+artH:'Il pannello Artifact',
+artD:'Quando Claude crea output strutturati, non li mette nel flusso di chat. Li apre in una finestra separata a destra.',
+art1H:'Codice',art1P:'Script, snippet, funzioni. Con syntax highlighting e possibilità di eseguire direttamente in alcuni casi.',
+art2H:'Tabelle e dati strutturati',art2P:'Comparazioni, dataset, output organizzati. Si possono copiare o scaricare direttamente dall\'Artifact.',
+art3H:'Documenti',art3P:'Testi lunghi, report, bozze. Restano nel pannello mentre continui a iterare nella chat.',
+art4H:'Visualizzazioni interattive',art4P:'Pagine HTML, grafici, prototipi. Claude può creare interfacce funzionanti che puoi esplorare nell\'Artifact.',
+artKey:'«L\'Artifact è il risultato, la chat è il processo. Non si mescolano — e questo è intenzionale. Continui a parlare nella chat, il risultato evolve nel pannello.»',
+s4:'Per chi viene da ChatGPT — le differenze chiave',
+diffIntro:'Non sono differenze superficiali di interfaccia: sono scelte progettuali che cambiano il modo in cui lavori. Clicca su ciascuna per approfondire.',
+d1T:'GPT personalizzati → Projects',
+d1gH:'GPT store',d1gP:'Assistenti preconfigurati tematici che altri hanno creato, o i tuoi GPT. Ogni GPT è un chatbot specializzato.',
+d1cH:'Projects',d1cP:'Ambienti di lavoro contestualizzati con memoria persistente, file di riferimento e cronologia separata. Non "chatbot tematici" — ambienti di lavoro.',
+d1F:'I Projects sono più vicini a un "collaboratore specializzato" che a un assistente preconfigurato. Li vedrai nel Modulo 3.',
+d2T:'La memoria funziona diversamente',
+d2gH:'Memoria automatica',d2gP:'Si aggiorna da sola raccogliendo informazioni dalle conversazioni. Funziona in background senza che tu debba fare nulla.',
+d2cH:'Memoria nei Projects',d2cP:'Non esiste una memoria globale automatica allo stesso modo. Il contesto si costruisce tramite i Projects e le istruzioni che scrivi tu. Più controllo, meno magia automatica.',
+d2F:'Questo non è un limite: puoi costruire un contesto molto più preciso di quello che una memoria automatica creerebbe. Lo vediamo nel Modulo 5.',
+d3T:'Plugin store → Connettori MCP e Skill',
+d3gH:'Plugin store',d3gP:'Marketplace di plugin da attivare nella chat. Ogni plugin aggiunge capacità specifiche.',
+d3cH:'MCP + Skill',d3cP:'I Connettori MCP collegano Claude a strumenti esterni (Slack, Drive, Notion, GitHub...). Le Skill sono workflow specializzati. Più potenti, ma richiede un setup iniziale.',
+d3F:'Approfondimento nel Modulo 6. Per ora basta sapere che l\'ecosistema esiste ed è configurabile.',
+d4T:'Il dialogo è progettato diversamente',
+d4P1:'ChatGPT è stato addestrato su un pattern domanda-risposta molto marcato: fai una domanda, ottieni una risposta completa che si chiude su sé stessa.',
+d4P2:'Claude è progettato per il dialogo iterativo. Risponde, lascia spazio, aspetta la tua reazione, continua. Non chiude tutto in un blocco — lascia la conversazione aperta al prossimo passo. Questo cambia il modo in cui si lavora: non si tratta di formulare la domanda perfetta, ma di costruire insieme la risposta giusta.',
+d5T:'Claude non genera immagini nella chat standard',
+d5P1:'ChatGPT con DALL-E genera immagini direttamente nella chat. Claude non funziona così nella chat standard.',
+d5P2:'Per output visivi — prototipi, layout, mockup — Claude ha funzionalità dedicate separate (Claude Design e simili). La chat rimane ottimizzata per testo, codice, ragionamento. Non è una limitazione: è una scelta di focus. Lo vediamo nel Modulo 2.',
+q1:'«In Claude, ogni conversazione è un documento vivo. Non è una domanda seguita da una risposta — è un processo che si costruisce nel tempo. E i Projects sono dove quel processo diventa un sistema che lavora per te anche domani.»',
+s5:'Checkpoint',
+cpH:'Trova i tre punti cardinali',
+cpP:'Apri la chat web adesso se non l\'hai già aperta. Individua queste tre cose — sono i punti di orientamento fondamentali.',
+cp1:'Dove si crea una nuova conversazione',
+cp2:'Dove si trova la sezione Projects (o dove apparirà)',
+cp3:'Dove si accede alle impostazioni del tuo account',
+cpNote:'Se li trovi tutti e tre, l\'orientamento è fatto. Da qui in poi sai dove mettere le mani.',
+bridge:'Setup completo. Hai un account, conosci le superfici disponibili, e ti muovi nell\'interfaccia. <b>Prossimo:</b> il Modulo 2 è dove Claude smette di essere uno strumento che stai esplorando e diventa qualcosa che usi ogni giorno — e la prima lezione parte da qualcosa che risparmia già tempo dalla prima volta che la provi.',
+foot:'Morfeus — Orientarsi nell\'interfaccia'
+},
+en:{
+kicker:'Lesson 1.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Setup',
+h1:'Finding your way around the interface',
+lede:'A tour of the key elements of the web chat: what each zone does, where the functions live, how someone who knows what they\'re looking for moves around.',
+hookH:'Two pieces of news',
+hookP:'"If you\'re coming from ChatGPT, I have two pieces of news. The bad one: some habits you built there don\'t work the same way here. The good one: Claude\'s interface is structured in a more powerful way than it looks at first glance, and in five minutes you\'re already oriented better than ninety percent of new users."',
+s1:'Map of the interface',
+mapIntro:'Click a zone to discover it.',
+mapTitle:'The web chat — main functional areas',
+mapSub:'Click any zone to see what it does',
+zNewchat:'New conversation',
+zHistory:'Recent conversations',zHistorySub:'Yesterday · 3 days ago · Last week',
+zProjects:'Projects',zProjectsSub:'Your work environments',
+zSettings:'Settings & account',
+chatArea:'Conversation area',
+typeMsg:'Type a message...',
+tipEmpty:'Click a zone to see its description',
+s2:'Guided tour of the main areas',
+prev:'Back',next:'Next',
+s3:'Artifacts: the result separated from the process',
+artH:'The Artifact panel',
+artD:'When Claude creates structured outputs, it doesn\'t put them in the chat flow. It opens them in a separate window on the right.',
+art1H:'Code',art1P:'Scripts, snippets, functions. With syntax highlighting and, in some cases, the ability to run them directly.',
+art2H:'Tables and structured data',art2P:'Comparisons, datasets, organized outputs. They can be copied or downloaded directly from the Artifact.',
+art3H:'Documents',art3P:'Long texts, reports, drafts. They stay in the panel while you keep iterating in the chat.',
+art4H:'Interactive visualizations',art4P:'HTML pages, charts, prototypes. Claude can create working interfaces you can explore in the Artifact.',
+artKey:'"The Artifact is the result, the chat is the process. They don\'t mix — and that\'s intentional. You keep talking in the chat, the result evolves in the panel."',
+s4:'For those coming from ChatGPT — the key differences',
+diffIntro:'These aren\'t superficial interface differences: they\'re design choices that change the way you work. Click each one to dig deeper.',
+d1T:'Custom GPTs → Projects',
+d1gH:'GPT store',d1gP:'Pre-configured thematic assistants others have created, or your own GPTs. Each GPT is a specialized chatbot.',
+d1cH:'Projects',d1cP:'Contextualized work environments with persistent memory, reference files and a separate history. Not "thematic chatbots" — work environments.',
+d1F:'Projects are closer to a "specialized collaborator" than to a pre-configured assistant. You\'ll see them in Module 3.',
+d2T:'Memory works differently',
+d2gH:'Automatic memory',d2gP:'It updates on its own by collecting information from conversations. It works in the background without you having to do anything.',
+d2cH:'Memory in Projects',d2cP:'There\'s no automatic global memory in the same way. Context is built through Projects and the instructions you write. More control, less automatic magic.',
+d2F:'This isn\'t a limitation: you can build a far more precise context than an automatic memory would create. We cover it in Module 5.',
+d3T:'Plugin store → MCP Connectors and Skills',
+d3gH:'Plugin store',d3gP:'A marketplace of plugins to activate in the chat. Each plugin adds specific capabilities.',
+d3cH:'MCP + Skills',d3cP:'MCP Connectors link Claude to external tools (Slack, Drive, Notion, GitHub...). Skills are specialized workflows. More powerful, but it requires some initial setup.',
+d3F:'Deep dive in Module 6. For now it\'s enough to know the ecosystem exists and is configurable.',
+d4T:'The dialogue is designed differently',
+d4P1:'ChatGPT was trained on a very pronounced question-answer pattern: you ask a question, you get a complete answer that closes in on itself.',
+d4P2:'Claude is designed for iterative dialogue. It answers, leaves space, waits for your reaction, continues. It doesn\'t close everything in one block — it leaves the conversation open to the next step. This changes the way you work: it\'s not about formulating the perfect question, but about building the right answer together.',
+d5T:'Claude doesn\'t generate images in the standard chat',
+d5P1:'ChatGPT with DALL-E generates images directly in the chat. Claude doesn\'t work this way in the standard chat.',
+d5P2:'For visual outputs — prototypes, layouts, mockups — Claude has separate dedicated features (Claude Design and similar). The chat stays optimized for text, code, reasoning. It\'s not a limitation: it\'s a choice of focus. We cover it in Module 2.',
+q1:'"In Claude, every conversation is a living document. It\'s not a question followed by an answer — it\'s a process that builds over time. And Projects are where that process becomes a system that works for you tomorrow too."',
+s5:'Checkpoint',
+cpH:'Find the three cardinal points',
+cpP:'Open the web chat now if you haven\'t already. Locate these three things — they\'re the fundamental orientation points.',
+cp1:'Where you start a new conversation',
+cp2:'Where the Projects section is (or where it will appear)',
+cp3:'Where you access your account settings',
+cpNote:'If you find all three, you\'re oriented. From here on you know where to put your hands.',
+bridge:'Setup complete. You have an account, you know the available surfaces, and you move around the interface. <b>Next:</b> Module 2 is where Claude stops being a tool you\'re exploring and becomes something you use every day — and the first lesson starts with something that saves time from the very first time you try it.',
+foot:'Morfeus — Finding your way around the interface'
+}};
+
+var ZONES={
+it:{
+newchat:['ti-edit','Nuova conversazione','Il punto di partenza di ogni sessione di lavoro. Cliccando qui si apre una chat vuota, senza contesto residuo da conversazioni precedenti. Ogni nuova chat parte da zero — a meno che non sia dentro un Project, dove il contesto è già caricato.','Sidebar — in alto'],
+history:['ti-clock','Cronologia delle conversazioni','L\'elenco di tutte le chat passate, organizzate per data. Le conversazioni non spariscono — restano accessibili finché non le elimini tu. Puoi cercarne una vecchia, riaprirla e continuarla. Il nome di ogni chat viene generato automaticamente dal contenuto.','Sidebar — sezione centrale'],
+projects:['ti-folder','Projects','Gli ambienti di lavoro contestualizzati. All\'inizio questa sezione è vuota. Appena crei il primo Project, appare qui nella sidebar. Ogni Project ha le sue conversazioni, le sue istruzioni e i suoi file. È il cuore del lavoro avanzato — approfondimento nel Modulo 3.','Sidebar — sezione centrale'],
+settings:['ti-settings','Impostazioni e account','In basso nella sidebar si trovano i link per le impostazioni dell\'account, il piano attuale, il logout e le preferenze globali. Nelle impostazioni puoi configurare le istruzioni globali — quelle che si applicano a tutte le chat, non solo a un Project specifico.','Sidebar — in basso'],
+model:['ti-sparkles','Selettore modello','Qui scegli quale versione di Claude usare. In genere trovi Sonnet (veloce, capace, per la maggior parte dei task) e Opus (più potente, più lento, per i task complessi). La disponibilità dipende dal piano. Se sei su Free vedi solo un\'opzione; su Pro e superiori puoi scegliere.','Barra superiore — sinistra'],
+customize:['ti-adjustments-horizontal','Customize / Stili di risposta','Questo pannello ti permette di impostare lo stile di risposta per la conversazione corrente: tono più formale o informale, risposte più concise o estese, linguaggio tecnico o divulgativo. Non è permanente per default — ma nei Projects puoi rendere queste preferenze stabili tramite le istruzioni.','Barra superiore — destra'],
+inputbar:['ti-pencil','Barra di input','Qui scrivi il messaggio. Supporta testo lungo senza limiti pratici. Invio invia il messaggio; Shift+Invio va a capo senza inviare. Puoi incollare testo, codice, URL. I tasti ai lati della barra danno accesso a funzionalità aggiuntive.','Area principale — in basso'],
+attach:['ti-paperclip','Allega file','Carica file nella conversazione: PDF, immagini, documenti Word, CSV, fogli Excel, codice sorgente. Claude li legge e li analizza. Puoi allegare più file nello stesso messaggio. Utile per far analizzare un contratto, estrarre dati da un foglio, spiegare una codebase.','Barra di input — icona allegati'],
+mic:['ti-microphone','Input vocale','Parla invece di scrivere. Il browser trascrive la voce e la inserisce nella barra di testo. Funziona su desktop nei browser moderni. Non è una funzione di voce bidirezionale (Claude non risponde a voce) — è solo trascrizione del tuo input.','Barra di input — icona microfono'],
+artifact:['ti-layout-sidebar-right-expand','Pannello Artifact','Quando Claude produce output strutturati (codice, tabelle, documenti HTML, visualizzazioni), li apre in questo pannello a destra invece di inserirli nel flusso di chat. Puoi copiare, scaricare o continuare a iterare sull\'Artifact via conversazione. Si attiva automaticamente quando serve.','Barra di input — icona artifact']
+},
+en:{
+newchat:['ti-edit','New conversation','The starting point of every work session. Clicking here opens an empty chat, with no leftover context from previous conversations. Every new chat starts from scratch — unless it\'s inside a Project, where the context is already loaded.','Sidebar — top'],
+history:['ti-clock','Conversation history','The list of all past chats, organized by date. Conversations don\'t disappear — they stay accessible until you delete them. You can search for an old one, reopen it and continue it. Each chat\'s name is generated automatically from the content.','Sidebar — middle section'],
+projects:['ti-folder','Projects','The contextualized work environments. At first this section is empty. As soon as you create your first Project, it appears here in the sidebar. Every Project has its own conversations, instructions and files. It\'s the heart of advanced work — deep dive in Module 3.','Sidebar — middle section'],
+settings:['ti-settings','Settings and account','At the bottom of the sidebar you\'ll find the links for account settings, the current plan, logout and global preferences. In the settings you can configure global instructions — the ones that apply to all chats, not just to a specific Project.','Sidebar — bottom'],
+model:['ti-sparkles','Model selector','Here you choose which version of Claude to use. You\'ll generally find Sonnet (fast, capable, for most tasks) and Opus (more powerful, slower, for complex tasks). Availability depends on the plan. On Free you see only one option; on Pro and above you can choose.','Top bar — left'],
+customize:['ti-adjustments-horizontal','Customize / Response styles','This panel lets you set the response style for the current conversation: a more formal or informal tone, more concise or extended answers, technical or plain language. It\'s not permanent by default — but in Projects you can make these preferences stable through the instructions.','Top bar — right'],
+inputbar:['ti-pencil','Input bar','Here you write the message. It supports long text with no practical limits. Enter sends the message; Shift+Enter goes to a new line without sending. You can paste text, code, URLs. The keys beside the bar give access to additional features.','Main area — bottom'],
+attach:['ti-paperclip','Attach file','Upload files into the conversation: PDFs, images, Word documents, CSVs, Excel sheets, source code. Claude reads and analyzes them. You can attach multiple files in the same message. Useful for having a contract analyzed, extracting data from a sheet, explaining a codebase.','Input bar — attachments icon'],
+mic:['ti-microphone','Voice input','Speak instead of typing. The browser transcribes the voice and inserts it into the text bar. It works on desktop in modern browsers. It\'s not a two-way voice feature (Claude doesn\'t answer by voice) — it\'s just transcription of your input.','Input bar — microphone icon'],
+artifact:['ti-layout-sidebar-right-expand','Artifact panel','When Claude produces structured outputs (code, tables, HTML documents, visualizations), it opens them in this panel on the right instead of inserting them into the chat flow. You can copy, download or keep iterating on the Artifact via conversation. It activates automatically when needed.','Input bar — artifact icon']
+}};
+
+var STEPS={
+it:[
+{num:1,title:'La sidebar sinistra: struttura e cronologia',sub:'Navigazione e orientamento',body:'La sidebar è la prima cosa che vedi. Contiene tutto ciò che serve per orientarsi: dove iniziare una chat, dove tornare a quelle passate, dove trovare i Projects. È la mappa di navigazione dell\'interfaccia.',items:[
+['ti-edit','Nuova conversazione','In cima alla sidebar. Ogni click apre una chat pulita, senza contesto residuo.'],
+['ti-clock','Cronologia','Le conversazioni recenti, ordinate per data. Non spariscono — restano sempre accessibili.'],
+['ti-folder','Sezione Projects','Inizialmente vuota. Quando crei il primo Project, appare qui. Diventa il punto di accesso ai tuoi ambienti di lavoro persistenti.'],
+['ti-settings','Impostazioni','In fondo alla sidebar: account, piano, istruzioni globali, logout.']]},
+{num:2,title:'La barra superiore: modello e stile',sub:'Configurazione della conversazione',body:'In alto nell\'area di chat, due controlli che cambiano come Claude lavora in quella conversazione: quale versione del modello usare e con che stile rispondere.',items:[
+['ti-sparkles','Selettore modello','Scegli tra Sonnet (veloce, per la maggior parte dei task) e Opus (più potente, per ragionamenti complessi). Disponibile in base al piano.'],
+['ti-adjustments-horizontal','Customize / Stili','Tono di risposta, lunghezza, registro formale/informale. Si applica alla chat corrente. Nei Projects puoi renderlo permanente.']],
+note:'Il selettore modello è visibile solo se il tuo piano include più di un modello. Su Free vedi un\'unica opzione.'},
+{num:3,title:'La barra di input: testo, file, voce',sub:'Il punto di contatto principale',body:'La barra di input in basso è dove scrivi. Ma ha funzioni aggiuntive che la maggior parte degli utenti ignora nelle prime settimane.',items:[
+['ti-pencil','Campo testo','Scrivi il messaggio. Invio invia, Shift+Invio va a capo. Supporta testo lungo, codice incollato, URL.'],
+['ti-paperclip','Allega file','PDF, immagini, documenti, CSV, codice. Claude li legge e analizza. Puoi allegarne più di uno nello stesso messaggio.'],
+['ti-microphone','Input vocale','Il browser trascrive la voce nel campo testo. Utile per dettare prompt lunghi senza digitare.']]},
+{num:4,title:'Gli Artifacts: output separato dalla chat',sub:'Il pannello dei risultati strutturati',body:'Quando Claude produce output strutturati — codice, tabelle, documenti, visualizzazioni HTML — non li inserisce nel flusso di conversazione. Li apre in un pannello separato a destra.',items:[
+['ti-code','Codice','Snippet, script, funzioni. Con syntax highlighting. In alcuni casi eseguibile direttamente nell\'Artifact.'],
+['ti-table','Tabelle e strutture dati','Output organizzati che rimarrebbero illeggibili nel flusso chat. Scaricabili con un click.'],
+['ti-browser','Visualizzazioni HTML','Pagine interattive, grafici, prototipi. Claude può costruire interfacce funzionanti che esplori nel pannello.']],
+note:'Il pannello Artifact si apre automaticamente quando serve. Non devi attivarlo — Claude decide da solo quando un output merita di essere separato dalla conversazione.'},
+{num:5,title:'Projects: il contesto che resta',sub:'Il sistema che cambia il modo di lavorare',body:'I Projects non sono solo cartelle di conversazioni. Sono ambienti con memoria persistente: istruzioni che Claude legge sempre, file di riferimento sempre disponibili, cronologia separata. Ogni Project è come avere un collaboratore che sa già tutto del tuo contesto.',items:[
+['ti-settings','Istruzioni personalizzate','Chi sei, che tono usare, come ragionare. Claude parte già calibrato in ogni chat del Project.'],
+['ti-database','Knowledge base','File e documenti che Claude consulta automaticamente. Fino a 200.000 token di contesto — circa 500 pagine.'],
+['ti-messages','Conversazioni separate','Le chat dentro un Project non si mescolano con quelle fuori. Contesti distinti, sempre.']],
+note:'I Projects sono il tema del Modulo 3. Per ora basta sapere dove si trovano nell\'interfaccia e cosa fanno. Ci torneremo in dettaglio.'}
+],
+en:[
+{num:1,title:'The left sidebar: structure and history',sub:'Navigation and orientation',body:'The sidebar is the first thing you see. It contains everything you need to orient yourself: where to start a chat, where to go back to past ones, where to find Projects. It\'s the interface\'s navigation map.',items:[
+['ti-edit','New conversation','At the top of the sidebar. Each click opens a clean chat, with no leftover context.'],
+['ti-clock','History','Recent conversations, ordered by date. They don\'t disappear — they stay accessible.'],
+['ti-folder','Projects section','Empty at first. When you create your first Project, it appears here. It becomes the access point to your persistent work environments.'],
+['ti-settings','Settings','At the bottom of the sidebar: account, plan, global instructions, logout.']]},
+{num:2,title:'The top bar: model and style',sub:'Configuring the conversation',body:'At the top of the chat area, two controls that change how Claude works in that conversation: which version of the model to use and what style to answer with.',items:[
+['ti-sparkles','Model selector','Choose between Sonnet (fast, for most tasks) and Opus (more powerful, for complex reasoning). Available depending on the plan.'],
+['ti-adjustments-horizontal','Customize / Styles','Response tone, length, formal/informal register. It applies to the current chat. In Projects you can make it permanent.']],
+note:'The model selector is visible only if your plan includes more than one model. On Free you see a single option.'},
+{num:3,title:'The input bar: text, files, voice',sub:'The main point of contact',body:'The input bar at the bottom is where you write. But it has additional functions most users ignore in the first weeks.',items:[
+['ti-pencil','Text field','Write the message. Enter sends, Shift+Enter goes to a new line. It supports long text, pasted code, URLs.'],
+['ti-paperclip','Attach file','PDFs, images, documents, CSV, code. Claude reads and analyzes them. You can attach more than one in the same message.'],
+['ti-microphone','Voice input','The browser transcribes the voice into the text field. Useful for dictating long prompts without typing.']]},
+{num:4,title:'Artifacts: output separated from the chat',sub:'The structured-results panel',body:'When Claude produces structured outputs — code, tables, documents, HTML visualizations — it doesn\'t insert them into the conversation flow. It opens them in a separate panel on the right.',items:[
+['ti-code','Code','Snippets, scripts, functions. With syntax highlighting. In some cases runnable directly in the Artifact.'],
+['ti-table','Tables and data structures','Organized outputs that would be unreadable in the chat flow. Downloadable with one click.'],
+['ti-browser','HTML visualizations','Interactive pages, charts, prototypes. Claude can build working interfaces you explore in the panel.']],
+note:'The Artifact panel opens automatically when needed. You don\'t have to activate it — Claude decides on its own when an output deserves to be separated from the conversation.'},
+{num:5,title:'Projects: the context that stays',sub:'The system that changes the way you work',body:'Projects aren\'t just folders of conversations. They\'re environments with persistent memory: instructions Claude always reads, reference files always available, a separate history. Every Project is like having a collaborator who already knows everything about your context.',items:[
+['ti-settings','Custom instructions','Who you are, what tone to use, how to reason. Claude starts already calibrated in every chat of the Project.'],
+['ti-database','Knowledge base','Files and documents Claude consults automatically. Up to 200,000 tokens of context — about 500 pages.'],
+['ti-messages','Separate conversations','Chats inside a Project don\'t mix with those outside. Distinct contexts, always.']],
+note:'Projects are the subject of Module 3. For now it\'s enough to know where they are in the interface and what they do. We\'ll come back to them in detail.'}
+]};
+
+var LANG='it',curZone=null,tourStep=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // reset tip if a zone is selected, re-render in new lang
+  if(curZone){var z=curZone;curZone=null;document.querySelectorAll('.zone,.mz,.imbtn').forEach(function(x){x.classList.remove('on')});selZone(z);}
+  renderTour();
+}
+function selZone(id){
+  if(curZone){var p=document.getElementById('z-'+curZone);if(p)p.classList.remove('on');var pb=document.getElementById('btn-'+curZone);if(pb)pb.classList.remove('on');}
+  curZone=id;
+  var el=document.getElementById('z-'+id);if(el)el.classList.add('on');
+  var b=document.getElementById('btn-'+id);if(b)b.classList.add('on');
+  var d=ZONES[LANG][id];if(!d)return;
+  var tip=document.getElementById('tip');tip.classList.remove('empty');
+  tip.innerHTML='<div class="th"><div class="ti2"><i class="ti '+d[0]+'"></i></div><div class="tt">'+d[1]+'</div></div><div class="tb">'+d[2]+'</div><span class="tg"><i class="ti ti-map-pin" style="font-size:11px"></i>'+d[3]+'</span>';
+}
+function renderTour(){
+  var s=STEPS[LANG][tourStep],card=document.getElementById('tcard');
+  var items=s.items.map(function(it){return '<div class="fitem"><div class="fii"><i class="ti '+it[0]+'"></i></div><div class="fit"><strong>'+it[1]+'</strong><span>'+it[2]+'</span></div></div>'}).join('');
+  var note=s.note?'<div class="tnote"><i class="ti ti-info-circle"></i><span>'+s.note+'</span></div>':'';
+  card.innerHTML='<div class="thead"><div class="tnum">'+s.num+'</div><div class="tcontent"><h3>'+s.title+'</h3><div class="tsub">'+s.sub+'</div><p>'+s.body+'</p></div></div><div class="tvis"><div class="flist">'+items+'</div>'+note+'</div>';
+  document.querySelectorAll('.tdot').forEach(function(d,i){d.classList.toggle('done',i<=tourStep)});
+  document.getElementById('tcount').textContent=(LANG==='it'?'Passo ':'Step ')+(tourStep+1)+(LANG==='it'?' di ':' of ')+STEPS[LANG].length;
+  document.getElementById('btn-prev').disabled=tourStep===0;
+  var bn=document.getElementById('btn-next');
+  bn.textContent=tourStep===STEPS[LANG].length-1?(LANG==='it'?'Fine':'Done'):DICT[LANG].next;
+}
+function tourNav(dir){tourStep=Math.max(0,Math.min(STEPS[LANG].length-1,tourStep+dir));renderTour()}
+function toggleDiff(el){el.classList.toggle('open')}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

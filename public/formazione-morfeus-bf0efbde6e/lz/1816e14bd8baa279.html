@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Installare un Plugin: dal marketplace al primo uso — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#eccb8d;
+--gray:#5F5E5A;--gray-soft:#eeece4;--gray-line:#cdcabd;
+--red:#d44a3e;--red-soft:#fbe9e6;--red-line:#eeb4ac;
+--purple:#6B5FE5;--purple-soft:#eeedfd;--purple-line:#cdc9f6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6a4a14;
+--gray:#B4B2A9;--gray-soft:#2c2c2a;--gray-line:#4a4a46;
+--red:#ee8a80;--red-soft:#412420;--red-line:#6a3a34;
+--purple:#9b92f2;--purple-soft:#2b2560;--purple-line:#4a4290;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+.kp.big{font-size:16px}
+/* ===== STEP-BY-STEP INSTALL ===== */
+.click-hint{font-size:12px;color:var(--ink-3);margin:0 0 14px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.click-hint i{font-size:15px}
+.install-wrap{margin:0}
+.progress-track{display:flex;align-items:center;margin-bottom:24px;position:relative}
+.progress-track::before{content:'';position:absolute;top:16px;left:16px;right:16px;height:2px;background:var(--line-2);z-index:0}
+.progress-track-fill{position:absolute;top:16px;left:16px;height:2px;background:var(--accent);z-index:1;transition:width .4s ease}
+.pt-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;z-index:2;position:relative}
+.pt-dot{width:32px;height:32px;border-radius:50%;background:var(--card);border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;font-family:var(--mono);color:var(--ink-3);transition:all .25s}
+.pt-step.active .pt-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.pt-step.done .pt-dot{background:var(--teal-soft);border-color:var(--teal);color:var(--teal)}
+.pt-label{font-size:10px;color:var(--ink-3);text-align:center;line-height:1.3;max-width:64px;transition:color .2s;font-family:var(--mono)}
+.pt-step.active .pt-label{color:var(--ink);font-weight:600}
+.pt-step.done .pt-label{color:var(--teal)}
+.step-panels{position:relative}
+.step-panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;animation:fadein .2s ease}
+.step-panel.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sp-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px}
+.sp-num{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;font-family:var(--mono);flex-shrink:0}
+.sp-title{flex:1}
+.sp-title strong{font-size:17px;font-weight:600;display:block;margin-bottom:4px}
+.sp-title>span{font-size:13px;color:var(--ink-2)}
+.sp-body{font-size:14px;color:var(--ink-2);line-height:1.75}
+.sp-body p{margin-bottom:12px}
+.sp-body p:last-child{margin-bottom:0}
+.sp-body strong{color:var(--ink);font-weight:600}
+.sp-body code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);padding:1px 6px;border-radius:5px;color:var(--accent)}
+.path-pill{display:inline-flex;align-items:center;gap:4px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;font-family:var(--mono)}
+.path-pill i{font-size:13px;color:var(--ink-3)}
+.sp-nav{display:flex;justify-content:space-between;margin-top:20px;gap:10px}
+.sp-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r);border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--mono)}
+.sp-btn:hover{border-color:var(--accent);color:var(--accent)}
+.sp-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sp-btn.primary:hover{filter:brightness(1.07);color:#fff}
+.sp-btn:disabled{opacity:.4;cursor:default;pointer-events:none}
+/* ===== WILL INSTALL CARD ===== */
+.wi-wrap{margin:0}
+.wi-trigger{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s,background .2s;user-select:none}
+.wi-trigger:hover{border-color:var(--accent-line);background:var(--accent-soft)}
+.wi-trigger.open{border-color:var(--accent);border-bottom-left-radius:0;border-bottom-right-radius:0;background:var(--accent-soft)}
+.wi-trigger-left{display:flex;align-items:center;gap:14px}
+.wi-trigger-icon{width:44px;height:44px;border-radius:10px;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid var(--amber-line)}
+.wi-trigger-text strong{font-size:15px;font-weight:600;display:block;margin-bottom:2px}
+.wi-trigger-text span{font-size:13px;color:var(--ink-2)}
+.wi-arrow{font-size:18px;color:var(--ink-3);transition:transform .3s}
+.wi-trigger.open .wi-arrow{transform:rotate(180deg)}
+.wi-body{display:none;background:var(--card);border:1px solid var(--accent);border-top:none;border-bottom-left-radius:var(--r-l);border-bottom-right-radius:var(--r-l);overflow:hidden}
+.wi-body.open{display:block}
+.wi-mock{padding:20px 24px}
+.wi-mock-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.wi-mock-icon{width:48px;height:48px;border-radius:12px;background:var(--purple-soft);border:1px solid var(--purple-line);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--purple)}
+.wi-mock-name strong{font-size:15px;font-weight:600;display:block;font-family:var(--mono)}
+.wi-mock-name span{font-size:12px;color:var(--ink-3)}
+.wi-section{margin-bottom:16px}
+.wi-section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:10px;font-family:var(--mono)}
+.wi-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:var(--r);border:1px solid var(--line);background:var(--bg-2);margin-bottom:6px}
+.wi-row:last-child{margin-bottom:0}
+.wi-row-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.wi-row-icon.skill{background:var(--teal-soft);color:var(--teal)}
+.wi-row-icon.conn{background:var(--blue-soft);color:var(--blue)}
+.wi-row-icon.hook{background:var(--amber-soft);color:var(--amber)}
+.wi-row-icon.agent{background:var(--purple-soft);color:var(--purple)}
+.wi-row-text strong{font-size:12px;font-weight:600;display:block}
+.wi-row-text span{font-size:11px;color:var(--ink-2);line-height:1.5}
+.wi-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-left:6px;display:inline-block;font-family:var(--mono)}
+.wi-badge.everywhere{background:var(--teal-soft);color:var(--teal)}
+.wi-badge.cowork{background:var(--amber-soft);color:var(--amber)}
+.wi-meta{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0 4px;border-top:1px solid var(--line);margin-top:4px}
+.wi-meta-item{font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:4px;font-family:var(--mono)}
+.wi-meta-item i{font-size:14px}
+.wi-install-btn{width:100%;padding:11px;border-radius:var(--r);background:var(--accent);color:#fff;border:none;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;transition:filter .2s;font-family:var(--mono)}
+.wi-install-btn:hover{filter:brightness(1.07)}
+.wi-feedback{margin-top:10px;padding:10px 14px;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r);font-size:13px;color:var(--teal);align-items:center;gap:8px}
+.wi-annotation{padding:14px 20px;background:var(--amber-soft);border-top:1px solid var(--amber-line)}
+.wi-annotation p{font-size:12px;color:var(--ink-2);line-height:1.6}
+.wi-annotation strong{color:var(--amber)}
+/* warn / info boxes */
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.info-box{background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.info-box .info-title{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.info-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* comparison table */
+.comp-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);margin:0}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:11px 14px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.comp th.center{text-align:center}
+.comp td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:middle}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+.comp .yes{color:var(--teal);text-align:center}
+.comp .no{color:var(--ink-3);text-align:center}
+.comp code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);padding:1px 5px;border-radius:5px;color:var(--accent)}
+/* troubleshooting accordion */
+.trouble-list{margin:0;display:flex;flex-direction:column;gap:8px}
+.trouble-item{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:border-color .15s}
+.trouble-item.open{border-color:var(--line-2)}
+.trouble-trigger{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none}
+.trouble-trigger:hover .trouble-title{color:var(--ink)}
+.trouble-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.trouble-icon.red{background:var(--red-soft);color:var(--red)}
+.trouble-icon.amber{background:var(--amber-soft);color:var(--amber)}
+.trouble-icon.blue{background:var(--blue-soft);color:var(--blue)}
+.trouble-icon.gray{background:var(--gray-soft);color:var(--gray)}
+.trouble-title{flex:1;font-size:14px;font-weight:600;color:var(--ink-2);transition:color .15s}
+.trouble-arrow{font-size:16px;color:var(--ink-3);transition:transform .3s}
+.trouble-item.open .trouble-arrow{transform:rotate(180deg)}
+.trouble-body{display:none;padding:0 18px 18px 62px}
+.trouble-item.open .trouble-body{display:block}
+.trouble-checks{display:flex;flex-direction:column;gap:8px}
+.tc-row{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r)}
+.tc-num{width:20px;height:20px;border-radius:50%;background:var(--card);border:1px solid var(--line-2);font-size:11px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--ink-3)}
+.tc-text{font-size:13px;color:var(--ink-2);line-height:1.55}
+.tc-text code{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);padding:1px 5px;border-radius:5px;color:var(--accent)}
+.tc-text strong{color:var(--ink);font-weight:600}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.bridge .br-i{width:48px;height:48px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge strong{font-weight:600;font-size:15px;display:block;margin-bottom:4px;color:var(--agent)}
+.bridge span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.pt-label{display:none}.progress-track{overflow-x:auto}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.step-panel{display:block!important;margin-bottom:14px}.wi-body{display:block!important}.trouble-body{display:block!important}.step-panel,.kp,.warn-box,.info-box,.comp-wrap,.bridge,.key,.trouble-item,.wi-trigger,.wi-body{break-inside:avoid;box-shadow:none!important}.sp-nav,.progress-track{display:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Bonus</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Installare un Plugin</div>
+  <h1 class="rv" data-i="h1">Dal marketplace al primo uso</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <!-- ===== 01 · STEP-BY-STEP ===== -->
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">01</span><h2 data-i="s1">Installazione passo per passo</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="installIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="installHint"></span></div>
+
+  <div class="install-wrap rv">
+    <div class="progress-track" id="progress-track">
+      <div class="progress-track-fill" id="ptFill" style="width:0%"></div>
+      <div class="pt-step active" id="pt-0" onclick="goStep(0)"><div class="pt-dot">1</div><div class="pt-label" data-i="ptL0"></div></div>
+      <div class="pt-step" id="pt-1" onclick="goStep(1)"><div class="pt-dot">2</div><div class="pt-label" data-i="ptL1"></div></div>
+      <div class="pt-step" id="pt-2" onclick="goStep(2)"><div class="pt-dot">3</div><div class="pt-label" data-i="ptL2"></div></div>
+      <div class="pt-step" id="pt-3" onclick="goStep(3)"><div class="pt-dot">4</div><div class="pt-label" data-i="ptL3"></div></div>
+      <div class="pt-step" id="pt-4" onclick="goStep(4)"><div class="pt-dot">5</div><div class="pt-label" data-i="ptL4"></div></div>
+    </div>
+
+    <div class="step-panels">
+      <!-- STEP 1 -->
+      <div class="step-panel active" id="sp-0">
+        <div class="sp-header">
+          <div class="sp-num">1</div>
+          <div class="sp-title"><strong data-i="sp0T"></strong><span data-i="sp0S"></span></div>
+        </div>
+        <div class="sp-body">
+          <p data-i-html="sp0P1"></p>
+          <p>
+            <span class="path-pill"><i class="ti ti-chevron-right"></i> Customize</span>
+            &nbsp;<i class="ti ti-arrow-right" style="font-size:12px;color:var(--ink-3)"></i>&nbsp;
+            <span class="path-pill"><i class="ti ti-chevron-right"></i> Plugins</span>
+            &nbsp;<i class="ti ti-arrow-right" style="font-size:12px;color:var(--ink-3)"></i>&nbsp;
+            <span class="path-pill"><i class="ti ti-plus"></i> "+"</span>
+            &nbsp;<i class="ti ti-arrow-right" style="font-size:12px;color:var(--ink-3)"></i>&nbsp;
+            <span class="path-pill"><i class="ti ti-search"></i> Browse plugins</span>
+          </p>
+          <p data-i-html="sp0P2"></p>
+          <p data-i-html="sp0P3"></p>
+        </div>
+        <div class="sp-nav">
+          <button class="sp-btn" onclick="goStep(currentStep-1)" disabled><i class="ti ti-arrow-left"></i> <span data-i="navBack"></span></button>
+          <button class="sp-btn primary" onclick="goStep(currentStep+1)"><span data-i="navNext"></span> <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- STEP 2 -->
+      <div class="step-panel" id="sp-1">
+        <div class="sp-header">
+          <div class="sp-num">2</div>
+          <div class="sp-title"><strong data-i="sp1T"></strong><span data-i="sp1S"></span></div>
+        </div>
+        <div class="sp-body">
+          <p data-i-html="sp1P1"></p>
+          <p data-i="sp1P2"></p>
+          <p data-i-html="sp1List"></p>
+          <p data-i="sp1P3"></p>
+        </div>
+        <div class="sp-nav">
+          <button class="sp-btn" onclick="goStep(currentStep-1)"><i class="ti ti-arrow-left"></i> <span data-i="navBack"></span></button>
+          <button class="sp-btn primary" onclick="goStep(currentStep+1)"><span data-i="navNext"></span> <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- STEP 3 -->
+      <div class="step-panel" id="sp-2">
+        <div class="sp-header">
+          <div class="sp-num">3</div>
+          <div class="sp-title"><strong data-i="sp2T"></strong><span data-i="sp2S"></span></div>
+        </div>
+        <div class="sp-body">
+          <p data-i-html="sp2P1"></p>
+          <p data-i="sp2P2"></p>
+          <p data-i-html="sp2List"></p>
+          <p data-i="sp2P3"></p>
+        </div>
+        <div class="sp-nav">
+          <button class="sp-btn" onclick="goStep(currentStep-1)"><i class="ti ti-arrow-left"></i> <span data-i="navBack"></span></button>
+          <button class="sp-btn primary" onclick="goStep(currentStep+1)"><span data-i="navNext"></span> <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- STEP 4 -->
+      <div class="step-panel" id="sp-3">
+        <div class="sp-header">
+          <div class="sp-num">4</div>
+          <div class="sp-title"><strong data-i="sp3T"></strong><span data-i="sp3S"></span></div>
+        </div>
+        <div class="sp-body">
+          <p data-i-html="sp3P1"></p>
+          <p data-i="sp3P2"></p>
+          <p data-i-html="sp3List"></p>
+          <p data-i-html="sp3P3"></p>
+        </div>
+        <div class="sp-nav">
+          <button class="sp-btn" onclick="goStep(currentStep-1)"><i class="ti ti-arrow-left"></i> <span data-i="navBack"></span></button>
+          <button class="sp-btn primary" onclick="goStep(currentStep+1)"><span data-i="navNext"></span> <i class="ti ti-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- STEP 5 -->
+      <div class="step-panel" id="sp-4">
+        <div class="sp-header">
+          <div class="sp-num">5</div>
+          <div class="sp-title"><strong data-i="sp4T"></strong><span data-i="sp4S"></span></div>
+        </div>
+        <div class="sp-body">
+          <p data-i="sp4P1"></p>
+          <p data-i-html="sp4List1"></p>
+          <p data-i="sp4P2"></p>
+          <p data-i-html="sp4List2"></p>
+          <p data-i="sp4P3"></p>
+        </div>
+        <div class="sp-nav">
+          <button class="sp-btn" onclick="goStep(currentStep-1)"><i class="ti ti-arrow-left"></i> <span data-i="navBack"></span></button>
+          <button class="sp-btn" disabled style="opacity:.4;cursor:default"><span data-i="navDone"></span> <i class="ti ti-check"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 02 · WILL INSTALL ===== -->
+  <div class="sh rv"><i class="ti ti-eye"></i><span class="no">02</span><h2 data-i="s2">La scheda "Will install" — cosa controllare</h2></div>
+  <p class="lede-p rv" style="margin-bottom:14px" data-i="wiIntro"></p>
+
+  <div class="wi-wrap rv">
+    <div class="wi-trigger" id="wi-trigger" onclick="toggleWillInstall()">
+      <div class="wi-trigger-left">
+        <div class="wi-trigger-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="wi-trigger-text">
+          <strong data-i="wiTrigT"></strong>
+          <span data-i="wiTrigS"></span>
+        </div>
+      </div>
+      <i class="ti ti-chevron-down wi-arrow" id="wi-arrow"></i>
+    </div>
+    <div class="wi-body" id="wi-body">
+      <div class="wi-mock">
+        <div class="wi-mock-header">
+          <div class="wi-mock-icon"><i class="ti ti-package"></i></div>
+          <div class="wi-mock-name">
+            <strong>plugin-esempio</strong>
+            <span data-i="wiMockSub"></span>
+          </div>
+        </div>
+        <div class="wi-section">
+          <div class="wi-section-title" data-i="wiSecTitle"></div>
+          <div class="wi-row">
+            <div class="wi-row-icon skill"><i class="ti ti-bolt"></i></div>
+            <div class="wi-row-text">
+              <strong><span data-i="wiSkillN"></span><span class="wi-badge everywhere" data-i="wiBadgeEvery"></span></strong>
+              <span data-i="wiSkillD"></span>
+            </div>
+          </div>
+          <div class="wi-row">
+            <div class="wi-row-icon conn"><i class="ti ti-plug"></i></div>
+            <div class="wi-row-text">
+              <strong><span data-i="wiConnN"></span><span class="wi-badge everywhere" data-i="wiBadgeEvery"></span></strong>
+              <span data-i="wiConnD"></span>
+            </div>
+          </div>
+          <div class="wi-row">
+            <div class="wi-row-icon hook"><i class="ti ti-hook"></i></div>
+            <div class="wi-row-text">
+              <strong><span data-i="wiHookN"></span><span class="wi-badge cowork" data-i="wiBadgeCowork"></span></strong>
+              <span data-i="wiHookD"></span>
+            </div>
+          </div>
+          <div class="wi-row">
+            <div class="wi-row-icon agent"><i class="ti ti-robot"></i></div>
+            <div class="wi-row-text">
+              <strong><span data-i="wiAgentN"></span><span class="wi-badge cowork" data-i="wiBadgeCowork"></span></strong>
+              <span data-i="wiAgentD"></span>
+            </div>
+          </div>
+          <div class="wi-meta">
+            <div class="wi-meta-item"><i class="ti ti-coins"></i> <span data-i="wiMeta1"></span></div>
+            <div class="wi-meta-item"><i class="ti ti-calendar"></i> <span data-i="wiMeta2"></span></div>
+          </div>
+        </div>
+        <button class="wi-install-btn" onclick="showInstallFeedback()"><i class="ti ti-download"></i> Install</button>
+        <div id="install-feedback" class="wi-feedback" style="display:none">
+          <i class="ti ti-check"></i> <span data-i="wiFeedback"></span>
+        </div>
+      </div>
+      <div class="wi-annotation">
+        <p data-i-html="wiAnnotation"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box rv" style="margin-top:16px">
+    <div class="warn-title"><i class="ti ti-shield"></i> <span data-i="secH"></span></div>
+    <p data-i="secP"></p>
+  </div>
+
+  <!-- ===== 03 · COSA FUNZIONA DOVE ===== -->
+  <div class="sh rv"><i class="ti ti-device-desktop"></i><span class="no">03</span><h2 data-i="s3">Cosa funziona dove</h2></div>
+  <p class="lede-p rv" style="margin-bottom:14px" data-i="surfIntro"></p>
+  <div class="comp-wrap rv">
+    <table class="comp">
+      <thead><tr><th data-i="thComponent"></th><th class="center" data-i="thChat"></th><th class="center" data-i="thCowork"></th><th data-i="thNote"></th></tr></thead>
+      <tbody id="surf-body"></tbody>
+    </table>
+  </div>
+  <div class="info-box rv" style="margin-top:16px">
+    <div class="info-title"><i class="ti ti-info-circle"></i> <span data-i="surfInfoH"></span></div>
+    <p data-i="surfInfoP"></p>
+  </div>
+
+  <!-- ===== 04 · TROUBLESHOOTING ===== -->
+  <div class="sh rv"><i class="ti ti-tool"></i><span class="no">04</span><h2 data-i="s4">Troubleshooting — i problemi più comuni</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="trIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="trHint"></span></div>
+
+  <div class="trouble-list rv">
+    <!-- PROBLEMA 1 -->
+    <div class="trouble-item" id="tr-0">
+      <div class="trouble-trigger" onclick="toggleTrouble(0)">
+        <div class="trouble-icon red"><i class="ti ti-bolt-off"></i></div>
+        <div class="trouble-title" data-i="tr0T"></div>
+        <i class="ti ti-chevron-down trouble-arrow"></i>
+      </div>
+      <div class="trouble-body">
+        <div class="trouble-checks">
+          <div class="tc-row"><div class="tc-num">1</div><div class="tc-text" data-i-html="tr0c1"></div></div>
+          <div class="tc-row"><div class="tc-num">2</div><div class="tc-text" data-i-html="tr0c2"></div></div>
+          <div class="tc-row"><div class="tc-num">3</div><div class="tc-text" data-i-html="tr0c3"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- PROBLEMA 2 -->
+    <div class="trouble-item" id="tr-1">
+      <div class="trouble-trigger" onclick="toggleTrouble(1)">
+        <div class="trouble-icon amber"><i class="ti ti-plug-x"></i></div>
+        <div class="trouble-title" data-i="tr1T"></div>
+        <i class="ti ti-chevron-down trouble-arrow"></i>
+      </div>
+      <div class="trouble-body">
+        <div class="trouble-checks">
+          <div class="tc-row"><div class="tc-num">1</div><div class="tc-text" data-i-html="tr1c1"></div></div>
+          <div class="tc-row"><div class="tc-num">2</div><div class="tc-text" data-i-html="tr1c2"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- PROBLEMA 3 -->
+    <div class="trouble-item" id="tr-2">
+      <div class="trouble-trigger" onclick="toggleTrouble(2)">
+        <div class="trouble-icon blue"><i class="ti ti-ghost"></i></div>
+        <div class="trouble-title" data-i="tr2T"></div>
+        <i class="ti ti-chevron-down trouble-arrow"></i>
+      </div>
+      <div class="trouble-body">
+        <div class="trouble-checks">
+          <div class="tc-row"><div class="tc-num">1</div><div class="tc-text" data-i-html="tr2c1"></div></div>
+          <div class="tc-row"><div class="tc-num">2</div><div class="tc-text" data-i-html="tr2c2"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- PROBLEMA 4 -->
+    <div class="trouble-item" id="tr-3">
+      <div class="trouble-trigger" onclick="toggleTrouble(3)">
+        <div class="trouble-icon gray"><i class="ti ti-mood-puzzled"></i></div>
+        <div class="trouble-title" data-i="tr3T"></div>
+        <i class="ti ti-chevron-down trouble-arrow"></i>
+      </div>
+      <div class="trouble-body">
+        <div class="trouble-checks">
+          <div class="tc-row"><div class="tc-num">1</div><div class="tc-text" data-i-html="tr3c1"></div></div>
+          <div class="tc-row"><div class="tc-num">2</div><div class="tc-text" data-i-html="tr3c2"></div></div>
+          <div class="tc-row"><div class="tc-num">3</div><div class="tc-text" data-i-html="tr3c3"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KEY PHRASE ===== -->
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <!-- ===== 05 · BRIDGE ===== -->
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">05</span><h2 data-i="s5">Prossimo passo</h2></div>
+  <div class="bridge rv"><div class="br-i"><i class="ti ti-arrow-right"></i></div><div><strong data-i="brH"></strong><span data-i="brP"></span></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Installare un Plugin: dal marketplace al primo uso</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Installare un Plugin',
+h1:'Dal marketplace al primo uso',
+lede:'Installare un Plugin richiede 5 minuti. Configurarlo bene altri 10. Testarlo altri 5. Vi mostro l\'intero processo — passo dopo passo.',
+hook:'«Installare un Plugin richiede 5 minuti. Configurarlo bene richiede altri 10. Testarlo richiede altri 5. In 20 minuti avete uno strumento completamente nuovo — Skills, connessioni e workflow già pronti. Vi mostro il processo dall\'inizio alla fine.»',
+s1:'Installazione passo per passo',
+installIntro:'Cinque passi dall\'apertura del pannello al primo test. Cliccate ogni passo (o i tasti avanti/indietro) per vedere cosa succede.',
+installHint:'Cliccate i passi o i tasti avanti/indietro',
+ptL0:'Trova',ptL1:'Leggi',ptL2:'Installa',ptL3:'Configura',ptL4:'Testa',
+navBack:'Indietro',navNext:'Avanti',navDone:'Completato',
+sp0T:'Trova il Plugin',sp0S:'Aprite il pannello Customize e navigate fino ai Plugin',
+sp0P1:'Il punto di accesso è sempre il pannello <strong>Customize</strong> nella sidebar sinistra di Cowork o Claude Desktop. Da lì:',
+sp0P2:'Il pulsante <strong>"+"</strong> apre la Unified Directory — il catalogo unificato di Anthropic. Potete anche navigarla su <strong>claude.com/plugins</strong> da browser senza login.',
+sp0P3:'Filtrate per categoria (produttività, marketing, legale, finanza, HR…) o cercate per nome. Il catalogo ufficiale Anthropic elenca i Plugin del repository <strong>knowledge-work-plugins</strong> oltre ai Plugin community verificati.',
+sp1T:'Leggi prima di installare',sp1S:'La scheda "Will install" — il bugiardino del Plugin',
+sp1P1:'Ogni Plugin ha una scheda con la descrizione, le Skills incluse e le connessioni richieste. La sezione chiave si chiama <strong>"Will install"</strong>: elenca esattamente cosa entra nel vostro ambiente.',
+sp1P2:'Cosa trovate nella scheda:',
+sp1List:'— <strong>Skills incluse</strong> con nome e trigger (capite cosa sa fare)<br>— <strong>Connettori richiesti</strong> (capite a quali servizi si collegherà)<br>— <strong>Hook e sub-agent</strong> inclusi (ricordate: funzionano solo in Cowork)<br>— <strong>Stima costo token</strong> di contesto aggiunto<br>— <strong>Data ultimo aggiornamento</strong> (valutate la manutenzione)',
+sp1P3:'Leggere questa scheda non è burocrazia — è la differenza tra installare consapevolmente e scoprire sorprese dopo.',
+sp2T:'Clicca "Install"',sp2S:'L\'installazione richiede meno di 30 secondi',
+sp2P1:'Dopo aver letto la scheda, cliccate <strong>Install</strong>. Il processo è automatico e dura pochi secondi.',
+sp2P2:'Cosa succede in automatico:',
+sp2List:'— Le <strong>Skills</strong> del Plugin compaiono in Customize → Skills (<em>abilitate di default</em>)<br>— I <strong>Connettori</strong> inclusi mostrano un prompt di autenticazione OAuth<br>— Se il Plugin ha <strong>hook o sub-agent</strong>, restano grigi in chat — è comportamento atteso, non un bug',
+sp2P3:'Se avete dubbi di sicurezza, ricordate: il marketplace ufficiale Anthropic è la fonte più sicura. Evitate Plugin da marketplace di terze parti non verificati.',
+sp3T:'Configura post-installazione',sp3S:'Autenticazione connettori e gestione Skills',
+sp3P1:'Se il Plugin include connettori (es. verso un servizio esterno), vedrete un flusso OAuth: cliccate <strong>"Connetti"</strong>, approvate i permessi nella finestra del browser, fatto. L\'autenticazione è una tantum.',
+sp3P2:'Gestire le Skills installate:',
+sp3List:'— Andate in <strong>Customize → Skills</strong><br>— Le Skills del Plugin sono abilitate di default — disabilitate quelle che non usate<br>— Potete ri-abilitarle in qualsiasi momento dallo stesso pannello',
+sp3P3:'<strong>Consiglio:</strong> non tenete attive Skills irrilevanti. Ogni Skill attiva aggiunge un po\' di contesto. Meglio 3-4 Skills che usate davvero che 20 dimenticate.',
+sp4T:'Testa subito',sp4S:'Non domani — adesso',
+sp4P1:'Aprite una nuova conversazione e invocate una delle Skills del Plugin in uno dei due modi:',
+sp4List1:'— Esplicito: digitare <code>/nome-skill</code> e seguire le domande<br>— Naturale: descrivere in italiano il task che la Skill dovrebbe fare',
+sp4P2:'Criteri di successo del test:',
+sp4List2:'— La Skill risponde in modo strutturato (non generico)<br>— L\'output corrisponde alla descrizione della Skill<br>— Se usa connettori, recupera dati dal servizio collegato',
+sp4P3:'Se il test non va, non disinstallate subito — andate alla sezione troubleshooting qui sotto.',
+s2:'La scheda "Will install" — cosa controllare',
+wiIntro:'Prima di installare, ogni Plugin mostra una scheda di trasparenza. Cliccate qui sotto per simulare una scheda e capire cosa leggere.',
+wiTrigT:'Apri la scheda "Will install"',
+wiTrigS:'Esempio generico di Plugin — clicca per vedere cosa leggere prima di accettare',
+wiMockSub:'Esempio generico — knowledge work plugin',
+wiSecTitle:'Will install',
+wiSkillN:'3 Skills',wiBadgeEvery:'Chat + Cowork',
+wiSkillD:'analizza-contenuto · genera-report · riassumi-documento — invocabili con /nome o in linguaggio naturale',
+wiConnN:'1 Connettore',
+wiConnD:'Connessione a un servizio esterno — richiede autenticazione OAuth al primo uso',
+wiHookN:'1 Hook',wiBadgeCowork:'Solo Cowork',
+wiHookD:'Azione automatica all\'apertura della sessione — inattivo in chat web',
+wiAgentN:'1 Sub-agent',
+wiAgentD:'Claude specializzato per una fase del workflow — inattivo in chat web',
+wiMeta1:'~4.200 token di contesto',wiMeta2:'Aggiornato 3 giorni fa',
+wiFeedback:'Installazione completata — le Skills sono ora in Customize → Skills',
+wiAnnotation:'<strong>Cosa leggere in questa scheda:</strong> verificate che le Skills incluse siano utili al vostro lavoro. Notate i badge <strong>"Solo Cowork"</strong> su hook e sub-agent — se usate principalmente la chat web, quelle funzioni non saranno disponibili. Controllate i connettori richiesti: avete accesso a quei servizi? Il costo in token vi dice quanto "peso" aggiunge al contesto.',
+secH:'Sicurezza: installate solo da fonti verificate',
+secP:'I Plugin eseguono codice con i vostri privilegi. Nel febbraio 2026 un audit ha trovato payload malevoli nel 13% dei Plugin su marketplace di terze parti non screened. Usate sempre la directory ufficiale Anthropic o Plugin di cui conoscete il codice. La scheda "Will install" esiste proprio per questo.',
+s3:'Cosa funziona dove',
+surfIntro:'Il punto più importante da non dimenticare: non tutto un Plugin funziona ovunque.',
+thComponent:'Componente',thChat:'Chat web',thCowork:'Cowork',thNote:'Note',
+surfInfoH:'Se usate principalmente la chat web',
+surfInfoP:'Skills e Connettori funzionano perfettamente. Hook e sub-agent non sono disponibili — non è un problema di configurazione, è architetturale. Se volete la pipeline completa del Plugin, passate alla tab Cowork.',
+s4:'Troubleshooting — i problemi più comuni',
+trIntro:'Qualcosa non va dopo l\'installazione? Aprite il problema e seguite i check.',
+trHint:'Cliccate il problema per espandere i check',
+tr0T:'La Skill non si attiva',
+tr0c1:'Provate a invocarla esplicitamente con <code>/nome-skill</code> oppure scrivete "usa la skill [nome] per [task]". Claude la attiva automaticamente quando il contesto è rilevante, ma se non scatta, l\'invocazione diretta è sempre affidabile.',
+tr0c2:'Andate in <strong>Customize → Skills</strong> e verificate che la Skill sia abilitata. Le Skills di un Plugin sono abilitate di default ma potrebbero essere state disattivate manualmente.',
+tr0c3:'Leggete la descrizione della Skill nella scheda. Descrive un contesto di uso molto specifico? Se il vostro task è parzialmente diverso, descrivete più chiaramente il contesto nel prompt.',
+tr1T:'Il connettore non si connette',
+tr1c1:'Andate in <strong>Customize → Connectors</strong>, trovate il connettore problematico, cliccate <strong>Disconnetti</strong> e poi <strong>Riconnetti</strong>. Questo ri-avvia il flusso OAuth da capo.',
+tr1c2:'Verificate che il servizio target (es. la vostra app, il workspace aziendale) non abbia revocato i permessi per applicazioni di terze parti. Aprite le impostazioni del servizio e controllate le app autorizzate.',
+tr2T:'Hook e sub-agent non funzionano',
+tr2c1:'<strong>Non è un bug.</strong> Hook e sub-agent funzionano solo in Cowork. Se siete nella chat web o nella Chat tab desktop, quelle funzioni sono architetturalmente disabilitate — appaiono grigi per design.',
+tr2c2:'Per usarli: aprite la <strong>tab Cowork</strong> nell\'app. L\'intero Plugin — inclusi hook e sub-agent — funziona nella sessione Cowork.',
+tr3T:'L\'output non è quello che mi aspettavo',
+tr3c1:'Leggete le istruzioni di ogni Skill inclusa nel Plugin: spiegano il formato dell\'output e i casi d\'uso previsti. Se la Skill è pensata per un contesto diverso dal vostro, l\'output sarà generico.',
+tr3c2:'Aggiungete contesto: più dettagli date sulla vostra situazione specifica, più l\'output sarà rilevante. Una Skill invocata dentro un <strong>Project</strong> con istruzioni personalizzate produce risultati molto più precisi.',
+tr3c3:'Disabilitate le Skills del Plugin che non usate da <strong>Customize → Skills</strong>. Troppi componenti attivi possono creare sovrapposizioni inattese.',
+keyPhrase:'«Un Plugin non installato vale zero. Un Plugin installato e mai testato vale quasi zero. Il valore si crea nell\'uso — fate il test subito, non domani.»',
+s5:'Prossimo passo',
+brH:'Prossimo: Demo — Plugin reale in azione',
+brP:'Avete installato, configurato e testato. Nel Bonus R.3 vedrete un Plugin professionale usato dall\'inizio alla fine su un task concreto — e capirete il mindset "Plugin come acceleratore" per estrarne il massimo.',
+foot:'Morfeus — Installare un Plugin: dal marketplace al primo uso'
+},
+en:{
+kicker:'Bonus',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Installing a Plugin',
+h1:'From the marketplace to first use',
+lede:'Installing a Plugin takes 5 minutes. Configuring it well, another 10. Testing it, another 5. I\'ll walk you through the whole process — step by step.',
+hook:'"Installing a Plugin takes 5 minutes. Configuring it well takes another 10. Testing it takes another 5. In 20 minutes you have a completely new tool — Skills, connections and workflows already set up. I\'ll show you the process from start to finish."',
+s1:'Installation, step by step',
+installIntro:'Five steps from opening the panel to your first test. Click each step (or the back/next buttons) to see what happens.',
+installHint:'Click the steps or the back/next buttons',
+ptL0:'Find',ptL1:'Read',ptL2:'Install',ptL3:'Configure',ptL4:'Test',
+navBack:'Back',navNext:'Next',navDone:'Completed',
+sp0T:'Find the Plugin',sp0S:'Open the Customize panel and navigate to Plugins',
+sp0P1:'The entry point is always the <strong>Customize</strong> panel in the left sidebar of Cowork or Claude Desktop. From there:',
+sp0P2:'The <strong>"+"</strong> button opens the Unified Directory — Anthropic\'s unified catalog. You can also browse it at <strong>claude.com/plugins</strong> from a browser without logging in.',
+sp0P3:'Filter by category (productivity, marketing, legal, finance, HR…) or search by name. Anthropic\'s official catalog lists the Plugins from the <strong>knowledge-work-plugins</strong> repository as well as verified community Plugins.',
+sp1T:'Read before you install',sp1S:'The "Will install" card — the Plugin\'s label',
+sp1P1:'Every Plugin has a card with the description, the included Skills and the required connections. The key section is called <strong>"Will install"</strong>: it lists exactly what enters your environment.',
+sp1P2:'What you\'ll find on the card:',
+sp1List:'— <strong>Included Skills</strong> with name and trigger (you understand what it can do)<br>— <strong>Required connectors</strong> (you understand which services it will connect to)<br>— <strong>Hooks and sub-agents</strong> included (remember: they only work in Cowork)<br>— <strong>Token-cost estimate</strong> of the context added<br>— <strong>Last-updated date</strong> (assess the maintenance)',
+sp1P3:'Reading this card isn\'t bureaucracy — it\'s the difference between installing knowingly and discovering surprises later.',
+sp2T:'Click "Install"',sp2S:'The installation takes less than 30 seconds',
+sp2P1:'Once you\'ve read the card, click <strong>Install</strong>. The process is automatic and takes a few seconds.',
+sp2P2:'What happens automatically:',
+sp2List:'— The Plugin\'s <strong>Skills</strong> appear in Customize → Skills (<em>enabled by default</em>)<br>— The included <strong>Connectors</strong> show an OAuth authentication prompt<br>— If the Plugin has <strong>hooks or sub-agents</strong>, they stay greyed out in chat — that\'s expected behaviour, not a bug',
+sp2P3:'If you have security doubts, remember: Anthropic\'s official marketplace is the safest source. Avoid Plugins from unverified third-party marketplaces.',
+sp3T:'Configure after installation',sp3S:'Connector authentication and Skills management',
+sp3P1:'If the Plugin includes connectors (e.g. to an external service), you\'ll see an OAuth flow: click <strong>"Connect"</strong>, approve the permissions in the browser window, done. Authentication is one-time.',
+sp3P2:'Managing the installed Skills:',
+sp3List:'— Go to <strong>Customize → Skills</strong><br>— The Plugin\'s Skills are enabled by default — disable the ones you don\'t use<br>— You can re-enable them at any time from the same panel',
+sp3P3:'<strong>Tip:</strong> don\'t keep irrelevant Skills active. Every active Skill adds a bit of context. Better 3-4 Skills you actually use than 20 forgotten ones.',
+sp4T:'Test right away',sp4S:'Not tomorrow — now',
+sp4P1:'Open a new conversation and invoke one of the Plugin\'s Skills in one of two ways:',
+sp4List1:'— Explicit: type <code>/skill-name</code> and follow the questions<br>— Natural: describe in plain language the task the Skill should do',
+sp4P2:'Test success criteria:',
+sp4List2:'— The Skill responds in a structured way (not generic)<br>— The output matches the Skill\'s description<br>— If it uses connectors, it retrieves data from the connected service',
+sp4P3:'If the test doesn\'t work, don\'t uninstall right away — go to the troubleshooting section below.',
+s2:'The "Will install" card — what to check',
+wiIntro:'Before installing, every Plugin shows a transparency card. Click below to simulate a card and understand what to read.',
+wiTrigT:'Open the "Will install" card',
+wiTrigS:'Generic example Plugin — click to see what to read before accepting',
+wiMockSub:'Generic example — knowledge work plugin',
+wiSecTitle:'Will install',
+wiSkillN:'3 Skills',wiBadgeEvery:'Chat + Cowork',
+wiSkillD:'analyze-content · generate-report · summarize-document — invocable with /name or in natural language',
+wiConnN:'1 Connector',
+wiConnD:'Connection to an external service — requires OAuth authentication on first use',
+wiHookN:'1 Hook',wiBadgeCowork:'Cowork only',
+wiHookD:'Automatic action when the session opens — inactive in web chat',
+wiAgentN:'1 Sub-agent',
+wiAgentD:'Specialized Claude for one phase of the workflow — inactive in web chat',
+wiMeta1:'~4,200 context tokens',wiMeta2:'Updated 3 days ago',
+wiFeedback:'Installation complete — the Skills are now in Customize → Skills',
+wiAnnotation:'<strong>What to read on this card:</strong> verify that the included Skills are useful for your work. Note the <strong>"Cowork only"</strong> badges on hooks and sub-agents — if you mainly use the web chat, those functions won\'t be available. Check the required connectors: do you have access to those services? The token cost tells you how much "weight" it adds to the context.',
+secH:'Security: install only from verified sources',
+secP:'Plugins run code with your privileges. In February 2026 an audit found malicious payloads in 13% of Plugins on unscreened third-party marketplaces. Always use Anthropic\'s official directory or Plugins whose code you know. The "Will install" card exists precisely for this.',
+s3:'What works where',
+surfIntro:'The most important point not to forget: not all of a Plugin works everywhere.',
+thComponent:'Component',thChat:'Web chat',thCowork:'Cowork',thNote:'Notes',
+surfInfoH:'If you mainly use the web chat',
+surfInfoP:'Skills and Connectors work perfectly. Hooks and sub-agents are not available — it\'s not a configuration problem, it\'s architectural. If you want the Plugin\'s full pipeline, switch to the Cowork tab.',
+s4:'Troubleshooting — the most common problems',
+trIntro:'Something not working after installation? Open the problem and follow the checks.',
+trHint:'Click the problem to expand the checks',
+tr0T:'The Skill won\'t activate',
+tr0c1:'Try invoking it explicitly with <code>/skill-name</code> or write "use the [name] skill for [task]". Claude activates it automatically when the context is relevant, but if it doesn\'t trigger, direct invocation is always reliable.',
+tr0c2:'Go to <strong>Customize → Skills</strong> and verify that the Skill is enabled. A Plugin\'s Skills are enabled by default but may have been disabled manually.',
+tr0c3:'Read the Skill\'s description on the card. Does it describe a very specific use context? If your task is partly different, describe the context more clearly in the prompt.',
+tr1T:'The connector won\'t connect',
+tr1c1:'Go to <strong>Customize → Connectors</strong>, find the problematic connector, click <strong>Disconnect</strong> and then <strong>Reconnect</strong>. This restarts the OAuth flow from scratch.',
+tr1c2:'Verify that the target service (e.g. your app, the company workspace) hasn\'t revoked permissions for third-party applications. Open the service\'s settings and check the authorized apps.',
+tr2T:'Hooks and sub-agents don\'t work',
+tr2c1:'<strong>It\'s not a bug.</strong> Hooks and sub-agents only work in Cowork. If you\'re in the web chat or the desktop Chat tab, those functions are architecturally disabled — they appear greyed out by design.',
+tr2c2:'To use them: open the <strong>Cowork tab</strong> in the app. The entire Plugin — including hooks and sub-agents — works in the Cowork session.',
+tr3T:'The output isn\'t what I expected',
+tr3c1:'Read the instructions of each Skill included in the Plugin: they explain the output format and the intended use cases. If the Skill is meant for a context different from yours, the output will be generic.',
+tr3c2:'Add context: the more details you give about your specific situation, the more relevant the output will be. A Skill invoked inside a <strong>Project</strong> with custom instructions produces much more precise results.',
+tr3c3:'Disable the Plugin\'s Skills you don\'t use from <strong>Customize → Skills</strong>. Too many active components can create unexpected overlaps.',
+keyPhrase:'"An uninstalled Plugin is worth zero. An installed Plugin never tested is worth almost zero. Value is created in use — run the test now, not tomorrow."',
+s5:'Next step',
+brH:'Next: Demo — a real Plugin in action',
+brP:'You\'ve installed, configured and tested. In Bonus R.3 you\'ll see a professional Plugin used from start to finish on a concrete task — and you\'ll grasp the "Plugin as accelerator" mindset to get the most out of it.',
+foot:'Morfeus — Installing a Plugin: from the marketplace to first use'
+}};
+
+var SURF={
+it:[
+['skill|Skills','yes','yes','Funzionano ovunque. Si invocano con <code>/nome</code> o in linguaggio naturale'],
+['conn|Connettori','yes','yes','Funzionano ovunque dopo autenticazione OAuth'],
+['hook|Hook','no','yes','Solo Cowork. In chat appaiono grigi — comportamento atteso, non un bug'],
+['agent|Sub-agent','no','yes','Solo Cowork. Per usarli aprite la tab Cowork']
+],
+en:[
+['skill|Skills','yes','yes','They work everywhere. Invoke them with <code>/name</code> or in natural language'],
+['conn|Connectors','yes','yes','They work everywhere after OAuth authentication'],
+['hook|Hooks','no','yes','Cowork only. In chat they appear greyed out — expected behaviour, not a bug'],
+['agent|Sub-agents','no','yes','Cowork only. To use them open the Cowork tab']
+]};
+
+var SURF_ICONS={skill:'ti-bolt|var(--teal)',conn:'ti-plug|var(--blue)',hook:'ti-hook|var(--amber)',agent:'ti-robot|var(--purple)'};
+
+var LANG='it';
+
+function surfCell(v){
+  if(v==='yes')return '<td class="yes"><i class="ti ti-check"></i></td>';
+  if(v==='no')return '<td class="no"><i class="ti ti-minus"></i></td>';
+  return '<td>'+v+'</td>';
+}
+function renderSurf(){
+  document.getElementById('surf-body').innerHTML=SURF[LANG].map(function(r){
+    var parts=r[0].split('|');var icon=SURF_ICONS[parts[0]].split('|');
+    var name='<td class="fn"><i class="ti '+icon[0]+'" style="color:'+icon[1]+';margin-right:6px"></i>'+parts[1]+'</td>';
+    return '<tr>'+name+surfCell(r[1])+surfCell(r[2])+'<td>'+r[3]+'</td></tr>';
+  }).join('');
+}
+
+/* STEP-BY-STEP */
+var currentStep=0;
+var totalSteps=5;
+function goStep(idx){
+  if(idx<0||idx>=totalSteps)return;
+  document.querySelectorAll('.step-panel').forEach(function(p,i){p.classList.toggle('active',i===idx);});
+  for(var i=0;i<totalSteps;i++){
+    var dot=document.getElementById('pt-'+i);
+    if(!dot)continue;
+    dot.classList.remove('active','done');
+    if(i===idx)dot.classList.add('active');
+    else if(i<idx)dot.classList.add('done');
+  }
+  var pct=idx===0?0:Math.round((idx/(totalSteps-1))*100);
+  document.getElementById('ptFill').style.width=pct+'%';
+  currentStep=idx;
+}
+
+/* WILL INSTALL */
+function toggleWillInstall(){
+  var trigger=document.getElementById('wi-trigger');
+  var body=document.getElementById('wi-body');
+  var open=trigger.classList.toggle('open');
+  body.classList.toggle('open',open);
+}
+function showInstallFeedback(){
+  var fb=document.getElementById('install-feedback');
+  fb.style.display='flex';
+  fb.style.animation='fadein .3s ease';
+}
+
+/* TROUBLESHOOTING */
+function toggleTrouble(idx){
+  var item=document.getElementById('tr-'+idx);
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.trouble-item').forEach(function(el){el.classList.remove('open');});
+  if(!wasOpen)item.classList.add('open');
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSurf();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

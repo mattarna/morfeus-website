@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il vault come memoria lunga dell'AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--gray:#5F5E5A;--gray-soft:#f1efe8;--gray-line:#d3d1c7;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--gray:#b4b2a9;--gray-soft:#2c2c2a;--gray-line:#444441;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note / hook */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.tbl th{text-align:left;padding:11px 13px;font-family:var(--mono);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line-2);white-space:nowrap}
+.tbl td{padding:11px 13px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}.tbl .fn{font-weight:600;color:var(--ink)}
+.tbl code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);padding:1px 5px;border-radius:5px;color:var(--accent)}
+.tblw{overflow-x:auto}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em}
+.key p em{font-style:italic}
+/* tip / warn */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.tip>i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}.tip p strong{color:var(--ink);font-weight:600}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.warn>i{color:var(--amber);font-size:21px;flex-shrink:0}.warn h4{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:4px}.warn p{font-size:13.5px;color:var(--ink-2)}
+/* feature rows */
+.feat{display:flex;flex-direction:column;gap:8px}
+.feat-row{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.feat-row .fi{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feat-row .fi.red{background:var(--bad-soft);color:var(--bad)}
+.feat-row .fi.teal{background:var(--teal-soft);color:var(--teal)}
+.feat-row .fi.acc{background:var(--accent-soft);color:var(--accent)}
+.feat-row .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.feat-row .ft span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+/* scenario */
+.scen{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px}
+.scen .si{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;font-family:var(--mono);font-weight:700}
+.scen.l0 .si{background:var(--gray-soft);color:var(--gray)}
+.scen.l1 .si{background:var(--accent-soft);color:var(--accent)}
+.scen.l2 .si{background:var(--teal-soft);color:var(--teal)}
+.scen h4{font-size:14px;font-weight:600;margin-bottom:3px}.scen p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.scen code{font-family:var(--mono);font-size:12px;background:var(--bg-2);padding:1px 5px;border-radius:5px;color:var(--accent)}
+/* ===== interactive 1: le 3 vie ===== */
+.vie-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.via-card{background:var(--card);border:2px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 18px 18px;cursor:pointer;transition:.22s;user-select:none;text-align:center;position:relative}
+.via-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.via-card.on{border-color:var(--accent);background:var(--accent-soft)}
+.via-card .vc-icon{font-size:30px;color:var(--ink-3);margin-bottom:10px;display:block;transition:color .22s}
+.via-card.on .vc-icon,.via-card:hover .vc-icon{color:var(--accent)}
+.via-card .vc-num{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.via-card.on .vc-num{color:var(--accent)}
+.via-card .vc-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.via-card .vc-sub{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.via-detail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .45s ease,opacity .35s ease,padding .35s ease;margin-top:0}
+.via-detail.show{max-height:640px;opacity:1;padding:22px;margin-top:12px}
+.via-detail .vd-head{font-family:var(--mono);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.via-detail .via-desc{font-size:13.5px;color:var(--ink-2);line-height:1.62;margin-bottom:14px}
+.via-detail .vd-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vd-col{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.vd-col .col-head{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.vd-col.pro .col-head{color:var(--teal)}
+.vd-col.con .col-head{color:var(--amber)}
+.vd-col ul{list-style:none}
+.vd-col li{font-size:12.5px;color:var(--ink-2);line-height:1.55;padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.vd-col li i{font-size:13px;margin-top:2px;flex-shrink:0}
+.vd-col.pro li i{color:var(--teal)}
+.vd-col.con li i{color:var(--amber)}
+/* ===== interactive 2: llm wiki ===== */
+.wiki-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px 20px}
+.wiki-stage{display:flex;align-items:stretch;gap:0;margin-bottom:20px;overflow-x:auto}
+.wiki-layer{flex:1;min-width:118px;border-radius:var(--r);padding:18px 14px;text-align:center;cursor:pointer;transition:.22s;user-select:none;position:relative;border:2px solid var(--line);background:var(--bg-2)}
+.wiki-layer:hover{transform:translateY(-2px)}
+.wiki-layer.raw{border-color:var(--gray-line)}
+.wiki-layer.raw.on,.wiki-layer.raw:hover{border-color:var(--gray);background:var(--gray-soft)}
+.wiki-layer.wiki{border-color:var(--accent-line)}
+.wiki-layer.wiki.on,.wiki-layer.wiki:hover{border-color:var(--accent);background:var(--accent-soft)}
+.wiki-layer.schema{border-color:var(--teal-line)}
+.wiki-layer.schema.on,.wiki-layer.schema:hover{border-color:var(--teal);background:var(--teal-soft)}
+.wiki-layer .wl-icon{font-size:25px;margin-bottom:8px;display:block}
+.wiki-layer.raw .wl-icon{color:var(--gray)}
+.wiki-layer.wiki .wl-icon{color:var(--accent)}
+.wiki-layer.schema .wl-icon{color:var(--teal)}
+.wiki-layer .wl-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);display:block;margin-bottom:4px}
+.wiki-layer .wl-sub{font-size:10.5px;color:var(--ink-3);line-height:1.4}
+.wiki-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 8px;gap:3px;flex-shrink:0}
+.wiki-arrow span{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.wiki-arrow i{font-size:16px;color:var(--ink-3)}
+.wiki-detail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;min-height:84px;transition:.3s}
+.wiki-detail .wd-head{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.wiki-detail.raw .wd-head{color:var(--gray)}
+.wiki-detail.wiki .wd-head{color:var(--accent)}
+.wiki-detail.schema .wd-head{color:var(--teal)}
+.wiki-detail .wd-body{font-size:13.5px;color:var(--ink-2);line-height:1.62}
+.wiki-detail .wd-body code{font-family:var(--mono);font-size:12px;background:var(--card);padding:1px 5px;border-radius:5px;color:var(--accent)}
+.wiki-detail .wd-body strong{color:var(--ink);font-weight:600}
+.wiki-ops{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.wiki-op{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:600;padding:6px 14px;border-radius:30px;border:1px solid var(--line);color:var(--ink-2);background:var(--bg-2);cursor:pointer;transition:.18s;user-select:none}
+.wiki-op.ingest{border-color:var(--accent-line);color:var(--accent)}
+.wiki-op.query{border-color:var(--teal-line);color:var(--teal)}
+.wiki-op.lint{border-color:var(--amber-line);color:var(--amber)}
+.wiki-op:hover{filter:brightness(1.04);transform:translateY(-1px)}
+/* ===== interactive 3: vault vs rag ===== */
+.vr-tabs{display:flex;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--sh)}
+.vr-tab{flex:1;padding:11px 14px;text-align:center;cursor:pointer;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--card);color:var(--ink-3);border:none;transition:.18s;white-space:nowrap}
+.vr-tab:not(:last-child){border-right:1px solid var(--line)}
+.vr-tab.on{background:var(--accent);color:#fff}
+.vr-panel{display:none}
+.vr-panel.show{display:block}
+.vr-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.vr-col{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 16px}
+.vr-col .vrc-head{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.vr-col.vault .vrc-head{color:var(--accent)}
+.vr-col.rag .vrc-head{color:var(--blue)}
+.vr-row{display:flex;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.5px;color:var(--ink-2);line-height:1.5;align-items:flex-start}
+.vr-row:last-child{border-bottom:none}
+.vr-row i{font-size:14px;margin-top:1px;flex-shrink:0}
+.vr-row strong{color:var(--ink);font-weight:600}
+.vr-row code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);padding:1px 4px;border-radius:4px}
+.vr-row.yes i{color:var(--teal)}
+.vr-row.no i{color:var(--amber)}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:10px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:560px;margin:0 auto;line-height:1.7}.cp p strong{color:var(--ink);font-weight:700}
+.bridge{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center;margin-top:16px}
+.bridge .bk{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--agent);margin-bottom:7px}
+.bridge p{font-size:14.5px;color:var(--ink);font-weight:500;max-width:580px;margin:0 auto;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.vie-grid{grid-template-columns:1fr}.via-detail .vd-cols{grid-template-columns:1fr}.vr-compare{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.tbl,.tip,.warn,.feat-row,.scen,.via-card,.via-detail,.wiki-wrap,.vr-col,.key,.cp,.bridge{break-inside:avoid;box-shadow:none!important}.via-detail{max-height:none!important;opacity:1!important;padding:22px!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz">Stack</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Stack AI</div>
+  <h1 class="rv" data-i="h1">Il vault come memoria lunga dell'AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <!-- 01 — il problema e la soluzione -->
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">01</span><h2 data-i="s1">Il problema e la soluzione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="probIntro"></p>
+  <div class="feat rv" id="probFeat"></div>
+  <div class="key rv" style="margin-top:24px"><p data-i-html="keyPhrase1"></p></div>
+
+  <!-- 02 — le 3 vie -->
+  <div class="sh rv"><i class="ti ti-git-branch"></i><span class="no">02</span><h2 data-i="s2">Le 3 vie per collegare vault e AI</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="vieIntro"></p>
+  <div class="vie-grid rv">
+    <div class="via-card" id="vc-mcp" onclick="viaSelect('mcp')">
+      <span class="vc-num">Via 1</span>
+      <i class="ti ti-plug-connected vc-icon"></i>
+      <div class="vc-title" data-i="vcMcpT">MCP Server</div>
+      <div class="vc-sub" data-i="vcMcpS"></div>
+    </div>
+    <div class="via-card" id="vc-plugin" onclick="viaSelect('plugin')">
+      <span class="vc-num">Via 2</span>
+      <i class="ti ti-apps vc-icon"></i>
+      <div class="vc-title" data-i="vcPluginT">Plugin in-app</div>
+      <div class="vc-sub" data-i="vcPluginS"></div>
+    </div>
+    <div class="via-card" id="vc-terminale" onclick="viaSelect('terminale')">
+      <span class="vc-num">Via 3</span>
+      <i class="ti ti-terminal-2 vc-icon"></i>
+      <div class="vc-title" data-i="vcTermT">AI nel terminale</div>
+      <div class="vc-sub" data-i="vcTermS"></div>
+    </div>
+  </div>
+  <div class="via-detail" id="viaDetail"></div>
+
+  <!-- 03 — il pattern llm wiki -->
+  <div class="sh rv"><i class="ti ti-layers-intersect"></i><span class="no">03</span><h2 data-i="s3">Il pattern LLM Wiki</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="wikiIntro"></p>
+  <div class="wiki-wrap rv">
+    <div class="wiki-stage" id="wikiStage">
+      <div class="wiki-layer raw on" id="wl-raw" onclick="wikiSelect('raw')">
+        <i class="ti ti-inbox wl-icon"></i>
+        <span class="wl-title">raw/</span>
+        <span class="wl-sub" data-i="wlRawSub"></span>
+      </div>
+      <div class="wiki-arrow"><i class="ti ti-arrow-right"></i><span data-i="wArrIngest">ingest</span></div>
+      <div class="wiki-layer wiki" id="wl-wiki" onclick="wikiSelect('wiki')">
+        <i class="ti ti-book-2 wl-icon"></i>
+        <span class="wl-title">wiki/</span>
+        <span class="wl-sub" data-i="wlWikiSub"></span>
+      </div>
+      <div class="wiki-arrow"><i class="ti ti-arrow-right"></i><span data-i="wArrRule">regola</span></div>
+      <div class="wiki-layer schema" id="wl-schema" onclick="wikiSelect('schema')">
+        <i class="ti ti-file-description wl-icon"></i>
+        <span class="wl-title">CLAUDE.md</span>
+        <span class="wl-sub" data-i="wlSchemaSub"></span>
+      </div>
+    </div>
+    <div class="wiki-detail raw" id="wikiDetail">
+      <div class="wd-head" id="wikiDetHead"></div>
+      <div class="wd-body" id="wikiDetBody"></div>
+    </div>
+    <div class="wiki-ops">
+      <div class="wiki-op ingest" onclick="wikiOpClick('ingest')"><i class="ti ti-download"></i> ingest</div>
+      <div class="wiki-op query" onclick="wikiOpClick('query')"><i class="ti ti-search"></i> query</div>
+      <div class="wiki-op lint" onclick="wikiOpClick('lint')"><i class="ti ti-shield-check"></i> lint</div>
+    </div>
+  </div>
+  <div class="tip rv"><i class="ti ti-bulb"></i><div><h4 data-i="wikiTipH">Cosa cambia rispetto a una cartella caotica</h4><p data-i-html="wikiTipP"></p></div></div>
+
+  <!-- 04 — llm wiki vs rag -->
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">04</span><h2 data-i="s4">LLM Wiki vs RAG</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="vrIntro"></p>
+  <div class="vr-tabs rv">
+    <button class="vr-tab on" data-t="stateful" onclick="vrTab('stateful')" data-i="vrTabStateful">Stateful vs Stateless</button>
+    <button class="vr-tab" data-t="infra" onclick="vrTab('infra')" data-i="vrTabInfra">Infrastruttura</button>
+    <button class="vr-tab" data-t="citazioni" onclick="vrTab('citazioni')" data-i="vrTabTrace">Tracciabilità</button>
+    <button class="vr-tab" data-t="scala" onclick="vrTab('scala')" data-i="vrTabScale">Scala</button>
+  </div>
+  <div id="vrPanels" class="rv"></div>
+
+  <!-- 05 — tre livelli di adozione -->
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">05</span><h2 data-i="s5">Tre livelli di adozione</h2></div>
+  <div class="rv" id="scenarios"></div>
+
+  <!-- 06 — glossario rapido -->
+  <div class="sh rv"><i class="ti ti-vocabulary"></i><span class="no">06</span><h2 data-i="s6">Glossario rapido</h2></div>
+  <div class="tblw rv">
+    <table class="tbl">
+      <thead><tr><th data-i="thTerm">Termine</th><th data-i="thMean">Cosa significa</th></tr></thead>
+      <tbody id="glossary"></tbody>
+    </table>
+  </div>
+
+  <!-- 07 — equivoci da smontare -->
+  <div class="sh rv"><i class="ti ti-mood-confuzed"></i><span class="no">07</span><h2 data-i="s7">Equivoci da smontare</h2></div>
+  <div class="feat rv" id="myths"></div>
+
+  <!-- 08 — checkpoint -->
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-checkbox cpi"></i>
+    <h4 data-i="cpH">Tre domande da farti dopo questa lezione.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+  <div class="bridge rv">
+    <div class="bk" data-i="bridgeK">Stack AI — Prossima lezione</div>
+    <p data-i="bridgeP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Il vault come memoria lunga dell'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Stack AI',
+h1:'Il vault come memoria lunga dell\'AI',
+lede:'Una cartella di file markdown può diventare la memoria persistente del tuo assistente AI. Tre vie per collegarla, un pattern per gestirla, e perché batte la RAG nel caso personale.',
+hookH:'L\'idea',
+hookP:'L\'AI da sola è brillante ma smemorata: ogni sessione riparte da zero. Il vault è la memoria esterna che sopravvive alla chat — e che l\'AI può leggere, navigare e aggiornare nel tempo.',
+s1:'Il problema e la soluzione',
+probIntro:'Un LLM non ricorda nulla tra una sessione e l\'altra. Ogni conversazione è una lavagna pulita: ripieghi, contesto accumulato, decisioni prese — tutto sparisce. Questo è accettabile per un task isolato. Diventa un ostacolo serio per chi usa l\'AI su lavori continuativi.',
+keyPhrase1:'Il tuo vault è solo una cartella di file markdown — e l\'AI può leggerla, capirne la struttura, e riscrivervi dentro. Il vault diventa la <em>working directory</em> dell\'AI, con accesso a tutto l\'albero.',
+s2:'Le 3 vie per collegare vault e AI',
+vieIntro:'Non esiste un\'unica strada. Ci sono tre approcci, con difficoltà e potenza crescenti. Clicca ciascuna via per vedere pro e contro.',
+vcMcpS:'Protocollo standard, max potenza',
+vcPluginS:'AI integrata nell\'editor di note',
+vcTermS:'Zero config, massima semplicità',
+s3:'Il pattern LLM Wiki',
+wikiIntro:'Un pattern definito da Andrej Karpathy: un agente LLM costruisce e mantiene una knowledge base in markdown a partire dalle tue fonti. Tre livelli distinti, tre operazioni. Clicca un livello per capire cosa contiene e cosa fa l\'AI su di esso.',
+wlRawSub:'Fonti immutabili',wlWikiSub:'Pagine generate',wlSchemaSub:'Schema e istruzioni',
+wArrIngest:'ingest',wArrRule:'regola',
+wikiTipH:'Cosa cambia rispetto a una cartella caotica',
+wikiTipP:'La struttura a 3 livelli è ciò che rende il vault navigabile dall\'AI. Senza schema, l\'AI annaspa. Con <strong>raw/</strong> (fonti), <strong>wiki/</strong> (conoscenza elaborata) e <strong>CLAUDE.md</strong> (regole), ogni operazione è prevedibile e tracciabile.',
+s4:'LLM Wiki vs RAG — perché il vault vince nel caso personale',
+vrIntro:'La RAG (Retrieval-Augmented Generation) è lo standard per grandi archivi aziendali. Ma per il caso personale o di team piccolo, il pattern LLM Wiki ha vantaggi concreti. Clicca le schede per confrontare.',
+vrTabStateful:'Stateful vs Stateless',vrTabInfra:'Infrastruttura',vrTabTrace:'Tracciabilità',vrTabScale:'Scala',
+s5:'Tre livelli di adozione',
+s6:'Glossario rapido',
+thTerm:'Termine',thMean:'Cosa significa',
+s7:'Equivoci da smontare',
+s8:'Checkpoint',
+cpH:'Tre domande da farti dopo questa lezione.',
+cpP:'<strong>1.</strong> Qual è la via giusta per te adesso? (Suggerimento: parti dal Livello 0 o dalla Via 3 — sono le più semplici.)<br><strong>2.</strong> Hai già una cartella di file markdown da usare come vault? Se sì, il Livello 1 è a portata di mano.<br><strong>3.</strong> Qual è il contesto che ri-spieghi più spesso all\'AI? Quel contesto va in un file del vault.',
+bridgeK:'Stack AI — Prossima lezione',
+bridgeP:'Nella lezione Stack 3 vedremo il workflow quotidiano: come catturare ogni giorno in modo leggero e usare l\'AI per trasformare il grezzo in note strutturate e task. Il loop che si ripete ogni giorno.',
+foot:'Morfeus — Il vault come memoria lunga dell\'AI'
+},
+en:{
+pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'AI Stack',
+h1:'The vault as the AI\'s long-term memory',
+lede:'A folder of markdown files can become the persistent memory of your AI assistant. Three ways to connect it, one pattern to manage it, and why it beats RAG for the personal case.',
+hookH:'The idea',
+hookP:'On its own, AI is brilliant but forgetful: every session starts from scratch. The vault is the external memory that survives the chat — and that the AI can read, navigate and update over time.',
+s1:'The problem and the solution',
+probIntro:'An LLM remembers nothing between one session and the next. Every conversation is a clean slate: fallbacks, accumulated context, decisions made — it all disappears. That\'s acceptable for an isolated task. It becomes a serious obstacle for anyone using AI on ongoing work.',
+keyPhrase1:'Your vault is just a folder of markdown files — and the AI can read it, understand its structure, and write back into it. The vault becomes the AI\'s <em>working directory</em>, with access to the whole tree.',
+s2:'The 3 ways to connect vault and AI',
+vieIntro:'There\'s no single route. There are three approaches, with increasing difficulty and power. Click each way to see its pros and cons.',
+vcMcpS:'Standard protocol, max power',
+vcPluginS:'AI integrated into your note editor',
+vcTermS:'Zero config, maximum simplicity',
+s3:'The LLM Wiki pattern',
+wikiIntro:'A pattern defined by Andrej Karpathy: an LLM agent builds and maintains a markdown knowledge base from your sources. Three distinct layers, three operations. Click a layer to understand what it holds and what the AI does to it.',
+wlRawSub:'Immutable sources',wlWikiSub:'Generated pages',wlSchemaSub:'Schema and instructions',
+wArrIngest:'ingest',wArrRule:'rule',
+wikiTipH:'What changes compared to a chaotic folder',
+wikiTipP:'The 3-layer structure is what makes the vault navigable by the AI. Without a schema, the AI flounders. With <strong>raw/</strong> (sources), <strong>wiki/</strong> (processed knowledge) and <strong>CLAUDE.md</strong> (rules), every operation is predictable and traceable.',
+s4:'LLM Wiki vs RAG — why the vault wins for the personal case',
+vrIntro:'RAG (Retrieval-Augmented Generation) is the standard for large corporate archives. But for the personal case or a small team, the LLM Wiki pattern has concrete advantages. Click the tabs to compare.',
+vrTabStateful:'Stateful vs Stateless',vrTabInfra:'Infrastructure',vrTabTrace:'Traceability',vrTabScale:'Scale',
+s5:'Three levels of adoption',
+s6:'Quick glossary',
+thTerm:'Term',thMean:'What it means',
+s7:'Misconceptions to dismantle',
+s8:'Checkpoint',
+cpH:'Three questions to ask yourself after this lesson.',
+cpP:'<strong>1.</strong> Which way is right for you now? (Hint: start with Level 0 or Way 3 — they\'re the simplest.)<br><strong>2.</strong> Do you already have a folder of markdown files to use as a vault? If so, Level 1 is within reach.<br><strong>3.</strong> What context do you re-explain to the AI most often? That context belongs in a vault file.',
+bridgeK:'AI Stack — Next lesson',
+bridgeP:'In lesson Stack 3 we\'ll see the daily workflow: how to capture every day in a lightweight way and use AI to turn raw input into structured notes and tasks. The loop that repeats every day.',
+foot:'Morfeus — The vault as the AI\'s long-term memory'
+}};
+
+/* problem / solution feature rows */
+var PROBFEAT={it:[
+['red','ti-refresh','Senza memoria esterna','Ogni sessione reintroduci il contesto da zero. Chi sei, su cosa stai lavorando, quali decisioni hai preso, come preferisci lavorare. Ogni volta.'],
+['teal','ti-database-heart','Con il vault come memoria','L\'AI legge i tuoi file all\'avvio, conosce il contesto, sa dove eravate rimasti. La conoscenza si accumula sessione dopo sessione.'],
+['acc','ti-lock-open','Il dato è tuo, per sempre','File markdown su disco: zero lock-in, leggibili da qualsiasi modello oggi e domani. Non dipendi da nessun cloud o fornitore.']
+],en:[
+['red','ti-refresh','Without external memory','Every session you reintroduce the context from scratch. Who you are, what you\'re working on, what decisions you\'ve made, how you prefer to work. Every time.'],
+['teal','ti-database-heart','With the vault as memory','The AI reads your files at startup, knows the context, knows where you left off. Knowledge accumulates session after session.'],
+['acc','ti-lock-open','The data is yours, forever','Markdown files on disk: zero lock-in, readable by any model today and tomorrow. You don\'t depend on any cloud or vendor.']
+]};
+
+/* interactive 1: le 3 vie */
+var VIA_DATA={it:{
+mcp:{icon:'ti-plug-connected',title:'Via 1 — MCP Server',
+desc:'Un server Model Context Protocol espone i file del vault a Claude Desktop, Claude Code o a qualsiasi app compatibile. L\'AI ha accesso read/write strutturato all\'intero albero di cartelle, con tool call esplicite (leggi file, scrivi file, cerca, elenca).',
+pro:['Massima potenza e flessibilità','Standard aperto: funziona con più AI','Accesso completo read/write al vault','Navigazione strutturata via tool call'],
+con:['Richiede installazione e configurazione del server','Setup tecnico non banale per chi inizia','Mantieni il server aggiornato']},
+plugin:{icon:'ti-apps',title:'Via 2 — Plugin in-app',
+desc:'Un plugin (es. "Claudian" per Obsidian) incorpora la CLI dell\'AI come sidebar nell\'editor di note. Il vault è la working directory: l\'AI legge, scrive, cerca direttamente dal pannello laterale, senza uscire dall\'app.',
+pro:['Tutto in un\'unica interfaccia','L\'AI vede il vault in tempo reale','Workflow integrato: scrivi e chiedi senza cambiare app','Buon equilibrio semplicità/potenza'],
+con:['Dipende dall\'editor scelto','Funzionalità limitate dalla sandbox del plugin','Aggiornamenti dell\'app possono rompere il plugin']},
+terminale:{icon:'ti-terminal-2',title:'Via 3 — AI nel terminale',
+desc:'La via più semplice: apri l\'AI nel terminale dentro la cartella del vault. Nessun server, nessuna config. Con le skill giuste (es. "obsidian-skills"), l\'AI impara wikilink e front matter e può leggere e scrivere file direttamente.',
+pro:['Zero infrastruttura: solo terminale + cartella','Setup in meno di 5 minuti','Nessun server da mantenere','Funziona su qualsiasi struttura di cartelle'],
+con:['Interfaccia testuale — nessuna GUI','Meno potente dell\'MCP per operazioni complesse','Richiede dimestichezza col terminale']}
+},en:{
+mcp:{icon:'ti-plug-connected',title:'Way 1 — MCP Server',
+desc:'A Model Context Protocol server exposes the vault files to Claude Desktop, Claude Code or any compatible app. The AI has structured read/write access to the entire folder tree, with explicit tool calls (read file, write file, search, list).',
+pro:['Maximum power and flexibility','Open standard: works with multiple AIs','Full read/write access to the vault','Structured navigation via tool calls'],
+con:['Requires installing and configuring the server','Non-trivial technical setup for beginners','You keep the server updated']},
+plugin:{icon:'ti-apps',title:'Way 2 — In-app plugin',
+desc:'A plugin (e.g. "Claudian" for Obsidian) embeds the AI\'s CLI as a sidebar inside your note editor. The vault is the working directory: the AI reads, writes and searches directly from the side panel, without leaving the app.',
+pro:['Everything in a single interface','The AI sees the vault in real time','Integrated workflow: write and ask without switching apps','Good balance of simplicity and power'],
+con:['Depends on the editor you choose','Functionality limited by the plugin sandbox','App updates can break the plugin']},
+terminale:{icon:'ti-terminal-2',title:'Way 3 — AI in the terminal',
+desc:'The simplest way: open the AI in the terminal inside the vault folder. No server, no config. With the right skills (e.g. "obsidian-skills"), the AI learns wikilinks and front matter and can read and write files directly.',
+pro:['Zero infrastructure: just terminal + folder','Setup in under 5 minutes','No server to maintain','Works on any folder structure'],
+con:['Text interface — no GUI','Less powerful than MCP for complex operations','Requires comfort with the terminal']}
+}};
+var VIA_LBL={it:{pro:'Pro',con:'Da considerare'},en:{pro:'Pros',con:'To consider'}};
+var activeVia=null;
+function viaSelect(id){
+  if(activeVia===id){
+    document.getElementById('vc-'+id).classList.remove('on');
+    document.getElementById('viaDetail').classList.remove('show');
+    activeVia=null;return;
+  }
+  if(activeVia){document.getElementById('vc-'+activeVia).classList.remove('on')}
+  activeVia=id;
+  document.getElementById('vc-'+id).classList.add('on');
+  renderViaDetail();
+  var det=document.getElementById('viaDetail');
+  det.classList.add('show');
+  setTimeout(function(){det.scrollIntoView({behavior:'smooth',block:'nearest'})},60);
+}
+function renderViaDetail(){
+  if(!activeVia)return;
+  var v=VIA_DATA[LANG][activeVia],L=VIA_LBL[LANG];
+  var proItems=v.pro.map(function(x){return '<li><i class="ti ti-check"></i><span>'+x+'</span></li>'}).join('');
+  var conItems=v.con.map(function(x){return '<li><i class="ti ti-alert-triangle"></i><span>'+x+'</span></li>'}).join('');
+  document.getElementById('viaDetail').innerHTML=
+    '<div class="vd-head"><i class="ti '+v.icon+'"></i> '+v.title+'</div>'+
+    '<div class="via-desc">'+v.desc+'</div>'+
+    '<div class="vd-cols">'+
+      '<div class="vd-col pro"><div class="col-head"><i class="ti ti-check"></i> '+L.pro+'</div><ul>'+proItems+'</ul></div>'+
+      '<div class="vd-col con"><div class="col-head"><i class="ti ti-alert-triangle"></i> '+L.con+'</div><ul>'+conItems+'</ul></div>'+
+    '</div>';
+}
+
+/* interactive 2: llm wiki */
+var WIKI_DATA={it:{
+raw:{cls:'raw',icon:'ti-inbox',title:'raw/ — Fonti immutabili',body:'Articoli, paper, trascrizioni, note di call, repo. L\'AI le <strong>legge ma non le modifica</strong>: sono la baseline di verifica. Se una pagina wiki generata dice qualcosa di sbagliato, torni qui e confronti con la fonte originale. L\'immutabilità è la garanzia di un audit trail pulito.'},
+wiki:{cls:'wiki',icon:'ti-book-2',title:'wiki/ — Pagine generate dall\'AI',body:'Pagine create dall\'AI a partire dalle fonti: <code>concepts/</code> (idee chiave), <code>entities/</code> (persone, progetti, aziende), <code>sources/</code> (sintesi di ogni fonte). Include <code>index.md</code> (catalogo di tutto) e <code>log.md</code> (timeline append-only delle operazioni). Qui la conoscenza si struttura e si accumula.'},
+schema:{cls:'schema',icon:'ti-file-description',title:'CLAUDE.md — Schema e istruzioni',body:'Il file che insegna all\'AI come funziona il vault: struttura delle cartelle, naming convention, template per ogni tipo di nota, regole di comportamento (cosa toccare, cosa lasciare stare). Senza schema, ogni AI "inventa" la struttura. Con schema, ogni operazione è prevedibile.'}
+},en:{
+raw:{cls:'raw',icon:'ti-inbox',title:'raw/ — Immutable sources',body:'Articles, papers, transcripts, call notes, repos. The AI <strong>reads them but never modifies them</strong>: they\'re the verification baseline. If a generated wiki page says something wrong, you come back here and compare with the original source. Immutability is the guarantee of a clean audit trail.'},
+wiki:{cls:'wiki',icon:'ti-book-2',title:'wiki/ — AI-generated pages',body:'Pages created by the AI from the sources: <code>concepts/</code> (key ideas), <code>entities/</code> (people, projects, companies), <code>sources/</code> (a synthesis of each source). It includes <code>index.md</code> (a catalogue of everything) and <code>log.md</code> (an append-only timeline of operations). Here knowledge gets structured and accumulates.'},
+schema:{cls:'schema',icon:'ti-file-description',title:'CLAUDE.md — Schema and instructions',body:'The file that teaches the AI how the vault works: folder structure, naming convention, templates for each note type, behavior rules (what to touch, what to leave alone). Without a schema, every AI "invents" the structure. With a schema, every operation is predictable.'}
+}};
+var WIKI_OPS={it:{
+ingest:{icon:'ti-download',title:'Operazione: Ingest',body:'Processa nuove fonti in <code>raw/</code> e genera/aggiorna le pagine corrispondenti in <code>wiki/</code>. Aggiorna <code>index.md</code> e appende una riga a <code>log.md</code>. Puoi buttare 5 articoli e dire "ingest" — l\'AI fa il resto.'},
+query:{icon:'ti-search',title:'Operazione: Query',body:'L\'AI naviga il vault tramite <code>index.md</code> per rispondere a domande. Non deve leggere tutto: l\'indice è la mappa. Più l\'indice è curato, più le risposte sono precise e veloci.'},
+lint:{icon:'ti-shield-check',title:'Operazione: Lint',body:'Controlli di salute del vault: pagine orfane (nessun link), claim contraddittori tra fonti, informazioni datate, pagine senza categoria. Il lint è la manutenzione ordinaria che tiene il vault affidabile nel tempo.'}
+},en:{
+ingest:{icon:'ti-download',title:'Operation: Ingest',body:'Processes new sources in <code>raw/</code> and generates/updates the corresponding pages in <code>wiki/</code>. It updates <code>index.md</code> and appends a line to <code>log.md</code>. You can drop in 5 articles and say "ingest" — the AI does the rest.'},
+query:{icon:'ti-search',title:'Operation: Query',body:'The AI navigates the vault through <code>index.md</code> to answer questions. It doesn\'t have to read everything: the index is the map. The more curated the index, the more precise and fast the answers.'},
+lint:{icon:'ti-shield-check',title:'Operation: Lint',body:'Vault health checks: orphan pages (no links), contradictory claims across sources, dated information, uncategorized pages. Lint is the routine maintenance that keeps the vault reliable over time.'}
+}};
+var activeWikiLayer='raw';
+function wikiSelect(id){
+  ['raw','wiki','schema'].forEach(function(k){document.getElementById('wl-'+k).classList.toggle('on',k===id)});
+  activeWikiLayer=id;
+  var d=WIKI_DATA[LANG][id];
+  var det=document.getElementById('wikiDetail');
+  det.className='wiki-detail '+d.cls;
+  document.getElementById('wikiDetHead').innerHTML='<i class="ti '+d.icon+'"></i> '+d.title;
+  document.getElementById('wikiDetBody').innerHTML=d.body;
+}
+function wikiOpClick(op){
+  var d=WIKI_OPS[LANG][op];
+  var det=document.getElementById('wikiDetail');
+  det.className='wiki-detail raw';
+  document.getElementById('wikiDetHead').innerHTML='<i class="ti '+d.icon+'"></i> '+d.title;
+  document.getElementById('wikiDetBody').innerHTML=d.body;
+  ['raw','wiki','schema'].forEach(function(k){document.getElementById('wl-'+k).classList.remove('on')});
+  activeWikiLayer=null;
+}
+
+/* interactive 3: vault vs rag */
+var VR_HEADS={it:{vault:'LLM Wiki (vault)',rag:'RAG classica'},en:{vault:'LLM Wiki (vault)',rag:'Classic RAG'}};
+var VR_DATA={it:{
+stateful:{vault:[['<strong>Stateful</strong> — la conoscenza si accumula. Ogni ingest aggiunge, non sovrascrive. Il vault di ieri include il vault di tre mesi fa.'],['Ogni sessione parte da uno stato avanzato, non da zero.'],['Il "perché" di ogni scelta resta scritto in un file leggibile.']],
+rag:[['<strong>Stateless</strong> — ogni query reperisce contesto fresco. Nulla si "compone" tra sessioni.'],['Forte per recuperare un fatto preciso; debole per costruire ragionamenti stratificati nel tempo.'],['Non ha memoria delle decisioni passate.']],warn:null},
+infra:{vault:[['Zero infrastruttura: solo file markdown su disco.'],['Nessun database vettoriale, nessun server di embedding, nessun costo aggiuntivo.'],['Setup in minuti: apri il terminale nella cartella e parti.']],
+rag:[['Richiede un database vettoriale (Pinecone, Weaviate, ChromaDB…).'],['Pipeline di embedding da mantenere; i costi crescono con il volume.'],['Complessità tecnica significativa per un uso personale.']],warn:null},
+citazioni:{vault:[['Ogni claim dell\'AI è tracciabile a un file <code>.md</code> specifico che puoi aprire e leggere.'],['Nessuna black box: sai esattamente da dove viene ogni informazione.'],['Puoi correggere o cancellare una fonte errata in modo chirurgico.']],
+rag:[['I chunk recuperati sono spesso decontestualizzati — difficile risalire alla fonte originale.'],['Gli embedding sono vettori opachi: non si "leggono" a mano.'],['Correggere una fonte richiede ri-embedding dell\'intero corpus.']],warn:null},
+scala:{vault:[['<strong>Sweet spot:</strong> uso personale o team piccolo, sotto ~100K token di contesto.','yes'],['Con le finestre di contesto degli LLM 2026 (1M+ token), la maggior parte dei vault personali entra tutta in una sola chiamata.','yes'],['Non scala bene su milioni di documenti aziendali.','no']],
+rag:[['<strong>Vince</strong> su archivi aziendali grandi: milioni di documenti, team distribuiti, ricerche semantiche complesse.','yes'],['Overkill per uso personale: introduce complessità che non ripaga.','no'],['Richiede manutenzione continua dell\'indice vettoriale.','no']],
+warn:{h:'La scelta giusta dipende dalla scala',p:'Vault markdown per il personale e team piccoli. RAG per archivi enterprise da milioni di documenti. Non esistono soluzioni universali — esiste quella giusta per il tuo caso.'}}
+},en:{
+stateful:{vault:[['<strong>Stateful</strong> — knowledge accumulates. Each ingest adds, it doesn\'t overwrite. Yesterday\'s vault includes the vault from three months ago.'],['Every session starts from an advanced state, not from zero.'],['The "why" behind every choice stays written in a readable file.']],
+rag:[['<strong>Stateless</strong> — each query retrieves fresh context. Nothing "compounds" across sessions.'],['Strong for retrieving a precise fact; weak for building reasoning that layers over time.'],['It has no memory of past decisions.']],warn:null},
+infra:{vault:[['Zero infrastructure: just markdown files on disk.'],['No vector database, no embedding server, no extra cost.'],['Setup in minutes: open the terminal in the folder and go.']],
+rag:[['Requires a vector database (Pinecone, Weaviate, ChromaDB…).'],['An embedding pipeline to maintain; costs grow with volume.'],['Significant technical complexity for personal use.']],warn:null},
+citazioni:{vault:[['Every claim from the AI is traceable to a specific <code>.md</code> file you can open and read.'],['No black box: you know exactly where every piece of information comes from.'],['You can correct or delete a wrong source surgically.']],
+rag:[['Retrieved chunks are often decontextualized — hard to trace back to the original source.'],['Embeddings are opaque vectors: you can\'t "read" them by hand.'],['Fixing a source requires re-embedding the entire corpus.']],warn:null},
+scala:{vault:[['<strong>Sweet spot:</strong> personal use or a small team, under ~100K context tokens.','yes'],['With the context windows of 2026 LLMs (1M+ tokens), most personal vaults fit entirely in a single call.','yes'],['Doesn\'t scale well to millions of corporate documents.','no']],
+rag:[['<strong>Wins</strong> on large corporate archives: millions of documents, distributed teams, complex semantic searches.','yes'],['Overkill for personal use: it introduces complexity that doesn\'t pay off.','no'],['Requires continuous maintenance of the vector index.','no']],
+warn:{h:'The right choice depends on scale',p:'Markdown vault for personal use and small teams. RAG for enterprise archives of millions of documents. There are no universal solutions — there\'s the right one for your case.'}}
+}};
+var activeVrTab='stateful';
+function vrTab(id){
+  activeVrTab=id;
+  document.querySelectorAll('.vr-tab').forEach(function(t){t.classList.toggle('on',t.getAttribute('data-t')===id)});
+  renderVr();
+}
+function vrRows(arr,kind){
+  return arr.map(function(r){
+    var icon=r[1]==='no'?'ti-minus':(r[1]==='yes'?'ti-check':(kind==='vault'?'ti-check':'ti-minus'));
+    var cls=r[1]==='no'?'no':(r[1]==='yes'?'yes':(kind==='vault'?'yes':'no'));
+    return '<div class="vr-row '+cls+'"><i class="ti '+icon+'"></i><span>'+r[0]+'</span></div>';
+  }).join('');
+}
+function renderVr(){
+  var d=VR_DATA[LANG][activeVrTab],H=VR_HEADS[LANG];
+  var html='<div class="vr-compare">'+
+    '<div class="vr-col vault"><div class="vrc-head"><i class="ti ti-database-heart"></i> '+H.vault+'</div>'+vrRows(d.vault,'vault')+'</div>'+
+    '<div class="vr-col rag"><div class="vrc-head"><i class="ti ti-search"></i> '+H.rag+'</div>'+vrRows(d.rag,'rag')+'</div>'+
+  '</div>';
+  if(d.warn){html+='<div class="warn" style="margin-top:14px"><i class="ti ti-alert-triangle"></i><div><h4>'+d.warn.h+'</h4><p>'+d.warn.p+'</p></div></div>'}
+  document.getElementById('vrPanels').innerHTML=html;
+}
+
+/* tre livelli di adozione */
+var SCEN={it:[
+['l0','0','Livello 0 — Knowledge base statica (no-code)','Carichi <code>brief.md</code>, <code>note_call.md</code>, <code>competitor.md</code> come knowledge base di un Project. L\'AI li legge all\'avvio di ogni chat. Zero config, memoria di lettura.'],
+['l1','1','Livello 1 — Vault come working directory','Apri l\'AI nella cartella del vault. Chiedi "leggi <code>progetti/</code> e dimmi dove eravamo rimasti". L\'AI naviga i file, capisce la struttura, risponde con contesto reale.'],
+['l2','2','Livello 2 — LLM Wiki completo','Butti 5 articoli in <code>raw/</code>, dici "ingest". L\'AI crea pagine in <code>wiki/concepts/</code>, aggiorna <code>index.md</code> e appende a <code>log.md</code>. La conoscenza si struttura da sola.']
+],en:[
+['l0','0','Level 0 — Static knowledge base (no-code)','You upload <code>brief.md</code>, <code>call_notes.md</code>, <code>competitor.md</code> as a Project\'s knowledge base. The AI reads them at the start of every chat. Zero config, read-only memory.'],
+['l1','1','Level 1 — Vault as working directory','You open the AI in the vault folder. You ask "read <code>projects/</code> and tell me where we left off". The AI navigates the files, understands the structure, answers with real context.'],
+['l2','2','Level 2 — Full LLM Wiki','You drop 5 articles into <code>raw/</code>, you say "ingest". The AI creates pages in <code>wiki/concepts/</code>, updates <code>index.md</code> and appends to <code>log.md</code>. Knowledge structures itself.']
+]};
+
+/* glossary */
+var GLOSS={it:[
+['Memoria lunga','Il vault: stato persistente che sopravvive alla singola chat.'],
+['Working directory','La cartella in cui l\'AI "vive" e su cui può leggere e scrivere.'],
+['MCP','Model Context Protocol — standard che dà a un\'AI accesso strutturato a file e strumenti esterni.'],
+['Front matter','Blocco di metadati <code>---</code> in cima a una nota (tipo, tag, data) — aiuta l\'AI a navigare senza leggere tutto.'],
+['Stateful vs Stateless','Stateful: la conoscenza si accumula nel tempo. Stateless: si riparte da zero a ogni query.'],
+['Ingest / Query / Lint','Le tre operazioni del pattern LLM Wiki: processa fonti, interroga, verifica la salute del vault.']
+],en:[
+['Long-term memory','The vault: persistent state that survives a single chat.'],
+['Working directory','The folder the AI "lives" in and where it can read and write.'],
+['MCP','Model Context Protocol — a standard that gives an AI structured access to external files and tools.'],
+['Front matter','A block of <code>---</code> metadata at the top of a note (type, tags, date) — it helps the AI navigate without reading everything.'],
+['Stateful vs Stateless','Stateful: knowledge accumulates over time. Stateless: it starts from scratch on every query.'],
+['Ingest / Query / Lint','The three operations of the LLM Wiki pattern: process sources, query, check the vault\'s health.']
+]};
+
+/* misconceptions */
+var MYTHS={it:[
+['"Mi serve un database vettoriale"','Per un secondo cervello personale i file markdown bastano e sono più tracciabili. La RAG è la scelta giusta su milioni di documenti aziendali, non sul tuo vault personale.'],
+['"Caricare i file una volta = memoria"','La KB statica di un Project è memoria di lettura. La memoria vera (read+write, che si aggiorna) richiede una delle 3 vie di connessione.'],
+['"MCP è obbligatorio"','La via più semplice è aprire l\'AI nel terminale dentro la cartella del vault. Zero server, zero config.'],
+['"L\'AI capisce qualsiasi cartella caotica"','La struttura è ciò che rende il vault navigabile. Meglio uno schema (CLAUDE.md, front matter) che aiuti l\'AI a capire dove sono le cose.']
+],en:[
+['"I need a vector database"','For a personal second brain, markdown files are enough and more traceable. RAG is the right choice for millions of corporate documents, not for your personal vault.'],
+['"Loading the files once = memory"','A Project\'s static KB is read-only memory. Real memory (read+write, that updates itself) requires one of the 3 connection ways.'],
+['"MCP is mandatory"','The simplest way is to open the AI in the terminal inside the vault folder. Zero servers, zero config.'],
+['"The AI understands any chaotic folder"','Structure is what makes the vault navigable. Better a schema (CLAUDE.md, front matter) that helps the AI understand where things are.']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // problem feature rows
+  document.getElementById('probFeat').innerHTML=PROBFEAT[LANG].map(function(f){
+    return '<div class="feat-row"><div class="fi '+f[0]+'"><i class="ti '+f[1]+'"></i></div><div class="ft"><strong>'+f[2]+'</strong><span>'+f[3]+'</span></div></div>';
+  }).join('');
+  // wiki detail (re-render current layer/op state in new lang)
+  if(activeWikiLayer){wikiSelect(activeWikiLayer)}else{
+    var det=document.getElementById('wikiDetail'),id='raw';
+    var d=WIKI_DATA[LANG][id];det.className='wiki-detail '+d.cls;
+    document.getElementById('wikiDetHead').innerHTML='<i class="ti '+d.icon+'"></i> '+d.title;
+    document.getElementById('wikiDetBody').innerHTML=d.body;
+  }
+  // via detail (if open)
+  renderViaDetail();
+  // vault vs rag panels
+  renderVr();
+  // scenarios
+  document.getElementById('scenarios').innerHTML=SCEN[LANG].map(function(s){
+    return '<div class="scen '+s[0]+'"><div class="si">'+s[1]+'</div><div><h4>'+s[2]+'</h4><p>'+s[3]+'</p></div></div>';
+  }).join('');
+  // glossary
+  document.getElementById('glossary').innerHTML=GLOSS[LANG].map(function(g){
+    return '<tr><td class="fn">'+g[0]+'</td><td>'+g[1]+'</td></tr>';
+  }).join('');
+  // misconceptions
+  document.getElementById('myths').innerHTML=MYTHS[LANG].map(function(m){
+    return '<div class="feat-row"><div class="fi red"><i class="ti ti-x"></i></div><div class="ft"><strong>'+m[0]+'</strong><span>'+m[1]+'</span></div></div>';
+  }).join('');
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

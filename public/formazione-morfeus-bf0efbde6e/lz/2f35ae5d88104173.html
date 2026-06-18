@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'infrastruttura AI aziendale — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* compose infrastructure */
+.compbar{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:12px 16px;margin-bottom:12px}
+.compbar .cl{font-family:var(--mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+.compbar .cprog{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:700}
+.compbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-family:var(--mono);font-size:12px;font-weight:600;border-radius:30px;padding:7px 14px;cursor:pointer;transition:.18s}
+.compbtn:hover{filter:brightness(1.06)}
+.compbtn.ghost{background:transparent;color:var(--accent)}
+.compgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.piece{display:flex;align-items:flex-start;gap:11px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px;cursor:pointer;transition:.18s;opacity:.5}
+.piece:hover{border-color:var(--line-2)}
+.piece.on{opacity:1;border-color:var(--accent);background:var(--accent-soft)}
+.piece .pio{width:32px;height:32px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:.18s}
+.piece.on .pio{background:var(--accent);color:#fff}
+.piece .pname{font-size:14px;font-weight:600;margin-bottom:2px}
+.piece .pdesc{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.compout{margin-top:14px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;padding:16px 18px;transition:.25s}
+.compout .coh{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--agent);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.compout p{font-size:14.5px;color:var(--ink-2)}.compout p b{color:var(--ink)}
+.compout.full{border-left-color:var(--good);background:var(--good-soft)}
+.compout.full .coh{color:var(--good)}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.steps2{display:flex;flex-direction:column;gap:8px}
+.stp{display:flex;align-items:flex-start;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.stp .sn{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stp b{font-size:14px;font-weight:600;color:var(--ink)}.stp span{font-size:13.5px;color:var(--ink-2)}
+.ctx{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ctxc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.ctxc .ch{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.ctxc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.ctxc p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.ctxc .stat{font-family:var(--mono);font-size:12px;background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:9px 12px;color:var(--ink-2);margin-top:10px}
+.contam{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.contamc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.contamc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.contamc.good{background:var(--good-soft);border-color:var(--good)}
+.contamc .ctag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.contamc.bad .ctag{background:var(--bad);color:#fff}.contamc.good .ctag{background:var(--good);color:#fff}
+.contamc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.contamc p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.contamc.bad h4{color:var(--bad)}.contamc.good h4{color:var(--good)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.compgrid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.ctx{grid-template-columns:1fr}.contam{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.compbtn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.piece{opacity:1!important}.note,.card3,.cp,.piece,.compout,.ctxc,.contamc,.stp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">L'infrastruttura AI aziendale</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-building-cog"></i><span class="no">01</span><h2 data-i="s1">Componi l'infrastruttura, pezzo per pezzo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="compIntro"></p>
+  <div class="compbar rv">
+    <span class="cl" data-i="compLbl"></span>
+    <span class="cprog"><span id="compCount">0</span>/9</span>
+    <div style="display:flex;gap:8px">
+      <button class="compbtn ghost" onclick="resetComp()" data-i="compReset"></button>
+      <button class="compbtn" onclick="allComp()" data-i="compAll"></button>
+    </div>
+  </div>
+  <div class="compgrid rv" id="compGrid"></div>
+  <div class="compout rv" id="compOut"></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-big-up-lines"></i><span class="no">02</span><h2 data-i="s2">Non è usare ChatGPT</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-device-desktop-cog"></i></div><div><h4 data-i="note1H">Un operating system aumentato dall'AI</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-file-pencil"></i><span class="no">03</span><h2 data-i="s3">Il metodo del foglio bianco</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="blankIntro"></p>
+  <div class="steps2 rv" id="blank"></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-sitemap"></i><span class="no">04</span><h2 data-i="s4">Context engineering: organizzare per non perdersi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="ctxIntro"></p>
+  <div class="ctx rv">
+    <div class="ctxc"><div class="ch"><i class="ti ti-folders"></i> <span data-i="ctx1H"></span></div><h4 data-i="ctx1Sub"></h4><p data-i="ctx1P"></p><div class="stat" data-i="ctx1Stat"></div></div>
+    <div class="ctxc"><div class="ch"><i class="ti ti-file-description"></i> <span data-i="ctx2H"></span></div><h4 data-i="ctx2Sub"></h4><p data-i="ctx2P"></p><div class="stat" data-i="ctx2Stat"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-droplet-x"></i><span class="no">05</span><h2 data-i="s5">La contaminazione del contesto</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="contamIntro"></p>
+  <div class="contam rv">
+    <div class="contamc bad"><span class="ctag" data-i="cont1T"></span><h4 data-i="cont1H"></h4><p data-i="cont1P"></p></div>
+    <div class="contamc good"><span class="ctag" data-i="cont2T"></span><h4 data-i="cont2H"></h4><p data-i="cont2P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q3"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — L'infrastruttura AI aziendale</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'L\'infrastruttura AI aziendale',
+lede:'Hai imparato i pezzi singoli: prompt, KB, assistenti, validatori, catene, tool. Questa lezione chiude il cerchio: cosa succede quando li metti tutti insieme. Non ottieni «un\'AI più brava». Ottieni un sistema operativo aziendale che lavora al posto tuo — e un nuovo modo di pensare al lavoro.',
+s1:'Componi l\'infrastruttura, pezzo per pezzo',
+compIntro:'Un singolo prompt non è un\'infrastruttura. L\'infrastruttura nasce sommando i pezzi: ognuno, da solo, fa poco; insieme diventano un sistema. Attiva un componente alla volta e guarda cosa cambia — quando ci sono tutti, hai un\'infrastruttura AI completa.',
+compLbl:'Componenti attivi',
+compReset:'Azzera',compAll:'Attiva tutto',
+s2:'Non è usare ChatGPT',
+note1H:'Un operating system aumentato dall\'AI',
+note1P:'La somma di questi pezzi ha un nome preciso: «<strong>Processi + KB + assistenti + folder + output + reviewer + router + tool + governance = infrastruttura AI</strong>». E qui sta il salto mentale: «<strong>non è usare ChatGPT, è un operating system aumentato dall\'AI</strong>». Smetti di «usare un tool» e inizi a far girare un\'azienda dentro un sistema che l\'AI alimenta.',
+q1:'«Non è usare ChatGPT: è un operating system aumentato dall\'AI.»',
+s3:'Il metodo del foglio bianco',
+blankIntro:'Quando hai l\'infrastruttura e il metodo, succede una cosa potente: puoi <strong>partire da zero</strong> — un foglio bianco — e usare l\'AI per costruire qualsiasi cosa. È il salto finale: <strong>da utente ad architetto</strong>.',
+q2:'«Uso l\'AI anche per capire cosa devo chiederle.»',
+s4:'Context engineering: organizzare per non perdersi',
+ctxIntro:'Quando l\'infrastruttura cresce, il problema non è più la potenza dell\'AI: è <strong>farla orientare</strong> in mezzo a centinaia di file senza che si perda né bruci il contesto. Questo è il <strong>context engineering</strong>: strutturare l\'informazione perché l\'AI trovi solo ciò che le serve.',
+ctx1H:'Scala reale',ctx1Sub:'README come indici',ctx1P:'«290 cartelle, 1200+ file»: a questa scala l\'AI non può «leggere tutto» ogni volta. I README fanno da indici — dicono all\'AI dove andare, come i capitoli di un libro: vai a pagina 200, non rileggi tutto.',
+ctx1Stat:'290 cartelle · 1200+ file · README = indici',
+ctx2H:'Doppio formato',ctx2Sub:'.md per l\'AI, .docx per gli umani',ctx2P:'Stesso contenuto, due vesti: i file <b>.md</b> (Markdown) sono leggeri e strutturati, ottimizzati perché l\'AI li legga senza rumore; i <b>.docx</b> restano per gli umani. La forma del file è parte dell\'architettura.',
+ctx2Stat:'.md → AI · .docx → umani',
+s5:'La contaminazione del contesto',
+contamIntro:'C\'è un limite che non è quantitativo (quanti token entrano) ma <strong>qualitativo</strong>: «<strong>i messaggi precedenti inquinano le risposte successive</strong>». Una conversazione lunga e disordinata peggiora le risposte, anche se ci sta tutto nella finestra.',
+cont1T:'Il problema',cont1H:'Il contesto si sporca',cont1P:'Parli di marketing in tono informale, poi chiedi un\'analisi legale: il tono e il dominio precedente «sbavano» sulla nuova richiesta. La risposta esce contaminata da ciò che è venuto prima.',
+cont2T:'La regola',cont2H:'Reset al cambio dominio',cont2P:'Quando cambi argomento davvero, apri una conversazione nuova. Il reset esplicito è gratis e tiene pulito il contesto: ogni dominio merita il suo spazio, senza residui del precedente.',
+q3:'«I messaggi precedenti inquinano le risposte successive: reset al cambio di dominio.»',
+s6:'Checkpoint',
+cpH:'Disegna la tua infrastruttura minima',
+cpP:'Non serve partire da 290 cartelle. Prendi il tuo processo più ripetuto e mettici accanto i pezzi che già hai: il prompt, la KB, l\'assistente, l\'output, il punto di review. Vedrai che un\'infrastruttura è già lì in nuce — manca solo comporla.',
+cpQ:'Qual è il pezzo che oggi ti manca di più — un reviewer che controlla, un router che smista, una governance che mette i limiti — e cosa cambierebbe nel tuo lavoro se domani lo aggiungessi?',
+bridge:'Hai chiuso il cerchio: dai singoli prompt all\'operating system aumentato dall\'AI, fino al foglio bianco da architetto. <b>Hai completato il Modulo A6.</b> Da qui in poi non usi più l\'AI — la fai lavorare dentro un sistema che hai progettato tu.',
+foot:'Morfeus — L\'infrastruttura AI aziendale'
+},
+en:{
+kicker:'Lesson A6.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'The company AI infrastructure',
+lede:'You\'ve learned the single pieces: prompts, KB, assistants, validators, chains, tools. This lesson closes the loop: what happens when you put them all together. You don\'t get "a smarter AI". You get a company operating system that works for you — and a new way of thinking about work.',
+s1:'Compose the infrastructure, piece by piece',
+compIntro:'A single prompt isn\'t an infrastructure. Infrastructure emerges by summing the pieces: each one, alone, does little; together they become a system. Turn on one component at a time and watch what changes — when they\'re all in, you have a complete AI infrastructure.',
+compLbl:'Active components',
+compReset:'Reset',compAll:'Turn on all',
+s2:'It isn\'t using ChatGPT',
+note1H:'An operating system augmented by AI',
+note1P:'The sum of these pieces has a precise name: "<strong>Processes + KB + assistants + folders + output + reviewer + router + tools + governance = AI infrastructure</strong>". And here\'s the mental leap: "<strong>it isn\'t using ChatGPT, it\'s an operating system augmented by AI</strong>". You stop "using a tool" and start running a company inside a system the AI powers.',
+q1:'"It isn\'t using ChatGPT: it\'s an operating system augmented by AI."',
+s3:'The blank-sheet method',
+blankIntro:'When you have the infrastructure and the method, something powerful happens: you can <strong>start from scratch</strong> — a blank sheet — and use the AI to build anything. It\'s the final leap: <strong>from user to architect</strong>.',
+q2:'"I use the AI even to figure out what I should ask it."',
+s4:'Context engineering: organizing so you don\'t get lost',
+ctxIntro:'When the infrastructure grows, the problem is no longer the AI\'s power: it\'s <strong>helping it orient itself</strong> among hundreds of files without getting lost or burning the context. This is <strong>context engineering</strong>: structuring information so the AI finds only what it needs.',
+ctx1H:'Real scale',ctx1Sub:'READMEs as indexes',ctx1P:'"290 folders, 1200+ files": at this scale the AI can\'t "read everything" every time. READMEs act as indexes — they tell the AI where to go, like a book\'s chapters: go to page 200, don\'t reread it all.',
+ctx1Stat:'290 folders · 1200+ files · README = indexes',
+ctx2H:'Dual format',ctx2Sub:'.md for the AI, .docx for humans',ctx2P:'Same content, two outfits: <b>.md</b> (Markdown) files are light and structured, optimized for the AI to read without noise; <b>.docx</b> files stay for humans. The file format is part of the architecture.',
+ctx2Stat:'.md → AI · .docx → humans',
+s5:'Context contamination',
+contamIntro:'There\'s a limit that isn\'t quantitative (how many tokens fit) but <strong>qualitative</strong>: "<strong>previous messages pollute later answers</strong>". A long, messy conversation degrades the answers, even if everything still fits in the window.',
+cont1T:'The problem',cont1H:'The context gets dirty',cont1P:'You talk marketing in an informal tone, then ask for a legal analysis: the previous tone and domain "bleed" onto the new request. The answer comes out contaminated by what came before.',
+cont2T:'The rule',cont2H:'Reset when the domain changes',cont2P:'When you truly switch topic, open a new conversation. The explicit reset is free and keeps the context clean: every domain deserves its own space, with no residue from the previous one.',
+q3:'"Previous messages pollute later answers: reset when the domain changes."',
+s6:'Checkpoint',
+cpH:'Sketch your minimal infrastructure',
+cpP:'You don\'t need to start with 290 folders. Take your most repeated process and place beside it the pieces you already have: the prompt, the KB, the assistant, the output, the review point. You\'ll see an infrastructure is already there in embryo — it just needs composing.',
+cpQ:'Which piece are you missing the most today — a reviewer that checks, a router that dispatches, a governance that sets the limits — and what would change in your work if tomorrow you added it?',
+bridge:'You\'ve closed the loop: from single prompts to the AI-augmented operating system, all the way to the architect\'s blank sheet. <b>You\'ve completed Module A6.</b> From here on you no longer use AI — you make it work inside a system you designed.',
+foot:'Morfeus — The company AI infrastructure'
+}};
+
+// pieces: [icon, name, desc]
+var PIECES={it:[
+['ti-route-2','Processi','Il modo in cui il lavoro viene fatto, documentato passo per passo.'],
+['ti-book-2','KB','La conoscenza che rende l\'AI un senior nel tuo contesto.'],
+['ti-users','Assistenti','Specialisti con ruolo, istruzioni e perimetro propri.'],
+['ti-folder','Folder','Le cartelle dove vivono input, lavoro e output.'],
+['ti-file-export','Output','I risultati concreti, salvati e riusabili.'],
+['ti-eye-check','Reviewer','Chi controlla il lavoro prima che vada avanti.'],
+['ti-route','Router','Chi smista la richiesta all\'assistente giusto.'],
+['ti-plug','Tool','I connettori che fanno agire l\'AI nel mondo reale.'],
+['ti-shield-lock','Governance','I limiti, le review e i rollback che tengono tutto sotto controllo.']
+],en:[
+['ti-route-2','Processes','How the work gets done, documented step by step.'],
+['ti-book-2','KB','The knowledge that makes the AI a senior in your context.'],
+['ti-users','Assistants','Specialists with their own role, instructions and perimeter.'],
+['ti-folder','Folders','The folders where input, work and output live.'],
+['ti-file-export','Output','The concrete results, saved and reusable.'],
+['ti-eye-check','Reviewer','The one who checks the work before it moves on.'],
+['ti-route','Router','The one who dispatches the request to the right assistant.'],
+['ti-plug','Tools','The connectors that make the AI act on the real world.'],
+['ti-shield-lock','Governance','The limits, reviews and rollbacks that keep it all under control.']
+]};
+
+var COMPMSG={it:{
+zero:'Attiva i componenti qui sopra. Con zero pezzi, hai solo una chat: l\'AI risponde, ma niente lavora al posto tuo.',
+some:function(n){return '<b>'+n+' pezzi su 9 attivi.</b> Stai costruendo: ogni componente che aggiungi rende il sistema più autonomo e più affidabile. Continua a comporre.';},
+full:'<b>Infrastruttura completa.</b> Processi + KB + assistenti + folder + output + reviewer + router + tool + governance: non è più «usare l\'AI», è un operating system aumentato dall\'AI che lavora al posto tuo.'
+},en:{
+zero:'Turn on the components above. With zero pieces, you just have a chat: the AI answers, but nothing works for you.',
+some:function(n){return '<b>'+n+' of 9 pieces active.</b> You\'re building: every component you add makes the system more autonomous and more reliable. Keep composing.';},
+full:'<b>Complete infrastructure.</b> Processes + KB + assistants + folders + output + reviewer + router + tools + governance: it\'s no longer "using AI", it\'s an AI-augmented operating system that works for you.'
+}};
+var COH={it:'Risultato',en:'Result'};
+
+var BLANK={it:[
+['Capisci il problema','Davanti al foglio bianco, prima di tutto usi l\'AI per capire cosa stai davvero affrontando: «uso l\'AI anche per capire cosa devo chiederle».'],
+['Progetta il metodo','Insieme all\'AI definisci l\'approccio: quali step, quale ordine, quali criteri di qualità.'],
+['Scomponi e costruisci','Spezzi il problema in pezzi e fai costruire all\'AI gli strumenti che servono: prompt, KB, assistenti, procedure.'],
+['Componi e valida','Metti insieme i pezzi nell\'infrastruttura, testi, validi. Sei passato da chi esegue a chi progetta il sistema.']
+],en:[
+['Understand the problem','Facing the blank sheet, first you use the AI to understand what you\'re really dealing with: "I use the AI even to figure out what I should ask it".'],
+['Design the method','Together with the AI you define the approach: which steps, which order, which quality criteria.'],
+['Decompose and build','You break the problem into pieces and have the AI build the tools you need: prompts, KB, assistants, procedures.'],
+['Compose and validate','You assemble the pieces into the infrastructure, you test, you validate. You\'ve gone from the one who executes to the one who designs the system.']
+]};
+
+var LANG='it',active=[];
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var P=PIECES[LANG];
+  document.getElementById('compGrid').innerHTML=P.map(function(p,i){return '<div class="piece'+(active.indexOf(i)>-1?' on':'')+'" onclick="togglePiece('+i+')"><div class="pio"><i class="ti '+p[0]+'"></i></div><div><div class="pname">'+p[1]+'</div><div class="pdesc">'+p[2]+'</div></div></div>'}).join('');
+  document.getElementById('blank').innerHTML=BLANK[LANG].map(function(b,i){return '<div class="stp"><div class="sn">'+(i+1)+'</div><div><b>'+b[0]+'</b><br><span>'+b[1]+'</span></div></div>'}).join('');
+  renderComp();
+}
+function renderComp(){
+  var n=active.length;document.getElementById('compCount').textContent=n;
+  var out=document.getElementById('compOut');var M=COMPMSG[LANG];
+  if(n===0){out.className='compout rv show';out.innerHTML='<div class="coh"><i class="ti ti-info-circle"></i> '+COH[LANG]+'</div><p>'+M.zero+'</p>';}
+  else if(n>=9){out.className='compout full rv show';out.innerHTML='<div class="coh"><i class="ti ti-circle-check"></i> '+COH[LANG]+'</div><p>'+M.full+'</p>';}
+  else{out.className='compout rv show';out.innerHTML='<div class="coh"><i class="ti ti-building-cog"></i> '+COH[LANG]+'</div><p>'+M.some(n)+'</p>';}
+}
+function togglePiece(i){var k=active.indexOf(i);if(k>-1)active.splice(k,1);else active.push(i);document.querySelectorAll('.piece').forEach(function(x,j){x.classList.toggle('on',active.indexOf(j)>-1)});renderComp();}
+function resetComp(){active=[];document.querySelectorAll('.piece').forEach(function(x){x.classList.remove('on')});renderComp();}
+function allComp(){active=[0,1,2,3,4,5,6,7,8];document.querySelectorAll('.piece').forEach(function(x){x.classList.add('on')});renderComp();}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

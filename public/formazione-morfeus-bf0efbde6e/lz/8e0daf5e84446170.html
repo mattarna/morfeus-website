@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I benefici concreti dell'AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}
+.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.note.agent p strong{color:var(--ink)}
+/* flow a 4 tappe */
+.flow{display:flex;gap:6px;margin-bottom:0}
+.fstep{flex:1;border:1.5px solid var(--line);background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 10px;cursor:pointer;transition:.18s;text-align:center;position:relative}
+.fstep:hover{border-color:var(--line-2)}.fstep.on{border-color:var(--accent);background:var(--accent-soft)}
+.fstep .fn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.fstep.on .fn{color:var(--accent)}
+.fstep .fi{font-size:22px;color:var(--ink-3);margin:6px 0 4px;display:block}
+.fstep.on .fi{color:var(--accent)}
+.fstep .ft{font-size:12.5px;font-weight:600;line-height:1.3}
+.fdetail{margin-top:14px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:20px 22px}
+.fdetail h4{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--accent);display:flex;align-items:center;gap:9px}
+.fdetail h4 i{font-size:19px}
+.fdetail p{font-size:14.5px;color:var(--ink-2);margin-bottom:0}
+.fdetail ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.fdetail li{font-size:14px;color:var(--ink-2);display:flex;gap:9px}
+.fdetail li i{font-size:15px;color:var(--accent);margin-top:2px;flex-shrink:0}
+.fdetail .fq{margin-top:14px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14px;color:var(--ink);font-weight:500;font-style:italic}
+/* galleria benefici */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14.5px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.statc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.statv{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--accent);line-height:1.1}
+.statl{font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+.sectors{margin-top:16px;font-size:14px;color:var(--ink-2);text-align:center}
+.sectors b{color:var(--ink)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+/* === Agenti AI: arricchimento === */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.vs-col{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.vs-col.auto{border-color:var(--bad-soft)}
+.vs-col.ag{border-color:var(--agent-line)}
+.vs-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.vs-head .vh-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.vs-col.auto .vh-ic{background:var(--bad-soft);color:var(--bad)}
+.vs-col.ag .vh-ic{background:var(--agent-soft);color:var(--agent)}
+.vs-head .vh-t{font-size:14.5px;font-weight:600}
+.vs-head .vh-s{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-top:1px}
+.vs-body{padding:6px 16px 16px;flex:1}
+.vs-step{display:flex;gap:11px;padding:11px 0;border-bottom:1px dashed var(--line);opacity:.35;transform:translateX(-6px);transition:.4s}
+.vs-step:last-child{border-bottom:none}
+.vs-step.live{opacity:1;transform:none}
+.vs-step .ss-n{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;background:var(--bg-3);color:var(--ink-3);margin-top:1px}
+.vs-col.auto .vs-step.live .ss-n{background:var(--bad);color:#fff}
+.vs-col.ag .vs-step.live .ss-n{background:var(--agent);color:#fff}
+.vs-step .ss-x{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.vs-step.live .ss-x{color:var(--ink)}
+.vs-step .ss-x b{font-weight:600}
+.vs-end{display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 12px;border-radius:var(--r);font-size:13px;font-weight:600;opacity:.35;transition:.4s}
+.vs-end.live{opacity:1}
+.vs-col.auto .vs-end{background:var(--bad-soft);color:var(--bad)}
+.vs-col.ag .vs-end{background:var(--good-soft);color:var(--good)}
+.vs-end i{font-size:17px}
+.vs-bar{display:flex;align-items:center;gap:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:13px 16px;margin-top:14px;flex-wrap:wrap}
+.vs-bar .vb-txt{font-size:13.5px;color:var(--ink-2);flex:1;min-width:200px}
+.vs-bar .vb-txt b{color:var(--ink)}
+.vs-btn{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--agent);color:#fff;font-family:var(--mono);font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:30px;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.vs-btn:hover{filter:brightness(1.06)}
+.vs-btn i{font-size:16px}
+.ex-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ex-chip{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:30px;padding:7px 14px;font-size:13px;color:var(--ink-2);box-shadow:var(--sh)}
+.ex-chip i{font-size:16px;color:var(--agent)}.ex-chip b{color:var(--ink);font-weight:600}
+.mini{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:16px 18px;margin-top:14px}
+.mini .mi{width:36px;height:36px;border-radius:10px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.mini h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.mini p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.mini .tag{display:inline-block;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--agent);border:1px solid var(--agent-line);border-radius:30px;padding:2px 8px;margin-bottom:6px}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.flow{flex-wrap:wrap}.fstep{flex:1 1 45%}.fstep .ft{font-size:12px}.vs{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.vs-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.vs-step,.vs-end{opacity:1!important;transform:none!important}.note,.card3,.statc,.cp,.fstep,.fdetail,.key,.vs-col,.mini{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.1b</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">I fondamenti</div>
+  <h1 class="rv" data-i="h1">I benefici concreti dell'AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-keyboard"></i><span class="no">01</span><h2 data-i="s1">La svolta: si usa a parole</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-message-2"></i></div><div><h4 data-i="note1H">Niente codice: linguaggio naturale</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-route-2"></i><span class="no">02</span><h2 data-i="s2">Il percorso in 4 tappe</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="flowIntro"></p>
+  <div class="flow rv" id="flow"></div>
+  <div class="fdetail rv" id="fdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-gift"></i><span class="no">03</span><h2 data-i="s3">I benefici pratici, uno per uno</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="benIntro"></p>
+  <div class="cards rv" id="bens"></div>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">04</span><h2 data-i="s4">Cosa puoi delegarle già oggi</h2></div>
+  <div class="cards rv" id="uses"></div>
+
+  <div class="sh rv"><i class="ti ti-puzzle"></i><span class="no">05</span><h2 data-i="s5">Il superpotere: riconoscere i pattern</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-puzzle"></i></div><div><h4 data-i="note2H">Pattern e procedure: è qui che eccelle</h4><p data-i-html="note2P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="patKey"></p></div>
+
+  <div class="sh rv"><i class="ti ti-robot"></i><span class="no">06</span><h2 data-i="s6">Gli agenti AI</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-robot-face"></i></div><div><h4 data-i="note3H">Assistenti virtuali che lavorano per te</h4><p data-i-html="note3P"></p></div></div>
+
+  <p class="lede rv" style="font-size:14.5px;margin:24px 0 4px" data-i-html="vsIntro"></p>
+  <div class="vs-bar rv">
+    <div class="vb-txt" data-i-html="vsObstacle"></div>
+    <button class="vs-btn" id="vsBtn" onclick="runVS()" data-i="vsRun"><i class="ti ti-player-play"></i><span data-i="vsRunL">Lancia il confronto</span></button>
+  </div>
+  <div class="vs rv">
+    <div class="vs-col auto">
+      <div class="vs-head"><div class="vh-ic"><i class="ti ti-settings"></i></div><div><div class="vh-t" data-i="vsAutoT">Automazione</div><div class="vh-s" data-i="vsAutoS">segue gli step fissi</div></div></div>
+      <div class="vs-body" id="vsAuto"></div>
+    </div>
+    <div class="vs-col ag">
+      <div class="vs-head"><div class="vh-ic"><i class="ti ti-robot-face"></i></div><div><div class="vh-t" data-i="vsAgT">Agente</div><div class="vh-s" data-i="vsAgS">decide e risolve</div></div></div>
+      <div class="vs-body" id="vsAg"></div>
+    </div>
+  </div>
+
+  <div class="note agent rv" style="margin-top:24px"><div class="ni"><i class="ti ti-brain"></i></div><div><h4 data-i="brainH">Il cervello linguistico</h4><p data-i-html="brainP"></p></div></div>
+
+  <p class="lede rv" style="font-size:14.5px;margin:24px 0 0" data-i-html="exIntro"></p>
+  <div class="ex-row rv" id="exRow"></div>
+
+  <div class="mini rv"><div class="mi"><i class="ti ti-hierarchy-2"></i></div><div><span class="tag" data-i="mgrTag">Anticipo · vedremo in A7</span><h4 data-i="mgrH">Il manager virtuale</h4><p data-i-html="mgrP"></p></div></div>
+
+  <div class="note agent rv" style="margin-top:24px"><div class="ni"><i class="ti ti-affiliate"></i></div><div><h4 data-i="liveH">Non è teoria: ci sei già dentro</h4><p data-i-html="liveP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">07</span><h2 data-i="s7">La condizione: le procedure</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:18px" data-i-html="procIntro"></p>
+  <div class="stats rv">
+    <div class="statc"><div class="statv" data-i="statN1">~20%</div><div class="statl" data-i="statL1"></div></div>
+    <div class="statc"><div class="statv" data-i="statN2">×N</div><div class="statl" data-i="statL2"></div></div>
+    <div class="statc"><div class="statv" data-i="statN3">→ 0</div><div class="statl" data-i="statL3"></div></div>
+  </div>
+  <p class="sectors rv" data-i-html="sectors"></p>
+  <div class="key rv" style="margin-top:30px"><p data-i="procKey"></p><div class="cap" data-i="procCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Trova la tua procedura</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — I benefici concreti dell'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.1b',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'I fondamenti',
+h1:'I benefici concreti dell\'AI',
+lede:'Si parla tanto di AI in astratto. Qui niente fumo: vediamo cosa cambia davvero nel tuo lavoro, perché ci riesce, e a quale unica condizione i benefici diventano reali.',
+s1:'La svolta: si usa a parole',
+note1H:'Niente codice: linguaggio naturale',
+note1P:'La vera rivoluzione non è solo la potenza del modello: è che oggi lo usi <strong>a parole, in linguaggio naturale</strong>, non con codice di programmazione. Prima servivano competenze tecniche; ora chiunque sappia spiegare cosa vuole può lavorarci. È questo che la rende accessibile a tutti — e applicabile ovunque: dal <strong>manifatturiero</strong> all\'<strong>intrattenimento</strong>, dal <strong>militare</strong> al lavoro d\'<strong>ufficio</strong>.',
+s2:'Il percorso in 4 tappe',
+flowIntro:'Quattro passaggi per capire dove sta il valore reale. Clicca ogni tappa per aprirla.',
+s3:'I benefici pratici, uno per uno',
+benIntro:'Non promesse: effetti misurabili che vedi dal primo giorno.',
+s4:'Cosa puoi delegarle già oggi',
+s5:'Il superpotere: riconoscere i pattern',
+note2H:'Pattern e procedure: è qui che eccelle',
+note2P:'L\'AI è addestrata prevalentemente su testo: per questo è bravissima a <strong>riconoscere pattern</strong> e fare collegamenti. Ogni cosa ripetitiva che fai ogni giorno — un report, una risposta-tipo, un controllo — è un <strong>pattern, una procedura</strong>. E replicare procedure con qualità costante è letteralmente ciò in cui è più forte al mondo.',
+patKey:'«Ogni singola procedura che fai durante la giornata è un algoritmo. E l\'AI è la cosa più forte al mondo a replicare un algoritmo, sempre con la stessa qualità.»',
+s6:'Gli agenti AI',
+note3H:'Assistenti virtuali che lavorano per te',
+note3P:'Gli <strong>agenti AI</strong> sono il livello più avanzato: non rispondono solo a una domanda, ma <strong>automatizzano interi compiti</strong> e prendono <strong>decisioni in autonomia</strong>. Il cambio di paradigma: non gli dici più <em>«segui questi step»</em>, gli dai un <strong>obiettivo</strong> e gli strumenti — e ci arriva da solo. Qui ne vediamo il cuore; la trattazione completa è in A7.',
+vsIntro:'La differenza tra un\'<strong>automazione</strong> e un <strong>agente</strong> si vede in un istante: dài a entrambi lo stesso ostacolo e guarda come si comportano.',
+vsObstacle:'<b>Stesso ostacolo:</b> a metà del compito manca un dato che non era previsto. Premi play e osserva le due reazioni.',
+vsRun:'Lancia il confronto',vsRunL:'Lancia il confronto',vsReset:'Rigioca',
+vsAutoT:'Automazione',vsAutoS:'segue gli step fissi',
+vsAgT:'Agente',vsAgS:'decide e risolve',
+vsAuto:[['1','Parte ed esegue gli step previsti, uno dopo l\'altro.'],['2','Arriva al punto: serve un dato che <b>non ha</b>.'],['3','Non era nello schema. <b>Si ferma.</b>']],
+vsAutoEnd:'Si blocca e dice: «errore».',
+vsAg:[['1','Parte verso l\'obiettivo, non verso uno script rigido.'],['2','Trova lo stesso blocco: serve un dato che non ha.'],['3','<b>Va a prenderselo</b> (Drive, CRM, web), risolve e prosegue.']],
+vsAgEnd:'Aggira l\'ostacolo e completa il compito.',
+brainH:'Il cervello linguistico',
+brainP:'Dentro ogni agente c\'è un <strong>LLM come cervello</strong>: comprende il contesto, comunica e <strong>agisce in autonomia</strong>. È questo che fa la differenza: <strong>se gli serve un\'informazione che non ha, va a prenderla</strong> — nel Drive, nel CRM, via API — e non solo la legge: può anche <strong>scrivere</strong> (creare un documento, aggiornare un dato, mandare una risposta).',
+exIntro:'La versione più semplice di agente <strong>ce l\'hai già in tasca</strong>: assistenti vocali che capiscono una richiesta a voce ed eseguono un\'azione.',
+mgrTag:'Anticipo · vedremo in A7',
+mgrH:'Il manager virtuale',
+mgrP:'Si può andare oltre il singolo agente: un <strong>manager virtuale</strong> è un agente il cui compito non è eseguire, ma <strong>decidere quale sotto-assistente attivare</strong> in base alla richiesta. Un team di agenti coordinato da un capo-agente. Solo un assaggio: lo costruiamo in A7.',
+liveH:'Non è teoria: ci sei già dentro',
+liveP:'Lo strumento che usi in questa formazione, <strong>Claude Cowork</strong>, è già un sistema multi-agente: quando gli affidi un lavoro non lavora da solo, <strong>lancia i suoi sub-agent</strong> e costruisce il suo team. E oggi quasi tutti i sistemi AI moderni funzionano così: <strong>non singoli assistenti, ma squadre di agenti che collaborano</strong>.',
+s7:'La condizione: le procedure',
+procIntro:'Il tutto, però, a <strong>una condizione</strong>: servono <strong>procedure chiare ed efficienti</strong>. Se le tue procedure sono ben definite, l\'AI le automatizza, gestisce il flusso di informazioni e monitora i progressi. Se sono confuse, anche il modello migliore produce confusione. La qualità dell\'output dipende dalla qualità della procedura che gli dai.',
+statN1:'~20%',statN2:'×N',statN3:'→ 0',
+statL1:'del lavoro noioso e ripetitivo liberato',
+statL2:'l\'output di molti, fatto con poche persone',
+statL3:'errori ripetitivi ridotti verso lo zero',
+sectors:'Funziona <b>in ogni settore</b>: manifatturiero, intrattenimento, ufficio, ricerca. Cambia il dominio, non il principio.',
+procKey:'L\'AI amplifica l\'efficacia delle nostre azioni. Non sostituisce il metodo: lo moltiplica.',
+procCap:'Procedura chiara → AI che la esegue, gestisce le informazioni e tiene il ritmo. Procedura confusa → niente di tutto questo.',
+s8:'Checkpoint',
+cpH:'Trova la tua procedura',
+cpP:'Non chiederti «come uso l\'AI?». Chiediti: qual è la cosa ripetitiva che faccio ogni settimana e che mi ruba tempo ed energia?',
+cpQ:'Pensa a UNA procedura tua, ricorrente e chiara — un report, una risposta-tipo, un controllo. È il candidato perfetto per partire.',
+cpNote:'Parti dal facile e quasi-sicuro, non dal task più complesso: aumenti la difficoltà man mano che capisci la macchina.',
+bridge:'Hai visto i benefici, gli agenti e la condizione. <b>Prossimo:</b> capire la macchina dall\'interno — come funziona un modello, perché a volte sbaglia, e come parlargli per ottenere ciò che vuoi.',
+foot:'Morfeus — I benefici concreti dell\'AI'
+},
+en:{
+kicker:'Lesson A1.1b',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The fundamentals',
+h1:'The concrete benefits of AI',
+lede:'There\'s a lot of abstract talk about AI. No fog here: we look at what actually changes in your work, why it works, and the single condition that turns the benefits into something real.',
+s1:'The shift: you use it in plain words',
+note1H:'No code: natural language',
+note1P:'The real revolution isn\'t just the power of the model: it\'s that today you use it <strong>in plain words, in natural language</strong>, not with programming code. It used to take technical skills; now anyone who can explain what they want can work with it. That\'s what makes it accessible to everyone — and applicable anywhere: from <strong>manufacturing</strong> to <strong>entertainment</strong>, from the <strong>military</strong> to <strong>office</strong> work.',
+s2:'The journey in 4 steps',
+flowIntro:'Four steps to see where the real value sits. Click each step to open it.',
+s3:'The practical benefits, one by one',
+benIntro:'Not promises: measurable effects you see from day one.',
+s4:'What you can delegate to it today',
+s5:'The superpower: spotting patterns',
+note2H:'Patterns and procedures: this is where it excels',
+note2P:'AI is trained mostly on text: that\'s why it\'s outstanding at <strong>spotting patterns</strong> and making connections. Every repetitive thing you do each day — a report, a stock reply, a check — is a <strong>pattern, a procedure</strong>. And replicating procedures with consistent quality is literally what it\'s best in the world at.',
+patKey:'"Every single procedure you run during the day is an algorithm. And AI is the best thing in the world at replicating an algorithm, always with the same quality."',
+s6:'AI agents',
+note3H:'Virtual assistants that work for you',
+note3P:'<strong>AI agents</strong> are the most advanced level: they don\'t just answer a question, they <strong>automate entire tasks</strong> and make <strong>decisions on their own</strong>. The paradigm shift: you no longer say <em>"follow these steps"</em>, you give it a <strong>goal</strong> and the tools — and it gets there by itself. Here we see the heart of it; the full treatment is in A7.',
+vsIntro:'The difference between an <strong>automation</strong> and an <strong>agent</strong> shows in an instant: give both the same obstacle and watch how they behave.',
+vsObstacle:'<b>Same obstacle:</b> halfway through the task, a piece of data is missing that wasn\'t planned for. Hit play and watch the two reactions.',
+vsRun:'Run the comparison',vsRunL:'Run the comparison',vsReset:'Replay',
+vsAutoT:'Automation',vsAutoS:'follows fixed steps',
+vsAgT:'Agent',vsAgS:'decides and solves',
+vsAuto:[['1','Starts and runs the planned steps, one after another.'],['2','Reaches the point: it needs a piece of data it <b>doesn\'t have</b>.'],['3','It wasn\'t in the script. <b>It stops.</b>']],
+vsAutoEnd:'It halts and says: "error".',
+vsAg:[['1','Heads toward the goal, not toward a rigid script.'],['2','Hits the same block: it needs data it doesn\'t have.'],['3','<b>It goes and gets it</b> (Drive, CRM, web), solves it and moves on.']],
+vsAgEnd:'It gets around the obstacle and completes the task.',
+brainH:'The language brain',
+brainP:'Inside every agent there\'s an <strong>LLM as its brain</strong>: it understands the context, communicates and <strong>acts on its own</strong>. That\'s what makes the difference: <strong>if it needs information it doesn\'t have, it goes and gets it</strong> — in the Drive, in the CRM, via API — and it doesn\'t just read: it can also <strong>write</strong> (create a document, update a record, send a reply).',
+exIntro:'The simplest version of an agent <strong>is already in your pocket</strong>: voice assistants that understand a spoken request and carry out an action.',
+mgrTag:'Preview · covered in A7',
+mgrH:'The virtual manager',
+mgrP:'You can go beyond the single agent: a <strong>virtual manager</strong> is an agent whose job isn\'t to execute, but to <strong>decide which sub-assistant to activate</strong> based on the request. A team of agents coordinated by a lead-agent. Just a taste: we build it in A7.',
+liveH:'It\'s not theory: you\'re already in it',
+liveP:'The tool you use in this training, <strong>Claude Cowork</strong>, is already a multi-agent system: when you hand it a task it doesn\'t work alone, <strong>it spawns its sub-agents</strong> and builds its own team. And today almost all modern AI systems work this way: <strong>not single assistants, but teams of agents working together</strong>.',
+s7:'The condition: the procedures',
+procIntro:'All of this, though, comes with <strong>one condition</strong>: you need <strong>clear, efficient procedures</strong>. If your procedures are well defined, AI automates them, manages the flow of information and monitors progress. If they\'re messy, even the best model produces mess. The quality of the output depends on the quality of the procedure you give it.',
+statN1:'~20%',statN2:'×N',statN3:'→ 0',
+statL1:'of boring, repetitive work freed up',
+statL2:'the output of many, done by a few people',
+statL3:'repetitive errors driven toward zero',
+sectors:'It works <b>in every sector</b>: manufacturing, entertainment, office, research. The domain changes, the principle doesn\'t.',
+procKey:'AI amplifies the effectiveness of our actions. It doesn\'t replace the method: it multiplies it.',
+procCap:'Clear procedure → AI runs it, manages the information and keeps the pace. Messy procedure → none of that.',
+s8:'Checkpoint',
+cpH:'Find your procedure',
+cpP:'Don\'t ask "how do I use AI?". Ask: what is the repetitive thing I do every week that steals my time and energy?',
+cpQ:'Think of ONE procedure of yours — recurring and clear: a report, a stock reply, a check. It\'s the perfect candidate to start from.',
+cpNote:'Start from 

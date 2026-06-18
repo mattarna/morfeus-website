@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validatori e accumulo dell'errore — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* simulator */
+.sim{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.ctrl{margin-bottom:18px}
+.ctrl .clbl{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:9px}
+.ctrl .clbl .cval{font-size:15px;color:var(--accent)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:7px;border-radius:30px;background:var(--bg-3);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:var(--sh);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:var(--sh);cursor:pointer}
+.toggle{display:flex;align-items:center;gap:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:13px 16px;cursor:pointer;transition:.18s;margin-bottom:18px}
+.toggle:hover{border-color:var(--line-2)}
+.toggle.on{border-color:var(--accent);background:var(--accent-soft)}
+.tgsw{width:42px;height:24px;border-radius:30px;background:var(--bg-3);position:relative;flex-shrink:0;transition:.2s;border:1px solid var(--line)}
+.toggle.on .tgsw{background:var(--accent);border-color:var(--accent)}
+.tgsw::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle.on .tgsw::after{left:20px}
+.toggle .tgtx{font-size:14px;font-weight:600}.toggle .tgtx small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:1px}
+.track{display:flex;gap:3px;margin-bottom:20px;flex-wrap:wrap}
+.stepdot{width:13px;height:13px;border-radius:3px;background:var(--good);position:relative}
+.stepdot.val{background:var(--accent);border-radius:50%;box-shadow:0 0 0 2px var(--accent-soft)}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ro{border-radius:var(--r-l);padding:16px;text-align:center}
+.ro.err{background:var(--bad-soft);border:1px solid var(--bad)}
+.ro.qual{background:var(--good-soft);border:1px solid var(--good)}
+.ro .rolbl{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.ro.err .rolbl{color:var(--bad)}.ro.qual .rolbl{color:var(--good)}
+.ro .roval{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.ro.err .roval{color:var(--bad)}.ro.qual .roval{color:var(--good)}
+.ro .rosub{font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.simverdict{margin-top:16px;font-size:13.5px;color:var(--ink-2);background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px}
+.simverdict b{color:var(--ink)}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:5px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}
+.cmpc p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cmpc .big{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:4px 0 8px}
+.cmpc.bad .big{color:var(--bad)}.cmpc.good .big{color:var(--good)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.gate{display:flex;align-items:center;gap:14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px}
+.gate .gi{width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.gate .gtx{font-size:14px;color:var(--ink-2)}.gate .gtx b{color:var(--ink)}
+.gate .garrow{margin:0 4px;color:var(--good);font-size:18px}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.readout{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.sim,.gate,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">Validatori e l'accumulo dell'errore</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">01</span><h2 data-i="s1">Cos'è un validatore</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-user-check"></i></div><div><h4 data-i="note1H">Un agente che prova a distruggere la tesi</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-trending-down"></i><span class="no">02</span><h2 data-i="s2">L'accumulo dell'errore: la matematica</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="accIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="accBadT">Esempio estremo</span><div class="big" data-i="accBadBig">~18%</div><h4 data-i="accBadH">20 step, 99% corretto a step</h4><p data-i-html="accBadP"></p></div>
+    <div class="cmpc bad"><span class="cmptag" data-i="accRealT">Scala più reale</span><div class="big" data-i="accRealBig">~5%</div><h4 data-i="accRealH">100 step, 99,96% a step</h4><p data-i-html="accRealP"></p></div>
+  </div>
+  <div class="note agent rv" style="margin-top:16px"><div class="ni"><i class="ti ti-zoom-question"></i></div><div><h4 data-i="note2H">«100 step non è uno step di procedura»</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-check"></i><span class="no">03</span><h2 data-i="s3">Il validatore come freno: simulalo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="simIntro"></p>
+  <div class="sim rv">
+    <div class="ctrl">
+      <div class="clbl"><span data-i="stepsLbl">Quanti micro-step</span><span class="cval" id="stepsVal">120</span></div>
+      <input type="range" id="steps" min="20" max="200" step="5" value="120">
+    </div>
+    <div class="toggle" id="valToggle" onclick="toggleVal()">
+      <div class="tgsw"></div>
+      <div class="tgtx" data-i="valTgT">Inserisci un validatore ogni 25 step<small data-i="valTgS">Trova l'errore, torna indietro, fa sistemare</small></div>
+    </div>
+    <div class="track" id="track"></div>
+    <div class="readout">
+      <div class="ro err"><div class="rolbl" data-i="roErrL">Errore finale</div><div class="roval" id="roErr">—</div><div class="rosub" data-i="roErrS">probabilità di sbagliare</div></div>
+      <div class="ro qual"><div class="rolbl" data-i="roQualL">Qualità tenuta</div><div class="roval" id="roQual">—</div><div class="rosub" data-i="roQualS">resta sopra soglia</div></div>
+    </div>
+    <div class="simverdict" id="verdict"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-crosshair"></i><span class="no">04</span><h2 data-i="s4">Perché il validatore funziona</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-bug"></i></div><div><h4 data-i="note3H">Deve solo trovare un errore</h4><p data-i-html="note3P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-gauge"></i><span class="no">05</span><h2 data-i="s5">Confidence score e gate di qualità</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="gateIntro"></p>
+  <div class="cards rv" style="margin-bottom:16px">
+    <div class="card3"><div class="ci"><i class="ti ti-percentage"></i></div><h4 data-i="g1H">Confidence score</h4><p data-i="g1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-door-enter"></i></div><h4 data-i="g2H">Gate di qualità</h4><p data-i="g2P"></p></div>
+  </div>
+  <div class="gate rv">
+    <div class="gi"><i class="ti ti-circle-dashed-percentage"></i></div>
+    <div class="gtx"><b data-i="gateA">80%</b> <span data-i="gateMid">qualità grezza dell'output</span> <span class="garrow">→</span> <b data-i="gateB">90%+</b> <span data-i="gateEnd">dopo il passaggio dal validatore</span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">06</span><h2 data-i="s6">Quando vale la pena</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-coin"></i></div><div><h4 data-i="note4H">Solo dove l'output conta</h4><p data-i-html="note4P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Dove mettere il primo validatore</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Validatori e accumulo dell'errore</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'Validatori e l\'accumulo dell\'errore',
+lede:'Una catena di prompt non eredita solo i vantaggi della specializzazione: eredita anche un rischio matematico. Ogni step può sbagliare un pochino, e quei piccoli errori si sommano lungo la catena. Il validatore è l\'agente che spezza questa somma — il senior che controlla il junior, ogni tot passaggi.',
+s1:'Cos\'è un validatore',
+note1H:'Un agente che prova a distruggere la tesi',
+note1P:'Un <strong>validatore</strong> è un agente o prompt il cui unico scopo è prendere l\'output di un altro e validarlo: fare ricerca, metterlo in dubbio, «<strong>provare a distruggere la tesi del primo</strong>» per assicurarsi che regga. È «<strong>come avere un senior che controlla il junior</strong>»: l\'iterazione continua sull\'output finché la soglia di certezza è alta, poi il lavoro passa avanti.',
+q1:'«Come avere un senior che controlla il junior.»',
+s2:'L\'accumulo dell\'errore: la matematica',
+accIntro:'Ogni step aggiunge una piccola probabilità di errore, e queste probabilità si compongono. Anche un\'AI quasi perfetta, ripetuta su tanti passaggi, finisce per sbagliare spesso.',
+accBadT:'Esempio estremo',accBadBig:'~18%',accBadH:'20 step, 99% corretto a step',
+accBadP:'Un\'AI corretta al <strong>99%</strong> a ogni step, su <strong>20 step</strong>, ha circa il <strong>18%</strong> di probabilità di sbagliare alla fine. Il 99% sembrava ottimo: composto 20 volte, non lo è più.',
+accRealT:'Scala più reale',accRealBig:'~5%',accRealH:'100 step, 99,96% a step',
+accRealP:'Con un errore di solo <strong>0,04%</strong> per step (cioè 99,96% giusto), su <strong>100 step</strong> arrivi comunque a circa <strong>5%</strong> di errore finale. La perfezione a singolo step non basta sui numeri grandi.',
+note2H:'«100 step non è uno step di procedura»',
+note2P:'Attenzione a sottovalutare il numero di step: quelli che per te sono <strong>4 passaggi umani</strong> per l\'AI possono diventare <strong>130-150 micro-step</strong> («apri il sito, cerca, formatta...»). I microprocessi si moltiplicano, e con loro l\'accumulo.',
+s3:'Il validatore come freno: simulalo',
+simIntro:'Sposta il numero di micro-step e poi inserisci il validatore. Senza, l\'errore cresce; con un validatore ogni 25 step, la qualità non scende mai sotto soglia.',
+stepsLbl:'Quanti micro-step',
+valTgT:'Inserisci un validatore ogni 25 step',
+valTgS:'Trova l\'errore, torna indietro, fa sistemare',
+roErrL:'Errore finale',roErrS:'probabilità di sbagliare',
+roQualL:'Qualità tenuta',roQualS:'resta sopra soglia',
+verdictOff:'<b>Senza validatore:</b> più step inserisci, più l\'errore si accumula. Su una catena lunga la qualità degrada e tu non te ne accorgi finché non è tardi.',
+verdictOn:'<b>Con un validatore ogni 25 step:</b> ogni 25 passaggi il senior controlla, trova l\'errore, fa sistemare. La qualità <b>non scende mai sotto il 99%</b>, qualunque sia la lunghezza della catena.',
+s4:'Perché il validatore funziona',
+note3H:'Deve solo trovare un errore',
+note3P:'Il validatore è efficace proprio perché è <strong>super-specifico</strong>: non deve produrre il lavoro, «<strong>deve solo trovare un errore</strong>». Trovato l\'errore, torna al primo, gli dice «sistemali», e si itera finché la soglia è raggiunta. Un compito iperspecifico riesce dove un generalista fallirebbe — è la stessa specializzazione che hai visto nei prompt.',
+q2:'«Il validatore deve solo trovare un errore: è fatto per questo.»',
+s5:'Confidence score e gate di qualità',
+gateIntro:'Per decidere quando un output può passare avanti servono due strumenti: una misura della fiducia e una soglia da superare.',
+g1H:'Confidence score',g1P:'Chiedi al validatore quanto è sicuro del risultato. Un punteggio esplicito ti dice se l\'output è pronto o se serve un\'altra iterazione.',
+g2H:'Gate di qualità',g2P:'Una soglia da superare prima di passare avanti. Sotto soglia, il lavoro torna indietro; sopra, prosegue. Il gate impedisce all\'errore di propagarsi.',
+gateA:'80%',gateMid:'qualità grezza dell\'output',gateB:'90%+',gateEnd:'dopo il passaggio dal validatore',
+s6:'Quando vale la pena',
+note4H:'Solo dove l\'output conta',
+note4P:'Validatori e cicli iterativi «<strong>vanno fatti solo quando è esattamente necessario</strong>»: ogni passaggio consuma token, quindi tempo e soldi. Per un brainstorming o una mail veloce non li attivi; per un report agli investitori o un deal importante, sì. Più rilevante è l\'output, più ha senso il controllo.',
+s7:'Checkpoint',
+cpH:'Dove mettere il primo validatore',
+cpP:'Prendi un tuo processo a catena. Conta quanti micro-step nasconde davvero (di solito molti più di quanti pensi) e individua il punto in cui un errore costerebbe di più.',
+cpQ:'In quale punto della tua catena un errore non controllato farebbe il danno più grande — e quanti micro-step passano prima che qualcuno, oggi, se ne accorga?',
+bridge:'Sai tenere la qualità su una catena lunga con i validatori. <b>Prossimo:</b> il Ponte — connettori, API e MCP, cioè come l\'AI smette di solo parlare e inizia ad agire sul mondo reale.',
+foot:'Morfeus — Validatori e accumulo dell\'errore'
+},
+en:{
+kicker:'Lesson A6.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'Validators and error accumulation',
+lede:'A chain of prompts doesn\'t just inherit the upside of specialization: it also inherits a mathematical risk. Each step can be slightly wrong, and those small errors add up along the chain. The validator is the agent that breaks this sum — the senior who checks the junior, every so many steps.',
+s1:'What a validator is',
+note1H:'An agent that tries to destroy the thesis',
+note1P:'A <strong>validator</strong> is an agent or prompt whose only purpose is to take another\'s output and validate it: do research, question it, «<strong>try to destroy the first one\'s thesis</strong>» to make sure it holds. It\'s «<strong>like having a senior who checks the junior</strong>»: iteration continues on the output until the certainty threshold is high, then the work moves forward.',
+q1:'«Like having a senior who checks the junior.»',
+s2:'Error accumulation: the math',
+accIntro:'Each step adds a small probability of error, and these probabilities compound. Even a near-perfect AI, repeated over many steps, ends up wrong often.',
+accBadT:'Extreme example',accBadBig:'~18%',accBadH:'20 steps, 99% correct per step',
+accBadP:'An AI that\'s <strong>99%</strong> correct at each step, over <strong>20 steps</strong>, has about an <strong>18%</strong> chance of being wrong at the end. 99% looked great: compounded 20 times, it isn\'t anymore.',
+accRealT:'More realistic scale',accRealBig:'~5%',accRealH:'100 steps, 99.96% per step',
+accRealP:'With an error of just <strong>0.04%</strong> per step (i.e. 99.96% correct), over <strong>100 steps</strong> you still reach about <strong>5%</strong> final error. Per-step perfection isn\'t enough on big numbers.',
+note2H:'«100 steps isn\'t one procedure step»',
+note2P:'Be careful not to underestimate the number of steps: what looks to you like <strong>4 human steps</strong> can become <strong>130-150 micro-steps</strong> for the AI («open the site, search, format...»). Micro-processes multiply, and so does the accumulation.',
+s3:'The validator as a brake: simulate it',
+simIntro:'Move the number of micro-steps, then insert the validator. Without it, error grows; with a validator every 25 steps, quality never drops below the bar.',
+stepsLbl:'How many micro-steps',
+valTgT:'Insert a validator every 25 steps',
+valTgS:'Finds the error, goes back, gets it fixed',
+roErrL:'Final error',roErrS:'probability of being wrong',
+roQualL:'Quality held',roQualS:'stays above the bar',
+verdictOff:'<b>Without a validator:</b> the more steps you add, the more error accumulates. On a long chain quality degrades and you don\'t notice until it\'s too late.',
+verdictOn:'<b>With a validator every 25 steps:</b> every 25 steps the senior checks, finds the error, gets it fixed. Quality <b>never drops below 99%</b>, whatever the length of the chain.',
+s4:'Why the validator works',
+note3H:'It only has to find one error',
+note3P:'The validator is effective precisely because it\'s <strong>super-specific</strong>: it doesn\'t have to produce the work, it «<strong>only has to find an error</strong>». Once found, it goes back to the first, says «fix these», and you iterate until the threshold is reached. A hyper-specific task succeeds where a generalist would fail — the same specialization you saw in prompts.',
+q2:'«The validator only has to find an error: that\'s what it\'s built for.»',
+s5:'Confidence score and quality gate',
+gateIntro:'To decide when an output can move forward, you need two tools: a measure of confidence and a threshold to clear.',
+g1H:'Confidence score',g1P:'Ask the validator how sure it is of the result. An explicit score tells you whether the output is ready or needs another iteration.',
+g2H:'Quality gate',g2P:'A threshold to clear before moving forward. Below it, the work goes back; above it, it proceeds. The gate stops error from propagating.',
+gateA:'80%',gateMid:'raw output quality',gateB:'90%+',gateEnd:'after the validator pass',
+s6:'When it\'s worth it',
+note4H:'Only where the output counts',
+note4P:'Validators and iterative loops «<strong>should only be done when exactly necessary</strong>»: every pass consumes tokens, hence time and money. For a brainstorm or a quick email you don\'t activate them; for an investor report or an important deal, you do. The more relevant the output, the more the check makes sense.',
+s7:'Checkpoint',
+cpH:'Where to put your first validator',
+cpP:'Take one of your chained processes. Count how many micro-steps it really hides (usually far more than you think) and find the point where an error would cost the most.',
+cpQ:'At which point of your chain would an unchecked error do the biggest damage — and how many micro-steps pass before anyone, today, notices it?',
+bridge:'You can hold quality on a long chain with validators. <b>Next:</b> the Bridge — connectors, APIs and MCP, i.e. how AI stops just talking and starts acting on the real world.',
+foot:'Morfeus — Validators and error accumulation'
+}};
+
+var LANG='it',nSteps=120,valOn=false;
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSim();
+}
+function renderSim(){
+  document.getElementById('stepsVal').textContent=nSteps;
+  document.getElementById('valToggle').classList.toggle('on',valOn);
+  // track dots: cap visual at 60 dots, mark validator positions every 25 steps
+  var shown=Math.min(nSteps,60);
+  var ratio=nSteps/shown;
+  var dots='';
+  for(var i=1;i<=shown;i++){
+    var realStep=Math.round(i*ratio);
+    var isVal=valOn && realStep>0 && (Math.floor(realStep/25)>Math.floor((realStep-ratio)/25));
+    dots+='<div class="stepdot'+(isVal?' val':'')+'"></div>';
+  }
+  document.getElementById('track').innerHTML=dots;
+  // error math: per-step correctness 99.96% (0.04% err). Final err = 1-(0.9996)^steps
+  var perStepOk=0.9996;
+  var errNoVal=1-Math.pow(perStepOk,nSteps);
+  var errFinal,qual;
+  if(valOn){
+    // validator every 25 steps resets accumulation; effective span = min(steps, 25)
+    var span=Math.min(nSteps,25);
+    errFinal=1-Math.pow(perStepOk,span);
+    qual=Math.max(99,100-errFinal*100);
+  }else{
+    errFinal=errNoVal;
+    qual=100-errFinal*100;
+  }
+  document.getElementById('roErr').textContent=(errFinal*100).toFixed(1).replace('.',LANG==='it'?',':'.')+'%';
+  document.getElementById('roQual').textContent=qual.toFixed(1).replace('.',LANG==='it'?',':'.')+'%';
+  document.getElementById('verdict').innerHTML=valOn?DICT[LANG].verdictOn:DICT[LANG].verdictOff;
+}
+function toggleVal(){valOn=!valOn;renderSim()}
+document.getElementById('steps').addEventListener('input',function(e){nSteps=parseInt(e.target.value,10);renderSim()});
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

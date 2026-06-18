@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token e limiti — Come Claude misura l'utilizzo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#b6dcc2;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#f0c4bd;
+--amber:#b9821a;--amber-soft:#faf0db;--amber-line:#ecd6a4;
+--blue:#2f7bc4;--blue-soft:#e7f0fa;--blue-line:#bcd6ef;
+--teal:#13917a;--teal-soft:#e1f3ef;--teal-line:#aadcd2;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5b41;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--amber:#e6b860;--amber-soft:#3a2c10;--amber-line:#6b521f;
+--blue:#7bb4e8;--blue-soft:#14304d;--blue-line:#2f5680;
+--teal:#6ec9b4;--teal-soft:#123a32;--teal-line:#2c6457;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{border-left:3px solid var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-left-width:3px;border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+.hook strong{color:var(--ink);font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px}
+.card h3{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card h3 i{font-size:21px}
+.card p{font-size:14.5px;color:var(--ink-2);line-height:1.72;margin-bottom:12px}
+.card p:last-child{margin-bottom:0}
+.card p strong{color:var(--ink);font-weight:600}
+.tokex{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 0}
+.tokc{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px;text-align:center}
+.tokc .tn{font-family:var(--mono);font-size:23px;font-weight:600;color:var(--accent);display:block;margin-bottom:5px}
+.tokc .tl{font-size:12.5px;color:var(--ink-3);line-height:1.45}
+.rolling{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:22px;margin:18px 0 0;text-align:center}
+.rolling .rt{font-size:13.5px;font-weight:600;margin-bottom:14px}
+.timeline{display:flex;align-items:center;justify-content:center;gap:5px;margin:0 0 10px;flex-wrap:wrap}
+.tb{width:46px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;transition:.4s}
+.tb.used{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.tb.free{background:var(--bg-3);color:var(--ink-3);border:1px dashed var(--line-2)}
+.tb.reset{background:var(--good-soft);color:var(--good);border:1px solid var(--good-line)}
+.rolling .rl{font-size:12px;color:var(--ink-3);margin-top:8px}
+.rolling .rn{font-size:13px;color:var(--ink-2);margin-top:12px;line-height:1.6;text-align:left}
+.rolling .rn strong{color:var(--ink);font-weight:600}
+.box{border-radius:var(--r-l);padding:16px 20px}
+.box h4{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.box p{font-size:13.5px;color:var(--ink-2);line-height:1.62}
+.box p strong{color:var(--ink);font-weight:600}
+.box.warn{background:var(--amber-soft);border:1px solid var(--amber-line)}.box.warn h4{color:var(--amber)}
+.box.info{background:var(--blue-soft);border:1px solid var(--blue-line)}.box.info h4{color:var(--blue)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh)}
+table.t{width:100%;border-collapse:collapse;font-size:13px;background:var(--card)}
+table.t th{text-align:left;padding:12px 14px;font-family:var(--mono);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);border-bottom:2px solid var(--line-2);white-space:nowrap}
+table.t td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+table.t tr:last-child td{border-bottom:none}
+table.t .nm{font-weight:600;color:var(--ink);white-space:nowrap}
+table.t .pz{color:var(--accent);font-weight:600;font-family:var(--mono);font-size:12px}
+table.t .mn{font-family:var(--mono);font-size:12px}
+table.t tr.hl td{background:var(--accent-soft)}
+.tnote{font-size:12px;color:var(--ink-3);margin-top:8px;line-height:1.5}
+.meter{margin:0 0 14px}
+.meter .ml{font-size:12.5px;font-weight:600;margin-bottom:5px}
+.mbar{height:24px;background:var(--bg-3);border-radius:12px;overflow:hidden;position:relative}
+.mfill{height:100%;border-radius:12px;transition:width 1.4s ease;position:relative}
+.mfill::after{content:attr(data-label);position:absolute;right:9px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;font-weight:600;color:#fff}
+.mscale{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.expand{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden;transition:.3s}
+.exh{padding:20px 22px;display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none}
+.exh:hover{background:var(--bg-2)}
+.exi{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.exht{flex:1}
+.exht h3{font-size:15.5px;font-weight:600;margin-bottom:2px}
+.exht .sub{font-size:13px;color:var(--ink-3)}
+.extog{color:var(--ink-3);font-size:20px;transition:transform .3s;flex-shrink:0}
+.expand.open .extog{transform:rotate(90deg)}
+.exbody{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.expand.open .exbody{max-height:9000px}
+.exin{padding:0 22px 22px}
+.exin>p.lead{font-size:14px;color:var(--ink-2);line-height:1.72;margin-bottom:16px}
+.exin>p.lead strong{color:var(--ink);font-weight:600}
+.feat{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.fi{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.ft{flex:1}.ft strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.ft span{font-size:13px;color:var(--ink-2);line-height:1.6}
+.api-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;align-items:center}
+.api-row:last-child{border-bottom:none}
+.api-head{display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:8px 0;border-bottom:2px solid var(--line-2);font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+.api-head>div:not(:first-child){text-align:right}
+.api-model{font-weight:600;color:var(--ink)}
+.api-price{font-family:var(--mono);font-size:12px;color:var(--ink-2);text-align:right;padding:4px 10px;background:var(--bg-2);border-radius:6px}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.diffc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;text-align:center}
+.diffc .di{font-size:28px;display:block;margin-bottom:8px}
+.diffc h4{font-size:14.5px;font-weight:600;margin-bottom:7px}
+.diffc .dd{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin-bottom:10px}
+.diffc .dv{font-family:var(--mono);font-size:13px;font-weight:600;padding:4px 12px;border-radius:6px;display:inline-block}
+.diffc .dn{font-size:11px;color:var(--ink-3);margin-top:5px}
+.happens .hs{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.happens .hs:last-child{border-bottom:none}
+.hn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;flex-shrink:0}
+.hst{flex:1}.hst strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.hst span{font-size:13px;color:var(--ink-2);line-height:1.55}
+.strat{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.strc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.strc i{font-size:20px;color:var(--teal);display:block;margin-bottom:9px}
+.strc strong{font-size:13.5px;font-weight:600;display:block;margin-bottom:5px}
+.strc span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.bridge{display:flex;gap:14px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0;margin-top:2px}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.66}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.tokex,.diff,.strat{grid-template-columns:1fr}table.t{font-size:11.5px}table.t th,table.t td{padding:8px 9px}.tb{width:38px;height:32px;font-size:10px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.expand .exbody{max-height:none!important}.expand .extog{display:none}.card,.expand,.diffc,.strc,.rolling,.tbl-wrap,.box,.hook,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Modulo 1 · Token &amp; limiti</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 1 · Setup</div>
+  <h1 class="rv" data-i="h1">Come Claude misura l'utilizzo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" data-i-html="hook" style="margin-top:24px"></div>
+
+  <!-- 01 COS'E UN TOKEN -->
+  <div class="sh rv"><i class="ti ti-code-dots"></i><span class="no">01</span><h2 data-i="s1">Il concetto base: cos'è un token</h2></div>
+  <div class="card rv">
+    <h3><i class="ti ti-abc" style="color:var(--accent)"></i> <span data-i="c1H">Token: l'unità di misura di Claude</span></h3>
+    <p data-i-html="c1P1"></p>
+    <p data-i-html="c1P2"></p>
+    <div class="tokex">
+      <div class="tokc"><span class="tn">~750</span><span class="tl" data-i="tk1">Token per un messaggio medio in italiano</span></div>
+      <div class="tokc"><span class="tn">~5.000</span><span class="tl" data-i="tk2">Token per una risposta lunga e strutturata</span></div>
+      <div class="tokc"><span class="tn">~75.000</span><span class="tl" data-i="tk3">Token per un PDF di 50 pagine caricato</span></div>
+      <div class="tokc"><span class="tn">~200.000</span><span class="tl" data-i="tk4">Token per un codebase di 15.000 righe</span></div>
+    </div>
+  </div>
+
+  <!-- 02 FINESTRA ROLLING 5H -->
+  <div class="sh rv"><i class="ti ti-clock-hour-5"></i><span class="no">02</span><h2 data-i="s2">La finestra mobile di 5 ore</h2></div>
+  <div class="card rv">
+    <h3><i class="ti ti-rotate-clockwise" style="color:var(--amber)"></i> <span data-i="c2H">Rolling window: come funziona davvero</span></h3>
+    <p data-i-html="c2P1"></p>
+    <p data-i-html="c2P2"></p>
+    <div class="rolling">
+      <div class="rt" data-i="rollT">Esempio: sessione di lavoro dalle 9:00 alle 11:00</div>
+      <div class="timeline">
+        <div class="tb used">9:00</div><div class="tb used">9:20</div><div class="tb used">9:45</div>
+        <div class="tb used">10:10</div><div class="tb used">10:30</div><div class="tb used">11:00</div>
+        <div class="tb free" style="opacity:.5">...</div>
+        <div class="tb reset">14:00</div><div class="tb reset">14:20</div><div class="tb reset">14:45</div>
+        <div class="tb reset">15:10</div><div class="tb reset">15:30</div><div class="tb reset">16:00</div>
+      </div>
+      <div class="rl" data-i-html="rollL"></div>
+      <div class="rn" data-i-html="rollN"></div>
+    </div>
+    <div class="box warn" style="margin-top:18px">
+      <h4><i class="ti ti-alert-triangle"></i> <span data-i="w1H">Attenzione alla conversazione lunga</span></h4>
+      <p data-i="w1P"></p>
+    </div>
+  </div>
+
+  <!-- 03 LIMITI PER PIANO -->
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">03</span><h2 data-i="s3">Limiti per piano (2026)</h2></div>
+  <div class="tbl-wrap rv">
+    <table class="t">
+      <thead><tr>
+        <th data-i="ph1">Piano</th><th data-i="ph2">Prezzo</th><th data-i="ph3">Token / 5h</th><th data-i="ph4">Msg stimati</th><th data-i="ph5">Modelli</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="nm">Free</td><td>$0</td><td class="mn">~18K</td><td>~20-25</td><td data-i="pm1">Solo Sonnet 4.5</td></tr>
+        <tr class="hl"><td class="nm">Pro</td><td class="pz">$20/mese</td><td class="mn">~90K</td><td>~45</td><td data-i="pm2">Opus 4.6 + Sonnet</td></tr>
+        <tr><td class="nm">Max 5x</td><td class="pz">$100/mese</td><td class="mn">~450K</td><td>~225</td><td data-i="pm3">Opus + Sonnet + Claude Code</td></tr>
+        <tr><td class="nm">Max 20x</td><td class="pz">$200/mese</td><td class="mn">~1.8M</td><td>~900</td><td data-i="pm4">Opus + Sonnet + Claude Code</td></tr>
+        <tr><td class="nm">Team Standard</td><td class="pz">$25/seat</td><td class="mn">~110K</td><td>~55</td><td data-i="pm5">Opus + Sonnet + admin</td></tr>
+        <tr><td class="nm">Team Premium</td><td class="pz">$125/seat</td><td class="mn">~550K</td><td>~275</td><td data-i="pm6">Opus + Sonnet + Claude Code</td></tr>
+        <tr><td class="nm">Enterprise</td><td class="pz">$20/seat + API</td><td class="mn" data-i="pt1">Custom</td><td data-i="pt2">Custom</td><td data-i="pm7">Tutti + SSO + 500K contesto</td></tr>
+        <tr><td class="nm">API</td><td class="pz" data-i="pp8">Pay-per-token</td><td class="mn" data-i="pt3">Illimitati*</td><td data-i="pt4">Illimitati*</td><td data-i="pm8">Tutti</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tnote rv" data-i="ptn"></div>
+
+  <div class="card rv" style="margin-top:20px">
+    <h3><i class="ti ti-chart-bar" style="color:var(--accent)"></i> <span data-i="capH">Capacità a colpo d'occhio</span></h3>
+    <p style="margin-bottom:18px" data-i="capP"></p>
+    <div class="meter"><div class="ml">Free</div><div class="mbar"><div class="mfill" data-w="2" data-label="~18K" style="background:var(--ink-3)"></div></div></div>
+    <div class="meter"><div class="ml">Pro</div><div class="mbar"><div class="mfill" data-w="5" data-label="~90K" style="background:var(--accent)"></div></div></div>
+    <div class="meter"><div class="ml">Max 5x</div><div class="mbar"><div class="mfill" data-w="25" data-label="~450K" style="background:var(--teal)"></div></div></div>
+    <div class="meter"><div class="ml">Max 20x</div><div class="mbar"><div class="mfill" data-w="100" data-label="~1.8M" style="background:var(--amber)"></div></div></div>
+    <div class="mscale"><span>0</span><span data-i="capScale">1.800.000 token</span></div>
+  </div>
+
+  <div class="box warn rv" style="margin-top:18px">
+    <h4><i class="ti ti-alert-triangle"></i> <span data-i="w2H">Claude Code: rimosso da Pro</span></h4>
+    <p data-i-html="w2P"></p>
+  </div>
+
+  <!-- 04 CLAUDE CODE + AUTOMAZIONI -->
+  <div class="sh rv"><i class="ti ti-terminal-2"></i><span class="no">04</span><h2 data-i="s4">Token per Claude Code e automazioni</h2></div>
+
+  <div class="expand rv">
+    <div class="exh" onclick="toggleExpand(this)">
+      <div class="exi" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-terminal-2"></i></div>
+      <div class="exht"><h3 data-i="ex1H">Claude Code (agente terminale)</h3><div class="sub" data-i="ex1S">Limiti settimanali aggiuntivi + consumo token elevato</div></div>
+      <i class="ti ti-chevron-right extog"></i>
+    </div>
+    <div class="exbody"><div class="exin">
+      <p class="lead" data-i-html="ex1P"></p>
+      <div class="tbl-wrap">
+        <table class="t">
+          <thead><tr><th data-i="cc1">Piano</th><th data-i="cc2">Ore/settimana Sonnet 4</th><th data-i="cc3">Ore/settimana Opus 4</th></tr></thead>
+          <tbody>
+            <tr><td class="nm">Pro</td><td colspan="2" style="color:var(--bad)" data-i="ccPro">Accesso rimosso (apr 2026)</td></tr>
+            <tr><td class="nm">Max 5x ($100)</td><td>40-80 ore</td><td>15-35 ore</td></tr>
+            <tr><td class="nm">Max 20x ($200)</td><td>240-480 ore</td><td>24-40 ore</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:16px">
+        <div class="feat"><div class="fi" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-flame"></i></div><div class="ft"><strong data-i="cf1H">Sessione di debugging (4 ore, 20 iterazioni)</strong><span data-i="cf1P">~150.000 token. Con piano Pro significherebbe quasi 2 finestre intere di 5 ore.</span></div></div>
+        <div class="feat"><div class="fi" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-flame"></i></div><div class="ft"><strong data-i="cf2H">Analisi codebase completo (80.000 righe)</strong><span data-i="cf2P">3-5 milioni di token in sessione intensiva. Solo Max 20x regge senza interruzioni.</span></div></div>
+        <div class="feat"><div class="fi" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-brain"></i></div><div class="ft"><strong data-i="cf3H">Opus brucia più velocemente</strong><span data-i="cf3P">Opus genera risposte più lunghe e ragionate. Aspettati un consumo 2-3x rispetto a Sonnet per la stessa task.</span></div></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="expand rv">
+    <div class="exh" onclick="toggleExpand(this)">
+      <div class="exi" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-api"></i></div>
+      <div class="exht"><h3 data-i="ex2H">API Anthropic (pay-per-token)</h3><div class="sub" data-i="ex2S">Sistema separato, nessuna finestra rolling, paghi per consumo</div></div>
+      <i class="ti ti-chevron-right extog"></i>
+    </div>
+    <div class="exbody"><div class="exin">
+      <p class="lead" data-i-html="ex2P"></p>
+      <div style="margin-bottom:16px">
+        <div class="api-head"><div data-i="apiC1">Modello</div><div data-i="apiC2">Input / 1M tok</div><div data-i="apiC3">Output / 1M tok</div></div>
+        <div class="api-row"><div class="api-model">Opus 4.6</div><div class="api-price">$15</div><div class="api-price">$75</div></div>
+        <div class="api-row"><div class="api-model">Sonnet 4.6</div><div class="api-price">$3</div><div class="api-price">$15</div></div>
+        <div class="api-row"><div class="api-model">Haiku 4.5</div><div class="api-price">$0.80</div><div class="api-price">$4</div></div>
+      </div>
+      <div class="box info">
+        <h4><i class="ti ti-calculator"></i> <span data-i="apiEgH">Esempio pratico: automazione email</span></h4>
+        <p data-i-html="apiEgP"></p>
+      </div>
+      <div class="box warn" style="margin-top:14px">
+        <h4><i class="ti ti-alert-triangle"></i> <span data-i="apiWH">API e claude.ai sono prodotti separati</span></h4>
+        <p data-i="apiWP"></p>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 05 COSA CONSUMA MOLTI TOKEN -->
+  <div class="sh rv"><i class="ti ti-flame"></i><span class="no">05</span><h2 data-i="s5">Cosa consuma molti token</h2></div>
+  <div class="tbl-wrap rv">
+    <table class="t">
+      <thead><tr><th data-i="co1">Attività</th><th data-i="co2">Consumo stimato</th><th data-i="co3">Note</th></tr></thead>
+      <tbody>
+        <tr><td class="nm" data-i="cn1">Caricamento PDF 50 pag</td><td>75.000-100.000 tok</td><td data-i="cd1">Un singolo file può usare &gt;100% del limite Free</td></tr>
+        <tr><td class="nm" data-i="cn2">Codebase review (15K righe)</td><td>200.000-500.000 tok</td><td data-i="cd2">Con Pro servono 2-3 finestre di 5 ore</td></tr>
+        <tr><td class="nm" data-i="cn3">Artifact complesso (UI/codice)</td><td>2.000-10.000 tok</td><td data-i="cd3">Dipende dalla complessità, iterazioni incluse</td></tr>
+        <tr><td class="nm" data-i="cn4">Research multi-fonte</td><td>10.000-50.000 tok</td><td data-i="cd4">Ricerca web + sintesi + ragionamento</td></tr>
+        <tr><td class="nm" data-i="cn5">Chat lunga (50+ scambi)</td><td data-i="cv5">Esponenziale</td><td data-i="cd5">Il contesto si accumula ad ogni messaggio</td></tr>
+        <tr><td class="nm" data-i="cn6">Extended Thinking attivo</td><td data-i="cv6">2-5x il normale</td><td data-i="cd6">Claude "pensa" internamente prima di rispondere</td></tr>
+        <tr><td class="nm" data-i="cn7">Projects con molti file</td><td data-i="cv7">Variabile (RAG)</td><td data-i="cd7">Ottimizzato: carica solo contenuto rilevante</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 06 CONTESTO VS UTILIZZO -->
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">06</span><h2 data-i="s6">Due limiti diversi: contesto vs utilizzo</h2></div>
+  <div class="key rv"><p data-i="q1"></p></div>
+  <div class="diff rv" style="margin-top:20px">
+    <div class="diffc">
+      <span class="di" style="color:var(--accent)"><i class="ti ti-ruler-measure"></i></span>
+      <h4 data-i="d1H">Finestra di contesto</h4>
+      <div class="dd" data-i="d1D">Quanto lunga può essere una singola chat prima che Claude inizi a "dimenticare".</div>
+      <div class="dv" style="background:var(--accent-soft);color:var(--accent)" data-i="d1V">200K token / chat</div>
+      <div class="dn" data-i="d1N">500K su Enterprise</div>
+    </div>
+    <div class="diffc">
+      <span class="di" style="color:var(--amber)"><i class="ti ti-gauge"></i></span>
+      <h4 data-i="d2H">Limite di utilizzo</h4>
+      <div class="dd" data-i="d2D">Quanti token puoi consumare in totale su tutte le chat in una finestra di 5 ore.</div>
+      <div class="dv" style="background:var(--amber-soft);color:var(--amber)" data-i="d2V">Dipende dal piano</div>
+      <div class="dn" data-i="d2N">Da 18K (Free) a 1.8M (Max 20x)</div>
+    </div>
+  </div>
+  <div class="box info rv" style="margin-top:18px">
+    <h4><i class="ti ti-info-circle"></i> <span data-i="acH">Auto-compaction</span></h4>
+    <p data-i="acP"></p>
+  </div>
+
+  <!-- 07 QUANDO RAGGIUNGI IL LIMITE -->
+  <div class="sh rv"><i class="ti ti-alert-octagon"></i><span class="no">07</span><h2 data-i="s7">Quando raggiungi il limite</h2></div>
+  <div class="card happens rv">
+    <h3><i class="ti ti-clock-pause" style="color:var(--bad)"></i> <span data-i="hpH">Cosa succede esattamente</span></h3>
+    <div class="hs"><div class="hn" style="background:var(--amber-soft);color:var(--amber)">1</div><div class="hst"><strong data-i="hp1H">Avviso "stai per raggiungere il limite"</strong><span data-i="hp1P">Claude mostra un banner quando sei vicino alla soglia. Non perdi nessun lavoro.</span></div></div>
+    <div class="hs"><div class="hn" style="background:var(--bad-soft);color:var(--bad)">2</div><div class="hst"><strong data-i="hp2H">Downgrade temporaneo del modello</strong><span data-i="hp2P">Puoi continuare a usare Claude, ma con un modello meno potente (Sonnet 4.5 invece di Opus 4.6). La qualità diminuisce, ma non ti fermi.</span></div></div>
+    <div class="hs"><div class="hn" style="background:var(--accent-soft);color:var(--accent)">3</div><div class="hst"><strong data-i="hp3H">Timer di reset visibile</strong><span data-i="hp3P">Claude mostra quanto manca al prossimo reset. I token si liberano progressivamente, non tutti insieme.</span></div></div>
+    <div class="hs"><div class="hn" style="background:var(--good-soft);color:var(--good)">4</div><div class="hst"><strong data-i="hp4H">Niente si perde</strong><span data-i="hp4P">Conversazioni, Projects, file caricati: tutto resta. Puoi riprendere esattamente dove eri.</span></div></div>
+  </div>
+
+  <!-- 08 STRATEGIE -->
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">08</span><h2 data-i="s8">Strategie per ottimizzare i token</h2></div>
+  <div class="strat rv">
+    <div class="strc"><i class="ti ti-folder"></i><strong data-i="st1H">Usa i Projects (RAG)</strong><span data-i="st1P">Carica solo i file rilevanti nel Project. Claude pesca automaticamente il contesto necessario senza caricare tutto in ogni messaggio.</span></div>
+    <div class="strc"><i class="ti ti-arrows-minimize"></i><strong data-i="st2H">Compact spesso</strong><span data-i="st2P">Dopo ogni milestone, usa /compact o inizia una nuova chat. Evita conversazioni da 100+ scambi che bruciano token solo per il contesto.</span></div>
+    <div class="strc"><i class="ti ti-brain-off"></i><strong data-i="st3H">Disattiva Extended Thinking</strong><span data-i="st3P">Quando non ti serve ragionamento profondo, disattivalo. Consuma 2-5x token in più per ogni risposta.</span></div>
+    <div class="strc"><i class="ti ti-messages-off"></i><strong data-i="st4H">Nuova chat ai primi segni</strong><span data-i="st4P">Quando Claude rallenta o le risposte diventano meno precise, inizia una nuova conversazione. Il contesto accumulato è il killer silenzioso.</span></div>
+    <div class="strc"><i class="ti ti-switch-3"></i><strong data-i="st5H">Seleziona il modello giusto</strong><span data-i="st5P">Sonnet per task rapidi e semplici. Opus solo quando serve ragionamento complesso, analisi profonda o creatività alta.</span></div>
+    <div class="strc"><i class="ti ti-clock-share"></i><strong data-i="st6H">Distribuisci il lavoro</strong><span data-i="st6P">Pianifica sessioni di 2-3 ore con pause. I token consumati alle 9 si liberano alle 14: sfrutta il rolling a tuo vantaggio.</span></div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <!-- 09 COME AUMENTARE -->
+  <div class="sh rv"><i class="ti ti-arrow-big-up-lines"></i><span class="no">09</span><h2 data-i="s9">Se i limiti non bastano</h2></div>
+  <div class="card rv">
+    <h3><i class="ti ti-rocket" style="color:var(--teal)"></i> <span data-i="upH">Quattro opzioni</span></h3>
+    <div class="feat"><div class="fi" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-clock"></i></div><div class="ft"><strong data-i="up1H">Aspetta il reset rolling</strong><span data-i="up1P">La più semplice: i token si liberano continuamente dopo 5 ore. Pianifica il lavoro pesante in sessioni distanziate.</span></div></div>
+    <div class="feat"><div class="fi" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-credit-card"></i></div><div class="ft"><strong data-i="up2H">Acquista utilizzo aggiuntivo</strong><span data-i="up2P">Disponibile per Pro, Max, Team ed Enterprise. Paghi un extra per sbloccare più token nella finestra corrente.</span></div></div>
+    <div class="feat"><div class="fi" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-arrow-up-circle"></i></div><div class="ft"><strong data-i="up3H">Passa a un piano superiore</strong><span data-i="up3P">Max 5x = 5 volte Pro. Max 20x = 20 volte Pro. Il salto è significativo per chi usa Claude come strumento primario.</span></div></div>
+    <div class="feat"><div class="fi" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-api"></i></div><div class="ft"><strong data-i="up4H">Usa l'API per le automazioni</strong><span data-i="up4P">Se hai task ripetitivi (analisi email, generazione report, classificazione), l'API pay-per-token è più prevedibile e spesso più economica.</span></div></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Come Claude misura l'utilizzo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Modulo 1 · Token & limiti',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 1 · Setup',
+h1:'Come Claude misura l\'utilizzo',
+lede:'Token, finestre rolling, limiti per piano, automazioni. Tutto quello che serve sapere per non restare mai a secco.',
+hook:'«Claude non funziona a messaggi. Funziona a token, misurati in finestre mobili di 5 ore. Capire questo meccanismo è la differenza tra usare bene il proprio piano e sbattere contro il muro ogni pomeriggio.»',
+s1:'Il concetto base: cos\'è un token',
+c1H:'Token: l\'unità di misura di Claude',
+c1P1:'Claude non conta messaggi o parole. Conta <strong>token</strong>: frammenti di testo che il modello elabora. Un token equivale a circa 3-4 caratteri in inglese, un po\' meno in italiano perché le parole sono mediamente più lunghe.',
+c1P2:'Ogni volta che invii un messaggio, paghi token in <strong>input</strong> (il tuo prompt + tutto il contesto della conversazione). Ogni volta che Claude risponde, paghi token in <strong>output</strong> (la risposta generata). Anche il contesto di sistema, i file caricati e la cronologia della chat contano come input.',
+tk1:'Token per un messaggio medio in italiano',
+tk2:'Token per una risposta lunga e strutturata',
+tk3:'Token per un PDF di 50 pagine caricato',
+tk4:'Token per un codebase di 15.000 righe',
+s2:'La finestra mobile di 5 ore',
+c2H:'Rolling window: come funziona davvero',
+c2P1:'Claude misura i token consumati in una <strong>finestra mobile (rolling) di 5 ore</strong>. Non è un periodo fisso (tipo "dalle 9 alle 14"): la finestra scorre continuamente in base a quando usi Claude.',
+c2P2:'Ogni messaggio che invii ha un timestamp. Dopo 5 ore da quel messaggio specifico, quei token vengono "liberati" e tornano disponibili. Se usi Claude di mattina alle 9, quei token si resettano alle 14. Se invii un altro messaggio alle 10, quei token si resettano alle 15.',
+rollT:'Esempio: sessione di lavoro dalle 9:00 alle 11:00',
+rollL:'Token usati (viola) &rarr; Token che si liberano progressivamente (verde)',
+rollN:'I token non si resettano tutti insieme: si liberano <strong>uno per uno</strong>, 5 ore dopo il messaggio che li ha consumati. Questo significa che alle 14:00 recuperi i token del messaggio delle 9:00, alle 14:20 quelli delle 9:20, e così via.',
+w1H:'Attenzione alla conversazione lunga',
+w1P:'Più una conversazione diventa lunga, più token consuma ad ogni messaggio, perché Claude rilegge tutta la cronologia come contesto. Una chat con 50 scambi può consumare 10x più token per messaggio rispetto a una chat appena iniziata.',
+s3:'Limiti per piano (2026)',
+ph1:'Piano',ph2:'Prezzo',ph3:'Token / 5h',ph4:'Msg stimati',ph5:'Modelli',
+pm1:'Solo Sonnet 4.5',pm2:'Opus 4.6 + Sonnet',pm3:'Opus + Sonnet + Claude Code',pm4:'Opus + Sonnet + Claude Code',pm5:'Opus + Sonnet + admin',pm6:'Opus + Sonnet + Claude Code',pm7:'Tutti + SSO + 500K contesto',pm8:'Tutti',
+pt1:'Custom',pt2:'Custom',pt3:'Illimitati*',pt4:'Illimitati*',pp8:'Pay-per-token',
+ptn:'* L\'API non ha finestra rolling: paghi per token consumato. I limiti sono di rate (richieste/minuto), non di volume.',
+capH:'Capacità a colpo d\'occhio',
+capP:'Quanto puoi fare con ogni piano in una singola finestra di 5 ore:',
+capScale:'1.800.000 token',
+w2H:'Claude Code: rimosso da Pro',
+w2P:'Da aprile 2026, Claude Code (l\'agente da terminale) non è più incluso nel piano Pro. Per usarlo serve <strong>Max 5x</strong> o superiore. Cowork nella desktop app funziona ancora con Pro.',
+s4:'Token per Claude Code e automazioni',
+ex1H:'Claude Code (agente terminale)',
+ex1S:'Limiti settimanali aggiuntivi + consumo token elevato',
+ex1P:'Claude Code consuma significativamente più token dell\'uso chat normale, perché legge file, esegue comandi, itera su errori e mantiene contesto lungo. Anthropic ha introdotto <strong>limiti settimanali</strong> specifici:',
+cc1:'Piano',cc2:'Ore/settimana Sonnet 4',cc3:'Ore/settimana Opus 4',
+ccPro:'Accesso rimosso (apr 2026)',
+cf1H:'Sessione di debugging (4 ore, 20 iterazioni)',
+cf1P:'~150.000 token. Con piano Pro significherebbe quasi 2 finestre intere di 5 ore.',
+cf2H:'Analisi codebase completo (80.000 righe)',
+cf2P:'3-5 milioni di token in sessione intensiva. Solo Max 20x regge senza interruzioni.',
+cf3H:'Opus brucia più velocemente',
+cf3P:'Opus genera risposte più lunghe e ragionate. Aspettati un consumo 2-3x rispetto a Sonnet per la stessa task.',
+ex2H:'API Anthropic (pay-per-token)',
+ex2S:'Sistema separato, nessuna finestra rolling, paghi per consumo',
+ex2P:'L\'API è un prodotto completamente separato da claude.ai. Non ha finestre rolling: paghi esattamente per i token che consumi. Il piano Pro <strong>non include crediti API</strong>.',
+apiC1:'Modello',apiC2:'Input / 1M tok',apiC3:'Output / 1M tok',
+apiEgH:'Esempio pratico: automazione email',
+apiEgP:'100 email/giorno &times; 500 token input + 300 token output = ~80.000 token/giorno. Con Sonnet 4.6: circa <strong>$13-15/mese</strong>. Con Batch API (50% di sconto): <strong>$7-8/mese</strong>.',
+apiWH:'API e claude.ai sono prodotti separati',
+apiWP:'Un abbonamento Pro non include crediti API. L\'API richiede una registrazione separata su console.anthropic.com con pagamento a consumo. Stessa tecnologia, prodotti e fatturazione diversi.',
+s5:'Cosa consuma molti token',
+co1:'Attività',co2:'Consumo stimato',co3:'Note',
+cn1:'Caricamento PDF 50 pag',cd1:'Un singolo file può usare >100% del limite Free',
+cn2:'Codebase review (15K righe)',cd2:'Con Pro servono 2-3 finestre di 5 ore',
+cn3:'Artifact complesso (UI/codice)',cd3:'Dipende dalla complessità, iterazioni incluse',
+cn4:'Research multi-fonte',cd4:'Ricerca web + sintesi + ragionamento',
+cn5:'Chat lunga (50+ scambi)',cv5:'Esponenziale',cd5:'Il contesto si accumula ad ogni messaggio',
+cn6:'Extended Thinking attivo',cv6:'2-5x il normale',cd6:'Claude "pensa" internamente prima di rispondere',
+cn7:'Projects con molti file',cv7:'Variabile (RAG)',cd7:'Ottimizzato: carica solo contenuto rilevante',
+s6:'Due limiti diversi: contesto vs utilizzo',
+q1:'«La finestra di contesto decide quanto lunga può essere una singola conversazione. I limiti di utilizzo decidono quanto puoi usare Claude in totale, su tutte le conversazioni.»',
+d1H:'Finestra di contesto',
+d1D:'Quanto lunga può essere una singola chat prima che Claude inizi a "dimenticare".',
+d1V:'200K token / chat',d1N:'500K su Enterprise',
+d2H:'Limite di utilizzo',
+d2D:'Quanti token puoi consumare in totale su tutte le chat in una finestra di 5 ore.',
+d2V:'Dipende dal piano',d2N:'Da 18K (Free) a 1.8M (Max 20x)',
+acH:'Auto-compaction',
+acP:'Quando una chat si avvicina ai 200K token di contesto, Claude riassume automaticamente i messaggi precedenti per liberare spazio. La cronologia completa viene preservata e Claude può farvi riferimento, ma i dettagli meno recenti diventano un riassunto. Chat più lunghe con auto-compaction consumano anche più limite di utilizzo.',
+s7:'Quando raggiungi il limite',
+hpH:'Cosa succede esattamente',
+hp1H:'Avviso "stai per raggiungere il limite"',
+hp1P:'Claude mostra un banner quando sei vicino alla soglia. Non perdi nessun lavoro.',
+hp2H:'Downgrade temporaneo del modello',
+hp2P:'Puoi continuare a usare Claude, ma con un modello meno potente (Sonnet 4.5 invece di Opus 4.6). La qualità diminuisce, ma non ti fermi.',
+hp3H:'Timer di reset visibile',
+hp3P:'Claude mostra quanto manca al prossimo reset. I token si liberano progressivamente, non tutti insieme.',
+hp4H:'Niente si perde',
+hp4P:'Conversazioni, Projects, file caricati: tutto resta. Puoi riprendere esattamente dove eri.',
+s8:'Strategie per ottimizzare i token',
+st1H:'Usa i Projects (RAG)',st1P:'Carica solo i file rilevanti nel Project. Claude pesca automaticamente il contesto necessario senza caricare tutto in ogni messaggio.',
+st2H:'Compact spesso',st2P:'Dopo ogni milestone, usa /compact o inizia una nuova chat. Evita conversazioni da 100+ scambi che bruciano token solo per il contesto.',
+st3H:'Disattiva Extended Thinking',st3P:'Quando non ti serve ragionamento profondo, disattivalo. Consuma 2-5x token in più per ogni risposta.',
+st4H:'Nuova chat ai primi segni',st4P:'Quando Claude rallenta o le risposte diventano meno precise, inizia una nuova conversazione. Il contesto accumulato è il killer silenzioso.',
+st5H:'Seleziona il modello giusto',st5P:'Sonnet per task rapidi e semplici. Opus solo quando serve ragionamento complesso, analisi profonda o creatività alta.',
+st6H:'Distribuisci il lavoro',st6P:'Pianifica sessioni di 2-3 ore con pause. I token consumati alle 9 si liberano alle 14: sfrutta il rolling a tuo vantaggio.',
+q2:'«Il segreto non è usare meno Claude. È usarlo in modo che ogni token conti: contesto pulito, modello giusto, conversazioni corte e mirate.»',
+s9:'Se i limiti non bastano',
+upH:'Quattro opzioni',
+up1H:'Aspetta il reset rolling',up1P:'La più semplice: i token si liberano continuamente dopo 5 ore. Pianifica il lavoro pesante in sessioni distanziate.',
+up2H:'Acquista utilizzo aggiuntivo',up2P:'Disponibile per Pro, Max, Team ed Enterprise. Paghi un extra per sbloccare più token nella finestra corrente.',
+up3H:'Passa a un piano superiore',up3P:'Max 5x = 5 volte Pro. Max 20x = 20 volte Pro. Il salto è significativo per chi usa Claude come strumento primario.',
+up4H:'Usa l\'API per le automazioni',up4P:'Se hai task ripetitivi (analisi email, generazione report, classificazione), l\'API pay-per-token è più prevedibile e spesso più economica.',
+bridge:'Per il 90% degli utenti, il piano <b>Pro a $20/mese</b> è più che sufficiente se si seguono le strategie di ottimizzazione. I limiti diventano un problema solo con uso intensivo (Claude Code, codebase grandi, sessioni multi-ora continue) o quando si tratta Claude come un motore di ricerca invece che come un partner di pensiero mirato.',
+foot:'Morfeus — Come Claude misura l\'utilizzo'
+},
+en:{
+kicker:'Module 1 · Tokens & limits',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 1 · Setup',
+h1:'How Claude measures usage',
+lede:'Tokens, rolling windows, per-plan limits, automations. Everything you need to know so you never run dry.',
+hook:'"Claude doesn\'t run on messages. It runs on tokens, measured in rolling 5-hour windows. Understanding this mechanism is the difference between using your plan well and hitting the wall every afternoon."',
+s1:'The basic concept: what is a token',
+c1H:'Token: Claude\'s unit of measure',
+c1P1:'Claude doesn\'t count messages or words. It counts <strong>tokens</strong>: fragments of text the model processes. One token equals roughly 3-4 characters in English, a bit less in Italian because words are on average longer.',
+c1P2:'Every time you send a message, you pay tokens in <strong>input</strong> (your prompt + the entire conversation context). Every time Claude replies, you pay tokens in <strong>output</strong> (the generated response). The system context, uploaded files and chat history also count as input.',
+tk1:'Tokens for an average message in Italian',
+tk2:'Tokens for a long, structured response',
+tk3:'Tokens for an uploaded 50-page PDF',
+tk4:'Tokens for a 15,000-line codebase',
+s2:'The 5-hour rolling window',
+c2H:'Rolling window: how it really works',
+c2P1:'Claude measures the tokens consumed within a <strong>rolling 5-hour window</strong>. It isn\'t a fixed period (like "9am to 2pm"): the window slides continuously based on when you use Claude.',
+c2P2:'Every message you send has a timestamp. After 5 hours from that specific message, those tokens are "freed" and become available again. If you use Claude in the morning at 9, those tokens reset at 2pm. If you send another message at 10, those tokens reset at 3pm.',
+rollT:'Example: a work session from 9:00 to 11:00',
+rollL:'Tokens used (purple) &rarr; Tokens freed progressively (green)',
+rollN:'Tokens don\'t reset all at once: they free up <strong>one by one</strong>, 5 hours after the message that consumed them. This means that at 2:00pm you recover the tokens from the 9:00 message, at 2:20pm those from 9:20, and so on.',
+w1H:'Watch out for the long conversation',
+w1P:'The longer a conversation gets, the more tokens it consumes per message, because Claude re-reads the entire history as context. A chat with 50 exchanges can consume 10x more tokens per message than a freshly started one.',
+s3:'Limits by plan (2026)',
+ph1:'Plan',ph2:'Price',ph3:'Tokens / 5h',ph4:'Est. msgs',ph5:'Models',
+pm1:'Sonnet 4.5 only',pm2:'Opus 4.6 + Sonnet',pm3:'Opus + Sonnet + Claude Code',pm4:'Opus + Sonnet + Claude Code',pm5:'Opus + Sonnet + admin',pm6:'Opus + Sonnet + Claude Code',pm7:'All + SSO + 500K context',pm8:'All',
+pt1:'Custom',pt2:'Custom',pt3:'Unlimited*',pt4:'Unlimited*',pp8:'Pay-per-token',
+ptn:'* The API has no rolling window: you pay per token consumed. Its limits are rate limits (requests/minute), not volume.',
+capH:'Capacity at a glance',
+capP:'How much you can do with each plan in a single 5-hour window:',
+capScale:'1,800,000 tokens',
+w2H:'Claude Code: removed from Pro',
+w2P:'As of April 2026, Claude Code (the terminal agent) is no longer included in the Pro plan. To use it you need <strong>Max 5x</strong> or higher. Cowork in the desktop app still works with Pro.',
+s4:'Tokens for Claude Code and automations',
+ex1H:'Claude Code (terminal agent)',
+ex1S:'Additional weekly limits + high token consumption',
+ex1P:'Claude Code consumes significantly more tokens than normal chat use, because it reads files, runs commands, iterates on errors and keeps a long context. Anthropic introduced specific <strong>weekly limits</strong>:',
+cc1:'Plan',cc2:'Hours/week Sonnet 4',cc3:'Hours/week Opus 4',
+ccPro:'Access removed (Apr 2026)',
+cf1H:'Debugging session (4 hours, 20 iterations)',
+cf1P:'~150,000 tokens. On the Pro plan that would mean almost 2 full 5-hour windows.',
+cf2H:'Full codebase analysis (80,000 lines)',
+cf2P:'3-5 million tokens in an intensive session. Only Max 20x holds up without interruptions.',
+cf3H:'Opus burns faster',
+cf3P:'Opus generates longer, more reasoned responses. Expect 2-3x the consumption compared to Sonnet for the same task.',
+ex2H:'Anthropic API (pay-per-token)',
+ex2S:'Separate system, no rolling window, you pay for usage',
+ex2P:'The API is a product completely separate from claude.ai. It has no rolling windows: you pay exactly for the tokens you consume. The Pro plan <strong>does not include API credits</strong>.',
+apiC1:'Model',apiC2:'Input / 1M tok',apiC3:'Output / 1M tok',
+apiEgH:'Practical example: email automation',
+apiEgP:'100 emails/day &times; 500 input tokens + 300 output tokens = ~80,000 tokens/day. With Sonnet 4.6: about <strong>$13-15/month</strong>. With the Batch API (50% discount): <strong>$7-8/month</strong>.',
+apiWH:'The API and claude.ai are separate products',
+apiWP:'A Pro subscription doesn\'t include API credits. The API requires a separate sign-up at console.anthropic.com with usage-based billing. Same technology, different products and billing.',
+s5:'What consumes a lot of tokens',
+co1:'Activity',co2:'Estimated consumption',co3:'Notes',
+cn1:'Uploading a 50-page PDF',cd1:'A single file can use >100% of the Free limit',
+cn2:'Codebase review (15K lines)',cd2:'On Pro it takes 2-3 5-hour windows',
+cn3:'Complex artifact (UI/code)',cd3:'Depends on complexity, iterations included',
+cn4:'Multi-source research',cd4:'Web search + synthesis + reasoning',
+cn5:'Long chat (50+ exchanges)',cv5:'Exponential',cd5:'Context accumulates with every message',
+cn6:'Extended Thinking on',cv6:'2-5x normal',cd6:'Claude "thinks" internally before answering',
+cn7:'Projects with many files',cv7:'Variable (RAG)',cd7:'Optimized: loads only relevant content',
+s6:'Two different limits: context vs usage',
+q1:'"The context window decides how long a single conversation can be. The usage limits decide how much you can use Claude in total, across all conversations."',
+d1H:'Context window',
+d1D:'How long a single chat can be before Claude starts to "forget".',
+d1V:'200K tokens / chat',d1N:'500K on Enterprise',
+d2H:'Usage limit',
+d2D:'How many tokens you can consume in total across all chats within a 5-hour window.',
+d2V:'Depends on the plan',d2N:'From 18K (Free) to 1.8M (Max 20x)',
+acH:'Auto-compaction',
+acP:'When a chat approaches 200K context tokens, Claude automatically summarizes the earlier messages to free up space. The full history is preserved and Claude can refer to it, but the less recent details become a summary. Longer chats with auto-compaction also consume more usage limit.',
+s7:'When you reach the limit',
+hpH:'What happens exactly',
+hp1H:'"You\'re about to reach the limit" warning',
+hp1P:'Claude shows a banner when you\'re near the threshold. You don\'t lose any work.',
+hp2H:'Temporary model downgrade',
+hp2P:'You can keep using Claude, but with a less powerful model (Sonnet 4.5 instead of Opus 4.6). Quality drops, but you don\'t stop.',
+hp3H:'Visible reset timer',
+hp3P:'Claude shows how long until the next reset. Tokens free up progressively, not all at once.',
+hp4H:'Nothing is lost',
+hp4P:'Conversations, Projects, uploaded files: everything stays. You can pick up exactly where you were.',
+s8:'Strategies to optimize tokens',
+st1H:'Use Projects (RAG)',st1P:'Upload only the relevant files into the Project. Claude automatically pulls the context it needs without loading everything in every message.',
+st2H:'Compact often',st2P:'After each milestone, use /compact or start a new chat. Avoid 100+ exchange conversations that burn tokens just on context.',
+st3H:'Turn off Extended Thinking',st3P:'When you don\'t need deep reasoning, turn it off. It consumes 2-5x more tokens per response.',
+st4H:'New chat at the first signs',st4P:'When Claude slows down or responses become less precise, start a new conversation. Accumulated context is the silent killer.',
+st5H:'Pick the right model',st5P:'Sonnet for quick, simple tasks. Opus only when you need complex reasoning, deep analysis or high creativity.',
+st6H:'Spread out the work',st6P:'Plan 2-3 hour sessions with breaks. Tokens consumed at 9 free up at 2pm: use the rolling window to your advantage.',
+q2:'"The secret isn\'t using Claude less. It\'s using it so that every token counts: clean context, the right model, short and focused conversations."',
+s9:'If the limits aren\'t enough',
+upH:'Four options',
+up1H:'Wait for the rolling reset',up1P:'The simplest: tokens free up continuously after 5 hours. Plan heavy work in spaced-out sessions.',
+up2H:'Buy additional usage',up2P:'Available for Pro, Max, Team and Enterprise. You pay extra to unlock more tokens in the current window.',
+up3H:'Move to a higher plan',up3P:'Max 5x = 5 times Pro. Max 20x = 20 times Pro. The jump is significant for those who use Claude as a primary tool.',
+up4H:'Use the API for automations',up4P:'If you have repetitive tasks (email analysis, report generation, classification), the pay-per-token API is more predictable and often cheaper.',
+bridge:'For 90% of users, the <b>Pro plan at $20/month</b> is more than enough if you follow the optimization strategies. Limits become a problem only with intensive use (Claude Code, large codebases, continuous multi-hour sessions) or when you treat Claude as a search engine instead of a focused thinking partner.',
+foot:'Morfeus — How Claude measures usage'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+function toggleExpand(el){el.closest('.expand').classList.toggle('open')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+var mob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.querySelectorAll('.mfill').forEach(function(f){f.style.width=f.getAttribute('data-w')+'%'});mob.unobserve(e.target)}})},{threshold:.3});
+document.querySelectorAll('.meter').forEach(function(el){mob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

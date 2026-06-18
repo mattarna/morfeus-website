@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Etica dell'AI & il framework di valutazione modelli — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--warn:#d99a14;--warn-soft:#fbf2dd;--warn-line:#ecd596;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--warn:#e8c069;--warn-soft:#3a3016;--warn-line:#6e5a24;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warn{background:var(--warn-soft);border-color:var(--warn-line)}.note.warn .ni{background:var(--warn)}.note.warn h4{color:var(--warn)}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* 7 principles map */
+.pmap{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 9px;cursor:pointer;transition:.18s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.pp:hover{border-color:var(--line-2)}.pp.on{border-color:var(--accent);background:var(--accent-soft)}
+.pp .ppi{width:38px;height:38px;border-radius:11px;background:var(--bg-2);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:19px;transition:.18s}
+.pp.on .ppi{background:var(--accent);color:#fff}
+.pp .ppn{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-3)}
+.pp .ppt{font-size:11.5px;font-weight:600;line-height:1.22}
+.pdetail{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:15px;align-items:flex-start;min-height:96px}
+.pdetail .pdi{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px}
+.pdetail .pdn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
+.pdetail .pdt{font-size:16px;font-weight:600;margin-bottom:5px}
+.pdetail .pdd{font-size:14px;color:var(--ink-2);line-height:1.55}.pdetail .pdd b{color:var(--ink)}
+.pdetail .pdprat{margin-top:8px;font-size:13px;color:var(--ink-2);padding-left:12px;border-left:3px solid var(--accent-line)}.pdetail .pdprat b{color:var(--accent)}
+/* compare two cols */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmpc.warn{background:var(--warn-soft);border-color:var(--warn-line)}
+.cmptag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:4px;margin-bottom:12px}
+.cmpc.good .cmptag{background:var(--good);color:#fff}.cmpc.warn .cmptag{background:var(--warn);color:#fff}
+.cmpc ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.cmpc li{font-size:13.5px;color:var(--ink-2);line-height:1.45;display:flex;gap:9px;align-items:flex-start}
+.cmpc li i{font-size:15px;flex-shrink:0;margin-top:2px}.cmpc.good li i{color:var(--good)}.cmpc.warn li i{color:var(--warn)}
+.cmpc li b{color:var(--ink);font-weight:600}
+/* clients table */
+.ctbl{display:flex;flex-direction:column;gap:8px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.crow .cscn{font-size:14px;font-weight:600;color:var(--ink);display:flex;gap:9px;align-items:center}.crow .cscn i{color:var(--accent);font-size:18px}
+.crow .cobl{font-size:13px;color:var(--ink-2);line-height:1.45}.crow .cobl b{color:var(--ink)}
+.crow .ctag{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:4px;background:var(--accent-soft);color:var(--accent);margin-bottom:5px}
+/* red lines builder */
+.rlintro{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.rlist{display:flex;flex-direction:column;gap:8px}
+.rli{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:13px 16px;cursor:pointer;transition:.18s;user-select:none}
+.rli:hover{border-color:var(--line-2)}.rli.on{border-color:var(--bad);background:var(--bad-soft)}
+.rli .rlbox{width:24px;height:24px;border-radius:6px;border:2px solid var(--line-2);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:transparent;font-size:15px;transition:.18s;margin-top:1px}
+.rli.on .rlbox{background:var(--bad);border-color:var(--bad);color:#fff}
+.rli .rlt{font-size:14px;color:var(--ink-2);line-height:1.45}.rli.on .rlt{color:var(--ink)}.rli .rlt b{color:var(--ink);font-weight:600}
+.rlcounter{margin-top:14px;display:flex;gap:13px;align-items:center;background:var(--bad-soft);border:1px solid var(--bad);border-radius:var(--r-l);padding:15px 18px}
+.rlcounter i{font-size:22px;color:var(--bad);flex-shrink:0}
+.rlcounter .rlc-num{font-family:var(--mono);font-weight:700;font-size:21px;color:var(--bad)}
+.rlcounter p{font-size:13.5px;color:var(--ink-2);line-height:1.4}.rlcounter p b{color:var(--ink)}
+/* committee */
+.comm{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.member{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 10px;text-align:center}
+.member .mi{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;margin:0 auto 8px}
+.member .mn{font-size:12.5px;font-weight:600;line-height:1.25}
+.cadence{display:flex;flex-direction:column;gap:8px}
+.cad{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:12px 16px}
+.cad .cn{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cad .ct{font-size:14px;color:var(--ink-2);line-height:1.45}.cad .ct b{color:var(--ink);font-weight:600}
+/* scorecard */
+.scintro{font-size:14.5px;color:var(--ink-2);margin-bottom:8px}
+.scprofiles{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.scprof{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:7px 14px;border-radius:30px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;transition:.18s;box-shadow:var(--sh);display:inline-flex;align-items:center;gap:7px}
+.scprof:hover{border-color:var(--line-2)}.scprof.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.scprof.on i{color:#fff}.scprof i{color:var(--accent);font-size:15px}
+.sclist{display:flex;flex-direction:column;gap:10px}
+.scrit{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px}
+.scrit .schead{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.scrit .sci{width:32px;height:32px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.scrit .scname{font-size:14.5px;font-weight:600;flex:1}
+.scrit .scval{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 11px;border-radius:30px;min-width:46px;text-align:center}
+.scrit .scdesc{font-size:12.5px;color:var(--ink-3);margin-bottom:11px;line-height:1.4}
+.scrit input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:30px;background:var(--bg-3);outline:none;cursor:pointer}
+.scrit input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:var(--sh);cursor:pointer}
+.scrit input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:var(--sh);cursor:pointer}
+.scnote{display:flex;gap:13px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:15px 18px;margin-top:16px}
+.scnote i{font-size:22px;color:var(--accent);flex-shrink:0}
+.scnote p{font-size:13.5px;color:var(--ink-2);line-height:1.45}.scnote p b{color:var(--ink)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.pmap{grid-template-columns:1fr 1fr}.cmp{grid-template-columns:1fr}.crow{grid-template-columns:1fr;gap:6px}.comm{grid-template-columns:1fr 1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.pp,.pdetail,.cmpc,.crow,.rli,.member,.cad,.scrit,.key,.bridge,.scnote,.rlcounter{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A9.7</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sicurezza & Governance</div>
+  <h1 class="rv" data-i="h1">Etica dell'AI &amp; il framework di valutazione modelli</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">01</span><h2 data-i="s1">L'etica è anche business</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-coin"></i></div><div><h4 data-i="note1H">Non è buonismo, è gestione del rischio</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stars"></i><span class="no">02</span><h2 data-i="s2">I sette principi etici della Commissione Europea</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pmapIntro"></p>
+  <div class="pmap rv" id="pmap"></div>
+  <div class="pdetail rv" id="pdetail">
+    <div class="pdi"><i class="ti ti-pointer" id="pdicon"></i></div>
+    <div style="flex:1"><div class="pdn" id="pdn"></div><div class="pdt" id="pdt"></div><div class="pdd" id="pdd"></div><div class="pdprat" id="pdprat" style="display:none"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-users-group"></i><span class="no">03</span><h2 data-i="s3">Etica coi dipendenti</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="empIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc good"><span class="cmptag"><i class="ti ti-check"></i><span data-i="empGoodT">Crea valore</span></span><ul id="empGood"></ul></div>
+    <div class="cmpc warn"><span class="cmptag"><i class="ti ti-alert-triangle"></i><span data-i="empWarnT">Richiede attenzione</span></span><ul id="empWarn"></ul></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-headset"></i><span class="no">04</span><h2 data-i="s4">Etica coi clienti</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cliIntro"></p>
+  <div class="ctbl rv" id="ctbl"></div>
+
+  <div class="sh rv"><i class="ti ti-shield-x"></i><span class="no">05</span><h2 data-i="s5">Il Codice Etico e le linee rosse</h2></div>
+  <p class="rlintro rv" data-i-html="rlIntro"></p>
+  <div class="rlist rv" id="rlist"></div>
+  <div class="rlcounter rv"><i class="ti ti-shield-check"></i><div><span class="rlc-num" id="rlcNum">0</span> <span data-i="rlcLabel"></span><p data-i-html="rlcBody"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-building-bank"></i><span class="no">06</span><h2 data-i="s6">Il Comitato AI</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="commIntro"></p>
+  <div class="comm rv" id="comm"></div>
+  <p class="lede rv" style="font-size:14px;margin:8px 0 14px" data-i-html="cadIntro"></p>
+  <div class="cadence rv" id="cadence"></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">07</span><h2 data-i="s7">Valutare i modelli: un framework, non una lista</h2></div>
+  <div class="note warn rv"><div class="ni"><i class="ti ti-clock-hour-4"></i></div><div><h4 data-i="note2H">"Il modello migliore oggi" è già vecchio domani</h4><p data-i-html="note2P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-alt"></i><span class="no">08</span><h2 data-i="s8">La scorecard di valutazione (7 criteri)</h2></div>
+  <p class="scintro rv" data-i-html="scIntro"></p>
+  <div class="scprofiles rv" id="scprofiles"></div>
+  <div class="sclist rv" id="sclist"></div>
+  <div class="scnote rv"><i class="ti ti-target-arrow"></i><p data-i-html="scNote"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Etica & valutazione modelli</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A9.7',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sicurezza & Governance',
+h1:'Etica dell\'AI & il framework di valutazione modelli',
+lede:'L\'etica dell\'AI non è un vincolo morale astratto: è il modo più economico di gestire il rischio. E poiché i modelli invecchiano in fretta, non si sceglie "il migliore" — si adotta un framework per scegliere il migliore per quel task, quel dato, quel rischio, quel budget.',
+s1:'L\'etica è anche business',
+note1H:'Non è buonismo, è gestione del rischio',
+note1P:'Senza criteri etici espliciti il conto arriva comunque: <strong>cause per discriminazione algoritmica</strong>, perdita di fiducia, danni reputazionali. L\'etica non è un lusso da aggiungere quando le cose vanno bene: è <strong>infrastruttura di rischio</strong>. Avere criteri in anticipo costa meno che gestirne l\'assenza dopo l\'incidente.',
+q1:'«L\'etica è anche business: avere criteri in anticipo è più economico che gestirne l\'assenza.»',
+s2:'I sette principi etici della Commissione Europea',
+pmapIntro:'Sono i sette principi-guida della Commissione Europea per un\'AI affidabile. Non slogan: criteri operativi, ognuno con un "nella pratica". Clicca ogni principio.',
+s3:'Etica coi dipendenti',
+empIntro:'Verso chi lavora in azienda, la linea passa tra usi che liberano valore e usi che invadono. Alcuni dei secondi non sono solo discutibili: sono spesso vietati dalla normativa.',
+empGoodT:'Crea valore',empWarnT:'Richiede attenzione',
+s4:'Etica coi clienti',
+cliIntro:'Verso il cliente, ogni scenario ha un doppio obbligo: quello etico (essere leali) e quello normativo (la legge lo impone). Spesso coincidono.',
+s5:'Il Codice Etico e le linee rosse',
+rlIntro:'Il <strong>Codice Etico AI</strong> aziendale ha una struttura minima: dichiarazione valori, criteri di adozione, diritti delle persone, meccanismo di segnalazione, processo di revisione. Al suo cuore ci sono le <strong>linee rosse</strong>: cosa l\'azienda non farà <strong>mai</strong>, non soggette a eccezioni economiche. Seleziona le linee rosse che vuoi rendere inviolabili.',
+rlcLabel:'linee rosse adottate',
+rlcBody:'Una linea rossa vale solo se è <b>davvero inviolabile</b>: nel momento in cui ammetti un\'eccezione "perché conviene", non è più una linea rossa — è una preferenza.',
+s6:'Il Comitato AI',
+commIntro:'La governance etica non regge sulle buone intenzioni: serve un organo che la presidi. Il Comitato AI mette allo stesso tavolo le funzioni che devono dire la loro.',
+cadIntro:'Cadenza <b>trimestrale</b>. A ogni riunione il comitato:',
+s7:'Valutare i modelli: un framework, non una lista',
+note2H:'"Il modello migliore oggi" è già vecchio domani',
+note2P:'Insegnare <strong>quale</strong> sia il modello migliore oggi è inutile: invecchia nel giro di mesi. Quello che resta è il <strong>framework</strong> — i criteri con cui valutare qualsiasi modello, oggi e tra due anni. Si impara a giudicare, non si impara una classifica.',
+q2:'«Non esiste "il modello migliore" in assoluto. Esiste il migliore per quel task, quel dato, quel rischio, quel budget.»',
+s8:'La scorecard di valutazione (7 criteri)',
+scIntro:'Sette criteri per valutare qualsiasi modello. Il peso che dai a ciascuno <strong>dipende dal tuo caso</strong>: scegli un profilo qui sotto e guarda come cambiano le priorità — oppure regola gli slider a mano.',
+scNote:'Nota il punto: gli stessi sette criteri, <b>pesi diversi</b>. Per un contratto legale conta la privacy e il ragionamento; per un\'app pubblica low-cost conta il costo. <b>Non c\'è una risposta universale</b> — c\'è la risposta giusta per quel contesto.',
+s9:'Checkpoint',
+cpH:'Dove sono le tue linee rosse?',
+cpP:'Pensa all\'AI nella tua organizzazione. Prova a nominare una cosa che non faresti mai con l\'AI, nemmeno se facesse risparmiare — e una persona o funzione che oggi ne risponde.',
+cpQ:'Se non riesci a nominare almeno una linea rossa, l\'etica resta un\'intenzione, non una regola. E se non c\'è un Comitato che la rivede, nessuno noterà quando una scorciatoia la attraversa.',
+bridge:'Hai chiuso il blocco Sicurezza & Governance: principi, ruoli, AI Act, GDPR, etica e valutazione dei modelli. <b>Hai completato il Modulo A9 — e con esso il percorso del Metodo.</b> Ora sai non solo usare l\'AI, ma governarla.',
+foot:'Morfeus — Etica & valutazione modelli'
+},
+en:{
+kicker:'Lesson A9.7',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Security & Governance',
+h1:'AI ethics & the model evaluation framework',
+lede:'AI ethics isn\'t an abstract moral constraint: it\'s the cheapest way to manage risk. And because models age fast, you don\'t pick "the best one" — you adopt a framework to pick the best one for that task, that data, that risk, that budget.',
+s1:'Ethics is also business',
+note1H:'It\'s not feel-good, it\'s risk management',
+note1P:'Without explicit ethical criteria the bill arrives anyway: <strong>algorithmic discrimination lawsuits</strong>, lost trust, reputational damage. Ethics isn\'t a luxury you add when things go well: it\'s <strong>risk infrastructure</strong>. Having criteria up front costs less than handling their absence after the incident.',
+q1:'"Ethics is also business: having criteria up front is cheaper than managing their absence."',
+s2:'The seven ethical principles of the European Commission',
+pmapIntro:'These are the European Commission\'s seven guiding principles for trustworthy AI. Not slogans: operational criteria, each with an "in practice". Click each principle.',
+s3:'Ethics with employees',
+empIntro:'Toward the people inside the company, the line runs between uses that free up value and uses that intrude. Some of the latter aren\'t just questionable: they\'re often banned by law.',
+empGoodT:'Creates value',empWarnT:'Needs care',
+s4:'Ethics with customers',
+cliIntro:'Toward the customer, every scenario carries a double obligation: the ethical one (be fair) and the regulatory one (the law requires it). Often they coincide.',
+s5:'The Code of Ethics and the red lines',
+rlIntro:'The company <strong>AI Code of Ethics</strong> has a minimum structure: values statement, adoption criteria, people\'s rights, a reporting mechanism, a review process. At its core are the <strong>red lines</strong>: what the company will <strong>never</strong> do, not subject to economic exceptions. Select the red lines you want to make inviolable.',
+rlcLabel:'red lines adopted',
+rlcBody:'A red line only holds if it\'s <b>truly inviolable</b>: the moment you allow an exception "because it pays off", it\'s no longer a red line — it\'s a preference.',
+s6:'The AI Committee',
+commIntro:'Ethical governance doesn\'t rest on good intentions: it needs a body that owns it. The AI Committee brings to the same table the functions that need a say.',
+cadIntro:'<b>Quarterly</b> cadence. At each meeting the committee:',
+s7:'Evaluating models: a framework, not a list',
+note2H:'"The best model today" is already old tomorrow',
+note2P:'Teaching <strong>which</strong> model is best today is pointless: it ages within months. What lasts is the <strong>framework</strong> — the criteria to evaluate any model, today and two years from now. You learn to judge, not to memorize a ranking.',
+q2:'"There is no \'best model\' in absolute terms. There\'s the best one for that task, that data, that risk, that budget."',
+s8:'The evaluation scorecard (7 criteria)',
+scIntro:'Seven criteria to evaluate any model. The weight you give each one <strong>depends on your case</strong>: pick a profile below and watch the priorities shift — or set the sliders by hand.',
+scNote:'Notice the point: the same seven criteria, <b>different weights</b>. For a legal contract, privacy and reasoning matter; for a low-cost public app, cost matters. <b>There\'s no universal answer</b> — there\'s the right answer for that context.',
+s9:'Checkpoint',
+cpH:'Where are your red lines?',
+cpP:'Think of AI in your organization. Try to name one thing you\'d never do with AI, not even if it saved money — and one person or function accountable for it today.',
+cpQ:'If you can\'t name at least one red line, ethics stays an intention, not a rule. And if no committee reviews it, no one will notice when a shortcut crosses it.',
+bridge:'You\'ve closed the Security & Governance block: principles, roles, the AI Act, GDPR, ethics and model evaluation. <b>You\'ve completed Module A9 — and with it the Method path.</b> You now know not just how to use AI, but how to govern it.',
+foot:'Morfeus — Ethics & model evaluation'
+}};
+
+// 7 principles: icon, short[it,en], name[it,en], desc[it,en], prat[it,en]
+var PRIN=[
+{ic:'ti-eye-check',short:['Supervisione umana','Human oversight'],
+ name:['Supervisione e controllo umano','Human agency and oversight'],
+ desc:['L\'AI assiste, non sostituisce il giudizio umano: una persona resta nel ciclo e può intervenire.','AI assists, it doesn\'t replace human judgment: a person stays in the loop and can intervene.'],
+ prat:['Nella pratica: nessuna decisione con effetti su persone presa "in automatico" senza revisione.','In practice: no decision affecting people taken "automatically" without review.']},
+{ic:'ti-shield-bolt',short:['Robustezza','Robustness'],
+ name:['Robustezza tecnica e sicurezza','Technical robustness and safety'],
+ desc:['Il sistema deve essere affidabile, resistere a errori e usi imprevisti, e avere un piano di fallback.','The system must be reliable, resist errors and unexpected use, and have a fallback plan.'],
+ prat:['Nella pratica: testare i casi limite e prevedere cosa succede quando il modello sbaglia.','In practice: test edge cases and plan for what happens when the model is wrong.']},
+{ic:'ti-database-cog',short:['Governance dati','Data governance'],
+ name:['Riservatezza e governance dei dati','Privacy and data governance'],
+ desc:['Si controlla quali dati entrano, come sono protetti e chi vi accede. Minimo necessario, sempre.','You control which data goes in, how it\'s protected and who accesses it. Minimum necessary, always.'],
+ prat:['Nella pratica: niente dati personali o riservati versati "per comodità" in un tool non verificato.','In practice: no personal or confidential data dumped "for convenience" into an unvetted tool.']},
+{ic:'ti-eye',short:['Trasparenza','Transparency'],
+ name:['Trasparenza','Transparency'],
+ desc:['È chiaro quando l\'AI è in uso, su quali dati lavora e come arriva ai suoi risultati.','It\'s clear when AI is in use, on what data it works and how it reaches its results.'],
+ prat:['Nella pratica: l\'uso dell\'AI è dichiarato, non nascosto a chi ne è toccato.','In practice: AI use is declared, not hidden from those it affects.']},
+{ic:'ti-scale-outline',short:['Non discriminazione','Non-discrimination'],
+ name:['Diversità, non discriminazione, inclusione','Diversity, non-discrimination, fairness'],
+ desc:['Il sistema non deve produrre o amplificare bias verso persone o gruppi. È il principio più esposto al rischio legale.','The system must not produce or amplify bias toward people or groups. It\'s the principle most exposed to legal risk.'],
+ prat:['Nella pratica: controllare che gli output non penalizzino sistematicamente categorie protette.','In practice: check that outputs don\'t systematically penalize protected categories.']},
+{ic:'ti-leaf',short:['Benessere sociale','Societal wellbeing'],
+ name:['Benessere sociale e ambientale','Societal and environmental wellbeing'],
+ desc:['L\'impatto va oltre l\'azienda: effetti sul lavoro, sulla società e l\'impronta ambientale dei modelli.','Impact goes beyond the company: effects on work, on society and the environmental footprint of models.'],
+ prat:['Nella pratica: pesare anche i costi non economici, non solo l\'efficienza immediata.','In practice: weigh non-economic costs too, not just immediate efficiency.']},
+{ic:'ti-user-check',short:['Responsabilità','Accountability'],
+ name:['Responsabilità','Accountability'],
+ desc:['Per ogni sistema c\'è qualcuno che ne risponde, con tracciabilità delle decisioni e meccanismi di rimedio.','For every system someone is accountable, with traceability of decisions and remedy mechanisms.'],
+ prat:['Nella pratica: un nome preciso per ogni sistema, non una responsabilità di tutti e quindi di nessuno.','In practice: a precise name per system, not a responsibility of everyone and so of no one.']}
+];
+
+// employees: good[it,en] / warn[it,en]
+var EMP_GOOD=[
+['Riduzione delle attività ripetitive, per liberare tempo su lavoro di valore.','Cutting repetitive tasks, to free up time for valuable work.'],
+['Analisi aggregata e <b>trasparente</b>, comunicata a chi è coinvolto.','Aggregate and <b>transparent</b> analysis, communicated to those involved.'],
+['Formazione <b>volontaria</b> sull\'AI, non imposta.','<b>Voluntary</b> AI training, not imposed.'],
+['Supporto alla pianificazione, con la <b>decisione finale umana</b>.','Planning support, with the <b>final human decision</b>.']
+];
+var EMP_WARN=[
+['Monitoraggio continuo dei dipendenti tramite AI.','Continuous AI monitoring of employees.'],
+['Valutazioni di performance affidate al modello.','Performance reviews handed to the model.'],
+['Analisi di <b>sentiment ed emozioni</b>: spesso <b>vietata</b>.','<b>Sentiment and emotion</b> analysis: often <b>banned</b>.'],
+['Screening automatico dei candidati: caso ad alto rischio.','Automated candidate screening: a high-risk case.']
+];
+
+// clients: scenario[it,en], obligation[it,en]
+var CLI=[
+{scn:['Chatbot di assistenza','Support chatbot'],ic:'ti-message-chatbot',
+ obl:['Va <b>dichiarato che è un\'AI</b>: l\'utente ha diritto di sapere con chi sta parlando (art. 52 AI Act).','Must <b>declare it\'s an AI</b>: the user has the right to know who they\'re talking to (AI Act art. 52).']},
+{scn:['Offerte personalizzate','Personalized offers'],ic:'ti-discount',
+ obl:['Se l\'AI decide da sola, scatta il diritto dell\'utente sulle decisioni automatizzate (art. 22 GDPR).','If AI decides on its own, the user\'s right on automated decisions kicks in (GDPR art. 22).']},
+{scn:['Analisi churn / upselling','Churn analysis / upselling'],ic:'ti-chart-arcs',
+ obl:['Richiede <b>informativa</b>: il cliente deve sapere che i suoi dati vengono profilati.','Requires <b>disclosure</b>: the customer must know their data is being profiled.']},
+{scn:['Decisioni su servizi o credito','Decisions on services or credit'],ic:'ti-gavel',
+ obl:['Caso <b>ad alto rischio</b>: serve la <b>revisione umana</b> della decisione.','A <b>high-risk</b> case: <b>human review</b> of the decision is required.']}
+];
+
+// red lines: text[it,en]
+var REDLINES=[
+['Mai usare l\'AI per decisioni su persone (assunzioni, licenziamenti) senza revisione umana.','Never use AI for decisions about people (hiring, firing) without human review.'],
+['Mai inserire dati personali o riservati in tool pubblici non verificati.','Never put personal or confidential data into unvetted public tools.'],
+['Mai usare l\'AI per sorveglianza o analisi emozionale dei dipendenti.','Never use AI for surveillance or emotional analysis of employees.'],
+['Mai far interagire un\'AI col cliente fingendo che sia un umano.','Never let an AI interact with the customer pretending to be human.'],
+['Mai adottare un modello senza sapere come tratta i dati che gli diamo.','Never adopt a model without knowing how it handles the data we give it.'],
+['Mai automatizzare un flusso critico senza un punto di validazione umana.','Never automate a critical flow without a human validation point.']
+];
+
+// committee members: icon, name[it,en]
+var COMM=[
+{ic:'ti-users',name:['HR','HR']},
+{ic:'ti-gavel',name:['Legale / compliance','Legal / compliance']},
+{ic:'ti-device-desktop-cog',name:['IT','IT']},
+{ic:'ti-user-shield',name:['Rappr. lavoratori / consulente','Worker rep / advisor']}
+];
+// cadence tasks
+var CADENCE=[
+['Valuta le <b>nuove adozioni</b> di AI proposte in azienda.','Reviews <b>new AI adoptions</b> proposed in the company.'],
+['Monitora i <b>sistemi già in produzione</b>.','Monitors <b>systems already in production</b>.'],
+['Aggiorna il <b>Codice Etico</b> alla luce di nuovi rischi e norme.','Updates the <b>Code of Ethics</b> in light of new risks and rules.'],
+['Risponde alle <b>segnalazioni</b> raccolte dal meccanismo interno.','Responds to <b>reports</b> gathered by the internal mechanism.']
+];
+
+// scorecard criteria: icon, name[it,en], desc[it,en]
+var CRIT=[
+{ic:'ti-brain',name:['Ragionamento','Reasoning'],desc:['Capacità di analisi, logica e problemi complessi.','Analysis, logic and complex problem-solving.']},
+{ic:'ti-writing',name:['Scrittura','Writing'],desc:['Qualità e tono dei testi prodotti.','Quality and tone of the text produced.']},
+{ic:'ti-windsock',name:['Contesto','Context window'],desc:['Quanta informazione regge in una sola richiesta.','How much info it holds in a single request.']},
+{ic:'ti-code',name:['Codice','Code'],desc:['Capacità di generare e correggere codice.','Generating and fixing code.']},
+{ic:'ti-language',name:['Italiano','Italian'],desc:['Fluidità e correttezza nella nostra lingua.','Fluency and correctness in our language.']},
+{ic:'ti-coin','name':['Costo','Cost'],desc:['Spesa per richiesta / per token.','Spend per request / per token.']},
+{ic:'ti-lock','name':['Privacy','Privacy'],desc:['Come tratta e protegge i dati che gli dai.','How it handles and protects the data you give it.']}
+];
+// profiles: name[it,en], icon, weights[7] (0-100)
+var PROFILES=[
+{name:['Contratto legale','Legal contract'],ic:'ti-gavel',w:[90,70,80,20,85,30,100]},
+{name:['App pubblica low-cost','Low-cost public app'],ic:'ti-rocket',w:[40,55,35,30,60,100,45]},
+{name:['Assistente di scrittura','Writing assistant'],ic:'ti-pencil',w:[60,100,55,15,90,50,40]},
+{name:['Sviluppo software','Software development'],ic:'ti-terminal-2',w:[85,40,75,100,25,55,50]}
+];
+
+var LANG='it',CURP=-1,RED=[],CURPROF=-1,WEIGHTS=[50,50,50,50,50,50,50];
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1.replace('&','&')+' — Morfeus';
+  renderPrin();renderPDetail();renderEmp();renderCli();renderRed();renderComm();renderCadence();renderProfiles();renderScore();
+}
+function renderPrin(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('pmap').innerHTML=PRIN.map(function(p,i){
+    return '<div class="pp'+(i===CURP?' on':'')+'" onclick="setP('+i+')"><div class="ppi"><i class="ti '+p.ic+'"></i></div><span class="ppn">'+(i+1)+'/7</span><span class="ppt">'+p.short[j]+'</span></div>';
+  }).join('');
+}
+function setP(i){CURP=i;renderPrin();renderPDetail()}
+function renderPDetail(){
+  var j=LANG==='it'?0:1,prat=document.getElementById('pdprat');
+  if(CURP<0){
+    document.getElementById('pdicon').className='ti ti-pointer';
+    document.getElementById('pdn').textContent='';
+    document.getElementById('pdt').textContent='';
+    document.getElementById('pdd').innerHTML=LANG==='it'?'Scegli un principio qui sopra per vederne il senso pratico.':'Pick a principle above to see its practical meaning.';
+    prat.style.display='none';return;
+  }
+  var p=PRIN[CURP];
+  document.getElementById('pdicon').className='ti '+p.ic;
+  document.getElementById('pdn').textContent='Principio '+(CURP+1)+' / 7';
+  document.getElementById('pdt').textContent=p.name[j];
+  document.getElementById('pdd').innerHTML=p.desc[j];
+  prat.innerHTML=p.prat[j];prat.style.display='block';
+}
+function renderEmp(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('empGood').innerHTML=EMP_GOOD.map(function(x){return '<li><i class="ti ti-circle-check"></i><span>'+x[j]+'</span></li>'}).join('');
+  document.getElementById('empWarn').innerHTML=EMP_WARN.map(function(x){return '<li><i class="ti ti-alert-circle"></i><span>'+x[j]+'</span></li>'}).join('');
+}
+function renderCli(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('ctbl').innerHTML=CLI.map(function(c){
+    return '<div class="crow"><div class="cscn"><i class="ti '+c.ic+'"></i>'+c.scn[j]+'</div><div><span class="ctag">'+(LANG==='it'?'Obbligo':'Obligation')+'</span><div class="cobl">'+c.obl[j]+'</div></div></div>';
+  }).join('');
+}
+function renderRed(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('rlist').innerHTML=REDLINES.map(function(r,i){
+    var on=RED.indexOf(i)>=0;
+    return '<div class="rli'+(on?' on':'')+'" onclick="toggleRed('+i+')"><div class="rlbox"><i class="ti ti-check"></i></div><div class="rlt">'+r[j]+'</div></div>';
+  }).join('');
+  document.getElementById('rlcNum').textContent=RED.length;
+}
+function toggleRed(i){var k=RED.indexOf(i);if(k>=0)RED.splice(k,1);else RED.push(i);renderRed()}
+function renderComm(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('comm').innerHTML=COMM.map(function(m){
+    return '<div class="member"><div class="mi"><i class="ti '+m.ic+'"></i></div><div class="mn">'+m.name[j]+'</div></div>';
+  }).join('');
+}
+function renderCadence(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('cadence').innerHTML=CADENCE.map(function(c,i){
+    return '<div class="cad"><div class="cn">'+(i+1)+'</div><div class="ct">'+c[j]+'</div></div>';
+  }).join('');
+}
+function renderProfiles(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('scprofiles').innerHTML=PROFILES.map(function(p,i){
+    return '<button class="scprof'+(i===CURPROF?' on':'')+'" onclick="setProfile('+i+')"><i class="ti '+p.ic+'"></i>'+p.name[j]+'</button>';
+  }).join('');
+}
+function setProfile(i){CURPROF=i;WEIGHTS=PROFILES[i].w.slice();renderProfiles();renderScore()}
+function renderScore(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('sclist').innerHTML=CRIT.map(function(c,i){
+    return '<div class="scrit"><div class="schead"><div class="sci"><i class="ti '+c.ic+'"></i></div><div class="scname">'+c.name[j]+'</div><div class="scval" id="scv'+i+'">'+WEIGHTS[i]+'</div></div><div class="scdesc">'+c.desc[j]+'</div><input type="range" min="0" max="100" step="5" value="'+WEIGHTS[i]+'" oninput="setWeight('+i+',this.value)"></div>';
+  }).join('');
+}
+function setWeight(i,v){WEIGHTS[i]=parseInt(v,10);CURPROF=-1;document.getElementById('scv'+i).textContent=WEIGHTS[i];renderProfiles()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il metodo completo, passo per passo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.lede em{font-style:italic;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p b{color:var(--ink);font-weight:600}
+/* recap moves */
+.recap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 24px;margin:0}
+.recap-lab{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.recap-moves{display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.rm{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:30px}
+.rm.m1{background:var(--accent-soft);color:var(--accent)}
+.rm.m2{background:var(--warn-soft);color:var(--warn)}
+.rm.m3{background:var(--teal-soft);color:var(--teal)}
+.rm-arrow{color:var(--ink-3);display:flex;align-items:center}
+.recap>p{font-size:13.5px;color:var(--ink-2);text-align:center;margin-top:14px;line-height:1.6}
+/* pipeline map */
+.pipe{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.pnode{flex:1 1 0;min-width:104px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 8px;text-align:center}
+.pnode .pn-ic{font-size:23px;display:block;margin-bottom:6px}
+.pnode .pn-t{font-size:11.5px;font-weight:600;letter-spacing:.3px}
+.pnode .pn-s{font-size:10.5px;color:var(--ink-3);margin-top:3px;line-height:1.3}
+.pnode.g1{border-top:3px solid var(--accent)}.pnode.g1 .pn-ic{color:var(--accent)}
+.pnode.g2{border-top:3px solid var(--warn)}.pnode.g2 .pn-ic{color:var(--warn)}
+.pnode.g3{border-top:3px solid var(--teal)}.pnode.g3 .pn-ic{color:var(--teal)}
+.pnode.gf{border-top:3px solid var(--good)}.pnode.gf .pn-ic{color:var(--good)}
+.pipe-note{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-top:4px}
+.pipe-note b{color:var(--ink);font-weight:600}
+/* mstep accordion */
+.hint{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;margin-bottom:12px;letter-spacing:.04em}
+.mstep{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+.mstep-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;transition:background .2s}
+.mstep-head:hover{background:var(--bg-2)}
+.mstep-num{width:36px;height:36px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex-shrink:0;font-family:var(--mono)}
+.mstep-tt{flex:1}
+.mstep-tt h3{font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mstep-tt .sub{font-size:12.5px;color:var(--ink-2);margin-top:2px;line-height:1.45}
+.movetag{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;padding:3px 8px;border-radius:12px;font-family:var(--mono);background:var(--accent-soft);color:var(--accent)}
+.mstep-chev{color:var(--ink-3);font-size:20px;transition:transform .3s}
+.mstep.open .mstep-chev{transform:rotate(180deg)}
+.mstep-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.mstep.open .mstep-body{max-height:900px}
+.mstep-inner{padding:0 20px 18px 70px}
+.mrow{margin-bottom:11px}
+.mrow .k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.mrow p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.mrow p b{color:var(--ink);font-weight:600}
+.mrow.why .k{color:var(--warn)}.mrow.why .k i{color:var(--warn)}
+.ex-chip{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:var(--r);padding:10px 13px;font-size:13px;color:var(--ink-2);line-height:1.55}
+.ex-chip b{color:var(--ink)}
+.prompt-chip{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 38px 11px 13px;font-family:var(--mono);font-size:12px;color:var(--ink);line-height:1.6;cursor:pointer;position:relative;white-space:pre-wrap;transition:.18s}
+.prompt-chip:hover{border-color:var(--accent)}
+.prompt-chip .cp-ic{position:absolute;top:9px;right:11px;font-size:15px;color:var(--ink-3)}
+.prompt-chip .cp-ic.show{color:var(--good)}
+.spacer8{height:8px}
+/* pre-mortem */
+.premortem{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:20px 22px;margin:0}
+.pm-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.pm-ic{width:42px;height:42px;border-radius:12px;background:var(--warn);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pm-k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--warn);font-weight:600;margin-bottom:2px}
+.pm-head h3{font-size:16px;font-weight:600}
+.pm-desc{font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:12px}
+.pm-desc b{color:var(--ink);font-weight:600}
+/* ping pong */
+.pp-intro{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.pp-intro b{color:var(--ink);font-weight:600}
+.pp-stage{border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);padding:18px 20px;position:relative}
+.pp-stage.a,.pp-stage.a2{background:var(--accent-soft);border-color:var(--accent-line)}
+.pp-stage.b{background:var(--warn-soft);border-color:var(--warn-line)}
+.pp-stage.done{background:var(--good-soft);border-color:var(--good-line)}
+.pp-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.pp-ic{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0}
+.pp-stage.a .pp-ic,.pp-stage.a2 .pp-ic{background:var(--accent)}
+.pp-stage.b .pp-ic{background:var(--warn)}
+.pp-stage.done .pp-ic{background:var(--good)}
+.pp-who{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3)}
+.pp-title{font-size:15.5px;font-weight:600}
+.pp-stage.a .pp-title,.pp-stage.a2 .pp-title{color:var(--accent)}
+.pp-stage.b .pp-title{color:var(--warn)}
+.pp-stage.done .pp-title{color:var(--good)}
+.pp-desc{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin-bottom:12px}
+.pp-carry{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink-3);font-size:12px;font-weight:500;padding:12px 0;font-family:var(--mono)}
+.pp-carry i{font-size:18px;color:var(--accent)}
+.pp-plabel{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;margin-bottom:6px}
+/* execution / living plan */
+.exec-p{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:14px}
+.exec-p b{color:var(--ink);font-weight:600}
+.plan-demo{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;margin:0}
+.plan-demo .filebar{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.plan-task{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:var(--r);font-size:14px;transition:all .4s;margin-bottom:5px}
+.plan-task .box{width:20px;height:20px;border-radius:5px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:13px;color:#fff}
+.plan-task.done .box{background:var(--good);border-color:var(--good)}
+.plan-task.done{color:var(--ink-3)}.plan-task.done .txt{text-decoration:line-through}
+.plan-task.milestone{font-weight:600;margin-top:6px}.plan-task.milestone .box{border-radius:50%}
+.plan-task.active{background:var(--accent-soft)}
+.run-btn{margin-top:12px;padding:11px 22px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);transition:.18s}
+.run-btn:hover:not(:disabled){filter:brightness(1.06)}
+.run-btn:disabled{opacity:.5;cursor:default}
+.run-status{font-size:13px;color:var(--ink-2);margin-top:10px;min-height:18px;font-style:italic}
+/* quality rules */
+.qrules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qrule{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.qrule .qn{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0;min-width:18px}
+.qrule p{font-size:13px;color:var(--ink-2);line-height:1.5}
+.qrule p b{color:var(--ink);font-weight:600}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+.key .key-sub{display:block;font-size:14px;font-weight:400;color:var(--ink-2);margin-top:14px;font-style:italic}
+/* bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge .bt h4{font-size:13px;font-weight:600;color:var(--agent);margin-bottom:3px}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .mstep-inner{padding-left:20px}
+  .pipe .pnode{flex:1 1 40%;min-width:0}
+  .qrules-grid{grid-template-columns:1fr}
+  .recap-moves{flex-direction:column}.rm-arrow i{transform:rotate(90deg)}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.run-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.mstep-body{max-height:none!important}.mstep,.recap,.pnode,.premortem,.pp-stage,.plan-demo,.qrule,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve</div>
+  <h1 class="rv" data-i="h1">Il metodo completo, passo per passo</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <!-- 01 RECAP -->
+  <div class="sh rv"><i class="ti ti-rotate"></i><span class="no">01</span><h2 data-i="s1">Ripartiamo da cos'è Plan &amp; Solve</h2></div>
+  <div class="recap rv">
+    <div class="recap-lab"><i class="ti ti-rotate"></i> <span data-i="recapLab"></span></div>
+    <div class="recap-moves">
+      <span class="rm m1"><i class="ti ti-map-2"></i> <span data-i="rm1"></span></span>
+      <span class="rm-arrow"><i class="ti ti-arrow-right"></i></span>
+      <span class="rm m2"><i class="ti ti-eye-check"></i> <span data-i="rm2"></span></span>
+      <span class="rm-arrow"><i class="ti ti-arrow-right"></i></span>
+      <span class="rm m3"><i class="ti ti-hammer"></i> <span data-i="rm3"></span></span>
+    </div>
+    <p data-i="recapP"></p>
+  </div>
+
+  <!-- 02 MAP -->
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">02</span><h2 data-i="s2">La mappa del metodo</h2></div>
+  <div class="pipe rv">
+    <div class="pnode g1"><i class="ti ti-target pn-ic"></i><div class="pn-t" data-i="pn1t"></div><div class="pn-s" data-i="pn1s"></div></div>
+    <div class="pnode g1"><i class="ti ti-map-2 pn-ic"></i><div class="pn-t" data-i="pn2t"></div><div class="pn-s" data-i="pn2s"></div></div>
+    <div class="pnode g2"><i class="ti ti-ghost-2 pn-ic"></i><div class="pn-t" data-i="pn3t"></div><div class="pn-s" data-i="pn3s"></div></div>
+    <div class="pnode g2"><i class="ti ti-eye-check pn-ic"></i><div class="pn-t" data-i="pn4t"></div><div class="pn-s" data-i="pn4s"></div></div>
+    <div class="pnode g3"><i class="ti ti-hammer pn-ic"></i><div class="pn-t" data-i="pn5t"></div><div class="pn-s" data-i="pn5s"></div></div>
+    <div class="pnode gf"><i class="ti ti-circle-check pn-ic"></i><div class="pn-t" data-i="pn6t"></div><div class="pn-s" data-i="pn6s"></div></div>
+  </div>
+  <p class="pipe-note rv" data-i-html="pipeNote"></p>
+
+  <!-- 03 PIANO -->
+  <div class="sh rv"><i class="ti ti-map-2"></i><span class="no">03</span><h2 data-i="s3">PIANO — crea il piano con Claude</h2></div>
+  <div class="hint rv" data-i="hint"></div>
+
+  <div class="mstep open rv" onclick="tog(this)">
+    <div class="mstep-head"><div class="mstep-num">1</div><div class="mstep-tt"><h3><span data-i="st1h"></span> <span class="movetag" data-i="moveP"></span></h3><div class="sub" data-i="st1sub"></div></div><i class="ti ti-chevron-down mstep-chev"></i></div>
+    <div class="mstep-body"><div class="mstep-inner">
+      <div class="mrow"><div class="k"><i class="ti ti-point"></i> <span data-i="kDo"></span></div><p data-i-html="st1do"></p></div>
+      <div class="mrow why"><div class="k"><i class="ti ti-bulb"></i> <span data-i="kWhy"></span></div><p data-i="st1why"></p></div>
+      <div class="ex-chip" data-i-html="st1ex"></div>
+      <div class="spacer8"></div>
+      <div class="prompt-chip" onclick="cp(event,this)"><span data-i="st1prompt"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+    </div></div>
+  </div>
+
+  <div class="mstep rv" onclick="tog(this)">
+    <div class="mstep-head"><div class="mstep-num">2</div><div class="mstep-tt"><h3><span data-i="st2h"></span> <span class="movetag" data-i="moveP"></span></h3><div class="sub" data-i="st2sub"></div></div><i class="ti ti-chevron-down mstep-chev"></i></div>
+    <div class="mstep-body"><div class="mstep-inner">
+      <div class="mrow"><div class="k"><i class="ti ti-point"></i> <span data-i="kDo"></span></div><p data-i="st2do"></p></div>
+      <div class="mrow why"><div class="k"><i class="ti ti-bulb"></i> <span data-i="kWhy"></span></div><p data-i="st2why"></p></div>
+      <div class="ex-chip" data-i-html="st2ex"></div>
+      <div class="spacer8"></div>
+      <div class="prompt-chip" onclick="cp(event,this)"><span data-i="st2prompt"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+    </div></div>
+  </div>
+
+  <!-- PRE-MORTEM -->
+  <div class="premortem rv">
+    <div class="pm-head"><div class="pm-ic"><i class="ti ti-ghost-2"></i></div>
+    <div><div class="pm-k" data-i="pmK"></div><h3 data-i="pmH"></h3></div></div>
+    <p class="pm-desc" data-i-html="pmDesc"></p>
+    <div class="prompt-chip" onclick="cp(event,this)"><span data-i="pmPrompt"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  </div>
+
+  <!-- 04 CONTROLLO -->
+  <div class="sh rv"><i class="ti ti-arrows-shuffle"></i><span class="no">04</span><h2 data-i="s4">CONTROLLO — la validazione incrociata</h2></div>
+  <p class="pp-intro rv" data-i-html="ppIntro"></p>
+
+  <div class="pp-stage a rv">
+    <div class="pp-top"><div class="pp-ic"><i class="ti ti-bulb"></i></div><div><div class="pp-who" data-i="ppAwho"></div><div class="pp-title" data-i="ppAtitle"></div></div></div>
+    <div class="pp-desc" data-i="ppAdesc"></div>
+  </div>
+
+  <div class="pp-carry rv"><i class="ti ti-arrow-down"></i> <span data-i="ppCarry1"></span></div>
+
+  <div class="pp-stage b rv">
+    <div class="pp-top"><div class="pp-ic"><i class="ti ti-shield-search"></i></div><div><div class="pp-who" data-i="ppBwho"></div><div class="pp-title" data-i="ppBtitle"></div></div></div>
+    <div class="pp-desc" data-i="ppBdesc"></div>
+    <div class="pp-plabel" data-i="ppBlabel"></div>
+    <div class="prompt-chip" onclick="cp(event,this)"><span data-i="ppBprompt"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  </div>
+
+  <div class="pp-carry rv"><i class="ti ti-arrow-down"></i> <span data-i="ppCarry2"></span></div>
+
+  <div class="pp-stage a2 rv">
+    <div class="pp-top"><div class="pp-ic"><i class="ti ti-filter-check"></i></div><div><div class="pp-who" data-i="ppA2who"></div><div class="pp-title" data-i="ppA2title"></div></div></div>
+    <div class="pp-desc" data-i="ppA2desc"></div>
+    <div class="pp-plabel" data-i="ppA2label1"></div>
+    <div class="prompt-chip" onclick="cp(event,this)"><span data-i="ppA2prompt1"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+    <div class="spacer8"></div>
+    <div class="pp-plabel" data-i="ppA2label2"></div>
+    <div class="prompt-chip" onclick="cp(event,this)"><span data-i="ppA2prompt2"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  </div>
+
+  <div class="pp-carry rv"><i class="ti ti-arrow-down"></i></div>
+
+  <div class="pp-stage done rv">
+    <div class="pp-top"><div class="pp-ic"><i class="ti ti-circle-check"></i></div><div><div class="pp-who" data-i="ppDwho"></div><div class="pp-title" data-i="ppDtitle"></div></div></div>
+    <div class="pp-desc" data-i="ppDdesc"></div>
+  </div>
+
+  <!-- 05 ESECUZIONE -->
+  <div class="sh rv"><i class="ti ti-hammer"></i><span class="no">05</span><h2 data-i="s5">ESECUZIONE — esegui e spunta</h2></div>
+  <p class="exec-p rv" data-i-html="execP"></p>
+  <div class="plan-demo rv">
+    <div class="filebar"><i class="ti ti-file-text"></i> <span data-i="planFile"></span></div>
+    <div id="planList">
+      <div class="plan-task milestone" data-i-idx="0"><span class="box"></span><span class="txt" data-i="pt0"></span></div>
+      <div class="plan-task" data-i-idx="1"><span class="box"></span><span class="txt" data-i="pt1"></span></div>
+      <div class="plan-task" data-i-idx="2"><span class="box"></span><span class="txt" data-i="pt2"></span></div>
+      <div class="plan-task" data-i-idx="3"><span class="box"></span><span class="txt" data-i="pt3"></span></div>
+      <div class="plan-task milestone" data-i-idx="4"><span class="box"></span><span class="txt" data-i="pt4"></span></div>
+    </div>
+    <button class="run-btn" id="runBtn" onclick="runPlan()"><i class="ti ti-player-play"></i> <span data-i="runBtn"></span></button>
+    <div class="run-status" id="runStatus"></div>
+  </div>
+
+  <!-- 06 QUALITY RULES -->
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">06</span><h2 data-i="s6">Le 8 regole di qualità del metodo</h2></div>
+  <div class="qrules-grid rv">
+    <div class="qrule"><span class="qn">01</span><p data-i-html="q1"></p></div>
+    <div class="qrule"><span class="qn">02</span><p data-i-html="q2"></p></div>
+    <div class="qrule"><span class="qn">03</span><p data-i-html="q3"></p></div>
+    <div class="qrule"><span class="qn">04</span><p data-i-html="q4"></p></div>
+    <div class="qrule"><span class="qn">05</span><p data-i-html="q5"></p></div>
+    <div class="qrule"><span class="qn">06</span><p data-i-html="q6"></p></div>
+    <div class="qrule"><span class="qn">07</span><p data-i-html="q7"></p></div>
+    <div class="qrule"><span class="qn">08</span><p data-i-html="q8"></p></div>
+  </div>
+
+  <!-- 07 KEY -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">07</span><h2 data-i="s7">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyP"></p><span class="key-sub" data-i="keySub"></span></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><div class="bt"><h4 data-i="bridgeH"></h4><p data-i="bridgeP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il metodo completo, passo per passo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve',
+h1:'Il metodo completo, passo per passo',
+lede:'Nella lezione scorsa hai visto <em>cos\'è</em> Plan &amp; Solve. Adesso lo apriamo e lo facciamo bene. Stesso esempio: assumere un responsabile marketing.',
+s1:'Ripartiamo da cos\'è Plan & Solve',
+recapLab:'Ripartiamo da cos\'è Plan & Solve',
+rm1:'PIANO',rm2:'CONTROLLO',rm3:'ESECUZIONE',
+recapP:'Prima il piano, lo controlli, poi l\'esecuzione. I passi qui sotto sono solo questi tre gesti fatti come si deve, e li facciamo fare a Claude.',
+s2:'La mappa del metodo',
+pn1t:'OBIETTIVO',pn1s:'cosa significa "fatto"',
+pn2t:'PIANO',pn2s:'tappe + output',
+pn3t:'PRE-MORTEM',pn3s:'i rischi, prima',
+pn4t:'CONTROLLO',pn4s:'la 2ª testa',
+pn5t:'ESEGUI',pn5s:'una tappa per volta',
+pn6t:'FATTO',pn6s:'verificato',
+pipeNote:'Il cuore del metodo è il <b>CONTROLLO</b>: il piano non lo validi tu a occhio, lo fai validare da un secondo LLM e poi lo fai correggere al primo. È questo che elimina gli errori prima di partire.',
+s3:'PIANO — crea il piano con Claude',
+hint:'Clicca per aprire',
+moveP:'Piano',kDo:'Cosa fai',kWhy:'Perché conta',
+st1h:'Definisci l\'obiettivo (in modo preciso)',
+st1sub:'Cosa vuoi ottenere, in modo che non resti spazio a interpretazioni.',
+st1do:'Scrivi con Claude un obiettivo <b>estremamente definito</b>: cosa significa "fatto", entro quando, con quali paletti (cosa NON deve succedere). Un obiettivo vago genera un piano vago.',
+st1why:'Tutto il piano e tutta la validazione dopo vengono misurati contro questo obiettivo. Se è impreciso, crolla tutto.',
+st1ex:'<b>Esempio:</b> non "assumere un marketer", ma "responsabile marketing operativo in autonomia entro 90 giorni, senza che io riveda ogni output; senza assumere in fretta la persona sbagliata".',
+st1prompt:'Aiutami a definire in modo preciso l\'obiettivo di questo lavoro: cosa significa "fatto", entro quando, e i paletti (cosa NON deve succedere). [descrivi]',
+st2h:'Fai creare il piano a Claude',
+st2sub:'Il lavoro diviso in tappe, ognuna con un risultato concreto.',
+st2do:'Cocrei il piano con Claude: tappe in ordine, ognuna con il risultato concreto che devi avere alla fine. Usa i checkbox così sarà aggiornabile.',
+st2why:'Una tappa con risultato concreto la sai verificare. È questo piano che poi farai validare dal secondo LLM.',
+st2ex:'<b>Esempio:</b> 1) annuncio + criteri · 2) 20 candidati · 3) 5 finalisti · 4) prova pratica + offerta · 5) persona operativa a 90 giorni.',
+st2prompt:'Dato questo obiettivo, crea un piano per raggiungerlo, diviso in tappe in ordine. Ogni tappa con il risultato concreto che devo avere alla fine. Usa i checkbox [ ].',
+pmK:'Prima di portarlo fuori',
+pmH:'Il pre-mortem: stressa il piano da solo',
+pmDesc:'Hai il piano. Prima ancora di farlo controllare da una seconda testa, fai con Claude un giro veloce di auto-critica: gli fai immaginare che <b>siamo nel futuro e il piano è già fallito</b>, e gli chiedi <b>perché</b>. Sblocca i rischi che a progetto vivo nessuno osa nominare, e li chiudi adesso che correggere costa zero.',
+pmPrompt:'Siamo nel futuro e questo piano è già fallito. Raccontami le 3-5 cause più probabili del fallimento, e per ognuna una mitigazione concreta da integrare nel piano. Non segnalare cose fuori dal nostro obiettivo.',
+s4:'CONTROLLO — la validazione incrociata (il cuore del metodo)',
+ppIntro:'Qui non controlli il piano da solo. Lo fai validare da un <b>secondo LLM</b> che fa l\'esperto indipendente, poi torni dal primo e gli fai <b>giudicare quali critiche sono davvero valide</b>. Tu sei il ponte: copi e incolli tra i due. Tre passaggi, tre prompt pronti.',
+ppAwho:'LLM A — es. Claude',ppAtitle:'Hai il piano cocreato',
+ppAdesc:'Il piano del passo 2 è pronto. Copialo: lo porti al secondo LLM.',
+ppCarry1:'porti il PIANO al secondo LLM',
+ppBwho:'LLM B — es. ChatGPT o un\'altra chat',ppBtitle:'L\'esperto indipendente trova le falle',
+ppBdesc:'Gli fai fare l\'esperto del settore e gli chiedi i punti di rottura: cosa potrebbe far fallire l\'obiettivo.',
+ppBlabel:'Prompt 1 · da incollare in LLM B',
+ppBprompt:'Agisci come un esperto senior di [AMBITO]. Devo raggiungere questo obiettivo: [OBIETTIVO PRECISO].\nUn esperto mi ha preparato questo piano per arrivarci. Analizzalo con occhio critico e trovami i\npunti di rottura: rischi, criticità e cose che potrebbero mettere a repentaglio il raggiungimento\ndell\'obiettivo. Elencameli in modo specifico e concreto.\n\nPIANO:\n[incolla il piano]',
+ppCarry2:'porti le FALLE trovate al primo LLM',
+ppA2who:'LLM A — torni da Claude',ppA2title:'Filtra le critiche e corregge',
+ppA2desc:'Claude ha tutto il contesto: gli fai decidere quali falle sono reali e importanti, poi gli fai aggiornare il piano solo con quelle.',
+ppA2label1:'Prompt 2 · torni in LLM A (giudica)',
+ppA2prompt1:'Ho fatto rivedere il nostro piano a un altro esperto in materia. Mi ha segnalato questi possibili problemi:\n\n[incolla il feedback di LLM B]\n\nTu, con tutto il contesto che hai, quali di questi consideri problemi REALI e importanti da correggere,\ne perché? Dimmi quali terresti e quali invece no.',
+ppA2label2:'Prompt 3 · in LLM A (correggi)',
+ppA2prompt2:'Perfetto. Aggiorna il piano integrando i punti che hai ritenuto validi. Dammi il piano completo aggiornato e dimmi cosa hai cambiato.',
+ppDwho:'Risultato',ppDtitle:'Piano validato, pronto da eseguire',
+ppDdesc:'Due teste diverse l\'hanno guardato. I buchi sono stati trovati e chiusi ora, quando correggere costa zero, non a lavoro fatto.',
+s5:'ESECUZIONE — esegui e spunta',
+execP:'Solo adesso fai costruire, una tappa alla volta. Dai a Claude la regola: <b>spunta [x] ogni cosa fatta e tieni il piano aggiornato.</b> Il piano diventa il tuo cruscotto. A fine tappa, controlli il risultato contro l\'obiettivo: non "ti sembra venuto bene?", ma "il risultato rispetta quello che volevamo, sì o no?".',
+planFile:'Il piano — la tua unica fonte di verità',
+pt0:'Tappa 1 — Definire il ruolo',
+pt1:'Annuncio (5 responsabilità misurabili)',
+pt2:'Scorecard di valutazione',
+pt3:'Dove cercare i candidati',
+pt4:'Tappa 2 — Trovare i candidati',
+runBtn:'Esegui la Tappa 1',
+s6:'Le 8 regole di qualità del metodo',
+q1:'<b>Niente esecuzione prima del piano validato.</b> Anche per le tappe facili.',
+q2:'<b>Un task alla volta.</b> La granularità dà tracciabilità.',
+q3:'<b>Output sempre verificabile.</b> Qualcosa che vedi, tocchi o testi.',
+q4:'<b>Contesto sempre esplicito.</b> Ogni sessione AI riparte da zero.',
+q5:'<b>La validazione cerca buchi,</b> non conferme.',
+q6:'<b>Le deviazioni si documentano</b> prima di continuare.',
+q7:'<b>Fermati quando qualcosa non torna.</b> Capisci, aggiusta, riprendi.',
+q8:'<b>È un audit, non una review.</b> "Il criterio è soddisfatto sì/no?", mai "ti sembra buono?".',
+s7:'In una frase',
+keyP:'Il controllo non lo fai a occhio. Lo fai fare a una seconda testa, e poi lasci che la prima — che ha tutto il contesto — decida cosa correggere davvero.',
+keySub:'Due LLM, tu come ponte: è questo che trasforma un piano in un piano solido.',
+bridgeH:'Prossima lezione',
+bridgeP:'Adesso lo vedi fare per intero, dall\'inizio alla fine, su un progetto vero. Senza tagli.',
+foot:'Morfeus — Il metodo completo, passo per passo'
+},
+en:{
+kicker:'Lesson 8.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve',
+h1:'The complete method, step by step',
+lede:'In the last lesson you saw <em>what</em> Plan &amp; Solve is. Now we open it up and do it right. Same example: hiring a marketing lead.',
+s1:'Let\'s restart from what Plan & Solve is',
+recapLab:'Let\'s restart from what Plan & Solve is',
+rm1:'PLAN',rm2:'CHECK',rm3:'EXECUTION',
+recapP:'First the plan, then you check it, then execution. The steps below are just these three moves done properly — and we have Claude do them.',
+s2:'The map of the method',
+pn1t:'GOAL',pn1s:'what "done" means',
+pn2t:'PLAN',pn2s:'stages + output',
+pn3t:'PRE-MORTEM',pn3s:'the risks, upfront',
+pn4t:'CHECK',pn4s:'the 2nd head',
+pn5t:'EXECUTE',pn5s:'one stage at a time',
+pn6t:'DONE',pn6s:'verified',
+pipeNote:'The heart of the method is the <b>CHECK</b>: you don\'t validate the plan by eye — you have a second LLM validate it, then have the first one fix it. This is what eliminates errors before you start.',
+s3:'PLAN — build the plan with Claude',
+hint:'Click to open',
+moveP:'Plan',kDo:'What you do',kWhy:'Why it matters',
+st1h:'Define the goal (precisely)',
+st1sub:'What you want to achieve, so no room is left for interpretation.',
+st1do:'Write an <b>extremely defined</b> goal with Claude: what "done" means, by when, with which boundaries (what must NOT happen). A vague goal produces a vague plan.',
+st1why:'The whole plan and all the validation afterward are measured against this goal. If it\'s imprecise, everything collapses.',
+st1ex:'<b>Example:</b> not "hire a marketer", but "a marketing lead operating autonomously within 90 days, without me reviewing every output; without rushing to hire the wrong person".',
+st1prompt:'Help me define the goal of this work precisely: what "done" means, by when, and the boundaries (what must NOT happen). [describe]',
+st2h:'Have Claude create the plan',
+st2sub:'The work split into stages, each with a concrete result.',
+st2do:'Co-create the plan with Claude: stages in order, each with the concrete result you need at the end. Use checkboxes so it stays updatable.',
+st2why:'A stage with a concrete result is one you can verify. This is the plan you\'ll then have the second LLM validate.',
+st2ex:'<b>Example:</b> 1) job post + criteria · 2) 20 candidates · 3) 5 finalists · 4) practical test + offer · 5) the person operational at 90 days.',
+st2prompt:'Given this goal, create a plan to reach it, split into stages in order. Each stage with the concrete result I need at the end. Use checkboxes [ ].',
+pmK:'Before taking it outside',
+pmH:'The pre-mortem: stress-test the plan on your own',
+pmDesc:'You have the plan. Before even having a second head check it, run a quick round of self-critique with Claude: have it imagine that <b>we\'re in the future and the plan has already failed</b>, and ask it <b>why</b>. It unlocks the risks that, mid-project, no one dares to name — and you close them now, while fixing costs nothing.',
+pmPrompt:'We\'re in the future and this plan has already failed. Tell me the 3-5 most likely causes of the failure, and for each one a concrete mitigation to integrate into the plan. Don\'t flag things outside our goal.',
+s4:'CHECK — the cross-validation (the heart of the method)',
+ppIntro:'Here you don\'t check the plan alone. You have a <b>second LLM</b> validate it acting as an independent expert, then you go back to the first one and have it <b>judge which criticisms are actually valid</b>. You are the bridge: you copy and paste between the two. Three passes, three ready-made prompts.',
+ppAwho:'LLM A — e.g. Claude',ppAtitle:'You have the co-created plan',
+ppAdesc:'The plan from step 2 is ready. Copy it: you\'ll take it to the second LLM.',
+ppCarry1:'you carry the PLAN to the second LLM',
+ppBwho:'LLM B — e.g. ChatGPT or another chat',ppBtitle:'The independent expert finds the flaws',
+ppBdesc:'You have it play the industry expert and ask for the breaking points: what could make the goal fail.',
+ppBlabel:'Prompt 1 · to paste into LLM B',
+ppBprompt:'Act as a senior expert in [DOMAIN]. I need to reach this goal: [PRECISE GOAL].\nAn expert prepared this plan for me to get there. Analyze it with a critical eye and find the\nbreaking points: risks, weaknesses and things that could jeopardize reaching\nthe goal. List them in a specific and concrete way.\n\nPLAN:\n[paste the plan]',
+ppCarry2:'you carry the FLAWS found back to the first LLM',
+ppA2who:'LLM A — back to Claude',ppA2title:'Filters the criticisms and corrects',
+ppA2desc:'Claude has all the context: you have it decide which flaws are real and important, then have it update the plan with only those.',
+ppA2label1:'Prompt 2 · back in LLM A (judge)',
+ppA2prompt1:'I had our plan reviewed by another expert in the field. They flagged these possible problems:\n\n[paste LLM B\'s feedback]\n\nWith all the context you have, which of these do you consider REAL and important problems to fix,\nand why? Tell me which ones you\'d keep and which you wouldn\'t.',
+ppA2label2:'Prompt 3 · in LLM A (correct)',
+ppA2prompt2:'Perfect. Update the plan by integrating the points you found valid. Give me the complete updated plan and tell me what you changed.',
+ppDwho:'Result',ppDtitle:'Validated plan, ready to execute',
+ppDdesc:'Two different heads looked at it. The holes were found and closed now, when fixing costs nothing — not once the work is done.',
+s5:'EXECUTION — execute and check off',
+execP:'Only now do you have it build, one stage at a time. Give Claude the rule: <b>check off [x] everything done and keep the plan updated.</b> The plan becomes your dashboard. At the end of a stage, you check the result against the goal: not "does it look good to you?", but "does the result meet what we wanted, yes or no?".',
+planFile:'The plan — your single source of truth',
+pt0:'Stage 1 — Define the role',
+pt1:'Job post (5 measurable responsibilities)',
+pt2:'Evaluation scorecard',
+pt3:'Where to look for candidates',
+pt4:'Stage 2 — Find the candidates',
+runBtn:'Execute Stage 1',
+s6:'The 8 quality rules of the method',
+q1:'<b>No execution before the validated plan.</b> Even for the easy stages.',
+q2:'<b>One task at a time.</b> Granularity gives traceability.',
+q3:'<b>Output always verifiable.</b> Something you see, touch or test.',
+q4:'<b>Context always explicit.</b> Every AI session starts from scratch.',
+q5:'<b>Validation looks for holes,</b> not confirmations.',
+q6:'<b>Deviations are documented</b> before continuing.',
+q7:'<b>Stop when something doesn\'t add up.</b> Understand, adjust, resume.',
+q8:'<b>It\'s an audit, not a review.</b> "Is the criterion met, yes/no?", never "does it look good to you?".',
+s7:'In one sentence',
+keyP:'You don\'t do the check by eye. You have a second head do it, then let the first one — which has all the context — decide what really needs fixing.',
+keySub:'Two LLMs, you as the bridge: this is what turns a plan into a solid plan.',
+bridgeH:'Next lesson',
+bridgeP:'Now you see it done in full, from start to finish, on a real project. No cuts.',
+foot:'Morfeus — The complete method, step by step'
+}};
+
+var LANG='it';
+
+/* run-plan messages (per language) */
+var PLAN_STEPS={
+it:[
+{i:1,msg:'Annuncio scritto. Rispetta l\'obiettivo: 5 responsabilità misurabili. ✓'},
+{i:2,msg:'Scorecard pronto. ✓'},
+{i:3,msg:'Canali di ricerca definiti. ✓'},
+{i:0,msg:'Tutti i passi chiusi → Tappa 1 completata. Passiamo alla Tappa 2.'},
+{i:4,msg:'Tappa 2 pronta a partire.'}
+],
+en:[
+{i:1,msg:'Job post written. Meets the goal: 5 measurable responsibilities. ✓'},
+{i:2,msg:'Scorecard ready. ✓'},
+{i:3,msg:'Search channels defined. ✓'},
+{i:0,msg:'All steps closed → Stage 1 completed. On to Stage 2.'},
+{i:4,msg:'Stage 2 ready to start.'}
+]};
+var PLAN_DONE={it:'Piano aggiornato da solo. In ogni momento sai dove sei.',en:'Plan updated by itself. At any moment you know where you are.'};
+
+/* ---- accordion ---- */
+function tog(el){el.classList.toggle('open');}
+
+/* ---- copy prompt ---- */
+function cp(e,el){
+  e.stopPropagation();
+  var span=el.querySelector('span[data-i]');
+  var t=span?span.textContent.trim():el.textContent.trim();
+  navigator.clipboard.writeText(t).then(function(){
+    var b=el.querySelector('.cp-ic');
+    b.classList.add('show');b.innerHTML='<i class="ti ti-check"></i>';
+    setTimeout(function(){b.classList.remove('show');b.innerHTML='<i class="ti ti-copy"></i>';},1400);
+  });
+}
+
+/* ---- living plan demo ---- */
+function runPlan(){
+  var btn=document.getElementById('runBtn');btn.disabled=true;
+  var st=document.getElementById('runStatus');var steps=PLAN_STEPS[LANG];var k=0;
+  function tick(){
+    if(k>=steps.length){st.innerHTML='<span style="color:var(--good)">'+PLAN_DONE[LANG]+'</span>';return;}
+    var s=steps[k];var el=document.querySelector('.plan-task[data-i-idx="'+s.i+'"]');el.classList.add('active');
+    setTimeout(function(){
+      el.classList.add('done');el.classList.remove('active');
+      el.querySelector('.box').innerHTML='<i class="ti ti-check"></i>';
+      st.textContent=s.msg;k++;setTimeout(tick,650);
+    },500);
+  }
+  tick();
+}
+
+/* ---- i18n / theme ---- */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+applyI18n();
+</script>
+</body>
+</html>

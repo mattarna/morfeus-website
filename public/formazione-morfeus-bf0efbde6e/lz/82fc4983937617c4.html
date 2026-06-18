@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Come trovare Skills e Plugin già pronti — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#eccb8d;
+--gray:#5F5E5A;--gray-soft:#eeece4;--gray-line:#cdcabd;
+--red:#d44a3e;--red-soft:#fbe9e6;--red-line:#eeb4ac;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6a4a14;
+--gray:#B4B2A9;--gray-soft:#2c2c2a;--gray-line:#4a4a46;
+--red:#ee8a80;--red-soft:#412420;--red-line:#6a3a34;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+.lede-p code,.codechip{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+/* key phrase */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+.kp.big{font-size:16px}
+/* breadcrumb bar */
+.breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:12px 16px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);margin:0 0 16px;font-size:12px;box-shadow:var(--sh)}
+.bc-item{color:var(--ink-3);display:flex;align-items:center;gap:4px;font-family:var(--mono);transition:color .2s}
+.bc-item.done{color:var(--ink);font-weight:600}
+.bc-item.done i{color:var(--accent)}
+.bc-sep{color:var(--ink-3);font-size:10px;margin:0 2px}
+.bc-progress{font-size:11px;color:var(--ink-3);margin-top:6px;width:100%;font-family:var(--mono)}
+/* nav steps (directory path) */
+.click-hint{font-size:12px;color:var(--ink-3);margin:0 0 14px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.click-hint i{font-size:15px}
+.nav-steps{margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.nav-step{display:flex;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s;align-items:flex-start}
+.nav-step:last-child{border-bottom:none}
+.nav-step:hover{background:var(--bg-2)}
+.nav-step.active{background:var(--accent-soft);border-left:3px solid var(--accent)}
+.nav-num{width:30px;height:30px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--mono);flex-shrink:0;transition:all .2s}
+.nav-step.active .nav-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-step-content{flex:1}
+.nav-step-content strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.nav-step-content>span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.nav-step-detail{display:none;margin-top:9px;padding:11px 13px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.nav-step-detail.open{display:block}
+.nav-step-detail code{font-family:var(--mono);font-size:11.5px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+.nav-step-icon{font-size:18px;color:var(--ink-3);flex-shrink:0;margin-top:4px;transition:color .2s}
+.nav-step.active .nav-step-icon{color:var(--accent)}
+/* sources grid */
+.sources-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.source-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px;cursor:pointer;transition:.22s;display:flex;flex-direction:column}
+.source-card:hover{border-color:var(--accent-line);background:var(--bg-2)}
+.source-card.open{border-color:var(--accent);background:var(--accent-soft)}
+.source-card-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.source-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.source-card-name{font-size:14px;font-weight:600}
+.source-card-sub{font-size:11.5px;color:var(--ink-3);line-height:1.4;margin-bottom:8px;font-family:var(--mono)}
+.source-chevron{margin-left:auto;font-size:16px;color:var(--ink-3);transition:transform .25s}
+.source-card.open .source-chevron{transform:rotate(90deg);color:var(--accent)}
+.source-body{display:none;padding-top:10px;border-top:1px solid var(--line)}
+.source-card.open .source-body{display:block}
+.source-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--ink-2);line-height:1.5}
+.source-row:last-child{margin-bottom:0}
+.source-row i{font-size:13px;flex-shrink:0;margin-top:1px}
+.source-row i.pro{color:var(--teal)}
+.source-row i.con{color:var(--amber)}
+.source-row em{font-style:italic}
+.source-url{font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);padding:4px 8px;border-radius:5px;margin-top:6px;display:inline-block;word-break:break-all}
+.source-extra{font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.5}
+.source-extra em{font-style:italic}
+/* warn box */
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.warn-box p strong{color:var(--ink);font-weight:600}
+/* toxic badge */
+.toxic-badge{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:var(--r-l);background:var(--red-soft);border:1px solid var(--red-line);font-size:12px;color:var(--ink-2);margin:0;box-shadow:var(--sh)}
+.toxic-badge .tb-num{font-size:22px;font-weight:700;color:var(--bad);font-family:var(--mono)}
+.toxic-badge .tb-label{line-height:1.4}
+/* tip box */
+.tip-box{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.tip-box .tip-title{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.tip-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.tip-box p strong{color:var(--ink);font-weight:600}
+/* checklist */
+.checklist{margin:0;display:flex;flex-direction:column;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);cursor:pointer;transition:all .2s;user-select:none}
+.check-item:hover{border-color:var(--accent-line)}
+.check-item.checked{background:var(--accent-soft);border-color:var(--accent-line)}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;margin-top:1px}
+.check-item.checked .check-box{background:var(--accent);border-color:var(--accent)}
+.check-box i{font-size:14px;color:#fff;display:none}
+.check-item.checked .check-box i{display:block}
+.check-content strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.check-content span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.check-progress{margin-top:14px;font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:10px}
+.progress-bar{flex:1;height:6px;background:var(--bg-3);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s}
+.check-count{font-family:var(--mono);font-weight:600}
+/* scenario / misconceptions */
+.scenario{background:var(--card);border:1px solid var(--bad-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:13px}
+.scenario:last-child{margin-bottom:0}
+.scenario .sc-icon{width:34px;height:34px;border-radius:10px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.scenario .sc-text{flex:1}
+.scenario .sc-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.scenario .sc-text span{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink);font-weight:600}
+.cp p code{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.bridge .br-i{width:48px;height:48px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge strong{font-weight:600;font-size:15px;display:block;margin-bottom:4px;color:var(--agent)}
+.bridge span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.sources-grid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.nav-step-detail,.source-body{display:block!important}.nav-steps,.source-card,.warn-box,.tip-box,.toxic-badge,.kp,.checklist,.check-item,.scenario,.cp,.bridge,.breadcrumb{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Bonus</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Trovare Skills e Plugin</div>
+  <h1 class="rv" data-i="h1">Come trovare Skills e Plugin già pronti</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-map-pin"></i><span class="no">01</span><h2 data-i="s1">La Unified Directory — percorso di navigazione</h2></div>
+  <p class="lede-p rv" data-i-html="navIntro"></p>
+
+  <div class="breadcrumb rv" id="breadcrumb">
+    <span class="bc-item" id="bc0"><i class="ti ti-layout-sidebar"></i> <span data-i="bc0">Customize</span></span>
+    <span class="bc-sep"><i class="ti ti-chevron-right"></i></span>
+    <span class="bc-item" id="bc1"><i class="ti ti-layout-grid"></i> <span data-i="bc1">Tab</span></span>
+    <span class="bc-sep"><i class="ti ti-chevron-right"></i></span>
+    <span class="bc-item" id="bc2"><i class="ti ti-plus"></i> +</span>
+    <span class="bc-sep"><i class="ti ti-chevron-right"></i></span>
+    <span class="bc-item" id="bc3"><i class="ti ti-search"></i> Browse</span>
+    <span class="bc-sep"><i class="ti ti-chevron-right"></i></span>
+    <span class="bc-item" id="bc4"><i class="ti ti-package"></i> <span data-i="bc4">Installa</span></span>
+    <span class="bc-progress" id="bc-progress" style="display:none"></span>
+  </div>
+
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="navHint"></span></div>
+
+  <div class="nav-steps rv" id="nav-steps">
+    <div class="nav-step" onclick="toggleNavStep(this,0)">
+      <div class="nav-num">1</div>
+      <div class="nav-step-content">
+        <strong data-i="nav1H"></strong>
+        <span data-i="nav1S"></span>
+        <div class="nav-step-detail" data-i-html="nav1X"></div>
+      </div>
+      <i class="ti ti-chevron-right nav-step-icon"></i>
+    </div>
+    <div class="nav-step" onclick="toggleNavStep(this,1)">
+      <div class="nav-num">2</div>
+      <div class="nav-step-content">
+        <strong data-i="nav2H"></strong>
+        <span data-i="nav2S"></span>
+        <div class="nav-step-detail" data-i-html="nav2X"></div>
+      </div>
+      <i class="ti ti-chevron-right nav-step-icon"></i>
+    </div>
+    <div class="nav-step" onclick="toggleNavStep(this,2)">
+      <div class="nav-num">3</div>
+      <div class="nav-step-content">
+        <strong data-i="nav3H"></strong>
+        <span data-i="nav3S"></span>
+        <div class="nav-step-detail" data-i-html="nav3X"></div>
+      </div>
+      <i class="ti ti-chevron-right nav-step-icon"></i>
+    </div>
+    <div class="nav-step" onclick="toggleNavStep(this,3)">
+      <div class="nav-num">4</div>
+      <div class="nav-step-content">
+        <strong data-i="nav4H"></strong>
+        <span data-i="nav4S"></span>
+        <div class="nav-step-detail" data-i-html="nav4X"></div>
+      </div>
+      <i class="ti ti-chevron-right nav-step-icon"></i>
+    </div>
+    <div class="nav-step" onclick="toggleNavStep(this,4)">
+      <div class="nav-num">5</div>
+      <div class="nav-step-content">
+        <strong data-i="nav5H"></strong>
+        <span data-i="nav5S"></span>
+        <div class="nav-step-detail" data-i-html="nav5X"></div>
+      </div>
+      <i class="ti ti-chevron-right nav-step-icon"></i>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-sources"></i><span class="no">02</span><h2 data-i="s2">Le fonti — dove cercare</h2></div>
+  <p class="lede-p rv" data-i="srcIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="srcHint"></span></div>
+
+  <div class="sources-grid rv" id="sources-grid">
+    <div class="source-card" onclick="toggleSource(this)">
+      <div class="source-card-head">
+        <div class="source-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-layout-grid"></i></div>
+        <div style="flex:1">
+          <div class="source-card-name" data-i="src1N"></div>
+        </div>
+        <i class="ti ti-chevron-right source-chevron"></i>
+      </div>
+      <div class="source-card-sub" data-i="src1Sub"></div>
+      <div class="source-body">
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src1p1"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src1p2"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src1p3"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src1c1"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src1c2"></span></div>
+        <div class="source-url">claude.ai/customize &nbsp;·&nbsp; claude.com/plugins</div>
+      </div>
+    </div>
+
+    <div class="source-card" onclick="toggleSource(this)">
+      <div class="source-card-head">
+        <div class="source-icon" style="background:var(--gray-soft);color:var(--gray)"><i class="ti ti-brand-github"></i></div>
+        <div style="flex:1">
+          <div class="source-card-name" data-i="src2N"></div>
+        </div>
+        <i class="ti ti-chevron-right source-chevron"></i>
+      </div>
+      <div class="source-card-sub" data-i="src2Sub"></div>
+      <div class="source-body">
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src2p1"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src2p2"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src2p3"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src2c1"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src2c2"></span></div>
+        <div class="source-url">github.com/anthropics/skills &nbsp;·&nbsp; github.com/anthropics/knowledge-work-plugins</div>
+      </div>
+    </div>
+
+    <div class="source-card" onclick="toggleSource(this)">
+      <div class="source-card-head">
+        <div class="source-icon" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-message-circle"></i></div>
+        <div style="flex:1">
+          <div class="source-card-name" data-i="src3N"></div>
+        </div>
+        <i class="ti ti-chevron-right source-chevron"></i>
+      </div>
+      <div class="source-card-sub" data-i="src3Sub"></div>
+      <div class="source-body">
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src3p1"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src3p2"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src3p3"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src3c1"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src3c2"></span></div>
+        <div class="source-extra" data-i-html="src3extra"></div>
+      </div>
+    </div>
+
+    <div class="source-card" onclick="toggleSource(this)">
+      <div class="source-card-head">
+        <div class="source-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-world"></i></div>
+        <div style="flex:1">
+          <div class="source-card-name" data-i="src4N"></div>
+        </div>
+        <i class="ti ti-chevron-right source-chevron"></i>
+      </div>
+      <div class="source-card-sub" data-i="src4Sub"></div>
+      <div class="source-body">
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src4p1"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src4p2"></span></div>
+        <div class="source-row"><i class="ti ti-check pro"></i> <span data-i="src4p3"></span></div>
+        <div class="source-row"><i class="ti ti-alert-triangle con"></i> <span data-i="src4c1"></span></div>
+        <div class="source-url">claude.com/plugins</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-shield-exclamation"></i><span class="no">03</span><h2 data-i="s3">Sicurezza: installate solo da fonti fidate</h2></div>
+
+  <div class="warn-box rv">
+    <div class="warn-title"><i class="ti ti-alert-triangle"></i> <span data-i="auditTitle"></span></div>
+    <p data-i-html="auditP"></p>
+  </div>
+
+  <div class="toxic-badge rv" style="margin-top:16px">
+    <span class="tb-num">13,4%</span>
+    <div class="tb-label" data-i-html="toxicLabel"></div>
+  </div>
+
+  <div class="tip-box rv" style="margin-top:16px">
+    <div class="tip-title"><i class="ti ti-check"></i> <span data-i="ruleTitle"></span></div>
+    <p data-i-html="ruleP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">04</span><h2 data-i="s4">Come valutare una Skill o Plugin prima di installarla</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="evalIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="evalHint"></span></div>
+
+  <div class="checklist rv" id="checklist">
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><i class="ti ti-check"></i></div>
+      <div class="check-content"><strong data-i="ck1H"></strong><span data-i="ck1P"></span></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><i class="ti ti-check"></i></div>
+      <div class="check-content"><strong data-i="ck2H"></strong><span data-i="ck2P"></span></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><i class="ti ti-check"></i></div>
+      <div class="check-content"><strong data-i="ck3H"></strong><span data-i="ck3P"></span></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><i class="ti ti-check"></i></div>
+      <div class="check-content"><strong data-i="ck4H"></strong><span data-i="ck4P"></span></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"><i class="ti ti-check"></i></div>
+      <div class="check-content"><strong data-i="ck5H"></strong><span data-i="ck5P"></span></div>
+    </div>
+  </div>
+  <div class="check-progress rv" id="check-progress" style="display:none">
+    <span class="check-count" id="check-count">0/5</span>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <span style="font-size:12px" id="check-msg"></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">05</span><h2 data-i="s5">Equivoci da evitare</h2></div>
+  <div class="rv">
+    <div class="scenario">
+      <div class="sc-icon"><i class="ti ti-x"></i></div>
+      <div class="sc-text"><strong data-i="m1H"></strong><span data-i="m1P"></span></div>
+    </div>
+    <div class="scenario">
+      <div class="sc-icon"><i class="ti ti-x"></i></div>
+      <div class="sc-text"><strong data-i="m2H"></strong><span data-i="m2P"></span></div>
+    </div>
+    <div class="scenario">
+      <div class="sc-icon"><i class="ti ti-x"></i></div>
+      <div class="sc-text"><strong data-i="m3H"></strong><span data-i="m3P"></span></div>
+    </div>
+    <div class="scenario">
+      <div class="sc-icon"><i class="ti ti-x"></i></div>
+      <div class="sc-text"><strong data-i="m4H"></strong><span data-i="m4P"></span></div>
+    </div>
+  </div>
+
+  <div class="kp big rv" style="margin-top:32px" data-i="keyPhrase"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-telescope"></i><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">07</span><h2 data-i="s7">Prossimo passo</h2></div>
+  <div class="bridge rv"><div class="br-i"><i class="ti ti-arrow-right"></i></div><div><strong data-i="brH"></strong><span data-i="brP"></span></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Come trovare Skills e Plugin già pronti</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Trovare Skills e Plugin',
+h1:'Come trovare Skills e Plugin già pronti',
+lede:'La maggior parte delle cose di cui avete bisogno sono già state costruite da qualcun altro, testate, e messe a disposizione. Questa lezione mostra dove cercarle e come valutarle.',
+hook:'«Tutto quello che abbiamo visto nel corso — Skills, Plugin, connettori — potete costruirlo da zero. Ma prima di costruire, cercate se esiste già. Il punto di partenza migliore è spesso una Skill della community che adattate al vostro contesto.»',
+s1:'La Unified Directory — percorso di navigazione',
+navIntro:'Dal 31 marzo 2026 esiste una superficie unificata: <strong>claude.ai/customize</strong> (o il pannello Customize nella sidebar). Raccoglie Skills, Connettori e Plugin in un unico catalogo navigabile. Cliccate ogni passo per vedere il dettaglio.',
+bc0:'Customize',bc1:'Tab',bc4:'Installa',
+navHint:'Cliccate ogni passo per espandere il dettaglio',
+nav1H:'Apri Customize',
+nav1S:'Sidebar sinistra in Cowork o Claude Desktop → voce "Customize" — oppure vai direttamente su claude.ai/customize',
+nav1X:'Il pannello Customize è il centro di controllo delle vostre personalizzazioni. Vedrete tre schede principali: <strong>Skills</strong>, <strong>Connectors</strong>, <strong>Plugins</strong>. Ogni scheda mostra ciò che avete già installato e un pulsante "+" per scoprire di più.<br><br>Da qui si gestisce tutto: abilitare/disabilitare Skills singolarmente, aggiungere connettori OAuth, sfogliare il catalogo dei Plugin.',
+nav2H:'Scegli la tab giusta',
+nav2S:'Skills · Connectors · Plugins — ogni tab filtra il catalogo per tipo. Oppure usate la vista unificata dal "+".',
+nav2X:'Le tre tab separano i tipi di estensione:<br><br><strong>Skills</strong> — procedure specializzate in Markdown (attivate da Claude quando rilevanti, o con "/" esplicito).<br><strong>Connectors</strong> — porte verso servizi esterni: Gmail, Calendar, Notion, Slack… via OAuth.<br><strong>Plugins</strong> — bundle verticali completi: Skills + Connettori + sub-agent + hook in un unico pacchetto.<br><br>Se non sapete cosa cercare, usate il pulsante "+" dalla tab Plugins che apre la Unified Directory con tutto insieme.',
+nav3H:'Clicca "+" → Browse',
+nav3S:'Il "+" in ogni tab apre il catalogo filtrato per quel tipo. È il punto di ingresso alla Unified Directory.',
+nav3X:'Il pulsante "+" apre la <strong>Unified Directory</strong> — il catalogo navigabile di Anthropic e community. Potete filtrare per categoria (marketing, legale, finance, HR, engineering, dati…), cercare per nome, o sfogliare le sezioni "ufficiali Anthropic" vs "community".<br><br>Il catalogo web è consultabile anche senza login su <code>claude.com/plugins</code> — utile per esplorare prima di accedere all\'app.',
+nav4H:'Leggi la scheda prima di installare',
+nav4S:'Descrizione, componenti inclusi, connessioni richieste, stima del costo in token. Leggete sempre prima di accettare.',
+nav4X:'Ogni Plugin/Skill mostra una scheda con:<br><br>• <strong>Descrizione</strong> — cosa fa e per chi è pensato<br>• <strong>"Will install"</strong> — elenco esatto di commands, agents, skills, hooks, MCP server che entrano nel vostro ambiente<br>• <strong>Costo token stimato</strong> — impatto sul contesto di ogni sessione<br>• <strong>Data ultimo aggiornamento</strong> — le Skills obsolete per versioni precedenti di Claude possono non funzionare bene<br><br>È trasparenza by design: sapete cosa entra prima di accettare.',
+nav5H:'Installa e testa subito',
+nav5S:'Install in pochi secondi. Le Skills compaiono in Customize → Skills. I Connettori richiedono autenticazione OAuth una tantum. Poi invocate con /nome-skill.',
+nav5X:'Dopo l\'installazione:<br><br>• Le <strong>Skills</strong> del Plugin appaiono in Customize → Skills, abilitate di default. Potete disabilitare quelle non rilevanti singolarmente.<br>• I <strong>Connettori</strong> richiedono un flusso OAuth: si apre il browser, autenticate il servizio, fatto — è una tantum.<br>• <strong>Hook e sub-agent</strong> del Plugin funzionano solo in Cowork (in chat web sono grigi — comportamento atteso, non un bug).<br><br>Test immediato: aprite una nuova conversazione e scrivete <code>/nome-skill</code> oppure descrivete il task in linguaggio naturale. Claude la attiva da solo se la description corrisponde.',
+s2:'Le fonti — dove cercare',
+srcIntro:'Ci sono quattro posti dove trovare Skills e Plugin. Cliccate ciascuno per vedere pro, contro e link. Non tutte le fonti hanno lo stesso livello di affidabilità.',
+srcHint:'Cliccate ogni fonte per vedere pro, contro e link',
+src1N:'Unified Directory',src1Sub:'claude.ai/customize → "+" → Browse',
+src1p1:'Catalogo ufficiale unificato — tutto in un posto',
+src1p2:'Skills, Connettori e Plugin filtrabili per categoria',
+src1p3:'Scheda "Will install" per trasparenza pre-install',
+src1c1:'Richiede login per installare (solo browse è libero)',
+src1c2:'Catalogo include community: valutare la fonte di ogni item',
+src2N:'GitHub ufficiale Anthropic',src2Sub:'github.com/anthropics/skills e knowledge-work-plugins',
+src2p1:'Fonte ufficiale Anthropic — qualità garantita',
+src2p2:'Skills open source: leggibili, modificabili, adattabili',
+src2p3:'knowledge-work-plugins copre: sales, finance, legal, marketing, HR, operations, data, engineering, design',
+src2c1:'Richiede un passaggio in più: scaricare ZIP e fare upload in Customize',
+src2c2:'Interfaccia tecnica — più adatta a chi vuole leggere il codice',
+src3N:'Community',src3Sub:'Reddit r/ClaudeAI · Discord Anthropic',
+src3p1:'Skills testate da persone reali nel vostro stesso settore',
+src3p2:'Workflow verticali che non esistono nel catalogo ufficiale',
+src3p3:'Feedback diretto dall\'autore se qualcosa non funziona',
+src3c1:'Qualità variabile — nessuna revisione formale',
+src3c2:'Leggere sempre il SKILL.md prima di installare (vedi sicurezza)',
+src3extra:'Cerca: <em>"[vostro settore] + Claude + workflow"</em> — molto più efficace di "migliori skills AI".',
+src4N:'Catalogo web',src4Sub:'claude.com/plugins — navigabile senza login',
+src4p1:'Esplorabile da browser senza dover aprire l\'app',
+src4p2:'Utile per ricercare prima di installare',
+src4p3:'Stesso catalogo della Unified Directory in-app',
+src4c1:'Per installare occorre accedere all\'app e al pannello Customize',
+s3:'Sicurezza: installate solo da fonti fidate',
+auditTitle:'Audit ToxicSkills — febbraio 2026',
+auditP:'Ricercatori Snyk hanno analizzato 3.984 skill su un marketplace di terze parti non ufficiale. Risultato: il <strong>13,4% conteneva problemi di sicurezza critici</strong> e 76 contenevano payload malevoli confermati. I Plugin eseguono codice con i vostri privilegi.',
+toxicLabel:'delle skill di terze parti analizzate<br>conteneva vulnerabilità critiche',
+ruleTitle:'Regola pratica',
+ruleP:'Installate solo dalla <strong>Unified Directory ufficiale Anthropic</strong> o da repository GitHub di cui conoscete l\'autore e potete leggere il codice. Per le Skill della community, leggete sempre il file SKILL.md prima di installarle: se non riuscite a capire cosa fa, non installatela.',
+s4:'Come valutare una Skill o Plugin prima di installarla',
+evalIntro:'Cinque domande pratiche da farsi ogni volta. Cliccate ogni criterio mentre valutate una Skill reale.',
+evalHint:'Cliccate per spuntare — la barra mostra il progresso della valutazione',
+ck1H:'1. La descrizione dice esattamente quando si attiva?',
+ck1P:'Se è vaga ("aiuta con il marketing"), l\'attivazione sarà imprevedibile. Una buona description specifica il contesto di trigger: "quando ricevi feedback clienti da analizzare", "quando prepari una call commerciale con dati del prospect".',
+ck2H:'2. Il trigger è compatibile con il mio workflow?',
+ck2P:'Una Skill ottima per chi fa outreach B2B è inutile per chi lavora in ambito legale. Leggete la description e chiedetevi: "questo è qualcosa che faccio più di una volta a settimana?"',
+ck3H:'3. Richiede connettori o configurazioni che non ho?',
+ck3P:'Se il Plugin integra Slack ma non lo usate, quella parte non funzionerà. Verificate i requisiti prima di installare — evita frustrazioni post-install e contesto aggiunto inutilmente.',
+ck4H:'4. C\'è un esempio di output? Corrisponde a quello che voglio?',
+ck4P:'La scheda di un Plugin ben fatto mostra un esempio concreto di output. Se l\'esempio non vi convince, l\'output reale difficilmente vi sorprenderà positivamente. L\'output è sempre un punto di partenza, non la risposta finale.',
+ck5H:'5. È stata aggiornata di recente?',
+ck5P:'Skills progettate per versioni precedenti di Claude possono non funzionare bene con i modelli attuali. Controllate la data di ultimo aggiornamento nella scheda. Preferite Skill mantenute attivamente.',
+s5:'Equivoci da evitare',
+m1H:'"Ci sono migliaia di Plugin ufficiali Anthropic"',
+m1P:'I Plugin ufficiali Anthropic in knowledge-work-plugins sono una trentina (~23 skill DR + quelli per knowledge worker). Il mercato community è molto più ampio ma non revisionato.',
+m2H:'"Qualsiasi Skill trovata online è sicura"',
+m2P:'No — i dati ToxicSkills parlano chiaro. Installate solo da fonti verificate. Una Skill da un repo GitHub anonimo senza documentazione è un rischio.',
+m3H:'"Aggiungere il marketplace installa i Plugin"',
+m3P:'Sono due passi separati: prima si aggiunge la fonte (il marketplace), poi si installa il singolo Plugin da quella fonte. Come aggiungere uno store non equivale a scaricare le app.',
+m4H:'"Più Plugin installo, meglio è"',
+m4P:'Ogni Plugin attivo aggiunge contesto caricato in ogni sessione. Meglio 3-4 Plugin rilevanti e usati ogni giorno che 20 installati per curiosità. La rilevanza batte sempre la quantità.',
+keyPhrase:'«Non reinventate la ruota. Prima di costruire una Skill, cercate se esiste già. Il tempo risparmiato a trovare quella giusta — e adattarla al vostro contesto — vale molto di più del tempo per crearne una da zero.»',
+s6:'Checkpoint',
+cpH:'Esplorate la Unified Directory. Non installate ancora.',
+cpP:'Aprite Customize → "+" → Browse. Cercate una categoria vicina al vostro lavoro. Trovate un Plugin o una Skill interessante e leggete la scheda completa.<br><br>Applicate i 5 criteri della checklist qui sopra. Poi decidete: vale la pena installarlo? Se sì, installatelo e fate subito un test con <code>/nome-skill</code>.',
+s7:'Prossimo passo',
+brH:'Prossimo passo: installare e configurare un Plugin',
+brP:'Sapete dove trovare Skills e Plugin, e come valutarli. Il passo successivo è seguire l\'intero flusso di installazione — find → read → install → configure → test — e fare il vostro primo troubleshooting. La lezione R.2 lo fa passo per passo.',
+foot:'Morfeus — Come trovare Skills e Plugin già pronti'
+},
+en:{
+kicker:'Bonus',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Finding Skills and Plugins',
+h1:'How to find ready-made Skills and Plugins',
+lede:'Most of the things you need have already been built by someone else, tested, and made available. This lesson shows where to look for them and how to evaluate them.',
+hook:'"Everything we\'ve seen in the course — Skills, Plugins, connectors — you can build from scratch. But before you build, look to see if it already exists. The best starting point is often a community Skill that you adapt to your own context."',
+s1:'The Unified Directory — navigation path',
+navIntro:'Since 31 March 2026 there\'s a unified surface: <strong>claude.ai/customize</strong> (or the Customize panel in the sidebar). It gathers Skills, Connectors and Plugins into a single browsable catalog. Click each step to see the detail.',
+bc0:'Customize',bc1:'Tab',bc4:'Install',
+navHint:'Click each step to expand the detail',
+nav1H:'Open Customize',
+nav1S:'Left sidebar in Cowork or Claude Desktop → "Customize" item — or go directly to claude.ai/customize',
+nav1X:'The Customize panel is the control center for your customizations. You\'ll see three main tabs: <strong>Skills</strong>, <strong>Connectors</strong>, <strong>Plugins</strong>. Each tab shows what you\'ve already installed and a "+" button to discover more.<br><br>Everything is managed from here: enable/disable Skills individually, add OAuth connectors, browse the Plugin catalog.',
+nav2H:'Pick the right tab',
+nav2S:'Skills · Connectors · Plugins — each tab filters the catalog by type. Or use the unified view from the "+".',
+nav2X:'The three tabs separate the types of extension:<br><br><strong>Skills</strong> — specialized procedures in Markdown (activated by Claude when relevant, or with an explicit "/").<br><strong>Connectors</strong> — doors to external services: Gmail, Calendar, Notion, Slack… via OAuth.<br><strong>Plugins</strong> — complete vertical bundles: Skills + Connectors + sub-agents + hooks in a single package.<br><br>If you don\'t know what to look for, use the "+" button from the Plugins tab, which opens the Unified Directory with everything together.',
+nav3H:'Click "+" → Browse',
+nav3S:'The "+" in each tab opens the catalog filtered by that type. It\'s the entry point to the Unified Directory.',
+nav3X:'The "+" button opens the <strong>Unified Directory</strong> — the browsable catalog of Anthropic and community items. You can filter by category (marketing, legal, finance, HR, engineering, data…), search by name, or browse the "official Anthropic" vs "community" sections.<br><br>The web catalog is also viewable without logging in at <code>claude.com/plugins</code> — useful for exploring before you sign in to the app.',
+nav4H:'Read the card before installing',
+nav4S:'Description, included components, required connections, estimated token cost. Always read before accepting.',
+nav4X:'Every Plugin/Skill shows a card with:<br><br>• <strong>Description</strong> — what it does and who it\'s designed for<br>• <strong>"Will install"</strong> — the exact list of commands, agents, skills, hooks, MCP servers that enter your environment<br>• <strong>Estimated token cost</strong> — the impact on the context of every session<br>• <strong>Last update date</strong> — Skills obsolete for previous versions of Claude may not work well<br><br>It\'s transparency by design: you know what enters before accepting.',
+nav5H:'Install and test right away',
+nav5S:'Install in a few seconds. Skills appear in Customize → Skills. Connectors require a one-time OAuth authentication. Then invoke with /skill-name.',
+nav5X:'After installation:<br><br>• The Plugin\'s <strong>Skills</strong> appear in Customize → Skills, enabled by default. You can disable the irrelevant ones individually.<br>• <strong>Connectors</strong> require an OAuth flow: the browser opens, you authenticate the service, done — it\'s one-time.<br>• The Plugin\'s <strong>hooks and sub-agents</strong> only work in Cowork (in the web chat they\'re greyed out — expected behavior, not a bug).<br><br>Immediate test: open a new conversation and type <code>/skill-name</code> or describe the task in natural language. Claude activates it on its own if the description matches.',
+s2:'The sources — where to look',
+srcIntro:'There are four places to find Skills and Plugins. Click each one to see pros, cons and links. Not all sources have the same level of reliability.',
+srcHint:'Click each source to see pros, cons and links',
+src1N:'Unified Directory',src1Sub:'claude.ai/customize → "+" → Browse',
+src1p1:'Official unified catalog — everything in one place',
+src1p2:'Skills, Connectors and Plugins filterable by category',
+src1p3:'"Will install" card for pre-install transparency',
+src1c1:'Requires login to install (only browse is free)',
+src1c2:'Catalog includes community: evaluate the source of each item',
+src2N:'Official Anthropic GitHub',src2Sub:'github.com/anthropics/skills and knowledge-work-plugins',
+src2p1:'Official Anthropic source — guaranteed quality',
+src2p2:'Open-source Skills: readable, editable, adaptable',
+src2p3:'knowledge-work-plugins covers: sales, finance, legal, marketing, HR, operations, data, engineering, design',
+src2c1:'Requires an extra step: download the ZIP and upload it in Customize',
+src2c2:'Technical interface — better suited to those who want to read the code',
+src3N:'Community',src3Sub:'Reddit r/ClaudeAI · Anthropic Discord',
+src3p1:'Skills tested by real people in your own sector',
+src3p2:'Vertical workflows that don\'t exist in the official catalog',
+src3p3:'Direct feedback from the author if something doesn\'t work',
+src3c1:'Variable quality — no formal review',
+src3c2:'Always read the SKILL.md before installing (see security)',
+src3extra:'Search: <em>"[your sector] + Claude + workflow"</em> — much more effective than "best AI skills".',
+src4N:'Web catalog',src4Sub:'claude.com/plugins — browsable without login',
+src4p1:'Explorable from a browser without having to open the app',
+src4p2:'Useful for researching before installing',
+src4p3:'Same catalog as the in-app Unified Directory',
+src4c1:'To install you need to sign in to the app and the Customize panel',
+s3:'Security: install only from trusted sources',
+auditTitle:'ToxicSkills audit — February 2026',
+auditP:'Snyk researchers analyzed 3,984 skills on an unofficial third-party marketplace. Result: <strong>13.4% contained critical security issues</strong> and 76 contained confirmed malicious payloads. Plugins run code with your privileges.',
+toxicLabel:'of the analyzed third-party skills<br>contained critical vulnerabilities',
+ruleTitle:'Practical rule',
+ruleP:'Install only from the <strong>official Anthropic Unified Directory</strong> or from GitHub repositories whose author you know and whose code you can read. For community Skills, always read the SKILL.md file before installing them: if you can\'t understand what it does, don\'t install it.',
+s4:'How to evaluate a Skill or Plugin before installing it',
+evalIntro:'Five practical questions to ask yourself every time. Click each criterion as you evaluate a real Skill.',
+evalHint:'Click to check — the bar shows the progress of the evaluation',
+ck1H:'1. Does the description say exactly when it activates?',
+ck1P:'If it\'s vague ("helps with marketing"), activation will be unpredictable. A good description specifies the trigger context: "when you receive customer feedback to analyze", "when you prepare a sales call with prospect data".',
+ck2H:'2. Is the trigger compatible with my workflow?',
+ck2P:'A Skill that\'s great for someone doing B2B outreach is useless for someone working in legal. Read the description and ask yourself: "is this something I do more than once a week?"',
+ck3H:'3. Does it require connectors or configurations I don\'t have?',
+ck3P:'If the Plugin integrates Slack but you don\'t use it, that part won\'t work. Check the requirements before installing — it avoids post-install frustration and context added needlessly.',
+ck4H:'4. Is there an example output? Does it match what I want?',
+ck4P:'A well-made Plugin\'s card shows a concrete example of output. If the example doesn\'t convince you, the real output is unlikely to surprise you positively. The output is always a starting point, not the final answer.',
+ck5H:'5. Has it been updated recently?',
+ck5P:'Skills designed for previous versions of Claude may not work well with current models. Check the last update date in the card. Prefer Skills that are actively maintained.',
+s5:'Misconceptions to avoid',
+m1H:'"There are thousands of official Anthropic Plugins"',
+m1P:'The official Anthropic Plugins in knowledge-work-plugins number around thirty (~23 DR skills + the ones for knowledge workers). The community market is much larger but not reviewed.',
+m2H:'"Any Skill found online is safe"',
+m2P:'No — the ToxicSkills data speaks clearly. Install only from verified sources. A Skill from an anonymous GitHub repo with no documentation is a risk.',
+m3H:'"Adding the marketplace installs the Plugins"',
+m3P:'They\'re two separate steps: first you add the source (the marketplace), then you install the individual Plugin from that source. Like adding a store doesn\'t mean downloading the apps.',
+m4H:'"The more Plugins I install, the better"',
+m4P:'Every active Plugin adds context loaded in every session. Better 3-4 relevant Plugins used every day than 20 installed out of curiosity. Relevance always beats quantity.',
+keyPhrase:'"Don\'t reinvent the wheel. Before building a Skill, look to see if it already exists. The time saved by finding the right one — and adapting it to your context — is worth much more than the time to create one from scratch."',
+s6:'Checkpoint',
+cpH:'Explore the Unified Directory. Don\'t install yet.',
+cpP:'Open Customize → "+" → Browse. Look for a category close to your work. Find an interesting Plugin or Skill and read the full card.<br><br>Apply the 5 criteria of the checklist above. Then decide: is it worth installing? If so, install it and run a test right away with <code>/skill-name</code>.',
+s7:'Next step',
+brH:'Next step: installing and configuring a Plugin',
+brP:'You know where to find Skills and Plugins, and how to evaluate them. The next step is to follow the entire installation flow — find → read → install → configure → test — and do your first troubleshooting. Lesson R.2 does it step by step.',
+foot:'Morfeus — How to find ready-made Skills and Plugins'
+}};
+
+var MSGS={
+it:['','Buon inizio — continuate.','Due su cinque.','A metà strada.','Quasi — ancora uno.','Valutazione completa. Ora sapete se vale la pena installarlo.'],
+en:['','Good start — keep going.','Two out of five.','Halfway there.','Almost — one more.','Evaluation complete. Now you know whether it\'s worth installing.']
+};
+
+var BCLABELS={
+it:['Customize','Tab scelto','+ premuto','Scheda letta','Installato'],
+en:['Customize','Tab chosen','+ pressed','Card read','Installed']
+};
+
+var LANG='it';
+var navActive=-1;
+
+/* NAV STEPS */
+function toggleNavStep(step,idx){
+  var detail=step.querySelector('.nav-step-detail');
+  var wasActive=step.classList.contains('active');
+  document.querySelectorAll('.nav-step').forEach(function(s){
+    s.classList.remove('active');
+    var d=s.querySelector('.nav-step-detail');
+    if(d)d.classList.remove('open');
+  });
+  if(!wasActive){
+    step.classList.add('active');
+    if(detail)detail.classList.add('open');
+    navActive=idx;
+  }else{
+    navActive=-1;
+  }
+  updateBreadcrumb();
+}
+function updateBreadcrumb(){
+  for(var i=0;i<5;i++){
+    var el=document.getElementById('bc'+i);
+    if(!el)continue;
+    if(navActive>=i){el.classList.add('done');}else{el.classList.remove('done');}
+  }
+  var prog=document.getElementById('bc-progress');
+  if(navActive>=0){
+    prog.style.display='block';
+    var labels=BCLABELS[LANG];
+    prog.textContent=(LANG==='it'?'Passo ':'Step ')+(navActive+1)+(LANG==='it'?' di 5: ':' of 5: ')+labels[navActive];
+  }else{
+    prog.style.display='none';
+  }
+}
+
+/* SOURCES */
+function toggleSource(card){
+  var wasOpen=card.classList.contains('open');
+  document.querySelectorAll('.source-card').forEach(function(c){c.classList.remove('open');});
+  if(!wasOpen){card.classList.add('open');}
+}
+
+/* CHECKLIST */
+function toggleCheck(item){
+  item.classList.toggle('checked');
+  var checked=document.querySelectorAll('.check-item.checked').length;
+  var total=document.querySelectorAll('.check-item').length;
+  var prog=document.getElementById('check-progress');
+  prog.style.display='flex';
+  document.getElementById('check-count').textContent=checked+'/'+total;
+  document.getElementById('progress-fill').style.width=Math.round(checked/total*100)+'%';
+  document.getElementById('check-msg').textContent=MSGS[LANG][checked]||'';
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  updateBreadcrumb();
+  var checked=document.querySelectorAll('.check-item.checked').length;
+  if(document.getElementById('check-progress').style.display==='flex'){
+    document.getElementById('check-msg').textContent=MSGS[LANG][checked]||'';
+  }
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

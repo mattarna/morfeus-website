@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La tassonomia del prompting — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* ladder */
+.ladder{display:flex;flex-direction:column-reverse;gap:7px}
+.rung{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:13px 16px;cursor:pointer;transition:.18s;position:relative}
+.rung:hover{border-color:var(--line-2)}.rung.on{border-color:var(--accent);background:var(--accent-soft)}
+.rung .rn{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rung.on .rn{background:var(--accent);color:#fff}
+.rung .rl{font-size:14.5px;font-weight:600;flex:1}
+.rung .rmeter{width:64px;height:7px;border-radius:6px;background:var(--bg-3);overflow:hidden;flex-shrink:0}
+.rung .rmeter span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--agent));border-radius:6px}
+.rungdetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;margin-top:12px}
+.rungdetail .rdh{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.rungdetail .rdh i{color:var(--accent)}
+.rungdetail p{font-size:14.5px;color:var(--ink-2)}.rungdetail p b{color:var(--ink)}
+.rungdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.rungdetail .whenrow{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:13.5px;color:var(--ink-2)}
+.rungdetail .whenrow i{color:var(--agent);font-size:16px;margin-top:2px;flex-shrink:0}
+/* selector */
+.cplx{display:flex;flex-direction:column;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;margin-top:6px}
+.cplx .ch{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px}.cplx .ch i{color:var(--agent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:600;padding:8px 14px;border-radius:30px;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink-2);cursor:pointer;transition:.18s}
+.chip:hover{border-color:var(--line-2)}.chip.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.cplxout{margin-top:4px;padding:14px 16px;border-left:3px solid var(--agent);background:var(--agent-soft);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink)}
+.cplxout b{color:var(--agent)}
+/* when-to-use table */
+.tbl{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;background:var(--card)}
+.trow{display:grid;grid-template-columns:150px 1fr;gap:0;border-bottom:1px solid var(--line);font-size:13.5px}
+.trow:last-child{border-bottom:none}
+.trow .tk{padding:11px 14px;font-weight:600;background:var(--bg-2);color:var(--ink);display:flex;align-items:center;gap:7px}
+.trow .tk i{color:var(--accent);font-size:15px}
+.trow .tv{padding:11px 14px;color:var(--ink-2)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.trow{grid-template-columns:1fr}.trow .tk{border-bottom:1px solid var(--line)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.rung,.rungdetail,.cplx,.tbl,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">La tassonomia del prompting (7 livelli)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">01</span><h2 data-i="s1">Una scala, non un interruttore</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-stairs"></i></div><div><h4 data-i="note1H">Più il task è complesso, più sali</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">02</span><h2 data-i="s2">I sette livelli</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="ladderIntro"></p>
+  <div class="ladder rv" id="ladder"></div>
+  <div class="rungdetail rv" id="rungDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">03</span><h2 data-i="s3">Scegli la complessità → trova il livello</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cplxIntro"></p>
+  <div class="cplx rv">
+    <div class="ch"><i class="ti ti-adjustments-horizontal"></i> <span data-i="cplxH">Com'è il tuo task?</span></div>
+    <div class="chips" id="chips"></div>
+    <div class="cplxout" id="cplxOut"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">04</span><h2 data-i="s4">Quando usarla</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="tblIntro"></p>
+  <div class="tbl rv" id="tbl"></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">05</span><h2 data-i="s5">Non sprecare livelli</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-arrow-bar-up"></i></div><div><h4 data-i="note2H">Il livello giusto, non il più alto</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Collocati sulla scala</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La tassonomia del prompting</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'La tassonomia del prompting (7 livelli)',
+lede:'Non esiste «il» modo di promptare: ne esistono sette, ordinati per potenza. Sono una scala. Più il task è complesso, più sali — ma salire troppo, quando non serve, è solo tempo sprecato. Imparare quando salire vale più di qualsiasi prompt perfetto.',
+s1:'Una scala, non un interruttore',
+note1H:'Più il task è complesso, più sali',
+note1P:'Le tecniche di prompting non sono alternative casuali: sono <strong>gradini ordinati per potenza</strong>. Zero-shot in fondo, Prompt Chaining in cima. La regola è una sola: <strong>più il task è complesso, più sali nella scala</strong>. Un task banale risolto in cima è overkill; un task complesso lasciato in fondo crolla.',
+q1:'«Le tecniche di prompting sono una scala. La domanda non è "qual è la migliore", ma "quale serve a questo task".»',
+s2:'I sette livelli',
+ladderIntro:'Dal più semplice al più potente. Ogni gradino aggiunge qualcosa al precedente: prima esempi, poi conoscenza esterna, poi ragionamento, poi pianificazione, infine la catena. Clicca un gradino per il dettaglio.',
+s3:'Scegli la complessità → trova il livello',
+cplxIntro:'Non parti dalla tecnica: parti dal task. Descrivilo per quello che è e la scala ti dice dove fermarti. Clicca la situazione più vicina alla tua.',
+cplxH:'Com\'è il tuo task?',
+s4:'Quando usarla',
+tblIntro:'La stessa scala, letta come tabella di decisione: a colpo d\'occhio, quale livello per quale tipo di lavoro.',
+s5:'Non sprecare livelli',
+note2H:'Il livello giusto, non il più alto',
+note2P:'Salire nella scala costa: più tempo, più contesto, più punti dove qualcosa può rompersi. <strong>Il livello giusto è il più basso che fa il lavoro</strong>, non il più alto che riesci a costruire. Sali di un gradino solo quando quello sotto non regge la complessità — non per il gusto di usare la tecnica più sofisticata.',
+s6:'Checkpoint',
+cpH:'Collocati sulla scala',
+cpP:'Prendi i tre task con AI che fai più spesso. Per ciascuno chiediti: a che livello li sto facendo oggi — e sto sotto o sopra il livello che il task richiederebbe?',
+cpQ:'Dove stai sprecando livelli (overkill su task semplici) e dove stai lasciando qualità sul tavolo (task complesso tenuto troppo in basso)? Quello è il tuo prossimo aggiustamento.',
+bridge:'Conosci la scala e sai dove salire. <b>Prossimo:</b> il gradino più alto da vicino — il <b>Prompt Chaining</b>, dove l\'output di un prompt diventa l\'input del successivo e il sistema inizia a lavorare al posto tuo.',
+foot:'Morfeus — La tassonomia del prompting'
+},
+en:{
+kicker:'Lesson A6.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'The prompting taxonomy (7 levels)',
+lede:'There is no single "right" way to prompt: there are seven, ordered by power. They\'re a ladder. The more complex the task, the higher you climb — but climbing too high when you don\'t need to is just wasted time. Learning when to climb is worth more than any perfect prompt.',
+s1:'A ladder, not a switch',
+note1H:'The more complex the task, the higher you climb',
+note1P:'Prompting techniques aren\'t random alternatives: they\'re <strong>rungs ordered by power</strong>. Zero-shot at the bottom, Prompt Chaining at the top. There\'s only one rule: <strong>the more complex the task, the higher you climb the ladder</strong>. A trivial task solved at the top is overkill; a complex task left at the bottom collapses.',
+q1:'"Prompting techniques are a ladder. The question isn\'t \'which is best\', but \'which one this task needs\'."',
+s2:'The seven levels',
+ladderIntro:'From simplest to most powerful. Each rung adds something to the previous one: first examples, then external knowledge, then reasoning, then planning, finally the chain. Click a rung for the detail.',
+s3:'Pick the complexity → find the level',
+cplxIntro:'You don\'t start from the technique: you start from the task. Describe it for what it is and the ladder tells you where to stop. Click the situation closest to yours.',
+cplxH:'What\'s your task like?',
+s4:'When to use it',
+tblIntro:'The same ladder, read as a decision table: at a glance, which level for which kind of work.',
+s5:'Don\'t waste levels',
+note2H:'The right level, not the highest',
+note2P:'Climbing the ladder costs: more time, more context, more points where something can break. <strong>The right level is the lowest one that gets the job done</strong>, not the highest you can build. Climb a rung only when the one below can\'t hold the complexity — not for the thrill of using the most sophisticated technique.',
+s6:'Checkpoint',
+cpH:'Place yourself on the ladder',
+cpP:'Take the three AI tasks you do most often. For each, ask: what level am I doing them at today — and am I below or above the level the task would require?',
+cpQ:'Where are you wasting levels (overkill on simple tasks) and where are you leaving quality on the table (a complex task kept too low)? That\'s your next adjustment.',
+bridge:'You know the ladder and where to climb. <b>Next:</b> the top rung up close — <b>Prompt Chaining</b>, where one prompt\'s output becomes the next one\'s input and the system starts working for you.',
+foot:'Morfeus — The prompting taxonomy'
+}};
+
+// ladder rungs: [name, power%, body, example, when]
+var RUNGS={it:[
+['Zero-shot',14,'Chiedi e basta, senza esempi. Il modello risponde con quello che già sa. È il livello di default, quello che usa il 90% delle persone senza saperlo.','«Riassumi questo testo in 5 punti.»','Task semplici, diretti, dove il modello ha già tutto il sapere che serve.'],
+['One-shot',28,'Aggiungi <b>un</b> esempio di input→output. Mostri al modello il formato e lo stile che vuoi, una volta sola.','«Riassumi così — Esempio: [testo] → [riassunto in 5 punti]. Ora fai lo stesso con questo.»','Quando il formato conta e una sola dimostrazione basta a fissarlo.'],
+['Few-shot',42,'Più esempi (in genere 2-5). Più copri i casi ambigui, più il modello diventa robusto e coerente. Investi negli edge case.','3-4 coppie input→output che coprono anche i casi grigi, poi il caso vero.','Output ripetitivi che devono essere coerenti su tanti casi diversi.'],
+['RAG-grounded',57,'Ancori la risposta a una fonte esterna: documenti, KB, manuali. Il modello non «ricorda», va a leggere — come un bibliotecario che ti va a prendere l\'informazione giusta.','«Rispondi usando SOLO il manuale allegato; se non c\'è, dillo.»','Quando servono fatti precisi dal TUO contesto, non dalla media globale.'],
+['Chain of Thought',71,'Chiedi al modello di ragionare passo passo prima di rispondere. Esplicitare i passaggi riduce gli errori sui task che richiedono logica o calcolo.','«Ragiona passo per passo, poi dammi la risposta finale.»','Problemi logici, matematici o multi-passo dove «sparare» la risposta sbaglia.'],
+['Plan-and-Solve',85,'Prima di eseguire, fai produrre un <b>piano</b>; poi lo si esegue. Forza la struttura del ragionamento e separa il «cosa farò» dal «lo faccio».','«Prima fammi il piano per analizzare questo bilancio. Lo approvo, poi esegui.»','Task complessi dove un piano sbagliato si propaga su tutto l\'output.'],
+['Prompt Chaining',100,'Il gradino più alto: spezzi il lavoro in prompt collegati, dove <b>l\'output di uno è l\'input del successivo</b>. Ogni prompt fa una cosa sola, fatta bene. È dove finisce il prompting e inizia il sistema.','Chiamata → trascrizione → report → preventivo → slide, ogni step alimenta il prossimo.','Processi lunghi e multi-fase che un singolo prompt non regge.']
+],en:[
+['Zero-shot',14,'Just ask, no examples. The model answers with what it already knows. It\'s the default level, the one 90% of people use without realizing.','"Summarize this text in 5 points."','Simple, direct tasks where the model already has all the knowledge it needs.'],
+['One-shot',28,'You add <b>one</b> input→output example. You show the model the format and style you want, just once.','"Summarize like this — Example: [text] → [summary in 5 points]. Now do the same with this."','When format matters and a single demonstration is enough to lock it in.'],
+['Few-shot',42,'Several examples (usually 2-5). The more you cover ambiguous cases, the more robust and consistent the model gets. Invest in edge cases.','3-4 input→output pairs that also cover the gray cases, then the real case.','Repetitive outputs that must stay consistent across many different cases.'],
+['RAG-grounded',57,'You anchor the answer to an external source: documents, KB, manuals. The model doesn\'t "remember", it goes and reads — like a librarian fetching the right information for you.','"Answer using ONLY the attached manual; if it\'s not there, say so."','When you need precise facts from YOUR context, not the global average.'],
+['Chain of Thought',71,'You ask the model to reason step by step before answering. Spelling out the steps reduces errors on tasks that need logic or calculation.','"Reason step by step, then give me the final answer."','Logical, mathematical or multi-step problems where blurting the answer fails.'],
+['Plan-and-Solve',85,'Before executing, you have it produce a <b>plan</b>; then it executes. It forces the structure of the reasoning and separates "what I\'ll do" from "doing it".','"First give me the plan to analyze this balance sheet. I approve it, then execute."','Complex tasks where a wrong plan propagates across the whole output.'],
+['Prompt Chaining',100,'The top rung: you break the work into linked prompts, where <b>one\'s output is the next one\'s input</b>. Each prompt does one thing, done well. It\'s where prompting ends and the system begins.','Call → transcript → report → quote → slides, each step feeding the next.','Long, multi-phase processes a single prompt can\'t hold.']
+]};
+
+// complexity selector: [label, rungIndex]
+var CPLX={it:[
+['Una domanda secca, risposta diretta',0],
+['Mi serve un formato preciso e ripetibile',2],
+['La risposta deve venire dai miei documenti',3],
+['È un problema logico / di calcolo',4],
+['Task complesso: meglio un piano prima',5],
+['Un processo lungo in più fasi',6]
+],en:[
+['A blunt question, a direct answer',0],
+['I need a precise, repeatable format',2],
+['The answer must come from my documents',3],
+['It\'s a logic / calculation problem',4],
+['Complex task: better a plan first',5],
+['A long, multi-phase process',6]
+]};
+
+var WHEN={it:[
+['Veloce e semplice','Zero-shot / One-shot — quando il modello ha già il sapere e ti basta una risposta pulita.'],
+['Formato che si ripete','Few-shot — quando lo stesso output deve restare coerente su molti casi.'],
+['Fatti dal tuo contesto','RAG-grounded — quando la risposta deve poggiare sui tuoi documenti, non sulla media.'],
+['Ragionamento o calcolo','Chain of Thought — quando «sparare» la risposta porta a errori logici.'],
+['Task complesso e strutturato','Plan-and-Solve — quando conviene approvare il piano prima di eseguire.'],
+['Processo lungo, multi-fase','Prompt Chaining — quando un singolo prompt non regge tutto il lavoro.']
+],en:[
+['Fast and simple','Zero-shot / One-shot — when the model already has the knowledge and a clean answer is enough.'],
+['A format that repeats','Few-shot — when the same output must stay consistent across many cases.'],
+['Facts from your context','RAG-grounded — when the answer must rest on your documents, not the average.'],
+['Reasoning or calculation','Chain of Thought — when blurting the answer leads to logical errors.'],
+['Complex, structured task','Plan-and-Solve — when it\'s worth approving the plan before executing.'],
+['Long, multi-phase process','Prompt Chaining — when a single prompt can\'t hold the whole job.']
+]};
+
+var LANG='it',curRung=0,curChip=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('ladder').innerHTML=RUNGS[LANG].map(function(r,i){return '<div class="rung'+(i===curRung?' on':'')+'" onclick="showRung('+i+')"><div class="rn">'+(i+1)+'</div><div class="rl">'+r[0]+'</div><div class="rmeter"><span style="width:'+r[1]+'%"></span></div></div>'}).join('');
+  document.getElementById('chips').innerHTML=CPLX[LANG].map(function(c,i){return '<div class="chip'+(i===curChip?' on':'')+'" onclick="selChip('+i+')">'+c[0]+'</div>'}).join('');
+  var thW=(LANG==='it'?'Quando':'When');
+  document.getElementById('tbl').innerHTML=WHEN[LANG].map(function(w){return '<div class="trow"><div class="tk"><i class="ti ti-point-filled"></i>'+w[0]+'</div><div class="tv">'+w[1]+'</div></div>'}).join('');
+  showRung(curRung);renderChip();
+}
+function showRung(i){curRung=i;var r=RUNGS[LANG][i];document.querySelectorAll('.rung').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var wlbl=(LANG==='it'?'Quando':'When');
+  document.getElementById('rungDetail').innerHTML='<div class="rdh"><i class="ti ti-stairs-up"></i> '+(i+1)+'. '+r[0]+'</div><p>'+r[2]+'</p><div class="ex">'+r[3]+'</div><div class="whenrow"><i class="ti ti-target-arrow"></i><div><b>'+wlbl+':</b> '+r[4]+'</div></div>';
+}
+function renderChip(){var idx=CPLX[LANG][curChip][1];var r=RUNGS[LANG][idx];var lbl=(LANG==='it'?'Livello consigliato':'Suggested level');
+  document.getElementById('cplxOut').innerHTML='<b>'+lbl+': '+(idx+1)+'. '+r[0]+'</b> — '+r[4];}
+function selChip(i){curChip=i;document.querySelectorAll('.chip').forEach(function(x,k){x.classList.toggle('on',k===i)});renderChip();}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

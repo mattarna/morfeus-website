@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Ponte: connettori, API, MCP — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* security key card */
+.seccard{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.secc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.secc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.secc.good{background:var(--good-soft);border-color:var(--good)}
+.secc .stag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.secc.bad .stag{background:var(--bad);color:#fff}.secc.good .stag{background:var(--good);color:#fff}
+.secc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.secc p{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.secc.bad h4{color:var(--bad)}.secc.good h4{color:var(--good)}
+.keychip{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--good);border-radius:0 var(--r) var(--r) 0;padding:9px 12px;color:var(--ink-2);margin-top:10px;word-break:break-all}
+/* bridge ladder */
+.ladnav{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
+.lnode{display:flex;align-items:center;gap:9px;background:var(--card);border:1.5px solid var(--line);border-radius:30px;box-shadow:var(--sh);padding:8px 14px 8px 8px;cursor:pointer;transition:.18s}
+.lnode:hover{border-color:var(--line-2)}.lnode.on{border-color:var(--accent);background:var(--accent-soft)}
+.lnode .ln{width:26px;height:26px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.lnode.on .ln{background:var(--accent);color:#fff}
+.lnode .lt{font-size:13px;font-weight:600}
+.larr{color:var(--ink-3);font-size:14px;align-self:center}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.step .sth{font-size:16px;font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:4px}.step .sth i{color:var(--accent)}
+.step .stsub{font-size:13px;color:var(--ink-3);font-family:var(--mono);margin-bottom:14px}
+.step .sbody{font-size:14.5px;color:var(--ink-2);margin-bottom:14px}
+.step .srow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.iobox{border-radius:var(--r);padding:13px 15px;font-size:13.5px}
+.iobox .iolbl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.iobox.tool{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent)}
+.iobox.tool .iolbl{color:var(--accent)}
+.iobox.skill{background:var(--agent-soft);border:1px solid var(--agent-line);border-left:3px solid var(--agent)}
+.iobox.skill .iolbl{color:var(--agent)}
+.iobox p{color:var(--ink-2);line-height:1.5}
+.exchip{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;font-family:var(--mono);color:var(--good);background:var(--good-soft);border:1px solid var(--good);border-radius:30px;padding:5px 12px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.gov{display:flex;flex-direction:column;gap:8px}
+.govli{display:flex;align-items:flex-start;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.govli i{color:var(--agent);font-size:19px;margin-top:1px;flex-shrink:0}
+.govli b{font-size:14px;font-weight:600;color:var(--ink)}.govli span{font-size:13.5px;color:var(--ink-2)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.seccard{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.step .srow{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.card3,.cp,.step,.secc,.govli,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A6.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Sistema</div>
+  <h1 class="rv" data-i="h1">Il Ponte: connettori, API, MCP</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-plug-connected"></i><span class="no">01</span><h2 data-i="s1">Claude può usare gli strumenti</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-key"></i></div><div><h4 data-i="note1H">Come un junior a cui do gli accessi</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-shield-lock"></i><span class="no">02</span><h2 data-i="s2">L'API: le chiavi di casa, non la password</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="apiIntro"></p>
+  <div class="seccard rv">
+    <div class="secc bad"><span class="stag" data-i="pwT">La password</span><h4 data-i="pwH"></h4><p data-i="pwP"></p></div>
+    <div class="secc good"><span class="stag" data-i="apiT">L'API</span><h4 data-i="apiH"></h4><p data-i="apiP"></p><div class="keychip" data-i="apiChip"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="apiOut"></p>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">03</span><h2 data-i="s3">MCP: come si chiama il connettore</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-transform"></i></div><div><h4 data-i="note2H">Il protocollo di collegamento</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">04</span><h2 data-i="s4">La progressione del Ponte</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="ladIntro"></p>
+  <div class="ladnav rv" id="ladNav"></div>
+  <div class="step rv" id="step"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="ladNote"></p>
+
+  <div class="sh rv"><i class="ti ti-folder"></i><span class="no">05</span><h2 data-i="s5">Il filesystem: il primo tool che cambia tutto</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-arrow-big-up-lines"></i></div><div><h4 data-i="note3H">Da assistente ad agente</h4><p data-i-html="note3P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-shield-half"></i><span class="no">06</span><h2 data-i="s6">Più agisce, più serve governarlo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="govIntro"></p>
+  <div class="gov rv" id="gov"></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Ponte: connettori, API, MCP</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A6.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Sistema',
+h1:'Il Ponte: connettori, API, MCP',
+lede:'Finora Claude ragiona e scrive. Ma un assistente che vive dentro la chat ha un limite: non tocca il mondo reale. Il Ponte è ciò che gli permette di agire — leggere il tuo Drive, mandare una mail, aggiornare il CRM. È il passaggio da «mi dà la risposta» a «fa la cosa».',
+s1:'Claude può usare gli strumenti',
+note1H:'Come un junior a cui do gli accessi',
+note1P:'«<strong>Claude può usare gli strumenti</strong>»: gli dai accesso a una piattaforma e lui ci lavora «<strong>come un junior a cui do gli accessi</strong>». Se capisce che gli servono informazioni che non ha, va a prenderle: nel Drive, nel CRM, via connettore. Non solo legge — anche scrive: crea documenti, risponde ai clienti, aggiorna i dati.',
+q1:'«Gli dai accesso a una piattaforma e lui ci lavora come un junior a cui do gli accessi.»',
+s2:'L\'API: le chiavi di casa, non la password',
+apiIntro:'Come fa Claude a entrare in un tuo account senza che tu gli consegni le credenziali? Con un\'<strong>API</strong>. La differenza con la password non è un dettaglio tecnico: è una questione di sicurezza e di controllo.',
+pwT:'La password',pwH:'Entra come te',pwP:'Dare la password significa dare accesso totale, indistinguibile dal tuo. Non è revocabile selettivamente, non è tracciabile, e se finisce nel posto sbagliato perdi tutto.',
+apiT:'L\'API',apiH:'Una chiave dedicata',apiP:'L\'API è una stringa alfanumerica unica: una chiave cifrata, autorizzata e revocabile. «Non gli serve la password perché non entra come te con username e login: ha un sistema con cui si connette e lavora.»',
+apiChip:'sk-••••-a8f3-cifrata-autorizzata-revocabile',
+apiOut:'La frase da ricordare: «<strong>è come dare le chiavi di casa del mio account, ma non gli sto dando la password</strong>». E proprio perché è cifrata e revocabile, è «<strong>più sicura di una persona</strong>»: la togli con un click, senza cambiare nulla del resto.',
+s3:'MCP: come si chiama il connettore',
+note2H:'Il protocollo di collegamento',
+note2P:'Il connettore — il ponte tra l\'AI e un tool — ha un nome: «<strong>su Claude in realtà si chiama MCP</strong>». È il protocollo generale di collegamento tra l\'AI e gli strumenti esterni. Non devi saperlo costruire: lo attivi «<strong>con un click</strong>» più il login col tuo account. Già più di 500 app nel mondo espongono questi connettori — e il costo per un software di aprirli è quasi nullo, quindi sempre di più li avranno.',
+s4:'La progressione del Ponte',
+ladIntro:'Il Ponte non è un salto unico: è una scala a tre gradini. Più sali, più potere dai all\'AI — e più competenza serve. Clicca ogni gradino per vedere cosa significa e un esempio concreto.',
+ladNote:'Non devi partire dall\'alto. Il punto è capire dove ti trovi e qual è il gradino successivo: «<strong>più l\'AI agisce sul mondo reale, più va controllata</strong>». La progressione è anche una progressione di responsabilità.',
+s5:'Il filesystem: il primo tool che cambia tutto',
+note3H:'Da assistente ad agente',
+note3P:'Tra tutti i tool, uno è speciale: l\'accesso al <strong>filesystem</strong> — alle cartelle e ai file. È «<strong>il primo tool che trasforma un assistente in un agente</strong>». Un assistente risponde dentro la chat; un agente che legge e scrive file lavora dentro una struttura: legge la KB, salva l\'output, lo passa allo step successivo. Smette di essere un testo e diventa un collaboratore che opera nel tuo ambiente.',
+q2:'«Il filesystem è il primo tool che trasforma un assistente in un agente.»',
+s6:'Più agisce, più serve governarlo',
+govIntro:'C\'è un principio che vale per tutto il Ponte: «<strong>più l\'AI agisce sul mondo reale, più servono governance, limiti, review e rollback</strong>». Dare azioni senza dare guardrail è la ricetta del disastro. Quattro presìdi minimi:',
+s7:'Checkpoint',
+cpH:'Mappa il tuo Ponte',
+cpP:'Pensa a un task che oggi ti costringe a copiare e incollare dati tra Claude e un altro software (Drive, mail, CRM, gestionale). Quel «copia-incolla manuale» è esattamente il punto dove ti serve un connettore.',
+cpQ:'Su quale dei tre gradini sei adesso, e qual è il primo connettore che ti farebbe risparmiare ore di passaggi manuali — senza saltare oltre il livello di controllo che riesci davvero a tenere?',
+bridge:'Hai capito come l\'AI agisce nel mondo reale tramite tool, API e MCP, e la scala dei tre gradini. <b>Prossimo:</b> mettere tutti i pezzi insieme — processi, KB, assistenti, tool e governance — e comporre la vera infrastruttura AI aziendale.',
+foot:'Morfeus — Il Ponte: connettori, API, MCP'
+},
+en:{
+kicker:'Lesson A6.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'System',
+h1:'The Bridge: connectors, API, MCP',
+lede:'So far Claude reasons and writes. But an assistant that lives inside the chat has a ceiling: it doesn\'t touch the real world. The Bridge is what lets it act — read your Drive, send an email, update the CRM. It\'s the shift from "it gives me the answer" to "it does the thing".',
+s1:'Claude can use tools',
+note1H:'Like a junior I give access to',
+note1P:'"<strong>Claude can use tools</strong>": you give it access to a platform and it works on it "<strong>like a junior I give access to</strong>". If it realizes it needs information it doesn\'t have, it goes and gets it: in the Drive, in the CRM, via a connector. And not just read — write too: it creates documents, replies to clients, updates the data.',
+q1:'"You give it access to a platform and it works on it like a junior I give access to."',
+s2:'The API: the house keys, not the password',
+apiIntro:'How does Claude get into one of your accounts without you handing over your credentials? With an <strong>API</strong>. The difference from a password isn\'t a technical footnote: it\'s a matter of security and control.',
+pwT:'The password',pwH:'It enters as you',pwP:'Giving the password means giving total access, indistinguishable from yours. It isn\'t selectively revocable, isn\'t traceable, and if it ends up in the wrong place you lose everything.',
+apiT:'The API',apiH:'A dedicated key',apiP:'The API is a unique alphanumeric string: an encrypted key, authorized and revocable. "It doesn\'t need the password because it doesn\'t log in as you with username and login: it has a system to connect and work."',
+apiChip:'sk-••••-a8f3-encrypted-authorized-revocable',
+apiOut:'The line to remember: "<strong>it\'s like giving the house keys to my account, but I\'m not giving it the password</strong>". And precisely because it\'s encrypted and revocable, it\'s "<strong>safer than a person</strong>": you pull it with one click, without changing anything else.',
+s3:'MCP: what the connector is called',
+note2H:'The connection protocol',
+note2P:'The connector — the bridge between the AI and a tool — has a name: "<strong>on Claude it\'s actually called MCP</strong>". It\'s the general protocol for connecting the AI to external tools. You don\'t need to know how to build it: you turn it on "<strong>with one click</strong>" plus the login with your own account. Already more than 500 apps in the world expose these connectors — and the cost for a piece of software to open them is nearly nothing, so more and more will have them.',
+s4:'The Bridge progression',
+ladIntro:'The Bridge isn\'t a single leap: it\'s a three-rung ladder. The higher you climb, the more power you give the AI — and the more skill it takes. Click each rung to see what it means and a concrete example.',
+ladNote:'You don\'t have to start at the top. The point is to know where you are and what the next rung is: "<strong>the more the AI acts on the real world, the more it must be controlled</strong>". The progression is also a progression of responsibility.',
+s5:'The filesystem: the first tool that changes everything',
+note3H:'From assistant to agent',
+note3P:'Among all the tools, one is special: access to the <strong>filesystem</strong> — to folders and files. It\'s "<strong>the first tool that turns an assistant into an agent</strong>". An assistant replies inside the chat; an agent that reads and writes files works inside a structure: it reads the KB, saves the output, passes it to the next step. It stops being text and becomes a collaborator that operates in your environment.',
+q2:'"The filesystem is the first tool that turns an assistant into an agent."',
+s6:'The more it acts, the more it needs governing',
+govIntro:'There\'s a principle that holds across the whole Bridge: "<strong>the more the AI acts on the real world, the more you need governance, limits, review and rollback</strong>". Granting actions without granting guardrails is the recipe for disaster. Four minimum safeguards:',
+s7:'Checkpoint',
+cpH:'Map your Bridge',
+cpP:'Think of a task that today forces you to copy and paste data between Claude and another piece of software (Drive, mail, CRM, management system). That "manual copy-paste" is exactly where you need a connector.',
+cpQ:'Which of the three rungs are you on now, and what\'s the first connector that would save you hours of manual steps — without leaping past the level of control you can actually hold?',
+bridge:'You\'ve grasped how the AI acts on the real world through tools, API and MCP, and the three-rung ladder. <b>Next:</b> putting all the pieces together — processes, KB, assistants, tools and governance — and composing the real company AI infrastructure.',
+foot:'Morfeus — The Bridge: connectors, API, MCP'
+}};
+
+// ladder rungs: [name, icon, subtitle, body, toolLabel, toolText, skillLabel, skillText, example]
+var LADDER={it:[
+['Entry','ti-click','Gradino 1 · Actions native','Le azioni già integrate dentro Claude. Attivi un connettore con un click, fai login col tuo account, e Claude può leggere e scrivere su quella piattaforma — senza che tu installi o configuri nulla.','Cosa fa','Legge il Drive, manda una mail, genera un\'immagine via un servizio collegato — restando dentro Claude.','Competenza richiesta','Nessuna. Sai cliccare e fare login: sei pronto.','Esempio · Claude crea un documento sul tuo Drive senza uscire dalla chat'],
+['Intermedio','ti-arrows-shuffle','Gradino 2 · n8n / Make / Zapier','L\'automazione visuale: workflow costruiti trascinando blocchi, senza scrivere codice. È il «ponte praticabile» per chi non è tecnico ma vuole collegare più tool in sequenza.','Cosa fa','Orchestra catene tra più piattaforme: un evento scatena una serie di azioni automatiche collegate.','Competenza richiesta','Drag-and-drop. Capire la logica dei passaggi, non programmare.','Esempio · Arriva una mail → l\'AI la analizza → classifica → scrive la bozza → invio in approvazione'],
+['Avanzato','ti-code','Gradino 3 · Code / MCP / API','Il livello pieno: l\'AI legge e modifica file, genera codice, chiama tool e orchestra interi workflow via MCP e API. Massima potenza, massima precisione — e massima responsabilità.','Cosa fa','Agenti che operano su file e sistemi, collegati via MCP/API, capaci di azioni complesse e in catena.','Competenza richiesta','Tecnica o un partner tecnico. Qui servono governance e controlli seri.','Esempio · Un agente legge i file di progetto, produce output multipli e li salva nelle cartelle giuste']
+],en:[
+['Entry','ti-click','Rung 1 · Native actions','The actions already built into Claude. You turn on a connector with one click, log in with your account, and Claude can read and write on that platform — without you installing or configuring anything.','What it does','Reads the Drive, sends an email, generates an image via a linked service — all inside Claude.','Skill required','None. You can click and log in: you\'re ready.','Example · Claude creates a document on your Drive without leaving the chat'],
+['Intermediate','ti-arrows-shuffle','Rung 2 · n8n / Make / Zapier','Visual automation: workflows built by dragging blocks, without writing code. It\'s the "practicable bridge" for those who aren\'t technical but want to link several tools in sequence.','What it does','Orchestrates chains across multiple platforms: one event triggers a series of linked automatic actions.','Skill required','Drag-and-drop. Understand the logic of the steps, not programming.','Example · An email arrives → the AI analyzes it → classifies → drafts a reply → sends for approval'],
+['Advanced','ti-code','Rung 3 · Code / MCP / API','The full level: the AI reads and edits files, generates code, calls tools and orchestrates entire workflows via MCP and API. Maximum power, maximum precision — and maximum responsibility.','What it does','Agents operating on files and systems, linked via MCP/API, capable of complex, chained actions.','Skill required','Technical, or a technical partner. Here you need serious governance and controls.','Example · An agent reads the project files, produces multiple outputs and saves them in the right folders']
+]};
+
+var GOV={it:[
+['ti-ruler-2','Limiti','Un perimetro esplicito di cosa l\'agente può e non può toccare. Permessi granulari, non accesso totale.'],
+['ti-eye-check','Review','Un punto di controllo umano prima che l\'azione diventi irreversibile: l\'umano valida, poi si procede.'],
+['ti-arrow-back-up-double','Rollback','La possibilità di tornare indietro: ogni azione importante deve essere annullabile, non definitiva al primo colpo.'],
+['ti-shield-lock','Governance','Le regole del gioco: chi può fare cosa, su quali dati, con quali tool. Cresce insieme al potere che dai all\'AI.']
+],en:[
+['ti-ruler-2','Limits','An explicit perimeter of what the agent can and cannot touch. Granular permissions, not total access.'],
+['ti-eye-check','Review','A human checkpoint before the action becomes irreversible: the human validates, then it proceeds.'],
+['ti-arrow-back-up-double','Rollback','The ability to undo: every important action must be reversible, not final on the first try.'],
+['ti-shield-lock','Governance','The rules of the game: who can do what, on which data, with which tools. It grows alongside the power you give the AI.']
+]};
+
+var LANG='it',curRung=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var L=LADDER[LANG];
+  document.getElementById('ladNav').innerHTML=L.map(function(s,i){var arr=i<L.length-1?'<span class="larr">→</span>':'';return '<div class="lnode'+(i===curRung?' on':'')+'" onclick="showRung('+i+')"><div class="ln">'+(i+1)+'</div><div class="lt">'+s[0]+'</div></div>'+arr}).join('');
+  document.getElementById('gov').innerHTML=GOV[LANG].map(function(g){return '<div class="govli"><i class="ti '+g[0]+'"></i><div><b>'+g[1]+'</b> — <span>'+g[2]+'</span></div></div>'}).join('');
+  showRung(curRung);
+}
+function showRung(i){curRung=i;var s=LADDER[LANG][i];document.querySelectorAll('.lnode').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  document.getElementById('step').innerHTML='<div class="sth"><i class="ti '+s[1]+'"></i> '+(i+1)+'. '+s[0]+'</div><div class="stsub">'+s[2]+'</div>'+
+    '<div class="sbody">'+s[3]+'</div>'+
+    '<div class="srow"><div class="iobox tool"><div class="iolbl"><i class="ti ti-bolt"></i>'+s[4]+'</div><p>'+s[5]+'</p></div>'+
+    '<div class="iobox skill"><div class="iolbl"><i class="ti ti-user-cog"></i>'+s[6]+'</div><p>'+s[7]+'</p></div></div>'+
+    '<div class="exchip"><i class="ti ti-bulb"></i> '+s[8]+'</div>';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

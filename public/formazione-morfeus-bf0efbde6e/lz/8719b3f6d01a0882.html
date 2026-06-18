@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La fusione umano + AI (framework T/Q/D) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;white-space:pre-wrap}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* T/Q/D axis list */
+.els{display:flex;flex-direction:column;gap:8px}
+.el{display:flex;align-items:flex-start;gap:14px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.el:hover{border-color:var(--line-2)}.el.on{border-color:var(--accent);background:var(--accent-soft)}
+.el .en{width:34px;height:34px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.el.on .en{background:var(--accent);color:#fff}
+.el .eb{flex:1}
+.el .et{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.el .ed{font-size:13px;color:var(--ink-2);margin-top:3px}
+.el .ei{color:var(--accent);font-size:17px;margin-top:1px;flex-shrink:0}
+.eltag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:4px;background:var(--agent-soft);color:var(--agent)}
+.eldetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.eldetail p{font-size:14.5px;color:var(--ink-2)}.eldetail p b{color:var(--ink)}
+.eldetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* lever simulator */
+.lev{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.levrow{margin-bottom:18px}
+.levrow:last-of-type{margin-bottom:0}
+.levlbl{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.levlbl .ln{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.levlbl .ln i{color:var(--accent);font-size:17px}
+.levlbl .lv{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);padding:2px 9px;border-radius:30px;background:var(--accent-soft);min-width:118px;text-align:center}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:30px;background:var(--bg-3);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:var(--sh);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:3px solid var(--card);cursor:pointer}
+.levhint{font-size:12px;color:var(--ink-3);margin-top:6px;font-family:var(--mono)}
+.verdict{margin-top:8px;border-radius:var(--r-l);padding:20px;text-align:center;border:1.5px solid var(--line);background:var(--bg-2);transition:.25s}
+.verdict.lever{border-color:var(--good);background:var(--good-soft)}
+.verdict.no{border-color:var(--bad);background:var(--bad-soft)}
+.verdict .vt{font-size:20px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;justify-content:center;gap:9px}
+.verdict.lever .vt{color:var(--good)}.verdict.no .vt{color:var(--bad)}.verdict .vt i{font-size:23px}
+.verdict .vd{font-size:13.5px;color:var(--ink-2);margin-top:7px;max-width:440px;margin-left:auto;margin-right:auto}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.el,.eldetail,.key,.lev,.verdict{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A4.7</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Fusione umano + AI</div>
+  <h1 class="rv" data-i="h1">La fusione umano + AI (framework T/Q/D)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">01</span><h2 data-i="s1">«Lo compreresti?» → «Dipende»</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="sellIntro"></p>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-businessplan"></i></div><div><h4 data-i="sellH">L'aneddoto della vendita</h4><p data-i-html="sellP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-horizontal"></i><span class="no">02</span><h2 data-i="s2">I tre assi: T / Q / D</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="elsIntro"></p>
+  <div class="els rv" id="els"></div>
+  <div class="eldetail rv" id="elDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">03</span><h2 data-i="s3">La qualità ha una soglia minima</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-user"></i></div><h4 data-i="qa1H">Neofiti: ≥ 90%</h4><p data-i="qa1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-award"></i></div><h4 data-i="qa2H">Bravi: → 100%</h4><p data-i="qa2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-clock-hour-4"></i></div><h4 data-i="qa3H">Delega reale</h4><p data-i="qa3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-shopping-bag"></i><span class="no">04</span><h2 data-i="s4">La mamma sovraccarica</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-trash"></i></div><div><h4 data-i="momH">Deleghi il task, controlli il risultato</h4><p data-i-html="momP"></p></div></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-flask"></i><span class="no">05</span><h2 data-i="s5">Simulatore: è una leva?</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="levIntro"></p>
+  <div class="lev rv">
+    <div class="levrow">
+      <div class="levlbl"><span class="ln"><i class="ti ti-clock-bolt"></i> <span data-i="levTn">Tempo</span></span><span class="lv" id="vT"></span></div>
+      <input type="range" id="rT" min="0" max="2" value="2" step="1" oninput="levUpdate()">
+      <div class="levhint" data-i="levTh">Quanto è più veloce sull'intero ciclo</div>
+    </div>
+    <div class="levrow">
+      <div class="levlbl"><span class="ln"><i class="ti ti-target"></i> <span data-i="levQn">Qualità</span></span><span class="lv" id="vQ"></span></div>
+      <input type="range" id="rQ" min="0" max="2" value="2" step="1" oninput="levUpdate()">
+      <div class="levhint" data-i="levQh">Supera la soglia minima accettabile?</div>
+    </div>
+    <div class="levrow">
+      <div class="levlbl"><span class="ln"><i class="ti ti-hand-finger-off"></i> <span data-i="levDn">Delega</span></span><span class="lv" id="vD"></span></div>
+      <input type="range" id="rD" min="0" max="2" value="2" step="1" oninput="levUpdate()">
+      <div class="levhint" data-i="levDh">Quanto puoi davvero toglierti le mani?</div>
+    </div>
+    <div class="verdict" id="verdict"><div class="vt" id="vtTitle"></div><div class="vd" id="vtDesc"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-equal"></i><span class="no">06</span><h2 data-i="s6">L'equazione della leva</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Valuta un tuo sistema su T/Q/D</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La fusione umano + AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A4.7',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Fusione umano + AI',
+h1:'La fusione umano + AI (framework T/Q/D)',
+lede:'Un sistema AI non si giudica «bello» o «brutto». Si valuta su tre assi insieme — Tempo, Qualità, Delega — e solo quando tutti e tre tengono diventa una vera leva. Qui impari il framework T/Q/D e capisci quando un sistema vale davvero la pena.',
+s1:'«Lo compreresti?» → «Dipende»',
+sellIntro:'Parti da una domanda di vendita. Se ti offrono un sistema che fa al posto tuo un lavoro noioso, la risposta giusta non è mai un sì secco: è «dipende». Ed è proprio quel «dipende» a contenere il framework.',
+sellH:'L\'aneddoto della vendita',
+sellP:'«Ti do un agente che fa quel lavoro noioso in <strong>metà tempo</strong>, lo compreresti?» La risposta onesta è <strong>«dipende»</strong> — ed è quella corretta. Il tempo da solo non basta: serve anche che l\'output regga la qualità e che tu non debba restare nel loop continuo a dire «continua, continua». Tre condizioni, non una.',
+s2:'I tre assi: T / Q / D',
+elsIntro:'Il framework T/Q/D, sviluppato da noi, è la lente con cui valuti qualsiasi sistema AI. Tre criteri inseparabili: se ne ottimizzi solo uno, il sistema fallisce. Clicca ogni asse.',
+s3:'La qualità ha una soglia minima',
+qa1H:'Neofiti: ≥ 90%',qa1P:'Per chi parte da zero, già il 90% della qualità di un esperto è «più conveniente»: arrivare al 90% in metà tempo è una vittoria netta.',
+qa2H:'Bravi: → 100%',qa2P:'Se sei già bravo nel tuo mestiere, il sistema deve tendere al 100%: l\'obiettivo è «avere un sistema più bravo di voi a fare il vostro lavoro».',
+qa3H:'Delega reale',qa3P:'«Quanto puoi davvero toglierti le mani?» Se devi spingere «continua, continua» a ogni passo, non hai delegato: hai solo cambiato il modo di lavorare a mano.',
+s4:'La mamma sovraccarica',
+momH:'Deleghi il task, controlli il risultato',
+momP:'La metafora: una mamma sovraccarica dice «porta fuori la spazzatura». <strong>Delega l\'esecuzione del task, ma controlla il risultato</strong>: che la spazzatura sia davvero fuori, nel cassonetto giusto. Supervisiona, non abdica. È così che vai gestita la delega all\'AI — non «fai tutto tu e fidati», ma «fai tu, io verifico».',
+q1:'«Deleghi il task, controlli il risultato. Supervisioni, non abdichi.»',
+s5:'Simulatore: è una leva?',
+levIntro:'Muovi i tre cursori e guarda il verdetto. Una leva nasce solo quando i tre assi tengono insieme: abbassane uno e vedi cosa succede.',
+levTn:'Tempo',levQn:'Qualità',levDn:'Delega',
+levTh:'Quanto è più veloce sull\'intero ciclo',
+levQh:'Supera la soglia minima accettabile?',
+levDh:'Quanto puoi davvero toglierti le mani?',
+s6:'L\'equazione della leva',
+q2:'Tempo ridotto + qualità alta + delega reale = LEVA.',
+s7:'Checkpoint',
+cpH:'Valuta un tuo sistema su T/Q/D',
+cpP:'Prendi un sistema o un assistente AI che usi davvero e passalo ai tre assi, uno per uno.',
+cpQ:'Ti fa risparmiare tempo sull\'intero ciclo, non solo sul singolo passo? L\'output supera la tua soglia minima accettabile? E puoi davvero toglierti le mani, o resti nel loop a spingere «continua»? Se anche un solo asse cade, non è ancora una leva: è lì che devi lavorare.',
+bridge:'Sai valutare se un sistema è una leva. <b>Prossimo:</b> la cross-validazione tra modelli — far criticare l\'output di un\'AI da un\'altra AI per renderlo robusto. Con questo chiudi il modulo A4.',
+foot:'Morfeus — La fusione umano + AI'
+},
+en:{
+kicker:'Lesson A4.7',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Human + AI fusion',
+h1:'Human + AI fusion (the T/Q/D framework)',
+lede:'An AI system isn\'t judged "good" or "bad." You assess it on three axes together — Time, Quality, Delegation — and only when all three hold does it become a real lever. Here you learn the T/Q/D framework and figure out when a system is truly worth it.',
+s1:'"Would you buy it?" → "It depends"',
+sellIntro:'Start with a sales question. If someone offers you a system that does a boring job for you, the right answer is never a flat yes: it\'s "it depends." And it\'s exactly that "it depends" that contains the framework.',
+sellH:'The sales anecdote',
+sellP:'"I\'ll give you an agent that does that boring job in <strong>half the time</strong> — would you buy it?" The honest answer is <strong>"it depends"</strong> — and it\'s the correct one. Time alone isn\'t enough: the output also has to hold up on quality, and you can\'t be stuck in a constant loop saying "keep going, keep going." Three conditions, not one.',
+s2:'The three axes: T / Q / D',
+elsIntro:'The T/Q/D framework, developed by us, is the lens for assessing any AI system. Three inseparable criteria: optimize only one and the system fails. Click each axis.',
+s3:'Quality has a minimum threshold',
+qa1H:'Beginners: ≥ 90%',qa1P:'For someone starting from zero, even 90% of an expert\'s quality is "more convenient": reaching 90% in half the time is a clear win.',
+qa2H:'Skilled: → 100%',qa2P:'If you\'re already good at your craft, the system must trend toward 100%: the goal is "to have a system better than you at doing your job."',
+qa3H:'Real delegation',qa3P:'"How much can you really take your hands off?" If you have to push "keep going, keep going" at every step, you haven\'t delegated: you\'ve just changed how you work by hand.',
+s4:'The overloaded mother',
+momH:'Delegate the task, check the result',
+momP:'The metaphor: an overloaded mother says "take out the trash." <strong>She delegates executing the task, but checks the result</strong>: that the trash is actually out, in the right bin. She supervises, she doesn\'t abdicate. That\'s how delegation to AI should be handled — not "do everything and trust it," but "you do it, I verify."',
+q1:'"Delegate the task, check the result. Supervise, don\'t abdicate."',
+s5:'Simulator: is it a lever?',
+levIntro:'Move the three sliders and watch the verdict. A lever only emerges when the three axes hold together: drop one and see what happens.',
+levTn:'Time',levQn:'Quality',levDn:'Delegation',
+levTh:'How much faster across the whole cycle',
+levQh:'Does it clear the minimum acceptable threshold?',
+levDh:'How much can you really take your hands off?',
+s6:'The lever equation',
+q2:'Reduced time + high quality + real delegation = LEVER.',
+s7:'Checkpoint',
+cpH:'Assess one of your systems on T/Q/D',
+cpP:'Take an AI system or assistant you actually use and run it through the three axes, one by one.',
+cpQ:'Does it save you time across the whole cycle, not just on the single step? Does the output clear your minimum acceptable threshold? And can you really take your hands off, or are you stuck in the loop pushing "keep going"? If even one axis falls, it isn\'t a lever yet: that\'s where you need to work.',
+bridge:'You can tell whether a system is a lever. <b>Next:</b> cross-validation across models — having one AI critique another\'s output to make it robust. This closes module A4.',
+foot:'Morfeus — Human + AI fusion'
+}};
+
+var ELS={it:[
+['Tempo','Lo fa più veloce sull\'intero ciclo — non solo sul singolo passo. Il guadagno si misura end-to-end.','Una bozza che ti prendeva mezza giornata esce in 20 minuti: tempo liberato sull\'intero processo.','T'],
+['Qualità','L\'output supera la soglia minima accettabile. Sotto la soglia, la velocità non conta: stai solo sbagliando più in fretta.','Soglia per neofiti: ≥ 90% dell\'esperto. Per i bravi: tendere a 100%.','Q'],
+['Delega','«Quanto puoi davvero toglierti le mani?» Niente loop continuo «continua, continua»: la delega è reale solo se il sistema procede da solo.','Da «io spingo a ogni passo» a «apro il lavoro, controllo il risultato finale».','D']
+],en:[
+['Time','It does it faster across the whole cycle — not just the single step. The gain is measured end-to-end.','A draft that took you half a day comes out in 20 minutes: time freed across the whole process.','T'],
+['Quality','The output clears the minimum acceptable threshold. Below the threshold, speed doesn\'t matter: you\'re just making mistakes faster.','Threshold for beginners: ≥ 90% of the expert. For the skilled: trend toward 100%.','Q'],
+['Delegation','"How much can you really take your hands off?" No constant "keep going, keep going" loop: delegation is real only if the system proceeds on its own.','From "I push at every step" to "I open the work, check the final result."','D']
+]};
+
+var VTXT={it:{
+lever:['LEVA','Tutti e tre gli assi tengono: tempo ridotto, qualità sopra soglia, delega reale. Questo è un sistema che merita di essere comprato e usato.'],
+time:['Non è una leva','Manca il TEMPO. Se non ti fa risparmiare sull\'intero ciclo, non c\'è guadagno reale — anche se la qualità e la delega ci sono.'],
+qual:['Non è una leva','Manca la QUALITÀ. Sotto la soglia minima stai solo «sbagliando più in fretta»: velocità e delega non bastano a salvare l\'output.'],
+dele:['Non è una leva','Manca la DELEGA. Se resti nel loop «continua, continua», non hai delegato nulla: hai solo cambiato il modo di lavorare a mano.'],
+multi:['Non è una leva','Più di un asse è basso. La leva nasce solo quando Tempo, Qualità e Delega tengono insieme: alza quelli rossi.']
+},en:{
+lever:['LEVER','All three axes hold: reduced time, quality above threshold, real delegation. This is a system worth buying and using.'],
+time:['Not a lever','TIME is missing. If it doesn\'t save you across the whole cycle, there\'s no real gain — even with quality and delegation in place.'],
+qual:['Not a lever','QUALITY is missing. Below the minimum threshold you\'re just "making mistakes faster": speed and delegation can\'t save the output.'],
+dele:['Not a lever','DELEGATION is missing. If you\'re stuck in the "keep going" loop, you haven\'t delegated anything: you\'ve just changed how you work by hand.'],
+multi:['Not a lever','More than one axis is low. A lever only emerges when Time, Quality and Delegation hold together: raise the red ones.']
+}};
+
+var LANG='it',curEl=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('els').innerHTML=ELS[LANG].map(function(el,i){var tag=el[3]?'<span class="eltag">'+el[3]+'</span>':'';return '<div class="el'+(i===curEl?' on':'')+'" onclick="showEl('+i+')"><div class="en">'+el[3]+'</div><div class="eb"><div class="et">'+el[0]+' '+tag+'</div><div class="ed">'+el[1]+'</div></div><i class="ti ti-chevron-right ei"></i></div>'}).join('');
+  showEl(curEl);
+  levUpdate();
+}
+function showEl(i){curEl=i;document.querySelectorAll('#els .el').forEach(function(x,k){x.classList.toggle('on',k===i)});var el=ELS[LANG][i];document.getElementById('elDetail').innerHTML='<p><b>'+el[0]+'.</b> '+el[1]+'</p><div class="ex">'+el[2]+'</div>'}
+
+var LEVLBL={it:['basso','medio','alto'],en:['low','mid','high']};
+function levUpdate(){
+  var t=+document.getElementById('rT').value,q=+document.getElementById('rQ').value,d=+document.getElementById('rD').value;
+  document.getElementById('vT').textContent=LEVLBL[LANG][t];
+  document.getElementById('vQ').textContent=LEVLBL[LANG][q];
+  document.getElementById('vD').textContent=LEVLBL[LANG][d];
+  var low=[];if(t<2)low.push('time');if(q<2)low.push('qual');if(d<2)low.push('dele');
+  var v=document.getElementById('verdict'),tt=document.getElementById('vtTitle'),dd=document.getElementById('vtDesc');
+  var key,cls;
+  if(low.length===0){key='lever';cls='lever'}
+  else if(low.length>1){key='multi';cls='no'}
+  else{key=low[0];cls='no'}
+  var txt=VTXT[LANG][key];
+  v.className='verdict '+cls;
+  tt.innerHTML='<i class="ti '+(cls==='lever'?'ti-bolt':'ti-alert-triangle')+'"></i>'+txt[0];
+  dd.textContent=txt[1];
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

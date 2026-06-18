@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costruire il vostro Team AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--amber:#BA7517;--amber-soft:#faf0db;--amber-line:#ecd3a0;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--amber:#EF9F27;--amber-soft:#3a2a0d;--amber-line:#6a4d1a;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* hook */
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+/* profiles */
+.hint{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 16px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.hint i{color:var(--accent)}
+.profiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0}
+.profile{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 16px;cursor:pointer;transition:.2s;text-align:center}
+.profile:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.profile.active{border-color:var(--accent);background:var(--accent-soft)}
+.profile .p-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 12px}
+.profile[data-p="0"] .p-icon{background:var(--teal-soft);color:var(--teal)}
+.profile[data-p="1"] .p-icon{background:var(--blue-soft);color:var(--blue)}
+.profile[data-p="2"] .p-icon{background:var(--amber-soft);color:var(--amber)}
+.profile h3{font-size:15px;font-weight:600;margin-bottom:3px}
+.profile .p-sub{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.profile-detail{background:var(--card);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 24px;margin-top:14px}
+.profile-detail h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.profile-detail p{font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:12px}
+.profile-detail .leverage{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:13px;color:var(--ink-2);line-height:1.55}
+.profile-detail .leverage i{color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px}
+.profile-detail .leverage strong{color:var(--ink);font-weight:600}
+/* playbook */
+.playbook{display:flex;flex-direction:column;gap:10px;margin:0}
+.pb-step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;cursor:pointer;transition:.2s}
+.pb-step:hover{border-color:var(--line-2)}
+.pb-step.active{border-color:var(--accent)}
+.pb-head{display:flex;gap:16px;align-items:flex-start}
+.pb-num{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);border:1.5px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;flex-shrink:0;transition:.2s}
+.pb-step.active .pb-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pb-text{flex:1}
+.pb-text h4{font-size:15px;font-weight:600;margin-bottom:2px}
+.pb-text .pb-tag{font-size:13px;color:var(--ink-3)}
+.pb-chev{font-size:18px;color:var(--ink-3);transition:transform .25s;margin-top:7px}
+.pb-step.active .pb-chev{transform:rotate(180deg);color:var(--accent)}
+.pb-expand{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.pb-step.active .pb-expand{max-height:280px}
+.pb-expand-inner{padding-top:14px;margin-top:14px;border-top:1px dashed var(--line-2);font-size:14px;color:var(--ink-2);line-height:1.7}
+/* flywheel */
+.flywheel{display:flex;align-items:center;justify-content:center;gap:0;margin:0;flex-wrap:wrap;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:26px 16px}
+.fw-step{text-align:center;padding:10px 14px}
+.fw-step .fw-label{font-size:14px;font-weight:600;margin-bottom:3px}
+.fw-step .fw-sub{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.fw-step[data-i-fw="0"] .fw-label{color:var(--teal)}
+.fw-step[data-i-fw="1"] .fw-label{color:var(--blue)}
+.fw-step[data-i-fw="2"] .fw-label{color:var(--amber)}
+.fw-step[data-i-fw="3"] .fw-label{color:var(--accent)}
+.fw-arrow{color:var(--ink-3);font-size:18px;padding:0 2px}
+/* objections */
+.objections{display:flex;flex-direction:column;gap:10px;margin:0}
+.objection{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:.2s}
+.objection:hover{border-color:var(--line-2)}
+.objection.open{border-color:var(--bad-line)}
+.obj-q{display:flex;align-items:center;gap:12px;padding:16px 20px}
+.obj-q>i{color:var(--bad);font-size:20px;flex-shrink:0}
+.obj-q span{flex:1;font-size:14px;font-weight:600;font-style:italic}
+.obj-q .obj-chev{font-size:18px;color:var(--ink-3);transition:transform .25s}
+.objection.open .obj-chev{transform:rotate(180deg);color:var(--bad)}
+.obj-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.objection.open .obj-a{max-height:240px}
+.obj-a-inner{padding:0 20px 18px 52px;font-size:14px;color:var(--ink-2);line-height:1.7}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.5;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+/* completion */
+.completion{background:var(--card);border:2px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:36px 32px;text-align:center;margin:0}
+.completion .c-icon{width:68px;height:68px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px}
+.completion h2{font-size:23px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.completion>p{font-size:15px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}
+.completion .final{margin-top:18px;padding-top:18px;border-top:1px dashed var(--line-2);font-size:15px;color:var(--accent);font-weight:600;max-width:540px;margin-left:auto;margin-right:auto}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.profiles{grid-template-columns:1fr}.flywheel{flex-direction:column}.fw-arrow{transform:rotate(90deg)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.hint{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.pb-expand{max-height:none!important}.obj-a{max-height:none!important}.pb-step,.profile,.profile-detail,.objection,.completion,.flywheel,.hook,.key,.fw-step{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 9.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Diffondere Claude</div>
+  <h1 class="rv" data-i="h1">Costruire il vostro Team AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-users-group"></i><span class="no">01</span><h2 data-i="sProfiles">Tre profili, tre strategie</h2></div>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hintText">Clicca un profilo per vedere la strategia</span></div>
+  <div class="profiles rv" id="profiles"></div>
+  <div class="profile-detail rv" id="profileDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">02</span><h2 data-i="sPlaybook">Il playbook in 5 step</h2></div>
+  <div class="hint rv"><i class="ti ti-hand-click"></i> <span data-i="hintText2">Clicca uno step per espanderlo</span></div>
+  <div class="playbook rv" id="playbook"></div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">03</span><h2 data-i="sFlywheel">Il volano dell'adozione</h2></div>
+  <div class="flywheel rv" id="flywheel"></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">04</span><h2 data-i="sObjections">Gestire le resistenze</h2></div>
+  <div class="objections rv" id="objections"></div>
+
+  <div class="key rv"><p data-i="keyphrase"></p></div>
+
+  <div class="sh rv"><i class="ti ti-trophy"></i><span class="no">05</span><h2 data-i="sCompletion">Corso completato</h2></div>
+  <div class="completion rv">
+    <div class="c-icon"><i class="ti ti-trophy"></i></div>
+    <h2 data-i="compH"></h2>
+    <p data-i="compP"></p>
+    <div class="final" data-i="compFinal"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Costruire il vostro Team AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 9.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Diffondere Claude',
+h1:'Costruire il vostro Team AI',
+lede:'Il vero moltiplicatore non è usare Claude bene da soli. È far sì che le persone intorno a voi lo usino bene.',
+hook:'«Imparare a usare Claude da soli vi rende più produttivi. Far sì che il vostro team, i vostri collaboratori, le persone intorno a voi lo usino bene: quello è il vero moltiplicatore.»',
+sProfiles:'Tre profili, tre strategie',
+hintText:'Clicca un profilo per vedere la strategia',
+sPlaybook:'Il playbook in 5 step',
+hintText2:'Clicca uno step per espanderlo',
+sFlywheel:'Il volano dell\'adozione',
+sObjections:'Gestire le resistenze',
+keyphrase:'Non diventate dipendenti da Claude. Diventate bravi a lavorare con Claude.',
+sCompletion:'Corso completato',
+compH:'Claude Unlocked — Completato',
+compP:'Setup, chat quotidiana, Projects, CoWork, contesto, Skills, MCP, workflow reali, pensiero strategico, privacy, aggiornamento continuo: ora avete un piano per diffondere tutto questo.',
+compFinal:'Non esiste un "finito" con Claude. C\'è un "iniziato". Benvenuti nell\'inizio.',
+foot:'Morfeus — Costruire il vostro Team AI'
+},
+en:{
+kicker:'Lesson 9.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Spreading Claude',
+h1:'Building your AI team',
+lede:'The real multiplier isn\'t using Claude well on your own. It\'s getting the people around you to use it well.',
+hook:'"Learning to use Claude on your own makes you more productive. Getting your team, your collaborators, the people around you to use it well: that\'s the real multiplier."',
+sProfiles:'Three profiles, three strategies',
+hintText:'Click a profile to see the strategy',
+sPlaybook:'The 5-step playbook',
+hintText2:'Click a step to expand it',
+sFlywheel:'The adoption flywheel',
+sObjections:'Handling the resistance',
+keyphrase:'Don\'t become dependent on Claude. Become good at working with Claude.',
+sCompletion:'Course completed',
+compH:'Claude Unlocked — Completed',
+compP:'Setup, everyday chat, Projects, CoWork, context, Skills, MCP, real workflows, strategic thinking, privacy, continuous updating: now you have a plan to spread all of this.',
+compFinal:'There\'s no "finished" with Claude. There\'s a "started". Welcome to the beginning.',
+foot:'Morfeus — Building your AI team'
+}};
+
+var PROFILES={
+it:[
+['ti ti-user','Solopreneur','Voi + collaboratori','Libero professionista / Solopreneur','Il "team" siete voi e i vostri clienti o collaboratori occasionali. L\'obiettivo è standardizzare i workflow in Projects e Skills riutilizzabili.','Flessibilità di sperimentare senza resistenze organizzative.'],
+['ti ti-users','Manager','Team da coinvolgere','Manager / Team leader','Avete un team da coinvolgere. L\'obiettivo è identificare i 2-3 workflow dove Claude dà il massimo impatto, standardizzarli e diffonderli.','Potete creare standard condivisi: Projects di team, Skills di team.'],
+['ti ti-building','Professionista','Grande organizzazione','Professionista in grande organizzazione','Non avete autorità formale ma potete influenzare. L\'obiettivo è diventare il riferimento pratico: la persona che sa come si fa.','La dimostrazione concreta vale 10 volte la presentazione teorica.']
+],
+en:[
+['ti ti-user','Solopreneur','You + collaborators','Freelancer / Solopreneur','The "team" is you and your clients or occasional collaborators. The goal is to standardize the workflows into reusable Projects and Skills.','Flexibility to experiment without organizational resistance.'],
+['ti ti-users','Manager','Team to involve','Manager / Team leader','You have a team to involve. The goal is to identify the 2-3 workflows where Claude has the most impact, standardize them and spread them.','You can create shared standards: team Projects, team Skills.'],
+['ti ti-building','Professional','Large organization','Professional in a large organization','You don\'t have formal authority but you can influence. The goal is to become the practical reference: the person who knows how it\'s done.','A concrete demonstration is worth 10 times a theoretical presentation.']
+]};
+var LEVLABEL={it:'Il vostro leverage:',en:'Your leverage:'};
+
+var PLAYBOOK={
+it:[
+['Identificate i pain point reali','Chiedete: "Qual è il task che ti prende più tempo e odi fare?"','Quella è la porta d\'ingresso. Non "Claude può fare tantissime cose" ma "Claude risolve esattamente il problema che mi hai detto stamattina." Si entra dal bisogno, non dalla tecnologia.'],
+['Mostrate prima che spieghiate','Demo di 3 minuti > presentazione di 30 slide','La sequenza: aprite Claude, risolvete il loro problema specifico in tempo reale, rispondete alle domande. Solo dopo, se vogliono, spiegate come funziona. Mai il contrario.'],
+['Create risorse condivisibili','Project condivisi, Skill riutilizzabili, template di prompt','Le cose più preziose da condividere: un Project con le istruzioni del contesto di team, una Skill per il workflow più comune, un template di prompt per il task che tutti fanno ogni settimana.'],
+['Piccole vittorie visibili','Non "trasformazione digitale": un task risolto domani','Una riunione con appunti e action list in 2 minuti. Una proposta in metà tempo. Un\'analisi condivisa dicendo "ho usato Claude per questo." Le piccole vittorie creano curiosità. La curiosità genera domande. Le domande generano adozione.'],
+['Gestite le resistenze','Tre obiezioni comuni e come rispondervi','Non si cambia il comportamento delle persone con presentazioni. Si cambia con la formula: "Guarda, ti faccio vedere come ho fatto X con Claude. Ci ho messo 10 minuti invece di 2 ore."']
+],
+en:[
+['Identify the real pain points','Ask: "What\'s the task that takes you the most time and you hate doing?"','That\'s the entry point. Not "Claude can do tons of things" but "Claude solves exactly the problem you told me about this morning." You enter from the need, not from the technology.'],
+['Show before you explain','A 3-minute demo > a 30-slide presentation','The sequence: open Claude, solve their specific problem in real time, answer their questions. Only afterwards, if they want, explain how it works. Never the other way around.'],
+['Create shareable resources','Shared Projects, reusable Skills, prompt templates','The most valuable things to share: a Project with the team context instructions, a Skill for the most common workflow, a prompt template for the task everyone does every week.'],
+['Visible small wins','Not "digital transformation": one task solved tomorrow','A meeting with notes and an action list in 2 minutes. A proposal in half the time. An analysis shared by saying "I used Claude for this." Small wins create curiosity. Curiosity generates questions. Questions generate adoption.'],
+['Handle the resistance','Three common objections and how to answer them','You don\'t change people\'s behavior with presentations. You change it with the formula: "Look, let me show you how I did X with Claude. It took me 10 minutes instead of 2 hours."']
+]};
+
+var FLYWHEEL={
+it:[
+['Piccole vittorie','task risolto'],['Curiosità','"come hai fatto?"'],['Domande','"mi fai vedere?"'],['Adozione','uso quotidiano']
+],
+en:[
+['Small wins','task solved'],['Curiosity','"how did you do it?"'],['Questions','"can you show me?"'],['Adoption','daily use']
+]};
+
+var OBJECTIONS={
+it:[
+['"Non mi fido dell\'output di Claude"','Giusto: nemmeno io mi fido ciecamente. Per questo verifico sempre. Ma produrre una bozza in 5 minuti che poi rivedete in 10 è meglio che scrivere da zero in 2 ore. Il processo non cambia: cambia la velocità.'],
+['"Non ho tempo di imparare un nuovo strumento"','Il tutorial per il 90% degli usi è: apri claude.ai, descrivi quello che vuoi. Seriamente. Ci vuole un\'ora per capire le basi, e quell\'ora si recupera nella prima settimana.'],
+['"Andrà a sostituire il mio lavoro"','Claude non sostituisce il pensiero, l\'esperienza, le relazioni, il giudizio. Sostituisce il tempo che passate a formattare, riformulare, riassumere, strutturare. Il lavoro che rimane è quello che conta davvero.']
+],
+en:[
+['"I don\'t trust Claude\'s output"','Fair: I don\'t trust it blindly either. That\'s why I always verify. But producing a draft in 5 minutes that you then review in 10 is better than writing from scratch in 2 hours. The process doesn\'t change: the speed does.'],
+['"I don\'t have time to learn a new tool"','The tutorial for 90% of the uses is: open claude.ai, describe what you want. Seriously. It takes an hour to understand the basics, and that hour is recovered in the first week.'],
+['"It\'s going to replace my job"','Claude doesn\'t replace thinking, experience, relationships, judgment. It replaces the time you spend formatting, rephrasing, summarizing, structuring. The work that remains is the work that really counts.']
+]};
+
+var LANG='it',activeProfile=0,activeStep=0;
+function renderProfiles(){
+  document.getElementById('profiles').innerHTML=PROFILES[LANG].map(function(p,i){
+    return '<div class="profile'+(i===activeProfile?' active':'')+'" data-p="'+i+'" onclick="showProfile('+i+')">'+
+    '<div class="p-icon"><i class="'+p[0]+'"></i></div>'+
+    '<h3>'+p[1]+'</h3><div class="p-sub">'+p[2]+'</div></div>';
+  }).join('');
+  renderProfileDetail();
+}
+function renderProfileDetail(){
+  var p=PROFILES[LANG][activeProfile];
+  document.getElementById('profileDetail').innerHTML=
+    '<h4>'+p[3]+'</h4><p>'+p[4]+'</p>'+
+    '<div class="leverage"><i class="ti ti-bolt"></i><span><strong>'+LEVLABEL[LANG]+'</strong> '+p[5]+'</span></div>';
+}
+function showProfile(i){activeProfile=i;renderProfiles()}
+function renderPlaybook(){
+  document.getElementById('playbook').innerHTML=PLAYBOOK[LANG].map(function(s,i){
+    return '<div class="pb-step'+(i===activeStep?' active':'')+'" onclick="toggleStep('+i+')">'+
+    '<div class="pb-head"><div class="pb-num">'+(i+1)+'</div>'+
+    '<div class="pb-text"><h4>'+s[0]+'</h4><div class="pb-tag">'+s[1]+'</div></div>'+
+    '<i class="ti ti-chevron-down pb-chev"></i></div>'+
+    '<div class="pb-expand"><div class="pb-expand-inner">'+s[2]+'</div></div></div>';
+  }).join('');
+}
+function toggleStep(i){activeStep=(activeStep===i?-1:i);renderPlaybook()}
+function renderFlywheel(){
+  var out='';
+  FLYWHEEL[LANG].forEach(function(f,i){
+    out+='<div class="fw-step" data-i-fw="'+i+'"><div class="fw-label">'+f[0]+'</div><div class="fw-sub">'+f[1]+'</div></div>';
+    if(i<FLYWHEEL[LANG].length-1)out+='<div class="fw-arrow"><i class="ti ti-arrow-right"></i></div>';
+  });
+  document.getElementById('flywheel').innerHTML=out;
+}
+var objOpen=-1;
+function renderObjections(){
+  document.getElementById('objections').innerHTML=OBJECTIONS[LANG].map(function(o,i){
+    return '<div class="objection'+(i===objOpen?' open':'')+'" onclick="toggleObj('+i+')">'+
+    '<div class="obj-q"><i class="ti ti-alert-circle"></i><span>'+o[0]+'</span><i class="ti ti-chevron-down obj-chev"></i></div>'+
+    '<div class="obj-a"><div class="obj-a-inner">'+o[1]+'</div></div></div>';
+  }).join('');
+}
+function toggleObj(i){objOpen=(objOpen===i?-1:i);renderObjections()}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderProfiles();renderPlaybook();renderFlywheel();renderObjections();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

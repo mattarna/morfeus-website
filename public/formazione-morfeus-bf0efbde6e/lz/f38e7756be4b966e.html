@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pensiero da architetto & scomposizione — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b7;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eab4ad;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5e45;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.eos{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.eosc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 12px;text-align:center}
+.eosc .ei{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px}
+.eosc h4{font-size:13.5px;font-weight:600;margin-bottom:3px}.eosc p{font-size:11.5px;color:var(--ink-2);line-height:1.4}
+.lazy{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:16px}
+.lazy i{color:var(--agent);font-size:24px;flex-shrink:0}.lazy p{font-size:14px;color:var(--ink-2)}.lazy b{color:var(--agent)}
+.decompose{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.dpick{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.dpb{font-family:var(--mono);font-size:12px;font-weight:600;padding:7px 13px;border-radius:30px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2);cursor:pointer;transition:.18s}
+.dpb:hover{border-color:var(--line-2)}.dpb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dleg{font-size:12px;color:var(--ink-3);margin-bottom:12px;display:flex;gap:16px;flex-wrap:wrap}
+.dleg span{display:flex;align-items:center;gap:6px}.dleg .dot{width:11px;height:11px;border-radius:3px}
+.dot.g{background:var(--good)}.dot.r{background:var(--bad)}
+.steps{display:flex;flex-direction:column;gap:7px}
+.step{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:var(--r);padding:11px 14px;cursor:pointer;transition:.16s;background:var(--bg-2)}
+.step:hover{border-color:var(--line-2)}
+.step.green{background:var(--good-soft);border-color:var(--good-line)}
+.step.red{background:var(--bad-soft);border-color:var(--bad-line)}
+.step .sn{width:26px;height:26px;border-radius:50%;background:var(--bg-3);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step.green .sn{background:var(--good);color:#fff}.step.red .sn{background:var(--bad);color:#fff}
+.step .st{font-size:13.5px;flex:1}
+.step .stag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;opacity:0;transition:.16s}
+.step.green .stag,.step.red .stag{opacity:1}
+.step.green .stag{color:var(--good)}.step.red .stag{color:var(--bad)}
+.dtally{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2);font-size:13.5px;color:var(--ink-2)}
+.dtally b{color:var(--ink)}
+.dhint{font-size:12.5px;color:var(--ink-3);margin-top:6px;font-style:italic}
+.tree{display:flex;flex-direction:column;gap:10px}
+.tnode{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.tnode .tq{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;gap:8px;align-items:center}.tnode .tq i{color:var(--accent)}
+.tbranch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tb{border-radius:var(--r);padding:10px 12px;font-size:13px}
+.tb.no{background:var(--bad-soft);border:1px solid var(--bad-line)}.tb.no b{color:var(--bad)}
+.tb.yes{background:var(--good-soft);border:1px solid var(--good-line)}.tb.yes b{color:var(--good)}
+.tb p{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.abcd{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.abc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;display:flex;gap:12px}
+.abc .al{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.abc h4{font-size:13.5px;font-weight:600;margin-bottom:2px}.abc p{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.eos{grid-template-columns:1fr 1fr}.tbranch,.abcd{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.eosc,.decompose,.step,.tnode,.abc,.cp,.key,.lazy{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A3.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo Morfeus</div>
+  <h1 class="rv" data-i="h1">Pensiero da architetto &amp; scomposizione</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-tools-kitchen-2"></i><span class="no">01</span><h2 data-i="s1">Il mindset dell'architetto</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-cake"></i></div><div><h4 data-i="note1H">Se la ricetta fa schifo, la torta fa schifo</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="cakeKey"></p><div class="cap" data-i="cakeCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-bed"></i><span class="no">02</span><h2 data-i="s2">Essere «pigri» (nel modo giusto)</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:0" data-i="lazyP"></p>
+  <div class="lazy rv"><i class="ti ti-copy"></i><p data-i-html="lazyQuote"></p></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">03</span><h2 data-i="s3">Il processo EOS: cinque domande</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="eosIntro"></p>
+  <div class="eos rv">
+    <div class="eosc"><div class="ei"><i class="ti ti-user"></i></div><h4 data-i="eos1H">Chi</h4><p data-i="eos1P"></p></div>
+    <div class="eosc"><div class="ei"><i class="ti ti-box"></i></div><h4 data-i="eos2H">Cosa</h4><p data-i="eos2P"></p></div>
+    <div class="eosc"><div class="ei"><i class="ti ti-map-2"></i></div><h4 data-i="eos3H">Dove</h4><p data-i="eos3P"></p></div>
+    <div class="eosc"><div class="ei"><i class="ti ti-clock"></i></div><h4 data-i="eos4H">Quando</h4><p data-i="eos4P"></p></div>
+    <div class="eosc"><div class="ei"><i class="ti ti-settings"></i></div><h4 data-i="eos5H">Come</h4><p data-i="eos5P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-binary-tree"></i><span class="no">04</span><h2 data-i="s4">Scomporre in micro-step</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-zoom-in"></i></div><div><h4 data-i="microH">Minimo 8-10 micro-step</h4><p data-i-html="microP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-cursor-text"></i><span class="no">05</span><h2 data-i="s5">Decompositore: dove entra l'AI?</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="decIntro"></p>
+  <div class="decompose rv">
+    <div class="dpick" id="dpick"></div>
+    <div class="dleg"><span><span class="dot g"></span><span data-i="legGreen">Verde = l'AI può entrare</span></span><span><span class="dot r"></span><span data-i="legRed">Rosso = resta umano</span></span></div>
+    <div class="steps" id="steps"></div>
+    <div class="dtally" id="dtally"></div>
+    <div class="dhint" data-i="decHint"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route-2"></i><span class="no">06</span><h2 data-i="s6">Il decision tree verde/rosso</h2></div>
+  <div class="tree rv">
+    <div class="tnode"><div class="tq"><i class="ti ti-help-circle"></i> <span data-i="treeQ"></span></div>
+      <div class="tbranch">
+        <div class="tb no"><b data-i="treeNoH">Rosso → umano</b><p data-i="treeNoP"></p></div>
+        <div class="tb yes"><b data-i="treeYesH">Verde → l'AI può entrare</b><p data-i="treeYesP"></p></div>
+      </div>
+    </div>
+    <div class="tnode"><div class="tq"><i class="ti ti-arrows-split"></i> <span data-i="tree2Q"></span></div>
+      <div class="tbranch">
+        <div class="tb yes" style="background:var(--accent-soft);border-color:var(--accent-line)"><b style="color:var(--accent)" data-i="tree2aH">Prompt</b><p data-i="tree2aP"></p></div>
+        <div class="tb yes" style="background:var(--accent-soft);border-color:var(--accent-line)"><b style="color:var(--accent)" data-i="tree2bH">Assistente</b><p data-i="tree2bP"></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">07</span><h2 data-i="s7">La checklist A-B-C-D</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="abcdIntro"></p>
+  <div class="abcd rv">
+    <div class="abc"><div class="al">A</div><div><h4 data-i="abcAH">Forma</h4><p data-i="abcAP"></p></div></div>
+    <div class="abc"><div class="al">B</div><div><h4 data-i="abcBH">Misura</h4><p data-i="abcBP"></p></div></div>
+    <div class="abc"><div class="al">C</div><div><h4 data-i="abcCH">Gestione</h4><p data-i="abcCP"></p></div></div>
+    <div class="abc"><div class="al">D</div><div><h4 data-i="abcDH">Aggiorna</h4><p data-i="abcDP"></p></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">08</span><h2 data-i="s8">L'AI amplifica il caos</h2></div>
+  <div class="key rv"><p data-i="chaosKey"></p></div>
+  <div class="cp rv" style="margin-top:20px">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Prima la chiarezza, poi l'AI</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Pensiero da architetto &amp; scomposizione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A3.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo Morfeus',
+h1:'Pensiero da architetto & scomposizione',
+lede:'Smetti di «fare task» e inizia a «scomporre processi». L\'AI non è brava a improvvisare: è bravissima a replicare un processo chiaro. Il tuo lavoro diventa progettare quel processo — come un architetto.',
+s1:'Il mindset dell\'architetto',
+note1H:'Se la ricetta fa schifo, la torta fa schifo',
+note1P:'L\'architetto non esegue: <strong>identifica problemi, riconosce pattern, scompone la complessità</strong>. Un processo è un pattern, e l\'AI replica i pattern benissimo — ma replica quello che le dai. Se il processo è confuso, lo replica confuso, in scala.',
+cakeKey:'«Se la ricetta fa schifo, la torta farà schifo anche su scala industriale.»',
+cakeCap:'L\'AI industrializza il tuo processo. Industrializza un buon processo → produzione di valore. Industrializza un processo scadente → produzione di scarti, più velocemente.',
+s2:'Essere «pigri» (nel modo giusto)',
+lazyP:'La pigrizia intelligente è una virtù dell\'architetto: non partire mai da zero se hai già un esempio che funziona. L\'AI fa pattern matching diretto — dalle il modello e lo imita.',
+lazyQuote:'<b>«Se ho 10 preventivi perfetti, li carico e dico: falli così.»</b> Non spieghi a parole come si fa: dai gli esempi giusti e lasci che l\'AI estragga il pattern.',
+s3:'Il processo EOS: cinque domande',
+eosIntro:'Per documentare qualsiasi processo bastano cinque domande. Sono il modo più semplice per trasformare qualcosa che «sai fare» in qualcosa che puoi delegare.',
+eos1H:'Chi',eos1P:'Chi è coinvolto, chi è responsabile.',
+eos2H:'Cosa',eos2P:'Cosa va prodotto, qual è l\'output.',
+eos3H:'Dove',eos3P:'Dove vive: file, piattaforma, canale.',
+eos4H:'Quando',eos4P:'Trigger e tempistiche del processo.',
+eos5H:'Come',eos5P:'I passi concreti, nell\'ordine giusto.',
+s4:'Scomporre in micro-step',
+microH:'Minimo 8-10 micro-step',
+microP:'L\'AI <strong>non gestisce task ambigue o macro</strong>. «Scrivi una landing page» è troppo grande. Spezzalo in almeno 8-10 micro-step — anche quelli che a te sembrano banali. Quello che per te è un gesto automatico, per l\'AI è un passo da esplicitare.',
+s5:'Decompositore: dove entra l\'AI?',
+decIntro:'Scegli un processo, poi clicca ogni step per marcarlo. Verde = l\'AI può entrare. Rosso = resta umano. Stai pensando da architetto.',
+legGreen:'Verde = l\'AI può entrare',legRed:'Rosso = resta umano',
+decHint:'Suggerimento: i passi ripetitivi e a basso giudizio tendono al verde; quelli con giudizio, relazione o decisione strategica restano rossi.',
+s6:'Il decision tree verde/rosso',
+treeQ:'Per ogni micro-step: l\'AI può entrare?',
+treeNoH:'Rosso → umano',treeNoP:'Richiede giudizio, relazione o decisione strategica. Resta a te.',
+treeYesH:'Verde → l\'AI può entrare',treeYesP:'Ripetitivo, regole chiare, basso giudizio. Delegabile.',
+tree2Q:'Se è verde: basta un prompt o serve un assistente?',
+tree2aH:'Prompt',tree2aP:'Step singolo, una richiesta ben strutturata basta.',
+tree2bH:'Assistente',tree2bP:'Ricorre spesso e ha bisogno di contesto e regole stabili.',
+s7:'La checklist A-B-C-D',
+abcdIntro:'Prima di dare un processo all\'AI, passalo a questa griglia. Se uno solo dei quattro punti manca, il processo non è ancora pronto per essere delegato.',
+abcAH:'Forma',abcAP:'È chiara? Scritta in modo che un altro la segua senza di te.',
+abcBH:'Misura',abcBP:'Ha dei KPI? Sai dire quando il risultato è buono.',
+abcCH:'Gestione',abcCP:'È seguita davvero? Esiste sulla carta ed è anche viva.',
+abcDH:'Aggiorna',abcDP:'È attuale? Una procedura vecchia è burocrazia, non leva.',
+s8:'L\'AI amplifica il caos',
+chaosKey:'Prima la chiarezza operativa, poi l\'AI, poi l\'automazione. L\'AI amplifica il caos.',
+cpH:'Prima la chiarezza, poi l\'AI',
+cpP:'È l\'errore più comune: buttare l\'AI su un processo confuso sperando che lo sistemi. Non lo fa: lo esegue confuso, più in fretta. La sequenza è una sola — prima metti ordine, poi deleghi, e solo alla fine automatizzi.',
+cpQ:'Prendi un processo che vuoi delegare. È già abbastanza chiaro da farlo seguire a una persona nuova senza di te? Se no, l\'AI non lo salverà: parti da lì.',
+foot:'Morfeus — Pensiero da architetto & scomposizione'
+},
+en:{
+kicker:'Lesson A3.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The Morfeus method',
+h1:'Architect thinking & process decomposition',
+lede:'Stop "doing tasks" and start "decomposing processes." AI isn\'t good at improvising: it\'s excellent at replicating a clear process. Your job becomes designing that process — like an architect.',
+s1:'The architect\'s mindset',
+note1H:'If the recipe is bad, the cake is bad',
+note1P:'The architect doesn\'t execute: they <strong>identify problems, recognize patterns, break down complexity</strong>. A process is a pattern, and AI replicates patterns beautifully — but it replicates what you give it. If the process is messy, it replicates the mess, at scale.',
+cakeKey:'"If the recipe is bad, the cake will be bad at industrial scale too."',
+cakeCap:'AI industrializes your process. Industrialize a good process → value production. Industrialize a poor one → waste production, faster.',
+s2:'Being "lazy" (the right way)',
+lazyP:'Smart laziness is an architect\'s virtue: never start from scratch if you already have a working example. AI does direct pattern matching — give it the model and it imitates it.',
+lazyQuote:'<b>"If I have 10 perfect quotes, I load them and say: make them like this."</b> You don\'t explain in words how it\'s done: you give the right examples and let the AI extract the pattern.',
+s3:'The EOS process: five questions',
+eosIntro:'To document any process, five questions are enough. They\'re the simplest way to turn something you "know how to do" into something you can delegate.',
+eos1H:'Who',eos1P:'Who is involved, who is responsible.',
+eos2H:'What',eos2P:'What must be produced, the output.',
+eos3H:'Where',eos3P:'Where it lives: file, platform, channel.',
+eos4H:'When',eos4P:'Triggers and timing of the process.',
+eos5H:'How',eos5P:'The concrete steps, in the right order.',
+s4:'Decompose into micro-steps',
+microH:'At least 8-10 micro-steps',
+microP:'AI <strong>can\'t handle ambiguous or macro tasks</strong>. "Write a landing page" is too big. Break it into at least 8-10 micro-steps — even the ones that seem trivial to you. What\'s an automatic gesture for you is, for the AI, a step to spell out.',
+s5:'Decomposer: where does AI enter?',
+decIntro:'Pick a process, then click each step to mark it. Green = AI can enter. Red = stays human. You\'re thinking like an architect.',
+legGreen:'Green = AI can enter',legRed:'Red = stays human',
+decHint:'Hint: repetitive, low-judgment steps tend to go green; those involving judgment, relationships or strategic decisions stay red.',
+s6:'The green/red decision tree',
+treeQ:'For each micro-step: can AI enter?',
+treeNoH:'Red → human',treeNoP:'Requires judgment, relationship or strategic decision. Stays with you.',
+treeYesH:'Green → AI can enter',treeYesP:'Repetitive, clear rules, low judgment. Delegable.',
+tree2Q:'If green: is a prompt enough, or do you need an assistant?',
+tree2aH:'Prompt',tree2aP:'Single step, one well-structured request is enough.',
+tree2bH:'Assistant',tree2bP:'Recurs often and needs stable context and rules.',
+s7:'The A-B-C-D checklist',
+abcdIntro:'Before handing a process to AI, run it through this grid. If even one of the four points is missing, the process isn\'t ready to be delegated yet.',
+abcAH:'Form',abcAP:'Is it clear? Written so someone else can follow it without you.',
+abcBH:'Measure',abcBP:'Does it have KPIs? You can tell when the result is good.',
+abcCH:'Managed',abcCP:'Is it actually followed? It exists on paper and is alive.',
+abcDH:'Updated',abcDP:'Is it current? An old procedure is bureaucracy, not leverage.',
+s8:'AI amplifies chaos',
+chaosKey:'Operational clarity first, then AI, then automation. AI amplifies chaos.',
+cpH:'Clarity first, then AI',
+cpP:'It\'s the most common mistake: throwing AI at a messy process hoping it\'ll fix it. It won\'t: it executes the mess, faster. There\'s only one sequence — put things in order first, then delegate, and only at the end automate.',
+cpQ:'Take a process you want to delegate. Is it already clear enough for a new person to follow without you? If not, AI won\'t save it: start there.',
+foot:'Morfeus — Architect thinking & process decomposition'
+}};
+
+// Decomposer processes: [stepText, isGreen]
+var PROC={it:[
+{name:'Preventivo cliente',steps:[
+['Ricevi la richiesta del cliente via email',true],
+['Capisci il bisogno reale e fai le domande mancanti',false],
+['Recupera i 10 preventivi modello dall\'archivio',true],
+['Compila il preventivo seguendo il formato standard',true],
+['Calcola prezzi e margini secondo il listino',true],
+['Decidi se applicare uno sconto strategico',false],
+['Rileggi e correggi il tono sul cliente specifico',true],
+['Invia e gestisci la relazione/negoziazione',false]
+]},
+{name:'Report mensile',steps:[
+['Esporta i dati grezzi dalle piattaforme',true],
+['Pulisci e normalizza i dati',true],
+['Calcola le metriche chiave del mese',true],
+['Confronta con il mese precedente',true],
+['Interpreta cosa significano gli scostamenti',false],
+['Scrivi la bozza di commento narrativo',true],
+['Decidi le 3 priorità strategiche da segnalare',false],
+['Formatta il report nel template aziendale',true],
+['Presenta i risultati al team',false]
+]},
+{name:'Post LinkedIn',steps:[
+['Scegli il tema in base alla strategia di brand',false],
+['Raccogli spunti e fonti sul tema',true],
+['Genera 5 angoli/hook alternativi',true],
+['Scegli l\'angolo più allineato alla tua voce',false],
+['Scrivi la bozza del post nel tuo tono',true],
+['Adatta la lunghezza e il formato per il feed',true],
+['Decidi se pubblicarlo o tenerlo in standby',false],
+['Rispondi ai commenti e costruisci relazione',false]
+]}
+],en:[
+{name:'Client quote',steps:[
+['Receive the client\'s request via email',true],
+['Understand the real need and ask missing questions',false],
+['Pull the 10 model quotes from the archive',true],
+['Fill in the quote following the standard format',true],
+['Calculate prices and margins per the price list',true],
+['Decide whether to apply a strategic discount',false],
+['Re-read and adjust the tone for this client',true],
+['Send and manage the relationship/negotiation',false]
+]},
+{name:'Monthly report',steps:[
+['Export raw data from the platforms',true],
+['Clean and normalize the data',true],
+['Compute the month\'s key metrics',true],
+['Compare with the previous month',true],
+['Interpret what the variances mean',false],
+['Write the draft narrative commentary',true],
+['Decide the 3 strategic priorities to flag',false],
+['Format the report in the company template',true],
+['Present the results to the team',false]
+]},
+{name:'LinkedIn post',steps:[
+['Pick the topic based on brand strategy',false],
+['Gather angles and sources on the topic',true],
+['Generate 5 alternative angles/hooks',true],
+['Choose the angle most aligned with your voice',false],
+['Write the draft post in your tone',true],
+['Adapt length and format for the feed',true],
+['Decide whether to publish or hold it',false],
+['Reply to comments and build relationships',false]
+]}
+]};
+
+var LANG='it',curP=0,marked={};
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderPick();renderSteps();
+}
+function renderPick(){
+  document.getElementById('dpick').innerHTML=PROC[LANG].map(function(p,i){return '<button class="dpb'+(i===curP?' on':'')+'" onclick="pickProc('+i+')">'+p[LANG==='it'?'name':'name']+'</button>'}).join('');
+}
+function pickProc(i){curP=i;marked={};renderPick();renderSteps()}
+function renderSteps(){
+  var steps=PROC[LANG][curP].steps;
+  var gtag=LANG==='it'?'AI':'AI',rtag=LANG==='it'?'UMANO':'HUMAN';
+  document.getElementById('steps').innerHTML=steps.map(function(s,i){
+    var cls=marked[i]==null?'':(marked[i]?'green':'red');
+    var tag=marked[i]==null?'':(marked[i]?gtag:rtag);
+    return '<div class="step '+cls+'" onclick="toggleStep('+i+')"><div class="sn">'+(i+1)+'</div><div class="st">'+s[0]+'</div><div class="stag">'+tag+'</div></div>';
+  }).join('');
+  renderTally();
+}
+function toggleStep(i){
+  // cycle: unmarked -> green -> red -> unmarked
+  if(marked[i]==null)marked[i]=true;else if(marked[i]===true)marked[i]=false;else delete marked[i];
+  renderSteps();
+}
+function renderTally(){
+  var steps=PROC[LANG][curP].steps;
+  var g=0,r=0,correct=0,decided=0;
+  steps.forEach(function(s,i){
+    if(marked[i]!=null){decided++;if(marked[i]===true)g++;else r++;if(marked[i]===s[1])correct++;}
+  });
+  var el=document.getElementById('dtally');
+  if(decided===0){el.innerHTML=LANG==='it'?'Clicca gli step per marcarli (verde → rosso → annulla).':'Click the steps to mark them (green → red → clear).';return;}
+  var done=decided===steps.length;
+  if(LANG==='it'){
+    el.innerHTML='Marcati <b>'+decided+'/'+steps.length+'</b> · <span style="color:var(--good)">'+g+' verdi</span> · <span style="color:var(--bad)">'+r+' rossi</span>'+(done?' · <b>'+correct+'/'+steps.length+'</b> allineati al modello Morfeus.':'');
+  }else{
+    el.innerHTML='Marked <b>'+decided+'/'+steps.length+'</b> · <span style="color:var(--good)">'+g+' green</span> · <span style="color:var(--bad)">'+r+' red</span>'+(done?' · <b>'+correct+'/'+steps.length+'</b> aligned with the Morfeus model.':'');
+  }
+}
+function setLang(l){LANG=l;marked={};document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

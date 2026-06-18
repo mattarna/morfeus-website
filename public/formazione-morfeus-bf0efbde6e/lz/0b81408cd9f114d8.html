@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cervello Aziendale — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* read/write brain interactive */
+.brainsim{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.bs-switch{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px;gap:4px;max-width:430px;margin:0 auto 18px}
+.bs-switch button{flex:1;background:transparent;border:none;border-radius:30px;padding:10px 8px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--ink-3);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.bs-switch button i{font-size:16px}
+.bs-switch button.on{color:#fff}
+.bs-switch button[data-bs="read"].on{background:var(--accent)}
+.bs-switch button[data-bs="write"].on{background:var(--agent)}
+.bs-stage{display:flex;gap:14px;align-items:center;justify-content:center;min-height:130px}
+.bs-side{flex:1;text-align:center}
+.bs-core{width:84px;height:84px;border-radius:21px;display:flex;align-items:center;justify-content:center;font-size:40px;background:var(--accent);color:#fff;flex-shrink:0;transition:.3s}
+.bs-stage.write .bs-core{background:var(--agent)}
+.bs-flow{font-size:30px;transition:.3s}
+.bs-stage.read .bs-flow{color:var(--accent)}
+.bs-stage.write .bs-flow{color:var(--agent)}
+.bs-agent{width:60px;height:60px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--ink-2);margin:0 auto}
+.bs-cap{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:8px;color:var(--ink-3)}
+.bs-text{margin-top:16px;text-align:center;font-size:14.5px;color:var(--ink-2);max-width:560px;margin-left:auto;margin-right:auto}
+.bs-text strong{color:var(--ink)}
+.bs-stage.read .bs-cap.act{color:var(--accent)}.bs-stage.write .bs-cap.act{color:var(--agent)}
+
+/* KB vs Cervello compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc.kb{background:var(--bg-2)}
+.cmpc.brain{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:12px}
+.cmpc.kb .cmptag{background:var(--ink-3);color:#fff}.cmpc.brain .cmptag{background:var(--accent);color:#fff}
+.cmprow{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);padding:7px 0;border-top:1px dashed var(--line-2)}
+.cmprow:first-of-type{border-top:none}
+.cmprow i{font-size:15px;flex-shrink:0;margin-top:2px}
+.cmpc.kb .cmprow i{color:var(--ink-3)}.cmpc.brain .cmprow i{color:var(--accent)}
+.cmprow b{color:var(--ink);font-weight:600}
+.cmprow .dim{color:var(--ink-3);font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:1px}
+
+/* bottom-up 3 levels */
+.bu{display:flex;flex-direction:column;gap:0}
+.bulvl{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.buconn{height:22px;width:2px;background:var(--accent-line);margin:0 auto;position:relative}
+.buconn::after{content:'\2191';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:15px;color:var(--accent);background:var(--bg);padding:0 3px;font-family:var(--mono)}
+.bunum{width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.bulvl.l3 .bunum{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bulvl .bub h4{font-size:14.5px;font-weight:600;margin-bottom:3px}
+.bulvl .bub h4 .tag{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;margin-left:6px}
+.bulvl .bub p{font-size:13px;color:var(--ink-2);line-height:1.5}
+
+/* 6 steps clickable */
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.stp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:12px 7px;cursor:pointer;transition:.18s;text-align:center}
+.stp:hover{border-color:var(--line-2)}.stp.on{border-color:var(--accent);background:var(--accent-soft)}
+.stp .sn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.stp.on .sn{color:var(--accent)}
+.stp .si{width:34px;height:34px;border-radius:10px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:17px;margin:6px auto 7px;transition:.18s}
+.stp.on .si{background:var(--accent);color:#fff}
+.stp .st{font-size:11.5px;font-weight:600;line-height:1.25}
+.stpdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.stpdetail h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.stpdetail p{font-size:14.5px;color:var(--ink-2)}.stpdetail p strong{color:var(--ink);font-weight:600}
+
+/* folders "start here" */
+.fld{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.fldrow{display:flex;gap:11px;align-items:center;padding:9px 11px;border-radius:var(--r);font-size:13.5px;color:var(--ink-2);transition:.15s}
+.fldrow i{font-size:18px;flex-shrink:0}
+.fldrow.hi{background:var(--agent-soft);border:1px solid var(--agent-line)}
+.fldrow.hi i{color:var(--agent)}.fldrow:not(.hi) i{color:var(--accent)}
+.fldrow b{color:var(--ink);font-weight:600}
+.fldrow .fc{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-left:auto}
+.fldnest{margin-left:26px;border-left:1px dashed var(--line-2);padding-left:6px}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+.paradox{display:flex;gap:16px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px}
+.paradox .pi{width:48px;height:48px;border-radius:13px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.paradox h4{font-size:15.5px;font-weight:600;color:var(--accent);margin-bottom:5px}
+.paradox p{font-size:14.5px;color:var(--ink-2)}.paradox p strong{color:var(--ink);font-weight:600}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}.bs-core{width:64px;height:64px;font-size:30px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.bs-switch{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.brainsim,.cmpc,.bulvl,.stp,.stpdetail,.fld,.card3,.paradox,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A7.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Organizzazione intelligente</div>
+  <h1 class="rv" data-i="h1">Il Cervello Aziendale</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">01</span><h2 data-i="s1">La metafora Jarvis</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="jarvisIntro"></p>
+  <div class="note rv"><div class="ni"><i class="ti ti-cpu"></i></div><div><h4 data-i="jarvisH">Non un assistente in più: un layer condiviso</h4><p data-i-html="jarvisP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange-2"></i><span class="no">02</span><h2 data-i="s2">Leggere e scrivere sul cervello</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="bsIntro"></p>
+  <div class="brainsim rv">
+    <div class="bs-switch">
+      <button data-bs="read" class="on" onclick="setBs('read')"><i class="ti ti-download"></i> <span data-i="bsReadBtn">L'agente legge</span></button>
+      <button data-bs="write" onclick="setBs('write')"><i class="ti ti-upload"></i> <span data-i="bsWriteBtn">L'agente scrive</span></button>
+    </div>
+    <div class="bs-stage read" id="bsStage"></div>
+    <p class="bs-text" id="bsText"></p>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-versions"></i><span class="no">03</span><h2 data-i="s3">KB di un assistente vs Cervello di tutti</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="cmpIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc kb">
+      <span class="cmptag" data-i="kbTag">Knowledge base · 1 assistente</span>
+      <div class="cmprow"><i class="ti ti-user"></i><span><span class="dim" data-i="dimScope">Scope</span><span data-i-html="kb1"></span></span></div>
+      <div class="cmprow"><i class="ti ti-file"></i><span><span class="dim" data-i="dimCont">Contenuto</span><span data-i-html="kb2"></span></span></div>
+      <div class="cmprow"><i class="ti ti-lock"></i><span><span class="dim" data-i="dimDyn">Dinamismo</span><span data-i-html="kb3"></span></span></div>
+      <div class="cmprow"><i class="ti ti-user-circle"></i><span><span class="dim" data-i="dimOwn">Ownership</span><span data-i-html="kb4"></span></span></div>
+    </div>
+    <div class="cmpc brain">
+      <span class="cmptag" data-i="brainTag">Cervello aziendale · tutti gli agenti</span>
+      <div class="cmprow"><i class="ti ti-users-group"></i><span><span class="dim" data-i="dimScope2">Scope</span><span data-i-html="br1"></span></span></div>
+      <div class="cmprow"><i class="ti ti-files"></i><span><span class="dim" data-i="dimCont2">Contenuto</span><span data-i-html="br2"></span></span></div>
+      <div class="cmprow"><i class="ti ti-trending-up"></i><span><span class="dim" data-i="dimDyn2">Dinamismo</span><span data-i-html="br3"></span></span></div>
+      <div class="cmprow"><i class="ti ti-shield-check"></i><span><span class="dim" data-i="dimOwn2">Ownership</span><span data-i-html="br4"></span></span></div>
+    </div>
+  </div>
+  <div class="note amber rv" style="margin-top:14px"><div class="ni"><i class="ti ti-box-multiple"></i></div><div><h4 data-i="contH">Cosa contiene il Cervello</h4><p data-i-html="contP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">04</span><h2 data-i="s4">Si costruisce dal basso, non dall'alto</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="buIntro"></p>
+  <div class="bu rv" id="bu"></div>
+  <div class="paradox rv" style="margin-top:16px"><div class="pi"><i class="ti ti-arrow-up"></i></div><div><h4 data-i="topH">Il Cervello non si costruisce dall'alto</h4><p data-i-html="topP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">05</span><h2 data-i="s5">I 6 step di costruzione</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="stpIntro"></p>
+  <div class="steps rv" id="steps"></div>
+  <div class="stpdetail rv" id="stpdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-user-check"></i><span class="no">06</span><h2 data-i="s6">Il test del nuovo dipendente</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-rosette-discount-check"></i></div><h4 data-i="t1H">Cervello vivo</h4><p data-i="t1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-help-circle"></i></div><h4 data-i="t2H">Cervello che non esiste</h4><p data-i="t2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-folders"></i><span class="no">07</span><h2 data-i="s7">"Start here" e l'AI come cecchino</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="fldIntro"></p>
+  <div class="fld rv" id="fld"></div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-crosshair"></i></div><div><h4 data-i="snipH">L'AI va "come un cecchino"</h4><p data-i-html="snipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">08</span><h2 data-i="s8">Model-agnostic</h2></div>
+  <div class="paradox rv"><div class="pi"><i class="ti ti-replace"></i></div><div><h4 data-i="maH">Investimento nel metodo permanente, nella piattaforma variabile</h4><p data-i-html="maP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Costruisci il tuo cervello personale</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Cervello Aziendale</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A7.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Organizzazione intelligente',
+h1:'Il Cervello Aziendale',
+lede:'Quando hai più agenti che lavorano, la domanda non è più "come faccio un buon assistente", ma "dove vive la conoscenza che tutti condividono". Il Cervello Aziendale è quel layer: lo strato di sapere comune che ogni agente legge e in cui scrive — e che rende l\'azienda più intelligente ogni giorno.',
+s1:'La metafora Jarvis',
+jarvisIntro:'Pensa a <strong>Jarvis</strong>: non è un singolo assistente che esegue un compito. È il <strong>layer di conoscenza condivisa</strong> a cui tutto il sistema attinge. Il Cervello Aziendale è la stessa idea applicata alla tua azienda.',
+jarvisH:'Non un assistente in più: un layer condiviso',
+jarvisP:'Il Cervello Aziendale <strong>non è un assistente in più</strong>: è il layer di conoscenza condivisa che <strong>tutti</strong> gli agenti leggono e in cui scrivono. Ogni decisione presa, ogni lezione imparata, ogni procedura affinata ci finisce dentro — e da quel momento è disponibile a tutti. È un <strong>sistema operativo aumentato</strong>: l\'azienda diventa un po\' più intelligente ogni giorno.',
+s2:'Leggere e scrivere sul cervello',
+bsIntro:'La differenza tra una semplice cartella di documenti e un Cervello è che il flusso va in <strong>due direzioni</strong>. Gli agenti non solo leggono: <strong>scrivono</strong> di ritorno. Usa lo switch.',
+bsReadBtn:'L\'agente legge',bsWriteBtn:'L\'agente scrive',
+q1:'«Una KB serve un assistente. Il Cervello serve tutti gli agenti — e ogni giorno ne sa di più.»',
+s3:'KB di un assistente vs Cervello di tutti',
+cmpIntro:'Una <strong>knowledge base</strong> e un <strong>Cervello Aziendale</strong> sembrano simili, ma differiscono su quattro dimensioni precise. È il salto da "tool di un assistente" a "infrastruttura dell\'organizzazione".',
+kbTag:'Knowledge base · 1 assistente',
+dimScope:'Scope',dimCont:'Contenuto',dimDyn:'Dinamismo',dimOwn:'Ownership',
+kb1:'Serve <b>un solo assistente</b>, per un compito specifico.',
+kb2:'Le informazioni che servono a <b>quel task</b>.',
+kb3:'<b>Statica</b>: la carichi e resta lì.',
+kb4:'<b>Individuale</b>: la cura chi ha creato l\'assistente.',
+brainTag:'Cervello aziendale · tutti gli agenti',
+dimScope2:'Scope',dimCont2:'Contenuto',dimDyn2:'Dinamismo',dimOwn2:'Ownership',
+br1:'Serve <b>tutti gli agenti</b> e tutte le persone.',
+br2:'<b>Conoscenza collettiva</b>: tutto ciò che l\'azienda sa.',
+br3:'<b>Cresce</b>: si arricchisce a ogni lavoro fatto.',
+br4:'<b>Condivisa e governata</b>: è un bene comune con regole.',
+contH:'Cosa contiene il Cervello',
+contP:'SOP e processi mappati · <strong>decisioni passate con le ragioni</strong> · lezioni apprese · template approvati · standard e criteri di qualità · glossario e policy · organigramma · contesto su clienti e mercato · best practice. In breve: tutto ciò che renderebbe operativa una persona nuova.',
+s4:'Si costruisce dal basso, non dall\'alto',
+buIntro:'L\'errore classico è provare a costruire il Cervello in un colpo solo, dall\'alto. Ma la conoscenza è <strong>distribuita</strong>: vive nelle teste e nei progetti. Si costruisce <strong>bottom-up</strong>, salendo tre livelli.',
+topH:'Il Cervello non si costruisce dall\'alto',
+topP:'La conoscenza è distribuita: <strong>non si costruisce top-down/centralizzato</strong>. Il metodo corretto è <strong>prima bottom-up</strong> (raccogli ciò che esiste già, dal basso), <strong>poi governance top-down</strong> (la dai una struttura, regole e proprietà). Invertire l\'ordine produce un Cervello vuoto che nessuno usa.',
+s5:'I 6 step di costruzione',
+stpIntro:'Costruire il Cervello non è un progetto IT da mesi: è un metodo in <strong>sei passi</strong>, ripetibile per ogni area dell\'azienda. Clicca ogni step.',
+s6:'Il test del nuovo dipendente',
+t1H:'Cervello vivo',t1P:'Un nuovo arrivato — umano o AI — diventa operativo in pochi giorni leggendo tutto ciò che c\'è dentro. Non deve fare domande: le risposte ci sono già.',
+t2H:'Cervello che non esiste',t2P:'Se al nuovo arrivato servono settimane di domande per capire come si lavora, il Cervello di fatto non esiste: la conoscenza è ancora solo nelle teste.',
+s7:'"Start here" e l\'AI come cecchino',
+fldIntro:'Il Cervello è un <strong>sistema operativo a cartelle</strong> che l\'AI legge. Per non perdersi, ha bisogno di <strong>documenti-bussola</strong>: un file "Start here" e, nelle cartelle complesse, un file "leggi inclusi".',
+snipH:'L\'AI va "come un cecchino"',
+snipP:'Immagina di dare a uno stagista <strong>20 GB di materiale</strong> ma anche un foglietto che gli dice, in base a cosa deve fare, dove andare. Il file <strong>"Start here"</strong> spiega come usare tutte le cartelle; il file <strong>"leggi inclusi"</strong> guida l\'AI nella cartella giusta. Così l\'AI non rilegge tutto sprecando token: va <strong>"come un cecchino"</strong> dove sta l\'informazione rilevante. È un piccolo RAG aziendale, costruito senza spendere.',
+s8:'Model-agnostic',
+maH:'Investimento nel metodo permanente, nella piattaforma variabile',
+maP:'I principi del Cervello — struttura della conoscenza, procedure, hand-off tra agenti, documenti-bussola — sono <strong>indipendenti dal modello</strong> che usi oggi. Cambierai LLM e piattaforma più volte; il metodo resta. È questo che rende l\'investimento sicuro: <strong>permanente nel metodo, variabile nella piattaforma</strong>.',
+s9:'Checkpoint',
+cpH:'Costruisci il tuo cervello personale',
+cpP:'Il modo migliore per capire il Cervello Aziendale è iniziare dal livello 1: il tuo cervello personale. È il primo mattone della costruzione bottom-up.',
+cpQ:'Prendi un\'area del tuo lavoro e immagina di crearne il "cervello personale": quali 5-10 documenti caricheresti? Come li organizzeresti in categorie? E che file "Start here" scriveresti perché l\'AI vada come un cecchino invece di rileggere tutto?',
+cpNote:'Regola d\'oro: prima dal basso (raccogli ciò che già esiste), poi la governance dall\'alto — mai il contrario.',
+bridge:'Hai capito cos\'è il Cervello Aziendale e come si costruisce. <b>Prossimo:</b> i Dipendenti AI persistenti — non un assistente usa-e-getta, ma un\'entità con ruolo, memoria e metriche che lavora ogni giorno.',
+foot:'Morfeus — Il Cervello Aziendale'
+},
+en:{
+kicker:'Lesson A7.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Intelligent organization',
+h1:'The Company Brain',
+lede:'Once you have several agents at work, the question is no longer "how do I build a good assistant", but "where does the knowledge they all share live". The Company Brain is that layer: the shared knowledge every agent reads from and writes to — making the company smarter every single day.',
+s1:'The Jarvis metaphor',
+jarvisIntro:'Think of <strong>Jarvis</strong>: it isn\'t a single assistant running one task. It\'s the <strong>shared knowledge layer</strong> the whole system draws on. The Company Brain is the same idea applied to your company.',
+jarvisH:'Not one more assistant: a shared layer',
+jarvisP:'The Company Brain <strong>isn\'t one more assistant</strong>: it\'s the shared knowledge layer that <strong>all</strong> agents read from and write to. Every decision made, every lesson learned, every refined procedure lands inside it — and from that moment it\'s available to everyone. It\'s an <strong>augmented operating system</strong>: the company gets a little smarter every day.',
+s2:'Reading and writing to the brain',
+bsIntro:'The difference between a plain document folder and a Brain is that the flow goes <strong>both ways</strong>. Agents don\'t just read: they <strong>write</strong> back. Use the switch.',
+bsReadBtn:'The agent reads',bsWriteBtn:'The agent writes',
+q1:'"A KB serves one assistant. The Brain serves every agent — and knows a little more each day."',
+s3:'An assistant\'s KB vs everyone\'s Brain',
+cmpIntro:'A <strong>knowledge base</strong> and a <strong>Company Brain</strong> look similar, but they differ on four precise dimensions. It\'s the leap from "an assistant\'s tool" to "the organization\'s infrastructure".',
+kbTag:'Knowledge base · 1 assistant',
+dimScope:'Scope',dimCont:'Content',dimDyn:'Dynamism',dimOwn:'Ownership',
+kb1:'Serves <b>a single assistant</b>, for one specific task.',
+kb2:'The information needed for <b>that task</b>.',
+kb3:'<b>Static</b>: you load it and it stays there.',
+kb4:'<b>Individual</b>: maintained by whoever built the assistant.',
+brainTag:'Company brain · all agents',
+dimScope2:'Scope',dimCont2:'Content',dimDyn2:'Dynamism',dimOwn2:'Ownership',
+br1:'Serves <b>all agents</b> and all people.',
+br2:'<b>Collective knowledge</b>: everything the company knows.',
+br3:'<b>Grows</b>: it gets richer with every job done.',
+br4:'<b>Shared and governed</b>: a common good with rules.',
+contH:'What the Brain contains',
+contP:'SOPs and mapped processes · <strong>past decisions with their reasons</strong> · lessons learned · approved templates · quality standards and criteria · glossary and policies · org chart · context on clients and market · best practices. In short: everything that would make a new hire operational.',
+s4:'Built bottom-up, not top-down',
+buIntro:'The classic mistake is trying to build the Brain in one shot, from the top. But knowledge is <strong>distributed</strong>: it lives in people\'s heads and in projects. It\'s built <strong>bottom-up</strong>, climbing three levels.',
+topH:'The Brain isn\'t built from the top',
+topP:'Knowledge is distributed: it <strong>can\'t be built top-down/centralized</strong>. The right method is <strong>bottom-up first</strong> (gather what already exists, from the ground up), <strong>then top-down governance</strong> (you give it structure, rules and ownership). Reversing the order produces an empty Brain no one uses.',
+s5:'The 6 building steps',
+stpIntro:'Building the Brain isn\'t a months-long IT project: it\'s a method in <strong>six steps</strong>, repeatable for every area of the company. Click each step.',
+s6:'The new-hire test',
+t1H:'A living Brain',t1P:'A newcomer — human or AI — becomes operational in a few days by reading everything inside it. They don\'t need to ask: the answers are already there.',
+t2H:'A Brain that doesn\'t exist',t2P:'If the newcomer needs weeks of questions to understand how the work gets done, the Brain effectively doesn\'t exist: the knowledge is still only in people\'s heads.',
+s7:'"Start here" and the AI as a sniper',
+fldIntro:'The Brain is a <strong>folder-based operating system</strong> the AI reads. To avoid getting lost, it needs <strong>compass documents</strong>: a "Start here" file and, in complex folders, a "read included" file.',
+snipH:'The AI goes "like a sniper"',
+snipP:'Imagine handing an intern <strong>20 GB of material</strong> but also a note telling them, depending on the task, where to go. The <strong>"Start here"</strong> file explains how to use all the folders; the <strong>"read included"</strong> file guides the AI inside the right folder. This way the AI doesn\'t re-read everything and burn tokens: it goes <strong>"like a sniper"</strong> straight to the relevant information. It\'s a small company RAG, built without spending a euro.',
+s8:'Model-agnostic',
+maH:'Permanent investment in the method, variable in the platform',
+maP:'The Brain\'s principles — knowledge structure, procedures, agent hand-offs, compass documents — are <strong>independent of the model</strong> you use today. You\'ll switch LLM and platform many times; the method stays. That\'s what makes the investment safe: <strong>permanent in the method, variable in the platform</strong>.',
+s9:'Checkpoint',
+cpH:'Build your personal brain',
+cpP:'The best way to grasp the Company Brain is to start at level 1: your personal brain. It\'s the first brick of the bottom-up build.',
+cpQ:'Take one area of your work and imagine building its "personal brain": which 5-10 documents would you load? How would you organize them into categories? And what "Start here" file would you write so the AI goes like a sniper instead of re-reading everything?',
+cpNote:'Golden rule: bottom-up first (gather what already exists), then top-down governance — never the other way around.',
+bridge:'You\'ve understood what the Company Brain is and how it\'s built. <b>Next:</b> persistent AI employees — not a throwaway assistant, but an entity with a role, memory and metrics that works every day.',
+foot:'Morfeus — The Company Brain'
+}};
+
+/* ===== read/write brain ===== */
+var BS={it:{
+read:{cap1:'Cervello',cap2:'Agente',flow:'ti-arrow-right',text:'L\'agente, prima di agire, <strong>legge</strong> dal Cervello: trova le SOP, le decisioni passate, gli standard, il glossario. Parte già informato sul contesto dell\'azienda, non da zero.'},
+write:{cap1:'Cervello',cap2:'Agente',flow:'ti-arrow-left',text:'Finito il lavoro, l\'agente <strong>scrive</strong> di ritorno nel Cervello: aggiorna una procedura, annota una decisione e il suo perché, lascia una lezione appresa. Da quel momento è patrimonio di tutti.'}
+},en:{
+read:{cap1:'Brain',cap2:'Agent',flow:'ti-arrow-right',text:'Before acting, the agent <strong>reads</strong> from the Brain: it finds the SOPs, past decisions, standards, glossary. It starts already informed about the company\'s context, not from scratch.'},
+write:{cap1:'Brain',cap2:'Agent',flow:'ti-arrow-left',text:'Once the work is done, the agent <strong>writes</strong> back to the Brain: it updates a procedure, records a decision and its reason, leaves a lesson learned. From that moment it\'s everyone\'s asset.'}
+}};
+var curBs='read';
+function setBs(k){
+  curBs=k;
+  document.querySelectorAll('.bs-switch button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-bs')===k)});
+  renderBs();
+}
+function renderBs(){
+  var d=BS[LANG][curBs];
+  var st=document.getElementById('bsStage');
+  st.className='bs-stage '+curBs;
+  st.innerHTML='<div class="bs-side"><div class="bs-core"><i class="ti ti-brain"></i></div><div class="bs-cap act">'+d.cap1+'</div></div>'+
+    '<div class="bs-flow"><i class="ti '+d.flow+'"></i></div>'+
+    '<div class="bs-side"><div class="bs-agent"><i class="ti ti-robot"></i></div><div class="bs-cap">'+d.cap2+'</div></div>';
+  document.getElementById('bsText').innerHTML=d.text;
+}
+
+/* ===== bottom-up 3 levels ===== */
+var BU={it:[
+['ti-user','Cervello personale','Livello 1','Parti da te: un NotebookLM o Project personale con i tuoi documenti. È la tua memoria di lavoro, ed è dove inizia tutto.'],
+['ti-users','KB di progetto / team','Livello 2','I cervelli personali confluiscono in knowledge base condivise di progetto: ciò che il team sa, in un posto solo.'],
+['ti-building','Cervello aziendale governato','Livello 3','Le KB di team salgono in una knowledge base centrale, con struttura e regole. Il Cervello dell\'intera organizzazione.']
+],en:[
+['ti-user','Personal brain','Level 1','Start with yourself: a personal NotebookLM or Project with your documents. It\'s your working memory, and where it all begins.'],
+['ti-users','Project / team KB','Level 2','Personal brains flow into shared project knowledge bases: what the team knows, in one place.'],
+['ti-building','Governed company brain','Level 3','Team KBs rise into a central knowledge base, with structure and rules. The Brain of the whole organization.']
+]};
+function buildBu(){
+  var rows=BU[LANG].map(function(b,i){
+    var lvlClass=(i===2?' l3':'');
+    return '<div class="bulvl'+lvlClass+'"><div class="bunum"><i class="ti '+b[0]+'"></i></div><div class="bub"><h4>'+b[1]+'<span class="tag">'+b[2]+'</span></h4><p>'+b[3]+'</p></div></div>';
+  });
+  document.getElementById('bu').innerHTML=rows[0]+'<div class="buconn"></div>'+rows[1]+'<div class="buconn"></div>'+rows[2];
+}
+
+/* ===== 6 steps ===== */
+var STEPS={it:[
+['ti-map-2','Mappare','Mappare i processi','Parti dal lavoro reale: <strong>mappa i processi</strong> e la conoscenza che oggi vive solo nelle teste. Non puoi strutturare ciò che non hai prima reso esplicito.'],
+['ti-file-text','Estrarre','Estrarre e strutturare in .md','Trasforma quella conoscenza in <strong>documenti strutturati</strong> (tipicamente file .md): SOP, decisioni, template. Testo pulito che l\'AI può leggere bene.'],
+['ti-folders','Organizzare','Organizzare in folder','Disponi i documenti in una <strong>struttura a cartelle</strong> chiara, con i documenti-bussola ("Start here") che spiegano dove sta cosa.'],
+['ti-plug','Collegare','Collegare agli agenti','Connetti il Cervello agli agenti con il principio del <strong>least privilege</strong>: ognuno accede solo a ciò che gli serve per il suo ruolo, niente di più.'],
+['ti-heart-rate-monitor','Mantenere','Mantenere vivo','Un Cervello non aggiornato muore. <strong>Mantienilo vivo</strong>: ogni lavoro fatto aggiorna procedure, decisioni e lezioni. Il read/write deve girare.'],
+['ti-shield-check','Governare','Governare','Dai la <strong>governance top-down</strong>: regole su chi scrive cosa, versioning, qualità, proprietà. Bottom-up per costruirlo, top-down per governarlo.']
+],en:[
+['ti-map-2','Map','Map the processes','Start from real work: <strong>map the processes</strong> and the knowledge that today lives only in people\'s heads. You can\'t structure what you haven\'t made explicit first.'],
+['ti-file-text','Extract','Extract and structure as .md','Turn that knowledge into <strong>structured documents</strong> (typically .md files): SOPs, decisions, templates. Clean text the AI can read well.'],
+['ti-folders','Organize','Organize into folders','Arrange the documents in a clear <strong>folder structure</strong>, with compass documents ("Start here") that explain where everything is.'],
+['ti-plug','Connect','Connect to the agents','Connect the Brain to the agents with the <strong>least-privilege</strong> principle: each one accesses only what its role needs, nothing more.'],
+['ti-heart-rate-monitor','Maintain','Keep it alive','An un-updated Brain dies. <strong>Keep it alive</strong>: every job done updates procedures, decisions and lessons. The read/write loop must run.'],
+['ti-shield-check','Govern','Govern','Apply <strong>top-down governance</strong>: rules on who writes what, versioning, quality, ownership. Bottom-up to build it, top-down to govern it.']
+]};
+var curStp=0;
+function showStp(i){
+  curStp=i;
+  document.querySelectorAll('#steps .stp').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var s=STEPS[LANG][i];
+  document.getElementById('stpdetail').innerHTML='<h4>'+(i+1)+'. '+s[2]+'</h4><p>'+s[3]+'</p>';
+}
+function buildSteps(){
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s,i){
+    return '<div class="stp'+(i===curStp?' on':'')+'" onclick="showStp('+i+')"><div class="sn">'+(i+1)+'</div><div class="si"><i class="ti '+s[0]+'"></i></div><div class="st">'+s[1]+'</div></div>';
+  }).join('');
+  showStp(curStp);
+}
+
+/* ===== folders "start here" ===== */
+var FLD={it:[
+['ti-file-star','Start here','start-here.md','hi','la bussola: dove sta cosa, in quale cartella entrare in base al compito'],
+['ti-settings','Sistema operativo','/os','value proposition, posizionamento, identità del brand, tono di voce'],
+['ti-route','Operations','/operations','le procedure: "fai la strategia X" → l\'AI entra qui ed esegue la SOP'],
+['ti-file-included','leggi-inclusi','/operations/leggi-inclusi.md','hi','guida l\'AI nella cartella complessa: legge solo i file rilevanti'],
+['ti-users','Clienti & funnel','/clienti','contesto clienti, CRM, funnel di vendita'],
+['ti-library','Libreria & risorse','/libreria','best practice, template approvati, materiale di riferimento']
+],en:[
+['ti-file-star','Start here','start-here.md','hi','the compass: where everything is, which folder to enter for each task'],
+['ti-settings','Operating system','/os','value proposition, positioning, brand identity, tone of voice'],
+['ti-route','Operations','/operations','the procedures: "do strategy X" → the AI enters here and runs the SOP'],
+['ti-file-included','read-included','/operations/read-included.md','hi','guides the AI inside the complex folder: it reads only the relevant files'],
+['ti-users','Clients & funnel','/clients','client context, CRM, sales funnel'],
+['ti-library','Library & resources','/library','best practices, approved templates, reference material']
+]};
+function buildFld(){
+  document.getElementById('fld').innerHTML=FLD[LANG].map(function(f){
+    var nest=(f[2].indexOf('/')>0&&f[2].split('/').length>2)?' style="margin-left:26px"':'';
+    return '<div class="fldrow '+f[3]+'"'+nest+'><i class="ti '+f[0]+'"></i><span><b>'+f[1]+'</b> — '+f[4]+'</span><span class="fc">'+f[2]+'</span></div>';
+  }).join('');
+}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderBs();buildBu();buildSteps();buildFld();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

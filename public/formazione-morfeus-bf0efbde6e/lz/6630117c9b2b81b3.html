@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modalità Diagnosi — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#9ed4ad;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eab3ab;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#85b7eb;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--teal:#0F9E78;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#7a3a33;
+--blue:#85b7eb;--blue-soft:#0c447c;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{border-left:3px solid var(--accent);background:var(--bg-2);padding:20px 24px;border-radius:0 var(--r-l) var(--r-l) 0;margin:0;font-style:italic;font-size:15.5px;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.tip{display:flex;gap:14px;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px}
+.tip i.tii{color:var(--teal);font-size:21px;flex-shrink:0}
+.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}.tip p strong{color:var(--ink)}
+/* COMPARE SPLIT */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;border-top:3px solid var(--line)}
+.cc.bad{border-top-color:var(--bad)}.cc.good{border-top-color:var(--teal)}
+.cc .cbadge{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:30px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.cc.bad .cbadge{background:var(--bad-soft);color:var(--bad)}.cc.good .cbadge{background:var(--teal-soft);color:var(--teal)}
+.cc p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+.cc .cpr{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--line-2);border-radius:0 var(--r) var(--r) 0;padding:11px 13px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2);line-height:1.6;margin:11px 0}
+.cc.good .cpr{border-left-color:var(--teal)}
+.cc .cres{font-size:12.5px;color:var(--ink-3);line-height:1.6;padding:10px 13px;background:var(--bg-2);border-radius:var(--r);border-left:3px solid var(--line-2);margin-top:8px}
+.cc.good .cres{border-left-color:var(--teal)}
+/* FLOW 3 STEPS */
+.flow{display:flex;flex-direction:column;gap:0}
+.fst{display:flex;align-items:flex-start;gap:16px;position:relative;padding-bottom:24px}
+.fst:last-child{padding-bottom:0}
+.fst::before{content:'';position:absolute;left:19px;top:42px;bottom:0;width:2px;background:var(--line-2)}
+.fst:last-child::before{display:none}
+.fnum{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:16px;font-weight:700;flex-shrink:0;z-index:1;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.fst.green .fnum{background:var(--teal-soft);color:var(--teal);border-color:var(--teal-line)}
+.fc{flex:1;padding-top:4px}
+.fc strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:3px}
+.fc span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.fc .fpr{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px;margin-top:9px;color:var(--ink-2);line-height:1.55}
+/* ERROR SELECTOR */
+.eblocks{display:flex;flex-direction:column;gap:8px}
+.eblk{display:flex;align-items:center;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.eblk:hover{border-color:var(--line-2)}.eblk.on{border-color:var(--accent);background:var(--accent-soft)}
+.eblk .ebi{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.eblk .ebt{flex:1}
+.eblk .ebt strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}
+.eblk .ebt span{font-size:12px;color:var(--ink-3);line-height:1.4}
+.eblk .ebc{font-size:18px;color:var(--ink-3);flex-shrink:0}
+.edetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.edetail .edlab{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:6px}
+.edetail .edpr{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+.edetail .edans{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--ink);line-height:1.6}
+.edetail .edans .dal{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.edetail .edcta{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--accent);margin-top:12px}
+/* RULE SELECTOR */
+.rgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.rcard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 14px;cursor:pointer;transition:.18s;text-align:center}
+.rcard:hover{border-color:var(--line-2)}.rcard.on{border-color:var(--accent);background:var(--accent-soft)}
+.rcard i.rci{font-size:27px;color:var(--accent);display:block;margin-bottom:9px}
+.rcard .rcn{font-size:13.5px;font-weight:600;margin-bottom:4px}
+.rcard .rcs{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.rdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.rdetail .rdh{font-size:13px;font-weight:600;margin-bottom:6px}
+.rdetail p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.rdetail .rdex{margin-top:12px}
+.rdetail .rdex .rdexl{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:5px}
+.rdetail .rdex .rdexb{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:10px 13px;color:var(--ink-2);line-height:1.6}
+/* MYTHS */
+.myths{display:flex;flex-direction:column}
+.myth{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}
+.myth:last-child{border-bottom:none}
+.myth .myi{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--bad-soft);color:var(--bad)}
+.myth .myt strong{font-weight:600;font-size:14px;display:block;margin-bottom:3px}
+.myth .myt span{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* CHECKPOINT */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center}
+.cp i.cpbig{font-size:36px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:500px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.compare{grid-template-columns:1fr}.rgrid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.cc,.fst,.eblk,.edetail,.rcard,.rdetail,.tip,.cp,.key,.hook,.myth{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 2.5c</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 2</div>
+  <h1 class="rv" data-i="h1">Modalità Diagnosi</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">L'idea</h2></div>
+  <div class="hook rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">02</span><h2 data-i="s2">Due domande, due risultati</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:18px" data-i-html="cmpIntro"></p>
+  <div class="compare rv">
+    <div class="cc bad">
+      <span class="cbadge"><i class="ti ti-bandage"></i> <span data-i="cmpBadL">Correzione</span></span>
+      <p data-i="cmpBadP"></p>
+      <div class="cpr" data-i="cmpBadPr"></div>
+      <div class="cres" data-i="cmpBadR"></div>
+    </div>
+    <div class="cc good">
+      <span class="cbadge"><i class="ti ti-stethoscope"></i> <span data-i="cmpGoodL">Diagnosi</span></span>
+      <p data-i="cmpGoodP"></p>
+      <div class="cpr" data-i="cmpGoodPr"></div>
+      <div class="cres" data-i="cmpGoodR"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">03</span><h2 data-i="s3">Le tre mosse</h2></div>
+  <div class="flow rv">
+    <div class="fst"><div class="fnum">1</div><div class="fc"><strong data-i="m1H"></strong><span data-i-html="m1B"></span><div class="fpr" data-i="m1P"></div></div></div>
+    <div class="fst"><div class="fnum">2</div><div class="fc"><strong data-i="m2H"></strong><span data-i-html="m2B"></span><div class="fpr" data-i="m2P"></div></div></div>
+    <div class="fst green"><div class="fnum">3</div><div class="fc"><strong data-i="m3H"></strong><span data-i-html="m3B"></span><div class="fpr" data-i="m3P"></div></div></div>
+  </div>
+  <div class="tip rv" style="margin-top:18px"><i class="ti ti-bulb tii"></i><div><h4 data-i="whyH">Perché funziona</h4><p data-i-html="whyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-bug"></i><span class="no">04</span><h2 data-i="s4">Errori ricorrenti — clicca per la diagnosi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="errIntro"></p>
+  <div class="eblocks rv" id="eblocks"></div>
+  <div class="edetail rv" id="edetail"></div>
+
+  <div class="sh rv"><i class="ti ti-map-pin"></i><span class="no">05</span><h2 data-i="s5">Dove vive la regola — clicca per scoprire</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="ruleIntro"></p>
+  <div class="rgrid rv" id="rgrid"></div>
+  <div class="rdetail rv" id="rdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">06</span><h2 data-i="s6">La frase da ricordare</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-circle-x"></i><span class="no">07</span><h2 data-i="s7">Equivoci da sfatare</h2></div>
+  <div class="myths rv" id="myths"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-stethoscope cpbig"></i>
+    <h4 data-i="cpH">Pensa a un errore che si ripete.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Modalità Diagnosi</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 2.5c',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 2',
+h1:'Modalità Diagnosi',
+lede:'C\'è una cosa più frustrante di un errore: lo stesso errore che torna ogni volta. Cambia una parola nella domanda — e trasformi la pezza in una regola permanente.',
+s0:'L\'idea',
+hook:'«Sistemalo ti fa risparmiare un minuto. "Perché succede?" ti fa risparmiare per sempre.»',
+s2:'Due domande, due risultati',
+cmpIntro:'La modalità diagnosi non è una funzione speciale di Claude — è <strong>come fai la domanda</strong>. Il salto da correzione a causa radice si fa con una sola parola diversa nel prompt.',
+cmpBadL:'Correzione',
+cmpBadP:'Risolvi il problema nell\'immediato. L\'errore sparisce oggi. Torna la prossima volta.',
+cmpBadPr:'«Riscrivimi questo testo — il tono non va.»',
+cmpBadR:'Risultato: Claude riscrive. La settimana dopo lo stesso problema si ripresenta.',
+cmpGoodL:'Diagnosi',
+cmpGoodP:'Scopri la causa. Claude ti dice cosa gli manca. Ottieni una regola da salvare.',
+cmpGoodPr:'«Guarda questi tre testi che mi hai scritto. Il tono è sempre sbagliato nello stesso modo. Perché lo fai? Cosa ti manca per farlo giusto ogni volta?»',
+cmpGoodR:'Risultato: una regola pronta da salvare. L\'errore non torna.',
+s3:'Le tre mosse',
+m1H:'Cattura il pattern — non il singolo caso',
+m1B:'Mostra a Claude 2-3 esempi dove ha sbagliato <em>allo stesso modo</em>. Il ripetersi è l\'informazione chiave. Un singolo errore potrebbe essere casuale; tre uguali sono un segnale.',
+m1P:'«Questi sono tre output dove hai fatto lo stesso errore. Guardali insieme.»',
+m2H:'Chiedi la causa — non la pezza',
+m2B:'Cambia la domanda da «riscrivimelo» a «perché lo fai?». Claude può rileggere il proprio ragionamento e identificare cosa gli mancava: un\'istruzione, un esempio di «giusto», un contesto che davi per scontato.',
+m2P:'«Perché continui a farlo così? Cosa ti manca da parte mia per farlo nel modo giusto ogni volta?»',
+m3H:'Chiedi la prevenzione — ottieni la regola',
+m3B:'L\'ultimo passo è quello che trasforma la diagnosi in un sistema. Chiedi a Claude di scrivere lui la regola da salvare. Quasi sempre te la dà pronta da copiare.',
+m3P:'«Perfetto. Scrivimi tu la regola che dovrei darti, così non sbagli più questo.»',
+whyH:'Perché funziona',
+whyP:'La causa radice quasi sempre è la stessa: un\'istruzione che non hai mai dato, un esempio di «giusto» che mancava, un contesto che davi per scontato. Claude non può conoscere ciò che non gli hai mai detto. La diagnosi te lo fa dire esplicitamente.',
+s4:'Errori ricorrenti — clicca per la diagnosi',
+errIntro:'Ecco quattro situazioni tipiche. Clicca su ognuna per vedere il prompt di diagnosi e cosa Claude risponde.',
+s5:'Dove vive la regola — clicca per scoprire',
+ruleIntro:'La diagnosi quasi sempre produce una regola. Ma una regola non va ripetuta a voce ogni volta: va salvata nel posto giusto. Ci sono tre destinazioni — clicca ognuna per capire quando usarla.',
+s6:'La frase da ricordare',
+q1:'«La diagnosi quasi sempre produce una regola. E una regola non va ripetuta a voce ogni volta — va salvata. Quello è il salto da "lo correggo ogni volta" a "non sbaglia più".»',
+s7:'Equivoci da sfatare',
+s8:'Checkpoint',
+cpH:'Pensa a un errore che si ripete.',
+cpP:'La prossima volta che Claude — o qualsiasi strumento — ti rifà lo stesso sbaglio, non correggerlo e basta. Mostragli il pattern, chiedi «perché lo fai?», chiedi la regola. Trasforma la pezza in un sistema.<br><br><strong>È il singolo upgrade che ti fa passare da utente che combatte a utente che costruisce.</strong>',
+foot:'Morfeus — Modalità Diagnosi'
+},
+en:{
+kicker:'Lesson 2.5c',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 2',
+h1:'Diagnosis Mode',
+lede:'There\'s something more frustrating than an error: the same error coming back every time. Change one word in the question — and you turn the patch into a permanent rule.',
+s0:'The idea',
+hook:'"Fix it saves you a minute. \'Why does it happen?\' saves you forever."',
+s2:'Two questions, two outcomes',
+cmpIntro:'Diagnosis mode isn\'t a special Claude feature — it\'s <strong>how you ask the question</strong>. The jump from correction to root cause happens with a single different word in the prompt.',
+cmpBadL:'Correction',
+cmpBadP:'You solve the problem in the moment. The error disappears today. It comes back next time.',
+cmpBadPr:'"Rewrite this text for me — the tone is off."',
+cmpBadR:'Result: Claude rewrites. A week later the same problem shows up again.',
+cmpGoodL:'Diagnosis',
+cmpGoodP:'You find the cause. Claude tells you what it\'s missing. You get a rule to save.',
+cmpGoodPr:'"Look at these three texts you wrote for me. The tone is always wrong in the same way. Why do you do it? What are you missing to get it right every time?"',
+cmpGoodR:'Result: a rule ready to save. The error doesn\'t come back.',
+s3:'The three moves',
+m1H:'Capture the pattern — not the single case',
+m1B:'Show Claude 2-3 examples where it got it wrong <em>in the same way</em>. The repetition is the key information. A single error might be random; three identical ones are a signal.',
+m1P:'"These are three outputs where you made the same mistake. Look at them together."',
+m2H:'Ask for the cause — not the patch',
+m2B:'Change the question from "rewrite it" to "why do you do it?". Claude can re-read its own reasoning and identify what it was missing: an instruction, an example of "right", a context you took for granted.',
+m2P:'"Why do you keep doing it this way? What are you missing from me to do it the right way every time?"',
+m3H:'Ask for prevention — get the rule',
+m3B:'The last step is what turns the diagnosis into a system. Ask Claude to write the rule to save itself. Almost always it hands it to you ready to copy.',
+m3P:'"Perfect. Write me the rule I should give you, so you never get this wrong again."',
+whyH:'Why it works',
+whyP:'The root cause is almost always the same: an instruction you never gave, an example of "right" that was missing, a context you took for granted. Claude can\'t know what you never told it. Diagnosis makes you say it explicitly.',
+s4:'Recurring errors — click for the diagnosis',
+errIntro:'Here are four typical situations. Click each one to see the diagnosis prompt and what Claude answers.',
+s5:'Where the rule lives — click to discover',
+ruleIntro:'Diagnosis almost always produces a rule. But a rule shouldn\'t be repeated out loud every time: it must be saved in the right place. There are three destinations — click each to understand when to use it.',
+s6:'The phrase to remember',
+q1:'"Diagnosis almost always produces a rule. And a rule shouldn\'t be repeated out loud every time — it must be saved. That\'s the jump from \'I correct it every time\' to \'it never gets it wrong again\'."',
+s7:'Myths to debunk',
+s8:'Checkpoint',
+cpH:'Think of an error that repeats.',
+cpP:'Next time Claude — or any tool — makes the same mistake again, don\'t just correct it. Show it the pattern, ask "why do you do it?", ask for the rule. Turn the patch into a system.<br><br><strong>It\'s the single upgrade that takes you from a user who fights to a user who builds.</strong>',
+foot:'Morfeus — Diagnosis Mode'
+}};
+
+var ERR={it:[
+['ti ti-writing','var(--amber-soft)','var(--amber)','Tono sempre troppo formale','Claude scrive email come se parlasse a un consiglio di amministrazione, ogni volta',
+'«Guarda queste tre email che mi hai scritto. Il tono è sempre troppo formale — io scrivo in modo diretto, quasi come se parlassi. Perché usi questo registro? Cosa ti serve da me per calibrarlo al mio stile ogni volta?»',
+'Non hai mai definito esplicitamente il tuo registro comunicativo. Lavoro con il default «professionale» perché non ho un riferimento del tuo stile. Dammi un esempio di testo che hai scritto tu — o descrivimi il tono in una riga — e lo uso come calibro.',
+'Regola da salvare nelle istruzioni del Project'],
+['ti ti-list','var(--blue-soft)','var(--blue)','Struttura sempre sbagliata','Claude produce documenti con intro lunghissima prima di arrivare al punto',
+'«Questi tre documenti che mi hai prodotto partono tutti con due paragrafi di contesto generale prima del contenuto utile. Io voglio partire diretto dal punto. Perché strutturi così? Cosa ti serve per partire subito dalla sostanza?»',
+'Il default è aprire con contesto per orientare il lettore. Non sapevo che preferivi struttura diretta. Se mi dici «inizia sempre dall\'azione o dalla conclusione, zero preamboli» lo applico sistematicamente.',
+'Regola da salvare nelle istruzioni del Project'],
+['ti ti-calendar','var(--accent-soft)','var(--accent)','Formato date sempre diverso','A volte 12/06/2025, a volte 12 giugno 2025, a volte Jun 12 — nessuna coerenza',
+'«In questi tre documenti le date hanno formati diversi. Da cosa dipende? Cosa devo dirti per avere sempre lo stesso formato in tutto ciò che produco?»',
+'Adotto il formato che sembra coerente col contesto del testo (formale, tecnico, internazionale) o quello usato nella tua richiesta. Non ho una regola fissa. Scrivimi il formato esatto che preferisci — es. «DD/MM/YYYY sempre» — e lo uso ogni volta.',
+'Regola da salvare nella Memory o nelle istruzioni'],
+['ti ti-repeat','var(--teal-soft)','var(--teal)','Disclaimer ripetuto sempre','Ogni risposta inizia con «Come assistente AI, preciso che…» — un rituale inutile',
+'«Stai aprendo ogni risposta con un disclaimer generico. Perché lo metti? Dammi la regola da aggiungere alle istruzioni per eliminarlo.»',
+'Lo uso come cautela di default in assenza di istruzioni diverse. Se vuoi eliminarlo, aggiungi nelle istruzioni: «Non premettere mai disclaimer o avvertenze generiche. Rispondi diretto al punto.» È sufficiente.',
+'Regola da salvare nelle istruzioni del Project']
+],en:[
+['ti ti-writing','var(--amber-soft)','var(--amber)','Tone always too formal','Claude writes emails as if addressing a board of directors, every time',
+'"Look at these three emails you wrote for me. The tone is always too formal — I write directly, almost as if speaking. Why do you use this register? What do you need from me to calibrate it to my style every time?"',
+'You never explicitly defined your communicative register. I work with the "professional" default because I have no reference for your style. Give me an example of text you wrote yourself — or describe the tone in one line — and I\'ll use it as a gauge.',
+'Rule to save in the Project instructions'],
+['ti ti-list','var(--blue-soft)','var(--blue)','Structure always wrong','Claude produces documents with a very long intro before getting to the point',
+'"These three documents you produced all start with two paragraphs of general context before the useful content. I want to start straight at the point. Why do you structure it this way? What do you need to start with the substance right away?"',
+'The default is to open with context to orient the reader. I didn\'t know you preferred a direct structure. If you tell me "always start from the action or the conclusion, zero preambles" I\'ll apply it systematically.',
+'Rule to save in the Project instructions'],
+['ti ti-calendar','var(--accent-soft)','var(--accent)','Date format always different','Sometimes 12/06/2025, sometimes June 12 2025, sometimes Jun 12 — no consistency',
+'"In these three documents the dates have different formats. What does it depend on? What do I have to tell you to always have the same format in everything I produce?"',
+'I adopt the format that seems consistent with the text\'s context (formal, technical, international) or the one used in your request. I don\'t have a fixed rule. Write me the exact format you prefer — e.g. "DD/MM/YYYY always" — and I\'ll use it every time.',
+'Rule to save in Memory or the instructions'],
+['ti ti-repeat','var(--teal-soft)','var(--teal)','Disclaimer always repeated','Every answer starts with "As an AI assistant, I should note that…" — a pointless ritual',
+'"You\'re opening every answer with a generic disclaimer. Why do you add it? Give me the rule to add to the instructions to remove it."',
+'I use it as a default precaution in the absence of different instructions. If you want to remove it, add to the instructions: "Never preface answers with generic disclaimers or warnings. Answer straight to the point." That\'s enough.',
+'Rule to save in the Project instructions']
+]};
+
+var RULES={it:[
+['ti ti-folder-open','Project Instructions','Regole specifiche di un progetto o area di lavoro',
+'Quando usarlo','La regola vale solo per questo contesto — un cliente, un tipo di documento, un progetto specifico. Le istruzioni del Project sopravvivono tra sessioni e si applicano ogni volta che apri quel Project.',
+'«In questo progetto usa sempre il tono diretto e inizia dal punto.»'],
+['ti ti-brain','Memory','Preferenze personali che valgono per tutto',
+'Quando usarlo','La regola riguarda te come persona — il tuo stile, le tue preferenze stabili, informazioni su di te. La Memory persiste tra tutti i Project e le chat (dove abilitata).',
+'«Scrivi sempre in italiano. Il mio formato data è GG/MM/AAAA.»'],
+['ti ti-settings','Cowork Global','Regole trasversali per tutte le sessioni Cowork',
+'Quando usarlo','Stai usando Cowork (app desktop) e vuoi che la regola valga per ogni task agentica, indipendentemente dal Project. Si configura in Settings > Cowork > Istruzioni globali.',
+'«Prima di creare file, chiedi sempre conferma del percorso.»']
+],en:[
+['ti ti-folder-open','Project Instructions','Rules specific to a project or work area',
+'When to use it','The rule applies only to this context — a client, a document type, a specific project. Project instructions survive across sessions and apply every time you open that Project.',
+'"In this project always use a direct tone and start from the point."'],
+['ti ti-brain','Memory','Personal preferences that apply everywhere',
+'When to use it','The rule concerns you as a person — your style, your stable preferences, information about you. Memory persists across all Projects and chats (where enabled).',
+'"Always write in Italian. My date format is DD/MM/YYYY."'],
+['ti ti-settings','Cowork Global','Cross-cutting rules for all Cowork sessions',
+'When to use it','You\'re using Cowork (desktop app) and want the rule to apply to every agentic task, regardless of the Project. It\'s configured in Settings > Cowork > Global instructions.',
+'"Before creating files, always ask for confirmation of the path."']
+]};
+
+var MYTHS={it:[
+['«Diagnosi = funzione speciale di Claude»','Non esiste nessun bottone «modalità diagnosi». È solo come fai la domanda. Nessuna opzione da attivare.'],
+['«Una correzione basta»','Senza un\'istruzione persistente, l\'errore torna alla sessione successiva. Correggere ogni volta è un loop — la diagnosi lo spezza.'],
+['«La memoria salva tutto da sola»','La regola va salvata esplicitamente nel posto giusto (Project / Memory / Cowork). Altrimenti vale solo per la conversazione corrente.']
+],en:[
+['"Diagnosis = a special Claude feature"','There is no "diagnosis mode" button. It\'s just how you ask the question. No option to activate.'],
+['"One correction is enough"','Without a persistent instruction, the error comes back in the next session. Correcting every time is a loop — diagnosis breaks it.'],
+['"Memory saves everything by itself"','The rule must be saved explicitly in the right place (Project / Memory / Cowork). Otherwise it applies only to the current conversation.']
+]};
+
+var LANG='it',curErr=0,curRule=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('eblocks').innerHTML=ERR[LANG].map(function(b,i){return '<div class="eblk'+(i===curErr?' on':'')+'" onclick="showErr('+i+')"><div class="ebi" style="background:'+b[1]+';color:'+b[2]+'"><i class="'+b[0]+'"></i></div><div class="ebt"><strong>'+b[3]+'</strong><span>'+b[4]+'</span></div><i class="ti ti-chevron-right ebc"></i></div>'}).join('');
+  document.getElementById('rgrid').innerHTML=RULES[LANG].map(function(b,i){return '<div class="rcard'+(i===curRule?' on':'')+'" onclick="showRule('+i+')"><i class="'+b[0]+' rci"></i><div class="rcn">'+b[1]+'</div><div class="rcs">'+b[2]+'</div></div>'}).join('');
+  document.getElementById('myths').innerHTML=MYTHS[LANG].map(function(m){return '<div class="myth"><div class="myi"><i class="ti ti-x"></i></div><div class="myt"><strong>'+m[0]+'</strong><span>'+m[1]+'</span></div></div>'}).join('');
+  showErr(curErr);showRule(curRule);
+}
+function showErr(i){curErr=i;var b=ERR[LANG][i];document.querySelectorAll('.eblk').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  document.getElementById('edetail').innerHTML='<div class="edlab">'+(LANG==='it'?'Prompt di diagnosi':'Diagnosis prompt')+'</div><div class="edpr">'+b[5]+'</div><div class="edans"><div class="dal"><i class="ti ti-stethoscope"></i> '+(LANG==='it'?'Diagnosi tipica di Claude':'Typical Claude diagnosis')+'</div>'+b[6]+'</div><div class="edcta"><i class="ti ti-arrow-right"></i> '+b[7]+'</div>';
+}
+function showRule(i){curRule=i;var b=RULES[LANG][i];document.querySelectorAll('.rcard').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  document.getElementById('rdetail').innerHTML='<div class="rdh">'+b[3]+'</div><p>'+b[4]+'</p><div class="rdex"><div class="rdexl">'+(LANG==='it'?'Esempio':'Example')+'</div><div class="rdexb">'+b[5]+'</div></div>';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

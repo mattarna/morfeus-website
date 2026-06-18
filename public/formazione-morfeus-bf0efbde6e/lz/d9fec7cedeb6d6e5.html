@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan &amp; Solve per Imparare: il Modo Confronto / Merge — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+.cap-badge{display:inline-flex;align-items:center;gap:6px;background:var(--agent-soft);border:1px solid var(--agent-line);color:var(--agent);font-family:var(--mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:5px 12px;border-radius:30px;margin-bottom:14px}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:640px}
+.lede em{font-style:italic;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* hook */
+.hook{display:flex;gap:16px;background:var(--agent-soft);border:1px solid var(--agent-line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--agent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.hook p b{color:var(--ink);font-style:normal;font-weight:600}
+/* whenbox / note card */
+.whenbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px;margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.72}
+.whenbox b{color:var(--ink);font-weight:600}
+.whenbox.lead-ex{display:flex;gap:14px;align-items:flex-start;border-left:3px solid var(--warn)}
+.whenbox.lead-ex>i{font-size:22px;color:var(--warn);flex-shrink:0;margin-top:2px}
+/* steps timeline */
+.steps{display:flex;flex-direction:column;gap:0;margin:0}
+.step{display:flex;gap:16px;position:relative;padding-bottom:20px}
+.step:not(:last-child)::before{content:'';position:absolute;left:19px;top:44px;bottom:-2px;width:2px;background:var(--line-2)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex-shrink:0;z-index:1;font-family:var(--mono)}
+.step-body{padding-top:7px}
+.step-body h4{font-size:15.5px;font-weight:600;margin-bottom:4px}
+.step-body p{font-size:13.5px;color:var(--ink-2);line-height:1.62}
+.step-body p b{color:var(--ink);font-weight:600}
+/* merge visual */
+.merge{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:12px;margin:0}
+.merge .m{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 16px;text-align:center;font-size:13px;color:var(--ink-2);display:flex;flex-direction:column;justify-content:center;gap:6px}
+.merge .m i{font-size:24px}
+.merge .m.you{border-top:3px solid var(--accent)}.merge .m.you i{color:var(--accent)}
+.merge .m.ai{border-top:3px solid var(--agent)}.merge .m.ai i{color:var(--agent)}
+.merge .m b{display:block;color:var(--ink);font-weight:600;font-size:14px}
+.merge .plus{display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--good)}
+.merge-out{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--good)}
+.merge-out i{font-size:18px}
+/* prompt chip */
+.plabel{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.plabel.p1{color:var(--accent)}.plabel.p1 i{color:var(--accent)}
+.plabel.p2{color:var(--agent)}.plabel.p2 i{color:var(--agent)}
+.prompt-chip{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:13px 40px 13px 15px;font-family:var(--mono);font-size:12.5px;color:var(--ink);line-height:1.65;cursor:pointer;position:relative;white-space:pre-wrap;transition:.18s}
+.prompt-chip:hover{border-color:var(--accent)}
+.prompt-chip .cp-ic{position:absolute;top:11px;right:12px;font-size:15px;color:var(--ink-3)}
+.prompt-chip .cp-ic.show{color:var(--good)}
+.spacer14{height:14px}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px 28px;display:flex;gap:16px;align-items:flex-start;margin:0}
+.cp>i{font-size:30px;color:var(--accent);flex-shrink:0;margin-top:2px}
+.cp .cph{font-size:16px;font-weight:600;margin-bottom:7px}
+.cp p{font-size:14px;color:var(--ink-2);line-height:1.72}
+.cp p b{color:var(--ink);font-weight:600}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:center;background:var(--good-soft);border:1px solid var(--good-line);border-radius:var(--r-l);padding:20px 22px;margin:30px 0 0}
+.bridge>i{color:var(--good);font-size:26px;flex-shrink:0}
+.bridge .bt h4{font-size:14.5px;font-weight:600;color:var(--good);margin-bottom:4px}
+.bridge .bt p{font-size:14px;color:var(--ink-2);line-height:1.62}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .merge{grid-template-columns:1fr}.merge .plus{transform:rotate(90deg)}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.hook,.whenbox,.step,.merge .m,.prompt-chip,.cp,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.8</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve per Imparare</div>
+  <div class="cap-badge rv"><i class="ti ti-flag"></i> <span data-i="capBadge"></span></div>
+  <h1 class="rv" data-i-html="h1"></h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <!-- HOOK -->
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Il soffitto invisibile</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i-html="hook"></p></div>
+
+  <!-- 02 IL VALIDATORE SEI TU -->
+  <div class="sh rv"><i class="ti ti-user-check"></i><span class="no">02</span><h2 data-i="s1">Qui il validatore sei tu</h2></div>
+  <div class="whenbox rv" data-i-html="valBox"></div>
+
+  <!-- 03 WORKFLOW DEL MERGE -->
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">03</span><h2 data-i="s2">Il workflow del Merge</h2></div>
+  <div class="steps rv">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4 data-i="st1h"></h4><p data-i-html="st1p"></p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4 data-i="st2h"></h4><p data-i-html="st2p"></p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4 data-i="st3h"></h4><p data-i-html="st3p"></p></div></div>
+  </div>
+  <div class="spacer14"></div>
+  <div class="merge rv">
+    <div class="m you"><i class="ti ti-user"></i><b data-i="mYouT"></b><span data-i="mYouS"></span></div>
+    <div class="plus"><i class="ti ti-plus"></i></div>
+    <div class="m ai"><i class="ti ti-robot"></i><b data-i="mAiT"></b><span data-i="mAiS"></span></div>
+  </div>
+  <div class="merge-out rv"><i class="ti ti-git-merge"></i> <span data-i="mOut"></span></div>
+
+  <!-- 04 LA DEMO -->
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">04</span><h2 data-i="s3">La demo, dal vivo</h2></div>
+  <div class="plabel p1 rv"><i class="ti ti-arrow-right"></i> <span data-i="pl1"></span></div>
+  <div class="prompt-chip rv" onclick="cp(event,this)"><span data-i="prompt1"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  <div class="spacer14"></div>
+  <div class="plabel p2 rv"><i class="ti ti-arrow-right"></i> <span data-i="pl2"></span></div>
+  <div class="prompt-chip rv" onclick="cp(event,this)"><span data-i="prompt2"></span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  <div class="spacer14"></div>
+  <div class="whenbox lead-ex rv"><i class="ti ti-bulb"></i><div data-i-html="example"></div></div>
+
+  <!-- 05 QUANDO VINCE -->
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">05</span><h2 data-i="s4">Quando il Merge vince (e il limite)</h2></div>
+  <div class="whenbox rv" data-i-html="winBox"></div>
+
+  <!-- 06 CHECKPOINT -->
+  <div class="sh rv"><i class="ti ti-player-pause"></i><span class="no">06</span><h2 data-i="s5">Fermati un attimo</h2></div>
+  <div class="cp rv"><i class="ti ti-player-pause"></i><div><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div></div>
+
+  <!-- 07 IN UNA FRASE -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">07</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyP"></p></div>
+
+  <!-- BRIDGE -->
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><div class="bt"><h4 data-i="bridgeH"></h4><p data-i-html="bridgeP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Plan &amp; Solve per Imparare: il Modo Confronto / Merge</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.8',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve per Imparare',
+capBadge:'Capstone · 2 di 2',
+h1:'Plan &amp; Solve per Imparare: il Modo Confronto / Merge',
+lede:'Il momento più potente non è usare l\'AI per ciò che non sai. È usarla per ciò che credi di saper fare benissimo — e scoprire un modo migliore.',
+s0:'Il soffitto invisibile',
+hook:'È lì che hai un soffitto invisibile: <b>"come l\'ho sempre fatto"</b>. Oggi ti mostro come sfondarlo — e di solito guadagni un livello su qualcosa che fai da anni.',
+s1:'Qui il validatore sei tu',
+valBox:'Nella lezione precedente (Foglio Bianco) il validatore era l\'AI, perché tu non sapevi. Qui è il contrario: la cosa la sai fare, e <b>proprio per questo</b> arrivi con una risposta già pronta in testa e filtri ogni alternativa attraverso il tuo metodo. L\'errore di quasi tutti — anche degli esperti — è appiccicare l\'AI sopra il processo che già hanno. Guadagno piccolo.',
+s2:'Il workflow del Merge',
+st1h:'Chiedi il suo metodo, pulito',
+st1p:'"Come raggiungeresti questo obiettivo TU, da zero, senza sapere come lo faccio io?" Vuoi il suo approccio senza i tuoi pre-frame.',
+st2h:'Metti il tuo a confronto',
+st2p:'Racconti come lo fai tu e chiedi: "dove il mio metodo è più debole del tuo? E il tuo del mio?".',
+st3h:'Fai il merge',
+st3p:'Il pezzo migliore del tuo + il pezzo migliore del suo = il modo migliore in assoluto. Qui il validatore sei tu: hai l\'esperienza per decidere cosa tenere.',
+mYouT:'Il tuo metodo',mYouS:'esperienza, gusto, contesto',
+mAiT:'Il metodo dell\'AI',mAiS:'senza i tuoi pre-frame',
+mOut:'il modo migliore in assoluto',
+s3:'La demo, dal vivo',
+pl1:'Prompt 1 — il suo metodo',
+prompt1:'Devo [task che so fare bene]. Non ti dico come lo faccio io. Voglio prima il TUO metodo: se dovessi farlo tu da zero, qual è il percorso e perché?',
+pl2:'Prompt 2 — il confronto',
+prompt2:'Io di solito lo faccio così: [il tuo metodo]. Confronta i due. Dove il mio è più forte? Dove il tuo? Costruiamo la versione migliore prendendo il meglio di entrambi.',
+example:'<b>Esempio reale:</b> ottimizzare una campagna pubblicitaria. L\'AI è più brava a calcolare soglie, kill-switch, scala dei budget — è matematica. Io uso l\'esperienza per guidarla e non schiantarmi contro un muro. Risultato: tre ore invece di un giorno e mezzo.',
+s4:'Quando il Merge vince (e il limite)',
+winBox:'Vince ogni volta che fai una cosa "sempre nello stesso modo" da anni: lì il soffitto è più alto e nemmeno lo vedi. Qui il rischio non è che l\'AI sbagli senza accorgertene — è il tuo <b>ego</b>: scartare il suo metodo solo perché non è il tuo. Resta onesto: tieni ciò che è oggettivamente migliore, non ciò che è tuo.',
+s5:'Fermati un attimo',
+cpH:'Pensa a una cosa che dai per scontata',
+cpP:'<b>Pensa a una cosa</b> che fai da anni, sempre nello stesso modo, e che dai per scontata. La prossima volta, prima di farla, chiedi all\'AI come la rifarebbe da zero. Poi confronta. Quasi sempre porti a casa almeno un pezzo migliore del tuo.',
+s6:'In una frase',
+keyP:'Non chiedere all\'AI di fare la cosa come la fai tu. Chiedile come la farebbe lei — e ruba il pezzo che è meglio del tuo.',
+bridgeH:'Il cuore del corso è completo',
+bridgeP:'Foglio Bianco per ciò che non sai, Confronto per ciò che sai già. Da qui in poi, ogni cosa che "non sai fare" non è più un muro: è solo un foglio bianco che non hai ancora aperto.',
+foot:'Morfeus — Plan & Solve per Imparare: il Modo Confronto / Merge'
+},
+en:{
+kicker:'Lesson 8.8',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve for Learning',
+capBadge:'Capstone · 2 of 2',
+h1:'Plan &amp; Solve for Learning: the Compare / Merge Mode',
+lede:'The most powerful moment isn\'t using AI for what you don\'t know. It\'s using it for what you believe you do brilliantly — and discovering a better way.',
+s0:'The invisible ceiling',
+hook:'That\'s where you have an invisible ceiling: <b>"the way I\'ve always done it"</b>. Today I\'ll show you how to break through it — and you usually level up on something you\'ve been doing for years.',
+s1:'Here, you are the validator',
+valBox:'In the previous lesson (Blank Sheet) the validator was the AI, because you didn\'t know. Here it\'s the opposite: you do know how to do the thing, and <b>precisely because of that</b> you arrive with an answer already set in your head and filter every alternative through your own method. The mistake almost everyone makes — even experts — is bolting the AI on top of the process they already have. Small gain.',
+s2:'The Merge workflow',
+st1h:'Ask for its method, clean',
+st1p:'"How would YOU reach this goal, from scratch, without knowing how I do it?" You want its approach without your pre-frames.',
+st2h:'Put yours side by side',
+st2p:'You explain how you do it and ask: "where is my method weaker than yours? And yours weaker than mine?".',
+st3h:'Do the merge',
+st3p:'The best piece of yours + the best piece of its = the best way overall. Here you are the validator: you have the experience to decide what to keep.',
+mYouT:'Your method',mYouS:'experience, taste, context',
+mAiT:'The AI\'s method',mAiS:'without your pre-frames',
+mOut:'the best way overall',
+s3:'The demo, live',
+pl1:'Prompt 1 — its method',
+prompt1:'I have to [task I do well]. I won\'t tell you how I do it. First I want YOUR method: if you had to do it from scratch, what\'s the path and why?',
+pl2:'Prompt 2 — the comparison',
+prompt2:'I usually do it like this: [your method]. Compare the two. Where is mine stronger? Where is yours? Let\'s build the best version by taking the best of both.',
+example:'<b>Real example:</b> optimizing an ad campaign. The AI is better at calculating thresholds, kill-switches, budget scaling — it\'s math. I use experience to steer it and avoid crashing into a wall. Result: three hours instead of a day and a half.',
+s4:'When the Merge wins (and the limit)',
+winBox:'It wins every time you do something "always the same way" for years: that\'s where the ceiling is highest and you don\'t even see it. Here the risk isn\'t that the AI gets it wrong without you noticing — it\'s your <b>ego</b>: dismissing its method just because it isn\'t yours. Stay honest: keep what is objectively better, not what is yours.',
+s5:'Pause for a moment',
+cpH:'Think of something you take for granted',
+cpP:'<b>Think of something</b> you\'ve done for years, always the same way, and that you take for granted. Next time, before doing it, ask the AI how it would redo it from scratch. Then compare. Almost always you take home at least one piece better than yours.',
+s6:'In one sentence',
+keyP:'Don\'t ask the AI to do the thing the way you do it. Ask it how it would do it — and steal the piece that\'s better than yours.',
+bridgeH:'The heart of the course is complete',
+bridgeP:'Blank Sheet for what you don\'t know, Compare for what you already know. From here on, anything you "can\'t do" is no longer a wall: it\'s just a blank sheet you haven\'t opened yet.',
+foot:'Morfeus — Plan & Solve for Learning: the Compare / Merge Mode'
+}};
+
+var LANG='it';
+
+/* ---- copy prompt ---- */
+function cp(e,el){
+  e.stopPropagation();
+  var span=el.querySelector('span[data-i]');
+  var t=span?span.textContent.trim():el.textContent.trim();
+  navigator.clipboard.writeText(t).then(function(){
+    var b=el.querySelector('.cp-ic');
+    b.classList.add('show');b.innerHTML='<i class="ti ti-check"></i>';
+    setTimeout(function(){b.classList.remove('show');b.innerHTML='<i class="ti ti-copy"></i>';},1400);
+  });
+}
+
+/* ---- i18n / theme ---- */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1.replace(/&amp;/g,'&')+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Programmate + Claude nel Browser — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:0 0 18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+/* correction banner */
+.correction{display:flex;gap:16px;background:var(--bad-soft);border:1px solid var(--bad-line);border-radius:var(--r-l);padding:18px;margin:0}
+.correction .ci{width:40px;height:40px;border-radius:11px;background:var(--bad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.correction h4{font-size:13.5px;font-weight:700;color:var(--bad);margin-bottom:4px}
+.correction p{font-size:13.5px;color:var(--ink-2);line-height:1.6}.correction p strong{color:var(--ink);font-weight:600}
+/* steps */
+.steps{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:8px 22px;margin:0}
+.step{display:flex;gap:15px;padding:16px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:none}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);border:1.5px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0}
+.step-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:3px}
+.step-text strong .step-code,.step-text span .step-code{display:inline-block;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 7px;font-family:var(--mono);font-size:12px;color:var(--agent);font-weight:500}
+.step-text span{font-size:13px;color:var(--ink-2);line-height:1.6}
+.step-text span strong{display:inline;font-size:13px;color:var(--ink)}
+/* freq configurator */
+.freq{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin:0}
+.freq-title{font-size:15px;font-weight:600;margin-bottom:5px}
+.freq-sub{font-size:13px;color:var(--ink-3);margin-bottom:18px}
+.freq-chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+.freq-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border-radius:24px;border:1.5px solid var(--line);background:var(--bg-2);font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:.18s;user-select:none}
+.freq-chip:hover{border-color:var(--line-2)}
+.freq-chip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.freq-chip i{font-size:15px}
+.freq-detail{min-height:120px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:.3s}
+.fd-label{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;padding:3px 11px;border-radius:20px;background:var(--accent-soft);color:var(--accent)}
+.fd-title{font-size:14.5px;font-weight:600;margin-bottom:5px}
+.fd-desc{font-size:13px;color:var(--ink-2);line-height:1.7}
+.fd-example{margin-top:13px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:11px 13px;font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.6}
+.fd-example .ex-label{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:block;margin-bottom:6px}
+/* limit / tip boxes */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip.blue{background:var(--blue-soft);border:1px solid var(--blue-line)}
+.tip.teal{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip .ti-i{width:42px;height:42px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.tip.warn .ti-i{background:var(--warn)}.tip.blue .ti-i{background:var(--blue)}.tip.teal .ti-i{background:var(--teal)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:5px}
+.tip.warn h4{color:var(--warn)}.tip.blue h4{color:var(--blue)}.tip.teal h4{color:var(--teal)}
+.tip p{font-size:13.5px;color:var(--ink-2);line-height:1.65}.tip p strong{color:var(--ink);font-weight:600}
+/* gallery */
+.g-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.g-tab{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:20px;border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh);font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:.18s}
+.g-tab:hover{border-color:var(--line-2)}
+.g-tab.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.g-tab i{font-size:14px}
+.g-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;min-height:180px}
+.gp-head{display:flex;align-items:center;gap:12px;margin-bottom:13px;flex-wrap:wrap}
+.gp-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.gp-icon.teal{background:var(--teal-soft);color:var(--teal)}
+.gp-icon.blue{background:var(--blue-soft);color:var(--blue)}
+.gp-title{font-size:16px;font-weight:600}
+.gp-badge{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;margin-left:4px}
+.gp-badge.sched{background:var(--teal-soft);color:var(--teal)}
+.gp-badge.browser{background:var(--blue-soft);color:var(--blue)}
+.gp-desc{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:14px}
+.gp-prompt{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:0 var(--r) var(--r) 0;padding:13px 15px;font-family:var(--mono);font-size:12px;color:var(--ink-2);line-height:1.65;white-space:pre-wrap}
+.gp-prompt.blue{border-left-color:var(--blue)}
+.gp-prompt .pmt-label{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--teal);display:block;margin-bottom:7px}
+.gp-prompt.blue .pmt-label{color:var(--blue)}
+.gp-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.gp-tag{font-family:var(--mono);font-size:10.5px;padding:4px 10px;border-radius:20px;background:var(--bg-3);color:var(--ink-3);border:1px solid var(--line)}
+/* hierarchy */
+.hier{margin:0}
+.hstep{display:flex;gap:16px;position:relative;padding-bottom:22px}
+.hstep:last-child{padding-bottom:0}
+.hstep::before{content:'';position:absolute;left:17px;top:40px;bottom:0;width:2px;background:var(--line)}
+.hstep:last-child::before{display:none}
+.hnum{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;flex-shrink:0;z-index:1}
+.hnum.n1{background:var(--teal-soft);color:var(--teal);border:2px solid var(--teal-line)}
+.hnum.n2{background:var(--blue-soft);color:var(--blue);border:2px solid var(--blue-line)}
+.hnum.n3{background:var(--warn-soft);color:var(--warn);border:2px solid var(--warn-line)}
+.hcontent{flex:1;padding-top:2px}
+.htag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:7px}
+.htag.faster{background:var(--good-soft);color:var(--good)}
+.htag.medium{background:var(--blue-soft);color:var(--blue)}
+.htag.slower{background:var(--warn-soft);color:var(--warn)}
+.hcontent h4{font-size:14.5px;font-weight:600;margin-bottom:4px}
+.hcontent p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* caution list */
+.caution{display:flex;flex-direction:column;gap:10px;margin:0}
+.citem{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r-l);padding:15px 17px}
+.citem .ci-i{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.citem .ci-i.ok{background:var(--good-soft);color:var(--good)}
+.citem .ci-i.warn{background:var(--warn-soft);color:var(--warn)}
+.citem .ci-t{flex:1}
+.citem .ci-t strong{font-size:13.5px;font-weight:600;display:block;margin-bottom:3px}
+.citem .ci-t span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+/* matrix */
+.matrix-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh)}
+.matrix-table{width:100%;border-collapse:collapse;font-size:13px}
+.matrix-table th{text-align:left;font-family:var(--mono);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);padding:11px 14px;background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap}
+.matrix-table td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:middle}
+.matrix-table tr:last-child td{border-bottom:none}
+.matrix-table .fn{font-weight:600;color:var(--ink)}
+.matrix-table td.c{text-align:center}
+.matrix-table .yes{color:var(--good)}.matrix-table .no{color:var(--ink-3)}
+.matrix-table .na{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.g-tabs{gap:6px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.hook,.correction,.steps,.freq,.tip,.g-panel,.hstep,.citem,.matrix-wrap,.key,.cp{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Cowork — chiude il modulo</div>
+  <h1 class="rv" data-i="h1">Task Programmate + Claude nel Browser</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="correction rv" style="margin-top:22px"><div class="ci"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="corrH"></h4><p data-i-html="corrP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-calendar-repeat"></i><span class="no">01</span><h2 data-i="s1">Task programmate in Cowork</h2></div>
+  <p class="lede-p rv" data-i="s1Intro"></p>
+
+  <div class="steps rv">
+    <div class="step"><div class="step-num">1</div><div class="step-text"><strong data-i="st1H"></strong><span data-i="st1P"></span></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text"><strong data-i-html="st2H"></strong><span data-i-html="st2P"></span></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text"><strong data-i="st3H"></strong><span data-i="st3P"></span></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text"><strong data-i="st4H"></strong><span data-i="st4P"></span></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-text"><strong data-i="st5H"></strong><span data-i="st5P"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments"></i><span class="no">02</span><h2 data-i="s2">Configuratore — scegli la frequenza</h2></div>
+  <div class="freq rv">
+    <div class="freq-title" data-i="freqTitle"></div>
+    <div class="freq-sub" data-i="freqSub"></div>
+    <div class="freq-chips" id="freq-chips"></div>
+    <div class="freq-detail" id="freq-detail"></div>
+  </div>
+
+  <div class="tip warn rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-device-desktop"></i></div><div><h4 data-i="limitH"></h4><p data-i-html="limitP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">03</span><h2 data-i="s3">Casi d'uso — task programmate e browser</h2></div>
+  <div class="g-tabs rv" id="g-tabs"></div>
+  <div class="g-panel rv" id="g-panel"></div>
+
+  <div class="sh rv"><i class="ti ti-brand-chrome"></i><span class="no">04</span><h2 data-i="s4">Claude in Chrome — l'estensione browser</h2></div>
+  <p class="lede-p rv" data-i-html="s4Intro"></p>
+  <div class="tip blue rv"><div class="ti-i"><i class="ti ti-info-circle"></i></div><div><h4 data-i="vsH"></h4><p data-i-html="vsP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-sitemap"></i><span class="no">05</span><h2 data-i="s5">Come Cowork sceglie come agire sul web</h2></div>
+  <p class="lede-p rv" data-i="s5Intro"></p>
+  <div class="hier rv">
+    <div class="hstep">
+      <div class="hnum n1">1</div>
+      <div class="hcontent"><span class="htag faster"><i class="ti ti-bolt"></i> <span data-i="h1tag"></span></span><h4 data-i="h1H"></h4><p data-i="h1P"></p></div>
+    </div>
+    <div class="hstep">
+      <div class="hnum n2">2</div>
+      <div class="hcontent"><span class="htag medium"><i class="ti ti-brand-chrome"></i> <span data-i="h2tag"></span></span><h4 data-i="h2H"></h4><p data-i="h2P"></p></div>
+    </div>
+    <div class="hstep">
+      <div class="hnum n3">3</div>
+      <div class="hcontent"><span class="htag slower"><i class="ti ti-device-desktop"></i> <span data-i="h3tag"></span></span><h4 data-i="h3H"></h4><p data-i-html="h3P"></p></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-horizontal"></i><span class="no">06</span><h2 data-i="s6">Cosa funziona bene / cosa richiede attenzione</h2></div>
+  <div class="caution rv">
+    <div class="citem"><div class="ci-i ok"><i class="ti ti-check"></i></div><div class="ci-t"><strong data-i="ca1H"></strong><span data-i="ca1P"></span></div></div>
+    <div class="citem"><div class="ci-i ok"><i class="ti ti-check"></i></div><div class="ci-t"><strong data-i="ca2H"></strong><span data-i="ca2P"></span></div></div>
+    <div class="citem"><div class="ci-i ok"><i class="ti ti-check"></i></div><div class="ci-t"><strong data-i="ca3H"></strong><span data-i="ca3P"></span></div></div>
+    <div class="citem"><div class="ci-i warn"><i class="ti ti-alert-triangle"></i></div><div class="ci-t"><strong data-i="ca4H"></strong><span data-i="ca4P"></span></div></div>
+    <div class="citem"><div class="ci-i warn"><i class="ti ti-alert-triangle"></i></div><div class="ci-t"><strong data-i="ca5H"></strong><span data-i="ca5P"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">07</span><h2 data-i="s7">Disponibilità per piano</h2></div>
+  <div class="matrix-wrap rv">
+    <table class="matrix-table">
+      <thead><tr><th data-i="mhFn"></th><th class="c" data-i="mhFree"></th><th class="c" data-i="mhPro"></th><th class="c" data-i="mhMax"></th><th class="c" data-i="mhTeam"></th></tr></thead>
+      <tbody id="matrix-body"></tbody>
+    </table>
+  </div>
+  <div class="tip teal rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-device-desktop"></i></div><div><h4 data-i="reqH"></h4><p data-i-html="reqP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s8">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s9">Il vostro prossimo passo</h2></div>
+  <div class="cp rv"><i class="ti ti-target-arrow"></i><div class="cph" data-i="cpH"></div><p data-i="cpP"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Task Programmate + Claude nel Browser</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Cowork — chiude il modulo',
+h1:'Task Programmate + Claude nel Browser',
+lede:'Automatizzare i compiti ripetitivi con le scheduled tasks e navigare il web con Claude in Chrome.',
+hook:'«E se Claude facesse cose per voi anche quando non siete al computer? Task che si attivano automaticamente — ogni giorno, ogni settimana, su cadenza scelta. Questo è il livello successivo di Cowork. E Claude nel browser aggiunge la capacità di navigare il web come un umano.»',
+corrH:'Nota importante: non "Comet"',
+corrP:'Il browser integrato con Claude si chiama <strong>Claude in Chrome</strong> — un\'<strong>estensione per Google Chrome</strong>. Comet è un prodotto di Perplexity, non di Anthropic.',
+s1:'Task programmate in Cowork',
+s1Intro:'Le task programmate permettono di salvare un prompt come istruzione ricorrente. Cowork le esegue automaticamente alla cadenza scelta — oppure le lanci tu manualmente quando vuoi, senza doverle riscrivere ogni volta.',
+st1H:'Apri il pannello Scheduled in Cowork',
+st1P:'Nella sidebar di Cowork trovi la sezione "Scheduled". Da qui puoi vedere tutte le task attive, le ultime esecuzioni e creare nuove task.',
+st2H:'Clicca "+ New task" oppure usa <span class="step-code">/schedule</span>',
+st2P:'Puoi creare una task dalla sidebar oppure digitare <strong>/schedule</strong> direttamente in una chat Cowork. Lo /schedule è una Skill che guida passo passo la configurazione.',
+st3H:'Compila nome, descrizione e prompt',
+st3P:'Il prompt è il cuore della task: scrivi esattamente cosa deve fare Claude ogni volta che la task si attiva. Più è specifico e contestualizzato, migliore è il risultato.',
+st4H:'Scegli la frequenza (vedi configuratore)',
+st4P:'Le frequenze disponibili sono: oraria, giornaliera, nei giorni feriali, settimanale, o manuale. Puoi anche specificare cartella di lavoro e modello preferito.',
+st5H:'Salva — e gestisci in qualsiasi momento',
+st5P:'Puoi modificare istruzioni o cadenza, mettere in pausa, riattivare, eliminare o lanciare on-demand dalla pagina Scheduled. Ogni run passata è consultabile.',
+s2:'Configuratore — scegli la frequenza',
+freqTitle:'Configuratore — scegli la frequenza',
+freqSub:'Clicca una frequenza per vedere quando si attiva e un esempio d\'uso generico.',
+limitH:'Limite importante: PC sveglio + app aperta',
+limitP:'Le task girano <strong>solo se il computer è sveglio e Claude Desktop è aperto</strong> all\'orario previsto. Non è un cloud scheduler 24/7. Se il PC è spento o in sospensione, Cowork salta l\'esecuzione e la <strong>riesegue automaticamente</strong> non appena l\'app viene riaperta o il PC si risveglia.',
+s3:'Casi d\'uso — task programmate e browser',
+s4:'Claude in Chrome — l\'estensione browser',
+s4Intro:'Claude in Chrome è un\'<strong>estensione per Google Chrome</strong> (attualmente in beta, disponibile per tutti i piani a pagamento). Apre un pannello laterale nel browser dove Claude può leggere la pagina, cliccare, navigare e raccogliere dati — esattamente come vedete voi.',
+vsH:'Claude in Chrome vs Computer use',
+vsP:'Sono due cose diverse. Claude in Chrome agisce <strong>dentro il browser</strong> via estensione. Il Computer use (solo Pro/Max) controlla direttamente <strong>lo schermo e le app desktop</strong> — è il livello successivo, più potente ma anche più lento.',
+s5:'Come Cowork sceglie come agire sul web',
+s5Intro:'Quando una task Cowork deve interagire con servizi esterni, segue una gerarchia: prima sceglie il metodo più veloce e affidabile.',
+h1tag:'Più veloce',h1H:'Connettori (Gmail, Drive, Slack, Calendar…)',
+h1P:'Se esiste un connettore MCP per il servizio, Cowork lo usa direttamente — senza aprire il browser. È il metodo più affidabile e preciso. Da preferire sempre quando disponibile.',
+h2tag:'Medio',h2H:'Navigazione browser via Claude in Chrome',
+h2P:'Se non c\'è connettore, Cowork usa l\'estensione Claude in Chrome per navigare, leggere pagine e interagire con i siti web. Richiede che l\'estensione sia installata.',
+h3tag:'Solo Pro/Max',h3H:'Controllo schermo (Computer use)',
+h3P:'Come ultima risorsa, Claude può controllare direttamente il desktop — aprire app, cliccare su qualsiasi elemento. Disponibile solo sui piani Pro e Max. Va abilitato in Settings &gt; General &gt; Computer use.',
+s6:'Cosa funziona bene / cosa richiede attenzione',
+ca1H:'Estrarre informazioni da siti pubblici',
+ca1P:'Prezzi, news, dati, articoli — tutto quello che è visibile in un browser funziona bene. Claude naviga, legge e struttura i risultati.',
+ca2H:'Siti dove avete già fatto login',
+ca2P:'Claude vede quello che vedete voi. Se siete già autenticati su un servizio, Claude può interagire con le pagine riservate.',
+ca3H:'Ricerche strutturate su più fonti',
+ca3P:'Chiedere di visitare più pagine e sintetizzare le informazioni trovate in un documento unico.',
+ca4H:'Captcha e protezioni anti-bot',
+ca4P:'Molti siti rilevano l\'automazione e bloccano l\'accesso. Non sempre Claude riesce a completare la navigazione.',
+ca5H:'Azioni irreversibili (invia, elimina, acquista)',
+ca5P:'Supervisionate sempre prima che Claude esegua un\'azione che non si può annullare. App bancarie, healthcare e crypto sono bloccate di default.',
+s7:'Disponibilità per piano',
+mhFn:'Funzionalità',mhFree:'Free',mhPro:'Pro',mhMax:'Max',mhTeam:'Team/Ent.',
+reqH:'Requisito comune a tutto',
+reqP:'Cowork, le task programmate e Claude in Chrome funzionano <strong>solo su Claude Desktop</strong> (macOS e Windows). Non sono disponibili su web né mobile. Il modello gira sui server Anthropic, i file restano locali sul vostro computer.',
+s8:'In una frase',
+keyPhrase:'«Le task programmate lavorano per voi nel tempo. Claude nel browser lavora per voi nello spazio — nel web. Insieme, estendono la vostra capacità di lavoro oltre le ore in cui siete fisicamente al computer.»',
+s9:'Il vostro prossimo passo',
+cpH:'Il vostro prossimo passo',
+cpP:'Scegliete una cosa che fate in modo ripetitivo — un setup settimanale, una raccolta di informazioni periodica, un template che compilate ogni volta. Valutatene se potrebbe diventare una task programmata. Non serve implementarla adesso: identificarla è già metà del lavoro.',
+foot:'Morfeus — Task Programmate + Claude nel Browser'
+},
+en:{
+kicker:'Lesson 4.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Cowork — closing the module',
+h1:'Scheduled Tasks + Claude in the Browser',
+lede:'Automate repetitive chores with scheduled tasks and browse the web with Claude in Chrome.',
+hook:'"What if Claude did things for you even when you\'re away from the computer? Tasks that trigger automatically — every day, every week, on a cadence you choose. This is the next level of Cowork. And Claude in the browser adds the ability to navigate the web like a human."',
+corrH:'Important note: not "Comet"',
+corrP:'The browser integrated with Claude is called <strong>Claude in Chrome</strong> — an <strong>extension for Google Chrome</strong>. Comet is a Perplexity product, not Anthropic\'s.',
+s1:'Scheduled tasks in Cowork',
+s1Intro:'Scheduled tasks let you save a prompt as a recurring instruction. Cowork runs them automatically on the cadence you choose — or you launch them manually whenever you want, without having to rewrite them each time.',
+st1H:'Open the Scheduled panel in Cowork',
+st1P:'In the Cowork sidebar you\'ll find the "Scheduled" section. From here you can see all active tasks, the latest runs and create new tasks.',
+st2H:'Click "+ New task" or use <span class="step-code">/schedule</span>',
+st2P:'You can create a task from the sidebar or type <strong>/schedule</strong> directly in a Cowork chat. /schedule is a Skill that guides the configuration step by step.',
+st3H:'Fill in name, description and prompt',
+st3P:'The prompt is the heart of the task: write exactly what Claude has to do every time the task triggers. The more specific and contextualized it is, the better the result.',
+st4H:'Choose the frequency (see configurator)',
+st4P:'The available frequencies are: hourly, daily, on weekdays, weekly, or manual. You can also specify a working folder and a preferred model.',
+st5H:'Save — and manage it anytime',
+st5P:'You can edit instructions or cadence, pause, reactivate, delete or launch on-demand from the Scheduled page. Every past run can be reviewed.',
+s2:'Configurator — choose the frequency',
+freqTitle:'Configurator — choose the frequency',
+freqSub:'Click a frequency to see when it triggers and a generic example of use.',
+limitH:'Important limit: PC awake + app open',
+limitP:'Tasks run <strong>only if the computer is awake and Claude Desktop is open</strong> at the scheduled time. It\'s not a 24/7 cloud scheduler. If the PC is off or asleep, Cowork skips the run and <strong>re-runs it automatically</strong> as soon as the app is reopened or the PC wakes up.',
+s3:'Use cases — scheduled tasks and browser',
+s4:'Claude in Chrome — the browser extension',
+s4Intro:'Claude in Chrome is an <strong>extension for Google Chrome</strong> (currently in beta, available on all paid plans). It opens a side panel in the browser where Claude can read the page, click, navigate and gather data — exactly as you see it.',
+vsH:'Claude in Chrome vs Computer use',
+vsP:'These are two different things. Claude in Chrome acts <strong>inside the browser</strong> via the extension. Computer use (Pro/Max only) directly controls <strong>the screen and desktop apps</strong> — it\'s the next level, more powerful but also slower.',
+s5:'How Cowork chooses how to act on the web',
+s5Intro:'When a Cowork task has to interact with external services, it follows a hierarchy: it first chooses the fastest and most reliable method.',
+h1tag:'Fastest',h1H:'Connectors (Gmail, Drive, Slack, Calendar…)',
+h1P:'If an MCP connector exists for the service, Cowork uses it directly — without opening the browser. It\'s the most reliable and precise method. Always preferred when available.',
+h2tag:'Medium',h2H:'Browser navigation via Claude in Chrome',
+h2P:'If there\'s no connector, Cowork uses the Claude in Chrome extension to navigate, read pages and interact with websites. It requires the extension to be installed.',
+h3tag:'Pro/Max only',h3H:'Screen control (Computer use)',
+h3P:'As a last resort, Claude can directly control the desktop — open apps, click on any element. Available only on Pro and Max plans. It must be enabled in Settings &gt; General &gt; Computer use.',
+s6:'What works well / what needs attention',
+ca1H:'Extract information from public sites',
+ca1P:'Prices, news, data, articles — anything visible in a browser works well. Claude navigates, reads and structures the results.',
+ca2H:'Sites where you\'re already logged in',
+ca2P:'Claude sees what you see. If you\'re already authenticated on a service, Claude can interact with the restricted pages.',
+ca3H:'Structured research across multiple sources',
+ca3P:'Asking to visit multiple pages and synthesize the information found into a single document.',
+ca4H:'Captcha and anti-bot protections',
+ca4P:'Many sites detect automation and block access. Claude can\'t always complete the navigation.',
+ca5H:'Irreversible actions (send, delete, buy)',
+ca5P:'Always supervise before Claude performs an action that can\'t be undone. Banking, healthcare and crypto apps are blocked by default.',
+s7:'Availability by plan',
+mhFn:'Feature',mhFree:'Free',mhPro:'Pro',mhMax:'Max',mhTeam:'Team/Ent.',
+reqH:'Requirement common to everything',
+reqP:'Cowork, scheduled tasks and Claude in Chrome work <strong>only on Claude Desktop</strong> (macOS and Windows). They\'re not available on web or mobile. The model runs on Anthropic\'s servers, the files stay local on your computer.',
+s8:'In one sentence',
+keyPhrase:'"Scheduled tasks work for you across time. Claude in the browser works for you across space — on the web. Together, they extend your work capacity beyond the hours you\'re physically at the computer."',
+s9:'Your next step',
+cpH:'Your next step',
+cpP:'Pick something you do repetitively — a weekly setup, a periodic information gathering, a template you fill in every time. Assess whether it could become a scheduled task. You don\'t need to implement it now: identifying it is already half the work.',
+foot:'Morfeus — Scheduled Tasks + Claude in the Browser'
+}};
+
+var FREQ={
+it:[
+['hourly','ti-clock','Oraria','Ogni ora','La task si attiva ogni ora — il ciclo più frequente disponibile. Utile per situazioni dove volete aggiornamenti ravvicinati nel corso della giornata.','Ogni ora controlla se nella cartella 02_INPUT sono arrivati nuovi file. Se sì, spostali in 03_DA_PROCESSARE e crea un file log con il nome e la data di arrivo.'],
+['daily','ti-sun','Giornaliera','Una volta al giorno','La frequenza più comune per task di pianificazione e riepilogo. Si attiva ogni giorno all\'orario impostato — perfetta per brief mattutini, log quotidiani o archivi giornalieri.','Ogni mattina, crea nella cartella Documenti un file "Note_[data].md" con una sezione Priorità del giorno, una sezione Spazio libero e una sezione Da rivedere domani.'],
+['weekdays','ti-calendar-week','Giorni feriali','Dal lunedì al venerdì','Come la giornaliera, ma salta automaticamente sabato e domenica. Ideale per tutto quello che ha senso solo nei giorni lavorativi.','Ogni giorno feriale alle 8:30, controlla la cartella Riunioni_Settimana e crea un file "Prep_[data].md" con uno spazio per l\'agenda, i partecipanti e le note di follow-up.'],
+['weekly','ti-calendar','Settimanale','Una volta alla settimana','Si attiva una volta a settimana nel giorno che scegliete. Perfetta per revisioni periodiche, report settimanali e archiviazione ricorrente.','Ogni lunedì mattina, crea nella cartella Output un file "Recap_Settimana_[data].md" con: lista dei file modificati nella settimana, sezione Priorità con 3 slot vuoti, e spazio note per il weekly review.'],
+['manual','ti-hand-click','Manuale','On-demand — lanci tu','Nessuna cadenza automatica. La task è salvata come template di istruzioni che potete lanciare quando volete, senza riscrivere il prompt ogni volta. Utile per processi ricorrenti ma non con frequenza fissa.','Template pronto: prendi tutti i file .md nella cartella Bozze, crea una lista con titolo e prime due righe di ognuno, e salvala come "Indice_Bozze_[data].md" in Archivio.']
+],
+en:[
+['hourly','ti-clock','Hourly','Every hour','The task triggers every hour — the most frequent cycle available. Useful for situations where you want close updates throughout the day.','Every hour check whether new files have arrived in the 02_INPUT folder. If so, move them to 03_DA_PROCESSARE and create a log file with the name and arrival date.'],
+['daily','ti-sun','Daily','Once a day','The most common frequency for planning and recap tasks. It triggers every day at the set time — perfect for morning briefs, daily logs or daily archives.','Every morning, create in the Documents folder a file "Note_[date].md" with a Priorities of the day section, a Free space section and a To review tomorrow section.'],
+['weekdays','ti-calendar-week','Weekdays','Monday to Friday','Like daily, but automatically skips Saturday and Sunday. Ideal for everything that only makes sense on working days.','Every weekday at 8:30, check the Riunioni_Settimana folder and create a file "Prep_[date].md" with space for the agenda, the participants and follow-up notes.'],
+['weekly','ti-calendar','Weekly','Once a week','It triggers once a week on the day you choose. Perfect for periodic reviews, weekly reports and recurring archiving.','Every Monday morning, create in the Output folder a file "Recap_Settimana_[date].md" with: a list of the files modified during the week, a Priorities section with 3 empty slots, and a notes space for the weekly review.'],
+['manual','ti-hand-click','Manual','On-demand — you launch it','No automatic cadence. The task is saved as an instruction template that you can launch whenever you want, without rewriting the prompt each time. Useful for recurring processes but not on a fixed frequency.','Ready template: take all the .md files in the Drafts folder, create a list with the title and first two lines of each, and save it as "Indice_Bozze_[date].md" in Archive.']
+]};
+var FREQ_EXLABEL={it:'Esempio prompt',en:'Example prompt'};
+
+var GALLERY={
+it:[
+['ti-calendar-event','teal','Weekly review template','Schedulata','sched','Ogni lunedì mattina, Claude crea automaticamente il documento di pianificazione settimanale con la struttura pronta. Arriva in workspace già formattato — voi ci mettete solo i contenuti.','Prompt della task','','Frequenza: ogni lunedì (weekdays)\n\nCrea nella cartella Output un file "Weekly_Review_[data].md" con queste sezioni:\n- Priorità della settimana (3 slot numerati)\n- In corso (lista vuota)\n- Da rimandare alla settimana prossima\n- Note varie\n\nAggiungi la data di lunedì in intestazione.',['Settimanale','Produttività','Template']],
+['ti-sun','teal','Daily brief mattutino','Schedulata','sched','Ogni mattina prima di iniziare a lavorare, Claude prepara un file di riepilogo con i punti chiave del giorno. Con i connettori giusti (Calendar, Email) può includere anche agenda e messaggi in sospeso.','Prompt della task','','Frequenza: ogni giorno feriale (weekdays)\n\nCrea in Documenti/Daily un file "Brief_[data].md" con:\n- Titolo: Buongiorno — [data completa]\n- Sezione "Oggi" con 3 slot priorità vuoti\n- Sezione "Pendenze" vuota\n- Sezione "Note rapide" vuota\n\nSe il connettore Calendar è attivo, aggiungi gli appuntamenti del giorno.',['Giornaliera','Brief','Connettori opzionali']],
+['ti-archive','teal','Archiviazione fine mese','Schedulata','sched','Template da lanciare manualmente il primo di ogni mese (o schedulare settimanalmente come reminder). Claude organizza e archivia i file del mese precedente nella struttura di cartelle giusta.','Prompt della task','','Frequenza: manuale (lancio il primo del mese)\n\nGuarda la cartella 03_OUTPUT e identifica tutti i file creati il mese scorso.\nCrea una cartella "Archivio_[mese_anno]" e spostaci quei file.\nGenera un file "Indice_[mese].md" con la lista di tutti i file archiviati, ordinati per data.',['Manuale','Archivio','Organizzazione']],
+['ti-world','blue','Browser: estrai dati da siti pubblici','Claude in Chrome','browser','Claude in Chrome può visitare pagine web, leggere i contenuti e strutturare le informazioni in un documento. Utile per raccogliere dati da più fonti senza copiarli manualmente.','Esempio prompt (via Claude in Chrome)','blue','Vai su [sito pubblico], trova la sezione prezzi/news/dati.\nEstrai le 3 voci principali con descrizione e valore.\nCrea un file "Estrazione_[data].md" in Documenti con i risultati formattati in tabella.',['Browser','Estrazione dati','Siti pubblici']],
+['ti-forms','blue','Browser: compilare form ripetitivi','Claude in Chrome','browser','Su piattaforme web dove avete già fatto login, Claude può compilare campi di form, inserire dati e navigare tra pagine. Supervisionate sempre prima delle azioni irreversibili.','Esempio prompt (via Claude in Chrome)','blue','Apri [piattaforma web — già loggato].\nVai nella sezione "Nuovo report".\nCompila i campi: titolo = [testo], data = [oggi], categoria = [valore].\nFermati prima di cliccare "Invia" — aspetta la mia conferma.',['Browser','Form','Supervisione necessaria']]
+],
+en:[
+['ti-calendar-event','teal','Weekly review template','Scheduled','sched','Every Monday morning, Claude automatically creates the weekly planning document with the structure ready. It lands in your workspace already formatted — you just add the content.','Task prompt','','Frequency: every Monday (weekdays)\n\nCreate in the Output folder a file "Weekly_Review_[date].md" with these sections:\n- Priorities of the week (3 numbered slots)\n- In progress (empty list)\n- To postpone to next week\n- Misc notes\n\nAdd Monday\'s date in the header.',['Weekly','Productivity','Template']],
+['ti-sun','teal','Morning daily brief','Scheduled','sched','Every morning before you start working, Claude prepares a recap file with the day\'s key points. With the right connectors (Calendar, Email) it can also include the agenda and pending messages.','Task prompt','','Frequency: every weekday (weekdays)\n\nCreate in Documents/Daily a file "Brief_[date].md" with:\n- Title: Good morning — [full date]\n- "Today" section with 3 empty priority slots\n- "Pending" section empty\n- "Quick notes" section empty\n\nIf the Calendar connector is active, add the day\'s appointments.',['Daily','Brief','Optional connectors']],
+['ti-archive','teal','End-of-month archiving','Scheduled','sched','Template to launch manually on the first of each month (or schedule weekly as a reminder). Claude organizes and archives the previous month\'s files into the right folder structure.','Task prompt','','Frequency: manual (launch on the first of the month)\n\nLook at the 03_OUTPUT folder and identify all files created last month.\nCreate a folder "Archivio_[month_year]" and move those files into it.\nGenerate a file "Indice_[month].md" with the list of all archived files, sorted by date.',['Manual','Archive','Organization']],
+['ti-world','blue','Browser: extract data from public sites','Claude in Chrome','browser','Claude in Chrome can visit web pages, read the contents and structure the information into a document. Useful for gathering data from multiple sources without copying it manually.','Example prompt (via Claude in Chrome)','blue','Go to [public site], find the prices/news/data section.\nExtract the 3 main entries with description and value.\nCreate a file "Estrazione_[date].md" in Documents with the results formatted as a table.',['Browser','Data extraction','Public sites']],
+['ti-forms','blue','Browser: fill in repetitive forms','Claude in Chrome','browser','On web platforms where you\'re already logged in, Claude can fill in form fields, enter data and navigate between pages. Always supervise before irreversible actions.','Example prompt (via Claude in Chrome)','blue','Open [web platform — already logged in].\nGo to the "New report" section.\nFill in the fields: title = [text], date = [today], category = [value].\nStop before clicking "Send" — wait for my confirmation.',['Browser','Form','Supervision required']]
+]};
+
+var MATRIX={
+it:[
+['Cowork (su Claude Desktop)','no','yes','yes','yes'],
+['Task programmate (scheduled)','no','yes','yes','yes'],
+['Claude in Chrome (estensione)','no','yes','yes','yes'],
+['Computer use (controllo schermo)','no','yes','yes','na:Non disponibile']
+],
+en:[
+['Cowork (on Claude Desktop)','no','yes','yes','yes'],
+['Scheduled tasks','no','yes','yes','yes'],
+['Claude in Chrome (extension)','no','yes','yes','yes'],
+['Computer use (screen control)','no','yes','yes','na:Not available']
+]};
+
+var LANG='it',curFreq='daily';
+
+function renderFreqChips(){
+  document.getElementById('freq-chips').innerHTML=FREQ[LANG].map(function(f){
+    return '<div class="freq-chip'+(f[0]===curFreq?' on':'')+'" onclick="selFreq(\''+f[0]+'\')"><i class="ti '+f[1]+'"></i> '+f[2]+'</div>';
+  }).join('');
+}
+function renderFreqDetail(){
+  var f=FREQ[LANG].filter(function(x){return x[0]===curFreq})[0];
+  document.getElementById('freq-detail').innerHTML=
+    '<span class="fd-label"><i class="ti '+f[1]+'"></i> '+f[2]+'</span>'+
+    '<div class="fd-title">'+f[3]+'</div>'+
+    '<div class="fd-desc">'+f[4]+'</div>'+
+    '<div class="fd-example"><span class="ex-label">'+FREQ_EXLABEL[LANG]+'</span>'+f[5]+'</div>';
+}
+function selFreq(k){curFreq=k;renderFreqChips();renderFreqDetail()}
+
+var curG=0;
+function renderGTabs(){
+  document.getElementById('g-tabs').innerHTML=GALLERY[LANG].map(function(g,i){
+    return '<div class="g-tab'+(i===curG?' on':'')+'" onclick="selG('+i+')"><i class="ti '+g[0]+'"></i> '+g[2]+'</div>';
+  }).join('');
+}
+function renderGPanel(){
+  var g=GALLERY[LANG][curG];
+  var tags=g[9].map(function(t){return '<span class="gp-tag">'+t+'</span>'}).join('');
+  document.getElementById('g-panel').innerHTML=
+    '<div class="gp-head">'+
+      '<div class="gp-icon '+g[1]+'"><i class="ti '+g[0]+'"></i></div>'+
+      '<div><span class="gp-title">'+g[2]+'</span> '+
+      '<span class="gp-badge '+g[4]+'">'+g[3]+'</span></div>'+
+    '</div>'+
+    '<div class="gp-desc">'+g[5]+'</div>'+
+    '<div class="gp-prompt '+g[7]+'"><span class="pmt-label">'+g[6]+'</span>'+g[8]+'</div>'+
+    '<div class="gp-tags">'+tags+'</div>';
+}
+function selG(i){curG=i;renderGTabs();renderGPanel()}
+
+function cellHTML(v){
+  if(v==='yes')return '<td class="c yes"><i class="ti ti-check"></i></td>';
+  if(v==='no')return '<td class="c no"><i class="ti ti-x"></i></td>';
+  if(v.indexOf('na:')===0)return '<td class="c na">'+v.slice(3)+'</td>';
+  return '<td class="c">'+v+'</td>';
+}
+function renderMatrix(){
+  document.getElementById('matrix-body').innerHTML=MATRIX[LANG].map(function(r){
+    return '<tr><td class="fn">'+r[0]+'</td>'+cellHTML(r[1])+cellHTML(r[2])+cellHTML(r[3])+cellHTML(r[4])+'</tr>';
+  }).join('');
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderFreqChips();renderFreqDetail();renderGTabs();renderGPanel();renderMatrix();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

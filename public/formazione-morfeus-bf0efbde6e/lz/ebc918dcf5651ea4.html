@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomia di una lezione — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* 10-step anatomy */
+.stepbar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.step{flex:1 1 calc(20% - 7px);min-width:64px;border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh);border-radius:var(--r);padding:10px 8px;cursor:pointer;transition:.18s;text-align:center;user-select:none;position:relative}
+.step:hover{background:var(--bg-2)}
+.step.on{border-color:var(--accent);background:var(--accent-soft);z-index:2}
+.step.fr{border-color:var(--agent)}
+.step.fr.on{border-color:var(--agent);background:var(--agent-soft)}
+.step .sno{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.step.on .sno{color:var(--accent)}.step.fr.on .sno{color:var(--agent)}
+.step .si{font-size:18px;color:var(--ink-2);margin:5px 0 4px}
+.step.on .si{color:var(--accent)}.step.fr.on .si{color:var(--agent)}
+.step h4{font-size:11.5px;font-weight:600;line-height:1.2}
+.steppanel{border:1px solid var(--accent-line);background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;border-left:3px solid var(--accent)}
+.steppanel.fr{border-color:var(--agent-line);border-left-color:var(--agent)}
+.steppanel .spn{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:4px}
+.steppanel.fr .spn{color:var(--agent)}
+.steppanel h3{font-size:19px;font-weight:600;margin-bottom:10px;letter-spacing:-.01em}
+.steppanel .spd{font-size:14.5px;color:var(--ink-2)}.steppanel .spd b{color:var(--ink);font-weight:600}
+.steppanel .spex{margin-top:14px;font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);line-height:1.6}
+.steppanel.fr .spex{border-left-color:var(--agent)}
+/* 8-stage emotional simulator */
+.emorail{display:flex;align-items:flex-end;gap:4px;height:120px;margin-bottom:8px;padding:0 2px}
+.emocol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;cursor:pointer;height:100%}
+.emobar{width:100%;border-radius:var(--r) var(--r) 0 0;background:var(--bg-3);transition:.25s;border:1.5px solid var(--line);border-bottom:none}
+.emocol:hover .emobar{background:var(--accent-soft)}
+.emocol.on .emobar{background:var(--accent);border-color:var(--accent)}
+.emocol.on.fr .emobar{background:var(--agent);border-color:var(--agent)}
+.emonum{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--ink-3);margin-bottom:5px}
+.emocol.on .emonum{color:var(--accent)}.emocol.on.fr .emonum{color:var(--agent)}
+.emolabels{display:flex;gap:4px;margin-bottom:18px}
+.emolabels div{flex:1;text-align:center;font-size:9.5px;font-weight:600;color:var(--ink-3);line-height:1.2}
+.emopanel{border:1px solid var(--accent-line);background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;border-left:3px solid var(--accent);display:flex;gap:16px;align-items:flex-start}
+.emopanel.fr{border-color:var(--agent-line);border-left-color:var(--agent)}
+.emopanel .ei{width:42px;height:42px;border-radius:11px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.emopanel.fr .ei{background:var(--agent)}
+.emopanel .est{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
+.emopanel.fr .est{color:var(--agent)}
+.emopanel h3{font-size:17px;font-weight:600;margin-bottom:6px}
+.emopanel p{font-size:14px;color:var(--ink-2)}.emopanel p b{color:var(--ink);font-weight:600}
+/* compare not/is */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.splitc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.splitc.b{background:var(--bad-soft);border-color:var(--bad)}
+.splitc.g{background:var(--good-soft);border-color:var(--good)}
+.splitc .stag2{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.splitc.b .stag2{background:var(--bad);color:#fff}.splitc.g .stag2{background:var(--good);color:#fff}
+.splitc ul{list-style:none;margin:0;padding:0}
+.splitc li{font-size:13px;color:var(--ink-2);line-height:1.5;padding:4px 0 4px 20px;position:relative}
+.splitc li::before{position:absolute;left:0;top:4px;font-family:'tabler-icons';font-size:13px}
+.splitc.b li::before{content:'\ea0c';color:var(--bad)}
+.splitc.g li::before{content:'\ea5e';color:var(--good)}
+/* rules grid */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rule{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:11px 13px}
+.rule .rn{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--accent);width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.rule p{font-size:13px;color:var(--ink-2);line-height:1.45}.rule p b{color:var(--ink);font-weight:600}
+/* cards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp,.rules,.cards{grid-template-columns:1fr}.step{flex:1 1 calc(33.33% - 7px)}.emolabels div{font-size:8px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.step,.steppanel,.splitc,.key,.rule,.card3,.emopanel{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A0.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo formatori</div>
+  <h1 class="rv" data-i="h1">Anatomia di una lezione e la sequenza emotiva</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-help-hexagon"></i><span class="no">01</span><h2 data-i="s1">La domanda che giudica ogni lezione</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-message-question"></i></div><div><h4 data-i="note1H">Cosa sa fare ora che prima non sapeva?</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">02</span><h2 data-i="s2">I dieci step di una lezione</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stepIntro"></p>
+  <div class="stepbar rv" id="stepbar"></div>
+  <div class="steppanel rv" id="steppanel"></div>
+
+  <div class="sh rv"><i class="ti ti-activity-heartbeat"></i><span class="no">03</span><h2 data-i="s3">La sequenza emotiva a otto stadi</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="emoIntro"></p>
+  <div class="emorail rv" id="emorail"></div>
+  <div class="emolabels rv" id="emolabels"></div>
+  <div class="emopanel rv" id="emopanel"></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-flame"></i><span class="no">04</span><h2 data-i="s4">La cattiveria formativa</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-shield-bolt"></i></div><div><h4 data-i="note2H">Cattivo verso le illusioni, non verso le persone</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split"></i><span class="no">05</span><h2 data-i="s5">Cosa la formazione NON deve diventare</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="notIntro"></p>
+  <div class="cmp rv">
+    <div class="splitc b"><span class="stag2" data-i="notT">Non è</span><ul id="notList"></ul></div>
+    <div class="splitc g"><span class="stag2" data-i="isT">È</span><ul id="isList"></ul></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">06</span><h2 data-i="s6">Le quindici regole del formatore</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="rulesIntro"></p>
+  <div class="rules rv" id="rules"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Criteri di successo e KPI</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="kpiIntro"></p>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-checkup-list"></i></div><h4 data-i="k1H">Criteri di competenza</h4><p data-i="k1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-chart-bar"></i></div><h4 data-i="k2H">KPI formativi</h4><p data-i="k2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Anatomia di una lezione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A0.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo formatori',
+h1:'Anatomia di una lezione e la sequenza emotiva',
+lede:'Questo modulo non è per chi impara: è per chi eroga. Una lezione Morfeus non è una presentazione di slide, è una macchina che porta una persona da «non so» a «so fare». Ha una struttura precisa — dieci step — e produce una sequenza emotiva precisa — otto stadi. Chi conosce entrambe sa esattamente dove sta perdendo o vincendo l\'aula.',
+s1:'La domanda che giudica ogni lezione',
+note1H:'Cosa sa fare ora che prima non sapeva?',
+note1P:'È la <strong>domanda di controllo</strong> che chiude ogni lezione e ne misura il valore. Non «è stata interessante?», non «sono rimasti colpiti?»: <strong>cosa sa fare ora che prima non sapeva?</strong> Se la risposta è «niente di operativo», la lezione ha intrattenuto, non formato. Una lezione che non sposta una capacità concreta è un\'ora persa, per quanto applausi raccolga.',
+q1:'«Una lezione non si misura dall\'entusiasmo che lascia, ma dalla capacità che aggiunge. Se non sai dire cosa il partecipante sa fare ora, non hai insegnato: hai parlato.»',
+s2:'I dieci step di una lezione',
+stepIntro:'Ogni lezione Morfeus segue la stessa sequenza di dieci step. Non è rigida burocrazia: è l\'ordine che porta il partecipante dal limite del vecchio metodo al nuovo, passando — questa è la parte non negoziabile — per la frizione. Clicca ogni step.',
+s3:'La sequenza emotiva a otto stadi',
+emoIntro:'Mentre i dieci step sono ciò che fai tu, gli otto stadi sono ciò che prova chi ti ascolta. Una lezione riuscita li attraversa tutti, in ordine. Il pericolo è fermarsi al «Wow»: l\'entusiasmo è solo lo stadio 4, e da solo non forma. Clicca ogni stadio.',
+q2:'«Non basta il Wow. Il Wow è uno stadio intermedio, non il traguardo. Il traguardo è l\'Autonomia: il partecipante che esce e lo rifà da solo, senza di te.»',
+s4:'La cattiveria formativa',
+note2H:'Cattivo verso le illusioni, non verso le persone',
+note2P:'Il formatore è <strong>cattivo verso le illusioni, non verso le persone</strong>. La frizione — far emergere che il vecchio metodo non basta, lasciare che il partecipante sbatta contro il limite prima di dargli la soluzione — non è crudeltà: è il meccanismo. <strong>Senza frizione resta informazione; con frizione diventa una nuova convinzione operativa.</strong> Il rispetto sta nel non risparmiare al partecipante lo sforzo che lo fa crescere.',
+s5:'Cosa la formazione NON deve diventare',
+notIntro:'Il modo più rapido per capire cosa una lezione deve essere è elencare cosa non deve diventare. Sono le derive in cui si cade quando si confonde lo show con la formazione.',
+notT:'Non è',isT:'È',
+s6:'Le quindici regole del formatore',
+rulesIntro:'Le quindici regole sono il distillato del metodo d\'aula: cosa fare, in che ordine, e — soprattutto — cosa non fare. La più sottovalutata è la terza: non dare subito la soluzione.',
+s7:'Criteri di successo e KPI',
+kpiIntro:'Una formazione che non si misura non si migliora. Due livelli: cosa i partecipanti devono saper fare (criteri di competenza) e i numeri che lo confermano (KPI formativi).',
+k1H:'Criteri di competenza',
+k1P:'Saper spiegare cos\'è un LLM, le allucinazioni, token e contesto. Saper scrivere un prompt strutturato e un meta-prompt. Saper scomporre un processo. Saper distinguere i ruoli (doer, reviewer, brainstormer, router). Saper partire dal foglio bianco.',
+k2H:'KPI formativi',
+k2P:'% di prompt funzionante al primo tentativo, % di procedure documentate, % di assistenti costruiti, riduzione del tempo sul task, numero di use case adottati, livello di confidence dichiarato. Numeri, non sensazioni.',
+s8:'Checkpoint',
+cpH:'Smonta una tua lezione esistente',
+cpP:'Prendi una lezione che eroghi già. Mappala sui dieci step: quali ci sono, quali mancano? Quasi sempre manca lo step 6 — la frizione — perché è il più scomodo da tenere in aula.',
+cpQ:'Sulla tua ultima sessione: hai dato la soluzione prima o dopo aver lasciato che il limite emergesse? Se l\'hai data prima, hai informato. Se dopo, hai formato. E sapresti dire, per ogni partecipante, cosa sa fare ora che prima non sapeva?',
+bridge:'Conosci l\'anatomia della lezione e la sequenza emotiva che deve produrre. <b>Prossimo:</b> le tecniche di delivery che la rendono viva in aula — demo iterativa, costruzione in diretta, frizione controllata, metafore.',
+foot:'Morfeus — Anatomia di una lezione'
+},
+en:{
+kicker:'Lesson A0.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Trainers module',
+h1:'Anatomy of a lesson and the emotional sequence',
+lede:'This module isn\'t for the learner: it\'s for whoever delivers. A Morfeus lesson isn\'t a slide deck, it\'s a machine that carries a person from "I don\'t know" to "I can do it". It has a precise structure — ten steps — and produces a precise emotional sequence — eight stages. Anyone who knows both knows exactly where they\'re losing or winning the room.',
+s1:'The question that judges every lesson',
+note1H:'What can they do now that they couldn\'t before?',
+note1P:'It\'s the <strong>control question</strong> that closes every lesson and measures its value. Not "was it interesting?", not "were they impressed?": <strong>what can they do now that they couldn\'t before?</strong> If the answer is "nothing operational", the lesson entertained, it didn\'t train. A lesson that doesn\'t move a concrete capability is an hour lost, however much applause it earns.',
+q1:'"A lesson isn\'t measured by the enthusiasm it leaves, but by the capability it adds. If you can\'t say what the participant can now do, you didn\'t teach: you talked."',
+s2:'The ten steps of a lesson',
+stepIntro:'Every Morfeus lesson follows the same ten-step sequence. It isn\'t rigid bureaucracy: it\'s the order that carries the participant from the limit of the old method to the new one, passing through — this is the non-negotiable part — the friction. Click each step.',
+s3:'The eight-stage emotional sequence',
+emoIntro:'While the ten steps are what you do, the eight stages are what the listener feels. A successful lesson goes through all of them, in order. The danger is stopping at the "Wow": enthusiasm is only stage 4, and on its own it doesn\'t train. Click each stage.',
+q2:'"The Wow isn\'t enough. The Wow is an intermediate stage, not the finish line. The finish line is Autonomy: the participant who walks out and does it again alone, without you."',
+s4:'Formative ruthlessness',
+note2H:'Ruthless toward illusions, not toward people',
+note2P:'The trainer is <strong>ruthless toward illusions, not toward people</strong>. Friction — surfacing that the old method isn\'t enough, letting the participant hit the limit before handing them the solution — isn\'t cruelty: it\'s the mechanism. <strong>Without friction it stays information; with friction it becomes a new operating conviction.</strong> The respect lies in not sparing the participant the effort that makes them grow.',
+s5:'What training must NOT become',
+notIntro:'The fastest way to understand what a lesson must be is to list what it must not become. These are the drifts you fall into when you confuse the show with the training.',
+notT:'It is not',isT:'It is',
+s6:'The fifteen rules of the trainer',
+rulesIntro:'The fifteen rules are the distillate of the classroom method: what to do, in what order, and — above all — what not to do. The most underrated is the third: don\'t give the solution right away.',
+s7:'Success criteria and KPIs',
+kpiIntro:'Training that isn\'t measured doesn\'t improve. Two levels: what participants must be able to do (competence criteria) and the numbers that confirm it (training KPIs).',
+k1H:'Competence criteria',
+k1P:'Able to explain what an LLM is, hallucinations, tokens and context. Able to write a structured prompt and a meta-prompt. Able to break down a process. Able to tell the roles apart (doer, reviewer, brainstormer, router). Able to start from the blank page.',
+k2H:'Training KPIs',
+k2P:'% of prompts working on the first try, % of procedures documented, % of assistants built, time reduction on the task, number of use cases adopted, declared confidence level. Numbers, not feelings.',
+s8:'Checkpoint',
+cpH:'Take apart one of your existing lessons',
+cpP:'Take a lesson you already deliver. Map it onto the ten steps: which are there, which are missing? Almost always step 6 — the friction — is missing, because it\'s the most uncomfortable one to hold in the room.',
+cpQ:'On your last session: did you give the solution before or after letting the limit surface? If before, you informed. If after, you trained. And could you say, for each participant, what they can now do that they couldn\'t before?',
+bridge:'You know the anatomy of the lesson and the emotional sequence it must produce. <b>Next:</b> the delivery techniques that make it come alive in the room — iterative demo, building live, controlled friction, metaphors.',
+foot:'Morfeus — Anatomy of a lesson'
+}};
+
+// steps: no, icon, friction-flag, name[it,en], desc[it,en], example[it,en]
+var STEPS=[
+{no:'01',icon:'ti-target',fr:false,name:['Obiettivo operativo','Operational objective'],
+ desc:['Si apre dichiarando cosa il partecipante <b>saprà fare</b> alla fine, non cosa «vedrà». L\'obiettivo è una capacità, non un argomento.','You open by stating what the participant <b>will be able to do</b> by the end, not what they\'ll "see". The objective is a capability, not a topic.'],
+ example:['«Alla fine saprai trasformare un processo manuale in un prompt riutilizzabile», non «oggi parliamo di prompting».','"By the end you\'ll be able to turn a manual process into a reusable prompt", not "today we talk about prompting".']},
+{no:'02',icon:'ti-bulb',fr:false,name:['Metafora','Metaphor'],
+ desc:['Si entra dal concreto. La metafora apre la porta cognitiva prima che arrivi l\'astrazione: dà un aggancio familiare a cui appendere il nuovo.','You enter from the concrete. The metaphor opens the cognitive door before the abstraction arrives: it gives a familiar hook to hang the new on.'],
+ example:['«Il contesto è come la valigia che dai a un collaboratore al primo giorno» prima di definire cos\'è una finestra di contesto.','"Context is like the suitcase you hand a collaborator on day one" before defining what a context window is.']},
+{no:'03',icon:'ti-book',fr:false,name:['Concetto chiave','Key concept'],
+ desc:['Ora il concetto, in chiaro. Uno per lezione, non dieci. La metafora ha preparato il terreno; qui si pianta l\'idea precisa.','Now the concept, in plain terms. One per lesson, not ten. The metaphor prepared the ground; here you plant the precise idea.'],
+ example:['«Un LLM non recupera fatti: predice la prossima parola più probabile dato il contesto.»','"An LLM doesn\'t retrieve facts: it predicts the most likely next word given the context."']},
+{no:'04',icon:'ti-photo',fr:false,name:['Esempio semplice','Simple example'],
+ desc:['Un esempio minimo che mostra il concetto al lavoro. Semplice di proposito: deve isolare l\'idea, non confonderla con la complessità del caso reale.','A minimal example showing the concept at work. Deliberately simple: it must isolate the idea, not muddy it with the complexity of the real case.'],
+ example:['Mostri lo stesso prompt vago e poi strutturato, e l\'aula vede la differenza di output con i propri occhi.','You show the same prompt vague then structured, and the room sees the difference in output with their own eyes.']},
+{no:'05',icon:'ti-hand-finger',fr:false,name:['Esercizio','Exercise'],
+ desc:['Il partecipante prova, da solo. Non guarda te fare: fa. È il momento in cui il concetto smette di essere ascoltato e inizia a essere usato.','The participant tries, alone. They don\'t watch you do it: they do it. It\'s the moment the concept stops being heard and starts being used.'],
+ example:['«Riscrivi il tuo prompt di sempre usando i cinque blocchi.» Cinque minuti, mani sulla tastiera.','"Rewrite your usual prompt using the five blocks." Five minutes, hands on the keyboard.']},
+{no:'06',icon:'ti-flame',fr:true,name:['Frizione','Friction'],
+ desc:['Lo step che tutti saltano e che fa la differenza. Il partecipante <b>sbatte contro il limite</b>: il vecchio metodo non basta, e lo scopre da sé. Né troppo forte (frustrazione) né troppo debole (nessun apprendimento).','The step everyone skips and the one that makes the difference. The participant <b>hits the limit</b>: the old method isn\'t enough, and they discover it themselves. Neither too strong (frustration) nor too weak (no learning).'],
+ example:['Lasci che l\'esercizio fallisca in modo prevedibile, così la soluzione che arriva dopo è desiderata, non subìta.','You let the exercise fail in a predictable way, so the solution that comes after is wanted, not endured.']},
+{no:'07',icon:'ti-sparkles',fr:false,name:['Soluzione AI','AI solution'],
+ desc:['Solo ora arriva la soluzione, nel momento di massimo bisogno. È il «salto»: il nuovo metodo risolve esattamente il limite che il partecipante ha appena toccato.','Only now does the solution arrive, at the moment of maximum need. It\'s the "leap": the new method solves exactly the limit the participant just touched.'],
+ example:['«Ecco perché funziona»: dopo la frizione, il meta-prompt o l\'assistente che chiude il gap appena vissuto.','"Here\'s why it works": after the friction, the meta-prompt or assistant that closes the gap just experienced.']},
+{no:'08',icon:'ti-route-2',fr:false,name:['Spiegazione metodo','Method explanation'],
+ desc:['Si estrae il principio ripetibile dal caso specifico. Non «questo prompt», ma «la regola che vale per tutti i prompt di questa famiglia».','You extract the repeatable principle from the specific case. Not "this prompt", but "the rule that holds for all prompts of this family".'],
+ example:['«La regola: parti sempre dall\'output, non dall\'input» — il metodo che il partecipante porterà via.','"The rule: always start from the output, not the input" — the method the participant takes away.']},
+{no:'09',icon:'ti-briefcase',fr:false,name:['Caso reale','Real case'],
+ desc:['Si applica il metodo a un caso vero del lavoro del partecipante. È il ponte tra l\'aula e il lunedì mattina: senza, il metodo resta teoria.','You apply the method to a real case from the participant\'s work. It\'s the bridge between the classroom and Monday morning: without it, the method stays theory.'],
+ example:['«Prendi un compito che hai fatto davvero la settimana scorsa e applicaci il metodo, ora.»','"Take a task you actually did last week and apply the method to it, now."']},
+{no:'10',icon:'ti-checklist',fr:false,name:['Checklist / output','Checklist / output'],
+ desc:['Si chiude con qualcosa di concreto che il partecipante <b>porta via</b>: una checklist, un template, un assistente costruito. E con la domanda di controllo.','You close with something concrete the participant <b>takes away</b>: a checklist, a template, a built assistant. And with the control question.'],
+ example:['«Esci con questo template e questa checklist. E sai dire cosa sai fare ora che prima non sapevi.»','"You leave with this template and this checklist. And you can say what you can now do that you couldn\'t before."']}
+];
+
+// stages: num, height%, icon, friction-flag, label[it,en], name[it,en], desc[it,en]
+var STAGES=[
+{n:1,h:35,icon:'ti-eye',fr:false,label:['Curiosità','Curiosity'],name:['Curiosità','Curiosity'],
+ desc:['L\'apertura accende l\'interesse. Una metafora, una promessa concreta, una domanda aperta: il partecipante vuole sapere dove va.','The opening sparks interest. A metaphor, a concrete promise, an open question: the participant wants to know where this goes.']},
+{n:2,h:48,icon:'ti-mood-confuzed',fr:false,label:['Spiazzamento','Disorientation'],name:['Spiazzamento','Disorientation'],
+ desc:['Qualcosa rompe l\'aspettativa. «Non era come pensavo.» È il momento in cui la certezza vacilla e si apre uno spazio per il nuovo.','Something breaks the expectation. "It wasn\'t what I thought." It\'s the moment certainty wobbles and a space opens for the new.']},
+{n:3,h:90,icon:'ti-flame',fr:true,label:['Frizione','Friction'],name:['Frizione','Friction'],
+ desc:['Il limite del vecchio metodo emerge, scomodo. Il partecipante prova e non basta. Questo disagio è il motore: senza, non c\'è apprendimento vero.','The limit of the old method surfaces, uncomfortably. The participant tries and it isn\'t enough. This discomfort is the engine: without it, there\'s no real learning.']},
+{n:4,h:70,icon:'ti-bulb',fr:false,label:['Scoperta','Discovery'],name:['Scoperta / Wow','Discovery / Wow'],
+ desc:['La soluzione arriva e accende il «Wow». Attenzione: è uno stadio intermedio, non il traguardo. Fermarsi qui è l\'errore più comune.','The solution lands and lights the "Wow". Careful: it\'s an intermediate stage, not the finish line. Stopping here is the most common mistake.']},
+{n:5,h:78,icon:'ti-bolt',fr:false,label:['Potere','Power'],name:['Potere operativo','Operating power'],
+ desc:['Il partecipante sente di poterlo fare. Il Wow diventa capacità: «io posso usarlo». È il primo segnale di trasformazione reale.','The participant feels they can do it. The Wow becomes capability: "I can use this". It\'s the first sign of real transformation.']},
+{n:6,h:62,icon:'ti-scale',fr:false,label:['Responsabilità','Responsibility'],name:['Responsabilità','Responsibility'],
+ desc:['Col potere arriva il peso. «Se lo uso, ne rispondo.» La governance, i limiti, i rischi: il potere senza responsabilità è incompleto.','With power comes weight. "If I use it, I\'m accountable." Governance, limits, risks: power without responsibility is incomplete.']},
+{n:7,h:55,icon:'ti-sun',fr:false,label:['Chiarezza','Clarity'],name:['Chiarezza','Clarity'],
+ desc:['Il quadro si ricompone. Il partecipante vede dove questo si incastra nel suo lavoro e quando usarlo. Il rumore si dirada.','The picture comes back together. The participant sees where this fits in their work and when to use it. The noise clears.']},
+{n:8,h:100,icon:'ti-rocket',fr:false,label:['Autonomia','Autonomy'],name:['Autonomia','Autonomy'],
+ desc:['Il traguardo. Il partecipante esce e lo rifà da solo, senza di te. È l\'unico stadio che conta davvero: tutto il resto serve ad arrivare qui.','The finish line. The participant walks out and does it again alone, without you. It\'s the only stage that truly counts: everything else exists to get here.']}
+];
+
+var NOTLIST={it:['Una lista di tool da provare','Una collezione di «prompt carini» da copiare','Una demo brillante ma non trasferibile','Teoria senza applicazione pratica','Automazione senza i processi sotto','Entusiasmo senza governance','Un intervento motivazionale','Un catalogo di modelli da confrontare'],
+en:['A list of tools to try','A collection of "cute prompts" to copy','A brilliant but non-transferable demo','Theory with no practical application','Automation without the processes underneath','Enthusiasm without governance','A motivational talk','A catalogue of models to compare']};
+var ISLIST={it:['Un metodo ripetibile','Un\'esperienza vissuta in prima persona','Frizione che genera convinzione','Trasformazione di una capacità','Esercizio con le mani sulla tastiera','Processo prima dello strumento','Struttura e delega','Governance e sistema'],
+en:['A repeatable method','A first-person lived experience','Friction that generates conviction','Transformation of a capability','Hands-on exercise on the keyboard','Process before the tool','Structure and delegation','Governance and system']};
+
+var RULES={it:[
+'Guidare la sequenza emotiva, non solo i contenuti.',
+'Creare frizione di proposito: è il motore dell\'apprendimento.',
+'<b>Non dare subito la soluzione</b>: lascia emergere il limite prima.',
+'Far emergere il limite del vecchio metodo, non dirlo.',
+'Mostrare il salto, il «prima» e il «dopo» a confronto.',
+'Andare da demo a principio: dall\'esempio alla regola.',
+'Andare da principio a esercizio: la regola si prova subito.',
+'Andare da esercizio a metodo ripetibile: estrarre la regola generale.',
+'Evitare lo show-off: la demo serve il partecipante, non il formatore.',
+'Evitare teoria non applicata: ogni concetto ha il suo esercizio.',
+'Tenere il focus sul lavoro reale del partecipante.',
+'Collegare sempre AI + processi + qualità, mai uno solo.',
+'Usare casi reali e personali, non esempi generici.',
+'Aprire con una metafora: la porta d\'ingresso al concetto.',
+'Costruire in diretta: il valore è vedere errori e correzioni.'
+],en:[
+'Guide the emotional sequence, not just the content.',
+'Create friction on purpose: it\'s the engine of learning.',
+'<b>Don\'t give the solution right away</b>: let the limit surface first.',
+'Surface the limit of the old method, don\'t state it.',
+'Show the leap, the "before" and "after" side by side.',
+'Go from demo to principle: from the example to the rule.',
+'Go from principle to exercise: the rule gets tried at once.',
+'Go from exercise to repeatable method: extract the general rule.',
+'Avoid show-off: the demo serves the participant, not the trainer.',
+'Avoid unapplied theory: every concept has its exercise.',
+'Keep the focus on the participant\'s real work.',
+'Always connect AI + processes + quality, never just one.',
+'Use real, personal cases, not generic examples.',
+'Open with a metaphor: the entry door to the concept.',
+'Build live: the value is seeing errors and corrections.'
+]};
+
+var LANG='it',CURST=0,CUREM=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var j=LANG==='it'?0:1;
+  document.getElementById('notList').innerHTML=NOTLIST[LANG].map(function(x){return '<li>'+x+'</li>'}).join('');
+  document.getElementById('isList').innerHTML=ISLIST[LANG].map(function(x){return '<li>'+x+'</li>'}).join('');
+  document.getElementById('rules').innerHTML=RULES[LANG].map(function(x,i){return '<div class="rule"><div class="rn">'+(i+1)+'</div><p>'+x+'</p></div>'}).join('');
+  renderSteps();renderStages();
+}
+function renderSteps(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('stepbar').innerHTML=STEPS.map(function(s,i){
+    return '<div class="step'+(s.fr?' fr':'')+(i===CURST?' on':'')+'" onclick="setSt('+i+')"><div class="sno">'+s.no+'</div><div class="si"><i class="ti '+s.icon+'"></i></div><h4>'+s.name[j]+'</h4></div>';
+  }).join('');
+  var s=STEPS[CURST];var fc=s.fr?' fr':'';
+  document.getElementById('steppanel').className='steppanel rv show'+fc;
+  document.getElementById('steppanel').innerHTML='<div class="spn">Step '+s.no+'</div><h3>'+s.name[j]+'</h3><div class="spd">'+s.desc[j]+'</div><div class="spex">'+s.example[j]+'</div>';
+}
+function setSt(i){CURST=i;renderSteps()}
+function renderStages(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('emorail').innerHTML=STAGES.map(function(s,i){
+    return '<div class="emocol'+(s.fr?' fr':'')+(i===CUREM?' on':'')+'" onclick="setEm('+i+')"><div class="emonum">'+s.n+'</div><div class="emobar" style="height:'+s.h+'%"></div></div>';
+  }).join('');
+  document.getElementById('emolabels').innerHTML=STAGES.map(function(s){return '<div>'+s.label[j]+'</div>'}).join('');
+  var s=STAGES[CUREM];var fc=s.fr?' fr':'';
+  document.getElementById('emopanel').className='emopanel rv show'+fc;
+  document.getElementById('emopanel').innerHTML='<div class="ei"><i class="ti '+s.icon+'"></i></div><div><div class="est">Stadio '+s.n+'</div><h3>'+s.name[j]+'</h3><p>'+s.desc[j]+'</p></div>';
+}
+function setEm(i){CUREM=i;renderStages()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

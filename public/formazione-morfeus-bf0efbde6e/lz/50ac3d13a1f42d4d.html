@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il ragionamento esteso (thinking) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px;align-items:flex-start}
+.card .ci{width:44px;height:44px;border-radius:12px;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.card.amber .ci{background:var(--agent)}.card.purple .ci{background:var(--accent)}
+.card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--good)}
+.card.amber h4{color:var(--agent)}.card.purple h4{color:var(--accent)}
+.card p{font-size:14.5px;color:var(--ink-2)}.card p strong{color:var(--ink);font-weight:600}
+
+/* ===== mode toggle (instant vs thinking) ===== */
+.md{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.mdtog{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px;gap:4px;margin-bottom:18px}
+.mdtog button{flex:1;border:none;background:transparent;color:var(--ink-2);font-family:var(--mono);font-size:13px;font-weight:700;padding:10px 0;border-radius:30px;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center;gap:7px}
+.mdtog button.on{background:var(--accent);color:#fff;box-shadow:var(--sh)}
+.mdtog button i{font-size:16px}
+.mdq{font-family:var(--mono);font-size:13px;color:var(--ink-3);margin-bottom:12px}
+.mdq b{color:var(--ink-2)}
+.mdthink{background:var(--bg-2);border:1px dashed var(--line-2);border-radius:var(--r);padding:14px 16px;margin-bottom:14px;overflow:hidden;transition:max-height .4s ease,opacity .3s,padding .3s}
+.mdthink.hide{max-height:0;opacity:0;padding-top:0;padding-bottom:0;margin-bottom:0;border-width:0}
+.mdthink .tl{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.mdstep{font-size:13.5px;color:var(--ink-2);padding:5px 0 5px 20px;position:relative;opacity:0;transform:translateX(-6px);transition:.4s}
+.mdstep.show{opacity:1;transform:none}
+.mdstep::before{content:'';position:absolute;left:4px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.mdstep.back::before{background:var(--agent)}
+.mdstep i{color:var(--agent);font-size:14px}
+.mdans{background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r);padding:14px 16px}
+.mdans .al{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--good);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.mdans .atxt{font-size:14.5px;color:var(--ink);font-weight:500}
+.mdmeter{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.mdmeter .mlab{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-weight:600}
+.mdmeter .mval{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent);transition:.4s}
+.mdmeter .mval.hot{color:var(--agent)}
+.mdmeter .mtag{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-left:auto;text-align:right}
+
+/* when-to-use grid */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;gap:8px;align-items:center;color:var(--accent)}
+.cmpc.amber h4{color:var(--agent)}
+.cmpc h4 i{font-size:18px}
+.cmpc ul{list-style:none;margin-top:4px}
+.cmpc li{font-size:13.5px;color:var(--ink-2);padding:3px 0 3px 18px;position:relative}
+.cmpc li::before{content:'›';position:absolute;left:2px;color:var(--accent);font-weight:700}
+.cmpc.amber li::before{color:var(--agent)}
+.cmpc li strong{color:var(--ink);font-weight:600}
+
+/* ===== math demo ===== */
+.math{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.mathtabs{display:flex;gap:8px;margin-bottom:16px}
+.mathtab{flex:1;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r);padding:12px;cursor:pointer;transition:.18s;text-align:center}
+.mathtab.on{border-color:var(--accent);background:var(--accent-soft)}
+.mathtab .me{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--ink)}
+.mathtab .ml{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:3px}
+.mathtab.on .ml{color:var(--accent)}
+.mathrow{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.mathcol{padding:18px}
+.mathcol.l{border-right:1px solid var(--line)}
+.mathcol .cl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.mathcol.l .cl{color:var(--ink-3)}.mathcol.r .cl{color:var(--good)}
+.mathcol .res{font-family:var(--mono);font-size:20px;font-weight:700;margin-bottom:4px}
+.mathcol.l .res.ok{color:var(--good)}.mathcol.l .res.err{color:var(--bad)}
+.mathcol.r .res{color:var(--good)}
+.mathcol .sub{font-size:12.5px;color:var(--ink-2)}
+.mathcol .sub b{color:var(--ink)}
+.mathnote{display:flex;align-items:flex-start;gap:11px;margin-top:14px;padding:14px 16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l)}
+.mathnote i{color:var(--accent);font-size:18px;flex-shrink:0;margin-top:1px}
+.mathnote .mn{font-size:13.5px;color:var(--ink-2)}.mathnote .mn b{color:var(--ink)}
+
+/* ===== temperature slider ===== */
+.tmp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.tmphead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.tmphead .tname{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink-2)}
+.tmphead .tnum{font-family:var(--mono);font-size:26px;font-weight:700;transition:color .3s}
+.tmpscale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:8px}
+.tmprange{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:30px;background:linear-gradient(90deg,#6B5FE5,#3b9e57 50%,#E8682A);outline:none;cursor:pointer}
+.tmprange::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--card);border:3px solid var(--ink);box-shadow:var(--sh);cursor:pointer}
+.tmprange::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--card);border:3px solid var(--ink);box-shadow:var(--sh);cursor:pointer}
+.tmpchip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;font-weight:700;padding:5px 12px;border-radius:30px;margin:16px 0 12px;transition:.3s}
+.tmpout{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;transition:border-color .3s}
+.tmpout .ol{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:700;margin-bottom:7px}
+.tmpout .otxt{font-size:14.5px;color:var(--ink);line-height:1.55;min-height:46px}
+.tmpprompt{font-size:13px;color:var(--ink-2);margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2)}
+.tmpprompt b{color:var(--ink)}.tmpprompt code{font-family:var(--mono);background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:5px;font-size:12.5px}
+
+/* ===== cross-validation ===== */
+.xv{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch}
+.xvc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.xvc .xh{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.xvc .xb{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.xvc.a .xb{background:var(--accent)}.xvc.b .xb{background:var(--agent)}
+.xvc .xn{font-size:14px;font-weight:700}
+.xvc.a .xn{color:var(--accent)}.xvc.b .xn{color:var(--agent)}
+.xvc p{font-size:13px;color:var(--ink-2)}.xvc p strong{color:var(--ink);font-weight:600}
+.xvmid{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--ink-3)}
+.xvmid i{transform:rotate(90deg)}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.modclose{display:flex;gap:14px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.modclose i{color:var(--accent);font-size:22px}.modclose p{font-size:14px;color:var(--ink-2)}.modclose b{color:var(--accent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.mathrow{grid-template-columns:1fr}.mathcol.l{border-right:none;border-bottom:1px solid var(--line)}.xv{grid-template-columns:1fr}.xvmid i{transform:rotate(0)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.mdtog,.tmprange{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.mdstep{opacity:1!important;transform:none!important}.mdthink.hide{max-height:none!important;opacity:1!important;padding:14px 16px!important;margin-bottom:14px!important;border-width:1px!important}.note,.card,.md,.cmpc,.math,.mathrow,.tmp,.xvc,.cp,.key{break-inside:avoid;box-shadow:none!important}.mathrow,.xv{display:block}.mathcol,.xvc{border-bottom:1px solid #ccc}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A2.8</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Come funziona un LLM</div>
+  <h1 class="rv" data-i="h1">Il ragionamento esteso (thinking)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">01</span><h2 data-i="s1">Due velocità: istantaneo vs thinking</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="mdIntro"></p>
+  <div class="md rv">
+    <div class="mdtog">
+      <button id="mdBtnInstant" class="on" onclick="mdSet('instant')"><i class="ti ti-bolt"></i> <span data-i="mdInstant">Istantaneo</span></button>
+      <button id="mdBtnThink" onclick="mdSet('think')"><i class="ti ti-brain"></i> <span data-i="mdThinkBtn">Thinking</span></button>
+    </div>
+    <div class="mdq" data-i-html="mdPrompt"></div>
+    <div class="mdthink hide" id="mdThinkBox">
+      <div class="tl"><i class="ti ti-brain"></i> <span data-i="mdReasonLabel">Sto ragionando…</span></div>
+      <div id="mdSteps"></div>
+    </div>
+    <div class="mdans">
+      <div class="al"><i class="ti ti-check"></i> <span data-i="mdAnsLabel">Risposta</span></div>
+      <div class="atxt" id="mdAns"></div>
+    </div>
+    <div class="mdmeter">
+      <span class="mlab" data-i="mdTokLabel">Token usati</span>
+      <span class="mval" id="mdTok">90</span>
+      <span class="mtag" id="mdTag"></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-flask"></i><span class="no">02</span><h2 data-i="s2">Si comporta come il metodo scientifico</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-flask"></i></div><div><h4 data-i="sciH">Prova ad autosabotarsi per arrivare alla verità</h4><p data-i-html="sciP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-cash"></i><span class="no">03</span><h2 data-i="s3">Ma il pensiero costa</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-coins"></i></div><div><h4 data-i="costH">I soldini che usate ogni 6 ore</h4><p data-i-html="costP"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="key1"></p><p class="cap" data-i="key1cap"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split"></i><span class="no">04</span><h2 data-i="s4">Quando accenderlo</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc"><h4><i class="ti ti-bolt"></i> <span data-i="whenInstH">Istantaneo basta</span></h4><ul><li data-i-html="whenInst1"></li><li data-i-html="whenInst2"></li><li data-i-html="whenInst3"></li></ul></div>
+    <div class="cmpc amber"><h4><i class="ti ti-brain"></i> <span data-i="whenThinkH">Vale il thinking</span></h4><ul><li data-i-html="whenThink1"></li><li data-i-html="whenThink2"></li><li data-i-html="whenThink3"></li></ul></div>
+  </div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-message-2-cog"></i></div><div><h4 data-i="howH">Come si attiva</h4><p data-i-html="howP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-math-function"></i><span class="no">05</span><h2 data-i="s5">La matematica: da probabilistico a deterministico</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="mathIntro"></p>
+  <div class="math rv">
+    <div class="mathtabs" id="mathTabs"></div>
+    <div class="mathrow">
+      <div class="mathcol l"><div class="cl"><i class="ti ti-language"></i> <span data-i="mathColL">Solo testo (probabilistico)</span></div><div class="res" id="mathResL"></div><div class="sub" id="mathSubL"></div></div>
+      <div class="mathcol r"><div class="cl"><i class="ti ti-brand-python"></i> <span data-i="mathColR">Con Python (deterministico)</span></div><div class="res" id="mathResR"></div><div class="sub" id="mathSubR"></div></div>
+    </div>
+    <div class="mathnote"><i class="ti ti-bulb"></i><div class="mn" id="mathNote"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-temperature"></i><span class="no">06</span><h2 data-i="s6">La temperatura: precisione vs creatività</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="tmpIntro"></p>
+  <div class="tmp rv">
+    <div class="tmphead"><span class="tname" data-i="tmpName">temperature</span><span class="tnum" id="tmpNum">0.2</span></div>
+    <div class="tmpscale"><span data-i="tmpLow">precisa</span><span data-i="tmpMid">quotidiana</span><span data-i="tmpHigh">creativa</span></div>
+    <input type="range" class="tmprange" id="tmpRange" min="0" max="100" value="20" step="1" oninput="tmpUpdate(this.value)" aria-label="temperature">
+    <div><span class="tmpchip" id="tmpChip"></span></div>
+    <div class="tmpout" id="tmpOut">
+      <div class="ol" data-i="tmpOutLabel">Stesso prompt: "scrivi l'apertura di una mail al cliente"</div>
+      <div class="otxt" id="tmpTxt"></div>
+    </div>
+    <div class="tmpprompt" data-i-html="tmpPrompt"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">07</span><h2 data-i="s7">Due cervelli, due bias</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="xvIntro"></p>
+  <div class="xv rv">
+    <div class="xvc a"><div class="xh"><div class="xb"><i class="ti ti-square-letter-c"></i></div><div class="xn" data-i="xvAName">Modello A</div></div><p data-i-html="xvA"></p></div>
+    <div class="xvmid"><i class="ti ti-arrows-exchange"></i></div>
+    <div class="xvc b"><div class="xh"><div class="xb"><i class="ti ti-square-letter-g"></i></div><div class="xn" data-i="xvBName">Modello B</div></div><p data-i-html="xvB"></p></div>
+  </div>
+  <div class="card purple rv" style="margin-top:14px"><div class="ci"><i class="ti ti-checks"></i></div><div><h4 data-i="xvH">Bias diversi = seconda opinione utile</h4><p data-i-html="xvP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-recycle"></i><span class="no">08</span><h2 data-i="s8">Il modello conosce sé stesso</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-wand"></i></div><div><h4 data-i="metaH">Nessuno meglio di OpenAI sa fare prompting per GPT</h4><p data-i-html="metaP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Far pensare il modello è una scelta, non un default</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="modclose rv"><i class="ti ti-checkbox"></i><p data-i-html="modClose"></p></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il ragionamento esteso (thinking)</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A2.8',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Come funziona un LLM',
+h1:'Il ragionamento esteso (thinking)',
+lede:'La stessa AI può rispondere di getto o fermarsi a ragionare prima di parlare. Il pensiero costa, quindi va acceso solo quando serve davvero — e capire quando è ciò che separa chi spende bene da chi brucia budget.',
+s1:'Due velocità: istantaneo vs thinking',
+mdInstant:'Istantaneo',mdThinkBtn:'Thinking',
+mdReasonLabel:'Sto ragionando…',mdAnsLabel:'Risposta',mdTokLabel:'Token usati',
+mdIntro:'Esistono <strong>due modi di rispondere</strong>. Nell\'<strong>istantaneo</strong> l\'AI spara subito la risposta più probabile. Nel <strong>thinking</strong> si ferma a ragionare prima — utile quando la domanda va interpretata. Premi i due tasti e guarda cosa cambia (anche nei token).',
+mdPrompt:'<b>Prompt:</b> "Risolvi questo indovinello di logica di media difficoltà."',
+mdAns:'',
+s2:'Si comporta come il metodo scientifico',
+sciH:'Prova ad autosabotarsi per arrivare alla verità',
+sciP:'Quando ragiona, l\'AI <strong>si prova a dare una risposta, prova ad autosabotarsi, cerca di rompere la tesi che ha formulato — come il metodo scientifico</strong>. Se trova qualcosa che la smentisce torna indietro, dice "non ho abbastanza informazioni", prende altri pezzi di contesto, e va avanti e indietro finché non è il più certo possibile. Per questo sui problemi tosti il thinking risponde meglio.',
+s3:'Ma il pensiero costa',
+costH:'I soldini che usate ogni 6 ore',
+costP:'Ogni token di ragionamento <strong>si paga</strong>. Pensala come <strong>i soldini che usate ogni 6 ore</strong>: far ragionare il modello quando non serve significa pagare di più per nulla — e rischiare di finire il budget e restare bloccati fino al refresh. <strong>Efficienza anche economica:</strong> thinking acceso solo dove serve.',
+key1:'Il thinking non è "meglio". È più costoso. Vale solo quando la difficoltà lo giustifica.',
+key1cap:'Accenderlo di default è come prendere un taxi per attraversare la strada.',
+s4:'Quando accenderlo',
+whenInstH:'Istantaneo basta',
+whenInst1:'Risposte <strong>brevi e dirette</strong>, riformulazioni, traduzioni',
+whenInst2:'Compiti che hai già fatto <strong>mille volte</strong>',
+whenInst3:'Quando vuoi <strong>velocità</strong> e l\'errore costa poco',
+whenThinkH:'Vale il thinking',
+whenThink1:'Problemi di <strong>logica, analisi, strategia</strong>',
+whenThink2:'Quando la domanda va <strong>interpretata</strong> prima di rispondere',
+whenThink3:'Quando un errore costa caro (il <strong>preventivo da 200.000 €</strong>)',
+howH:'Come si attiva',
+howP:'Su alcune piattaforme <strong>scegli tu</strong> tra istantaneo e thinking con un interruttore. Dove non c\'è il bottone, lo <strong>chiedi col prompt</strong>: "è complicata come per un junior, pensaci, fai il ragionamento". Trattare il modello come un collega a cui dici "fermati e ragiona" è già metodo.',
+s5:'La matematica: da probabilistico a deterministico',
+mathColL:'Solo testo (probabilistico)',mathColR:'Con Python (deterministico)',
+mathIntro:'Per anni la matematica dell\'AI <strong>faceva schifo</strong>: prevedeva il numero "più probabile" come fa con le parole. Oggi <strong>apre Python e usa la calcolatrice</strong> — e il calcolo passa da probabilistico (può sbagliare) a <strong>deterministico</strong> (giusto, sempre). Cambia operazione qui sotto.',
+mathNote:'',
+s6:'La temperatura: precisione vs creatività',
+tmpName:'temperature',tmpLow:'precisa',tmpMid:'quotidiana',tmpHigh:'creativa',
+tmpOutLabel:'Stesso prompt: "scrivi l\'apertura di una mail al cliente"',
+tmpIntro:'La <strong>temperature</strong> è la manopola che regola quanto il modello è <strong>prevedibile o creativo</strong>. Bassa = preciso e ripetibile; alta = fantasioso e vario. Sposta lo slider: stesso prompt, output diverso.',
+tmpPrompt:'Spesso la manopola <b>non è esposta</b>. Ma la influenzi col prompt: <code>sii preciso e letterale</code> abbassa la temperatura, <code>sii creativo e sorprendente</code> la alza. Tu scrivi a parole quello che il parametro fa sotto il cofano.',
+s7:'Due cervelli, due bias',
+xvAName:'Claude',xvBName:'GPT',
+xvIntro:'Ogni modello ha <strong>bias diversi</strong>, ereditati dai dati su cui è stato addestrato. Non è un difetto da nascondere: è un\'occasione. Far rispondere <strong>due modelli diversi</strong> alla stessa domanda è come chiedere una seconda opinione.',
+xvA:'Forte sul <strong>ragionamento</strong> e sul lavoro pratico strutturato. Tende a essere <strong>cauto e rigoroso</strong>.',
+xvB:'Forte sul <strong>brainstorming</strong> e sulla memoria. Bravo a <strong>sfidarti</strong> e tirare fuori pattern che non vedevi.',
+xvH:'Bias diversi = seconda opinione utile',
+xvP:'Se due modelli con bias diversi <strong>concordano</strong>, hai più fiducia. Se <strong>divergono</strong>, hai trovato esattamente il punto da controllare. Questa <strong>cross-validazione</strong> è una delle leve più potenti del metodo — la approfondiamo nel <strong>Modulo A4</strong>.',
+s8:'Il modello conosce sé stesso',
+metaH:'Nessuno meglio di OpenAI sa fare prompting per GPT',
+metaP:'Un modello sa descrivere sé stesso meglio di quanto faresti tu: <strong>nessuno meglio di OpenAI sa fare prompting per GPT</strong>. Da qui nasce la <strong>meta-creazione</strong>: usare l\'AI per costruire i prompt, le istruzioni e gli strumenti che poi userai sull\'AI. Il modello diventa il miglior assistente per imparare a guidarlo.',
+s9:'Checkpoint',
+cpH:'Far pensare il modello è una scelta, non un default',
+cpP:'Istantaneo o thinking, temperatura bassa o alta, un modello o due: sono leve che decidi tu in base al compito. Usarle a caso significa spendere male e fidarti troppo. Usarle bene è metodo.',
+cpQ:'L\'ultima cosa importante che hai chiesto all\'AI: era da risposta istantanea o da thinking? E l\'avresti fatta cross-validare da un secondo modello?',
+cpNote:'Regola d\'oro: accendi il thinking quando il costo dell\'errore supera il costo dei token. Negli altri casi, vai veloce.',
+modClose:'<b>Hai chiuso il Modulo A2.</b> Ora conosci la macchina sotto il cofano: transformer, token, contesto, modello probabilistico, ragionamento e temperatura. Sai <b>perché</b> l\'AI si comporta così.',
+bridge:'<b>Prossimo — il Metodo:</b> smettiamo di guardare la macchina e iniziamo a guidarla. Dal prossimo modulo: il metodo prima dello strumento, la cross-validazione applicata e la lingua per parlare all\'AI — il prompting.',
+foot:'Morfeus — Il ragionamento esteso (thinking)'
+},
+en:{
+kicker:'Lesson A2.8',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'How an LLM works',
+h1:'Extended thinking',
+lede:'The same AI can answer off the cuff or stop and reason before it speaks. Thinking costs money, so you only turn it on when it\'s truly worth it — and knowing when is what separates smart spenders from budget-burners.',
+s1:'Two speeds: instant vs thinking',
+mdInstant:'Instant',mdThinkBtn:'Thinking',
+mdReasonLabel:'Reasoning…',mdAnsLabel:'Answer',mdTokLabel:'Tokens used',
+mdIntro:'There are <strong>two ways to answer</strong>. In <strong>instant</strong> mode the AI fires back the most likely answer right away. In <strong>thinking</strong> mode it stops to reason first — useful when the question needs interpreting. Hit the two buttons and watch what changes (tokens too).',
+mdPrompt:'<b>Prompt:</b> "Solve this medium-difficulty logic riddle."',
+mdAns:'',
+s2:'It behaves like the scientific method',
+sciH:'It tries to sabotage itself to reach the truth',
+sciP:'When it reasons, the AI <strong>tries to give an answer, tries to sabotage itself, tries to break the thesis it just formed — like the scientific method</strong>. If it finds something that disproves it, it backtracks, says "I don\'t have enough information", grabs more context, and goes back and forth until it\'s as certain as possible. That\'s why thinking answers better on hard problems.',
+s3:'But thinking costs',
+costH:'The little money you spend every 6 hours',
+costP:'Every reasoning token <strong>costs money</strong>. Think of it as <strong>the little budget you get every 6 hours</strong>: making the model reason when it doesn\'t need to means paying more for nothing — and risking running out and being locked until the refresh. <strong>Efficiency is also economic:</strong> thinking on only where it earns its keep.',
+key1:'Thinking isn\'t "better". It\'s more expensive. It only pays when the difficulty justifies it.',
+key1cap:'Leaving it on by default is like taking a taxi to cross the street.',
+s4:'When to turn it on',
+whenInstH:'Instant is enough',
+whenInst1:'<strong>Short, direct</strong> answers, rewrites, translations',
+whenInst2:'Tasks you\'ve done <strong>a thousand times</strong> already',
+whenInst3:'When you want <strong>speed</strong> and an error is cheap',
+whenThinkH:'Thinking is worth it',
+whenThink1:'Problems of <strong>logic, analysis, strategy</strong>',
+whenThink2:'When the question must be <strong>interpreted</strong> before answering',
+whenThink3:'When an error is expensive (the <strong>€200,000 quote</strong>)',
+howH:'How to turn it on',
+howP:'On some platforms <strong>you choose</strong> between instant and thinking with a switch. Where there\'s no button, you <strong>ask for it in the prompt</strong>: "this is tricky, like it would be for a junior — take your time, reason it through". Treating the model like a colleague you tell to "stop and think" is already method.',
+s5:'Math: from probabilistic to deterministic',
+mathColL:'Text only (probabilistic)',mathColR:'With Python (deterministic)',
+mathIntro:'For years AI math was <strong>terrible</strong>: it predicted the "most likely" number the way it predicts words. Today it <strong>opens Python and uses the calculator</strong> — and the calculation goes from probabilistic (can be wrong) to <strong>deterministic</strong> (right, every time). Switch the operation below.',
+mathNote:'',
+s6:'Temperature: precision vs creativity',
+tmpName:'temperature',tmpLow:'precise',tmpMid:'everyday',tmpHigh:'creative',
+tmpOutLabel:'Same prompt: "write the opening of an email to a client"',
+tmpIntro:'<strong>Temperature</strong> is the dial that sets how <strong>predictable or creative</strong> the model is. Low = precise and repeatable; high = imaginative and varied. Drag the slider: same prompt, different output.',
+tmpPrompt:'Often the dial <b>isn\'t exposed</b>. But you steer it with the prompt: <code>be precise and literal</code> lowers the temperature, <code>be creative and surprising</code> raises it. You say in words what the parameter does under the hood.',
+s7:'Two brains, two biases',
+xvAName:'Claude',xvBName:'GPT',
+xvIntro:'Every model carries <strong>different biases</strong>, inherited from the data it was trained on. That\'s not a flaw to hide: it\'s an opportunity. Asking <strong>two different models</strong> the same question is like getting a second opinion.',
+xvA:'Strong at <strong>reasoning</strong> and structured practical work. Tends to be <strong>cautious and rigorous</strong>.',
+xvB:'Strong at <strong>brainstorming</strong> and memory. Good at <strong>challenging you</strong> and surfacing patterns you missed.',
+xvH:'Different biases = a useful second opinion',
+xvP:'If two models with different biases <strong>agree</strong>, you trust the result more. If they <strong>diverge</strong>, you\'ve found exactly the spot to check. This <strong>cross-validation</strong> is one of the method\'s most powerful levers — we go deep on it in <strong>Module A4</strong>.',
+s8:'The model knows itself',
+metaH:'No one knows GPT prompting better than OpenAI',
+metaP:'A model can describe itself better than you could: <strong>no one knows GPT prompting better than OpenAI</strong>. This is the root of <strong>meta-creation</strong>: using AI to build the prompts, instructions and tools you then use on AI. The model becomes the best assistant for learning to steer it.',
+s9:'Checkpoint',
+cpH:'Making the model think is a choice, not a default',
+cpP:'Instant or thinking, low or high temperature, one model or two: these are levers you decide based on the task. Using them at random means spending badly and trusting too much. Using them well is method.',
+cpQ:'The last important thing you asked an AI: was it an instant answer or a thinking one? And would you have cross-validated it with a second model?',
+cpNote:'Golden rule: turn thinking on when the cost of an error outweighs the cost of the tokens. Otherwise, go fast.',
+modClose:'<b>You\'ve completed Module A2.</b> You now know the machine under the hood: transformer, tokens, context, the probabilistic model, reasoning and temperature. You understand <b>why</b> the AI behaves the way it does.',
+bridge:'<b>Next — the Method:</b> we stop watching the machine and start steering it. From the next module on: method before tool, cross-validation in practice, and the language to talk to AI — prompting.',
+foot:'Morfeus — Extended thinking'
+}};
+
+/* ===== mode toggle ===== */
+var MODE={it:{
+instAns:'La risposta dell\'indovinello è: il fiume. (sparata subito, senza mostrare il ragionamento)',
+thinkAns:'La risposta dell\'indovinello è: il fiume — verificata dopo aver scartato due ipotesi che non reggevano.',
+steps:[
+ 'Prima ipotesi: "il tempo". Sembra adattarsi…',
+ '…ma una parte dell\'indizio non torna. Scarto.',
+ 'Provo "il fiume": scorre, ha sponde, non si ferma. Regge.',
+ 'Cerco di romperla: c\'è un controesempio? No. Tengo "il fiume".'
+],instTag:'risposta rapida',thinkTag:'+ ragionamento (più token)'
+},en:{
+instAns:'The answer to the riddle is: the river. (fired instantly, no reasoning shown)',
+thinkAns:'The answer to the riddle is: the river — verified after ruling out two hypotheses that didn\'t hold.',
+steps:[
+ 'First hypothesis: "time". Seems to fit…',
+ '…but one part of the clue doesn\'t add up. Discard.',
+ 'Try "the river": it flows, it has banks, it never stops. Holds.',
+ 'Try to break it: is there a counterexample? No. Keep "the river".'
+],instTag:'fast answer',thinkTag:'+ reasoning (more tokens)'
+}};
+var mdMode='instant';
+function mdSet(m){
+  mdMode=m;
+  document.getElementById('mdBtnInstant').classList.toggle('on',m==='instant');
+  document.getElementById('mdBtnThink').classList.toggle('on',m==='think');
+  mdRender();
+}
+function mdRender(){
+  var d=MODE[LANG];var box=document.getElementById('mdThinkBox');
+  var ans=document.getElementById('mdAns');var tok=document.getElementById('mdTok');var tag=document.getElementById('mdTag');
+  if(mdMode==='instant'){
+    box.classList.add('hide');document.getElementById('mdSteps').innerHTML='';
+    ans.textContent=d.instAns;tok.textContent='90';tok.classList.remove('hot');tag.textContent=d.instTag;
+  }else{
+    box.classList.remove('hide');
+    var html=d.steps.map(function(s,i){return '<div class="mdstep'+(i>=1&&i<=1?' back':'')+'">'+s+'</div>';}).join('');
+    document.getElementById('mdSteps').innerHTML=html;
+    var els=document.querySelectorAll('#mdSteps .mdstep');
+    els.forEach(function(el,i){setTimeout(function(){el.classList.add('show')},120+i*420);});
+    ans.textContent=d.thinkAns;tok.textContent='90';tok.classList.add('hot');tag.textContent=d.thinkTag;
+    var target=1240;var t0=null;
+    function tick(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1100,1);var v=Math.round(90+(target-90)*p);tok.textContent=v.toLocaleString();if(p<1)requestAnimationFrame(tick);}
+    requestAnimationFrame(tick);
+  }
+}
+
+/* ===== math demo ===== */
+var MATH={it:[
+ {e:'1 + 1',resL:'2',subL:'<b>~100%</b> giusto: visto in miliardi di esempi.',resR:'2',subR:'Identico — qui il testo già basta.',note:'Sui calcoli <b>banalissimi</b> il modello "ha visto" la risposta tante volte da azzeccarla quasi sempre. Sembra una calcolatrice, ma sta ancora indovinando.',okL:true},
+ {e:'2747 × 4223',resL:'11.598.181',subL:'<b>Sbagliato.</b> Pochi esempi di <i>questa</i> moltiplicazione: tira a indovinare cifra per cifra.',resR:'11.600.581',subR:'Esatto: ha eseguito codice, non ha indovinato.',note:'Qui il testo crolla: nessuno ha "memorizzato" 2747×4223. Aprendo <b>Python</b> il calcolo diventa <b>deterministico</b> — giusto sempre. Prima dovevi dire "usa Python"; oggi il modello lo fa <b>da solo</b>: gli dai l\'obiettivo, sceglie lo strumento.',okL:false}
+],en:[
+ {e:'1 + 1',resL:'2',subL:'<b>~100%</b> right: seen in billions of examples.',resR:'2',subR:'Identical — text alone is enough here.',note:'On <b>trivial</b> sums the model has "seen" the answer so often it nails it almost every time. It looks like a calculator, but it\'s still guessing.',okL:true},
+ {e:'2747 × 4223',resL:'11,598,181',subL:'<b>Wrong.</b> Few examples of <i>this</i> multiplication: it guesses digit by digit.',resR:'11,600,581',subR:'Correct: it ran code, it didn\'t guess.',note:'Here text collapses: nobody "memorized" 2747×4223. By opening <b>Python</b> the calculation becomes <b>deterministic</b> — right every time. You used to have to say "use Python"; today the model does it <b>on its own</b>: you give it the goal, it picks the tool.',okL:false}
+]};
+var mathPos=0;
+function mathRender(){
+  var c=MATH[LANG][mathPos];
+  document.getElementById('mathResL').textContent=c.resL;
+  document.getElementById('mathResL').className='res '+(c.okL?'ok':'err');
+  document.getElementById('mathSubL').innerHTML=c.subL;
+  document.getElementById('mathResR').textContent=c.resR;
+  document.getElementById('mathSubR').innerHTML=c.subR;
+  document.getElementById('mathNote').innerHTML=c.note;
+  document.querySelectorAll('#mathTabs .mathtab').forEach(function(t,i){t.classList.toggle('on',i===mathPos)});
+}
+function mathSet(i){mathPos=i;mathRender()}
+function mathBuild(){
+  var arr=MATH[LANG];
+  document.getElementById('mathTabs').innerHTML=arr.map(function(c,i){
+    var lab=i===0?(LANG==='it'?'banale':'trivial'):(LANG==='it'?'difficile':'hard');
+    return '<button class="mathtab'+(i===mathPos?' on':'')+'" onclick="mathSet('+i+')"><div class="me">'+c.e+'</div><div class="ml">'+lab+'</div></button>';
+  }).join('');
+  mathRender();
+}
+
+/* ===== temperature slider ===== */
+var TEMP={it:[
+ {txt:'Gentile Cliente, in allegato trova il preventivo richiesto. Resto a disposizione per qualsiasi chiarimento. Cordiali saluti.'},
+ {txt:'Buongiorno, ecco il preventivo che avevamo discusso. Se vuole ne parliamo insieme con calma: mi dica pure quando le fa comodo.'},
+ {txt:'Allora, ci siamo! Le ho preparato qualcosa su misura — credo le strapperà un sorriso. Apra l\'allegato e poi mi racconta. 🚀'}
+],en:[
+ {txt:'Dear Client, please find the requested quote attached. I remain available for any clarification. Kind regards.'},
+ {txt:'Hi there, here\'s the quote we discussed. Happy to walk through it together whenever suits you — just say the word.'},
+ {txt:'Right, here we go! I\'ve put together something tailor-made — I think it\'ll make you smile. Open the attachment and tell me what you think. 🚀'}
+]};
+var TCHIP={it:['precisa & ripetibile','equilibrata & naturale','creativa & sorprendente'],en:['precise & repeatable','balanced & natural','creative & surprising']};
+function tmpBand(v){return v<34?0:(v<67?1:2)}
+function tmpColor(b){return b===0?'var(--accent)':(b===1?'var(--good)':'var(--agent)')}
+function tmpUpdate(v){
+  var val=(v/100*1).toFixed(2);
+  var b=tmpBand(v);var col=tmpColor(b);
+  var num=document.getElementById('tmpNum');num.textContent=val;num.style.color=col;
+  var chip=document.getElementById('tmpChip');chip.textContent=TCHIP[LANG][b];
+  chip.style.background=(b===0?'var(--accent-soft)':(b===1?'var(--good-soft)':'var(--agent-soft)'));
+  chip.style.color=col;
+  document.getElementById('tmpTxt').textContent=TEMP[LANG][b].txt;
+  document.getElementById('tmpOut').style.borderLeftColor=col;
+}
+function tmpInit(){tmpUpdate(document.getElementById('tmpRange').value)}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  mdRender();
+  mathBuild();
+  tmpInit();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});var keepMath=mathPos;applyI18n();mathPos=keepMath;mathRender();}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

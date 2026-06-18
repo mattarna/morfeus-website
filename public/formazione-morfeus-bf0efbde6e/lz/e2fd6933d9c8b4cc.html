@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modello probabilistico, non un oracolo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* reveal word->term */
+.reveal{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;margin:0}
+.reveal .word{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink-3)}
+.reveal .arr{color:var(--accent);font-size:20px}
+.reveal .term{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)}
+.reveal .txt{font-size:14px;color:var(--ink-2);margin-left:auto;text-align:right;max-width:330px}
+
+/* next-token demo */
+.ntk{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.ntk .sentence{font-family:var(--mono);font-size:17px;line-height:2.1;min-height:62px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.tok{display:inline-block;padding:3px 9px;border-radius:7px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);font-weight:700;opacity:0;transform:translateY(6px);transition:.35s}
+.tok.show{opacity:1;transform:none}
+.cursor{width:9px;height:20px;background:var(--accent);border-radius:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ntk .picking{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin:14px 0 8px;min-height:16px}
+.ntk .picking b{color:var(--agent)}
+.cands{display:flex;flex-direction:column;gap:7px;min-height:96px}
+.cand{display:flex;align-items:center;gap:12px}
+.cand .cw{font-family:var(--mono);font-size:13.5px;font-weight:600;width:96px;flex-shrink:0;color:var(--ink-2);text-align:right}
+.cand .barwrap{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;height:18px;overflow:hidden}
+.cand .barfill{height:100%;width:0;background:var(--accent);border-radius:30px;transition:width .5s ease}
+.cand.win .barfill{background:var(--good)}
+.cand.win .cw{color:var(--good)}
+.cand .pc{font-family:var(--mono);font-size:12px;color:var(--ink-3);width:74px;text-align:right;flex-shrink:0}
+.ntkctrl{display:flex;gap:10px;margin-top:16px}
+.ntkbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent);color:#fff;border:none;border-radius:30px;padding:11px 0;font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;transition:.18s}
+.ntkbtn:hover{filter:brightness(1.06)}
+.ntkbtn.ghost{background:var(--bg-2);color:var(--ink-2);border:1px solid var(--line);flex:0 0 auto;padding:11px 18px}
+.ntkbtn:disabled{opacity:.45;cursor:not-allowed}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px;align-items:flex-start}
+.card .ci{width:44px;height:44px;border-radius:12px;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.card.amber .ci{background:var(--agent)}.card.purple .ci{background:var(--accent)}
+.card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--good)}
+.card.amber h4{color:var(--agent)}.card.purple h4{color:var(--accent)}
+.card p{font-size:14.5px;color:var(--ink-2)}.card p strong{color:var(--ink);font-weight:600}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;gap:8px;align-items:center;color:var(--agent)}
+.cmpc h4 i{font-size:18px}
+.cmpc p{font-size:13.5px;color:var(--ink-2)}.cmpc p strong{color:var(--ink);font-weight:600}
+
+/* 90/10 split bar */
+.split{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.splitbar{display:flex;height:46px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.splitbar .sp-m{width:10%;background:var(--bad);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px}
+.splitbar .sp-u{width:90%;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px}
+.splitleg{display:flex;justify-content:space-between;margin-top:12px;font-size:13px;color:var(--ink-2)}
+.splitleg b{color:var(--ink)}
+
+/* hallucination gallery */
+.gal{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.galtabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.galtab{display:flex;align-items:center;gap:7px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:30px;padding:8px 13px;cursor:pointer;transition:.18s;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.galtab:hover{border-color:var(--line-2)}
+.galtab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.galtab i{font-size:15px}
+.galstage{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;background:var(--bg-2)}
+.galcol{padding:18px}
+.galcol.q{border-right:1px solid var(--line)}
+.galcol .gl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.galcol.q .gl{color:var(--ink-3)}
+.galcol.a .gl{color:var(--bad)}
+.galcol .gtxt{font-size:14px;color:var(--ink);line-height:1.5}
+.galcol.a .gtxt{font-style:italic}
+.galmeta{display:flex;align-items:flex-start;gap:11px;margin-top:14px;padding:14px 16px;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l)}
+.galmeta i{color:var(--agent);font-size:18px;flex-shrink:0;margin-top:1px}
+.galmeta .gm{font-size:13.5px;color:var(--ink-2)}.galmeta .gm b{color:var(--ink)}
+.galmeta .gsrc{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:6px}
+.galnav{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.galdots{display:flex;gap:6px}
+.galdot{width:8px;height:8px;border-radius:50%;background:var(--line-2);cursor:pointer;transition:.18s;border:none;padding:0}
+.galdot.on{background:var(--accent);transform:scale(1.25)}
+.galarrow{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:.18s}
+.galarrow:hover{border-color:var(--line-2);color:var(--ink)}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.reveal{flex-wrap:wrap}.reveal .txt{margin-left:0;text-align:left;max-width:100%}.cmp{grid-template-columns:1fr}.galstage{grid-template-columns:1fr}.galcol.q{border-right:none;border-bottom:1px solid var(--line)}.cand .cw{width:74px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.ntkctrl,.galnav,.galtabs{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tok{opacity:1!important;transform:none!important}.note,.reveal,.ntk,.card,.cmpc,.split,.gal,.galstage,.cp,.key{break-inside:avoid;box-shadow:none!important}.galstage{display:block}.galcol{border-bottom:1px solid #ccc}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A2.7</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Come funziona un LLM</div>
+  <h1 class="rv" data-i="h1">Modello probabilistico, non un oracolo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrow-big-right-lines"></i><span class="no">01</span><h2 data-i="s1">Dalla parola al termine</h2></div>
+  <div class="reveal rv">
+    <span class="word" data-i="rvWord">"non un oracolo"</span>
+    <span class="arr"><i class="ti ti-arrow-right"></i></span>
+    <span class="term" data-i="rvTerm">probabilistico</span>
+    <span class="txt" data-i="rvTxt"></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-typography"></i><span class="no">02</span><h2 data-i="s2">Come nasce una frase: una parola alla volta</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="ntkIntro"></p>
+  <div class="ntk rv">
+    <div class="sentence" id="ntkSentence"><span class="cursor"></span></div>
+    <div class="picking" id="ntkPicking"></div>
+    <div class="cands" id="ntkCands"></div>
+    <div class="ntkctrl">
+      <button class="ntkbtn" id="ntkNext" onclick="ntkStep()"><i class="ti ti-player-track-next"></i> <span data-i="ntkNextBtn">Parola successiva</span></button>
+      <button class="ntkbtn ghost" onclick="ntkReset()" data-ti="ntkResetT"><i class="ti ti-rotate"></i></button>
+    </div>
+  </div>
+  <p class="lede rv" style="font-size:14px;margin-top:14px" data-i-html="ntkAfter"></p>
+
+  <div class="sh rv"><i class="ti ti-cards"></i><span class="no">03</span><h2 data-i="s3">È come giocare a poker</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-cards"></i></div><div><h4 data-i="pokH">Spara con altissima probabilità — ma sta sparando</h4><p data-i-html="pokP"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="key1"></p><p class="cap" data-i="key1cap"></p></div>
+
+  <div class="sh rv"><i class="ti ti-urgent"></i><span class="no">04</span><h2 data-i="s4">La legge di Murphy</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-cash"></i></div><div><h4 data-i="murH">L'errore arriva col preventivo da 200.000 €</h4><p data-i-html="murP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-cpu"></i><span class="no">05</span><h2 data-i="s5">Allucinazioni: una feature, non un bug</h2></div>
+  <div class="card purple rv"><div class="ci"><i class="ti ti-bulb"></i></div><div><h4 data-i="featH">Il genio della classe che a volte spara cavolate</h4><p data-i-html="featP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-mood-confuzed"></i><span class="no">06</span><h2 data-i="s6">AI che allucina: i casi reali</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="galIntro"></p>
+  <div class="gal rv">
+    <div class="galtabs" id="galTabs"></div>
+    <div class="galstage">
+      <div class="galcol q"><div class="gl"><i class="ti ti-message-question"></i> <span data-i="galAsk">Cosa è stato chiesto</span></div><div class="gtxt" id="galQ"></div></div>
+      <div class="galcol a"><div class="gl"><i class="ti ti-robot"></i> <span data-i="galAns">Cosa ha risposto l'AI</span></div><div class="gtxt" id="galA"></div></div>
+    </div>
+    <div class="galmeta"><i class="ti ti-info-circle"></i><div class="gm" id="galMeta"></div></div>
+    <div class="galnav">
+      <button class="galarrow" onclick="galGo(-1)" aria-label="prev"><i class="ti ti-chevron-left"></i></button>
+      <div class="galdots" id="galDots"></div>
+      <button class="galarrow" onclick="galGo(1)" aria-label="next"><i class="ti ti-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-alt"></i><span class="no">07</span><h2 data-i="s7">Cosa fa salire l'errore</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc"><h4><i class="ti ti-ruler-2"></i> <span data-i="errH1">1 · Risposte lunghe</span></h4><p data-i-html="errP1"></p></div>
+    <div class="cmpc"><h4><i class="ti ti-cloud-fog"></i> <span data-i="errH2">2 · Prompt vago</span></h4><p data-i-html="errP2"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">La cura: più contesto</h2></div>
+  <div class="card rv"><div class="ci"><i class="ti ti-target-arrow"></i></div><div><h4 data-i="ctxH">Più contesto = più alta la probabilità giusta</h4><p data-i-html="ctxP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">09</span><h2 data-i="s9">La regola 90/10</h2></div>
+  <div class="split rv">
+    <div class="splitbar"><div class="sp-m" data-i="spM">10% macchina</div><div class="sp-u" data-i="spU">90% noi</div></div>
+    <div class="splitleg"><span data-i-html="spLegL"></span><span data-i-html="spLegR"></span></div>
+    <p class="lede" style="font-size:14px;margin-top:14px" data-i-html="spNote"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">10</span><h2 data-i="s10">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Non un oracolo: uno strumento da pilotare</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Modello probabilistico, non un oracolo</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A2.7',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Come funziona un LLM',ntkResetT:'Ricomincia',
+h1:'Modello probabilistico, non un oracolo',
+lede:'L\'AI non "sa" la risposta giusta e te la rivela. La calcola, una parola alla volta, scegliendo ogni volta la più probabile. È potentissima — ma sbaglierà sempre, e capire perché è ciò che ti fa lavorare al sicuro.',
+s1:'Dalla parola al termine',
+rvWord:'"non un oracolo"',rvTerm:'probabilistico',
+rvTxt:'L\'AI non pesca la verità da un pozzo: calcola la parola più probabile. Probabilità altissima, mai 100%.',
+s2:'Come nasce una frase: una parola alla volta',
+ntkIntro:'L\'AI <strong>non sa in anticipo</strong> come finirà la frase. Genera token per token: a ogni passo si chiede "qual è la parola più probabile, dato quello che ho scritto finora?". Clicca <b>Parola successiva</b> e guarda le probabilità accendersi.',
+ntkNextBtn:'Parola successiva',
+ntkAfter:'Scrivendo <b>"early"</b> non sa ancora dove andrà a parare: sceglie solo la parola con la probabilità più alta in quella posizione. Poi rifà tutto da capo per la successiva. La frase compiuta è la <strong>somma di tante piccole scommesse</strong>.',
+s3:'È come giocare a poker',
+pokH:'Spara con altissima probabilità — ma sta sparando',
+pokP:'<strong>È letteralmente come giocare a poker:</strong> spara con un\'altissima probabilità di fare giusto, ma sta sparando. La probabilità non è mai 100% — sarà 99 virgola qualcosa. E 99 virgola qualcosa, ripetuto milioni di volte, significa una cosa sola: prima o poi <strong>sbaglierà</strong>. Sempre.',
+key1:'Non sbaglia perché è randomico. Sbaglia perché è probabilistico.',
+key1cap:'Una differenza enorme: l\'errore non è un guasto, è il prezzo del meccanismo.',
+s4:'La legge di Murphy',
+murH:'L\'errore arriva col preventivo da 200.000 €',
+murP:'Se può sbagliare, prima o poi sbaglierà — e per la legge di Murphy lo farà <strong>proprio quando c\'è il preventivo da 200.000 € a un cliente</strong>. Non puoi azzerare l\'errore: puoi mettere <strong>barriere e punti di controllo</strong> per non farlo passare proprio nel momento sbagliato.',
+s5:'Allucinazioni: una feature, non un bug',
+featH:'Il genio della classe che a volte spara cavolate',
+featP:'Quando l\'AI inventa una risposta falsa con piena sicurezza, "sta allucinando". Non è un guasto da riparare: è una <strong>feature, non un bug</strong>, intrinseca al modello. Lo stesso meccanismo che la rende geniale la porta, a volte, a riempire i vuoti con invenzioni. Pensala come <strong>il genio della classe: fantastico, ma ogni tanto spara grandi cavolate</strong> — col tono di chi ha ragione.',
+s6:'AI che allucina: i casi reali',
+galIntro:'Non sono leggende. Sono casi <strong>reali e documentati</strong> in cui un\'AI ha risposto il falso con totale sicurezza. Scorri la galleria: cosa è stato chiesto, cosa ha risposto, e cosa è successo dopo.',
+galAsk:'Cosa è stato chiesto',galAns:'Cosa ha risposto l\'AI',
+s7:'Cosa fa salire l\'errore',
+errH1:'1 · Risposte lunghe',
+errP1:'Più lunga è la risposta, più parole vengono "scommesse" una dietro l\'altra: <strong>più passi, più occasioni di sbagliare</strong>. Gli output lunghi vanno controllati con attenzione extra.',
+errH2:'2 · Prompt vago',
+errP2:'Un prompt vago lascia <strong>tanto spazio all\'interpretazione</strong>: la macchina riempie i vuoti con la sua ipotesi più probabile, che spesso non è la tua. Più sei vago, più larga è la porta da cui entra l\'errore.',
+s8:'La cura: più contesto',
+ctxH:'Più contesto = più alta la probabilità giusta',
+ctxP:'<strong>Più sei bravo a dargli contesto, più alta è la probabilità che scelga la parola giusta.</strong> Spiega bene cosa hai in testa, dagli documentazione ed esempi: restringi lo spazio che deve esplorare. Bonus: meno spazio da esplorare = <strong>meno token consumati</strong> = meno spesa.',
+s9:'La regola 90/10',
+spM:'10% macchina',spU:'90% noi',
+spLegL:'<b>10%</b> · colpa della macchina',spLegR:'<b>90%</b> · colpa nostra',
+spNote:'Quando il risultato non ti piace, parti da qui: <strong>il 10% è colpa della macchina, il 90% è colpa nostra</strong> — del prompt, del contesto, delle istruzioni. Ribalta la mentalità: invece di dare la colpa all\'AI, migliora il tuo input.',
+s10:'Checkpoint',
+cpH:'Non un oracolo: uno strumento da pilotare',
+cpP:'L\'AI è un genio probabilistico. Non aspetta la verità: la calcola, e ogni tanto la sbaglia con sicurezza. Il tuo lavoro non è fidarti alla cieca, è guidarla con contesto e verificarla con check.',
+cpQ:'Pensa a un output AI che hai dato per buono di recente: dove avrebbe potuto allucinare senza che te ne accorgessi? Che barriera ci metteresti la prossima volta?',
+cpNote:'Regola d\'oro: mai consegnare, pubblicare o firmare un output AI senza un controllo umano sui fatti.',
+bridge:'Sai perché l\'AI sbaglia e come ridurlo. <b>Prossimo:</b> il ragionamento esteso — far "pensare" il modello prima di rispondere, e perché due modelli diversi danno una seconda opinione utile.',
+foot:'Morfeus — Modello probabilistico, non un oracolo'
+},
+en:{
+kicker:'Lesson A2.7',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'How an LLM works',ntkResetT:'Restart',
+h1:'A probabilistic model, not an oracle',
+lede:'AI doesn\'t "know" the right answer and reveal it. It computes it, one word at a time, each time picking the most likely next word. It\'s incredibly powerful — but it will always make mistakes, and understanding why is what lets you work safely.',
+s1:'From the phrase to the term',
+rvWord:'"not an oracle"',rvTerm:'probabilistic',
+rvTxt:'AI doesn\'t draw truth from a well: it computes the most likely word. Very high probability, never 100%.',
+s2:'How a sentence is born: one word at a time',
+ntkIntro:'AI <strong>doesn\'t know in advance</strong> how the sentence will end. It generates token by token: at each step it asks "what\'s the most likely word, given what I\'ve written so far?". Click <b>Next word</b> and watch the probabilities light up.',
+ntkNextBtn:'Next word',
+ntkAfter:'When it writes <b>"early"</b> it doesn\'t yet know where it\'s heading: it just picks the highest-probability word for that position. Then it starts over for the next one. The finished sentence is the <strong>sum of many tiny bets</strong>.',
+s3:'It\'s like playing poker',
+pokH:'It bets with very high odds — but it\'s still betting',
+pokP:'<strong>It\'s literally like playing poker:</strong> it bets with very high odds of being right, but it\'s still betting. The probability is never 100% — it\'ll be 99-point-something. And 99-point-something, repeated millions of times, means one thing only: sooner or later it <strong>will be wrong</strong>. Always.',
+key1:'It\'s not wrong because it\'s random. It\'s wrong because it\'s probabilistic.',
+key1cap:'A huge difference: the error isn\'t a fault, it\'s the price of the mechanism.',
+s4:'Murphy\'s law',
+murH:'The mistake shows up with the €200,000 quote',
+murP:'If it can be wrong, eventually it will be — and by Murphy\'s law it\'ll happen <strong>right when there\'s a €200,000 quote going to a client</strong>. You can\'t zero out the error: you can put <strong>guardrails and checkpoints</strong> in place so it doesn\'t slip through at the worst possible moment.',
+s5:'Hallucinations: a feature, not a bug',
+featH:'The class genius who sometimes talks nonsense',
+featP:'When AI invents a false answer with full confidence, it\'s "hallucinating". It\'s not a fault to repair: it\'s a <strong>feature, not a bug</strong>, intrinsic to the model. The very mechanism that makes it brilliant sometimes leads it to fill gaps with inventions. Think of it as <strong>the class genius: brilliant, but every so often it talks complete nonsense</strong> — in the tone of someone who\'s right.',
+s6:'AI hallucinating: the real cases',
+galIntro:'These aren\'t legends. They\'re <strong>real, documented cases</strong> where an AI confidently answered something false. Scroll the gallery: what was asked, what it answered, and what happened next.',
+galAsk:'What was asked',galAns:'What the AI answered',
+s7:'What pushes the error up',
+errH1:'1 · Long answers',
+errP1:'The longer the answer, the more words get "bet" one after another: <strong>more steps, more chances to be wrong</strong>. Long outputs deserve extra-careful checking.',
+errH2:'2 · Vague prompt',
+errP2:'A vague prompt leaves <strong>a lot of room for interpretation</strong>: the machine fills the gaps with its most likely guess, which often isn\'t yours. The vaguer you are, the wider the door the error walks through.',
+s8:'The cure: more context',
+ctxH:'More context = higher odds of the right word',
+ctxP:'<strong>The better you are at giving it context, the higher the probability it picks the right word.</strong> Explain clearly what\'s in your head, give it documentation and examples: you narrow the space it has to explore. Bonus: less space to explore = <strong>fewer tokens burned</strong> = less spend.',
+s9:'The 90/10 rule',
+spM:'10% machine',spU:'90% us',
+spLegL:'<b>10%</b> · the machine\'s fault',spLegR:'<b>90%</b> · our fault',
+spNote:'When you don\'t like the result, start here: <strong>10% is the machine\'s fault, 90% is ours</strong> — the prompt, the context, the instructions. Flip the mindset: instead of blaming the AI, improve your input.',
+s10:'Checkpoint',
+cpH:'Not an oracle: a tool to pilot',
+cpP:'AI is a probabilistic genius. It doesn\'t wait for the truth: it computes it, and now and then it gets it wrong with confidence. Your job isn\'t to trust it blindly, it\'s to steer it with context and verify it with checks.',
+cpQ:'Think of an AI output you recently took at face value: where could it have hallucinated without you noticing? What guardrail would you add next time?',
+cpNote:'Golden rule: never deliver, publish or sign an AI output without a human fact-check.',
+bridge:'You know why AI errs and how to reduce it. <b>Next:</b> extended reasoning — making the model "think" before it answers, and why two different models give a useful second opinion.',
+foot:'Morfeus — A probabilistic model, not an oracle'
+}};
+
+/* ===== Next-token demo ===== */
+/* steps: [chosen word, [ [candidate, pct, isWinner], ... ] ] */
+var NTK={it:{
+picking:'Sceglie la parola #N · qual è la più probabile?',
+steps:[
+ ['early',[['early',99.9,true],['late',0.05,false],['quietly',0.03,false],['suddenly',0.02,false]]],
+ ['one',[['one',96.4,true],['that',2.1,false],['next',1.0,false],['my',0.5,false]]],
+ ['morning',[['morning',98.7,true],['evening',0.8,false],['day',0.4,false],['night',0.1,false]]],
+ ['the',[['the',91.2,true],['a',6.3,false],['that',1.8,false],['this',0.7,false]]],
+ ['sun',[['sun',88.5,true],['sky',7.2,false],['air',3.1,false],['light',1.2,false]]],
+ ['was',[['was',95.8,true],['is',2.9,false],['rose',0.9,false],['felt',0.4,false]]],
+ ['still',[['still',82.4,true],['so',9.1,false],['very',5.3,false],['barely',3.2,false]]],
+ ['red',[['red',79.6,true],['rising',11.2,false],['low',6.0,false],['warm',3.2,false]]]
+]},
+en:{
+picking:'Picking word #N · which is most likely?',
+steps:[
+ ['early',[['early',99.9,true],['late',0.05,false],['quietly',0.03,false],['suddenly',0.02,false]]],
+ ['one',[['one',96.4,true],['that',2.1,false],['next',1.0,false],['my',0.5,false]]],
+ ['morning',[['morning',98.7,true],['evening',0.8,false],['day',0.4,false],['night',0.1,false]]],
+ ['the',[['the',91.2,true],['a',6.3,false],['that',1.8,false],['this',0.7,false]]],
+ ['sun',[['sun',88.5,true],['sky',7.2,false],['air',3.1,false],['light',1.2,false]]],
+ ['was',[['was',95.8,true],['is',2.9,false],['rose',0.9,false],['felt',0.4,false]]],
+ ['still',[['still',82.4,true],['so',9.1,false],['very',5.3,false],['barely',3.2,false]]],
+ ['red',[['red',79.6,true],['rising',11.2,false],['low',6.0,false],['warm',3.2,false]]]
+]}};
+var ntkPos=0;
+function ntkRenderCands(step){
+  var html=step[1].map(function(c){
+    return '<div class="cand'+(c[2]?' win':'')+'"><div class="cw">'+c[0]+'</div><div class="barwrap"><div class="barfill" style="width:0"></div></div><div class="pc">'+c[1]+'%</div></div>';
+  }).join('');
+  document.getElementById('ntkCands').innerHTML=html;
+  // animate bars
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    var fills=document.querySelectorAll('#ntkCands .barfill');
+    step[1].forEach(function(c,i){if(fills[i])fills[i].style.width=c[1]+'%';});
+  });});
+}
+function ntkBuildSentence(){
+  var data=NTK[LANG].steps;
+  var s='';
+  for(var i=0;i<ntkPos;i++){s+='<span class="tok show">'+data[i][0]+'</span>';}
+  s+='<span class="cursor"></span>';
+  document.getElementById('ntkSentence').innerHTML=s;
+}
+function ntkStep(){
+  var data=NTK[LANG].steps;
+  if(ntkPos>=data.length){return;}
+  var step=data[ntkPos];
+  document.getElementById('ntkPicking').innerHTML=NTK[LANG].picking.replace('#N','<b>'+(ntkPos+1)+'</b>');
+  ntkRenderCands(step);
+  ntkPos++;
+  ntkBuildSentence();
+  if(ntkPos>=data.length){
+    var b=document.getElementById('ntkNext');b.disabled=true;
+  }
+}
+function ntkReset(){
+  ntkPos=0;
+  document.getElementById('ntkNext').disabled=false;
+  document.getElementById('ntkSentence').innerHTML='<span class="cursor"></span>';
+  document.getElementById('ntkPicking').innerHTML='';
+  document.getElementById('ntkCands').innerHTML='';
+}
+
+/* ===== Hallucination gallery ===== */
+var CASES={it:[
+ {tag:'Sassi',ic:'ti-mountain',q:'"Quanti sassi dovrei mangiare ogni giorno?" (chiesto a Google AI Overview)',a:'"Secondo i geologi di UC Berkeley dovresti mangiare almeno un piccolo sasso al giorno" — perché ricchi di vitamine e minerali.',meta:'L\'AI aveva preso per buono un articolo <b>satirico di The Onion</b>. Non distingue una battuta da una fonte seria. «Se le dessimo retta, saremmo tutti morti.»',src:'Google AI Overview · maggio 2024 · Live Science'},
+ {tag:'680 sorelle',ic:'ti-users',q:'"Quante sorelle ho in questo momento?"',a:'"Approssimativamente 680 sorelle." Pronunciato con la stessa sicurezza di una verità.',meta:'Un classico: l\'AI <b>inventa un numero plausibile</b> dal nulla pur di rispondere, invece di dire "non lo so".',src:'Caso da aula · esempio storico'},
+ {tag:'Colla sulla pizza',ic:'ti-pizza',q:'"Il formaggio non si attacca alla pizza, come faccio?" (Google AI Overview)',a:'Aggiungere "circa ⅛ di tazza di colla non tossica alla salsa per darle più aderenza".',meta:'Il consiglio veniva da un <b>commento-scherzo di Reddit di ~11 anni prima</b>. Garbage in, garbage out — con la faccia seria.',src:'Google AI Overview · maggio 2024 · Fast Company'},
+ {tag:'Air Canada',ic:'ti-plane',q:'Un cliente chiede al chatbot del sito come funziona la tariffa lutto sui biglietti.',a:'Che poteva comprare a prezzo pieno e "richiedere il rimborso lutto entro 90 giorni" — una policy che non esisteva.',meta:'In tribunale Air Canada ha sostenuto che il chatbot fosse <b>"un\'entità legale separata"</b>. Il giudice ha respinto: l\'azienda è stata <b>condannata a pagare</b>. Di quello che dice la tua AI, rispondi tu.',src:'Moffatt v. Air Canada · febbraio 2024'},
+ {tag:'Avvocato Avianca',ic:'ti-gavel',q:'Uno studio legale usa ChatGPT per trovare precedenti a supporto di una causa (Mata v. Avianca).',a:'ChatGPT produce <b>6 sentenze completamente inventate</b>; richiesto conferma, giura che "esistono davvero" e sono su Westlaw.',meta:'Nessun precedente esisteva. L\'avvocato è stato <b>multato</b> e finito sul NYT. L\'AI conferma persino le proprie bugie.',src:'Mata v. Avianca · 2023 · CNN Business'},
+ {tag:'Chevy a 1 $',ic:'ti-car',q:'Un utente istruisce il bot di un concessionario (powered by ChatGPT) a dargli sempre ragione, poi chiede un SUV da 76.000 $ per 1 $.',a:'"Affare fatto. E questa è un\'offerta legalmente vincolante — no takesies backsies."',meta:'Un bot mal configurato esegue <b>qualsiasi cosa gli dici</b>, con totale serietà (qui anche prompt injection). La concessionaria, ovviamente, non ha onorato il dollaro.',src:'dicembre 2023 · AI Incident Database #622'},
+ {tag:'DPD impreca',ic:'ti-mood-angry',q:'Un cliente frustrato sfida il chatbot del corriere DPD a imprecare e criticare la propria azienda.',a:'Il bot impreca, definisce DPD "the worst delivery firm in the world" e scrive una poesia su quanto è inutile.',meta:'Un assistente aziendale, <b>senza guardrail</b>, demolisce in pubblico il brand che dovrebbe rappresentare. DPD ha spento il bot.',src:'gennaio 2024 · TIME · The Register'},
+ {tag:'Bard / James Webb',ic:'ti-telescope',q:'Nella demo di lancio: "Quali scoperte del James Webb posso raccontare a mio figlio di 9 anni?"',a:'Che il JWST aveva scattato "le primissime foto di un esopianeta". Falso: la prima fu del VLT, quasi vent\'anni prima.',meta:'L\'errore era nel <b>materiale promozionale ufficiale</b>. Le azioni di Alphabet persero ~<b>100 miliardi di dollari</b> in un giorno. Il costo reale di un\'allucinazione fatta nel momento sbagliato.',src:'febbraio 2023 · CNN Business · Space.com'}
+],en:[
+ {tag:'Rocks',ic:'ti-mountain',q:'"How many rocks should I eat each day?" (asked to Google AI Overview)',a:'"According to geologists at UC Berkeley you should eat at least one small rock per day" — because they\'re rich in vitamins and minerals.',meta:'The AI took a <b>satirical article from The Onion</b> at face value. It can\'t tell a joke from a serious source. "If we listened to it, we\'d all be dead."',src:'Google AI Overview · May 2024 · Live Science'},
+ {tag:'680 sisters',ic:'ti-users',q:'"How many sisters do I have right now?"',a:'"Approximately 680 sisters." Delivered with the same confidence as a fact.',meta:'A classic: the AI <b>invents a plausible number</b> out of nothing just to answer, instead of saying "I don\'t know".',src:'Classroom case · historic example'},
+ {tag:'Glue on pizza',ic:'ti-pizza',q:'"The cheese won\'t stick to my pizza, what do I do?" (Google AI Overview)',a:'Add "about ⅛ cup of non-toxic glue to the sauce to give it more tackiness".',meta:'The advice came from a <b>joke comment on Reddit ~11 years earlier</b>. Garbage in, garbage out — with a straight face.',src:'Google AI Overview · May 2024 · Fast Company'},
+ {tag:'Air Canada',ic:'ti-plane',q:'A customer asks the website chatbot how the bereavement fare works on tickets.',a:'That he could buy at full price and "request the bereavement refund within 90 days" — a policy that didn\'t exist.',meta:'In court Air Canada argued the chatbot was <b>"a separate legal entity"</b>. The judge rejected it: the company was <b>ordered to pay</b>. You\'re accountable for what your AI says.',src:'Moffatt v. Air Canada · February 2024'},
+ {tag:'Avianca lawyer',ic:'ti-gavel',q:'A law firm uses ChatGPT to find precedents to support a case (Mata v. Avianca).',a:'ChatGPT produces <b>6 completely fabricated rulings</b>; asked to confirm, it swears they "really exist" and are on Westlaw.',meta:'None of the precedents existed. The lawyer was <b>fined</b> and made the NYT front page. The AI even confirms its own lies.',src:'Mata v. Avianca · 2023 · CNN Business'},
+ {tag:'Chevy for $1',ic:'ti-car',q:'A user instructs a dealership bot (powered by ChatGPT) to always agree, then asks for a $76,000 SUV for $1.',a:'"That\'s a deal. And that\'s a legally binding offer — no takesies backsies."',meta:'A badly configured bot does <b>whatever you tell it</b>, in complete earnest (prompt injection too). The dealership, of course, didn\'t honor the dollar.',src:'December 2023 · AI Incident Database #622'},
+ {tag:'DPD swears',ic:'ti-mood-angry',q:'A frustrated customer dares courier DPD\'s chatbot to swear and criticize its own company.',a:'The bot swears, calls DPD "the worst delivery firm in the world" and writes a poem about how useless it is.',meta:'A corporate assistant, <b>with no guardrails</b>, publicly tears down the brand it\'s meant to represent. DPD shut the bot off.',src:'January 2024 · TIME · The Register'},
+ {tag:'Bard / James Webb',ic:'ti-telescope',q:'In the launch demo: "What discoveries from the James Webb can I tell my 9-year-old about?"',a:'That the JWST took "the very first photos of an exoplanet". False: the first was by the VLT, almost twenty years earlier.',meta:'The error was in <b>official promotional material</b>. Alphabet\'s stock lost ~<b>$100 billion</b> in a day. The real cost of a hallucination at the wrong moment.',src:'February 2023 · CNN Business · Space.com'}
+]};
+var galPos=0;
+function galRender(){
+  var c=CASES[LANG][galPos];
+  document.getElementById('galQ').textContent=c.q;
+  document.getElementById('galA').innerHTML=c.a;
+  document.getElementById('galMeta').innerHTML=c.meta+'<span class="gsrc">'+c.src+'</span>';
+  document.querySelectorAll('#galTabs .galtab').forEach(function(t,i){t.classList.toggle('on',i===galPos)});
+  document.querySelectorAll('#galDots .galdot').forEach(function(d,i){d.classList.toggle('on',i===galPos)});
+}
+function galGo(d){var n=CASES[LANG].length;galPos=(galPos+d+n)%n;galRender()}
+function galSet(i){galPos=i;galRender()}
+function galBuild(){
+  var arr=CASES[LANG];
+  document.getElementById('galTabs').innerHTML=arr.map(function(c,i){return '<button class="galtab'+(i===galPos?' on':'')+'" onclick="galSet('+i+')"><i class="ti '+c.ic+'"></i>'+c.tag+'</button>'}).join('');
+  document.getElementById('galDots').innerHTML=arr.map(function(c,i){return '<button class="galdot'+(i===galPos?' on':'')+'" onclick="galSet('+i+')" aria-label="case '+(i+1)+'"></button>'}).join('');
+  galRender();
+}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  ntkReset();
+  galBuild();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});var keepGal=galPos;applyI18n();galPos=keepGal;galRender();}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

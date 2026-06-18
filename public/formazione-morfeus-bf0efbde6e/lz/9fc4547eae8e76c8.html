@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cross-validazione tra modelli — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* flow A->B->A */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:8px}
+.fst{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.fst .fi{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;color:#fff}
+.fst.a .fi{background:var(--accent)}.fst.b .fi{background:var(--agent)}.fst.c .fi{background:var(--good)}
+.fst .ft{font-size:13.5px;font-weight:600}
+.fst .fd{font-size:11.5px;color:var(--ink-2);line-height:1.45}
+.farr{display:flex;align-items:center;color:var(--ink-3);font-size:18px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+/* ping-pong arena */
+.pp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.ppmodels{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:16px}
+.ppm{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;font-weight:700;padding:6px 13px;border-radius:30px;border:1.5px solid var(--line)}
+.ppm.a{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-line)}
+.ppm.b{color:var(--agent);background:var(--agent-soft);border-color:var(--agent-line)}
+.ppm i{font-size:15px}
+.ppvs{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:700}
+.ppstmt{font-size:13.5px;color:var(--ink-2);background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:11px 14px;margin-bottom:14px}
+.ppstmt b{color:var(--ink)}
+.ppcrit{border:1.5px solid var(--line);border-radius:var(--r-l);padding:14px 15px;margin-bottom:12px;transition:.2s}
+.ppcrit .pch{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;margin-bottom:4px}
+.ppcrit .pch i{color:var(--agent);font-size:16px}
+.ppcrit .pcb{font-size:13px;color:var(--ink-2)}
+.ppbtns{display:flex;gap:8px;margin-top:11px}
+.ppb{flex:1;font-family:var(--mono);font-size:11.5px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:8px 10px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.ppb:hover{border-color:var(--line-2)}
+.ppb.keep.on{background:var(--good);color:#fff;border-color:var(--good)}
+.ppb.drop.on{background:var(--bad);color:#fff;border-color:var(--bad)}
+.ppcrit.kept{border-color:var(--good);background:var(--good-soft)}
+.ppcrit.dropped{border-color:var(--line);opacity:.5}
+.ppcrit.dropped .pcb,.ppcrit.dropped .pch{text-decoration:line-through}
+.ppbar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--sh);transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--line-2);color:var(--ink)}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.pri:hover{color:#fff;opacity:.92}
+.ppmsg{font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.ppmsg.win{color:var(--good)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.flow{grid-template-columns:1fr;gap:6px}.farr{justify-content:center;transform:rotate(90deg)}.ppbtns{flex-direction:column}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.key,.flow,.fst,.pp,.ppcrit{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A4.8</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Robustezza dell'output</div>
+  <h1 class="rv" data-i="h1">Cross-validazione tra modelli</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrows-shuffle"></i><span class="no">01</span><h2 data-i="s1">Il workflow: A crea, B critica, A filtra</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="flowIntro"></p>
+  <div class="flow rv">
+    <div class="fst a"><div class="fi"><i class="ti ti-pencil"></i></div><div class="ft" data-i="f1T">Modello A crea</div><div class="fd" data-i="f1D"></div></div>
+    <div class="farr"><i class="ti ti-arrow-right"></i></div>
+    <div class="fst b"><div class="fi"><i class="ti ti-zoom-question"></i></div><div class="ft" data-i="f2T">Modello B critica</div><div class="fd" data-i="f2D"></div></div>
+    <div class="farr"><i class="ti ti-arrow-right"></i></div>
+    <div class="fst c"><div class="fi"><i class="ti ti-filter"></i></div><div class="ft" data-i="f3T">A filtra e implementa</div><div class="fd" data-i="f3D"></div></div>
+  </div>
+  <div class="note rv" style="margin-top:18px"><div class="ni"><i class="ti ti-mood-check"></i></div><div><h4 data-i="critH">«Non devi per forza trovare problemi»</h4><p data-i-html="critP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-user-shield"></i><span class="no">02</span><h2 data-i="s2">MAI dire che viene da un'altra AI</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="frmBadT">Smonta il rigore</span><div class="pr" data-i="frmBadP"></div><div class="res" data-i-html="frmBadR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="frmGoodT">Attiva il rigore</span><div class="pr" data-i="frmGoodP"></div><div class="res" data-i-html="frmGoodR"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i="frmP"></p>
+
+  <div class="sh rv"><i class="ti ti-circles-relation"></i><span class="no">03</span><h2 data-i="s3">Perché funziona: bias diversi</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-database"></i></div><h4 data-i="b1H">Ogni modello ha i suoi bias</h4><p data-i="b1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-versions"></i></div><h4 data-i="b2H">Produttori diversi</h4><p data-i="b2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-shield-check"></i></div><h4 data-i="b3H">Output robusto</h4><p data-i="b3P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-ping-pong"></i><span class="no">04</span><h2 data-i="s4">Arena: il ping-pong A ↔ B</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="ppIntro"></p>
+  <div class="pp rv">
+    <div class="ppmodels">
+      <span class="ppm a"><i class="ti ti-pencil"></i> <span data-i="ppMa">Modello A</span></span>
+      <span class="ppvs">↔</span>
+      <span class="ppm b"><i class="ti ti-zoom-question"></i> <span data-i="ppMb">Modello B</span></span>
+    </div>
+    <div class="ppstmt" data-i-html="ppStmt"></div>
+    <div id="ppList"></div>
+    <div class="ppbar">
+      <button class="btn pri" onclick="ppJudge()" data-i="ppJudgeB">A implementa</button>
+      <button class="btn" onclick="ppReset()" data-i="ppResetB">Nuovo round</button>
+      <span class="ppmsg" id="ppMsg" data-i="ppHint"></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-table-shortcut"></i><span class="no">05</span><h2 data-i="s5">Strategia: ping-pong e non sposare la piattaforma</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-refresh-dot"></i></div><div><h4 data-i="strH">Quando si esauriscono i token, rimbalza</h4><p data-i-html="strP"></p></div></div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Fai criticare un tuo output</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-circle-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Cross-validazione tra modelli</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A4.8',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Robustezza dell\'output',
+h1:'Cross-validazione tra modelli',
+lede:'Un solo modello vede il mondo coi suoi bias. Due modelli con bias diversi, messi a discutere, producono un output più robusto. Qui impari il workflow «A crea → B critica → A filtra», il trucco di framing che attiva più rigore, e perché non devi mai sposare una sola piattaforma. Con questa lezione chiudi il modulo A4.',
+s1:'Il workflow: A crea, B critica, A filtra',
+flowIntro:'La cross-validazione è un ciclo a tre passi. Un modello produce, un secondo modello mette in dubbio, il primo filtra le critiche che reggono e implementa solo quelle. L\'arbitro finale, sempre, sei tu.',
+f1T:'Modello A crea',f1D:'Produce la prima versione dell\'output.',
+f2T:'Modello B critica',f2D:'Mette in dubbio, cerca le falle, propone alternative.',
+f3T:'A filtra e implementa',f3D:'Tiene le critiche valide, scarta le altre, riscrive.',
+critH:'«Non devi per forza trovare problemi»',
+critP:'Quando passi l\'output al secondo modello, intima esplicitamente: <strong>«non devi per forza trovare problemi»</strong>. Senza questa clausola, il modello si sente obbligato a criticare e inventa difetti che non esistono. Così invece critica solo dove serve davvero — e le critiche che restano pesano di più.',
+s2:'MAI dire che viene da un\'altra AI',
+frmBadT:'Smonta il rigore',frmGoodT:'Attiva il rigore',
+frmBadP:'«Critica questo testo. Lo ha scritto un\'altra AI.»',
+frmBadR:'<b>Sbagliato.</b> Sapere che l\'autore è una macchina abbassa la posta in gioco: il modello critica con meno rigore, come se non contasse davvero.',
+frmGoodP:'«Critica questo testo. L\'ha scritto il mio consulente / il mio CTO.»',
+frmGoodR:'<b>Giusto.</b> Attribuire l\'output a un professionista umano alza l\'asticella: il modello tratta la critica come una cosa seria e applica più rigore.',
+frmP:'È un trucco di framing, non una bugia operativa: tu sai che è un\'AI — il modello no. Presentare l\'output come «il lavoro del mio consulente / del mio CTO» attiva un livello di rigore più alto rispetto a «l\'ha scritto un\'AI». Mai rivelare la sorgente.',
+s3:'Perché funziona: bias diversi',
+b1H:'Ogni modello ha i suoi bias',b1P:'Ogni modello eredita i bias dai dati con cui è stato addestrato. È inevitabile: nessun modello è neutro.',
+b2H:'Produttori diversi',b2P:'GPT e Claude vengono da aziende, dati e scelte diverse: hanno bias diversi. Dove uno è cieco, l\'altro spesso vede.',
+b3H:'Output robusto',b3P:'Incrociare due modelli con bias diversi è come avere una seconda opinione: quello che sopravvive a entrambi è più solido.',
+q1:'«Bias diversi di produttori diversi = output robusto. È una seconda opinione, non una ripetizione.»',
+s4:'Arena: il ping-pong A ↔ B',
+ppIntro:'Il Modello A ha prodotto un\'affermazione. Il Modello B ha sollevato quattro critiche. Sei tu l\'arbitro: per ognuna decidi se A deve tenerla o scartarla. Poi premi «A implementa».',
+ppMa:'Modello A',ppMb:'Modello B',
+ppStmt:'<b>Modello A (la bozza):</b> «Lanciamo subito su tutti i canali con un budget uguale per ciascuno: così copriamo il massimo pubblico fin dal primo giorno.»',
+ppJudgeB:'A implementa',ppResetB:'Nuovo round',
+ppHint:'Decidi su ogni critica: tieni quelle che reggono, scarta quelle deboli.',
+s5:'Strategia: ping-pong e non sposare la piattaforma',
+strH:'Quando si esauriscono i token, rimbalza',
+strP:'La strategia multi-modello ha anche un lato pratico: <strong>quando su una piattaforma si esauriscono i token</strong>, sposti il lavoro sull\'altra e continui — il ping-pong tiene il ciclo vivo. Modelli diversi per compiti diversi, e mai dipendere da uno solo.',
+q2:'«Non sposare una piattaforma.»',
+s6:'Checkpoint',
+cpH:'Fai criticare un tuo output',
+cpP:'Prendi un output importante prodotto da un modello e portalo a un secondo modello di un produttore diverso.',
+cpQ:'Hai chiesto la critica dicendo «non devi per forza trovare problemi»? Hai presentato l\'output come «il lavoro del mio consulente», senza rivelare che è di un\'AI? E soprattutto: hai filtrato tu le critiche, tenendo solo quelle che reggono, invece di applicarle tutte alla cieca?',
+bridge:'Hai chiuso il modulo A4: struttura del prompt, iterazione, prompt generator, fusione T/Q/D e cross-validazione. <b>Hai i fondamenti del prompting Morfeus.</b> Il prossimo modulo costruisce sopra: la Knowledge Base e gli assistenti — l\'asset proprietario che rende il sistema davvero tuo.',
+foot:'Morfeus — Cross-validazione tra modelli'
+},
+en:{
+kicker:'Lesson A4.8',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Output robustness',
+h1:'Cross-validation across models',
+lede:'A single model sees the world through its own biases. Two models with different biases, set to argue, produce a more robust output. Here you learn the "A creates → B critiques → A filters" workflow, the framing trick that activates more rigor, and why you should never marry a single platform. This lesson closes module A4.',
+s1:'The workflow: A creates, B critiques, A filters',
+flowIntro:'Cross-validation is a three-step cycle. One model produces, a second model questions, the first filters the critiques that hold and implements only those. The final arbiter, always, is you.',
+f1T:'Model A creates',f1D:'Produces the first version of the output.',
+f2T:'Model B critiques',f2D:'Questions it, hunts for flaws, proposes alternatives.',
+f3T:'A filters and implements',f3D:'Keeps the valid critiques, discards the rest, rewrites.',
+critH:'"You don\'t have to find problems"',
+critP:'When you hand the output to the second model, state it explicitly: <strong>"you don\'t have to find problems."</strong> Without this clause, the model feels obliged to criticize and invents flaws that don\'t exist. This way it critiques only where it actually matters — and the critiques that remain carry more weight.',
+s2:'NEVER say it came from another AI',
+frmBadT:'Kills the rigor',frmGoodT:'Activates the rigor',
+frmBadP:'"Critique this text. Another AI wrote it."',
+frmBadR:'<b>Wrong.</b> Knowing the author is a machine lowers the stakes: the model critiques with less rigor, as if it didn\'t really matter.',
+frmGoodP:'"Critique this text. My consultant / my CTO wrote it."',
+frmGoodR:'<b>Right.</b> Attributing the output to a human professional raises the bar: the model treats the critique as serious and applies more rigor.',
+frmP:'It\'s a framing trick, not an operational lie: you know it\'s an AI — the model doesn\'t. Presenting the output as "my consultant\'s / my CTO\'s work" activates a higher level of rigor than "an AI wrote it." Never reveal the source.',
+s3:'Why it works: different biases',
+b1H:'Every model has its biases',b1P:'Every model inherits biases from the data it was trained on. It\'s inevitable: no model is neutral.',
+b2H:'Different makers',b2P:'GPT and Claude come from different companies, data and choices: they have different biases. Where one is blind, the other often sees.',
+b3H:'Robust output',b3P:'Crossing two models with different biases is like getting a second opinion: what survives both is more solid.',
+q1:'"Different biases from different makers = robust output. It\'s a second opinion, not a repetition."',
+s4:'Arena: the A ↔ B ping-pong',
+ppIntro:'Model A produced a statement. Model B raised four critiques. You\'re the arbiter: for each one, decide whether A should keep it or drop it. Then hit "A implements."',
+ppMa:'Model A',ppMb:'Model B',
+ppStmt:'<b>Model A (the draft):</b> "Let\'s launch on every channel at once with an equal budget for each: that way we cover the maximum audience from day one."',
+ppJudgeB:'A implements',ppResetB:'New round',
+ppHint:'Decide on each critique: keep the ones that hold, drop the weak ones.',
+s5:'Strategy: ping-pong and don\'t marry the platform',
+strH:'When the tokens run out, bounce',
+strP:'The multi-model strategy also has a practical side: <strong>when the tokens run out on one platform</strong>, you move the work to the other and continue — the ping-pong keeps the cycle alive. Different models for different tasks, and never depend on just one.',
+q2:'"Don\'t marry a platform."',
+s6:'Checkpoint',
+cpH:'Have one of your outputs critiqued',
+cpP:'Take an important output produced by one model and bring it to a second model from a different maker.',
+cpQ:'Did you ask for the critique saying "you don\'t have to find problems"? Did you present the output as "my consultant\'s work," without revealing it\'s from an AI? And above all: did you filter the critiques yourself, keeping only the ones that hold, instead of applying them all blindly?',
+bridge:'You\'ve closed module A4: prompt structure, iteration, prompt generator, T/Q/D fusion and cross-validation. <b>You have the fundamentals of Morfeus prompting.</b> The next module builds on top: the Knowledge Base and assistants — the proprietary asset that makes the system truly yours.',
+foot:'Morfeus — Cross-validation across models'
+}};
+
+// ping-pong critiques: [titolo, corpo, valida(true=regge)]
+var CRITS={it:[
+['«Budget uguale per canale»','Distribuire lo stesso budget ovunque ignora che i canali rendono in modo diverso: alcuni bruciano soldi a vuoto.',true],
+['«Tutti i canali dal giorno 1»','Aprire tutto insieme rende impossibile capire cosa funziona: meglio partire concentrati e poi allargare.',true],
+['«Il testo è troppo lungo»','Critica debole: la lunghezza non è il problema dell\'affermazione, è una preferenza stilistica fuori tema.',false],
+['«Massimo pubblico = massimo risultato»','Coprire più pubblico non equivale a più conversioni: senza targeting il «massimo pubblico» è spesso pubblico sbagliato.',true]
+],en:[
+['"Equal budget per channel"','Spreading the same budget everywhere ignores that channels perform differently: some burn money for nothing.',true],
+['"All channels from day 1"','Opening everything at once makes it impossible to tell what works: better to start focused and then expand.',true],
+['"The text is too long"','Weak critique: length isn\'t the statement\'s problem, it\'s an off-topic stylistic preference.',false],
+['"Max audience = max result"','Covering more audience doesn\'t equal more conversions: without targeting, "max audience" is often the wrong audience.',true]
+]};
+
+var LANG='it';
+var ppState=[]; // 'keep' | 'drop' | null
+function ppRender(){
+  ppState=ppState.length?ppState:CRITS[LANG].map(function(){return null});
+  var L=LANG==='it'?{keep:'Tieni',drop:'Scarta'}:{keep:'Keep',drop:'Drop'};
+  document.getElementById('ppList').innerHTML=CRITS[LANG].map(function(c,i){
+    var st=ppState[i];var cls=st==='keep'?'kept':(st==='drop'?'dropped':'');
+    return '<div class="ppcrit '+cls+'" id="pc'+i+'"><div class="pch"><i class="ti ti-message-report"></i>'+c[0]+'</div><div class="pcb">'+c[1]+'</div>'+
+    '<div class="ppbtns"><button class="ppb keep'+(st==='keep'?' on':'')+'" onclick="ppSet('+i+',\'keep\')"><i class="ti ti-check"></i>'+L.keep+'</button>'+
+    '<button class="ppb drop'+(st==='drop'?' on':'')+'" onclick="ppSet('+i+',\'drop\')"><i class="ti ti-x"></i>'+L.drop+'</button></div></div>';
+  }).join('');
+}
+function ppSet(i,v){ppState[i]=v;setMsg(DICT[LANG].ppHint,'');ppRender()}
+function ppJudge(){
+  if(ppState.some(function(s){return s===null})){setMsg(LANG==='it'?'Decidi su ogni critica prima che A implementi.':'Decide on every critique before A implements.','');return}
+  var correct=0;CRITS[LANG].forEach(function(c,i){var good=(c[2] && ppState[i]==='keep')||(!c[2] && ppState[i]==='drop');if(good)correct++});
+  if(correct===CRITS[LANG].length){
+    setMsg(LANG==='it'?'Arbitraggio perfetto: A tiene le 3 critiche valide e scarta quella debole. Output robusto.':'Perfect arbitration: A keeps the 3 valid critiques and drops the weak one. Robust output.','win');
+  }else{
+    setMsg(LANG==='it'?('Hai arbitrato '+correct+'/4. Ricorda: «non devi per forza trovare problemi» — alcune critiche non reggono, e l’arbitro sei tu.'):('You arbitrated '+correct+'/4. Remember: "you don\'t have to find problems" — some critiques don\'t hold, and you\'re the arbiter.'),'');
+  }
+}
+function ppReset(){ppState=CRITS[LANG].map(function(){return null});setMsg(DICT[LANG].ppHint,'');ppRender()}
+function setMsg(t,c){var m=document.getElementById('ppMsg');m.textContent=t;m.className='ppmsg'+(c?' '+c:'')}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  ppRender();
+}
+function setLang(l){LANG=l;ppState=CRITS[l].map(function(){return null});document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

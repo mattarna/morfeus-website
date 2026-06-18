@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il flusso quotidiano — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--blue:#378ADD;--blue-soft:#e6f1fb;--amber:#BA7517;--amber-soft:#faeeda;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--blue:#85b7eb;--blue-soft:#0c447c;--amber:#fac775;--amber-soft:#412402;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.legend-item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);padding:5px 12px;border-radius:30px;box-shadow:var(--sh)}
+.legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.legend-dot.you{background:var(--good)}
+.legend-dot.claude{background:var(--agent)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-sm{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+/* 3-step flow */
+.flow{display:flex;gap:0;margin:8px 0 0;position:relative}
+.flow-step{flex:1;text-align:center;cursor:pointer;position:relative;padding:22px 14px 18px;border-radius:var(--r-l);transition:.25s;background:var(--card);border:2px solid var(--line);box-shadow:var(--sh)}
+.flow-step.on{border-color:var(--good);background:var(--good-soft)}
+.flow-step:hover:not(.on){border-color:var(--line-2)}
+.flow-step:nth-child(1) .flow-num{background:var(--good-soft);color:var(--good)}
+.flow-step:nth-child(3) .flow-num{background:var(--agent-soft);color:var(--agent)}
+.flow-step:nth-child(5) .flow-num{background:var(--good-soft);color:var(--good)}
+.flow-step.on:nth-child(1) .flow-num{background:var(--good);color:#fff}
+.flow-step.on:nth-child(3) .flow-num{background:var(--agent);color:#fff}
+.flow-step.on:nth-child(5) .flow-num{background:var(--good);color:#fff}
+.flow-step.on:nth-child(3){border-color:var(--agent);background:var(--agent-soft)}
+.flow-num{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;margin:0 auto 11px;transition:.3s}
+.flow-step h3{font-size:15px;font-weight:600;margin-bottom:3px}
+.flow-step p{font-size:12.5px;color:var(--ink-3)}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:34px;flex-shrink:0;color:var(--ink-3);font-size:18px}
+.flow-detail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:14px;min-height:150px}
+.flow-detail h4{font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.flow-detail h4 i{font-size:19px}
+.flow-detail ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0}
+.flow-detail li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-2)}
+.flow-detail li i{color:var(--accent);font-size:15px;margin-top:3px;flex-shrink:0}
+.flow-detail .ex{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);margin-top:12px;line-height:1.6;white-space:pre-wrap}
+.cmptag{display:inline-block;padding:2px 9px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.cmptag.bad{background:var(--bad);color:#fff}
+.cmptag.good{background:var(--good);color:#fff}
+.cmptag.adv{background:var(--agent);color:#fff}
+.cmptag.gold{background:var(--good);color:#fff}
+/* reframe */
+.reframe{background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r-l);padding:22px;margin:0;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--sh)}
+.reframe-icon{width:44px;height:44px;border-radius:12px;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.reframe h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--good)}
+.reframe p{font-size:14.5px;color:var(--ink-2);line-height:1.7}.reframe p strong{color:var(--ink);font-weight:600}
+/* multi-agent */
+.ma-intro{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin:0 0 8px}
+.ma-intro b.you{color:var(--good);font-weight:700}
+.ma-intro b.claude{color:var(--agent);font-weight:700}
+.ma-stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px 20px 22px;margin:16px 0 0;overflow:hidden}
+.node{border-radius:13px;padding:12px 14px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;transition:.45s cubic-bezier(.2,.7,.3,1);position:relative;z-index:2}
+.node .node-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.node .node-title{font-size:13px;font-weight:600;line-height:1.25}
+.node .node-sub{font-size:11px;color:var(--ink-3);line-height:1.3}
+.node-you{background:var(--good-soft);border:2px solid var(--good);color:var(--good);max-width:300px;margin:0 auto}
+.node-you .node-ic{background:var(--good);color:#fff}.node-you .node-title{color:var(--good)}
+.node-claude{background:var(--agent-soft);border:2px solid var(--agent);color:var(--agent);max-width:230px;margin:0 auto}
+.node-claude .node-ic{background:var(--agent);color:#fff}.node-claude .node-title{color:var(--agent)}
+.node-claude.thinking .node-ic{animation:claudePulse 1s ease-in-out infinite}
+@keyframes claudePulse{0%,100%{box-shadow:0 0 0 0 rgba(232,104,42,.45)}50%{box-shadow:0 0 0 9px rgba(232,104,42,0)}}
+.ma-rail{display:flex;flex-direction:column;align-items:center;gap:14px}
+.ma-connector{width:2px;height:18px;background:var(--line-2);position:relative}
+.ma-connector.flow-down::after{content:'';position:absolute;inset:0;background:var(--good);transform-origin:top;animation:fillDown .5s ease forwards}
+@keyframes fillDown{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.ma-agents{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:6px}
+.subagent{background:var(--bg-2);border:1.5px solid var(--line);border-radius:12px;padding:12px 8px 10px;text-align:center;opacity:0;transform:translateY(-14px) scale(.85);transition:opacity .4s ease,transform .4s ease,border-color .3s ease;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:118px;justify-content:flex-start}
+.subagent.spawned{opacity:1;transform:translateY(0) scale(1);border-color:var(--agent-line)}
+.subagent.working{border-color:var(--agent);animation:saPulse 1.1s ease-in-out infinite}
+@keyframes saPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,104,42,.35)}50%{box-shadow:0 0 0 6px rgba(232,104,42,0)}}
+.subagent.done{border-color:var(--good)}
+.sa-ic{width:30px;height:30px;border-radius:9px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.subagent.done .sa-ic{background:var(--good-soft);color:var(--good)}
+.sa-name{font-size:10.5px;font-weight:700;color:var(--agent);line-height:1.2}
+.subagent.done .sa-name{color:var(--good)}
+.sa-task{font-size:10px;color:var(--ink-2);line-height:1.3}
+.sa-status{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-3);margin-top:auto}
+.subagent.working .sa-status{color:var(--agent)}.subagent.done .sa-status{color:var(--good)}
+.ma-result{margin-top:6px;background:var(--good-soft);border:1.5px solid var(--good);border-radius:12px;padding:13px 16px;font-size:13px;color:var(--ink);line-height:1.6;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+.ma-result.show{opacity:1;transform:translateY(0)}
+.ma-result i{color:var(--good);font-size:20px;flex-shrink:0}
+.ma-status-line{text-align:center;font-size:12.5px;color:var(--ink-3);min-height:18px;margin-top:14px;font-weight:500;letter-spacing:.2px}
+.ma-controls{display:flex;justify-content:center;margin-top:18px}
+.ma-btn{display:inline-flex;align-items:center;gap:8px;background:var(--agent);color:#fff;border:none;padding:11px 22px;border-radius:30px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:.2s;box-shadow:0 2px 10px rgba(232,104,42,.25)}
+.ma-btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.ma-btn:active{transform:translateY(0)}
+/* tip box */
+.tip{display:flex;gap:14px;border-radius:var(--r-l);padding:18px;margin:18px 0 0}
+.tip.agent{background:var(--agent-soft);border:1px solid var(--agent-line)}
+.tip.agent i{color:var(--agent);font-size:21px;flex-shrink:0}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.tip.agent h4{color:var(--agent)}
+.tip p{font-size:13.5px;color:var(--ink-2);line-height:1.7}.tip p strong{color:var(--ink);font-weight:600}
+/* XP / levels */
+.xp-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:4px;font-weight:600;letter-spacing:.3px;font-family:var(--mono)}
+.xp-bar-wrap{background:var(--bg-3);border:1px solid var(--line);border-radius:30px;height:16px;margin:0 0 18px;overflow:hidden;position:relative}
+.xp-bar-fill{height:100%;width:25%;background:linear-gradient(90deg,var(--accent-line),var(--accent));border-radius:30px;transition:width .7s cubic-bezier(.3,.8,.3,1)}
+.lv-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 8px}
+.lv-tab{cursor:pointer;border:2px solid var(--line);background:var(--card);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 12px;text-align:center;transition:.25s}
+.lv-tab:hover{border-color:var(--line-2)}
+.lv-tab.on{border-color:var(--accent);background:var(--accent-soft)}
+.lv-badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:var(--bg-2);color:var(--ink-2);font-size:18px;margin-bottom:8px;transition:.25s}
+.lv-tab.on .lv-badge{background:var(--accent);color:#fff}
+.lv-tab .lv-lvl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);font-family:var(--mono)}
+.lv-tab.on .lv-lvl{color:var(--accent)}
+.lv-tab .lv-name{font-size:14px;font-weight:600;margin-top:2px}
+.lv-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:8px}
+.lv-panel h4{font-size:17px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.lv-panel h4 i{color:var(--accent)}
+.lv-panel .lv-tag{font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
+.lv-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.lv-metric{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 10px;text-align:center}
+.lv-metric .lv-mval{font-size:22px;font-weight:700;color:var(--accent);line-height:1.1}
+.lv-metric .lv-mlab{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.4px;margin-top:4px}
+.lv-skills-title,.lv-ex-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);margin:0 0 8px;font-family:var(--mono)}
+.lv-skills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.lv-skill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);animation:skillPop .35s ease backwards}
+@keyframes skillPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.lv-skill i{font-size:14px}
+.lv-example{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r);padding:16px 18px;display:flex;gap:12px;align-items:flex-start}
+.lv-example .lv-ex-ic{width:34px;height:34px;border-radius:9px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.lv-example .lv-ex-body strong{display:block;font-size:13px;font-weight:600;color:var(--agent);margin-bottom:3px}
+.lv-example .lv-ex-body span{font-size:13px;color:var(--ink-2);line-height:1.6}
+.lv-teams{display:none;gap:8px;margin-top:14px;flex-wrap:wrap;justify-content:center}
+.lv-teams.show{display:flex}
+.mini-team{display:flex;flex-direction:column;align-items:center;gap:5px;background:var(--bg-2);border:1px solid var(--agent-line);border-radius:10px;padding:10px 8px;min-width:78px;animation:skillPop .4s ease backwards}
+.mini-team .mt-head{font-size:10px;font-weight:700;color:var(--agent)}
+.mini-team .mt-dots{display:flex;gap:3px}
+.mini-team .mt-dots span{width:7px;height:7px;border-radius:50%;background:var(--agent);opacity:.8}
+/* when grid */
+.when-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.when-card{border-radius:var(--r-l);padding:22px;border:1px solid var(--line);box-shadow:var(--sh)}
+.when-card.cowork{background:var(--good-soft);border-color:var(--good)}
+.when-card.web{background:var(--blue-soft);border-color:var(--blue)}
+.when-card h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.when-card.cowork h4{color:var(--good)}.when-card.web h4{color:var(--blue)}
+.when-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin:0}
+.when-card li{font-size:13px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px}
+.when-card li i{font-size:14px;margin-top:2px;flex-shrink:0}
+.when-card.cowork li i{color:var(--good)}.when-card.web li i{color:var(--blue)}
+/* habit */
+.habit{background:var(--amber-soft);border:1px solid var(--amber);border-radius:var(--r-l);padding:24px;margin:0;display:flex;gap:18px;align-items:flex-start;box-shadow:var(--sh)}
+.habit-icon{width:46px;height:46px;border-radius:12px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.habit h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.habit p{font-size:14px;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key p em{font-style:italic;color:var(--agent)}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.when-grid{grid-template-columns:1fr}.ma-agents{grid-template-columns:repeat(2,1fr)}.lv-metrics{grid-template-columns:repeat(3,1fr)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.ma-btn,.ma-controls{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.flow-step,.flow-detail,.reframe,.ma-stage,.tip,.lv-tab,.lv-panel,.when-card,.habit,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">Il flusso quotidiano</h1>
+  <p class="lede rv" data-i="lede"></p>
+  <div class="legend rv">
+    <span class="legend-item"><span class="legend-dot you"></span> <span data-i="legYou"></span></span>
+    <span class="legend-item"><span class="legend-dot claude"></span> <span data-i="legClaude"></span></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">01</span><h2 data-i="s1">I tre momenti</h2></div>
+  <div class="flow rv">
+    <div class="flow-step on" onclick="showFlow(0)">
+      <div class="flow-num"><i class="ti ti-send"></i></div>
+      <h3 data-i="f1T">Assegna</h3>
+      <p data-i="f1S">Descrivi il task</p>
+    </div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="flow-step" onclick="showFlow(1)">
+      <div class="flow-num"><i class="ti ti-loader"></i></div>
+      <h3 data-i="f2T">Aspetta</h3>
+      <p data-i="f2S">Claude lavora</p>
+    </div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="flow-step" onclick="showFlow(2)">
+      <div class="flow-num"><i class="ti ti-checks"></i></div>
+      <h3 data-i="f3T">Verifica</h3>
+      <p data-i="f3S">Controllate il risultato</p>
+    </div>
+  </div>
+  <div class="flow-detail rv" id="flowDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-seedling"></i><span class="no">02</span><h2 data-i="s2">Si parte da una task alla volta</h2></div>
+  <div class="reframe rv">
+    <div class="reframe-icon"><i class="ti ti-seedling"></i></div>
+    <div>
+      <h4 data-i="reframeH">Si parte da una task alla volta — ed è giusto così</h4>
+      <p data-i-html="reframeP"></p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-affiliate"></i><span class="no">03</span><h2 data-i="s3">Claude è un sistema multi-agentico</h2></div>
+  <p class="ma-intro rv" data-i-html="maIntro"></p>
+  <div class="ma-stage rv" id="maStage">
+    <div class="node node-you" id="nodeYou">
+      <div class="node-ic"><i class="ti ti-user"></i></div>
+      <div class="node-title" data-i="youTitle">Tu — assegni il task</div>
+      <div class="node-sub" id="youSub"></div>
+    </div>
+    <div class="ma-rail">
+      <div class="ma-connector" id="conn1"></div>
+      <div class="node node-claude" id="nodeClaude">
+        <div class="node-ic"><i class="ti ti-sparkles"></i></div>
+        <div class="node-title">Claude</div>
+        <div class="node-sub" id="claudeSub"></div>
+      </div>
+    </div>
+    <div class="ma-agents" id="maAgents">
+      <div class="subagent" data-i="0"><div class="sa-ic"><i class="ti ti-file-text"></i></div><div class="sa-name" data-sa="n0"></div><div class="sa-task" data-sa="t0"></div><div class="sa-status" data-sa="queue"></div></div>
+      <div class="subagent" data-i="1"><div class="sa-ic"><i class="ti ti-file-text"></i></div><div class="sa-name" data-sa="n1"></div><div class="sa-task" data-sa="t1"></div><div class="sa-status" data-sa="queue"></div></div>
+      <div class="subagent" data-i="2"><div class="sa-ic"><i class="ti ti-table"></i></div><div class="sa-name" data-sa="n2"></div><div class="sa-task" data-sa="t2"></div><div class="sa-status" data-sa="queue"></div></div>
+      <div class="subagent" data-i="3"><div class="sa-ic"><i class="ti ti-shield-check"></i></div><div class="sa-name" data-sa="n3"></div><div class="sa-task" data-sa="t3"></div><div class="sa-status" data-sa="queue"></div></div>
+      <div class="subagent" data-i="4"><div class="sa-ic"><i class="ti ti-writing"></i></div><div class="sa-name" data-sa="n4"></div><div class="sa-task" data-sa="t4"></div><div class="sa-status" data-sa="queue"></div></div>
+    </div>
+    <div class="ma-result" id="maResult"><i class="ti ti-circle-check-filled"></i><span data-i="maResult"></span></div>
+    <div class="ma-status-line" id="maStatus"></div>
+    <div class="ma-controls"><button class="ma-btn" id="maBtn" onclick="runMultiAgent()"><i class="ti ti-player-play"></i> <span id="maBtnLabel"></span></button></div>
+  </div>
+  <div class="tip agent rv"><i class="ti ti-bulb"></i><div><h4 data-i="tipMaH">Perché funziona su documenti lunghi</h4><p data-i-html="tipMaP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-trending-up"></i><span class="no">04</span><h2 data-i="s4">L'evoluzione del professionista</h2></div>
+  <p class="ma-intro rv" data-i-html="lvIntro"></p>
+  <div class="rv">
+    <div class="xp-label"><span id="xpName"></span><span id="xpPct"></span></div>
+    <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xpFill"></div></div>
+  </div>
+  <div class="lv-tabs rv">
+    <div class="lv-tab on" id="tab0" onclick="showLevel(0)"><div class="lv-badge"><i class="ti ti-seedling"></i></div><div class="lv-lvl" data-i="lv1Lvl">Lv 1</div><div class="lv-name" data-i="lv1Name">Novizio</div></div>
+    <div class="lv-tab" id="tab1" onclick="showLevel(1)"><div class="lv-badge"><i class="ti ti-stack-2"></i></div><div class="lv-lvl" data-i="lv2Lvl">Lv 2</div><div class="lv-name" data-i="lv2Name">Operativo</div></div>
+    <div class="lv-tab" id="tab2" onclick="showLevel(2)"><div class="lv-badge"><i class="ti ti-crown"></i></div><div class="lv-lvl" data-i="lv3Lvl">Lv 3</div><div class="lv-name" data-i="lv3Name">Manager AI</div></div>
+  </div>
+  <div class="lv-panel rv" id="lvPanel"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">05</span><h2 data-i="s5">Quando usare cosa</h2></div>
+  <div class="when-grid rv">
+    <div class="when-card cowork">
+      <h4><i class="ti ti-rocket"></i> CoWork</h4>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="cw1"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="cw2"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="cw3"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="cw4"></span></li>
+      </ul>
+    </div>
+    <div class="when-card web">
+      <h4><i class="ti ti-message-circle"></i> Claude Web</h4>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="wb1"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="wb2"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="wb3"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="wb4"></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-sunrise"></i><span class="no">06</span><h2 data-i="s6">L'abitudine da costruire</h2></div>
+  <div class="habit rv">
+    <div class="habit-icon"><i class="ti ti-sunrise"></i></div>
+    <div>
+      <h4 data-i="habitH">L'abitudine da costruire</h4>
+      <p data-i="habitP"></p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">07</span><h2 data-i="s7">Task tipici da affidare</h2></div>
+  <div class="when-card cowork rv">
+    <h4><i class="ti ti-list-check"></i> <span data-i="taskH">Esempi dalla giornata tipo</span></h4>
+    <ul>
+      <li><i class="ti ti-check"></i><span data-i="task1"></span></li>
+      <li><i class="ti ti-check"></i><span data-i="task2"></span></li>
+      <li><i class="ti ti-check"></i><span data-i="task3"></span></li>
+      <li><i class="ti ti-check"></i><span data-i="task4"></span></li>
+    </ul>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">08</span><h2 data-i="s8">La frase da ricordare</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i-html="keyphrase"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il flusso quotidiano</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'Il flusso quotidiano',
+lede:'Tre momenti. Un ritmo. Poi la scoperta: quando aspetti, Claude non lavora da solo — costruisce il suo team. E tu cresci come professionista.',
+legYou:'Teal = tu / il sistema / chi delega',
+legClaude:'Arancione = Claude e i suoi agenti',
+s1:'I tre momenti',
+f1T:'Assegna',f1S:'Descrivi il task',
+f2T:'Aspetta',f2S:'Claude lavora',
+f3T:'Verifica',f3S:'Controllate il risultato',
+s2:'Si parte da una task alla volta',
+reframeH:'Si parte da una task alla volta — ed è giusto così',
+reframeP:'Il protocollo <strong>assegna &rarr; aspetta &rarr; verifica</strong> è il punto di partenza, non il punto d\'arrivo. All\'inizio lavori su <strong>una task per volta, ed è normale</strong>: è la fase di calibrazione. Come con un nuovo collega appena inserito — gli affidi un compito circoscritto, ne osservi il ritmo, capisci dove serve guidarlo. Da qui si cresce. Le prossime due sezioni mostrano dove arriva chi cresce.',
+s3:'Claude è un sistema multi-agentico',
+maIntro:'<b class="you">Tu</b> assegni un task e aspetti. Ma in quell\'attesa Claude non lavora da solo: <b class="claude">si lancia i suoi sub-agent e costruisce il suo team</b>. Ognuno prende un pezzo, lavorano in parallelo, riportano a Claude, lui consolida e ti restituisce un solo risultato.',
+youTitle:'Tu — assegni il task',
+youSub:'"Elabora il report da 80 pagine"',
+youSubDone:'riceve il risultato consolidato ✓',
+claudeWait:'in attesa del via',
+claudeAnalyze:'analizza e divide il lavoro…',
+claudeCoord:'coordina i sub-agent',
+claudeConsolidate:'consolida e restituisce',
+maResult:'Risultato consolidato restituito a te: dati chiave estratti, ogni informazione con la fonte, più una sintesi di 1 pagina.',
+maStatusInit:'Premi "Avvia" per vedere Claude costruire il suo team.',
+maStatusReceive:'Claude riceve il task e prepara il suo team…',
+maStatusSpawn:'Claude lancia i sub-agent…',
+maStatusWork:'I sub-agent lavorano in parallelo su blocchi diversi…',
+maStatusConsolidate:'Claude unisce i pezzi in un solo risultato…',
+maStatusDone:'Fatto: un solo risultato verificato, pronto per te.',
+maBtnStart:'Avvia Claude al lavoro',
+maBtnRestart:'Rilancia',
+saStatusQueue:'in coda',saStatusWork:'al lavoro',saStatusReport:'riporta ↑',
+sa_n0:'Sub-agent 1',sa_t0:'Legge il documento pag. 1–20',
+sa_n1:'Sub-agent 2',sa_t1:'Legge pag. 21–50',
+sa_n2:'Sub-agent 3',sa_t2:'Estrae le tabelle in un foglio di calcolo',
+sa_n3:'Sub-agent 4',sa_t3:'Verifica le fonti',
+sa_n4:'Sub-agent 5',sa_t4:'Sintesi finale',
+tipMaH:'Perché funziona su documenti lunghi',
+tipMaP:'Su un PDF da 80 pagine, invece di un solo assistente che fatica a tenere tutto in testa, Claude lancia <strong>più sub-agent</strong>: ognuno legge un blocco ed estrae i dati con la fonte (la pagina esatta). Poi un secondo passaggio <strong>verifica</strong>. Così si bypassa il limite della finestra di contesto: nessun agente deve leggere tutte le 80 pagine insieme.',
+s4:'L\'evoluzione del professionista',
+lvIntro:'Più usi Claude, più sali di livello — come un personaggio che accumula XP. Non cresce la velocità di battitura: cresce <b class="you">quanto sai delegare e orchestrare</b>.',
+lv1Lvl:'Lv 1',lv1Name:'Novizio',lv2Lvl:'Lv 2',lv2Name:'Operativo',lv3Lvl:'Lv 3',lv3Name:'Manager AI',
+s5:'Quando usare cosa',
+cw1:'Il task produce un file reale',cw2:'Opera su file già nella workspace',cw3:'Task multi-step in autonomia',cw4:'Organizzare, rinominare, archiviare',
+wb1:'Esplorare idee, brainstorming',wb2:'Risposta rapida senza file',wb3:'Ragionamento conversazionale',wb4:'Nessun output permanente',
+s6:'L\'abitudine da costruire',
+habitH:'L\'abitudine da costruire',
+habitP:'Ogni mattina: aprite CoWork, identificate il task più meccanico e ripetitivo che avete in lista, e affidate quello a Claude. Non il task creativo, non quello che richiede giudizio — quello che è tedioso e che non volete fare. Nel tempo, calibrate quali task Claude fa bene e quali richiedono più supervisione.',
+s7:'Task tipici da affidare',
+taskH:'Esempi dalla giornata tipo',
+task1:'"Rinomina e ordina per data i file in 03_OUTPUT."',
+task2:'"Estrai i numeri da questi 5 PDF e mettili in un Excel."',
+task3:'"Trasforma queste note in un verbale .docx pulito."',
+task4:'"Crea una bozza di slide dal documento di strategia in 01_PROGETTI."',
+s8:'La frase da ricordare',
+keyphrase:'Non è la velocità di battitura che cresce. È la tua capacità di <em>delegare</em> e <em>orchestrare</em>.',
+bridge:'Conosci il ritmo del lavoro quotidiano e sai dove può arrivare. <b>Prossimo:</b> i file Office — Word, Excel e PowerPoint reali, già strutturati, pronti da aprire.',
+foot:'Morfeus — Il flusso quotidiano'
+},
+en:{
+kicker:'Lesson 4.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'The daily flow',
+lede:'Three moments. One rhythm. Then the discovery: while you wait, Claude doesn\'t work alone — it builds its own team. And you grow as a professional.',
+legYou:'Teal = you / the system / the one who delegates',
+legClaude:'Orange = Claude and its agents',
+s1:'The three moments',
+f1T:'Assign',f1S:'Describe the task',
+f2T:'Wait',f2S:'Claude works',
+f3T:'Verify',f3S:'Check the result together',
+s2:'You start one task at a time',
+reframeH:'You start one task at a time — and that\'s how it should be',
+reframeP:'The <strong>assign &rarr; wait &rarr; verify</strong> protocol is the starting point, not the destination. At first you work on <strong>one task at a time, and that\'s normal</strong>: it\'s the calibration phase. Like with a new colleague who has just joined — you hand them a contained task, watch their rhythm, learn where they need guidance. From here you grow. The next two sections show where those who grow end up.',
+s3:'Claude is a multi-agent system',
+maIntro:'<b class="you">You</b> assign a task and wait. But during that wait Claude doesn\'t work alone: <b class="claude">it launches its own sub-agents and builds its team</b>. Each one takes a piece, they work in parallel, report back to Claude, it consolidates and returns a single result to you.',
+youTitle:'You — assign the task',
+youSub:'"Process the 80-page report"',
+youSubDone:'receives the consolidated result ✓',
+claudeWait:'waiting for the go',
+claudeAnalyze:'analyzing and dividing the work…',
+claudeCoord:'coordinates the sub-agents',
+claudeConsolidate:'consolidates and returns',
+maResult:'Consolidated result returned to you: key data extracted, every piece of information with its source, plus a 1-page summary.',
+maStatusInit:'Press "Start" to watch Claude build its team.',
+maStatusReceive:'Claude receives the task and prepares its team…',
+maStatusSpawn:'Claude launches the sub-agents…',
+maStatusWork:'The sub-agents work in parallel on different blocks…',
+maStatusConsolidate:'Claude merges the pieces into a single result…',
+maStatusDone:'Done: a single verified result, ready for you.',
+maBtnStart:'Start Claude working',
+maBtnRestart:'Run again',
+saStatusQueue:'queued',saStatusWork:'working',saStatusReport:'reports ↑',
+sa_n0:'Sub-agent 1',sa_t0:'Reads the document pp. 1–20',
+sa_n1:'Sub-agent 2',sa_t1:'Reads pp. 21–50',
+sa_n2:'Sub-agent 3',sa_t2:'Extracts the tables into a spreadsheet',
+sa_n3:'Sub-agent 4',sa_t3:'Verifies the sources',
+sa_n4:'Sub-agent 5',sa_t4:'Final synthesis',
+tipMaH:'Why it works on long documents',
+tipMaP:'On an 80-page PDF, instead of a single assistant struggling to hold everything in mind, Claude launches <strong>multiple sub-agents</strong>: each reads a block and extracts the data with its source (the exact page). Then a second pass <strong>verifies</strong>. This bypasses the context-window limit: no single agent has to read all 80 pages at once.',
+s4:'The professional\'s evolution',
+lvIntro:'The more you use Claude, the more you level up — like a character accumulating XP. It\'s not your typing speed that grows: it\'s <b class="you">how much you can delegate and orchestrate</b>.',
+lv1Lvl:'Lv 1',lv1Name:'Novice',lv2Lvl:'Lv 2',lv2Name:'Operational',lv3Lvl:'Lv 3',lv3Name:'AI Manager',
+s5:'When to use what',
+cw1:'The task produces a real file',cw2:'Operates on files already in the workspace',cw3:'Multi-step tasks autonomously',cw4:'Organizing, renaming, archiving',
+wb1:'Exploring ideas, brainstorming',wb2:'Quick answer without files',wb3:'Conversational reasoning',wb4:'No permanent output',
+s6:'The habit to build',
+habitH:'The habit to build',
+habitP:'Every morning: open CoWork, identify the most mechanical and repetitive task on your list, and hand that to Claude. Not the creative task, not the one requiring judgment — the one that\'s tedious and that you don\'t want to do. Over time, calibrate which tasks Claude does well and which require more supervision.',
+s7:'Typical tasks to delegate',
+taskH:'Examples from a typical day',
+task1:'"Rename and sort by date the files in 03_OUTPUT."',
+task2:'"Extract the numbers from these 5 PDFs and put them in an Excel."',
+task3:'"Turn these notes into a clean .docx minutes."',
+task4:'"Create a slide draft from the strategy document in 01_PROJECTS."',
+s8:'The phrase to remember',
+keyphrase:'It\'s not your typing speed that grows. It\'s your ability to <em>delegate</em> and <em>orchestrate</em>.',
+bridge:'You know the rhythm of daily work and where it can lead. <b>Next:</b> Office files — real Word, Excel and PowerPoint, already structured, ready to open.',
+foot:'Morfeus — The daily flow'
+}};
+
+var FLOW={it:[
+{icon:'ti-send',color:'var(--good)',title:'Momento 1: Assegnare il task',
+ li:['<i class="ti ti-target"></i>Cosa volete ottenere (risultato finale)','<i class="ti ti-folder"></i>Dove trovare i materiali di input','<i class="ti ti-download"></i>Dove mettere l\'output','<i class="ti ti-adjustments"></i>Eventuali vincoli (formato, lunghezza, tono)'],
+ ex:[['bad','Troppo vago','Lavora sui report.'],['good','Task eseguibile','Prendi i tre PDF nella cartella 02_RISORSE/reference, estrai i dati principali e crea un documento riassuntivo in 03_OUTPUT.']]},
+{icon:'ti-loader',color:'var(--agent)',title:'Momento 2: Claude lavora (e costruisce il team)',
+ li:['<i class="ti ti-eye"></i>Guardate in tempo reale (consigliato all\'inizio per capire come lavora)','<i class="ti ti-affiliate"></i>Su task grandi, Claude lancia sub-agent che lavorano in parallelo','<i class="ti ti-hand-stop"></i>Interrompete e correggete se vedete qualcosa che va storto'],
+ ex:[['adv','Consiglio','Le prime volte, guardate Claude lavorare. Capite il suo ritmo, i suoi passaggi intermedi, dove tende a fare errori. Questa calibrazione è normale — è come lavorare con un nuovo collega.']]},
+{icon:'ti-checks',color:'var(--good)',title:'Momento 3: Verificare il risultato',
+ li:['<i class="ti ti-file-check"></i>Aprite il file prodotto e leggetelo','<i class="ti ti-search"></i>Controllate che sia quello che volevate','<i class="ti ti-message"></i>Se no: correggete via conversazione, non ripartite da zero'],
+ ex:[['gold','Regola d\'oro','Sempre verificate. Il Verification Loop vale ancora di più in CoWork — Claude sta producendo file reali sul vostro computer. Un documento sbagliato nella cartella sbagliata è un problema reale.']]}
+],en:[
+{icon:'ti-send',color:'var(--good)',title:'Moment 1: Assigning the task',
+ li:['<i class="ti ti-target"></i>What you want to achieve (the final result)','<i class="ti ti-folder"></i>Where to find the input materials','<i class="ti ti-download"></i>Where to put the output','<i class="ti ti-adjustments"></i>Any constraints (format, length, tone)'],
+ ex:[['bad','Too vague','Work on the reports.'],['good','Executable task','Take the three PDFs in the 02_RESOURCES/reference folder, extract the main data and create a summary document in 03_OUTPUT.']]},
+{icon:'ti-loader',color:'var(--agent)',title:'Moment 2: Claude works (and builds the team)',
+ li:['<i class="ti ti-eye"></i>Watch in real time (recommended at first to understand how it works)','<i class="ti ti-affiliate"></i>On large tasks, Claude launches sub-agents that work in parallel','<i class="ti ti-hand-stop"></i>Interrupt and correct if you see something going wrong'],
+ ex:[['adv','Tip','The first few times, watch Claude work. Understand its rhythm, its intermediate steps, where it tends to make mistakes. This calibration is normal — it\'s like working with a new colleague.']]},
+{icon:'ti-checks',color:'var(--good)',title:'Moment 3: Verifying the result',
+ li:['<i class="ti ti-file-check"></i>Open the produced file and read it','<i class="ti ti-search"></i>Check that it\'s what you wanted','<i class="ti ti-message"></i>If not: correct via conversation, don\'t start from scratch'],
+ ex:[['gold','Golden rule','Always verify. The Verification Loop matters even more in CoWork — Claude is producing real files on your computer. A wrong document in the wrong folder is a real problem.']]}
+]};
+
+var LEVELS={it:[
+{pct:25,name:'Livello 1 · Novizio',title:'Novizio',icon:'ti-seedling',xp:'25 XP',
+ tag:'Una task per volta, sempre dentro il loop assegna → aspetta → verifica.',
+ metrics:[['1','task in parallelo'],['1','chat alla volta'],['1','progetto seguito']],
+ skills:[['ti-send','Assegnare bene'],['ti-checks','Verificare l’output'],['ti-eye','Osservare il ritmo']],
+ exT:'Esempio pratico',exB:'Affidate l’estrazione dati da <strong>un</strong> documento, restate accanto, controllate ogni risultato. State imparando il ritmo dello strumento e costruendo fiducia.',teams:0},
+{pct:60,name:'Livello 2 · Operativo',title:'Operativo',icon:'ti-stack-2',xp:'60 XP',
+ tag:'Più task e più chat in parallelo: avete costruito protocolli e deleghe più grandi.',
+ metrics:[['3+','task in parallelo'],['3+','chat in parallelo'],['1','progetto a fondo']],
+ skills:[['ti-template','Protocolli riusabili'],['ti-database','Knowledge base curata'],['ti-arrows-shuffle','Più chat insieme'],['ti-clipboard-check','Checklist di verifica']],
+ exT:'Esempio pratico',exB:'Su un progetto seguite in parallelo: elaborazione documenti, ricerca di settore, validazione della bozza. Non siete più dentro ogni micro-step: avete delegato processi interi.',teams:0},
+{pct:100,name:'Livello 3 · Manager AI',title:'Manager AI',icon:'ti-crown',xp:'100 XP',
+ tag:'Più PROGETTI in parallelo. È una skill manageriale: orchestrate tanti fronti, ognuno col suo team di agenti.',
+ metrics:[['N','progetti in parallelo'],['∞','agenti orchestrati'],['multi','clienti/fronti']],
+ skills:[['ti-sitemap','Orchestrazione'],['ti-affiliate','Più team in parallelo'],['ti-route','Routing dei task'],['ti-gauge','Governo della qualità'],['ti-crown','Mentalità da manager']],
+ exT:'Esempio pratico',exB:'Gestite in parallelo l’analisi di <strong>più progetti o clienti</strong> contemporaneamente, ciascuno col suo team di sub-agent: chi legge i documenti, chi fa ricerca, chi prepara la sintesi. Voi orchestrate, non eseguite.',teams:4,teamsTitle:'Team attivi in parallelo',teamLabels:['Progetto A','Progetto B','Progetto C','Progetto D']}
+],en:[
+{pct:25,name:'Level 1 · Novice',title:'Novice',icon:'ti-seedling',xp:'25 XP',
+ tag:'One task at a time, always inside the assign → wait → verify loop.',
+ metrics:[['1','tasks in parallel'],['1','chat at a time'],['1','project followed']],
+ skills:[['ti-send','Assign well'],['ti-checks','Verify the output'],['ti-eye','Observe the rhythm']],
+ exT:'Practical example',exB:'Delegate data extraction from <strong>one</strong> document, stay alongside, check every result. You\'re learning the tool\'s rhythm and building trust.',teams:0},
+{pct:60,name:'Level 2 · Operational',title:'Operational',icon:'ti-stack-2',xp:'60 XP',
+ tag:'Multiple tasks and multiple chats in parallel: you\'ve built protocols and larger delegations.',
+ metrics:[['3+','tasks in parallel'],['3+','chats in parallel'],['1','project in depth']],
+ skills:[['ti-template','Reusable protocols'],['ti-database','Curated knowledge base'],['ti-arrows-shuffle','Multiple chats together'],['ti-clipboard-check','Verification checklist']],
+ exT:'Practical example',exB:'On a project you follow in parallel: document processing, sector research, draft validation. You\'re no longer inside every micro-step: you\'ve delegated entire processes.',teams:0},
+{pct:100,name:'Level 3 · AI Manager',title:'AI Manager',icon:'ti-crown',xp:'100 XP',
+ tag:'Multiple PROJECTS in parallel. It\'s a managerial skill: you orchestrate many fronts, each with its own team of agents.',
+ metrics:[['N','projects in parallel'],['∞','agents orchestrated'],['multi','clients/fronts']],
+ skills:[['ti-sitemap','Orchestration'],['ti-affiliate','Multiple teams in parallel'],['ti-route','Task routing'],['ti-gauge','Quality governance'],['ti-crown','Manager mindset']],
+ exT:'Practical example',exB:'You manage in parallel the analysis of <strong>multiple projects or clients</strong> at the same time, each with its own team of sub-agents: one reads the documents, one does research, one prepares the synthesis. You orchestrate, you don\'t execute.',teams:4,teamsTitle:'Teams active in parallel',teamLabels:['Project A','Project B','Project C','Project D']}
+]};
+
+var LANG='it',curFlow=0,curLevel=0;
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // subagent labels
+  for(var i=0;i<5;i++){
+    var n=document.querySelector('[data-sa="n'+i+'"]'),t=document.querySelector('[data-sa="t'+i+'"]');
+    if(n)n.textContent=DICT[LANG]['sa_n'+i];if(t)t.innerHTML=DICT[LANG]['sa_t'+i];
+  }
+  showFlow(curFlow);
+  showLevel(curLevel);
+  resetMultiAgent();
+}
+
+function showFlow(idx){
+  curFlow=idx;
+  document.querySelectorAll('.flow-step').forEach(function(s,k){s.classList.toggle('on',k===idx)});
+  var d=FLOW[LANG][idx];
+  var li=d.li.map(function(x){return '<li>'+x+'</li>'}).join('');
+  var ex=d.ex.map(function(e,i){var cls='cmptag '+e[0];var mt=i>0?' style="margin-top:8px"':'';return '<div class="ex"'+mt+'><span class="'+cls+'">'+e[1]+'</span>\n'+e[2]+'</div>'}).join('');
+  document.getElementById('flowDetail').innerHTML='<h4><i class="ti '+d.icon+'" style="color:'+d.color+'"></i> '+d.title+'</h4><ul>'+li+'</ul>'+ex;
+}
+
+/* MULTI-AGENT */
+var maTimers=[];
+function maClearTimers(){maTimers.forEach(clearTimeout);maTimers=[]}
+function maT(fn,ms){maTimers.push(setTimeout(fn,ms))}
+function resetMultiAgent(){
+  maClearTimers();
+  var subs=document.querySelectorAll('#maAgents .subagent');
+  subs.forEach(function(s){
+    s.classList.remove('spawned','working','done');
+    var ic=s.querySelector('.sa-ic');var orig=ic.getAttribute('data-orig');if(orig)ic.innerHTML=orig;
+    s.querySelector('.sa-status').textContent=DICT[LANG].saStatusQueue;
+  });
+  document.getElementById('conn1').classList.remove('flow-down');
+  document.getElementById('nodeClaude').classList.remove('thinking');
+  document.getElementById('claudeSub').textContent=DICT[LANG].claudeWait;
+  document.getElementById('maResult').classList.remove('show');
+  document.getElementById('youSub').textContent=DICT[LANG].youSub;
+  document.getElementById('maStatus').textContent=DICT[LANG].maStatusInit;
+  var btn=document.getElementById('maBtn'),label=document.getElementById('maBtnLabel');
+  label.textContent=DICT[LANG].maBtnStart;btn.querySelector('i').className='ti ti-player-play';
+  btn.disabled=false;btn.style.opacity='1';
+}
+function runMultiAgent(){
+  var btn=document.getElementById('maBtn'),label=document.getElementById('maBtnLabel');
+  resetMultiAgent();
+  btn.disabled=true;btn.style.opacity='.7';
+  var subs=document.querySelectorAll('#maAgents .subagent');
+  var claudeSub=document.getElementById('claudeSub'),status=document.getElementById('maStatus');
+  subs.forEach(function(s){var ic=s.querySelector('.sa-ic');if(!ic.getAttribute('data-orig'))ic.setAttribute('data-orig',ic.innerHTML)});
+  document.getElementById('conn1').classList.add('flow-down');
+  document.getElementById('nodeClaude').classList.add('thinking');
+  claudeSub.textContent=DICT[LANG].claudeAnalyze;
+  status.textContent=DICT[LANG].maStatusReceive;
+  maT(function(){status.textContent=DICT[LANG].maStatusSpawn},700);
+  subs.forEach(function(s,i){maT(function(){s.classList.add('spawned')},800+i*220)});
+  var workStart=800+subs.length*220+250;
+  maT(function(){
+    claudeSub.textContent=DICT[LANG].claudeCoord;
+    status.textContent=DICT[LANG].maStatusWork;
+    subs.forEach(function(s){s.classList.add('working');s.querySelector('.sa-status').textContent=DICT[LANG].saStatusWork});
+  },workStart);
+  subs.forEach(function(s,i){maT(function(){
+    s.classList.remove('working');s.classList.add('done');
+    s.querySelector('.sa-ic').innerHTML='<i class="ti ti-check"></i>';
+    s.querySelector('.sa-status').textContent=DICT[LANG].saStatusReport;
+  },workStart+900+i*420)});
+  var consolidate=workStart+900+subs.length*420+300;
+  maT(function(){
+    document.getElementById('nodeClaude').classList.remove('thinking');
+    claudeSub.textContent=DICT[LANG].claudeConsolidate;
+    status.textContent=DICT[LANG].maStatusConsolidate;
+  },consolidate);
+  maT(function(){
+    document.getElementById('maResult').classList.add('show');
+    document.getElementById('youSub').textContent=DICT[LANG].youSubDone;
+    status.textContent=DICT[LANG].maStatusDone;
+    label.textContent=DICT[LANG].maBtnRestart;
+    btn.querySelector('i').className='ti ti-refresh';
+    btn.disabled=false;btn.style.opacity='1';
+  },consolidate+700);
+}
+
+/* LEVELS */
+function showLevel(i){
+  curLevel=i;
+  var lv=LEVELS[LANG][i];
+  for(var k=0;k<3;k++){document.getElementById('tab'+k).classList.toggle('on',k===i)}
+  document.getElementById('xpFill').style.width=lv.pct+'%';
+  document.getElementById('xpName').textContent=lv.name;
+  document.getElementById('xpPct').textContent=lv.xp;
+  var metrics=lv.metrics.map(function(m){return '<div class="lv-metric"><div class="lv-mval">'+m[0]+'</div><div class="lv-mlab">'+m[1]+'</div></div>'}).join('');
+  var skills=lv.skills.map(function(s,si){return '<span class="lv-skill" style="animation-delay:'+(si*70)+'ms"><i class="ti '+s[0]+'"></i>'+s[1]+'</span>'}).join('');
+  var teams='';
+  if(lv.teams>0){
+    var t='';
+    for(var n=0;n<lv.teams;n++){t+='<div class="mini-team" style="animation-delay:'+(n*90)+'ms"><div class="mt-head">'+lv.teamLabels[n]+'</div><div class="mt-dots"><span></span><span></span><span></span></div></div>'}
+    teams='<p class="lv-skills-title" style="margin-top:18px">'+lv.teamsTitle+'</p><div class="lv-teams show">'+t+'</div>';
+  }
+  var skillsTitle=LANG==='it'?'Skill sbloccate':'Unlocked skills';
+  var fieldTitle=LANG==='it'?'Sul campo':'In the field';
+  document.getElementById('lvPanel').innerHTML=
+    '<h4><i class="ti '+lv.icon+'"></i> '+lv.title+'</h4>'+
+    '<div class="lv-tag">'+lv.tag+'</div>'+
+    '<div class="lv-metrics">'+metrics+'</div>'+
+    '<p class="lv-skills-title">'+skillsTitle+'</p><div class="lv-skills">'+skills+'</div>'+
+    '<p class="lv-ex-title">'+fieldTitle+'</p>'+
+    '<div class="lv-example"><div class="lv-ex-ic"><i class="ti ti-bolt"></i></div><div class="lv-ex-body"><strong>'+lv.exT+'</strong><span>'+lv.exB+'</span></div></div>'+
+    teams;
+}
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

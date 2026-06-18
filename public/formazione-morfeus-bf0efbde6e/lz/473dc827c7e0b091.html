@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da Assistente ad Agente — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* assistant<->agent toggle */
+.tg-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.tg-switch{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px;gap:4px;max-width:430px;margin:0 auto 18px}
+.tg-switch button{flex:1;background:transparent;border:none;border-radius:30px;padding:10px 8px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--ink-3);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.tg-switch button i{font-size:16px}
+.tg-switch button.on{color:#fff}
+.tg-switch button[data-tg="assistant"].on{background:var(--ink-3)}
+.tg-switch button[data-tg="agent"].on{background:var(--agent)}
+.tg-stage{display:flex;gap:18px;align-items:center;justify-content:center;min-height:140px;text-align:center;flex-direction:column}
+.tg-eye{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;transition:.3s;flex-shrink:0}
+.tg-eye.watch{background:var(--bg-3);color:var(--ink-3)}
+.tg-eye.work{background:var(--agent-soft);color:var(--agent)}
+.tg-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:6px}
+.tg-stage.assistant .tg-label{color:var(--ink-3)}
+.tg-stage.agent .tg-label{color:var(--agent)}
+.tg-headline{font-size:18px;font-weight:600;margin-bottom:8px;max-width:480px}
+.tg-body{font-size:14px;color:var(--ink-2);max-width:480px}
+.tg-body strong{color:var(--ink)}
+
+/* 4 components clickable */
+.comps{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.comp{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 12px;cursor:pointer;transition:.18s;text-align:center}
+.comp:hover{border-color:var(--line-2)}.comp.on{border-color:var(--agent);background:var(--agent-soft)}
+.comp .ci{width:38px;height:38px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto 8px;transition:.18s}
+.comp.on .ci{background:var(--agent);color:#fff}
+.comp .ct{font-size:13px;font-weight:600;line-height:1.25}
+.compdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.compdetail h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--agent)}
+.compdetail p{font-size:14.5px;color:var(--ink-2)}.compdetail p strong{color:var(--ink);font-weight:600}
+.compdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;color:var(--ink-2);margin-top:11px;line-height:1.55}
+
+/* robot metaphor: step comparison */
+.robot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.robotc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.robotc.auto{background:var(--bad-soft);border-color:var(--bad)}
+.robotc.ag{background:var(--good-soft);border-color:var(--good)}
+.robotc .rh{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;margin-bottom:12px}
+.robotc .rh i{font-size:20px}
+.robotc.auto .rh{color:var(--bad)}.robotc.ag .rh{color:var(--good)}
+.rstep{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);padding:7px 0;border-top:1px dashed var(--line-2)}
+.rstep:first-of-type{border-top:none}
+.rstep i{font-size:15px;flex-shrink:0;margin-top:2px}
+.robotc.auto .rstep i{color:var(--bad)}.robotc.ag .rstep i{color:var(--good)}
+.rstep b{color:var(--ink)}
+.rstop{margin-top:12px;padding:9px 12px;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:700;text-align:center}
+.robotc.auto .rstop{background:var(--bad);color:#fff}
+.robotc.ag .rstop{background:var(--good);color:#fff}
+
+/* brain flow */
+.brain{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.brainrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.brainnode{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;min-width:78px}
+.brainnode .bi{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px}
+.brainnode.core .bi{background:var(--accent);color:#fff}
+.brainnode.tool .bi{background:var(--bg-2);color:var(--accent);border:1px solid var(--accent-line)}
+.brainnode .bl{font-size:11.5px;font-weight:600;color:var(--ink-2);font-family:var(--mono)}
+.brainarrow{color:var(--ink-3);font-size:20px}
+.brainnote{font-size:13.5px;color:var(--ink-2);text-align:center;margin-top:4px}
+.brainnote strong{color:var(--ink)}
+.rwtag{display:inline-flex;gap:5px;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);margin:0 3px}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+/* paradox flip */
+.paradox{display:flex;gap:16px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px}
+.paradox .pi{width:48px;height:48px;border-radius:13px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.paradox h4{font-size:15.5px;font-weight:600;color:var(--accent);margin-bottom:5px}
+.paradox p{font-size:14.5px;color:var(--ink-2)}.paradox p strong{color:var(--ink);font-weight:600}
+
+/* real systems gallery */
+.gal{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.galgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.galchip{display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r-l);padding:13px 8px;cursor:pointer;transition:.18s;text-align:center}
+.galchip:hover{border-color:var(--line-2)}
+.galchip.on{background:var(--agent-soft);border-color:var(--agent)}
+.galchip .gci{width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--accent)}
+.galchip.on .gci{background:var(--agent);color:#fff;border-color:var(--agent)}
+.galchip .gcn{font-size:11.5px;font-weight:600;color:var(--ink-2);line-height:1.2}
+.galchip.on .gcn{color:var(--agent)}
+.galstage{border:1px solid var(--line);border-radius:var(--r-l);background:var(--bg-2);padding:18px 20px}
+.galstage .gtop{display:flex;align-items:center;gap:11px;margin-bottom:8px}
+.galstage .gtop .gti{width:42px;height:42px;border-radius:11px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.galstage .gname{font-size:16px;font-weight:600}
+.galstage .gco{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);display:block;margin-top:1px}
+.galstage .gclass{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:20px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);margin-bottom:10px}
+.galstage .gdesc{font-size:14px;color:var(--ink-2);line-height:1.55}
+.galstage .gdesc b{color:var(--ink)}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.comps{grid-template-columns:1fr 1fr}.robot{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.galgrid{grid-template-columns:repeat(2,1fr)}.brainrow{gap:8px}.brainarrow{transform:rotate(90deg)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.tg-switch{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.tg-wrap,.comp,.compdetail,.robotc,.brain,.card3,.paradox,.gal,.galstage,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A7.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Organizzazione intelligente</div>
+  <h1 class="rv" data-i="h1">Da Assistente ad Agente</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-eye-check"></i><span class="no">01</span><h2 data-i="s1">Agent is the goal</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="tgIntro"></p>
+  <div class="tg-wrap rv">
+    <div class="tg-switch">
+      <button data-tg="assistant" class="on" onclick="setTg('assistant')"><i class="ti ti-message-2"></i> <span data-i="tgAssBtn">Assistente</span></button>
+      <button data-tg="agent" onclick="setTg('agent')"><i class="ti ti-robot"></i> <span data-i="tgAgBtn">Agente</span></button>
+    </div>
+    <div class="tg-stage assistant" id="tgStage"></div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-puzzle"></i><span class="no">02</span><h2 data-i="s2">I quattro componenti di un agente</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="compsIntro"></p>
+  <div class="comps rv" id="comps"></div>
+  <div class="compdetail rv" id="compdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-robot-face"></i><span class="no">03</span><h2 data-i="s3">Agente vs automazione: la metafora del robot</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-barrier-block"></i></div><div><h4 data-i="robH">Stesso ostacolo, due reazioni opposte</h4><p data-i-html="robP"></p></div></div>
+  <div class="robot rv" style="margin-top:14px">
+    <div class="robotc auto">
+      <div class="rh"><i class="ti ti-settings"></i> <span data-i="autoH">Automazione</span></div>
+      <div class="rstep"><i class="ti ti-arrow-right"></i><span data-i-html="auto1"></span></div>
+      <div class="rstep"><i class="ti ti-arrow-right"></i><span data-i-html="auto2"></span></div>
+      <div class="rstep"><i class="ti ti-x"></i><span data-i-html="auto3"></span></div>
+      <div class="rstop" data-i="autoStop">SI FERMA · "Errore"</div>
+    </div>
+    <div class="robotc ag">
+      <div class="rh"><i class="ti ti-robot"></i> <span data-i="agH">Agente</span></div>
+      <div class="rstep"><i class="ti ti-arrow-right"></i><span data-i-html="ag1"></span></div>
+      <div class="rstep"><i class="ti ti-arrow-right"></i><span data-i-html="ag2"></span></div>
+      <div class="rstep"><i class="ti ti-arrow-right"></i><span data-i-html="ag3"></span></div>
+      <div class="rstop" data-i="agStop">PROSEGUE · obiettivo raggiunto</div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">04</span><h2 data-i="s4">Il cervello linguistico</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="brainIntro"></p>
+  <div class="brain rv">
+    <div class="brainrow">
+      <div class="brainnode core"><div class="bi"><i class="ti ti-brain"></i></div><span class="bl" data-i="brLLM">LLM</span></div>
+      <span class="brainarrow"><i class="ti ti-arrows-right-left"></i></span>
+      <div class="brainnode tool"><div class="bi"><i class="ti ti-brand-google-drive"></i></div><span class="bl" data-i="brDrive">Drive</span></div>
+      <div class="brainnode tool"><div class="bi"><i class="ti ti-address-book"></i></div><span class="bl" data-i="brCrm">CRM</span></div>
+      <div class="brainnode tool"><div class="bi"><i class="ti ti-mail"></i></div><span class="bl" data-i="brMail">Email</span></div>
+      <div class="brainnode tool"><div class="bi"><i class="ti ti-api"></i></div><span class="bl" data-i="brApi">API</span></div>
+    </div>
+    <p class="brainnote" data-i-html="brainNote"></p>
+    <p class="brainnote" style="margin-top:10px">
+      <span class="rwtag"><i class="ti ti-download"></i> <span data-i="brRead">legge</span></span>
+      <span class="rwtag"><i class="ti ti-upload"></i> <span data-i="brWrite">scrive</span></span>
+    </p>
+  </div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-device-speaker"></i></div><div><h4 data-i="basicH">Gli esempi basici li conosci già</h4><p data-i-html="basicP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-shield-lock"></i><span class="no">05</span><h2 data-i="s5">Il paradosso del controllo</h2></div>
+  <div class="paradox rv"><div class="pi"><i class="ti ti-shield-check"></i></div><div><h4 data-i="parH">Un agente è PIÙ controllato di un assistente, non meno</h4><p data-i-html="parP"></p></div></div>
+  <div class="cards rv" style="margin-top:14px">
+    <div class="card3"><div class="ci"><i class="ti ti-route"></i></div><h4 data-i="pr1H">Prima il processo</h4><p data-i="pr1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-stairs-up"></i></div><h4 data-i="pr2H">Poi l'automazione</h4><p data-i="pr2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-world-bolt"></i><span class="no">06</span><h2 data-i="s6">Non è teoria, è già qui</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="galIntro"></p>
+  <div class="gal rv">
+    <div class="galgrid" id="galGrid"></div>
+    <div class="galstage">
+      <div class="gtop"><div class="gti" id="galIc"><i class="ti ti-robot"></i></div><div><div class="gname" id="galName"></div><span class="gco" id="galCo"></span></div></div>
+      <span class="gclass" id="galClass"></span>
+      <div class="gdesc" id="galDesc"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Da "esegui questo" a "raggiungi questo"</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Da Assistente ad Agente</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A7.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Organizzazione intelligente',
+h1:'Da Assistente ad Agente',
+lede:'Tutto il percorso converge qui. Non è un salto tecnico, è un salto concettuale: si passa da un\'AI che risponde quando le parli a un\'entità che lavora anche quando non la guardi — con obiettivi, strumenti, confini ed escalation.',
+s1:'Agent is the goal',
+tgIntro:'La differenza tra assistente e agente non è la potenza del modello: è <strong>cosa fa quando non lo stai guardando</strong>. Usa lo switch.',
+tgAssBtn:'Assistente',tgAgBtn:'Agente',
+q1:'«Un assistente risponde quando gli parli. Un agente lavora anche quando non lo guardi.»',
+s2:'I quattro componenti di un agente',
+compsIntro:'Quello che trasforma un assistente in un agente non è magia: sono quattro componenti precisi. Tolto anche uno solo, torni ad avere un assistente. Clicca ogni componente.',
+s3:'Agente vs automazione: la metafora del robot',
+robH:'Stesso ostacolo, due reazioni opposte',
+robP:'Un\'<strong>automazione</strong> tradizionale, quando trova un blocco, si ferma e dice "errore". Un <strong>agente</strong>, quando trova un blocco, inizia a cercare soluzioni. È come un <strong>robot che trova un ostacolo per terra</strong>: non si blocca — lo vede, analizza il problema, lo aggira e prosegue.',
+autoH:'Automazione',
+auto1:'Esegue il passo 1, il passo 2, il passo 3…',
+auto2:'Al passo 4 il dato manca o il formato è diverso',
+auto3:'Non sa cosa fare di imprevisto',
+autoStop:'SI FERMA · "Errore"',
+agH:'Agente',
+ag1:'Esegue i passi verso l\'<b>obiettivo</b>',
+ag2:'Incontra l\'imprevisto e lo <b>analizza</b>',
+ag3:'Cerca un\'alternativa, la <b>aggira</b> e continua',
+agStop:'PROSEGUE · obiettivo raggiunto',
+s4:'Il cervello linguistico',
+brainIntro:'Ciò che distingue un agente da una comune automazione è che è <strong>connesso a un LLM</strong>: il modello generativo diventa il suo <strong>"cervello linguistico"</strong>. Comprende il contesto, comunica e agisce in autonomia.',
+brLLM:'cervello',brDrive:'Drive',brCrm:'CRM',brMail:'Email',brApi:'API',
+brainNote:'Se il cervello capisce che gli servono informazioni che <strong>non ha</strong>, se le va a prendere: nel Drive, nel CRM, via API. E non solo <strong>legge</strong>: <strong>scrive</strong> — crea documenti, aggiorna i dati, manda le email.',
+brRead:'legge',brWrite:'scrive',
+basicH:'Gli esempi basici li conosci già',
+basicP:'<strong>Alexa, Siri, Google Assistant</strong> sono la versione più basica di un assistente: eseguono azioni come fissare un appuntamento o una sveglia. L\'agente è lo stesso principio, ma con un cervello linguistico e gli strumenti per agire su compiti complessi.',
+s5:'Il paradosso del controllo',
+parH:'Un agente è PIÙ controllato di un assistente, non meno',
+parP:'"Agente" non vuol dire "AI autonoma senza controllo": è <strong>il contrario</strong>. Più potere dai a un sistema, più governance ti serve. Proprio perché agisce da solo, l\'agente nasce con confini espliciti e punti di escalation — cose che a un assistente conversazionale non servono.',
+pr1H:'Prima il processo',pr1P:'Un processo confuso che diventa agente è un problema che scala. Prima chiarisci come si fa il lavoro, poi lo deleghi.',
+pr2H:'Poi l\'automazione',pr2P:'Si automatizza un processo già compreso e affidabile. L\'ordine non è negoziabile: vale ancora di più qui che altrove.',
+s6:'Non è teoria, è già qui',
+galIntro:'Gli agenti non sono una promessa per il futuro: sono i <strong>sistemi che chi lavora con l\'AI vede nominare ogni settimana</strong>, oggi. Scorri la galleria di quelli più riconoscibili.',
+s7:'Checkpoint',
+cpH:'Da "esegui questo" a "raggiungi questo"',
+cpP:'L\'assistente esegue un\'istruzione. L\'agente persegue un obiettivo dentro un perimetro, con strumenti propri e una via di escalation quando serve l\'umano. Il salto è di mentalità, prima che di tecnologia.',
+cpQ:'Pensa a un\'attività ripetitiva che oggi affidi a un assistente "a comando". Quale obiettivo le daresti se dovesse lavorare da sola? E quali confini ed escalation metteresti perché tu possa fidarti senza guardarla?',
+cpNote:'Regola d\'oro: prima si chiarisce il processo a mano, poi lo si trasforma in agente — mai il contrario.',
+bridge:'Hai capito cos\'è un agente e i suoi quattro componenti. <b>Prossimo:</b> la tassonomia degli agenti — i sei livelli, dal GPT base stateless ai sistemi multi-agente che collaborano o competono.',
+foot:'Morfeus — Da Assistente ad Agente'
+},
+en:{
+kicker:'Lesson A7.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Intelligent organization',
+h1:'From Assistant to Agent',
+lede:'The whole path converges here. It isn\'t a technical leap, it\'s a conceptual one: you go from an AI that answers when you talk to it, to an entity that works even when you\'re not watching — with goals, tools, boundaries and escalation.',
+s1:'Agent is the goal',
+tgIntro:'The difference between an assistant and an agent isn\'t the model\'s power: it\'s <strong>what it does when you\'re not watching</strong>. Use the switch.',
+tgAssBtn:'Assistant',tgAgBtn:'Agent',
+q1:'"An assistant answers when you talk to it. An agent works even when you\'re not watching."',
+s2:'The four components of an agent',
+compsIntro:'What turns an assistant into an agent isn\'t magic: it\'s four precise components. Remove even one and you\'re back to an assistant. Click each component.',
+s3:'Agent vs automation: the robot metaphor',
+robH:'Same obstacle, two opposite reactions',
+robP:'A traditional <strong>automation</strong>, when it hits a block, stops and says "error". An <strong>agent</strong>, when it hits a block, starts looking for solutions. It\'s like a <strong>robot that finds an obstacle on the floor</strong>: it doesn\'t freeze — it sees it, analyzes the problem, works around it and carries on.',
+autoH:'Automation',
+auto1:'Runs step 1, step 2, step 3…',
+auto2:'At step 4 the data is missing or the format differs',
+auto3:'Doesn\'t know what to do with the unexpected',
+autoStop:'STOPS · "Error"',
+agH:'Agent',
+ag1:'Runs the steps toward the <b>goal</b>',
+ag2:'Hits the unexpected and <b>analyzes</b> it',
+ag3:'Finds an alternative, <b>works around</b> it and continues',
+agStop:'CARRIES ON · goal reached',
+s4:'The language brain',
+brainIntro:'What sets an agent apart from a plain automation is that it\'s <strong>connected to an LLM</strong>: the generative model becomes its <strong>"language brain"</strong>. It understands context, communicates and acts autonomously.',
+brLLM:'brain',brDrive:'Drive',brCrm:'CRM',brMail:'Email',brApi:'API',
+brainNote:'If the brain realizes it needs information it <strong>doesn\'t have</strong>, it goes and gets it: from the Drive, the CRM, via API. And it doesn\'t just <strong>read</strong>: it <strong>writes</strong> — it creates documents, updates records, sends emails.',
+brRead:'reads',brWrite:'writes',
+basicH:'You already know the basic examples',
+basicP:'<strong>Alexa, Siri, Google Assistant</strong> are the most basic version of an assistant: they perform actions like setting an appointment or an alarm. The agent is the same principle, but with a language brain and the tools to act on complex tasks.',
+s5:'The control paradox',
+parH:'An agent is MORE controlled than an assistant, not less',
+parP:'"Agent" doesn\'t mean "autonomous AI with no control": it\'s <strong>the opposite</strong>. The more power you give a system, the more governance you need. Precisely because it acts on its own, an agent is born with explicit boundaries and escalation points — things a conversational assistant doesn\'t need.',
+pr1H:'Process first',pr1P:'A messy process that becomes an agent is a problem that scales. First clarify how the work is done, then delegate it.',
+pr2H:'Automation second',pr2P:'You automate a process that\'s already understood and reliable. The order isn\'t negotiable: it matters here even more than elsewhere.',
+s6:'Not theory — it\'s already here',
+galIntro:'Agents aren\'t a promise for the future: they\'re the <strong>systems anyone working with AI sees named every week</strong>, today. Scroll through the most recognizable ones.',
+s7:'Checkpoint',
+cpH:'From "do this" to "achieve this"',
+cpP:'An assistant runs an instruction. An agent pursues a goal within a perimeter, with its own tools and an escalation path when a human is needed. The leap is one of mindset before technology.',
+cpQ:'Think of a repetitive task you hand today to a "command me" assistant. What goal would you give it if it had to work on its own? And what boundaries and escalation would you set so you could trust it without watching it?',
+cpNote:'Golden rule: first clarify the process by hand, then turn it into an agent — never the other way around.',
+bridge:'You\'ve understood what an agent is and its four components. <b>Next:</b> the agent taxonomy — the six levels, from the stateless base GPT to multi-agent systems that collaborate or compete.',
+foot:'Morfeus — From Assistant to Agent'
+}};
+
+/* ===== assistant<->agent toggle ===== */
+var TG={it:{
+assistant:{label:'Ti guarda',eye:'ti-eye',headline:'"Scrivi questa email"',body:'Esegue un\'<strong>istruzione singola</strong> e si ferma. Reattivo: aspetta che tu gli parli. Se manca un dato, ti chiede. Niente memoria del prima, niente iniziativa.'},
+agent:{label:'Non lo guardi',eye:'ti-eye-off',headline:'"Gestisci la comunicazione col cliente per portarlo al meeting"',body:'Persegue un <strong>obiettivo</strong>, non un\'istruzione. Decide i passi, usa gli strumenti, aggira gli intoppi e ti chiama solo quando serve. Lavora anche quando non lo guardi.'}
+},en:{
+assistant:{label:'Watching it',eye:'ti-eye',headline:'"Write this email"',body:'It runs a <strong>single instruction</strong> and stops. Reactive: it waits for you to talk to it. If a detail is missing, it asks. No memory of before, no initiative.'},
+agent:{label:'Not watching',eye:'ti-eye-off',headline:'"Manage the communication with the client to bring them to the meeting"',body:'It pursues a <strong>goal</strong>, not an instruction. It decides the steps, uses the tools, works around snags and calls you only when needed. It works even when you\'re not watching.'}
+}};
+var curTg='assistant';
+function setTg(k){
+  curTg=k;
+  document.querySelectorAll('.tg-switch button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-tg')===k)});
+  renderTg();
+}
+function renderTg(){
+  var d=TG[LANG][curTg];
+  var st=document.getElementById('tgStage');
+  st.className='tg-stage '+curTg;
+  st.innerHTML='<div class="tg-eye '+(curTg==='agent'?'work':'watch')+'"><i class="ti '+d.eye+'"></i></div>'+
+    '<div><div class="tg-label">'+d.label+'</div><div class="tg-headline">'+d.headline+'</div><div class="tg-body">'+d.body+'</div></div>';
+}
+
+/* ===== 4 components ===== */
+var COMPS={it:[
+['ti-target','Obiettivi','Un risultato, non un\'istruzione','All\'agente dai un <strong>esito da raggiungere</strong>, non una lista di passi da eseguire. "Porta il cliente al meeting" — come, lo decide lui. È questo che lo rende proattivo invece che reattivo.','Assistente: "manda questa email" → Agente: "porta il cliente al meeting"'],
+['ti-tools','Strumenti','Le mani per agire sul mondo','Senza strumenti, un agente sa solo parlare. I <strong>tool</strong> (Drive, CRM, email, API) sono ciò che gli permette di compiere azioni reali su sistemi esterni: leggere e scrivere, non solo rispondere.','Drive · CRM · Email · API · Filesystem'],
+['ti-border-all','Confini','Il perimetro esplicito','I confini dicono cosa l\'agente <strong>può e non può</strong> fare. Su quali dati, con quali permessi, fino a che importo, su quali sistemi. Sono il guardrail che ti fa dormire la notte.','"Puoi mandare email; non puoi cancellare nulla; budget max 50 €."'],
+['ti-hand-stop','Escalation','Quando fermarsi e chiedere','L\'escalation definisce <strong>quando l\'agente deve passare la palla all\'umano</strong>: nei casi ambigui, oltre una certa soglia, sull\'irreversibile. Un agente senza escalation non è autonomo, è incontrollato.','"Se l\'importo supera 1.000 € o il caso è dubbio → fermati e chiedi a me."']
+],en:[
+['ti-target','Goals','A result, not an instruction','You give an agent an <strong>outcome to reach</strong>, not a list of steps to run. "Bring the client to the meeting" — how, it decides. This is what makes it proactive rather than reactive.','Assistant: "send this email" → Agent: "bring the client to the meeting"'],
+['ti-tools','Tools','The hands to act on the world','Without tools, an agent can only talk. <strong>Tools</strong> (Drive, CRM, email, API) are what let it take real actions on external systems: read and write, not just answer.','Drive · CRM · Email · API · Filesystem'],
+['ti-border-all','Boundaries','The explicit perimeter','Boundaries say what the agent <strong>can and cannot</strong> do. On which data, with which permissions, up to what amount, on which systems. They\'re the guardrail that lets you sleep at night.','"You may send email; you may not delete anything; max budget €50."'],
+['ti-hand-stop','Escalation','When to stop and ask','Escalation defines <strong>when the agent must hand off to a human</strong>: on ambiguous cases, beyond a threshold, on the irreversible. An agent without escalation isn\'t autonomous, it\'s uncontrolled.','"If the amount exceeds €1,000 or the case is doubtful → stop and ask me."']
+]};
+var curComp=0;
+function showComp(i){
+  curComp=i;
+  document.querySelectorAll('#comps .comp').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var c=COMPS[LANG][i];
+  document.getElementById('compdetail').innerHTML='<h4>'+c[1]+' — '+c[2]+'</h4><p>'+c[3]+'</p><div class="ex">'+c[4]+'</div>';
+}
+function buildComps(){
+  document.getElementById('comps').innerHTML=COMPS[LANG].map(function(c,i){
+    return '<div class="comp'+(i===curComp?' on':'')+'" onclick="showComp('+i+')"><div class="ci"><i class="ti '+c[0]+'"></i></div><div class="ct">'+c[1]+'</div></div>';
+  }).join('');
+  showComp(curComp);
+}
+
+/* ===== real systems gallery ===== */
+var SYS={it:[
+{ic:'ti-terminal-2',name:'Claude Code / Cowork',co:'Anthropic',cl:'agente · multi-agente',desc:'L\'agente che <b>pianifica, esegue e verifica</b>, orchestrando sub-agent in parallelo. È il "qui e ora" che stiamo usando: gira sul desktop, si collega a file e app locali e porta a termine task multi-step.'},
+{ic:'ti-code',name:'Cursor',co:'Anysphere',cl:'agente',desc:'L\'IDE con agente integrato più diffuso: <b>edita più file, esegue comandi e itera sugli errori</b> da solo. Milioni di utenti al mese — chiunque scriva codice lo conosce.'},
+{ic:'ti-brand-github',name:'GitHub Copilot agent',co:'GitHub / Microsoft',cl:'agente',desc:'Da autocomplete a <b>agente asincrono</b>: gli assegni una issue e apre da solo una Pull Request in un ambiente sandbox. Ora dentro Agent HQ, che orchestra agenti di più vendor.'},
+{ic:'ti-rocket',name:'Google Antigravity',co:'Google',cl:'multi-agente',desc:'IDE "agent-first" con una <b>vista Manager</b> per orchestrare più agenti in parallelo su editor, terminale e browser. Annunciato con Gemini 3.'},
+{ic:'ti-world-search',name:'Perplexity Comet',co:'Perplexity',cl:'agente',desc:'Il browser che <b>È un agente</b>: esegue task al posto tuo dentro le pagine mentre navighi. L\'esempio perfetto di agente nel quotidiano.'},
+{ic:'ti-message-chatbot',name:'ChatGPT agent',co:'OpenAI',cl:'agente',desc:'Ex Operator, ora dentro ChatGPT: <b>naviga, compra, prenota, costruisce slide</b>. L\'agente "consumer" che chiunque può provare.'},
+{ic:'ti-user-code',name:'Devin',co:'Cognition',cl:'agente',desc:'"Il primo software engineer autonomo": prende un task e lo <b>porta a termine da solo</b> — codice, test, deploy. Pilotato accanto a migliaia di sviluppatori umani.'},
+{ic:'ti-paw',name:'OpenClaw',co:'open-source',cl:'agente',desc:'Assistente AI personale open-source che gira <b>in locale</b> e agisce su file, shell, web ed email via chat. Diventato uno dei progetti più stellati di GitHub a inizio 2026.'}
+],en:[
+{ic:'ti-terminal-2',name:'Claude Code / Cowork',co:'Anthropic',cl:'agent · multi-agent',desc:'The agent that <b>plans, executes and verifies</b>, orchestrating sub-agents in parallel. It\'s the "here and now" we\'re using: it runs on the desktop, connects to local files and apps, and completes multi-step tasks.'},
+{ic:'ti-code',name:'Cursor',co:'Anysphere',cl:'agent',desc:'The most widely used IDE with a built-in agent: it <b>edits multiple files, runs commands and iterates on errors</b> on its own. Millions of users a month — anyone who writes code knows it.'},
+{ic:'ti-brand-github',name:'GitHub Copilot agent',co:'GitHub / Microsoft',cl:'agent',desc:'From autocomplete to an <b>asynchronous agent</b>: you assign it an issue and it opens a Pull Request by itself in a sandbox. Now inside Agent HQ, which orchestrates agents from multiple vendors.'},
+{ic:'ti-rocket',name:'Google Antigravity',co:'Google',cl:'multi-agent',desc:'An "agent-first" IDE with a <b>Manager view</b> to orchestrate several agents in parallel across editor, terminal and browser. Announced with Gemini 3.'},
+{ic:'ti-world-search',name:'Perplexity Comet',co:'Perplexity',cl:'agent',desc:'The browser that <b>IS an agent</b>: it carries out tasks for you inside pages as you browse. The perfect example of an agent in everyday life.'},
+{ic:'ti-message-chatbot',name:'ChatGPT agent',co:'OpenAI',cl:'agent',desc:'Formerly Operator, now inside ChatGPT: it <b>browses, buys, books, builds slides</b>. The "consumer" agent anyone can try.'},
+{ic:'ti-user-code',name:'Devin',co:'Cognition',cl:'agent',desc:'"The first autonomous software engineer": it takes a task and <b>completes it on its own</b> — code, tests, deploy. Piloted alongside thousands of human developers.'},
+{ic:'ti-paw',name:'OpenClaw',co:'open-source',cl:'agent',desc:'An open-source personal AI assistant that runs <b>locally</b> and acts on files, shell, web and email via chat. Became one of GitHub\'s most-starred projects in early 2026.'}
+]};
+var curSys=0;
+function showSys(i){
+  curSys=i;
+  document.querySelectorAll('#galGrid .galchip').forEach(function(x,k){x.classList.toggle('on',k===i)});
+  var s=SYS[LANG][i];
+  document.getElementById('galIc').innerHTML='<i class="ti '+s.ic+'"></i>';
+  document.getElementById('galName').textContent=s.name;
+  document.getElementById('galCo').textContent=s.co;
+  document.getElementById('galClass').textContent=s.cl;
+  document.getElementById('galDesc').innerHTML=s.desc;
+}
+function buildGal(){
+  document.getElementById('galGrid').innerHTML=SYS[LANG].map(function(s,i){
+    return '<div class="galchip'+(i===curSys?' on':'')+'" onclick="showSys('+i+')"><div class="gci"><i class="ti '+s.ic+'"></i></div><div class="gcn">'+s.name+'</div></div>';
+  }).join('');
+  showSys(curSys);
+}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderTg();buildComps();buildGal();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</h

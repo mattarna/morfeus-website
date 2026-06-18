@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG e il bibliotecario — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* library interactive */
+.lib{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chap{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 16px;cursor:pointer;transition:.18s;position:relative}
+.chap:hover{border-color:var(--line-2)}
+.chap.pulled{border-color:var(--good);background:var(--good-soft)}
+.chap.dimmed{opacity:.42}
+.chap .chi{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.chap.pulled .chi{background:var(--good);color:#fff}
+.chap .cb{flex:1}.chap .ct{font-size:14.5px;font-weight:600}.chap .cd{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.chap .pin{position:absolute;top:10px;right:12px;font-size:10px;font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--good);opacity:0;transition:.18s}
+.chap.pulled .pin{opacity:1}
+.libask{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.askbtn{display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1.5px solid var(--accent-line);border-radius:30px;box-shadow:var(--sh);padding:11px 18px;cursor:pointer;transition:.18s;font-size:13.5px;color:var(--ink);font-weight:500;text-align:left;width:100%}
+.askbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.askbtn.on{border-color:var(--accent);background:var(--accent-soft)}
+.askbtn i{color:var(--accent);font-size:17px;flex-shrink:0}
+.askbtn .q{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:4px}
+.retr{display:flex;align-items:center;gap:12px;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:13px 16px;margin-top:12px;font-size:13.5px;color:var(--ink-2)}
+.retr i{color:var(--agent);font-size:20px;flex-shrink:0}.retr b{color:var(--agent)}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.flow{display:flex;flex-direction:column;gap:8px}
+.frow{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.frow .fn{width:30px;height:30px;border-radius:50%;background:var(--agent-soft);color:var(--agent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.frow .ftt{font-size:14.5px;font-weight:600}.frow .fdd{font-size:13px;color:var(--ink-2);margin-top:1px}
+.cost{display:flex;gap:16px;align-items:center;background:var(--card);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cost .cn{font-family:var(--mono);font-weight:700;font-size:30px;color:var(--accent);line-height:1;flex-shrink:0}
+.cost .ct2{font-size:14px;color:var(--ink-2)}.cost .ct2 b{color:var(--ink)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.lib{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.chap,.frow,.key,.cost,.askbtn,.retr{break-inside:avoid;box-shadow:none!important}.chap.dimmed{opacity:1!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A5.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Knowledge Base &amp; Assistenti</div>
+  <h1 class="rv" data-i="h1">RAG e il bibliotecario</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-help-octagon"></i><span class="no">01</span><h2 data-i="s1">«Esiste un LLM che conosce la mia azienda?»</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-building"></i></div><div><h4 data-i="note1H">La risposta è «sni»</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-books"></i><span class="no">02</span><h2 data-i="s2">RAG, in parole povere</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-user-search"></i></div><div><h4 data-i="note2H">Il bibliotecario</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-book"></i><span class="no">03</span><h2 data-i="s3">La metafora del manuale a capitoli</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="s3Intro"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="rdBadT">Senza capitoli</span><div class="pr" data-i-html="rdBadP"></div><div class="res" data-i-html="rdBadR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="rdGoodT">Con tag e capitoli</span><div class="pr" data-i-html="rdGoodP"></div><div class="res" data-i-html="rdGoodR"></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-library"></i><span class="no">04</span><h2 data-i="s4">Il bibliotecario al lavoro</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="libIntro"></p>
+  <div class="libask rv" id="libask"></div>
+  <div class="lib rv" id="lib"></div>
+  <div class="retr rv" id="retr"></div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="libNote"></p>
+
+  <div class="sh rv"><i class="ti ti-route-2"></i><span class="no">05</span><h2 data-i="s5">Il flusso completo, in 4 passi</h2></div>
+  <div class="flow rv" id="flow"></div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">06</span><h2 data-i="s6">La KB nel prompt: un mini-RAG fatto in casa</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-list-search"></i></div><div><h4 data-i="note3H">L'indice, non tutto il testo</h4><p data-i-html="note3P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-coin-euro"></i><span class="no">07</span><h2 data-i="s7">Quanto costa, e perché ce l'avete già</h2></div>
+  <div class="cost rv"><div class="cn" data-i="costN">~50.000 €</div><div class="ct2" data-i-html="costP"></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Organizza la tua libreria</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — RAG e il bibliotecario</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A5.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Knowledge Base & Assistenti',
+h1:'RAG e il bibliotecario',
+lede:'L\'azienda intera non entra nella finestra di contesto: sono più di mille pagine, la lavagna è troppo piccola. Il RAG risolve esattamente questo. È il bibliotecario che va a prenderti solo le informazioni che servono — e ti dà un «cervello aziendale» che altrove costerebbe decine di migliaia di euro.',
+s1:'«Esiste un LLM che conosce la mia azienda?»',
+note1H:'La risposta è «sni»',
+note1P:'È la domanda guida. <strong>Da solo, no</strong>: tutta la conoscenza di un\'azienda supera le 1000 pagine, e non entra nella finestra di contesto (la lavagna). <strong>Col RAG, sì</strong>: invece di far cercare il modello in tutto il suo sapere, gli <strong>limiti le informazioni</strong> alla tua documentazione. Risultato: un LLM che conosce la tua azienda.',
+q1:'«Esiste un LLM che conosce la mia azienda? Da solo no — col RAG sì.»',
+s2:'RAG, in parole povere',
+note2H:'Il bibliotecario',
+note2P:'<strong>RAG</strong> = Retrieval Augmented Generation. Niente parolone: è il <strong>bibliotecario che va a prenderti le informazioni</strong>. Non usi più l\'LLM per pescare in tutto lo scibile umano: un componente va nella tua libreria, recupera solo i documenti rilevanti, e li passa al modello — che viene usato <strong>solo per generare</strong> la risposta. È la vera potenza dietro i lavori più impressionanti.',
+s3:'La metafora del manuale a capitoli',
+s3Intro:'Immagina un <strong>manuale per costruire una casa</strong>, diviso in capitoli: fondazioni, pilastri, pavimento, tetto. «Devo fare il tetto: devo leggere tutto il libro?» Ovviamente no. I <strong>tag — etichette, capitoli —</strong> dicono al modello esattamente dove andare.',
+rdBadT:'Senza capitoli',rdGoodT:'Con tag e capitoli',
+rdBadP:'Il modello ha davanti tutto il manuale come un blocco unico. Per fare il tetto è costretto a rileggere fondazioni, pilastri, pavimento.',
+rdBadR:'<b>Tutto rumore.</b> Più testo da processare, più token, più probabilità di perdersi e allucinare.',
+rdGoodP:'Il manuale è etichettato per capitoli. Devi fare il tetto → vai dritto al capitolo «tetto», scarti tutti gli altri.',
+rdGoodR:'<b>Solo il rilevante.</b> Meno rumore, meno token, risposta più precisa. Il tag è la mappa.',
+s4:'Il bibliotecario al lavoro',
+libIntro:'Questa è la tua libreria aziendale, organizzata in capitoli. Fai una domanda: lo smart retriever — il bibliotecario — entra e preleva SOLO i capitoli rilevanti. Prova a porre una domanda diversa e guarda cosa va a prendere.',
+libNote:'Regola d\'oro: <strong>più sei bravo a dare contesto, più il tuo bibliotecario è bravo.</strong> Come quando chiedi un libro in libreria: «vorrei un fantasy, mi è piaciuto un casino questo qui» trova di più di un generico «un libro». Una domanda specifica → documenti più rilevanti, meno rumore di fondo.',
+s5:'Il flusso completo, in 4 passi',
+s6:'La KB nel prompt: un mini-RAG fatto in casa',
+note3H:'L\'indice, non tutto il testo',
+note3P:'Non serve un sistema dedicato per iniziare. Nella parte «contesto» del prompt non scrivi tutto il testo: scrivi «<strong>il tuo contesto è allegato, e questo è l\'indice per consultarlo</strong>». È un <strong>mini-RAG fatto in casa</strong>: l\'assistente non conosce tutta l\'azienda, solo quello che gli serve per fare un buon lavoro. L\'indice fa da bibliotecario.',
+s7:'Quanto costa, e perché ce l\'avete già',
+costN:'~50.000 €',
+costP:'È quanto può costare far costruire un <b>RAG aziendale su misura</b> a un fornitore commerciale. <b>Con questo metodo ce l\'avete</b>: una libreria di documenti ben etichettata + un indice nel prompt vi danno il 90% del valore, senza il conto da decine di migliaia di euro.',
+s8:'Checkpoint',
+cpH:'Organizza la tua libreria',
+cpP:'Prendi un compito ricorrente e immagina la libreria che ti servirebbe: quali sono i «capitoli» (i documenti) e che etichetta daresti a ciascuno perché il bibliotecario li trovi al volo.',
+cpQ:'Per la domanda più frequente che farai a quell\'assistente, quali 2-3 capitoli dovrebbe prelevare il bibliotecario — e quali deve poter ignorare? Quel taglio è il tuo RAG.',
+bridge:'Sai come l\'AI può «conoscere la tua azienda» senza affogare nel contesto. <b>Prossimo:</b> i 3 elementi dell\'assistente — Prompt, Knowledge Base e Azioni, i tre vertici che lo fanno funzionare.',
+foot:'Morfeus — RAG e il bibliotecario'
+},
+en:{
+kicker:'Lesson A5.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Knowledge Base & Assistants',
+h1:'RAG and the librarian',
+lede:'A whole company doesn\'t fit in the context window: it\'s well over a thousand pages, and the whiteboard is too small. RAG solves exactly this. It\'s the librarian that fetches only the information you need — and it gives you a "company brain" that would cost tens of thousands of euros elsewhere.',
+s1:'"Is there an LLM that knows my company?"',
+note1H:'The answer is "yes-and-no"',
+note1P:'This is the guiding question. <strong>On its own, no</strong>: all of a company\'s knowledge runs past 1,000 pages, and it won\'t fit in the context window (the whiteboard). <strong>With RAG, yes</strong>: instead of making the model search through all its knowledge, you <strong>limit the information</strong> to your documentation. The result: an LLM that knows your company.',
+q1:'"Is there an LLM that knows my company? On its own, no — with RAG, yes."',
+s2:'RAG, in plain words',
+note2H:'The librarian',
+note2P:'<strong>RAG</strong> = Retrieval Augmented Generation. No jargon: it\'s the <strong>librarian who fetches the information for you</strong>. You no longer use the LLM to fish through all of human knowledge: a component goes into your library, retrieves only the relevant documents, and hands them to the model — which is used <strong>only to generate</strong> the answer. This is the real power behind the most impressive work.',
+s3:'The chaptered-manual metaphor',
+s3Intro:'Picture a <strong>manual for building a house</strong>, split into chapters: foundations, pillars, flooring, roof. "I need to do the roof: do I have to read the whole book?" Of course not. <strong>Tags — labels, chapters —</strong> tell the model exactly where to go.',
+rdBadT:'No chapters',rdGoodT:'With tags and chapters',
+rdBadP:'The model faces the whole manual as one block. To do the roof, it\'s forced to reread foundations, pillars and flooring.',
+rdBadR:'<b>All noise.</b> More text to process, more tokens, more chance of getting lost and hallucinating.',
+rdGoodP:'The manual is labeled by chapter. You need the roof → go straight to the "roof" chapter, skip all the rest.',
+rdGoodR:'<b>Only what\'s relevant.</b> Less noise, fewer tokens, a sharper answer. The tag is the map.',
+s4:'The librarian at work',
+libIntro:'This is your company library, organized into chapters. Ask a question: the smart retriever — the librarian — goes in and pulls ONLY the relevant chapters. Try a different question and watch what it fetches.',
+libNote:'Golden rule: <strong>the better you are at giving context, the better your librarian is.</strong> Just like asking for a book at a bookstore: "I\'d like a fantasy, I absolutely loved this one" finds more than a generic "a book." A specific question → more relevant documents, less background noise.',
+s5:'The full flow, in 4 steps',
+s6:'The KB inside the prompt: a homemade mini-RAG',
+note3H:'The index, not the whole text',
+note3P:'You don\'t need a dedicated system to start. In the "context" part of the prompt you don\'t write the whole text: you write "<strong>your context is attached, and this is the index to consult it</strong>". It\'s a <strong>homemade mini-RAG</strong>: the assistant doesn\'t know the whole company, only what it needs to do a good job. The index acts as the librarian.',
+s7:'What it costs, and why you already have it',
+costN:'~€50,000',
+costP:'That\'s what it can cost to have a <b>custom company RAG</b> built by a commercial vendor. <b>With this method, you already have it</b>: a well-labeled library of documents + an index in the prompt give you 90% of the value, without the bill in the tens of thousands.',
+s8:'Checkpoint',
+cpH:'Organize your library',
+cpP:'Take a recurring task and picture the library you\'d need: what are the "chapters" (the documents), and what label would you give each one so the librarian finds them instantly.',
+cpQ:'For the question you\'ll ask that assistant most often, which 2-3 chapters should the librarian pull — and which must it be able to ignore? That cut is your RAG.',
+bridge:'You know how AI can "know your company" without drowning in context. <b>Next:</b> the 3 elements of the assistant — Prompt, Knowledge Base and Actions, the three vertices that make it work.',
+foot:'Morfeus — RAG and the librarian'
+}};
+
+// library chapters: [title, icon, shortdesc]
+var CHAP={it:[
+['Report trimestrali','ti-chart-bar','Bilanci e risultati per periodo'],
+['Due diligence','ti-file-search','Analisi e verifiche su aziende target'],
+['Linee guida brand','ti-palette','Tono di voce, identità, posizionamento'],
+['Procedure operative','ti-list-numbers','I processi standard, passo per passo'],
+['Contratti','ti-file-certificate','Accordi, clausole, condizioni'],
+['Ricerche di mercato','ti-world-search','Settori, trend, competitor']
+],en:[
+['Quarterly reports','ti-chart-bar','Financials and results by period'],
+['Due diligence','ti-file-search','Analyses and checks on target companies'],
+['Brand guidelines','ti-palette','Tone of voice, identity, positioning'],
+['Operating procedures','ti-list-numbers','The standard processes, step by step'],
+['Contracts','ti-file-certificate','Agreements, clauses, terms'],
+['Market research','ti-world-search','Sectors, trends, competitors']
+]};
+
+// questions: [question label, retriever message, [indexes of pulled chapters]]
+var ASK={it:[
+['Come è andato l\'ultimo trimestre?','Il bibliotecario entra e preleva solo i <b>report trimestrali</b>. Lascia a scaffale contratti, brand e ricerche: non c\'entrano.',[0]],
+['Possiamo procedere con questa acquisizione?','Recupera <b>due diligence</b> + <b>report trimestrali</b> dell\'azienda target. Ignora brand e procedure.',[1,0]],
+['Questo testo rispetta il nostro tono di voce?','Va dritto alle <b>linee guida brand</b>. Tutto il resto resta a scaffale.',[2]],
+['Come facciamo una due diligence da zero?','Preleva le <b>procedure operative</b> (il processo) + un esempio dalle <b>due diligence</b> passate.',[3,1]]
+],en:[
+['How did last quarter go?','The librarian goes in and pulls only the <b>quarterly reports</b>. It leaves contracts, brand and research on the shelf: irrelevant.',[0]],
+['Can we move ahead with this acquisition?','It retrieves <b>due diligence</b> + the target\'s <b>quarterly reports</b>. Ignores brand and procedures.',[1,0]],
+['Does this text match our tone of voice?','It heads straight to the <b>brand guidelines</b>. Everything else stays on the shelf.',[2]],
+['How do we run a due diligence from scratch?','It pulls the <b>operating procedures</b> (the process) + an example from past <b>due diligence</b>.',[3,1]]
+]};
+
+var FLOW={it:[
+['Fai la domanda','«Quali sono i principali problemi da efficientare?» — tu chiedi, in linguaggio naturale.'],
+['Il retriever cerca','Il bibliotecario legge le etichette dei capitoli e va nella knowledge base.'],
+['Preleva i rilevanti','Recupera solo i documenti pertinenti — non tutto lo scibile. Meno rumore, meno token.'],
+['L\'LLM genera','I documenti rilevanti + la tua domanda passano al modello, usato solo per scrivere la risposta.']
+],en:[
+['Ask the question','"What are the main things to streamline?" — you ask, in natural language.'],
+['The retriever searches','The librarian reads the chapter labels and goes into the knowledge base.'],
+['It pulls the relevant ones','It retrieves only the pertinent documents — not all of human knowledge. Less noise, fewer tokens.'],
+['The LLM generates','The relevant documents + your question go to the model, used only to write the answer.']
+]};
+
+var LANG='it',curAsk=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('libask').innerHTML=ASK[LANG].map(function(a,i){return '<button class="askbtn'+(i===curAsk?' on':'')+'" onclick="ask('+i+')"><i class="ti ti-message-question"></i><span><span class="q">DOMANDA</span>'+a[0]+'</span></button>'}).join('');
+  document.getElementById('flow').innerHTML=FLOW[LANG].map(function(f,i){return '<div class="frow"><div class="fn">'+(i+1)+'</div><div><div class="ftt">'+f[0]+'</div><div class="fdd">'+f[1]+'</div></div></div>'}).join('');
+  renderLib();
+}
+function renderLib(){
+  var pulled=ASK[LANG][curAsk][2];
+  document.getElementById('lib').innerHTML=CHAP[LANG].map(function(c,i){
+    var on=pulled.indexOf(i)>-1;
+    return '<div class="chap'+(on?' pulled':' dimmed')+'"><div class="chi"><i class="ti '+c[1]+'"></i></div><div class="cb"><div class="ct">'+c[0]+'</div><div class="cd">'+c[2]+'</div></div><span class="pin">prelevato</span></div>'
+  }).join('');
+  document.getElementById('retr').innerHTML='<i class="ti ti-user-search"></i><div>'+ASK[LANG][curAsk][1]+'</div>';
+}
+function ask(i){curAsk=i;document.querySelectorAll('.askbtn').forEach(function(b,k){b.classList.toggle('on',k===i)});renderLib()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

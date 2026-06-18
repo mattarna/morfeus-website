@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I cinque livelli di utilizzo dell'AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+--gray:#888780;--gray-soft:#f1efe8;
+--blue:#378ADD;--blue-soft:#e6f1fb;
+--teal:#1D9E75;--teal-soft:#e1f5ee;
+--amber:#BA7517;--amber-soft:#faeeda;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+--gray:#888780;--gray-soft:#2c2c2a;
+--blue:#378ADD;--blue-soft:#042c53;
+--teal:#1D9E75;--teal-soft:#04342c;
+--amber:#BA7517;--amber-soft:#412402;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* Progress bar */
+.prog{margin:0}
+.prog-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-bottom:8px}
+.prog-track{height:8px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:5px;transition:width .5s ease,background .3s}
+/* Staircase */
+.stairs{display:flex;flex-direction:column-reverse;gap:8px;margin:0}
+.step{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:.18s}
+.step:hover{border-color:var(--line-2)}
+.step.on{border-color:var(--accent)}
+.step-top{height:4px}
+.step-hd{display:flex;align-items:center;gap:13px;padding:14px 18px}
+.step-num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;flex-shrink:0}
+.step-info{flex:1;min-width:0}
+.step-name{font-size:15px;font-weight:600;color:var(--ink)}
+.step-tag{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
+.step-pct{font-family:var(--mono);font-size:12px;font-weight:600;padding:4px 11px;border-radius:14px;white-space:nowrap;flex-shrink:0}
+.step-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.step.on .step-body{max-height:600px}
+.step-inner{padding:0 18px 16px;border-top:1px dashed var(--line-2);margin-top:0;padding-top:14px}
+.step-list{list-style:none;padding:0}
+.step-list li{position:relative;padding-left:18px;margin-bottom:9px;font-size:14px;color:var(--ink-2);line-height:1.6}
+.step-list li::before{content:'';position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--ink-3)}
+.step-key{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14px;font-style:italic;color:var(--ink);font-weight:500}
+/* level colors */
+.lv1 .step-top{background:var(--gray)}.lv1 .step-num{background:var(--gray-soft);color:var(--gray)}.lv1 .step-pct{background:var(--gray-soft);color:var(--gray)}
+.lv2 .step-top{background:var(--blue)}.lv2 .step-num{background:var(--blue-soft);color:var(--blue)}.lv2 .step-pct{background:var(--blue-soft);color:var(--blue)}
+.lv3 .step-top{background:var(--teal)}.lv3 .step-num{background:var(--teal-soft);color:var(--teal)}.lv3 .step-pct{background:var(--teal-soft);color:var(--teal)}
+.lv4 .step-top{background:var(--accent)}.lv4 .step-num{background:var(--accent-soft);color:var(--accent)}.lv4 .step-pct{background:var(--accent-soft);color:var(--accent)}
+.lv5 .step-top{background:var(--amber)}.lv5 .step-num{background:var(--amber-soft);color:var(--amber)}.lv5 .step-pct{background:var(--amber-soft);color:var(--amber)}
+/* Motivational */
+.moti{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--amber);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.moti h3{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:9px}.moti h3 i{color:var(--amber);font-size:20px}
+.arrow-list{list-style:none;padding:0}
+.arrow-list li{position:relative;padding-left:24px;margin-bottom:10px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.arrow-list li::before{content:'→';position:absolute;left:0;color:var(--amber);font-weight:600}
+/* Checkpoint */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp-picker{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.pick-btn{padding:9px 18px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:.18s}
+.pick-btn:hover{border-color:var(--line-2)}
+.pick-btn.sel{color:#fff}
+.pick-btn[data-pick="1"].sel{background:var(--gray);border-color:var(--gray)}
+.pick-btn[data-pick="2"].sel{background:var(--blue);border-color:var(--blue)}
+.pick-btn[data-pick="3"].sel{background:var(--teal);border-color:var(--teal)}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.step,.moti,.cp,.key{break-inside:avoid;box-shadow:none!important}.step .step-body{max-height:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 0.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">I fondamentali</div>
+  <h1 class="rv" data-i="h1">I cinque livelli di utilizzo dell'AI</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">01</span><h2 data-i="s1">Obiettivo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-target"></i></div><div><h4 data-i="objH">Dove sei, dove arrivi</h4><p data-i-html="objP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">02</span><h2 data-i="s2">Hook</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">03</span><h2 data-i="s3">La scala dei cinque livelli</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="frameworkIntro"></p>
+  <div class="prog rv">
+    <div class="prog-lbl"><span data-i="progName">Percorso del corso</span><span id="progLabel">Livello 1 → 4</span></div>
+    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:20%;background:var(--gray)"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:13.5px;margin:14px 0 16px;color:var(--ink-3)" data-i="stairsHint"></p>
+  <div class="stairs rv" id="stairs"></div>
+
+  <div class="sh rv"><i class="ti ti-flame"></i><span class="no">04</span><h2 data-i="s4">Il momento motivazionale</h2></div>
+  <div class="moti rv">
+    <h3><i class="ti ti-flame"></i> <span data-i="motiH"></span></h3>
+    <ul class="arrow-list" id="motiList"></ul>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">05</span><h2 data-i="s5">Checkpoint — Dove sei adesso?</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cp-picker" id="picker">
+      <button class="pick-btn" data-pick="1" onclick="pick(this)" data-i="pick1">Livello 1</button>
+      <button class="pick-btn" data-pick="2" onclick="pick(this)" data-i="pick2">Livello 2</button>
+      <button class="pick-btn" data-pick="3" onclick="pick(this)" data-i="pick3">Livello 3</button>
+    </div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — I cinque livelli di utilizzo dell'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 0.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'I fondamentali',
+h1:'I cinque livelli di utilizzo dell\'AI',
+lede:'Dove sei adesso, dove puoi arrivare, e cosa cambia a ogni livello.',
+s1:'Obiettivo',
+objH:'Dove sei, dove arrivi',
+objP:'Capire dove ti trovi oggi nella scala di utilizzo e <strong>visualizzare il percorso</strong> che il corso ti farà fare fino al livello 4.',
+s2:'Hook',
+hook:'«Il 95% delle persone che usa Claude è bloccato al livello 1. Non perché siano meno intelligenti — ma perché nessuno ha mai mostrato loro che esistono altri quattro livelli sopra.»',
+s3:'La scala dei cinque livelli',
+frameworkIntro:'Esistono cinque livelli di utilizzo dell\'AI. Il corso base ti porta al livello 4. Il corso avanzato al 5.',
+progName:'Percorso del corso',
+stairsHint:'Clicca ogni gradino per espanderlo. La barra qui sopra segue il livello che apri.',
+s4:'Il momento motivazionale',
+motiH:'Il momento motivazionale',
+s5:'Checkpoint — Dove sei adesso?',
+cpH:'Checkpoint — Dove sei adesso?',
+cpP:'Sii onesto con te stesso. Seleziona il livello in cui ti riconosci oggi. Tra 30 giorni vuoi avere qualcosa da confrontare.',
+pick1:'Livello 1',pick2:'Livello 2',pick3:'Livello 3',
+bridge:'Sai a che livello sei. <b>Prossimo:</b> il primo strumento pratico — un framework in tre parti per capire esattamente quali task delegare a Claude e quali no. Si chiama T/Q/D, e da domani lo userai ogni giorno.',
+foot:'Morfeus — I cinque livelli di utilizzo dell\'AI'
+},
+en:{
+kicker:'Lesson 0.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The fundamentals',
+h1:'The five levels of using AI',
+lede:'Where you are now, where you can get to, and what changes at each level.',
+s1:'Goal',
+objH:'Where you are, where you arrive',
+objP:'Understand where you stand today on the usage ladder and <strong>visualize the path</strong> the course will take you through, up to level 4.',
+s2:'Hook',
+hook:'"95% of people who use Claude are stuck at level 1. Not because they\'re less intelligent — but because no one ever showed them there are four more levels above."',
+s3:'The five-level ladder',
+frameworkIntro:'There are five levels of using AI. The base course takes you to level 4. The advanced course to level 5.',
+progName:'Course path',
+stairsHint:'Click each step to expand it. The bar above follows the level you open.',
+s4:'The motivational moment',
+motiH:'The motivational moment',
+s5:'Checkpoint — Where are you now?',
+cpH:'Checkpoint — Where are you now?',
+cpP:'Be honest with yourself. Select the level you recognize yourself in today. In 30 days you\'ll want something to compare against.',
+pick1:'Level 1',pick2:'Level 2',pick3:'Level 3',
+bridge:'You know what level you\'re at. <b>Next:</b> the first practical tool — a three-part framework to know exactly which tasks to delegate to Claude and which not. It\'s called T/Q/D, and you\'ll use it every day from tomorrow.',
+foot:'Morfeus — The five levels of using AI'
+}};
+
+// [level, name, tag, pct-label, bullets[], key(optional)]
+var STEPS={it:[
+[5,'Orchestrazione','Corso avanzato + Bootcamp','Futuro',[
+'Claude gestisce più task, più agenti, più flussi in parallelo.',
+'Non lavora con te — lavora mentre tu fai altro.',
+'Esempio: un sistema che ogni mattina analizza le notizie del tuo settore, filtra quelle rilevanti, e prepara una sintesi pronta.',
+'Territorio del corso avanzato. Lo nomino perché voglio che tu sappia dove porta la strada.'],null],
+[4,'Sistema personalizzato','Obiettivo del corso base','Obiettivo',[
+'Claude ti conosce. Conosce il tuo lavoro, il tuo tono, i tuoi clienti, le tue preferenze.',
+'Non perché "impari" — ma perché hai costruito un sistema di contesto persistente.',
+'Projects con istruzioni su misura. File di contesto. Skill dedicate. Memoria strutturata.',
+'Ogni sessione inizia già a metà strada. Claude non riparte da zero.'],
+'«Il livello 4 non è usare Claude meglio — è costruire la tua versione personalizzata di Claude.»'],
+[3,'Collaborazione iterativa','Il salto qualitativo','~4%',[
+'Non dai un task e aspetti. Lavori INSIEME a Claude.',
+'Proponi, Claude risponde, tu reagisci, Claude affina, tu decidi.',
+'Esempio: costruisci una strategia di lancio dicendo "ho questo problema, queste risorse, questo vincolo — ragioniamoci insieme."',
+'Il risultato è 10x quello del livello 2. Un processo completamente diverso.',
+'Richiede una mentalità diversa: non cerchi la risposta, cerchi il ragionamento.'],null],
+[2,'Esecuzione assistita','Chi "usa bene" Claude','~20%',[
+'Dai un task specifico. Claude lo esegue.',
+'Esempio: "Scrivi una email di follow-up per questo cliente" + contesto allegato.',
+'Output pertinente, utile, abbastanza personalizzato.',
+'Il salto dal livello 1 al 2 richiede solo di dare più contesto. Salto piccolo, impatto grande.'],null],
+[1,'Domanda / Risposta','Qui si ferma il 95%','95%',[
+'Usi Claude come un motore di ricerca evoluto.',
+'Fai una domanda, leggi la risposta, chiudi.',
+'Nessun contesto, nessuna iterazione, nessuna personalizzazione.',
+'Output generici. Utili, ma non trasformativi.',
+'Non è inutile — è il punto di partenza. Ma è solo l\'inizio.'],null]
+],en:[
+[5,'Orchestration','Advanced course + Bootcamp','Future',[
+'Claude handles multiple tasks, multiple agents, multiple flows in parallel.',
+'It doesn\'t work with you — it works while you do something else.',
+'Example: a system that every morning analyzes your industry news, filters the relevant ones, and prepares a ready-made summary.',
+'Advanced-course territory. I name it because I want you to know where the road leads.'],null],
+[4,'Personalized system','Goal of the base course','Goal',[
+'Claude knows you. It knows your work, your tone, your clients, your preferences.',
+'Not because it "learns" — but because you\'ve built a system of persistent context.',
+'Projects with tailored instructions. Context files. Dedicated skills. Structured memory.',
+'Every session starts halfway there. Claude doesn\'t restart from zero.'],
+'"Level 4 isn\'t using Claude better — it\'s building your own personalized version of Claude."'],
+[3,'Iterative collaboration','The quality leap','~4%',[
+'You don\'t give a task and wait. You work TOGETHER with Claude.',
+'You propose, Claude responds, you react, Claude refines, you decide.',
+'Example: you build a launch strategy saying "I have this problem, these resources, this constraint — let\'s reason it through together."',
+'The result is 10x that of level 2. A completely different process.',
+'It requires a different mindset: you don\'t seek the answer, you seek the reasoning.'],null],
+[2,'Assisted execution','Those who "use Claude well"','~20%',[
+'You give a specific task. Claude executes it.',
+'Example: "Write a follow-up email for this client" + attached context.',
+'Relevant, useful, fairly personalized output.',
+'The leap from level 1 to 2 only requires giving more context. Small leap, big impact.'],null],
+[1,'Question / Answer','Where 95% stop','95%',[
+'You use Claude as an evolved search engine.',
+'You ask a question, read the answer, close it.',
+'No context, no iteration, no personalization.',
+'Generic output. Useful, but not transformative.',
+'It\'s not useless — it\'s the starting point. But it\'s only the beginning.'],null]
+]};
+
+var MOTI={it:[
+'Adesso sai a che livello sei. Probabilmente 1 o 2.',
+'Il salto dal livello 1 al livello 4 non richiede anni. Richiede il metodo giusto.',
+'Ogni modulo di questo corso ti porta un livello avanti.',
+'Non è teoria — è pratica che puoi applicare il giorno stesso in cui guardi la lezione.'
+],en:[
+'Now you know what level you\'re at. Probably 1 or 2.',
+'The leap from level 1 to level 4 doesn\'t take years. It takes the right method.',
+'Every module of this course takes you one level forward.',
+'It\'s not theory — it\'s practice you can apply the same day you watch the lesson.'
+]};
+
+var levelColors={1:'var(--gray)',2:'var(--blue)',3:'var(--teal)',4:'var(--accent)',5:'var(--amber)'};
+var levelPcts={1:20,2:40,3:60,4:80,5:100};
+var LANG='it',openLevel=1;
+
+function renderStairs(){
+  document.getElementById('stairs').innerHTML=STEPS[LANG].map(function(s){
+    var lv=s[0];
+    var bullets=s[4].map(function(b){return '<li>'+b+'</li>'}).join('');
+    var key=s[5]?'<div class="step-key">'+s[5]+'</div>':'';
+    return '<div class="step lv'+lv+(lv===openLevel?' on':'')+'" data-level="'+lv+'" onclick="selectStep('+lv+')">'+
+      '<div class="step-top"></div>'+
+      '<div class="step-hd"><div class="step-num">'+lv+'</div>'+
+      '<div class="step-info"><div class="step-name">'+s[1]+'</div><div class="step-tag">'+s[2]+'</div></div>'+
+      '<div class="step-pct">'+s[3]+'</div></div>'+
+      '<div class="step-body"><div class="step-inner"><ul class="step-list">'+bullets+'</ul>'+key+'</div></div>'+
+    '</div>';
+  }).join('');
+}
+function selectStep(lv){
+  openLevel=lv;
+  document.querySelectorAll('.step').forEach(function(s){s.classList.toggle('on',parseInt(s.getAttribute('data-level'))===lv)});
+  var f=document.getElementById('progFill');
+  f.style.width=levelPcts[lv]+'%';f.style.background=levelColors[lv];
+}
+function renderMoti(){
+  document.getElementById('motiList').innerHTML=MOTI[LANG].map(function(m){return '<li>'+m+'</li>'}).join('');
+}
+function pick(btn){
+  document.querySelectorAll('.pick-btn').forEach(function(b){b.classList.remove('sel')});
+  btn.classList.add('sel');
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderStairs();renderMoti();
+  var f=document.getElementById('progFill');f.style.width=levelPcts[openLevel]+'%';f.style.background=levelColors[openLevel];
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

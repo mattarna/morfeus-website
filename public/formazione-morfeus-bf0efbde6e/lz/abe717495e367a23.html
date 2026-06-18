@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File di Contesto e Knowledge Base — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* progress arc */
+.progress-arc{display:flex;align-items:flex-start;justify-content:center;gap:0;margin:0 auto;max-width:520px}
+.arc-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative}
+.arc-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border:2px solid var(--line);color:var(--ink-3);background:var(--card);box-shadow:var(--sh);z-index:1}
+.arc-dot.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.arc-dot.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.arc-label{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.3;max-width:86px}
+.arc-label.active{color:var(--accent);font-weight:600}
+.arc-label.done{color:var(--accent)}
+.arc-line{position:absolute;top:19px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;background:var(--line);z-index:0}
+.arc-step:last-child .arc-line{display:none}
+.arc-line.done{background:var(--accent-line)}
+/* stack visual */
+.stack-visual{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px 26px;margin:0;text-align:center}
+.stack-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:16px}
+.stack-layers{max-width:420px;margin:0 auto}
+.stack-layer{border-radius:var(--r);padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:12px;text-align:left;font-size:13px;transition:.3s}
+.stack-layer:last-child{margin-bottom:0}
+.stack-layer i{font-size:20px;flex-shrink:0}
+.stack-layer .sl-name{font-weight:600;font-size:14px}
+.stack-layer .sl-desc{font-size:12px;opacity:.7;margin-top:2px}
+.layer-active{background:var(--accent);color:#fff;border:2px solid var(--accent);transform:scale(1.02)}
+.layer-done{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.layer-ghost{background:var(--bg-2);color:var(--ink-3);border:1px dashed var(--line-2);opacity:.6}
+.layer-base{background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+/* context type cards */
+.ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.ctx-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 20px;transition:.18s}
+.ctx-card:hover{border-color:var(--line-2)}
+.ctx-card .ctx-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.ctx-card h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.ctx-card ul{list-style:none;padding:0}
+.ctx-card ul li{font-size:12.5px;color:var(--ink-2);padding:4px 0;display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+.ctx-card ul li i{font-size:14px;color:var(--accent);flex-shrink:0;margin-top:2px}
+/* format visual */
+.format-visual{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.fv-header{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.fv-header i{font-size:16px;color:var(--accent)}
+.fv-body{display:grid;grid-template-columns:1fr 1fr;min-height:170px}
+.fv-col{padding:20px}
+.fv-col:first-child{border-right:1px solid var(--line)}
+.fv-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:11px}
+.fv-mock{border-radius:var(--r);padding:14px;font-size:11px;line-height:1.6;background:var(--bg-2);border:1px solid var(--line)}
+.fv-mock .fv-line{height:4px;border-radius:2px;margin-bottom:5px;opacity:.15;background:var(--ink)}
+.fv-mock .fv-heading{height:6px;border-radius:2px;margin-bottom:6px;opacity:.25;background:var(--ink)}
+.fv-note{font-size:11px;color:var(--ink-3);margin-top:9px;line-height:1.45}
+/* timeline */
+.timeline{margin:0}
+.tl-step{display:flex;align-items:flex-start;gap:16px;position:relative;padding-bottom:24px}
+.tl-step:last-child{padding-bottom:0}
+.tl-step::before{content:'';position:absolute;left:19px;top:44px;bottom:0;width:2px;background:var(--line)}
+.tl-step:last-child::before{display:none}
+.tl-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;z-index:1}
+.tl-content{flex:1;padding-top:8px}
+.tl-content strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px}
+.tl-content span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+/* code mock */
+.code-mock{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.cm-header{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.cm-htitle{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.cm-htitle i{font-size:16px;color:var(--accent)}
+.cm-body{padding:20px;font-size:12px;font-family:var(--mono);color:var(--ink-2);line-height:1.8;white-space:pre-line;word-break:break-word}
+.cm-accent{color:var(--accent);font-weight:600}
+.cm-muted{color:var(--ink-3);font-style:italic}
+.cm-body strong{color:var(--ink);font-weight:600}
+.copy-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);font-family:var(--mono);transition:.18s}
+.copy-btn:hover{border-color:var(--accent-line)}
+.prompt-scroll{max-height:300px;overflow-y:auto;white-space:pre-wrap}
+/* tips */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--teal)}.tip.warn .ti-i{background:var(--warn)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--teal)}.tip.warn h4{color:var(--warn)}.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+/* key phrase */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:17px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0;text-align:center}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:8px}
+.bridge p{font-size:15px;color:var(--ink);font-weight:600;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ctx-grid{grid-template-columns:1fr}.fv-body{grid-template-columns:1fr}.fv-col:first-child{border-right:none;border-bottom:1px solid var(--line)}.arc-label{font-size:9px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.copy-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.prompt-scroll{max-height:none!important;overflow:visible!important}.stack-visual,.ctx-card,.format-visual,.timeline,.code-mock,.tip,.kp,.cp,.bridge,.progress-arc,.tl-step{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 3.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Projects</div>
+  <h1 class="rv" data-i="h1">File di Contesto e Knowledge Base</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="progress-arc rv" style="margin-top:34px">
+    <div class="arc-step"><div class="arc-dot done">3.2</div><div class="arc-label done" data-i="arc1"></div><div class="arc-line done"></div></div>
+    <div class="arc-step"><div class="arc-dot active">3.3</div><div class="arc-label active" data-i="arc2"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.4</div><div class="arc-label" data-i="arc3"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.5</div><div class="arc-label" data-i="arc4"></div></div>
+  </div>
+
+  <div class="hook rv" style="margin-top:34px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">01</span><h2 data-i="s1">Cosa stiamo costruendo</h2></div>
+  <div class="stack-visual rv">
+    <div class="stack-label" data-i="stackLabel"></div>
+    <div class="stack-layers">
+      <div class="stack-layer layer-ghost"><i class="ti ti-arrows-split-2"></i><div><div class="sl-name" data-i="sl1N"></div><div class="sl-desc" data-i="sl1D"></div></div></div>
+      <div class="stack-layer layer-active"><i class="ti ti-files"></i><div><div class="sl-name" data-i="sl2N"></div><div class="sl-desc" data-i="sl2D"></div></div></div>
+      <div class="stack-layer layer-done"><i class="ti ti-settings"></i><div><div class="sl-name" data-i="sl3N"></div><div class="sl-desc" data-i="sl3D"></div></div></div>
+      <div class="stack-layer layer-base"><i class="ti ti-folder"></i><div><div class="sl-name" data-i="sl4N"></div><div class="sl-desc" data-i="sl4D"></div></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-info-circle"></i><span class="no">02</span><h2 data-i="s2">Come funzionano</h2></div>
+  <p class="lede-p rv" data-i="cf1"></p>
+  <p class="lede-p rv" data-i="cf2"></p>
+
+  <div class="sh rv"><i class="ti ti-upload"></i><span class="no">03</span><h2 data-i="s3">Cosa caricare per tipo di Project</h2></div>
+  <div class="ctx-grid rv">
+    <div class="ctx-card">
+      <div class="ctx-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-briefcase"></i></div>
+      <h3 data-i="cc1H"></h3>
+      <ul>
+        <li><i class="ti ti-check"></i> <span data-i="cc1a"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc1b"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc1c"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc1d"></span></li>
+      </ul>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-pencil"></i></div>
+      <h3 data-i="cc2H"></h3>
+      <ul>
+        <li><i class="ti ti-check"></i> <span data-i="cc2a"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc2b"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc2c"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc2d"></span></li>
+      </ul>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-icon" style="background:var(--warn-soft);color:var(--warn)"><i class="ti ti-building"></i></div>
+      <h3 data-i="cc3H"></h3>
+      <ul>
+        <li><i class="ti ti-check"></i> <span data-i="cc3a"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc3b"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc3c"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc3d"></span></li>
+      </ul>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-book"></i></div>
+      <h3 data-i="cc4H"></h3>
+      <ul>
+        <li><i class="ti ti-check"></i> <span data-i="cc4a"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc4b"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc4c"></span></li>
+        <li><i class="ti ti-check"></i> <span data-i="cc4d"></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-file-check"></i><span class="no">04</span><h2 data-i="s4">La qualità del formato conta</h2></div>
+  <div class="format-visual rv">
+    <div class="fv-header"><i class="ti ti-file-check"></i> <span data-i="fvHeader"></span></div>
+    <div class="fv-body">
+      <div class="fv-col">
+        <div class="fv-tag" style="background:var(--good-soft);color:var(--good)"><i class="ti ti-check" style="font-size:11px"></i> <span data-i="fvGoodTag"></span></div>
+        <div class="fv-mock">
+          <div class="fv-heading" style="width:40%"></div>
+          <div class="fv-line" style="width:100%"></div>
+          <div class="fv-line" style="width:90%"></div>
+          <div class="fv-line" style="width:95%"></div>
+          <div style="height:8px"></div>
+          <div class="fv-heading" style="width:50%"></div>
+          <div class="fv-line" style="width:100%"></div>
+          <div class="fv-line" style="width:85%"></div>
+          <div class="fv-line" style="width:92%"></div>
+        </div>
+        <p class="fv-note" data-i="fvGoodNote"></p>
+      </div>
+      <div class="fv-col">
+        <div class="fv-tag" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x" style="font-size:11px"></i> <span data-i="fvBadTag"></span></div>
+        <div class="fv-mock">
+          <div class="fv-line" style="width:70%;opacity:.06"></div>
+          <div class="fv-line" style="width:40%;opacity:.04;margin-left:20%"></div>
+          <div class="fv-line" style="width:55%;opacity:.07"></div>
+          <div class="fv-line" style="width:30%;opacity:.03;margin-left:10%"></div>
+          <div style="height:8px"></div>
+          <div class="fv-line" style="width:60%;opacity:.05"></div>
+          <div class="fv-line" style="width:80%;opacity:.04"></div>
+          <div class="fv-line" style="width:25%;opacity:.06;margin-left:15%"></div>
+        </div>
+        <p class="fv-note" data-i="fvBadNote"></p>
+      </div>
+    </div>
+  </div>
+  <div class="tip good rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="fmtTipH"></h4><p data-i="fmtTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-trending-up"></i><span class="no">05</span><h2 data-i="s5">La strategia di progressione</h2></div>
+  <p class="lede-p rv" data-i="progIntro"></p>
+  <div class="timeline rv">
+    <div class="tl-step">
+      <div class="tl-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-calendar-event"></i></div>
+      <div class="tl-content"><strong data-i="tl1H"></strong><span data-i="tl1P"></span></div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-calendar-week"></i></div>
+      <div class="tl-content"><strong data-i="tl2H"></strong><span data-i="tl2P"></span></div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-icon" style="background:var(--good-soft);color:var(--good)"><i class="ti ti-calendar-month"></i></div>
+      <div class="tl-content"><strong data-i="tl3H"></strong><span data-i="tl3P"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-search"></i><span class="no">06</span><h2 data-i="s6">Il file _INDICE.md: il moltiplicatore</h2></div>
+  <p class="lede-p rv" data-i-html="idxIntro"></p>
+  <div class="code-mock rv">
+    <div class="cm-header"><div class="cm-htitle"><i class="ti ti-file-text"></i> <span data-i="idxMockTitle"></span></div></div>
+    <div class="cm-body" data-i-html="idxMockBody"></div>
+  </div>
+  <div class="tip good rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="idxTipH"></h4><p data-i="idxTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-wand"></i><span class="no">07</span><h2 data-i="s7">Bonus: il KB Organizer</h2></div>
+  <p class="lede-p rv" data-i="kbIntro"></p>
+  <div class="code-mock rv">
+    <div class="cm-header">
+      <div class="cm-htitle"><i class="ti ti-wand"></i> <span data-i="kbMockTitle"></span></div>
+      <button class="copy-btn" onclick="copyKB(this)"><i class="ti ti-copy"></i> <span data-i="copyLabel">Copia</span></button>
+    </div>
+    <div id="kb-prompt" class="cm-body prompt-scroll" data-i="kbPrompt"></div>
+  </div>
+  <div class="tip warn rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="kbTipH"></h4><p data-i="kbTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s8">In una frase</h2></div>
+  <div class="kp rv" data-i="keyPhrase"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-rocket"></i><div class="cph" data-i="cpH"></div><p data-i="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">10</span><h2 data-i="s10">Prossimo livello</h2></div>
+  <div class="bridge rv"><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — File di Contesto e Knowledge Base</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 3.3',pdfT:'Scarica PDF',themeT:'Cambia tema',copyLabel:'Copia',eyebrow:'Projects',
+h1:'File di Contesto e Knowledge Base',
+lede:'Le istruzioni dicono a Claude come comportarsi. I file gli dicono cosa sa. Questo è il secondo ingrediente di un Project potente — la memoria di lungo termine.',
+arc1:'Istruzioni',arc2:'File di contesto',arc3:'Più Projects',arc4:'Concatenare output',
+hook:'«Avete un Project con le istruzioni perfette. Ma Claude ancora non conosce il vostro cliente, il vostro stile di scrittura, i vostri template, il vostro settore. I file di contesto sono la memoria di lungo termine del vostro Claude specializzato.»',
+s1:'Cosa stiamo costruendo',
+stackLabel:'Anatomia di un Project — Livello 2 di 4',
+sl1N:'Più Projects in parallelo',sl1D:'Lezione 3.4',
+sl2N:'File di contesto',sl2D:'Questa lezione',
+sl3N:'Istruzioni personalizzate',sl3D:'Lezione 3.2 ✓',
+sl4N:'Project (contenitore)',sl4D:'Lezione 3.1 ✓',
+s2:'Come funzionano',
+cf1:'Ogni Project ha una sezione dove caricate file permanenti. Questi file non scadono — restano nel Project finché non li rimuovete. Claude li legge in aggiunta alle istruzioni, per ogni conversazione.',
+cf2:'Formati supportati: PDF, documenti di testo, codice, CSV e altri. Il limite totale è la finestra di contesto del Project (200K token) — molto spazio per la maggior parte degli usi.',
+s3:'Cosa caricare per tipo di Project',
+cc1H:'Project Cliente',
+cc1a:'Profilo cliente (settore, obiettivi)',cc1b:'Storico comunicazioni rilevanti',cc1c:'Contratto o accordo (scope e vincoli)',cc1d:'Feedback e note dal passato',
+cc2H:'Project Contenuti',
+cc2a:'Linee guida editoriali (tono, stile)',cc2b:'Esempi di contenuti passati',cc2c:'Calendario editoriale',cc2d:'Template che usate di frequente',
+cc3H:'Project Interno',
+cc3a:'Procedure operative standard',cc3b:'FAQ interne',cc3c:'Organigramma e ruoli rilevanti',cc3d:'Prezziario o listino',
+cc4H:'Project Personale',
+cc4a:'Articoli e paper di riferimento',cc4b:'Note che avete già preso',cc4c:'Framework concettuali',cc4d:'Materiali di studio',
+s4:'La qualità del formato conta',
+fvHeader:'Stesso contenuto, formato diverso → risultati diversi',
+fvGoodTag:'File ben strutturato',
+fvGoodNote:'Titoli chiari, sezioni logiche, testo pulito. Claude lo capisce perfettamente.',
+fvBadTag:'PDF scansionato male',
+fvBadNote:'Testo illeggibile, layout frammentato. Claude non può estrarne il contenuto.',
+fmtTipH:'Formato ideale',
+fmtTipP:'Testo pulito, strutturato, con titoli. Un documento Word o Google Docs esportato in PDF funziona bene. Una nota testuale semplice funziona benissimo. Evitate scan di documenti cartacei e PDF con formattazione pesante.',
+s5:'La strategia di progressione',
+progIntro:'Non cercate di caricare tutto subito. I Projects crescono nel tempo — come un archivio di lavoro, non come un modulo da compilare una volta.',
+tl1H:'Primo giorno',tl1P:'Caricate i 2-3 documenti più importanti per quel contesto. Il minimo indispensabile per partire.',
+tl2H:'Prima settimana',tl2P:'Aggiungete quello che vi accorgete mancare mentre lavorate. "Claude non sapeva che..." → cercate il documento e caricatelo.',
+tl3H:'Dopo un mese',tl3P:'Avete una knowledge base solida costruita dal lavoro reale. Il vostro Claude specializzato ha già letto tutto.',
+s6:'Il file _INDICE.md: il moltiplicatore',
+idxIntro:'Claude vede i file nella KB, ma non sa il loro scopo né quando usarli. Senza una guida, pesca a caso. La soluzione è creare un file <strong>_INDICE.md</strong> che fa da mappa di navigazione.',
+idxMockTitle:'_INDICE.md — esempio',
+idxMockBody:'<span class="cm-accent"># Indice Knowledge Base — Strategia GTM Alfa SRL</span>\n\n<span class="cm-accent">## Documenti principali</span>\n— <strong>brief_cliente.pdf</strong> — Situazione attuale, problemi dichiarati, budget. Consultalo per qualsiasi domanda sul contesto del cliente.\n— <strong>competitor_analysis.xlsx</strong> — 5 competitor tedeschi con prezzi, posizionamento, punti deboli. Usalo per analisi competitive.\n— <strong>mercato_germania_2024.pdf</strong> — Report di settore: dimensione mercato, trend, normative. Reference per dati di mercato.\n\n<span class="cm-accent">## Documenti di supporto</span>\n— <strong>note_call_onboarding.md</strong> — Trascrizione call iniziale col CEO. Include priorità non scritte nel brief.\n— <strong>brand_guidelines.pdf</strong> — Tono di voce e visual identity. Usalo quando produci materiali per il cliente.\n\n<span class="cm-muted">## Note\n— I dati competitor sono aggiornati a marzo 2024\n— Il budget nel brief è indicativo, la cifra finale dipende dall\'approvazione del board</span>',
+idxTipH:'Quando usare l\'indice inline vs il file',
+idxTipP:'Se hai 3-5 file, l\'indice può stare direttamente nelle istruzioni del Project (Blocco 3 della lezione 3.2). Se hai 8+ file, crea un file _INDICE.md separato nella KB e nelle istruzioni scrivi "Consulta _INDICE.md per la mappa dei documenti." Tieni l\'underscore nel nome: così appare sempre in cima alla lista dei file.',
+s7:'Bonus: il KB Organizer',
+kbIntro:'Hai tanti documenti e non sai da dove partire? Usa questo prompt: allega i tuoi file a Claude, incolla il prompt, e Claude fa un assessment completo. Ti restituisce l\'indice pronto, il blocco da incollare nelle istruzioni del Project, e i suggerimenti su cosa includere o escludere.',
+kbMockTitle:'KB Organizer — Prompt',
+kbPrompt:'Organizza la mia knowledge base per un Project Claude. Devi trasformare i documenti che ti fornisco in una KB strutturata, con un indice navigabile e una mappa pronta per le istruzioni del Project.\n\nFASE 1 — Assessment (fai queste domande PRIMA di procedere)\n\n1. Qual è l\'obiettivo del Project? (cosa devi aiutarmi a fare con questi documenti)\n2. Che tipo di domande farai a Claude in questo Project? (analisi, scrittura, decisioni, ricerca, altro)\n3. Ci sono documenti più importanti di altri? Se sì, quali e perché?\n4. Ci sono informazioni sensibili che NON devono finire nella KB?\n5. Quanto è grande il set di documenti? (approssimativo: 5 file, 20 file, 50+)\n\nSe alcune risposte sono già evidenti dai documenti allegati, salta quelle domande.\n\nFASE 2 — Analisi e catalogazione\n\nAnalizza ogni documento e identifica: tipo, contenuto chiave (3-5 punti), utilità per il Project (alta/media/bassa), e suggerimento (includere, escludere, o sintetizzare).\n\nPresenta in tabella ordinata per utilità. Se i documenti sono più di 10, lavora a batch di 10.\n\nFASE 3 — Output strutturato\n\nDopo la mia approvazione, produci:\n\n1. _INDICE.md — File da caricare nella KB con la lista completa dei documenti e descrizioni\n2. Blocco "Mappa KB" — Testo pronto da incollare nelle istruzioni del Project\n3. Raccomandazioni — File da escludere (con motivo), file da sintetizzare, file mancanti, suggerimenti di naming\n\nRegole:\n— NON procedere alla Fase 2 senza aver completato l\'assessment\n— Non inventare contenuti dei documenti\n— Ordina sempre per rilevanza rispetto all\'obiettivo\n— Presenta i deliverable dentro blocchi di codice markdown per facilitare la copiatura',
+kbTipH:'Come usare il KB Organizer',
+kbTipP:'Apri una nuova chat Claude (non dentro il Project). Allega tutti i tuoi documenti, incolla il prompt, e segui il processo in 3 fasi. Alla fine avrai i materiali pronti da caricare nel Project.',
+s8:'In una frase',
+keyPhrase:'«Il knowledge base di un Project è la differenza tra un assistente che dovete briefare ogni volta e uno che ha già letto tutto. Più lo nutrite, meno dovete spiegare. E con un indice strutturato, Claude sa esattamente dove cercare.»',
+s9:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Hai due strade. Se hai pochi file (3-5): caricali e scrivi l\'indice a mano nelle istruzioni del Project. Se hai tanti documenti: usa il KB Organizer qui sopra, allega tutto a Claude, e lascia che organizzi lui. In entrambi i casi, il risultato è una KB navigabile, non un mucchio di file.',
+s10:'Prossimo livello',
+brK:'Prossimo livello →',
+brP:'Istruzioni scritte, file caricati. Il vostro Claude specializzato è pronto. Adesso scalate: non uno, ma più Projects in parallelo.',
+foot:'Morfeus — File di Contesto e Knowledge Base'
+},
+en:{
+kicker:'Lesson 3.3',pdfT:'Download PDF',themeT:'Toggle theme',copyLabel:'Copy',eyebrow:'Projects',
+h1:'Context Files and Knowledge Base',
+lede:'Instructions tell Claude how to behave. Files tell it what it knows. This is the second ingredient of a powerful Project — long-term memory.',
+arc1:'Instructions',arc2:'Context files',arc3:'Multiple Projects',arc4:'Chaining output',
+hook:'"You have a Project with perfect instructions. But Claude still doesn\'t know your client, your writing style, your templates, your sector. Context files are the long-term memory of your specialized Claude."',
+s1:'What we\'re building',
+stackLabel:'Anatomy of a Project — Layer 2 of 4',
+sl1N:'Multiple Projects in parallel',sl1D:'Lesson 3.4',
+sl2N:'Context files',sl2D:'This lesson',
+sl3N:'Custom instructions',sl3D:'Lesson 3.2 ✓',
+sl4N:'Project (container)',sl4D:'Lesson 3.1 ✓',
+s2:'How they work',
+cf1:'Every Project has a section where you upload permanent files. These files don\'t expire — they stay in the Project until you remove them. Claude reads them in addition to the instructions, for every conversation.',
+cf2:'Supported formats: PDF, text documents, code, CSV and others. The total limit is the Project\'s context window (200K tokens) — plenty of room for most uses.',
+s3:'What to upload by type of Project',
+cc1H:'Client Project',
+cc1a:'Client profile (sector, objectives)',cc1b:'Relevant communication history',cc1c:'Contract or agreement (scope and constraints)',cc1d:'Feedback and notes from the past',
+cc2H:'Content Project',
+cc2a:'Editorial guidelines (tone, style)',cc2b:'Examples of past content',cc2c:'Editorial calendar',cc2d:'Templates you use frequently',
+cc3H:'Internal Project',
+cc3a:'Standard operating procedures',cc3b:'Internal FAQs',cc3c:'Org chart and relevant roles',cc3d:'Price list or rate card',
+cc4H:'Personal Project',
+cc4a:'Reference articles and papers',cc4b:'Notes you\'ve already taken',cc4c:'Conceptual frameworks',cc4d:'Study materials',
+s4:'Format quality matters',
+fvHeader:'Same content, different format → different results',
+fvGoodTag:'Well-structured file',
+fvGoodNote:'Clear titles, logical sections, clean text. Claude understands it perfectly.',
+fvBadTag:'Badly scanned PDF',
+fvBadNote:'Unreadable text, fragmented layout. Claude can\'t extract the content.',
+fmtTipH:'Ideal format',
+fmtTipP:'Clean, structured text, with titles. A Word or Google Docs document exported to PDF works well. A simple text note works perfectly. Avoid scans of paper documents and PDFs with heavy formatting.',
+s5:'The progression strategy',
+progIntro:'Don\'t try to upload everything at once. Projects grow over time — like a working archive, not a form to fill in once.',
+tl1H:'Day one',tl1P:'Upload the 2-3 most important documents for that context. The bare minimum to get started.',
+tl2H:'First week',tl2P:'Add what you notice is missing as you work. "Claude didn\'t know that..." → find the document and upload it.',
+tl3H:'After a month',tl3P:'You have a solid knowledge base built from real work. Your specialized Claude has already read everything.',
+s6:'The _INDEX.md file: the multiplier',
+idxIntro:'Claude sees the files in the KB, but doesn\'t know their purpose or when to use them. Without a guide, it fishes at random. The solution is to create an <strong>_INDEX.md</strong> file that acts as a navigation map.',
+idxMockTitle:'_INDEX.md — example',
+idxMockBody:'<span class="cm-accent"># Knowledge Base Index — GTM Strategy Alfa SRL</span>\n\n<span class="cm-accent">## Main documents</span>\n— <strong>client_brief.pdf</strong> — Current situation, stated problems, budget. Consult it for any question about the client\'s context.\n— <strong>competitor_analysis.xlsx</strong> — 5 German competitors with prices, positioning, weaknesses. Use it for competitive analysis.\n— <strong>germany_market_2024.pdf</strong> — Industry report: market size, trends, regulations. Reference for market data.\n\n<span class="cm-accent">## Supporting documents</span>\n— <strong>onboarding_call_notes.md</strong> — Transcript of the initial call with the CEO. Includes priorities not written in the brief.\n— <strong>brand_guidelines.pdf</strong> — Tone of voice and visual identity. Use it when producing materials for the client.\n\n<span class="cm-muted">## Notes\n— Competitor data is updated to March 2024\n— The budget in the brief is indicative, the final figure depends on board approval</span>',
+idxTipH:'When to use the inline index vs the file',
+idxTipP:'If you have 3-5 files, the index can sit directly in the Project instructions (Block 3 of lesson 3.2). If you have 8+ files, create a separate _INDEX.md file in the KB and in the instructions write "Consult _INDEX.md for the document map." Keep the underscore in the name: that way it always appears at the top of the file list.',
+s7:'Bonus: the KB Organizer',
+kbIntro:'Have lots of documents and don\'t know where to start? Use this prompt: attach your files to Claude, paste the prompt, and Claude does a complete assessment. It gives you back the ready index, the block to paste into the Project instructions, and suggestions on what to include or exclude.',
+kbMockTitle:'KB Organizer — Prompt',
+kbPrompt:'Organize my knowledge base for a Claude Project. You must turn the documents I provide into a structured KB, with a navigable index and a map ready for the Project instructions.\n\nPHASE 1 — Assessment (ask these questions BEFORE proceeding)\n\n1. What is the objective of the Project? (what should you help me do with these documents)\n2. What kind of questions will you ask Claude in this Project? (analysis, writing, decisions, research, other)\n3. Are some documents more important than others? If so, which ones and why?\n4. Is there sensitive information that must NOT end up in the KB?\n5. How large is the document set? (approximate: 5 files, 20 files, 50+)\n\nIf some answers are already evident from the attached documents, skip those questions.\n\nPHASE 2 — Analysis and cataloging\n\nAnalyze each document and identify: type, key content (3-5 points), usefulness for the Project (high/medium/low), and suggestion (include, exclude, or summarize).\n\nPresent it in a table sorted by usefulness. If there are more than 10 documents, work in batches of 10.\n\nPHASE 3 — Structured output\n\nAfter my approval, produce:\n\n1. _INDEX.md — File to upload to the KB with the complete list of documents and descriptions\n2. "KB Map" block — Text ready to paste into the Project instructions\n3. Recommendations — Files to exclude (with reason), files to summarize, missing files, naming suggestions\n\nRules:\n— Do NOT proceed to Phase 2 without completing the assessment\n— Don\'t make up the documents\' contents\n— Always sort by relevance to the objective\n— Present the deliverables inside markdown code blocks to make copying easier',
+kbTipH:'How to use the KB Organizer',
+kbTipP:'Open a new Claude chat (not inside the Project). Attach all your documents, paste the prompt, and follow the 3-phase process. At the end you\'ll have the materials ready to upload to the Project.',
+s8:'In one sentence',
+keyPhrase:'"A Project\'s knowledge base is the difference between an assistant you have to brief every time and one that has already read everything. The more you feed it, the less you have to explain. And with a structured index, Claude knows exactly where to look."',
+s9:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'You have two routes. If you have few files (3-5): upload them and write the index by hand in the Project instructions. If you have lots of documents: use the KB Organizer above, attach everything to Claude, and let it do the organizing. Either way, the result is a navigable KB, not a pile of files.',
+s10:'Next level',
+brK:'Next level →',
+brP:'Instructions written, files uploaded. Your specialized Claude is ready. Now you scale: not one, but multiple Projects in parallel.',
+foot:'Morfeus — Context Files and Knowledge Base'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+function copyKB(btn){
+  var el=document.getElementById('kb-prompt');
+  navigator.clipboard.writeText(el.innerText).then(function(){
+    var lbl=LANG==='it'?'Copiato!':'Copied!';
+    btn.innerHTML='<i class="ti ti-check"></i> '+lbl;
+    btn.style.color='var(--teal)';btn.style.borderColor='var(--teal)';
+    setTimeout(function(){
+      btn.innerHTML='<i class="ti ti-copy"></i> '+DICT[LANG].copyLabel;
+      btn.style.color='';btn.style.borderColor='';
+    },2500);
+  });
+}
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

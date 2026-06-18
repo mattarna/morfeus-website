@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le quattro funzioni del contesto persistente — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:640px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* explore counter */
+.expl{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-bottom:14px}
+.expl span{color:var(--accent);font-weight:700}
+/* function cards */
+.fn-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fn-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px 20px;cursor:pointer;transition:.3s;position:relative;overflow:hidden}
+.fn-card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.fn-card.on{transform:translateY(-2px)}
+.fn-card[data-fn="orient"].on{border-color:var(--accent)}
+.fn-card[data-fn="calib"].on{border-color:var(--blue)}
+.fn-card[data-fn="effic"].on{border-color:var(--teal)}
+.fn-card[data-fn="qual"].on{border-color:var(--amber)}
+.fn-card.related{animation:relpulse .7s ease-out}
+@keyframes relpulse{0%{box-shadow:var(--sh)}35%{box-shadow:0 0 0 5px var(--accent-line)}100%{box-shadow:var(--sh)}}
+.fn-rtag{position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.04em;padding:2px 9px;border-radius:12px;opacity:0;transition:opacity .4s;pointer-events:none}
+.fn-card[data-fn="orient"] .fn-rtag{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.fn-card[data-fn="calib"] .fn-rtag{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.fn-card[data-fn="effic"] .fn-rtag{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.fn-card[data-fn="qual"] .fn-rtag{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.fn-card.relon .fn-rtag{opacity:1}
+.fn-top{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+.fn-ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.fn-card[data-fn="orient"] .fn-ic{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.fn-card[data-fn="calib"] .fn-ic{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.fn-card[data-fn="effic"] .fn-ic{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.fn-card[data-fn="qual"] .fn-ic{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.fn-lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:2px}
+.fn-name{font-size:18px;font-weight:600}
+.fn-card[data-fn="orient"] .fn-name{color:var(--accent)}
+.fn-card[data-fn="calib"] .fn-name{color:var(--blue)}
+.fn-card[data-fn="effic"] .fn-name{color:var(--teal)}
+.fn-card[data-fn="qual"] .fn-name{color:var(--amber)}
+.fn-kw{font-size:12.5px;color:var(--ink-3);margin-bottom:12px;font-style:italic}
+.fn-desc{font-size:13.5px;color:var(--ink-2);line-height:1.6;margin-bottom:14px}
+.fn-bul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.fn-bul li{font-size:12.5px;color:var(--ink-2);padding-left:15px;position:relative;line-height:1.45}
+.fn-bul li::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%}
+.fn-card[data-fn="orient"] .fn-bul li::before{background:var(--accent)}
+.fn-card[data-fn="calib"] .fn-bul li::before{background:var(--blue)}
+.fn-card[data-fn="effic"] .fn-bul li::before{background:var(--teal)}
+.fn-card[data-fn="qual"] .fn-bul li::before{background:var(--amber)}
+.fn-detail{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.fn-card.on .fn-detail{max-height:300px}
+.fn-exp{display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:10px;transition:opacity .3s}
+.fn-card.on .fn-exp{opacity:0}
+/* demo */
+.dsub{font-size:14.5px;color:var(--ink-2);margin-bottom:18px;max-width:620px}
+.q-nav{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.q-tabs{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+.q-tab{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:.18s;white-space:nowrap}
+.q-tab:hover{border-color:var(--line-2);color:var(--ink-2)}
+.q-tab.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.q-arrows{display:flex;gap:6px}
+.q-arrow{background:var(--card);border:1px solid var(--line);color:var(--ink-3);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:var(--sh);transition:.18s}
+.q-arrow:hover{border-color:var(--line-2);color:var(--ink)}
+.q-arrow:disabled{opacity:.35;cursor:default}
+.q-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 11px;border-radius:12px;margin-bottom:16px}
+.q-badge.operativa{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.q-badge.analitica{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.q-badge.strategica{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+/* toggle */
+.tg-bar{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:22px}
+.tg-lbl{font-size:13.5px;font-weight:600;color:var(--ink-3);transition:color .3s}
+.tg-lbl.act{color:var(--ink)}
+.tg-track{width:56px;height:30px;border-radius:15px;cursor:pointer;position:relative;transition:background .3s}
+.tg-track.off{background:var(--bad-line)}
+.tg-track.on{background:var(--green)}
+.tg-knob{position:absolute;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .3s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tg-track.off .tg-knob{left:3px}
+.tg-track.on .tg-knob{left:29px}
+/* chat box */
+.chat-box{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;transition:border-color .3s}
+.chat-box.has-ctx{border-color:var(--green-line)}
+.chat-head{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink-3)}
+.chat-head .dot{width:8px;height:8px;border-radius:50%;transition:background .3s}
+.chat-box.no-ctx .chat-head .dot{background:var(--bad)}
+.chat-box.has-ctx .chat-head .dot{background:var(--green)}
+.chat-prompt{padding:15px 18px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink);background:var(--bg-2)}
+.chat-prompt .who{font-family:var(--mono);color:var(--ink-3);font-size:11px;display:block;margin-bottom:4px}
+.chat-resp{padding:18px;min-height:180px;transition:opacity .25s}
+.chat-resp.fading{opacity:0}
+.chat-resp p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:9px}
+.chat-resp .tag{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
+.chat-resp .tag.generic{color:var(--bad)}
+.chat-resp .tag.specific{color:var(--green)}
+.chat-resp ul{list-style:disc;padding-left:20px;margin-bottom:9px}
+.chat-resp ul li{font-size:13.5px;color:var(--ink-2);margin-bottom:4px;line-height:1.55}
+.chat-resp .note-it{margin-top:12px;font-size:12.5px;color:var(--ink-3);font-style:italic}
+.q-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.q-dot{width:6px;height:6px;border-radius:50%;background:var(--line-2);transition:all .25s;cursor:pointer}
+.q-dot.on{width:18px;border-radius:3px;background:var(--accent)}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .emphasis{display:block;margin-top:14px;font-size:14.5px;color:var(--ink-2);font-weight:400;line-height:1.65}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0;display:flex;align-items:center;gap:18px}
+.bridge>i{font-size:26px;color:var(--agent);flex-shrink:0}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:6px}
+.bridge p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.fn-grid{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.q-arrows,.q-dots,.tg-bar{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.fn-card .fn-detail{max-height:none!important}.note,.fn-card,.chat-box,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 5.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Workspace avanzato</div>
+  <h1 class="rv" data-i="h1">Le quattro funzioni del contesto</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-brain"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-apps"></i><span class="no">01</span><h2 data-i="s1">Le quattro funzioni</h2></div>
+  <div class="expl rv">Funzioni esplorate: <span id="fnCount">0</span>/4</div>
+  <div class="fn-grid rv" id="fnGrid"></div>
+
+  <div class="sh rv"><i class="ti ti-device-desktop"></i><span class="no">02</span><h2 data-i="s2">Stessa domanda, risultato diverso</h2></div>
+  <p class="dsub rv" data-i="dsub"></p>
+
+  <div class="q-nav rv">
+    <div class="q-tabs">
+      <div class="q-tab on" onclick="goToQ(0)" data-i="qt0">Operativa</div>
+      <div class="q-tab" onclick="goToQ(1)" data-i="qt1">Analitica</div>
+      <div class="q-tab" onclick="goToQ(2)" data-i="qt2">Strategica</div>
+    </div>
+    <div class="q-arrows">
+      <button class="q-arrow" id="qPrev" onclick="prevQ()" disabled><i class="ti ti-chevron-left"></i></button>
+      <button class="q-arrow" id="qNext" onclick="nextQ()"><i class="ti ti-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <div id="qBadge" class="q-badge operativa rv"><i class="ti ti-bolt"></i> <span id="qBadgeTxt"></span></div>
+
+  <div class="tg-bar rv">
+    <div class="tg-lbl act" id="lblOff" data-i="lblOff">Senza contesto</div>
+    <div class="tg-track off" id="ctxToggle" onclick="toggleCtx()"><div class="tg-knob"></div></div>
+    <div class="tg-lbl" id="lblOn" data-i="lblOn">Con contesto</div>
+  </div>
+
+  <div class="rv">
+    <div class="chat-box no-ctx" id="chatBox">
+      <div class="chat-head"><div class="dot"></div><span id="chatLabel"></span></div>
+      <div class="chat-prompt"><span class="who" data-i="youLbl">Tu:</span><span id="chatQuestion"></span></div>
+      <div class="chat-resp" id="chatResp"></div>
+    </div>
+    <div class="q-dots">
+      <div class="q-dot on" onclick="goToQ(0)"></div>
+      <div class="q-dot" onclick="goToQ(1)"></div>
+      <div class="q-dot" onclick="goToQ(2)"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">03</span><h2 data-i="s3">In una frase</h2></div>
+  <div class="key rv"><p data-i="key1"></p><span class="emphasis" data-i="key1b"></span></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">04</span><h2 data-i="s4">Prossimo passo</h2></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right"></i><div><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Le quattro funzioni del contesto persistente</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 5.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Workspace avanzato',
+h1:'Le quattro funzioni del contesto',
+lede:'Quando date a Claude chi siete, cosa fate, e come lavorate, si attivano quattro funzioni precise. Capirle vi permette di costruire il contesto nel modo giusto.',
+hookH:'L\'idea',
+hookP:'Quando date a Claude chi siete, cosa fate, e come lavorate, si attivano quattro funzioni precise. Capirle vi permette di costruire il contesto nel modo giusto.',
+s1:'Le quattro funzioni',
+s2:'Stessa domanda, risultato diverso',
+dsub:'Scegliete il tipo di domanda, poi attivate il contesto per vedere come cambia la risposta di Claude.',
+qt0:'Operativa',qt1:'Analitica',qt2:'Strategica',
+youLbl:'Tu:',
+lblOff:'Senza contesto',lblOn:'Con contesto',
+s3:'In una frase',
+key1:'La qualità dell\'output è sempre proporzionale alla qualità del contesto.',
+key1b:'Non c\'è eccezione a questa regola. Il contesto persistente non fa lavorare Claude di più. Lo fa lavorare meglio, perché parte già sapendo quello che conta.',
+s4:'Prossimo passo',
+brK:'Prossimo passo →',
+brP:'Sai perché il contesto è importante e cosa fa. Adesso il nodo pratico: come si scrivono bene le istruzioni? Perché le istruzioni mal scritte sono quasi peggio di non averne.',
+foot:'Morfeus — Le quattro funzioni del contesto persistente'
+},
+en:{
+kicker:'Lesson 5.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced workspace',
+h1:'The four functions of context',
+lede:'When you give Claude who you are, what you do, and how you work, four precise functions kick in. Understanding them lets you build context the right way.',
+hookH:'The idea',
+hookP:'When you give Claude who you are, what you do, and how you work, four precise functions kick in. Understanding them lets you build context the right way.',
+s1:'The four functions',
+s2:'Same question, different result',
+dsub:'Choose the type of question, then turn context on to see how Claude\'s answer changes.',
+qt0:'Operational',qt1:'Analytical',qt2:'Strategic',
+youLbl:'You:',
+lblOff:'Without context',lblOn:'With context',
+s3:'In one sentence',
+key1:'The quality of the output is always proportional to the quality of the context.',
+key1b:'There is no exception to this rule. Persistent context doesn\'t make Claude work harder. It makes it work better, because it starts out already knowing what matters.',
+s4:'Next step',
+brK:'Next step →',
+brP:'You know why context matters and what it does. Now the practical knot: how do you write good instructions? Because badly written instructions are almost worse than none.',
+foot:'Morfeus — The four functions of persistent context'
+}};
+
+var FNS={it:[
+['orient','ti-compass','Funzione 1','Orientamento','Produce pertinenza','Senza contesto, Claude non sa chi siete. Risponde come se parlasse con chiunque: generico, prudente, neutro.',['Sa che siete un consulente marketing, non un ingegnere','Sa che il vostro cliente è una PMI, non un e-commerce','Sa che lavorate in italiano, con clienti italiani']],
+['calib','ti-adjustments-horizontal','Funzione 2','Calibrazione','Elimina il lavoro di correzione','Claude ha un modo di rispondere di default. Con il contesto, lo calibrate sul vostro stile.',['Tono: formale o informale? Tecnico o divulgativo?','Lunghezza: risposte brevi o articolate?','Formato: testo libero o strutturato?','Cosa evitare: disclaimer eccessivi? Linguaggio prudente?']],
+['effic','ti-clock-bolt','Funzione 3','Efficienza','Risparmia tempo su ogni interazione','Ogni messaggio che non dovete scrivere per spiegare il contesto è tempo risparmiato. Ogni risposta che non dovete correggere è energia risparmiata.',['30-50 interazioni al giorno: la differenza si accumula','"Devo rispiegare tutto" vs "Claude sa già"','Il risparmio reale vale ore alla settimana']],
+['qual','ti-diamond','Funzione 4','Qualità','Più contesto = output migliore','La qualità non viene dall\'intelligenza di Claude. Viene dalla qualità del contesto che gli date.',['Stesso Claude, contesto ricco vs contesto vuoto','Più sa di voi, del settore, del cliente, dello stile','Meno revisione necessaria, più output utili subito']]
+],en:[
+['orient','ti-compass','Function 1','Orientation','Produces relevance','Without context, Claude doesn\'t know who you are. It answers as if talking to anyone: generic, cautious, neutral.',['It knows you\'re a marketing consultant, not an engineer','It knows your client is an SME, not an e-commerce','It knows you work in Italian, with Italian clients']],
+['calib','ti-adjustments-horizontal','Function 2','Calibration','Eliminates correction work','Claude has a default way of answering. With context, you calibrate it to your style.',['Tone: formal or informal? Technical or accessible?','Length: short or detailed answers?','Format: free text or structured?','What to avoid: excessive disclaimers? Cautious language?']],
+['effic','ti-clock-bolt','Function 3','Efficiency','Saves time on every interaction','Every message you don\'t have to write to explain context is time saved. Every answer you don\'t have to correct is energy saved.',['30-50 interactions a day: the difference adds up','"I have to re-explain everything" vs "Claude already knows"','The real saving is worth hours a week']],
+['qual','ti-diamond','Function 4','Quality','More context = better output','Quality doesn\'t come from Claude\'s intelligence. It comes from the quality of the context you give it.',['Same Claude, rich context vs empty context','The more it knows about you, the sector, the client, the style','Less revision needed, more useful output right away']]
+]};
+
+var RELMAP={
+  it:{orient:'→ Calibrazione',calib:'→ Efficienza',effic:'→ Qualità',qual:'→ Orientamento'},
+  en:{orient:'→ Calibration',calib:'→ Efficiency',effic:'→ Quality',qual:'→ Orientation'}
+};
+var RELNEXT={orient:'calib',calib:'effic',effic:'qual',qual:'orient'};
+
+var QUESTIONS={it:[
+  {type:'operativa',typeLabel:'Domanda operativa',typeIcon:'ti-bolt',
+   text:'Scrivi una email di follow-up dopo una call commerciale.',
+   contextLabel:'Project: Account Manager B2B',
+   genericLabel:'Chat generica',
+   without:{tag:'Risposta generica',note:'Non sa nulla di voi: settore, cliente, tono. Produce una email formale e generica che potrebbe usare chiunque.',
+     body:'<p>Oggetto: Follow-up alla nostra call</p><p>Gentile [Nome],</p><p>La ringrazio per il tempo dedicatoci durante la nostra call. Come discusso, le invio un riepilogo dei punti principali.</p><ul><li>Abbiamo presentato i nostri servizi</li><li>Valuterà la proposta entro la settimana</li><li>Ci aggiorneremo entro venerdì</li></ul><p>Rimango a disposizione per qualsiasi domanda. Cordiali saluti.</p>'},
+   with:{tag:'Risposta calibrata',note:'Sa che lavorate nel software B2B, che il prospect è un responsabile IT di una media impresa, e che il vostro tono è diretto ma non formale.',
+     body:'<p>Oggetto: Riepilogo call — integrazione ERP e prossimi passi</p><p>Ciao Marco,</p><p>Grazie per la call di oggi. Tre cose che ci siamo detti:</p><ul><li>Il vostro collo di bottiglia principale è l\'import dati da SAP — affrontiamo quello per primo</li><li>Avete bisogno di essere operativi entro Q2: fattibile con il piano base, non con il custom</li><li>Ti mando la demo dell\'API connector entro giovedì</li></ul><p>Ti va bene un check rapido venerdì mattina per vedere la demo insieme?</p>'}},
+  {type:'analitica',typeLabel:'Domanda analitica',typeIcon:'ti-chart-bar',
+   text:'Il nostro tasso di conversione è sceso del 12% nell\'ultimo trimestre. Cosa analizzo prima?',
+   contextLabel:'Project: Growth Lead – SaaS B2C',
+   genericLabel:'Chat generica',
+   without:{tag:'Risposta generica',note:'Risponde con un framework da manuale, valido per qualsiasi azienda. Nessuna priorità reale, nessun contesto sul vostro modello.',
+     body:'<p>Per analizzare un calo del tasso di conversione, valutate questi fattori:</p><ul><li>Traffico: qualità e quantità delle visite</li><li>Landing page: messaggi, design, caricamento</li><li>Funnel: dove avvengono le uscite</li><li>Offerta: prezzo, posizionamento, competitor</li><li>Stagionalità: confronto anno precedente</li></ul><p>Raccogliete i dati e identificate il punto di maggiore attrito.</p>'},
+   with:{tag:'Risposta calibrata',note:'Sa che gestite un SaaS B2C con trial gratuito di 14 giorni e che il Q1 è storicamente più debole. Suggerisce dove guardare davvero.',
+     body:'<p>Con un trial da 14 giorni, il calo del 12% può stare in tre posti — in ordine di probabilità per un SaaS B2C:</p><ul><li><strong>Attivazione nei primi 3 giorni</strong>: è il momento più critico. Controllate il drop tra signup e primo evento di valore</li><li><strong>Email di nurturing durante il trial</strong>: se le open rate sono calate, il problema è lì prima ancora della conversione</li><li><strong>Confronto Q4 vs Q1</strong>: il vostro storico mostra tipicamente -8/10% in questo periodo — state vedendo un calo anomalo o nella norma?</li></ul><p>Iniziate dall\'attivazione: è modificabile in giorni, non settimane.</p>'}},
+  {type:'strategica',typeLabel:'Domanda strategica',typeIcon:'ti-map-2',
+   text:'Dovremmo espanderci in un nuovo mercato geografico il prossimo anno?',
+   contextLabel:'Project: CEO – Startup Logistica',
+   genericLabel:'Chat generica',
+   without:{tag:'Risposta generica',note:'Elenca i criteri da manuale per valutare l\'espansione geografica. Niente di sbagliato, ma non decide nulla e non sa nulla del vostro contesto.',
+     body:'<p>Prima di espandervi in un nuovo mercato geografico, valutate:</p><ul><li>Dimensione e crescita del mercato target</li><li>Competizione locale e barriere all\'ingresso</li><li>Risorse necessarie (team, capitale, infrastruttura)</li><li>Rischi regolatori e operativi</li><li>Timing rispetto alla maturità del business attuale</li></ul><p>Una due diligence approfondita vi aiuterà a prendere la decisione giusta.</p>'},
+   with:{tag:'Risposta calibrata',note:'Sa che siete una startup di logistica last-mile in Italia, con operations consolidate su 3 città, 18 mesi di runway e un Series A da chiudere.',
+     body:'<p>Con 18 mesi di runway e un round da chiudere, la risposta è: dipende da cosa serve agli investitori, non da quanto siete pronti operativamente.</p><ul><li><strong>Se il Series A richiede prove di scalabilità geografica</strong>: espandetevi in una quarta città italiana (meno rischio, narrativa coerente) entro H1, prima della firma</li><li><strong>Se il round non dipende da questo</strong>: consolidate le metriche unit economics nelle 3 città attuali — è la storia più forte che potete portare al tavolo</li><li><strong>Evitate l\'estero ora</strong>: aggiunge complessità operativa e regolatorio che col runway attuale è un rischio non necessario</li></ul><p>Qual è il principale criterio degli investitori target?</p>'}}
+],en:[
+  {type:'operativa',typeLabel:'Operational question',typeIcon:'ti-bolt',
+   text:'Write a follow-up email after a sales call.',
+   contextLabel:'Project: B2B Account Manager',
+   genericLabel:'Generic chat',
+   without:{tag:'Generic answer',note:'It knows nothing about you: sector, client, tone. It produces a formal, generic email that anyone could use.',
+     body:'<p>Subject: Follow-up to our call</p><p>Dear [Name],</p><p>Thank you for the time you gave us during our call. As discussed, I\'m sending you a summary of the main points.</p><ul><li>We presented our services</li><li>You will evaluate the proposal within the week</li><li>We will follow up by Friday</li></ul><p>I remain available for any questions. Best regards.</p>'},
+   with:{tag:'Calibrated answer',note:'It knows you work in B2B software, that the prospect is an IT manager at a mid-sized company, and that your tone is direct but not formal.',
+     body:'<p>Subject: Call recap — ERP integration and next steps</p><p>Hi Marco,</p><p>Thanks for today\'s call. Three things we agreed on:</p><ul><li>Your main bottleneck is data import from SAP — let\'s tackle that first</li><li>You need to be operational by Q2: feasible with the base plan, not the custom one</li><li>I\'ll send you the API connector demo by Thursday</li></ul><p>Does a quick check on Friday morning work for you to see the demo together?</p>'}},
+  {type:'analitica',typeLabel:'Analytical question',typeIcon:'ti-chart-bar',
+   text:'Our conversion rate dropped 12% last quarter. What should I analyze first?',
+   contextLabel:'Project: Growth Lead – SaaS B2C',
+   genericLabel:'Generic chat',
+   without:{tag:'Generic answer',note:'It answers with a textbook framework, valid for any company. No real priority, no context on your model.',
+     body:'<p>To analyze a drop in conversion rate, evaluate these factors:</p><ul><li>Traffic: quality and quantity of visits</li><li>Landing page: messaging, design, loading</li><li>Funnel: where the exits happen</li><li>Offer: price, positioning, competitors</li><li>Seasonality: comparison with the previous year</li></ul><p>Collect the data and identify the point of greatest friction.</p>'},
+   with:{tag:'Calibrated answer',note:'It knows you run a B2C SaaS with a 14-day free trial and that Q1 is historically weaker. It suggests where to really look.',
+     body:'<p>With a 14-day trial, the 12% drop can be in three places — in order of probability for a B2C SaaS:</p><ul><li><strong>Activation in the first 3 days</strong>: it\'s the most critical moment. Check the drop between signup and first value event</li><li><strong>Nurturing emails during the trial</strong>: if open rates have fallen, the problem is there even before conversion</li><li><strong>Q4 vs Q1 comparison</strong>: your history typically shows -8/10% in this period — are you seeing an abnormal drop or one within the norm?</li></ul><p>Start with activation: it can be changed in days, not weeks.</p>'}},
+  {type:'strategica',typeLabel:'Strategic question',typeIcon:'ti-map-2',
+   text:'Should we expand into a new geographic market next year?',
+   contextLabel:'Project: CEO – Logistics Startup',
+   genericLabel:'Generic chat',
+   without:{tag:'Generic answer',note:'It lists the textbook criteria for evaluating geographic expansion. Nothing wrong, but it decides nothing and knows nothing about your context.',
+     body:'<p>Before expanding into a new geographic market, evaluate:</p><ul><li>Size and growth of the target market</li><li>Local competition and barriers to entry</li><li>Resources required (team, capital, infrastructure)</li><li>Regulatory and operational risks</li><li>Timing relative to the maturity of the current business</li></ul><p>A thorough due diligence will help you make the right decision.</p>'},
+   with:{tag:'Calibrated answer',note:'It knows you\'re a last-mile logistics startup in Italy, with consolidated operations in 3 cities, 18 months of runway and a Series A to close.',
+     body:'<p>With 18 months of runway and a round to close, the answer is: it depends on what the investors need, not on how operationally ready you are.</p><ul><li><strong>If the Series A requires proof of geographic scalability</strong>: expand into a fourth Italian city (less risk, coherent narrative) within H1, before signing</li><li><strong>If the round doesn\'t depend on this</strong>: consolidate the unit economics metrics in the 3 current cities — it\'s the strongest story you can bring to the table</li><li><strong>Avoid going abroad now</strong>: it adds operational and regulatory complexity that with the current runway is an unnecessary risk</li></ul><p>What is the main criterion of the target investors?</p>'}}
+]};
+
+var LANG='it',currentQ=0,hasCtx=false,explored=new Set();
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('fnGrid').innerHTML=FNS[LANG].map(function(f){
+    return '<div class="fn-card" data-fn="'+f[0]+'" onclick="toggleFn(this)">'+
+      '<div class="fn-rtag"></div>'+
+      '<div class="fn-top"><div class="fn-ic"><i class="ti '+f[1]+'"></i></div>'+
+      '<div><div class="fn-lbl">'+f[2]+'</div><div class="fn-name">'+f[3]+'</div></div></div>'+
+      '<div class="fn-kw">'+f[4]+'</div>'+
+      '<div class="fn-desc">'+f[5]+'</div>'+
+      '<div class="fn-detail"><ul class="fn-bul">'+f[6].map(function(b){return '<li>'+b+'</li>'}).join('')+'</ul></div>'+
+      '<div class="fn-exp"><i class="ti ti-chevron-down"></i> '+(LANG==='it'?'Espandi':'Expand')+'</div>'+
+      '</div>';
+  }).join('');
+  explored.clear();document.getElementById('fnCount').textContent='0';
+  renderQuestion(currentQ);
+}
+
+function toggleFn(card){
+  var was=card.classList.contains('on');
+  document.querySelectorAll('.fn-card').forEach(function(c){
+    c.classList.remove('on','relon','related');
+    c.querySelector('.fn-rtag').textContent='';
+  });
+  if(!was){
+    card.classList.add('on');
+    explored.add(card.dataset.fn);
+    document.getElementById('fnCount').textContent=explored.size;
+    var rel=RELNEXT[card.dataset.fn];
+    if(rel){
+      var relCard=document.querySelector('.fn-card[data-fn="'+rel+'"]');
+      if(relCard){
+        relCard.querySelector('.fn-rtag').textContent=RELMAP[LANG][card.dataset.fn];
+        relCard.classList.add('relon');
+        relCard.classList.remove('related');void relCard.offsetWidth;relCard.classList.add('related');
+      }
+    }
+  }
+}
+
+function renderQuestion(idx){
+  var q=QUESTIONS[LANG][idx];
+  document.querySelectorAll('.q-tab').forEach(function(t,i){t.classList.toggle('on',i===idx)});
+  document.querySelectorAll('.q-dot').forEach(function(d,i){d.classList.toggle('on',i===idx)});
+  document.getElementById('qPrev').disabled=(idx===0);
+  document.getElementById('qNext').disabled=(idx===QUESTIONS[LANG].length-1);
+  var badge=document.getElementById('qBadge');
+  badge.className='q-badge '+q.type+' rv show';
+  badge.innerHTML='<i class="ti '+q.typeIcon+'"></i> <span>'+q.typeLabel+'</span>';
+  document.getElementById('chatQuestion').textContent=q.text;
+  hasCtx=false;
+  document.getElementById('ctxToggle').className='tg-track off';
+  document.getElementById('chatBox').className='chat-box no-ctx';
+  document.getElementById('chatLabel').textContent=q.genericLabel;
+  document.getElementById('lblOff').classList.add('act');
+  document.getElementById('lblOn').classList.remove('act');
+  renderResponse();
+}
+
+function renderResponse(){
+  var q=QUESTIONS[LANG][currentQ];
+  var data=hasCtx?q.with:q.without;
+  var tagClass=hasCtx?'specific':'generic';
+  document.getElementById('chatResp').innerHTML=
+    '<div class="tag '+tagClass+'">'+data.tag+'</div>'+data.body+
+    '<p class="note-it">'+data.note+'</p>';
+}
+
+function goToQ(idx){
+  if(idx===currentQ)return;currentQ=idx;
+  var resp=document.getElementById('chatResp');
+  resp.classList.add('fading');
+  setTimeout(function(){renderQuestion(currentQ);resp.classList.remove('fading')},200);
+}
+function prevQ(){if(currentQ>0)goToQ(currentQ-1)}
+function nextQ(){if(currentQ<QUESTIONS[LANG].length-1)goToQ(currentQ+1)}
+
+function toggleCtx(){
+  hasCtx=!hasCtx;
+  var q=QUESTIONS[LANG][currentQ];
+  var resp=document.getElementById('chatResp');
+  resp.classList.add('fading');
+  setTimeout(function(){
+    if(hasCtx){
+      document.getElementById('ctxToggle').className='tg-track on';
+      document.getElementById('chatBox').className='chat-box has-ctx';
+      document.getElementById('chatLabel').textContent=q.contextLabel;
+      document.getElementById('lblOff').classList.remove('act');
+      document.getElementById('lblOn').classList.add('act');
+    }else{
+      document.getElementById('ctxToggle').className='tg-track off';
+      document.getElementById('chatBox').className='chat-box no-ctx';
+      document.getElementById('chatLabel').textContent=q.genericLabel;
+      document.getElementById('lblOff').classList.add('act');
+      document.getElementById('lblOn').classList.remove('act');
+    }
+    renderResponse();resp.classList.remove('fading');
+  },220);
+}
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

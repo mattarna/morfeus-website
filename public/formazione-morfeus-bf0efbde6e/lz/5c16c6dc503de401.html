@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecniche di delivery — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* technique selector */
+.techs{display:flex;flex-direction:column;gap:8px}
+.tech{display:flex;align-items:center;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
+.tech:hover{border-color:var(--line-2)}.tech.on{border-color:var(--accent);background:var(--accent-soft)}
+.tech .ti2{width:36px;height:36px;border-radius:10px;background:var(--bg-3);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;transition:.18s}
+.tech.on .ti2{background:var(--accent);color:#fff}
+.tech .tt{font-size:14.5px;font-weight:600;line-height:1.25}
+.tech .ts{font-size:12px;color:var(--ink-3);font-family:var(--mono);margin-top:2px}
+.techdetail{margin-top:12px;background:var(--card);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.techdetail h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.techdetail .tdd{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}.techdetail .tdd b{color:var(--ink);font-weight:600}
+.flowmini{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:16px}
+.fstep{font-family:var(--mono);font-size:11.5px;font-weight:600;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:5px 12px;color:var(--ink-2)}
+.fstep.fr{background:var(--agent-soft);border-color:var(--agent-line);color:var(--agent)}
+.farr{color:var(--ink-3);font-size:13px}
+.tdkey{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);padding:13px 16px;font-size:13.5px;color:var(--ink-2);line-height:1.55;display:flex;gap:11px;align-items:flex-start}
+.tdkey i{color:var(--accent);font-size:17px;flex-shrink:0;margin-top:1px}.tdkey b{color:var(--accent)}
+/* storytelling triple */
+.cards3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3.agent .ci{background:var(--agent-soft);color:var(--agent)}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* metaphor map */
+.mapintro{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.metas{display:flex;flex-direction:column;gap:7px}
+.meta{display:grid;grid-template-columns:auto 1fr auto 1fr;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:12px 15px;cursor:pointer;transition:.18s}
+.meta:hover{border-color:var(--line-2);background:var(--bg-2)}.meta.on{border-color:var(--accent);background:var(--accent-soft)}
+.meta .mi{width:30px;height:30px;border-radius:9px;background:var(--bg-3);color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:.18s}
+.meta.on .mi{background:var(--accent);color:#fff}
+.meta .ml{font-size:14px;font-weight:600}
+.meta .marr{color:var(--ink-3);font-size:15px}
+.meta .mb{font-family:var(--mono);font-size:12px;color:var(--ink-2);text-align:right}
+.meta.on .mb{color:var(--accent)}
+.metadetail{margin-top:10px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.metadetail b{color:var(--ink)}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards3{grid-template-columns:1fr}.meta{grid-template-columns:auto 1fr;gap:8px}.meta .marr,.meta .mb{display:none}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.tech,.techdetail,.card3,.meta,.metadetail,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A0.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo formatori</div>
+  <h1 class="rv" data-i="h1">Tecniche di delivery: demo live, costruzione in diretta, metafore</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-presentation"></i><span class="no">01</span><h2 data-i="s1">Il principio sotto tutte le tecniche</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-eye-check"></i></div><div><h4 data-i="note1H">Il valore è nel vedere il processo, non il risultato</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-tools"></i><span class="no">02</span><h2 data-i="s2">Il repertorio delle tecniche</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="techIntro"></p>
+  <div class="techs rv" id="techs"></div>
+  <div class="techdetail rv" id="techdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-book-2"></i><span class="no">03</span><h2 data-i="s3">Storytelling con casi reali</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="storyIntro"></p>
+  <div class="cards3 rv">
+    <div class="card3"><div class="ci"><i class="ti ti-trophy"></i></div><h4 data-i="st1H">Una di successo</h4><p data-i="st1P"></p></div>
+    <div class="card3 agent"><div class="ci"><i class="ti ti-alert-triangle"></i></div><h4 data-i="st2H">Una di errore</h4><p data-i="st2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-transform"></i></div><h4 data-i="st3H">Una di trasformazione</h4><p data-i="st3P"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-door-enter"></i><span class="no">04</span><h2 data-i="s4">Le metafore come strumento primario</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-route"></i></div><div><h4 data-i="note2H">La metafora è la porta d'ingresso, non la destinazione</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-map"></i><span class="no">05</span><h2 data-i="s5">La mappa metafora → mattoncino</h2></div>
+  <p class="mapintro rv" data-i="mapIntro"></p>
+  <div class="metas rv" id="metas"></div>
+  <div class="metadetail rv" id="metadetail"></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Tecniche di delivery</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A0.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo formatori',
+h1:'Tecniche di delivery: demo live, costruzione in diretta, metafore',
+lede:'Sai com\'è fatta una lezione e quale sequenza emotiva deve produrre. Ora servono le mani: le tecniche d\'aula che la rendono viva. Tutte condividono un principio scomodo — mostrare il processo, non il risultato pulito. È il «durante» che insegna, non il «dopo».',
+s1:'Il principio sotto tutte le tecniche',
+note1H:'Il valore è nel vedere il processo, non il risultato',
+note1P:'Un risultato perfetto preparato in anticipo non insegna nulla: il partecipante vede la magia, non il metodo. <strong>Il valore è vedere errori e correzioni</strong> — il prompt debole che diventa forte, l\'assistente che sbaglia e si aggiusta. Tutte le tecniche che seguono fanno la stessa cosa: <strong>espongono il «durante»</strong>, il momento in cui il lavoro si costruisce davvero.',
+s2:'Il repertorio delle tecniche',
+techIntro:'Tre tecniche d\'aula, ciascuna con una struttura precisa. Non sono intercambiabili: la demo apre, la costruzione dimostra la profondità, la frizione trasforma. Clicca ogni tecnica per vederne lo schema.',
+s3:'Storytelling con casi reali',
+storyIntro:'Le storie generiche non funzionano: servono casi specifici, presi dal tuo lavoro reale. Per ogni concetto chiave costruisci un piccolo repertorio di tre storie. L\'errore è il miglior insegnante — non nasconderlo, raccontalo.',
+st1H:'Una di successo',
+st1P:'Un caso in cui il metodo ha funzionato e ha prodotto un risultato concreto. Mostra dove si arriva: dà la direzione e la fiducia che il salto è possibile.',
+st2H:'Una di errore',
+st2P:'Un caso in cui è andata storta — e cosa hai imparato. È la più preziosa: l\'errore raccontato disinnesca la paura del partecipante e insegna più di dieci successi.',
+st3H:'Una di trasformazione',
+st3P:'Un caso di «prima e dopo»: come lavoravi prima del metodo e come lavori ora. Mostra il cambiamento di capacità, non solo il singolo risultato.',
+q1:'«L\'errore è il miglior insegnante. Una storia di successo dà la direzione, una di errore dà la lezione, una di trasformazione dà la prova che il cambiamento è possibile.»',
+s4:'Le metafore come strumento primario',
+note2H:'La metafora è la porta d\'ingresso, non la destinazione',
+note2P:'La metafora apre la porta cognitiva: dà al partecipante un aggancio familiare a cui appendere il concetto nuovo. Ma è solo l\'ingresso. <strong>La metafora è la porta d\'ingresso, non la destinazione</strong>: dopo averla usata per entrare, devi attraversarla fino al concetto preciso. Una lezione che resta sulla metafora è suggestiva ma non insegna. La sequenza è sempre la stessa: <strong>metafora → concetto → applicazione</strong>.',
+s5:'La mappa metafora → mattoncino',
+mapIntro:'Ogni mattoncino del metodo ha la sua metafora-porta. Questo è il repertorio: la metafora a sinistra, il concetto a cui dà accesso a destra. Clicca per vedere come la porta si attraversa fino al concetto.',
+s6:'Checkpoint',
+cpH:'Prepara la tua prossima demo iterativa',
+cpP:'Scegli un concetto che insegni spesso. Prepara — senza scriverla — una demo iterativa: un prompt debole di partenza, il ragionamento ad alta voce che farai, e il principio che estrarrai alla fine. La parte difficile è resistere alla tentazione di arrivare già col prompt perfetto.',
+cpQ:'Sul tuo modo di insegnare: tendi a mostrare il risultato pulito o il processo con gli errori dentro? Se mostri il pulito, stai facendo show. Se mostri il processo, stai formando. E la tua frizione è calibrata — né così forte da frustrare, né così debole da non far emergere il limite?',
+bridge:'Hai chiuso il <b>Modulo A0</b> e con esso l\'intero <b>Percorso A</b>. Sai cosa insegnare — il metodo, dalla A1 alla A9 — e ora sai come insegnarlo: anatomia della lezione, sequenza emotiva, tecniche di delivery. Il passo successivo non è un\'altra lezione: è erogarne una vera, e chiederti, alla fine, cosa i tuoi partecipanti sanno fare ora che prima non sapevano.',
+foot:'Morfeus — Tecniche di delivery'
+},
+en:{
+kicker:'Lesson A0.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Trainers module',
+h1:'Delivery techniques: live demo, building live, metaphors',
+lede:'You know how a lesson is built and what emotional sequence it must produce. Now you need the hands: the classroom techniques that make it come alive. They all share one uncomfortable principle — show the process, not the clean result. It\'s the "during" that teaches, not the "after".',
+s1:'The principle under every technique',
+note1H:'The value is seeing the process, not the result',
+note1P:'A perfect result prepared in advance teaches nothing: the participant sees the magic, not the method. <strong>The value is seeing errors and corrections</strong> — the weak prompt that becomes strong, the assistant that fails and gets fixed. All the techniques that follow do the same thing: <strong>they expose the "during"</strong>, the moment the work is actually built.',
+s2:'The repertoire of techniques',
+techIntro:'Three classroom techniques, each with a precise structure. They aren\'t interchangeable: the demo opens, building live shows the depth, friction transforms. Click each technique to see its schema.',
+s3:'Storytelling with real cases',
+storyIntro:'Generic stories don\'t work: you need specific cases, taken from your real work. For each key concept, build a small repertoire of three stories. The error is the best teacher — don\'t hide it, tell it.',
+st1H:'One of success',
+st1P:'A case where the method worked and produced a concrete result. It shows where you arrive: it gives direction and the confidence that the leap is possible.',
+st2H:'One of error',
+st2P:'A case where it went wrong — and what you learned. It\'s the most precious: a told error defuses the participant\'s fear and teaches more than ten successes.',
+st3H:'One of transformation',
+st3P:'A "before and after" case: how you worked before the method and how you work now. It shows the change in capability, not just a single result.',
+q1:'"The error is the best teacher. A success story gives direction, an error story gives the lesson, a transformation story gives the proof that change is possible."',
+s4:'Metaphors as the primary tool',
+note2H:'The metaphor is the entry door, not the destination',
+note2P:'The metaphor opens the cognitive door: it gives the participant a familiar hook to hang the new concept on. But it\'s only the entrance. <strong>The metaphor is the entry door, not the destination</strong>: after using it to enter, you must walk through it to the precise concept. A lesson that stays on the metaphor is evocative but doesn\'t teach. The sequence is always the same: <strong>metaphor → concept → application</strong>.',
+s5:'The metaphor → building block map',
+mapIntro:'Every building block of the method has its door-metaphor. This is the repertoire: the metaphor on the left, the concept it gives access to on the right. Click to see how the door is walked through to the concept.',
+s6:'Checkpoint',
+cpH:'Prepare your next iterative demo',
+cpP:'Pick a concept you teach often. Prepare — without writing it out — an iterative demo: a weak starting prompt, the reasoning out loud you\'ll do, and the principle you\'ll extract at the end. The hard part is resisting the temptation to arrive with the perfect prompt already.',
+cpQ:'On the way you teach: do you tend to show the clean result or the process with the errors in it? If you show the clean one, you\'re doing a show. If you show the process, you\'re training. And is your friction calibrated — neither so strong it frustrates, nor so weak it surfaces no limit?',
+bridge:'You\'ve closed <b>Module A0</b> and with it the entire <b>Path A</b>. You know what to teach — the method, from A1 to A9 — and now you know how to teach it: lesson anatomy, emotional sequence, delivery techniques. The next step isn\'t another lesson: it\'s delivering a real one, and asking yourself, at the end, what your participants can now do that they couldn\'t before.',
+foot:'Morfeus — Delivery techniques'
+}};
+
+// techniques: icon, name[it,en], sub[it,en], desc[it,en], flow[[label,fr]...][it,en], key[it,en]
+var TECHS=[
+{icon:'ti-player-play',
+ name:['Demo Iterativa Live','Iterative Live Demo'],
+ sub:['Il «durante», non il prima/dopo','The "during", not before/after'],
+ desc:['Esegui un prompt dal vivo e mostri il raffinamento in tempo reale. La regola d\'oro: <b>non preparare il prompt finale in anticipo</b>. Il partecipante deve vedere il prompt debole diventare forte sotto i suoi occhi, non confrontare due risultati già pronti.','You run a prompt live and show the refinement in real time. The golden rule: <b>don\'t prepare the final prompt in advance</b>. The participant must see the weak prompt become strong before their eyes, not compare two ready-made results.'],
+ flow:[['Prompt debole',false],['Ragionamento ad alta voce',false],['Migliorare in tempo reale',false],['Confrontare v1/v2/v3',false],['Estrarre il principio',false]],
+ flowEn:[['Weak prompt',false],['Reasoning out loud',false],['Improve in real time',false],['Compare v1/v2/v3',false],['Extract the principle',false]],
+ key:['Il «durante», non solo il prima/dopo. Se arrivi col prompt perfetto già scritto, hai tolto proprio la parte che insegna.','The "during", not just before/after. If you arrive with the perfect prompt already written, you\'ve removed the very part that teaches.']},
+{icon:'ti-building',
+ name:['Costruzione Assistente in Diretta','Building an Assistant Live'],
+ sub:['15-20 min, errori inclusi','15-20 min, errors included'],
+ desc:['Costruisci un assistente completo davanti all\'aula in 15-20 minuti: istruzioni di sistema, knowledge base, test, iterazione. <b>Non preparare tutto in anticipo</b>: il valore è proprio vedere errori e correzioni in tempo reale, il momento in cui qualcosa non funziona e lo aggiusti.','You build a complete assistant in front of the room in 15-20 minutes: system instructions, knowledge base, test, iteration. <b>Don\'t prepare everything in advance</b>: the value is precisely seeing errors and corrections in real time, the moment something doesn\'t work and you fix it.'],
+ flow:[['Istruzioni di sistema',false],['Knowledge base',false],['Primo test',false],['Errore',true],['Correzione',false],['Iterazione',false],['Assistente funzionante',false]],
+ flowEn:[['System instructions',false],['Knowledge base',false],['First test',false],['Error',true],['Correction',false],['Iteration',false],['Working assistant',false]],
+ key:['Il valore è vedere <b>errori e correzioni</b>. Un assistente che funziona al primo colpo è sospetto: significa che era preparato.','The value is seeing <b>errors and corrections</b>. An assistant that works on the first try is suspicious: it means it was prepared.']},
+{icon:'ti-flame',
+ name:['Challenge con Frizione Controllata','Challenge with Controlled Friction'],
+ sub:['Né troppo forte né troppo debole','Neither too strong nor too weak'],
+ desc:['È la cattiveria formativa resa tecnica strutturata. Dai un problema, lasci che il partecipante ci provi e fallisca contro il limite, poi riveli il metodo che lo supera. La calibrazione è tutto: <b>né troppo forte</b> (frustra e blocca) <b>né troppo debole</b> (non fa emergere alcun limite, quindi non insegna).','It\'s formative ruthlessness turned into a structured technique. You give a problem, let the participant try and fail against the limit, then reveal the method that overcomes it. Calibration is everything: <b>neither too strong</b> (frustrates and blocks) <b>nor too weak</b> (surfaces no limit, so teaches nothing).'],
+ flow:[['Problema',false],['Tentativo',false],['Frizione',true],['Rivelazione',false],['Metodo',false],['Ripetizione',false],['Generalizzazione',false]],
+ flowEn:[['Problem',false],['Attempt',false],['Friction',true],['Revelation',false],['Method',false],['Repetition',false],['Generalization',false]],
+ key:['La frizione va calibrata: <b>né troppo forte né troppo debole</b>. Troppo forte frustra, troppo debole non fa emergere il limite — e senza limite non c\'è apprendimento.','Friction must be calibrated: <b>neither too strong nor too weak</b>. Too strong frustrates, too weak surfaces no limit — and without a limit there\'s no learning.']}
+];
+
+// metaphors: metaphor[it,en], block[it,en], detail[it,en]
+var METAS=[
+{icon:'ti-bike',m:['Bicicletta della mente','Bicycle of the mind'],b:['L\'AI come amplificatore','AI as amplifier'],
+ d:['La metafora di Steve Jobs: il computer come «bicicletta per la mente». <b>Apri</b> con l\'immagine dell\'amplificazione, <b>attraversa</b> fino al concetto: l\'AI non sostituisce il pensiero, ne moltiplica la portata.','Steve Jobs\' metaphor: the computer as a "bicycle for the mind". <b>Open</b> with the image of amplification, <b>walk through</b> to the concept: AI doesn\'t replace thought, it multiplies its reach.']},
+{icon:'ti-building-factory',m:['Catena di montaggio','Assembly line'],b:['Scomporre il processo','Breaking down the process'],
+ d:['Un lavoro complesso si scompone in stazioni. <b>Apri</b> con la fabbrica, <b>attraversa</b> fino al concetto: ogni task atomico è una stazione con un input, un\'azione e un output verificabile.','A complex job breaks into stations. <b>Open</b> with the factory, <b>walk through</b> to the concept: every atomic task is a station with an input, an action and a verifiable output.']},
+{icon:'ti-fridge',m:['Ingredienti / frigo','Ingredients / fridge'],b:['Il contesto come materiale','Context as material'],
+ d:['L\'AI cucina solo con quello che le metti nel frigo. <b>Apri</b> con la cucina, <b>attraversa</b> fino al concetto: l\'output dipende dal contesto fornito, non dalla magia del modello.','The AI cooks only with what you put in the fridge. <b>Open</b> with the kitchen, <b>walk through</b> to the concept: the output depends on the context provided, not on the model\'s magic.']},
+{icon:'ti-clipboard-list',m:['Ricetta','Recipe'],b:['Le istruzioni operative','Operating instructions'],
+ d:['Una ricetta è una sequenza ordinata di passi. <b>Apri</b> con la ricetta, <b>attraversa</b> fino al concetto: prima la struttura e l\'ordine, poi il dettaglio — come guideresti un collaboratore al primo giorno.','A recipe is an ordered sequence of steps. <b>Open</b> with the recipe, <b>walk through</b> to the concept: structure and order first, detail second — like guiding a collaborator on day one.']},
+{icon:'ti-user-question',m:['Stagista / collega pigro','Intern / lazy colleague'],b:['Delega e supervisione','Delegation and supervision'],
+ d:['L\'AI è uno stagista bravissimo ma che va guidato e controllato. <b>Apri</b> con lo stagista, <b>attraversa</b> fino al concetto: delega chiara più verifica, mai delega cieca.','The AI is a brilliant intern who still needs guiding and checking. <b>Open</b> with the intern, <b>walk through</b> to the concept: clear delegation plus verification, never blind delegation.']},
+{icon:'ti-bow',m:['Arciere','Archer'],b:['Output prima dell\'input','Output before input'],
+ d:['L\'arciere fissa il bersaglio prima di scoccare. <b>Apri</b> con l\'arciere, <b>attraversa</b> fino al concetto: si decide l\'output desiderato prima di costruire il prompt, non dopo.','The archer fixes the target before loosing the arrow. <b>Open</b> with the archer, <b>walk through</b> to the concept: you decide the desired output before building the prompt, not after.']},
+{icon:'ti-robot',m:['Jarvis','Jarvis'],b:['L\'assistente personale','The personal assistant'],
+ d:['Jarvis di Iron Man: un assistente che conosce il contesto e agisce. <b>Apri</b> con Jarvis, <b>attraversa</b> fino al concetto: un assistente è sistema (istruzioni + knowledge base), non una singola chat.','Iron Man\'s Jarvis: an assistant that knows the context and acts. <b>Open</b> with Jarvis, <b>walk through</b> to the concept: an assistant is a system (instructions + knowledge base), not a single chat.']},
+{icon:'ti-clock-exclamation',m:['Debito temporale','Time debt'],b:['L\'investimento iniziale','The upfront investment'],
+ d:['Costruire un sistema costa tempo oggi per risparmiarne molto domani. <b>Apri</b> col debito, <b>attraversa</b> fino al concetto: l\'automazione è un investimento, non un costo — ripaga sui task ripetitivi.','Building a system costs time today to save a lot tomorrow. <b>Open</b> with the debt, <b>walk through</b> to the concept: automation is an investment, not a cost — it pays back on repetitive tasks.']}
+];
+
+var LANG='it',CURT=0,CURM=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderTechs();renderMetas();
+}
+function renderTechs(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('techs').innerHTML=TECHS.map(function(t,i){
+    return '<div class="tech'+(i===CURT?' on':'')+'" onclick="setT('+i+')"><div class="ti2"><i class="ti '+t.icon+'"></i></div><div><div class="tt">'+t.name[j]+'</div><div class="ts">'+t.sub[j]+'</div></div></div>';
+  }).join('');
+  var t=TECHS[CURT];var fl=LANG==='it'?t.flow:t.flowEn;
+  var steps=fl.map(function(s,k){return (k>0?'<span class="farr"><i class="ti ti-chevron-right"></i></span>':'')+'<span class="fstep'+(s[1]?' fr':'')+'">'+s[0]+'</span>'}).join('');
+  document.getElementById('techdetail').innerHTML='<h3>'+t.name[j]+'</h3><div class="tdd">'+t.desc[j]+'</div><div class="flowmini">'+steps+'</div><div class="tdkey"><i class="ti ti-key"></i><div>'+t.key[j]+'</div></div>';
+}
+function setT(i){CURT=i;renderTechs()}
+function renderMetas(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('metas').innerHTML=METAS.map(function(m,i){
+    return '<div class="meta'+(i===CURM?' on':'')+'" onclick="setM('+i+')"><div class="mi"><i class="ti '+m.icon+'"></i></div><div class="ml">'+m.m[j]+'</div><div class="marr"><i class="ti ti-arrow-right"></i></div><div class="mb">'+m.b[j]+'</div></div>';
+  }).join('');
+  document.getElementById('metadetail').innerHTML=METAS[CURM].d[j];
+}
+function setM(i){CURM=i;renderMetas()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

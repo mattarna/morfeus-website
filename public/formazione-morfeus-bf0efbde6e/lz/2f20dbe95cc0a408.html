@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La cross-validazione (il cuore del metodo) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* three roles */
+.roles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.role{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.role .ri{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;margin:0 auto 10px;color:#fff}
+.role.a .ri{background:var(--accent)}.role.b .ri{background:var(--bad)}.role.u .ri{background:var(--good)}
+.role .rtag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:3px}
+.role h4{font-size:15px;font-weight:600;margin-bottom:5px}.role p{font-size:13px;color:var(--ink-2);line-height:1.5}
+.role.a h4{color:var(--accent)}.role.b h4{color:var(--bad)}.role.u h4{color:var(--good)}
+/* ping-pong */
+.moves{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.move{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 17px;cursor:pointer;transition:.18s}
+.move:hover{border-color:var(--line-2)}.move.on{border-color:var(--accent);background:var(--accent-soft)}
+.move .mn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:14px;flex-shrink:0;color:#fff}
+.move.m1 .mn{background:var(--accent)}.move.m2 .mn{background:var(--bad)}.move.m3 .mn{background:var(--good)}
+.move .mc{flex:1}
+.move .mt{font-size:14.5px;font-weight:600;margin-bottom:2px}
+.move .msub{font-size:12.5px;color:var(--ink-3)}
+.move .mar{color:var(--ink-3);font-size:18px;align-self:center;transition:.18s}.move.on .mar{color:var(--accent);transform:rotate(90deg)}
+.movedetail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;border-left:3px solid var(--accent)}
+.movedetail h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.movedetail p{font-size:14.5px;color:var(--ink-2);margin-bottom:12px}
+.movedetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);white-space:pre-wrap;line-height:1.6}
+/* arbiter */
+.arb{display:flex;flex-direction:column;gap:10px}
+.crit{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;transition:.2s}
+.crit .ch{display:flex;align-items:flex-start;gap:11px;margin-bottom:11px}
+.crit .ci{width:30px;height:30px;border-radius:8px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.crit .ctxt{font-size:14px;color:var(--ink);font-weight:500;line-height:1.45}
+.crit .cbtns{display:flex;gap:8px}
+.crit .cbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2);border-radius:var(--r);padding:9px 12px;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:.16s}
+.crit .cbtn i{font-size:16px}
+.crit .cbtn:hover{border-color:var(--line-2)}
+.crit.kept{border-color:var(--good);background:var(--good-soft)}
+.crit.kept .cbtn.keep{background:var(--good);color:#fff;border-color:var(--good)}
+.crit.dropped{border-color:var(--ink-3);opacity:.62}
+.crit.dropped .cbtn.drop{background:var(--ink-3);color:#fff;border-color:var(--ink-3)}
+.crit .verdict{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line-2);font-size:13px;color:var(--ink-2);display:none;line-height:1.5}
+.crit.kept .verdict,.crit.dropped .verdict{display:block}
+.crit .verdict b{color:var(--ink)}
+.arbscore{text-align:center;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);margin-top:6px}
+.arbscore b{color:var(--accent)}
+/* iterations */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .cci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.card3 p b{color:var(--ink)}
+/* audit split */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.splitc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.splitc.b{background:var(--bad-soft);border-color:var(--bad)}
+.splitc.g{background:var(--good-soft);border-color:var(--good)}
+.splitc .stag2{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.splitc.b .stag2{background:var(--bad);color:#fff}.splitc.g .stag2{background:var(--good);color:#fff}
+.splitc h4{font-size:14px;font-weight:600;margin-bottom:6px}.splitc p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.roles{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cp,.role,.move,.movedetail,.crit,.card3,.splitc,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A8.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Metodo</div>
+  <h1 class="rv" data-i="h1">La cross-validazione (il cuore del metodo)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-flame"></i><span class="no">01</span><h2 data-i="s1">Il momento più importante del metodo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-flame"></i></div><div><h4 data-i="note1H">Nessun piano nasce già giusto</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-users"></i><span class="no">02</span><h2 data-i="s2">Tre figure, un solo arbitro</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="rolesIntro"></p>
+  <div class="roles rv">
+    <div class="role a"><div class="ri"><i class="ti ti-bulb"></i></div><div class="rtag" data-i="rAtag">LLM A</div><h4 data-i="rAh"></h4><p data-i="rAp"></p></div>
+    <div class="role b"><div class="ri"><i class="ti ti-search"></i></div><div class="rtag" data-i="rBtag">LLM B</div><h4 data-i="rBh"></h4><p data-i="rBp"></p></div>
+    <div class="role u"><div class="ri"><i class="ti ti-gavel"></i></div><div class="rtag" data-i="rUtag">Tu</div><h4 data-i="rUh"></h4><p data-i="rUp"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:22px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">03</span><h2 data-i="s3">Il ping-pong in tre mosse</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="movesIntro"></p>
+  <div class="moves rv" id="moves"></div>
+  <div class="movedetail rv" id="movedetail"></div>
+
+  <div class="sh rv"><i class="ti ti-gavel"></i><span class="no">04</span><h2 data-i="s4">Arbitra tu: tieni o scarta</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="arbIntro"></p>
+  <div class="arb rv" id="arb"></div>
+  <div class="arbscore rv" id="arbscore"></div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">05</span><h2 data-i="s5">Quanti round bastano</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="cci"><i class="ti ti-flag"></i></div><h4 data-i="it1H"></h4><p data-i-html="it1P"></p></div>
+    <div class="card3"><div class="cci"><i class="ti ti-checkbox"></i></div><h4 data-i="it2H"></h4><p data-i-html="it2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">06</span><h2 data-i="s6">Esecuzione con audit</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="auditIntro"></p>
+  <div class="cmp rv">
+    <div class="splitc b"><span class="stag2" data-i="rvT">Review</span><h4 data-i="rvH"></h4><p data-i="rvP"></p></div>
+    <div class="splitc g"><span class="stag2" data-i="auT">Audit</span><h4 data-i="auH"></h4><p data-i="auP"></p></div>
+  </div>
+  <div class="key rv" style="margin-top:20px"><p data-i="q3"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La cross-validazione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A8.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Metodo',
+h1:'La cross-validazione (il cuore del metodo)',
+lede:'Hai un Master Plan. Sembra solido. Ed è proprio qui che il metodo gioca la sua mossa più importante: invece di eseguire, lo passi a una seconda testa che ha un solo compito — trovare i punti di rottura. Questa è la versione profonda della cross-validazione, dentro il metodo, fino all\'audit di ogni task.',
+s1:'Il momento più importante del metodo',
+note1H:'Nessun piano nasce già giusto',
+note1P:'Un singolo modello produce un piano coerente con sé stesso — e con i propri punti ciechi. La cross-validazione rompe questa <strong>monocultura cognitiva</strong>: un secondo LLM, che non ha generato il piano, lo legge come un avversario e cerca dove si spezza. Ne hai già visto la logica generale in <strong>A4.8</strong>; qui la portiamo dentro il metodo, dal piano fino al singolo task.',
+q1:'«Nessuna esecuzione prima che il piano sia messo alla prova da una seconda testa. Una sola testa pianifica ed esegue con gli stessi punti ciechi: la cross-validazione li separa.»',
+s2:'Tre figure, un solo arbitro',
+rolesIntro:'La cross-validazione non è "chiedo a Claude se va bene". È un triangolo con tre funzioni distinte, e tu sei al vertice.',
+rAtag:'LLM A',rAh:'Genera',rAp:'Produce il piano (Master o Sprint) e, alla fine, giudica quali critiche di B sono reali. È l\'autore — ma anche il filtro.',
+rBtag:'LLM B',rBh:'Accusa',rBp:'Esperto indipendente, chat nuova o modello diverso. Unico compito: trovare i punti di rottura. Non deve essere gentile.',
+rUtag:'Tu',rUh:'Arbitri',rUp:'Decidi quali critiche entrano e quali no. Né A né B hanno l\'ultima parola: ce l\'hai tu.',
+q2:'«B accusa, A filtra, tu arbitri. Le critiche non si accettano a scatola chiusa.»',
+s3:'Il ping-pong in tre mosse',
+movesIntro:'Una palla che rimbalza tra A e B, con te a fondo campo. Clicca ogni mossa per vederla nel dettaglio.',
+s4:'Arbitra tu: tieni o scarta',
+arbIntro:'B ha sollevato quattro critiche sul Master Plan. A le ha già filtrate. Ora tocca a te: per ognuna, decidi se entra nella revisione o se è rumore. Non c\'è una risposta "giusta" — c\'è il tuo giudizio.',
+s5:'Quanti round bastano',
+it1H:'Master Plan',it1P:'<b>1-2 round.</b> È il livello strategico: vale spendere un secondo giro se il primo ha cambiato la struttura. Qui si gioca la qualità di tutto ciò che viene dopo.',
+it2H:'Sprint',it2P:'<b>~1 round.</b> È già dentro una milestone validata: il grosso del rischio è stato disinnescato a monte. Un passaggio di controllo basta quasi sempre.',
+s6:'Esecuzione con audit',
+auditIntro:'Piano validato? Si esegue — ma <strong>una milestone alla volta, un task alla volta</strong>. A fine milestone arriva il momento decisivo: l\'audit. E audit non è review.',
+rvT:'Review',rvH:'«Mi sembra a posto»',rvP:'Sguardo d\'insieme, impressione generale. Non dice perché, non dice su cosa. È esattamente il punto in cui i difetti passano inosservati.',
+auT:'Audit',auH:'Criterio per criterio',auP:'Per ogni task: il criterio è soddisfatto sì/no, e perché. Niente impressioni — una verifica osservabile, task per task. Se qualcosa non torna: ci si ferma, si aggiorna, si ri-valida.',
+q3:'«La validazione è un audit, non una review. "Mi sembra ok" non è una verifica: è una speranza.»',
+s7:'Checkpoint',
+cpH:'Trasforma il tuo prossimo piano in un caso da arbitrare',
+cpP:'Prendi un piano (o una decisione) che hai generato di recente con l\'AI. Aprilo in una chat nuova — o su un modello diverso — con una sola istruzione: «Sei un esperto indipendente. Trova i punti di rottura di questo piano». Poi torna sull\'autore e fagli giudicare quali critiche sono reali.',
+cpQ:'Quante delle critiche di B reggono davvero al tuo arbitraggio? Se più della metà, il piano originale non era pronto per l\'esecuzione — e l\'avresti scoperto solo a danno avvenuto.',
+bridge:'Sai far accusare, filtrare e arbitrare. <b>Prossimo:</b> il piano vivente — un file a checkbox che si aggiorna da solo, e il livello avanzato Master + Sprint per i lavori enormi.',
+foot:'Morfeus — La cross-validazione'
+},
+en:{
+kicker:'Lesson A8.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Method',
+h1:'Cross-validation (the heart of the method)',
+lede:'You have a Master Plan. It looks solid. And that\'s exactly where the method plays its most important move: instead of executing, you hand it to a second mind with one job — find the breaking points. This is the deep version of cross-validation, inside the method, all the way down to the audit of every task.',
+s1:'The most important moment of the method',
+note1H:'No plan is born right',
+note1P:'A single model produces a plan that is consistent with itself — and with its own blind spots. Cross-validation breaks this <strong>cognitive monoculture</strong>: a second LLM, one that didn\'t generate the plan, reads it like an opponent and looks for where it cracks. You already saw the general logic in <strong>A4.8</strong>; here we bring it inside the method, from the plan down to the single task.',
+q1:'"No execution before the plan is tested by a second mind. One mind plans and executes with the same blind spots: cross-validation separates them."',
+s2:'Three figures, one arbiter',
+rolesIntro:'Cross-validation isn\'t "I ask Claude if it\'s fine". It\'s a triangle with three distinct functions, and you sit at the top.',
+rAtag:'LLM A',rAh:'Generates',rAp:'Produces the plan (Master or Sprint) and, at the end, judges which of B\'s critiques are real. It\'s the author — but also the filter.',
+rBtag:'LLM B',rBh:'Accuses',rBp:'Independent expert, new chat or a different model. One job only: find the breaking points. It doesn\'t have to be polite.',
+rUtag:'You',rUh:'Arbitrate',rUp:'You decide which critiques get in and which don\'t. Neither A nor B has the last word: you do.',
+q2:'"B accuses, A filters, you arbitrate. Critiques are never accepted sight unseen."',
+s3:'The ping-pong in three moves',
+movesIntro:'A ball bouncing between A and B, with you at the baseline. Click each move to see it in detail.',
+s4:'You arbitrate: keep or drop',
+arbIntro:'B raised four critiques on the Master Plan. A has already filtered them. Now it\'s your turn: for each one, decide whether it enters the revision or it\'s noise. There\'s no "right" answer — there\'s your judgment.',
+s5:'How many rounds are enough',
+it1H:'Master Plan',it1P:'<b>1-2 rounds.</b> It\'s the strategic level: worth a second pass if the first changed the structure. This is where the quality of everything downstream is decided.',
+it2H:'Sprint',it2P:'<b>~1 round.</b> It\'s already inside a validated milestone: most of the risk was defused upstream. A single check pass is almost always enough.',
+s6:'Execution with audit',
+auditIntro:'Plan validated? You execute — but <strong>one milestone at a time, one task at a time</strong>. At the end of a milestone comes the decisive moment: the audit. And audit isn\'t review.',
+rvT:'Review',rvH:'"Looks fine to me"',rvP:'A bird\'s-eye glance, a general impression. It doesn\'t say why, doesn\'t say about what. It\'s exactly where defects slip through unnoticed.',
+auT:'Audit',auH:'Criterion by criterion',auP:'For every task: is the criterion met yes/no, and why. No impressions — an observable check, task by task. If something doesn\'t add up: you stop, update, re-validate.',
+q3:'"Validation is an audit, not a review. \'Looks ok\' isn\'t a check: it\'s a hope."',
+s7:'Checkpoint',
+cpH:'Turn your next plan into a case to arbitrate',
+cpP:'Take a plan (or a decision) you recently generated with AI. Open it in a new chat — or on a different model — with a single instruction: "You are an independent expert. Find the breaking points of this plan." Then go back to the author and have it judge which critiques are real.',
+cpQ:'How many of B\'s critiques actually survive your arbitration? If more than half, the original plan wasn\'t ready to execute — and you\'d have found out only after the damage was done.',
+bridge:'You know how to make it accuse, filter and arbitrate. <b>Next:</b> the living plan — a checkbox file that updates itself, and the advanced Master + Sprint level for huge jobs.',
+foot:'Morfeus — Cross-validation'
+}};
+
+// moves: class, num, title[it,en], sub[it,en], body[it,en], example[it,en]
+var MOVES=[
+{cls:'m1',n:'1',
+ title:['Genera con A','Generate with A'],
+ sub:['Il piano nasce qui','The plan is born here'],
+ body:['LLM A produce il Master Plan (o lo Sprint). È il lavoro grezzo: coerente, ben scritto — e cieco sui propri limiti. Non lo esegui ancora.',
+       'LLM A produces the Master Plan (or the Sprint). It\'s the raw work: coherent, well-written — and blind to its own limits. You don\'t execute it yet.'],
+ example:['A → "Ecco il Master Plan in 6 milestone, con output verificabile e dipendenze per ciascuna."',
+          'A → "Here\'s the Master Plan in 6 milestones, with a verifiable output and dependencies for each."']},
+{cls:'m2',n:'2',
+ title:['Fai trovare le falle a B','Have B find the cracks'],
+ sub:['Chat nuova, o modello diverso','New chat, or a different model'],
+ body:['Porti il piano a un secondo LLM con un solo mandato: trovare i punti di rottura. È un esperto indipendente, non un correttore di bozze. Non deve migliorare il piano: deve attaccarlo.',
+       'You bring the plan to a second LLM with a single mandate: find the breaking points. It\'s an independent expert, not a proofreader. It doesn\'t have to improve the plan: it has to attack it.'],
+ example:['B → "Sei un esperto indipendente. Trova i punti di rottura di questo piano: dipendenze nascoste, milestone non verificabili, rischi non coperti."',
+          'B → "You are an independent expert. Find the breaking points of this plan: hidden dependencies, non-verifiable milestones, uncovered risks."']},
+{cls:'m3',n:'3',
+ title:['Torni da A: giudica','Back to A: it judges'],
+ sub:['A filtra, tu hai l\'ultima parola','A filters, you have the last word'],
+ body:['Le critiche di B non si accettano a scatola chiusa. Le riporti ad A, che giudica quali sono reali e quali no, e aggiorna il piano. Tu arbitri il verdetto finale: nessuno dei due decide al posto tuo.',
+       'B\'s critiques aren\'t accepted sight unseen. You bring them back to A, which judges which ones are real and which aren\'t, and updates the plan. You arbitrate the final verdict: neither one decides for you.'],
+ example:['A → "Critica 1: valida, aggiorno la milestone 3. Critica 2: non regge, la dipendenza è già coperta dalla milestone 2."',
+          'A → "Critique 1: valid, I\'m updating milestone 3. Critique 2: doesn\'t hold, that dependency is already covered by milestone 2."']}
+];
+
+// critiques: text[it,en], suggested keep(true/false), verdict[it,en]
+var CRITS=[
+{text:['La milestone 3 non ha un output verificabile: "rafforzare il posizionamento" non si tocca.',
+       'Milestone 3 has no verifiable output: "strengthen the positioning" can\'t be touched.'],
+ sugg:true,
+ verdict:['<b>Critica reale.</b> Una milestone senza output toccabile è un desiderio. Va riscritta con un confine netto.',
+          '<b>Real critique.</b> A milestone with no touchable output is a wish. Rewrite it with a clean edge.']},
+{text:['Il piano usa font Helvetica invece di un font più moderno.',
+       'The plan uses Helvetica instead of a more modern font.'],
+ sugg:false,
+ verdict:['<b>Rumore.</b> B sta migliorando di sua iniziativa, fuori dallo scope. Una critica di gusto, non di rottura: si scarta.',
+          '<b>Noise.</b> B is improving on its own initiative, outside scope. A taste critique, not a breaking one: drop it.']},
+{text:['La milestone 5 dipende dalla 2, ma nel piano parte in parallelo: dipendenza nascosta.',
+       'Milestone 5 depends on 2, but in the plan it starts in parallel: hidden dependency.'],
+ sugg:true,
+ verdict:['<b>Critica reale.</b> Esattamente il tipo di errore che un piano nasconde a sé stesso. Va riordinata la sequenza.',
+          '<b>Real critique.</b> Exactly the kind of error a plan hides from itself. Reorder the sequence.']},
+{text:['Manca un piano B se il fornitore esterno salta: rischio non coperto.',
+       'There\'s no plan B if the external vendor falls through: uncovered risk.'],
+ sugg:true,
+ verdict:['<b>Critica reale.</b> Un rischio noto senza mitigazione torna a valle, più costoso. Va aggiunto al piano.',
+          '<b>Real critique.</b> A known risk with no mitigation comes back downstream, costlier. Add it to the plan.']}
+];
+
+var LANG='it',CURMV=0,STATE=[null,null,null,null];
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderMoves();renderArb();
+}
+function renderMoves(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('moves').innerHTML=MOVES.map(function(m,i){
+    return '<div class="move '+m.cls+(i===CURMV?' on':'')+'" onclick="setMv('+i+')"><div class="mn">'+m.n+'</div><div class="mc"><div class="mt">'+m.title[j]+'</div><div class="msub">'+m.sub[j]+'</div></div><i class="ti ti-chevron-right mar"></i></div>';
+  }).join('');
+  var m=MOVES[CURMV];
+  document.getElementById('movedetail').innerHTML='<h3>'+m.title[j]+'</h3><p>'+m.body[j]+'</p><div class="ex">'+m.example[j]+'</div>';
+}
+function setMv(i){CURMV=i;renderMoves()}
+function renderArb(){
+  var j=LANG==='it'?0:1;
+  document.getElementById('arb').innerHTML=CRITS.map(function(c,i){
+    var st=STATE[i];var cls=st==='keep'?' kept':st==='drop'?' dropped':'';
+    return '<div class="crit'+cls+'"><div class="ch"><div class="ci"><i class="ti ti-alert-triangle"></i></div><div class="ctxt">'+c.text[j]+'</div></div><div class="cbtns"><button class="cbtn keep" onclick="arbSet('+i+',\'keep\')"><i class="ti ti-check"></i> '+(LANG==='it'?'Tieni':'Keep')+'</button><button class="cbtn drop" onclick="arbSet('+i+',\'drop\')"><i class="ti ti-x"></i> '+(LANG==='it'?'Scarta':'Drop')+'</button></div><div class="verdict">'+c.verdict[j]+'</div></div>';
+  }).join('');
+  var done=STATE.filter(function(s){return s!==null}).length;
+  var kept=STATE.filter(function(s){return s==='keep'}).length;
+  var sc=document.getElementById('arbscore');
+  if(done===0){sc.innerHTML=LANG==='it'?'Decidi su ognuna delle 4 critiche.':'Decide on each of the 4 critiques.';}
+  else if(done<4){sc.innerHTML=(LANG==='it'?'Arbitrate ':'Arbitrated ')+'<b>'+done+'/4</b>'+(LANG==='it'?' · continua':' · keep going');}
+  else{sc.innerHTML=(LANG==='it'?'Hai tenuto ':'You kept ')+'<b>'+kept+'/4</b>'+(LANG==='it'?' critiche. Le 3 reali reggono, quella di gusto si scarta: questo è arbitrare.':' critiques. The 3 real ones hold, the taste one drops: that\'s arbitrating.');}
+}
+function arbSet(i,v){STATE[i]=v;renderArb()}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

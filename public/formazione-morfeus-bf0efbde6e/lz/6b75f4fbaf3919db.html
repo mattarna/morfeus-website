@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo reale end-to-end — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.lede em{font-style:italic;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* hook */
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+/* live banner */
+.live-banner{display:flex;align-items:center;gap:11px;background:var(--bad-soft);border:1px solid var(--bad-line);color:var(--bad);border-radius:var(--r-l);padding:13px 18px;font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.02em;margin:18px 0 0;box-shadow:var(--sh)}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--bad);animation:pulse 1.4s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* session map / timeline */
+.maphint{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;margin-bottom:14px;letter-spacing:.04em}
+.tl{margin:0}
+.tlstep{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+.tlstep-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;transition:background .2s}
+.tlstep-head:hover{background:var(--bg-2)}
+.tlstep-num{width:38px;height:38px;border-radius:11px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex-shrink:0;font-family:var(--mono)}
+.tlstep-tt{flex:1;min-width:0}
+.tlstep-tt h3{font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tlstep-min{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-3);background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:2px 9px;white-space:nowrap}
+.tlstep-chev{color:var(--ink-3);font-size:20px;transition:transform .3s;flex-shrink:0}
+.tlstep.open .tlstep-chev{transform:rotate(180deg)}
+.tlstep-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.tlstep.open .tlstep-body{max-height:480px}
+.tlstep-inner{padding:0 20px 18px 72px}
+.tlstep-inner p{font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+.tlstep-inner p b{color:var(--ink);font-weight:600}
+.ph{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--bg-2);border:1px dashed var(--line-2);border-radius:var(--r);padding:9px 13px;display:flex;align-items:center;gap:8px;line-height:1.5}
+.ph i{color:var(--accent);font-size:15px;flex-shrink:0}
+@media(max-width:640px){.tlstep-inner{padding-left:20px}}
+/* regia */
+.regia{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:20px 22px;margin:0;box-shadow:var(--sh)}
+.regia-head{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.regia-ic{width:42px;height:42px;border-radius:12px;background:var(--warn);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.regia-k{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--warn);font-weight:600;margin-bottom:2px}
+.regia-head h3{font-size:16px;font-weight:600}
+.regia ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.regia li{font-size:13.5px;color:var(--ink-2);line-height:1.6;display:flex;gap:11px;align-items:flex-start}
+.regia li i{color:var(--warn);font-size:17px;flex-shrink:0;margin-top:1px}
+.regia li b{color:var(--ink);font-weight:600}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.45;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .key-sub{display:block;font-size:14.5px;font-weight:400;color:var(--ink-2);margin-top:14px;font-style:italic;line-height:1.6}
+/* bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge .bt h4{font-size:13px;font-weight:600;color:var(--agent);margin-bottom:3px}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tlstep-body{max-height:none!important}.tlstep,.regia,.hook,.live-banner,.key,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve dal vivo</div>
+  <h1 class="rv" data-i="h1">Plan &amp; Solve dal vivo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- 01 HOOK -->
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s1">Il punto della lezione</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="live-banner rv"><span class="live-dot"></span> <span data-i="liveBanner"></span></div>
+
+  <!-- 02 MAPPA SESSIONE -->
+  <div class="sh rv"><i class="ti ti-timeline"></i><span class="no">02</span><h2 data-i="s2">La mappa della sessione</h2></div>
+  <div class="maphint rv" data-i="maphint"></div>
+  <div class="tl rv">
+
+    <div class="tlstep open" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">0</div><div class="tlstep-tt"><h3><span data-i="t0h"></span> <span class="tlstep-min" data-i="t0min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t0p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t0ph"></span></div>
+      </div></div>
+    </div>
+
+    <div class="tlstep" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">1</div><div class="tlstep-tt"><h3><span data-i="t1h"></span> <span class="tlstep-min" data-i="t1min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t1p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t1ph"></span></div>
+      </div></div>
+    </div>
+
+    <div class="tlstep" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">2</div><div class="tlstep-tt"><h3><span data-i="t2h"></span> <span class="tlstep-min" data-i="t2min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t2p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t2ph"></span></div>
+      </div></div>
+    </div>
+
+    <div class="tlstep" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">3</div><div class="tlstep-tt"><h3><span data-i="t3h"></span> <span class="tlstep-min" data-i="t3min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t3p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t3ph"></span></div>
+      </div></div>
+    </div>
+
+    <div class="tlstep" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">4</div><div class="tlstep-tt"><h3><span data-i="t4h"></span> <span class="tlstep-min" data-i="t4min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t4p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t4ph"></span></div>
+      </div></div>
+    </div>
+
+    <div class="tlstep" onclick="tog(this)">
+      <div class="tlstep-head"><div class="tlstep-num">5</div><div class="tlstep-tt"><h3><span data-i="t5h"></span> <span class="tlstep-min" data-i="t5min"></span></h3></div><i class="ti ti-chevron-down tlstep-chev"></i></div>
+      <div class="tlstep-body"><div class="tlstep-inner">
+        <p data-i-html="t5p"></p>
+        <div class="ph"><i class="ti ti-terminal-2"></i> <span data-i="t5ph"></span></div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- 03 NOTE DI REGIA -->
+  <div class="sh rv"><i class="ti ti-video"></i><span class="no">03</span><h2 data-i="s3">Note di regia</h2></div>
+  <div class="regia rv">
+    <div class="regia-head">
+      <div class="regia-ic"><i class="ti ti-bulb"></i></div>
+      <div><div class="regia-k" data-i="regiaK"></div><h3 data-i="regiaH"></h3></div>
+    </div>
+    <ul>
+      <li><i class="ti ti-point"></i> <span data-i-html="rg1"></span></li>
+      <li><i class="ti ti-point"></i> <span data-i-html="rg2"></span></li>
+      <li><i class="ti ti-point"></i> <span data-i-html="rg3"></span></li>
+      <li><i class="ti ti-point"></i> <span data-i-html="rg4"></span></li>
+      <li><i class="ti ti-point"></i> <span data-i-html="rg5"></span></li>
+    </ul>
+  </div>
+
+  <!-- 04 IN UNA FRASE -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">04</span><h2 data-i="s4">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyP"></p><span class="key-sub" data-i="keySub"></span></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><div class="bt"><h4 data-i="bridgeH"></h4><p data-i="bridgeP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Demo reale end-to-end</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve dal vivo',
+h1:'Plan & Solve dal vivo',
+lede:'Una sessione vera, su un progetto business reale, dall\'inizio alla fine. Senza tagli, incluse le parti dove serve correggere.',
+s1:'Il punto della lezione',
+hook:'In questa lezione non spiego niente di nuovo. Mostro tutto quello che abbiamo visto, in azione, su un progetto vero, dall\'inizio alla fine. Vedrete anche dove Claude non è perfetto e dove devo correggerlo. Perché il processo reale non è lineare. Ma ha una struttura. E quella struttura funziona.',
+liveBanner:'Sessione live reale — niente risposte preparate',
+s2:'La mappa della sessione',
+maphint:'Clicca ogni passo per aprirlo',
+t0h:'Brief con Anti-Goal',t0min:'≈3 min',
+t0p:'Descrivi il progetto a voce, Claude struttura il Brief. Commenta la definizione di "finito" e gli Anti-Goal.',
+t0ph:'Prompt 1 → Brief reale generato in sessione',
+t1h:'Analisi rischi (2 output)',t1min:'≈4 min',
+t1p:'Report Rischi e Regole Operative. Commenta almeno un rischio che non avevi considerato.',
+t1ph:'Prompt 2 + Prompt 3',
+t2h:'Master Plan a milestone',t2min:'≈3 min',
+t2p:'Milestone con output verificabili e checkbox.',
+t2ph:'Prompt 4',
+t3h:'Sprint della Milestone 1',t3min:'≈3 min',
+t3p:'Task con criteri di successo. Evidenzia perché ogni criterio è verificabile.',
+t3ph:'Prompt 5',
+t4h:'Cross-validazione',t4min:'≈3 min',
+t4p:'Chat NUOVA: il revisore critico. Leggi i problemi ad alta voce, poi mostra il piano aggiornato.',
+t4ph:'Prompt 6 + Prompt 7',
+t5h:'Esecuzione + audit',t5min:'≈5 min',
+t5p:'Claude esegue e spunta le [x] da solo. A milestone chiusa, l\'audit task per task.',
+t5ph:'Prompt 8 + Prompt 9',
+s3:'Note di regia',
+regiaK:'Per chi registra',
+regiaH:'Come tenere la sessione autentica',
+rg1:'Scegli un progetto business reale e ricco (lancio, nuova linea, delivery cliente). Non l\'esempio assunzione, che è il filo didattico delle lezioni precedenti.',
+rg2:'Non preparare le risposte: la sessione deve essere autentica perché lo è.',
+rg3:'Output sorprendente → commentalo: <b>"questo angolo da solo non l\'avrei considerato"</b>.',
+rg4:'Output generico → NON tagliare: mostra come riformuli. Vedere il processo non lineare è pedagogicamente potente.',
+rg5:'Tieni il piano vivente visibile: il momento in cui Claude spunta le [x] è il <b>climax</b>.',
+s4:'In una frase',
+keyP:'Non avete visto un trucco. Avete visto un sistema.',
+keySub:'Lo stesso che potete applicare domani al vostro prossimo progetto importante, qualunque esso sia.',
+bridgeH:'Prossima lezione',
+bridgeP:'Per i progetti davvero enormi c\'è un livello in più: un master e un documento separato per ogni fase. Il livello dei professionisti.',
+foot:'Morfeus — Demo reale end-to-end'
+},
+en:{
+kicker:'Lesson 8.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve live',
+h1:'Plan & Solve, live',
+lede:'A real session, on a real business project, from start to finish. No cuts — including the parts where corrections are needed.',
+s1:'The point of this lesson',
+hook:'In this lesson I explain nothing new. I show everything we\'ve seen, in action, on a real project, from start to finish. You\'ll also see where Claude isn\'t perfect and where I have to correct it. Because the real process isn\'t linear. But it has a structure. And that structure works.',
+liveBanner:'Real live session — no prepared answers',
+s2:'The map of the session',
+maphint:'Click each step to open it',
+t0h:'Brief with Anti-Goals',t0min:'≈3 min',
+t0p:'You describe the project out loud, Claude structures the Brief. Comment on the definition of "done" and the Anti-Goals.',
+t0ph:'Prompt 1 → real Brief generated in the session',
+t1h:'Risk analysis (2 outputs)',t1min:'≈4 min',
+t1p:'Risk Report and Operating Rules. Comment on at least one risk you hadn\'t considered.',
+t1ph:'Prompt 2 + Prompt 3',
+t2h:'Master Plan by milestone',t2min:'≈3 min',
+t2p:'Milestones with verifiable outputs and checkboxes.',
+t2ph:'Prompt 4',
+t3h:'Sprint of Milestone 1',t3min:'≈3 min',
+t3p:'Tasks with success criteria. Highlight why each criterion is verifiable.',
+t3ph:'Prompt 5',
+t4h:'Cross-validation',t4min:'≈3 min',
+t4p:'NEW chat: the critical reviewer. Read the problems out loud, then show the updated plan.',
+t4ph:'Prompt 6 + Prompt 7',
+t5h:'Execution + audit',t5min:'≈5 min',
+t5p:'Claude executes and checks off the [x] on its own. Once the milestone is closed, the audit task by task.',
+t5ph:'Prompt 8 + Prompt 9',
+s3:'Director\'s notes',
+regiaK:'For whoever is recording',
+regiaH:'How to keep the session authentic',
+rg1:'Pick a real, rich business project (a launch, a new line, a client delivery). Not the hiring example, which is the teaching thread of the previous lessons.',
+rg2:'Don\'t prepare the answers: the session has to be authentic because it is.',
+rg3:'Surprising output → comment on it: <b>"this angle alone I wouldn\'t have considered"</b>.',
+rg4:'Generic output → DON\'T cut it: show how you rephrase. Seeing the non-linear process is pedagogically powerful.',
+rg5:'Keep the living plan visible: the moment Claude checks off the [x] is the <b>climax</b>.',
+s4:'In one sentence',
+keyP:'You didn\'t see a trick. You saw a system.',
+keySub:'The same one you can apply tomorrow to your next important project, whatever it is.',
+bridgeH:'Next lesson',
+bridgeP:'For truly enormous projects there\'s one more level: a master and a separate document for each phase. The professionals\' level.',
+foot:'Morfeus — End-to-end real demo'
+}};
+
+var LANG='it';
+
+/* ---- accordion ---- */
+function tog(el){el.classList.toggle('open');}
+
+/* ---- i18n / theme ---- */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Istruzioni Personalizzate — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* progress arc */
+.progress-arc{display:flex;align-items:flex-start;justify-content:center;gap:0;margin:0 auto;max-width:520px}
+.arc-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative}
+.arc-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700;border:2px solid var(--line);color:var(--ink-3);background:var(--card);box-shadow:var(--sh);z-index:1}
+.arc-dot.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.arc-label{font-size:11px;color:var(--ink-3);text-align:center;line-height:1.3;max-width:86px}
+.arc-label.active{color:var(--accent);font-weight:600}
+.arc-line{position:absolute;top:19px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;background:var(--line);z-index:0}
+.arc-step:last-child .arc-line{display:none}
+/* stack visual */
+.stack-visual{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px 26px;margin:0;text-align:center}
+.stack-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:16px}
+.stack-layers{max-width:420px;margin:0 auto}
+.stack-layer{border-radius:var(--r);padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:12px;text-align:left;font-size:13px;transition:.3s}
+.stack-layer:last-child{margin-bottom:0}
+.stack-layer i{font-size:20px;flex-shrink:0}
+.stack-layer .sl-name{font-weight:600;font-size:14px}
+.stack-layer .sl-desc{font-size:12px;opacity:.7;margin-top:2px}
+.layer-active{background:var(--accent);color:#fff;border:2px solid var(--accent);transform:scale(1.02)}
+.layer-ghost{background:var(--bg-2);color:var(--ink-3);border:1px dashed var(--line-2);opacity:.6}
+.layer-base{background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+/* 5 blocks */
+.elem-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:0}
+.elem-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:14px;align-items:flex-start;transition:.18s}
+.elem-card:hover{border-color:var(--line-2)}
+.elem-card.hl{border-color:var(--accent-line)}
+.elem-num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:700;background:var(--accent-soft);color:var(--accent);flex-shrink:0}
+.elem-card.hl .elem-num{background:var(--accent);color:#fff}
+.elem-text{flex:1}
+.elem-text h4{font-size:14.5px;font-weight:600;margin-bottom:4px}
+.elem-text>p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.elem-text em{font-style:italic;color:var(--ink)}
+.elem-flag{font-size:11px;color:var(--accent);font-weight:600;margin-left:4px}
+.elem-opt{font-weight:400;color:var(--ink-3);font-size:12px}
+.elem-example{font-size:12px;font-family:var(--mono);background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;margin-top:9px;color:var(--ink-2);line-height:1.6;border-left:2px solid var(--accent-line);white-space:pre-line}
+.mi-highlight{color:var(--accent);font-weight:600}
+.elem-example strong{color:var(--ink);font-weight:600}
+/* key phrase */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+/* mock instructions */
+.mock-instructions{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.mi-header{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.mi-header i{font-size:16px;color:var(--accent)}
+.mi-body{padding:20px;font-size:13px;font-family:var(--mono);color:var(--ink-2);line-height:1.8;white-space:pre-line}
+.mi-body .mi-comment{color:var(--ink-3);font-style:italic}
+/* tips */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip.warn{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--teal)}.tip.warn .ti-i{background:var(--warn)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--teal)}.tip.warn h4{color:var(--warn)}.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+/* errors */
+.error-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.error-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;transition:.18s}
+.error-card:hover{border-color:var(--line-2)}
+.error-card .ec-icon{font-size:24px;color:var(--bad);margin-bottom:10px;display:block}
+.error-card h4{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--bad)}
+.error-card p{font-size:12px;color:var(--ink-2);line-height:1.55}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp .cph{font-size:17px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.cp .cph i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0;text-align:center}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:8px}
+.bridge p{font-size:15px;color:var(--ink);font-weight:600;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.error-grid{grid-template-columns:1fr}.arc-label{font-size:9px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.stack-visual,.elem-card,.kp,.mock-instructions,.tip,.error-card,.cp,.bridge,.progress-arc{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 3.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Projects</div>
+  <h1 class="rv" data-i="h1">Istruzioni Personalizzate</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="progress-arc rv" style="margin-top:34px">
+    <div class="arc-step"><div class="arc-dot active">3.2</div><div class="arc-label active" data-i="arc1"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.3</div><div class="arc-label" data-i="arc2"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.4</div><div class="arc-label" data-i="arc3"></div><div class="arc-line"></div></div>
+    <div class="arc-step"><div class="arc-dot">3.5</div><div class="arc-label" data-i="arc4"></div></div>
+  </div>
+
+  <div class="hook rv" style="margin-top:34px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">01</span><h2 data-i="s1">Cosa stiamo costruendo</h2></div>
+  <div class="stack-visual rv">
+    <div class="stack-label" data-i="stackLabel"></div>
+    <div class="stack-layers">
+      <div class="stack-layer layer-ghost"><i class="ti ti-arrows-split-2"></i><div><div class="sl-name" data-i="sl1N"></div><div class="sl-desc" data-i="sl1D"></div></div></div>
+      <div class="stack-layer layer-ghost"><i class="ti ti-files"></i><div><div class="sl-name" data-i="sl2N"></div><div class="sl-desc" data-i="sl2D"></div></div></div>
+      <div class="stack-layer layer-active"><i class="ti ti-settings"></i><div><div class="sl-name" data-i="sl3N"></div><div class="sl-desc" data-i="sl3D"></div></div></div>
+      <div class="stack-layer layer-base"><i class="ti ti-folder"></i><div><div class="sl-name" data-i="sl4N"></div><div class="sl-desc" data-i="sl4D"></div></div></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-info-circle"></i><span class="no">02</span><h2 data-i="s2">Come funzionano</h2></div>
+  <p class="lede-p rv" data-i="cf1"></p>
+  <p class="lede-p rv" data-i="cf2"></p>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">03</span><h2 data-i="s3">I 5 blocchi delle istruzioni efficaci</h2></div>
+  <div class="elem-grid rv">
+    <div class="elem-card">
+      <div class="elem-num">1</div>
+      <div class="elem-text"><h4 data-i="b1H"></h4><p data-i="b1P"></p><div class="elem-example" data-i-html="b1E"></div></div>
+    </div>
+    <div class="elem-card">
+      <div class="elem-num">2</div>
+      <div class="elem-text"><h4 data-i="b2H"></h4><p data-i="b2P"></p><div class="elem-example" data-i="b2E"></div></div>
+    </div>
+    <div class="elem-card hl">
+      <div class="elem-num">3</div>
+      <div class="elem-text"><h4 data-i-html="b3H"></h4><p data-i="b3P"></p><p style="margin-top:8px;font-size:13px;color:var(--ink-2)" data-i="b3P2"></p><div class="elem-example" data-i-html="b3E1"></div><div class="elem-example" style="margin-top:8px" data-i-html="b3E2"></div></div>
+    </div>
+    <div class="elem-card">
+      <div class="elem-num">4</div>
+      <div class="elem-text"><h4 data-i="b4H"></h4><p data-i="b4P"></p><div class="elem-example" data-i="b4E"></div></div>
+    </div>
+    <div class="elem-card">
+      <div class="elem-num">5</div>
+      <div class="elem-text"><h4 data-i-html="b5H"></h4><p data-i="b5P"></p><div class="elem-example" data-i="b5E"></div></div>
+    </div>
+  </div>
+  <div class="kp rv" style="margin-top:22px" data-i="blockKey"></div>
+
+  <div class="sh rv"><i class="ti ti-code"></i><span class="no">04</span><h2 data-i="s4">Esempio completo: come si combinano i 5 blocchi</h2></div>
+  <div class="mock-instructions rv">
+    <div class="mi-header"><i class="ti ti-settings"></i> <span data-i="miHeader"></span></div>
+    <div class="mi-body" data-i-html="miBody"></div>
+  </div>
+  <div class="tip good rv" style="margin-top:22px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="testH"></h4><p data-i="testP"></p></div></div>
+  <div class="tip warn rv" style="margin-top:16px"><div class="ti-i"><i class="ti ti-alert-triangle"></i></div><div><h4 data-i="framingH"></h4><p data-i="framingP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">05</span><h2 data-i="s5">I quattro errori da evitare</h2></div>
+  <div class="error-grid rv">
+    <div class="error-card"><i class="ti ti-cloud-fog ec-icon"></i><h4 data-i="e1H"></h4><p data-i="e1P"></p></div>
+    <div class="error-card"><i class="ti ti-lock ec-icon"></i><h4 data-i="e2H"></h4><p data-i="e2P"></p></div>
+    <div class="error-card"><i class="ti ti-blender ec-icon"></i><h4 data-i="e3H"></h4><p data-i="e3P"></p></div>
+    <div class="error-card"><i class="ti ti-clock-pause ec-icon"></i><h4 data-i="e4H"></h4><p data-i="e4P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="kp rv" data-i="keyPhrase"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv"><div class="cph"><i class="ti ti-rocket"></i> <span data-i="cpH"></span></div><p data-i="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">08</span><h2 data-i="s8">Prossimo livello</h2></div>
+  <div class="bridge rv"><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Istruzioni Personalizzate</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 3.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Projects',
+h1:'Istruzioni Personalizzate',
+lede:'Il contratto tra te e il tuo Claude specializzato. Se le scrivi bene, ogni risposta parte già centrata. Se le salti, il Project è un wrapper vuoto.',
+arc1:'Istruzioni',arc2:'File di contesto',arc3:'Più Projects',arc4:'Concatenare output',
+hook:'«Le istruzioni di un Project sono il contratto tra te e il tuo Claude specializzato. Se le scrivi bene, ogni risposta parte già centrata — tono giusto, contesto giusto, nessun malinteso. Se le salti o le scrivi male, il Project è un wrapper vuoto.»',
+s1:'Cosa stiamo costruendo',
+stackLabel:'Anatomia di un Project — Livello 1 di 4',
+sl1N:'Più Projects in parallelo',sl1D:'Lezione 3.4',
+sl2N:'File di contesto',sl2D:'Lezione 3.3',
+sl3N:'Istruzioni personalizzate',sl3D:'Questa lezione',
+sl4N:'Project (contenitore)',sl4D:'Lezione 3.1',
+s2:'Come funzionano',
+cf1:'Le istruzioni del Project funzionano come un system prompt: Claude le legge automaticamente all\'inizio di ogni conversazione in quel Project. Non le vedete nelle risposte, lavorano in background. Si modificano in qualsiasi momento, e ogni modifica si applica da subito alle nuove chat.',
+cf2:'Il principio è semplice: stai briefando un collaboratore. Gli dici chi è in questo contesto, cosa stiamo facendo, cosa ha a disposizione, e dove vogliamo arrivare. Più il brief è chiaro, meno devi correggere dopo.',
+s3:'I 5 blocchi delle istruzioni efficaci',
+b1H:'Ruolo e contesto operativo',
+b1P:'Chi è Claude <em>in questo progetto</em>. Non un role-play generico ("fai finta di essere..."), ma un contesto operativo specifico: qual è il suo ruolo, la sua area di competenza, la prospettiva da cui deve ragionare. Questo cambia concretamente come Claude analizza i problemi e cosa enfatizza nelle risposte.',
+b1E:'<span class="mi-highlight">Nota:</span> non "Sei un esperto di marketing" ma:\n\n"Questo è un progetto di consulenza marketing B2B. Il tuo ruolo è analizzare strategie go-to-market e proporre azioni concrete basate sui dati del cliente. Ragiona come un consulente senior con esperienza nel settore manifatturiero italiano."',
+b2H:'Contesto del progetto',
+b2P:'Cosa stiamo facendo, per chi, in quale situazione. Più è specifico, meno Claude deve inferire, e meno sbaglia. Includi: chi è il cliente/destinatario, settore, dimensione, problema da risolvere.',
+b2E:'"Stiamo costruendo la strategia GTM per Alfa SRL, produttore di componentistica industriale (50 dipendenti, Milano). Il loro problema: zero presenza sul mercato tedesco, vogliono entrarci entro 12 mesi con un budget di 80K."',
+b3H:'Mappa della Knowledge Base <span class="elem-flag">← il più sottovalutato</span>',
+b3P:'Claude vede i file, ma non sa il loro scopo né quando usarli. Senza un indice, pesca a caso nella knowledge base. La mappa è il moltiplicatore: trasforma una pila di documenti in una base di conoscenza navigabile.',
+b3P2:'Due approcci:',
+b3E1:'<span class="mi-highlight">Opzione A — Indice inline</span> (fino a 5-8 file)\n\n"Nella knowledge base troverai:\n— <strong>brief_cliente.pdf</strong>: situazione attuale, problemi dichiarati, budget disponibile\n— <strong>competitor_analysis.xlsx</strong>: 5 competitor con prezzi, posizionamento, punti deboli\n— <strong>note_call_onboarding.md</strong>: trascrizione della call iniziale, include le priorità dichiarate dal CEO\n— <strong>brand_guidelines.pdf</strong>: tono di voce, visual identity, do\'s e don\'ts comunicazione"',
+b3E2:'<span class="mi-highlight">Opzione B — File indice</span> (per 10+ documenti)\n\n"Consulta il file <strong>_INDICE.md</strong> nella knowledge base: contiene la lista completa di tutti i documenti con una descrizione di cosa trovi in ciascuno. Usalo come mappa di navigazione prima di rispondere a qualsiasi domanda."',
+b4H:'Obiettivo finale',
+b4P:'La bussola del Project. Dice a Claude dove stiamo andando, così calibra la profondità di ogni risposta. Senza obiettivo, Claude non sa se state esplorando o se state producendo un deliverable.',
+b4E:'"L\'obiettivo finale è produrre un documento di strategia GTM completo, pronto per la presentazione al board del cliente. Non stiamo raccogliendo idee: stiamo costruendo un deliverable."',
+b5H:'Vincoli e regole operative <span class="elem-opt">(opzionale ma utile)</span>',
+b5P:'Cosa NON fare, come gestire l\'incertezza, tono, lingua, formato preferito. I vincoli negativi ("non fare X") hanno un impatto immediato e prevengono errori ricorrenti.',
+b5E:'"— Lingua: italiano. Tono: professionale ma diretto, zero formalità inutile.\n— Se non hai dati sufficienti per rispondere, chiedi prima di procedere. Non inventare numeri.\n— Non proporre soluzioni oltre il budget dichiarato senza segnalarlo esplicitamente.\n— Formato: titoli chiari, bullet per le liste, mai muri di testo."',
+blockKey:'Non stai programmando un software. Stai briefando un collaboratore competente. Più il brief è chiaro, preciso e specifico per il contesto, meno tempo perdi a correggere dopo.',
+s4:'Esempio completo: come si combinano i 5 blocchi',
+miHeader:'Istruzioni del Project "Strategia GTM — Alfa SRL"',
+miBody:'<span class="mi-comment">// BLOCCO 1 — Ruolo</span>\n<span class="mi-highlight">Contesto operativo:</span> questo è un progetto di consulenza marketing B2B.\nIl tuo ruolo è analizzare dati di mercato e proporre strategie concrete, ragionando come un consulente senior con esperienza nel manifatturiero italiano.\n\n<span class="mi-comment">// BLOCCO 2 — Contesto</span>\n<span class="mi-highlight">Il progetto:</span> stiamo costruendo la strategia go-to-market per Alfa SRL (componentistica industriale, 50 dipendenti, Milano) per il loro ingresso nel mercato tedesco. Budget: 80K. Timeline: 12 mesi.\n\n<span class="mi-comment">// BLOCCO 3 — Mappa Knowledge Base</span>\n<span class="mi-highlight">Documenti disponibili:</span>\n— brief_cliente.pdf → situazione attuale, problemi, budget, priorità del CEO\n— competitor_analysis.xlsx → 5 competitor tedeschi con prezzi e posizionamento\n— note_call_onboarding.md → trascrizione call iniziale + domande aperte\n— mercato_germania_2024.pdf → report di settore, dimensione mercato, trend\n\n<span class="mi-comment">// BLOCCO 4 — Obiettivo</span>\n<span class="mi-highlight">Obiettivo:</span> produrre un documento di strategia GTM completo, pronto per la presentazione al board di Alfa. Non stiamo esplorando: stiamo costruendo un deliverable finale.\n\n<span class="mi-comment">// BLOCCO 5 — Vincoli</span>\n<span class="mi-highlight">Regole:</span>\n— Italiano, tono professionale e diretto\n— Se non hai dati sufficienti, chiedi prima di inventare\n— Non proporre nulla oltre gli 80K senza segnalarlo\n— Formato: titoli chiari, bullet, zero muri di testo',
+testH:'Il test delle istruzioni',
+testP:'Dopo aver scritto le istruzioni, apri una nuova conversazione nel Project e fai una domanda reale. Se Claude risponde già sapendo chi siete, cosa state facendo, e nel tono giusto, senza che dobbiate rispiegare nulla, le istruzioni funzionano. Se dovete aggiungere contesto nel messaggio, le istruzioni vanno migliorate.',
+framingH:'Framing, non role-play',
+framingP:'Su Claude, "Sei un esperto di X" funziona peggio che dare il contesto operativo. La differenza è sottile ma reale: non gli stai chiedendo di recitare un ruolo, gli stai dando il contesto in cui deve ragionare. "Questo è un progetto di consulenza marketing B2B, il tuo ruolo è analizzare strategie" produce risposte migliori di "Fai finta di essere un consulente marketing."',
+s5:'I quattro errori da evitare',
+e1H:'Troppo vaghe',e1P:'"Sii utile e professionale" — non dice niente. Claude è già così di default. Servono dettagli specifici del vostro contesto.',
+e2H:'Troppo rigide',e2P:'"Rispondi SEMPRE in massimo 50 parole" — se il task richiede più spazio, state limitando Claude inutilmente.',
+e3H:'Mescolare tutto',e3P:'Istruzioni generiche copia-incollate da un template. Devono essere specifiche per QUEL contesto, non universali.',
+e4H:'Non aggiornarle',e4P:'Il progetto evolve, le istruzioni no. Tornate periodicamente ad aggiornarle con quello che avete imparato.',
+s6:'In una frase',
+keyPhrase:'«Le istruzioni di un Project non si scrivono una volta e si dimenticano. Si affinano nel tempo — come si fa con qualsiasi collaboratore. Più lavori su un Project, più le istruzioni diventano precise. E più diventano precise, meno devi correggere gli output.»',
+s7:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Apri il tuo Project e scrivi le istruzioni usando i 5 blocchi: ruolo, contesto del progetto, mappa dei documenti, obiettivo finale, vincoli. Non devono essere perfette: scrivi la prima versione, testala con una domanda reale, e affina. Le istruzioni migliori nascono dall\'uso, non dalla teoria.',
+s8:'Prossimo livello',
+brK:'Prossimo livello →',
+brP:'Le istruzioni dicono a Claude come comportarsi. I file di contesto gli dicono cosa sa. Prossima lezione: la memoria di lungo termine del vostro Claude specializzato.',
+foot:'Morfeus — Istruzioni Personalizzate'
+},
+en:{
+kicker:'Lesson 3.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Projects',
+h1:'Custom Instructions',
+lede:'The contract between you and your specialized Claude. Write them well and every answer starts already on target. Skip them and the Project is an empty wrapper.',
+arc1:'Instructions',arc2:'Context files',arc3:'Multiple Projects',arc4:'Chaining output',
+hook:'"A Project\'s instructions are the contract between you and your specialized Claude. Write them well and every answer starts already on target — right tone, right context, no misunderstanding. Skip them or write them badly and the Project is an empty wrapper."',
+s1:'What we\'re building',
+stackLabel:'Anatomy of a Project — Layer 1 of 4',
+sl1N:'Multiple Projects in parallel',sl1D:'Lesson 3.4',
+sl2N:'Context files',sl2D:'Lesson 3.3',
+sl3N:'Custom instructions',sl3D:'This lesson',
+sl4N:'Project (container)',sl4D:'Lesson 3.1',
+s2:'How they work',
+cf1:'A Project\'s instructions work like a system prompt: Claude reads them automatically at the start of every conversation in that Project. You don\'t see them in the answers, they work in the background. You can edit them at any time, and every change applies immediately to new chats.',
+cf2:'The principle is simple: you\'re briefing a collaborator. You tell them who they are in this context, what we\'re doing, what they have available, and where we want to get to. The clearer the brief, the less you have to correct afterward.',
+s3:'The 5 blocks of effective instructions',
+b1H:'Role and operating context',
+b1P:'Who Claude is <em>in this project</em>. Not a generic role-play ("pretend to be..."), but a specific operating context: what its role is, its area of competence, the perspective from which it must reason. This concretely changes how Claude analyzes problems and what it emphasizes in its answers.',
+b1E:'<span class="mi-highlight">Note:</span> not "You are a marketing expert" but:\n\n"This is a B2B marketing consulting project. Your role is to analyze go-to-market strategies and propose concrete actions based on the client\'s data. Reason like a senior consultant with experience in the Italian manufacturing sector."',
+b2H:'Project context',
+b2P:'What we\'re doing, for whom, in what situation. The more specific it is, the less Claude has to infer, and the less it gets wrong. Include: who the client/recipient is, sector, size, problem to solve.',
+b2E:'"We are building the GTM strategy for Alfa SRL, a manufacturer of industrial components (50 employees, Milan). Their problem: zero presence in the German market, they want to enter it within 12 months with a budget of 80K."',
+b3H:'Knowledge Base map <span class="elem-flag">← the most underrated</span>',
+b3P:'Claude sees the files, but doesn\'t know their purpose or when to use them. Without an index, it fishes at random in the knowledge base. The map is the multiplier: it turns a pile of documents into a navigable knowledge base.',
+b3P2:'Two approaches:',
+b3E1:'<span class="mi-highlight">Option A — Inline index</span> (up to 5-8 files)\n\n"In the knowledge base you\'ll find:\n— <strong>client_brief.pdf</strong>: current situation, stated problems, available budget\n— <strong>competitor_analysis.xlsx</strong>: 5 competitors with prices, positioning, weaknesses\n— <strong>onboarding_call_notes.md</strong>: transcript of the initial call, includes the priorities stated by the CEO\n— <strong>brand_guidelines.pdf</strong>: tone of voice, visual identity, communication do\'s and don\'ts"',
+b3E2:'<span class="mi-highlight">Option B — Index file</span> (for 10+ documents)\n\n"Consult the <strong>_INDEX.md</strong> file in the knowledge base: it contains the complete list of all documents with a description of what you\'ll find in each. Use it as a navigation map before answering any question."',
+b4H:'Final objective',
+b4P:'The Project\'s compass. It tells Claude where we\'re going, so it calibrates the depth of every answer. Without an objective, Claude doesn\'t know whether you\'re exploring or producing a deliverable.',
+b4E:'"The final objective is to produce a complete GTM strategy document, ready for presentation to the client\'s board. We\'re not collecting ideas: we\'re building a deliverable."',
+b5H:'Constraints and operating rules <span class="elem-opt">(optional but useful)</span>',
+b5P:'What NOT to do, how to handle uncertainty, tone, language, preferred format. Negative constraints ("don\'t do X") have an immediate impact and prevent recurring errors.',
+b5E:'"— Language: Italian. Tone: professional but direct, zero useless formality.\n— If you don\'t have enough data to answer, ask before proceeding. Don\'t make up numbers.\n— Don\'t propose solutions over the stated budget without flagging it explicitly.\n— Format: clear titles, bullets for lists, never walls of text."',
+blockKey:'You\'re not programming software. You\'re briefing a competent collaborator. The clearer, more precise and context-specific the brief, the less time you lose correcting afterward.',
+s4:'Full example: how the 5 blocks combine',
+miHeader:'Instructions of the Project "GTM Strategy — Alfa SRL"',
+miBody:'<span class="mi-comment">// BLOCK 1 — Role</span>\n<span class="mi-highlight">Operating context:</span> this is a B2B marketing consulting project.\nYour role is to analyze market data and propose concrete strategies, reasoning like a senior consultant with experience in Italian manufacturing.\n\n<span class="mi-comment">// BLOCK 2 — Context</span>\n<span class="mi-highlight">The project:</span> we are building the go-to-market strategy for Alfa SRL (industrial components, 50 employees, Milan) for their entry into the German market. Budget: 80K. Timeline: 12 months.\n\n<span class="mi-comment">// BLOCK 3 — Knowledge Base map</span>\n<span class="mi-highlight">Available documents:</span>\n— client_brief.pdf → current situation, problems, budget, CEO\'s priorities\n— competitor_analysis.xlsx → 5 German competitors with prices and positioning\n— onboarding_call_notes.md → initial call transcript + open questions\n— germany_market_2024.pdf → industry report, market size, trends\n\n<span class="mi-comment">// BLOCK 4 — Objective</span>\n<span class="mi-highlight">Objective:</span> produce a complete GTM strategy document, ready for presentation to Alfa\'s board. We\'re not exploring: we\'re building a final deliverable.\n\n<span class="mi-comment">// BLOCK 5 — Constraints</span>\n<span class="mi-highlight">Rules:</span>\n— Italian, professional and direct tone\n— If you don\'t have enough data, ask before making things up\n— Don\'t propose anything over 80K without flagging it\n— Format: clear titles, bullets, zero walls of text',
+testH:'The instructions test',
+testP:'After writing the instructions, open a new conversation in the Project and ask a real question. If Claude responds already knowing who you are, what you\'re doing, and in the right tone, without you having to re-explain anything, the instructions work. If you have to add context in the message, the instructions need improving.',
+framingH:'Framing, not role-play',
+framingP:'On Claude, "You are an expert in X" works worse than giving the operating context. The difference is subtle but real: you\'re not asking it to play a role, you\'re giving it the context in which it must reason. "This is a B2B marketing consulting project, your role is to analyze strategies" produces better answers than "Pretend to be a marketing consultant."',
+s5:'The four mistakes to avoid',
+e1H:'Too vague',e1P:'"Be helpful and professional" — says nothing. Claude is already like that by default. You need details specific to your context.',
+e2H:'Too rigid',e2P:'"ALWAYS answer in 50 words maximum" — if the task needs more space, you\'re limiting Claude pointlessly.',
+e3H:'Mixing everything',e3P:'Generic instructions copy-pasted from a template. They have to be specific to THAT context, not universal.',
+e4H:'Not updating them',e4P:'The project evolves, the instructions don\'t. Come back periodically to update them with what you\'ve learned.',
+s6:'In one sentence',
+keyPhrase:'"A Project\'s instructions aren\'t written once and forgotten. They\'re refined over time — as you do with any collaborator. The more you work on a Project, the more precise the instructions become. And the more precise they become, the less you have to correct the outputs."',
+s7:'Checkpoint',
+cpH:'Checkpoint',
+cpP:'Open your Project and write the instructions using the 5 blocks: role, project context, document map, final objective, constraints. They don\'t have to be perfect: write the first version, test it with a real question, and refine. The best instructions are born from use, not from theory.',
+s8:'Next level',
+brK:'Next level →',
+brP:'Instructions tell Claude how to behave. Context files tell it what it knows. Next lesson: the long-term memory of your specialized Claude.',
+foot:'Morfeus — Custom Instructions'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

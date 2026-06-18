@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I token: la "valuta" — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.reveal{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;margin:0}
+.reveal .word{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink-3)}
+.reveal .arr{color:var(--accent);font-size:20px}
+.reveal .term{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)}
+.reveal .txt{font-size:14px;color:var(--ink-2);margin-left:auto;text-align:right;max-width:320px}
+
+/* tokenizer chips */
+.tkdemo{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.tkrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.tkrow:last-child{border-bottom:none}
+.tkword{font-family:var(--mono);font-size:16px;font-weight:600;width:110px;flex-shrink:0;color:var(--ink)}
+.tkchips{display:flex;gap:5px;flex-wrap:wrap;flex:1}
+.chip{font-family:var(--mono);font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:6px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.tkcount{font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+.tkcount b{color:var(--agent)}
+
+/* live counter */
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.seg2{display:flex;gap:8px;margin-bottom:14px}
+.seg2 button{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:8px 0;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:.18s}
+.seg2 button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sample{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font-size:14.5px;color:var(--ink-2);line-height:1.55;min-height:80px}
+.ccounts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.cc{text-align:center;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 8px}
+.cc .cv{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1.1}
+.cc.it .cv{color:var(--agent)}.cc.en .cv{color:var(--good)}.cc.sv .cv{color:var(--accent)}
+.cc .cl{font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.ccap{font-size:13px;color:var(--ink-3);margin-top:12px;text-align:center}
+.ccap b{color:var(--ink)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+/* dual cost cards */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;background:var(--card)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;gap:8px;align-items:center;color:var(--agent)}
+.cmpc h4 i{font-size:18px}
+.cmpc p{font-size:13.5px;color:var(--ink-2)}.cmpc p strong{color:var(--ink);font-weight:600}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px;align-items:flex-start}
+.card .ci{width:44px;height:44px;border-radius:12px;background:var(--good);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.card.amber .ci{background:var(--agent)}
+.card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--good)}
+.card.amber h4{color:var(--agent)}
+.card p{font-size:14.5px;color:var(--ink-2)}.card p strong{color:var(--ink);font-weight:600}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.reveal{flex-wrap:wrap}.reveal .txt{margin-left:0;text-align:left;max-width:100%}.cmp{grid-template-columns:1fr}.tkword{width:90px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.reveal,.tkdemo,.cbox,.cmpc,.card,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A2.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Come funziona un LLM</div>
+  <h1 class="rv" data-i="h1">I token: la "valuta"</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrow-big-right-lines"></i><span class="no">01</span><h2 data-i="s1">Dalla parola al termine</h2></div>
+  <div class="reveal rv">
+    <span class="word" data-i="rvWord">"la valuta"</span>
+    <span class="arr"><i class="ti ti-arrow-right"></i></span>
+    <span class="term" data-i="rvTerm">token</span>
+    <span class="txt" data-i="rvTxt"></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-coin"></i><span class="no">02</span><h2 data-i="s2">Cos'è un token</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-coin"></i></div><div><h4 data-i="note1H">Un pezzo di informazione, in numero</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-scissors"></i><span class="no">03</span><h2 data-i="s3">Il tokenizer: come si spezza il testo</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="tkIntro"></p>
+  <div class="tkdemo rv">
+    <div class="tkrow"><span class="tkword">setting</span><div class="tkchips"><span class="chip">setting</span></div><span class="tkcount"><b>1</b> <span data-i="tkTok">token</span></span></div>
+    <div class="tkrow"><span class="tkword">scatole</span><div class="tkchips"><span class="chip">scat</span><span class="chip">ole</span></div><span class="tkcount"><b>2</b> <span data-i="tkTok2">token</span></span></div>
+    <div class="tkrow"><span class="tkword">sono</span><div class="tkchips"><span class="chip">sono</span></div><span class="tkcount"><b>1</b> <span data-i="tkTok3">token</span></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">04</span><h2 data-i="s4">Italiano vs inglese: conta i token</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="cIntro"></p>
+  <div class="cbox rv">
+    <div class="seg2">
+      <button class="on" id="bGen" onclick="useSample('gen')" data-i="sampGen">Esempio generico</button>
+      <button id="bBiz" onclick="useSample('biz')" data-i="sampBiz">Esempio business</button>
+    </div>
+    <div class="sample" id="sample"></div>
+    <div class="ccounts">
+      <div class="cc it"><div class="cv" id="itTok">0</div><div class="cl" data-i="ccIt">Token in italiano</div></div>
+      <div class="cc en"><div class="cv" id="enTok">0</div><div class="cl" data-i="ccEn">Token in inglese</div></div>
+      <div class="cc sv"><div class="cv" id="svPct">0%</div><div class="cl" data-i="ccSv">In meno in inglese</div></div>
+    </div>
+    <p class="ccap" data-i-html="cCap"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">05</span><h2 data-i="s5">Perché si paga davvero</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-plug"></i></div><div><h4 data-i="note2H">Sto pagando la corrente</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-coins"></i><span class="no">06</span><h2 data-i="s6">Il doppio costo</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc"><h4><i class="ti ti-cash"></i> <span data-i="costH1">1 · La spesa</span></h4><p data-i-html="costP1"></p></div>
+    <div class="cmpc"><h4><i class="ti ti-layout-board"></i> <span data-i="costH2">2 · Il contesto</span></h4><p data-i-html="costP2"></p></div>
+  </div>
+  <div class="card amber rv" style="margin-top:12px"><div class="ci"><i class="ti ti-message-off"></i></div><div><h4 data-i="fillerH">Il filler spreca tutti e due</h4><p data-i-html="fillerP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">07</span><h2 data-i="s7">Trucco: pensa in inglese, rispondi in italiano</h2></div>
+  <div class="card rv"><div class="ci"><i class="ti ti-language"></i></div><div><h4 data-i="trickH">Ragionare in inglese = risparmio</h4><p data-i-html="trickP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-photo"></i><span class="no">08</span><h2 data-i="s8">E le immagini?</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-eye"></i></div><div><h4 data-i="imgH">Costano per peso e complessità</h4><p data-i-html="imgP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Ogni parola ha un prezzo</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — I token: la valuta</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A2.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Come funziona un LLM',
+h1:'I token: la "valuta"',
+lede:'Prima parola semplice, poi il termine tecnico. Ogni cosa che dici al modello viene tradotta in una "valuta" che si paga davvero. Quella valuta si chiama token — e capirla ti fa lavorare meglio spendendo meno.',
+s1:'Dalla parola al termine',
+rvWord:'"la valuta"',rvTerm:'token',
+rvTxt:'La moneta con cui il modello "compra" ogni parola che gli dai e ogni parola che ti restituisce.',
+s2:'Cos\'è un token',
+note1H:'Un pezzo di informazione, in numero',
+note1P:'<strong>Un token è un pezzo di informazione tramutato in numero: è quella valuta.</strong> Non è la parola intera e non è la lettera: è il pezzetto che la macchina conta. Più token gestisci, più paghi — in euro reali. È l\'unità di misura e di costo dell\'AI.',
+s3:'Il tokenizer: come si spezza il testo',
+tkIntro:'Lo strumento che spezza il testo in token si chiama tokenizer. Stessa frase, parole diverse: alcune valgono un token, altre due. Guarda.',
+tkTok:'token',tkTok2:'token',tkTok3:'token',
+s4:'Italiano vs inglese: conta i token',
+cIntro:'Lo stesso testo costa diverso a seconda della lingua. L\'italiano spezza più parole in due token; l\'inglese quasi mai. Cambia lingua e guarda il contatore.',
+sampGen:'Esempio generico',sampBiz:'Esempio business',
+ccIt:'Token in italiano',ccEn:'Token in inglese',ccSv:'In meno in inglese',
+cCap:'Su un testo di 200 parole: <b>italiano 296 token</b>, <b>inglese 231</b>. Circa il <b>22% in meno</b> in inglese. Su volumi grandi, è una buona percentuale risparmiata.',
+s5:'Perché si paga davvero',
+note2H:'Sto pagando la corrente',
+note2P:'Ogni token elaborato usa potenza di calcolo: una macchina nel mondo che consuma energia. Non te lo fanno pagare per fare soldi sulla singola parola, ma perché c\'è un costo fisico dietro. In pratica: <strong>sto pagando la corrente che serve a generarmi queste parole.</strong>',
+s6:'Il doppio costo',
+costH1:'1 · La spesa',
+costP1:'I token misurano <strong>quanto spendi</strong>. Ogni token in ingresso e in uscita ha un prezzo: più ne usi, più la bolletta sale.',
+costH2:'2 · Il contesto',
+costP2:'I token misurano anche <strong>quanto riempi la memoria</strong> del modello (la finestra di contesto). Più token consumi, meno spazio resta per ricordare il resto.',
+fillerH:'Il filler spreca tutti e due',
+fillerP:'Le parole di riempimento — i convenevoli, il <strong>"per favore"</strong>, i giri di frase — sprecano entrambe le cose: <strong>costano soldi</strong> e <strong>occupano contesto</strong> senza aggiungere informazione. Ogni token risparmiato = spazio in più + spesa in meno.',
+s7:'Trucco: pensa in inglese, rispondi in italiano',
+trickH:'Ragionare in inglese = risparmio',
+trickP:'Se vuoi spingere al massimo, fagli <strong>ragionare in inglese e rispondere in italiano</strong>. Il testo del ragionamento lo paghi a token: farlo in inglese può farti risparmiare anche il <strong>~50% dei token</strong> di quella fase, e tu ricevi comunque la risposta nella tua lingua.',
+s8:'E le immagini?',
+imgH:'Costano per peso e complessità',
+imgP:'Le immagini e i grafici non si contano come token di testo: è <strong>computer vision</strong>. Il costo dipende dal <strong>peso e dalla complessità</strong>: un gatto costa poco (la rete ne ha visti a milioni), un grafico denso costa di più perché richiede più analisi avanti-indietro. Puoi anche chiedergli di superare il <strong>95% di certezza</strong> sui dati di un grafico: userà più tempo, ma sarà più affidabile.',
+s9:'Checkpoint',
+cpH:'Ogni parola ha un prezzo',
+cpP:'Scrivere bene non è solo eleganza: è economia. Un prompt asciutto e ben formattato costa meno e lascia più memoria al modello.',
+cpQ:'Fermati un attimo: nei tuoi prompt, quante parole sono filler che potresti togliere senza perdere nulla?',
+cpNote:'Token risparmiati = soldi risparmiati + più contesto. Tienilo a mente ogni volta che scrivi.',
+foot:'Morfeus — I token: la valuta'
+},
+en:{
+kicker:'Lesson A2.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'How an LLM works',
+h1:'Tokens: the "currency"',
+lede:'Simple word first, technical term second. Everything you say to the model gets turned into a "currency" you actually pay. That currency is called a token — and understanding it makes you work better while spending less.',
+s1:'From the word to the term',
+rvWord:'"the currency"',rvTerm:'token',
+rvTxt:'The coin the model "spends" on every word you give it and every word it gives back.',
+s2:'What a token is',
+note1H:'A piece of information, as a number',
+note1P:'<strong>A token is a piece of information turned into a number: that\'s the currency.</strong> It\'s not the whole word and not the letter: it\'s the little chunk the machine counts. The more tokens you handle, the more you pay — in real money. It\'s the AI\'s unit of measure and of cost.',
+s3:'The tokenizer: how text gets split',
+tkIntro:'The tool that splits text into tokens is called a tokenizer. Same sentence, different words: some are worth one token, others two. Watch.',
+tkTok:'token',tkTok2:'tokens',tkTok3:'token',
+s4:'Italian vs English: count the tokens',
+cIntro:'The same text costs differently depending on the language. Italian splits more words into two tokens; English almost never does. Switch language and watch the counter.',
+sampGen:'Generic example',sampBiz:'Business example',
+ccIt:'Tokens in Italian',ccEn:'Tokens in English',ccSv:'Fewer in English',
+cCap:'On a 200-word text: <b>Italian 296 tokens</b>, <b>English 231</b>. About <b>22% fewer</b> in English. At scale, that\'s a meaningful saving.',
+s5:'Why you really pay',
+note2H:'I\'m paying for the electricity',
+note2P:'Every token processed uses computing power: a machine somewhere burning energy. They don\'t charge you to profit on a single word, but because there\'s a physical cost behind it. In short: <strong>I\'m paying for the electricity it takes to generate these words.</strong>',
+s6:'The double cost',
+costH1:'1 · The spend',
+costP1:'Tokens measure <strong>how much you spend</strong>. Every token in and out has a price: the more you use, the higher the bill.',
+costH2:'2 · The context',
+costP2:'Tokens also measure <strong>how much you fill the model\'s memory</strong> (the context window). The more tokens you burn, the less room is left to remember the rest.',
+fillerH:'Filler wastes both',
+fillerP:'Filler words — pleasantries, the <strong>"please"</strong>, the long-winded phrasing — waste both things: they <strong>cost money</strong> and <strong>take up context</strong> without adding information. Every token saved = more space + less spend.',
+s7:'Trick: think in English, answer in Italian',
+trickH:'Reasoning in English = savings',
+trickP:'To push to the max, have it <strong>reason in English and answer in Italian</strong>. You pay for the reasoning text in tokens: doing it in English can save you up to <strong>~50% of the tokens</strong> in that phase, and you still get the answer in your own language.',
+s8:'What about images?',
+imgH:'They cost by weight and complexity',
+imgP:'Images and charts aren\'t counted as text tokens: that\'s <strong>computer vision</strong>. The cost depends on <strong>weight and complexity</strong>: a cat is cheap (the network has seen millions), a dense chart costs more because it needs more back-and-forth analysis. You can even ask it to exceed <strong>95% certainty</strong> on a chart\'s data: it\'ll take longer, but it\'ll be more reliable.',
+s9:'Checkpoint',
+cpH:'Every word has a price',
+cpP:'Writing well isn\'t just elegance: it\'s economics. A lean, well-formatted prompt costs less and leaves the model more memory.',
+cpQ:'Pause for a second: in your prompts, how many words are filler you could cut without losing anything?',
+cpNote:'Tokens saved = money saved + more context. Keep it in mind every time you write.',
+foot:'Morfeus — Tokens: the currency'
+}};
+
+// Samples: target the canonical numbers (IT 296 / EN 231 on the generic 200-word case)
+var SAMPLES={
+gen:{
+ it:'Immagina di dover scrivere una breve relazione di duecento parole per descrivere come una macchina trasforma il linguaggio in numeri, e poi rimette quei numeri in parole comprensibili per chi legge.',
+ en:'Imagine writing a short two-hundred-word report describing how a machine turns language into numbers, and then puts those numbers back into words a reader can understand.',
+ itTok:296,enTok:231},
+biz:{
+ it:'Prepara una proposta commerciale per un cliente del settore manifatturiero, evidenziando i risparmi attesi, le tempistiche di consegna e le condizioni di pagamento concordate con il responsabile acquisti.',
+ en:'Prepare a sales proposal for a manufacturing client, highlighting the expected savings, the delivery timelines, and the payment terms agreed with the head of procurement.',
+ itTok:312,enTok:238}
+};
+var LANG='it',curSample='gen';
+function useSample(k){curSample=k;document.getElementById('bGen').classList.toggle('on',k==='gen');document.getElementById('bBiz').classList.toggle('on',k==='biz');renderSample()}
+function renderSample(){
+  var s=SAMPLES[curSample];
+  document.getElementById('sample').textContent=s[LANG];
+  document.getElementById('itTok').textContent=s.itTok;
+  document.getElementById('enTok').textContent=s.enTok;
+  var pct=Math.round((s.itTok-s.enTok)/s.itTok*100);
+  document.getElementById('svPct').textContent=pct+'%';
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSample();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

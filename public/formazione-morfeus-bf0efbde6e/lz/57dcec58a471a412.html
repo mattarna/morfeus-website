@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta-creazione: lo strumento che crea lo strumento — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#eccb8d;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c7dfa6;
+--purple:#6B5FE5;--purple-soft:#eeedfd;--purple-line:#cdc9f6;
+--gray:#5F5E5A;--gray-soft:#eeece4;--gray-line:#cdcabd;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;
+--amber:#EF9F27;--amber-soft:#412402;--amber-line:#6a4a14;
+--green:#97C459;--green-soft:#173404;--green-line:#3a5a1f;
+--purple:#9b92f2;--purple-soft:#2b2560;--purple-line:#4a4290;
+--gray:#B4B2A9;--gray-soft:#2c2c2a;--gray-line:#4a4a46;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+.lede-p code{font-family:var(--mono);font-size:12.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent)}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* FLOW */
+.flow-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:30px 24px;margin:0;text-align:center}
+.flow-wrap h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.flow-hint{font-size:12px;color:var(--ink-3);margin-bottom:24px;font-family:var(--mono)}
+.flow-steps{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap}
+.flow-step{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 12px;border-radius:var(--r);cursor:pointer;transition:background .25s,transform .3s;user-select:none}
+.flow-step:hover{background:var(--bg-2)}
+.flow-step-icon{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:25px;position:relative;transition:transform .3s,box-shadow .3s}
+.flow-step-label{font-size:12.5px;font-weight:600;transition:color .25s}
+.flow-step-desc{font-size:11px;color:var(--ink-3);max-width:108px;line-height:1.4;text-align:center}
+.flow-arrow{font-size:19px;color:var(--ink-3);padding:0 2px;align-self:center;margin-bottom:30px;transition:color .25s,transform .25s}
+.flow-step.is-active{background:var(--bg-2);transform:translateY(-4px)}
+.flow-step.is-active .flow-step-icon{transform:scale(1.1);box-shadow:0 0 0 6px var(--accent-soft)}
+.flow-step.is-active .flow-step-icon::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);opacity:.5;animation:ringPulse 1.1s ease-out infinite}
+.flow-arrow.is-active{color:var(--accent);transform:translateX(3px) scale(1.25)}
+@keyframes ringPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.4);opacity:0}}
+.flow-detail{margin-top:24px;border-radius:var(--r);padding:0 16px;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .35s,padding .4s;background:var(--bg-2);border:1px solid transparent;text-align:left}
+.flow-detail.open{max-height:240px;opacity:1;padding:16px;border-color:var(--line)}
+.flow-detail-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.flow-detail-body{font-size:13px;color:var(--ink-2);line-height:1.65}
+.flow-ctrl{display:inline-flex;align-items:center;gap:6px;margin-top:20px;padding:8px 16px;border-radius:30px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);font-family:var(--mono);transition:.2s}
+.flow-ctrl:hover{border-color:var(--accent-line);color:var(--accent)}
+.flow-ctrl i{font-size:16px}
+@media(prefers-reduced-motion:reduce){.flow-step.is-active .flow-step-icon::after{animation:none}}
+/* COMPARE TABS */
+.compare-wrap{margin:0}
+.compare-tabs{display:flex;gap:0;border-radius:var(--r-l) var(--r-l) 0 0;overflow:hidden;border:1px solid var(--line-2);border-bottom:none}
+.compare-tab{flex:1;padding:14px 18px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--bg-2);color:var(--ink-2);font-family:var(--sans);transition:background .2s,color .2s;display:flex;align-items:center;justify-content:center;gap:8px;border-right:1px solid var(--line-2)}
+.compare-tab:last-child{border-right:none}
+.compare-tab i{font-size:16px}
+.compare-tab.active{background:var(--card);color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+.compare-panel{display:none;padding:22px;background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-l) var(--r-l);box-shadow:var(--sh)}
+.compare-panel.active{display:block}
+.compare-panel-title{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.compare-panel-title i{font-size:18px}
+.compare-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:11px}
+.compare-item:last-child{margin-bottom:0}
+.compare-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px}
+.compare-item p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.compare-item p strong{color:var(--ink);font-weight:600}
+.compare-note{margin-top:16px;padding:12px 16px;border-radius:var(--r);font-size:12.5px;line-height:1.6}
+.compare-note strong{font-weight:600}
+/* GALLERY */
+.click-hint{font-size:12px;color:var(--ink-3);margin:0 0 14px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.click-hint i{font-size:15px}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.gallery-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:border-color .2s}
+.gallery-card:hover{border-color:var(--accent-line)}
+.gallery-card.is-open{border-color:var(--accent)}
+.gc-head{display:flex;align-items:center;gap:12px;padding:16px 18px}
+.gc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.gc-title{flex:1;min-width:0}
+.gc-title strong{font-size:14px;font-weight:600;display:block;margin-bottom:1px}
+.gc-title span{font-size:12px;color:var(--ink-3)}
+.gc-chevron{font-size:16px;color:var(--ink-3);transition:transform .3s}
+.gallery-card.is-open .gc-chevron{transform:rotate(180deg);color:var(--accent)}
+.gc-body{padding:0 18px;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .3s,padding .35s}
+.gallery-card.is-open .gc-body{max-height:360px;opacity:1;padding:0 18px 18px}
+.gc-desc{font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:12px}
+.gc-desc code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--accent)}
+.gc-desc strong{color:var(--ink);font-weight:600}
+.gc-example{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 14px}
+.gc-example .gc-ex-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono);font-weight:600;color:var(--ink-3);margin-bottom:6px}
+.gc-example p{font-size:12px;font-family:var(--mono);color:var(--ink-2);line-height:1.6}
+/* SKILL CREATOR BLOCK */
+.sc-block{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.sc-head{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sc-head-left{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink)}
+.sc-head-left i{font-size:18px;color:var(--accent)}
+.sc-badge{padding:3px 11px;border-radius:30px;font-size:11px;font-weight:600;font-family:var(--mono);background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);white-space:nowrap}
+.sc-body{padding:18px 20px}
+.sc-step-list{list-style:none;counter-reset:sc-counter;margin:0;padding:0}
+.sc-step-list li{counter-increment:sc-counter;display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2);line-height:1.6}
+.sc-step-list li:last-child{border-bottom:none}
+.sc-step-list li::before{content:counter(sc-counter);display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700;font-family:var(--mono);flex-shrink:0;margin-top:1px}
+.sc-step-list li strong{color:var(--ink);font-weight:600}
+.sc-step-list li code{font-family:var(--mono);font-size:11.5px;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--accent)}
+/* TIP BOX */
+.tip-box{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px 20px;margin:0}
+.tip-box .tip-title{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.tip-box p{font-size:13px;color:var(--ink-2);line-height:1.65}
+.tip-box p strong{color:var(--ink);font-weight:600}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink);font-weight:600}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.bridge .br-i{width:48px;height:48px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge strong{font-weight:600;font-size:15px;display:block;margin-bottom:4px;color:var(--agent)}
+.bridge span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .flow-steps{flex-direction:column;align-items:center}
+  .flow-arrow{transform:rotate(90deg);margin:0}
+  .flow-arrow.is-active{transform:rotate(90deg) translateX(3px) scale(1.25)}
+  .gallery-grid{grid-template-columns:1fr}
+  .compare-tab span.tab-label{display:none}
+  .key p{font-size:17px}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.flow-ctrl{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.flow-detail{max-height:none!important;opacity:1!important;padding:16px!important;border-color:var(--line)!important}.gc-body{max-height:none!important;opacity:1!important;padding:0 18px 18px!important}.compare-panel{display:block!important}.flow-wrap,.compare-wrap,.gallery-card,.sc-block,.tip-box,.key,.cp,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 6.4</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Meta-creazione</div>
+  <h1 class="rv" data-i="h1">Meta-creazione: lo strumento che crea lo strumento</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">01</span><h2 data-i="s1">Il flusso della meta-creazione</h2></div>
+  <p class="lede-p rv" style="margin-bottom:16px" data-i="flowIntro"></p>
+  <div class="flow-wrap rv" id="flow-wrap">
+    <h3 data-i="flowTitle"></h3>
+    <div class="flow-hint" data-i="flowHint"></div>
+    <div class="flow-steps" id="flow-steps">
+      <div class="flow-step" data-step="0" onclick="selectFlowStep(0)">
+        <div class="flow-step-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-user-circle"></i></div>
+        <div class="flow-step-label" style="color:var(--blue)" data-i="fl0L"></div>
+        <div class="flow-step-desc" data-i="fl0D"></div>
+      </div>
+      <div class="flow-arrow" data-arrow="0"><i class="ti ti-chevron-right"></i></div>
+      <div class="flow-step" data-step="1" onclick="selectFlowStep(1)">
+        <div class="flow-step-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-tools"></i></div>
+        <div class="flow-step-label" style="color:var(--accent)" data-i="fl1L"></div>
+        <div class="flow-step-desc" data-i="fl1D"></div>
+      </div>
+      <div class="flow-arrow" data-arrow="1"><i class="ti ti-chevron-right"></i></div>
+      <div class="flow-step" data-step="2" onclick="selectFlowStep(2)">
+        <div class="flow-step-icon" style="background:var(--purple-soft);color:var(--purple)"><i class="ti ti-upload"></i></div>
+        <div class="flow-step-label" style="color:var(--purple)" data-i="fl2L"></div>
+        <div class="flow-step-desc" data-i="fl2D"></div>
+      </div>
+      <div class="flow-arrow" data-arrow="2"><i class="ti ti-chevron-right"></i></div>
+      <div class="flow-step" data-step="3" onclick="selectFlowStep(3)">
+        <div class="flow-step-icon" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-stack-2"></i></div>
+        <div class="flow-step-label" style="color:var(--amber)" data-i="fl3L"></div>
+        <div class="flow-step-desc" data-i="fl3D"></div>
+      </div>
+      <div class="flow-arrow" data-arrow="3"><i class="ti ti-chevron-right"></i></div>
+      <div class="flow-step" data-step="4" onclick="selectFlowStep(4)">
+        <div class="flow-step-icon" style="background:var(--green-soft);color:var(--green)"><i class="ti ti-adjustments"></i></div>
+        <div class="flow-step-label" style="color:var(--green)" data-i="fl4L"></div>
+        <div class="flow-step-desc" data-i="fl4D"></div>
+      </div>
+    </div>
+    <div class="flow-detail" id="flow-detail">
+      <div class="flow-detail-title" id="flow-detail-title"></div>
+      <div class="flow-detail-body" id="flow-detail-body"></div>
+    </div>
+    <button class="flow-ctrl" id="flow-ctrl" onclick="toggleFlow()"><i class="ti ti-player-pause"></i> <span id="flow-ctrl-label"></span></button>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-git-compare"></i><span class="no">02</span><h2 data-i="s2">Creare un output vs costruire uno strumento</h2></div>
+  <p class="lede-p rv" style="margin-bottom:16px" data-i="cmpIntro"></p>
+  <div class="compare-wrap rv">
+    <div class="compare-tabs">
+      <button class="compare-tab active" id="tab-once" onclick="switchCompare('once')"><i class="ti ti-bolt"></i> <span class="tab-label" data-i="tabOnce"></span></button>
+      <button class="compare-tab" id="tab-system" onclick="switchCompare('system')"><i class="ti ti-infinity"></i> <span class="tab-label" data-i="tabSystem"></span></button>
+    </div>
+    <div class="compare-panel active" id="panel-once">
+      <div class="compare-panel-title"><i class="ti ti-bolt" style="color:var(--blue)"></i> <span data-i="onceTitle"></span></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-check" style="font-size:10px"></i></div><p data-i-html="once1"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x" style="font-size:10px"></i></div><p data-i-html="once2"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x" style="font-size:10px"></i></div><p data-i-html="once3"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x" style="font-size:10px"></i></div><p data-i-html="once4"></p></div>
+      <div class="compare-note" style="background:var(--blue-soft);color:var(--blue)" data-i-html="onceNote"></div>
+    </div>
+    <div class="compare-panel" id="panel-system">
+      <div class="compare-panel-title"><i class="ti ti-infinity" style="color:var(--accent)"></i> <span data-i="sysTitle"></span></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-check" style="font-size:10px"></i></div><p data-i-html="sys1"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-check" style="font-size:10px"></i></div><p data-i-html="sys2"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-check" style="font-size:10px"></i></div><p data-i-html="sys3"></p></div>
+      <div class="compare-item"><div class="compare-dot" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-clock" style="font-size:10px"></i></div><p data-i-html="sys4"></p></div>
+      <div class="compare-note" style="background:var(--accent-soft);color:var(--accent)" data-i-html="sysNote"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">03</span><h2 data-i="s3">I quattro tipi di meta-creazione</h2></div>
+  <p class="lede-p rv" style="margin-bottom:14px" data-i="galIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="galHint"></span></div>
+  <div class="gallery-grid rv" id="gallery-grid">
+    <div class="gallery-card" id="gc-0" onclick="toggleGalleryCard(0)">
+      <div class="gc-head">
+        <div class="gc-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-puzzle"></i></div>
+        <div class="gc-title"><strong data-i="g0T"></strong><span data-i="g0S"></span></div>
+        <i class="ti ti-chevron-down gc-chevron"></i>
+      </div>
+      <div class="gc-body" id="gcb-0">
+        <p class="gc-desc" data-i-html="g0D"></p>
+        <div class="gc-example"><div class="gc-ex-label" data-i="gExLabel"></div><p data-i="g0E"></p></div>
+      </div>
+    </div>
+    <div class="gallery-card" id="gc-1" onclick="toggleGalleryCard(1)">
+      <div class="gc-head">
+        <div class="gc-icon" style="background:var(--purple-soft);color:var(--purple)"><i class="ti ti-wand"></i></div>
+        <div class="gc-title"><strong data-i="g1T"></strong><span data-i="g1S"></span></div>
+        <i class="ti ti-chevron-down gc-chevron"></i>
+      </div>
+      <div class="gc-body" id="gcb-1">
+        <p class="gc-desc" data-i-html="g1D"></p>
+        <div class="gc-example"><div class="gc-ex-label" data-i="gExLabel"></div><p data-i="g1E"></p></div>
+      </div>
+    </div>
+    <div class="gallery-card" id="gc-2" onclick="toggleGalleryCard(2)">
+      <div class="gc-head">
+        <div class="gc-icon" style="background:var(--amber-soft);color:var(--amber)"><i class="ti ti-template"></i></div>
+        <div class="gc-title"><strong data-i="g2T"></strong><span data-i="g2S"></span></div>
+        <i class="ti ti-chevron-down gc-chevron"></i>
+      </div>
+      <div class="gc-body" id="gcb-2">
+        <p class="gc-desc" data-i-html="g2D"></p>
+        <div class="gc-example"><div class="gc-ex-label" data-i="gExLabel"></div><p data-i="g2E"></p></div>
+      </div>
+    </div>
+    <div class="gallery-card" id="gc-3" onclick="toggleGalleryCard(3)">
+      <div class="gc-head">
+        <div class="gc-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-scan"></i></div>
+        <div class="gc-title"><strong data-i="g3T"></strong><span data-i="g3S"></span></div>
+        <i class="ti ti-chevron-down gc-chevron"></i>
+      </div>
+      <div class="gc-body" id="gcb-3">
+        <p class="gc-desc" data-i-html="g3D"></p>
+        <div class="gc-example"><div class="gc-ex-label" data-i="gExLabel"></div><p data-i="g3E"></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">04</span><h2 data-i="s4">skill-creator: la meta-skill ufficiale</h2></div>
+  <p class="lede-p rv" style="margin-bottom:16px" data-i-html="scIntro"></p>
+  <div class="sc-block rv">
+    <div class="sc-head">
+      <div class="sc-head-left"><i class="ti ti-sparkles"></i> <span data-i="scHead"></span></div>
+      <span class="sc-badge" data-i="scBadge"></span>
+    </div>
+    <div class="sc-body">
+      <ol class="sc-step-list">
+        <li data-i-html="sc1"></li>
+        <li data-i-html="sc2"></li>
+        <li data-i-html="sc3"></li>
+        <li data-i-html="sc4"></li>
+        <li data-i-html="sc5"></li>
+      </ol>
+    </div>
+  </div>
+  <div class="tip-box rv" style="margin-top:18px">
+    <div class="tip-title"><i class="ti ti-bulb"></i> <span data-i="tipTitle"></span></div>
+    <p data-i="tipBody"></p>
+  </div>
+
+  <div class="key rv"><p data-i="key"></p></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">05</span><h2 data-i="s5">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-tools"></i><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">06</span><h2 data-i="s6">Prossima lezione</h2></div>
+  <div class="bridge rv"><div class="br-i"><i class="ti ti-arrow-right"></i></div><div><strong data-i="brH"></strong><span data-i="brP"></span></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Meta-creazione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 6.4',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Meta-creazione',
+h1:'Meta-creazione: lo strumento che crea lo strumento',
+lede:'Usare Claude per costruire le cose che Claude userà dopo. Il loop in cui il confine tra "usare" e "costruire" scompare.',
+hook:'«Cosa succede quando applicate le capacità di Claude alla creazione di strumenti per Claude stesso? Ottenete qualcosa di potente: un sistema che si auto-migliora. Non serve essere ingegneri — serve avere chiari i workflow.»',
+s1:'Il flusso della meta-creazione',
+flowIntro:'Ogni meta-creazione segue lo stesso ciclo: tu descrivi, Claude costruisce lo strumento, lo strumento produce lavoro ripetibile. Clicca su ogni fase per capirla in dettaglio.',
+flowTitle:'Tu descrivi → Claude costruisce → Lo strumento produce',
+flowHint:'Clicca su un passo per i dettagli · oppure lascia scorrere automaticamente',
+fl0L:'Tu descrivi',fl0D:'Spieghi il workflow in linguaggio naturale',
+fl1L:'Claude costruisce',fl1D:'Genera la Skill, il prompt o il template',
+fl2L:'Tu installi',fl2D:'Aggiungi lo strumento al tuo sistema',
+fl3L:'Lo strumento produce',fl3D:'Output ripetibili, ogni volta coerenti',
+fl4L:'Itera e migliora',fl4D:'Il sistema cresce con l\'uso',
+flowDetail0T:'<i class="ti ti-user-circle"></i> Tu descrivi il workflow',
+flowDetail0B:'Spieghi in linguaggio naturale cosa fa il workflow: input, passaggi, output atteso. Non serve codice, non serve formattazione speciale. Più sei preciso su "quando si usa" e "cosa deve produrre", meglio Claude capisce cosa costruire.',
+flowDetail1T:'<i class="ti ti-tools"></i> Claude costruisce lo strumento',
+flowDetail1B:'Claude scrive il SKILL.md completo (o il prompt, o il template), con istruzioni operative, formato output e trigger già impostati. Ti intervista se mancano dettagli. Il risultato è leggibile e modificabile — nessuna magia nera, solo Markdown strutturato.',
+flowDetail2T:'<i class="ti ti-upload"></i> Tu installi lo strumento',
+flowDetail2B:'Aggiungi la Skill al pannello Customize (o salvi il prompt / template nel tuo sistema). Da quel momento lo strumento è disponibile ogni volta che ne hai bisogno, senza riconfigurare nulla.',
+flowDetail3T:'<i class="ti ti-stack-2"></i> Lo strumento produce output ripetibili',
+flowDetail3B:'Ogni volta che usi la Skill (o il prompt, o il template) l\'output è coerente con quello che hai progettato. Non devi ri-spiegare il contesto, non c\'è variabilità indesiderata. Il lavoro si moltiplica senza sforzo aggiuntivo da parte tua.',
+flowDetail4T:'<i class="ti ti-adjustments"></i> Itera e migliora',
+flowDetail4B:'Se l\'output non è esattamente quello che volevi, descrivi la correzione. Claude aggiorna lo strumento. Ogni iterazione migliora l\'intero sistema — non solo la singola risposta. Il loop si chiude e si auto-alimenta.',
+flowPause:'Pausa',flowPlay:'Avvia',
+s2:'Creare un output vs costruire uno strumento',
+cmpIntro:'Il salto mentale della meta-creazione: smettere di chiedersi "come ottengo questo output?" e iniziare a chiedersi "come costruisco lo strumento che produce questo tipo di output ogni volta?"',
+tabOnce:'Creare un output (una volta)',tabSystem:'Costruire uno strumento (N volte)',
+onceTitle:'Approccio "dammi il risultato"',
+once1:'<strong>Veloce per task occasionali.</strong> Descrivi il problema, Claude risponde, hai l\'output. Zero configurazione.',
+once2:'<strong>Non scala.</strong> Il contesto si perde ad ogni nuova chat. Le istruzioni le ri-date ogni volta.',
+once3:'<strong>Variabilità imprevedibile.</strong> L\'output cambia a seconda di come formulate la richiesta e del momento.',
+once4:'<strong>Dipendenza lineare.</strong> Più output volete, più tempo ci mettete voi. Non si moltiplica.',
+onceNote:'<strong>Quando ha senso:</strong> task mai ripetuto, richiesta estemporanea, sperimentazione. Non per workflow ricorrenti.',
+sysTitle:'Approccio "costruiamo lo strumento"',
+sys1:'<strong>Output coerenti ogni volta.</strong> Le istruzioni stanno nella Skill: non le riscrivete, sono già lì.',
+sys2:'<strong>Si scala.</strong> Una Skill costruita oggi produce output per settimane senza sforzo aggiuntivo.',
+sys3:'<strong>Migliora nel tempo.</strong> Aggiornate lo strumento una volta sola, tutti i futuri output ne beneficiano.',
+sys4:'<strong>Investimento iniziale.</strong> Ci vogliono 15–30 minuti per costruire bene una Skill. Si ammortizza in pochi usi.',
+sysNote:'<strong>Quando ha senso:</strong> workflow ripetuto almeno una volta a settimana, stesso formato atteso, vorreste "copiare" il prompt da qualche parte.',
+s3:'I quattro tipi di meta-creazione',
+galIntro:'La meta-creazione non si limita alle Skill. Il principio si applica a quattro categorie di "strumenti che Claude può costruire per voi". Clicca su ciascuna per scoprire come funziona.',
+galHint:'Clicca una carta per espanderla',
+gExLabel:'Prompt di avvio',
+g0T:'Skill che crea Skill',g0S:'Workflow → procedura riusabile',
+g0D:'Descrivi un workflow ricorrente a Claude — Claude scrive il <code>SKILL.md</code> completo: istruzioni operative, formato output, trigger. Puoi installarlo in 2 clic e usarlo da subito. La skill ufficiale <strong>skill-creator</strong> fa esattamente questo: ti intervista, scrive la Skill, la fa installare. Anthropic dichiara una Skill funzionante in 15–30 minuti.',
+g0E:'"Voglio una Skill per analizzare il feedback dei clienti: sentiment, top 3 punti positivi, top 3 critici, azioni suggerite. Crea la Skill per questo workflow."',
+g1T:'Prompt che genera prompt',g1S:'Richiesta generica → prompt ottimale',
+g1D:'Descrivi un tipo di richiesta che fate spesso — Claude scrive il prompt ottimale, strutturato, riusabile. Non lo scrivete voi: lo fate scrivere a Claude una volta sola, poi lo salvate e lo riusate. Il prompt generato è calibrato sulla struttura della risposta che volete, non sulla singola richiesta.',
+g1E:'"Devo spesso scrivere annunci per i social. Scrivi il prompt ottimale riusabile per questo tipo di richiesta, con le variabili da compilare ogni volta."',
+g2T:'Template che produce template',g2S:'Struttura → documento riusabile',
+g2D:'Descrivi la struttura di un documento che producete regolarmente — Claude crea il template completo con sezioni, indicazioni su cosa scrivere dove, variabili compilabili. Il template diventa il punto di partenza ogni volta: mai più da foglio bianco, con formato e logica già incorporati.',
+g2E:'"Ho bisogno di un template per il report mensile di aggiornamento al cliente: stato avanzamento, metriche chiave, prossimi passi, rischi. Crea il template riusabile."',
+g3T:'Instruction reviewer',g3S:'Istruzioni esistenti → versione migliorata',
+g3D:'Date a Claude le vostre istruzioni correnti (di un Project, di una Skill, di un prompt) e chiedetegli di analizzarle. Claude identifica cosa manca, cosa è ambiguo, cosa potrebbe causare sotto-triggering o risposte inconsistenti. Non riscrive per voi: vi dice cosa e perché migliorare, così il controllo resta vostro.',
+g3E:'"Queste sono le istruzioni del mio Project. Cosa manca? Cosa è ambiguo? Cosa cambieresti e perché? [incolla le istruzioni]"',
+s4:'skill-creator: la meta-skill ufficiale',
+scIntro:'Anthropic ha pubblicato una Skill ufficiale chiamata <strong>skill-creator</strong> — una meta-skill il cui unico scopo è costruire altre Skill per voi. È disponibile nel catalogo di Cowork (Customize → Skills) e come Plugin su claude.com/plugins.',
+scHead:'Come funziona skill-creator',
+scBadge:'15–30 min · Skill funzionante',
+sc1:'<strong>Abilitate la Skill</strong> da Customize → Skills → skill-creator (toggle on).',
+sc2:'<strong>Descrivete il workflow</strong> in chat, in linguaggio naturale. Più è preciso il contesto, migliore sarà la Skill generata.',
+sc3:'<strong>skill-creator vi intervista:</strong> cosa abilita la Skill, quando deve scattare, formato output atteso, casi limite da gestire.',
+sc4:'<strong>Claude scrive il <code>SKILL.md</code></strong> completo — leggibile, modificabile, standard. Nessun codice, solo Markdown.',
+sc5:'<strong>Installate e testate.</strong> Se qualcosa non torna, descrivete la correzione: Claude itera. Di solito basta un giro.',
+tipTitle:'Il segreto del buon risultato',
+tipBody:'La qualità della Skill generata dipende quasi interamente da quanto chiaramente descrivete il workflow. Non serve essere tecnici: serve avere chiari il trigger ("quando la uso"), l\'input ("cosa porto in chat"), e l\'output atteso ("cosa voglio ricevere"). Se sapete rispondere a queste tre domande, skill-creator fa il resto.',
+key:'«La meta-creazione è il momento in cui il confine tra usare uno strumento e costruire uno strumento scompare. Non serve essere ingegneri — serve avere chiari i workflow e la voglia di formalizzarli. Il resto lo fa Claude.»',
+s5:'Checkpoint',
+cpH:'Costruite la vostra prima Skill con skill-creator.',
+cpP:'Scegliete un workflow nel vostro lavoro che fate spesso ma non avete ancora formalizzato — uno che descrivete bene a parole. Descrivete il workflow a Claude in chat normale, poi chiedetegli di creare una Skill per eseguirlo. È il modo più veloce per costruire il vostro arsenale di Skill senza partire da zero.<br><br><strong>Il parametro di successo: dopo averla installata, la Skill produce l\'output atteso senza che dobbiate ri-spiegare il contesto.</strong>',
+s6:'Prossima lezione',
+brH:'Prossima lezione →',
+brP:'Sapete creare Skill e far sì che Claude le crei per voi. Il passo successivo: i Plugin — pacchetti completi già pronti che espandono Claude in un colpo solo, senza configurare ogni pezzo.',
+foot:'Morfeus — Meta-creazione'
+},
+en:{
+kicker:'Lesson 6.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Meta-creation',
+h1:'Meta-creation: the tool that builds the tool',
+lede:'Using Claude to build the things Claude will use later. The loop where the line between "using" and "building" disappears.',
+hook:'"What happens when you apply Claude\'s capabilities to building tools for Claude itself? You get something powerful: a self-improving system. You don\'t need to be an engineer — you need to be clear about your workflows."',
+s1:'The meta-creation flow',
+flowIntro:'Every meta-creation follows the same cycle: you describe, Claude builds the tool, the tool produces repeatable work. Click each phase to understand it in detail.',
+flowTitle:'You describe → Claude builds → The tool produces',
+flowHint:'Click a step for the details · or let it cycle automatically',
+fl0L:'You describe',fl0D:'You explain the workflow in natural language',
+fl1L:'Claude builds',fl1D:'Generates the Skill, the prompt or the template',
+fl2L:'You install',fl2D:'You add the tool to your system',
+fl3L:'The tool produces',fl3D:'Repeatable outputs, consistent every time',
+fl4L:'Iterate and improve',fl4D:'The system grows with use',
+flowDetail0T:'<i class="ti ti-user-circle"></i> You describe the workflow',
+flowDetail0B:'You explain in natural language what the workflow does: input, steps, expected output. No code, no special formatting needed. The more precise you are about "when to use it" and "what it must produce", the better Claude understands what to build.',
+flowDetail1T:'<i class="ti ti-tools"></i> Claude builds the tool',
+flowDetail1B:'Claude writes the complete SKILL.md (or the prompt, or the template), with operational instructions, output format and trigger already set. It interviews you if details are missing. The result is readable and editable — no black magic, just structured Markdown.',
+flowDetail2T:'<i class="ti ti-upload"></i> You install the tool',
+flowDetail2B:'You add the Skill to the Customize panel (or save the prompt / template in your system). From that moment the tool is available whenever you need it, without reconfiguring anything.',
+flowDetail3T:'<i class="ti ti-stack-2"></i> The tool produces repeatable outputs',
+flowDetail3B:'Every time you use the Skill (or the prompt, or the template) the output is consistent with what you designed. You don\'t have to re-explain the context, there\'s no unwanted variability. The work multiplies with no additional effort on your part.',
+flowDetail4T:'<i class="ti ti-adjustments"></i> Iterate and improve',
+flowDetail4B:'If the output isn\'t exactly what you wanted, describe the fix. Claude updates the tool. Every iteration improves the whole system — not just the single response. The loop closes and feeds itself.',
+flowPause:'Pause',flowPlay:'Play',
+s2:'Creating one output vs building a tool',
+cmpIntro:'The mental leap of meta-creation: stop asking "how do I get this output?" and start asking "how do I build the tool that produces this kind of output every time?"',
+tabOnce:'Create an output (once)',tabSystem:'Build a tool (N times)',
+onceTitle:'The "give me the result" approach',
+once1:'<strong>Fast for occasional tasks.</strong> You describe the problem, Claude responds, you have the output. Zero configuration.',
+once2:'<strong>Doesn\'t scale.</strong> The context is lost with each new chat. You re-give the instructions every time.',
+once3:'<strong>Unpredictable variability.</strong> The output changes depending on how you phrase the request and on the moment.',
+once4:'<strong>Linear dependency.</strong> The more outputs you want, the more time you spend. It doesn\'t multiply.',
+onceNote:'<strong>When it makes sense:</strong> a task never repeated, an off-the-cuff request, experimentation. Not for recurring workflows.',
+sysTitle:'The "let\'s build the tool" approach',
+sys1:'<strong>Consistent outputs every time.</strong> The instructions live in the Skill: you don\'t rewrite them, they\'re already there.',
+sys2:'<strong>It scales.</strong> A Skill built today produces outputs for weeks with no additional effort.',
+sys3:'<strong>It improves over time.</strong> You update the tool once, all future outputs benefit from it.',
+sys4:'<strong>Initial investment.</strong> It takes 15–30 minutes to build a Skill well. It pays off in a few uses.',
+sysNote:'<strong>When it makes sense:</strong> a workflow repeated at least once a week, the same expected format, you\'d like to "copy" the prompt somewhere.',
+s3:'The four types of meta-creation',
+galIntro:'Meta-creation isn\'t limited to Skills. The principle applies to four categories of "tools Claude can build for you". Click each one to discover how it works.',
+galHint:'Click a card to expand it',
+gExLabel:'Starter prompt',
+g0T:'Skill that creates Skills',g0S:'Workflow → reusable procedure',
+g0D:'Describe a recurring workflow to Claude — Claude writes the complete <code>SKILL.md</code>: operational instructions, output format, trigger. You can install it in 2 clicks and use it right away. The official <strong>skill-creator</strong> skill does exactly this: it interviews you, writes the Skill, has it installed. Anthropic states a working Skill in 15–30 minutes.',
+g0E:'"I want a Skill to analyze customer feedback: sentiment, top 3 positives, top 3 critical points, suggested actions. Build the Skill for this workflow."',
+g1T:'Prompt that generates prompts',g1S:'Generic request → optimal prompt',
+g1D:'Describe a type of request you make often — Claude writes the optimal, structured, reusable prompt. You don\'t write it: you have Claude write it once, then you save it and reuse it. The generated prompt is calibrated on the structure of the answer you want, not on the single request.',
+g1E:'"I often have to write social media posts. Write the optimal reusable prompt for this type of request, with the variables to fill in each time."',
+g2T:'Template that produces templates',g2S:'Structure → reusable document',
+g2D:'Describe the structure of a document you produce regularly — Claude creates the complete template with sections, guidance on what to write where, fillable variables. The template becomes the starting point every time: never from a blank page again, with format and logic already built in.',
+g2E:'"I need a template for the monthly client update report: progress status, key metrics, next steps, risks. Build the reusable template."',
+g3T:'Instruction reviewer',g3S:'Existing instructions → improved version',
+g3D:'Give Claude your current instructions (from a Project, a Skill, a prompt) and ask it to analyze them. Claude identifies what\'s missing, what\'s ambiguous, what could cause under-triggering or inconsistent responses. It doesn\'t rewrite for you: it tells you what and why to improve, so control stays yours.',
+g3E:'"These are my Project\'s instructions. What\'s missing? What\'s ambiguous? What would you change and why? [paste the instructions]"',
+s4:'skill-creator: the official meta-skill',
+scIntro:'Anthropic has published an official Skill called <strong>skill-creator</strong> — a meta-skill whose sole purpose is to build other Skills for you. It\'s available in the Cowork catalog (Customize → Skills) and as a Plugin on claude.com/plugins.',
+scHead:'How skill-creator works',
+scBadge:'15–30 min · working Skill',
+sc1:'<strong>Enable the Skill</strong> from Customize → Skills → skill-creator (toggle on).',
+sc2:'<strong>Describe the workflow</strong> in chat, in natural language. The more precise the context, the better the generated Skill.',
+sc3:'<strong>skill-creator interviews you:</strong> what enables the Skill, when it should fire, expected output format, edge cases to handle.',
+sc4:'<strong>Claude writes the complete <code>SKILL.md</code></strong> — readable, editable, standard. No code, just Markdown.',
+sc5:'<strong>Install and test.</strong> If something\'s off, describe the fix: Claude iterates. Usually one round is enough.',
+tipTitle:'The secret to a good result',
+tipBody:'The quality of the generated Skill depends almost entirely on how clearly you describe the workflow. You don\'t need to be technical: you need to be clear about the trigger ("when do I use it"), the input ("what do I bring into chat"), and the expected output ("what do I want to receive"). If you can answer these three questions, skill-creator does the rest.',
+key:'"Meta-creation is the moment when the line between using a tool and building a tool disappears. You don\'t need to be an engineer — you need to be clear about your workflows and willing to formalize them. Claude does the rest."',
+s5:'Checkpoint',
+cpH:'Build your first Skill with skill-creator.',
+cpP:'Pick a workflow in your work that you do often but haven\'t yet formalized — one you describe well in words. Describe the workflow to Claude in a normal chat, then ask it to create a Skill to run it. It\'s the fastest way to build your arsenal of Skills without starting from scratch.<br><br><strong>The measure of success: after you install it, the Skill produces the expected output without you having to re-explain the context.</strong>',
+s6:'Next lesson',
+brH:'Next lesson →',
+brP:'You know how to create Skills and have Claude create them for you. The next step: Plugins — complete, ready-made packages that expand Claude in one move, without configuring each piece.',
+foot:'Morfeus — Meta-creation'
+}};
+
+var LANG='it';
+
+/* FLOW */
+var flowStepEls,flowArrowEls,flowDetail,flowDetailTitle,flowDetailBody;
+var flowIdx=0,flowTimer=null,flowPlaying=false,flowUserClicked=false,flowStarted=false;
+function showFlowDetail(idx){
+  var d=DICT[LANG];
+  flowDetailTitle.innerHTML=d['flowDetail'+idx+'T'];
+  flowDetailBody.textContent=d['flowDetail'+idx+'B'];
+  flowDetail.classList.add('open');
+}
+function activateFlowStep(idx){
+  flowStepEls.forEach(function(s){s.classList.remove('is-active');});
+  flowArrowEls.forEach(function(a){a.classList.remove('is-active');});
+  flowStepEls[idx].classList.add('is-active');
+  if(flowArrowEls[idx])flowArrowEls[idx].classList.add('is-active');
+}
+function selectFlowStep(idx){
+  flowUserClicked=true;
+  stopFlow();
+  flowIdx=idx;
+  activateFlowStep(idx);
+  showFlowDetail(idx);
+}
+function flowTick(){
+  activateFlowStep(flowIdx);
+  showFlowDetail(flowIdx);
+  flowIdx=(flowIdx+1)%flowStepEls.length;
+}
+function startFlow(){
+  if(flowPlaying)return;
+  flowPlaying=true;setFlowCtrl(true);
+  flowTick();
+  flowTimer=setInterval(flowTick,2200);
+}
+function stopFlow(){
+  flowPlaying=false;setFlowCtrl(false);
+  if(flowTimer){clearInterval(flowTimer);flowTimer=null;}
+}
+function toggleFlow(){flowPlaying?stopFlow():startFlow();}
+function setFlowCtrl(playing){
+  var btn=document.getElementById('flow-ctrl');
+  var d=DICT[LANG];
+  btn.innerHTML=playing
+    ?'<i class="ti ti-player-pause"></i> <span id="flow-ctrl-label">'+d.flowPause+'</span>'
+    :'<i class="ti ti-player-play"></i> <span id="flow-ctrl-label">'+d.flowPlay+'</span>';
+}
+
+/* COMPARE */
+function switchCompare(which){
+  ['once','system'].forEach(function(t){
+    document.getElementById('tab-'+t).classList.toggle('active',t===which);
+    document.getElementById('panel-'+t).classList.toggle('active',t===which);
+  });
+}
+
+/* GALLERY */
+function toggleGalleryCard(idx){
+  var card=document.getElementById('gc-'+idx);
+  var isOpen=card.classList.contains('is-open');
+  for(var i=0;i<4;i++){document.getElementById('gc-'+i).classList.remove('is-open');}
+  if(!isOpen)card.classList.add('is-open');
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  setFlowCtrl(flowPlaying);
+  var act=document.querySelector('.flow-step.is-active');
+  if(act)showFlowDetail(parseInt(act.getAttribute('data-step'),10));
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+flowStepEls=Array.prototype.slice.call(document.querySelectorAll('#flow-steps .flow-step'));
+flowArrowEls=Array.prototype.slice.call(document.querySelectorAll('#flow-steps .flow-arrow'));
+flowDetail=document.getElementById('flow-detail');
+flowDetailTitle=document.getElementById('flow-detail-title');
+flowDetailBody=document.getElementById('flow-detail-body');
+
+var flowObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting&&!flowStarted&&!flowUserClicked){flowStarted=true;startFlow();}
+  });
+},{threshold:.4});
+flowObs.observe(document.getElementById('flow-wrap'));
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

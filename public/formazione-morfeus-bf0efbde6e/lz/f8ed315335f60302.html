@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restare aggiornati su Claude — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.sh .hint{margin-left:auto;text-transform:none;letter-spacing:0;color:var(--ink-3);font-weight:500;font-size:11px;display:flex;align-items:center;gap:5px}
+.sh .hint i{color:var(--accent)}
+.sh.has-hint::after{display:none}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* channels grid */
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.ch-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.ch-card:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.ch-card.primary{border-color:var(--accent-line)}
+.ch-card.secondary{border-color:var(--blue-line)}
+.ch-card.open.primary{border-color:var(--accent)}
+.ch-card.open.secondary{border-color:var(--blue)}
+.ch-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.ch-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ch-card.primary .ch-icon{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.ch-card.secondary .ch-icon{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.ch-meta{flex:1;min-width:0}
+.ch-meta h3{font-size:14.5px;font-weight:600;margin-bottom:3px}
+.ch-freq{font-size:11px;color:var(--ink-3);font-family:var(--mono);display:flex;align-items:center;gap:5px}
+.ch-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-family:var(--mono);margin-bottom:9px}
+.ch-card.primary .ch-pill{background:var(--accent-soft);color:var(--accent)}
+.ch-card.secondary .ch-pill{background:var(--blue-soft);color:var(--blue)}
+.ch-teaser{font-size:12.5px;color:var(--ink-3)}
+.ch-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ch-card.open .ch-body{max-height:260px}
+.ch-body-inner{padding-top:13px;margin-top:11px;border-top:1px solid var(--line)}
+.ch-body-inner p{font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:10px}
+.ch-url{font-size:11px;color:var(--ink-3);font-family:var(--mono);background:var(--bg-2);border:1px solid var(--line);padding:4px 9px;border-radius:6px;display:inline-block}
+/* info / warn box */
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* rhythm */
+.rhythm-row{display:flex;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.rhythm-item{flex:1;text-align:center;padding:20px 14px;cursor:pointer;transition:.2s;border-right:1px solid var(--line)}
+.rhythm-item:last-child{border-right:none}
+.rhythm-item:hover{background:var(--bg-2)}
+.rhythm-item.on{background:var(--accent-soft)}
+.ri-icon{font-size:22px;color:var(--accent);margin-bottom:7px;display:block}
+.ri-cadenza{font-size:16px;font-weight:600;color:var(--accent);display:block;margin-bottom:2px}
+.ri-label{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.rhythm-detail{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:18px 22px;margin-top:12px;min-height:64px}
+.rhythm-detail p{font-size:14px;color:var(--ink-2);line-height:1.65}
+.rhythm-detail strong{color:var(--accent);font-weight:600}
+/* signal / noise */
+.sig-tabs{display:flex;gap:8px;margin:0}
+.stab{flex:1;padding:11px 16px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh);cursor:pointer;font-size:13.5px;font-weight:600;text-align:center;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--ink-2);font-family:inherit}
+.stab:hover{border-color:var(--line-2)}
+.stab.on-sig{border-color:var(--teal);background:var(--teal-soft);color:var(--teal)}
+.stab.on-noise{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.sig-panel{display:none;margin-top:14px}
+.sig-panel.show-p{display:block}
+.sig-list{display:flex;flex-direction:column;gap:10px}
+.sig-item{display:flex;align-items:flex-start;gap:13px;padding:15px 18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.sig-item.s{border-left:3px solid var(--teal)}
+.sig-item.n{border-left:3px solid var(--bad)}
+.si-icon{font-size:19px;flex-shrink:0;margin-top:1px}
+.sig-item.s .si-icon{color:var(--teal)}
+.sig-item.n .si-icon{color:var(--bad)}
+.si-text h4{font-size:13.5px;font-weight:600;margin-bottom:3px}
+.si-text p{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+/* ritual steps */
+.ritual-steps{display:flex;flex-direction:column;gap:12px;margin:0}
+.rs{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px;cursor:pointer;transition:.2s}
+.rs:hover{border-color:var(--line-2)}
+.rs.open{border-color:var(--accent)}
+.rs-num{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);border:1.5px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;flex-shrink:0;transition:.2s}
+.rs.open .rs-num{background:var(--accent);color:#fff;border-color:var(--accent)}
+.rs-body{flex:1;min-width:0}
+.rs-body h3{font-size:15px;font-weight:600;margin-bottom:2px}
+.rs-sub{font-size:12.5px;color:var(--ink-3);font-family:var(--mono)}
+.rs-expand{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.rs.open .rs-expand{max-height:320px}
+.rs-expand-inner{padding-top:13px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.rs-expand-inner em{color:var(--ink);font-style:italic;font-weight:500}
+.rs-tip{display:flex;align-items:flex-start;gap:9px;margin-top:11px;padding:11px 13px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.rs-tip i{flex-shrink:0;color:var(--accent);margin-top:1px;font-size:15px}
+.rs-chev{font-size:17px;color:var(--ink-3);transition:transform .25s;margin-top:11px;flex-shrink:0}
+.rs.open .rs-chev{transform:rotate(180deg);color:var(--accent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ch-grid{grid-template-columns:1fr}.rhythm-row{flex-direction:column}.rhythm-item{border-right:none;border-bottom:1px solid var(--line)}.rhythm-item:last-child{border-bottom:none}.sig-tabs{flex-direction:column}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.sh .hint{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.ch-card .ch-body,.rs .rs-expand{max-height:none!important}.sig-panel{display:block!important}.ch-card,.warn-box,.rhythm-row,.rhythm-detail,.sig-item,.rs,.key,.hook{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 9.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Restare aggiornati</div>
+  <h1 class="rv" data-i="h1">Restare aggiornati su Claude</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv has-hint"><i class="ti ti-map-pin"></i><span class="no">01</span><h2 data-i="s1">Le fonti</h2><span class="hint"><i class="ti ti-hand-click"></i> <span data-i="hint1"></span></span></div>
+  <div class="ch-grid rv" id="ch-grid"></div>
+  <div class="warn-box rv" style="margin-top:18px">
+    <div class="warn-title"><i class="ti ti-info-circle"></i> <span data-i="cutoffH"></span></div>
+    <p data-i="cutoffP"></p>
+  </div>
+
+  <div class="sh rv has-hint"><i class="ti ti-chart-bar"></i><span class="no">02</span><h2 data-i="s2">Il ritmo reale</h2><span class="hint"><i class="ti ti-hand-click"></i> <span data-i="hint2"></span></span></div>
+  <div class="rhythm-row rv" id="rhythm-row"></div>
+  <div class="rhythm-detail rv"><p id="rhythm-text"></p></div>
+
+  <div class="sh rv"><i class="ti ti-filter"></i><span class="no">03</span><h2 data-i="s3">Segnale vs rumore</h2></div>
+  <div class="sig-tabs rv">
+    <button class="stab on-sig" onclick="showSignal('sig',this)"><i class="ti ti-check"></i> <span data-i="tabSig"></span></button>
+    <button class="stab" onclick="showSignal('noise',this)"><i class="ti ti-x"></i> <span data-i="tabNoise"></span></button>
+  </div>
+  <div class="sig-panel show-p rv" id="panel-sig"><div class="sig-list" id="sig-list"></div></div>
+  <div class="sig-panel rv" id="panel-noise"><div class="sig-list" id="noise-list"></div></div>
+
+  <div class="sh rv has-hint"><i class="ti ti-calendar-check"></i><span class="no">04</span><h2 data-i="s4">Il rituale minimo</h2><span class="hint"><i class="ti ti-hand-click"></i> <span data-i="hint4"></span></span></div>
+  <div class="ritual-steps rv" id="ritual-steps"></div>
+
+  <div class="key rv" style="margin-top:46px"><p data-i="key"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Restare aggiornati su Claude</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 9.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Restare aggiornati',
+h1:'Restare aggiornati su Claude',
+lede:'Il sistema per non restare indietro in un campo che cambia ogni mese — senza essere sommersi dall\'hype.',
+hook:'«Il settore AI ha il rapporto hype/cambiamenti reali più alto che esista. Ogni settimana: "rivoluzione", "cambia tutto". La maggior parte è rumore. Ma alcune cose cambiano davvero — e se le perdete, perdete vantaggio. Come si distingue il segnale? Come ci si aggiorna senza passare la vita a leggere newsletter? Ecco il sistema.»',
+s1:'Le fonti',
+hint1:'Clicca per espandere',
+cutoffH:'Nota sul knowledge cutoff',
+cutoffP:'Claude ha una data limite del training oltre la quale non conosce aggiornamenti. Chiedere a Claude le novità recenti funziona come orientamento iniziale, ma non come fonte definitiva. Le release notes ufficiali sono sempre più affidabili.',
+s2:'Il ritmo reale',
+hint2:'Clicca per dettaglio',
+s3:'Segnale vs rumore',
+tabSig:'Vale il tuo tempo',tabNoise:'Ignorabile',
+s4:'Il rituale minimo',
+hint4:'Clicca per espandere',
+key:'Non dovete seguire tutto. Dovete seguire quello che cambia il vostro lavoro.',
+foot:'Morfeus — Restare aggiornati su Claude'
+},
+en:{
+kicker:'Lesson 9.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Staying current',
+h1:'Staying current on Claude',
+lede:'The system for not falling behind in a field that changes every month — without being buried by the hype.',
+hook:'"The AI sector has the highest hype-to-real-change ratio that exists. Every week: \'revolution\', \'this changes everything\'. Most of it is noise. But some things really do change — and if you miss them, you lose your edge. How do you tell the signal apart? How do you stay current without spending your life reading newsletters? Here\'s the system."',
+s1:'The sources',
+hint1:'Click to expand',
+cutoffH:'A note on the knowledge cutoff',
+cutoffP:'Claude has a training cutoff date beyond which it doesn\'t know about updates. Asking Claude about recent news works as an initial orientation, but not as a definitive source. The official release notes are always more reliable.',
+s2:'The real rhythm',
+hint2:'Click for detail',
+s3:'Signal vs noise',
+tabSig:'Worth your time',tabNoise:'Ignorable',
+s4:'The minimum ritual',
+hint4:'Click to expand',
+key:'You don\'t have to follow everything. You have to follow what changes your work.',
+foot:'Morfeus — Staying current on Claude'
+}};
+
+/* ===== CHANNELS ===== */
+var CHANNELS={
+it:[
+['primary','ti ti-news','Newsroom','Poche volte al mese','Primario','Lanci grandi, modelli nuovi, policy','Qui Anthropic annuncia i cambiamenti importanti: nuovi modelli, aggiornamenti policy, ricerca. Bassa frequenza ma alta rilevanza. Se non compare qui, prima di fidarsi conviene verificare.','anthropic.com/news'],
+['primary','ti ti-list-details','Release Notes app','Quasi ogni settimana','Primario','Feature settimanali di claude.ai','Il log ufficiale di tutte le modifiche all\'app claude.ai. Esce regolarmente con date precise. Qui si trova tutto quello che il newsroom non annuncia: miglioramenti minori, nuove impostazioni, fix.','support.claude.com → Release Notes'],
+['primary','ti ti-book','Documentazione &amp; Privacy','Aggiornamenti policy','Primario','Docs, Privacy Center, Trust Center','Per capire come funziona davvero qualcosa: la documentazione ufficiale. Per privacy, dati e policy: privacy.claude.com (migrato da support.anthropic.com). Per sicurezza enterprise: trust.anthropic.com.','docs.anthropic.com · privacy.claude.com'],
+['secondary','ti ti-users','Community affidabili','Continuo','Secondario','Reddit, newsletter selezionate','Utili per la segnalazione rapida di nuove feature (spesso ore prima delle release notes ufficiali) e per casi d\'uso pratici. Non affidabili per policy o dati ufficiali: verificare sempre sulle fonti primarie.','r/ClaudeAI · newsletter tech selezionate']
+],
+en:[
+['primary','ti ti-news','Newsroom','A few times a month','Primary','Big launches, new models, policy','This is where Anthropic announces the important changes: new models, policy updates, research. Low frequency but high relevance. If it doesn\'t show up here, it\'s worth verifying before trusting it.','anthropic.com/news'],
+['primary','ti ti-list-details','App Release Notes','Almost every week','Primary','Weekly features of claude.ai','The official log of every change to the claude.ai app. It comes out regularly with precise dates. This is where you find everything the newsroom doesn\'t announce: minor improvements, new settings, fixes.','support.claude.com → Release Notes'],
+['primary','ti ti-book','Documentation &amp; Privacy','Policy updates','Primary','Docs, Privacy Center, Trust Center','To understand how something really works: the official documentation. For privacy, data and policy: privacy.claude.com (migrated from support.anthropic.com). For enterprise security: trust.anthropic.com.','docs.anthropic.com · privacy.claude.com'],
+['secondary','ti ti-users','Reliable communities','Continuous','Secondary','Reddit, selected newsletters','Useful for the rapid flagging of new features (often hours before the official release notes) and for practical use cases. Not reliable for official policy or data: always verify against the primary sources.','r/ClaudeAI · selected tech newsletters']
+]};
+
+/* ===== RHYTHM ===== */
+var RHYTHM={
+it:[
+['ti ti-calendar-week','Ogni settimana','Feature app','<strong>Feature settimanali:</strong> Le release notes escono con cadenza quasi settimanale. Piccoli miglioramenti all\'interfaccia, nuove impostazioni, fix. Non cambiano il workflow, ma vale tenerle d\'occhio: ogni tanto c\'è qualcosa di pratico.'],
+['ti ti-calendar-month','3-5/mese','Aggiornamenti medi','<strong>3-5 aggiornamenti al mese:</strong> Il ritmo medio di rilascio di funzionalità significative. Abbastanza per rendere rilevante una scansione settimanale, non così alto da richiedere monitoraggio giornaliero.'],
+['ti ti-clock-2','Ogni 2-3 mesi','Modello nuovo','<strong>Modello nuovo ogni 2-3 mesi:</strong> Il dato che rende questo settore unico. Non è "evoluzione lenta" — è un ciclo rapido e prevedibile. Ogni nuovo modello vale un test di 15 minuti sul tuo workflow specifico.'],
+['ti ti-shield-check','Ogni 3-6 mesi','Policy/privacy','<strong>Policy e privacy ogni 3-6 mesi:</strong> Cambiamenti ai termini, alle regole sul training, alle opzioni privacy. Frequenza bassa, ma impatto alto se usi Claude per dati sensibili o in contesti professionali.']
+],
+en:[
+['ti ti-calendar-week','Every week','App features','<strong>Weekly features:</strong> The release notes come out at an almost weekly cadence. Small interface improvements, new settings, fixes. They don\'t change the workflow, but they\'re worth keeping an eye on: every so often there\'s something practical.'],
+['ti ti-calendar-month','3-5/month','Medium updates','<strong>3-5 updates a month:</strong> The average pace of releasing significant features. Enough to make a weekly scan relevant, not so high as to require daily monitoring.'],
+['ti ti-clock-2','Every 2-3 months','New model','<strong>A new model every 2-3 months:</strong> The figure that makes this sector unique. It\'s not "slow evolution" — it\'s a fast, predictable cycle. Every new model is worth a 15-minute test on your specific workflow.'],
+['ti ti-shield-check','Every 3-6 months','Policy/privacy','<strong>Policy and privacy every 3-6 months:</strong> Changes to the terms, to the rules on training, to the privacy options. Low frequency, but high impact if you use Claude for sensitive data or in professional contexts.']
+]};
+
+/* ===== SIGNAL / NOISE ===== */
+var SIGNAL={
+it:[
+['ti ti-cpu','Nuovo modello rilasciato','Cambia le capacità base. Vale testarlo sul tuo workflow specifico per vedere se migliora qualcosa di concreto.'],
+['ti ti-layout','Nuova feature nell\'interfaccia che usi','Una nuova funzionalità in un\'area che usi già. Ad esempio: miglioramenti ai Projects, nuove integrazioni, nuovi tipi di output.'],
+['ti ti-receipt-2','Cambiamenti ai piani e al pricing','Impatta direttamente quello che hai a disposizione e quanto costa. Sempre rilevante controllare.'],
+['ti ti-plug','Integrazione con tool che già usi','Claude si collega a qualcosa che è nel tuo stack quotidiano. Rilevante perché cambia un workflow esistente.']
+],
+en:[
+['ti ti-cpu','A new model released','It changes the base capabilities. Worth testing on your specific workflow to see if it improves something concrete.'],
+['ti ti-layout','A new feature in the interface you use','A new function in an area you already use. For example: improvements to Projects, new integrations, new types of output.'],
+['ti ti-receipt-2','Changes to plans and pricing','It directly impacts what you have available and how much it costs. Always relevant to check.'],
+['ti ti-plug','Integration with a tool you already use','Claude connects to something that\'s in your daily stack. Relevant because it changes an existing workflow.']
+]};
+var NOISE={
+it:[
+['ti ti-chart-bar','Benchmark tecnici su task che non fai','"Claude supera GPT su 47 test matematici." Se non fai calcoli matematici complessi nel tuo lavoro, questo non dice nulla di utile su come lavorare meglio.'],
+['ti ti-brand-x','Thread social su "Claude vs ChatGPT"','Confronti generici senza test su casi d\'uso specifici. Il parametro corretto è sempre: "Funziona meglio sul mio lavoro specifico?"'],
+['ti ti-repeat','Commenti di commenti di commenti','La maggior parte dei contenuti AI è amplificazione di amplificazione. Più è distante dalla fonte primaria, meno vale il tempo.'],
+['ti ti-bulb','Annunci di ricerca senza feature rilasciate','"Anthropic pubblica paper su X." Interessante, ma irrilevante finché non si traduce in qualcosa di disponibile nell\'app o nell\'API.']
+],
+en:[
+['ti ti-chart-bar','Technical benchmarks on tasks you don\'t do','"Claude beats GPT on 47 math tests." If you don\'t do complex math in your work, this says nothing useful about how to work better.'],
+['ti ti-brand-x','Social threads on "Claude vs ChatGPT"','Generic comparisons with no test on specific use cases. The correct parameter is always: "Does it work better on my specific work?"'],
+['ti ti-repeat','Comments of comments of comments','Most AI content is amplification of amplification. The further it is from the primary source, the less the time is worth.'],
+['ti ti-bulb','Research announcements with no released feature','"Anthropic publishes a paper on X." Interesting, but irrelevant until it translates into something available in the app or the API.']
+]};
+
+/* ===== RITUAL ===== */
+var RITUAL={
+it:[
+['1','La scansione settimanale — 5 minuti','Una volta a settimana, non di più','Apri le release notes (support.claude.com) e il newsroom (anthropic.com/news). Cerca solo gli aggiornamenti degli ultimi 7 giorni. Se trovi qualcosa di potenzialmente rilevante per il tuo lavoro, lo segni per testarlo. Se non trovi nulla, chiudi e vai avanti: hai fatto il tuo dovere.','ti ti-clock','Abbina a un momento fisso: inizio settimana, fine settimana. 5 minuti, non di più.'],
+['2','Il test mensile — 15 minuti','Una feature nuova, un caso reale','Una volta al mese: prendi una feature che non hai mai usato o che è stata aggiornata. Testala su un caso reale del tuo lavoro — non un esempio generico. Se migliora qualcosa nel tuo workflow, integrala. Se non cambia nulla, archivi e passi avanti.','ti ti-flask','Regola: se non la testi in 15 minuti su un caso reale, non puoi sapere se è utile. Leggere non basta.'],
+['3','Il filtro anti-hype — sempre attivo','Una domanda, applicata a ogni notizia AI','Prima di investire tempo su qualsiasi notizia "rivoluzionaria": <em>"Questo cambia qualcosa nel mio workflow specifico?"</em><br><br>Se la risposta è no → ignora senza sensi di colpa.<br>Se la risposta è "forse" → testa in 15 minuti prima di decidere.<br>Se la risposta è sì → priorità alta, blocca il tempo per testarlo.','ti ti-filter','Il filtro vale anche per questo corso: prendete solo quello che cambia il vostro lavoro. Il resto è rumore — anche se viene da una buona fonte.']
+],
+en:[
+['1','The weekly scan — 5 minutes','Once a week, no more','Open the release notes (support.claude.com) and the newsroom (anthropic.com/news). Look only at the updates from the last 7 days. If you find something potentially relevant to your work, you note it down to test it. If you find nothing, close it and move on: you\'ve done your duty.','ti ti-clock','Pair it with a fixed moment: start of the week, end of the week. 5 minutes, no more.'],
+['2','The monthly test — 15 minutes','One new feature, one real case','Once a month: take a feature you\'ve never used or that has been updated. Test it on a real case from your work — not a generic example. If it improves something in your workflow, integrate it. If nothing changes, file it away and move on.','ti ti-flask','Rule: if you don\'t test it in 15 minutes on a real case, you can\'t know whether it\'s useful. Reading isn\'t enough.'],
+['3','The anti-hype filter — always on','One question, applied to every AI news item','Before investing time on any "revolutionary" news: <em>"Does this change anything in my specific workflow?"</em><br><br>If the answer is no → ignore it without guilt.<br>If the answer is "maybe" → test it in 15 minutes before deciding.<br>If the answer is yes → high priority, block the time to test it.','ti ti-filter','The filter applies to this course too: take only what changes your work. The rest is noise — even if it comes from a good source.']
+]};
+
+var LANG='it',openCh=null,openRs=null,rhythmIdx=0;
+
+function renderChannels(){
+  document.getElementById('ch-grid').innerHTML=CHANNELS[LANG].map(function(c,i){
+    var isOpen=(openCh===i);
+    var star=(c[0]==='primary')?'<i class="ti ti-star"></i> ':'<i class="ti ti-point"></i> ';
+    return '<div class="ch-card '+c[0]+(isOpen?' open':'')+'" onclick="toggleChannel('+i+')">'+
+    '<div class="ch-head"><div class="ch-icon"><i class="'+c[1]+'"></i></div>'+
+    '<div class="ch-meta"><h3>'+c[2]+'</h3><div class="ch-freq"><i class="ti ti-clock"></i> '+c[3]+'</div></div></div>'+
+    '<span class="ch-pill">'+star+c[4]+'</span>'+
+    '<div class="ch-teaser">'+c[5]+'</div>'+
+    '<div class="ch-body"><div class="ch-body-inner"><p>'+c[6]+'</p><span class="ch-url">'+c[7]+'</span></div></div>'+
+    '</div>';
+  }).join('');
+}
+function toggleChannel(i){openCh=(openCh===i)?null:i;renderChannels();}
+
+function renderRhythm(){
+  document.getElementById('rhythm-row').innerHTML=RHYTHM[LANG].map(function(r,i){
+    return '<div class="rhythm-item'+(rhythmIdx===i?' on':'')+'" onclick="showRhythm('+i+')">'+
+    '<span class="ri-icon"><i class="'+r[0]+'"></i></span>'+
+    '<span class="ri-cadenza">'+r[1]+'</span>'+
+    '<span class="ri-label">'+r[2]+'</span></div>';
+  }).join('');
+  document.getElementById('rhythm-text').innerHTML=RHYTHM[LANG][rhythmIdx][3];
+}
+function showRhythm(i){rhythmIdx=i;renderRhythm();}
+
+function renderSignal(){
+  document.getElementById('sig-list').innerHTML=SIGNAL[LANG].map(function(s){
+    return '<div class="sig-item s"><i class="'+s[0]+' si-icon"></i><div class="si-text"><h4>'+s[1]+'</h4><p>'+s[2]+'</p></div></div>';
+  }).join('');
+  document.getElementById('noise-list').innerHTML=NOISE[LANG].map(function(s){
+    return '<div class="sig-item n"><i class="'+s[0]+' si-icon"></i><div class="si-text"><h4>'+s[1]+'</h4><p>'+s[2]+'</p></div></div>';
+  }).join('');
+}
+function showSignal(type,btn){
+  document.querySelectorAll('.stab').forEach(function(b){b.classList.remove('on-sig','on-noise');});
+  document.querySelectorAll('.sig-panel').forEach(function(p){p.classList.remove('show-p');});
+  if(type==='sig'){btn.classList.add('on-sig');document.getElementById('panel-sig').classList.add('show-p');}
+  else{btn.classList.add('on-noise');document.getElementById('panel-noise').classList.add('show-p');}
+}
+
+function renderRitual(){
+  document.getElementById('ritual-steps').innerHTML=RITUAL[LANG].map(function(r,i){
+    var isOpen=(openRs===i);
+    return '<div class="rs'+(isOpen?' open':'')+'" onclick="toggleRitual('+i+')">'+
+    '<div class="rs-num">'+r[0]+'</div>'+
+    '<div class="rs-body"><h3>'+r[1]+'</h3><div class="rs-sub">'+r[2]+'</div>'+
+    '<div class="rs-expand"><div class="rs-expand-inner">'+r[3]+
+    '<div class="rs-tip"><i class="'+r[4]+'"></i>'+r[5]+'</div></div></div></div>'+
+    '<i class="ti ti-chevron-down rs-chev"></i></div>';
+  }).join('');
+}
+function toggleRitual(i){openRs=(openRs===i)?null:i;renderRitual();}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderChannels();renderRhythm();renderSignal();renderRitual();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

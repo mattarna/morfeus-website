@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il principio delle istruzioni stratificate — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* layers / pyramid */
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer{border:1.5px solid var(--line);border-radius:var(--r-l);background:var(--card);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:.2s}
+.layer:hover{border-color:var(--line-2)}
+.layer[data-l="1"].on{border-color:var(--accent)}
+.layer[data-l="2"].on{border-color:var(--blue)}
+.layer[data-l="3"].on{border-color:var(--teal)}
+.layer[data-l="4"].on{border-color:var(--amber)}
+.lhead{display:flex;align-items:center;gap:14px;padding:16px 18px}
+.lnum{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700;flex-shrink:0}
+.layer[data-l="1"] .lnum{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.layer[data-l="2"] .lnum{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.layer[data-l="3"] .lnum{background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-line)}
+.layer[data-l="4"] .lnum{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.ltit{flex:1}.ltit strong{font-size:14.5px;font-weight:600;display:block;margin-bottom:1px}.ltit span{font-size:12.5px;color:var(--ink-3)}
+.ldur{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--bg-2);color:var(--ink-3);white-space:nowrap}
+.larrow{font-size:18px;color:var(--ink-3);transition:transform .3s;flex-shrink:0}
+.layer.on .larrow{transform:rotate(180deg)}
+.lbody{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.layer.on .lbody{max-height:340px}
+.lbody-in{padding:0 18px 18px 70px}
+.lbody-in>p{font-size:13.5px;color:var(--ink-2);margin-bottom:10px}
+.lex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;color:var(--ink-2);line-height:1.55}
+.cov{margin-top:12px}
+.cov-lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px}
+.cov-track{height:6px;background:var(--bg-2);border-radius:3px;overflow:hidden}
+.cov-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.layer[data-l="1"] .cov-fill{background:var(--accent);width:100%}
+.layer[data-l="2"] .cov-fill{background:var(--blue);width:68%}
+.layer[data-l="3"] .cov-fill{background:var(--teal);width:36%}
+.layer[data-l="4"] .cov-fill{background:var(--amber);width:12%}
+.cov-note{font-size:11px;color:var(--ink-3);margin-top:4px}
+/* sin box — before/after tabs */
+.sin{background:var(--card);border:1.5px solid var(--bad-line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.sin-tabs{display:flex;border-bottom:1px solid var(--line)}
+.sin-tab{flex:1;padding:13px 18px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:none;color:var(--ink-3);transition:.18s}
+.sin-tab:first-child{border-right:1px solid var(--line)}
+.sin-tab.on{background:var(--bg-2);color:var(--ink)}
+.sin-tab.tab-bad.on{color:var(--bad)}.sin-tab.tab-good.on{color:var(--teal)}
+.sin-panel{display:none;padding:22px;gap:16px;align-items:flex-start}
+.sin-panel.on{display:flex}
+.sin-panel .pi{font-size:22px;flex-shrink:0;margin-top:2px}
+.sin-panel.p-bad .pi{color:var(--bad)}.sin-panel.p-good .pi{color:var(--teal)}
+.sin-panel h4{font-size:15px;font-weight:600;margin-bottom:7px}
+.sin-panel>div>p{font-size:14px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+.sin-chat{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-top:8px}
+.sin-chat .clbl{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;color:var(--ink-3)}
+.sin-msg{padding:8px 12px;border-radius:var(--r);margin-bottom:6px;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--ink-2)}
+.sin-msg:last-child{margin-bottom:0}
+.p-bad .sin-msg{background:var(--bad-soft)}
+.p-good .sin-msg.m1{background:var(--accent-soft)}
+.p-good .sin-msg.m2{background:var(--blue-soft)}
+.p-good .sin-msg.m3{background:var(--teal-soft)}
+.p-good .sin-msg.m4{background:var(--amber-soft)}
+.sin-res{display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 14px;border-radius:var(--r);font-size:13px;font-weight:600}
+.p-bad .sin-res{background:var(--bad-soft);color:var(--bad)}
+.p-good .sin-res{background:var(--teal-soft);color:var(--teal)}
+/* distribution cards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ch{display:flex;align-items:center;gap:8px;margin-bottom:9px;font-size:14px;font-weight:600}
+.card3 .ch i{font-size:18px}
+.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+/* key */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+/* bridge */
+.bridge{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0;display:flex;align-items:center;gap:18px}
+.bridge>i{font-size:26px;color:var(--agent);flex-shrink:0}
+.bridge .br-k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);margin-bottom:6px}
+.bridge p{font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cards{grid-template-columns:1fr}.sin-tabs{flex-direction:column}.sin-tab:first-child{border-right:none;border-bottom:1px solid var(--line)}.lbody-in{padding-left:18px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.layer .lbody{max-height:none!important}.note,.layer,.sin,.card3,.key,.bridge,.sin-panel{break-inside:avoid;box-shadow:none!important}.sin-panel{display:flex!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 5.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Workspace avanzato</div>
+  <h1 class="rv" data-i="h1">Il principio delle istruzioni stratificate</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-stack-2"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-stack-2"></i><span class="no">01</span><h2 data-i="s1">I quattro strati del contesto</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pyrIntro"></p>
+  <div class="layers rv" id="layers"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">02</span><h2 data-i="s2">Il peccato originale, e il rimedio</h2></div>
+  <div class="sin rv">
+    <div class="sin-tabs">
+      <button class="sin-tab tab-bad on" onclick="showSin('bad')"><i class="ti ti-alert-triangle"></i> <span data-i="tabBad">Tutto nel messaggio</span></button>
+      <button class="sin-tab tab-good" onclick="showSin('good')"><i class="ti ti-check"></i> <span data-i="tabGood">Distribuito sui 4 strati</span></button>
+    </div>
+    <div class="sin-panel p-bad on" id="sinBad">
+      <i class="ti ti-alert-triangle pi"></i>
+      <div>
+        <h4 data-i="badH"></h4>
+        <p data-i="badP"></p>
+        <div class="sin-chat">
+          <div class="clbl" data-i="badChatLbl"></div>
+          <div class="sin-msg" data-i="badChatMsg"></div>
+        </div>
+        <div class="sin-res"><i class="ti ti-clock"></i> <span data-i="badRes"></span></div>
+      </div>
+    </div>
+    <div class="sin-panel p-good" id="sinGood">
+      <i class="ti ti-check pi"></i>
+      <div>
+        <h4 data-i="goodH"></h4>
+        <p data-i="goodP"></p>
+        <div class="sin-chat">
+          <div class="clbl" data-i="goodChatLbl"></div>
+          <div class="sin-msg m1" data-i="goodM1"></div>
+          <div class="sin-msg m2" data-i="goodM2"></div>
+          <div class="sin-msg m3" data-i="goodM3"></div>
+          <div class="sin-msg m4" data-i="goodM4"></div>
+        </div>
+        <div class="sin-res"><i class="ti ti-bolt"></i> <span data-i="goodRes"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-distribute-vertical"></i><span class="no">03</span><h2 data-i="s3">Cosa va dove</h2></div>
+  <div class="cards rv" id="dist"></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">04</span><h2 data-i="s4">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">05</span><h2 data-i="s5">Prossima lezione</h2></div>
+  <div class="bridge rv"><i class="ti ti-arrow-right"></i><div><div class="br-k" data-i="brK"></div><p data-i="brP"></p></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Il principio delle istruzioni stratificate</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 5.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Workspace avanzato',
+h1:'Il principio delle istruzioni stratificate',
+lede:'Il contesto non è "quanto scrivo nel messaggio". È un sistema a strati che fa il lavoro una volta e lo applica ovunque.',
+hookH:'L\'idea',
+hookP:'Il contesto non è "quanto scrivo nel messaggio". È un sistema a strati che fa il lavoro una volta e lo applica ovunque. Capirne l\'architettura cambia il modo in cui parli a Claude.',
+s1:'I quattro strati del contesto',
+pyrIntro:'Il contesto vive su quattro livelli, dal più permanente al più effimero. Ogni livello ha una copertura diversa: il primo vale per ogni conversazione, l\'ultimo solo per un singolo scambio. Clicca ciascuno per espanderlo.',
+s2:'Il peccato originale, e il rimedio',
+tabBad:'Tutto nel messaggio',
+tabGood:'Distribuito sui 4 strati',
+badH:'Il peccato originale',
+badP:'Mettere tutto nel Livello 4, il messaggio. È come costruire casa partendo dal tetto ogni volta. Ripartite da zero ad ogni conversazione: chi siete, il contesto, il tono.',
+badChatLbl:'Ogni volta che scrivi a Claude',
+badChatMsg:'"Sei un consulente di marketing professionale. Lavoro con PMI italiane, tono diretto e concreto. Stiamo lavorando al lancio di marzo, budget 20K, target 35-50 anni. Scrivi un oggetto email per la campagna."',
+badRes:'Lento, incoerente — da riscrivere ad ogni sessione',
+goodH:'Distribuito sui 4 strati',
+goodP:'Il contesto sta dove costa meno da mantenere. Il messaggio diventa chirurgico perché il sistema sa già tutto il resto.',
+goodChatLbl:'Cosa sta dove',
+goodM1:'L1 — Project: "Sei un consulente marketing per PMI italiane. Tono diretto e concreto."',
+goodM2:'L2 — KB: profilo cliente tipo, storico campagne, brand guide',
+goodM3:'L3 — Conversazione: "Lancio di marzo, budget 20K, target 35-50 anni."',
+goodM4:'L4 — Messaggio: "Scrivi un oggetto email per la campagna."',
+goodRes:'Veloce, consistente — Claude già contestualizzato',
+s3:'Cosa va dove',
+s4:'In una frase',
+keyPhrase:'Il messaggio perfetto non è quello che spiega tutto. È quello che non deve spiegare niente perché il sistema lo sa già.',
+s5:'Prossima lezione',
+brK:'Prossima lezione →',
+brP:'A cosa serve davvero il contesto persistente? Ha quattro funzioni distinte — e capirle cambia come lo costruite.',
+foot:'Morfeus — Il principio delle istruzioni stratificate'
+},
+en:{
+kicker:'Lesson 5.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced workspace',
+h1:'The principle of layered instructions',
+lede:'Context isn\'t "how much I write in the message". It\'s a layered system that does the work once and applies it everywhere.',
+hookH:'The idea',
+hookP:'Context isn\'t "how much I write in the message". It\'s a layered system that does the work once and applies it everywhere. Understanding its architecture changes the way you talk to Claude.',
+s1:'The four layers of context',
+pyrIntro:'Context lives on four levels, from the most permanent to the most ephemeral. Each level has a different coverage: the first applies to every conversation, the last only to a single exchange. Click each to expand it.',
+s2:'The original sin, and the fix',
+tabBad:'Everything in the message',
+tabGood:'Distributed across the 4 layers',
+badH:'The original sin',
+badP:'Putting everything in Layer 4, the message. It\'s like building a house starting from the roof every time. You start from scratch in every conversation: who you are, the context, the tone.',
+badChatLbl:'Every time you write to Claude',
+badChatMsg:'"You are a professional marketing consultant. I work with Italian SMEs, direct and concrete tone. We\'re working on the March launch, budget 20K, target 35-50 years old. Write an email subject line for the campaign."',
+badRes:'Slow, inconsistent — to be rewritten every session',
+goodH:'Distributed across the 4 layers',
+goodP:'Context sits where it costs the least to maintain. The message becomes surgical because the system already knows everything else.',
+goodChatLbl:'What sits where',
+goodM1:'L1 — Project: "You are a marketing consultant for Italian SMEs. Direct and concrete tone."',
+goodM2:'L2 — KB: typical client profile, campaign history, brand guide',
+goodM3:'L3 — Conversation: "March launch, budget 20K, target 35-50 years old."',
+goodM4:'L4 — Message: "Write an email subject line for the campaign."',
+goodRes:'Fast, consistent — Claude already contextualized',
+s3:'What goes where',
+s4:'In one sentence',
+keyPhrase:'The perfect message isn\'t the one that explains everything. It\'s the one that doesn\'t have to explain anything because the system already knows it.',
+s5:'Next lesson',
+brK:'Next lesson →',
+brP:'What is persistent context really for? It has four distinct functions — and understanding them changes how you build it.',
+foot:'Morfeus — The principle of layered instructions'
+}};
+
+var LAYERS={it:[
+['L1','Base: Istruzioni del Project','Chi sei, cosa fa questo Project, come rispondere','Permanente','Le istruzioni permanenti che Claude legge sempre per quel contesto. Identità, tono, vincoli fissi.','"Questo è il progetto di consulenza per Alfa SRL. Il tuo ruolo è analizzare dati di mercato e proporre strategie concrete. Tono professionale, sempre in italiano."','100% — copre ogni conversazione, ogni messaggio'],
+['L2','Knowledge Base: File di contesto','Documenti, template, reference sempre disponibili','Permanente','I materiali di riferimento che Claude ha a disposizione. Profili clienti, procedure, style guide, contratti.','Profilo del cliente, contratto attivo, guida editoriale, template email','68% — disponibile ovunque, ma solo i file caricati'],
+['L3','Conversazione: Contesto di sessione','Il task specifico di oggi, dettagli della sessione','Sessione','Tutto quello che avete detto in questa conversazione specifica. Obiettivi del giorno, aggiornamenti, correzioni in corso.','"Oggi stiamo lavorando alla proposta Q3. Il budget è cambiato: ora è 50K invece di 30K."','36% — valido per questa sessione sola'],
+['L4','Messaggio: Il prompt specifico','L\'istruzione singola, la domanda, la correzione','Singolo','Il singolo messaggio che mandate. Solo il task del momento, perché il resto è già coperto dai livelli precedenti.','"Riscrivi il secondo paragrafo con un tono più assertivo."','12% — copre solo questo singolo scambio']
+],en:[
+['L1','Base: Project Instructions','Who you are, what this Project does, how to respond','Permanent','The permanent instructions Claude always reads for that context. Identity, tone, fixed constraints.','"This is the consulting project for Alfa SRL. Your role is to analyze market data and propose concrete strategies. Professional tone, always in Italian."','100% — covers every conversation, every message'],
+['L2','Knowledge Base: Context files','Documents, templates, references always available','Permanent','The reference materials Claude has at its disposal. Client profiles, procedures, style guides, contracts.','Client profile, active contract, editorial guide, email template','68% — available everywhere, but only the uploaded files'],
+['L3','Conversation: Session context','Today\'s specific task, session details','Session','Everything you\'ve said in this specific conversation. The day\'s objectives, updates, corrections in progress.','"Today we\'re working on the Q3 proposal. The budget has changed: it\'s now 50K instead of 30K."','36% — valid for this session only'],
+['L4','Message: The specific prompt','The single instruction, the question, the correction','Single','The single message you send. Only the task of the moment, because the rest is already covered by the previous levels.','"Rewrite the second paragraph with a more assertive tone."','12% — covers only this single exchange']
+]};
+
+var DIST={it:[
+['ti-settings','var(--accent)','L1 — Istruzioni','Tutto quello che è vero sempre: identità, tono, vincoli fissi, regole non negoziabili.'],
+['ti-files','var(--blue)','L2 — File','Tutto quello che Claude deve conoscere ma non riscrivere: materiali di riferimento, archivi, template.'],
+['ti-message-2','var(--teal)','L3 — Conversazione','Il contesto di questa sessione: obiettivi del giorno, aggiornamenti, decisioni prese ora.'],
+['ti-send','var(--amber)','L4 — Messaggio','Solo il task. Perché il resto è già coperto dai livelli precedenti.']
+],en:[
+['ti-settings','var(--accent)','L1 — Instructions','Everything that is always true: identity, tone, fixed constraints, non-negotiable rules.'],
+['ti-files','var(--blue)','L2 — Files','Everything Claude must know but not rewrite: reference materials, archives, templates.'],
+['ti-message-2','var(--teal)','L3 — Conversation','The context of this session: the day\'s objectives, updates, decisions made now.'],
+['ti-send','var(--amber)','L4 — Message','Just the task. Because the rest is already covered by the previous levels.']
+]};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('layers').innerHTML=LAYERS[LANG].map(function(l,i){
+    return '<div class="layer" data-l="'+(i+1)+'" onclick="toggleLayer(this)">'+
+      '<div class="lhead"><div class="lnum">'+l[0]+'</div>'+
+      '<div class="ltit"><strong>'+l[1]+'</strong><span>'+l[2]+'</span></div>'+
+      '<div class="ldur">'+l[3]+'</div><i class="ti ti-chevron-down larrow"></i></div>'+
+      '<div class="lbody"><div class="lbody-in"><p>'+l[4]+'</p><div class="lex">'+l[5]+'</div>'+
+      '<div class="cov"><div class="cov-lbl">Copertura contestuale</div><div class="cov-track"><div class="cov-fill"></div></div><div class="cov-note">'+l[6]+'</div></div>'+
+      '</div></div></div>';
+  }).join('');
+  document.getElementById('dist').innerHTML=DIST[LANG].map(function(d){
+    return '<div class="card3"><div class="ch" style="color:'+d[1]+'"><i class="ti '+d[0]+'"></i> '+d[2]+'</div><p>'+d[3]+'</p></div>';
+  }).join('');
+}
+function toggleLayer(el){
+  var was=el.classList.contains('on');
+  document.querySelectorAll('.layer').forEach(function(l){l.classList.remove('on')});
+  if(!was)el.classList.add('on');
+}
+function showSin(which){
+  document.querySelectorAll('.sin-tab').forEach(function(t){t.classList.remove('on')});
+  document.querySelectorAll('.sin-panel').forEach(function(p){p.classList.remove('on')});
+  if(which==='bad'){document.querySelector('.tab-bad').classList.add('on');document.getElementById('sinBad').classList.add('on');}
+  else{document.querySelector('.tab-good').classList.add('on');document.getElementById('sinGood').classList.add('on');}
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

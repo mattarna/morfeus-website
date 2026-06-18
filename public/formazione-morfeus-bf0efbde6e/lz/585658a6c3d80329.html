@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La curva di apprendimento & il percorso progressivo — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+/* curva 3 fasi */
+.curve{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.curvesvg{width:100%;height:auto;display:block}
+.phase-tabs{display:flex;gap:6px;margin-top:14px}
+.ptab{flex:1;border:1.5px solid var(--line);background:var(--bg-2);border-radius:var(--r);padding:9px 8px;cursor:pointer;transition:.18s;text-align:center}
+.ptab:hover{border-color:var(--line-2)}
+.ptab.on.p0{border-color:var(--bad);background:var(--bad-soft)}
+.ptab.on.p1{border-color:var(--accent);background:var(--accent-soft)}
+.ptab.on.p2{border-color:var(--good);background:var(--good-soft)}
+.ptab .pn{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.ptab.on.p0 .pn{color:var(--bad)}.ptab.on.p1 .pn{color:var(--accent)}.ptab.on.p2 .pn{color:var(--good)}
+.ptab .pl{font-size:12.5px;font-weight:600;margin-top:3px;line-height:1.3}
+.phase-detail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-size:14.5px;color:var(--ink-2)}
+.phase-detail.p0{border-left-color:var(--bad)}.phase-detail.p1{border-left-color:var(--accent)}.phase-detail.p2{border-left-color:var(--good)}
+.phase-detail b{color:var(--ink);font-weight:600}
+
+/* mappa 8 livelli */
+.levels{display:flex;flex-direction:column;gap:7px}
+.lvl{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:12px 16px;cursor:pointer;transition:.18s}
+.lvl:hover{border-color:var(--line-2)}.lvl.on{border-color:var(--accent);background:var(--accent-soft)}
+.lvl .ln{width:30px;height:30px;border-radius:50%;background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lvl.on .ln{background:var(--accent);color:#fff}
+.lvl .lt{font-size:14.5px;font-weight:600}
+.lvl .lc{margin-left:auto;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);background:var(--bg-2);padding:3px 8px;border-radius:20px;flex-shrink:0}
+.lvl.on .lc{background:var(--accent);color:#fff}
+.lvldetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:16px 18px}
+.lvldetail p{font-size:14.5px;color:var(--ink-2)}.lvldetail b{color:var(--ink);font-weight:600}
+
+/* metafora auto */
+.cars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.carc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.carc .ci{width:48px;height:48px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.carc.c0 .ci{background:var(--bad-soft);color:var(--bad)}
+.carc.c1 .ci{background:var(--accent-soft);color:var(--accent)}
+.carc.c2 .ci{background:var(--agent-soft);color:var(--agent)}
+.carc h4{font-size:15px;font-weight:600;margin-bottom:4px}
+.carc .cm{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);margin-bottom:8px}
+.carc p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+/* 5 step */
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.step .sn{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#fff;font-family:var(--mono);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step h4{font-size:14.5px;font-weight:600;margin-bottom:3px}.step p{font-size:13.5px;color:var(--ink-2)}
+.step .tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);padding:1px 7px;border-radius:5px;margin-left:7px;vertical-align:middle}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cars{grid-template-columns:1fr}.phase-tabs{flex-direction:column}.lvl .lc{display:none}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.carc,.cp,.lvl,.lvldetail,.step,.curve,.key,.phase-detail{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A3.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo</div>
+  <h1 class="rv" data-i="h1">La curva di apprendimento & il percorso progressivo</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-trending-up"></i><span class="no">01</span><h2 data-i="s1">Le tre fasi della curva</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="curveIntro"></p>
+  <div class="curve rv">
+    <svg class="curvesvg" viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" aria-label="Curva di apprendimento a tre fasi">
+      <defs>
+        <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--bad)"/><stop offset="50%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--good)"/>
+        </linearGradient>
+      </defs>
+      <line x1="50" y1="195" x2="680" y2="195" stroke="var(--line-2)" stroke-width="1"/>
+      <line x1="50" y1="195" x2="50" y2="20" stroke="var(--line-2)" stroke-width="1"/>
+      <text x="44" y="30" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--ink-3)" data-i-svg="axQ"></text>
+      <text x="365" y="222" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink-3)" data-i-svg="axT"></text>
+      <line x1="260" y1="20" x2="260" y2="195" stroke="var(--line)" stroke-dasharray="3 4"/>
+      <line x1="470" y1="20" x2="470" y2="195" stroke="var(--line)" stroke-dasharray="3 4"/>
+      <path d="M50,185 C120,165 180,170 260,120 C330,80 410,55 470,45 C540,38 620,40 680,40" fill="none" stroke="url(#cg)" stroke-width="3" stroke-linecap="round"/>
+      <circle id="pdot" cx="155" cy="170" r="7" fill="var(--bad)" stroke="var(--card)" stroke-width="2.5"/>
+      <text x="155" y="60" text-anchor="middle" font-family="var(--mono)" font-size="10" font-weight="700" fill="var(--bad)" data-i-svg="ph0"></text>
+      <text x="365" y="60" text-anchor="middle" font-family="var(--mono)" font-size="10" font-weight="700" fill="var(--accent)" data-i-svg="ph1"></text>
+      <text x="575" y="78" text-anchor="middle" font-family="var(--mono)" font-size="10" font-weight="700" fill="var(--good)" data-i-svg="ph2"></text>
+    </svg>
+    <div class="phase-tabs">
+      <button class="ptab p0 on" onclick="showPhase(0)"><div class="pn">FASE 1</div><div class="pl" data-i="pt0"></div></button>
+      <button class="ptab p1" onclick="showPhase(1)"><div class="pn">FASE 2</div><div class="pl" data-i="pt1"></div></button>
+      <button class="ptab p2" onclick="showPhase(2)"><div class="pn">FASE 3</div><div class="pl" data-i="pt2"></div></button>
+    </div>
+    <div class="phase-detail p0" id="phaseDetail"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">02</span><h2 data-i="s2">La regola che salva</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-stairs-up"></i></div><div><h4 data-i="note1H">Non saltare la fase ipercontrollante</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-map-2"></i><span class="no">03</span><h2 data-i="s3">Il percorso a 8 livelli</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="lvlIntro"></p>
+  <div class="levels rv" id="levels"></div>
+  <div class="lvldetail rv" id="lvldetail"></div>
+
+  <div class="sh rv"><i class="ti ti-car"></i><span class="no">04</span><h2 data-i="s4">Fiat 500 → SUV → Ferrari</h2></div>
+  <div class="key rv" style="border-bottom:none;padding-bottom:0"><p data-i="carKey"></p><div class="cap" data-i="carCap"></div></div>
+  <div class="cars rv" style="margin-top:20px">
+    <div class="carc c0"><div class="ci"><i class="ti ti-car"></i></div><div class="cm" data-i="car0M">Fiat 500</div><h4 data-i="car0H"></h4><p data-i="car0P"></p></div>
+    <div class="carc c1"><div class="ci"><i class="ti ti-car-suv"></i></div><div class="cm" data-i="car1M">SUV</div><h4 data-i="car1H"></h4><p data-i="car1P"></p></div>
+    <div class="carc c2"><div class="ci"><i class="ti ti-steering-wheel"></i></div><div class="cm" data-i="car2M">Ferrari</div><h4 data-i="car2H"></h4><p data-i="car2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-numbers"></i><span class="no">05</span><h2 data-i="s5">Il metodo operativo in 5 step</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stepsIntro"></p>
+  <div class="steps rv" id="steps"></div>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">06</span><h2 data-i="s6">La competenza abilita la velocità</h2></div>
+  <div class="key rv"><p data-i="speedKey"></p><div class="cap" data-i="speedCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-map-pin"></i> <span data-i="cpH">Dove sei sulla curva?</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-flag-check"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La curva di apprendimento</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A3.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo',
+h1:'La curva di apprendimento & il percorso progressivo',
+lede:'Nessuno diventa padrone dell\'AI in un giorno. Si attraversano tre fasi, in ordine, e una di esse sembra un passo indietro ma è quella che ti costruisce. Qui vedi la curva, la mappa di crescita e il metodo che si applica a ogni progetto.',
+s1:'Le tre fasi della curva',
+curveIntro:'La crescita con l\'AI non è lineare. Si passa da errori e frustrazione, a un controllo ossessivo che alza la qualità ma costa fatica, fino alla semplicità di chi sa quello che fa. Clicca ogni fase.',
+axQ:'Qualità',axT:'Tempo / esperienza',ph0:'ERRORI',ph1:'IPERCONTROLLO',ph2:'PADRONANZA',
+pt0:'Iniziale',pt1:'Ipercontrollante',pt2:'Padronanza',
+s2:'La regola che salva',
+note1H:'Non saltare la fase ipercontrollante',
+note1P:'È la fase che sembra inefficiente — <strong>tanto overhead, tante istruzioni, tante verifiche</strong> — e proprio per questo molti la saltano per tornare ai prompt veloci e vaghi. Errore. È qui che la qualità sale e che impari <strong>perché</strong> funziona ciò che funziona. Saltarla significa restare per sempre nella fase degli errori, solo più velocemente.',
+s3:'Il percorso a 8 livelli',
+lvlIntro:'Start Simple: si sale un gradino alla volta, ognuno costruisce il successivo. Saltare crea entusiasmo superficiale, non competenza. Clicca ogni livello.',
+s4:'Fiat 500 → SUV → Ferrari',
+carKey:'Impara con la Fiat 500 sullo sterrato. Prima devi saper guidare — poi scegli la macchina.',
+carCap:'Lo strumento più potente in mano a chi non sa guidare è solo un modo più caro di sbattere.',
+car0M:'Fiat 500',car0H:'Lo sterrato',car0P:'Inizia su qualcosa di semplice e perdonante. Sbagli, impari a sterzare, capisci come reagisce il mezzo. È qui che si costruisce il manico.',
+car1M:'SUV',car1H:'La strada vera',car1P:'Quando sai guidare, passi a uno strumento più capace. Affronti terreni più difficili, ma le basi le hai già: il salto è di potenza, non di metodo.',
+car2M:'Ferrari',car2H:'La pista',car2P:'Lo strumento più potente rende al massimo solo con un pilota all\'altezza. Senza manico, è solo un modo più costoso di uscire di strada.',
+s5:'Il metodo operativo in 5 step',
+stepsIntro:'Non è teoria: è la sequenza che applichi a ogni progetto, sempre nello stesso ordine. Salti un gradino e l\'AI amplifica il buco.',
+s6:'La competenza abilita la velocità',
+speedKey:'L\'AI moltiplica la competenza che hai già. Non la crea: la amplifica.',
+speedCap:'Il dilettante con l\'AI non produce risultati migliori — produce errori più velocemente.',
+s7:'Checkpoint',
+cpH:'Dove sei sulla curva?',
+cpP:'Le tre fasi non si scelgono: si attraversano. Sapere in quale sei ti dice cosa ti serve adesso — più pratica, più disciplina, o più coraggio di semplificare.',
+cpQ:'Pensa al tuo uso attuale dell\'AI: sei ancora negli errori, sei nel controllo ossessivo, o hai già la semplicità consapevole? Il prossimo passo dipende dalla risposta.',
+bridge:'Hai chiuso il <b>Metodo Morfeus</b>: metodo prima dello strumento, delega, pensiero da architetto, meta-creazione, qualità 9/10 e ora la curva con cui ci si arriva. <b>Prossimo modulo:</b> l\'architettura del prompting — la struttura concreta che mette in pratica tutto questo.',
+foot:'Morfeus — La curva di apprendimento'
+},
+en:{
+kicker:'Lesson A3.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The method',
+h1:'The learning curve & the progressive path',
+lede:'Nobody masters AI in a day. You go through three phases, in order, and one of them feels like a step back but is the one that builds you. Here you see the curve, the growth map, and the method you apply to every project.',
+s1:'The three phases of the curve',
+curveIntro:'Growth with AI isn\'t linear. You move from errors and frustration, to an obsessive control that raises quality but costs effort, to the simplicity of someone who knows what they\'re doing. Click each phase.',
+axQ:'Quality',axT:'Time / experience',ph0:'ERRORS',ph1:'OVER-CONTROL',ph2:'MASTERY',
+pt0:'Initial',pt1:'Over-controlling',pt2:'Mastery',
+s2:'The rule that saves you',
+note1H:'Don\'t skip the over-controlling phase',
+note1P:'It\'s the phase that looks inefficient — <strong>lots of overhead, lots of instructions, lots of checks</strong> — and that\'s exactly why many skip it to go back to fast, vague prompts. Mistake. This is where quality rises and where you learn <strong>why</strong> what works, works. Skip it and you stay in the error phase forever — just faster.',
+s3:'The 8-level path',
+lvlIntro:'Start Simple: you climb one step at a time, each builds the next. Skipping creates shallow excitement, not competence. Click each level.',
+s4:'Fiat 500 → SUV → Ferrari',
+carKey:'Learn on the Fiat 500, on the dirt road. First you have to know how to drive — then you pick the car.',
+carCap:'The most powerful tool in the hands of someone who can\'t drive is just a pricier way to crash.',
+car0M:'Fiat 500',car0H:'The dirt road',car0P:'Start on something simple and forgiving. You make mistakes, learn to steer, feel how it reacts. This is where the skill is built.',
+car1M:'SUV',car1H:'The real road',car1P:'Once you can drive, you move to a more capable tool. Tougher terrain, but you already have the fundamentals: the jump is in power, not in method.',
+car2M:'Ferrari',car2H:'The track',car2P:'The most powerful tool performs at its best only with a driver to match. Without the skill, it\'s just a costlier way to run off the road.',
+s5:'The operating method in 5 steps',
+stepsIntro:'Not theory: it\'s the sequence you apply to every project, always in the same order. Skip a step and AI amplifies the gap.',
+s6:'Competence enables speed',
+speedKey:'AI multiplies the competence you already have. It doesn\'t create it: it amplifies it.',
+speedCap:'The amateur with AI doesn\'t produce better results — they produce errors faster.',
+s7:'Checkpoint',
+cpH:'Where are you on the curve?',
+cpP:'You don\'t choose the three phases: you go through them. Knowing which one you\'re in tells you what you need now — more practice, more discipline, or more courage to simplify.',
+cpQ:'Think about your current AI use: are you still in the errors, in obsessive control, or already at conscious simplicity? The next step depends on the answer.',
+bridge:'You\'ve closed the <b>Morfeus Method</b>: method before the tool, delegation, architect thinking, meta-creation, 9/10 quality, and now the curve that gets you there. <b>Next module:</b> the architecture of prompting — the concrete structure that puts all of this into practice.',
+foot:'Morfeus — The learning curve'
+}};
+
+var PHASE={it:[
+['Iniziale','<b>Errori e frustrazione.</b> Prompt veloci e vaghi, risposte deludenti, la sensazione che "l\'AI non capisce". È normale: la colpa non è del modello, è del manico che ancora non c\'è.'],
+['Ipercontrollante','<b>Overhead alto, qualità che sale.</b> Specifichi tutto, dai contesto, verifichi ogni output. Costa fatica e tempo, ma è qui che capisci cosa funziona e perché. Sembra inefficiente: è la fase che ti costruisce.'],
+['Padronanza','<b>Semplicità consapevole.</b> Ora scrivi poco ma giusto, perché sai esattamente cosa serve. La leggerezza non è pigrizia: è competenza che ha interiorizzato il controllo.']
+],en:[
+['Initial','<b>Errors and frustration.</b> Fast, vague prompts, disappointing answers, the feeling that "AI doesn\'t get it." It\'s normal: the fault isn\'t the model, it\'s the skill that isn\'t there yet.'],
+['Over-controlling','<b>High overhead, rising quality.</b> You specify everything, give context, check every output. It costs effort and time, but this is where you learn what works and why. It looks inefficient: it\'s the phase that builds you.'],
+['Mastery','<b>Conscious simplicity.</b> Now you write little but right, because you know exactly what\'s needed. The lightness isn\'t laziness: it\'s competence that has internalized control.']
+]};
+
+var LEVELS={it:[
+['Prompt','BASE','Il punto di partenza: dare istruzioni a un modello in una singola conversazione. Tutto nasce da qui.'],
+['Prompt Library','BASE','Smetti di riscrivere: raccogli e versioni i prompt che funzionano, pronti da riusare.'],
+['Meta-prompting','BASE','Usi l\'AI per scrivere i prompt che poi userai. L\'AI inizia a costruire i propri strumenti.'],
+['Assistenti / GPTs','SISTEMA','Un prompt + un ruolo stabile = un assistente specializzato che riparte già sapendo chi è.'],
+['Knowledge Base avanzata','SISTEMA','Dai all\'assistente la tua conoscenza: contesto, esempi, regole. Da generico a esperto del tuo mondo.'],
+['Projects / Stanze','SISTEMA','Spazi isolati con istruzioni e KB dedicate. Progetti diversi non si contaminano.'],
+['Orchestrazione multi-agente','SCALA','Più assistenti che lavorano insieme: chi fa, chi controlla, chi coordina. Un team virtuale.'],
+['Agenti autonomi','SCALA','Entità che perseguono un obiettivo anche quando non le guardi, con strumenti e confini propri.']
+],en:[
+['Prompt','BASE','The starting point: giving instructions to a model in a single conversation. Everything starts here.'],
+['Prompt Library','BASE','Stop rewriting: collect and version the prompts that work, ready to reuse.'],
+['Meta-prompting','BASE','You use AI to write the prompts you\'ll later use. AI starts building its own tools.'],
+['Assistants / GPTs','SYSTEM','A prompt + a stable role = a specialized assistant that restarts already knowing who it is.'],
+['Advanced Knowledge Base','SYSTEM','You give the assistant your knowledge: context, examples, rules. From generic to expert in your world.'],
+['Projects / Rooms','SYSTEM','Isolated spaces with dedicated instructions and KB. Different projects don\'t contaminate each other.'],
+['Multi-agent orchestration','SCALE','Several assistants working together: one does, one checks, one coordinates. A virtual team.'],
+['Autonomous agents','SCALE','Entities that pursue a goal even when you\'re not watching, with their own tools and boundaries.']
+]};
+
+var STEPS={it:[
+['Potenzio / Mi informo','',' Conosci la macchina e potenzi le tue competenze sul dominio prima di chiedere qualsiasi cosa. Non si delega ciò che non si padroneggia.'],
+['Identifico il processo','TQD','Scompongo il lavoro e lo valuto su Tempo, Qualità, Delega: dove e quanto può entrare davvero l\'AI?'],
+['Creo gli assistenti','',' Trasformo il processo in assistenti specializzati: un prompt e un ruolo per ogni pezzo, non un mega-tuttofare.'],
+['Creo l\'ambiente','',' Allestisco progetti, knowledge base e cartelle: il contesto stabile in cui gli assistenti lavorano bene.'],
+['Faccio lavorare','',' Metto in moto il sistema, valido i risultati, itero. Da qui — e solo da qui — si pensa ad automatizzare e scalare.']
+],en:[
+['Empower / get informed','',' You learn the machine and sharpen your domain skills before asking anything. You don\'t delegate what you don\'t master.'],
+['Identify the process','TQD','I break down the work and judge it on Time, Quality, Delegation: where and how much can AI really enter?'],
+['Build the assistants','',' I turn the process into specialized assistants: one prompt and one role per piece, not one mega do-it-all.'],
+['Build the environment','',' I set up projects, knowledge bases and folders: the stable context in which assistants work well.'],
+['Put it to work','',' I start the system, validate the results, iterate. From here — and only here — you think about automating and scaling.']
+]};
+
+var LANG='it',curPhase=0,curLvl=0;
+var PDOT=[[155,170,'var(--bad)'],[365,90,'var(--accent)'],[575,42,'var(--good)']];
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-i-svg]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-svg')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('levels').innerHTML=LEVELS[LANG].map(function(l,i){return '<div class="lvl'+(i===curLvl?' on':'')+'" onclick="showLvl('+i+')"><div class="ln">'+(i+1)+'</div><div class="lt">'+l[0]+'</div><div class="lc">'+l[1]+'</div></div>'}).join('');
+  document.getElementById('steps').innerHTML=STEPS[LANG].map(function(s,i){return '<div class="step"><div class="sn">'+(i+1)+'</div><div><h4>'+s[0]+(s[1]?'<span class="tag">'+s[1]+'</span>':'')+'</h4><p>'+s[2]+'</p></div></div>'}).join('');
+  showPhase(curPhase);showLvl(curLvl);
+}
+function showPhase(i){curPhase=i;var p=PHASE[LANG][i];document.querySelectorAll('.ptab').forEach(function(x,k){x.classList.toggle('on',k===i)});var d=document.getElementById('phaseDetail');d.className='phase-detail p'+i;d.innerHTML=p[1];var dot=document.getElementById('pdot');dot.setAttribute('cx',PDOT[i][0]);dot.setAttribute('cy',PDOT[i][1]);dot.setAttribute('fill',PDOT[i][2])}
+function showLvl(i){curLvl=i;var l=LEVELS[LANG][i];document.querySelectorAll('.lvl').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('lvldetail').innerHTML='<p><b>'+(i+1)+'. '+l[0]+'</b> — '+l[2]+'</p>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

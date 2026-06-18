@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progettare l'agente con la meta-creazione — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+/* meta-creation matryoshka toggle */
+.mc-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.mc-switch{display:flex;background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:4px;gap:4px;max-width:460px;margin:0 auto 18px}
+.mc-switch button{flex:1;background:transparent;border:none;border-radius:30px;padding:10px 8px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--ink-3);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.mc-switch button i{font-size:16px}
+.mc-switch button.on{color:#fff}
+.mc-switch button[data-mc="you"].on{background:var(--ink-3)}
+.mc-switch button[data-mc="ai"].on{background:var(--agent)}
+.mc-stage{text-align:center;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.mc-nest{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center;font-family:var(--mono);font-size:11.5px;font-weight:700}
+.mc-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:30px;border:1px solid var(--line-2)}
+.mc-pill.h{background:var(--bg-3);color:var(--ink-2)}
+.mc-pill.ai{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+.mc-pill.out{background:var(--agent-soft);color:var(--agent);border-color:var(--agent-line)}
+.mc-arr{color:var(--ink-3);font-size:16px}
+.mc-label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.mc-stage.you .mc-label{color:var(--ink-3)}.mc-stage.ai .mc-label{color:var(--agent)}
+.mc-headline{font-size:18px;font-weight:600;max-width:500px}
+.mc-body{font-size:14px;color:var(--ink-2);max-width:500px}.mc-body strong{color:var(--ink)}
+
+/* 8 ingredients clickable */
+.ing{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ingc{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:13px 10px;cursor:pointer;transition:.18s;text-align:center}
+.ingc:hover{border-color:var(--line-2)}.ingc.on{border-color:var(--accent);background:var(--accent-soft)}
+.ingc .ci{width:36px;height:36px;border-radius:11px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px;transition:.18s}
+.ingc.on .ci{background:var(--accent);color:#fff}
+.ingc .ct{font-size:12.5px;font-weight:600;line-height:1.25}
+.ingdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.ingdetail h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.ingdetail p{font-size:14.5px;color:var(--ink-2)}.ingdetail p strong{color:var(--ink);font-weight:600}
+.ingdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;color:var(--ink-2);margin-top:11px;line-height:1.55}
+
+/* validation loop flow */
+.loop{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.looprow{display:flex;align-items:stretch;gap:10px;justify-content:center}
+.loopnode{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 12px}
+.loopnode.ai{background:var(--accent-soft);border-color:var(--accent-line)}
+.loopnode.hu{background:var(--bg-3)}
+.loopnode.pr{background:var(--good-soft);border-color:var(--good)}
+.loopnode .li{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px}
+.loopnode.ai .li{background:var(--accent);color:#fff}
+.loopnode.hu .li{background:var(--ink-3);color:#fff}
+.loopnode.pr .li{background:var(--good);color:#fff}
+.loopnode .ll{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.loopnode.ai .ll{color:var(--accent)}.loopnode.pr .ll{color:var(--good)}
+.loopnode .ld{font-size:12.5px;color:var(--ink-2);line-height:1.45}
+.looparr{display:flex;align-items:center;color:var(--ink-3);font-size:22px}
+
+/* step process */
+.steps{display:flex;flex-direction:column;gap:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:8px 4px}
+.stp{display:flex;gap:14px;align-items:flex-start;padding:13px 16px;border-top:1px dashed var(--line-2)}
+.stp:first-child{border-top:none}
+.stp .sn{width:30px;height:30px;border-radius:50%;background:var(--agent-soft);color:var(--agent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--agent-line)}
+.stp .stx{font-size:14px;color:var(--ink-2)}.stp .stx b{color:var(--ink)}
+.stp .stx .sk{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:2px}
+
+/* compare before/after */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:4px;margin-bottom:11px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .big{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.cmpc.bad .big{color:var(--bad)}.cmpc.good .big{color:var(--good)}
+.cmpc .bl{font-size:13px;color:var(--ink-3);font-family:var(--mono);margin-top:2px}
+.cmpc .res{font-size:13.5px;color:var(--ink-2);margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-2)}
+.cmpc .res b{color:var(--ink)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ing{grid-template-columns:1fr 1fr}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.looprow{flex-direction:column}.looparr{transform:rotate(90deg);justify-content:center}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.mc-switch{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.mc-wrap,.ingc,.ingdetail,.loop,.steps,.cmpc,.card3,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A7.2</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Organizzazione intelligente</div>
+  <h1 class="rv" data-i="h1">Progettare l'agente con la meta-creazione</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-recycle"></i><span class="no">01</span><h2 data-i="s1">Chi progetta l'agente?</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="mcIntro"></p>
+  <div class="mc-wrap rv">
+    <div class="mc-switch">
+      <button data-mc="you" class="on" onclick="setMc('you')"><i class="ti ti-user-cog"></i> <span data-i="mcYouBtn">Lo progetti tu</span></button>
+      <button data-mc="ai" onclick="setMc('ai')"><i class="ti ti-sparkles"></i> <span data-i="mcAiBtn">Lo progetta l'AI</span></button>
+    </div>
+    <div class="mc-stage you" id="mcStage"></div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-list"></i><span class="no">02</span><h2 data-i="s2">Cosa fai progettare all'AI</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="ingIntro"></p>
+  <div class="ing rv" id="ing"></div>
+  <div class="ingdetail rv" id="ingdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-loop-right"></i><span class="no">03</span><h2 data-i="s3">Il ciclo: l'AI propone, tu validi, poi produzione</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="loopIntro"></p>
+  <div class="loop rv">
+    <div class="looprow">
+      <div class="loopnode ai"><div class="li"><i class="ti ti-sparkles"></i></div><div class="ll" data-i="loopAiL">L'AI propone</div><div class="ld" data-i="loopAiD"></div></div>
+      <div class="looparr"><i class="ti ti-arrow-right"></i></div>
+      <div class="loopnode hu"><div class="li"><i class="ti ti-checkup-list"></i></div><div class="ll" data-i="loopHuL">Tu validi</div><div class="ld" data-i="loopHuD"></div></div>
+      <div class="looparr"><i class="ti ti-arrow-right"></i></div>
+      <div class="loopnode pr"><div class="li"><i class="ti ti-rocket"></i></div><div class="ll" data-i="loopPrL">Produzione</div><div class="ld" data-i="loopPrD"></div></div>
+    </div>
+  </div>
+  <div class="note rv" style="margin-top:14px"><div class="ni"><i class="ti ti-user-shield"></i></div><div><h4 data-i="valH">La validazione resta umana</h4><p data-i-html="valP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-file-invoice"></i><span class="no">04</span><h2 data-i="s4">Esempio reale: l'agente preventivi</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="qIntro"></p>
+  <div class="steps rv" id="qsteps"></div>
+  <div class="note amber rv" style="margin-top:14px"><div class="ni"><i class="ti ti-adjustments-horizontal"></i></div><div><h4 data-i="qsupH">Due settimane di supervisione, poi si allenta</h4><p data-i-html="qsupP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-clock-bolt"></i><span class="no">05</span><h2 data-i="s5">Il salto di velocità: assessment autonomo</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i-html="asIntro"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad">
+      <span class="cmptag" data-i="asBadT"><i class="ti ti-message-2"></i> Modalità assistente</span>
+      <div class="big" data-i="asBadBig">~6 ore</div>
+      <div class="bl" data-i="asBadBl">passo per passo, a comando</div>
+      <div class="res" data-i-html="asBadR"></div>
+    </div>
+    <div class="cmpc good">
+      <span class="cmptag" data-i="asGoodT"><i class="ti ti-robot"></i> Modalità agente</span>
+      <div class="big" data-i="asGoodBig">~20 min</div>
+      <div class="bl" data-i="asGoodBl">piano autonomo end-to-end</div>
+      <div class="res" data-i-html="asGoodR"></div>
+    </div>
+  </div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q2"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Non scrivi l'agente: lo fai scrivere e lo validi</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Progettare l'agente con la meta-creazione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A7.2',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Organizzazione intelligente',
+h1:'Progettare l\'agente con la meta-creazione',
+lede:'Sai cos\'è un agente: obiettivi, strumenti, confini, escalation. Ma chi li scrive? La risposta della meta-creazione è controintuitiva: non li scrivi tu da zero — li fa progettare all\'AI stessa, e tu validi.',
+s1:'Chi progetta l\'agente?',
+mcIntro:'La <strong>meta-creazione</strong> è la matrioska del metodo: l\'AI non produce solo l\'output, produce <strong>lo strumento che produce l\'output</strong>. Applicata all\'agente, significa che l\'AI progetta sé stessa-come-agente. Usa lo switch.',
+mcYouBtn:'Lo progetti tu',mcAiBtn:'Lo progetta l\'AI',
+q1:'«Non parti dal foglio bianco. Chiedi all\'AI di progettare l\'agente — obiettivi, confini, tool, escalation — e il tuo lavoro diventa validare, non scrivere.»',
+s2:'Cosa fai progettare all\'AI',
+ingIntro:'Quando deleghi la progettazione, l\'AI non ti restituisce un paragrafo vago: ti propone <strong>otto componenti precisi</strong>, pronti da rivedere. Clicca ognuno per vedere cosa ti consegna — e cosa devi controllare.',
+s3:'Il ciclo: l\'AI propone, tu validi, poi produzione',
+loopIntro:'La meta-creazione non è "premi un bottone e parte". È un <strong>ciclo a tre tempi</strong> in cui l\'umano resta il punto di controllo prima che l\'agente tocchi il mondo reale.',
+loopAiL:'L\'AI propone',loopAiD:'Analizza il processo e redige gli 8 componenti: una bozza completa di agente.',
+loopHuL:'Tu validi',loopHuD:'Leggi, correggi, stringi i confini e l\'escalation. Approvi solo ciò che ti convince.',
+loopPrL:'Produzione',loopPrD:'L\'agente va in funzione, sotto supervisione, finché non dimostra di essere affidabile.',
+valH:'La validazione resta umana',
+valP:'L\'AI accelera la <strong>stesura</strong>, non la <strong>responsabilità</strong>. Sei tu a decidere cosa l\'agente può toccare, fino a che importo, quando deve fermarsi e chiamarti. Delegare la progettazione non vuol dire delegare il giudizio.',
+s4:'Esempio reale: l\'agente preventivi',
+qIntro:'Un commerciale riceve decine di richieste di preventivo a settimana, sempre lo stesso schema. Invece di scrivere l\'agente a mano, lo fa progettare all\'AI a partire dai dati reali. Ecco il percorso.',
+qsupH:'Due settimane di supervisione, poi si allenta',
+qsupP:'Per le prime <strong>due settimane</strong> ogni preventivo passa sotto l\'occhio umano: si correggono i casi sbagliati e l\'agente impara i confini reali. Quando il tasso di errore crolla, <strong>si allentano i controlli</strong> e l\'umano interviene solo sulle eccezioni. È l\'opposto del "tutto o niente": fiducia guadagnata, non concessa.',
+s5:'Il salto di velocità: assessment autonomo',
+asIntro:'Stesso compito, due modalità. Un\'analisi (assessment) su una cartella di documenti: <strong>10 aree, 4 fasi, un output integrato</strong>. La differenza non è la qualità — è chi guida i passi.',
+asBadT:'Modalità assistente',asBadBig:'~6 ore',asBadBl:'passo per passo, a comando',
+asBadR:'Tu spezzi il lavoro in micro-istruzioni e guidi ogni passaggio. L\'AI esegue, ma <b>aspetta te</b> a ogni bivio.',
+asGoodT:'Modalità agente',asGoodBig:'~20 min',asGoodBl:'piano autonomo end-to-end',
+asGoodR:'Prompt unico: <b>"non so come fare, crea il piano dall\'inizio alla fine"</b>. L\'agente disegna le 10 aree e le 4 fasi, le esegue e integra l\'output da solo.',
+q2:'«La meta-creazione non rende l\'output migliore: rende il percorso per ottenerlo molto più corto. Da ore a minuti, perché smetti di guidare ogni passo.»',
+s6:'Checkpoint',
+cpH:'Non scrivi l\'agente: lo fai scrivere e lo validi',
+cpP:'Il salto di A7.2 è di ruolo: passi da autore a revisore. L\'AI redige gli otto componenti dell\'agente partendo dal processo reale; tu stringi confini ed escalation, supervisioni in produzione e allenti i controlli quando l\'affidabilità è dimostrata.',
+cpQ:'Prendi un processo ripetitivo che gestisci a mano. Se chiedessi all\'AI di progettarne l\'agente partendo dai tuoi casi passati, quali due confini e quale regola di escalation NON le lasceresti decidere da sola?',
+cpNote:'Regola d\'oro: l\'AI propone tutto, l\'umano valida tutto. La velocità è sua, la responsabilità è tua.',
+bridge:'Sai far progettare e validare un singolo agente. <b>Prossimo:</b> quando gli agenti diventano molti, serve un\'architettura che li orchestri — pipeline, hub-spoke, swarm e il manager che decide chi attivare.',
+foot:'Morfeus — Progettare l\'agente con la meta-creazione'
+},
+en:{
+kicker:'Lesson A7.2',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Intelligent organization',
+h1:'Designing the agent with meta-creation',
+lede:'You know what an agent is: goals, tools, boundaries, escalation. But who writes them? Meta-creation\'s answer is counter-intuitive: you don\'t write them from scratch — you have the AI itself design them, and you validate.',
+s1:'Who designs the agent?',
+mcIntro:'<strong>Meta-creation</strong> is the method\'s matryoshka: the AI doesn\'t just produce the output, it produces <strong>the tool that produces the output</strong>. Applied to an agent, it means the AI designs itself-as-an-agent. Use the switch.',
+mcYouBtn:'You design it',mcAiBtn:'The AI designs it',
+q1:'"You don\'t start from a blank page. You ask the AI to design the agent — goals, boundaries, tools, escalation — and your job becomes validating, not writing."',
+s2:'What you have the AI design',
+ingIntro:'When you delegate the design, the AI doesn\'t hand you a vague paragraph: it proposes <strong>eight precise components</strong>, ready to review. Click each one to see what it delivers — and what you must check.',
+s3:'The loop: the AI proposes, you validate, then production',
+loopIntro:'Meta-creation isn\'t "press a button and go". It\'s a <strong>three-beat loop</strong> where the human stays the control point before the agent touches the real world.',
+loopAiL:'The AI proposes',loopAiD:'It analyzes the process and drafts the 8 components: a complete agent blueprint.',
+loopHuL:'You validate',loopHuD:'You read, correct, tighten the boundaries and escalation. You approve only what convinces you.',
+loopPrL:'Production',loopPrD:'The agent goes live, under supervision, until it proves it\'s reliable.',
+valH:'Validation stays human',
+valP:'The AI speeds up the <strong>drafting</strong>, not the <strong>responsibility</strong>. You decide what the agent can touch, up to what amount, when it must stop and call you. Delegating the design doesn\'t mean delegating judgment.',
+s4:'Real example: the quote agent',
+qIntro:'A salesperson gets dozens of quote requests a week, always the same shape. Instead of writing the agent by hand, they have the AI design it from the real data. Here\'s the path.',
+qsupH:'Two weeks of supervision, then it loosens',
+qsupP:'For the first <strong>two weeks</strong> every quote passes under human eyes: wrong cases get corrected and the agent learns the real boundaries. When the error rate drops, <strong>the controls loosen</strong> and the human only steps in on exceptions. It\'s the opposite of "all or nothing": trust earned, not granted.',
+s5:'The speed leap: autonomous assessment',
+asIntro:'Same task, two modes. An analysis (assessment) over a folder of documents: <strong>10 areas, 4 phases, one integrated output</strong>. The difference isn\'t quality — it\'s who drives the steps.',
+asBadT:'Assistant mode',asBadBig:'~6 hours',asBadBl:'step by step, on command',
+asBadR:'You break the work into micro-instructions and steer every step. The AI executes, but <b>waits for you</b> at each fork.',
+asGoodT:'Agent mode',asGoodBig:'~20 min',asGoodBl:'autonomous end-to-end plan',
+asGoodR:'A single prompt: <b>"I don\'t know how to do this, build the plan from start to finish"</b>. The agent maps the 10 areas and 4 phases, runs them, and integrates the output on its own.',
+q2:'"Meta-creation doesn\'t make the output better: it makes the path to it far shorter. From hours to minutes, because you stop steering every step."',
+s6:'Checkpoint',
+cpH:'You don\'t write the agent: you have it written and you validate',
+cpP:'The leap of A7.2 is a role change: you go from author to reviewer. The AI drafts the eight components of the agent from the real process; you tighten boundaries and escalation, supervise in production, and loosen the controls once reliability is proven.',
+cpQ:'Take a repetitive process you handle by hand. If you asked the AI to design its agent from your past cases, which two boundaries and which escalation rule would you NOT let it decide on its own?',
+cpNote:'Golden rule: the AI proposes everything, the human validates everything. The speed is its, the responsibility is yours.',
+bridge:'You can have a single agent designed and validate it. <b>Next:</b> when agents become many, you need an architecture to orchestrate them — pipeline, hub-spoke, swarm, and the manager that decides who to activate.',
+foot:'Morfeus — Designing the agent with meta-creation'
+}};
+
+/* ===== meta-creation matryoshka toggle ===== */
+var MC={it:{
+you:{label:'Modalità classica',headline:'Tu scrivi ogni componente a mano',body:'Parti dal foglio bianco e redigi obiettivi, confini, tool, escalation, istruzioni. Funziona, ma è <strong>lento</strong> e dipende da quanto sei bravo a immaginare ogni caso.',nest:[['h','ti-user','tu'],['arr',''],['out','ti-robot','agente']]},
+ai:{label:'Meta-creazione',headline:'L\'AI progetta l\'agente, tu validi',body:'Dai all\'AI il processo e i casi reali; lei redige <strong>tutti gli otto componenti</strong>. Tu non scrivi: leggi, correggi, approvi. È la matrioska — l\'AI che crea lo strumento che lavorerà.',nest:[['h','ti-user','tu'],['arr',''],['ai','ti-sparkles','AI progetta'],['arr',''],['out','ti-robot','agente']]}
+},en:{
+you:{label:'Classic mode',headline:'You write each component by hand',body:'You start from a blank page and draft goals, boundaries, tools, escalation, instructions. It works, but it\'s <strong>slow</strong> and depends on how well you imagine every case.',nest:[['h','ti-user','you'],['arr',''],['out','ti-robot','agent']]},
+ai:{label:'Meta-creation',headline:'The AI designs the agent, you validate',body:'You give the AI the process and the real cases; it drafts <strong>all eight components</strong>. You don\'t write: you read, correct, approve. It\'s the matryoshka — the AI building the tool that will do the work.',nest:[['h','ti-user','you'],['arr',''],['ai','ti-sparkles','AI designs'],['arr',''],['out','ti-robot','agent']]}
+}};
+var curMc='you';
+function setMc(k){curMc=k;document.querySelectorAll('.mc-switch button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-mc')===k)});renderMc()}
+function renderMc(){
+  var d=MC[LANG][curMc];var st=document.getElementById('mcStage');st.className='mc-stage '+curMc;
+  var nest=d.nest.map(function(n){
+    if(n[0]==='arr')return '<span class="mc-arr"><i class="ti ti-arrow-right"></i></span>';
+    return '<span class="mc-pill '+n[0]+'"><i class="ti '+n[1]+'"></i> '+n[2]+'</span>';
+  }).join('');
+  st.innerHTML='<div class="mc-label">'+d.label+'</div><div class="mc-headline">'+d.headline+'</div><div class="mc-nest">'+nest+'</div><div class="mc-body">'+d.body+'</div>';
+}
+
+/* ===== 8 ingredients ===== */
+var ING={it:[
+['ti-target','Obiettivi','Il risultato da raggiungere','L\'AI traduce il processo in un <strong>esito misurabile</strong>, non in una lista di passi. Tu controlli che l\'obiettivo sia davvero quello che vuoi.','"Produci un preventivo corretto e inviabile per ogni richiesta in entrata."'],
+['ti-border-all','Confini','Il perimetro esplicito','Propone cosa l\'agente <strong>può e non può</strong> fare. Qui la tua validazione è critica: stringi sempre.','"Può preparare il preventivo; non può inviarlo né applicare sconti oltre il listino."'],
+['ti-tools','Tool','Le mani per agire','Indica gli strumenti necessari: CRM, listino, Drive, email. Tu verifichi i permessi (solo lettura dove basta).','CRM (lettura) · Listino (lettura) · Drive (scrittura bozza)'],
+['ti-hand-stop','Escalation','Quando fermarsi e chiedere','Definisce le soglie oltre cui passa la palla all\'umano. Tu la rendi più severa, mai più permissiva.','"Se importo > 5.000 € o richiesta fuori standard → ferma e chiedi."'],
+['ti-list-details','Istruzioni','I passi operativi e l\'ordine','Scrive la procedura passo-passo che l\'agente seguirà, con cosa fare nei casi ambigui.','"1. Leggi la richiesta 2. Recupera i prezzi 3. Compila 4. Segnala i dubbi."'],
+['ti-database','Knowledge Base','Il sapere a cui attingere','Identifica i documenti che servono: listini, casi passati, policy. Tu approvi le fonti.','Listino aggiornato · 50 preventivi passati · policy sconti'],
+['ti-route-2','Procedure','Lo standard ripetibile','Formalizza il "come si fa" perché il risultato sia uniforme ogni volta, non a caso.','SOP "preventivo standard" · checklist di completezza'],
+['ti-rosette-discount-check','Criteri qualità','Quando l\'output è accettabile','Definisce cosa rende un preventivo "buono": completo, coerente col listino, senza voci mancanti.','"Tutte le voci compilate, totale verificato, nessun prezzo fuori listino."']
+],en:[
+['ti-target','Goals','The result to reach','The AI translates the process into a <strong>measurable outcome</strong>, not a list of steps. You check the goal is really what you want.','"Produce a correct, send-ready quote for every incoming request."'],
+['ti-border-all','Boundaries','The explicit perimeter','It proposes what the agent <strong>can and cannot</strong> do. Your validation is critical here: always tighten.','"It may prepare the quote; it may not send it or apply discounts beyond the price list."'],
+['ti-tools','Tools','The hands to act','It lists the needed tools: CRM, price list, Drive, email. You verify permissions (read-only where enough).','CRM (read) · Price list (read) · Drive (write draft)'],
+['ti-hand-stop','Escalation','When to stop and ask','It defines the thresholds beyond which it hands off to a human. You make it stricter, never looser.','"If amount > €5,000 or non-standard request → stop and ask."'],
+['ti-list-details','Instructions','The steps and the order','It writes the step-by-step procedure the agent will follow, including what to do in ambiguous cases.','"1. Read the request 2. Pull the prices 3. Fill it in 4. Flag doubts."'],
+['ti-database','Knowledge Base','The knowledge to draw on','It identifies the needed documents: price lists, past cases, policies. You approve the sources.','Up-to-date price list · 50 past quotes · discount policy'],
+['ti-route-2','Procedures','The repeatable standard','It formalizes the "how it\'s done" so the result is uniform every time, not by chance.','"Standard quote" SOP · completeness checklist'],
+['ti-rosette-discount-check','Quality criteria','When the output is acceptable','It defines what makes a quote "good": complete, consistent with the price list, no missing items.','"All items filled, total verified, no off-list prices."']
+]};
+var curIng=0;
+function showIng(i){curIng=i;document.querySelectorAll('#ing .ingc').forEach(function(x,k){x.classList.toggle('on',k===i)});var c=ING[LANG][i];document.getElementById('ingdetail').innerHTML='<h4>'+c[1]+' — '+c[2]+'</h4><p>'+c[3]+'</p><div class="ex">'+c[4]+'</div>'}
+function buildIng(){document.getElementById('ing').innerHTML=ING[LANG].map(function(c,i){return '<div class="ingc'+(i===curIng?' on':'')+'" onclick="showIng('+i+')"><div class="ci"><i class="ti '+c[0]+'"></i></div><div class="ct">'+c[1]+'</div></div>'}).join('');showIng(curIng)}
+
+/* ===== quote agent steps ===== */
+var QSTEPS={it:[
+['Analizza i casi passati','L\'AI legge 50 richieste di preventivo già evase'],
+['Identifica i pattern','Trova ricorrenze: voci tipiche, sconti applicati, eccezioni'],
+['Propone un processo a 6 step','Dal ricevere la richiesta al consegnare la bozza'],
+['Crea istruzioni, KB ed escalation','Redige la procedura, raccoglie il sapere, fissa le soglie'],
+['Due settimane di supervisione','Ogni output passa sotto l\'occhio umano, si corregge'],
+['Si allentano i controlli','Quando è affidabile, l\'umano interviene solo sulle eccezioni']
+],en:[
+['Analyze past cases','The AI reads 50 quote requests already handled'],
+['Identify the patterns','Finds recurrences: typical items, discounts applied, exceptions'],
+['Propose a 6-step process','From receiving the request to delivering the draft'],
+['Create instructions, KB and escalation','Drafts the procedure, gathers the knowledge, sets the thresholds'],
+['Two weeks of supervision','Every output passes under human eyes, gets corrected'],
+['The controls loosen','Once reliable, the human only steps in on exceptions']
+]};
+function buildQ(){document.getElementById('qsteps').innerHTML=QSTEPS[LANG].map(function(s,i){return '<div class="stp"><div class="sn">'+(i+1)+'</div><div class="stx"><b>'+s[0]+'</b><span class="sk">'+s[1]+'</span></div></div>'}).join('')}
+
+/* ===== i18n + chrome ===== */
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderMc();buildIng();buildQ();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

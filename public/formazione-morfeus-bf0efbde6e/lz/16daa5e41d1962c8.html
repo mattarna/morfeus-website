@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP e Connettori — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* key phrase block */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+.kp.big{font-size:16px}
+/* stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0}
+.stat-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 14px;text-align:center}
+.stat-card .stat-num{font-size:26px;font-weight:700;color:var(--accent);display:block;line-height:1.1;margin-bottom:5px;font-family:var(--mono)}
+.stat-card .stat-label{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
+/* info / warn box */
+.info-box{background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.info-box .info-title{font-size:12px;font-weight:600;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.info-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.info-box strong{color:var(--ink);font-weight:600}
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* before/after */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0}
+.ba-card{padding:22px 20px;border-radius:var(--r-l);border:1.5px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.ba-card.before{background:var(--bad-soft);border-color:var(--bad-line)}
+.ba-card.after{background:var(--good-soft);border-color:var(--good-line)}
+.ba-tag{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.ba-card.before .ba-tag{color:var(--bad)}
+.ba-card.after .ba-tag{color:var(--good)}
+.ba-card p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* architecture interactive */
+.arch-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px 22px;margin:0}
+.arch-diagram{display:flex;align-items:stretch;gap:0;margin-bottom:18px;position:relative;overflow-x:auto}
+.arch-node{flex:1;min-width:128px;background:var(--bg-2);border:1.5px solid var(--line);border-radius:var(--r-l);padding:18px 14px;text-align:center;cursor:pointer;transition:all .25s;position:relative;user-select:none}
+.arch-node:hover{border-color:var(--accent-line);transform:translateY(-2px)}
+.arch-node.active{border-color:var(--accent);background:var(--accent-soft)}
+.arch-node .an-icon{font-size:28px;color:var(--ink-3);margin-bottom:8px;display:block;transition:color .25s}
+.arch-node.active .an-icon,.arch-node:hover .an-icon{color:var(--accent)}
+.arch-node .an-label{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:4px}
+.arch-node .an-sub{font-size:11px;color:var(--ink-3);line-height:1.4}
+.arch-arrow{display:flex;align-items:center;padding:0 6px;color:var(--ink-3);font-size:18px;flex-shrink:0}
+.arch-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;justify-content:center}
+.arch-pill{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--ink-3);transition:all .25s;font-family:var(--mono)}
+.arch-node.active .arch-pill{border-color:var(--accent-line);color:var(--accent)}
+.arch-detail{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:18px 20px;min-height:90px;transition:all .35s}
+.arch-detail .ad-head{font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:7px;margin-bottom:10px;font-family:var(--mono)}
+.arch-detail .ad-body{font-size:13px;color:var(--ink-2);line-height:1.65}
+.arch-detail .ad-body strong{color:var(--ink)}
+.arch-meta{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.arch-meta span{font-size:11px;color:var(--ink-3);padding:4px 10px;background:var(--bg-2);border-radius:10px;border:1px solid var(--line);font-family:var(--mono);display:inline-flex;align-items:center;gap:5px}
+.arch-meta span i{font-size:12px}
+/* scenario */
+.scenario{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 20px;margin-bottom:12px;display:flex;align-items:flex-start;gap:14px}
+.scenario:last-child{margin-bottom:0}
+.scenario .sc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.scenario .sc-text{flex:1}
+.scenario .sc-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.scenario .sc-text span{font-size:13px;color:var(--ink-2);line-height:1.5}
+.scenario .sc-text strong em{font-style:normal;color:var(--ink)}
+/* connector gallery */
+.click-hint{font-size:12px;color:var(--ink-3);margin:0 0 6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.conn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px;margin:0}
+.conn-card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 12px;text-align:center;cursor:pointer;transition:all .25s;user-select:none;position:relative}
+.conn-card:hover{border-color:var(--accent-line);transform:translateY(-2px)}
+.conn-card.active{border-color:var(--accent);background:var(--accent-soft)}
+.conn-card .cc-icon{font-size:28px;margin-bottom:8px;display:block}
+.conn-card .cc-name{font-size:12.5px;font-weight:600;color:var(--ink)}
+.conn-card .cc-cat{font-size:10px;color:var(--ink-3);margin-top:2px;text-transform:uppercase;letter-spacing:.04em;font-family:var(--mono)}
+.conn-card .cc-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--line-2)}
+.conn-card.active .cc-dot{background:var(--accent)}
+.conn-detail{background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r-l);padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .45s ease,opacity .35s ease,padding .35s ease,margin .35s ease;margin-top:0}
+.conn-detail.show{max-height:700px;opacity:1;padding:22px 22px 20px;margin-top:16px}
+.conn-detail .cd-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.conn-detail .cd-icon{font-size:32px}
+.conn-detail .cd-title{font-size:17px;font-weight:600}
+.conn-detail .cd-subtitle{font-size:11px;color:var(--ink-3);margin-top:2px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.conn-detail .cd-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+.cd-col{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:14px 16px}
+.cd-col .col-head{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.cd-col.can .col-head{color:var(--teal)}
+.cd-col.cannot .col-head{color:var(--bad)}
+.cd-col ul{list-style:none}
+.cd-col li{font-size:12.5px;color:var(--ink-2);line-height:1.55;padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.cd-col li i{font-size:13px;margin-top:2px;flex-shrink:0}
+.cd-col.can li i{color:var(--teal)}
+.cd-col.cannot li i{color:var(--bad)}
+.cd-note{margin-top:12px;background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--ink-2);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+.cd-note i{color:var(--warn);font-size:14px;margin-top:1px;flex-shrink:0}
+.cd-note strong{color:var(--ink);font-weight:600}
+/* comparison table */
+.comp-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);margin:0}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:11px 14px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.comp td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:top}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+.comp td strong{color:var(--ink);font-weight:600}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink);font-weight:600}
+/* module-complete bridge */
+.modcomp{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center;margin:0}
+.modcomp .mc-tag{font-size:11px;color:var(--agent);margin-bottom:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
+.modcomp p{font-size:15px;color:var(--ink);font-weight:500;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.stats-row{grid-template-columns:1fr 1fr}.ba-grid{grid-template-columns:1fr}.arch-diagram{flex-direction:column;gap:6px}.arch-arrow{transform:rotate(90deg);justify-content:center}.conn-detail .cd-cols{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.conn-detail{max-height:none!important;opacity:1!important}.stat-card,.info-box,.warn-box,.ba-card,.arch-wrap,.scenario,.kp,.comp-wrap,.cp,.modcomp,.key,.conn-card{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 6.6</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Ecosistema</div>
+  <h1 class="rv" data-i="h1">MCP e Connettori</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="stats-row rv" style="margin-top:30px">
+    <div class="stat-card"><span class="stat-num">~97M</span><span class="stat-label" data-i="stat1"></span></div>
+    <div class="stat-card"><span class="stat-num">&gt;10k</span><span class="stat-label" data-i="stat2"></span></div>
+    <div class="stat-card"><span class="stat-num">2024</span><span class="stat-label" data-i="stat3"></span></div>
+    <div class="stat-card"><span class="stat-num">AAIF</span><span class="stat-label" data-i="stat4"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-code-dots"></i><span class="no">01</span><h2 data-i="s1">Cos'è MCP</h2></div>
+  <p class="lede-p rv" data-i-html="mcpIntro"></p>
+  <div class="info-box rv">
+    <div class="info-title"><i class="ti ti-info-circle"></i> <span data-i="infoH"></span></div>
+    <p data-i-html="infoP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">02</span><h2 data-i="s2">La differenza pratica</h2></div>
+  <div class="ba-grid rv">
+    <div class="ba-card before">
+      <div class="ba-tag"><i class="ti ti-x"></i> <span data-i="baBeforeTag"></span></div>
+      <p data-i="baBeforeP"></p>
+    </div>
+    <div class="ba-card after">
+      <div class="ba-tag"><i class="ti ti-check"></i> <span data-i="baAfterTag"></span></div>
+      <p data-i="baAfterP"></p>
+    </div>
+  </div>
+  <p class="lede-p rv" style="margin-top:18px;margin-bottom:0" data-i-html="baCap"></p>
+
+  <div class="sh rv"><i class="ti ti-topology-star"></i><span class="no">03</span><h2 data-i="s3">Architettura MCP</h2></div>
+  <p class="lede-p rv" style="margin-bottom:16px" data-i="archIntro"></p>
+  <div class="arch-wrap rv">
+    <div class="arch-diagram">
+      <div class="arch-node active" id="an-host" onclick="archSelect('host')">
+        <i class="ti ti-layout-2 an-icon"></i>
+        <span class="an-label" data-i="archHostL"></span>
+        <span class="an-sub" data-i="archHostS"></span>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="arch-node" id="an-client" onclick="archSelect('client')">
+        <i class="ti ti-plug an-icon"></i>
+        <span class="an-label" data-i="archClientL"></span>
+        <span class="an-sub" data-i="archClientS"></span>
+      </div>
+      <div class="arch-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="arch-node" id="an-server" onclick="archSelect('server')">
+        <i class="ti ti-server an-icon"></i>
+        <span class="an-label" data-i="archServerL"></span>
+        <span class="an-sub" data-i="archServerS"></span>
+        <div class="arch-pills">
+          <span class="arch-pill">tools</span>
+          <span class="arch-pill">resources</span>
+          <span class="arch-pill">prompts</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-detail">
+      <div class="ad-head" id="archDetHead"></div>
+      <div class="ad-body" id="archDetBody"></div>
+    </div>
+    <div class="arch-meta">
+      <span><i class="ti ti-bolt"></i> <span data-i="archMeta1"></span></span>
+      <span><i class="ti ti-lock"></i> <span data-i="archMeta2"></span></span>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split"></i><span class="no">04</span><h2 data-i="s4">MCP vs Connettore: non sono sinonimi</h2></div>
+  <div class="scenario rv">
+    <div class="sc-icon" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-code-dots"></i></div>
+    <div class="sc-text">
+      <strong data-i="protoH"></strong>
+      <span data-i="protoP"></span>
+    </div>
+  </div>
+  <div class="scenario rv">
+    <div class="sc-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-plug-connected"></i></div>
+    <div class="sc-text">
+      <strong data-i="connH"></strong>
+      <span data-i-html="connP"></span>
+    </div>
+  </div>
+  <div class="kp rv" style="margin-top:20px" data-i="vsKey"></div>
+
+  <div class="sh rv"><i class="ti ti-apps"></i><span class="no">05</span><h2 data-i="s5">Galleria Connettori</h2></div>
+  <p class="lede-p rv" style="margin-bottom:6px" data-i="galIntro"></p>
+  <div class="click-hint rv"><i class="ti ti-hand-click"></i> <span data-i="galHint"></span></div>
+  <div class="conn-grid rv" id="connGrid"></div>
+  <div class="conn-detail" id="connDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-shield-check"></i><span class="no">06</span><h2 data-i="s6">Permessi, sicurezza, privacy</h2></div>
+  <div class="comp-wrap rv">
+    <table class="comp">
+      <thead><tr><th data-i="thWhat"></th><th data-i="thHow"></th></tr></thead>
+      <tbody id="sec-body"></tbody>
+    </table>
+  </div>
+  <div class="warn-box rv" style="margin-top:16px">
+    <div class="warn-title"><i class="ti ti-alert-triangle"></i> <span data-i="permWarnH"></span></div>
+    <p data-i="permWarnP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">07</span><h2 data-i="s7">Quando attivare un Connettore</h2></div>
+  <div class="scenario rv">
+    <div class="sc-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-check"></i></div>
+    <div class="sc-text"><strong data-i="when1H"></strong><span data-i="when1P"></span></div>
+  </div>
+  <div class="scenario rv">
+    <div class="sc-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-check"></i></div>
+    <div class="sc-text"><strong data-i="when2H"></strong><span data-i="when2P"></span></div>
+  </div>
+  <div class="scenario rv">
+    <div class="sc-icon" style="background:var(--bad-soft);color:var(--bad)"><i class="ti ti-x"></i></div>
+    <div class="sc-text"><strong data-i="when3H"></strong><span data-i="when3P"></span></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-checkbox"></i><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">09</span><h2 data-i="s9">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="sh rv"><i class="ti ti-flag-check"></i><span class="no">10</span><h2 data-i="s10">Modulo 6 completato</h2></div>
+  <div class="modcomp rv">
+    <div class="mc-tag" data-i="mcTag"></div>
+    <p data-i="mcP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — MCP e Connettori</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 6.6',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Ecosistema',
+h1:'MCP e Connettori',
+lede:'Collegare Claude ai servizi che usate ogni giorno — dal protocollo all\'interruttore. Cosa sono, come funzionano, cosa possono (e non possono) fare.',
+hook:'«Fino ad ora Claude ha lavorato con quello che voi gli date — file, testo, istruzioni. Con i Connettori MCP, Claude ha accesso diretto ai servizi che usate ogni giorno: il vostro calendario, le email, il project manager. Non perché li vede — ma perché voi gliene date accesso.»',
+stat1:'download SDK/mese',stat2:'server MCP pubblici',stat3:'annunciato da Anthropic',stat4:'governance neutrale (2025)',
+s1:'Cos\'è MCP',
+mcpIntro:'<strong>MCP (Model Context Protocol)</strong> è uno standard aperto per connettere app AI a sistemi esterni — dati, strumenti, workflow. La metafora ufficiale: <strong>"USB-C per le applicazioni AI"</strong>. Come l\'USB-C ha eliminato il caos di connettori incompatibili, MCP definisce un linguaggio comune tra un\'AI e qualsiasi servizio esterno.',
+infoH:'Standard aperto, non di Anthropic',
+infoP:'MCP è stato annunciato da Anthropic a <strong>novembre 2024</strong>, ma a fine 2025 è stato <strong>donato all\'Agentic AI Foundation (AAIF)</strong>: oggi è uno standard con governance neutrale, non proprietario. Lo usano anche <strong>OpenAI/ChatGPT, Google DeepMind, Microsoft Copilot, VS Code, Cursor</strong> — e decine di altri.',
+s2:'La differenza pratica',
+baBeforeTag:'Senza Connettore',
+baBeforeP:'Apri il calendario, cerchi gli appuntamenti, li copi nel prompt, chiedi a Claude. Ogni volta. Per ogni sessione.',
+baAfterTag:'Con Connettore Calendar',
+baAfterP:'Chiedete a Claude "riassumi la settimana e trova blocchi liberi di 2 ore". Claude li legge da solo, risponde con dati reali.',
+baCap:'La differenza: da <em>"copio le informazioni per Claude"</em> a <em>"Claude le legge da solo"</em>.',
+s3:'Architettura MCP — clicca ogni componente',
+archIntro:'MCP funziona con tre ruoli distinti. Cliccate su ciascun nodo per capire cosa fa — e cosa espone.',
+archHostL:'Host',archHostS:'L\'app AI',
+archClientL:'Client',archClientS:'Il connettore interno',
+archServerL:'Server MCP',archServerS:'Il servizio esterno',
+archMeta1:'Comunicazione via JSON-RPC 2.0',archMeta2:'Server locale o remoto (HTTPS)',
+s4:'MCP vs Connettore: non sono sinonimi',
+protoH:'MCP — il protocollo',
+protoP:'Il "linguaggio comune" che definisce come un\'AI parla con sistemi esterni. È l\'infrastruttura: non la vedete, ma ci regge sopra tutto. Come TCP/IP per internet.',
+connH:'Connettore — l\'istanza',
+connP:'Un Connettore è un server MCP reso "pronto all\'uso" verso un servizio specifico (Gmail, Calendar, Notion…), autenticabile in pochi clic via OAuth. <strong>Connettore = MCP già cablato.</strong>',
+vsKey:'«MCP è il protocollo — il linguaggio. Un Connettore è una porta aperta su un servizio — MCP già pronto da accendere. Uno è l\'infrastruttura, l\'altro è l\'interruttore dell\'utente.»',
+s5:'Galleria Connettori — clicca per vedere cosa fa e cosa NON fa',
+galIntro:'Ogni connettore ha permessi precisi. Cliccate su un servizio per vedere cosa Claude può fare — e i caveat importanti.',
+galHint:'Cliccate su un servizio per vedere cosa può e cosa NON può fare',
+s6:'Permessi, sicurezza, privacy',
+thWhat:'Cosa',thHow:'Come funziona',
+permWarnH:'Leggete sempre i permessi OAuth',
+permWarnP:'Prima di connettere un servizio, leggete cosa autorizzate. Ogni Connettore chiede solo i permessi che gli servono: Calendar legge il calendario, non le email. Notion accede alle pagine che autorizzate, non a tutto il workspace. Non date permessi di scrittura se vi serve solo la lettura.',
+s7:'Quando attivare un Connettore',
+when1H:'Servizio che aprite più volte al giorno',
+when1P:'Se copiate informazioni da un\'app verso Claude regolarmente, un Connettore elimina quel passaggio manuale.',
+when2H:'Dati che cambiano nel tempo',
+when2P:'Calendari, task, messaggi Slack, note Notion: informazioni che evolvono e che Claude non può sapere senza accesso diretto.',
+when3H:'Non servono tutti insieme',
+when3P:'Iniziate con uno — quello che usate di più. Capite come funziona. Poi aggiungete. Un Connettore mal configurato o poco compreso è rumore, non aiuto.',
+s8:'Checkpoint',
+cpH:'Un\'azione dopo questa lezione.',
+cpP:'Scegliete <strong>UN Connettore</strong> — quello per il servizio che usate di più. Attivatelo in Customize → Connectors. Poi fate una domanda a Claude sul contenuto di quel servizio — qualcosa che normalmente richiederebbe di aprire l\'app, cercare, copiare. Vedete se Claude risponde senza che voi abbiate fatto niente di manuale.',
+s9:'In una frase',
+keyPhrase:'«Un Connettore MCP trasforma Claude da assistente isolato a membro del vostro ecosistema digitale. Non sa solo quello che gli dite — sa quello che succede nei vostri strumenti. È la differenza tra un consulente esterno e un collega interno.»',
+s10:'Modulo 6 completato',
+mcTag:'Fine del Modulo 6',
+mcP:'Avete la mappa degli strumenti, sapete usare le Skills, crearne di nuove, capite la meta-creazione, installate Plugin, e collegate Claude ai servizi che già usate. Il Modulo 7 è quello dove tutto si mette al lavoro: use case concreti, workflow reali, risultati misurabili.',
+foot:'Morfeus — MCP e Connettori'
+},
+en:{
+kicker:'Lesson 6.6',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Ecosystem',
+h1:'MCP and Connectors',
+lede:'Connecting Claude to the services you use every day — from the protocol to the switch. What they are, how they work, what they can (and can\'t) do.',
+hook:'"Until now Claude has worked with what you give it — files, text, instructions. With MCP Connectors, Claude has direct access to the services you use every day: your calendar, your email, your project manager. Not because it sees them — but because you give it access."',
+stat1:'SDK downloads/month',stat2:'public MCP servers',stat3:'announced by Anthropic',stat4:'neutral governance (2025)',
+s1:'What MCP is',
+mcpIntro:'<strong>MCP (Model Context Protocol)</strong> is an open standard for connecting AI apps to external systems — data, tools, workflows. The official metaphor: <strong>"USB-C for AI applications"</strong>. Just as USB-C eliminated the chaos of incompatible connectors, MCP defines a common language between an AI and any external service.',
+infoH:'Open standard, not Anthropic\'s',
+infoP:'MCP was announced by Anthropic in <strong>November 2024</strong>, but at the end of 2025 it was <strong>donated to the Agentic AI Foundation (AAIF)</strong>: today it\'s a standard with neutral governance, not proprietary. It\'s also used by <strong>OpenAI/ChatGPT, Google DeepMind, Microsoft Copilot, VS Code, Cursor</strong> — and dozens of others.',
+s2:'The practical difference',
+baBeforeTag:'Without a Connector',
+baBeforeP:'You open the calendar, look for the appointments, copy them into the prompt, ask Claude. Every time. For every session.',
+baAfterTag:'With a Calendar Connector',
+baAfterP:'You ask Claude "summarize the week and find free 2-hour blocks". Claude reads them on its own, responds with real data.',
+baCap:'The difference: from <em>"I copy the information for Claude"</em> to <em>"Claude reads it on its own"</em>.',
+s3:'MCP architecture — click each component',
+archIntro:'MCP works with three distinct roles. Click on each node to understand what it does — and what it exposes.',
+archHostL:'Host',archHostS:'The AI app',
+archClientL:'Client',archClientS:'The internal connector',
+archServerL:'MCP Server',archServerS:'The external service',
+archMeta1:'Communication via JSON-RPC 2.0',archMeta2:'Local or remote server (HTTPS)',
+s4:'MCP vs Connector: they\'re not synonyms',
+protoH:'MCP — the protocol',
+protoP:'The "common language" that defines how an AI talks to external systems. It\'s the infrastructure: you don\'t see it, but everything rests on top of it. Like TCP/IP for the internet.',
+connH:'Connector — the instance',
+connP:'A Connector is an MCP server made "ready to use" toward a specific service (Gmail, Calendar, Notion…), authenticatable in a few clicks via OAuth. <strong>Connector = MCP already wired.</strong>',
+vsKey:'"MCP is the protocol — the language. A Connector is a door open onto a service — MCP ready to switch on. One is the infrastructure, the other is the user\'s switch."',
+s5:'Connector gallery — click to see what it does and what it does NOT do',
+galIntro:'Every connector has precise permissions. Click on a service to see what Claude can do — and the important caveats.',
+galHint:'Click on a service to see what it can and cannot do',
+s6:'Permissions, security, privacy',
+thWhat:'What',thHow:'How it works',
+permWarnH:'Always read the OAuth permissions',
+permWarnP:'Before connecting a service, read what you\'re authorizing. Every Connector asks only for the permissions it needs: Calendar reads the calendar, not the email. Notion accesses the pages you authorize, not the whole workspace. Don\'t grant write permissions if you only need read.',
+s7:'When to activate a Connector',
+when1H:'A service you open several times a day',
+when1P:'If you copy information from an app to Claude regularly, a Connector eliminates that manual step.',
+when2H:'Data that changes over time',
+when2P:'Calendars, tasks, Slack messages, Notion notes: information that evolves and that Claude can\'t know without direct access.',
+when3H:'You don\'t need them all at once',
+when3P:'Start with one — the one you use most. Understand how it works. Then add. A poorly configured or poorly understood Connector is noise, not help.',
+s8:'Checkpoint',
+cpH:'One action after this lesson.',
+cpP:'Choose <strong>ONE Connector</strong> — the one for the service you use most. Activate it in Customize → Connectors. Then ask Claude a question about the content of that service — something that would normally require opening the app, searching, copying. See if Claude answers without you having done anything manual.',
+s9:'In one sentence',
+keyPhrase:'"An MCP Connector turns Claude from an isolated assistant into a member of your digital ecosystem. It doesn\'t just know what you tell it — it knows what\'s happening in your tools. It\'s the difference between an external consultant and an internal colleague."',
+s10:'Module 6 completed',
+mcTag:'End of Module 6',
+mcP:'You have the map of the tools, you know how to use Skills, create new ones, you understand meta-creation, you install Plugins, and you connect Claude to the services you already use. Module 7 is where everything gets to work: concrete use cases, real workflows, measurable results.',
+foot:'Morfeus — MCP and Connectors'
+}};
+
+var ARCH={
+it:{
+host:{icon:'ti-layout-2',title:'Host — l\'app AI',body:'L\'<strong>Host</strong> è l\'applicazione AI che l\'utente usa direttamente — come <strong>Claude Cowork</strong> o Claude Desktop. È il "cervello" che riceve le richieste e decide quali strumenti attivare. Ogni Host può aprire uno o più Client MCP, uno per ogni servizio esterno. In Claude Cowork, ogni Connettore attivato corrisponde a un Client istanziato dall\'Host.'},
+client:{icon:'ti-plug',title:'Client — il connettore interno',body:'Il <strong>Client</strong> è il componente che vive dentro l\'Host e gestisce la comunicazione con un singolo Server MCP. Si occupa del ciclo di vita della connessione, della negoziazione delle capacità e dello scambio di messaggi in <strong>JSON-RPC 2.0</strong>. Per l\'utente è invisibile: è la "parte di cavo" dentro l\'app. Un Host crea un Client separato per ogni Connettore attivato.'},
+server:{icon:'ti-server',title:'Server MCP — il servizio esterno',body:'Il <strong>Server MCP</strong> è il programma che espone le capacità di un servizio (Gmail, Notion, Calendar…). Può girare <strong>localmente</strong> (es. accesso al filesystem) o <strong>da remoto</strong> su HTTPS. Ogni Server espone tre tipi di oggetti che l\'AI può usare:<br><br><strong>tools</strong> — azioni che Claude può eseguire (es. creare un evento, leggere email)<br><strong>resources</strong> — dati che Claude può leggere (es. file, pagine Notion, messaggi)<br><strong>prompts</strong> — workflow preconfezionati con template e istruzioni'}
+},
+en:{
+host:{icon:'ti-layout-2',title:'Host — the AI app',body:'The <strong>Host</strong> is the AI application the user uses directly — like <strong>Claude Cowork</strong> or Claude Desktop. It\'s the "brain" that receives requests and decides which tools to activate. Each Host can open one or more MCP Clients, one for each external service. In Claude Cowork, every activated Connector corresponds to a Client instantiated by the Host.'},
+client:{icon:'ti-plug',title:'Client — the internal connector',body:'The <strong>Client</strong> is the component that lives inside the Host and manages communication with a single MCP Server. It handles the connection lifecycle, the negotiation of capabilities and the exchange of messages in <strong>JSON-RPC 2.0</strong>. To the user it\'s invisible: it\'s the "piece of cable" inside the app. A Host creates a separate Client for each activated Connector.'},
+server:{icon:'ti-server',title:'MCP Server — the external service',body:'The <strong>MCP Server</strong> is the program that exposes the capabilities of a service (Gmail, Notion, Calendar…). It can run <strong>locally</strong> (e.g. filesystem access) or <strong>remotely</strong> over HTTPS. Each Server exposes three types of objects the AI can use:<br><br><strong>tools</strong> — actions Claude can perform (e.g. create an event, read email)<br><strong>resources</strong> — data Claude can read (e.g. files, Notion pages, messages)<br><strong>prompts</strong> — pre-packaged workflows with templates and instructions'}
+}};
+
+var CONNECTORS={
+it:[
+{id:'gmail',icon:'ti-mail',iconColor:'var(--bad)',name:'Gmail',cat:'Comunicazione',
+can:['Cercare e leggere email','Riassumere thread e conversazioni','Identificare action item nelle email','Creare bozze di risposta','Gestire label e organizzare la posta'],
+cannot:['Inviare email autonomamente','Accedere alle password salvate','Leggere email di altri account'],
+note:'Il Connettore Gmail crea <strong>bozze</strong> — non invia email. L\'invio rimane sempre un\'azione manuale vostra. Questo è un comportamento deliberato: ogni comunicazione che parte a vostro nome resta sotto il vostro controllo.'},
+{id:'calendar',icon:'ti-calendar',iconColor:'var(--blue)',name:'Calendar',cat:'Produttività',
+can:['Leggere eventi e appuntamenti','Riassumere la settimana / il giorno','Trovare blocchi di tempo libero','Identificare conflitti di orario','Creare e modificare eventi','Eliminare eventi esistenti'],
+cannot:['Inviare inviti senza approvazione','Accedere a calendari condivisi non autorizzati','Modificare eventi di altri partecipanti'],
+note:null},
+{id:'drive',icon:'ti-brand-google-drive',iconColor:'var(--warn)',name:'Google Drive',cat:'Produttività',
+can:['Leggere file e documenti','Cercare file per nome o contenuto','Leggere metadati (chi ha modificato, quando)','Creare cartelle','Caricare nuovi file'],
+cannot:['Condividere file con persone esterne senza approvazione','Eliminare file permanentemente senza conferma','Accedere a Drive di altri account'],
+note:null},
+{id:'slack',icon:'ti-brand-slack',iconColor:'var(--accent)',name:'Slack',cat:'Comunicazione',
+can:['Leggere messaggi e thread','Riassumere conversazioni e canali','Identificare action item da thread','Cercare messaggi e file','Scrivere messaggi in bozza'],
+cannot:['Inviare messaggi senza approvazione','Accedere a workspace non autorizzati','Leggere DM di altri utenti'],
+note:'Come per Gmail, l\'invio di messaggi su Slack richiede approvazione esplicita. Claude può preparare il messaggio — voi decidete se e quando spedirlo.'},
+{id:'notion',icon:'ti-brand-notion',iconColor:'var(--ink)',name:'Notion',cat:'Knowledge Base',
+can:['Leggere pagine e database','Cercare contenuti nel workspace','Rispondere basandosi sulle vostre note','Creare e aggiornare pagine','Aggiungere elementi a database'],
+cannot:['Accedere a workspace non condivisi','Eliminare pagine permanentemente senza conferma','Modificare permessi di condivisione'],
+note:'Notion accede <strong>solo alle pagine e workspace che autorizzate</strong> durante il flusso OAuth — non a tutto il vostro account Notion. Potete scegliere granularmente cosa esporre.'}
+],
+en:[
+{id:'gmail',icon:'ti-mail',iconColor:'var(--bad)',name:'Gmail',cat:'Communication',
+can:['Search and read email','Summarize threads and conversations','Identify action items in email','Create reply drafts','Manage labels and organize the inbox'],
+cannot:['Send email autonomously','Access saved passwords','Read email from other accounts'],
+note:'The Gmail Connector creates <strong>drafts</strong> — it doesn\'t send email. Sending always remains a manual action of yours. This is deliberate behavior: every communication that goes out under your name stays under your control.'},
+{id:'calendar',icon:'ti-calendar',iconColor:'var(--blue)',name:'Calendar',cat:'Productivity',
+can:['Read events and appointments','Summarize the week / the day','Find free time blocks','Identify scheduling conflicts','Create and modify events','Delete existing events'],
+cannot:['Send invites without approval','Access unauthorized shared calendars','Modify other participants\' events'],
+note:null},
+{id:'drive',icon:'ti-brand-google-drive',iconColor:'var(--warn)',name:'Google Drive',cat:'Productivity',
+can:['Read files and documents','Search files by name or content','Read metadata (who edited, when)','Create folders','Upload new files'],
+cannot:['Share files with external people without approval','Delete files permanently without confirmation','Access Drive of other accounts'],
+note:null},
+{id:'slack',icon:'ti-brand-slack',iconColor:'var(--accent)',name:'Slack',cat:'Communication',
+can:['Read messages and threads','Summarize conversations and channels','Identify action items from threads','Search messages and files','Write draft messages'],
+cannot:['Send messages without approval','Access unauthorized workspaces','Read other users\' DMs'],
+note:'As with Gmail, sending messages on Slack requires explicit approval. Claude can prepare the message — you decide if and when to send it.'},
+{id:'notion',icon:'ti-brand-notion',iconColor:'var(--ink)',name:'Notion',cat:'Knowledge Base',
+can:['Read pages and databases','Search content in the workspace','Answer based on your notes','Create and update pages','Add items to databases'],
+cannot:['Access unshared workspaces','Delete pages permanently without confirmation','Modify sharing permissions'],
+note:'Notion accesses <strong>only the pages and workspace you authorize</strong> during the OAuth flow — not your entire Notion account. You can choose granularly what to expose.'}
+]};
+
+var SEC={
+it:[
+['Autenticazione','Ogni Connettore usa <strong>OAuth 2.0</strong> — lo stesso protocollo di Google, Slack, Notion. Autorizzate voi, revocate voi, in qualsiasi momento.'],
+['Permessi','Claude <strong>rispecchia i vostri permessi esistenti</strong>: non accede a ciò a cui voi non accedete. Ogni azione richiede <strong>approvazione esplicita</strong>.'],
+['Training dati','Anthropic <strong>non addestra i modelli sui dati dei Connettori</strong>. I dati recuperati sono cifrati at-rest e in transito. <em>(Eccezione: utenti consumer con opt-in esplicito al training.)</em>'],
+['Revoca','Potete rimuovere un Connettore in qualsiasi momento da Customize → Connectors → Disconnect. I permessi OAuth si revocano anche direttamente nell\'app del servizio.']
+],
+en:[
+['Authentication','Every Connector uses <strong>OAuth 2.0</strong> — the same protocol as Google, Slack, Notion. You authorize, you revoke, at any time.'],
+['Permissions','Claude <strong>mirrors your existing permissions</strong>: it doesn\'t access what you don\'t access. Every action requires <strong>explicit approval</strong>.'],
+['Data training','Anthropic <strong>does not train the models on Connector data</strong>. The retrieved data is encrypted at-rest and in transit. <em>(Exception: consumer users with explicit opt-in to training.)</em>'],
+['Revocation','You can remove a Connector at any time from Customize → Connectors → Disconnect. The OAuth permissions can also be revoked directly in the service\'s app.']
+]};
+
+var LANG='it';
+
+function renderSec(){
+  document.getElementById('sec-body').innerHTML=SEC[LANG].map(function(r){
+    return '<tr><td class="fn">'+r[0]+'</td><td>'+r[1]+'</td></tr>';
+  }).join('');
+}
+
+/* ARCHITECTURE */
+function archSelect(key){
+  ['host','client','server'].forEach(function(k){
+    document.getElementById('an-'+k).classList.toggle('active',k===key);
+  });
+  var d=ARCH[LANG][key];
+  document.getElementById('archDetHead').innerHTML='<i class="ti '+d.icon+'"></i> '+d.title;
+  document.getElementById('archDetBody').innerHTML=d.body;
+  archCurrent=key;
+}
+var archCurrent='host';
+
+/* CONNECTOR GALLERY */
+var activeConnId=null;
+function renderConnectors(){
+  var grid=document.getElementById('connGrid');
+  grid.innerHTML='';
+  CONNECTORS[LANG].forEach(function(c){
+    var card=document.createElement('div');
+    card.className='conn-card';
+    card.id='cc-'+c.id;
+    card.onclick=function(){connSelect(c.id);};
+    card.innerHTML='<div class="cc-dot"></div><i class="ti '+c.icon+' cc-icon" style="color:'+c.iconColor+'"></i><div class="cc-name">'+c.name+'</div><div class="cc-cat">'+c.cat+'</div>';
+    grid.appendChild(card);
+  });
+}
+function connStrings(){
+  return LANG==='it'
+    ? {can:'Cosa può fare',cannot:'Cosa NON può fare'}
+    : {can:'What it can do',cannot:'What it CANNOT do'};
+}
+function connSelect(id){
+  var det=document.getElementById('connDetail');
+  if(activeConnId===id){
+    document.getElementById('cc-'+id).classList.remove('active');
+    det.classList.remove('show');
+    activeConnId=null;
+    return;
+  }
+  if(activeConnId){var prev=document.getElementById('cc-'+activeConnId);if(prev)prev.classList.remove('active');}
+  activeConnId=id;
+  document.getElementById('cc-'+id).classList.add('active');
+  renderConnDetail();
+  det.classList.add('show');
+  setTimeout(function(){det.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+}
+function renderConnDetail(){
+  if(!activeConnId)return;
+  var det=document.getElementById('connDetail');
+  var c=CONNECTORS[LANG].filter(function(x){return x.id===activeConnId;})[0];
+  if(!c)return;
+  var L=connStrings();
+  var canItems=c.can.map(function(x){return '<li><i class="ti ti-check"></i><span>'+x+'</span></li>';}).join('');
+  var cannotItems=c.cannot.map(function(x){return '<li><i class="ti ti-x"></i><span>'+x+'</span></li>';}).join('');
+  var noteHtml=c.note?'<div class="cd-note"><i class="ti ti-alert-triangle"></i><span>'+c.note+'</span></div>':'';
+  det.innerHTML=
+    '<div class="cd-header"><i class="ti '+c.icon+' cd-icon" style="color:'+c.iconColor+'"></i><div><div class="cd-title">'+c.name+'</div><div class="cd-subtitle">'+c.cat+'</div></div></div>'+
+    '<div class="cd-cols">'+
+      '<div class="cd-col can"><div class="col-head"><i class="ti ti-check"></i> '+L.can+'</div><ul>'+canItems+'</ul></div>'+
+      '<div class="cd-col cannot"><div class="col-head"><i class="ti ti-x"></i> '+L.cannot+'</div><ul>'+cannotItems+'</ul></div>'+
+    '</div>'+noteHtml;
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderSec();
+  archSelect(archCurrent);
+  renderConnectors();
+  if(activeConnId){var card=document.getElementById('cc-'+activeConnId);if(card)card.classList.add('active');renderConnDetail();}
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

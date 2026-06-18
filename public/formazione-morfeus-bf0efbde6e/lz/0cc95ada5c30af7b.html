@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il metodo prima dello strumento — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.tool{background:var(--bg-2)}
+.cmpc.method{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.cmpc.tool h4{color:var(--ink-2)}.cmpc.method h4{color:var(--accent)}
+.cmpc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.cmpc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.cmpc li i{font-size:14px;margin-top:2px}
+.cmpc.tool li i{color:var(--ink-3)}.cmpc.method li i{color:var(--accent)}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.statc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;text-align:center}
+.statv{font-family:var(--mono);font-size:25px;font-weight:700;color:var(--accent);line-height:1.1}
+.statl{font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+.sectors{margin-top:14px;font-size:13.5px;color:var(--ink-2);text-align:center}
+.sectors b{color:var(--ink)}
+
+.seg-bar{display:flex;gap:4px;height:48px;margin-bottom:0}
+.seg{border:1px solid transparent;cursor:pointer;color:#fff;font-family:var(--mono);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.2s;opacity:.8;border-radius:var(--r)}
+.seg:hover,.seg.on{opacity:1;transform:translateY(-1px)}
+.seg.s-auto{background:var(--good)}.seg.s-co{background:var(--accent)}.seg.s-hum{background:var(--agent)}
+.seg-detail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-size:14.5px;color:var(--ink-2)}
+.seg-detail b{color:var(--ink);font-weight:600}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.seg{font-size:12px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.statc,.cp,.seg-detail,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A3.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Il metodo</div>
+  <h1 class="rv" data-i="h1">Il metodo prima dello strumento</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">01</span><h2 data-i="s1">Il principio</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-anchor"></i></div><div><h4 data-i="note1H">I tool cambiano, il metodo resta</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-left-right"></i><span class="no">02</span><h2 data-i="s2">Tool o metodo?</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc tool"><h4><i class="ti ti-tool"></i> <span data-i="toolH">Se impari un tool</span></h4><ul id="toolL"></ul></div>
+    <div class="cmpc method"><h4><i class="ti ti-route"></i> <span data-i="methodH">Se impari il metodo</span></h4><ul id="methodL"></ul></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bike"></i><span class="no">03</span><h2 data-i="s3">La bicicletta della mente</h2></div>
+  <div class="key rv"><p data-i="bike"></p><div class="cap" data-i="bikeCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-world"></i><span class="no">04</span><h2 data-i="s4">Universale, e con le prove</h2></div>
+  <div class="stats rv">
+    <div class="statc"><div class="statv" data-i="statN1">10 → 40</div><div class="statl" data-i="statL1"></div></div>
+    <div class="statc"><div class="statv" data-i="statN2">1100+</div><div class="statl" data-i="statL2"></div></div>
+    <div class="statc"><div class="statv" data-i="statN3">= Stripe</div><div class="statl" data-i="statL3"></div></div>
+  </div>
+  <p class="sectors rv" data-i-html="sectors"></p>
+
+  <div class="sh rv"><i class="ti ti-chart-pie"></i><span class="no">05</span><h2 data-i="s5">La regola 30-40-30</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="segIntro"></p>
+  <div class="rv">
+    <div class="seg-bar">
+      <button class="seg s-auto on" style="flex:30" onclick="showSeg(0)">30%</button>
+      <button class="seg s-co" style="flex:40" onclick="showSeg(1)">40%</button>
+      <button class="seg s-hum" style="flex:30" onclick="showSeg(2)">30%</button>
+    </div>
+    <div class="seg-detail" id="segDetail"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">06</span><h2 data-i="s6">L'obiettivo</h2></div>
+  <div class="key rv"><p data-i="goalKey"></p></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">Parti dal problema, non dal tool</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Il metodo prima dello strumento</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A3.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Il metodo',
+h1:'Il metodo prima dello strumento',
+lede:'Gli strumenti cambiano: GPT, Claude, quello che arriverà. Il metodo resta. Qui non impari un tool, impari un modo di pensare l\'AI che sopravvive alla loro obsolescenza.',
+s1:'Il principio',
+note1H:'I tool cambiano, il metodo resta',
+note1P:'L\'AI non è un semplice software: è un <strong>metodo di lavoro</strong>. Identifichi le tue attività e trovi il modo più efficiente per delegarle a una macchina. Vale in qualsiasi settore: render 3D, analisi dati, sviluppo, comunicazione. Cambia il dominio, non l\'approccio.',
+s2:'Tool o metodo?',
+toolH:'Se impari un tool',methodH:'Se impari il metodo',
+s3:'La bicicletta della mente',
+bike:'L\'AI è la bicicletta della mente: non cambia dove vuoi andare né le tue gambe. Cambia la velocità con cui ci arrivi e la distanza che copri.',
+bikeCap:'Se non sai pedalare, non ti serve. Se sai pedalare, diventa il moltiplicatore.',
+s4:'Universale, e con le prove',
+statN1:'10 → 40',statN2:'1100+',statN3:'= Stripe',
+statL1:'In Morfeus: 10 persone producono come 40',statL2:'persone formate col metodo',statL3:'lo stesso approccio, scala diversa',
+sectors:'Lo stesso metodo funziona per <b>avvocati, designer, marketer, architetti, consulenti</b>. Cambia il dominio, non l\'approccio.',
+s5:'La regola 30-40-30',
+segIntro:'Quando analizzi il tuo lavoro con l\'AI trovi una distribuzione naturale. Clicca ogni fascia.',
+s6:'L\'obiettivo',
+goalKey:'L\'AI deve liberare tempo mantenendo o alzando la qualità. Non è un sostituto: è un moltiplicatore. Il traguardo è renderti autonomo.',
+s7:'Checkpoint',
+cpH:'Parti dal problema, non dal tool',
+cpP:'Non partire da «voglio usare l\'AI». Parti da un problema concreto. La domanda giusta è «quale problema risolvo?», non «come uso l\'AI?».',
+cpQ:'Fermati un attimo: qual è il problema concreto che vuoi risolvere? Tienilo a mente per tutto il percorso.',
+cpNote:'La qualità della delega dipende dalla qualità del problema che scegli.',
+foot:'Morfeus — Il metodo prima dello strumento'
+},
+en:{
+kicker:'Lesson A3.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The method',
+h1:'Method before the tool',
+lede:'Tools change: GPT, Claude, whatever comes next. The method stays. Here you don\'t learn a tool, you learn a way of thinking about AI that outlives their obsolescence.',
+s1:'The principle',
+note1H:'Tools change, the method stays',
+note1P:'AI isn\'t just software: it\'s a <strong>way of working</strong>. You identify your activities and find the most efficient way to delegate them to a machine. True in any field: 3D rendering, data analysis, development, communication. The domain changes, the approach doesn\'t.',
+s2:'Tool or method?',
+toolH:'Learn a tool',methodH:'Learn the method',
+s3:'The bicycle of the mind',
+bike:'AI is the bicycle of the mind: it doesn\'t change where you want to go or your legs. It changes the speed and the distance you can cover.',
+bikeCap:'If you can\'t pedal, it\'s useless. If you can, it becomes the multiplier.',
+s4:'Universal, and proven',
+statN1:'10 → 40',statN2:'1100+',statN3:'= Stripe',
+statL1:'At Morfeus: 10 people produce like 40',statL2:'people trained with the method',statL3:'same approach, different scale',
+sectors:'The same method works for <b>lawyers, designers, marketers, architects, consultants</b>. The domain changes, the approach doesn\'t.',
+s5:'The 30-40-30 rule',
+segIntro:'When you analyze your work with AI you find a natural split. Click each band.',
+s6:'The goal',
+goalKey:'AI must free up time while keeping or raising quality. Not a replacement: a multiplier. The finish line is making you autonomous.',
+s7:'Checkpoint',
+cpH:'Start from the problem, not the tool',
+cpP:'Don\'t start from "I want to use AI." Start from a real problem. The right question is "what problem am I solving?", not "how do I use AI?".',
+cpQ:'Pause for a second: what is the real problem you want to solve? Keep it in mind throughout.',
+cpNote:'The quality of your delegation depends on the quality of the problem you pick.',
+foot:'Morfeus — Method before the tool'
+}};
+
+var TOOL={it:['Sei legato a quello strumento','Quando cambia o sparisce, riparti da zero','Insegui ogni aggiornamento'],en:['You\'re tied to that tool','When it changes or disappears, you start over','You chase every update']};
+var METHOD={it:['Resta la struttura mentale: Input → Obiettivo → Output','Cosa ho, cosa voglio, in che forma','Sopravvive a qualunque aggiornamento'],en:['The mental structure stays: Input → Goal → Output','What I have, what I want, in what form','It survives any update']};
+var SEG={it:[
+['30% Automatico','<b>30% automatizzabile.</b> Output consistente, errore quasi zero. L\'AI lo fa da sola, tu validi a campione.'],
+['40% Copilot','<b>40% copilot.</b> Umano + AI insieme: l\'AI propone, tu validi e guidi. È la zona dove si lavora di più.'],
+['30% Solo umano','<b>30% solo umano.</b> Creatività pura, decisioni strategiche, relazione. Qui l\'AI non ti sostituisce.']
+],en:[
+['30% Automated','<b>30% automatable.</b> Consistent output, near-zero error. AI does it alone, you spot-check.'],
+['40% Copilot','<b>40% copilot.</b> Human + AI together: AI proposes, you validate and steer. The busiest zone.'],
+['30% Human-only','<b>30% human-only.</b> Pure creativity, strategic decisions, relationships. AI doesn\'t replace you here.']
+]};
+
+var LANG='it',curSeg=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.querySelectorAll('[data-i-ph]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-ph')];if(v!=null)e.placeholder=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('toolL').innerHTML=TOOL[LANG].map(function(x){return '<li><i class="ti ti-x"></i>'+x+'</li>'}).join('');
+  document.getElementById('methodL').innerHTML=METHOD[LANG].map(function(x){return '<li><i class="ti ti-check"></i>'+x+'</li>'}).join('');
+  showSeg(curSeg);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+function showSeg(i){curSeg=i;var segs=document.querySelectorAll('.seg');segs.forEach(function(s,k){s.classList.toggle('on',k===i)});document.getElementById('segDetail').innerHTML=SEG[LANG][i][1]}
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:

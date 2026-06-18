@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan &amp; Solve per Imparare: il Modo Foglio Bianco — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#bfe0c8;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#f1c4bd;
+--amber:#BA7517;--amber-soft:#faf0db;--amber-line:#ecd3a0;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#345840;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a33;
+--amber:#EF9F27;--amber-soft:#3a2a0d;--amber-line:#6a4d1a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+.capstone{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--agent);background:var(--agent-soft);border:1px solid var(--agent-line);padding:4px 11px;border-radius:30px;margin-bottom:16px}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:640px}
+.lede em{font-style:italic;color:var(--ink)}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{border-left:3px solid var(--agent);background:var(--agent-soft);border:1px solid var(--agent-line);border-left:3px solid var(--agent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 24px;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2);line-height:1.65}.note p strong{color:var(--ink);font-weight:600}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;position:relative;padding-bottom:18px}
+.step:not(:last-child)::before{content:'';position:absolute;left:19px;top:42px;bottom:-2px;width:2px;background:var(--line-2)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex-shrink:0;z-index:1;font-family:var(--mono)}
+.step-body{padding-top:6px}
+.step-body h4{font-size:15px;font-weight:600;margin-bottom:3px}
+.step-body p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.prompt-chip{background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);border-radius:var(--r-l);padding:14px 40px 14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink);line-height:1.7;cursor:pointer;position:relative;white-space:pre-wrap;transition:.18s;margin-bottom:10px}
+.prompt-chip:hover{border-color:var(--accent)}
+.prompt-chip .plab{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+.prompt-chip .cp-ic{position:absolute;top:12px;right:13px;font-size:15px;color:var(--ink-3)}
+.prompt-chip .cp-ic.show{color:var(--good)}
+.scale{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 22px}
+.scale>p{font-size:13.5px;color:var(--ink-2);line-height:1.65}.scale>p strong{color:var(--ink);font-weight:600}
+.scale-bar{height:14px;border-radius:8px;background:linear-gradient(90deg,var(--bad),var(--amber),var(--good));position:relative;margin:14px 0 6px}
+.scale-bar .mark{position:absolute;top:-6px;height:26px;width:3px;background:var(--ink);left:80%;border-radius:2px}
+.scale .lbls{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px 20px;margin-top:12px}
+.warn i{font-size:20px;color:var(--amber);flex-shrink:0;margin-top:2px}
+.warn p{font-size:14px;color:var(--ink-2);line-height:1.6}.warn p strong{color:var(--ink);font-weight:600}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px}
+.cp .ci{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2);line-height:1.65}.cp p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.45;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge .bt h4{font-size:13px;font-weight:600;color:var(--agent);margin-bottom:3px}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.scale,.cp,.step,.key,.warn,.hook,.prompt-chip{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.7</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve</div>
+  <span class="capstone rv"><i class="ti ti-flag"></i> <span data-i="capstone">Capstone · 1 di 2</span></span>
+  <h1 class="rv" data-i="h1">Plan &amp; Solve per Imparare: il Modo Foglio Bianco</h1>
+  <p class="lede rv" data-i-html="lede"></p>
+
+  <div class="sh rv" style="margin-top:38px"><i class="ti ti-quote"></i><span class="no">00</span><h2 data-i="sHook">Da dove parto io</h2></div>
+  <div class="hook rv" data-i="hook"></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-shuffle"></i><span class="no">01</span><h2 data-i="s1">Due modalità, una differenza</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-arrows-split-2"></i></div><div><h4 data-i="whenH">Due modalità, una differenza</h4><p data-i-html="whenP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-list-check"></i><span class="no">02</span><h2 data-i="s2">Il Modo Foglio Bianco</h2></div>
+  <div class="steps rv">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h4 data-i="st1h">Dichiari l'ignoranza</h4><p data-i-html="st1p"></p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h4 data-i="st2h">Dai l'obiettivo, non i passi</h4><p data-i-html="st2p"></p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h4 data-i="st3h">Fai validare il piano DALL'AI</h4><p data-i-html="st3p"></p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h4 data-i="st4h">Esegui passo per passo</h4><p data-i-html="st4p"></p></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-player-play"></i><span class="no">03</span><h2 data-i="s3">La demo, dal vivo</h2></div>
+  <div class="prompt-chip rv" onclick="cp(event,this)"><span class="plab" data-i="p1lab">Prompt 1 — il percorso</span><span data-i="p1">Sono completamente ignorante in materia. Il mio obiettivo è [obiettivo concreto]. Prima di farmi fare qualsiasi cosa, dimmi qual è il percorso giusto, passo per passo, per ottenere il massimo risultato.</span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  <div class="prompt-chip rv" onclick="cp(event,this)"><span class="plab" data-i="p2lab">Prompt 2 — la validazione</span><span data-i="p2">Fai l'avvocato del diavolo sul piano che mi hai dato. Dove può fallire? Cosa manca? Qual è il punto più rischioso per uno come me che parte da zero?</span><span class="cp-ic"><i class="ti ti-copy"></i></span></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-clock-hour-3"></i></div><div><h4 data-i="demoH">Non gli ho chiesto di FARE</h4><p data-i-html="demoP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">04</span><h2 data-i="s4">Il limite onesto</h2></div>
+  <div class="scale rv">
+    <p data-i-html="scaleP"></p>
+    <div class="scale-bar"><span class="mark"></span></div>
+    <div class="lbls"><span data-i="scL1">0 — "non sono capace"</span><span data-i="scL2">70-90% ↑</span><span data-i="scL3">esperto</span></div>
+  </div>
+  <div class="warn rv"><i class="ti ti-alert-triangle"></i><p data-i-html="warnP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-player-pause"></i><span class="no">05</span><h2 data-i="s5">Fermati un attimo</h2></div>
+  <div class="cp rv"><div class="ci"><i class="ti ti-player-pause"></i></div><div><h4 data-i="cpH">Prendi quella cosa</h4><p data-i-html="cpP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-key"></i><span class="no">06</span><h2 data-i="s6">In una frase</h2></div>
+  <div class="key rv"><p data-i="key"></p></div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><div class="bt"><h4 data-i="bridgeH">Prossima lezione</h4><p data-i="bridgeP"></p></div></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Plan &amp; Solve per Imparare: il Modo Foglio Bianco</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.7',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve',
+capstone:'Capstone · 1 di 2',
+h1:'Plan & Solve per Imparare: il Modo Foglio Bianco',
+lede:'Fin qui hai usato Plan &amp; Solve per costruire ciò che <em>sai</em> fare. Adesso lo giri di 90 gradi: usarlo per fare e imparare ciò che NON sai fare.',
+sHook:'Da dove parto io',
+hook:'Io tre mesi fa non sapevo sviluppare un sito. Oggi tiro su funnel e landing da solo. È lo stesso metodo che hai imparato — usato per partire da un foglio bianco.',
+s1:'Due modalità, una differenza',
+whenH:'Due modalità, una differenza',
+whenP:'Plan &amp; Solve "per imparare" ha <strong>due modalità</strong>, e la differenza tra loro è una sola: <strong>chi fa da validatore</strong> del piano. Questa lezione è la prima — quando NON sai fare la cosa, il validatore è l\'AI. La prossima è l\'altra: quando la sai già, il validatore sei tu.',
+s2:'Il Modo Foglio Bianco',
+st1h:'Dichiari l\'ignoranza',
+st1p:'"Sono completamente ignorante in materia." Toglie i pre-frame e fa partire l\'AI dal percorso ottimale, non da quello adattato a te.',
+st2h:'Dai l\'obiettivo, non i passi',
+st2p:'"Voglio ottenere [X]. Qual è il percorso giusto per ottenere il massimo risultato?"',
+st3h:'Fai validare il piano DALL\'AI',
+st3p:'Tu non hai gli strumenti per giudicarlo: lo fai giudicare a lei. Chat separata, oppure "fai l\'avvocato del diavolo sul piano — dove può fallire?".',
+st4h:'Esegui passo per passo',
+st4p:'Chiedendo a ogni step. Spendi più tempo di un esperto — ma arrivi al risultato.',
+s3:'La demo, dal vivo',
+p1lab:'Prompt 1 — il percorso',
+p1:'Sono completamente ignorante in materia. Il mio obiettivo è [obiettivo concreto]. Prima di farmi fare qualsiasi cosa, dimmi qual è il percorso giusto, passo per passo, per ottenere il massimo risultato.',
+p2lab:'Prompt 2 — la validazione',
+p2:'Fai l\'avvocato del diavolo sul piano che mi hai dato. Dove può fallire? Cosa manca? Qual è il punto più rischioso per uno come me che parte da zero?',
+demoH:'Non gli ho chiesto di FARE',
+demoP:'Non gli ho chiesto di FARE. Gli ho chiesto il PERCORSO, e poi l\'ho fatto validare. In mezz\'ora sono operativo su una cosa che stamattina non sapevo fare.',
+s4:'Il limite onesto',
+scaleP:'Ti porta al 70-90% di un esperto, non al 100%. L\'esperto che usa <strong>anche</strong> l\'AI ti batte. Ma passare da "non sono capace" a 80 cambia cosa puoi fare, a 360 gradi.',
+scL1:'0 — "non sono capace"',scL2:'70-90% ↑',scL3:'esperto',
+warnP:'<strong>Il punto debole:</strong> qui il giudice del risultato è l\'AI, non tu. Alza l\'asticella della verifica (Verification Loop), e dove puoi fatti dare anche COME verificare da solo.',
+s5:'Fermati un attimo',
+cpH:'Prendi quella cosa',
+cpP:'<strong>Prendi quella cosa</strong> che nel Modulo 0 ti avevo chiesto di tenere in mente — quella che hai sempre rimandato perché "non sei capace". Aprila adesso in Modo Foglio Bianco. Non finire questa lezione senza averlo fatto almeno una volta.',
+s6:'In una frase',
+key:'Plan & Solve per eseguire ti fa risparmiare tempo. Plan & Solve per imparare ti toglie i limiti.',
+bridgeH:'Prossima lezione',
+bridgeP:'Questo è quando NON sai. Ma la mossa più sottile è l\'opposto: usare lo stesso metodo su una cosa che SAI già fare benissimo. Prossima: il Modo Confronto.',
+foot:'Morfeus — Plan & Solve per Imparare: il Modo Foglio Bianco'
+},
+en:{
+kicker:'Lesson 8.7',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve',
+capstone:'Capstone · 1 of 2',
+h1:'Plan & Solve to Learn: the Blank Page Mode',
+lede:'So far you\'ve used Plan &amp; Solve to build what you <em>know</em> how to do. Now you turn it 90 degrees: using it to do and learn what you do NOT know how to do.',
+sHook:'Where I started',
+hook:'Three months ago I didn\'t know how to build a website. Today I put up funnels and landing pages on my own. It\'s the same method you\'ve learned — used to start from a blank page.',
+s1:'Two modes, one difference',
+whenH:'Two modes, one difference',
+whenP:'Plan &amp; Solve "to learn" has <strong>two modes</strong>, and the difference between them is just one thing: <strong>who acts as the validator</strong> of the plan. This lesson is the first — when you do NOT know how to do the thing, the validator is the AI. The next one is the other: when you already know how, the validator is you.',
+s2:'The Blank Page Mode',
+st1h:'You declare your ignorance',
+st1p:'"I\'m completely ignorant on the subject." It removes the pre-frames and has the AI start from the optimal path, not from one adapted to you.',
+st2h:'You give the goal, not the steps',
+st2p:'"I want to achieve [X]. What\'s the right path to get the best possible result?"',
+st3h:'You have the AI validate the plan',
+st3p:'You don\'t have the tools to judge it: you have it judge it instead. A separate chat, or "play devil\'s advocate on the plan — where can it fail?".',
+st4h:'You execute step by step',
+st4p:'Asking at every step. You spend more time than an expert — but you reach the result.',
+s3:'The demo, live',
+p1lab:'Prompt 1 — the path',
+p1:'I\'m completely ignorant on the subject. My goal is [concrete goal]. Before having me do anything, tell me what the right path is, step by step, to get the best possible result.',
+p2lab:'Prompt 2 — the validation',
+p2:'Play devil\'s advocate on the plan you gave me. Where can it fail? What\'s missing? What\'s the riskiest point for someone like me starting from zero?',
+demoH:'I didn\'t ask it to DO',
+demoP:'I didn\'t ask it to DO. I asked it for the PATH, and then I had it validated. In half an hour I\'m operational on something I didn\'t know how to do this morning.',
+s4:'The honest limit',
+scaleP:'It takes you to 70-90% of an expert, not 100%. The expert who <strong>also</strong> uses AI beats you. But going from "I\'m not able to" to 80 changes what you can do, across the board.',
+scL1:'0 — "I\'m not able to"',scL2:'70-90% ↑',scL3:'expert',
+warnP:'<strong>The weak point:</strong> here the judge of the result is the AI, not you. Raise the bar on verification (Verification Loop), and where you can, also have it give you HOW to verify on your own.',
+s5:'Pause for a moment',
+cpH:'Take that thing',
+cpP:'<strong>Take that thing</strong> I asked you to keep in mind back in Module 0 — the one you\'ve always put off because "you\'re not able to". Open it now in Blank Page Mode. Don\'t finish this lesson without having done it at least once.',
+s6:'In one sentence',
+key:'Plan & Solve to execute saves you time. Plan & Solve to learn removes your limits.',
+bridgeH:'Next lesson',
+bridgeP:'This is when you DON\'T know. But the subtler move is the opposite: using the same method on something you ALREADY know how to do perfectly. Next: the Comparison Mode.',
+foot:'Morfeus — Plan & Solve to Learn: the Blank Page Mode'
+}};
+
+var LANG='it';
+function cp(e,el){
+  e.stopPropagation();
+  var span=el.querySelector('span[data-i]:not(.plab)');
+  var t=span?span.textContent.trim():el.textContent.trim();
+  navigator.clipboard.writeText(t).then(function(){
+    var b=el.querySelector('.cp-ic');
+    b.classList.add('show');b.innerHTML='<i class="ti ti-check"></i>';
+    setTimeout(function(){b.classList.remove('show');b.innerHTML='<i class="ti ti-copy"></i>';},1400);
+  });
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

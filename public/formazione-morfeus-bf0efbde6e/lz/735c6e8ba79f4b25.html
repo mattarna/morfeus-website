@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input vocale — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* speed bars */
+.speed{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.speed h3{font-size:14px;font-weight:600;margin-bottom:18px;text-align:center}
+.srow{display:flex;align-items:center;gap:12px;margin-bottom:14px}.srow:last-child{margin-bottom:0}
+.slabel{width:96px;font-size:13px;font-weight:600;color:var(--ink-2);text-align:right;flex-shrink:0}
+.sbarw{flex:1;height:30px;background:var(--bg-2);border-radius:var(--r);overflow:hidden}
+.sbar{height:100%;border-radius:var(--r);display:flex;align-items:center;justify-content:flex-end;padding-right:11px;font-size:12px;font-weight:700;color:#fff;width:0;transition:width 1.3s ease}
+.swpm{font-size:12px;color:var(--ink-3);width:64px;text-align:left;flex-shrink:0;font-family:var(--mono)}
+/* two modes compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.am{background:var(--agent-soft);border-color:var(--agent-line)}
+.cmpc.tl{background:var(--teal-soft);border-color:var(--teal-line)}
+.cmpc h4{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.cmpc.am h4 i{color:var(--agent)}.cmpc.tl h4 i{color:var(--teal)}
+.cmpc .sub{font-size:12.5px;color:var(--ink-3);margin-bottom:12px}
+.cmpc ul{list-style:none}.cmpc li{font-size:13px;color:var(--ink-2);padding:5px 0;display:flex;gap:8px;line-height:1.45}
+.cmpc.am li i{color:var(--agent);flex-shrink:0;margin-top:2px}.cmpc.tl li i{color:var(--teal);flex-shrink:0;margin-top:2px}
+/* mode cards (steps) */
+.mode{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;margin-bottom:16px}
+.mode .mh{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.mode .mi{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.mode .mi.tl{background:var(--teal-soft);color:var(--teal)}.mode .mi.bl{background:var(--accent-soft);color:var(--accent)}
+.mode h3{font-size:17px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mode .mtag{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 9px;border-radius:20px;background:var(--teal-soft);color:var(--teal)}
+.mode .msub{font-size:13px;color:var(--ink-3);margin-top:2px}
+.step{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.step:last-of-type{border-bottom:none}
+.step .sn{width:30px;height:30px;border-radius:8px;background:var(--teal-soft);color:var(--teal);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;flex-shrink:0}
+.step .st strong{font-size:14px;font-weight:600;display:block;margin-bottom:1px}.step .st span{font-size:13px;color:var(--ink-2)}
+.mintro{font-size:14px;color:var(--ink-2);margin-bottom:16px}
+.tip{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r);padding:16px 18px;margin-top:14px}
+.tip .tt{font-size:12.5px;font-weight:700;color:var(--teal);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.tip p{font-size:13px;color:var(--ink-2)}.tip strong{color:var(--ink)}
+.warn{background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r);padding:14px 18px;margin-top:16px}
+.warn .wt{font-size:12px;font-weight:700;color:var(--agent);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.warn p{font-size:13px;color:var(--ink-2)}
+/* OS grid */
+.osg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px}
+.osc{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:18px 14px;text-align:center}
+.osc i.osi{font-size:26px;display:block;margin-bottom:9px}
+.osc .osn{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.osc .osk{display:inline-block;background:var(--card);border:1px solid var(--line-2);padding:6px 13px;border-radius:var(--r);font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)}
+.osc .osnote{font-size:11px;color:var(--ink-3);margin-top:8px;line-height:1.4}
+/* feat rows */
+.frow{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}.frow:last-child{border-bottom:none}
+.frow .fi{width:38px;height:38px;border-radius:10px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.frow .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.frow .ft span{font-size:13px;color:var(--ink-2)}
+/* when grid */
+.wheng{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.whenb{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.whenb.go{background:var(--teal-soft);border-color:var(--teal-line)}.whenb.no{background:var(--bad-soft);border-color:var(--bad)}
+.whent{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.whenb.go .whent{color:var(--teal)}.whenb.no .whent{color:var(--bad)}
+.wi{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--ink-2);line-height:1.45}.wi i{flex-shrink:0;margin-top:2px}
+.whenb.go .wi i{color:var(--teal)}.whenb.no .wi i{color:var(--bad)}
+/* comparison table */
+.cwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh)}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:11px 12px;font-family:var(--mono);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);border-bottom:2px solid var(--line-2);white-space:nowrap;background:var(--bg-2)}
+.comp td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+.comp .yes{color:var(--teal)}.comp .no{color:var(--ink-3)}.comp .pt{color:var(--agent)}
+.cnote{font-size:12px;color:var(--ink-3);text-align:center;margin-top:8px}.cnote i{color:var(--agent)}
+/* scenarios */
+.sc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.sc .sci{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:var(--agent-soft);color:var(--agent)}
+.sc .sci.bad{background:var(--bad-soft);color:var(--bad)}
+.sc .sct{flex:1}.sc .sct strong{font-size:14px;font-weight:600;display:block;margin-bottom:1px}.sc .sct span{font-size:13px;color:var(--ink-2)}
+.sc .scr{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--agent);white-space:nowrap;display:flex;align-items:center;gap:5px}
+.sc .scr.gray{color:var(--ink-3)}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;text-align:center}
+.cp i.cpi{font-size:34px;color:var(--accent);display:block;margin-bottom:10px}
+.cp h4{font-size:16px;font-weight:700;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:500px;margin:0 auto}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.wheng{grid-template-columns:1fr}.osg{grid-template-columns:1fr}.slabel{width:74px;font-size:12px}.sc{flex-wrap:wrap}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.sbar{transition:none!important}.note,.cmpc,.card3,.cp,.mode,.speed,.whenb,.cwrap,.sc,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 2.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">Input Vocale: Parlare è 3x Più Veloce</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:32px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">Pensieri completi</h4><p data-i="hookP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-bolt"></i><span class="no">01</span><h2 data-i="s1">Velocità a confronto</h2></div>
+  <div class="speed rv">
+    <h3 data-i="speedH"></h3>
+    <div class="srow"><div class="slabel" data-i="spType"></div><div class="sbarw"><div class="sbar" data-w="27" style="background:var(--ink-3)">40</div></div><div class="swpm">~40 wpm</div></div>
+    <div class="srow"><div class="slabel" data-i="spDict"></div><div class="sbarw"><div class="sbar" data-w="80" style="background:var(--agent)">120</div></div><div class="swpm">~120 wpm</div></div>
+    <div class="srow"><div class="slabel">Voice Mode</div><div class="sbarw"><div class="sbar" data-w="100" style="background:var(--teal)">150</div></div><div class="swpm">~150 wpm</div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">02</span><h2 data-i="s2">Due modalità vocali</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc am">
+      <h4><i class="ti ti-keyboard"></i> <span data-i="m1H">Dettatura</span></h4>
+      <div class="sub" data-i="m1Sub"></div>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="m1a"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m1b"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m1c"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m1d"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m1e"></span></li>
+      </ul>
+    </div>
+    <div class="cmpc tl">
+      <h4><i class="ti ti-messages"></i> Voice Mode</h4>
+      <div class="sub" data-i="m2Sub"></div>
+      <ul>
+        <li><i class="ti ti-check"></i><span data-i="m2a"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m2b"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m2c"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m2d"></span></li>
+        <li><i class="ti ti-check"></i><span data-i="m2e"></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-device-mobile"></i><span class="no">03</span><h2 data-i="s3">Dettatura: come attivarla</h2></div>
+  <div class="mode rv">
+    <div class="mh">
+      <div class="mi tl"><i class="ti ti-device-mobile"></i></div>
+      <div><h3><span data-i="mob1H">Mobile (App Claude)</span> <span class="mtag" data-i="mobTag">Più veloce</span></h3><div class="msub" data-i="mob1Sub">iOS e Android</div></div>
+    </div>
+    <div class="step"><div class="sn">1</div><div class="st"><strong data-i="mob1aT"></strong><span data-i="mob1aS"></span></div></div>
+    <div class="step"><div class="sn">2</div><div class="st"><strong data-i="mob1bT"></strong><span data-i="mob1bS"></span></div></div>
+    <div class="step"><div class="sn">3</div><div class="st"><strong data-i="mob1cT"></strong><span data-i="mob1cS"></span></div></div>
+    <div class="tip"><div class="tt"><i class="ti ti-bulb"></i> <span data-i="proTipT">Pro tip</span></div><p data-i-html="proTipP"></p></div>
+  </div>
+
+  <div class="mode rv">
+    <div class="mh">
+      <div class="mi bl"><i class="ti ti-device-laptop"></i></div>
+      <div><h3 data-i="dsk1H">Desktop e Web</h3><div class="msub" data-i="dsk1Sub"></div></div>
+    </div>
+    <p class="mintro" data-i="dskIntro"></p>
+    <div class="osg">
+      <div class="osc"><i class="ti ti-brand-apple osi" style="color:var(--ink)"></i><div class="osn">macOS</div><div class="osk">Fn Fn</div><div class="osnote" data-i="osMac"></div></div>
+      <div class="osc"><i class="ti ti-brand-windows osi" style="color:var(--accent)"></i><div class="osn">Windows</div><div class="osk">Win + H</div><div class="osnote" data-i="osWin"></div></div>
+      <div class="osc"><i class="ti ti-brand-chrome osi" style="color:var(--agent)"></i><div class="osn">Chrome</div><div class="osk"><i class="ti ti-microphone" style="font-size:15px"></i></div><div class="osnote" data-i="osChr"></div></div>
+    </div>
+    <div class="warn"><div class="wt"><i class="ti ti-info-circle"></i> <span data-i="dskNoteT">Nota</span></div><p data-i="dskNoteP"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">04</span><h2 data-i="s4">Perché la voce produce prompt migliori</h2></div>
+  <div class="key rv"><p data-i="keyWhy"></p></div>
+  <div class="rv" style="margin-top:20px">
+    <div class="frow"><div class="fi"><i class="ti ti-writing"></i></div><div class="ft"><strong data-i="why1T"></strong><span data-i="why1S"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-microphone"></i></div><div class="ft"><strong data-i="why2T"></strong><span data-i="why2S"></span></div></div>
+    <div class="frow"><div class="fi"><i class="ti ti-clock-bolt"></i></div><div class="ft"><strong data-i="why3T"></strong><span data-i="why3S"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">05</span><h2 data-i="s5">Quando usare la voce</h2></div>
+  <div class="wheng rv">
+    <div class="whenb go">
+      <div class="whent"><i class="ti ti-circle-check"></i> <span data-i="useT">Usa la voce quando</span></div>
+      <div class="wi"><i class="ti ti-bulb"></i><span data-i="use1"></span></div>
+      <div class="wi"><i class="ti ti-file-text"></i><span data-i="use2"></span></div>
+      <div class="wi"><i class="ti ti-walk"></i><span data-i="use3"></span></div>
+      <div class="wi"><i class="ti ti-refresh"></i><span data-i="use4"></span></div>
+      <div class="wi"><i class="ti ti-message-2"></i><span data-i="use5"></span></div>
+    </div>
+    <div class="whenb no">
+      <div class="whent"><i class="ti ti-circle-x"></i> <span data-i="notT">Non conviene la voce quando</span></div>
+      <div class="wi"><i class="ti ti-code"></i><span data-i="not1"></span></div>
+      <div class="wi"><i class="ti ti-numbers"></i><span data-i="not2"></span></div>
+      <div class="wi"><i class="ti ti-volume-off"></i><span data-i="not3"></span></div>
+      <div class="wi"><i class="ti ti-copy"></i><span data-i="not4"></span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">06</span><h2 data-i="s6">Confronto per piattaforma</h2></div>
+  <div class="cwrap rv">
+  <table class="comp">
+    <thead><tr>
+      <th data-i="thFn">Funzionalità</th>
+      <th style="text-align:center"><i class="ti ti-device-mobile"></i> Mobile</th>
+      <th style="text-align:center"><i class="ti ti-world"></i> Web</th>
+      <th style="text-align:center"><i class="ti ti-app-window"></i> <span data-i="thDsk">Desktop App</span></th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="fn" data-i="r1"></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="pt"><i class="ti ti-minus"></i></td><td style="text-align:center" class="pt"><i class="ti ti-minus"></i></td></tr>
+      <tr><td class="fn" data-i="r2"></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="no"><i class="ti ti-x"></i></td><td style="text-align:center" class="no"><i class="ti ti-x"></i></td></tr>
+      <tr><td class="fn" data-i="r3"></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td></tr>
+      <tr><td class="fn" data-i="r4"></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td></tr>
+      <tr><td class="fn" data-i="r5"></td><td style="text-align:center;font-size:12px" class="yes" data-i="r5m"></td><td style="text-align:center;font-size:12px" class="pt" data-i="r5w"></td><td style="text-align:center;font-size:12px" class="pt" data-i="r5d"></td></tr>
+      <tr><td class="fn" data-i="r6"></td><td style="text-align:center" class="yes"><i class="ti ti-check"></i></td><td style="text-align:center" class="no"><i class="ti ti-x"></i></td><td style="text-align:center" class="no"><i class="ti ti-x"></i></td></tr>
+      <tr><td class="fn" data-i="r7"></td><td style="text-align:center;font-size:12px" data-i="r7m"></td><td style="text-align:center;font-size:12px" data-i="r7w"></td><td style="text-align:center;font-size:12px" data-i="r7d"></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="cnote rv"><i class="ti ti-minus"></i> <span data-i="cnote"></span></p>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">07</span><h2 data-i="s7">Scenari pratici</h2></div>
+  <div class="rv">
+    <div class="sc"><div class="sci"><i class="ti ti-bulb"></i></div><div class="sct"><strong data-i="sc1T"></strong><span data-i="sc1S"></span></div><div class="scr"><i class="ti ti-microphone"></i> <span data-i="scVoice">Voce</span></div></div>
+    <div class="sc"><div class="sci"><i class="ti ti-car"></i></div><div class="sct"><strong data-i="sc2T"></strong><span data-i="sc2S"></span></div><div class="scr"><i class="ti ti-headphones"></i> Voice Mode</div></div>
+    <div class="sc"><div class="sci"><i class="ti ti-mail"></i></div><div class="sct"><strong data-i="sc3T"></strong><span data-i="sc3S"></span></div><div class="scr"><i class="ti ti-microphone"></i> <span data-i="scDict">Dettatura</span></div></div>
+    <div class="sc"><div class="sci"><i class="ti ti-refresh"></i></div><div class="sct"><strong data-i="sc4T"></strong><span data-i="sc4S"></span></div><div class="scr"><i class="ti ti-microphone"></i> <span data-i="scVoice2">Voce</span></div></div>
+    <div class="sc"><div class="sci bad"><i class="ti ti-code"></i></div><div class="sct"><strong data-i="sc5T"></strong><span data-i="sc5S"></span></div><div class="scr gray"><i class="ti ti-keyboard"></i> <span data-i="scType">Digita</span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-microphone cpi"></i>
+    <h4 data-i="cpH"></h4>
+    <p data-i-html="cpP"></p>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Input Vocale</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 2.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'Input Vocale: Parlare è 3x Più Veloce',
+lede:'Digitare è il modo più lento per comunicare con Claude. La voce produce prompt migliori, più naturali, più completi. Nessuna configurazione. Funziona subito.',
+hookH:'Pensieri completi',
+hookP:'«Quando parli, non editi te stesso mentre pensi. Esci il pensiero completo. Claude lavora meglio con pensieri completi.»',
+s1:'Velocità a confronto',
+speedH:'Parole al minuto per metodo di input',
+spType:'Digitare',spDict:'Dettatura',
+s2:'Due modalità vocali',
+m1H:'Dettatura',
+m1Sub:'Tu parli, Claude risponde in testo',
+m1a:'Disponibile su mobile, desktop e web',
+m1b:'Usa il microfono di sistema o dell\'app',
+m1c:'Puoi editare il testo prima di inviare',
+m1d:'Ideale per prompt lunghi e complessi',
+m1e:'Risposta scritta consultabile e copiabile',
+m2Sub:'Dialogo bidirezionale: parli tu, risponde Claude a voce',
+m2a:'Attualmente disponibile su mobile (iOS/Android)',
+m2b:'Conversazione naturale hands-free',
+m2c:'Perfetto in movimento: guida, cucina, passeggiate',
+m2d:'Brainstorming a voce come con un collega',
+m2e:'Risposte immediate senza leggere',
+s3:'Dettatura: come attivarla',
+mob1H:'Mobile (App Claude)',mobTag:'Più veloce',mob1Sub:'iOS e Android',
+mob1aT:'Apri l\'app Claude',mob1aS:'L\'icona del microfono è nella barra di input, in basso.',
+mob1bT:'Tocca il microfono e parla',mob1bS:'Aspetta il segnale visivo, poi inizia a parlare. Funziona in italiano senza configurazione.',
+mob1cT:'Claude converte e risponde',mob1cS:'Il testo appare nel campo di input. Puoi editarlo prima di inviare o inviare direttamente.',
+proTipT:'Pro tip',
+proTipP:'Sul mobile puoi anche attivare la <strong>Voice Mode completa</strong>: un dialogo bidirezionale dove anche Claude risponde a voce. Cerca l\'icona delle cuffie/onde sonore nella barra di input.',
+dsk1H:'Desktop e Web',dsk1Sub:'Dettatura di sistema su qualsiasi browser o app',
+dskIntro:'Sul desktop non c\'è una voice mode bidirezionale integrata. Ma puoi usare la dettatura di sistema del tuo OS: parli, il testo appare nel campo di input, poi premi invio.',
+osMac:'Premi due volte il tasto Fn',
+osWin:'Windows + H apre il pannello dettatura',
+osChr:'Icona microfono nel campo di input (se disponibile)',
+dskNoteT:'Nota',
+dskNoteP:'La dettatura di sistema funziona con qualsiasi campo di testo, non solo Claude. Per i workflow di lavoro intensi con la voce, il mobile resta il setup migliore.',
+s4:'Perché la voce produce prompt migliori',
+keyWhy:'«Parlare produce prompt migliori. Non perché la voce sia magica, ma perché quando parli non editi te stesso mentre pensi. Esci il pensiero completo. Claude lavora meglio con pensieri completi.»',
+why1T:'Digitando ti auto-censuri',why1S:'Quando scrivi, il tuo cervello fa editing in tempo reale. Semplifichi, tagli, riduci. Il prompt risultante è più breve ma meno ricco di contesto.',
+why2T:'Parlando pensi a flusso libero',why2S:'Il pensiero esce nella sua completezza. Aggiungi sfumature, contesto, dettagli che scrivendo avresti saltato. Claude ha più materiale su cui lavorare.',
+why3T:'3x più veloce, 2x più contesto',why3S:'In 30 secondi a voce dici quello che in 2 minuti non avresti finito di scrivere. Più input per Claude significa output più preciso e personalizzato.',
+s5:'Quando usare la voce',
+useT:'Usa la voce quando',
+use1:'Stai facendo brainstorming e vuoi esprimere idee velocemente',
+use2:'Il prompt è lungo e articolato: descrivere una situazione complessa',
+use3:'Sei in movimento: domande rapide mentre fai altro',
+use4:'Stai iterando: spiegare a voce cosa non ti convince nell\'output',
+use5:'Vuoi pensare ad alta voce con Claude come partner di ragionamento',
+notT:'Non conviene la voce quando',
+not1:'Il prompt contiene codice, formule, URL o dati strutturati',
+not2:'Servono numeri precisi, date, nomi specifici da non sbagliare',
+not3:'Sei in un luogo rumoroso o non puoi parlare',
+not4:'Devi fare copia-incolla di testo da un\'altra fonte nel prompt',
+s6:'Confronto per piattaforma',
+thFn:'Funzionalità',thDsk:'Desktop App',
+r1:'Dettatura in-app',r2:'Voice Mode bidirezionale',r3:'Dettatura di sistema',r4:'Editing prima dell\'invio',
+r5:'Qualità riconoscimento IT',r5m:'Ottima',r5w:'Dipende da OS',r5d:'Dipende da OS',
+r6:'Hands-free completo',
+r7:'Ideale per',r7m:'Brainstorm, iterazioni, in movimento',r7w:'Prompt lunghi al volo',r7d:'Prompt lunghi al volo',
+cnote:'= Solo tramite dettatura di sistema (Fn Fn / Win+H)',
+s7:'Scenari pratici',
+scVoice:'Voce',scVoice2:'Voce',scDict:'Dettatura',scType:'Digita',
+sc1T:'Ho un\'idea confusa per un progetto',sc1S:'Parla a flusso libero descrivendo tutto quello che hai in testa. Claude organizza il caos.',
+sc2T:'Sto guidando e mi viene un\'idea',sc2S:'Voice Mode sul mobile. Dialogo bidirezionale, mani libere, zero rischi.',
+sc3T:'Devo descrivere una situazione complessa per un\'email',sc3S:'Dettatura: parla per 60 secondi, ottieni un prompt ricchissimo. Poi edita prima di inviare.',
+sc4T:'L\'output di Claude non mi convince, devo spiegare perché',sc4S:'Parla: "Non è questo che intendevo, il tono è troppo formale e manca il punto X" è più rapido che scrivere.',
+sc5T:'Devo incollare del codice e chiedere un fix',sc5S:'Scrivi. Il codice va copiato e incollato, non dettato. La voce non è lo strumento giusto qui.',
+s8:'Checkpoint',
+cpH:'Fallo adesso.',
+cpP:'Se hai il telefono vicino, apri Claude, tocca il microfono e detta una domanda qualsiasi. L\'obiettivo è fare la prima volta <strong>adesso</strong>, non domani.<br><br>Se non hai il telefono, prova la dettatura di sistema sul desktop con la prossima cosa che scrivi a Claude.',
+bridge:'La voce è il modo più veloce di parlare a Claude. <b>Prossimo:</b> come strutturare le istruzioni perché Claude faccia esattamente quello che vuoi.',
+foot:'Morfeus — Input Vocale'
+},
+en:{
+kicker:'Lesson 2.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'Voice Input: Speaking Is 3x Faster',
+lede:'Typing is the slowest way to communicate with Claude. Voice produces better prompts — more natural, more complete. No setup. It just works.',
+hookH:'Complete thoughts',
+hookP:'"When you speak, you don\'t edit yourself while you think. The complete thought comes out. Claude works better with complete thoughts."',
+s1:'Speed compared',
+speedH:'Words per minute by input method',
+spType:'Typing',spDict:'Dictation',
+s2:'Two voice modes',
+m1H:'Dictation',
+m1Sub:'You speak, Claude replies in text',
+m1a:'Available on mobile, desktop and web',
+m1b:'Uses the system or app microphone',
+m1c:'You can edit the text before sending',
+m1d:'Ideal for long, complex prompts',
+m1e:'Written answer you can review and copy',
+m2Sub:'Two-way dialogue: you speak, Claude replies aloud',
+m2a:'Currently available on mobile (iOS/Android)',
+m2b:'Natural hands-free conversation',
+m2c:'Perfect on the move: driving, cooking, walking',
+m2d:'Brainstorming aloud like with a colleague',
+m2e:'Instant answers without reading',
+s3:'Dictation: how to turn it on',
+mob1H:'Mobile (Claude app)',mobTag:'Fastest',mob1Sub:'iOS and Android',
+mob1aT:'Open the Claude app',mob1aS:'The microphone icon is in the input bar, at the bottom.',
+mob1bT:'Tap the microphone and speak',mob1bS:'Wait for the visual cue, then start speaking. It works in your language with no setup.',
+mob1cT:'Claude transcribes and replies',mob1cS:'The text appears in the input field. You can edit it before sending or send directly.',
+proTipT:'Pro tip',
+proTipP:'On mobile you can also turn on the <strong>full Voice Mode</strong>: a two-way dialogue where Claude replies aloud too. Look for the headphones/sound-wave icon in the input bar.',
+dsk1H:'Desktop and Web',dsk1Sub:'System dictation in any browser or app',
+dskIntro:'On desktop there is no built-in two-way voice mode. But you can use your OS\'s system dictation: you speak, the text appears in the input field, then you press enter.',
+osMac:'Press the Fn key twice',
+osWin:'Windows + H opens the dictation panel',
+osChr:'Microphone icon in the input field (if available)',
+dskNoteT:'Note',
+dskNoteP:'System dictation works with any text field, not just Claude. For voice-heavy work workflows, mobile remains the best setup.',
+s4:'Why voice produces better prompts',
+keyWhy:'"Speaking produces better prompts. Not because voice is magic, but because when you speak you don\'t edit yourself while you think. The complete thought comes out. Claude works better with complete thoughts."',
+why1T:'Typing, you self-censor',why1S:'When you write, your brain edits in real time. You simplify, cut, trim. The resulting prompt is shorter but poorer in context.',
+why2T:'Speaking, you think free-flow',why2S:'The thought comes out in full. You add nuance, context, details you would have skipped while writing. Claude has more material to work with.',
+why3T:'3x faster, 2x more context',why3S:'In 30 seconds aloud you say what you wouldn\'t have finished writing in 2 minutes. More input for Claude means more precise, more personalized output.',
+s5:'When to use voice',
+useT:'Use voice when',
+use1:'You\'re brainstorming and want to express ideas fast',
+use2:'The prompt is long and articulated: describing a complex situation',
+use3:'You\'re on the move: quick questions while doing something else',
+use4:'You\'re iterating: explaining aloud what doesn\'t convince you in the output',
+use5:'You want to think out loud with Claude as a reasoning partner',
+notT:'Voice isn\'t worth it when',
+not1:'The prompt contains code, formulas, URLs or structured data',
+not2:'You need precise numbers, dates, specific names you can\'t get wrong',
+not3:'You\'re in a noisy place or you can\'t speak',
+not4:'You need to copy-paste text from another source into the prompt',
+s6:'Comparison by platform',
+thFn:'Feature',thDsk:'Desktop App',
+r1:'In-app dictation',r2:'Two-way Voice Mode',r3:'System dictation',r4:'Editing before sending',
+r5:'Recognition quality (your language)',r5m:'Excellent',r5w:'Depends on OS',r5d:'Depends on OS',
+r6:'Full hands-free',
+r7:'Ideal for',r7m:'Brainstorm, iterations, on the move',r7w:'Long prompts on the fly',r7d:'Long prompts on the fly',
+cnote:'= Only via system dictation (Fn Fn / Win+H)',
+s7:'Practical scenarios',
+scVoice:'Voice',scVoice2:'Voice',scDict:'Dictation',scType:'Type',
+sc1T:'I have a fuzzy idea for a project',sc1S:'Speak free-flow describing everything in your head. Claude organizes the chaos.',
+sc2T:'I\'m driving and an idea hits me',sc2S:'Voice Mode on mobile. Two-way dialogue, hands free, zero risk.',
+sc3T:'I need to describe a complex situation for an email',sc3S:'Dictation: speak for 60 seconds, get a very rich prompt. Then edit before sending.',
+sc4T:'Claude\'s output doesn\'t convince me, I need to explain why',sc4S:'Speak: "That\'s not what I meant, the tone is too formal and point X is missing" is faster than writing.',
+sc5T:'I need to paste code and ask for a fix',sc5S:'Type. Code has to be copied and pasted, not dictated. Voice isn\'t the right tool here.',
+s8:'Checkpoint',
+cpH:'Do it now.',
+cpP:'If your phone is nearby, open Claude, tap the microphone and dictate any question. The goal is to do it for the first time <strong>now</strong>, not tomorrow.<br><br>If you don\'t have your phone, try system dictation on desktop with the next thing you write to Claude.',
+bridge:'Voice is the fastest way to talk to Claude. <b>Next:</b> how to structure instructions so Claude does exactly what you want.',
+foot:'Morfeus — Voice Input'
+}};
+
+var LANG='it';
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');if(e.target.querySelector){e.target.querySelectorAll('.sbar').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%'})}ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

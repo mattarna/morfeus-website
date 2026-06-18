@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cos'è l'AI — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.gchip{display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 8px;cursor:pointer;transition:.18s}
+.gchip:hover{border-color:var(--line-2);transform:translateY(-1px)}.gchip.on{border-color:var(--accent);background:var(--accent-soft)}
+.gchip i{font-size:24px;color:var(--ink-3)}.gchip.on i{color:var(--accent)}
+.gchip span{font-size:12px;font-weight:600;text-align:center;line-height:1.25}
+.gdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px 20px}
+.gdetail h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center;color:var(--accent)}
+.gdetail p{font-size:14.5px;color:var(--ink-2)}.gdetail p strong{color:var(--ink)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc h4{font-size:14.5px;font-weight:600;margin-bottom:6px}.cmpc p{font-size:13.5px;color:var(--ink-2)}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.gchip,.gdetail,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Cultura dell'AI</div>
+  <h1 class="rv" data-i="h1">Cos'è l'AI (e non è roba di ieri)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-help-hexagon"></i><span class="no">01</span><h2 data-i="s1">La definizione concreta</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-chart-histogram"></i></div><div><h4 data-i="note1H">Statistica a massimo livello</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-businessplan"></i><span class="no">02</span><h2 data-i="s2">Perché Netflix e Meta fanno soldi</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="biz"></p>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="cluTag1">Il singolo</span><h4 data-i="clu1H"></h4><p data-i="clu1P"></p></div>
+    <div class="cmpc good"><span class="cmptag" data-i="cluTag2">Il pool</span><h4 data-i="clu2H"></h4><p data-i="clu2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-apps"></i><span class="no">03</span><h2 data-i="s3">L'AI è già nella tua giornata</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="galIntro"></p>
+  <div class="gallery rv" id="gallery"></div>
+  <div class="gdetail rv" id="gdetail"></div>
+
+  <div class="sh rv"><i class="ti ti-history"></i><span class="no">04</span><h2 data-i="s4">Non da ieri, da sempre</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i="q2"></p><div class="cap" data-i="q2cap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-shuffle"></i><span class="no">05</span><h2 data-i="s5">Non è una moda di settore</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-cube"></i></div><h4 data-i="x1H"></h4><p data-i="x1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-building-factory-2"></i></div><h4 data-i="x2H"></h4><p data-i="x2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-arrow-bar-to-up"></i></div><h4 data-i="x3H"></h4><p data-i="x3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">06</span><h2 data-i="s6">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-eye"></i> <span data-i="cpH"></span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Cos'è l'AI</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Cultura dell\'AI',
+h1:'Cos\'è l\'AI (e non è roba di ieri)',
+lede:'Prima di parlare alla macchina bisogna capire cos\'è. Non è magia, non è nata con ChatGPT: è statistica portata al massimo livello, ed è dentro la tua giornata da anni senza che tu te ne accorga.',
+s1:'La definizione concreta',
+note1H:'Statistica a massimo livello',
+note1P:'Tolta tutta la mitologia, l\'AI è <strong>statistica a massimo livello</strong>: un sistema che, su una quantità enorme di esempi, calcola qual è il risultato più probabile. Non è uno strumento rigido che risponde a impulsi fissi, ed è molto più di una calcolatrice. È un motore di probabilità — e capire questo cambia tutto su come lo usi.',
+q1:'«Statistica. Vedremo perché è così importante, questa statistica.»',
+s2:'Perché Netflix e Meta fanno soldi',
+biz:'L\'unico motivo per cui Netflix, Facebook, Meta, TikTok, Amazon fanno soldi è perché dietro c\'è l\'intelligenza artificiale. Netflix ti tiene a scrollare due ore prima di scegliere un film — e cambia perfino le copertine (primo piano dell\'attore o scena d\'azione) in base alla probabilità che tu clicchi. Amazon: ne parli al bar la sera, e il giorno dopo ce l\'hai come pubblicità.',
+cluTag1:'Il singolo',cluTag2:'Il pool',
+clu1H:'Non interessa il tuo dato',clu1P:'Alle piattaforme non importa nulla di te come singolo. Il tuo dato isolato non vale.',
+clu2H:'Interessano i cluster',clu2P:'Contano i grandi pool di dati e i cluster di audience simili a te. L\'algoritmo predice sulla somiglianza, non sull\'individuo.',
+s3:'L\'AI è già nella tua giornata',
+galIntro:'Non serve aprire ChatGPT per usare l\'AI: la usi già decine di volte al giorno. Clicca ogni esempio per vedere cosa c\'è dietro.',
+s4:'Non da ieri, da sempre',
+q2:'«Le AI sono dappertutto, ma non da ieri. Da sempre.»',
+q2cap:'Lo stesso filo che muove Netflix e Amazon muove i suggerimenti, le ricerche, i feed. È solo diventato visibile con i chatbot.',
+s5:'Non è una moda di settore',
+x1H:'Trasversale, non verticale',x1P:'L\'AI non è il trend di un solo settore. A differenza, per dire, della blockchain, attraversa marketing, dati, design, sviluppo, comunicazione.',
+x2H:'Cambia il dominio',x2P:'Render 3D, analisi di mercato, contratti, presentazioni: cambia il campo, non il fatto che l\'AI ci entri.',
+x3H:'È infrastruttura',x3P:'Sta diventando un layer di base come l\'elettricità o internet: non un\'app in più, ma il modo in cui si lavora.',
+s6:'Checkpoint',
+cpH:'Allena l\'occhio',
+cpP:'Capire l\'AI parte dal riconoscerla dove già c\'è. Non è uno strumento esotico: è il motore silenzioso di servizi che usi ogni giorno.',
+cpQ:'Nelle prossime 24 ore prova a contare quante volte incontri un sistema di AI senza chiederlo esplicitamente: un suggerimento, un feed, un filtro, una traduzione. Ti sorprenderai.',
+bridge:'Sai cos\'è l\'AI e dove vive. <b>Prossimo:</b> da dove nasce questa "statistica" — l\'algoritmo, la torta della nonna, e la catena che porta fino al Transformer.',
+foot:'Morfeus — Cos\'è l\'AI'
+},
+en:{
+kicker:'Lesson A1.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'AI culture',
+h1:'What AI really is (and it\'s not new)',
+lede:'Before talking to the machine you have to understand what it is. It\'s not magic, and it wasn\'t born with ChatGPT: it\'s statistics taken to the highest level, and it\'s been inside your day for years without you noticing.',
+s1:'The concrete definition',
+note1H:'Statistics at the highest level',
+note1P:'Strip away the mythology and AI is <strong>statistics at the highest level</strong>: a system that, across an enormous set of examples, computes the most probable outcome. It\'s not a rigid tool answering fixed inputs, and it\'s far more than a calculator. It\'s a probability engine — and grasping this changes everything about how you use it.',
+q1:'"Statistics. We\'ll see why this statistics is so important."',
+s2:'Why Netflix and Meta make money',
+biz:'The only reason Netflix, Facebook, Meta, TikTok and Amazon make money is the AI behind them. Netflix keeps you scrolling for two hours before picking a film — and it even swaps the cover art (a close-up of the actor or an action scene) based on the probability you\'ll click. Amazon: you mention it at the bar at night, and the next day it\'s your ad.',
+cluTag1:'The individual',cluTag2:'The pool',
+clu1H:'Your data point doesn\'t matter',clu1P:'Platforms don\'t care about you as an individual. Your isolated data is worthless.',
+clu2H:'Clusters matter',clu2P:'What counts are the large data pools and clusters of audiences similar to you. The algorithm predicts on similarity, not on the individual.',
+s3:'AI is already in your day',
+galIntro:'You don\'t need to open ChatGPT to use AI: you already use it dozens of times a day. Click each example to see what\'s behind it.',
+s4:'Not since yesterday, forever',
+q2:'"AI is everywhere — but not since yesterday. Forever."',
+q2cap:'The same thread that drives Netflix and Amazon drives recommendations, searches and feeds. It just became visible with chatbots.',
+s5:'Not a single-sector fad',
+x1H:'Cross-cutting, not vertical',x1P:'AI isn\'t one sector\'s trend. Unlike, say, blockchain, it cuts across marketing, data, design, development, communication.',
+x2H:'The domain changes',x2P:'3D rendering, market analysis, contracts, presentations: the field changes, not the fact that AI enters it.',
+x3H:'It\'s infrastructure',x3P:'It\'s becoming a base layer like electricity or the internet: not one more app, but the way work gets done.',
+s6:'Checkpoint',
+cpH:'Train your eye',
+cpP:'Understanding AI starts with spotting it where it already is. It\'s not an exotic tool: it\'s the silent engine of services you use every day.',
+cpQ:'Over the next 24 hours, try counting how many times you meet an AI system without asking for it: a recommendation, a feed, a filter, a translation. You\'ll be surprised.',
+bridge:'You know what AI is and where it lives. <b>Next:</b> where this "statistics" comes from — the algorithm, grandma\'s cake, and the chain that leads to the Transformer.',
+foot:'Morfeus — What AI really is'
+}};
+
+var GAL={it:[
+['ti-movie','Netflix','Suggerimenti e copertine','Netflix non sceglie i film: predice quelli che probabilmente guarderai e mostra anche la <strong>copertina</strong> con la più alta probabilità di click. Più guardi, più ti propone simili.'],
+['ti-shopping-cart','Amazon','Ogni utente, una vetrina','Ogni utente vede una piattaforma diversa. È l\'aneddoto dell\'<strong>aspirapolvere</strong>: ne parli al bar la sera, il giorno dopo ce l\'hai come pubblicità. Non è magia: sono cluster di dati.'],
+['ti-music','Spotify','Stazioni su misura','Spotify costruisce stazioni radio sulla base dei tuoi ascolti: trova pattern e prevede cosa ti piacerà accanto a ciò che ascolti già.'],
+['ti-microphone-2','Alexa','La "stupidità artificiale"','Gli assistenti vocali sono AI — anche quando sbagliano. Battuta del corso: a volte è più "stupidità artificiale" che intelligenza. Ma il motore è lo stesso.'],
+['ti-face-id','Face ID','Riconoscimento visivo','Sbloccare il telefono col volto è computer vision: il sistema impara i pattern del tuo viso e li riconosce in millisecondi.'],
+['ti-language','Google Translate','Traduzione automatica','Tradurre tra lingue è un classico problema di AI: il sistema mappa il significato e sceglie la resa più probabile nella lingua di arrivo.'],
+['ti-brand-youtube','YouTube','Il feed che ti trattiene','L\'obiettivo è tenerti in piattaforma più a lungo per mostrarti più pubblicità: l\'algoritmo ottimizza ogni "prossimo video" sul tempo di permanenza.'],
+['ti-ad','Social ads','Pool e cluster','Instagram, Facebook, Meta: ti tengono più tempo per mostrarti più ads. Non interessa il tuo singolo dato, interessano i grandi pool di audience simili.']
+],en:[
+['ti-movie','Netflix','Recommendations & covers','Netflix doesn\'t pick films: it predicts the ones you\'ll likely watch and even shows the <strong>cover art</strong> with the highest click probability. The more you watch, the more it offers similar.'],
+['ti-shopping-cart','Amazon','One storefront per user','Every user sees a different platform. It\'s the <strong>vacuum cleaner</strong> story: you mention it at the bar at night, the next day it\'s your ad. Not magic: data clusters.'],
+['ti-music','Spotify','Stations tailored to you','Spotify builds radio stations from your listening: it finds patterns and predicts what you\'ll like next to what you already play.'],
+['ti-microphone-2','Alexa','"Artificial stupidity"','Voice assistants are AI — even when they get it wrong. Course joke: sometimes it\'s more "artificial stupidity" than intelligence. But the engine is the same.'],
+['ti-face-id','Face ID','Visual recognition','Unlocking your phone with your face is computer vision: the system learns your face\'s patterns and recognizes them in milliseconds.'],
+['ti-language','Google Translate','Machine translation','Translating between languages is a classic AI problem: the system maps meaning and picks the most probable rendering in the target language.'],
+['ti-brand-youtube','YouTube','The feed that holds you','The goal is to keep you on the platform longer to show you more ads: the algorithm optimizes each "next video" for watch time.'],
+['ti-ad','Social ads','Pools & clusters','Instagram, Facebook, Meta: they keep you longer to show more ads. Your single data point doesn\'t matter — the large pools of similar audiences do.']
+]};
+
+var LANG='it',curG=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('gallery').innerHTML=GAL[LANG].map(function(g,i){return '<div class="gchip'+(i===curG?' on':'')+'" onclick="showG('+i+')"><i class="ti '+g[0]+'"></i><span>'+g[1]+'</span></div>'}).join('');
+  showG(curG);
+}
+function showG(i){curG=i;var g=GAL[LANG][i];document.querySelectorAll('.gchip').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('gdetail').innerHTML='<h4><i class="ti '+g[0]+'"></i>'+g[1]+' · '+g[2]+'</h4><p>'+g[3]+'</p>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Principio dei Due Sistemi — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#a9d9b8;
+--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb2aa;
+--warn:#BA7517;--warn-soft:#faeeda;--warn-line:#ecca8e;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;
+--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6e3a33;
+--warn:#EF9F27;--warn-soft:#412402;--warn-line:#6e4a14;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85B7EB;--blue-soft:#042c53;--blue-line:#1e4d7a;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* Hook */
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+/* Diamond */
+.diamond-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;margin:0}
+.diamond-title{text-align:center;font-size:14px;font-weight:600;color:var(--ink-2);margin-bottom:20px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.diamond-svg{display:block;margin:0 auto;max-width:100%}
+.diamond-labels{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.diamond-label{padding:16px 18px;border-radius:var(--r-l)}
+.diamond-label.divg{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.diamond-label.conv{background:var(--warn-soft);border:1px solid var(--warn-line)}
+.diamond-label h4{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.diamond-label.divg h4{color:var(--teal)}
+.diamond-label.conv h4{color:var(--warn)}
+.diamond-label p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* Two systems */
+.systems{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.sys-card{border-radius:var(--r-l);padding:24px 22px;cursor:pointer;transition:.3s;box-shadow:var(--sh)}
+.sys-card.s1{background:var(--teal-soft);border:1.5px solid var(--teal-line)}
+.sys-card.s2{background:var(--warn-soft);border:1.5px solid var(--warn-line)}
+.sys-card.expanded .sys-expand{max-height:600px;opacity:1;margin-top:16px}
+.sys-head{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.sys-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;color:#fff}
+.sys-card.s1 .sys-icon{background:var(--teal)}
+.sys-card.s2 .sys-icon{background:var(--warn)}
+.sys-tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--ink-3);font-family:var(--mono)}
+.sys-name{font-size:16px;font-weight:600}
+.sys-card.s1 .sys-name{color:var(--teal)}
+.sys-card.s2 .sys-name{color:var(--warn)}
+.sys-sub{font-size:12.5px;color:var(--ink-3);margin-bottom:10px;font-weight:500}
+.sys-body{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+.sys-expand{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease,margin .3s ease}
+.sys-questions{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.sys-questions li{font-size:12.5px;color:var(--ink-2);padding:10px 13px;background:var(--card);border-radius:var(--r);border:1px solid var(--line);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.sys-questions li i{font-size:14px;flex-shrink:0;margin-top:2px}
+.sys-card.s1 .sys-questions li i{color:var(--teal)}
+.sys-card.s2 .sys-questions li i{color:var(--warn)}
+.sys-output{margin-top:12px;padding:12px 14px;border-radius:var(--r);font-size:12.5px;font-weight:600;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.sys-output i{flex-shrink:0;margin-top:2px}
+.sys-card.s1 .sys-output{background:var(--teal);color:#fff}
+.sys-card.s2 .sys-output{background:var(--warn);color:#fff}
+.sys-click{font-size:11px;color:var(--ink-3);text-align:center;margin-top:10px;font-family:var(--mono)}
+/* Flow */
+.flow-arrow{display:flex;align-items:center;justify-content:center;margin:18px 0 0;gap:12px;color:var(--ink-3)}
+.flow-arrow .fline{flex:1;height:1px;border-top:1px dashed var(--line-2)}
+.flow-arrow i{font-size:18px;color:var(--accent)}
+.flow-arrow span{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+/* Trap */
+.trap-card{background:var(--bad-soft);border:1.5px solid var(--bad-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;margin:0}
+.trap-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.trap-icon{width:44px;height:44px;border-radius:12px;background:var(--bad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.trap-head h3{font-size:16px;font-weight:600;color:var(--bad)}
+.trap-body{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.trap-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trap-box{padding:16px 18px;border-radius:var(--r-l);font-size:13px;line-height:1.6}
+.trap-box.bad{background:var(--card);border:1px solid var(--bad-line)}
+.trap-box.good{background:var(--card);border:1px solid var(--good-line)}
+.trap-box-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.trap-box.bad .trap-box-label{color:var(--bad)}
+.trap-box.good .trap-box-label{color:var(--good)}
+.trap-box p{color:var(--ink-2)}
+/* Scenario */
+.scenario-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.scenario-tab{padding:9px 15px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;transition:.25s;border:1px solid var(--line);background:var(--card);color:var(--ink-2);display:flex;align-items:center;gap:6px;box-shadow:var(--sh)}
+.scenario-tab i{font-size:15px}
+.scenario-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.scenario-content{display:none;animation:fade-in .3s ease}
+.scenario-content.visible{display:block}
+@keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.scenario-context{font-size:14px;color:var(--ink-2);margin-bottom:16px;padding:15px 18px;background:var(--accent-soft);border-radius:var(--r-l);border-left:3px solid var(--accent);font-style:italic}
+.approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.approach-card{border-radius:var(--r-l);overflow:hidden;border:1.5px solid var(--line);box-shadow:var(--sh)}
+.approach-card.wrong{border-color:var(--bad-line)}
+.approach-card.right{border-color:var(--good-line)}
+.approach-label{padding:11px 16px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.approach-card.wrong .approach-label{background:var(--bad-soft);color:var(--bad)}
+.approach-card.right .approach-label{background:var(--good-soft);color:var(--good)}
+.approach-prompt{padding:16px;font-size:12.5px;font-family:var(--mono);color:var(--ink-2);line-height:1.65;background:var(--card);white-space:pre-wrap;min-height:118px}
+.approach-result{padding:12px 16px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--line);font-style:italic;background:var(--bg-2)}
+/* Quiz */
+.quiz-progress{display:flex;gap:6px;margin-bottom:18px}
+.quiz-dot{width:30px;height:5px;border-radius:3px;background:var(--bg-3);transition:background .3s}
+.quiz-dot.done{background:var(--good)}
+.quiz-dot.current{background:var(--accent)}
+.quiz-dot.wrong-dot{background:var(--bad)}
+.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px}
+.quiz-q-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;color:var(--ink-3);margin-bottom:12px;font-family:var(--mono)}
+.quiz-prompt-display{font-family:var(--mono);font-size:14px;color:var(--ink);line-height:1.7;padding:18px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);margin-bottom:18px}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quiz-btn{padding:14px 16px;border-radius:var(--r-l);font-size:14px;font-weight:600;cursor:pointer;transition:.25s;border:1.5px solid var(--line);background:var(--bg-2);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:9px;font-family:var(--sans)}
+.quiz-btn:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.quiz-btn.correct{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.quiz-btn.incorrect{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.quiz-btn.disabled{pointer-events:none;opacity:.5}
+.quiz-feedback{margin-top:16px;padding:14px 16px;border-radius:var(--r-l);font-size:13px;line-height:1.6;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.right{background:var(--good-soft);border:1px solid var(--good-line);color:var(--ink-2)}
+.quiz-feedback.wrong{background:var(--bad-soft);border:1px solid var(--bad-line);color:var(--ink-2)}
+.quiz-feedback i{margin-right:5px}
+.quiz-feedback.right i{color:var(--good)}.quiz-feedback.wrong i{color:var(--bad)}
+.quiz-next{margin-top:16px;padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--accent);color:#fff;display:none;font-family:var(--sans)}
+.quiz-next.show{display:inline-flex;align-items:center;gap:6px}
+.quiz-score{text-align:center;padding:24px}
+.quiz-score-num{font-size:48px;font-weight:600;color:var(--accent);font-family:var(--mono)}
+.quiz-score-label{font-size:13px;color:var(--ink-2);margin-top:4px}
+.quiz-score-msg{font-size:15px;color:var(--ink);margin-top:16px;font-weight:600;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.5}
+.quiz-retry{margin-top:18px;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--bg-2);color:var(--ink);font-family:var(--sans);display:inline-flex;align-items:center;gap:6px}
+/* Library */
+.lib-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0}
+.lib-col h3{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lib-col.divg h3{color:var(--teal)}
+.lib-col.conv h3{color:var(--warn)}
+.lib-item{padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:12.5px;color:var(--ink-2);margin-bottom:8px;font-style:italic;line-height:1.5;cursor:pointer;transition:.2s;position:relative;box-shadow:var(--sh)}
+.lib-item:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.lib-item .copied{position:absolute;top:50%;right:12px;transform:translateY(-50%);font-size:11px;font-weight:600;color:var(--good);opacity:0;transition:opacity .3s;font-family:var(--mono);background:var(--card);padding:2px 6px}
+.lib-item .copied.show{opacity:1}
+/* Key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.45;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.key .emphasis{display:block;margin-top:14px;font-size:15px;color:var(--ink-2);font-weight:500;font-style:normal}
+/* Bridge */
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin:28px 0 0}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2);line-height:1.6}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){
+  h1{font-size:28px}
+  .systems{grid-template-columns:1fr}
+  .diamond-labels{grid-template-columns:1fr}
+  .approach-grid{grid-template-columns:1fr}
+  .trap-compare{grid-template-columns:1fr}
+  .quiz-options{grid-template-columns:1fr}
+  .lib-grid{grid-template-columns:1fr}
+  .scenario-tabs{flex-direction:column}
+}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.sys-expand{max-height:none!important;opacity:1!important;margin-top:16px!important}.scenario-content{display:block!important}.diamond-wrap,.systems,.sys-card,.trap-card,.approach-card,.quiz-card,.lib-item,.key,.hook,.bridge{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 8.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Plan &amp; Solve</div>
+  <h1 class="rv" data-i="h1">Il Principio dei Due Sistemi</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-quote"></i><span class="no">01</span><h2 data-i="s0">Hook</h2></div>
+  <div class="hook rv"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">02</span><h2 data-i="s1">Il modello mentale</h2></div>
+  <div class="diamond-wrap rv">
+    <div class="diamond-title" data-i="diamondTitle">Il Diamante del Pensiero</div>
+    <svg class="diamond-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="100" x2="260" y2="30" stroke="var(--teal)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".75"/>
+      <line x1="60" y1="100" x2="260" y2="170" stroke="var(--teal)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".75"/>
+      <line x1="260" y1="30" x2="540" y2="100" stroke="var(--warn)" stroke-width="2.5" opacity=".75"/>
+      <line x1="260" y1="170" x2="540" y2="100" stroke="var(--warn)" stroke-width="2.5" opacity=".75"/>
+      <polygon points="60,100 260,30 260,170" fill="var(--teal)" opacity=".1"/>
+      <polygon points="260,30 540,100 260,170" fill="var(--warn)" opacity=".1"/>
+      <circle cx="60" cy="100" r="8" fill="var(--accent)"/>
+      <circle cx="260" cy="30" r="5" fill="var(--teal)"/>
+      <circle cx="260" cy="100" r="3" fill="var(--ink-3)" opacity=".5"/>
+      <circle cx="260" cy="170" r="5" fill="var(--teal)"/>
+      <circle cx="540" cy="100" r="8" fill="var(--warn)"/>
+      <circle cx="180" cy="55" r="3" fill="var(--teal)" opacity=".55"/>
+      <circle cx="200" cy="80" r="3" fill="var(--teal)" opacity=".45"/>
+      <circle cx="190" cy="130" r="3" fill="var(--teal)" opacity=".55"/>
+      <circle cx="170" cy="150" r="3" fill="var(--teal)" opacity=".45"/>
+      <text x="60" y="86" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink-3)" font-family="monospace" data-svg="lblProblem">Problema</text>
+      <text x="260" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="var(--teal)" font-family="monospace" data-svg="lblOptions">Opzioni</text>
+      <text x="540" y="86" text-anchor="middle" font-size="11" font-weight="600" fill="var(--warn)" font-family="monospace" data-svg="lblDecision">Decisione</text>
+      <text x="150" y="108" text-anchor="middle" font-size="12" font-weight="600" fill="var(--teal)" font-family="monospace" data-svg="lblDiverge">DIVERGERE</text>
+      <text x="410" y="108" text-anchor="middle" font-size="12" font-weight="600" fill="var(--warn)" font-family="monospace" data-svg="lblConverge">CONVERGERE</text>
+    </svg>
+    <div class="diamond-labels">
+      <div class="diamond-label divg">
+        <h4><i class="ti ti-arrows-maximize"></i> <span data-i="dl1H"></span></h4>
+        <p data-i="dl1P"></p>
+      </div>
+      <div class="diamond-label conv">
+        <h4><i class="ti ti-arrows-minimize"></i> <span data-i="dl2H"></span></h4>
+        <p data-i="dl2P"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-adjustments-horizontal"></i><span class="no">03</span><h2 data-i="s2">I due sistemi in pratica</h2></div>
+  <div class="systems rv">
+    <div class="sys-card s1" onclick="toggleSys(this)">
+      <div class="sys-head">
+        <div class="sys-icon"><i class="ti ti-arrows-maximize"></i></div>
+        <div><div class="sys-tag" data-i="sys1tag">Sistema 1</div><div class="sys-name" data-i="sys1name">Problem Exploration</div></div>
+      </div>
+      <div class="sys-sub" data-i="sys1sub"></div>
+      <div class="sys-body" data-i="sys1body"></div>
+      <div class="sys-expand">
+        <ul class="sys-questions">
+          <li><i class="ti ti-message-question"></i> <span data-i="sys1q1"></span></li>
+          <li><i class="ti ti-message-question"></i> <span data-i="sys1q2"></span></li>
+          <li><i class="ti ti-message-question"></i> <span data-i="sys1q3"></span></li>
+          <li><i class="ti ti-message-question"></i> <span data-i="sys1q4"></span></li>
+        </ul>
+        <div class="sys-output"><i class="ti ti-package"></i> <span data-i="sys1out"></span></div>
+      </div>
+      <div class="sys-click" data-i="sysClickOpen">Clicca per espandere</div>
+    </div>
+    <div class="sys-card s2" onclick="toggleSys(this)">
+      <div class="sys-head">
+        <div class="sys-icon"><i class="ti ti-arrows-minimize"></i></div>
+        <div><div class="sys-tag" data-i="sys2tag">Sistema 2</div><div class="sys-name" data-i="sys2name">Decision Support</div></div>
+      </div>
+      <div class="sys-sub" data-i="sys2sub"></div>
+      <div class="sys-body" data-i="sys2body"></div>
+      <div class="sys-expand">
+        <ul class="sys-questions">
+          <li><i class="ti ti-message-check"></i> <span data-i="sys2q1"></span></li>
+          <li><i class="ti ti-message-check"></i> <span data-i="sys2q2"></span></li>
+          <li><i class="ti ti-message-check"></i> <span data-i="sys2q3"></span></li>
+          <li><i class="ti ti-message-check"></i> <span data-i="sys2q4"></span></li>
+        </ul>
+        <div class="sys-output"><i class="ti ti-package"></i> <span data-i="sys2out"></span></div>
+      </div>
+      <div class="sys-click" data-i="sysClickOpen">Clicca per espandere</div>
+    </div>
+  </div>
+  <div class="flow-arrow rv">
+    <div class="fline"></div>
+    <i class="ti ti-arrow-right"></i>
+    <span data-i="flowLabel">Prima divergi, poi convergi</span>
+    <i class="ti ti-arrow-right"></i>
+    <div class="fline"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">04</span><h2 data-i="s3">Il trap cognitivo</h2></div>
+  <div class="trap-card rv">
+    <div class="trap-head">
+      <div class="trap-icon"><i class="ti ti-alert-triangle"></i></div>
+      <h3 data-i="trapH">Il trap cognitivo</h3>
+    </div>
+    <div class="trap-body" data-i="trapBody"></div>
+    <div class="trap-compare">
+      <div class="trap-box bad">
+        <div class="trap-box-label"><i class="ti ti-x"></i> <span data-i="trapBadLbl"></span></div>
+        <p data-i="trapBadP"></p>
+      </div>
+      <div class="trap-box good">
+        <div class="trap-box-label"><i class="ti ti-check"></i> <span data-i="trapGoodLbl"></span></div>
+        <p data-i="trapGoodP"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-device-desktop"></i><span class="no">05</span><h2 data-i="s4">Scenari reali — due approcci a confronto</h2></div>
+  <div class="rv">
+    <div class="scenario-tabs">
+      <div class="scenario-tab active" onclick="showScenario(0)"><i class="ti ti-building"></i> <span data-i="scTab0"></span></div>
+      <div class="scenario-tab" onclick="showScenario(1)"><i class="ti ti-users"></i> <span data-i="scTab1"></span></div>
+      <div class="scenario-tab" onclick="showScenario(2)"><i class="ti ti-rocket"></i> <span data-i="scTab2"></span></div>
+    </div>
+
+    <div class="scenario-content visible" id="sc0">
+      <div class="scenario-context" data-i="sc0ctx"></div>
+      <div class="approach-grid">
+        <div class="approach-card wrong">
+          <div class="approach-label"><i class="ti ti-x"></i> <span data-i="apWrong"></span></div>
+          <div class="approach-prompt" data-i="sc0wrong"></div>
+          <div class="approach-result" data-i="sc0wrongR"></div>
+        </div>
+        <div class="approach-card right">
+          <div class="approach-label"><i class="ti ti-check"></i> <span data-i="apRight"></span></div>
+          <div class="approach-prompt" data-i="sc0right"></div>
+          <div class="approach-result" data-i="sc0rightR"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-content" id="sc1">
+      <div class="scenario-context" data-i="sc1ctx"></div>
+      <div class="approach-grid">
+        <div class="approach-card wrong">
+          <div class="approach-label"><i class="ti ti-x"></i> <span data-i="apWrong"></span></div>
+          <div class="approach-prompt" data-i="sc1wrong"></div>
+          <div class="approach-result" data-i="sc1wrongR"></div>
+        </div>
+        <div class="approach-card right">
+          <div class="approach-label"><i class="ti ti-check"></i> <span data-i="apRight"></span></div>
+          <div class="approach-prompt" data-i="sc1right"></div>
+          <div class="approach-result" data-i="sc1rightR"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scenario-content" id="sc2">
+      <div class="scenario-context" data-i="sc2ctx"></div>
+      <div class="approach-grid">
+        <div class="approach-card wrong">
+          <div class="approach-label"><i class="ti ti-x"></i> <span data-i="apWrong"></span></div>
+          <div class="approach-prompt" data-i="sc2wrong"></div>
+          <div class="approach-result" data-i="sc2wrongR"></div>
+        </div>
+        <div class="approach-card right">
+          <div class="approach-label"><i class="ti ti-check"></i> <span data-i="apRight"></span></div>
+          <div class="approach-prompt" data-i="sc2right"></div>
+          <div class="approach-result" data-i="sc2rightR"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">06</span><h2 data-i="s5">Riconosci il pattern</h2></div>
+  <div class="rv">
+    <div class="quiz-progress" id="quizProgress"></div>
+    <div class="quiz-card" id="quizCard"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-list"></i><span class="no">07</span><h2 data-i="s6">Libreria prompt — copia e usa</h2></div>
+  <div class="lib-grid rv">
+    <div class="lib-col divg">
+      <h3><i class="ti ti-arrows-maximize"></i> <span data-i="libDivH"></span></h3>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD1"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD2"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD3"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD4"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD5"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libD6"></span><span class="copied" data-i="copied">Copiato!</span></div>
+    </div>
+    <div class="lib-col conv">
+      <h3><i class="ti ti-arrows-minimize"></i> <span data-i="libConvH"></span></h3>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC1"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC2"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC3"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC4"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC5"></span><span class="copied" data-i="copied">Copiato!</span></div>
+      <div class="lib-item" onclick="copyPrompt(this)"><span data-i="libC6"></span><span class="copied" data-i="copied">Copiato!</span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">08</span><h2 data-i="s7">In una frase</h2></div>
+  <div class="key rv">
+    <p data-i="kp"></p>
+    <span class="emphasis" data-i="kpEmphasis"></span>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Il Principio dei Due Sistemi</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 8.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Plan & Solve',
+h1:'Il Principio dei Due Sistemi',
+lede:'Claude è straordinario per produrre output. Ma per problemi complessi, serve un metodo diverso: pensiero divergente prima, convergente dopo.',
+s0:'Hook',
+hook:'«C\'è un limite a Claude che nessuno vi dice. Se chiedete "cosa devo fare?" ottenete una risposta, ma non è la vostra risposta. È la risposta più probabile statisticamente, quella più frequente, quella più generica. Questa lezione vi insegna come usare Claude per pensare meglio, non per smettere di pensare.»',
+s1:'Il modello mentale',
+diamondTitle:'Il Diamante del Pensiero',
+lblProblem:'Problema',lblOptions:'Opzioni',lblDecision:'Decisione',lblDiverge:'DIVERGERE',lblConverge:'CONVERGERE',
+dl1H:'Fase 1: Espandere',
+dl1P:'Generare opzioni, esplorare possibilità, ampliare il campo visivo. Claude è eccellente qui: è veloce, ampio, non si limita ai vostri bias.',
+dl2H:'Fase 2: Valutare',
+dl2P:'Analizzare trade-off, rischi, conseguenze. Voi portate il contesto che Claude non ha: valori, relazioni, vincoli, storia.',
+s2:'I due sistemi in pratica',
+sys1tag:'Sistema 1',sys1name:'Problem Exploration',
+sys1sub:'Pensiero divergente: espandere',
+sys1body:'Fase di esplorazione. Non avete ancora una soluzione. Chiedete a Claude di ampliare, fare domande, generare opzioni. Non filtrate ancora: raccogliete.',
+sys1q1:'"Quali sono tutti i modi possibili per..."',
+sys1q2:'"Cosa potrei non aver considerato?"',
+sys1q3:'"Fai le domande che dovrei pormi"',
+sys1q4:'"Quali assunzioni sto facendo senza rendermene conto?"',
+sys1out:'Output: un panorama di possibilità',
+sys2tag:'Sistema 2',sys2name:'Decision Support',
+sys2sub:'Pensiero convergente: valutare',
+sys2body:'Avete già le opzioni, volete valutarle. Chiedete a Claude di analizzare trade-off, rischi, conseguenze. Voi portate il contesto che Claude non ha.',
+sys2q1:'"Quali sono i 3 argomenti a favore e i 3 contro?"',
+sys2q2:'"Analizza i trade-off tra queste opzioni"',
+sys2q3:'"Non decidere per me: aiutami a vedere"',
+sys2q4:'"Quali rischi sto sottovalutando?"',
+sys2out:'Output: supporto alla vostra decisione, non la decisione al posto vostro',
+sysClickOpen:'Clicca per espandere',sysClickClose:'Clicca per chiudere',
+flowLabel:'Prima divergi, poi convergi',
+s3:'Il trap cognitivo',
+trapH:'Il trap cognitivo',
+trapBody:'Usare Claude solo per convergenza (farsi dire cosa fare) senza il lavoro di divergenza (esplorare davvero il problema) porta a decisioni superficiali. Ottenete la risposta più probabile statisticamente, non la vostra risposta.',
+trapBadLbl:'Solo convergenza',
+trapBadP:'"Claude, cosa devo fare?" → Risposta generica, bilanciata, che dice "dipende". Non vi aiuta perché manca tutto il vostro contesto.',
+trapGoodLbl:'Divergenza + Convergenza',
+trapGoodP:'"Aiutami a capire il problema, poi aiutami a valutare." → Quadro completo, trade-off chiari, decisione vostra ma informata.',
+s4:'Scenari reali — due approcci a confronto',
+scTab0:'Espansione mercato',scTab1:'Assumere o no',scTab2:'Lanciare un prodotto',
+apWrong:'Convergenza prematura',apRight:'Prima divergere, poi convergere',
+sc0ctx:'"Devo decidere se espandere la mia attività in Germania."',
+sc0wrong:'Devo espandere la mia azienda in Germania. È una buona idea?',
+sc0wrongR:'Risultato: risposta bilanciata e generica. "Dipende da vari fattori tra cui..." Non vi aiuta.',
+sc0right:'Sto valutando l\'espansione della mia attività in Germania. Prima di valutare se farlo, aiutami a capire il problema completo.\n\nFai le domande che dovrei pormi prima di prendere questa decisione. Non darmi ancora una risposta.',
+sc0rightR:'Risultato: Claude vi aiuta a costruire il problema. Dopo, convergete con un quadro completo.',
+sc1ctx:'"Il team è sovraccarico. Devo assumere un\'altra persona?"',
+sc1wrong:'Il mio team è sovraccarico, devo assumere? Sì o no?',
+sc1wrongR:'Risultato: "Assumere potrebbe essere una buona idea se il budget lo permette." Ovvio e inutile.',
+sc1right:'Il mio team di 4 persone è costantemente sovraccarico. Prima di decidere se assumere, aiutami a esplorare il problema.\n\nQuali potrebbero essere tutte le cause del sovraccarico oltre alla carenza di personale? Cosa potrei non star vedendo?',
+sc1rightR:'Risultato: scoprite che forse il problema è nei processi, nelle priorità, o nell\'allocazione, non solo nel numero.',
+sc2ctx:'"Ho un\'idea per un nuovo prodotto digitale. Lo lancio?"',
+sc2wrong:'Ho un\'idea per un corso online su [tema]. Secondo te funziona?',
+sc2wrongR:'Risultato: "Sì, il mercato dei corsi online è in crescita." Rassicurante ma vuoto. Nessun vero stress-test.',
+sc2right:'Sto considerando di lanciare un corso online su [tema]. Non voglio che mi dica se è una buona idea.\n\nVoglio che mi faccia le domande scomode: quelle che un investitore scettico farebbe. Quali sono i rischi che sto sottovalutando? Quali assunzioni sto facendo?',
+sc2rightR:'Risultato: un vero stress-test dell\'idea. Scoprite i punti deboli prima di investire tempo e denaro.',
+s5:'Riconosci il pattern',
+quizLabel:'Prompt',quizOf:'di',
+quizDiv:'Divergente',quizConv:'Convergente',
+quizNext:'Prossimo',quizRight:'Corretto! ',quizWrong:'Non proprio. ',
+quizCorrectLabel:'risposte corrette',
+quizMsg100:'Perfetto! Distinguete chiaramente i due sistemi.',
+quizMsg70:'Ottimo! Avete colto la differenza fondamentale.',
+quizMsgLow:'Ripassate la sezione sui due sistemi e riprovate.',
+quizRetry:'Riprova',
+s6:'Libreria prompt — copia e usa',
+copied:'Copiato!',
+libDivH:'Divergenti (esplorare)',
+libD1:'"Quali sono tutti i modi possibili per affrontare questo?"',
+libD2:'"Cosa potrei non aver considerato?"',
+libD3:'"Fai le domande che dovrei pormi prima di decidere"',
+libD4:'"Quali assunzioni sto facendo senza rendermene conto?"',
+libD5:'"Genera 5 approcci radicalmente diversi a questo problema"',
+libD6:'"Se dovessi ricominciare da zero, come imposteresti questo?"',
+libConvH:'Convergenti (valutare)',
+libC1:'"Quali sono i 3 argomenti a favore e i 3 contro?"',
+libC2:'"Analizza i trade-off tra queste opzioni"',
+libC3:'"Non decidere per me: aiutami a vedere i trade-off"',
+libC4:'"Quali rischi sto sottovalutando in questa scelta?"',
+libC5:'"Dato questo contesto, quale opzione ha il miglior rapporto rischio/beneficio?"',
+libC6:'"Cosa direbbe un consulente scettico di questa decisione?"',
+s7:'In una frase',
+kp:'Claude espande il vostro campo visivo. La decisione appartiene a chi ha il contesto completo.',
+kpEmphasis:'E quel contesto, nella vostra vita professionale, lo avete solo voi.',
+bridge:'<b>Prossimo passo.</b> Avete capito i due sistemi. La prossima lezione entra nelle regole d\'oro e nel framework degli Anti-Goals: uno degli strumenti più controintuitivi e potenti per la pianificazione.',
+foot:'Morfeus — Il Principio dei Due Sistemi'
+},
+en:{
+kicker:'Lesson 8.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Plan & Solve',
+h1:'The Two-Systems Principle',
+lede:'Claude is remarkable at producing output. But for complex problems you need a different method: divergent thinking first, convergent thinking after.',
+s0:'Hook',
+hook:'"There\'s a limit to Claude that nobody tells you about. If you ask \'what should I do?\' you get an answer — but it isn\'t your answer. It\'s the statistically most likely answer, the most frequent one, the most generic one. This lesson teaches you how to use Claude to think better, not to stop thinking."',
+s1:'The mental model',
+diamondTitle:'The Diamond of Thinking',
+lblProblem:'Problem',lblOptions:'Options',lblDecision:'Decision',lblDiverge:'DIVERGE',lblConverge:'CONVERGE',
+dl1H:'Phase 1: Expand',
+dl1P:'Generate options, explore possibilities, widen your field of view. Claude excels here: it\'s fast, broad, and not limited by your biases.',
+dl2H:'Phase 2: Evaluate',
+dl2P:'Analyze trade-offs, risks, consequences. You bring the context Claude doesn\'t have: values, relationships, constraints, history.',
+s2:'The two systems in practice',
+sys1tag:'System 1',sys1name:'Problem Exploration',
+sys1sub:'Divergent thinking: expand',
+sys1body:'The exploration phase. You don\'t have a solution yet. Ask Claude to broaden, ask questions, generate options. Don\'t filter yet: gather.',
+sys1q1:'"What are all the possible ways to..."',
+sys1q2:'"What might I not have considered?"',
+sys1q3:'"Ask me the questions I should be asking myself"',
+sys1q4:'"What assumptions am I making without realizing it?"',
+sys1out:'Output: a landscape of possibilities',
+sys2tag:'System 2',sys2name:'Decision Support',
+sys2sub:'Convergent thinking: evaluate',
+sys2body:'You already have the options, you want to evaluate them. Ask Claude to analyze trade-offs, risks, consequences. You bring the context Claude doesn\'t have.',
+sys2q1:'"What are the 3 arguments for and the 3 against?"',
+sys2q2:'"Analyze the trade-offs between these options"',
+sys2q3:'"Don\'t decide for me: help me see"',
+sys2q4:'"What risks am I underestimating?"',
+sys2out:'Output: support for your decision, not the decision made for you',
+sysClickOpen:'Click to expand',sysClickClose:'Click to collapse',
+flowLabel:'First diverge, then converge',
+s3:'The cognitive trap',
+trapH:'The cognitive trap',
+trapBody:'Using Claude only for convergence (getting told what to do) without the divergence work (truly exploring the problem) leads to shallow decisions. You get the statistically most likely answer, not your answer.',
+trapBadLbl:'Convergence only',
+trapBadP:'"Claude, what should I do?" → A generic, balanced answer that says "it depends." It doesn\'t help you because all of your context is missing.',
+trapGoodLbl:'Divergence + Convergence',
+trapGoodP:'"Help me understand the problem, then help me evaluate." → A complete picture, clear trade-offs, a decision that\'s yours but informed.',
+s4:'Real scenarios — two approaches compared',
+scTab0:'Market expansion',scTab1:'Hire or not',scTab2:'Launch a product',
+apWrong:'Premature convergence',apRight:'First diverge, then converge',
+sc0ctx:'"I have to decide whether to expand my business into Germany."',
+sc0wrong:'I have to expand my company into Germany. Is it a good idea?',
+sc0wrongR:'Result: a balanced, generic answer. "It depends on various factors including..." It doesn\'t help you.',
+sc0right:'I\'m evaluating expanding my business into Germany. Before assessing whether to do it, help me understand the full problem.\n\nAsk me the questions I should be asking myself before making this decision. Don\'t give me an answer yet.',
+sc0rightR:'Result: Claude helps you build the problem. Afterward, you converge with a complete picture.',
+sc1ctx:'"The team is overloaded. Should I hire another person?"',
+sc1wrong:'My team is overloaded, should I hire? Yes or no?',
+sc1wrongR:'Result: "Hiring might be a good idea if the budget allows." Obvious and useless.',
+sc1right:'My 4-person team is constantly overloaded. Before deciding whether to hire, help me explore the problem.\n\nWhat could all the causes of the overload be, beyond a staffing shortage? What might I not be seeing?',
+sc1rightR:'Result: you discover that maybe the problem is in the processes, the priorities, or the allocation — not just the headcount.',
+sc2ctx:'"I have an idea for a new digital product. Should I launch it?"',
+sc2wrong:'I have an idea for an online course on [topic]. Do you think it works?',
+sc2wrongR:'Result: "Yes, the online course market is growing." Reassuring but empty. No real stress-test.',
+sc2right:'I\'m considering launching an online course on [topic]. I don\'t want you to tell me whether it\'s a good idea.\n\nI want you to ask me the uncomfortable questions: the ones a skeptical investor would ask. What are the risks I\'m underestimating? What assumptions am I making?',
+sc2rightR:'Result: a real stress-test of the idea. You uncover the weak points before investing time and money.',
+s5:'Spot the pattern',
+quizLabel:'Prompt',quizOf:'of',
+quizDiv:'Divergent',quizConv:'Convergent',
+quizNext:'Next',quizRight:'Correct! ',quizWrong:'Not quite. ',
+quizCorrectLabel:'correct answers',
+quizMsg100:'Perfect! You clearly distinguish the two systems.',
+quizMsg70:'Great! You\'ve grasped the fundamental difference.',
+quizMsgLow:'Review the two-systems section and try again.',
+quizRetry:'Try again',
+s6:'Prompt library — copy and use',
+copied:'Copied!',
+libDivH:'Divergent (explore)',
+libD1:'"What are all the possible ways to approach this?"',
+libD2:'"What might I not have considered?"',
+libD3:'"Ask me the questions I should be asking before I decide"',
+libD4:'"What assumptions am I making without realizing it?"',
+libD5:'"Generate 5 radically different approaches to this problem"',
+libD6:'"If you had to start from scratch, how would you set this up?"',
+libConvH:'Convergent (evaluate)',
+libC1:'"What are the 3 arguments for and the 3 against?"',
+libC2:'"Analyze the trade-offs between these options"',
+libC3:'"Don\'t decide for me: help me see the trade-offs"',
+libC4:'"What risks am I underestimating in this choice?"',
+libC5:'"Given this context, which option has the best risk/reward ratio?"',
+libC6:'"What would a skeptical consultant say about this decision?"',
+s7:'In one sentence',
+kp:'Claude expands your field of view. The decision belongs to whoever has the complete context.',
+kpEmphasis:'And in your professional life, that context — only you have it.',
+bridge:'<b>Next step.</b> You\'ve understood the two systems. The next lesson goes into the golden rules and the Anti-Goals framework: one of the most counterintuitive and powerful tools for planning.',
+foot:'Morfeus — The Two-Systems Principle'
+}};
+
+var QUIZ={
+it:[
+{prompt:'Quali sono tutti i possibili approcci per ridurre il churn dei clienti?',answer:'div',explain:'Divergente: state esplorando le possibilità senza ancora filtrare.'},
+{prompt:'Dato il nostro budget di 50K e il target di PMI, quale tra queste 3 strategie marketing ha il miglior ROI atteso?',answer:'conv',explain:'Convergente: avete già le opzioni e state valutando quale scegliere.'},
+{prompt:'Cosa potrei non aver considerato nella mia strategia di pricing?',answer:'div',explain:'Divergente: state cercando punti ciechi, ampliando la visuale.'},
+{prompt:'Analizza i trade-off tra assumere un freelancer senior o due junior per questo progetto',answer:'conv',explain:'Convergente: le opzioni sono definite, serve valutarle.'},
+{prompt:'Se dovessi ripensare completamente il nostro onboarding, quali direzioni radicalmente diverse potremmo prendere?',answer:'div',explain:'Divergente: chiedete esplicitamente di generare opzioni nuove e diverse.'},
+{prompt:'Tra il piano A (lancio rapido) e il piano B (beta chiusa), quale ha meno rischi dato il nostro contesto?',answer:'conv',explain:'Convergente: due opzioni definite, analisi dei rischi per scegliere.'},
+{prompt:'Fai le domande scomode che un investitore scettico farebbe sul mio business plan',answer:'div',explain:'Divergente: state esplorando le debolezze che non vedete, non cercando una risposta.'}
+],
+en:[
+{prompt:'What are all the possible approaches to reduce customer churn?',answer:'div',explain:'Divergent: you\'re exploring possibilities without filtering yet.'},
+{prompt:'Given our 50K budget and our SMB target, which of these 3 marketing strategies has the best expected ROI?',answer:'conv',explain:'Convergent: you already have the options and you\'re evaluating which to choose.'},
+{prompt:'What might I not have considered in my pricing strategy?',answer:'div',explain:'Divergent: you\'re looking for blind spots, widening the view.'},
+{prompt:'Analyze the trade-offs between hiring one senior freelancer or two juniors for this project',answer:'conv',explain:'Convergent: the options are defined, you need to evaluate them.'},
+{prompt:'If you had to completely rethink our onboarding, which radically different directions could we take?',answer:'div',explain:'Divergent: you explicitly ask to generate new and different options.'},
+{prompt:'Between plan A (fast launch) and plan B (closed beta), which has fewer risks given our context?',answer:'conv',explain:'Convergent: two defined options, a risk analysis to choose.'},
+{prompt:'Ask me the uncomfortable questions a skeptical investor would ask about my business plan',answer:'div',explain:'Divergent: you\'re exploring the weaknesses you can\'t see, not looking for an answer.'}
+]};
+
+var LANG='it';
+
+/* Systems toggle */
+function toggleSys(card){
+  card.classList.toggle('expanded');
+  var hint=card.querySelector('.sys-click');
+  if(hint)hint.textContent=card.classList.contains('expanded')?DICT[LANG].sysClickClose:DICT[LANG].sysClickOpen;
+}
+
+/* Scenarios */
+function showScenario(n){
+  document.querySelectorAll('.scenario-tab').forEach(function(t,i){t.classList.toggle('active',i===n)});
+  document.querySelectorAll('.scenario-content').forEach(function(c,i){c.classList.toggle('visible',i===n)});
+}
+
+/* Copy prompt */
+function copyPrompt(el){
+  var span=el.querySelector('span[data-i]');
+  var text=span?span.textContent.trim():el.textContent.replace(DICT[LANG].copied,'').trim();
+  navigator.clipboard.writeText(text).then(function(){
+    var badge=el.querySelector('.copied');
+    badge.classList.add('show');
+    setTimeout(function(){badge.classList.remove('show')},1500);
+  });
+}
+
+/* Quiz */
+var quizState={current:0,score:0,answered:false};
+function quizData(){return QUIZ[LANG]}
+function initQuiz(){
+  var prog=document.getElementById('quizProgress');
+  prog.innerHTML='';
+  var data=quizData();
+  for(var i=0;i<data.length;i++){
+    var d=document.createElement('div');
+    d.className='quiz-dot'+(i===0?' current':'');
+    prog.appendChild(d);
+  }
+  quizState={current:0,score:0,answered:false};
+  renderQuizQ();
+}
+function renderQuizQ(){
+  var data=quizData(),t=DICT[LANG];
+  if(quizState.current>=data.length){showQuizScore();return}
+  var q=data[quizState.current];
+  var card=document.getElementById('quizCard');
+  card.innerHTML='<div class="quiz-q-label">'+t.quizLabel+' '+(quizState.current+1)+' '+t.quizOf+' '+data.length+'</div>'+
+  '<div class="quiz-prompt-display">'+q.prompt+'</div>'+
+  '<div class="quiz-options">'+
+  '<button class="quiz-btn" data-c="div" onclick="answerQuiz(\'div\')"><i class="ti ti-arrows-maximize"></i> '+t.quizDiv+'</button>'+
+  '<button class="quiz-btn" data-c="conv" onclick="answerQuiz(\'conv\')"><i class="ti ti-arrows-minimize"></i> '+t.quizConv+'</button>'+
+  '</div>'+
+  '<div class="quiz-feedback" id="qFeedback"></div>'+
+  '<button class="quiz-next" id="qNext" onclick="nextQuizQ()">'+t.quizNext+' <i class="ti ti-arrow-right"></i></button>';
+}
+function answerQuiz(choice){
+  if(quizState.answered)return;
+  quizState.answered=true;
+  var data=quizData(),t=DICT[LANG];
+  var q=data[quizState.current];
+  var correct=choice===q.answer;
+  if(correct)quizState.score++;
+  document.querySelectorAll('.quiz-btn').forEach(function(b){
+    var c=b.getAttribute('data-c');
+    if(c===choice)b.classList.add(correct?'correct':'incorrect');
+    if(c===q.answer&&!correct)b.classList.add('correct');
+    if(!b.classList.contains('correct')&&!b.classList.contains('incorrect'))b.classList.add('disabled');
+  });
+  var fb=document.getElementById('qFeedback');
+  fb.className='quiz-feedback show '+(correct?'right':'wrong');
+  fb.innerHTML=(correct?'<i class="ti ti-check"></i> '+t.quizRight:'<i class="ti ti-x"></i> '+t.quizWrong)+q.explain;
+  document.getElementById('qNext').classList.add('show');
+  var dots=document.querySelectorAll('.quiz-dot');
+  dots[quizState.current].classList.remove('current');
+  dots[quizState.current].classList.add(correct?'done':'wrong-dot');
+}
+function nextQuizQ(){
+  quizState.current++;
+  quizState.answered=false;
+  var data=quizData();
+  if(quizState.current<data.length){
+    var dots=document.querySelectorAll('.quiz-dot');
+    dots[quizState.current].classList.add('current');
+  }
+  renderQuizQ();
+}
+function showQuizScore(){
+  var data=quizData(),t=DICT[LANG];
+  var pct=Math.round(quizState.score/data.length*100);
+  var msg=pct===100?t.quizMsg100:pct>=70?t.quizMsg70:t.quizMsgLow;
+  var card=document.getElementById('quizCard');
+  card.innerHTML='<div class="quiz-score">'+
+  '<div class="quiz-score-num">'+quizState.score+'/'+data.length+'</div>'+
+  '<div class="quiz-score-label">'+t.quizCorrectLabel+'</div>'+
+  '<div class="quiz-score-msg">'+msg+'</div>'+
+  '<button class="quiz-retry" onclick="initQuiz()"><i class="ti ti-refresh"></i> '+t.quizRetry+'</button>'+
+  '</div>';
+}
+
+/* i18n / theme */
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.querySelectorAll('[data-svg]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-svg')];if(v!=null)e.textContent=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.querySelectorAll('.sys-card').forEach(function(card){
+    var hint=card.querySelector('.sys-click');
+    if(hint)hint.textContent=card.classList.contains('expanded')?DICT[LANG].sysClickClose:DICT[LANG].sysClickOpen;
+  });
+  initQuiz();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

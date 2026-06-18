@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Struttura Cartelle — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+/* ===== TREE ===== */
+.tree-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px}
+.tree{font-family:var(--mono);font-size:14px}
+.tree-item{display:flex;align-items:center;gap:10px;padding:8px 8px;cursor:pointer;transition:.18s;border-radius:var(--r)}
+.tree-item:hover{background:var(--bg-2)}
+.tree-item.active{background:var(--accent-soft)}
+.tree-indent{display:inline-block;width:22px;flex-shrink:0}
+.tree-icon{font-size:18px;flex-shrink:0}
+.tree-icon.folder{color:var(--warn)}
+.tree-icon.file{color:var(--accent)}
+.tree-name{font-weight:600;color:var(--ink)}
+.tree-desc{font-family:var(--sans);font-size:12px;color:var(--ink-3);margin-left:auto;padding-left:16px;white-space:nowrap}
+.tree-children{padding-left:22px;border-left:1px dashed var(--line-2);margin-left:14px}
+.tree-sub{font-size:13px;color:var(--ink-2)}
+.detail-panel{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:18px 22px;margin-top:16px;min-height:84px;transition:.3s}
+.detail-panel h4{font-size:14px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.detail-panel h4 i{font-size:18px}
+.detail-panel p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+/* ===== PRINCIPLES ===== */
+.principles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.principle{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;transition:.18s}
+.principle:hover{border-color:var(--line-2)}
+.principle-num{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;margin-bottom:12px}
+.principle:nth-child(1) .principle-num{background:var(--accent-soft);color:var(--accent)}
+.principle:nth-child(2) .principle-num{background:var(--blue-soft);color:var(--blue)}
+.principle:nth-child(3) .principle-num{background:var(--warn-soft);color:var(--warn)}
+.principle:nth-child(4) .principle-num{background:var(--teal-soft);color:var(--teal)}
+.principle h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.principle p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* ===== NAMING ===== */
+.naming-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.naming-card{border-radius:var(--r-l);padding:20px;box-shadow:var(--sh)}
+.naming-card.bad{background:var(--bad-soft);border:1px solid var(--bad-line)}
+.naming-card.good{background:var(--good-soft);border:1px solid var(--good-line)}
+.naming-card h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:13px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.naming-card.bad h4{color:var(--bad)}
+.naming-card.good h4{color:var(--good)}
+.naming-card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.naming-card li{font-family:var(--mono);font-size:13px;color:var(--ink-2);padding:6px 10px;background:var(--card);border-radius:6px}
+/* ===== NOTE / CALLOUT ===== */
+.note{display:flex;gap:18px;border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;align-items:flex-start}
+.note.accent{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.note.teal{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.note-ic{width:48px;height:48px;border-radius:12px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.note.accent .note-ic{background:var(--accent)}
+.note.teal .note-ic{background:var(--teal)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px}
+.note.accent h4{color:var(--accent)}.note.teal h4{color:var(--teal)}
+.note p{font-size:14px;color:var(--ink-2);line-height:1.65}
+.note p em{font-style:italic;color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.principles{grid-template-columns:1fr}.naming-compare{grid-template-columns:1fr}.tree-desc{display:none}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tree-box,.principle,.naming-card,.note,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.3</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Modulo 4 — CoWork</div>
+  <h1 class="rv" data-i="h1">Struttura Cartelle</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <!-- ===== 01 TREE ===== -->
+  <div class="sh rv"><i class="ti ti-folders"></i><span class="no">01</span><h2 data-i="s1">La struttura consigliata</h2></div>
+  <div class="tree-box rv">
+    <div class="tree">
+      <div class="tree-item" onclick="showDetail(0,this)">
+        <i class="ti ti-folder-filled tree-icon folder"></i>
+        <span class="tree-name">WORKSPACE/</span>
+        <span class="tree-desc" data-i="trd0"></span>
+      </div>
+      <div class="tree-children">
+        <div class="tree-item" onclick="showDetail(1,this)">
+          <i class="ti ti-folder-filled tree-icon folder"></i>
+          <span class="tree-name">01_PROGETTI/</span>
+          <span class="tree-desc" data-i="trd1"></span>
+        </div>
+        <div class="tree-children">
+          <div class="tree-item" onclick="showDetail(1,this)" style="opacity:.72"><span class="tree-indent"></span><i class="ti ti-folder tree-icon folder" style="font-size:15px"></i><span class="tree-sub">Cliente_A/</span></div>
+          <div class="tree-item" onclick="showDetail(1,this)" style="opacity:.72"><span class="tree-indent"></span><i class="ti ti-folder tree-icon folder" style="font-size:15px"></i><span class="tree-sub">Newsletter/</span></div>
+        </div>
+        <div class="tree-item" onclick="showDetail(2,this)">
+          <i class="ti ti-folder-filled tree-icon folder"></i>
+          <span class="tree-name">02_RISORSE/</span>
+          <span class="tree-desc" data-i="trd2"></span>
+        </div>
+        <div class="tree-children">
+          <div class="tree-item" onclick="showDetail(2,this)" style="opacity:.72"><span class="tree-indent"></span><i class="ti ti-folder tree-icon folder" style="font-size:15px"></i><span class="tree-sub">template/</span></div>
+          <div class="tree-item" onclick="showDetail(2,this)" style="opacity:.72"><span class="tree-indent"></span><i class="ti ti-folder tree-icon folder" style="font-size:15px"></i><span class="tree-sub">reference/</span></div>
+        </div>
+        <div class="tree-item" onclick="showDetail(3,this)">
+          <i class="ti ti-folder-filled tree-icon folder"></i>
+          <span class="tree-name">03_OUTPUT/</span>
+          <span class="tree-desc" data-i="trd3"></span>
+        </div>
+        <div class="tree-item" onclick="showDetail(4,this)">
+          <i class="ti ti-folder-filled tree-icon folder"></i>
+          <span class="tree-name">04_ARCHIVIO/</span>
+          <span class="tree-desc" data-i="trd4"></span>
+        </div>
+        <div class="tree-item" onclick="showDetail(5,this)">
+          <i class="ti ti-file-text tree-icon file"></i>
+          <span class="tree-name">CLAUDE.md</span>
+          <span class="tree-desc" data-i="trd5"></span>
+        </div>
+      </div>
+    </div>
+    <div class="detail-panel" id="detailPanel">
+      <h4><i class="ti ti-info-circle" style="color:var(--accent)"></i> <span data-i="dpDefaultH"></span></h4>
+      <p data-i="dpDefaultP"></p>
+    </div>
+  </div>
+
+  <!-- ===== 02 PRINCIPLES ===== -->
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">02</span><h2 data-i="s2">I 4 principi</h2></div>
+  <div class="principles rv">
+    <div class="principle"><div class="principle-num">1</div><h4 data-i="p1H"></h4><p data-i="p1P"></p></div>
+    <div class="principle"><div class="principle-num">2</div><h4 data-i="p2H"></h4><p data-i="p2P"></p></div>
+    <div class="principle"><div class="principle-num">3</div><h4 data-i="p3H"></h4><p data-i="p3P"></p></div>
+    <div class="principle"><div class="principle-num">4</div><h4 data-i="p4H"></h4><p data-i="p4P"></p></div>
+  </div>
+
+  <!-- ===== 03 NAMING ===== -->
+  <div class="sh rv"><i class="ti ti-tag"></i><span class="no">03</span><h2 data-i="s3">Naming che funziona</h2></div>
+  <div class="naming-compare rv">
+    <div class="naming-card bad">
+      <h4><i class="ti ti-x"></i> <span data-i="nBadH"></span></h4>
+      <ul>
+        <li>Materiali_Marzo_v2_FINALE2/</li>
+        <li>Cose_per_il_sito_nuovo/</li>
+        <li>backup_old_stuff_2/</li>
+        <li>aaa_URGENTE/</li>
+      </ul>
+    </div>
+    <div class="naming-card good">
+      <h4><i class="ti ti-check"></i> <span data-i="nGoodH"></span></h4>
+      <ul>
+        <li>Cliente_A/</li>
+        <li>Newsletter_2026/</li>
+        <li>Report_Vendite_Q1/</li>
+        <li>Rebrand_Sito/</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 04 CLAUDE.md ===== -->
+  <div class="sh rv"><i class="ti ti-file-code"></i><span class="no">04</span><h2 data-i="s4">CLAUDE.md — il cervello della workspace</h2></div>
+  <div class="note accent rv">
+    <div class="note-ic"><i class="ti ti-file-code"></i></div>
+    <div><h4 data-i="cmdH"></h4><p data-i="cmdP"></p></div>
+  </div>
+  <div class="note teal rv" style="margin-top:14px">
+    <div class="note-ic"><i class="ti ti-wand"></i></div>
+    <div><h4 data-i="buildH"></h4><p data-i-html="buildP"></p></div>
+  </div>
+
+  <!-- ===== 05 IN UNA FRASE ===== -->
+  <div class="sh rv"><i class="ti ti-diamond"></i><span class="no">05</span><h2 data-i="s5">In una frase</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Struttura Cartelle</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.3',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Modulo 4 — CoWork',
+h1:'Struttura Cartelle',
+lede:'Una workspace organizzata non è estetica. È la fondamenta su cui Claude lavora in modo efficace.',
+s1:'La struttura consigliata',
+trd0:'la vostra cartella di lavoro',
+trd1:'lavoro attivo',
+trd2:'template e reference',
+trd3:'output di Claude',
+trd4:'completato',
+trd5:'istruzioni per Claude',
+dpDefaultH:'Clicca una cartella per i dettagli',
+dpDefaultP:'Ogni elemento della struttura ha uno scopo preciso. Esplora l’albero per scoprirlo.',
+s2:'I 4 principi',
+p1H:'Attivi vs Archivio',p1P:'Quello in lavorazione sta in PROGETTI. Quello finito va in ARCHIVIO. Claude non deve cercare tra lavoro vecchio e nuovo.',
+p2H:'Nomi chiari e consistenti',p2P:'Le cartelle hanno nomi che si capiscono a prima vista. Niente "v2_FINALE2" — nomi semplici e descrittivi.',
+p3H:'Un posto per ogni tipo',p3P:'Template in RISORSE. Output di Claude in OUTPUT. Input del cliente nella cartella progetto. Ogni cosa ha la sua casa.',
+p4H:'Struttura piatta',p4P:'Tre livelli al massimo. Evitate catene infinite di sottocartelle. Più è profondo, più diventa difficile da mantenere.',
+s3:'Naming che funziona',
+nBadH:'Da evitare',nGoodH:'Funziona',
+s4:'CLAUDE.md — il cervello della workspace',
+cmdH:'CLAUDE.md — il cervello della workspace',
+cmdP:'Il file dove scrivete le istruzioni permanenti per Claude: chi siete, come lavorate, le convenzioni di naming, cosa fare e cosa non fare. Claude lo legge ogni volta che inizia una sessione. È la versione CoWork delle istruzioni del Project.',
+buildH:'Non devi costruirla a mano',
+buildP:'La cosa più comoda: questa struttura te la fa creare CoWork in dieci secondi. Apri la workspace e scrivi — <em>"Crea questa struttura di cartelle: 01_PROGETTI, 02_RISORSE (con dentro template e reference), 03_OUTPUT, 04_ARCHIVIO, più un file CLAUDE.md con le istruzioni base."</em> E te la costruisce lui, già pronta.',
+s5:'In una frase',
+keyPhrase:'«L’ordine non è estetica. È efficienza. Più la struttura è logica, più Claude riesce a orientarsi e produrre nel posto giusto.»',
+foot:'Morfeus — Struttura Cartelle',
+details:[
+{icon:'ti-home',color:'var(--teal)',title:'WORKSPACE',text:'La cartella radice che condividete con CoWork. Tutto il lavoro avviene qui dentro. Selezionatela al primo avvio di CoWork.'},
+{icon:'ti-briefcase',color:'var(--warn)',title:'01_PROGETTI',text:'Una sottocartella per ogni progetto attivo. Qui vivono i file in lavorazione, gli input dal cliente, le bozze. Quando un progetto finisce, lo spostate in ARCHIVIO.'},
+{icon:'ti-book',color:'var(--blue)',title:'02_RISORSE',text:'Template riusabili, materiali di reference, guide, brand kit. Tutto quello che non cambia spesso e serve a più progetti.'},
+{icon:'ti-package',color:'var(--teal)',title:'03_OUTPUT',text:'Dove Claude deposita i file che produce. Li revisionate qui, poi li spostate nel progetto giusto. È la "inbox" del lavoro di Claude.'},
+{icon:'ti-archive',color:'var(--ink-3)',title:'04_ARCHIVIO',text:'Lavoro completato. Non più attivo ma disponibile se serve. Claude non lo cerca di default — meno rumore, più focus.'},
+{icon:'ti-file-code',color:'var(--accent)',title:'CLAUDE.md',text:'Le istruzioni permanenti per Claude in questa workspace. Chi siete, come lavorate, convenzioni di naming, regole. Claude lo legge a ogni sessione.'}
+]
+},
+en:{
+kicker:'Lesson 4.3',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Module 4 — CoWork',
+h1:'Folder Structure',
+lede:'An organized workspace isn’t about looks. It’s the foundation on which Claude works effectively.',
+s1:'The recommended structure',
+trd0:'your working folder',
+trd1:'active work',
+trd2:'templates and reference',
+trd3:'Claude’s output',
+trd4:'completed',
+trd5:'instructions for Claude',
+dpDefaultH:'Click a folder for the details',
+dpDefaultP:'Every element of the structure has a precise purpose. Explore the tree to discover it.',
+s2:'The 4 principles',
+p1H:'Active vs Archive',p1P:'What’s in progress stays in PROJECTS. What’s finished goes to ARCHIVE. Claude shouldn’t have to search between old and new work.',
+p2H:'Clear, consistent names',p2P:'Folders have names you understand at a glance. No "v2_FINAL2" — simple, descriptive names.',
+p3H:'A place for every type',p3P:'Templates in RESOURCES. Claude’s output in OUTPUT. Client input in the project folder. Everything has its home.',
+p4H:'Flat structure',p4P:'Three levels at most. Avoid endless chains of subfolders. The deeper it goes, the harder it gets to maintain.',
+s3:'Naming that works',
+nBadH:'To avoid',nGoodH:'Works',
+s4:'CLAUDE.md — the workspace’s brain',
+cmdH:'CLAUDE.md — the workspace’s brain',
+cmdP:'The file where you write the permanent instructions for Claude: who you are, how you work, the naming conventions, what to do and what not to do. Claude reads it every time it starts a session. It’s the CoWork version of the Project instructions.',
+buildH:'You don’t have to build it by hand',
+buildP:'The handiest part: CoWork creates this structure for you in ten seconds. Open the workspace and write — <em>"Create this folder structure: 01_PROJECTS, 02_RESOURCES (with template and reference inside), 03_OUTPUT, 04_ARCHIVE, plus a CLAUDE.md file with the base instructions."</em> And it builds it for you, ready to go.',
+s5:'In one sentence',
+keyPhrase:'"Order isn’t about looks. It’s efficiency. The more logical the structure, the more Claude can orient itself and produce in the right place."',
+foot:'Morfeus — Folder Structure',
+details:[
+{icon:'ti-home',color:'var(--teal)',title:'WORKSPACE',text:'The root folder you share with CoWork. All work happens inside here. Select it the first time you launch CoWork.'},
+{icon:'ti-briefcase',color:'var(--warn)',title:'01_PROJECTS',text:'A subfolder for each active project. Here live the files in progress, the input from the client, the drafts. When a project ends, you move it to ARCHIVE.'},
+{icon:'ti-book',color:'var(--blue)',title:'02_RESOURCES',text:'Reusable templates, reference materials, guides, brand kit. Everything that doesn’t change often and serves more than one project.'},
+{icon:'ti-package',color:'var(--teal)',title:'03_OUTPUT',text:'Where Claude deposits the files it produces. You review them here, then move them to the right project. It’s the "inbox" of Claude’s work.'},
+{icon:'ti-archive',color:'var(--ink-3)',title:'04_ARCHIVE',text:'Completed work. No longer active but available if needed. Claude doesn’t search it by default — less noise, more focus.'},
+{icon:'ti-file-code',color:'var(--accent)',title:'CLAUDE.md',text:'The permanent instructions for Claude in this workspace. Who you are, how you work, naming conventions, rules. Claude reads it every session.'}
+]
+}};
+
+var LANG='it';
+var lastDetail=-1;
+
+function showDetail(idx,el){
+  document.querySelectorAll('.tree-item').forEach(function(t){t.classList.remove('active')});
+  if(el)el.classList.add('active');
+  lastDetail=idx;
+  var d=DICT[LANG].details[idx],p=document.getElementById('detailPanel');
+  p.innerHTML='<h4><i class="ti '+d.icon+'" style="color:'+d.color+'"></i> '+d.title+'</h4><p>'+d.text+'</p>';
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  if(lastDetail>=0)showDetail(lastDetail,null);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAUDE.md, Front Matter e Memoria — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--teal:#1d9e75;--teal-soft:#e1f5ee;--teal-line:#9fe1cb;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#fac775;
+--green:#6BA32E;--green-soft:#eaf3de;--green-line:#c0dd97;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--teal:#5dcaa5;--teal-soft:#04342c;--teal-line:#0f6e56;
+--blue:#85b7eb;--blue-soft:#042c53;--blue-line:#185fa5;
+--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--green:#97c459;--green-soft:#173404;--green-line:#2a4f0c;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+/* note / hook */
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.tbl th{text-align:left;padding:11px 13px;font-family:var(--mono);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line-2);white-space:nowrap}
+.tbl td{padding:11px 13px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}.tbl .fn{font-weight:600;color:var(--ink)}
+.tblw{overflow-x:auto}
+/* code block */
+.code{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;color:var(--ink-2);white-space:pre-wrap;line-height:1.78;overflow-x:auto}
+.code .hh{color:var(--accent);font-weight:700}.code .ht{color:var(--teal);font-weight:600}.code .hd{color:var(--ink-3);font-style:italic}
+/* tip / warn */
+.tip{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.tip>i{color:var(--teal);font-size:21px;flex-shrink:0}.tip h4{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:4px}.tip p{font-size:13.5px;color:var(--ink-2)}
+.warn{display:flex;gap:14px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:var(--r-l);padding:18px;margin-top:14px}
+.warn>i{color:var(--amber);font-size:21px;flex-shrink:0}.warn h4{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:4px}.warn p{font-size:13.5px;color:var(--ink-2)}
+/* feature rows */
+.feat{display:flex;flex-direction:column;gap:8px}
+.feat-row{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
+.feat-row .fi{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feat-row .ft strong{font-size:14px;font-weight:600;display:block;margin-bottom:2px}.feat-row .ft span{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+/* scenario */
+.scen{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;margin-bottom:10px}
+.scen .si{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.scen.good{border-color:var(--teal-line)}.scen.good .si{background:var(--teal-soft);color:var(--teal)}
+.scen.bad{border-color:var(--bad-line)}.scen.bad .si{background:var(--bad-soft);color:var(--bad)}
+.scen h4{font-size:14px;font-weight:600;margin-bottom:3px}.scen p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.42;color:var(--accent);max-width:620px;margin:0 auto;letter-spacing:-.01em}
+/* ===== interactive CLAUDE.md preview ===== */
+.cmd-lab{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cmd-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmd-panel h4{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.cmd-toggle{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:var(--r);border:1px solid var(--line);margin-bottom:9px;cursor:pointer;transition:.18s;background:var(--bg-2)}
+.cmd-toggle:hover{border-color:var(--line-2)}
+.cmd-toggle.on{border-color:var(--accent);background:var(--accent-soft)}
+.cmd-toggle .sw{width:34px;height:20px;border-radius:20px;background:var(--line-2);position:relative;flex-shrink:0;transition:background .2s;margin-top:1px}
+.cmd-toggle .sw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.cmd-toggle.on .sw{background:var(--accent)}
+.cmd-toggle.on .sw::after{transform:translateX(14px)}
+.cmd-toggle .tg-text strong{font-size:13px;font-weight:600;display:block;color:var(--ink)}
+.cmd-toggle .tg-text span{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.cmd-read{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;font-size:13px;line-height:1.6}
+.cmd-read .cr-head{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cmd-read .cr-line{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);color:var(--ink-2);animation:crIn .35s ease}
+.cmd-read .cr-line:last-child{border-bottom:none}
+.cmd-read .cr-line i{color:var(--teal);font-size:14px;margin-top:2px;flex-shrink:0}
+.cmd-read .cr-line b{color:var(--ink);font-weight:600}
+.cmd-read .cr-empty{color:var(--ink-3);font-style:italic;font-size:12.5px;padding:8px 0}
+@keyframes crIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+/* ===== front matter builder ===== */
+.fmb{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fmb-form{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.fmb-form label{display:block;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:700;margin:13px 0 6px}
+.fmb-form label:first-child{margin-top:0}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chipset .chip{background:var(--bg-2);border:1px solid var(--line);border-radius:30px;padding:6px 12px;font-size:12.5px;color:var(--ink-2);cursor:pointer;transition:.16s;font-family:var(--sans)}
+.chipset .chip:hover{border-color:var(--line-2)}
+.chipset .chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.fmb-out{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:1.85;color:var(--ink-2);white-space:pre-wrap;word-break:break-word}
+.fmb-out .hd{color:var(--ink-3);font-style:italic}
+.fmb-out .ht{color:var(--teal);font-weight:600}
+/* ===== convergence visual ===== */
+.conv{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px 20px 22px}
+.conv-stage{position:relative;width:100%;max-width:560px;margin:0 auto}
+.conv-stage svg{display:block;width:100%;height:auto}
+.conv-path{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;opacity:.25}
+.conv-path.flow{stroke-dasharray:6 8;animation:dash 1.1s linear infinite;opacity:.7}
+@keyframes dash{to{stroke-dashoffset:-28}}
+.conv-dot{fill:var(--accent);opacity:0}
+.conv-center circle{transition:all .5s cubic-bezier(.34,1.56,.64,1)}
+.conv-center.pulse circle{filter:drop-shadow(0 0 10px var(--accent))}
+.conv-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.conv-chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:5px 11px;border-radius:20px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-2)}
+.conv-chip i{font-size:13px}
+.conv-chip.c1 i{color:var(--accent)}.conv-chip.c2 i{color:var(--teal)}.conv-chip.c3 i{color:var(--amber)}
+.conv-controls{text-align:center;margin-top:18px}
+.conv-btn{background:var(--accent);color:#fff;border:none;border-radius:var(--r);padding:11px 22px;font-size:14px;font-weight:600;font-family:var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:filter .2s,transform .1s}
+.conv-btn:hover{filter:brightness(1.08)}.conv-btn:active{transform:scale(.97)}
+.conv-btn:disabled{opacity:.5;cursor:default}
+.conv-speech{max-width:480px;margin:0 auto;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s ease,opacity .4s ease}
+.conv-speech.show{max-height:420px;opacity:1;padding:16px 18px;margin-top:18px}
+.conv-speech .sp-head{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.conv-speech .sp-line{font-size:13px;color:var(--ink-2);line-height:1.6;padding:5px 0;display:flex;gap:9px;align-items:flex-start;opacity:0;transform:translateY(4px);animation:spIn .4s ease forwards}
+.conv-speech .sp-line i{color:var(--teal);font-size:14px;margin-top:2px;flex-shrink:0}
+.conv-speech .sp-line b{color:var(--ink);font-weight:600}
+@keyframes spIn{to{opacity:1;transform:none}}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;text-align:center}
+.cp .cpi{font-size:38px;color:var(--accent);display:block;margin-bottom:12px}
+.cp h4{font-size:16px;font-weight:600;margin-bottom:10px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:540px;margin:0 auto;line-height:1.7}.cp p strong{color:var(--ink);font-weight:700}
+.done{background:var(--teal-soft);border:1px solid var(--teal-line);border-radius:var(--r-l);padding:22px;text-align:center;margin-top:14px}
+.done .dk{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:6px}
+.done p{font-size:14.5px;color:var(--ink);font-weight:500;max-width:560px;margin:0 auto;line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmd-lab,.fmb{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.tbl,.code,.tip,.warn,.feat-row,.scen,.key,.cmd-panel,.fmb-form,.fmb-out,.conv,.cp,.done{break-inside:avoid;box-shadow:none!important}.conv-speech{max-height:none!important;opacity:1!important;padding:16px 18px!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 5.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Workspace avanzato</div>
+  <h1 class="rv" data-i="h1">CLAUDE.md, Front Matter e Memoria</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="note rv" style="margin-top:28px"><div class="ni"><i class="ti ti-quote"></i></div><div><h4 data-i="hookH">L'idea</h4><p data-i="hookP"></p></div></div>
+
+  <!-- 01 — CLAUDE.md -->
+  <div class="sh rv"><i class="ti ti-file-code"></i><span class="no">01</span><h2 data-i="s1">Il file CLAUDE.md</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cmdIntro"></p>
+  <div class="tblw rv">
+    <table class="tbl">
+      <thead><tr><th></th><th data-i="thProj">Istruzioni Project</th><th data-i="thCmd">CLAUDE.md</th></tr></thead>
+      <tbody id="cmdCompare"></tbody>
+    </table>
+  </div>
+
+  <!-- 02 — cosa scrivere -->
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">02</span><h2 data-i="s2">Cosa scrivere nel CLAUDE.md</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="writeIntro"></p>
+  <div class="code rv" id="cmdCode"></div>
+  <div class="tip rv"><i class="ti ti-bulb"></i><div><h4 data-i="testH">Il test del CLAUDE.md</h4><p data-i="testP"></p></div></div>
+
+  <!-- 03 — interactive preview -->
+  <div class="sh rv"><i class="ti ti-adjustments-alt"></i><span class="no">03</span><h2 data-i="s3">Provalo: ogni sezione cambia ciò che Claude sa</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cmdLabIntro"></p>
+  <div class="cmd-lab rv">
+    <div class="cmd-panel">
+      <h4><i class="ti ti-file-code"></i> <span data-i="cmdLabPanelH">Sezioni del tuo CLAUDE.md</span></h4>
+      <div id="cmdToggles"></div>
+    </div>
+    <div class="cmd-panel" style="padding:0;background:transparent;border:none;box-shadow:none">
+      <div class="cmd-read" id="cmdRead"></div>
+    </div>
+  </div>
+
+  <!-- 04 — front matter -->
+  <div class="sh rv"><i class="ti ti-tag"></i><span class="no">04</span><h2 data-i="s4">Front Matter: la carta d'identità dei file</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="fmIntro"></p>
+  <div class="code rv" id="fmCode"></div>
+  <p class="lede rv" style="font-size:14.5px;margin:16px 0" data-i="fmExplain"></p>
+
+  <!-- 05 — front matter builder -->
+  <div class="sh rv"><i class="ti ti-forms"></i><span class="no">05</span><h2 data-i="s5">Costruisci il tuo front matter</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="fmbIntro"></p>
+  <div class="fmb rv">
+    <div class="fmb-form">
+      <label data-i="lblTitolo">Titolo</label>
+      <div class="chipset" id="fmTitolo"></div>
+      <label data-i="lblTipo">Tipo</label>
+      <div class="chipset" id="fmTipo"></div>
+      <label data-i="lblStato">Stato</label>
+      <div class="chipset" id="fmStato"></div>
+      <label data-i="lblData">Data</label>
+      <div class="chipset" id="fmData"></div>
+      <label data-i="lblStep">Prossimo step</label>
+      <div class="chipset" id="fmStep"></div>
+    </div>
+    <div class="fmb-out" id="fmOut"></div>
+  </div>
+
+  <!-- 06 — quando usare il front matter -->
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">06</span><h2 data-i="s6">Quando usare il front matter</h2></div>
+  <div class="rv" id="scenarios"></div>
+
+  <!-- 07 — auto-memory -->
+  <div class="sh rv"><i class="ti ti-sparkles"></i><span class="no">07</span><h2 data-i="s7">Auto-memory: Claude che impara da solo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="amIntro"></p>
+  <div class="feat rv" id="amFeat"></div>
+  <div class="warn rv"><i class="ti ti-alert-triangle"></i><div><h4 data-i="amWarnH">Tenete d'occhio la memoria</h4><p data-i="amWarnP"></p></div></div>
+
+  <!-- 08 — il sistema completo -->
+  <div class="sh rv"><i class="ti ti-layers-intersect"></i><span class="no">08</span><h2 data-i="s8">Il sistema completo di memoria</h2></div>
+  <div class="key rv"><p data-i="keyPhrase"></p></div>
+  <p class="lede rv" style="font-size:14.5px;margin:20px 0 16px" data-i-html="convIntro"></p>
+
+  <div class="conv rv">
+    <div class="conv-stage">
+      <svg viewBox="0 0 560 260" role="img" aria-label="Tre layer di memoria che convergono verso Claude">
+        <path class="conv-path" id="cp1" d="M 80 50 C 200 50, 240 130, 280 130"/>
+        <path class="conv-path" id="cp2" d="M 80 130 C 180 130, 200 130, 280 130"/>
+        <path class="conv-path" id="cp3" d="M 80 210 C 200 210, 240 130, 280 130"/>
+        <circle class="conv-dot" id="cd1" r="4.5"/>
+        <circle class="conv-dot" id="cd2" r="4.5"/>
+        <circle class="conv-dot" id="cd3" r="4.5"/>
+        <g class="conv-node" id="cn1">
+          <circle cx="48" cy="50" r="22" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="48" y="55" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="15" font-weight="600" fill="var(--accent)">md</text>
+        </g>
+        <g class="conv-node" id="cn2">
+          <circle cx="48" cy="130" r="22" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.5"/>
+          <text x="48" y="136" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="600" fill="var(--teal)">#</text>
+        </g>
+        <g class="conv-node" id="cn3">
+          <circle cx="48" cy="210" r="22" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="48" y="217" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="600" fill="var(--amber)">&#9733;</text>
+        </g>
+        <text x="80" y="22" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="11" fill="var(--ink-3)">CLAUDE.md</text>
+        <text x="80" y="102" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="11" fill="var(--ink-3)">front matter</text>
+        <text x="80" y="182" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="11" fill="var(--ink-3)">auto-memory</text>
+        <g class="conv-center" id="cnC">
+          <circle cx="320" cy="130" r="40" fill="var(--bg-2)" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="320" cy="124" r="15" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <line x1="320" y1="124" x2="320" y2="110" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="320" y1="124" x2="330" y2="124" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="320" y="192" text-anchor="middle" font-family="-apple-system,system-ui,sans-serif" font-size="13" font-weight="500" fill="var(--ink)">Claude</text>
+        </g>
+      </svg>
+    </div>
+    <div class="conv-legend">
+      <span class="conv-chip c1"><i class="ti ti-file-code"></i> <span data-i="chip1"></span></span>
+      <span class="conv-chip c2"><i class="ti ti-tag"></i> <span data-i="chip2"></span></span>
+      <span class="conv-chip c3"><i class="ti ti-sparkles"></i> <span data-i="chip3"></span></span>
+    </div>
+    <div class="conv-controls">
+      <button class="conv-btn" id="convBtn" onclick="runConvergence()"><i class="ti ti-player-play"></i> <span data-i="convStart">Avvia sessione</span></button>
+    </div>
+    <div class="conv-speech" id="convSpeech">
+      <div class="sp-head"><i class="ti ti-message-circle"></i> <span data-i="convSpeechH">Claude, all'avvio della sessione:</span></div>
+      <div id="convSpeechBody"></div>
+    </div>
+  </div>
+
+  <div class="tblw rv" style="margin-top:20px">
+    <table class="tbl">
+      <thead><tr><th data-i="thLayer">Layer</th><th data-i="thWho">Chi lo scrive</th><th data-i="thWhat">Cosa contiene</th><th data-i="thWhere">Dove vive</th></tr></thead>
+      <tbody id="sysTable"></tbody>
+    </table>
+  </div>
+
+  <!-- 09 — checkpoint -->
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-checkbox cpi"></i>
+    <h4 data-i="cpH">Tre azioni dopo questa lezione.</h4>
+    <p data-i-html="cpP"></p>
+  </div>
+  <div class="done rv">
+    <div class="dk"><i class="ti ti-circle-check"></i> <span data-i="doneK">Modulo 5 completato</span></div>
+    <p data-i="doneP"></p>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — CLAUDE.md, Front Matter e Memoria</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 5.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Workspace avanzato',
+h1:'CLAUDE.md, Front Matter e Memoria',
+lede:'L\'ultimo pezzo del puzzle: come dare a Claude una memoria strutturata che lo rende un collaboratore che vi conosce davvero, non un visitatore che riparte da zero.',
+hookH:'L\'idea',
+hookP:'I Projects hanno le istruzioni. CoWork ha qualcosa di equivalente ma più profondo: il file CLAUDE.md. E dentro i documenti, c\'è una tecnica che aiuta Claude a navigare il vostro lavoro senza dover leggere tutto: il front matter.',
+s1:'Il file CLAUDE.md',
+cmdIntro:'Il CLAUDE.md è un file markdown nella root della vostra workspace. Claude lo legge automaticamente a ogni sessione in CoWork. È l\'equivalente delle istruzioni del Project, ma per l\'intero ambiente di lavoro. Se le istruzioni del Project sono il brief di un singolo progetto, il CLAUDE.md è il manuale operativo dell\'intera organizzazione.',
+thProj:'Istruzioni Project',thCmd:'CLAUDE.md',
+s2:'Cosa scrivere nel CLAUDE.md',
+writeIntro:'5 sezioni. Non serve un romanzo: anche 20 righe funzionano. Si affina nel tempo con il loop di miglioramento <strong>(lezione 5.4)</strong>.',
+testH:'Il test del CLAUDE.md',
+testP:'Aprite una nuova sessione in CoWork e chiedete "cosa sai di me e del mio workspace?" Se Claude risponde con i dettagli del CLAUDE.md senza che voi abbiate detto nulla, funziona.',
+s3:'Provalo: ogni sezione cambia ciò che Claude sa',
+cmdLabIntro:'Accendi e spegni le sezioni del CLAUDE.md. A destra vedi in tempo reale cosa Claude "sa" — e come cambia il modo in cui risponde. È l\'effetto cumulativo: ogni riga aggiunge un pezzo di contesto.',
+cmdLabPanelH:'Sezioni del tuo CLAUDE.md',
+s4:'Front Matter: la carta d\'identità dei file',
+fmIntro:'Il front matter è un blocco di metadati all\'inizio di un file. Dice a Claude cosa è il file, per chi è, a che punto è, senza dover leggere tutto il contenuto. Quando avete 50+ file nella workspace, il front matter è la differenza tra un Claude che naviga e uno che annaspa.',
+fmExplain:'Claude vede questo header e sa immediatamente: cosa è il file, chi è il destinatario, che è una bozza, cosa deve succedere dopo. Senza leggere il corpo del documento.',
+s5:'Costruisci il tuo front matter',
+fmbIntro:'Compila i campi: il blocco si genera dal vivo, pronto da incollare in cima a un documento.',
+lblTitolo:'Titolo',lblTipo:'Tipo',lblStato:'Stato',lblData:'Data',lblStep:'Prossimo step (opzionale)',
+s6:'Quando usare il front matter',
+s7:'Auto-memory: Claude che impara da solo',
+amIntro:'Oltre al CLAUDE.md (che scrivete voi) e al front matter (che mettete nei documenti), c\'è un terzo layer: la memoria automatica. Claude accumula osservazioni durante il lavoro: preferenze notate, pattern ricorrenti, informazioni che ritornano spesso.',
+amWarnH:'Tenete d\'occhio la memoria',
+amWarnP:'Periodicamente controllate cosa Claude ha memorizzato. Se ci sono informazioni obsolete o sbagliate, aggiornatele. Una memoria vecchia produce risposte basate su una realtà che non esiste più.',
+s8:'Il sistema completo di memoria',
+keyPhrase:'CLAUDE.md è la carta d\'identità del vostro workspace. Il front matter è la carta d\'identità di ogni file. La auto-memory è ciò che Claude impara osservandovi. Insieme, costruiscono un sistema dove Claude naviga il vostro lavoro come un collaboratore che lo conosce davvero.',
+convIntro:'Non sono tre concetti paralleli. All\'inizio di ogni sessione <strong>confluiscono</strong> in un\'unica identità di Claude. Premi il bottone e guarda i tre layer fluire verso il centro.',
+chip1:'CLAUDE.md · chi siete / come lavorate',
+chip2:'front matter · cos\'è ogni file',
+chip3:'auto-memory · cosa ha imparato',
+convStart:'Avvia sessione',
+convSpeechH:'Claude, all\'avvio della sessione:',
+thLayer:'Layer',thWho:'Chi lo scrive',thWhat:'Cosa contiene',thWhere:'Dove vive',
+s9:'Checkpoint',
+cpH:'Tre azioni dopo questa lezione.',
+cpP:'<strong>1.</strong> Create il file CLAUDE.md nella root della vostra workspace. Anche 10 righe bastano.<br><strong>2.</strong> Prendete un documento importante e aggiungete un front matter semplice (titolo, tipo, stato, data).<br><strong>3.</strong> Tornate su entrambi tra un mese e aggiungete quello che avete imparato nel frattempo.',
+doneK:'Modulo 5 completato',
+doneP:'Sapete strutturare il contesto, organizzare la workspace come sistema, migliorare le istruzioni nel tempo, e dare a Claude una memoria strutturata. Il Modulo 6 va oltre Claude stesso: Skills, Plugin, e connessioni al mondo esterno.',
+foot:'Morfeus — CLAUDE.md, Front Matter e Memoria'
+},
+en:{
+kicker:'Lesson 5.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Advanced workspace',
+h1:'CLAUDE.md, Front Matter and Memory',
+lede:'The last piece of the puzzle: how to give Claude a structured memory that turns it into a collaborator who truly knows you, not a visitor starting from scratch.',
+hookH:'The idea',
+hookP:'Projects have instructions. CoWork has something equivalent but deeper: the CLAUDE.md file. And inside your documents, there\'s a technique that helps Claude navigate your work without having to read everything: front matter.',
+s1:'The CLAUDE.md file',
+cmdIntro:'CLAUDE.md is a markdown file in the root of your workspace. Claude reads it automatically at every session in CoWork. It\'s the equivalent of Project instructions, but for the entire work environment. If Project instructions are the brief for a single project, CLAUDE.md is the operating manual for the whole organization.',
+thProj:'Project Instructions',thCmd:'CLAUDE.md',
+s2:'What to write in CLAUDE.md',
+writeIntro:'5 sections. You don\'t need a novel: even 20 lines work. It gets refined over time with the improvement loop <strong>(lesson 5.4)</strong>.',
+testH:'The CLAUDE.md test',
+testP:'Open a new session in CoWork and ask "what do you know about me and my workspace?" If Claude answers with the details from CLAUDE.md without you saying anything, it works.',
+s3:'Try it: each section changes what Claude knows',
+cmdLabIntro:'Turn the CLAUDE.md sections on and off. On the right you see in real time what Claude "knows" — and how it changes the way it responds. It\'s the cumulative effect: every line adds a piece of context.',
+cmdLabPanelH:'Your CLAUDE.md sections',
+s4:'Front Matter: the ID card of your files',
+fmIntro:'Front matter is a block of metadata at the start of a file. It tells Claude what the file is, who it\'s for, what stage it\'s at, without having to read the whole content. When you have 50+ files in the workspace, front matter is the difference between a Claude that navigates and one that flounders.',
+fmExplain:'Claude sees this header and immediately knows: what the file is, who the recipient is, that it\'s a draft, what needs to happen next. Without reading the body of the document.',
+s5:'Build your front matter',
+fmbIntro:'Fill in the fields: the block generates live, ready to paste at the top of a document.',
+lblTitolo:'Title',lblTipo:'Type',lblStato:'Status',lblData:'Date',lblStep:'Next step (optional)',
+s6:'When to use front matter',
+s7:'Auto-memory: Claude that learns on its own',
+amIntro:'Beyond CLAUDE.md (which you write) and front matter (which you put in documents), there\'s a third layer: automatic memory. Claude accumulates observations while working: preferences noticed, recurring patterns, information that comes up often.',
+amWarnH:'Keep an eye on the memory',
+amWarnP:'Periodically check what Claude has stored. If there\'s outdated or wrong information, update it. An old memory produces answers based on a reality that no longer exists.',
+s8:'The complete memory system',
+keyPhrase:'CLAUDE.md is the ID card of your workspace. Front matter is the ID card of every file. Auto-memory is what Claude learns by observing you. Together, they build a system where Claude navigates your work like a collaborator who truly knows it.',
+convIntro:'They\'re not three parallel concepts. At the start of every session they <strong>converge</strong> into a single identity of Claude. Press the button and watch the three layers flow toward the center.',
+chip1:'CLAUDE.md · who you are / how you work',
+chip2:'front matter · what each file is',
+chip3:'auto-memory · what it has learned',
+convStart:'Start session',
+convSpeechH:'Claude, at the start of the session:',
+thLayer:'Layer',thWho:'Who writes it',thWhat:'What it contains',thWhere:'Where it lives',
+s9:'Checkpoint',
+cpH:'Three actions after this lesson.',
+cpP:'<strong>1.</strong> Create the CLAUDE.md file in the root of your workspace. Even 10 lines are enough.<br><strong>2.</strong> Take an important document and add a simple front matter (title, type, status, date).<br><strong>3.</strong> Come back to both in a month and add what you\'ve learned in the meantime.',
+doneK:'Module 5 completed',
+doneP:'You know how to structure context, organize your workspace as a system, improve instructions over time, and give Claude a structured memory. Module 6 goes beyond Claude itself: Skills, Plugins, and connections to the outside world.',
+foot:'Morfeus — CLAUDE.md, Front Matter and Memory'
+}};
+
+/* CLAUDE.md vs Project comparison rows */
+var CMDCOMP={it:[
+['Scope','Un singolo Project','L\'intera workspace'],
+['Dove vive','Dentro il Project','Root della workspace'],
+['Cosa contiene','Contesto specifico di quel lavoro','Chi sei, come lavori, regole globali, mappa della struttura'],
+['Quando si legge','Nelle chat di quel Project','In ogni sessione CoWork'],
+['Superficie','claude.ai Projects','CoWork / Claude Code']
+],en:[
+['Scope','A single Project','The entire workspace'],
+['Where it lives','Inside the Project','Root of the workspace'],
+['What it contains','Context specific to that work','Who you are, how you work, global rules, structure map'],
+['When it\'s read','In that Project\'s chats','In every CoWork session'],
+['Surface','claude.ai Projects','CoWork / Claude Code']
+]};
+
+/* CLAUDE.md example code */
+var CMDCODE={it:'<span class="hh"># Chi sono</span>\nSono Chiara, consulente di strategia digitale per PMI italiane.\nLavoro su: piani marketing, analisi competitive, formazione team.\n\n<span class="hh"># Come lavoro</span>\n- Mattina: produzione focalizzata (contenuti, analisi, deliverable)\n- Pomeriggio: comunicazione, call, task operativi\n- Uso CoWork per: creazione documenti, ricerche strutturate, organizzazione file\n\n<span class="hh"># Struttura workspace</span>\n- 00_SYSTEM/ → regole, routing, mappa (non toccare senza conferma)\n- 01_AGENZIA/ → la mia agenzia, brand, marketing, progetti\n- 02_CLIENTI/ → un folder per cliente (nome_cliente/)\n- 03_PERSONAL_BRAND/ → newsletter, LinkedIn, contenuti personali\n- 99_ARCHIVE/ → lavoro completato (mai eliminare, solo archiviare)\n\n<span class="hh"># Convenzioni di naming</span>\n- Cartelle top-level: NN_NOME (prefisso numerico)\n- File: kebab-case o Titolo-Leggibile\n- Date: sempre ISO 2026-06-02, mai "ieri" o "oggi"\n- Archivio: data-progetto-descrizione\n\n<span class="hh"># Note importanti</span>\n- Non modificare file in 99_ARCHIVE senza conferma esplicita\n- Quando crei documenti Word, usa header numerati\n- Se non sai dove mettere un file, consulta ROUTER.md',
+en:'<span class="hh"># Who I am</span>\nI\'m Chiara, a digital strategy consultant for Italian SMEs.\nI work on: marketing plans, competitive analyses, team training.\n\n<span class="hh"># How I work</span>\n- Morning: focused production (content, analysis, deliverables)\n- Afternoon: communication, calls, operational tasks\n- I use CoWork for: document creation, structured research, file organization\n\n<span class="hh"># Workspace structure</span>\n- 00_SYSTEM/ → rules, routing, map (don\'t touch without confirmation)\n- 01_AGENZIA/ → my agency, brand, marketing, projects\n- 02_CLIENTI/ → one folder per client (client_name/)\n- 03_PERSONAL_BRAND/ → newsletter, LinkedIn, personal content\n- 99_ARCHIVE/ → completed work (never delete, only archive)\n\n<span class="hh"># Naming conventions</span>\n- Top-level folders: NN_NAME (numeric prefix)\n- Files: kebab-case or Readable-Title\n- Dates: always ISO 2026-06-02, never "yesterday" or "today"\n- Archive: date-project-description\n\n<span class="hh"># Important notes</span>\n- Don\'t modify files in 99_ARCHIVE without explicit confirmation\n- When you create Word documents, use numbered headers\n- If you don\'t know where to put a file, check ROUTER.md'};
+
+/* interactive CLAUDE.md preview */
+var CMD_TOGGLES={it:[
+['chi','# Chi sono','Chiara, consulente strategia digitale',true],
+['come','# Come lavoro','Ritmi, strumenti, abitudini',true],
+['struttura','# Struttura workspace','Mappa delle cartelle',false],
+['naming','# Convenzioni di naming','Come nomini file e date',false],
+['note','# Note importanti','Cosa evitare / regole rosse',false]
+],en:[
+['chi','# Who I am','Chiara, digital strategy consultant',true],
+['come','# How I work','Rhythms, tools, habits',true],
+['struttura','# Workspace structure','Folder map',false],
+['naming','# Naming conventions','How you name files and dates',false],
+['note','# Important notes','What to avoid / red rules',false]
+]};
+var CMD_READS={it:{
+chi:{i:'ti-user',t:'So che parlo con <b>Chiara</b>, consulente di strategia digitale per PMI: taro il linguaggio sul tuo settore, niente spiegazioni da principiante.'},
+come:{i:'ti-clock-hour-4',t:'So che la mattina produci e il pomeriggio comunichi: <b>non ti propongo call al mattino</b> e tengo i deliverable pronti quando servono.'},
+struttura:{i:'ti-folders',t:'Conosco la mappa delle cartelle: un nuovo file cliente lo metto in <b>02_CLIENTI/</b>, non a caso, e non tocco 00_SYSTEM.'},
+naming:{i:'ti-typography',t:'So come nomini: file in kebab-case e date sempre <b>ISO (2026-06-09)</b>, mai "ieri". Nessuna domanda su come chiamare le cose.'},
+note:{i:'ti-shield-check',t:'Conosco le regole rosse: <b>non modifico 99_ARCHIVE</b> senza conferma e uso header numerati nei Word. Lavoro nei tuoi paletti.'}
+},en:{
+chi:{i:'ti-user',t:'I know I\'m talking to <b>Chiara</b>, a digital strategy consultant for SMEs: I tune the language to your field, no beginner explanations.'},
+come:{i:'ti-clock-hour-4',t:'I know you produce in the morning and communicate in the afternoon: <b>I don\'t suggest calls in the morning</b> and I keep deliverables ready when you need them.'},
+struttura:{i:'ti-folders',t:'I know the folder map: a new client file goes in <b>02_CLIENTI/</b>, not randomly, and I don\'t touch 00_SYSTEM.'},
+naming:{i:'ti-typography',t:'I know how you name things: files in kebab-case and dates always <b>ISO (2026-06-09)</b>, never "yesterday". No questions about what to call things.'},
+note:{i:'ti-shield-check',t:'I know the red rules: <b>I don\'t modify 99_ARCHIVE</b> without confirmation and I use numbered headers in Word docs. I work inside your boundaries.'}
+}};
+var CMD_ORDER=['chi','come','struttura','naming','note'];
+var CMD_EMPTY={it:'Senza CLAUDE.md, Claude riparte da zero a ogni sessione: non sa chi sei, come lavori, dove vanno i file. Accendi una sezione →',en:'Without CLAUDE.md, Claude starts from scratch every session: it doesn\'t know who you are, how you work, where files go. Turn on a section →'};
+var CMD_READHEAD={it:'Cosa Claude sa di te ora',en:'What Claude knows about you now'};
+var CMD_READHEAD_OFF={it:'Lettura di Claude',en:'Claude\'s reading'};
+
+/* front matter example code */
+var FMCODE={it:'<span class="hd">---</span>\n<span class="ht">titolo:</span> Proposta Commerciale Q3 — Cliente Rossi\n<span class="ht">tipo:</span> proposta\n<span class="ht">stato:</span> bozza\n<span class="ht">data:</span> 2026-06-02\n<span class="ht">destinatario:</span> Mario Rossi, CEO Alfa SRL\n<span class="ht">prossimo-step:</span> inviare entro 10 giugno\n<span class="hd">---</span>\n\n# Proposta Commerciale Q3...\n<span class="hd">[contenuto del documento]</span>',
+en:'<span class="hd">---</span>\n<span class="ht">title:</span> Q3 Commercial Proposal — Client Rossi\n<span class="ht">type:</span> proposal\n<span class="ht">status:</span> draft\n<span class="ht">date:</span> 2026-06-02\n<span class="ht">recipient:</span> Mario Rossi, CEO Alfa SRL\n<span class="ht">next-step:</span> send by June 10\n<span class="hd">---</span>\n\n# Q3 Commercial Proposal...\n<span class="hd">[document content]</span>'};
+
+/* front matter builder — preset chips (no fillable fields) + labels */
+var FM_TITOLO={it:['Proposta Commerciale Q3','Piano Marketing 2026','Report Trimestrale'],en:['Q3 Commercial Proposal','2026 Marketing Plan','Quarterly Report']};
+var FM_TIPO={it:['proposta','piano','report','nota','contratto','email'],en:['proposal','plan','report','note','contract','email']};
+var FM_STATO={it:['bozza','in revisione','finale','archiviato'],en:['draft','in review','final','archived']};
+var FM_DATA=['2026-06-09','2026-06-02','2026-07-01'];
+var FM_STEP={it:['inviare entro venerdì','attendere feedback','—'],en:['send by Friday','await feedback','—']};
+var FM_SEL={titolo:0,tipo:0,stato:0,data:0,step:0};
+var FM_KEYS={it:{titolo:'titolo',tipo:'tipo',stato:'stato',data:'data',step:'prossimo-step'},en:{titolo:'title',tipo:'type',stato:'status',data:'date',step:'next-step'}};
+
+/* when to use front matter — scenarios */
+var SCEN={it:[
+['good','ti-check','Documenti con status evolutivo','Proposte, piani, report che passano da bozza → revisione → finale. Lo stato nel front matter dice a Claude dove siete nel processo.'],
+['good','ti-check','File con destinatari specifici','Email importanti, proposte cliente, lettere formali. Il destinatario nel front matter calibra il tono.'],
+['good','ti-check','Documenti aggiornati frequentemente','Piani di progetto, note di avanzamento, log. La data nel front matter dice quanto è fresco il contenuto.'],
+['bad','ti-x','Non serve per tutto','Note veloci, file temporanei, immagini. Il front matter ha senso per documenti strutturati che Claude deve navigare spesso. Non appesantite ogni file.']
+],en:[
+['good','ti-check','Documents with evolving status','Proposals, plans, reports that move from draft → review → final. The status in the front matter tells Claude where you are in the process.'],
+['good','ti-check','Files with specific recipients','Important emails, client proposals, formal letters. The recipient in the front matter calibrates the tone.'],
+['good','ti-check','Frequently updated documents','Project plans, progress notes, logs. The date in the front matter says how fresh the content is.'],
+['bad','ti-x','Not needed for everything','Quick notes, temporary files, images. Front matter makes sense for structured documents Claude has to navigate often. Don\'t weigh down every file.']
+]};
+
+/* auto-memory features */
+var AMFEAT={it:[
+['ti-eye','Osservazione passiva','Claude nota che preferite risposte brevi, che usate un certo termine tecnico, che lavorate sempre sullo stesso tipo di task il lunedì. Lo memorizza per le sessioni future.'],
+['ti-message-plus','Memorizzazione esplicita','Potete dirgli "ricordati che il cliente Rossi preferisce proposte sotto le 3 pagine" e Claude lo aggiunge alla memoria immediatamente.'],
+['ti-settings','Controllabile e trasparente','Potete vedere, modificare e cancellare tutto ciò che Claude ha memorizzato. La memoria non è una scatola nera: è un file che potete leggere.']
+],en:[
+['ti-eye','Passive observation','Claude notices you prefer short answers, that you use a certain technical term, that you always work on the same type of task on Monday. It stores it for future sessions.'],
+['ti-message-plus','Explicit memorization','You can tell it "remember that client Rossi prefers proposals under 3 pages" and Claude adds it to memory immediately.'],
+['ti-settings','Controllable and transparent','You can see, edit and delete everything Claude has stored. Memory isn\'t a black box: it\'s a file you can read.']
+]};
+
+/* complete system table */
+var SYSTBL={it:[
+['CLAUDE.md','Voi','Chi siete, come lavorate, struttura, regole','Root workspace'],
+['Front matter','Voi','Metadati dei singoli documenti','Inizio di ogni file rilevante'],
+['Auto-memory','Claude','Preferenze osservate, pattern, fatti ricorrenti','Settings / file di memoria'],
+['Istruzioni Project','Voi','Contesto specifico per quel progetto','Dentro il Project'],
+['Knowledge Base','Voi','Documenti di riferimento permanenti','Dentro il Project']
+],en:[
+['CLAUDE.md','You','Who you are, how you work, structure, rules','Workspace root'],
+['Front matter','You','Metadata for individual documents','Start of every relevant file'],
+['Auto-memory','Claude','Observed preferences, patterns, recurring facts','Settings / memory file'],
+['Project Instructions','You','Context specific to that project','Inside the Project'],
+['Knowledge Base','You','Permanent reference documents','Inside the Project']
+]};
+
+/* convergence speech lines */
+var CONVLINES={it:[
+['ti-check','So che sei <b>Chiara</b> e come lavori → dal <b>CLAUDE.md</b>'],
+['ti-check','Questa proposta è una <b>bozza per Rossi</b> da chiudere → dal <b>front matter</b>'],
+['ti-check','Rossi preferisce documenti <b>sotto le 3 pagine</b> → dalla <b>auto-memory</b>'],
+['ti-bolt','Quindi parto già sapendo cosa fare: <b>nessun briefing da zero.</b>']
+],en:[
+['ti-check','I know you\'re <b>Chiara</b> and how you work → from <b>CLAUDE.md</b>'],
+['ti-check','This proposal is a <b>draft for Rossi</b> to close → from the <b>front matter</b>'],
+['ti-check','Rossi prefers documents <b>under 3 pages</b> → from <b>auto-memory</b>'],
+['ti-bolt','So I start already knowing what to do: <b>no briefing from scratch.</b>']
+]};
+
+var LANG='it',convDone=false;
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  // comparison table
+  document.getElementById('cmdCompare').innerHTML=CMDCOMP[LANG].map(function(r){return '<tr><td class="fn">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>'}).join('');
+  // CLAUDE.md code
+  document.getElementById('cmdCode').innerHTML=CMDCODE[LANG];
+  // toggles
+  document.getElementById('cmdToggles').innerHTML=CMD_TOGGLES[LANG].map(function(t){
+    return '<div class="cmd-toggle'+(t[3]?' on':'')+'" data-k="'+t[0]+'" onclick="toggleCmd(this)"><div class="sw"></div><div class="tg-text"><strong>'+t[1]+'</strong><span>'+t[2]+'</span></div></div>';
+  }).join('');
+  renderCmd();
+  // front matter code
+  document.getElementById('fmCode').innerHTML=FMCODE[LANG];
+  // front matter builder chips
+  renderChips('fmTitolo',FM_TITOLO[LANG],'titolo');
+  renderChips('fmTipo',FM_TIPO[LANG],'tipo');
+  renderChips('fmStato',FM_STATO[LANG],'stato');
+  renderChips('fmData',FM_DATA,'data');
+  renderChips('fmStep',FM_STEP[LANG],'step');
+  buildFM();
+  // scenarios
+  document.getElementById('scenarios').innerHTML=SCEN[LANG].map(function(s){
+    return '<div class="scen '+s[0]+'"><div class="si"><i class="ti '+s[1]+'"></i></div><div><h4>'+s[2]+'</h4><p>'+s[3]+'</p></div></div>';
+  }).join('');
+  // auto-memory features
+  document.getElementById('amFeat').innerHTML=AMFEAT[LANG].map(function(f){
+    return '<div class="feat-row"><div class="fi"><i class="ti '+f[0]+'"></i></div><div class="ft"><strong>'+f[1]+'</strong><span>'+f[2]+'</span></div></div>';
+  }).join('');
+  // system table
+  document.getElementById('sysTable').innerHTML=SYSTBL[LANG].map(function(r){
+    return '<tr><td class="fn">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';
+  }).join('');
+}
+/* interactive CLAUDE.md preview */
+function renderCmd(){
+  var on=[];
+  document.querySelectorAll('.cmd-toggle').forEach(function(t){if(t.classList.contains('on'))on.push(t.dataset.k)});
+  var box=document.getElementById('cmdRead');
+  if(!on.length){
+    box.innerHTML='<div class="cr-head"><i class="ti ti-message-off"></i> '+CMD_READHEAD_OFF[LANG]+'</div><div class="cr-empty">'+CMD_EMPTY[LANG]+'</div>';
+    return;
+  }
+  var html='<div class="cr-head"><i class="ti ti-message-circle"></i> '+CMD_READHEAD[LANG]+'</div>';
+  CMD_ORDER.forEach(function(k){
+    if(on.indexOf(k)>-1){var r=CMD_READS[LANG][k];html+='<div class="cr-line"><i class="ti '+r.i+'"></i><span>'+r.t+'</span></div>'}
+  });
+  box.innerHTML=html;
+}
+function toggleCmd(el){el.classList.toggle('on');renderCmd()}
+/* front matter builder — chip-based, no fillable fields */
+function renderChips(id,arr,field){
+  document.getElementById(id).innerHTML=arr.map(function(o,i){
+    return '<span class="chip'+(i===FM_SEL[field]?' on':'')+'" onclick="pickChip(\''+field+'\','+i+')">'+esc(o)+'</span>';
+  }).join('');
+}
+function pickChip(field,i){FM_SEL[field]=i;
+  var map={titolo:FM_TITOLO[LANG],tipo:FM_TIPO[LANG],stato:FM_STATO[LANG],data:FM_DATA,step:FM_STEP[LANG]};
+  var id={titolo:'fmTitolo',tipo:'fmTipo',stato:'fmStato',data:'fmData',step:'fmStep'}[field];
+  renderChips(id,map[field],field);buildFM();
+}
+function buildFM(){
+  var K=FM_KEYS[LANG];
+  var titolo=esc(FM_TITOLO[LANG][FM_SEL.titolo]);
+  var tipo=esc(FM_TIPO[LANG][FM_SEL.tipo]);
+  var stato=esc(FM_STATO[LANG][FM_SEL.stato]);
+  var data=esc(FM_DATA[FM_SEL.data]);
+  var step=FM_STEP[LANG][FM_SEL.step];
+  var out='<span class="hd">---</span>\n';
+  out+='<span class="ht">'+K.titolo+':</span> '+titolo+'\n';
+  out+='<span class="ht">'+K.tipo+':</span> '+tipo+'\n';
+  out+='<span class="ht">'+K.stato+':</span> '+stato+'\n';
+  out+='<span class="ht">'+K.data+':</span> '+data+'\n';
+  if(step&&step!=='—') out+='<span class="ht">'+K.step+':</span> '+esc(step)+'\n';
+  out+='<span class="hd">---</span>';
+  document.getElementById('fmOut').innerHTML=out;
+}
+/* convergence animation */
+function runConvergence(){
+  var btn=document.getElementById('convBtn');
+  btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader-2"></i> '+(LANG==='it'?'Confluiscono…':'Converging…');
+  ['cp1','cp2','cp3'].forEach(function(id){document.getElementById(id).classList.add('flow')});
+  ['cd1','cd2','cd3'].forEach(function(dotId,idx){
+    var path=document.getElementById('cp'+(idx+1));
+    var dot=document.getElementById(dotId);
+    var len=path.getTotalLength();
+    var start=null,dur=1300;
+    dot.style.opacity='1';
+    function step(ts){
+      if(!start)start=ts;
+      var p=Math.min((ts-start)/dur,1);
+      var pt=path.getPointAtLength(p*len);
+      dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);
+      if(p<1){requestAnimationFrame(step)}else{dot.style.opacity='0'}
+    }
+    requestAnimationFrame(step);
+  });
+  setTimeout(function(){
+    document.getElementById('cnC').classList.add('pulse');
+    revealSpeech();
+    btn.innerHTML='<i class="ti ti-refresh"></i> '+(LANG==='it'?'Riavvia':'Restart');
+    btn.disabled=false;
+    convDone=true;
+  },1350);
+}
+function revealSpeech(){
+  var body=document.getElementById('convSpeechBody');
+  body.innerHTML='';
+  document.getElementById('convSpeech').classList.add('show');
+  CONVLINES[LANG].forEach(function(l,i){
+    var div=document.createElement('div');
+    div.className='sp-line';
+    div.style.animationDelay=(i*0.45)+'s';
+    div.innerHTML='<i class="ti '+l[0]+'"></i><span>'+l[1]+'</span>';
+    body.appendChild(div);
+  });
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n();if(convDone){document.getElementById('convSpeech').classList.contains('show')&&revealSpeech()}}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+/* auto-run convergence once when scrolled into view */
+(function(){
+  var stage=document.querySelector('.conv');
+  if(!stage){return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting&&!convDone){runConvergence();io.disconnect();}});
+  },{threshold:.4});
+  io.observe(stage);
+})();
+</script>
+</body>
+</html>
+

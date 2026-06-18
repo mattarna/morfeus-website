@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La finestra di contesto: la "lavagna" — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);
+--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);
+--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);
+--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn i{font-size:16px;color:var(--accent)}
+
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note.amber{background:var(--agent-soft);border-color:var(--agent-line)}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note.amber .ni{background:var(--agent)}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note.amber h4{color:var(--agent)}
+.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+
+.reveal{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 22px;margin:0}
+.reveal .word{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ink-3)}
+.reveal .arr{color:var(--accent);font-size:20px}
+.reveal .term{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent)}
+.reveal .txt{font-size:14px;color:var(--ink-2);margin-left:auto;text-align:right;max-width:320px}
+
+/* blackboard demo */
+.bbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.board{position:relative;height:230px;border-radius:var(--r);overflow:hidden;border:5px solid #6b4a2e;background:#1f2a25;box-shadow:inset 0 0 40px rgba(0,0,0,.45)}
+.board .bgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:26px 26px}
+.chk{position:absolute;font-family:var(--mono);font-size:12.5px;color:#dfe9e3;padding:3px 9px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);white-space:nowrap;transition:opacity .45s,transform .45s;line-height:1.2}
+.chk.warn{color:#ffd9b0;border-color:rgba(245,145,92,.5);background:rgba(245,145,92,.14)}
+.chk.gone{opacity:0;transform:scale(.85) translateY(-6px)}
+.bfill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(107,95,229,.28),rgba(107,95,229,.06));border-top:1px dashed rgba(255,255,255,.25);transition:height .5s cubic-bezier(.4,0,.2,1)}
+.bcap{position:absolute;top:8px;left:10px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.5)}
+.slbox{margin-top:16px}
+.slhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:13.5px;color:var(--ink-2)}
+.slhead b{color:var(--ink)}
+.slrange{width:100%;-webkit-appearance:none;height:6px;border-radius:30px;background:var(--bg-3);outline:none;margin:12px 0 8px}
+.slrange::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--card);box-shadow:var(--sh)}
+.slrange::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--card)}
+/* performance bar */
+.perf{margin-top:14px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.perfhead{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--ink-2);margin-bottom:8px}
+.perfhead .pv{font-family:var(--mono);font-weight:700}
+.pbar{height:14px;border-radius:30px;background:var(--bg-3);overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--bad),var(--agent),var(--good));border-radius:30px;transition:width .45s,filter .45s}
+.pnote{font-size:12.5px;color:var(--ink-3);margin-top:10px;text-align:center}
+.pnote b{color:var(--ink)}
+
+/* fact cards */
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fact{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;background:var(--card)}
+.fact i{font-size:22px;color:var(--accent)}
+.fact .fv{font-family:var(--mono);font-size:21px;font-weight:700;margin:8px 0 2px;letter-spacing:-.01em}
+.fact p{font-size:13.5px;color:var(--ink-2)}.fact p strong{color:var(--ink);font-weight:600}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;display:flex;gap:16px;align-items:flex-start}
+.card .ci{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.card.amber .ci{background:var(--agent)}
+.card h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}
+.card.amber h4{color:var(--agent)}
+.card p{font-size:14.5px;color:var(--ink-2)}.card p strong{color:var(--ink);font-weight:600}
+
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:23px;font-weight:600;line-height:1.4;color:var(--accent);max-width:560px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:48px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.reveal{flex-wrap:wrap}.reveal .txt{margin-left:0;text-align:left;max-width:100%}.facts{grid-template-columns:1fr}.board{height:200px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.reveal,.bbox,.fact,.card,.cp,.key{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A2.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Come funziona un LLM</div>
+  <h1 class="rv" data-i="h1">La finestra di contesto: la "lavagna"</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-arrow-big-right-lines"></i><span class="no">01</span><h2 data-i="s1">Dalla parola al termine</h2></div>
+  <div class="reveal rv">
+    <span class="word" data-i="rvWord">"la finestra"</span>
+    <span class="arr"><i class="ti ti-arrow-right"></i></span>
+    <span class="term" data-i="rvTerm">finestra di contesto</span>
+    <span class="txt" data-i="rvTxt"></span>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-blackboard"></i><span class="no">02</span><h2 data-i="s2">È una lavagna</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-blackboard"></i></div><div><h4 data-i="note1H">Spazio limitato: per scrivere, devi cancellare</h4><p data-i-html="note1P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-eraser"></i><span class="no">03</span><h2 data-i="s3">Riempila e guarda cosa si cancella</h2></div>
+  <p class="lede rv" style="font-size:15px;margin-bottom:16px" data-i="bIntro"></p>
+  <div class="bbox rv">
+    <div class="board">
+      <div class="bgrid"></div>
+      <div class="bcap" id="bcap">12% · 0%</div>
+      <div class="bfill" id="bfill" style="height:12%"></div>
+      <div class="chk" data-key="c0" style="left:6%;top:18%">brief progetto X</div>
+      <div class="chk" data-key="c1" style="left:54%;top:14%">scadenza venerdì</div>
+      <div class="chk warn" data-key="c2" style="left:10%;top:40%">⚑ NON mandare quell'email al cliente</div>
+      <div class="chk" data-key="c3" style="left:60%;top:44%">tono di voce</div>
+      <div class="chk" data-key="c4" style="left:8%;top:66%">budget approvato</div>
+      <div class="chk" data-key="c5" style="left:58%;top:70%">nome referente</div>
+    </div>
+    <div class="slbox">
+      <div class="slhead"><span data-i="slLabel">Quanto è piena la lavagna</span> <b><span id="fillPct">12</span>%</b></div>
+      <input type="range" min="0" max="100" value="12" class="slrange" id="fillRange" oninput="updateBoard(this.value)">
+    </div>
+    <div class="perf">
+      <div class="perfhead"><span data-i="perfLabel">Performance del modello</span> <span class="pv" id="perfPct" style="color:var(--good)">98%</span></div>
+      <div class="pbar"><div class="pfill" id="perfFill" style="width:98%"></div></div>
+      <p class="pnote" data-i-html="perfNote"></p>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-device-desktop-analytics"></i><span class="no">04</span><h2 data-i="s4">È la RAM del modello</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-cpu"></i></div><div><h4 data-i="note2H">Memoria di lavoro, non archivio</h4><p data-i-html="note2P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-ruler-2"></i><span class="no">05</span><h2 data-i="s5">Quanto è grande</h2></div>
+  <div class="facts rv">
+    <div class="fact"><i class="ti ti-coins"></i><div class="fv" data-i="fact1V">1–2 milioni</div><p data-i-html="fact1P"></p></div>
+    <div class="fact"><i class="ti ti-book-2"></i><div class="fv" data-i="fact2V">~1000 pagine</div><p data-i-html="fact2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-trending-down"></i><span class="no">06</span><h2 data-i="s6">Più si riempie, più cala</h2></div>
+  <div class="card rv"><div class="ci"><i class="ti ti-layout-grid"></i></div><div><h4 data-i="comH">Tieni le cose in compartimenti stagni</h4><p data-i-html="comP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-user-question"></i><span class="no">07</span><h2 data-i="s7">Come lo stagista in tilt</h2></div>
+  <div class="note amber rv"><div class="ni"><i class="ti ti-brain"></i></div><div><h4 data-i="note3H">Vomitare informazioni senza un pezzo di carta</h4><p data-i-html="note3P"></p></div></div>
+
+  <div class="key rv"><p data-i="keyP"></p><div class="cap" data-i="keyCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">08</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-bulb"></i> <span data-i="cpH">La memoria è un bene finito</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — La finestra di contesto: la lavagna</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A2.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Come funziona un LLM',
+h1:'La finestra di contesto: la "lavagna"',
+lede:'Prima parola semplice, poi il termine tecnico. La memoria del modello non è infinita: è una lavagna con spazio limitato. Capire come si riempie — e cosa si perde quando è piena — ti fa lavorare con un\'AI che non perde il filo.',
+s1:'Dalla parola al termine',
+rvWord:'"la finestra"',rvTerm:'finestra di contesto',
+rvTxt:'La memoria di lavoro del modello: tutto ciò che "ha sotto gli occhi" mentre risponde. Si misura in token e ha un limite.',
+s2:'È una lavagna',
+note1H:'Spazio limitato: per scrivere, devi cancellare',
+note1P:'La finestra di contesto è <strong>una lavagna</strong>: ha uno spazio limitato. Quando è piena, per scrivere nuove informazioni devi <strong>cancellare</strong> da qualche parte — e rischi di perdere pezzi importanti, <strong>magari proprio l\'email da non mandare a quel paese il cliente</strong>. Non sparisce a caso: sparisce ciò che "non ci sta più".',
+s3:'Riempila e guarda cosa si cancella',
+bIntro:'Trascina lo slider per riempire la lavagna. Più la riempi, più le note vengono cancellate per fare spazio — e la performance del modello scende.',
+slLabel:'Quanto è piena la lavagna',
+perfLabel:'Performance del modello',
+perfNote:'A lavagna quasi vuota il modello tiene tutto. Oltre una certa soglia, <b>inizia a barellare</b>: perde le istruzioni iniziali e le note più "vecchie".',
+s4:'È la RAM del modello',
+note2H:'Memoria di lavoro, non archivio',
+note2P:'La finestra di contesto è <strong>la RAM del mio modello</strong>: la memoria di lavoro temporanea, non un archivio permanente. Se gli dai troppe informazioni tutte insieme, perde il contesto e le risposte peggiorano — pericoloso soprattutto in un sistema automatico che non stai controllando a vista.',
+s5:'Quanto è grande',
+fact1V:'1–2 milioni',
+fact1P:'di <strong>token</strong> di finestra nei modelli di oggi. Tanto — ma dentro ci finiscono anche tutti i ragionamenti, quindi <strong>si riempie in fretta</strong>.',
+fact2V:'~1000 pagine',
+fact2P:'è l\'equivalente: un <strong>libro di 1000 pagine</strong>. Sembra enorme, ma una conversazione lunga con documenti e thinking lo consuma più velocemente di quanto pensi.',
+s6:'Più si riempie, più cala',
+comH:'Tieni le cose in compartimenti stagni',
+comP:'Man mano che la finestra si riempie, <strong>le performance diminuiscono</strong>: il modello perde il filo, dimentica le istruzioni di partenza, si contraddice. La difesa è tenere le cose in <strong>compartimenti stagni</strong> — una conversazione per tema, niente calderoni infiniti dove tutto si mescola.',
+s7:'Come lo stagista in tilt',
+note3H:'Vomitare informazioni senza un pezzo di carta',
+note3P:'È come lo <strong>stagista a cui vomiti informazioni senza dargli un pezzo di carta</strong> dove segnarsi le cose: va in tilt. Troppo input tutto in una volta, nessun modo di trattenerlo in ordine. Il modello non è stupido — è solo <strong>sommerso</strong>.',
+keyP:'Quando la lavagna è piena, per scrivere devi cancellare. E ciò che cancelli non lo decidi tu.',
+keyCap:'Per questo conviene tenere le conversazioni pulite, brevi e a tema.',
+s8:'Checkpoint',
+cpH:'La memoria è un bene finito',
+cpP:'La finestra di contesto è una risorsa che spendi, esattamente come i token. Riempirla di roba inutile non è gratis: paghi in performance.',
+cpQ:'Fermati un attimo: le tue chat più importanti sono pulite e a tema, o sono calderoni lunghissimi dove hai parlato di dieci cose diverse?',
+cpNote:'Conversazione pulita = lavagna con spazio = modello che tiene il filo. Apri una chat nuova quando cambi argomento.',
+foot:'Morfeus — La finestra di contesto: la lavagna'
+},
+en:{
+kicker:'Lesson A2.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'How an LLM works',
+h1:'The context window: the "blackboard"',
+lede:'Simple word first, technical term second. The model\'s memory isn\'t infinite: it\'s a blackboard with limited space. Understanding how it fills up — and what gets lost when it\'s full — lets you work with an AI that doesn\'t lose the thread.',
+s1:'From the word to the term',
+rvWord:'"the window"',rvTerm:'context window',
+rvTxt:'The model\'s working memory: everything it "has in front of it" while answering. It\'s measured in tokens and it has a limit.',
+s2:'It\'s a blackboard',
+note1H:'Limited space: to write, you have to erase',
+note1P:'The context window is <strong>a blackboard</strong>: it has limited space. When it\'s full, to write new information you have to <strong>erase</strong> something — and you risk losing important pieces, <strong>maybe the very note saying don\'t send that email to the client</strong>. It doesn\'t vanish at random: what vanishes is whatever "no longer fits".',
+s3:'Fill it up and watch what gets erased',
+bIntro:'Drag the slider to fill the blackboard. The more you fill it, the more notes get erased to make room — and the model\'s performance drops.',
+slLabel:'How full the blackboard is',
+perfLabel:'Model performance',
+perfNote:'With the board nearly empty the model holds everything. Past a certain point, <b>it starts to wobble</b>: it loses the initial instructions and the "older" notes.',
+s4:'It\'s the model\'s RAM',
+note2H:'Working memory, not storage',
+note2P:'The context window is <strong>my model\'s RAM</strong>: temporary working memory, not permanent storage. If you give it too much information all at once, it loses context and the answers get worse — especially dangerous in an automated system you\'re not watching live.',
+s5:'How big it is',
+fact1V:'1–2 million',
+fact1P:'<strong>tokens</strong> of window in today\'s models. A lot — but all the reasoning lands in there too, so <strong>it fills up fast</strong>.',
+fact2V:'~1000 pages',
+fact2P:'is the equivalent: a <strong>1000-page book</strong>. It sounds enormous, but a long conversation with documents and thinking burns through it faster than you\'d expect.',
+s6:'The fuller it gets, the worse it gets',
+comH:'Keep things in watertight compartments',
+comP:'As the window fills, <strong>performance drops</strong>: the model loses the thread, forgets the starting instructions, contradicts itself. The defense is keeping things in <strong>watertight compartments</strong> — one conversation per topic, no endless cauldrons where everything blends together.',
+s7:'Like the intern in meltdown',
+note3H:'Dumping information with no scrap of paper',
+note3P:'It\'s like the <strong>intern you dump information on without giving them a scrap of paper</strong> to note things down: they melt down. Too much input at once, no way to hold it in order. The model isn\'t dumb — it\'s just <strong>swamped</strong>.',
+keyP:'When the blackboard is full, to write you have to erase. And you don\'t get to choose what gets erased.',
+keyCap:'That\'s why it pays to keep conversations clean, short and on-topic.',
+s8:'Checkpoint',
+cpH:'Memory is a finite resource',
+cpP:'The context window is a resource you spend, exactly like tokens. Filling it with junk isn\'t free: you pay in performance.',
+cpQ:'Pause for a second: are your most important chats clean and on-topic, or endless cauldrons where you\'ve covered ten different things?',
+cpNote:'Clean conversation = blackboard with room = model that keeps the thread. Open a fresh chat when you switch topics.',
+foot:'Morfeus — The context window: the blackboard'
+}};
+
+var LANG='it';
+// erase order as the board fills: notes with higher threshold disappear first
+var THRESH={c5:55,c4:62,c1:70,c3:78,c2:88,c0:95}; // c2 (the warn email) erased only when very full
+function updateBoard(v){
+  v=+v;
+  document.getElementById('fillPct').textContent=v;
+  var bf=document.getElementById('bfill');bf.style.height=v+'%';
+  // performance: ~98% until ~50%, then drops; floor ~28%
+  var perf;
+  if(v<=45)perf=98-(v*0.18);
+  else perf=Math.max(28,Math.round(90-(v-45)*1.08));
+  perf=Math.round(perf);
+  var pp=document.getElementById('perfPct');pp.textContent=perf+'%';
+  var pf=document.getElementById('perfFill');pf.style.width=perf+'%';
+  var col=perf>=75?'var(--good)':perf>=50?'var(--agent)':'var(--bad)';
+  pp.style.color=col;
+  document.getElementById('bcap').textContent=v+'% · '+(100-perf)+'%';
+  // erase notes
+  document.querySelectorAll('.chk').forEach(function(c){
+    var k=c.getAttribute('data-key');var t=THRESH[k];
+    if(t!=null&&v>=t)c.classList.add('gone');else c.classList.remove('gone');
+  });
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-i')];if(val!=null)e.textContent=val});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-i-html')];if(val!=null)e.innerHTML=val});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var val=DICT[LANG][e.getAttribute('data-ti')];if(val!=null)e.title=val});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*60)+'ms';ob.observe(el)});
+applyI18n();
+updateBoard(12);
+</script>
+</body>
+</html>

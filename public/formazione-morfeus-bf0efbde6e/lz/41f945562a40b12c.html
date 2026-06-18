@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Office — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;--amber:#BA7517;--amber-soft:#faeeda;--amber-line:#f6c9aa;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--blue:#85b7eb;--blue-soft:#0c447c;--blue-line:#185fa5;--amber:#fac775;--amber-soft:#412402;--amber-line:#854f0b;
+--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.lede-sm{font-size:14px;color:var(--ink-2);margin-bottom:18px}
+/* hook */
+.hook{border-left:3px solid var(--blue);background:var(--card);box-shadow:var(--sh);padding:20px 24px;border-radius:0 var(--r-l) var(--r-l) 0;margin:0;font-style:italic;font-size:15px;color:var(--ink-2);line-height:1.7}
+/* availability banner */
+.avail{display:flex;align-items:flex-start;gap:12px;background:var(--good-soft);border:1px solid var(--good);border-radius:var(--r-l);padding:16px 18px;margin:20px 0 0;font-size:13.5px;color:var(--ink);line-height:1.65;box-shadow:var(--sh)}
+.avail i{color:var(--good);font-size:20px;flex-shrink:0;margin-top:1px}
+.avail strong{color:var(--good)}
+/* format gallery */
+.format-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:8px 0 0}
+.fmt-card{background:var(--card);border:2px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 16px;cursor:pointer;transition:.25s;text-align:center}
+.fmt-card:hover:not(.on){border-color:var(--line-2)}
+.fmt-card.on{border-color:var(--blue);background:var(--blue-soft)}
+.fmt-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 12px;transition:.25s}
+.fmt-card.docx .fmt-icon{background:var(--blue-soft);color:var(--blue)}
+.fmt-card.docx.on .fmt-icon{background:var(--blue);color:#fff}
+.fmt-card.xlsx .fmt-icon{background:var(--good-soft);color:var(--good)}
+.fmt-card.xlsx.on .fmt-icon{background:var(--good);color:#fff}
+.fmt-card.pptx .fmt-icon{background:var(--amber-soft);color:var(--amber)}
+.fmt-card.pptx.on .fmt-icon{background:var(--amber);color:#fff}
+.fmt-card h3{font-size:15px;font-weight:600;margin-bottom:3px}
+.fmt-ext{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.fmt-detail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:14px;min-height:160px}
+.fmt-detail h4{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.fmt-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.fd-col h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);margin-bottom:10px;font-family:var(--mono)}
+.fd-list{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0}
+.fd-list li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink-2)}
+.fd-list li i{font-size:14px;margin-top:2px;flex-shrink:0}
+.fd-ok i{color:var(--good)}.fd-warn i{color:var(--amber)}
+.prompt-box{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;padding:14px 16px;font-family:var(--mono);font-size:12.5px;color:var(--ink-2);margin-top:14px;line-height:1.7;white-space:pre-wrap}
+/* flow */
+.flow{display:flex;gap:0;margin:8px 0 0;position:relative}
+.flow-step{flex:1;text-align:center;cursor:pointer;position:relative;padding:20px 12px 16px;border-radius:var(--r-l);transition:.25s;background:var(--card);border:2px solid var(--line);box-shadow:var(--sh)}
+.flow-step.on{border-color:var(--blue);background:var(--blue-soft)}
+.flow-step:hover:not(.on){border-color:var(--line-2)}
+.flow-num{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin:0 auto 10px;transition:.3s}
+.flow-step:nth-child(1) .flow-num{background:var(--blue-soft);color:var(--blue)}
+.flow-step:nth-child(3) .flow-num{background:var(--agent-soft);color:var(--agent)}
+.flow-step:nth-child(5) .flow-num{background:var(--good-soft);color:var(--good)}
+.flow-step.on:nth-child(1) .flow-num{background:var(--blue);color:#fff}
+.flow-step.on:nth-child(3) .flow-num{background:var(--agent);color:#fff}
+.flow-step.on:nth-child(5) .flow-num{background:var(--good);color:#fff}
+.flow-step.on:nth-child(3){border-color:var(--agent);background:var(--agent-soft)}
+.flow-step.on:nth-child(5){border-color:var(--good);background:var(--good-soft)}
+.flow-step h3{font-size:14px;font-weight:600;margin-bottom:3px}
+.flow-step p{font-size:12px;color:var(--ink-3)}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:32px;flex-shrink:0;color:var(--ink-3);font-size:18px}
+.flow-detail{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:24px;margin-top:14px;min-height:130px}
+.flow-detail h4{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.flow-detail p{font-size:14px;color:var(--ink-2);line-height:1.7}
+.flow-detail .fd-note{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--ink-2);margin-top:12px;display:flex;align-items:flex-start;gap:10px;line-height:1.65}
+.flow-detail .fd-note i{font-size:15px;flex-shrink:0;margin-top:2px}
+/* excel mock */
+.excel-mock{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden;margin:0}
+.excel-header{background:var(--good-soft);border-bottom:1px solid var(--line);padding:10px 18px;display:flex;align-items:center;gap:8px}
+.excel-header i{color:var(--good);font-size:18px}
+.excel-header span{font-size:13px;font-weight:600;color:var(--good);font-family:var(--mono)}
+.excel-table{width:100%;border-collapse:collapse;font-size:13px}
+.excel-table th{background:var(--bg-2);padding:8px 12px;text-align:left;font-weight:700;font-size:11px;color:var(--ink-2);border-bottom:1px solid var(--line-2);letter-spacing:.3px;font-family:var(--mono)}
+.excel-table td{padding:7px 12px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.excel-table tr:last-child td{border-bottom:none}
+.excel-table td.num{text-align:right;font-family:var(--mono)}
+.excel-table td.formula{text-align:right;font-family:var(--mono);color:var(--good);font-weight:600}
+.formula-badge{display:inline-flex;align-items:center;gap:4px;background:var(--good-soft);border:1px solid var(--good);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--good)}
+.excel-tabs{display:flex;gap:0;border-top:1px solid var(--line);background:var(--bg-2)}
+.excel-tab{padding:7px 16px;font-size:12px;color:var(--ink-3);border-right:1px solid var(--line);font-family:var(--mono)}
+.excel-tab.active{background:var(--card);color:var(--good);font-weight:600}
+/* tip box */
+.tip{display:flex;gap:14px;border-radius:var(--r-l);padding:18px;margin:18px 0 0}
+.tip.info{background:var(--blue-soft);border:1px solid var(--blue-line)}
+.tip.info i{color:var(--blue);font-size:21px;flex-shrink:0}
+.tip.info h4{color:var(--blue);font-size:14px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.tip.warn{background:var(--amber-soft);border:1px solid var(--amber-line)}
+.tip.warn i{color:var(--amber);font-size:21px;flex-shrink:0}
+.tip.warn h4{color:var(--amber);font-size:14px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.tip p{font-size:13.5px;color:var(--ink-2);line-height:1.7}.tip p strong{color:var(--ink);font-weight:600}
+/* progress / 80% */
+.progress-block{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:26px;margin:0}
+.progress-block h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.progress-block .pb-sub{font-size:13.5px;color:var(--ink-2);margin-bottom:18px;line-height:1.65}
+.pbar-wrap{background:var(--bg-3);border:1px solid var(--line);border-radius:30px;height:22px;overflow:hidden;position:relative;margin-bottom:10px}
+.pbar-fill{height:100%;border-radius:30px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-size:11px;font-weight:700;color:#fff;width:80%;background:linear-gradient(90deg,var(--blue-line),var(--blue))}
+.pbar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:16px;font-family:var(--mono)}
+.pb-legend{display:flex;gap:16px;flex-wrap:wrap}
+.pb-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-2)}
+.pb-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.pb-dot.blue{background:var(--blue)}.pb-dot.teal{background:var(--good)}
+/* key phrase */
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:21px;font-weight:600;line-height:1.45;color:var(--blue);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+.key p em{font-style:italic;color:var(--accent)}
+/* checkpoint */
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center}
+.cp .cp-ic{font-size:40px;color:var(--blue);display:block;margin-bottom:12px}
+.cp .cp-lead{font-size:16px;font-weight:600;margin-bottom:8px}
+.cp .cp-body{font-size:14px;color:var(--ink-2);max-width:480px;margin:0 auto;line-height:1.7}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.format-grid{grid-template-columns:1fr}.fmt-cols{grid-template-columns:1fr}.flow{flex-direction:column}.flow-arrow{transform:rotate(90deg);width:100%;height:26px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.hook,.avail,.fmt-card,.fmt-detail,.flow-step,.flow-detail,.excel-mock,.tip,.progress-block,.key,.cp{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 4.5</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Uso quotidiano</div>
+  <h1 class="rv" data-i="h1">File Office</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" data-i="hook" style="margin-top:24px"></div>
+
+  <div class="avail rv">
+    <i class="ti ti-globe"></i>
+    <div data-i-html="avail"></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">01</span><h2 data-i="s1">Scegli il formato</h2></div>
+  <p class="lede-sm rv" data-i="fmtIntro"></p>
+  <div class="format-grid rv">
+    <div class="fmt-card docx on" onclick="showFormat('docx')">
+      <div class="fmt-icon"><i class="ti ti-file-word"></i></div>
+      <h3>Word</h3>
+      <div class="fmt-ext">.docx</div>
+    </div>
+    <div class="fmt-card xlsx" onclick="showFormat('xlsx')">
+      <div class="fmt-icon"><i class="ti ti-file-spreadsheet"></i></div>
+      <h3>Excel</h3>
+      <div class="fmt-ext">.xlsx</div>
+    </div>
+    <div class="fmt-card pptx" onclick="showFormat('pptx')">
+      <div class="fmt-icon"><i class="ti ti-presentation"></i></div>
+      <h3>PowerPoint</h3>
+      <div class="fmt-ext">.pptx</div>
+    </div>
+  </div>
+  <div class="fmt-detail rv" id="fmtDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-route"></i><span class="no">02</span><h2 data-i="s2">Come ottieni il file</h2></div>
+  <p class="lede-sm rv" data-i="flowIntro"></p>
+  <div class="flow rv">
+    <div class="flow-step on" onclick="showFlow(0)">
+      <div class="flow-num"><i class="ti ti-pencil"></i></div>
+      <h3 data-i="f1T">Descrivi</h3>
+      <p data-i="f1S">Spiega struttura e contenuto</p>
+    </div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="flow-step" onclick="showFlow(1)">
+      <div class="flow-num"><i class="ti ti-sparkles"></i></div>
+      <h3 data-i="f2T">Claude genera</h3>
+      <p data-i="f2S">Code execution in sandbox</p>
+    </div>
+    <div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>
+    <div class="flow-step" onclick="showFlow(2)">
+      <div class="flow-num"><i class="ti ti-download"></i></div>
+      <h3 data-i="f3T">Scarichi</h3>
+      <p data-i="f3S">File reale, già pronto</p>
+    </div>
+  </div>
+  <div class="flow-detail rv" id="flowDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-table"></i><span class="no">03</span><h2 data-i="s3">Esempio: Excel con formule</h2></div>
+  <p class="lede-sm rv" data-i="excelIntro"></p>
+  <div class="excel-mock rv">
+    <div class="excel-header">
+      <i class="ti ti-file-spreadsheet"></i>
+      <span>Budget_Q2.xlsx</span>
+    </div>
+    <table class="excel-table">
+      <thead>
+        <tr>
+          <th data-i="exVoce">VOCE</th>
+          <th style="text-align:right" data-i="exPrev">PREVISTO (€)</th>
+          <th style="text-align:right" data-i="exSpeso">SPESO (€)</th>
+          <th style="text-align:right" data-i="exVar">VARIAZIONE</th>
+          <th data-i="exNote">NOTE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td data-i="exR1">Marketing</td><td class="num">3.000</td><td class="num">2.750</td><td class="num" style="color:var(--good)">+250</td><td style="font-size:12px;color:var(--ink-3)" data-i="exN1">Sotto budget</td></tr>
+        <tr><td data-i="exR2">Software</td><td class="num">1.500</td><td class="num">1.620</td><td class="num" style="color:var(--bad)">−120</td><td style="font-size:12px;color:var(--ink-3)" data-i="exN2">Licenza aggiuntiva</td></tr>
+        <tr><td data-i="exR3">Personale</td><td class="num">12.000</td><td class="num">12.000</td><td class="num">0</td><td style="font-size:12px;color:var(--ink-3)">—</td></tr>
+        <tr><td data-i="exR4">Formazione</td><td class="num">800</td><td class="num">600</td><td class="num" style="color:var(--good)">+200</td><td style="font-size:12px;color:var(--ink-3)" data-i="exN4">Corso rinviato</td></tr>
+        <tr style="font-weight:600;background:var(--bg-2)">
+          <td data-i="exTot">TOTALE</td>
+          <td class="num">17.300</td>
+          <td class="formula"><span class="formula-badge"><i class="ti ti-math-function" style="font-size:11px"></i>=SUM</span></td>
+          <td class="formula"><span class="formula-badge"><i class="ti ti-math-function" style="font-size:11px"></i>=SUM</span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="excel-tabs">
+      <div class="excel-tab active" data-i="exTab1">Budget</div>
+      <div class="excel-tab" data-i="exTab2">Dati Grafico</div>
+    </div>
+  </div>
+  <div class="tip info rv"><i class="ti ti-bulb"></i><div><h4 data-i="tipInfoH">Come funziona sotto il cofano</h4><p data-i-html="tipInfoP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-chart-bar"></i><span class="no">04</span><h2 data-i="s4">La regola dell'80%</h2></div>
+  <div class="progress-block rv">
+    <h4 data-i="pbH">Pagina bianca &rarr; ottanta percento già fatto</h4>
+    <p class="pb-sub" data-i="pbSub"></p>
+    <div class="pbar-wrap"><div class="pbar-fill" id="pbar">80%</div></div>
+    <div class="pbar-labels"><span data-i="pbL1">Pagina bianca</span><span data-i="pbL2">100% pronto</span></div>
+    <div class="pb-legend">
+      <div class="pb-item"><div class="pb-dot blue"></div><span data-i="pbLeg1">Claude: struttura, ossatura, formule, placeholder</span></div>
+      <div class="pb-item"><div class="pb-dot teal"></div><span data-i="pbLeg2">Tu: dati reali, design finale, revisione</span></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-bookmark"></i><span class="no">05</span><h2 data-i="s5">La frase da ricordare</h2></div>
+  <div class="key rv" style="border-top:none;padding-top:0"><p data-i-html="keyphrase"></p></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">06</span><h2 data-i="s6">Cosa verificare sempre</h2></div>
+  <div class="tip warn rv"><i class="ti ti-alert-triangle"></i><div><h4 data-i="tipWarnH">Cosa verificare sempre</h4><p data-i-html="tipWarnP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <i class="ti ti-file-plus cp-ic"></i>
+    <p class="cp-lead" data-i="cpLead">Prova adesso.</p>
+    <p class="cp-body" data-i="cpBody"></p>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — File Office</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 4.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Uso quotidiano',
+h1:'File Office',
+lede:'Word, Excel, PowerPoint — file reali, già strutturati, pronti da aprire. Non testo da copiare-incollare.',
+hook:'"Uno dei momenti che stupisce di più chi inizia con Claude: chiedi di creare un documento Word, una presentazione o un file Excel — e lo trovi subito, pronto da aprire. Non testo da copiare. Un file vero, già formattato."',
+avail:'<strong>Non è solo Cowork.</strong> Creare file Office funziona su <strong>Web, Desktop e Mobile</strong> — e su <strong>tutti i piani, incluso Free</strong>. In Cowork il vantaggio extra è che il file finisce direttamente nella tua cartella locale; in chat web lo scarichi con un clic.',
+s1:'Scegli il formato',
+fmtIntro:'Clicca su un formato per vedere cosa funziona bene e un esempio di prompt.',
+s2:'Come ottieni il file',
+flowIntro:'Clicca su ogni passo per capire cosa succede.',
+f1T:'Descrivi',f1S:'Spiega struttura e contenuto',
+f2T:'Claude genera',f2S:'Code execution in sandbox',
+f3T:'Scarichi',f3S:'File reale, già pronto',
+s3:'Esempio: Excel con formule',
+excelIntro:'Claude crea fogli con formule funzionanti, intestazioni in grassetto e più sheet. Questo è ciò che ottieni da un prompt di budget.',
+exVoce:'VOCE',exPrev:'PREVISTO (€)',exSpeso:'SPESO (€)',exVar:'VARIAZIONE',exNote:'NOTE',
+exR1:'Marketing',exR2:'Software',exR3:'Personale',exR4:'Formazione',exTot:'TOTALE',
+exN1:'Sotto budget',exN2:'Licenza aggiuntiva',exN4:'Corso rinviato',
+exTab1:'Budget',exTab2:'Dati Grafico',
+tipInfoH:'Come funziona sotto il cofano',
+tipInfoP:'Claude usa il <strong>code execution</strong> — un ambiente Python sandboxed — con librerie come openpyxl, python-docx e python-pptx. Scrive ed esegue il codice, poi ti serve il file generato. Non è testo formattato: è un file binario vero, apribile da Office, Google Workspace e LibreOffice.',
+s4:'La regola dell\'80%',
+pbH:'Pagina bianca → ottanta percento già fatto',
+pbSub:'Claude ti porta subito all\'80%: struttura, sezioni, formule, placeholder. Il 20% restante — dati reali, design avanzato, ultime revisioni — rimane a te. Ma la parte più lenta è già fatta.',
+pbL1:'Pagina bianca',pbL2:'100% pronto',
+pbLeg1:'Claude: struttura, ossatura, formule, placeholder',
+pbLeg2:'Tu: dati reali, design finale, revisione',
+s5:'La frase da ricordare',
+keyphrase:'Non crea documenti perfetti — crea documenti <em>pronti</em>. Parti dall\'ottanta percento già fatto, non da una pagina bianca.',
+s6:'Cosa verificare sempre',
+tipWarnH:'Cosa verificare sempre',
+tipWarnP:'<strong>Formule Excel complesse e macro VBA:</strong> funzionano, ma controllale prima di usarle in produzione. <strong>Design avanzato:</strong> Claude crea la struttura, non il layout grafico finale — le slide vanno personalizzate dopo. <strong>Dati reali:</strong> Claude usa placeholder salvo che tu li fornisca nel prompt.',
+s7:'Checkpoint',
+cpLead:'Prova adesso.',
+cpBody:'Apri claude.ai (qualsiasi piano, incluso Free) e chiedi di creare un template che usi spesso: un report mensile, una struttura di presentazione standard, un foglio budget. Scarica il file, aprilo, valuta quanto ci vuole a portarlo al cento percento.',
+bridge:'Sai trasformare una richiesta in un file Office pronto da aprire. <b>Prossimo:</b> spingere oltre l\'uso quotidiano e costruire flussi di lavoro sempre più autonomi con Claude.',
+foot:'Morfeus — File Office',
+// format detail
+fmtDocxTitle:'Word (.docx)',
+fmtDocxOk:['Sezioni con titoli e sottotitoli','Tabelle strutturate','Liste numerate e puntate','Header, footer e numero di pagina','Stile testo: grassetto, corsivo, intestazioni'],
+fmtDocxWarn:['Layout complessi (multi-colonna avanzato)','Immagini e grafici integrati (posizionamento)','Macro Word avanzate'],
+fmtDocxPrompt:'Crea un file Word "Report_Mensile.docx".\nStruttura:\n- Titolo: "Report Mensile — [Mese Anno]"\n- Sezione "Executive Summary" (3 paragrafi placeholder)\n- Sezione "Dati" (tabella: Voce | Valore | Note)\n- Sezione "Prossimi Passi" (lista numerata, 5 voci)\n- Footer con data\nTono: aziendale professionale.',
+fmtXlsxTitle:'Excel (.xlsx)',
+fmtXlsxOk:['Formule di somma, media, conteggio','Più sheet nello stesso file','Formattazione: valuta EUR, grassetto header','Struttura dati per grafici','Tabelle pivot semplici'],
+fmtXlsxWarn:['Formule molto complesse o annidate: verificare','Macro VBA: funzionano ma vanno testate','Grafici embedded (genera i dati, il grafico lo aggiungi tu)'],
+fmtXlsxPrompt:'Crea un file Excel "Budget_Q2.xlsx".\nSheet "Budget": colonne Voce | Previsto | Speso | Variazione | Note.\n10 righe placeholder (marketing, software, personale…).\nRiga TOTALE con =SUM per le colonne numeriche.\nSheet "Dati Grafico": dati mensili per grafico.\nFormato numeri: valuta EUR, header in grassetto.',
+fmtPptxTitle:'PowerPoint (.pptx)',
+fmtPptxOk:['Slide con titolo e testo strutturato','Bullet point e liste','Tabelle all\'interno delle slide','Schema colori di base (chiaro/scuro)','Slide di copertina e chiusura'],
+fmtPptxWarn:['Design grafico avanzato: va personalizzato in PowerPoint','Immagini e icone nelle slide (aggiungile tu)','Animazioni e transizioni non incluse'],
+fmtPptxPrompt:'Crea un file PowerPoint "Presentazione_Team.pptx".\nSlide 1 (copertina): Titolo "L\'AI nel Nostro Lavoro", sottotitolo placeholder.\nSlide 2: "Cosa abbiamo fatto" — 4 bullet placeholder.\nSlide 3: "Risultati" — tabella 2×4 (Metrica | Valore).\nSlide 4: "Prossimi passi" — 3 aree con testo.\nSlide 5: "Domande?" con nome e contatto placeholder.\nSchema colori: scuro e professionale.',
+fmtOkTitle:'Funziona bene',fmtWarnTitle:'Verifica con attenzione',fmtPromptTitle:'Esempio di prompt:',
+// flow detail
+flowD0Title:'Passo 1: Descrivi struttura e contenuto',
+flowD0Body:'Specifica il nome del file, le sezioni che vuoi, il tipo di tabelle o formule, lo stile (formale, conciso, con placeholder). Più dettaglio dai, meglio sarà il risultato. Non serve scrivere il contenuto vero: Claude usa placeholder che sostituirai tu.',
+flowD0Note:'Regola pratica: descrivi il documento come se stessi briefing un collaboratore. "Crea un report con queste sezioni, questa struttura, questo tono."',
+flowD1Title:'Passo 2: Claude genera il file via code execution',
+flowD1Body:'Claude usa un ambiente Python sandboxed con librerie specializzate (openpyxl per Excel, python-docx per Word, python-pptx per PowerPoint). Scrive ed esegue il codice, poi produce un file binario vero — non testo formattato.',
+flowD1Note:'Nota: la generazione consuma più risorse di una chat normale. Su piani Free potrebbe richiedere qualche secondo in più o avere limiti sul volume giornaliero.',
+flowD2Title:'Passo 3: Scarichi e apri il file',
+flowD2Body:'In chat web (Web/Desktop/Mobile): compare un link di download — clic e hai il file. In Cowork: il file viene salvato direttamente nella tua cartella locale di lavoro, senza passare per il browser. In entrambi i casi il file si apre con Office, Google Workspace o LibreOffice.',
+flowD2Note:'Vantaggio Cowork: nessun download manuale, il file è già dove lavori. Vantaggio Web/Mobile: funziona da qualsiasi dispositivo, anche Free.'
+},
+en:{
+kicker:'Lesson 4.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Everyday use',
+h1:'Office Files',
+lede:'Word, Excel, PowerPoint — real files, already structured, ready to open. Not text to copy-paste.',
+hook:'"One of the moments that surprises beginners with Claude the most: you ask it to create a Word document, a presentation or an Excel file — and you find it right away, ready to open. Not text to copy. A real file, already formatted."',
+avail:'<strong>It\'s not just Cowork.</strong> Creating Office files works on <strong>Web, Desktop and Mobile</strong> — and on <strong>all plans, including Free</strong>. In Cowork the extra advantage is that the file lands directly in your local folder; in web chat you download it with one click.',
+s1:'Choose the format',
+fmtIntro:'Click a format to see what works well and an example prompt.',
+s2:'How you get the file',
+flowIntro:'Click each step to understand what happens.',
+f1T:'Describe',f1S:'Explain structure and content',
+f2T:'Claude generates',f2S:'Code execution in a sandbox',
+f3T:'Download',f3S:'Real file, already ready',
+s3:'Example: Excel with formulas',
+excelIntro:'Claude creates sheets with working formulas, bold headers and multiple sheets. This is what you get from a budget prompt.',
+exVoce:'ITEM',exPrev:'BUDGETED (€)',exSpeso:'SPENT (€)',exVar:'VARIANCE',exNote:'NOTES',
+exR1:'Marketing',exR2:'Software',exR3:'Staff',exR4:'Training',exTot:'TOTAL',
+exN1:'Under budget',exN2:'Extra license',exN4:'Course postponed',
+exTab1:'Budget',exTab2:'Chart Data',
+tipInfoH:'How it works under the hood',
+tipInfoP:'Claude uses <strong>code execution</strong> — a sandboxed Python environment — with libraries like openpyxl, python-docx and python-pptx. It writes and runs the code, then serves you the generated file. It\'s not formatted text: it\'s a real binary file, openable by Office, Google Workspace and LibreOffice.',
+s4:'The 80% rule',
+pbH:'Blank page → eighty percent already done',
+pbSub:'Claude takes you straight to 80%: structure, sections, formulas, placeholders. The remaining 20% — real data, advanced design, final revisions — stays with you. But the slowest part is already done.',
+pbL1:'Blank page',pbL2:'100% ready',
+pbLeg1:'Claude: structure, skeleton, formulas, placeholders',
+pbLeg2:'You: real data, final design, review',
+s5:'The phrase to remember',
+keyphrase:'It doesn\'t create perfect documents — it creates documents that are <em>ready</em>. You start from eighty percent already done, not from a blank page.',
+s6:'What to always verify',
+tipWarnH:'What to always verify',
+tipWarnP:'<strong>Complex Excel formulas and VBA macros:</strong> they work, but check them before using them in production. <strong>Advanced design:</strong> Claude creates the structure, not the final graphic layout — slides need to be customized afterwards. <strong>Real data:</strong> Claude uses placeholders unless you provide them in the prompt.',
+s7:'Checkpoint',
+cpLead:'Try it now.',
+cpBody:'Open claude.ai (any plan, including Free) and ask it to create a template you use often: a monthly report, a standard presentation structure, a budget sheet. Download the file, open it, assess how long it takes to bring it to one hundred percent.',
+bridge:'You can turn a request into an Office file that\'s ready to open. <b>Next:</b> pushing beyond everyday use and building increasingly autonomous workflows with Claude.',
+foot:'Morfeus — Office Files',
+fmtDocxTitle:'Word (.docx)',
+fmtDocxOk:['Sections with headings and subheadings','Structured tables','Numbered and bulleted lists','Header, footer and page number','Text styling: bold, italic, headings'],
+fmtDocxWarn:['Complex layouts (advanced multi-column)','Embedded images and charts (positioning)','Advanced Word macros'],
+fmtDocxPrompt:'Create a Word file "Monthly_Report.docx".\nStructure:\n- Title: "Monthly Report — [Month Year]"\n- "Executive Summary" section (3 placeholder paragraphs)\n- "Data" section (table: Item | Value | Notes)\n- "Next Steps" section (numbered list, 5 items)\n- Footer with date\nTone: professional business.',
+fmtXlsxTitle:'Excel (.xlsx)',
+fmtXlsxOk:['Sum, average, count formulas','Multiple sheets in the same file','Formatting: EUR currency, bold header','Data structured for charts','Simple pivot tables'],
+fmtXlsxWarn:['Very complex or nested formulas: verify','VBA macros: they work but must be tested','Embedded charts (it generates the data, you add the chart)'],
+fmtXlsxPrompt:'Create an Excel file "Budget_Q2.xlsx".\n"Budget" sheet: columns Item | Budgeted | Spent | Variance | Notes.\n10 placeholder rows (marketing, software, staff…).\nTOTAL row with =SUM for the numeric columns.\n"Chart Data" sheet: monthly data for a chart.\nNumber format: EUR currency, bold header.',
+fmtPptxTitle:'PowerPoint (.pptx)',
+fmtPptxOk:['Slides with title and structured text','Bullet points and lists','Tables inside slides','Basic color scheme (light/dark)','Cover and closing slide'],
+fmtPptxWarn:['Advanced graphic design: must be customized in PowerPoint','Images and icons in slides (you add them)','Animations and transitions not included'],
+fmtPptxPrompt:'Create a PowerPoint file "Team_Presentation.pptx".\nSlide 1 (cover): Title "AI in Our Work", placeholder subtitle.\nSlide 2: "What we did" — 4 placeholder bullets.\nSlide 3: "Results" — 2×4 table (Metric | Value).\nSlide 4: "Next steps" — 3 areas with text.\nSlide 5: "Questions?" with placeholder name and contact.\nColor scheme: dark and professional.',
+fmtOkTitle:'Works well',fmtWarnTitle:'Verify carefully',fmtPromptTitle:'Example prompt:',
+flowD0Title:'Step 1: Describe structure and content',
+flowD0Body:'Specify the file name, the sections you want, the type of tables or formulas, the style (formal, concise, with placeholders). The more detail you give, the better the result. You don\'t need to write the real content: Claude uses placeholders that you\'ll replace.',
+flowD0Note:'Practical rule: describe the document as if you were briefing a collaborator. "Create a report with these sections, this structure, this tone."',
+flowD1Title:'Step 2: Claude generates the file via code execution',
+flowD1Body:'Claude uses a sandboxed Python environment with specialized libraries (openpyxl for Excel, python-docx for Word, python-pptx for PowerPoint). It writes and runs the code, then produces a real binary file — not formatted text.',
+flowD1Note:'Note: generation consumes more resources than a normal chat. On Free plans it might take a few extra seconds or have limits on daily volume.',
+flowD2Title:'Step 3: Download and open the file',
+flowD2Body:'In web chat (Web/Desktop/Mobile): a download link appears — click and you have the file. In Cowork: the file is saved directly in your local working folder, without going through the browser. In both cases the file opens with Office, Google Workspace or LibreOffice.',
+flowD2Note:'Cowork advantage: no manual download, the file is already where you work. Web/Mobile advantage: it works from any device, even Free.'
+}};
+
+var FORMATS=['docx','xlsx','pptx'];
+var FMTMETA={
+docx:{icon:'ti-file-word',color:'var(--blue)'},
+xlsx:{icon:'ti-file-spreadsheet',color:'var(--good)'},
+pptx:{icon:'ti-presentation',color:'var(--amber)'}
+};
+
+var LANG='it',curFmt='docx',curFlow=0;
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  showFormat(curFmt);
+  showFlow(curFlow);
+}
+
+function showFormat(key){
+  curFmt=key;
+  var m=FMTMETA[key],d=DICT[LANG];
+  var cap=key.charAt(0).toUpperCase()+key.slice(1);
+  document.querySelectorAll('.fmt-card').forEach(function(c){c.classList.remove('on')});
+  document.querySelector('.fmt-card.'+key).classList.add('on');
+  var ok=d['fmt'+cap+'Ok'].map(function(t){return '<li class="fd-ok"><i class="ti ti-circle-check"></i>'+t+'</li>'}).join('');
+  var warn=d['fmt'+cap+'Warn'].map(function(t){return '<li class="fd-warn"><i class="ti ti-alert-circle"></i>'+t+'</li>'}).join('');
+  document.getElementById('fmtDetail').innerHTML=
+    '<h4 style="color:'+m.color+'"><i class="ti '+m.icon+'" style="font-size:20px"></i> '+d['fmt'+cap+'Title']+'</h4>'+
+    '<div class="fmt-cols">'+
+      '<div class="fd-col"><h5>'+d.fmtOkTitle+'</h5><ul class="fd-list">'+ok+'</ul></div>'+
+      '<div class="fd-col"><h5>'+d.fmtWarnTitle+'</h5><ul class="fd-list">'+warn+'</ul></div>'+
+    '</div>'+
+    '<div class="prompt-box">'+d.fmtPromptTitle+'\n\n'+d['fmt'+cap+'Prompt']+'</div>';
+}
+
+var FLOWMETA=[
+  {icon:'ti-pencil',color:'var(--blue)',noteIcon:'ti-bulb',noteColor:'var(--blue)'},
+  {icon:'ti-sparkles',color:'var(--agent)',noteIcon:'ti-info-circle',noteColor:'var(--agent)'},
+  {icon:'ti-download',color:'var(--good)',noteIcon:'ti-folder',noteColor:'var(--good)'}
+];
+function showFlow(idx){
+  curFlow=idx;
+  var steps=document.querySelectorAll('.flow-step');
+  steps.forEach(function(s){s.classList.remove('on')});
+  steps[idx*2].classList.add('on');
+  var m=FLOWMETA[idx],d=DICT[LANG];
+  document.getElementById('flowDetail').innerHTML=
+    '<h4 style="color:'+m.color+'"><i class="ti '+m.icon+'" style="font-size:18px"></i> '+d['flowD'+idx+'Title']+'</h4>'+
+    '<p>'+d['flowD'+idx+'Body']+'</p>'+
+    '<div class="fd-note"><i class="ti '+m.noteIcon+'" style="color:'+m.noteColor+'"></i><span>'+d['flowD'+idx+'Note']+'</span></div>';
+}
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

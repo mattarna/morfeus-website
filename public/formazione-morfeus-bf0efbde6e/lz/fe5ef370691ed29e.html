@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Knowledge Base + la tassonomia (4 tipi) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.agent{background:var(--agent-soft);border-color:var(--agent-line)}.note.agent .ni{background:var(--agent)}.note.agent h4{color:var(--agent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpc.good{background:var(--good-soft);border-color:var(--good)}
+.cmptag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.cmpc.bad .cmptag{background:var(--bad);color:#fff}.cmpc.good .cmptag{background:var(--good);color:#fff}
+.cmpc .pr{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.cmpc .res{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.cmpc.bad .res b{color:var(--bad)}.cmpc.good .res b{color:var(--good)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
+/* taxonomy 4 types */
+.tax{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.txc{display:flex;align-items:flex-start;gap:13px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 16px;cursor:pointer;transition:.18s}
+.txc:hover{border-color:var(--line-2)}.txc.on{border-color:var(--accent);background:var(--accent-soft)}
+.txc .ti2{width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.txc.on .ti2{background:var(--accent);color:#fff}
+.txc .tb{flex:1}.txc .tt{font-size:14.5px;font-weight:600}.txc .td{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.taxdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.taxdetail h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}.taxdetail h4 i{color:var(--accent)}
+.taxdetail p{font-size:14.5px;color:var(--ink-2)}.taxdetail p b{color:var(--ink)}
+.taxdetail .ex{font-family:var(--mono);font-size:12px;background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;color:var(--ink-2);margin-top:10px;white-space:pre-wrap;line-height:1.6}
+/* 3 sources */
+.src{display:flex;flex-direction:column;gap:8px}
+.srow{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px}
+.srow .sn{width:30px;height:30px;border-radius:50%;background:var(--agent-soft);color:var(--agent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.srow .stt{font-size:14.5px;font-weight:600}.srow .sdd{font-size:13px;color:var(--ink-2);margin-top:1px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.tax{grid-template-columns:1fr}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.txc,.taxdetail,.key,.srow{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A5.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Knowledge Base &amp; Assistenti</div>
+  <h1 class="rv" data-i="h1">La Knowledge Base + la tassonomia (4 tipi)</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-database"></i><span class="no">01</span><h2 data-i="s1">Prompt e KB fanno due lavori diversi</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-versions"></i></div><div><h4 data-i="note1H">Comportamento contro conoscenza</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="q1"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">02</span><h2 data-i="s2">Lo stesso prompt, con e senza KB</h2></div>
+  <div class="cmp rv">
+    <div class="cmpc bad"><span class="cmptag" data-i="jBadT">Prompt da solo</span><div class="pr" data-i="jBadP"></div><div class="res" data-i-html="jBadR"></div></div>
+    <div class="cmpc good"><span class="cmptag" data-i="jGoodT">Prompt + KB</span><div class="pr" data-i="jGoodP"></div><div class="res" data-i-html="jGoodR"></div></div>
+  </div>
+  <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i="jP"></p>
+
+  <div class="sh rv"><i class="ti ti-category-2"></i><span class="no">03</span><h2 data-i="s3">La tassonomia: i 4 tipi di KB</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="taxIntro"></p>
+  <div class="tax rv" id="tax"></div>
+  <div class="taxdetail rv" id="taxDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-map-pins"></i><span class="no">04</span><h2 data-i="s4">Le 3 fonti della tua conoscenza</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="srcIntro"></p>
+  <div class="src rv" id="src"></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-big-up-lines"></i><span class="no">05</span><h2 data-i="s5">Dal corso da 10 ore al playbook</h2></div>
+  <div class="note agent rv"><div class="ni"><i class="ti ti-transform"></i></div><div><h4 data-i="note2H">La conoscenza si condensa</h4><p data-i-html="note2P"></p></div></div>
+  <div class="cards rv" style="margin-top:20px">
+    <div class="card3"><div class="ci"><i class="ti ti-clock-hour-4"></i></div><h4 data-i="c1H">10 ore di lezione</h4><p data-i="c1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-arrow-narrow-right"></i></div><h4 data-i="c2H">Estrazione del metodo</h4><p data-i="c2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-book-2"></i></div><h4 data-i="c3H">43 pagine di playbook</h4><p data-i="c3P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-compass"></i><span class="no">06</span><h2 data-i="s6">Il prompt cambia ruolo: diventa guida</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-route"></i></div><div><h4 data-i="note3H">Con la KB, il prompt naviga</h4><p data-i-html="note3P"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">07</span><h2 data-i="s7">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Mappa la tua prima KB</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — La Knowledge Base + la tassonomia</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A5.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Knowledge Base & Assistenti',
+h1:'La Knowledge Base + la tassonomia (4 tipi)',
+lede:'Un prompt perfetto resta un junior brillante ma generico. La Knowledge Base è ciò che lo rende un senior: la TUA conoscenza specifica, in un posto che l\'AI può consultare. Qui impari cos\'è, i 4 tipi e dove pescarla.',
+s1:'Prompt e KB fanno due lavori diversi',
+note1H:'Comportamento contro conoscenza',
+note1P:'Il <strong>prompt</strong> dice a Claude <strong>come comportarsi</strong>: chi è, come ragiona, in che ordine lavora. La <strong>Knowledge Base</strong> gli dà <strong>conoscenza, contesto, esempi e regole</strong> — la tua conoscenza specifica. Sono due cose distinte: il prompt è il comportamento, la KB è il sapere.',
+q1:'«Il prompt dice come comportarsi. La Knowledge Base dà la conoscenza, il contesto, gli esempi e le regole: è la TUA conoscenza specifica, quella che Claude da solo non ha.»',
+s2:'Lo stesso prompt, con e senza KB',
+jBadT:'Prompt da solo',jGoodT:'Prompt + KB',
+jBadP:'Stesso prompt, ottimo. Ma Claude conosce solo la media globale: best practice generiche, casi non tuoi, nessuna regola della tua azienda.',
+jBadR:'<b>Junior.</b> Brillante, veloce, ma generico. Pesca dalla conoscenza pubblica, non dalla tua — e si vede.',
+jGoodP:'Stesso prompt, più una KB con i tuoi processi, i tuoi esempi approvati, le tue regole. Ora Claude lavora dentro il TUO contesto.',
+jGoodR:'<b>Senior.</b> Stesso modello, stesso prompt: cambia solo la conoscenza che gli hai dato. La KB fa il salto.',
+jP:'Non cambi modello e non cambi prompt: aggiungi la conoscenza. È l\'unica leva che trasforma una risposta plausibile in una risposta giusta per te.',
+s3:'La tassonomia: i 4 tipi di KB',
+taxIntro:'Non tutta la conoscenza è uguale. Una KB efficace si compone di quattro tipi distinti: insieme rendono l\'assistente esperto. Clicca ogni tipo per vederne lo scopo e un esempio.',
+s4:'Le 3 fonti della tua conoscenza',
+srcIntro:'«Le informazioni le trovo in 3 posti.» Quando devi nutrire la KB, la conoscenza arriva sempre da una di queste tre sorgenti.',
+s5:'Dal corso da 10 ore al playbook',
+note2H:'La conoscenza si condensa',
+note2P:'Un\'ottima KB non è il materiale grezzo: è la sua <strong>distillazione</strong>. Da un corso di <strong>10 ore</strong>, l\'AI estrae il metodo e lo comprime in un <strong>playbook di 43 pagine</strong> — il sapere senza il rumore. È questa la forma che diventa conoscenza usabile.',
+c1H:'10 ore di lezione',c1P:'Il materiale grezzo: ricco, ma disperso. Troppo lungo da rileggere, troppo rumoroso da consultare.',
+c2H:'Estrazione del metodo',c2P:'L\'AI legge tutto e tira fuori i framework, le regole, i passi. Tu governi, validi, migliori.',
+c3H:'43 pagine di playbook',c3P:'Il sapere condensato e strutturato: quello che l\'assistente consulta davvero. Conoscenza, non trascrizione.',
+s6:'Il prompt cambia ruolo: diventa guida',
+note3H:'Con la KB, il prompt naviga',
+note3P:'Quando la KB è strutturata, il prompt smette di contenere tutto il sapere e diventa una <strong>guida di navigazione</strong>: spiega a Claude <strong>come usare</strong> la KB. System prompt = le regole · KB = il contenuto · prompt di conversazione = il task di oggi. Tre strati, tre ruoli.',
+s7:'Checkpoint',
+cpH:'Mappa la tua prima KB',
+cpP:'Prendi un compito che fai spesso e mappa la KB che lo renderebbe «senior»: quale know-how, quale contesto, quali esempi, quali procedure servono a Claude per farlo come lo fai tu.',
+cpQ:'Per ognuno dei 4 tipi, da quale delle 3 fonti lo prenderesti? Quello che non sai mappare è esattamente la conoscenza che oggi tieni solo nella tua testa.',
+bridge:'Sai cos\'è una KB e di cosa è fatta. <b>Prossimo:</b> costruirla con l\'AI — come trasformare materiale grezzo in una KB ben formattata e leggibile.',
+foot:'Morfeus — La Knowledge Base + la tassonomia'
+},
+en:{
+kicker:'Lesson A5.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Knowledge Base & Assistants',
+h1:'The Knowledge Base + the taxonomy (4 types)',
+lede:'A perfect prompt is still a brilliant but generic junior. The Knowledge Base is what turns it into a senior: YOUR specific knowledge, in a place Claude can consult. Here you learn what it is, the 4 types, and where to source it.',
+s1:'Prompt and KB do two different jobs',
+note1H:'Behavior versus knowledge',
+note1P:'The <strong>prompt</strong> tells Claude <strong>how to behave</strong>: who it is, how it reasons, in what order it works. The <strong>Knowledge Base</strong> gives it <strong>knowledge, context, examples and rules</strong> — your specific knowledge. They\'re two distinct things: the prompt is the behavior, the KB is the knowing.',
+q1:'"The prompt says how to behave. The Knowledge Base gives the knowledge, the context, the examples and the rules: it\'s YOUR specific knowledge, the one Claude doesn\'t have on its own."',
+s2:'The same prompt, with and without KB',
+jBadT:'Prompt alone',jGoodT:'Prompt + KB',
+jBadP:'Same prompt, excellent. But Claude only knows the global average: generic best practices, cases that aren\'t yours, none of your company\'s rules.',
+jBadR:'<b>Junior.</b> Brilliant, fast, but generic. It draws from public knowledge, not from yours — and it shows.',
+jGoodP:'Same prompt, plus a KB with your processes, your approved examples, your rules. Now Claude works inside YOUR context.',
+jGoodR:'<b>Senior.</b> Same model, same prompt: only the knowledge you gave it changes. The KB makes the leap.',
+jP:'You don\'t change the model and you don\'t change the prompt: you add the knowledge. It\'s the only lever that turns a plausible answer into the right answer for you.',
+s3:'The taxonomy: the 4 types of KB',
+taxIntro:'Not all knowledge is the same. An effective KB is made of four distinct types: together they make the assistant an expert. Click each type to see its purpose and an example.',
+s4:'The 3 sources of your knowledge',
+srcIntro:'"I find the information in 3 places." When you need to feed the KB, knowledge always comes from one of these three sources.',
+s5:'From the 10-hour course to the playbook',
+note2H:'Knowledge condenses',
+note2P:'A great KB isn\'t the raw material: it\'s its <strong>distillation</strong>. From a <strong>10-hour</strong> course, the AI extracts the method and compresses it into a <strong>43-page playbook</strong> — the knowledge without the noise. This is the form that becomes usable knowledge.',
+c1H:'10 hours of lessons',c1P:'The raw material: rich, but scattered. Too long to reread, too noisy to consult.',
+c2H:'Method extraction',c2P:'The AI reads everything and pulls out the frameworks, the rules, the steps. You govern, validate, improve.',
+c3H:'43-page playbook',c3P:'The condensed, structured knowledge: what the assistant actually consults. Knowledge, not a transcript.',
+s6:'The prompt changes role: it becomes a guide',
+note3H:'With the KB, the prompt navigates',
+note3P:'When the KB is structured, the prompt stops holding all the knowledge and becomes a <strong>navigation guide</strong>: it explains to Claude <strong>how to use</strong> the KB. System prompt = the rules · KB = the content · conversation prompt = today\'s task. Three layers, three roles.',
+s7:'Checkpoint',
+cpH:'Map your first KB',
+cpP:'Take a task you do often and map the KB that would make it "senior": which know-how, which context, which examples, which procedures Claude needs to do it the way you do.',
+cpQ:'For each of the 4 types, which of the 3 sources would you take it from? Whatever you can\'t map is exactly the knowledge you currently keep only in your head.',
+bridge:'You know what a KB is and what it\'s made of. <b>Next:</b> building it with AI — how to turn raw material into a well-formatted, readable KB.',
+foot:'Morfeus — The Knowledge Base + the taxonomy'
+}};
+
+var TAX={it:[
+['Know-how','ti-bulb','Le skill e il metodo: porta il junior a esperto','Know-how','La competenza vera di un mestiere: framework, regole, criteri di qualità. È ciò che fa salire l\'assistente da junior a esperto: gli insegna a fare la cosa bene, non solo a farla.','Il metodo di copywriting che applichi · i criteri con cui valuti un\'analisi · le regole di una due diligence.'],
+['Contesto','ti-map-2','Chi sei, come operi, dove ti muovi','Contesto','La situazione permanente: chi è la tua azienda, come lavorate, in che mercato, con quali vincoli. È il contesto stabile che daresti a un collaboratore competente al primo giorno.','«Vendiamo direttamente al consumatore, mercato italiano, budget limitato, queste sono le linee guida del brand.»'],
+['Esempi','ti-copy','Input e output reali, nel formato che vuoi','Esempi','Casi concreti già fatti bene: input e output attesi, nel formato reale. Più coprono i casi ambigui, più l\'assistente è robusto. Mostrano, non spiegano.','Dieci preventivi perfetti già approvati · un report modello · una risposta scritta con la tua voce.'],
+['Procedure','ti-list-numbers','I passi e l\'ordine in cui seguirli','Procedure','Il processo standard, passo per passo: cosa fare, in che sequenza, cosa fare nei casi grigi. È la procedura che garantisce un output consistente, chiunque la usi.','«La procedura standard con cui facciamo le due diligence: 1. leggi il documento 2. analizza 3. classifica.»']
+],en:[
+['Know-how','ti-bulb','The skills and the method: junior to expert','Know-how','The real competence of a craft: frameworks, rules, quality criteria. It\'s what lifts the assistant from junior to expert: it teaches it to do the thing well, not just to do it.','The copywriting method you apply · the criteria you judge an analysis by · the rules of a due diligence.'],
+['Context','ti-map-2','Who you are, how you operate, where you move','Context','The permanent situation: who your company is, how you work, in what market, with which constraints. It\'s the stable context you\'d give a competent collaborator on day one.','"We sell direct-to-consumer, Italian market, limited budget, these are the brand guidelines."'],
+['Examples','ti-copy','Real input and output, in the format you want','Examples','Concrete cases already done well: expected input and output, in the real format. The more they cover ambiguous cases, the more robust the assistant. They show, they don\'t explain.','Ten perfect, already-approved quotes · a model report · an answer written in your voice.'],
+['Procedures','ti-list-numbers','The steps and the order to follow them','Procedures','The standard process, step by step: what to do, in what sequence, what to do in the gray cases. It\'s the procedure that guarantees a consistent output, whoever uses it.','"The standard procedure we use for due diligence: 1. read the document 2. analyze 3. classify."']
+]};
+
+var SRC={it:[
+['Dentro di me / la mia azienda','Il tuo know-how e i tuoi processi. «Ho brevettato un metodo → insegno quello.»'],
+['Da chi è più bravo di me','«Leggi i libri che leggerei io, vedi i corsi che farei io.» Le formazioni in cui investi diventano knowledge.'],
+['Chiedo all\'AI','«Qual è il miglior modo per…?» e l\'AI ti restituisce la procedura. Non sai come fare X? Lo chiedi a lei.']
+],en:[
+['Inside me / my company','Your know-how and your processes. "I patented a method → I teach that one."'],
+['From those better than me','"Read the books I\'d read, watch the courses I\'d take." The training you invest in becomes knowledge.'],
+['I ask the AI','"What\'s the best way to…?" and the AI hands you the procedure. Don\'t know how to do X? Ask it.']
+]};
+
+var LANG='it',curTax=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('tax').innerHTML=TAX[LANG].map(function(t,i){return '<div class="txc'+(i===curTax?' on':'')+'" onclick="showTax('+i+')"><div class="ti2"><i class="ti '+t[1]+'"></i></div><div class="tb"><div class="tt">'+t[0]+'</div><div class="td">'+t[2]+'</div></div></div>'}).join('');
+  document.getElementById('src').innerHTML=SRC[LANG].map(function(s,i){return '<div class="srow"><div class="sn">'+(i+1)+'</div><div><div class="stt">'+s[0]+'</div><div class="sdd">'+s[1]+'</div></div></div>'}).join('');
+  showTax(curTax);
+}
+function showTax(i){curTax=i;document.querySelectorAll('#tax .txc').forEach(function(x,k){x.classList.toggle('on',k===i)});var t=TAX[LANG][i];document.getElementById('taxDetail').innerHTML='<h4><i class="ti '+t[1]+'"></i> '+t[0]+'</h4><p>'+t[4]+'</p><div class="ex">'+t[5]+'</div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

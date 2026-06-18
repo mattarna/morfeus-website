@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosa sono i Projects e perché cambiano tutto — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--good-line:#aedcbb;--bad:#d44a3e;--bad-soft:#fbe9e6;--bad-line:#eeb4ac;
+--warn:#b8860b;--warn-soft:#f8efd6;--warn-line:#e6cf8f;
+--teal:#1D9E75;--teal-soft:#e1f5ee;--teal-line:#a8e0cd;
+--blue:#378ADD;--blue-soft:#e6f1fb;--blue-line:#b5d4f4;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--good-line:#3a5a44;--bad:#ee8a80;--bad-soft:#412420;--bad-line:#6a3a34;
+--warn:#e0b84e;--warn-soft:#3a2f12;--warn-line:#6a571f;
+--teal:#5DCAA5;--teal-soft:#04342c;--teal-line:#1d5a48;
+--blue:#85b7eb;--blue-soft:#0c2944;--blue-line:#1e4d7a;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.hook{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;padding:20px 22px;margin:0}
+.hook i{color:var(--accent);font-size:22px;flex-shrink:0}
+.hook p{font-size:15px;font-style:italic;color:var(--ink-2);line-height:1.7}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:20px;font-weight:600;line-height:1.5;color:var(--accent);max-width:640px;margin:0 auto;letter-spacing:-.01em;font-style:italic}
+.lede-p{font-size:14.5px;color:var(--ink-2);line-height:1.7;margin-bottom:18px}
+.lede-p strong{color:var(--ink);font-weight:600}
+/* before/after */
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0}
+.ba-card{padding:24px 20px;border-radius:var(--r-l);border:1.5px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.ba-card.before{background:var(--bad-soft);border-color:var(--bad-line)}
+.ba-card.after{background:var(--good-soft);border-color:var(--good-line)}
+.ba-tag{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.ba-card.before .ba-tag{color:var(--bad)}
+.ba-card.after .ba-tag{color:var(--good)}
+.ba-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.ba-card p{font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:12px}
+.ba-mock{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:12px;font-family:var(--mono);color:var(--ink-2);line-height:1.6}
+.ba-mock .user{color:var(--ink);font-weight:600}
+.ba-mock .ai{font-style:italic;margin-top:8px}
+/* feature cards grid */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.feat-card{display:flex;gap:14px;padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);transition:.18s}
+.feat-card:hover{border-color:var(--line-2)}
+.feat-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
+.feat-card h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.feat-card p{font-size:12px;color:var(--ink-2);line-height:1.5}
+/* key phrase block */
+.kp{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 var(--r) var(--r) 0;font-style:italic;font-size:15px;color:var(--ink);line-height:1.7;margin:0}
+.kp.big{font-size:16px}
+/* tip / warn */
+.tip{display:flex;gap:16px;border-radius:var(--r-l);padding:18px;margin:0}
+.tip.good{background:var(--teal-soft);border:1px solid var(--teal-line)}
+.tip .ti-i{width:40px;height:40px;border-radius:11px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.tip.good .ti-i{background:var(--teal)}
+.tip h4{font-size:14px;font-weight:600;margin-bottom:4px}.tip.good h4{color:var(--teal)}.tip p{font-size:14px;color:var(--ink-2);line-height:1.6}
+.warn-box{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:var(--r-l);padding:16px 20px;margin:0}
+.warn-box .warn-title{font-size:12px;font-weight:600;color:var(--warn);margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.warn-box p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* steps */
+.step-wrap{margin:0}
+.istep{display:flex;align-items:flex-start;gap:16px;position:relative;padding-bottom:22px}
+.istep:last-child{padding-bottom:0}
+.istep::before{content:'';position:absolute;left:19px;top:42px;bottom:0;width:2px;background:var(--line)}
+.istep:last-child::before{display:none}
+.inum{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;flex-shrink:0;z-index:1;background:var(--accent-soft);color:var(--accent);border:1.5px solid var(--accent-line)}
+.icontent{flex:1;padding-top:7px}
+.icontent strong{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px}
+.icontent span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+/* comparison table */
+.comp-wrap{overflow-x:auto;border-radius:var(--r-l);border:1px solid var(--line);box-shadow:var(--sh);margin:0}
+.comp{width:100%;border-collapse:collapse;font-size:13px}
+.comp th{text-align:left;padding:11px 14px;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap;font-family:var(--mono)}
+.comp td{padding:12px 14px;border-bottom:1px dashed var(--line);background:var(--card);color:var(--ink-2);vertical-align:top}
+.comp tr:last-child td{border-bottom:none}
+.comp .fn{font-weight:600;color:var(--ink)}
+.comp .yes{color:var(--teal)}
+.comp .no{color:var(--ink-3)}
+/* role rows */
+.role-wrap{margin:0}
+.role-row{display:flex;gap:10px;margin-bottom:10px;align-items:stretch}
+.role-row:last-child{margin-bottom:0}
+.role-tag{width:148px;padding:10px 14px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r);font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.role-tag i{font-size:14px}
+.role-projects{flex:1;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.role-pill{padding:6px 12px;background:var(--card);border:1px solid var(--line);border-radius:20px;font-size:12px;color:var(--ink-2)}
+/* decision cards */
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0}
+.decision-card{padding:24px 20px;border-radius:var(--r-l);border:1.5px solid var(--line);background:var(--card);box-shadow:var(--sh)}
+.decision-card.go{border-color:var(--teal-line)}
+.decision-card.no{border-color:var(--warn-line)}
+.decision-card h3{font-size:16px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.decision-card .dc-sub{font-size:12px;color:var(--ink-3);margin-bottom:16px}
+.decision-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;font-size:13px;color:var(--ink-2);line-height:1.5}
+.decision-item i{font-size:16px;flex-shrink:0;margin-top:1px}
+.decision-card.go .decision-item i{color:var(--teal)}
+.decision-card.no .decision-item i{color:var(--warn)}
+/* feat rows (globali vs project) */
+.feat-rows{margin:0}
+.feat-row{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.feat-row:last-child{border-bottom:none}
+.feat-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.feat-text{flex:1}
+.feat-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.feat-text span{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* scenario (errori) */
+.scenario{background:var(--card);border:1.5px solid var(--bad-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 20px;margin-bottom:12px;display:flex;align-items:flex-start;gap:14px}
+.scenario:last-child{margin-bottom:0}
+.scenario .sc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--bad-soft);color:var(--bad)}
+.scenario .sc-text{flex:1}
+.scenario .sc-text strong{font-weight:600;font-size:14px;display:block;margin-bottom:2px}
+.scenario .sc-text span{font-size:13px;color:var(--ink-2);line-height:1.5}
+/* checkpoint */
+.cp{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);box-shadow:var(--sh);padding:28px;text-align:center;margin:0}
+.cp>i{font-size:40px;color:var(--accent);display:block;margin-bottom:12px}
+.cp .cph{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.cp p{font-size:14px;color:var(--ink-2);max-width:520px;margin:0 auto;line-height:1.7}
+.cp p strong{color:var(--ink);font-weight:600}
+/* bridge */
+.bridge{display:flex;gap:16px;align-items:flex-start;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.bridge .br-i{width:48px;height:48px;border-radius:12px;background:var(--agent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bridge strong{font-weight:600;font-size:15px;display:block;margin-bottom:4px;color:var(--agent)}
+.bridge span{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.ba-grid,.feat-grid,.decision-grid{grid-template-columns:1fr}.role-row{flex-direction:column}.role-tag{width:100%}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.ba-card,.feat-card,.kp,.tip,.warn-box,.comp-wrap,.decision-card,.scenario,.cp,.bridge,.key,.istep{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione 3.1</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Projects</div>
+  <h1 class="rv" data-i="h1">Cosa sono i Projects e perché cambiano tutto</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="hook rv" style="margin-top:30px"><i class="ti ti-quote"></i><p data-i="hook"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-exchange"></i><span class="no">01</span><h2 data-i="s1">Prima e dopo</h2></div>
+  <div class="ba-grid rv">
+    <div class="ba-card before">
+      <div class="ba-tag"><i class="ti ti-x"></i> <span data-i="baBeforeTag"></span></div>
+      <h3 data-i="baBeforeH"></h3>
+      <p data-i="baBeforeP"></p>
+      <div class="ba-mock">
+        <div class="user" data-i="baBeforeU"></div>
+        <div class="ai" data-i="baBeforeAi"></div>
+      </div>
+    </div>
+    <div class="ba-card after">
+      <div class="ba-tag"><i class="ti ti-check"></i> <span data-i="baAfterTag"></span></div>
+      <h3 data-i="baAfterH"></h3>
+      <p data-i="baAfterP"></p>
+      <div class="ba-mock">
+        <div class="user" data-i="baAfterU"></div>
+        <div class="ai" data-i="baAfterAi"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-package"></i><span class="no">02</span><h2 data-i="s2">Cosa contiene un Project</h2></div>
+  <div class="feat-grid rv">
+    <div class="feat-card"><div class="feat-card-icon"><i class="ti ti-settings"></i></div><div><h4 data-i="f1H"></h4><p data-i="f1P"></p></div></div>
+    <div class="feat-card"><div class="feat-card-icon"><i class="ti ti-database"></i></div><div><h4 data-i="f2H"></h4><p data-i="f2P"></p></div></div>
+    <div class="feat-card"><div class="feat-card-icon"><i class="ti ti-messages"></i></div><div><h4 data-i="f3H"></h4><p data-i="f3P"></p></div></div>
+    <div class="feat-card"><div class="feat-card-icon"><i class="ti ti-dimensions"></i></div><div><h4 data-i="f4H"></h4><p data-i="f4P"></p></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">03</span><h2 data-i="s3">Il modello mentale giusto</h2></div>
+  <div class="kp big rv" data-i="mm1"></div>
+  <p class="lede-p rv" style="margin-top:18px" data-i="mm2"></p>
+  <div class="tip good rv"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="mmTipH"></h4><p data-i="mmTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-plus"></i><span class="no">04</span><h2 data-i="s4">Come creare un Project</h2></div>
+  <div class="step-wrap rv">
+    <div class="istep"><div class="inum">1</div><div class="icontent"><strong data-i="st1H"></strong><span data-i="st1P"></span></div></div>
+    <div class="istep"><div class="inum">2</div><div class="icontent"><strong data-i="st2H"></strong><span data-i="st2P"></span></div></div>
+    <div class="istep"><div class="inum">3</div><div class="icontent"><strong data-i="st3H"></strong><span data-i="st3P"></span></div></div>
+    <div class="istep"><div class="inum">4</div><div class="icontent"><strong data-i="st4H"></strong><span data-i="st4P"></span></div></div>
+    <div class="istep"><div class="inum">5</div><div class="icontent"><strong data-i="st5H"></strong><span data-i="st5P"></span></div></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-lock-open"></i><span class="no">05</span><h2 data-i="s5">Disponibilità e limiti</h2></div>
+  <div class="comp-wrap rv">
+    <table class="comp">
+      <thead><tr><th data-i="cmpF"></th><th style="text-align:center" data-i="cmpFree"></th><th style="text-align:center" data-i="cmpPro"></th><th style="text-align:center" data-i="cmpTeam"></th></tr></thead>
+      <tbody id="comp-body"></tbody>
+    </table>
+  </div>
+  <div class="warn-box rv" style="margin-top:16px">
+    <div class="warn-title"><i class="ti ti-info-circle"></i> <span data-i="fmtH"></span></div>
+    <p data-i="fmtP"></p>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">06</span><h2 data-i="s6">Come organizzare i Projects</h2></div>
+  <p class="lede-p rv" data-i="orgIntro"></p>
+  <div class="role-wrap rv">
+    <div class="role-row"><div class="role-tag"><i class="ti ti-user"></i> <span data-i="role1"></span></div><div class="role-projects" id="role1-pills"></div></div>
+    <div class="role-row"><div class="role-tag"><i class="ti ti-pencil"></i> <span data-i="role2"></span></div><div class="role-projects" id="role2-pills"></div></div>
+    <div class="role-row"><div class="role-tag"><i class="ti ti-briefcase"></i> <span data-i="role3"></span></div><div class="role-projects" id="role3-pills"></div></div>
+    <div class="role-row"><div class="role-tag"><i class="ti ti-building-store"></i> <span data-i="role4"></span></div><div class="role-projects" id="role4-pills"></div></div>
+  </div>
+  <div class="tip good rv" style="margin-top:20px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="nameTipH"></h4><p data-i="nameTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-arrows-split-2"></i><span class="no">07</span><h2 data-i="s7">Quando usare un Project</h2></div>
+  <div class="decision-grid rv">
+    <div class="decision-card go">
+      <h3><i class="ti ti-check" style="color:var(--teal)"></i> <span data-i="decGoH"></span></h3>
+      <div class="dc-sub" data-i="decGoSub"></div>
+      <div class="decision-item"><i class="ti ti-refresh"></i> <span data-i="decGo1"></span></div>
+      <div class="decision-item"><i class="ti ti-file-text"></i> <span data-i="decGo2"></span></div>
+      <div class="decision-item"><i class="ti ti-copy"></i> <span data-i="decGo3"></span></div>
+      <div class="decision-item"><i class="ti ti-settings"></i> <span data-i="decGo4"></span></div>
+    </div>
+    <div class="decision-card no">
+      <h3><i class="ti ti-x" style="color:var(--warn)"></i> <span data-i="decNoH"></span></h3>
+      <div class="dc-sub" data-i="decNoSub"></div>
+      <div class="decision-item"><i class="ti ti-message"></i> <span data-i="decNo1"></span></div>
+      <div class="decision-item"><i class="ti ti-clock"></i> <span data-i="decNo2"></span></div>
+      <div class="decision-item"><i class="ti ti-bulb"></i> <span data-i="decNo3"></span></div>
+      <div class="decision-item"><i class="ti ti-calculator"></i> <span data-i="decNo4"></span></div>
+    </div>
+  </div>
+  <div class="kp rv" style="margin-top:20px" data-i="decKey"></div>
+
+  <div class="sh rv"><i class="ti ti-layers-intersect"></i><span class="no">08</span><h2 data-i="s8">Projects + Istruzioni globali</h2></div>
+  <p class="lede-p rv" data-i="glIntro"></p>
+  <div class="feat-rows rv">
+    <div class="feat-row">
+      <div class="feat-icon" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-world"></i></div>
+      <div class="feat-text"><strong data-i="gl1H"></strong><span data-i="gl1P"></span></div>
+    </div>
+    <div class="feat-row">
+      <div class="feat-icon" style="background:var(--teal-soft);color:var(--teal)"><i class="ti ti-folder"></i></div>
+      <div class="feat-text"><strong data-i="gl2H"></strong><span data-i="gl2P"></span></div>
+    </div>
+  </div>
+  <div class="tip good rv" style="margin-top:20px"><div class="ti-i"><i class="ti ti-bulb"></i></div><div><h4 data-i="glTipH"></h4><p data-i="glTipP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-circle"></i><span class="no">09</span><h2 data-i="s9">Errori comuni</h2></div>
+  <div class="rv" id="errors"></div>
+
+  <div class="sh rv"><i class="ti ti-target-arrow"></i><span class="no">10</span><h2 data-i="s10">Checkpoint</h2></div>
+  <div class="cp rv"><i class="ti ti-folders"></i><div class="cph" data-i="cpH"></div><p data-i-html="cpP"></p></div>
+
+  <div class="sh rv"><i class="ti ti-arrow-right-circle"></i><span class="no">11</span><h2 data-i="s11">Prossimo passo</h2></div>
+  <div class="bridge rv"><div class="br-i"><i class="ti ti-arrow-right"></i></div><div><strong data-i="brH"></strong><span data-i="brP"></span></div></div>
+
+  <div class="foot rv"><span data-i="foot">Morfeus — Cosa sono i Projects</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione 3.1',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Projects',
+h1:'Cosa sono i Projects e perché cambiano tutto',
+lede:'Il problema che tutti incontrano entro la prima settimana: aprire Claude e dover rispiegare tutto da capo. I Projects lo eliminano alla radice.',
+hook:'«Aprono Claude il giorno dopo, iniziano a scrivere, e devono rispiegare tutto. Chi sono. Su cosa lavorano. Che tono usare. Qual è il contesto. Ogni volta. Da capo. I Projects eliminano questo problema alla radice.»',
+s1:'Prima e dopo',
+baBeforeTag:'Senza Projects',baBeforeH:'Ogni volta, da capo',
+baBeforeP:'Ogni conversazione è isolata. Claude non ricorda niente delle precedenti. Devi rispiegare chi sei, su cosa lavori, che tono usare, ogni singola volta.',
+baBeforeU:'Tu: Suggerisci come migliorare l\'engagement delle email di questo cliente',
+baBeforeAi:'Claude: Ecco alcuni suggerimenti generici per migliorare l\'engagement delle email...',
+baAfterTag:'Con Projects',baAfterH:'Claude sa già',
+baAfterP:'Claude porta con sé un contesto permanente, automaticamente. Sa chi sei, conosce i materiali, risponde già calibrato sul tuo lavoro.',
+baAfterU:'Tu: Suggerisci come migliorare l\'engagement delle email di questo cliente',
+baAfterAi:'Claude: Per il Cliente X nel settore manifatturiero, considerando il tono diretto che preferisci e i dati dell\'ultima campagna...',
+s2:'Cosa contiene un Project',
+f1H:'Istruzioni personalizzate',f1P:'Chi sei, come ragionare, che tono usare. Claude parte già calibrato in ogni chat del Project.',
+f2H:'Knowledge base',f2P:'File, documenti, materiali di riferimento. Claude li consulta automaticamente quando servono.',
+f3H:'Conversazioni separate',f3P:'Ogni Project ha le sue chat, separate da tutto il resto. Non si mischiano mai.',
+f4H:'200.000 token di contesto',f4P:'Circa 500 pagine di testo. Abbastanza per caricare un intero manuale operativo.',
+s3:'Il modello mentale giusto',
+mm1:'Un Project non è una cartella di conversazioni. È un Claude specializzato. Conosce il vostro contesto, ricorda i vostri materiali, e risponde già sapendo chi siete e su cosa state lavorando.',
+mm2:'Immaginate di avere un assistente dedicato per ogni area di lavoro. L\'assistente del cliente A conosce tutto sul cliente A: il settore, le preferenze, la storia del rapporto. L\'assistente per i contenuti conosce il vostro stile, le linee editoriali, i topic. Non si confondono tra loro. Ognuno è specializzato. Questo è un Project.',
+mmTipH:'La differenza chiave',
+mmTipP:'È la differenza tra assumere qualcuno e dovergli rispiegare tutto ogni mattina. Con un Project, Claude "si siede alla scrivania" già sapendo cosa deve fare.',
+s4:'Come creare un Project',
+st1H:'Apri la sezione Projects',st1P:'Nella sidebar sinistra di claude.ai, clicca su "Projects". È dove vivono tutti i tuoi Projects.',
+st2H:'Clicca "Create project"',st2P:'Dai un nome chiaro e descrittivo. "Cliente Rossi - Marketing" è meglio di "Progetto 1".',
+st3H:'Scrivi le istruzioni personalizzate',st3P:'Spiega a Claude il contesto: chi sei, cosa fa questo progetto, che tipo di output ti serve, che tono usare. Approfondimento nella lezione 3.2.',
+st4H:'Carica i file nella knowledge base',st4P:'Documenti, PDF, CSV, codice. Tutto ciò che Claude deve conoscere per rispondere bene. Approfondimento nella lezione 3.3.',
+st5H:'Inizia una conversazione nel Project',st5P:'Ogni chat aperta dentro il Project ha accesso automatico alle istruzioni e alla knowledge base. Non devi fare nulla di speciale.',
+s5:'Disponibilità e limiti',
+cmpF:'Funzionalità',cmpFree:'Free',cmpPro:'Pro',cmpTeam:'Team',
+fmtH:'Formati file supportati',
+fmtP:'PDF, DOCX, TXT, CSV, HTML, codice sorgente (.py, .js, .ts, etc.), immagini (PNG, JPG). Claude può leggere e analizzare tutti questi formati direttamente nella knowledge base.',
+s6:'Come organizzare i Projects',
+orgIntro:'Dipende dal lavoro. Ecco come li organizzano diversi profili:',
+role1:'Freelancer',role2:'Creator',role3:'Manager',role4:'Imprenditore',
+nameTipH:'Naming tip',
+nameTipP:'Dai nomi che ti fanno capire immediatamente il contesto: "Marco Rossi - Campagne Email" è meglio di "Progetto 3". Se hai molti Projects, il nome è l\'unica cosa che vedi nella sidebar.',
+s7:'Quando usare un Project',
+decGoH:'Crea un Project quando',decGoSub:'Il contesto è ricorrente',
+decGo1:'Torni sullo stesso argomento più volte a settimana',
+decGo2:'Hai documenti che Claude deve consultare ogni volta',
+decGo3:'Ti ritrovi a copiare/incollare lo stesso contesto',
+decGo4:'Serve un tono o un ruolo specifico per quel lavoro',
+decNoH:'Non serve un Project quando',decNoSub:'È una cosa una tantum',
+decNo1:'È una domanda veloce senza contesto particolare',
+decNo2:'Non ci tornerai più (task one-shot)',
+decNo3:'Stai esplorando o facendo brainstorming libero',
+decNo4:'Serve una risposta fattuale semplice',
+decKey:'Il segnale che ti serve un Project: ti ritrovi a rispiegare lo stesso contesto a Claude per la terza volta. Quello è il momento di fermarti e creare un Project.',
+s8:'Projects + Istruzioni globali',
+glIntro:'Un Project non sostituisce le istruzioni globali (quelle in Settings). Si sommano. Le istruzioni globali dicono a Claude COME comportarsi sempre. Le istruzioni del Project dicono COSA sapere per quel contesto specifico.',
+gl1H:'Istruzioni globali (Settings)',
+gl1P:'"Sii diretto, non condiscendente, non usare em dash, pensa in sistemi" → vale per TUTTE le chat, anche nei Projects.',
+gl2H:'Istruzioni del Project',
+gl2P:'"Questo è il progetto per il Cliente Rossi, settore manifatturiero, tono formale ma non burocratico, l\'obiettivo è aumentare il conversion rate" → vale solo qui.',
+glTipH:'Regola pratica',
+glTipP:'Nelle istruzioni globali metti il "come" (tono, formato, standard di pensiero). Nelle istruzioni del Project metti il "cosa" (contesto, materiali, obiettivi specifici). Non ripetere le stesse cose in entrambi i posti.',
+s9:'Errori comuni',
+s10:'Checkpoint',
+cpH:'Pensa al tuo primo Project.',
+cpP:'Qual è l\'area del tuo lavoro dove usi Claude in modo ricorrente? Dove ti ritrovi a rispiegare lo stesso contesto? Quello è il candidato perfetto per diventare il tuo primo Project.<br><br><strong>Nelle prossime tre lezioni lo costruiamo insieme: istruzioni, knowledge base, e gestione multi-progetto.</strong>',
+s11:'Prossimo passo',
+brH:'Prossimo passo: le istruzioni personalizzate',
+brP:'Sai cos\'è un Project e perché esiste. Adesso vediamo il componente più potente: le istruzioni personalizzate. Quello che scrivi lì è la differenza tra un Claude generico e un Claude fatto apposta per il tuo lavoro.',
+foot:'Morfeus — Cosa sono i Projects'
+},
+en:{
+kicker:'Lesson 3.1',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Projects',
+h1:'What Projects are and why they change everything',
+lede:'The problem everyone hits within the first week: opening Claude and having to re-explain everything from scratch. Projects eliminate it at the root.',
+hook:'"They open Claude the next day, start typing, and have to re-explain everything. Who they are. What they work on. What tone to use. What the context is. Every time. From scratch. Projects eliminate this problem at the root."',
+s1:'Before and after',
+baBeforeTag:'Without Projects',baBeforeH:'Every time, from scratch',
+baBeforeP:'Every conversation is isolated. Claude remembers nothing from the previous ones. You have to re-explain who you are, what you work on, what tone to use, every single time.',
+baBeforeU:'You: Suggest how to improve the email engagement for this client',
+baBeforeAi:'Claude: Here are some generic suggestions to improve email engagement...',
+baAfterTag:'With Projects',baAfterH:'Claude already knows',
+baAfterP:'Claude carries permanent context with it, automatically. It knows who you are, knows the materials, and responds already calibrated to your work.',
+baAfterU:'You: Suggest how to improve the email engagement for this client',
+baAfterAi:'Claude: For Client X in the manufacturing sector, considering the direct tone you prefer and the data from the last campaign...',
+s2:'What a Project contains',
+f1H:'Custom instructions',f1P:'Who you are, how to reason, what tone to use. Claude starts already calibrated in every chat of the Project.',
+f2H:'Knowledge base',f2P:'Files, documents, reference materials. Claude consults them automatically when they\'re needed.',
+f3H:'Separate conversations',f3P:'Every Project has its own chats, separate from everything else. They never mix.',
+f4H:'200,000 tokens of context',f4P:'About 500 pages of text. Enough to load an entire operations manual.',
+s3:'The right mental model',
+mm1:'A Project is not a folder of conversations. It\'s a specialized Claude. It knows your context, remembers your materials, and responds already knowing who you are and what you\'re working on.',
+mm2:'Imagine having a dedicated assistant for each area of work. Client A\'s assistant knows everything about Client A: the sector, the preferences, the history of the relationship. The content assistant knows your style, your editorial guidelines, your topics. They don\'t get confused with each other. Each one is specialized. That\'s a Project.',
+mmTipH:'The key difference',
+mmTipP:'It\'s the difference between hiring someone and having to re-explain everything to them every morning. With a Project, Claude "sits down at the desk" already knowing what it has to do.',
+s4:'How to create a Project',
+st1H:'Open the Projects section',st1P:'In the left sidebar of claude.ai, click on "Projects". That\'s where all your Projects live.',
+st2H:'Click "Create project"',st2P:'Give it a clear, descriptive name. "Client Rossi - Marketing" is better than "Project 1".',
+st3H:'Write the custom instructions',st3P:'Explain the context to Claude: who you are, what this project does, what kind of output you need, what tone to use. Deep dive in lesson 3.2.',
+st4H:'Upload the files into the knowledge base',st4P:'Documents, PDFs, CSVs, code. Everything Claude needs to know to respond well. Deep dive in lesson 3.3.',
+st5H:'Start a conversation in the Project',st5P:'Every chat opened inside the Project has automatic access to the instructions and the knowledge base. You don\'t have to do anything special.',
+s5:'Availability and limits',
+cmpF:'Feature',cmpFree:'Free',cmpPro:'Pro',cmpTeam:'Team',
+fmtH:'Supported file formats',
+fmtP:'PDF, DOCX, TXT, CSV, HTML, source code (.py, .js, .ts, etc.), images (PNG, JPG). Claude can read and analyze all these formats directly in the knowledge base.',
+s6:'How to organize your Projects',
+orgIntro:'It depends on the work. Here\'s how different profiles organize them:',
+role1:'Freelancer',role2:'Creator',role3:'Manager',role4:'Entrepreneur',
+nameTipH:'Naming tip',
+nameTipP:'Give names that let you understand the context immediately: "Marco Rossi - Email Campaigns" is better than "Project 3". If you have many Projects, the name is the only thing you see in the sidebar.',
+s7:'When to use a Project',
+decGoH:'Create a Project when',decGoSub:'The context is recurring',
+decGo1:'You come back to the same topic several times a week',
+decGo2:'You have documents Claude needs to consult every time',
+decGo3:'You find yourself copy/pasting the same context',
+decGo4:'You need a specific tone or role for that work',
+decNoH:'You don\'t need a Project when',decNoSub:'It\'s a one-off',
+decNo1:'It\'s a quick question with no particular context',
+decNo2:'You won\'t come back to it (one-shot task)',
+decNo3:'You\'re exploring or doing free brainstorming',
+decNo4:'You need a simple factual answer',
+decKey:'The signal that you need a Project: you find yourself re-explaining the same context to Claude for the third time. That\'s the moment to stop and create a Project.',
+s8:'Projects + global instructions',
+glIntro:'A Project does not replace the global instructions (the ones in Settings). They add up. Global instructions tell Claude HOW to always behave. The Project instructions tell it WHAT to know for that specific context.',
+gl1H:'Global instructions (Settings)',
+gl1P:'"Be direct, not condescending, don\'t use em dashes, think in systems" → applies to ALL chats, even inside Projects.',
+gl2H:'Project instructions',
+gl2P:'"This is the project for Client Rossi, manufacturing sector, formal but not bureaucratic tone, the goal is to increase the conversion rate" → applies only here.',
+glTipH:'Practical rule',
+glTipP:'Put the "how" (tone, format, thinking standards) in the global instructions. Put the "what" (context, materials, specific goals) in the Project instructions. Don\'t repeat the same things in both places.',
+s9:'Common mistakes',
+s10:'Checkpoint',
+cpH:'Think about your first Project.',
+cpP:'What\'s the area of your work where you use Claude in a recurring way? Where do you find yourself re-explaining the same context? That\'s the perfect candidate to become your first Project.<br><br><strong>In the next three lessons we build it together: instructions, knowledge base, and multi-project management.</strong>',
+s11:'Next step',
+brH:'Next step: custom instructions',
+brP:'You know what a Project is and why it exists. Now let\'s look at the most powerful component: custom instructions. What you write there is the difference between a generic Claude and a Claude built specifically for your work.',
+foot:'Morfeus — What Projects are'
+}};
+
+var COMP={
+it:[
+['Creare Projects','yes','yes','yes'],
+['Numero massimo Projects','5','Illimitati','Illimitati'],
+['Istruzioni personalizzate','yes','yes','yes'],
+['Knowledge base (file)','yes','yes','yes'],
+['Dimensione max per file','30 MB','30 MB','30 MB'],
+['Context window','200K token','200K token','200K token'],
+['Condivisione con team','no','no','yes']
+],
+en:[
+['Create Projects','yes','yes','yes'],
+['Maximum number of Projects','5','Unlimited','Unlimited'],
+['Custom instructions','yes','yes','yes'],
+['Knowledge base (files)','yes','yes','yes'],
+['Max size per file','30 MB','30 MB','30 MB'],
+['Context window','200K tokens','200K tokens','200K tokens'],
+['Team sharing','no','no','yes']
+]};
+
+var ROLES={
+it:[
+['Cliente A','Cliente B','Cliente C','Admin interno'],
+['Newsletter','Podcast','YouTube','Social'],
+['Progetto Alpha','Progetto Beta','Team Ops','Ricerca'],
+['Azienda A','Azienda B','Finanza','Strategia']
+],
+en:[
+['Client A','Client B','Client C','Internal admin'],
+['Newsletter','Podcast','YouTube','Social'],
+['Project Alpha','Project Beta','Team Ops','Research'],
+['Company A','Company B','Finance','Strategy']
+]};
+
+var ERRORS={
+it:[
+['Un Project per tutto','Mettere clienti, contenuti, e admin nello stesso Project. Claude confonde i contesti. Un Project = un contesto.'],
+['Creare il Project ma lasciare le istruzioni vuote','Un Project senza istruzioni è una cartella di chat. Il valore sta nelle istruzioni e nella knowledge base, non nel contenitore.'],
+['Caricare troppi file irrilevanti','200K token sono tanti, ma non infiniti. Carica solo quello che serve. File irrilevanti diluiscono l\'attenzione di Claude.'],
+['Non aggiornare mai il Project','Il contesto evolve. Se il cliente cambia strategia o il progetto avanza, aggiorna le istruzioni e i file. Un Project obsoleto produce risposte obsolete.']
+],
+en:[
+['One Project for everything','Putting clients, content, and admin in the same Project. Claude confuses the contexts. One Project = one context.'],
+['Creating the Project but leaving the instructions empty','A Project without instructions is a folder of chats. The value is in the instructions and the knowledge base, not in the container.'],
+['Uploading too many irrelevant files','200K tokens is a lot, but not infinite. Upload only what\'s needed. Irrelevant files dilute Claude\'s attention.'],
+['Never updating the Project','Context evolves. If the client changes strategy or the project moves forward, update the instructions and the files. An obsolete Project produces obsolete answers.']
+]};
+
+var LANG='it';
+function cell(v){if(v==='yes')return '<td style="text-align:center" class="yes"><i class="ti ti-check"></i></td>';if(v==='no')return '<td style="text-align:center" class="no"><i class="ti ti-x"></i></td>';return '<td style="text-align:center">'+v+'</td>'}
+function renderComp(){
+  document.getElementById('comp-body').innerHTML=COMP[LANG].map(function(r){
+    return '<tr><td class="fn">'+r[0]+'</td>'+cell(r[1])+cell(r[2])+cell(r[3])+'</tr>';
+  }).join('');
+}
+function renderRoles(){
+  ROLES[LANG].forEach(function(arr,i){
+    document.getElementById('role'+(i+1)+'-pills').innerHTML=arr.map(function(p){return '<span class="role-pill">'+p+'</span>'}).join('');
+  });
+}
+function renderErrors(){
+  document.getElementById('errors').innerHTML=ERRORS[LANG].map(function(e){
+    return '<div class="scenario"><div class="sc-icon"><i class="ti ti-x"></i></div><div class="sc-text"><strong>'+e[0]+'</strong><span>'+e[1]+'</span></div></div>';
+  }).join('');
+}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderComp();renderRoles();renderErrors();
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>
