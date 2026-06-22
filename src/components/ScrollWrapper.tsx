@@ -9,7 +9,7 @@ interface ScrollWrapperProps {
   children: ReactNode;
 }
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 const TRANSITION_DURATION = "1000ms";
 const TRANSITION_EASING = "cubic-bezier(0.645, 0.045, 0.355, 1.000)";
 

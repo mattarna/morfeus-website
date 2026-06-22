@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * CTA Section - Index 13
@@ -45,7 +45,7 @@ export function CTA() {
   };
 
   return (
-    <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center justify-center bg-black overflow-hidden px-6 py-20 lg:py-0">
+    <section className="relative z-0 min-h-screen xl:h-screen w-full flex items-center justify-center bg-black overflow-hidden px-5 sm:px-6 pt-28 pb-16 xl:py-0">
       {/* Layered Background Effects */}
       
       {/* Deep purple base gradient */}
@@ -83,12 +83,12 @@ export function CTA() {
       />
       
       <div 
-        className={`relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto transition-all duration-1000 ${
+        className={`relative z-10 flex flex-col items-center text-center max-w-4xl 2xl:max-w-5xl mx-auto transition-all duration-1000 ${
           isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
         {/* Headline - Impactful and unified size with orange accent */}
-        <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-black tracking-tighter text-white leading-[1.05] mb-10 uppercase">
+        <h2 className="text-[2.35rem] sm:text-5xl md:text-6xl xl:text-[4.25rem] 2xl:text-[5rem] font-black tracking-tighter text-white leading-[1.04] mb-7 xl:mb-10 uppercase">
           <span className="block mb-1 opacity-90">{t("headline_1")}</span>
           <span className="block mb-1">{t("headline_2")}</span>
           <span className="relative inline-block">
@@ -96,25 +96,25 @@ export function CTA() {
               {t("headline_3")}
             </span>
             {/* Fico Underline: Dual-layered orange brush effect */}
-            <div className="absolute -bottom-1 left-0 w-full h-[6px] md:h-[10px] bg-forge/40 blur-[2px] -rotate-1 rounded-full z-0" />
-            <div className="absolute bottom-0 left-[2%] w-[96%] h-[3px] md:h-[5px] bg-forge shadow-[0_0_20px_rgba(232,101,10,0.8)] -rotate-1 rounded-full z-0" />
+            <div className="absolute -bottom-1 left-0 w-full h-[5px] md:h-[8px] 2xl:h-[10px] bg-forge/40 blur-[2px] -rotate-1 rounded-full z-0" />
+            <div className="absolute bottom-0 left-[2%] w-[96%] h-[3px] 2xl:h-[5px] bg-forge shadow-[0_0_18px_rgba(232,101,10,0.75)] -rotate-1 rounded-full z-0" />
           </span>
         </h2>
 
         {/* Subheadline - Better readability */}
-        <p className="text-lg md:text-xl xl:text-2xl font-normal text-slate-400 max-w-3xl mb-14 tracking-tight leading-relaxed text-balance">
+        <p className="text-base md:text-lg xl:text-xl 2xl:text-2xl font-normal text-slate-400 max-w-2xl 2xl:max-w-3xl mb-9 xl:mb-12 tracking-tight leading-relaxed text-balance">
           {t("subheadline")}
         </p>
 
         {/* Action Buttons - Refined weights */}
-        <div className="flex flex-col sm:flex-row items-center gap-6 mb-10">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-7 xl:mb-10">
           {/* Primary CTA */}
           <a 
             href="https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website" 
             target="_blank" 
             rel="noopener noreferrer"
             onClick={() => trackCta(t("primary"), "cta_section", "external_link")}
-            className="group h-16 px-12 bg-white text-black text-[16px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_rgba(255,255,255,0.3)] hover:-translate-y-1 active:translate-y-0"
+            className="group h-12 sm:h-14 2xl:h-16 px-7 sm:px-9 2xl:px-12 bg-white text-black text-sm 2xl:text-[16px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_rgba(255,255,255,0.3)] hover:-translate-y-1 active:translate-y-0"
           >
             {t("primary")}
             <Icon 
@@ -130,7 +130,7 @@ export function CTA() {
               trackCta(t("secondary"), "cta_section", "open_form");
               setIsFormOpen(true);
             }}
-            className="group h-16 px-10 bg-transparent text-slate-400 hover:text-white transition-all text-[16px] font-semibold tracking-wide flex items-center gap-2"
+            className="group h-11 sm:h-14 2xl:h-16 px-5 sm:px-8 2xl:px-10 bg-transparent text-slate-400 hover:text-white transition-all text-sm 2xl:text-[16px] font-semibold tracking-wide flex items-center gap-2"
           >
             {t("secondary")}
             <Icon 
@@ -142,7 +142,7 @@ export function CTA() {
         </div>
 
         {/* Microcopy - Trust Badge Style */}
-        <div className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.03] border border-white/5 gap-3 text-slate-500 text-xs md:text-sm font-medium tracking-wider uppercase backdrop-blur-sm">
+        <div className="inline-flex max-w-full items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/[0.03] border border-white/5 gap-2.5 sm:gap-3 text-slate-500 text-[10px] sm:text-xs 2xl:text-sm font-medium tracking-wider uppercase backdrop-blur-sm">
           <div className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forge opacity-40"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-forge"></span>

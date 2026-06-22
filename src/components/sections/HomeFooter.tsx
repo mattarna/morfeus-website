@@ -5,7 +5,7 @@ import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * Footer Section - Index 14

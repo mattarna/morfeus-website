@@ -17,7 +17,7 @@ export function HomeHero() {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const checkViewport = () => setIsDesktop(window.innerWidth >= 1024);
+    const checkViewport = () => setIsDesktop(window.innerWidth >= 1280);
     checkViewport();
     window.addEventListener("resize", checkViewport);
     return () => window.removeEventListener("resize", checkViewport);
@@ -50,7 +50,7 @@ export function HomeHero() {
   };
 
   return (
-    <section className="relative min-h-screen lg:h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent py-20 lg:py-0">
+    <section className="relative min-h-[100svh] xl:h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent pt-28 pb-20 sm:pt-32 xl:py-0">
       <style jsx>{`
         @keyframes pulse-glow {
           0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.7; }
@@ -66,9 +66,9 @@ export function HomeHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-6xl mx-auto lg:-translate-y-4">
+      <div className="relative z-10 flex flex-col items-center text-center px-5 sm:px-6 max-w-6xl mx-auto xl:-translate-y-4">
         {/* Alert Bar (Over-headline) - DESIGN UPGRADE */}
-        <div className="mb-10 md:mb-14 w-fit mx-auto px-5 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_4px_30px_-10px_rgba(0,0,0,0.5)] flex items-center justify-center gap-3 animate-fadeIn hover:scale-[1.02] hover:bg-white/10 hover:border-white/20 transition-all duration-300 group/alert cursor-default max-w-full">
+        <div className="mb-8 md:mb-10 xl:mb-14 short:!mb-6 w-fit mx-auto px-4 sm:px-5 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_4px_30px_-10px_rgba(0,0,0,0.5)] flex items-center justify-center gap-3 animate-fadeIn hover:scale-[1.02] hover:bg-white/10 hover:border-white/20 transition-all duration-300 group/alert cursor-default max-w-full">
           <div className="relative flex h-2.5 w-2.5 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forge opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-forge shadow-[0_0_10px_rgba(232,101,10,0.8)]"></span>
@@ -80,7 +80,7 @@ export function HomeHero() {
 
         {/* Headline - REFINED FOR IMPACT */}
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto w-full">
-          <h1 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.2rem] leading-[1.1] md:leading-[1.05] font-black tracking-tighter uppercase break-words w-full">
+          <h1 className="text-[2.5rem] sm:text-[3.35rem] md:text-[4.15rem] lg:text-[4.55rem] xl:text-[clamp(3.25rem,9.2vh,5.2rem)] short:!text-[4.15rem] leading-[1.08] md:leading-[1.03] font-black tracking-tighter uppercase break-words w-full">
             <span className="bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-transparent block pb-1">
               {t("headline_part1")}
             </span>
@@ -98,18 +98,18 @@ export function HomeHero() {
         </div>
 
         {/* Subheadline - REFINED SPACING */}
-        <div className="mt-8 md:mt-10 md:max-w-[750px] mx-auto">
-          <p className="md:text-xl leading-relaxed text-[15px] md:text-base font-normal text-vista/70 tracking-wide text-center text-balance px-2 md:px-0">
+        <div className="mt-7 md:mt-8 xl:mt-10 short:!mt-5 md:max-w-[720px] mx-auto">
+          <p className="text-[15px] md:text-lg xl:text-xl short:!text-base leading-relaxed font-normal text-vista/70 tracking-wide text-center text-balance px-2 md:px-0">
             {t("subheadline")}
           </p>
         </div>
 
         {/* CTAs - REVERTED TO PILL STYLE AS REQUESTED */}
-        <div className="mt-10 md:mt-16 flex flex-col sm:flex-row items-center gap-6 z-10 w-full sm:w-auto px-6 md:px-0">
+        <div className="mt-9 md:mt-11 xl:mt-16 short:!mt-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 z-10 w-full sm:w-auto px-4 md:px-0">
           <a 
             href="#section-13"
             onClick={(e) => handleCtaClick(e, 13, t("cta_primary"))}
-            className="group h-14 md:h-12 px-10 bg-white text-black text-[15px] font-bold md:font-semibold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:min-w-[240px] sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
+            className="group h-14 px-10 bg-white text-black text-[15px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:min-w-[240px] sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
           >
             {t("cta_primary")}
             <Icon icon="lucide:arrow-right" width={18} className="transition-transform group-hover:translate-x-0.5" />

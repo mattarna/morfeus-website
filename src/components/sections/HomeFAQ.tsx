@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * FAQ Section - Index 12
@@ -85,12 +85,12 @@ export function HomeFAQ() {
   };
 
   return (
-    <section className="relative z-0 min-h-screen lg:h-screen w-full bg-black overflow-hidden flex flex-col justify-center px-6 py-20 lg:py-0">
+    <section className="relative z-0 min-h-screen xl:h-screen w-full bg-black overflow-hidden flex flex-col justify-center px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 pt-28 pb-16 xl:py-0">
       <div className={`relative z-10 max-w-[1400px] mx-auto w-full transition-all duration-1000 ${
         isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}>
         {/* Headline */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-normal tracking-tighter text-center mb-8 sm:mb-12 md:mb-16 leading-[0.95]">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl font-normal tracking-tighter text-center mb-7 sm:mb-9 xl:mb-12 2xl:mb-16 leading-[0.98]">
           <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 pb-1">
             {t("headline_1")}
           </span>
@@ -100,7 +100,7 @@ export function HomeFAQ() {
         </h2>
 
         {/* FAQ Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-5 2xl:gap-6">
           {faqItems.map((item) => (
             <div 
               key={item.id}
@@ -112,9 +112,9 @@ export function HomeFAQ() {
             >
               <button
                 onClick={() => toggleItem(item.id, item.question)}
-                className="w-full flex items-center justify-between p-6 md:p-8 text-left outline-none select-none focus:outline-none focus:ring-0 active:outline-none group/btn"
+                className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 2xl:p-8 text-left outline-none select-none focus:outline-none focus:ring-0 active:outline-none group/btn"
               >
-                <span className={`text-lg md:text-xl font-normal transition-all duration-500 tracking-tight ${
+                <span className={`text-base sm:text-lg 2xl:text-xl font-normal transition-all duration-500 tracking-tight ${
                   openId === item.id ? "text-white scale-[1.01]" : "text-white/70 group-hover/btn:text-white"
                 }`}>
                   {item.question}
@@ -137,8 +137,8 @@ export function HomeFAQ() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="p-6 md:p-8 pt-0 md:pt-0">
-                    <p className="text-slate-400 text-base md:text-lg font-light leading-relaxed max-w-[90%]">
+                  <div className="p-5 sm:p-6 2xl:p-8 pt-0 sm:pt-0">
+                    <p className="text-slate-400 text-sm sm:text-base 2xl:text-lg font-light leading-relaxed max-w-[95%]">
                       {item.answer}
                     </p>
                   </div>

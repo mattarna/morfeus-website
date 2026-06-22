@@ -5,7 +5,7 @@ import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * Case Study Section - Index 11
@@ -221,18 +221,18 @@ export function CaseStudy() {
 
       {/* Content Grid */}
       <div 
-        className={`relative z-20 h-full w-full max-w-[1600px] mx-auto px-12 xl:px-[140px] grid grid-cols-2 gap-16 items-end py-24 transition-all duration-1000 ${
+        className={`relative z-20 h-full w-full max-w-[1600px] mx-auto px-8 lg:px-12 xl:px-20 2xl:px-48 grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] gap-8 xl:gap-12 2xl:gap-16 items-center pt-28 pb-10 short:pt-24 short:pb-8 transition-all duration-1000 ${
           isActive ? "opacity-100" : "opacity-0"
         }`}
       >
         {/* LEFT: Metric Display */}
-        <div className="flex flex-col justify-end">
+        <div className="flex flex-col justify-center">
           <div 
             className={`transition-all duration-500 ease-out ${
               isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
             }`}
           >
-            <h2 className="text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tighter leading-none">
+            <h2 className="text-5xl xl:text-6xl 2xl:text-8xl short:!text-5xl font-medium tracking-tighter leading-none">
               <span className={`text-transparent bg-clip-text bg-gradient-to-r ${metricGradient}`}>
                 {currentData.metric}
               </span>
@@ -244,10 +244,10 @@ export function CaseStudy() {
         </div>
 
         {/* RIGHT: Menu & Details */}
-        <div className="flex flex-col h-full justify-between pt-16">
+        <div className="flex flex-col justify-center gap-8 xl:gap-10 2xl:gap-14 min-h-0">
           {/* Case Study Menu */}
           <div 
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-3 xl:gap-4 2xl:gap-6"
             onMouseLeave={handleMenuLeave}
           >
             {caseStudies.map((cs, index) => {
@@ -259,11 +259,11 @@ export function CaseStudy() {
                   key={cs.id}
                   onClick={() => handleCaseClick(index)}
                   onMouseEnter={() => handleCaseHover(index)}
-                  className="group flex items-center gap-6 text-left transition-all duration-300 outline-none select-none focus:outline-none focus:ring-0 focus:border-none active:outline-none"
+                  className="group flex items-center gap-4 xl:gap-5 2xl:gap-6 text-left transition-all duration-300 outline-none select-none focus:outline-none focus:ring-0 focus:border-none active:outline-none"
                 >
                   {/* Number */}
                   <span 
-                    className={`text-sm font-medium font-mono transition-colors duration-300 ${
+                    className={`text-xs 2xl:text-sm font-medium font-mono transition-colors duration-300 ${
                       isItemDisplayed 
                         ? cs.featured ? "text-[#8B7BFF]" : "text-[#4D39EB]"
                         : cs.featured ? "text-slate-500 group-hover:text-[#8B7BFF]" : "text-slate-500 group-hover:text-[#4D39EB]"
@@ -274,7 +274,7 @@ export function CaseStudy() {
                   
                   {/* Name */}
                   <span 
-                    className={`text-4xl lg:text-5xl font-normal tracking-tight transition-all duration-300 ${
+                    className={`text-3xl xl:text-4xl 2xl:text-5xl short:!text-[2rem] font-normal tracking-tight leading-[1.05] transition-all duration-300 ${
                       isItemDisplayed 
                         ? "text-white" 
                         : "text-white/30 group-hover:text-white/60"
@@ -294,21 +294,21 @@ export function CaseStudy() {
 
           {/* Description & Tags */}
           <div 
-            className={`flex flex-col gap-8 max-w-xl transition-all duration-500 ease-out ${
+            className={`flex flex-col gap-5 xl:gap-6 2xl:gap-8 max-w-xl transition-all duration-500 ease-out ${
               isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
             }`}
           >
             {/* Description */}
-            <p className="text-lg lg:text-xl font-light text-slate-300 leading-relaxed">
+            <p className="text-base xl:text-lg 2xl:text-xl short:!text-base font-light text-slate-300 leading-relaxed short:!leading-[1.55]">
               {currentData.description}
             </p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 2xl:gap-3">
               {currentData.tags.map((tag, tagIndex) => (
                 <div
                   key={tag}
-                  className={`px-6 py-2.5 rounded-full backdrop-blur-sm transition-all duration-300 ${
+                  className={`px-4 2xl:px-6 py-2 2xl:py-2.5 rounded-full backdrop-blur-sm transition-all duration-300 ${
                     currentData.featured
                       ? "bg-[#8B7BFF]/15 border border-[#8B7BFF]/35 hover:bg-[#8B7BFF]/25 hover:border-[#8B7BFF]/55"
                       : "bg-[#4D39EB]/15 border border-[#4D39EB]/30 hover:bg-[#4D39EB]/25 hover:border-[#4D39EB]/50"
@@ -319,7 +319,7 @@ export function CaseStudy() {
                     transform: isTransitioning ? 'translateY(8px)' : 'translateY(0)'
                   }}
                 >
-                  <span className="text-sm font-medium text-white/90">{tag}</span>
+                  <span className="text-xs 2xl:text-sm font-medium text-white/90">{tag}</span>
                 </div>
               ))}
             </div>

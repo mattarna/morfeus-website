@@ -41,20 +41,20 @@ export function Services() {
   ];
 
   return (
-    <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center bg-black xl:px-40 py-20 lg:py-0">
-      <div className="relative z-10 w-full flex flex-col justify-center px-6 md:px-12 xl:px-0 max-w-[1400px] mx-auto">
+    <section className="relative z-0 min-h-screen xl:h-screen w-full flex items-center bg-black pt-28 pb-16 xl:py-0">
+      <div className="relative z-10 w-full flex flex-col justify-center px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col xl:flex-row xl:items-end mb-10 sm:mb-12 gap-6 sm:gap-10 justify-between">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-light tracking-tighter text-white uppercase leading-[1.1]">
+        <div className="flex flex-col xl:flex-row xl:items-end mb-8 sm:mb-10 xl:mb-12 gap-5 sm:gap-7 xl:gap-10 justify-between">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-6xl font-light tracking-tighter text-white uppercase leading-[1.1]">
             {t("title_part1")} <span className="font-medium">{t("title_part2")}</span>
           </h2>
-          <p className="text-sm sm:text-base md:text-[17px] font-light text-slate-400 max-w-lg leading-relaxed text-left xl:text-right">
+          <p className="text-sm sm:text-base 2xl:text-[17px] font-light text-slate-400 max-w-lg leading-relaxed text-left xl:text-right">
             {t("subtitle")}
           </p>
         </div>
 
         {/* Cards Grid */}
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
+        <div className="w-full grid grid-cols-1 xl:grid-cols-2 gap-5 md:gap-6 xl:gap-8 2xl:gap-10">
           {SERVICES.map((service, index) => (
             <ServiceCard key={index} {...service} />
           ))}
@@ -91,7 +91,7 @@ function ServiceCard({
 
   useEffect(() => {
     const checkIsMobile = () => {
-      if (window.innerWidth < 1024) return true;
+      if (window.innerWidth < 1280) return true;
       if (window.matchMedia('(pointer: coarse)').matches && 
           window.matchMedia('(hover: none)').matches) {
         return true;
@@ -117,7 +117,7 @@ function ServiceCard({
   };
 
   return (
-    <div className="group relative flex flex-col justify-between p-8 sm:p-10 xl:p-12 min-h-[400px] sm:min-h-[450px] lg:min-h-[550px] bg-[#080808]/40 border border-white/10 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/20 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
+    <div className="group relative flex flex-col justify-between p-6 sm:p-8 xl:p-10 2xl:p-12 min-h-[340px] sm:min-h-[360px] xl:min-h-[400px] 2xl:min-h-[460px] bg-[#080808]/40 border border-white/10 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/20 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
       {/* Gradient Overlay - More defined */}
       <div className="absolute inset-0 bg-gradient-to-br from-majorelle/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
       
@@ -131,10 +131,10 @@ function ServiceCard({
       
       {/* Content */}
       <div className="relative z-10 mt-auto">
-        <h3 className="text-2xl sm:text-3xl xl:text-4xl font-normal text-white mb-5 sm:mb-6 leading-tight tracking-tight">
+        <h3 className="text-2xl sm:text-3xl 2xl:text-4xl font-normal text-white mb-4 sm:mb-5 2xl:mb-6 leading-tight tracking-tight">
           {headline}
         </h3>
-        <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-lg mb-8 sm:mb-10 group-hover:text-slate-300 transition-colors">
+        <p className="text-sm sm:text-[15px] 2xl:text-base text-slate-400 leading-relaxed max-w-lg mb-7 2xl:mb-10 group-hover:text-slate-300 transition-colors">
           {description}
         </p>
 

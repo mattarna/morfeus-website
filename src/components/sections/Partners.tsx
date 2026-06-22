@@ -24,32 +24,32 @@ export function Partners() {
   const t = useTranslations("Partners");
 
   return (
-    <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center justify-center bg-black py-20 lg:py-0 overflow-hidden">
+    <section className="relative z-0 min-h-screen xl:h-screen w-full flex items-center justify-center bg-black pt-28 pb-16 xl:pt-24 xl:pb-10 short:!pt-28 overflow-hidden">
       {/* Dynamic Background Effects - Enhanced Purple Gradient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[800px] xl:w-[1200px] h-[400px] md:h-[700px] bg-[#4e39ec]/20 rounded-[100%] blur-[120px] md:blur-[160px] xl:blur-[200px] mix-blend-screen pointer-events-none animate-pulse opacity-60" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] xl:w-[700px] h-[200px] md:h-[400px] bg-[#4e39ec]/30 rounded-[100%] blur-[80px] md:blur-[120px] xl:blur-[150px] mix-blend-screen pointer-events-none" />
       
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col items-center">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-6 md:px-10 flex flex-col items-center">
         {/* Title Group */}
-        <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-white tracking-tighter leading-tight uppercase mb-4">
+        <div className="text-center mb-10 md:mb-12 xl:mb-14 2xl:mb-20 short:!mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[3.35rem] 2xl:text-6xl short:!text-5xl font-medium text-white tracking-tighter leading-tight uppercase mb-4">
             {t("title")}
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-transparent via-[#4e39ec] to-transparent mx-auto" />
         </div>
         
         {/* New Grid Layout - High Visibility */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 w-full max-w-6xl">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 2xl:gap-8 w-full max-w-5xl 2xl:max-w-6xl">
           {PARTNERS.map((partner) => (
             <div 
               key={partner.name}
-              className="group relative h-40 md:h-56 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center p-6 md:p-8 transition-all duration-500 hover:bg-white/[0.05] hover:border-[#4e39ec]/30 hover:shadow-[0_0_30px_rgba(78,57,236,0.1)] overflow-hidden"
+              className="group relative h-36 md:h-44 xl:h-48 2xl:h-56 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center p-5 md:p-6 2xl:p-8 transition-all duration-500 hover:bg-white/[0.05] hover:border-[#4e39ec]/30 hover:shadow-[0_0_30px_rgba(78,57,236,0.1)] overflow-hidden"
             >
               {/* Animated Glow on Hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#4e39ec]/0 via-[#4e39ec]/0 to-[#4e39ec]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Logo Container */}
-              <div className="relative w-full h-16 md:h-24 mb-4 transition-transform duration-500 group-hover:scale-110">
+              <div className="relative w-full h-14 md:h-18 xl:h-20 2xl:h-24 mb-3 2xl:mb-4 transition-transform duration-500 group-hover:scale-110">
                 <Image
                   src={partner.image}
                   alt={partner.name}

@@ -17,7 +17,7 @@ export function SystemStatus() {
 
   return (
     <div
-      className={`fixed z-40 pointer-events-none hidden xl:block left-8 bottom-8 transition-opacity duration-500 ${
+      className={`fixed z-40 pointer-events-none hidden 2xl:block left-8 bottom-8 transition-opacity duration-500 ${
         shouldHide ? "opacity-0" : "opacity-100"
       }`}
     >

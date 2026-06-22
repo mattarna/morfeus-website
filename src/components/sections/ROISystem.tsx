@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * ROI System Section - Index 9

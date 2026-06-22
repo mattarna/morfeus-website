@@ -6,7 +6,7 @@ import { getActiveProcessStep } from "@/app/lib/scrollConfig";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-const DESKTOP_BREAKPOINT = 1024;
+const DESKTOP_BREAKPOINT = 1280;
 
 /**
  * ProcessMaster Section - Indices 6-8 (pinned on desktop)

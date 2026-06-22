@@ -22,7 +22,7 @@ export function HomeProblem() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      if (window.innerWidth < 1024) return true;
+      if (window.innerWidth < 1280) return true;
       if (window.matchMedia('(pointer: coarse)').matches && 
           window.matchMedia('(hover: none)').matches) {
         return true;
@@ -68,26 +68,26 @@ export function HomeProblem() {
   ];
 
   return (
-    <section className="relative z-0 min-h-screen lg:h-screen w-full flex items-center justify-center bg-black py-12 lg:py-0 overflow-hidden">
+    <section className="relative z-0 min-h-screen xl:h-screen w-full flex items-center justify-center bg-black pt-28 pb-16 xl:pt-28 xl:pb-20 short:!pt-24 short:!pb-10 overflow-hidden">
       {/* Background depth */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-blue-500/10 via-transparent to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 xl:px-24 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-center">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 w-full">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-10 xl:gap-14 2xl:gap-20 items-center">
           
           {/* LEFT COLUMN: Narrative & Vertical Cards */}
-          <div className="lg:col-span-7 flex flex-col gap-8">
+          <div className="xl:col-span-7 flex flex-col gap-7 xl:gap-8 short:!gap-5">
             <div className="max-w-2xl">
-              <h2 className={`text-4xl md:text-5xl xl:text-6xl font-normal tracking-tighter text-white leading-[1.1] mb-6 transition-all duration-1000 delay-100 ${
+              <h2 className={`text-[2.35rem] sm:text-4xl md:text-5xl xl:text-[3.35rem] 2xl:text-6xl short:!text-5xl font-normal tracking-tighter text-white leading-[1.1] mb-5 xl:mb-6 short:!mb-4 transition-all duration-1000 delay-100 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}>
                 {t("headline").split(".")[0]}.<br />
                 <span className="text-slate-500">{t("headline").split(".")[1]}</span>
               </h2>
               
-              <p className={`text-base md:text-lg text-slate-400 font-light leading-relaxed transition-all duration-1000 delay-200 ${
+              <p className={`text-[15px] md:text-base 2xl:text-lg text-slate-400 font-light leading-relaxed transition-all duration-1000 delay-200 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}>
                 {t("body")}
@@ -95,11 +95,11 @@ export function HomeProblem() {
             </div>
 
             {/* Vertical Cards List */}
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:flex xl:flex-col gap-3">
               {cards.map((card, index) => (
                 <div 
                   key={card.key}
-                  className={`group flex items-start gap-5 p-5 rounded-2xl bg-white/[0.06] border border-white/10 transition-all duration-700 hover:bg-white/[0.1] hover:border-white/20 ${
+                  className={`group flex items-start gap-4 2xl:gap-5 p-4 2xl:p-5 rounded-2xl bg-white/[0.06] border border-white/10 transition-all duration-700 hover:bg-white/[0.1] hover:border-white/20 ${
                     isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                   }`}
                   style={{ transitionDelay: `${300 + index * 50}ms` }}
@@ -108,10 +108,10 @@ export function HomeProblem() {
                     <Icon icon={card.icon} width={20} />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-sm md:text-base font-bold text-white tracking-tight leading-snug group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-sm 2xl:text-base font-bold text-white tracking-tight leading-snug group-hover:text-blue-400 transition-colors">
                       {t(`cards.${card.key}.title`)}
                     </h3>
-                    <p className="text-xs md:text-sm text-slate-500 leading-relaxed group-hover:text-slate-300 transition-colors">
+                    <p className="text-xs 2xl:text-sm text-slate-500 leading-relaxed group-hover:text-slate-300 transition-colors">
                       {t(`cards.${card.key}.desc`)}
                     </p>
                   </div>
@@ -121,21 +121,21 @@ export function HomeProblem() {
           </div>
 
           {/* RIGHT COLUMN: Diagnostic Report Card */}
-          <div className="lg:col-span-5 flex justify-end">
+          <div className="xl:col-span-5 flex justify-center xl:justify-end">
             <div 
               className={`relative w-full max-w-md transition-all duration-1000 delay-500 ${
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
               }`}
             >
-              <div className="relative p-8 md:p-10 rounded-[32px] bg-gradient-to-br from-[#121212] to-[#080808] border border-white/20 shadow-2xl overflow-hidden min-h-[500px] flex flex-col">
+              <div className="relative p-6 md:p-8 2xl:p-10 short:!p-6 rounded-[28px] 2xl:rounded-[32px] bg-gradient-to-br from-[#121212] to-[#080808] border border-white/20 shadow-2xl overflow-hidden min-h-[420px] md:min-h-[460px] xl:min-h-[500px] short:!min-h-0 flex flex-col">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none" />
                 
-                <div className="flex justify-between items-start mb-10">
+                <div className="flex justify-between items-start mb-10 short:!mb-6">
                   <div className="flex flex-col gap-1">
                     <span className="text-[11px] font-bold tracking-[0.2em] text-blue-500 uppercase">
                       {t("ticker.label")}
                     </span>
-                    <h4 className="text-5xl md:text-6xl font-black tracking-tighter text-white leading-none">
+                    <h4 className="text-4xl md:text-5xl 2xl:text-6xl short:!text-5xl font-black tracking-tighter text-white leading-none">
                       €47.000<span className="text-blue-500/50 text-2xl font-normal ml-1">/m</span>
                     </h4>
                   </div>
@@ -144,11 +144,11 @@ export function HomeProblem() {
                   </div>
                 </div>
 
-                <p className="text-[12px] text-slate-400 mb-10 leading-relaxed uppercase tracking-wider font-medium border-l-2 border-forge/40 pl-4">
+                <p className="text-[12px] text-slate-400 mb-10 short:!mb-6 leading-relaxed uppercase tracking-wider font-medium border-l-2 border-forge/40 pl-4">
                   {t("ticker.sub")}
                 </p>
 
-                <div className="space-y-6 mb-12 flex-1">
+                <div className="space-y-6 short:!space-y-4 mb-12 short:!mb-7 flex-1">
                   {breakdown.map((item, idx) => (
                     <div key={idx} className="space-y-2.5">
                       <div className="flex justify-between items-end text-[11px] font-bold tracking-wide uppercase">
@@ -165,10 +165,10 @@ export function HomeProblem() {
                   ))}
                 </div>
 
-                <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
+                <div className="pt-8 short:!pt-5 border-t border-white/10 flex flex-col gap-4">
                   <button 
                     onClick={() => handleCtaClick(10)} 
-                    className="w-full flex items-center justify-between px-6 py-5 bg-white text-black rounded-2xl hover:bg-slate-200 transition-all duration-300 font-bold text-[16px] tracking-tight"
+                    className="w-full flex items-center justify-between px-5 md:px-6 py-4 2xl:py-5 bg-white text-black rounded-2xl hover:bg-slate-200 transition-all duration-300 font-bold text-[15px] 2xl:text-[16px] tracking-tight"
                   >
                     <span>{t("cta")}</span>
                     <Icon icon="solar:arrow-right-bold" width={22} />

@@ -137,7 +137,14 @@ export function HomeROIMeter() {
   const displayedAnnualMin = useAnimatedNumber(roundedAnnualMin);
   const displayedAnnualMax = useAnimatedNumber(roundedAnnualMax);
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const formatCurrency = (val: number) => {
+    if (!mounted) return `${val} €`; // Prevent hydration mismatch on initial render
     return new Intl.NumberFormat(locale === 'it' ? 'it-IT' : 'en-US', {
       style: 'currency',
       currency: 'EUR',
@@ -159,7 +166,7 @@ export function HomeROIMeter() {
   };
 
   return (
-    <div className="relative z-0 h-auto lg:h-screen w-full flex items-center justify-center px-6 xl:px-40 py-8 lg:py-4 overflow-hidden">
+    <div className="relative z-0 h-auto lg:h-screen w-full flex items-center justify-center px-6 md:px-12 lg:px-16 xl:px-48 pt-28 pb-10 lg:pt-24 lg:pb-8 xl:pt-28 xl:pb-10 short:!pt-24 overflow-hidden">
       <style jsx>{`
         .roiometer-slider {
           -webkit-appearance: none;
