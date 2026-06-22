@@ -677,7 +677,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
   const content = step.content.FinanziataLanding;
   const vslYoutubeId = content?.vslYoutubeId ?? "";
   const optinEndpoint = content?.optinEndpoint ?? "/api/funnels/formazione-finanziata/optin";
-  const deadline = content?.deadline ?? "15 giugno";
+  const deadline = content?.deadline ?? "3 luglio";
   const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
 
   const [videoOn, setVideoOn] = useState(false);
