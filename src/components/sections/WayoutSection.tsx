@@ -32,7 +32,7 @@ export function WayoutSection() {
               <div className="absolute inset-4 rounded-full border border-indigo-500/20 animate-[spin_15s_linear_infinite_reverse]" />
               <div className="absolute inset-8 rounded-full border border-indigo-500/30" />
               <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full bg-[#030508] border-2 border-indigo-500/40 flex flex-col items-center justify-center shadow-[0_0_60px_-10px_rgba(79,70,229,0.4)]">
-                <span className="text-5xl sm:text-6xl md:text-7xl font-black text-white leading-none">60</span>
+                <span className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-none">30–60</span>
                 <span className="text-base sm:text-lg md:text-xl font-bold text-indigo-400 uppercase tracking-[0.2em] mt-2">{t("days_label")}</span>
               </div>
               <motion.div 

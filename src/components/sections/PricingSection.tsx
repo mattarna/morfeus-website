@@ -81,15 +81,14 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
                       <ul className="space-y-5">
                         {Object.entries(t.raw(`pricing.tiers.${id}.governance`)).map(([key, value]) => {
                           const bulletText = value as string;
-                          const isSprint = bulletText.toLowerCase().includes("sprint");
                           
                           return (
                             <li key={key} className="flex items-start gap-4">
                               <Icon 
-                                icon={isSprint ? "solar:bolt-bold" : "solar:check-circle-bold"}
-                                className={`w-5 h-5 flex-shrink-0 mt-0.5 ${isSprint ? 'text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]' : isCore ? 'text-indigo-400' : 'text-emerald-500/60'}`} 
+                                icon="solar:check-circle-bold"
+                                className={`w-5 h-5 flex-shrink-0 mt-0.5 ${isCore ? 'text-indigo-400' : 'text-emerald-500/60'}`} 
                               />
-                              <span className={`text-slate-300 text-base leading-snug ${isSprint ? 'font-bold text-white' : 'font-light'}`}>
+                              <span className="text-slate-300 text-base leading-snug font-light">
                                 {bulletText}
                               </span>
                             </li>
@@ -108,15 +107,6 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
                     >
                       {t("ctas.pricing")}
                     </button>
-                  </div>
-
-                  {/* Price Block (Bottom) */}
-                  <div className={`p-8 md:p-10 border-t ${isCore ? 'border-indigo-500/20 bg-indigo-500/5' : 'border-white/[0.05] bg-white/[0.02]'}`}>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="text-4xl md:text-5xl font-black text-white">{t(`pricing.tiers.${id}.price_monthly`)}</span>
-                      <span className="text-slate-500 font-light">/ mese</span>
-                    </div>
-                    <p className="text-[11px] font-mono text-slate-500 uppercase tracking-widest">{t(`pricing.tiers.${id}.price_yearly`)}</p>
                   </div>
                 </div>
               </div>
@@ -157,11 +147,10 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
           
           <h3 className="relative z-10 text-2xl md:text-3xl font-black text-white mb-16 text-center uppercase tracking-tight">{t("pricing.bonus.title")}</h3>
           
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10 lg:gap-20">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-10 lg:gap-20 max-w-3xl mx-auto">
              {[
                { id: "1", icon: "solar:cpu-bolt-bold-duotone", color: "text-indigo-400", bg: "bg-indigo-500/10", border: "border-indigo-500/20" },
-               { id: "2", icon: "solar:map-bold-duotone", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-               { id: "3", icon: "solar:bolt-bold", color: "text-amber-400", bg: "bg-amber-400/10", border: "border-amber-400/20" }
+               { id: "2", icon: "solar:map-bold-duotone", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" }
              ].map((bonus) => (
               <div key={bonus.id} className="text-center group/bonus flex flex-col items-center">
                 <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${bonus.bg} border ${bonus.border} ${bonus.color} mb-8 transition-all duration-500 group-hover/bonus:scale-105 group-hover/bonus:-translate-y-1 shadow-lg group-hover/bonus:shadow-${bonus.color.split('-')[1]}-500/10`}>

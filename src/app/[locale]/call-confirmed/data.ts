@@ -30,7 +30,7 @@ export const FALLBACK_CALL_CONFIRMED_TEXT = {
     credibilityLabel: "Chi siamo",
     credibilityTitle: "Team operativo",
     credibilityBody: "Lavoriamo su processi e risultati misurabili.",
-    stats: ["Clienti 5-100M", "60 giorni way-out", "Focus su risultati reali"],
+    stats: ["Clienti 5-100M", "Si parte da un Pilot", "Focus su risultati reali"],
     logosLabel: "Alcune aziende con cui lavoriamo",
     form: {
       preLabel: "Aiutaci ad arrivare preparati",
@@ -155,7 +155,7 @@ export const FALLBACK_CALL_CONFIRMED_TEXT = {
     credibilityLabel: "Who we are",
     credibilityTitle: "Operational team",
     credibilityBody: "We work on processes and measurable outcomes.",
-    stats: ["Clients 5-100M", "60-day way-out", "Real outcomes first"],
+    stats: ["Clients 5-100M", "Start with a Pilot", "Real outcomes first"],
     logosLabel: "Some companies we work with",
     form: {
       preLabel: "Help us arrive prepared",
