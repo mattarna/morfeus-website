@@ -1,4 +1,7 @@
 # MORFEUS — CURSOR BRIEF
+
+> ⚠️ **ARCHIVIATO — SUPERSEDED (giugno 2026).** Brief di build one-shot, già eseguito. Le pagine reali sono divergite dalle route qui indicate (oggi: `call-confirmed`, `intro-confirmed`, `case-study`). **Per il modello commerciale fa fede l'OS Morfeus (`offer_forge_v2.md`) + il sito live, non questo file:** il modello "way-out 60gg / AI Transformation Sprint" qui descritto è obsoleto (ora: Pilot → Retainer). Conservato solo come riferimento storico (struttura pagine, case study).
+
 ## Funnel Pre-Call: Specifiche Tecniche Complete
 
 ---
@@ -17,14 +20,14 @@ Morfeus è un AI Operating Partner per aziende italiane in scaling. Il funnel pr
 
 ## 1. PAGINE DA COSTRUIRE
 
-| # | Pagina | Route | Priorità |
-|---|--------|-------|----------|
-| 1 | Thank You Page | `/it/call-confermata` | ALTA — prima da costruire |
-| 2 | Caso Studio Sales (default) | `/it/casi-studio/sales` | ALTA |
-| 3 | Caso Studio Operations & Dati | `/it/casi-studio/operations` | MEDIA |
-| 4 | Caso Studio Amministrativo | `/it/casi-studio/amministrativo` | MEDIA |
-| 5 | Caso Studio E-commerce | `/it/casi-studio/ecommerce` | MEDIA |
-| 6 | Caso Studio Info Business | `/it/casi-studio/info-business` | MEDIA |
+| #   | Pagina                        | Route                            | Priorità                  |
+| --- | ----------------------------- | -------------------------------- | ------------------------- |
+| 1   | Thank You Page                | `/it/call-confermata`            | ALTA — prima da costruire |
+| 2   | Caso Studio Sales (default)   | `/it/casi-studio/sales`          | ALTA                      |
+| 3   | Caso Studio Operations & Dati | `/it/casi-studio/operations`     | MEDIA                     |
+| 4   | Caso Studio Amministrativo    | `/it/casi-studio/amministrativo` | MEDIA                     |
+| 5   | Caso Studio E-commerce        | `/it/casi-studio/ecommerce`      | MEDIA                     |
+| 6   | Caso Studio Info Business     | `/it/casi-studio/info-business`  | MEDIA                     |
 
 ---
 
@@ -36,13 +39,13 @@ Morfeus è un AI Operating Partner per aziende italiane in scaling. Il funnel pr
 
 ### 2.1 Parametri URL attesi
 
-| Parametro | Tipo | Esempio | Comportamento |
-|-----------|------|---------|---------------|
-| `name` | string | `Marco` | Mostrare nella headline |
-| `date` | string | `Lunedì 24 Marzo` | Mostrare nel blocco data/ora |
-| `time` | string | `15:00` | Mostrare nel blocco data/ora |
-| `source` | string | `linkedin` o `cold_email` | Determina quale video mostrare |
-| `form` | string | `complete` | Se presente, nasconde il form e mostra stato B |
+| Parametro | Tipo   | Esempio                   | Comportamento                                  |
+| --------- | ------ | ------------------------- | ---------------------------------------------- |
+| `name`    | string | `Marco`                   | Mostrare nella headline                        |
+| `date`    | string | `Lunedì 24 Marzo`         | Mostrare nel blocco data/ora                   |
+| `time`    | string | `15:00`                   | Mostrare nel blocco data/ora                   |
+| `source`  | string | `linkedin` o `cold_email` | Determina quale video mostrare                 |
+| `form`    | string | `complete`                | Se presente, nasconde il form e mostra stato B |
 
 **Tutti i parametri sono opzionali.** La pagina deve funzionare anche senza parametri, con fallback graceful.
 
@@ -75,10 +78,10 @@ Player video (embed iframe — YouTube o Vimeo):
   SE ?source=linkedin → embed video LinkedIn (URL: [PLACEHOLDER_VIDEO_LINKEDIN])
   SE ?source=cold_email → embed video Cold Email (URL: [PLACEHOLDER_VIDEO_COLDEMAIL])
   SE source assente o altro valore → embed video LinkedIn (default)
-  
+
   Il container video deve avere aspect-ratio 16/9, bordo sottile Majorelle,
   border-radius 16px. Usare iframe embed standard YouTube/Vimeo.
-  
+
   Finché i video non sono caricati, mostrare un placeholder con:
   - Icona play (cerchio Majorelle)
   - Testo: "Video in arrivo"
@@ -224,6 +227,7 @@ SUBMIT HANDLER:
 **Stato B — Form già compilato**
 
 Condizioni di attivazione:
+
 1. Submit del form completato con successo
 2. Parametro URL `?form=complete` presente al caricamento
 
@@ -284,9 +288,9 @@ Headline: [vedi tabella contenuti §4.3] — sempre formato: "[N] mesi." o "[N] 
 
 Metriche — layout righe:
   [Label metrica]    [Valore prima]  →  [Valore dopo]  · (timeframe)
-  
+
   Stile: label bold Night, freccia muted, valore dopo Majorelle bold, timeframe Light italic
-  
+
   [vedi tabella contenuti §4.3 per le metriche di ogni pagina]
 ```
 
@@ -331,15 +335,15 @@ Nessun bottone CTA commerciale in questa sezione.
 
 La logica di routing è gestita dalla sequenza email (esterna a queste pagine). Le pagine sono statiche. Il routing si basa sulla risposta al campo "area di attrito" nel form della Thank You Page.
 
-| Risposta form | Pagina |
-|---------------|--------|
-| Sales / Commerciale | `/it/casi-studio/sales` |
-| Operations / Processi | `/it/casi-studio/operations` |
-| Dati / Decisioni | `/it/casi-studio/operations` |
-| Area Amministrativa | `/it/casi-studio/amministrativo` |
-| Retail / E-commerce (settore) | `/it/casi-studio/ecommerce` |
-| Info Business / Formazione (settore) | `/it/casi-studio/info-business` |
-| Form non compilato | `/it/casi-studio/sales` (default) |
+| Risposta form                        | Pagina                            |
+| ------------------------------------ | --------------------------------- |
+| Sales / Commerciale                  | `/it/casi-studio/sales`           |
+| Operations / Processi                | `/it/casi-studio/operations`      |
+| Dati / Decisioni                     | `/it/casi-studio/operations`      |
+| Area Amministrativa                  | `/it/casi-studio/amministrativo`  |
+| Retail / E-commerce (settore)        | `/it/casi-studio/ecommerce`       |
+| Info Business / Formazione (settore) | `/it/casi-studio/info-business`   |
+| Form non compilato                   | `/it/casi-studio/sales` (default) |
 
 ### 3.3 Contenuti per pagina
 
@@ -348,19 +352,23 @@ La logica di routing è gestita dalla sequenza email (esterna a queste pagine). 
 **PAGINA 2 — Sales** (`/it/casi-studio/sales`)
 
 S1 Hero:
+
 - Label: `Caso Studio · Area Sales`
 - Headline: `Chiudevano il 12% delle trattative. Non sapevano perché.`
 - Sottotitolo: `Azienda di servizi B2B · Lombardia · €14M di fatturato · 34 persone · pipeline commerciale gestita interamente a memoria.`
 
 S2 Problema:
+
 - Headline: `Tre commerciali. Un buon prodotto. Zero visibilità su cosa succedeva tra il primo contatto e la firma.`
 - Testo: `Il pipeline esisteva solo nella testa del responsabile senior. I follow-up dipendevano dalla sua memoria. Le trattative giacevano ferme per giorni senza che nessuno lo sapesse. Tempo medio tra l'invio di un'offerta e il contatto successivo: 11 giorni. In un mercato reattivo, 11 giorni di silenzio equivalgono spesso a una trattativa persa — senza saperlo.`
 
 S3 Intervento:
+
 - Headline: `Abbiamo reso visibile quello che era invisibile.`
 - Testo: `Prima settimana: osservazione. Riunioni, materiali, conversazioni con il team. Niente proposte prima di capire. Poi: sistema di gestione pipeline su MARF con stati chiari e criteri di avanzamento. Qualificazione a tre domande per ogni nuova opportunità. Alert automatici su follow-up scaduti. Dashboard settimanale per il direttore — aggiornamento automatico ogni mattina alle 7:30. Il pipeline è passato da 47 opportunità dichiarate a 31 reali. Meno rumore, più chiarezza. Nelle prime due settimane dall'attivazione degli alert, il team ha ricontattato 14 trattative ferme. Tre si sono chiuse nel giro di due settimane.`
 
 S4 Risultati:
+
 - Headline: `Sei mesi.`
 - Metriche:
   - `Tasso di chiusura | 12% | 31% | mese 6`
@@ -369,6 +377,7 @@ S4 Risultati:
   - `Revenue incrementale | — | +€340k | cumulata 6 mesi`
 
 S5 Citazione:
+
 - `"Prima passavo ogni lunedì mattina a capire dove eravamo. Adesso lo so già la domenica sera, e il lunedì mattina lo uso per lavorare."`
 - `Responsabile Commerciale Senior · Servizi B2B · Lombardia`
 
@@ -377,19 +386,23 @@ S5 Citazione:
 **PAGINA 3 — Operations & Dati** (`/it/casi-studio/operations`)
 
 S1 Hero:
+
 - Label: `Caso Studio · Operations & Dati`
 - Headline: `Il COO passava due giorni a settimana a raccogliere dati che già esistevano.`
 - Sottotitolo: `Azienda manifatturiera · Vicenza · €27M di fatturato · 61 persone · tre stabilimenti, undici fonti dati separate, zero visibilità unificata.`
 
 S2 Problema:
+
 - Headline: `I dati c'erano. Nessuno li vedeva nel momento giusto.`
 - Testo: `Ogni lunedì: raccolta Excel dai tre stabilimenti, consolidamento manuale, verifica con il gestionale. Due giorni interi. I dati che il COO guardava avevano tre o quattro giorni di anzianità. Tre episodi negli ultimi sei mesi in cui un problema rilevato in ritardo aveva generato costi non pianificati: penali, rilavorazioni. €54k di costo documentato in un semestre. Tutto evitabile con visibilità in tempo reale.`
 
 S3 Intervento:
+
 - Headline: `Abbiamo collegato quello che c'era già. Zero sostituzione di sistemi.`
 - Testo: `Audit di due settimane: undici fonti dati mappate. ERP legacy, MES di produzione, Excel dei responsabili, sistema qualità, fogli presenze. Niente sostituito. Layer di integrazione su MARF: raccolta automatica ogni 4 ore dalle fonti principali. Dashboard operativa accessibile da qualsiasi dispositivo, incluso il telefono in stabilimento. Tre alert automatici su soglie critiche definite dal COO: resa sotto soglia, commessa in ritardo, scarto di lotto fuori range. Il COO non cerca i problemi. I problemi vengono da lui.`
 
 S4 Risultati:
+
 - Headline: `Quattro mesi.`
 - Metriche:
   - `Tempo COO su raccolta e consolidamento dati | ~2 giorni/settimana | ~1.5 ore/settimana | dal mese 2`
@@ -398,6 +411,7 @@ S4 Risultati:
   - `Costi da problemi rilevati in ritardo | ~€54k/semestre | ~€9k/semestre | proiezione mese 4`
 
 S5 Citazione:
+
 - `"Avevo sempre la sensazione di guidare guardando nello specchietto retrovisore. Adesso guardo avanti, e quando c'è qualcosa sul percorso lo vedo in tempo."`
 - `COO · Componentistica industriale · Vicenza`
 
@@ -406,19 +420,23 @@ S5 Citazione:
 **PAGINA 4 — Amministrativo** (`/it/casi-studio/amministrativo`)
 
 S1 Hero:
+
 - Label: `Caso Studio · Area Amministrativa`
 - Headline: `Tre persone brave. In un lavoro sbagliato.`
 - Sottotitolo: `Studio di consulenza · Milano · €8.8M di fatturato · 26 persone · tre risorse amministrative sempre in ritardo, sempre sotto pressione, con nessun problema di competenza.`
 
 S2 Problema:
+
 - Headline: `Il 65% del loro tempo andava su tre attività automatizzabili.`
 - Testo: `Ogni mese: riconciliazione manuale dei timesheet di 16 consulenti (tre giorni), gestione note spese via email con ricevute in formati diversi (6 ore settimanali), preparazione report mensile per i soci raccogliendo dati da tre sistemi diversi (due giorni). Il team non era inefficiente. Stava eseguendo correttamente un processo mal progettato.`
 
 S3 Intervento:
+
 - Headline: `Automatizzare la parte ordinaria. Lasciare alle persone la parte che conta.`
 - Testo: `Timesheet: sistema strutturato su MARF che sostituisce 16 Excel diversi. Validazione in tempo reale — se un consulente inserisce un'anomalia, il sistema la segnala subito, non a fine mese. Note spese: approvazione automatica sotto soglia, un click sopra soglia, percorso standard sopra €200. Il consulente fotografa la ricevuta dal telefono. Tempo: 20 secondi invece di un'email. Report mensile: generazione automatica ogni primo lunedì del mese, formato definitivo. Il CFO verifica in 30 minuti invece di costruirlo in due giorni.`
 
 S4 Risultati:
+
 - Headline: `Tre mesi.`
 - Metriche:
   - `Ore settimanali su attività ripetitive | ~31 ore | ~8 ore | dal mese 2`
@@ -427,6 +445,7 @@ S4 Risultati:
   - `Capacità liberata per attività a valore | ~30% del tempo | ~65% del tempo | mese 3`
 
 S5 Citazione:
+
 - `"Le mie colleghe adesso fanno cose che prima non avevano mai tempo di fare. E non hanno più paura del fine mese."`
 - `CFO · Studio di consulenza organizzativa · Milano`
 
@@ -435,19 +454,23 @@ S5 Citazione:
 **PAGINA 5 — E-commerce** (`/it/casi-studio/ecommerce`)
 
 S1 Hero:
+
 - Label: `Caso Studio · E-commerce`
 - Headline: `Ogni cliente costava acquisirlo. Quasi nessuno tornava.`
 - Sottotitolo: `E-commerce B2C arredamento · Nord Italia · €10.9M di fatturato · 19 persone · buon traffico, buone recensioni, tasso di riacquisto all'11%.`
 
 S2 Problema:
+
 - Headline: `Stavano investendo in acquisizione su un secchio bucato.`
 - Testo: `Tasso di abbandono carrello al 74% — nella media del settore, quindi mai considerato urgente. Ma tre clienti su quattro che aggiungono al carrello spariscono senza ricevere nessuna comunicazione di recupero. Solo l'11% dei clienti riacquistava entro 90 giorni. La media del segmento è 22-28%. LTV medio a 12 mesi: €148, mai misurato prima. Ogni punto percentuale di riacquisto in più vale circa €90k di revenue annua senza spendere un euro in advertising.`
 
 S3 Intervento:
+
 - Headline: `Smesso di rincorrere nuovi clienti. Iniziato a coltivare quelli esistenti.`
 - Testo: `Tre punti di abbandono analizzati: pagina prodotto, configuratore (semplificato da 5 a 3 step), checkout (costi spedizione mostrati in anticipo). Sequenza recupero carrelli automatizzata in tre step: promemoria a 45 minuti, domanda genuina a 24 ore, sconto 5% a 72 ore. Si ferma al primo acquisto. Sistema post-acquisto segmentato: email di benvenuto dopo consegna, tre email editoriali in 30 giorni, promemoria di riacquisto calibrato sul ciclo di vita del prodotto, sequenza di riattivazione per clienti inattivi da 120+ giorni.`
 
 S4 Risultati:
+
 - Headline: `Cinque mesi.`
 - Metriche:
   - `Tasso abbandono carrello | 74% | 52% | media mesi 4-5`
@@ -457,6 +480,7 @@ S4 Risultati:
   - `Revenue incrementale da automazioni | — | +€218k | cumulata 5 mesi`
 
 S5 Citazione:
+
 - `"Prima ogni cliente costava acquisirlo e poi spariva. Adesso il cliente che acquisisco vale molto di più, e parte di quel valore arriva senza spendere un euro in più in pubblicità."`
 - `CEO · E-commerce arredamento B2C · Nord Italia`
 
@@ -465,19 +489,23 @@ S5 Citazione:
 **PAGINA 6 — Info Business** (`/it/casi-studio/info-business`)
 
 S1 Hero:
+
 - Label: `Caso Studio · Info Business`
 - Headline: `L'azienda cresceva finché il fondatore reggeva.`
 - Sottotitolo: `Formazione manageriale B2B · Milano · €5.4M di fatturato · 13 persone · ogni trattativa passava per il fondatore. Due figure commerciali perse in tre anni.`
 
 S2 Problema:
+
 - Headline: `Il capitale commerciale era intrappolato nella testa di una sola persona.`
 - Testo: `18 ore a settimana del fondatore su attività commerciali dirette. Ogni trattativa: dalla prima call alla firma. Nessun processo documentato, nessun materiale, nessun sistema di supporto. Il problema non era trovare commerciali. Era che senza un sistema replicabile, ogni nuova figura commerciale galleggiava senza struttura e se ne andava entro otto mesi. Era già successo due volte.`
 
 S3 Intervento:
+
 - Headline: `Abbiamo estratto quello che era nella sua testa e lo abbiamo reso replicabile.`
 - Testo: `16 ore di conversazioni registrate con il fondatore: come qualifica, quali segnali cerca, come gestisce le obiezioni, cosa rende una proposta vincente. Da lì: un Sales Playbook di 28 pagine con il processo completo. Sistema di nurturing su MARF per i 3.400 iscritti alla newsletter e i partecipanti ai webinar: sequenza per livello di consapevolezza, criterio automatico di passaggio a lead caldo, notifica al commerciale entro 24 ore. Onboarding del nuovo commerciale con il playbook come guida, affiancamento su cinque call. Il fondatore supervisiona con alert solo su eccezioni. Zero micromanagement.`
 
 S4 Risultati:
+
 - Headline: `Sette mesi.`
 - Metriche:
   - `Ore settimanali fondatore su commerciale diretto | 18 ore | 5 ore | media mesi 6-7`
@@ -486,6 +514,7 @@ S4 Risultati:
   - `Revenue da trattative gestite senza il fondatore | €0 | +€390k | cumulata mesi 5-7`
 
 S5 Citazione:
+
 - `"Per la prima volta in dieci anni sono andato in vacanza una settimana senza guardare il telefono. E quando sono tornato, nessuno aveva bisogno di me per recuperare il tempo perso."`
 - `Fondatore · Formazione manageriale B2B · Milano`
 
@@ -498,15 +527,18 @@ S5 Citazione:
 **Footer:** Non presente su queste pagine. Le pagine del funnel non hanno footer.
 
 **SEO / Meta:**
+
 - `noindex, nofollow` su tutte le 6 pagine — non sono pagine pubbliche
 - Title tag: `[Titolo pagina] — Morfeus`
 - Nessun og:image necessario
 
 **Animazioni:**
+
 - Usare le stesse animazioni già presenti nel sito (fadeUp on scroll, glow breathe)
 - Non aggiungere animazioni nuove non presenti nel design system esistente
 
 **Placeholder da sostituire dopo la build:**
+
 ```
 [PLACEHOLDER_VIDEO_LINKEDIN]     → URL YouTube/Vimeo video pre-call (variante LinkedIn)
 [PLACEHOLDER_VIDEO_COLDEMAIL]    → URL YouTube/Vimeo video pre-call (variante cold email)

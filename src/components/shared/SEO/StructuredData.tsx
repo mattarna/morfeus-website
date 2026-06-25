@@ -97,7 +97,7 @@ export function StructuredData({ locale }: StructuredDataProps) {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Morph Lab",
+            name: "Morf Lab",
             description: locale === "it"
               ? "Workshop esperienziali per trasformare i team in AI Champion"
               : "Experiential workshops to transform teams into AI Champions",
@@ -107,20 +107,10 @@ export function StructuredData({ locale }: StructuredDataProps) {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Morph Path",
+            name: "Morf Forge",
             description: locale === "it"
-              ? "AI Adoption & Governance per sistemi scalabili"
-              : "AI Adoption & Governance for scalable systems",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Morph Forge",
-            description: locale === "it"
-              ? "Sviluppo rapido e MVP con AI"
-              : "Rapid development and AI-first MVPs",
+              ? "Operating Partner AI per aziende in scaling: si parte da un Pilot, poi presidio continuativo come Retainer"
+              : "AI Operating Partner for scaling companies: start with a Pilot, then an ongoing Retainer partnership",
           },
         },
       ],
