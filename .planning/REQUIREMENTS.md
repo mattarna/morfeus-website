@@ -85,19 +85,47 @@ Esclusi esplicitamente da questo milestone.
 
 ## Traceability
 
-Popolata durante la creazione della roadmap (ogni requisito → esattamente una fase).
-
-| Requirement                   | Phase | Status  |
-| ----------------------------- | ----- | ------- |
-| (da compilare dal roadmapper) | —     | Pending |
+| Requirement | Phase | Status  |
+| ----------- | ----- | ------- |
+| MEAS-01     | 1     | Pending |
+| MEAS-02     | 1     | Pending |
+| MEAS-03     | 1     | Pending |
+| ENT-01      | 2     | Pending |
+| ENT-02      | 2     | Pending |
+| ENT-03      | 2     | Pending |
+| ENT-04      | 2     | Pending |
+| TECH-01     | 2     | Pending |
+| TECH-02     | 2     | Pending |
+| TECH-03     | 2     | Pending |
+| TECH-04     | 2     | Pending |
+| TECH-05     | 2     | Pending |
+| SCHEMA-01   | 3     | Pending |
+| SCHEMA-02   | 3     | Pending |
+| SCHEMA-03   | 3     | Pending |
+| SCHEMA-04   | 3     | Pending |
+| SCHEMA-05   | 3     | Pending |
+| HUB-01      | 4     | Pending |
+| HUB-02      | 4     | Pending |
+| HUB-03      | 4     | Pending |
+| HUB-04      | 4     | Pending |
+| HUB-05      | 4     | Pending |
+| HUB-06      | 4     | Pending |
+| IA-01       | 5     | Pending |
+| IA-02       | 5     | Pending |
+| IA-03       | 5     | Pending |
+| LLMS-01     | 5     | Pending |
+| LLMS-02     | 5     | Pending |
+| OFF-01      | 6     | Pending |
+| OFF-02      | 6     | Pending |
+| OFF-03      | 6     | Pending |
 
 **Coverage:**
 
 - v1 requirements: 27 totali
-- Mapped to phases: 0 (da fare)
-- Unmapped: 27 ⚠️
+- Mapped to phases: 27 (100%)
+- Unmapped: 0
 
 ---
 
 _Requirements defined: 2026-06-26_
-_Last updated: 2026-06-26 after initial definition_
+_Last updated: 2026-06-26 — Traceability compiled after roadmap creation_
