@@ -33,7 +33,13 @@ Ogni fase consegna capacità verificabili prima che inizi la successiva.
 1. GA4 ha un segmento attivo per il traffico di referral dagli LLM (chatgpt.com, perplexity.ai, gemini.google.com, copilot.microsoft.com, claude.ai) e i dati storici smettono di finire in "Direct"
 2. Esiste un file template prompt-panel (IT+EN, 15 domande: 5 brand, 5 categoria, 5 problema) con la baseline registrata e la procedura di ripetizione mensile documentata
 3. Esiste documentazione step-by-step con file/sitemap pronti per la verifica su Bing Webmaster Tools e Google Search Console, con gli step umani esplicitati
-   **Plans**: TBD
+
+**Plans:** 2 plans
+
+Plans:
+
+- [ ] 01-01-PLAN.md — GA4 LLM channel group spec (docs/geo/measurement.md) + prompt panel template (docs/geo/prompt-panel.md) [MEAS-01, MEAS-02]
+- [ ] 01-02-PLAN.md — Search Console + Bing WMT setup procedure + human verification checkpoint [MEAS-03]
 
 ### Phase 2: Quick-Win Fixes + Entity Layer
 
@@ -113,7 +119,7 @@ Ogni fase consegna capacità verificabili prima che inizi la successiva.
 
 | Phase                             | Plans Complete | Status      | Completed |
 | --------------------------------- | -------------- | ----------- | --------- |
-| 1. Measure First                  | 0/TBD          | Not started | -         |
+| 1. Measure First                  | 0/2            | Planning    | -         |
 | 2. Quick-Win Fixes + Entity Layer | 0/TBD          | Not started | -         |
 | 3. Schema Infrastructure          | 0/TBD          | Not started | -         |
 | 4. Content Hub                    | 0/TBD          | Not started | -         |
