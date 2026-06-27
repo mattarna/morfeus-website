@@ -10,6 +10,7 @@ export const INDEXABLE_LOCALE_PATHS = [
   "",
   "forge",
   "lab",
+  "chi-siamo",
   "privacy",
   "cookies",
 ] as const;
