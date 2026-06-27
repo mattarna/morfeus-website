@@ -26,7 +26,7 @@
   - https://www.instagram.com/morfeushub.ai/
   - https://www.youtube.com/@MorfeusHub
 - Logo: `/images/brand/morfeus-mark.png` (referenziato in StructuredData) — ⬜ confermare che esista/sia il logo giusto
-- Slogan / disambiguatingDescription: ✏️ bozzo io, tu confermi
+- **disambiguatingDescription** (frase-entità canonica — lock 2026-06-26): _"Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro."_
 
 ## Founders (Person schema + pagina /chi-siamo) — ✅ dal repo (`src/app/lib/team-data.ts`)
 

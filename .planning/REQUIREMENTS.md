@@ -62,6 +62,17 @@ Requirements per questo milestone. Ognuno mappa a una fase della roadmap.
 - [ ] **OFF-02**: Copy pronta per il profilo **Crunchbase**.
 - [ ] **OFF-03**: Copy pronta per **Google Business Profile** + LinkedIn/directory, con NAP e disambiguazione coerenti con il sito.
 
+## Rifiniture (CMO — integrate 2026-06-26)
+
+Vincolano i requisiti delle fasi indicate (non cambiano lo scope "architettura"):
+
+- **Layer conversione (→ HUB)**: HUB-03 (template articolo) include uno **slot CTA contestuale**; HUB-06 include una **mappa contenuto→offerta** (quale CTA/offerta per cluster e intento).
+- **Standard editoriale anti-fuffa (→ HUB-03)**: ogni articolo deve avere ≥2 tra — esperienza diretta Morfeus, esempio operativo, framework proprietario, tabella decisionale, dato reale, errore visto nei clienti, checklist, mini-case, template. (codificato nel template/checklist)
+- **Intento commerciale (→ IA-01)**: la tassonomia aggiunge la dimensione _intento/funnel-stage_ (brand / informativo / problema / soluzione / vendor / comparison) per pesare i contenuti per valore commerciale.
+- **Off-site sequenziato (→ OFF)**: prima **fonti esterne credibili + proof commerciale** (Clutch, testimonial nominativi, case con numeri), POI **Wikidata**, poi `sameAs`. Non invertire.
+- **Goal allargato**: l'architettura è orientata non solo a visibilità ma a **domanda qualificata + conversione B2B** (north star = pipeline, non solo citazioni).
+- **Onestà di framing**: distinguere _Fondamenta certe_ (crawl/index/schema/lang/internal-link/off-site) da _Esperimenti GEO_ (llms.txt, prompt-panel, AI citation tracking).
+
 ## Future Requirements (v2 / dopo l'architettura)
 
 - **CONT-xx**: Produzione continuativa di articoli answer-first sui cluster (ops editoriale).
