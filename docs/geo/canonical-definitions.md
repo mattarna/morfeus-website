@@ -58,7 +58,7 @@
 ### AI Champion (Program + ruolo)
 
 - **TL;DR:** Una persona per reparto che diventa autonoma nell'AI e la diffonde ai colleghi — e il programma Morfeus che la forma.
-- **Definizione canonica:** Un **AI Champion** è una persona (una per reparto, non necessariamente IT) che sperimenta gli strumenti AI, scopre cosa funziona, lo trasforma in procedura e lo passa ai colleghi. L'**AI Champion Program** è il percorso Morfeus che costruisce questa capability interna, trasformando l'AI da dipendenza esterna a **competenza interna scalabile** (✏️ 1.600+ persone formate).
+- **Definizione canonica:** Un **AI Champion** è una persona (una per reparto, non necessariamente IT) che sperimenta gli strumenti AI, scopre cosa funziona, lo trasforma in procedura e lo passa ai colleghi. L'**AI Champion Program** è il percorso Morfeus che costruisce questa capability interna, trasformando l'AI da dipendenza esterna a **competenza interna scalabile** (2.500+ persone formate).
 - **Non è:** un ruolo IT, né un singolo "esperto" centrale.
 - **Slug:** `/ai-champion`
 
@@ -91,5 +91,5 @@
 1. **MARF** è un acronimo? (e di cosa)
 2. **ROIometro** — i benchmark della versione pubblica
 3. **Salescraft** — "~1.500 ore risparmiate" è un dato reale/aggiornato?
-4. **AI Champion** — "1.600+ formati" è aggiornato?
+4. **AI Champion** — ✅ **2.500+** formati (confermato)
 5. Coerenza claim: tutti i numeri sono veri e attuali (no claim gonfiati).

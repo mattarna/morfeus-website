@@ -13,14 +13,14 @@
 - **TL;DR:** Il curriculum proprietario _tool-independent_ che porta da "uso un chatbot" a "costruisco sistemi AI".
 - **Definizione canonica:** Il Metodo Morfeus è il framework formativo proprietario, **indipendente dallo strumento** (si insegna a pedalare, non la bicicletta specifica), che porta una persona da _"uso un chatbot"_ a _"costruisco sistemi AI"_. È organizzato in **21 Mattoncini** su **4 strati** progressivi (Fondamenta → Architettura → Sistema → Organizzazione Intelligente) e segue la spina dorsale **Cultura → Linguaggio → Metodo → Delega → Sistema**.
 - **Non è:** un corso legato a un tool specifico; sopravvive all'obsolescenza degli strumenti.
-- **Slug:** `/metodo-morfeus` · ✏️ numero formati (1.100+? 1.600+?)
+- **Slug:** `/metodo-morfeus` · **2.500+ persone formate** ✅
 
 ### M-V-A (Manuale → Validato → Attivato)
 
 - **TL;DR:** Il metodo Morfeus per costruire un sistema / Dipendente AI in 3 mosse.
 - **Definizione canonica:** M-V-A è il metodo per costruire un sistema AI: prima capisci e fai il task **a mano** (Manuale), poi lo testi finché regge il tuo standard (**Validato**), poi lo fai girare in autonomia (**Attivato**). È agnostico al settore perché lavora sulla _struttura del processo_: "ChatGPT è il martello, il sistema M-V-A è la casa."
 - **Non è:** "automatizza tutto subito".
-- **Slug:** `/metodo-mva` · ⚠️✏️ **3ª lettera da bloccare**: "Attivato" o "Automatizzato"? (oggi oscilla)
+- **Slug:** `/metodo-mva` · ✅ 3ª lettera = **Attivato** (il Dipendente AI viene _attivato_ — confermato da Matteo)
 
 ### TQD (Tempo · Qualità · Delega)
 
@@ -39,8 +39,8 @@
 ### I 5 Livelli (L1–L5)
 
 - **TL;DR:** La scala di maturità nell'uso dell'AI, da "rispondo a domande" a "orchestro sistemi".
-- **Definizione canonica:** I 5 Livelli inquadrano la sofisticazione nell'uso dell'AI: **L1** domanda-risposta (il 95% degli utenti) · **L2** esecuzione assistita ("l'AI lavora CON te") · **L3** sistema con Dipendenti AI ("l'AI lavora PER te") · **L4** versione personalizzata costruita · **L5** orchestrazione. I prodotti mappano il percorso: Claude Unlocked L1→L2, Bootcamp L2→L3.
-- **Slug:** `/livelli-ai` · ⚠️✏️ **sono 5 (L1-L5) o 3 (L1/L2/L3)?** (i materiali usano entrambe — chiarire la scala canonica)
+- **Definizione canonica:** I 5 Livelli inquadrano la sofisticazione nell'uso dell'AI: **L1 — Domanda/Risposta** (qui si ferma il 95%) · **L2 — Esecuzione assistita** (dai un task, Claude lo esegue) · **L3 — Collaborazione iterativa** (lavori _insieme_ a Claude) · **L4 — Sistema personalizzato** (Claude ti conosce: contesto persistente, Projects, Skill, memoria) · **L5 — Orchestrazione** (più task/agenti/flussi in parallelo). Il **corso base** porta a **L4**, il **corso avanzato/Bootcamp** a **L5**.
+- **Slug:** `/livelli-ai` · ✅ scala canonica = **5 livelli (L1-L5)**. ⚠️ Le VSL usano anche una versione _semplificata a 3 step_ (L1 "AI risponde" / L2 "AI lavora CON te" / L3 "AI lavora PER te") → lente di vendita, da non confondere con la scala a 5.
 
 ---
 
@@ -75,8 +75,8 @@
 
 ### METODO PRISMA
 
-- **Definizione:** Framework per progettare/presentare/vendere offerte high-ticket via webinar; acronimo **P-R-I-S-M-A** (Promessa → Racconto → Ingresso → Scena → Monetizzazione → A…). IP Morfeus v1.0.
-- **Slug:** `/metodo-prisma` · ✏️ sciogliere la "A" finale di PRISMA
+- **Definizione:** Framework per progettare/presentare/vendere offerte high-ticket via webinar; acronimo **P·R·I·S·M·A**: **P**romessa → **R**acconto → **I**ngresso (Acquisizione) → **S**cena (Evento Live) → **M**onetizzazione (Pitch) → **A**rchitettura dell'Offerta. IP Morfeus v1.0.
+- **Slug:** `/metodo-prisma`
 
 ### Prodotti nominati
 
@@ -91,10 +91,14 @@ Regole numeriche: ⚠️✏️ convivono **90/10** (input umano vs macchina), **
 
 ---
 
-## ✏️ DA CONFERMARE con Matteo
+## ✅ Risolti (2026-06-26)
 
-1. **M-V-A** — la 3ª lettera è "Attivato" o "Automatizzato"?
-2. **5 Livelli** — sono 5 (L1-L5) o 3 (L1/L2/L3)? Qual è la scala canonica?
-3. **METODO PRISMA** — cosa è la "A" finale?
-4. Numeri: formati Metodo Morfeus (1.100+ / 1.600+?), iscritti AI Espresso (10k+?)
-5. Regole numeriche: quali sono le 2-3 ufficiali (90/10, 60/20/20, 70/30 _o_ 30-40-30)?
+- **M-V-A** = Manuale → Validato → **Attivato**
+- **5 Livelli** = scala canonica **L1-L5** (le VSL usano una versione a 3 step come lente di vendita)
+- **METODO PRISMA** = P·R·I·S·M·**A** (Architettura dell'Offerta)
+- **Formati** = **2.500+**
+
+## ✏️ Aperti (minori)
+
+- **AI Espresso** — n° iscritti (~10k? da confermare)
+- **Regole numeriche** — _proposta:_ tenere **90/10** (input umano vs macchina) + **70/30** (cosa automatizzare), archiviare 60/20/20 e 30-40-30. Confermi?

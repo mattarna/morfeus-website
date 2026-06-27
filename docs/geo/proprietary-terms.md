@@ -87,7 +87,7 @@ Perfect Webinar / Epiphany Bridge (Brunson) · StoryBrand (Miller) · Core 4 / H
 
 ## 9. ⚠️ Da sistemare (per coerenza entità/GEO)
 
-- **M-V-A**: la 3ª lettera oscilla — "**Attivato**" (sezioni finanziata) vs "**Automatizzato**" (posizionamento). Scegliere UNA.
+- **M-V-A**: ✅ risolto — 3ª lettera = **Attivato** (il Dipendente AI viene _attivato_).
 - **Regole numeriche**: convivono `70/30`, `30-40-30`, `60/20/20`, `90/10` → rischio confusione. Tenere le 2-3 canoniche, archiviare il resto.
 - **Naming offerta**: Morf Forge/Lab/Path (sito pubblico) vs FOCUS/CORE/SCALE (tier) vs Operating Partner (interno) → restano com'è (sito in transizione), ma da allineare in futuro.
 - **"Metodo Arciere"**: ⚠️ **NON trovato** in nessun file (HTML/MD/TSX/JSON) di nessun corpus. Esiste? Materiale esterno? Da chiarire con Matteo.
