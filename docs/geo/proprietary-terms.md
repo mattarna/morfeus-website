@@ -94,7 +94,26 @@ Perfect Webinar / Epiphany Bridge (Brunson) · StoryBrand (Miller) · Core 4 / H
 
 ---
 
-## 🎯 Signature set consigliato per le pagine DefinedTerm (IA-02, da espandere)
+## 🎯 Signature set per le pagine DefinedTerm (IA-02) — split per audience
 
-**B2B core (priorità 1):** MARF · ROIometro · Salescraft · Operating Partner · Margin Recovery · Value Leak · AI Champion · Value Report
-**Metodo/practitioner (priorità 2):** Metodo Morfeus · M-V-A · TQD · Plan & Solve · Dipendente AI · Cervello Aziendale
+### 🏢 B2B (Operating Partner — CEO/COO/CFO) · priorità per il sito/GEO
+
+| Priorità    | Termini                                                                      | Slug proposti                                                                               |
+| ----------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| 🥇 must-own | MARF · ROIometro · Operating Partner · Margin Recovery (+ Value Leak)        | `/marf` · `/roiometro` · `/operating-partner` · `/margin-recovery`                          |
+| 🥈 forti    | Salescraft · Value Report · AI Champion · Dipendente AI · Cervello Aziendale | `/salescraft` · `/value-report` · `/ai-champion` · `/dipendente-ai` · `/cervello-aziendale` |
+| 🥉 supporto | Coordination Tax · Pilot → Retainer · Control System as a Service            | (per copy/contenuti)                                                                        |
+
+### 🎓 Infobusiness (creator / corsi / brand Matteo)
+
+| Priorità          | Termini                                                                                                                 | Slug proposti                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 🥇 flagship       | Metodo Morfeus · M-V-A · Plan & Solve · TQD · I 5 Livelli (L1/L2/L3)                                                    | `/metodo-morfeus` · `/metodo-mva` · `/plan-and-solve` · `/tqd` · `/livelli-ai` |
+| 🥈 forti          | Dipendente AI · Cervello Aziendale · AI Champion · I 21 Mattoncini · AI Hero (Protocol)                                 | `/ai-hero` …                                                                   |
+| 🥉 brand/prodotti | AI Espresso (+ Radioactive Barista · Il Bunker · Think in Two) · METODO PRISMA · Claude Unlocked · Bootcamp AI Champion | (prodotti/brand)                                                               |
+
+### 🔗 Core condiviso — possedere per primi (vale doppio)
+
+**AI Champion · Dipendente AI · Cervello Aziendale · M-V-A** — forti su **entrambe** le audience: una pagina serve B2B _e_ infobusiness.
+
+**Note:** per il milestone del sito la priorità è il set **B2B** (ICP della Fase 5/IA-02); l'**infobusiness** serve corsi + personal brand (AI Espresso), secondario per il sito _ora_. Gli slug sono proposte — alcuni si incrociano con funnel esistenti (es. `plan-and-solve`): decideremo se le pagine-termine vivono top-level o sotto `/glossario`.
