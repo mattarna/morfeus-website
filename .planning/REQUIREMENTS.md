@@ -22,7 +22,7 @@ Requirements per questo milestone. Ognuno mappa a una fase della roadmap.
 
 ### Technical AEO fixes (TECH)
 
-- [ ] **TECH-01**: L'attributo `<html lang>` è corretto server-side per locale (EN non dichiara più `it`), gestendo il vincolo skip-worktree su `layout.tsx`.
+- [~] **TECH-01** — ⏸️ **DEFERRED (Architecture Decision)**: `<html lang>` corretto server-side. Il fix richiede `headers()` nel root layout (condiviso con le route non-locale) → **render dinamico globale** (SSG→dynamic): costo/rischio sproporzionato vs beneficio. Google rileva la lingua dal _contenuto_ (non da `lang`/hreflang; hreflang = dichiarazione di alternate localizzate, già corrette sui core). Manteniamo il **patch client** (UX/a11y). **Riaprire** durante: refactor routing/root-layout, rimozione scroll-hijack, nuova architettura internazionale, o problemi concreti di lingua EN da GSC/Bing/accessibility audit. _(Beneficio basso, non bloccante per la fase SEO/GEO.)_
 - [ ] **TECH-02**: La sitemap esclude funnel e step `noindex` e usa un `lastModified` reale per voce.
 - [ ] **TECH-03**: Le route interne `/funnel-internal/*` restituiscono `noindex` (blanket) e non sono indicizzabili direttamente.
 - [ ] **TECH-04**: Ogni funnel `indexable: true` ha metadata propri (fix del bootcamp che oggi cade nel metadata generico).
@@ -96,39 +96,39 @@ Esclusi esplicitamente da questo milestone.
 
 ## Traceability
 
-| Requirement | Phase | Status  |
-| ----------- | ----- | ------- |
-| MEAS-01     | 1     | Pending |
-| MEAS-02     | 1     | Pending |
-| MEAS-03     | 1     | Pending |
-| ENT-01      | 2     | Pending |
-| ENT-02      | 2     | Pending |
-| ENT-03      | 2     | Pending |
-| ENT-04      | 2     | Pending |
-| TECH-01     | 2     | Pending |
-| TECH-02     | 2     | Pending |
-| TECH-03     | 2     | Pending |
-| TECH-04     | 2     | Pending |
-| TECH-05     | 2     | Pending |
-| SCHEMA-01   | 3     | Pending |
-| SCHEMA-02   | 3     | Pending |
-| SCHEMA-03   | 3     | Pending |
-| SCHEMA-04   | 3     | Pending |
-| SCHEMA-05   | 3     | Pending |
-| HUB-01      | 4     | Pending |
-| HUB-02      | 4     | Pending |
-| HUB-03      | 4     | Pending |
-| HUB-04      | 4     | Pending |
-| HUB-05      | 4     | Pending |
-| HUB-06      | 4     | Pending |
-| IA-01       | 5     | Pending |
-| IA-02       | 5     | Pending |
-| IA-03       | 5     | Pending |
-| LLMS-01     | 5     | Pending |
-| LLMS-02     | 5     | Pending |
-| OFF-01      | 6     | Pending |
-| OFF-02      | 6     | Pending |
-| OFF-03      | 6     | Pending |
+| Requirement | Phase | Status   |
+| ----------- | ----- | -------- |
+| MEAS-01     | 1     | Pending  |
+| MEAS-02     | 1     | Pending  |
+| MEAS-03     | 1     | Pending  |
+| ENT-01      | 2     | Pending  |
+| ENT-02      | 2     | Pending  |
+| ENT-03      | 2     | Pending  |
+| ENT-04      | 2     | Pending  |
+| TECH-01     | 2     | Deferred |
+| TECH-02     | 2     | Pending  |
+| TECH-03     | 2     | Pending  |
+| TECH-04     | 2     | Pending  |
+| TECH-05     | 2     | Pending  |
+| SCHEMA-01   | 3     | Pending  |
+| SCHEMA-02   | 3     | Pending  |
+| SCHEMA-03   | 3     | Pending  |
+| SCHEMA-04   | 3     | Pending  |
+| SCHEMA-05   | 3     | Pending  |
+| HUB-01      | 4     | Pending  |
+| HUB-02      | 4     | Pending  |
+| HUB-03      | 4     | Pending  |
+| HUB-04      | 4     | Pending  |
+| HUB-05      | 4     | Pending  |
+| HUB-06      | 4     | Pending  |
+| IA-01       | 5     | Pending  |
+| IA-02       | 5     | Pending  |
+| IA-03       | 5     | Pending  |
+| LLMS-01     | 5     | Pending  |
+| LLMS-02     | 5     | Pending  |
+| OFF-01      | 6     | Pending  |
+| OFF-02      | 6     | Pending  |
+| OFF-03      | 6     | Pending  |
 
 **Coverage:**
 
