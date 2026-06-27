@@ -35,12 +35,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   const funnelSitemapEntries: MetadataRoute.Sitemap = Object.values(funnelRegistry).flatMap((item) => {
+    // Solo funnel indicizzabili: i noindex non devono comparire in sitemap (no segnale contraddittorio)
+    if (!item.indexable) {
+      return [];
+    }
     const config = getRegisteredFunnelConfig(item.slug);
     if (!config) {
       return [];
     }
 
-    return config.steps.map((step) => {
+    return config.steps
+      .filter((step) => !step.noindex) // escludi step noindex (es. thank-you / conversion)
+      .map((step) => {
       const normalizedStepPath = step.path.trim().replace(/^\/+|\/+$/g, "");
       const url =
         normalizedStepPath.length === 0
