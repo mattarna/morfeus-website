@@ -72,6 +72,14 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
+  // Destinazione interna del rewrite dei funnel: mai indicizzabile in accesso
+  // diretto (la URL canonica e` /<slug>, non /funnel-internal/<slug>).
+  if (pathname.startsWith("/funnel-internal")) {
+    const response = NextResponse.next();
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
+  }
+
   const segments = getPathSegments(pathname);
   const firstSegment = segments[0];
 

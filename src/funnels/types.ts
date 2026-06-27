@@ -1048,7 +1048,7 @@ export interface FunnelRegistryItem {
   runtime?: {
     fontPack?: "webinar" | "playbook";
     theme?: "default" | "bootcamp" | "finanziata";
-    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata" | "freebie-hub" | "plan-solve";
+    metadataPreset?: "claude-unlocked-sales" | "vocabolario-page" | "playbook" | "formazione-finanziata" | "freebie-hub" | "plan-solve" | "bootcamp";
     chatbotStepIds?: string[];
   };
   abTest: {

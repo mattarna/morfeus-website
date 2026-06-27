@@ -212,6 +212,7 @@ const bootcampAiChampion3aEdizioneItem: FunnelRegistryItem = {
   runtime: {
     fontPack: "webinar",
     theme: "bootcamp",
+    metadataPreset: "bootcamp",
     chatbotStepIds: ["sales"],
   },
   abTest: {

@@ -107,6 +107,30 @@ export function generateMetadata({ params }: FunnelPageProps): Metadata {
     };
   }
 
+  if (metadataPreset === "bootcamp") {
+    const title = "Bootcamp AI Champion — costruisci il tuo Dipendente AI | Morfeus";
+    const description =
+      "Il bootcamp Morfeus per costruire il tuo primo Dipendente AI con il metodo M-V-A: 7 sessioni live su casi reali, per passare dall'usare l'AI al farla lavorare per te. Ingresso su selezione, posti limitati.";
+    const url = `https://morfeushub.com/${params.slug}`;
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: {
+        title,
+        description,
+        type: "website",
+        url,
+        siteName: "Morfeus Hub",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+      },
+    };
+  }
+
   if (metadataPreset === "plan-solve") {
     const title = "Plan & Solve — La macchina per i lavori grandi con l'AI | Morfeus";
     const description =
