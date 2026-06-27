@@ -77,7 +77,8 @@ export function StructuredData({ locale }: StructuredDataProps) {
       contactType: "customer service",
       availableLanguage: ["English", "Italian"],
     },
-    areaServed: { "@type": "Country", name: "Italy" },
+    // Sede/identità italiana (legalName + address), ma servizio internazionale.
+    areaServed: "Worldwide",
     knowsAbout: [
       "Artificial Intelligence",
       "AI Consulting",
