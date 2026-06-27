@@ -45,7 +45,7 @@ export function Services() {
       <div className="relative z-10 w-full flex flex-col justify-center px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="flex flex-col xl:flex-row xl:items-end mb-8 sm:mb-10 xl:mb-12 gap-5 sm:gap-7 xl:gap-10 justify-between">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-6xl font-light tracking-tighter text-white uppercase leading-[1.1]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-6xl font-light tracking-tighter text-white uppercase leading-[1.1] whitespace-nowrap">
             {t("title_part1")} <span className="font-medium">{t("title_part2")}</span>
           </h2>
           <p className="text-sm sm:text-base 2xl:text-[17px] font-light text-slate-400 max-w-lg leading-relaxed text-left xl:text-right">
@@ -117,7 +117,7 @@ function ServiceCard({
   };
 
   return (
-    <div className="group relative flex flex-col justify-between p-6 sm:p-8 xl:p-10 2xl:p-12 min-h-[340px] sm:min-h-[360px] xl:min-h-[400px] 2xl:min-h-[460px] bg-[#080808]/40 border border-white/10 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/20 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
+    <div className="group relative flex flex-col p-6 sm:p-8 xl:p-10 2xl:p-12 min-h-[340px] sm:min-h-[360px] xl:min-h-[400px] 2xl:min-h-[460px] bg-[#080808]/40 border border-white/10 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/20 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
       {/* Gradient Overlay - More defined */}
       <div className="absolute inset-0 bg-gradient-to-br from-majorelle/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
       
@@ -130,7 +130,7 @@ function ServiceCard({
       </div>
       
       {/* Content */}
-      <div className="relative z-10 mt-auto">
+      <div className="relative z-10 flex flex-col flex-grow mt-8 sm:mt-10 xl:mt-12">
         <h3 className="text-2xl sm:text-3xl 2xl:text-4xl font-normal text-white mb-4 sm:mb-5 2xl:mb-6 leading-tight tracking-tight">
           {headline}
         </h3>
@@ -139,21 +139,21 @@ function ServiceCard({
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-6">
+        <div className="mt-auto flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
           <a 
             href={href}
             onClick={(e) => {
               e.preventDefault();
               handleCtaClick(13); // Book call section
             }}
-            className="h-11 px-8 bg-white text-black text-[14px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(255,255,255,0.2)] w-full sm:w-auto cursor-pointer"
+            className="h-11 px-8 bg-white text-black text-[14px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_-5px_rgba(255,255,255,0.2)] w-full sm:w-auto shrink-0 whitespace-nowrap cursor-pointer"
           >
             {ctaPrimary}
             <Icon icon="solar:arrow-right-bold" width={16} />
           </a>
           <Link 
             href={secondaryHref}
-            className="text-[13px] font-bold text-slate-500 hover:text-white transition-colors tracking-wider cursor-pointer uppercase"
+            className="text-[13px] font-bold text-slate-500 hover:text-white transition-colors tracking-wider cursor-pointer uppercase whitespace-nowrap"
           >
             {ctaSecondary}
           </Link>
