@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CaseStudyTemplate } from "@/components/sections/CaseStudyTemplate";
 import { buildLocaleAlternates, INDEXABLE_CASE_STUDY_SLUGS } from "@/lib/seo/public-indexing";
+import { JsonLd, buildBreadcrumbList } from "@/lib/seo/schema";
 
 const ALLOWED_CASE_SLUGS = new Set<string>(INDEXABLE_CASE_STUDY_SLUGS);
 
@@ -45,10 +46,17 @@ export default async function CaseStudyRoute({ params: { locale, slug } }: CaseS
 
   const t = await getTranslations({ locale, namespace: `PreCall.caseStudies.${slug}` });
 
+  const breadcrumb = buildBreadcrumbList([
+    { name: "Home", path: `/${locale}` },
+    { name: t("meta.title"), path: `/${locale}/case-study/${slug}` },
+  ]);
+
   return (
-    <CaseStudyTemplate
-      locale={locale}
-      slug={slug}
+    <>
+      <JsonLd schema={breadcrumb} />
+      <CaseStudyTemplate
+        locale={locale}
+        slug={slug}
       content={{
         metaTitle: t("meta.title"),
         problemLabel: t("labels.problem"),
@@ -80,6 +88,7 @@ export default async function CaseStudyRoute({ params: { locale, slug } }: CaseS
           linkedinLinkLabel: t("tripleCta.linkedin.linkLabel")
         }
       }}
-    />
+      />
+    </>
   );
 }

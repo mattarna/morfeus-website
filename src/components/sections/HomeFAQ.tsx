@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useTranslations } from "next-intl";
+import { JsonLd, buildFaqPage } from "@/lib/seo/schema";
 
 const DESKTOP_BREAKPOINT = 1280;
 
@@ -86,6 +87,7 @@ export function HomeFAQ() {
 
   return (
     <section className="relative z-0 min-h-screen xl:h-screen w-full bg-black overflow-hidden flex flex-col justify-center px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 pt-28 pb-16 xl:py-0">
+      <JsonLd schema={buildFaqPage(faqItems)} />
       <div className={`relative z-10 max-w-[1400px] mx-auto w-full transition-all duration-1000 ${
         isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}>

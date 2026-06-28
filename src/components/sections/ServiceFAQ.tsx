@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify/react";
 import { GridPattern } from "../shared/GridPattern";
+import { JsonLd, buildFaqPage } from "@/lib/seo/schema";
 
 interface FAQSectionProps {
   activeFaq: number | null;
@@ -13,6 +14,10 @@ interface FAQSectionProps {
 export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_operating_system" }: FAQSectionProps) {
   const t = useTranslations(namespace);
   const faqItems = Object.entries(t.raw("items"));
+  const faqSchemaEntries = faqItems.map(([, item]) => {
+    const faq = item as { q: string; a: string };
+    return { question: faq.q, answer: faq.a };
+  });
   const useSingleColumn = faqItems.length > 10;
   const faqGroups = useSingleColumn
     ? [faqItems]
@@ -20,6 +25,7 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
 
   return (
     <section id="faq" className="relative z-[130] py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/[0.05] overflow-visible">
+      <JsonLd schema={buildFaqPage(faqSchemaEntries)} />
       <GridPattern />
       
       {/* Module ID Tag */}
