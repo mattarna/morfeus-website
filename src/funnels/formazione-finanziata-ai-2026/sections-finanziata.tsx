@@ -661,7 +661,7 @@ const FAQ = [
   { q: "Cosa succede se non raggiungo il 75% di presenze?", a: "Il rimborso è garantito solo a chi partecipa ad almeno il 75% delle lezioni, pari a 30 ore su 40. Sotto questa soglia non puoi accedere al rimborso del bando regionale, ma mantieni comunque l'accesso al corso e a tutti i materiali condivisi durante il percorso." },
   { q: "Serve esperienza tecnica o di programmazione?", a: "No. Il corso parte da zero ed è pensato per chi non ha mai usato l'AI in modo strutturato. Nessun codice, nessun prerequisito tecnico. Ti basta saper usare strumenti digitali di base. Tutto il percorso è no-code: lavoriamo con Claude e altri strumenti pratici, non con la programmazione." },
   { q: "L'attestato finale è riconosciuto?", a: "Sì. Al termine del corso ricevi un attestato rilasciato da un ente accreditato da Regione Lombardia, coerente con il bando Formazione Continua FSE+ 2021-2027." },
-  { q: "Quando inizia il corso e quanti posti ci sono?", a: "Il corso parte dopo il 3 luglio 2026. I posti sono limitati per garantire un'esperienza di qualità con assistenza diretta durante le esercitazioni. Una volta esauriti, le iscrizioni riapriranno con la prossima edizione. Dopo la candidatura ti contattiamo entro 24 ore." },
+  { q: "Quando inizia il corso e quanti posti ci sono?", a: "Il corso parte a settembre 2026. I posti sono limitati per garantire un'esperienza di qualità con assistenza diretta durante le esercitazioni. Una volta esauriti, le iscrizioni riapriranno con la prossima edizione. Dopo la candidatura ti contattiamo entro 24 ore." },
 ];
 
 const TRUST = ["HFarm", "Talent Garden", "Confcommercio", "Asseprim", "Sole 24 Ore Formazione"];
@@ -677,7 +677,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
   const content = step.content.FinanziataLanding;
   const vslYoutubeId = content?.vslYoutubeId ?? "";
   const optinEndpoint = content?.optinEndpoint ?? "/api/funnels/formazione-finanziata/optin";
-  const deadline = content?.deadline ?? "3 luglio";
+  const deadline = content?.deadline ?? "31 luglio";
   const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
 
   const [videoOn, setVideoOn] = useState(false);
