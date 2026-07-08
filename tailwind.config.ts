@@ -74,6 +74,18 @@ const config: Config = {
         vista: "#8CA5F7",
         "ghost-white": "#E4E7F0",
         forge: "#E8650A",
+        // MORFEUS Brand 2026 ("Progettato. Provato.") — content pages (sito madre non-home)
+        carta: "#F4F3EF",
+        inchiostro: "#14132E",
+        "inchiostro-2": "#211F45",
+        "riga-scuro": "#2A2850",
+        firma: "#533DFC",
+        "firma-hover": "#4230D6",
+        lilla: "#A99CFF",
+        ombra: "#7A7890",
+        anomalia: "#FF5C5C",
+        ok: "#1E9E5A",
+        marker: "#FFE14D",
         // Legacy/Generic mapping (mapping majorelle to purple for backward compat if needed)
         purple: {
           DEFAULT: "#533DFC", // Majorelle Blue
@@ -94,6 +106,11 @@ const config: Config = {
         outfit: ["var(--font-outfit)", "sans-serif"],
         "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
         prodigy: ["var(--font-prodigy)", "sans-serif"],
+        // Brand 2026: Clash/Satoshi self-host TODO (fallback Outfit/DM Sans finche i woff2 non sono in public/fonts)
+        clash: ["'Clash Display'", "var(--font-outfit)", "system-ui", "sans-serif"],
+        satoshi: ["'Satoshi'", "var(--font-dm-sans)", "system-ui", "sans-serif"],
+        playfair: ["var(--font-playfair)", "Georgia", "serif"],
+        plex: ["var(--f-mono)", "'IBM Plex Mono'", "monospace"],
       },
       transitionDuration: {
         "1000": "1000ms",
