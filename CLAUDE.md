@@ -45,6 +45,13 @@ npm run check:public-assets[:strict]  # policy asset in public/
 
 I componenti freebie condivisi (`FreebieHero`, `FreebieThankYou`, `FreebieWebinarTeaser`, `FreebieHub`) vivono in `src/funnels/freebie-cowork-setup-skill-2026-04/sections.tsx` e `freebie-hub-2026-06/sections.tsx`.
 
+## 🧱 Blueprint-first — struttura ASCII prima di costruire
+
+**Prima di creare QUALCOSA con una struttura** (landing/pagina, funnel, sequenza email, componente, documento, deck, architettura cartelle/file, sistema), NON partire dal codice o dalla copy: **prima disegna in chat uno scheletro ASCII a blocchi**, ogni blocco con etichetta + una riga di razionale (perché sta lì / che lavoro fa). Poi **aspetta l'OK di Matt** prima di costruire. Serve ad allinearci sulla struttura prima di investire nel dettaglio.
+
+- Vale anche fuori dalle landing: ogni volta che la cosa ha sezioni / layout / gerarchia.
+- **Eccezione:** modifiche triviali o one-shot (un fix puntuale, un singolo elemento, una copy breve) non lo richiedono. Nel dubbio, fallo o chiedi.
+
 ## ⛔ Regole dure (lezioni reali)
 
 - **Committa SEMPRE i file sorgente untracked importati** da codice tracciato. Un file presente solo sul tuo disco passa la build locale ma rompe Vercel (`Module not found`). Controlla `git status` per `??` su file `.ts/.tsx` importati. _(il pre-push hook lo verifica)_

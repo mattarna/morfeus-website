@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/funnels/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   safelist: [
     // OptinMockup theme classes (dynamic from optin-themes.ts)
@@ -56,6 +57,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Laptops with limited vertical space (e.g. 14" at 150% scale ~1280x720).
+        // Scales typography/spacing down ONLY here, leaving large monitors untouched.
+        short: { raw: "(min-width: 1024px) and (max-height: 900px)" },
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

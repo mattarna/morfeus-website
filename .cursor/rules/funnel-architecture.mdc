@@ -1,6 +1,6 @@
 ---
 description: Funnel routing and architecture standards
-globs: src/{middleware.ts,app/__funnels/**,funnels/**}
+globs: src/{middleware.ts,app/funnel-internal/**,funnels/**}
 alwaysApply: false
 ---
 
@@ -9,5 +9,5 @@ alwaysApply: false
 - Funnel URLs are root-level (`/slug`) and must be resolved only via explicit registry in `src/funnels/registry.ts`.
 - Do not add locale prefix (`/it`, `/en`) to funnel routes.
 - Keep all non-funnel pages under the existing locale flow.
-- Use middleware rewrite to internal route namespace (`/__funnels/...`) to avoid dynamic route conflicts.
+- Use middleware rewrite to internal route namespace (`/funnel-internal/...`) to avoid dynamic route conflicts.
 - Never treat unregistered slugs as funnels.

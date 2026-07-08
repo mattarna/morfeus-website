@@ -8,7 +8,7 @@ alwaysApply: true
 ## Two Separate Worlds
 
 1. **Sito Madre** (`src/app/[locale]/...`): locale-prefixed, i18n via next-intl, dual language IT+EN.
-2. **Funnel Area** (`src/app/__funnels/...`): no locale prefix, single-language per funnel, middleware rewrite from `/slug`.
+2. **Funnel Area** (`src/app/funnel-internal/...`): no locale prefix, single-language per funnel, middleware rewrite from `/slug`.
 
 These are completely separate. Never share page components between them. Infrastructure (types, tracking, middleware) can be shared.
 

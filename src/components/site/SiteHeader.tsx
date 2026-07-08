@@ -1,13 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
 
 /**
- * Official-site sticky header — "forge hand" (server component, crawlable).
- * Shared chrome for all non-home content pages. Home/forge/lab keep theirs.
+ * Official-site header — v7 light-first (server component, crawlable).
+ * Brand = Morfeus logo image (white mark inverted to dark for the light header).
  */
-
 const NAV = {
-  it: { items: [["chi-siamo", "Chi siamo"], ["forge", "Forge"], ["lab", "Lab"]], cta: "Parliamone", status: "System Operational" },
-  en: { items: [["chi-siamo", "About"], ["forge", "Forge"], ["lab", "Lab"]], cta: "Let’s talk", status: "System Operational" },
+  it: {
+    items: [["metodo", "Metodo"], ["servizi", "Servizi"], ["insights", "Insights"], ["glossario", "Glossario"]],
+    cta: "Prova il ROIometro",
+  },
+  en: {
+    items: [["metodo", "Method"], ["servizi", "Services"], ["insights", "Insights"], ["glossario", "Glossary"]],
+    cta: "Try the ROIometro",
+  },
 } as const;
 
 export function SiteHeader({ locale }: { locale: "it" | "en" }) {
@@ -15,21 +21,26 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
   const base = `/${locale}`;
   return (
     <header className="hdr">
-      <div className="in">
-        <Link href={base} className="brand" aria-label="Morfeus">
-          <span className="mk" aria-hidden>M</span>
-          <b>Morfeus</b>
+      <nav className="nav">
+        <Link className="brand" href={base} aria-label="Morfeus">
+          <Image
+            src="/images/brand/morfeus-mark.png"
+            alt="Morfeus"
+            width={170}
+            height={22}
+            priority
+            style={{ height: 22, width: "auto", filter: "brightness(0)" }}
+          />
         </Link>
-        <div className="right">
-          <span className="status"><span className="d" aria-hidden /><span>{t.status}</span></span>
-          <nav className="navlinks">
-            {t.items.map(([slug, label]) => (
-              <Link key={slug} href={`${base}/${slug}`}>{label}</Link>
-            ))}
-          </nav>
-          <a href="mailto:hello@morfeushub.com" className="cta">{t.cta}</a>
+        <div className="menu">
+          {t.items.map(([slug, label]) => (
+            <Link key={slug} href={`${base}/${slug}`}>{label}</Link>
+          ))}
         </div>
-      </div>
+        <div className="nav-cta">
+          <a className="btn btn-solid" href={`${base}/roiometro`}>{t.cta}</a>
+        </div>
+      </nav>
     </header>
   );
 }
