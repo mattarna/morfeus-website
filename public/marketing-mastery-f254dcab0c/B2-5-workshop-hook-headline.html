@@ -20,7 +20,7 @@
   <div class="brand">
     <span class="mk" role="img" aria-label="Marketing Mastery"></span>
     <span class="sep"></span>
-    <span class="atto-badge" data-i="badge">Blocco B · Il messaggio</span>
+    <span class="atto-badge" data-i="badge">Workshop · produrre · 20 min</span>
   </div>
   <div class="tools">
     <div class="lang" role="group" aria-label="Lingua">
@@ -47,7 +47,7 @@
 
   <div class="note rv">
     <div class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-    <div><h4 data-i="note1t">Come funziona questo workshop (e il criterio reale)</h4><p data-i-html="note1p">Qui c'è un compito da consegnare a te stesso e un criterio con cui verificarlo. Il criterio non è un'opinione: è la <strong>griglia con cui il corso giudica un hook</strong> (le cinque voci della rubrica hook del sistema di giudizio). Un reviewer AI la applicherà in automatico quando sarà pronto: per ora la applichi tu, su uno standard esplicito. La selezione dei tuoi hook non è "questo mi piace di più", è "questo passa la griglia, e questi no, e so dire perché".</p></div>
+    <div><h4 data-i="note1t">Come funziona questo workshop (e il criterio reale)</h4><p data-i-html="note1p">Qui c'è un compito da consegnare a te stesso e un criterio con cui verificarlo. Il criterio non è un'opinione: è la <strong>griglia con cui il corso giudica un hook</strong> (le cinque voci della rubrica hook del sistema di giudizio). In fondo trovi un prompt che porta quella griglia dentro una qualsiasi AI: le passi i tuoi hook e ti restituisce una pagella pass/fail sullo standard del corso, non un complimento generico. La selezione dei tuoi hook non è "questo mi piace di più", è "questo passa la griglia, e questi no, e so dire perché".</p></div>
   </div>
 
   <div class="sh rv"><span class="no">01</span><span data-i="sh1">Il gesto AI-first, in quattro tempi</span></div>
@@ -137,10 +137,10 @@ NON selezionare tu il migliore e NON rifinire: la selezione e la riscrittura le 
     <div class="checklist-item num"><span class="ci-mark">5</span><p data-i-html="step5"><strong>Dichiara il gesto AI-first</strong>: cosa ha fatto l'AI (brief eseguito, generazione) e cosa hai fatto tu (selezione argomentata, rifinitura).</p></div>
   </div>
 
-  <div class="sh rv"><span class="no">05</span><span data-i="sh5">Autovalutazione (la griglia reale del giudizio)</span></div>
+  <div class="sh rv"><span class="no">05</span><span data-i="sh5">Il gate: la griglia reale ti dà una pagella</span></div>
 
   <div class="prosa rv">
-    <p data-i-html="p6">Il criterio sotto è la griglia con cui il corso giudica il tuo lavoro su hook e headline: le stesse voci che un reviewer AI applicherà quando sarà pronto. Passa i tuoi 5 hook e 5 headline a questa griglia, con onestà.</p>
+    <p data-i-html="p6">Le voci sotto sono la griglia con cui il corso giudica hook e headline. Prima fai tu una scansione onesta; poi copia il prompt del gate qui in fondo e fai valutare i tuoi 5 hook da una qualsiasi AI: applica la stessa griglia e ti dà un verdetto pass/fail con la UNA cosa da sistemare. Non è più un'autovalutazione a naso, è lo standard del corso applicato al tuo lavoro.</p>
   </div>
 
   <div class="checklist rv">
@@ -149,6 +149,46 @@ NON selezionare tu il migliore e NON rifinire: la selezione e la riscrittura le 
     <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="q3"><strong>Aderenza al livello di consapevolezza</strong>: l'apertura è tarata su dove sta davvero il mercato, non un gradino a caso.</p></div>
     <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="q4"><strong>Selezione argomentata</strong>: per ogni hook tenuto sai dire quale voce della griglia lo salva, e cosa hai scartato e perché. Non "mi piaceva".</p></div>
     <div class="checklist-item bad"><span class="ci-mark">✕</span><p data-i-html="q5"><strong>Segnale che hai sbagliato</strong>: se hai tenuto gli hook che "suonavano bene" senza passarli alla griglia, o se un tuo hook è ancora l'output grezzo dell'AI non rifinito, il gesto non è completo.</p></div>
+  </div>
+
+  <div class="prosa rv">
+    <p data-i-html="gate-p">Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto i tuoi 5 hook e 5 headline (col brief e la riga di selezione per ciascuno) e l'AI ti dà una pagella pass/fail sullo standard del corso: severa, non un complimento. È lo stesso metro con cui un reviewer valuterà il tuo lavoro.</p>
+  </div>
+
+  <div class="prompt-box rv">
+    <span class="pb-k" data-i="pbk-gate">Prompt del gate · copia, incolla il tuo lavoro, ottieni la pagella</span>
+    <pre data-i="pbtext-gate">Sei il mio reviewer per il workshop hook/headline del corso Marketing Mastery. Giudichi sullo standard del corso e sei severo: meglio bocciare troppo che promuovere un pezzo mediocre. Non conosci il corso oltre a ciò che ti do qui.
+
+SOTTO TI INCOLLO il mio lavoro: brief, i 5 hook e le 5 headline per il mio mercato, con una riga di selezione per ciascuno.
+
+VALUTA OGNI HOOK su 5 criteri, ognuno a 4 livelli (Assente 0 · Debole 1 · Solido 2 · Eccellente 3):
+- H1 · Ferma lo scroll [peso x3]: cattura l'attenzione in 3 secondi con una leva reale: rilevanza personale, novità, tensione irrisolta, minaccia/opportunità. Generico e già visto = Assente.
+- H2 · Promette e mantiene [peso x3]: promette un beneficio specifico che il pezzo può onorare. Un'esca che il pezzo non mantiene è clickbait.
+- H3 · Aderenza al mercato [peso x2]: attacca dal punto giusto per il livello di consapevolezza del mercato (unaware, problem aware, most aware).
+- H4 · Specificità [peso x2]: un numero preciso o un dettaglio concreto che fa da prova implicita, al posto del vago.
+- H5 · Una sola idea [peso x1]: dice una cosa sola e netta, non ne impila tre.
+
+BOCCIATURE AUTOMATICHE (bocciano l'hook a prescindere dal punteggio):
+- Clickbait: promette qualcosa che il pezzo non mantiene.
+- Genericità totale: funzionerebbe identico per qualsiasi concorrente della categoria.
+- Promessa non credibile per il livello di quel mercato.
+- AI-slop: suona di copy da modello, generico e intercambiabile, non emoziona e non parla a una parte profonda del lettore.
+
+GATE (pass/fail di ogni hook): passa SE E SOLO SE nessuna bocciatura automatica è scattata, E né H1 né H2 sono ad Assente, E il punteggio pesato è almeno il 70% del massimo (massimo 33, soglia circa 23).
+
+CONTROLLI SUL SET (oltre ai singoli hook):
+- Varietà: i 5 hook coprono almeno 3 famiglie diverse.
+- Selezione argomentata: per ogni hook tenuto dico quale voce lo salva e cosa ho scartato e perché.
+
+DAMMI L'OUTPUT ESATTAMENTE COSI, per ogni hook e poi una sintesi sul set:
+VERDETTO: PASS / FAIL
+PROBLEMA PRIMARIO: (l'anello debole singolo, con il criterio e il perché, non elencarmi tutto)
+PRIORITÀ CORRETTIVA: (la UNA cosa da sistemare prima di tutto)
+DA RISTUDIARE: (la lezione esatta a cui tornare: 3.2.1 famiglie di hook, 3.2.2 headline formulas, 3.1.1 hook non è clickbait, 3.1.6 specificità, A.4 awareness)
+PAGELLA: H1:_ H2:_ H3:_ H4:_ H5:_
+
+Sii severo e specifico. Se un hook sa di AI, dillo chiaro e bòccialo. Comincia.</pre>
+    <button class="pb-copy" type="button" data-copied="Copiato!">Copia</button>
   </div>
 
   <div class="lab rv" data-bet="b2"></div>
@@ -199,7 +239,7 @@ Comincia ora, con la prima domanda della Fase 1. Una domanda sola.</pre>
   </div>
 
   <div class="closing rv">
-    <div class="ct" data-i-html="closet">Da qui in poi, davanti all'AI non chiedi "scrivimi una headline": porti <span class="a-w">un brief, una griglia e un giudizio</span>.</div>
+    <div class="ct" data-i-html="closet">Il test più onesto lo fai prima di aprire l'AI, in pochi secondi: <span class="a-w">un brief, una griglia e un giudizio</span>.</div>
     <div class="cs" data-i="closes">Compito reale: nelle prossime 48 ore esegui il gesto completo una volta, su un tuo asset reale. 20 generati, 2 tenuti, argomentati. È l'allenamento che rende il giudizio più veloce della generazione.</div>
   </div>
 
@@ -219,13 +259,13 @@ Comincia ora, con la prima domanda della Fase 1. Una domanda sola.</pre>
 window.PAGE={id:'mm-b2-5'};
 window.DICT={
   it:{
-    badge:"Blocco B · Il messaggio", pdf:"PDF",
+    badge:"Workshop · produrre · 20 min", pdf:"PDF",
     eyebrow:"Blocco B · M3.2 · lezione 5 di 5 · workshop",
     h1:"Hook e headline, il <span class=\"hl\">gesto AI-first</span>.",
     tesi:"Non chiedere all'AI \"scrivimi una headline\" e prendere la prima. Il mestiere, nell'era dell'AI, è un gesto in quattro tempi: un brief preciso, una generazione ampia, una selezione con criteri, una rifinitura umana. La macchina produce quantità, tu porti il giudizio. Questo workshop lo mette in pratica.",
     p1:"Chiude il modulo M3.2. Nelle quattro lezioni precedenti hai visto le famiglie di hook, le formule testate, la disciplina del test e come l'hook cambia pelle sul canale. Ora tutto questo diventa un metodo di lavoro con l'AI. Il punto: l'AI non ti sostituisce nel giudizio, ti moltiplica nella produzione. Chi non ha i principi la usa per produrre fuffa più in fretta. Chi li ha, la usa per generare venti opzioni e riconoscere le due che valgono. La differenza non è l'AI, sei tu davanti all'AI.",
     note1t:"Come funziona questo workshop (e il criterio reale)",
-    note1p:"Qui c'è un compito da consegnare a te stesso e un criterio con cui verificarlo. Il criterio non è un'opinione: è la <strong>griglia con cui il corso giudica un hook</strong> (le cinque voci della rubrica hook del sistema di giudizio). Un reviewer AI la applicherà in automatico quando sarà pronto: per ora la applichi tu, su uno standard esplicito. La selezione dei tuoi hook non è \"questo mi piace di più\", è \"questo passa la griglia, e questi no, e so dire perché\".",
+    note1p:"Qui c'è un compito da consegnare a te stesso e un criterio con cui verificarlo. Il criterio non è un'opinione: è la <strong>griglia con cui il corso giudica un hook</strong> (le cinque voci della rubrica hook del sistema di giudizio). In fondo trovi un prompt che porta quella griglia dentro una qualsiasi AI: le passi i tuoi hook e ti restituisce una pagella pass/fail sullo standard del corso, non un complimento generico. La selezione dei tuoi hook non è \"questo mi piace di più\", è \"questo passa la griglia, e questi no, e so dire perché\".",
     sh1:"Il gesto AI-first, in quattro tempi",
     p2:"Il gesto è sempre lo stesso, e vale per gli hook come per qualsiasi altro output. <strong>Brief</strong>: dai all'AI il contesto preciso (mercato, awareness, desiderio, famiglie di hook da usare), non \"scrivi qualcosa di accattivante\". <strong>Generazione ampia</strong>: chiedi quantità, venti o trenta opzioni, non una: la prima idea dell'AI è quasi sempre la più generica. <strong>Selezione con criteri</strong>: passi le opzioni alla griglia, non al gusto, e scarti l'80%. <strong>Rifinitura umana</strong>: le due o tre superstiti le riscrivi tu, perché nessun output grezzo dell'AI è pronto per andare live. La macchina fa il lavoro di quantità, tu il lavoro di giudizio e di ultimo miglio.",
     fig1:"L'AI moltiplica la quantità (tempo 2), tu porti il giudizio (tempi 1, 3, 4). Salta il brief o la selezione e ottieni fuffa più in fretta.",
@@ -248,13 +288,16 @@ window.DICT={
     step3:"<strong>Seleziona con la griglia</strong>: tieni i 5 hook migliori, e per ciascuno scrivi una riga su perché passa (quale voce della griglia lo salva) e cosa hai scartato e perché.",
     step4:"<strong>Deriva 5 headline</strong> dai 5 hook, usando le formule di 3.2.2, e rifiniscile a mano: nessuna deve suonare grezza o AI.",
     step5:"<strong>Dichiara il gesto AI-first</strong>: cosa ha fatto l'AI (brief eseguito, generazione) e cosa hai fatto tu (selezione argomentata, rifinitura).",
-    sh5:"Autovalutazione (la griglia reale del giudizio)",
-    p6:"Il criterio sotto è la griglia con cui il corso giudica il tuo lavoro su hook e headline: le stesse voci che un reviewer AI applicherà quando sarà pronto. Passa i tuoi 5 hook e 5 headline a questa griglia, con onestà.",
+    sh5:"Il gate: la griglia reale ti dà una pagella",
+    p6:"Le voci sotto sono la griglia con cui il corso giudica hook e headline. Prima fai tu una scansione onesta; poi copia il prompt del gate qui in fondo e fai valutare i tuoi 5 hook da una qualsiasi AI: applica la stessa griglia e ti dà un verdetto pass/fail con la UNA cosa da sistemare. Non è più un'autovalutazione a naso, è lo standard del corso applicato al tuo lavoro.",
     q1:"<strong>Ogni hook passa le due voci a peso più alto</strong>: ferma lo scroll con una leva reale, e promette qualcosa che il pezzo può mantenere. Se un hook cade su una di queste due, è fuori.",
     q2:"<strong>Varietà di famiglie</strong>: i tuoi 5 non sono cinque volte lo stesso tipo. Almeno 3 famiglie diverse tra le sette.",
     q3:"<strong>Aderenza al livello di consapevolezza</strong>: l'apertura è tarata su dove sta davvero il mercato, non un gradino a caso.",
     q4:"<strong>Selezione argomentata</strong>: per ogni hook tenuto sai dire quale voce della griglia lo salva, e cosa hai scartato e perché. Non \"mi piaceva\".",
     q5:"<strong>Segnale che hai sbagliato</strong>: se hai tenuto gli hook che \"suonavano bene\" senza passarli alla griglia, o se un tuo hook è ancora l'output grezzo dell'AI non rifinito, il gesto non è completo.",
+    "gate-p":"Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto i tuoi 5 hook e 5 headline (col brief e la riga di selezione per ciascuno) e l'AI ti dà una pagella pass/fail sullo standard del corso: severa, non un complimento. È lo stesso metro con cui un reviewer valuterà il tuo lavoro.",
+    "pbk-gate":"Prompt del gate · copia, incolla il tuo lavoro, ottieni la pagella",
+    "pbtext-gate":"Sei il mio reviewer per il workshop hook/headline del corso Marketing Mastery. Giudichi sullo standard del corso e sei severo: meglio bocciare troppo che promuovere un pezzo mediocre. Non conosci il corso oltre a ciò che ti do qui.\n\nSOTTO TI INCOLLO il mio lavoro: brief, i 5 hook e le 5 headline per il mio mercato, con una riga di selezione per ciascuno.\n\nVALUTA OGNI HOOK su 5 criteri, ognuno a 4 livelli (Assente 0 · Debole 1 · Solido 2 · Eccellente 3):\n- H1 · Ferma lo scroll [peso x3]: cattura l'attenzione in 3 secondi con una leva reale: rilevanza personale, novità, tensione irrisolta, minaccia/opportunità. Generico e già visto = Assente.\n- H2 · Promette e mantiene [peso x3]: promette un beneficio specifico che il pezzo può onorare. Un'esca che il pezzo non mantiene è clickbait.\n- H3 · Aderenza al mercato [peso x2]: attacca dal punto giusto per il livello di consapevolezza del mercato (unaware, problem aware, most aware).\n- H4 · Specificità [peso x2]: un numero preciso o un dettaglio concreto che fa da prova implicita, al posto del vago.\n- H5 · Una sola idea [peso x1]: dice una cosa sola e netta, non ne impila tre.\n\nBOCCIATURE AUTOMATICHE (bocciano l'hook a prescindere dal punteggio):\n- Clickbait: promette qualcosa che il pezzo non mantiene.\n- Genericità totale: funzionerebbe identico per qualsiasi concorrente della categoria.\n- Promessa non credibile per il livello di quel mercato.\n- AI-slop: suona di copy da modello, generico e intercambiabile, non emoziona e non parla a una parte profonda del lettore.\n\nGATE (pass/fail di ogni hook): passa SE E SOLO SE nessuna bocciatura automatica è scattata, E né H1 né H2 sono ad Assente, E il punteggio pesato è almeno il 70% del massimo (massimo 33, soglia circa 23).\n\nCONTROLLI SUL SET (oltre ai singoli hook):\n- Varietà: i 5 hook coprono almeno 3 famiglie diverse.\n- Selezione argomentata: per ogni hook tenuto dico quale voce lo salva e cosa ho scartato e perché.\n\nDAMMI L'OUTPUT ESATTAMENTE COSI, per ogni hook e poi una sintesi sul set:\nVERDETTO: PASS / FAIL\nPROBLEMA PRIMARIO: (l'anello debole singolo, con il criterio e il perché, non elencarmi tutto)\nPRIORITÀ CORRETTIVA: (la UNA cosa da sistemare prima di tutto)\nDA RISTUDIARE: (la lezione esatta a cui tornare: 3.2.1 famiglie di hook, 3.2.2 headline formulas, 3.1.1 hook non è clickbait, 3.1.6 specificità, A.4 awareness)\nPAGELLA: H1:_ H2:_ H3:_ H4:_ H5:_\n\nSii severo e specifico. Se un hook sa di AI, dillo chiaro e bòccialo. Comincia.",
     key1:"L'AI ti dà venti opzioni in dieci secondi. Il tuo valore non è averle chieste: è saper riconoscere le due che valgono, e sapere perché.",
     sh6:"Il tuo lavoro: consegna il gesto completo",
     jk:"Consegna qui il gesto AI-first completo",
@@ -265,20 +308,20 @@ window.DICT={
     "pbtext-int":"Sei il mio esaminatore per il modulo \"M3.2 · Hook e headline\" del corso Marketing Mastery. Non conosci il corso: l'unica base che puoi usare è quella che ti do qui sotto. Non aggiungere teoria esterna, non inventare nozioni.\n\nI CONCETTI DEL MODULO da verificare:\n1. Le famiglie di hook (beneficio diretto, curiosità, problema/paura, notizia, storia, contrarian, numero/prova) e il rischio di ciascuna; il matching hook-mercato secondo il livello di consapevolezza.\n2. Le headline formulas testate (how-to, lista, domanda, comando, \"chi altro vuole\", testimonial, \"se...allora\", specificità numerica); formula ≠ gabbia (lo scheletro, non la carne); il triplo hook (headline + subheadline + primo paragrafo).\n3. Il test come disciplina: le opinioni non contano, contano le risposte misurate; la headline è il primo elemento da testare; anche i professionisti sbagliano la previsione del vincitore, per questo testano.\n4. Hook per canale e contesto: lo stesso hook cambia pelle su sales page, ad, subject line, video; interruzione (non cercava) vs intercettazione (sta cercando).\n5. Il gesto AI-first: brief → generazione ampia → selezione con criteri (la griglia, non il gusto) → rifinitura umana; l'AI moltiplica la quantità, tu porti il giudizio.\n\nINTERROGAMI COSI, in 3 fasi:\n\nFASE 1 · RICHIAMO. Fammi UNA domanda aperta alla volta, una per ciascun concetto. Aspetta la mia risposta prima di passare alla successiva. NON darmi mai la risposta prima che io abbia risposto. Se rispondo in modo vago o a pappagallo, incalzami (\"perché?\", \"fammi un esempio concreto\") prima di andare avanti.\n\nFASE 2 · APPLICAZIONE. Dammi un mercato inventato da te e chiedimi di scrivere 3 hook di 3 famiglie diverse, tarati sul suo livello di consapevolezza, poi di dirmi quale terrei e perché con la griglia. Valuta come applico il metodo, non se ricito la teoria.\n\nFASE 3 · VERDETTO. Chiudi con una pagella onesta e severa: per ognuno dei 5 concetti dimmi se sono SOLIDO, INCERTO o DA RISTUDIARE. Per ogni \"incerto\" o \"da ristudiare\" dimmi esattamente a quale lezione tornare (tipologie di hook, headline formulas, il test come disciplina, hook per canale, il gesto AI-first). Meglio un giudizio duro che un complimento.\n\nComincia ora, con la prima domanda della Fase 1. Una domanda sola.",
     xt:"Cross-reference · chiude M3.2, apre M3.3",
     xp:"Sai fermare l'attenzione e generare hook col metodo. Ma l'hook migliore non lo inventi: lo trovi nelle parole del cliente. Il prossimo modulo, <strong>M3.3 · Dalla ricerca al copy</strong>, mostra come il copy non si scrive ma si assembla dalla voce del mercato, il ponte tra la ricerca e la pagina. Arriva nel prossimo lotto del percorso.",
-    closet:"Da qui in poi, davanti all'AI non chiedi \"scrivimi una headline\": porti <span class=\"a-w\">un brief, una griglia e un giudizio</span>.",
+    closet:"Il test più onesto lo fai prima di aprire l'AI, in pochi secondi: <span class=\"a-w\">un brief, una griglia e un giudizio</span>.",
     closes:"Compito reale: nelle prossime 48 ore esegui il gesto completo una volta, su un tuo asset reale. 20 generati, 2 tenuti, argomentati. È l'allenamento che rende il giudizio più veloce della generazione.",
     navp:"Torna", navpt:"B.3 · Hook per canale e per contesto",
     navn:"Prossimo", navnt:"M3.3 · Dalla ricerca al copy",
     foot:"Marketing Mastery · Blocco B · Il messaggio · costruito sullo <span class=\"mono\">Spiegatore Standard</span>"
   },
   en:{
-    badge:"Block B · The message", pdf:"PDF",
+    badge:"Workshop · produce · 20 min", pdf:"PDF",
     eyebrow:"Block B · M3.2 · lesson 5 of 5 · workshop",
     h1:"Hook and headline, the <span class=\"hl\">AI-first move</span>.",
     tesi:"Don't ask the AI \"write me a headline\" and take the first one. The craft, in the AI era, is a four-beat move: a precise brief, a wide generation, a criteria-based selection, a human refinement. The machine produces quantity, you bring the judgment. This workshop puts it into practice.",
     p1:"This closes module M3.2. In the previous four lessons you saw the hook families, the tested formulas, the discipline of testing and how a hook changes skin by channel. Now all of it becomes a way of working with AI. The point: AI doesn't replace your judgment, it multiplies your production. Whoever lacks the principles uses it to produce fluff faster. Whoever has them uses it to generate twenty options and recognize the two that are worth it. The difference isn't the AI, it's you in front of the AI.",
     note1t:"How this workshop works (and the real criterion)",
-    note1p:"Here there's a task to deliver to yourself and a criterion to check it against. The criterion isn't an opinion: it's the <strong>grid the course judges a hook with</strong> (the five items of the judgment system's hook rubric). An AI reviewer will apply it automatically once it's ready: for now you apply it, on an explicit standard. Selecting your hooks isn't \"I like this one more\", it's \"this one passes the grid, and these don't, and I can say why\".",
+    note1p:"Here there's a task to deliver to yourself and a criterion to check it against. The criterion isn't an opinion: it's the <strong>grid the course judges a hook with</strong> (the five items of the judgment system's hook rubric). At the bottom you'll find a prompt that carries that grid into any AI: you hand it your hooks and it returns a pass/fail report card on the course standard, not a generic compliment. Selecting your hooks isn't \"I like this one more\", it's \"this one passes the grid, and these don't, and I can say why\".",
     sh1:"The AI-first move, in four beats",
     p2:"The move is always the same, and it holds for hooks as for any other output. <strong>Brief</strong>: give the AI precise context (market, awareness, desire, hook families to use), not \"write something catchy\". <strong>Wide generation</strong>: ask for quantity, twenty or thirty options, not one: the AI's first idea is almost always the most generic. <strong>Criteria-based selection</strong>: run the options through the grid, not through taste, and discard 80%. <strong>Human refinement</strong>: the two or three survivors you rewrite yourself, because no raw AI output is ready to go live. The machine does the quantity work, you do the judgment and last-mile work.",
     fig1:"The AI multiplies quantity (beat 2), you bring the judgment (beats 1, 3, 4). Skip the brief or the selection and you get fluff faster.",
@@ -301,13 +344,16 @@ window.DICT={
     step3:"<strong>Select with the grid</strong>: keep the 5 best hooks, and for each write one line on why it passes (which grid item saves it) and what you discarded and why.",
     step4:"<strong>Derive 5 headlines</strong> from the 5 hooks, using the formulas from 3.2.2, and refine them by hand: none should sound raw or AI.",
     step5:"<strong>Declare the AI-first move</strong>: what the AI did (brief executed, generation) and what you did (argued selection, refinement).",
-    sh5:"Self-assessment (the real judgment grid)",
-    p6:"The criterion below is the grid the course judges your hook and headline work with: the same items an AI reviewer will apply once it's ready. Run your 5 hooks and 5 headlines through this grid, honestly.",
+    sh5:"The gate: the real grid gives you a report card",
+    p6:"The items below are the grid the course judges hooks and headlines with. First run an honest scan yourself; then copy the gate prompt at the bottom and have any AI evaluate your 5 hooks: it applies the same grid and gives you a pass/fail verdict with the ONE thing to fix. It's no longer a gut self-assessment, it's the course standard applied to your work.",
     q1:"<strong>Every hook passes the two highest-weight items</strong>: stops the scroll with a real lever, and promises something the piece can keep. If a hook fails one of these two, it's out.",
     q2:"<strong>Variety of families</strong>: your 5 aren't five times the same type. At least 3 different families among the seven.",
     q3:"<strong>Fit to the awareness level</strong>: the opening is tuned to where the market really is, not a random step.",
     q4:"<strong>Argued selection</strong>: for each kept hook you can say which grid item saves it, and what you discarded and why. Not \"I liked it\".",
     q5:"<strong>Sign you got it wrong</strong>: if you kept the hooks that \"sounded good\" without running them through the grid, or if one of your hooks is still the raw, unrefined AI output, the move isn't complete.",
+    "gate-p":"Once you've scanned, here's the real gate. Copy the prompt, paste your 5 hooks and 5 headlines below it (with the brief and the line of selection for each) and the AI gives you a pass/fail report card on the course standard: strict, not a compliment. It's the same measure a reviewer will judge your work with.",
+    "pbk-gate":"Gate prompt · copy, paste your work, get the report card",
+    "pbtext-gate":"You are my reviewer for the hook/headline workshop of the Marketing Mastery course. You judge on the course standard and you're strict: better to fail too much than to promote a mediocre piece. You don't know the course beyond what I give you here.\n\nBELOW I PASTE my work: brief, the 5 hooks and 5 headlines for my market, with one line of selection for each.\n\nSCORE EACH HOOK on 5 criteria, each at 4 levels (Absent 0 · Weak 1 · Solid 2 · Excellent 3):\n- H1 · Stops the scroll [weight x3]: catches attention in 3 seconds with a real lever: personal relevance, novelty, unresolved tension, threat/opportunity. Generic and already-seen = Absent.\n- H2 · Promises and keeps [weight x3]: promises a specific benefit the piece can honor. A bait the piece doesn't keep is clickbait.\n- H3 · Market fit [weight x2]: opens from the right point for the market's awareness level (unaware, problem aware, most aware).\n- H4 · Specificity [weight x2]: a precise number or concrete detail that acts as implicit proof, instead of the vague.\n- H5 · A single idea [weight x1]: says one clear thing, doesn't stack three.\n\nAUTOMATIC FAILS (fail the hook regardless of score):\n- Clickbait: promises something the piece doesn't keep.\n- Total genericity: would work identically for any competitor in the category.\n- Promise not credible for that market's level.\n- AI-slop: sounds like model copy, generic and interchangeable, doesn't move and doesn't speak to a deep part of the reader.\n\nGATE (pass/fail per hook): passes IF AND ONLY IF no automatic fail triggered, AND neither H1 nor H2 is Absent, AND the weighted score is at least 70% of the max (max 33, threshold about 23).\n\nSET CHECKS (beyond the single hooks):\n- Variety: the 5 hooks cover at least 3 different families.\n- Argued selection: for each kept hook I say which item saves it and what I discarded and why.\n\nGIVE ME THE OUTPUT EXACTLY LIKE THIS, for each hook and then a summary on the set:\nVERDICT: PASS / FAIL\nPRIMARY PROBLEM: (the single weak link, with the criterion and the why, don't list everything)\nCORRECTIVE PRIORITY: (the ONE thing to fix before anything else)\nTO RESTUDY: (the exact lesson to go back to: 3.2.1 hook families, 3.2.2 headline formulas, 3.1.1 hook isn't clickbait, 3.1.6 specificity, A.4 awareness)\nREPORT CARD: H1:_ H2:_ H3:_ H4:_ H5:_\n\nBe strict and specific. If a hook smells of AI, say it clearly and fail it. Begin.",
     key1:"The AI gives you twenty options in ten seconds. Your value isn't having asked for them: it's recognizing the two that are worth it, and knowing why.",
     sh6:"Your work: deliver the complete move",
     jk:"Deliver the complete AI-first move here",
@@ -318,7 +364,7 @@ window.DICT={
     "pbtext-int":"You are my examiner for the module \"M3.2 · Hook and headline\" of the Marketing Mastery course. You don't know the course: the only basis you may use is what I give you below. Don't add outside theory, don't invent notions.\n\nTHE MODULE CONCEPTS to check:\n1. The hook families (direct benefit, curiosity, problem/fear, news, story, contrarian, number/proof) and the risk of each; the hook-market match by awareness level.\n2. The tested headline formulas (how-to, list, question, command, \"who else wants\", testimonial, \"if...then\", numeric specificity); formula ≠ cage (the skeleton, not the flesh); the triple hook (headline + subheadline + first paragraph).\n3. Testing as discipline: opinions don't count, measured responses do; the headline is the first element to test; even professionals mispredict the winner, which is why they test.\n4. Hook by channel and context: the same hook changes skin on a sales page, ad, subject line, video; interruption (wasn't searching) vs interception (is searching).\n5. The AI-first move: brief → wide generation → criteria-based selection (the grid, not taste) → human refinement; the AI multiplies quantity, you bring the judgment.\n\nEXAMINE ME LIKE THIS, in 3 phases:\n\nPHASE 1 · RECALL. Ask me ONE open question at a time, one per concept. Wait for my answer before moving to the next. NEVER give me the answer before I've answered. If I answer vaguely or parrot-fashion, press me (\"why?\", \"give me a concrete example\") before going on.\n\nPHASE 2 · APPLICATION. Give me a market you invent and ask me to write 3 hooks of 3 different families, tuned to its awareness level, then to tell you which I'd keep and why with the grid. Judge how I apply the method, not whether I recite the theory.\n\nPHASE 3 · VERDICT. Close with an honest, severe report card: for each of the 5 concepts tell me if I'm SOLID, SHAKY or TO-RESTUDY. For each \"shaky\" or \"to-restudy\" tell me exactly which lesson to go back to (hook types, headline formulas, testing as discipline, hook by channel, the AI-first move). Better a hard judgment than a compliment.\n\nStart now, with the first question of Phase 1. One question only.",
     xt:"Cross-reference · closes M3.2, opens M3.3",
     xp:"You can stop attention and generate hooks with the method. But the best hook you don't invent: you find it in the customer's words. The next module, <strong>M3.3 · From research to copy</strong>, shows how copy isn't written but assembled from the voice of the market, the bridge between research and the page. It arrives in the next batch of the path.",
-    closet:"From here on, facing the AI you don't ask \"write me a headline\": you bring <span class=\"a-w\">a brief, a grid and a judgment</span>.",
+    closet:"The most honest test is the one you run before opening the AI, in a few seconds: <span class=\"a-w\">a brief, a grid and a judgment</span>.",
     closes:"Real task: in the next 48 hours run the full move once, on a real asset of yours. 20 generated, 2 kept, argued. It's the training that makes judgment faster than generation.",
     navp:"Back", navpt:"B.3 · Hook by channel and context",
     navn:"Next", navnt:"M3.3 · From research to copy",

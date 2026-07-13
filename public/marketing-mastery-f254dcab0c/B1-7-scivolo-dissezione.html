@@ -20,7 +20,7 @@
   <div class="brand">
     <span class="mk" role="img" aria-label="Marketing Mastery"></span>
     <span class="sep"></span>
-    <span class="atto-badge" data-i="badge">Blocco B · Il messaggio</span>
+    <span class="atto-badge" data-i="badge">Workshop · produrre · 20 min</span>
   </div>
   <div class="tools">
     <div class="lang" role="group" aria-label="Lingua">
@@ -176,10 +176,10 @@ Alla fine NON darmi una lista di tutti i problemi. Dammi UN solo anello debole p
     <div class="checklist-item num"><span class="ci-mark">5</span><p data-i-html="step5"><strong>Dichiara il gesto AI-first</strong>: cosa hai delegato all'AI (l'analisi elemento per elemento) e cosa resta tuo (la scelta dell'anello debole e dell'intervento).</p></div>
   </div>
 
-  <div class="sh rv"><span class="no">06</span><span data-i="sh6">Autovalutazione (la griglia reale del giudizio)</span></div>
+  <div class="sh rv"><span class="no">06</span><span data-i="sh6">Il gate: fai controllare la tua diagnosi</span></div>
 
   <div class="prosa rv">
-    <p data-i-html="p9">Il criterio sotto è la griglia con cui il corso giudica una sales page: le stesse voci che un reviewer AI applicherà quando sarà pronto. Usala per verificare la tua dissezione. Non è più "fidati del tuo gusto": è lo standard esplicito.</p>
+    <p data-i-html="p9">Le voci sotto sono la griglia con cui il corso giudica una sales page: usale prima come scansione veloce della tua dissezione. Poi copia il prompt del gate qui in fondo e fai controllare le tue 3 diagnosi da una qualsiasi AI: le confronta con lo standard dei sette elementi e ti dice dove hai sbagliato l'anello debole. Non è più "fidati del tuo gusto", è lo standard esplicito applicato al tuo lavoro.</p>
   </div>
 
   <div class="checklist rv">
@@ -187,6 +187,41 @@ Alla fine NON darmi una lista di tutti i problemi. Dammi UN solo anello debole p
     <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="crit2"><strong>Un solo anello debole primario</strong>, non una lista: hai scelto l'elemento a leva più alta e sai dire perché tutto il resto dipende da lui.</p></div>
     <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="crit3"><strong>Il sintomo precede l'elemento</strong>: sei partito da dove esce il lettore ("non legge", "non crede"...) e da lì sei arrivato all'elemento, non il contrario.</p></div>
     <div class="checklist-item bad"><span class="ci-mark">✕</span><p data-i-html="crit4"><strong>Segnale che hai sbagliato</strong>: se la tua diagnosi è "un po' tutto va sistemato", non hai fatto una diagnosi. Torna a cercare l'anello debole: uno, non sette.</p></div>
+  </div>
+
+  <div class="prosa rv">
+    <p data-i-html="gate-p">Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto le tue 3 dissezioni (i 7 elementi con la prova, l'anello debole col sintomo, il primo intervento) e l'AI ti dice, sullo standard del corso, se hai diagnosticato bene o se hai mancato l'anello debole. Severa, non un complimento.</p>
+  </div>
+
+  <div class="prompt-box rv">
+    <span class="pb-k" data-i="pbk-gate">Prompt del gate · copia, incolla le tue dissezioni, ottieni il verdetto</span>
+    <pre data-i="pbtext-gate">Sei il mio reviewer per il drill di dissezione del corso Marketing Mastery. Il tuo compito: controllare se le mie 3 dissezioni di sales page sono fatte bene, sullo standard del corso. Sei severo: meglio dirmi che ho sbagliato la diagnosi che promuovermi.
+
+SOTTO TI INCOLLO le mie 3 dissezioni. Per ogni pagina ho passato i 7 elementi alla griglia, ho scelto un anello debole primario col suo sintomo, e ho scritto il primo intervento.
+
+L'ANATOMIA STANDARD (i 7 elementi, ognuno con un solo lavoro):
+1. Hook: ferma l'attenzione in 3 secondi; se non ferma, il resto non viene letto (porta circa l'80% del risultato).
+2. Big idea: un angolo concettuale unico; se il concorrente può dirlo identico, non è una big idea.
+3. Promessa: risultato tangibile + certezza + meccanismo che la rende plausibile; la più grande che si può PROVARE.
+4. Prova: famiglie di prova adeguate al mercato, gerarchia dimostrazione > caso > testimonial > claim.
+5. Offerta: cosa ricevo, per chi, come funziona, quanto costa, cosa rischio, perché ora.
+6. Urgenza: una ragione legittima per agire ora, non finta.
+7. Azione/CTA: una sola CTA, istruzione non invito.
+
+CONTROLLA, per ciascuna delle mie 3 dissezioni:
+- Elementi: per ognuno dei 7 ho dato un verdetto (c'è / fa il suo lavoro) con una riga di PROVA, non a sensazione? Dove il mio verdetto è sbagliato, dimmelo.
+- Anello debole: ne ho scelto UNO SOLO (non una lista)? È davvero l'elemento a leva più alta, o ne ho mancato uno più a monte? La diagnosi che indica tutto non indica niente.
+- Sintomo prima dell'elemento: sono partito da dove esce il lettore (non legge / legge ma non crede / crede ma non gli importa / gli importa ma non agisce) e da lì all'elemento?
+- Intervento: il primo intervento che propongo è pertinente all'anello debole e sblocca il resto?
+
+DAMMI L'OUTPUT ESATTAMENTE COSI, per ciascuna pagina e poi una sintesi:
+VERDETTO DIAGNOSI: CORRETTA / DA RIVEDERE
+DOVE SBAGLIO: (l'errore singolo più grave della mia dissezione, con il perché, non elencarmi tutto)
+COSA CAMBIARE: (la UNA correzione da fare alla mia diagnosi)
+DA RISTUDIARE: (la lezione esatta a cui tornare: 3.1.1 hook, 3.1.2 big idea, 3.1.3 promessa, 3.1.4 prova, 3.1.5 offerta e CTA, 3.1.7 lo scivolo)
+
+Sii severo e concreto. Se la mia diagnosi è "va sistemato un po' tutto", bocciala: non è una diagnosi. Comincia.</pre>
+    <button class="pb-copy" type="button" data-copied="Copiato!">Copia</button>
   </div>
 
   <div class="lab rv" data-bet="b2"></div>
@@ -237,7 +272,7 @@ Comincia ora, con la prima domanda della Fase 1. Una domanda sola.</pre>
   </div>
 
   <div class="closing rv">
-    <div class="ct" data-i-html="closet">Da qui in poi, davanti a ogni pezzo che vende, non dici più "mi piace o no": dici <span class="a-w">quale elemento sta fallendo</span>.</div>
+    <div class="ct" data-i-html="closet">Il test più onesto lo fai da solo: davanti a un pezzo che vende non dici se ti piace, dici <span class="a-w">quale elemento sta fallendo</span>.</div>
     <div class="cs" data-i="closes">Compito reale: nelle prossime 48 ore smonta una sola sales page che incontri, con la griglia dei 7 elementi, e scrivi l'unico anello debole primario. Una pagina, un verdetto: è l'allenamento che rende automatico l'occhio del diagnosta.</div>
   </div>
 
@@ -257,7 +292,7 @@ Comincia ora, con la prima domanda della Fase 1. Una domanda sola.</pre>
 window.PAGE={id:'mm-b1-7'};
 window.DICT={
   it:{
-    badge:"Blocco B · Il messaggio", pdf:"PDF",
+    badge:"Workshop · produrre · 20 min", pdf:"PDF",
     eyebrow:"Blocco B · M3.1 · lezione 7 di 7 · dissezione + workshop",
     h1:"Smonta qualsiasi pezzo che vende, e trova <span class=\"hl\">l'anello debole</span>.",
     tesi:"Le sei lezioni prima ti hanno dato i sette elementi dell'anatomia. Questa te li mette in mano come strumento diagnostico: uno scivolo che tiene o si rompe, e una griglia con cui, davanti a qualsiasi sales page, sai dire non \"mi piace o non mi piace\", ma esattamente quale elemento sta fallendo.",
@@ -292,12 +327,15 @@ window.DICT={
     step3:"<strong>Per ciascuna, indica l'anello debole primario</strong>: un solo elemento, con il sintomo che lo rivela (\"non legge\", \"legge ma non crede\"...) e una riga di argomento.",
     step4:"<strong>Scrivi l'unico intervento</strong> che faresti per primo su ciascuna, e perché quello sblocca il resto.",
     step5:"<strong>Dichiara il gesto AI-first</strong>: cosa hai delegato all'AI (l'analisi elemento per elemento) e cosa resta tuo (la scelta dell'anello debole e dell'intervento).",
-    sh6:"Autovalutazione (la griglia reale del giudizio)",
-    p9:"Il criterio sotto è la griglia con cui il corso giudica una sales page: le stesse voci che un reviewer AI applicherà quando sarà pronto. Usala per verificare la tua dissezione. Non è più \"fidati del tuo gusto\": è lo standard esplicito.",
+    sh6:"Il gate: fai controllare la tua diagnosi",
+    p9:"Le voci sotto sono la griglia con cui il corso giudica una sales page: usale prima come scansione veloce della tua dissezione. Poi copia il prompt del gate qui in fondo e fai controllare le tue 3 diagnosi da una qualsiasi AI: le confronta con lo standard dei sette elementi e ti dice dove hai sbagliato l'anello debole. Non è più \"fidati del tuo gusto\", è lo standard esplicito applicato al tuo lavoro.",
     crit1:"<strong>Ogni elemento ha un verdetto con prova</strong>: per tutti e 7 hai scritto c'è/non c'è e fa/non fa il suo lavoro, con una riga di prova, non un sì a sensazione.",
     crit2:"<strong>Un solo anello debole primario</strong>, non una lista: hai scelto l'elemento a leva più alta e sai dire perché tutto il resto dipende da lui.",
     crit3:"<strong>Il sintomo precede l'elemento</strong>: sei partito da dove esce il lettore (\"non legge\", \"non crede\"...) e da lì sei arrivato all'elemento, non il contrario.",
     crit4:"<strong>Segnale che hai sbagliato</strong>: se la tua diagnosi è \"un po' tutto va sistemato\", non hai fatto una diagnosi. Torna a cercare l'anello debole: uno, non sette.",
+    "gate-p":"Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto le tue 3 dissezioni (i 7 elementi con la prova, l'anello debole col sintomo, il primo intervento) e l'AI ti dice, sullo standard del corso, se hai diagnosticato bene o se hai mancato l'anello debole. Severa, non un complimento.",
+    "pbk-gate":"Prompt del gate · copia, incolla le tue dissezioni, ottieni il verdetto",
+    "pbtext-gate":"Sei il mio reviewer per il drill di dissezione del corso Marketing Mastery. Il tuo compito: controllare se le mie 3 dissezioni di sales page sono fatte bene, sullo standard del corso. Sei severo: meglio dirmi che ho sbagliato la diagnosi che promuovermi.\n\nSOTTO TI INCOLLO le mie 3 dissezioni. Per ogni pagina ho passato i 7 elementi alla griglia, ho scelto un anello debole primario col suo sintomo, e ho scritto il primo intervento.\n\nL'ANATOMIA STANDARD (i 7 elementi, ognuno con un solo lavoro):\n1. Hook: ferma l'attenzione in 3 secondi; se non ferma, il resto non viene letto (porta circa l'80% del risultato).\n2. Big idea: un angolo concettuale unico; se il concorrente può dirlo identico, non è una big idea.\n3. Promessa: risultato tangibile + certezza + meccanismo che la rende plausibile; la più grande che si può PROVARE.\n4. Prova: famiglie di prova adeguate al mercato, gerarchia dimostrazione > caso > testimonial > claim.\n5. Offerta: cosa ricevo, per chi, come funziona, quanto costa, cosa rischio, perché ora.\n6. Urgenza: una ragione legittima per agire ora, non finta.\n7. Azione/CTA: una sola CTA, istruzione non invito.\n\nCONTROLLA, per ciascuna delle mie 3 dissezioni:\n- Elementi: per ognuno dei 7 ho dato un verdetto (c'è / fa il suo lavoro) con una riga di PROVA, non a sensazione? Dove il mio verdetto è sbagliato, dimmelo.\n- Anello debole: ne ho scelto UNO SOLO (non una lista)? È davvero l'elemento a leva più alta, o ne ho mancato uno più a monte? La diagnosi che indica tutto non indica niente.\n- Sintomo prima dell'elemento: sono partito da dove esce il lettore (non legge / legge ma non crede / crede ma non gli importa / gli importa ma non agisce) e da lì all'elemento?\n- Intervento: il primo intervento che propongo è pertinente all'anello debole e sblocca il resto?\n\nDAMMI L'OUTPUT ESATTAMENTE COSI, per ciascuna pagina e poi una sintesi:\nVERDETTO DIAGNOSI: CORRETTA / DA RIVEDERE\nDOVE SBAGLIO: (l'errore singolo più grave della mia dissezione, con il perché, non elencarmi tutto)\nCOSA CAMBIARE: (la UNA correzione da fare alla mia diagnosi)\nDA RISTUDIARE: (la lezione esatta a cui tornare: 3.1.1 hook, 3.1.2 big idea, 3.1.3 promessa, 3.1.4 prova, 3.1.5 offerta e CTA, 3.1.7 lo scivolo)\n\nSii severo e concreto. Se la mia diagnosi è \"va sistemato un po' tutto\", bocciala: non è una diagnosi. Comincia.",
     key1:"Prima di scrivere meglio, si impara a vedere cosa non funziona. Un pezzo si smonta come un motore: non \"fa un brutto rumore\", ma \"è quella valvola\".",
     sh7:"Il tuo lavoro: consegna le 3 dissezioni",
     jk:"Consegna qui le tue 3 dissezioni",
@@ -308,14 +346,14 @@ window.DICT={
     "pbtext-int":"Sei il mio esaminatore per il modulo \"M3.1 · La struttura persuasiva\" del corso Marketing Mastery. Non conosci il corso: l'unica base che puoi usare è quella che ti do qui sotto. Non aggiungere teoria esterna, non inventare nozioni.\n\nI CONCETTI DEL MODULO da verificare:\n1. L'anatomia in 7 elementi (hook, big idea, promessa, prova, offerta, urgenza, azione), ognuno con un solo lavoro; l'hook porta circa l'80% del risultato: se non ferma, il resto non esiste.\n2. La big idea: l'angolo concettuale centrale da cui deriva la headline (la headline non è la big idea); il test dell'unicità (se il competitor può dirlo identico, non è una big idea).\n3. La promessa provata: risultato specifico + certezza + meccanismo; la promessa più grande che puoi PROVARE, non scrivere. E la prova: le famiglie di prova, la gerarchia dimostrazione > caso > testimonial > claim, la specificità come prova implicita.\n4. La chiusura: offerta chiara (cosa ricevo, costo, rischio, perché ora), una sola CTA come istruzione, urgenza legittima vs finta; e le 3 leve di credibilità (vendi la destinazione non il meccanismo, la concessione onesta, la specificità).\n5. Lo scivolo e la dissezione: ogni elemento fa leggere il successivo; trovare l'anello debole primario partendo dal sintomo (non legge / legge ma non crede / crede ma non gli importa / gli importa ma non agisce).\n\nINTERROGAMI COSI, in 3 fasi:\n\nFASE 1 · RICHIAMO. Fammi UNA domanda aperta alla volta, una per ciascun concetto. Aspetta la mia risposta prima di passare alla successiva. NON darmi mai la risposta prima che io abbia risposto. Se rispondo in modo vago o a pappagallo, incalzami (\"perché?\", \"fammi un esempio concreto\") prima di andare avanti.\n\nFASE 2 · APPLICAZIONE. Dammi UNA sales page o un annuncio inventato da te, breve, e chiedimi di dissezionarlo con la griglia dei 7 elementi e di indicarmi l'anello debole primario. Valuta come applico il metodo, non se ricito la teoria.\n\nFASE 3 · VERDETTO. Chiudi con una pagella onesta e severa: per ognuno dei 5 concetti dimmi se sono SOLIDO, INCERTO o DA RISTUDIARE. Per ogni \"incerto\" o \"da ristudiare\" dimmi esattamente a quale lezione tornare (hook e attenzione, la big idea, la promessa, la prova, offerta-cta-urgenza, le tre leve, lo scivolo). Meglio un giudizio duro che un complimento.\n\nComincia ora, con la prima domanda della Fase 1. Una domanda sola.",
     xt:"Cross-reference · chiude M3.1, apre M3.2",
     xp:"Hai chiuso l'anatomia della struttura persuasiva e sai smontarla. Il prossimo modulo, <strong>M3.2 · Hook e headline</strong>, torna sul primo elemento, quello che porta l'80%, e lo apre a fondo: tipologie di hook, formule testate, e la disciplina del test come antidoto all'opinione. Arriva nel prossimo lotto del percorso.",
-    closet:"Da qui in poi, davanti a ogni pezzo che vende, non dici più \"mi piace o no\": dici <span class=\"a-w\">quale elemento sta fallendo</span>.",
+    closet:"Il test più onesto lo fai da solo: davanti a un pezzo che vende non dici se ti piace, dici <span class=\"a-w\">quale elemento sta fallendo</span>.",
     closes:"Compito reale: nelle prossime 48 ore smonta una sola sales page che incontri, con la griglia dei 7 elementi, e scrivi l'unico anello debole primario. Una pagina, un verdetto: è l'allenamento che rende automatico l'occhio del diagnosta.",
     navp:"Torna", navpt:"B.3 · Tre leve di credibilità e framing",
     navn:"Prossimo", navnt:"M3.2 · Hook e headline",
     foot:"Marketing Mastery · Blocco B · Il messaggio · costruito sullo <span class=\"mono\">Spiegatore Standard</span>"
   },
   en:{
-    badge:"Block B · The message", pdf:"PDF",
+    badge:"Workshop · produce · 20 min", pdf:"PDF",
     eyebrow:"Block B · M3.1 · lesson 7 of 7 · dissection + workshop",
     h1:"Take apart any selling piece, and find <span class=\"hl\">the weak link</span>.",
     tesi:"The six lessons before gave you the seven elements of the anatomy. This one hands them to you as a diagnostic tool: a slide that holds or breaks, and a grid with which, facing any sales page, you can say not \"I like it or I don't\", but exactly which element is failing.",
@@ -350,12 +388,15 @@ window.DICT={
     step3:"<strong>For each, name the primary weak link</strong>: a single element, with the symptom that reveals it (\"doesn't read\", \"reads but doesn't believe\"...) and one line of argument.",
     step4:"<strong>Write the single intervention</strong> you'd make first on each, and why that one unlocks the rest.",
     step5:"<strong>Declare the AI-first move</strong>: what you delegated to the AI (the element-by-element analysis) and what stays yours (choosing the weak link and the intervention).",
-    sh6:"Self-assessment (the real judgment grid)",
-    p9:"The criterion below is the grid the course judges a sales page with: the same items an AI reviewer will apply once it's ready. Use it to check your dissection. It's no longer \"trust your taste\": it's the explicit standard.",
+    sh6:"The gate: have your diagnosis checked",
+    p9:"The items below are the grid the course judges a sales page with: use them first as a quick scan of your dissection. Then copy the gate prompt at the bottom and have any AI check your 3 diagnoses: it compares them against the seven-element standard and tells you where you got the weak link wrong. It's no longer \"trust your taste\", it's the explicit standard applied to your work.",
     crit1:"<strong>Every element has a verdict with evidence</strong>: for all 7 you wrote there/not there and does/doesn't do its job, with one line of evidence, not a yes by feel.",
     crit2:"<strong>A single primary weak link</strong>, not a list: you chose the highest-leverage element and can say why everything else depends on it.",
     crit3:"<strong>The symptom precedes the element</strong>: you started from where the reader leaves (\"doesn't read\", \"doesn't believe\"...) and from there reached the element, not the other way round.",
     crit4:"<strong>Sign you got it wrong</strong>: if your diagnosis is \"a bit of everything needs fixing\", you haven't made a diagnosis. Go back and find the weak link: one, not seven.",
+    "gate-p":"Once you've scanned, here's the real gate. Copy the prompt, paste your 3 dissections below it (the 7 elements with proof, the weak link with its symptom, the first fix) and the AI tells you, on the course standard, whether you diagnosed well or missed the weak link. Strict, not a compliment.",
+    "pbk-gate":"Gate prompt · copy, paste your dissections, get the verdict",
+    "pbtext-gate":"You are my reviewer for the dissection drill of the Marketing Mastery course. Your job: check whether my 3 sales-page dissections are done well, on the course standard. You're strict: better to tell me I got the diagnosis wrong than to promote me.\n\nBELOW I PASTE my 3 dissections. For each page I ran the 7 elements through the grid, chose one primary weak link with its symptom, and wrote the first fix.\n\nTHE STANDARD ANATOMY (the 7 elements, each with one job):\n1. Hook: stops attention in 3 seconds; if it doesn't stop, the rest goes unread (carries about 80% of the result).\n2. Big idea: a unique conceptual angle; if a competitor can say it identically, it isn't a big idea.\n3. Promise: tangible result + certainty + mechanism that makes it plausible; the biggest one you can PROVE.\n4. Proof: proof families adequate to the market, hierarchy demonstration > case > testimonial > claim.\n5. Offer: what I get, for whom, how it works, how much it costs, what I risk, why now.\n6. Urgency: a legitimate reason to act now, not a fake one.\n7. Action/CTA: a single CTA, an instruction not an invitation.\n\nCHECK, for each of my 3 dissections:\n- Elements: for each of the 7 did I give a verdict (present / does its job) with a line of PROOF, not a gut feeling? Where my verdict is wrong, tell me.\n- Weak link: did I choose ONE ONLY (not a list)? Is it really the highest-leverage element, or did I miss one further upstream? The diagnosis that points to everything points to nothing.\n- Symptom before the element: did I start from where the reader exits (doesn't read / reads but doesn't believe / believes but doesn't care / cares but doesn't act) and from there to the element?\n- Fix: is the first fix I propose pertinent to the weak link and does it unlock the rest?\n\nGIVE ME THE OUTPUT EXACTLY LIKE THIS, for each page and then a summary:\nDIAGNOSIS VERDICT: CORRECT / TO REVIEW\nWHERE I'M WRONG: (the single most serious error in my dissection, with the why, don't list everything)\nWHAT TO CHANGE: (the ONE correction to make to my diagnosis)\nTO RESTUDY: (the exact lesson to go back to: 3.1.1 hook, 3.1.2 big idea, 3.1.3 promise, 3.1.4 proof, 3.1.5 offer and CTA, 3.1.7 the slide)\n\nBe strict and concrete. If my diagnosis is \"a bit of everything needs fixing\", fail it: it's not a diagnosis. Begin.",
     key1:"Before writing better, you learn to see what doesn't work. You take a piece apart like an engine: not \"it makes a bad noise\", but \"it's that valve\".",
     sh7:"Your work: deliver the 3 dissections",
     jk:"Deliver your 3 dissections here",
@@ -366,7 +407,7 @@ window.DICT={
     "pbtext-int":"You are my examiner for the module \"M3.1 · Persuasive structure\" of the Marketing Mastery course. You don't know the course: the only basis you may use is what I give you below. Don't add outside theory, don't invent notions.\n\nTHE MODULE CONCEPTS to check:\n1. The anatomy in 7 elements (hook, big idea, promise, proof, offer, urgency, action), each with one job; the hook carries about 80% of the result: if it doesn't stop, the rest doesn't exist.\n2. The big idea: the central conceptual angle the headline derives from (the headline isn't the big idea); the uniqueness test (if the competitor can say it identically, it's not a big idea).\n3. The proven promise: specific result + certainty + mechanism; the biggest promise you can PROVE, not write. And proof: the families of proof, the hierarchy demonstration > case > testimonial > claim, specificity as implicit proof.\n4. The close: clear offer (what I get, cost, risk, why now), a single CTA as an instruction, legitimate vs fake urgency; and the 3 credibility levers (sell the destination not the mechanism, the honest admission, specificity).\n5. The slide and dissection: each element gets the next one read; finding the primary weak link starting from the symptom (doesn't read / reads but doesn't believe / believes but doesn't care / cares but doesn't act).\n\nEXAMINE ME LIKE THIS, in 3 phases:\n\nPHASE 1 · RECALL. Ask me ONE open question at a time, one per concept. Wait for my answer before moving to the next. NEVER give me the answer before I've answered. If I answer vaguely or parrot-fashion, press me (\"why?\", \"give me a concrete example\") before going on.\n\nPHASE 2 · APPLICATION. Give me ONE sales page or ad you invent, short, and ask me to dissect it with the grid of 7 elements and name the primary weak link. Judge how I apply the method, not whether I recite the theory.\n\nPHASE 3 · VERDICT. Close with an honest, severe report card: for each of the 5 concepts tell me if I'm SOLID, SHAKY or TO-RESTUDY. For each \"shaky\" or \"to-restudy\" tell me exactly which lesson to go back to (hook and attention, the big idea, the promise, proof, offer-cta-urgency, the three levers, the slide). Better a hard judgment than a compliment.\n\nStart now, with the first question of Phase 1. One question only.",
     xt:"Cross-reference · closes M3.1, opens M3.2",
     xp:"You've closed the anatomy of persuasive structure and you know how to take it apart. The next module, <strong>M3.2 · Hook and headline</strong>, returns to the first element, the one that carries 80%, and opens it fully: hook types, tested formulas, and the discipline of testing as the antidote to opinion. It arrives in the next batch of the path.",
-    closet:"From here on, facing any selling piece, you no longer say \"I like it or not\": you say <span class=\"a-w\">which element is failing</span>.",
+    closet:"The most honest test is the one you run yourself: facing a selling piece you don't say whether you like it, you say <span class=\"a-w\">which element is failing</span>.",
     closes:"Real task: in the next 48 hours take apart a single sales page you come across, with the grid of 7 elements, and write the one primary weak link. One page, one verdict: it's the training that makes the diagnostician's eye automatic.",
     navp:"Back", navpt:"B.3 · Three credibility levers and framing",
     navn:"Next", navnt:"M3.2 · Hook and headline",
