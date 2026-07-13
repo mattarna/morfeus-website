@@ -30,6 +30,7 @@
     });
     document.documentElement.lang = l;
     renderLab(l);
+    updateHomeBtn(l);
   }
   window.setLang = applyLang;
 
@@ -170,6 +171,31 @@
   }
   window.exportJournal = exportJournal;
 
+  /* ---------- HOME BUTTON (torna a tutte le lezioni) ---------- */
+  function homeLabel(l){ return l === 'en' ? 'All lessons' : 'Tutte le lezioni'; }
+  function injectHomeBtn(){
+    if (window.PAGE && window.PAGE.id === 'mm-hub') return; // sei gia' alla home
+    var tools = document.querySelector('.bar .tools');
+    if (!tools || document.getElementById('sp-home-btn')) return;
+    if (!document.getElementById('sp-home-css')) {
+      var st = document.createElement('style'); st.id = 'sp-home-css';
+      st.textContent = '#sp-home-btn{white-space:nowrap}@media(max-width:720px){#sp-home-btn .hb-t{display:none}#sp-home-btn{padding:0 12px}}';
+      document.head.appendChild(st);
+    }
+    var a = document.createElement('a');
+    a.id = 'sp-home-btn';
+    a.className = 'pdf-btn';
+    a.href = 'index.html';
+    a.title = homeLabel(LANG);
+    a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="hb-t">' + homeLabel(LANG) + '</span>';
+    tools.insertBefore(a, tools.firstChild);
+  }
+  function updateHomeBtn(l){
+    var a = document.getElementById('sp-home-btn'); if (!a) return;
+    a.title = homeLabel(l);
+    var t = a.querySelector('.hb-t'); if (t) t.textContent = homeLabel(l);
+  }
+
   function injectExportBtn(){
     var tools = document.querySelector('.bar .tools');
     if(!tools || document.getElementById('sp-export-btn')) return;
@@ -306,6 +332,7 @@
     initFire();
     initJournal();
     injectExportBtn();
+    injectHomeBtn();
     initPromptBox();
     markVisited();
     // ricalcola le lunghezze draw al resize (layout responsivo)
