@@ -56,22 +56,62 @@
   </div>
 
   <div class="figure rv">
-    <svg viewBox="0 0 480 400" role="img" aria-label="L'anatomia di una lezione: tesi, spiegazione con figure, box attivi, interrogazione, riepilogo">
-      <text class="svg-sub" x="240" y="30" text-anchor="middle" fill="var(--ink-3)" style="font-size:14px" data-i="gcap">Leggi, poi FAI. I box in ocra sono dove si impara davvero.</text>
+    <svg viewBox="0 0 456 362" role="img" aria-label="L'anatomia di una lezione, in 5 passi numerati lungo una linea del tempo: 1 la tesi, 2 la spiegazione, 3 i box attivi, 4 l'interrogazione, 5 il riepilogo. I passi 3 e 4, evidenziati in ocra, sono il cuore: è lì che si impara davvero.">
+      <text class="svg-sub" x="228" y="18" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="gcap">Leggi, poi FAI. I box in ocra sono dove si impara davvero.</text>
 
-      <g class="pop" data-delay="120"><rect class="k-node-soft" style="--c:var(--accent)" x="80" y="60" width="320" height="50" rx="12"/><text class="svg-lbl" x="240" y="84" text-anchor="middle" fill="var(--accent)" style="font-size:20px" data-i="g1a">LA TESI</text><text class="svg-sub" x="240" y="102" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="g1b">l'idea in 1 frase</text></g>
-      <path class="k-conn pop" data-delay="260" d="M240 110 L240 126"/>
+      <!-- spina dorsale continua + tratto ocra sul cuore (passi 3-4) -->
+      <path class="draw" data-delay="140" d="M46 77 L46 317" stroke="var(--line-2)" stroke-width="2" fill="none"/>
+      <path class="draw" data-delay="760" d="M46 197 L46 257" stroke="var(--agent)" stroke-width="4" fill="none" stroke-linecap="round"/>
 
-      <g class="pop" data-delay="340"><rect class="k-node-soft" style="--c:var(--accent)" x="80" y="126" width="320" height="50" rx="12"/><text class="svg-lbl" x="240" y="150" text-anchor="middle" fill="var(--accent)" style="font-size:20px" data-i="g2a">SPIEGAZIONE</text><text class="svg-sub" x="240" y="168" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="g2b">prosa + figure</text></g>
-      <path class="k-conn pop" data-delay="480" d="M240 176 L240 192"/>
+      <!-- step 1 · la tesi -->
+      <g class="pop" data-delay="200">
+        <line class="k-conn" x1="59" y1="77" x2="76" y2="77"/>
+        <rect x="76" y="54" width="340" height="46" rx="12" fill="var(--card)" stroke="var(--accent)" stroke-width="1.8"/>
+        <text class="svg-lbl" x="246" y="79" text-anchor="middle" fill="var(--accent)" style="font-size:18px" data-i="g1a">LA TESI</text>
+        <text class="svg-sub" x="246" y="94" text-anchor="middle" fill="var(--ink-3)" style="font-size:12px" data-i="g1b">l'idea in 1 frase</text>
+        <circle cx="46" cy="77" r="13" fill="var(--card)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="46" y="81" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="11" fill="var(--accent)">01</text>
+      </g>
 
-      <g class="pop" data-delay="560"><rect class="k-node k-glow" style="--c:var(--agent)" x="80" y="192" width="320" height="50" rx="12"/><text class="svg-lbl" x="240" y="216" text-anchor="middle" fill="var(--agent)" style="font-size:20px" data-i="g3a">I BOX ATTIVI</text><text class="svg-sub" x="240" y="234" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="g3b">tocca a te</text></g>
-      <path class="k-conn pop" data-delay="700" d="M240 242 L240 258"/>
+      <!-- step 2 · spiegazione -->
+      <g class="pop" data-delay="320">
+        <line class="k-conn" x1="59" y1="137" x2="76" y2="137"/>
+        <rect x="76" y="114" width="340" height="46" rx="12" fill="var(--card)" stroke="var(--accent)" stroke-width="1.8"/>
+        <text class="svg-lbl" x="246" y="139" text-anchor="middle" fill="var(--accent)" style="font-size:18px" data-i="g2a">SPIEGAZIONE</text>
+        <text class="svg-sub" x="246" y="154" text-anchor="middle" fill="var(--ink-3)" style="font-size:12px" data-i="g2b">prosa + figure</text>
+        <circle cx="46" cy="137" r="13" fill="var(--card)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="46" y="141" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="11" fill="var(--accent)">02</text>
+      </g>
 
-      <g class="pop" data-delay="780"><rect class="k-node k-glow" style="--c:var(--agent)" x="80" y="258" width="320" height="50" rx="12"/><text class="svg-lbl" x="240" y="282" text-anchor="middle" fill="var(--agent)" style="font-size:20px" data-i="g4a">INTERROGAZIONE</text><text class="svg-sub" x="240" y="300" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="g4b">il gate, a fine modulo</text></g>
-      <path class="k-conn pop" data-delay="920" d="M240 308 L240 324"/>
+      <!-- step 3 · i box attivi (cuore) -->
+      <g class="pop" data-delay="440">
+        <line class="k-conn" x1="59" y1="197" x2="76" y2="197" style="stroke:var(--agent-line)"/>
+        <rect class="k-glow" style="--c:var(--agent)" x="76" y="174" width="340" height="46" rx="12" fill="var(--agent-soft)" stroke="var(--agent)" stroke-width="1.8"/>
+        <text class="svg-lbl" x="246" y="199" text-anchor="middle" fill="var(--agent)" style="font-size:18px" data-i="g3a">I BOX ATTIVI</text>
+        <text class="svg-sub" x="246" y="214" text-anchor="middle" fill="var(--agent)" style="font-size:12px;opacity:.75" data-i="g3b">tocca a te</text>
+        <circle cx="46" cy="197" r="13" fill="var(--agent)" stroke="var(--agent)" stroke-width="2"/>
+        <text x="46" y="201" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="11" fill="#fff">03</text>
+      </g>
 
-      <g class="pop" data-delay="1000"><rect class="k-node-soft" style="--c:var(--good)" x="80" y="324" width="320" height="50" rx="12"/><text class="svg-lbl" x="240" y="348" text-anchor="middle" fill="var(--good)" style="font-size:20px" data-i="g5a">RIEPILOGO</text><text class="svg-sub" x="240" y="366" text-anchor="middle" fill="var(--ink-3)" style="font-size:13px" data-i="g5b">cosa portarti a casa</text></g>
+      <!-- step 4 · interrogazione (cuore) -->
+      <g class="pop" data-delay="560">
+        <line class="k-conn" x1="59" y1="257" x2="76" y2="257" style="stroke:var(--agent-line)"/>
+        <rect class="k-glow" style="--c:var(--agent)" x="76" y="234" width="340" height="46" rx="12" fill="var(--agent-soft)" stroke="var(--agent)" stroke-width="1.8"/>
+        <text class="svg-lbl" x="246" y="259" text-anchor="middle" fill="var(--agent)" style="font-size:18px" data-i="g4a">INTERROGAZIONE</text>
+        <text class="svg-sub" x="246" y="274" text-anchor="middle" fill="var(--agent)" style="font-size:12px;opacity:.75" data-i="g4b">il gate, a fine modulo</text>
+        <circle cx="46" cy="257" r="13" fill="var(--agent)" stroke="var(--agent)" stroke-width="2"/>
+        <text x="46" y="261" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="11" fill="#fff">04</text>
+      </g>
+
+      <!-- step 5 · riepilogo -->
+      <g class="pop" data-delay="680">
+        <line class="k-conn" x1="59" y1="317" x2="76" y2="317"/>
+        <rect x="76" y="294" width="340" height="46" rx="12" fill="var(--card)" stroke="var(--good)" stroke-width="1.8"/>
+        <text class="svg-lbl" x="246" y="319" text-anchor="middle" fill="var(--good)" style="font-size:18px" data-i="g5a">RIEPILOGO</text>
+        <text class="svg-sub" x="246" y="334" text-anchor="middle" fill="var(--ink-3)" style="font-size:12px" data-i="g5b">cosa portarti a casa</text>
+        <circle cx="46" cy="317" r="13" fill="var(--card)" stroke="var(--good)" stroke-width="2"/>
+        <text x="46" y="321" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="11" fill="var(--good)">05</text>
+      </g>
     </svg>
     <div class="cap" data-i="fig1">La stessa forma in ogni lezione. Il grosso dell'apprendimento sta dove tocca a te: i box e l'interrogazione.</div>
   </div>
