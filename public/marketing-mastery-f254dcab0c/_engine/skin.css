@@ -1,0 +1,110 @@
+/* =========================================================================
+   SKIN · MARKETING MASTERY  ·  implementa il CONTRATTO.md
+   Derivata (DERIVAZIONE.md caso A) da:
+   05_FORMAZIONE/MARKETING_MASTERY/BRAND_KIT/ (le 7 Tavole + DESIGN_SYSTEM_SOURCE.html,
+   ex "Playground", approvato da Matt 2026-07-09) + logo Matteo Arnaboldi.
+   Concetto: TAVOLA TECNICA. Carta e inchiostro, la griglia blueprint, il MARKER
+   giallo che misura. Documento che spiega, non landing.
+
+   MAPPATURA SEMANTICA (il passo critico, DERIVAZIONE step 2):
+   - Il brand ha UN gesto-firma (il marker giallo #FFE14D) e un fondo (carta+inchiostro).
+     Il giallo NON puo' fare da --accent: fallisce il contrasto come testo su carta e
+     non regge testo bianco quando riempie (era il difetto "giallo su bianco" del primo giro).
+     Quindi il giallo resta cio' che e' nel brand: un GESTO DI EVIDENZIATURA (.hl, filo
+     dei numeri, italic-keyword su scuro), mai un colore funzionale.
+   - --accent = INDACO-INCHIOSTRO. E' l'hue proprio dell'inchiostro #14132E, sollevato:
+     nella fonte e' gia' presente come --core-lilla #A99CFF e come colore della griglia
+     (rgba 83,61,252). Chi guida: il metodo, la struttura. Leggibile su carta, regge bianco.
+   - --agent = OCRA (gold scuro): il cugino funzionale del marker per il ruolo "strumento/AI".
+     Caldo contro l'indaco freddo (regola DERIVAZIONE), distinto dal marker (piu' bruno/scuro),
+     regge testo bianco. Cosi' il giallo brillante resta solo evidenziatura.
+   - good/bad = verde/rosso delle Tavole (#1E9E5A / #D93A3A). steel = neutro caldo.
+
+   GESTI-FIRMA aggiunti in coda (il contratto ammette override oltre i token, come matteo.css):
+   1. .hl  = l'evidenziatura marker (ink su giallo, leggibile in light E dark)
+   2. em nei titoli/prosa = Playfair italic nel colore d'accento (su scuro diventa marker)
+   3. .stat::before (filo dei numeri) = marker: la firma gialla sui dati
+   4. eyebrow su scuro = marker (regola Playground: giallo-testo solo su fondo scuro)
+   ========================================================================= */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  /* superfici LIGHT · carta */
+  --bg:#F4F3EF; --bg-2:#ECEBE4; --bg-3:#E3E1D8; --card:#FCFBF7;
+  --ink:#14132E; --ink-2:#4F4E66; --ink-3:#82809A;
+  --line:rgba(20,19,46,.12); --line-2:rgba(20,19,46,.2);
+  /* griglia blueprint (firma della fonte): indaco tenue, passo 44px */
+  --grid:rgba(83,61,252,.06);
+  --skin-grid-size:44px 44px;
+  /* scala di lettura ALZATA: Satoshi corre un filo piccolo, la prosa sale (fix "font piccoli") */
+  --skin-fs-prose:18px; --skin-fs-ui:15.5px; --skin-fs-meta:12.5px;
+  /* ruoli semantici (tripla declinazione) */
+  --accent:#4B3FCF; --accent-soft:#ECEAFB; --accent-line:#C9C4F2;
+  --agent:#A56A16;  --agent-soft:#F6ECD9;  --agent-line:#E4C795;
+  --good:#1E9E5A; --good-soft:#E3F2EA; --bad:#D0392F; --bad-soft:#F9E7E4;
+  --steel:#83819A; --steel-soft:#ECEAF0; --steel-line:#CAC7D6;
+  /* materiale: gradiente firma misurato (badge, bottoni, note-icon) */
+  --grad:linear-gradient(135deg,#3A2EB8 0%,#4B3FCF 55%,#6B5FE5 100%);
+  --grad-agent:linear-gradient(135deg,#8A5710 0%,#A56A16 60%,#C68A2E 100%);
+  --sh:0 1px 2px rgba(20,19,46,.05),0 6px 20px rgba(20,19,46,.05);
+  --sh-l:0 10px 40px -14px rgba(20,19,46,.22);
+  --deep-1:#EBEAF8; --deep-2:#F3F2FB;
+  /* tipografia del brand */
+  --skin-display:'Clash Display','Satoshi',system-ui,sans-serif;
+  --skin-sans:'Satoshi','Inter',system-ui,sans-serif;
+  --skin-mono:'IBM Plex Mono','JetBrains Mono',monospace;
+  --skin-serif:'Playfair Display',Georgia,serif;
+  /* geometria: la tavola ha angoli piu' netti del default */
+  --r:8px; --r-l:12px; --r-xl:16px;
+  /* logo di barra: monogramma Matteo Arnaboldi (assets/logo/ma-monogram-dark.svg), ar 1.
+     Un deploy puo' forzarlo con --logo su :root senza toccare skin/HTML (white-label). */
+  --skin-logo:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiPjxnIGZpbGw9IiMwQTBBMEIiPjxwYXRoIGQ9Ik01MDEgODIyLjUgTDQ5My41IDgxNyBMMzgxIDU0MC41IEwzNzQuNSA1NDcgTDM0MS41IDYzMSBMMzM0IDY0MS41IEwyMTMgNjQyLjUgTDIwNC41IDYzNyBMMzcxLjUgMjE3IEwzODAgMjA2LjUgTDM4Ny41IDIxNCBMNTY2LjUgNjYxIEw1MTAuNSA4MDggWiIvPjxwYXRoIGQ9Ik04MDIuOCA2NDIuNSBMNjcyLjggNjQyLjUgTDY2My4zIDYzOCBMNTQzLjUgMzczIEw1NDEuMiAzNjMgTDU0Ni44IDM0OSBMNjA2LjIgMjE3IEw2MTUuNyAyMDYuNSBMNjIzLjAgMjEyIEw2MzAuOCAyMjggTDgxMC4wIDYyNiBMODEyLjMgNjM4IFoiLz48L2c+PC9zdmc+Cg==");
+  --skin-logo-ar:1;
+  /* il gesto-firma giallo, isolato in un token proprio */
+  --mm-marker:#FFE14D;
+}
+
+html.dark{
+  /* superfici NOTTE · inchiostro */
+  --bg:#14132E; --bg-2:#1D1B3D; --bg-3:#262248; --card:#1B1938;
+  --ink:#F4F3EF; --ink-2:#BAB8CF; --ink-3:#84819C;
+  --line:rgba(169,156,255,.13); --line-2:rgba(169,156,255,.24);
+  --grid:rgba(169,156,255,.07);
+  --accent:#A99CFF; --accent-soft:#262150; --accent-line:#463F8C;
+  --agent:#E0A44A;  --agent-soft:#332413;  --agent-line:#7E5C24;
+  --good:#4CC486; --good-soft:#123020; --bad:#F0736F; --bad-soft:#3A1613;
+  --steel:#7C7A96; --steel-soft:#221F3B; --steel-line:#3C3960;
+  --grad:linear-gradient(135deg,#6A5CE0 0%,#8A7EF0 55%,#A99CFF 100%);
+  --grad-agent:linear-gradient(135deg,#C68A2E 0%,#E0A44A 60%,#EDBE74 100%);
+  --sh:0 1px 2px rgba(0,0,0,.45); --sh-l:0 20px 60px -20px rgba(0,0,0,.7);
+  --deep-1:#0E0D24; --deep-2:#171533;
+}
+
+/* ---------- GESTI-FIRMA (il marker, oltre i token) ---------- */
+
+/* 1. l'evidenziatura marker: ink su giallo, leggibile in light E dark.
+   Uso: <span class="hl">parola</span> su una keyword nei titoli o nella prosa. */
+.hl{
+  background:linear-gradient(180deg,transparent 12%,var(--mm-marker) 12%,var(--mm-marker) 88%,transparent 88%);
+  color:#14132E;padding:0 .1em;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+
+/* 2. la keyword d'enfasi = Playfair italic nel colore d'accento (gesto del brand).
+   Su scuro diventa marker giallo (regola Playground: giallo-testo solo su fondo scuro).
+   Prefisso html: alza la specificita' cosi' la skin vince sul core, che carica DOPO
+   e ridefinisce em (font-style:normal). Senza il prefisso l'italic non si applica. */
+html .tesi em,html .prosa em,html .lede em{font-family:var(--serif);font-style:italic;font-weight:500}
+html.dark .tesi em,html.dark .prosa em,html.dark .lede em{color:var(--mm-marker)}
+
+/* 3. il filo dei numeri = marker: la firma gialla sui dati (3px, nessun testo sopra).
+   Prefisso html per la stessa ragione (il core definisce .stat::before dopo). */
+html .stat::before{background:var(--mm-marker)}
+
+/* 4. eyebrow su scuro = marker (giallo-testo ammesso solo su fondo scuro) */
+html.dark .eyebrow{color:var(--mm-marker)}
+
+/* titoli Clash: max 700 di peso, il tracking piu' stretto compensa otticamente */
+h1{letter-spacing:-.03em}
+.tesi{letter-spacing:-.015em}
