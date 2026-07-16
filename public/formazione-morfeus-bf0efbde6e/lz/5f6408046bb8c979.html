@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partire dal semplice — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warn{background:var(--agent-soft);border-color:var(--agent-line)}.note.warn .ni{background:var(--agent)}.note.warn h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+/* Selettore criteri primo task */
+.crit{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.critc{position:relative;display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;cursor:pointer;transition:.18s}
+.critc:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.critc.on{border-color:var(--accent);background:var(--accent-soft)}
+.critc .cci{width:38px;height:38px;border-radius:11px;background:var(--bg-2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:.18s}
+.critc.on .cci{background:var(--accent);color:#fff}
+.critc h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.critc p{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.critc .cchk{position:absolute;top:12px;right:12px;color:var(--ink-3);font-size:18px;opacity:.35;transition:.18s}
+.critc.on .cchk{color:var(--accent);opacity:1}
+.critscore{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;display:flex;gap:14px;align-items:center}
+.critscore .csi{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:#fff;transition:.25s}
+.critscore .cst{font-size:14px;color:var(--ink-2)}.critscore .cst b{color:var(--ink);font-weight:600}
+.critscore.lo .csi{background:var(--bad)}.critscore.mid .csi{background:var(--agent)}.critscore.hi .csi{background:var(--good)}
+.critscore.lo .verdict{color:var(--bad);font-weight:600}.critscore.mid .verdict{color:var(--agent);font-weight:600}.critscore.hi .verdict{color:var(--good);font-weight:600}
+
+/* Scala di complessità */
+.ladder{display:flex;flex-direction:column;gap:8px}
+.rung{display:flex;gap:14px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:15px 18px;cursor:pointer;transition:.18s;position:relative}
+.rung:hover{border-color:var(--line-2)}
+.rung.on{border-color:var(--accent);background:var(--accent-soft)}
+.rung .rlv{width:34px;height:34px;border-radius:50%;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.18s}
+.rung.on .rlv{background:var(--accent);color:#fff;border-color:var(--accent)}
+.rung .rmain{flex:1}
+.rung .rt{font-size:14.5px;font-weight:600;line-height:1.3}
+.rung .rs{font-size:12.5px;color:var(--ink-3);font-family:var(--mono);margin-top:1px}
+.rung .rbar{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--r-l) 0 0 var(--r-l);background:transparent;transition:.18s}
+.rung.on .rbar{background:var(--accent)}
+.rungdetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;border-top:3px solid var(--accent)}
+.rungdetail .rdh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.rungdetail .rdh .rdi{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rungdetail .rdh h4{font-size:16px;font-weight:600}
+.rungdetail .rdesc{font-size:14.5px;color:var(--ink-2);margin-bottom:12px}.rungdetail .rdesc b{color:var(--ink);font-weight:600}
+.rungdetail .rex{background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;font-size:13.5px;color:var(--ink)}
+.rungdetail .rex .rel{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);display:block;margin-bottom:4px}
+
+/* confronto semplice vs complesso */
+.tog{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--sh);width:max-content;margin:0 auto 14px}
+.tog button{background:transparent;border:none;color:var(--ink-3);padding:9px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:600;transition:.18s}
+.tog button.on{background:var(--accent);color:#fff}
+.simbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.simbox .sq{font-size:13px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.simbox .sp{font-size:15px;color:var(--ink);background:var(--bg-2);border-left:3px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:13px 15px;margin-bottom:14px}
+.simbox .sr{display:flex;gap:12px;align-items:flex-start}
+.simbox .sri{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;color:#fff}
+.simbox.miss .sri{background:var(--bad)}.simbox.clear .sri{background:var(--good)}
+.simbox .srt{font-size:14px;color:var(--ink-2)}.simbox .srt b{color:var(--ink);font-weight:600}
+.simbox.miss .srt .verdict{color:var(--bad);font-weight:600}.simbox.clear .srt .verdict{color:var(--good);font-weight:600}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cmpc.tool{background:var(--bg-2)}
+.cmpc.method{background:var(--accent-soft);border-color:var(--accent-line)}
+.cmpc h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+.cmpc.tool h4{color:var(--ink-2)}.cmpc.method h4{color:var(--accent)}
+.cmpc ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.cmpc li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px}.cmpc li i{font-size:14px;margin-top:2px}
+.cmpc.tool li i{color:var(--bad)}.cmpc.method li i{color:var(--good)}
+
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:18px;align-items:flex-start}
+.story .si{width:48px;height:48px;border-radius:12px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.story h4{font-size:15px;font-weight:600;margin-bottom:6px}.story p{font-size:14px;color:var(--ink-2)}.story p b{color:var(--ink);font-weight:600}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+/* Domanda-guida (key phrase piena) */
+.kk{background:var(--accent);color:#fff;border-radius:var(--r-l);padding:30px 26px;text-align:center;box-shadow:var(--sh);position:relative;overflow:hidden}
+.kk::before{content:'\201C';position:absolute;top:-14px;left:14px;font-size:120px;line-height:1;opacity:.14;font-family:Georgia,serif}
+.kk .kkl{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin-bottom:10px}
+.kk p{font-size:21px;font-weight:600;line-height:1.42;letter-spacing:-.01em;max-width:600px;margin:0 auto;position:relative}
+.kk .kkc{font-size:13px;opacity:.85;margin-top:12px;font-weight:400}
+
+/* Trade-off semplicità x impatto */
+.trade{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:stretch}
+.tradec{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;text-align:center}
+.tradec.win{background:var(--good-soft);border-color:var(--good)}
+.tradec .ti-arrow{color:var(--ink-3);align-self:center;display:flex;align-items:center;justify-content:center;font-size:22px;background:none;border:none;box-shadow:none}
+.tradec .trh{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:6px}
+.tradec.win .trh{color:var(--good)}
+.tradec .trv{font-size:14px;font-weight:600;color:var(--ink);line-height:1.35}
+.tradec .trd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.5}
+
+/* Matrice Impatto x Sforzo */
+.matx{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px 18px 18px}
+.matx .maxlbl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);text-align:center;margin-bottom:8px}
+.matx .maxrow{display:flex;gap:10px}
+.matx .maxy{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);text-align:center;display:flex;align-items:center;justify-content:center;padding:4px 0}
+.matgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+.quad{position:relative;border:1px dashed var(--line-2);border-radius:var(--r);padding:10px 10px 8px;min-height:120px;background:var(--bg-2)}
+.quad.lever{border-style:solid;border-color:var(--good);background:var(--good-soft)}
+.quad.big{border-color:var(--agent-line)}
+.quad .ql{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-3);margin-bottom:6px;display:block}
+.quad.lever .ql{color:var(--good)}.quad.big .ql{color:var(--agent)}
+.mtask{display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:4px 10px;font-size:11.5px;font-weight:600;color:var(--ink);cursor:pointer;transition:.15s;margin:2px 3px 2px 0;box-shadow:var(--sh)}
+.mtask:hover{border-color:var(--accent);transform:translateY(-1px)}
+.mtask.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.mtask i{font-size:13px}
+.matx .maxx{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);text-align:center;margin-top:8px;padding-left:26px}
+.matexpl{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;display:flex;gap:14px;align-items:flex-start;border-top:3px solid var(--accent)}
+.matexpl .mei{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;color:#fff;background:var(--accent)}
+.matexpl.yes .mei{background:var(--good)}.matexpl.no .mei{background:var(--bad)}
+.matexpl .met{font-size:14px;color:var(--ink-2)}.matexpl .met b{color:var(--ink);font-weight:600}
+.matexpl.yes .verdict{color:var(--good);font-weight:600}.matexpl.no .verdict{color:var(--bad);font-weight:600}
+.matexpl .verdict{font-weight:600}
+
+/* Curva del compounding */
+.comp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.comp .clegend{display:flex;gap:18px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
+.comp .cli{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);font-weight:500}
+.comp .cdot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.comp .cdot.small{background:var(--good)}.comp .cdot.big{background:var(--agent)}
+.compchart{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;height:190px;padding:0 4px;border-bottom:1.5px solid var(--line-2);margin-bottom:6px}
+.compcol{display:flex;flex-direction:column;justify-content:flex-end;gap:3px;height:100%;position:relative}
+.cbars{display:flex;gap:4px;align-items:flex-end;height:100%}
+.cbar{flex:1;border-radius:4px 4px 0 0;transition:height .9s cubic-bezier(.4,0,.2,1);min-height:2px;position:relative}
+.cbar.small{background:var(--good)}.cbar.big{background:var(--agent)}
+.cbar .cval{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;font-family:var(--mono);color:var(--ink-3);white-space:nowrap;opacity:0;transition:.3s}
+.compchart.reveal .cbar .cval{opacity:1}
+.compx{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:0 4px;margin-bottom:12px}
+.compx span{font-family:var(--mono);font-size:10px;color:var(--ink-3);text-align:center}
+.comp .ctake{display:flex;gap:12px;align-items:flex-start;background:var(--bg-2);border-left:3px solid var(--good);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;font-size:13.5px;color:var(--ink)}
+.comp .ctake i{color:var(--good);font-size:18px;flex-shrink:0;margin-top:1px}
+.comp .ctake b{font-weight:600}
+
+/* Mini prioritizzatore */
+.prio{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.priorow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line)}
+.priorow:last-of-type{border-bottom:none}
+.priorow .pname{font-size:14px;font-weight:600;color:var(--ink)}
+.prioctl{display:flex;flex-direction:column;gap:3px;min-width:118px}
+.prioctl label{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);display:flex;justify-content:space-between}
+.prioctl label b{color:var(--accent)}
+.prioctl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:4px}
+.prioout{margin-top:16px;border-top:2px solid var(--line-2);padding-top:14px}
+.prioout .poh{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:10px}
+.porank{display:flex;gap:12px;align-items:center;background:var(--bg-2);border-radius:var(--r);padding:11px 14px;margin-bottom:8px;transition:.3s}
+.porank:first-child{background:var(--good-soft);border:1px solid var(--good)}
+.porank .porn{width:28px;height:28px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-family:var(--mono);font-weight:700;font-size:13px;color:var(--ink-3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.porank:first-child .porn{background:var(--good);color:#fff;border-color:var(--good)}
+.porank .porname{flex:1;font-size:14px;font-weight:600;color:var(--ink)}
+.porank .poscore{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-weight:600}
+.porank:first-child .poscore{color:var(--good)}
+.porank .potag{font-family:var(--mono);font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--good);opacity:0}
+.porank:first-child .potag{opacity:1}
+
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+
+@media print{
+@media(max-width:640px){h1{font-size:28px}.crit{grid-template-columns:1fr}.cmp{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.story{flex-direction:column}.trade{grid-template-columns:1fr}.tradec .ti-arrow{transform:rotate(90deg)}.kk p{font-size:18px}.priorow{grid-template-columns:1fr;gap:8px}.prioctl{min-width:0}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.tog{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.simbox,.story,.key,.critc,.rung,.rungdetail,.critscore,.kk,.tradec,.matx,.matexpl,.comp,.prio,.quad{break-inside:avoid;box-shadow:none!important}.compchart .cbar .cval{opacity:1!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.4b</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Pilastro 4 dell'adozione AI</div>
+  <h1 class="rv" data-i="h1">Partire dal semplice</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">01</span><h2 data-i="s1">Perché è un pilastro</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-seeding"></i></div><div><h4 data-i="note1H">Il metodo si impara sui task piccoli</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="goldKey"></p><div class="cap" data-i="goldCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-target"></i><span class="no">02</span><h2 data-i="s2">Cos'è: task a basso rischio, alto attrito</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="whatIntro"></p>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-shield-half"></i></div><h4 data-i="w1H">Basso rischio</h4><p data-i="w1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-repeat"></i></div><h4 data-i="w2H">Alto attrito</h4><p data-i="w2P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">03</span><h2 data-i="s3">Cosa si rompe se parti dal complesso</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:14px" data-i="breakIntro"></p>
+  <div class="tog rv">
+    <button class="on" onclick="showSim(0)" data-i="togA">Parti dal complesso</button>
+    <button onclick="showSim(1)" data-i="togB">Parti dal semplice</button>
+  </div>
+  <div class="rv" id="simWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-checklist"></i><span class="no">04</span><h2 data-i="s4">Come scegliere il primo task</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="critIntro"></p>
+  <div class="crit rv" id="critWrap"></div>
+  <div class="rv" id="critScore"></div>
+
+  <div class="sh rv"><i class="ti ti-stairs"></i><span class="no">05</span><h2 data-i="s5">La scala di complessità</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="ladderIntro"></p>
+  <div class="ladder rv" id="ladderWrap"></div>
+  <div class="rv" id="ladderDetail"></div>
+
+  <div class="sh rv"><i class="ti ti-scale"></i><span class="no">06</span><h2 data-i="s6b">La domanda che decide il primo passo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="tradeIntro"></p>
+  <div class="kk rv"><div class="kkl" data-i="kkLbl">La domanda-guida</div><p data-i="kkQ"></p><div class="kkc" data-i="kkCap"></div></div>
+  <p class="lede rv" style="font-size:14.5px;margin:22px 0 14px" data-i="tradeExpl"></p>
+  <div class="trade rv">
+    <div class="tradec"><div class="trh" data-i="tr1H">Impatto massimo assoluto</div><div class="trv" data-i="tr1V">Il "sistema che fa tutto"</div><div class="trd" data-i="tr1D"></div></div>
+    <div class="tradec"><i class="ti ti-arrow-right ti-arrow"></i></div>
+    <div class="tradec win"><div class="trh" data-i="tr2H">Massimo impatto raggiungibile SUBITO</div><div class="trv" data-i="tr2V">La prima cosa deployabile</div><div class="trd" data-i="tr2D"></div></div>
+  </div>
+  <div class="sh rv"><i class="ti ti-layout-grid"></i><span class="no">07</span><h2 data-i="s7b">Matrice: Impatto × Sforzo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="matIntro"></p>
+  <div class="matx rv">
+    <div class="maxlbl" data-i="matTop"></div>
+    <div class="maxrow">
+      <div class="maxy" data-i="matYaxis"></div>
+      <div class="matgrid" id="matGrid"></div>
+    </div>
+    <div class="maxx" data-i="matXaxis"></div>
+  </div>
+  <div class="rv" id="matExpl"></div>
+
+  <div class="sh rv"><i class="ti ti-chart-line"></i><span class="no">08</span><h2 data-i="s8b">La matematica del ritorno: il compounding</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="compIntro"></p>
+  <div class="tog rv">
+    <button class="on" onclick="showComp(0)" data-i="compTogA">Piccolo win veloce</button>
+    <button onclick="showComp(1)" data-i="compTogB">Confronta i due</button>
+  </div>
+  <div class="comp rv">
+    <div class="clegend">
+      <div class="cli"><span class="cdot small"></span><span data-i="compLegA">Piccolo win — parte lunedì (10h/mese)</span></div>
+      <div class="cli" id="compLegBig" style="display:none"><span class="cdot big"></span><span data-i="compLegB">Grande win — forse fra 3 mesi (40h/mese)</span></div>
+    </div>
+    <div class="compchart" id="compChart"></div>
+    <div class="compx" id="compX"></div>
+    <div class="ctake"><i class="ti ti-bulb"></i><div data-i-html="compTake"></div></div>
+  </div>
+  <div class="prio rv" style="margin-top:18px">
+    <div class="poh" style="font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin-bottom:4px" data-i="prioH"></div>
+    <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:12px" data-i="prioIntro"></p>
+    <div id="prioRows"></div>
+    <div class="prioout"><div class="poh" data-i="prioOutH"></div><div id="prioRank"></div></div>
+  </div>
+  <div class="note rv" style="margin-top:20px"><div class="ni"><i class="ti ti-arrows-up-down"></i></div><div><h4 data-i="kaizenH">Aggancio al Metodo: Kaizen</h4><p data-i-html="kaizenP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-trophy"></i><span class="no">09</span><h2 data-i="s6">Quick win e fiducia</h2></div>
+  <div class="story rv"><div class="si"><i class="ti ti-bolt"></i></div><div><h4 data-i="storyH">I primi successi costruiscono l'adozione</h4><p data-i-html="storyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">10</span><h2 data-i="s7">Esempi concreti</h2></div>
+  <div class="cards rv">
+    <div class="card3"><div class="ci"><i class="ti ti-mail"></i></div><h4 data-i="ex1H">Email ricorrenti</h4><p data-i="ex1P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-file-text"></i></div><h4 data-i="ex2H">Riassunti e verbali</h4><p data-i="ex2P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-table"></i></div><h4 data-i="ex3H">Riordino dati</h4><p data-i="ex3P"></p></div>
+    <div class="card3"><div class="ci"><i class="ti ti-language"></i></div><h4 data-i="ex4H">Traduzioni e riformulazioni</h4><p data-i="ex4P"></p></div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-mistake"></i><span class="no">11</span><h2 data-i="s8">Errori comuni</h2></div>
+  <div class="note warn rv"><div class="ni"><i class="ti ti-rocket"></i></div><div><h4 data-i="errH">Partire dall'iniziativa più grande e ambiziosa</h4><p data-i-html="errP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">12</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Identifica il tuo primo task</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Partire dal semplice</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.4b',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Pilastro 4 dell\'adozione AI',
+h1:'Partire dal semplice',
+lede:'Il quarto pilastro dell\'adozione AI è il più controintuitivo: non parti dal progetto ambizioso, parti dai task piccoli e ripetitivi. È lì che impari il metodo, costruisci fiducia e ottieni i primi risultati veri. La scala si sale un gradino alla volta — mai saltando.',
+s1:'Perché è un pilastro',
+note1H:'Il metodo si impara sui task piccoli',
+note1P:'Il metodo prevede una progressione precisa: <strong>non si salta</strong>. La regola è <strong>imparare prima con lo strumento più semplice, sul task più semplice</strong>, e solo dopo passare al complesso. È come imparare a guidare: prima l\'utilitaria sullo sterrato, poi il SUV in autostrada. <em>Ma prima devi imparare a guidare.</em> Partire dal semplice non è mancanza di ambizione: è il modo in cui l\'ambizione diventa raggiungibile.',
+goldKey:'«Non puoi passare al SUV se non sai cosa è un volante.» Prima il gesto semplice, poi la potenza.',
+goldCap:'Ogni task complesso che funziona è una catena di task semplici che hai già domato uno per uno.',
+s2:'Cos\'è: task a basso rischio, alto attrito',
+whatIntro:'Partire dal semplice significa scegliere il primo compito con due proprietà precise. Non il più impressionante — il più adatto a farti imparare senza pagare un prezzo se sbagli.',
+w1H:'Basso rischio',w1P:'Se l\'AI sbaglia, non succede niente di grave: nessun cliente perso, nessun dato compromesso, nessuna decisione irreversibile. Puoi verificare con calma e correggere. Lo sbaglio è parte dell\'apprendimento, non un incidente.',
+w2H:'Alto attrito',w2P:'Un compito che oggi ti costa tempo e fatica, ma senza richiedere il tuo giudizio esperto. Tedioso, ripetitivo, a bassa creatività. È proprio il 20% del lavoro che ti fa schifo: quello che l\'AI dovrebbe togliere dal tuo tavolo.',
+s3:'Cosa si rompe se parti dal complesso',
+breakIntro:'Immagina di dare all\'AI un\'iniziativa enorme al primo colpo, contro lo stesso lavoro spezzato in un primo task semplice. Confronta i due percorsi.',
+togA:'Parti dal complesso',togB:'Parti dal semplice',
+s4:'Come scegliere il primo task',
+critIntro:'Un buon primo task risponde a quattro criteri. Cliccali per accenderli: più ne spunti, più quel compito è il candidato giusto per iniziare.',
+s5:'La scala di complessità',
+ladderIntro:'L\'adozione sale un gradino alla volta. Ogni livello riusa quello sotto: non abbandoni il semplice, lo componi. Clicca ogni gradino per salire.',
+s6b:'La domanda che decide il primo passo',
+tradeIntro:'Qui la maggior parte delle persone si arena. Non parti dal task più complesso: fai una scala delle priorità — un piano di lavoro — e ti poni UNA sola domanda che filtra tutto.',
+kkLbl:'La domanda-guida',
+kkQ:'«Qual è la cosa più SEMPLICE che posso ottimizzare che mi porta il MAGGIOR impatto?»',
+kkCap:'Non l\'impatto massimo in assoluto. Il massimo impatto che riesci a mettere a terra SUBITO.',
+tradeExpl:'La trappola è confondere «impatto massimo» con «impatto massimo raggiungibile ora». Il primo è iper-complesso e lento; il secondo è la prima cosa che puoi davvero deployare — ed è quella che vince.',
+tr1H:'Impatto massimo assoluto',tr1V:'Il "sistema che fa tutto"',tr1D:'Enorme sulla carta. Ma iper-complesso, lento, e con la tua skill ancora bassa non arriva mai in produzione. Impatto reale oggi: zero.',
+tr2H:'Massimo impatto raggiungibile SUBITO',tr2V:'La prima cosa deployabile',tr2D:'Meno ambizioso sulla carta, ma parte lunedì. Impatto reale che inizia a comporre da subito — e ti costruisce la competenza per il win grande.',
+s7b:'Matrice: Impatto × Sforzo',
+matIntro:'Metti i task candidati su due assi: quanto impatto portano e quanto sforzo costano. Clicca ogni task per capire perché sì o perché no come primo passo. Il quadrante che cerchi è uno solo.',
+matTop:'↑ Alto impatto',matYaxis:'IMPATTO',matXaxis:'SFORZO / tempo-di-deploy →',
+s8b:'La matematica del ritorno: il compounding',
+compIntro:'Perché il piccolo win batte il grande? Perché parte prima e inizia a comporre. Guarda il risparmio CUMULATO nel tempo: 10 ore/mese che partono lunedì contro 40 ore/mese che forse arrivano fra 3 mesi.',
+compTogA:'Piccolo win veloce',compTogB:'Confronta i due',
+compLegA:'Piccolo win — parte lunedì (10h/mese)',
+compLegB:'Grande win — forse fra 3 mesi (40h/mese)',
+compTake:'Il grande win, quando (e se) arriva, corre più veloce — ma parte da fermo per 3 mesi. Il piccolo win è già davanti, a rischio quasi zero, e nel frattempo ti ha insegnato il metodo. <b>Meglio qualcosa di imperfetto che parte ora, che il progetto perfetto che forse non finisci.</b>',
+prioH:'Mini-prioritizzatore',
+prioIntro:'Dai un voto da 1 a 5 a impatto e facilità di deploy per ogni task. Il ranking ti dice da quale partire: vince il miglior rapporto impatto × facilità, cioè ciò che è shippabile in fretta.',
+prioOutH:'Da fare per primo →',
+kaizenH:'Aggancio al Metodo: Kaizen',
+kaizenP:'Questo è <strong>Kaizen</strong> — miglioramento incrementale — applicato all\'AI. Elenchi i candidati, li valuti su impatto e velocità-di-deploy, scegli il miglior rapporto impatto/sforzo shippabile in fretta, deployi, componi, poi sali di livello. Non un salto eroico: <b>una scala di piccoli win che si sommano</b>. Il piccolo win non è un ripiego: è il motore.',
+s6:'Quick win e fiducia',
+storyH:'I primi successi costruiscono l\'adozione',
+storyP:'La curva di apprendimento dell\'AI è prevedibile: all\'inizio molti errori e frustrazione, poi la padronanza. <strong>I quick win servono a superare la prima fase.</strong> Un piccolo compito tedioso che l\'AI ti toglie oggi vale più di un progetto ambizioso che fallisce: <b>ti dà la prova concreta che il metodo funziona</b>. E la fiducia è il carburante dell\'adozione — nel team, «molti test iniziali falliranno», ma il primo successo visibile convince più di mille spiegazioni.',
+s7:'Esempi concreti',
+ex1H:'Email ricorrenti',ex1P:'Follow-up, conferme, risposte standard. Struttura fissa, contenuto che cambia poco: l\'AI le sforna in secondi, tu controlli e invii.',
+ex2H:'Riassunti e verbali',ex2P:'Trascrizioni di call, note di riunione, documenti lunghi. Da testo grezzo a sintesi ordinata: tedioso per te, immediato per l\'AI.',
+ex3H:'Riordino dati',ex3P:'Elenchi da pulire, tabelle da riformattare, informazioni da raggruppare. Lavoro meccanico e verificabile a colpo d\'occhio.',
+ex4H:'Traduzioni e riformulazioni',ex4P:'Riscrivere un testo in un altro tono, tradurre, adattare la lunghezza. Basso giudizio, alta frequenza: il candidato perfetto.',
+s8:'Errori comuni',
+errH:'Partire dall\'iniziativa più grande e ambiziosa',
+errP:'L\'errore classico è volere subito «il sistema che automatizza tutto». Ma <strong>chi cerca di automatizzare troppo presto produce output scadenti</strong>: non hai ancora il metodo, sbagli il compito più visibile, e il fallimento spegne l\'entusiasmo del team. Non salti la fase di apprendimento — la paghi solo più cara. Parti piccolo, vinci, poi <b>alza l\'asticella un gradino alla volta</b>.',
+s9:'Checkpoint',
+cpH:'Identifica il tuo primo task',
+cpP:'Guarda la tua settimana. Cerca il compito che è al tempo stesso a basso rischio e ad alto attrito: quello che ti annoia, che rifai sempre uguale, e dove uno sbaglio non costa nulla. Quello è il tuo primo task.',
+cpQ:'Scrivi UN compito che rifai ogni settimana, ti pesa, e non richiede il tuo giudizio esperto. Delegalo all\'AI questa settimana — prima di pensare a qualsiasi progetto grande.',
+cpNote:'Non parti da «cosa può fare l\'AI di grandioso». Parti da «qual è la cosa piccola che mi tolgo dal tavolo oggi».',
+bridge:'Hai il primo gradino. <b>Prossimo:</b> il pensiero da architetto — come scomporre un processo complesso nella catena di task semplici che hai imparato a delegare.',
+foot:'Morfeus — Partire dal semplice'
+},
+en:{
+kicker:'Lesson A1.4b',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Pillar 4 of AI adoption',
+h1:'Start simple',
+lede:'The fourth pillar of AI adoption is the most counterintuitive: you don\'t start from the ambitious project, you start from small, repetitive tasks. That\'s where you learn the method, build trust and get your first real results. You climb the ladder one rung at a time — never skipping.',
+s1:'Why it\'s a pillar',
+note1H:'The method is learned on small tasks',
+note1P:'The method follows a precise progression: <strong>you don\'t skip steps</strong>. The rule is <strong>learn first with the simplest tool, on the simplest task</strong>, and only then move to the complex. It\'s like learning to drive: first the little car on the dirt road, then the SUV on the motorway. <em>But first you have to learn to drive.</em> Starting simple isn\'t a lack of ambition: it\'s how ambition becomes reachable.',
+goldKey:'"You can\'t move to the SUV if you don\'t know what a steering wheel is." First the simple move, then the power.',
+goldCap:'Every complex task that works is a chain of simple tasks you\'ve already tamed one by one.',
+s2:'What it is: low-risk, high-friction tasks',
+whatIntro:'Starting simple means picking a first task with two precise properties. Not the most impressive one — the one best suited to letting you learn without paying a price if you get it wrong.',
+w1H:'Low risk',w1P:'If the AI gets it wrong, nothing serious happens: no client lost, no data compromised, no irreversible decision. You can check calmly and fix it. The mistake is part of learning, not an incident.',
+w2H:'High friction',w2P:'A task that costs you time and effort today, but doesn\'t require your expert judgment. Tedious, repetitive, low-creativity. It\'s exactly the 20% of the work you hate: the part AI should take off your plate.',
+s3:'What breaks if you start from the complex',
+breakIntro:'Imagine handing AI a huge initiative on the first try, versus the same work broken down into a simple first task. Compare the two paths.',
+togA:'Start from the complex',togB:'Start simple',
+s4:'How to choose the first task',
+critIntro:'A good first task meets four criteria. Click them to light them up: the more you check, the better that task is as your starting candidate.',
+s5:'The complexity ladder',
+ladderIntro:'Adoption climbs one rung at a time. Each level reuses the one below: you don\'t abandon the simple, you compose it. Click each rung to climb.',
+s6b:'The question that decides the first step',
+tradeIntro:'This is where most people get stuck. You don\'t start from the most complex task: you build a priority ladder — a work plan — and ask yourself ONE question that filters everything.',
+kkLbl:'The guiding question',
+kkQ:'"What is the SIMPLEST thing I can optimize that brings me the GREATEST impact?"',
+kkCap:'Not the maximum impact in absolute terms. The maximum impact you can actually ship RIGHT NOW.',
+tradeExpl:'The trap is confusing "maximum impact" with "maximum impact reachable now." The first is hyper-complex and slow; the second is the first thing you can truly deploy — and that\'s the one that wins.',
+tr1H:'Absolute maximum impact',tr1V:'The "system that does everything"',tr1D:'Huge on paper. But hyper-complex, slow, and with your skill still low it never reaches production. Real impact today: zero.',
+tr2H:'Maximum impact reachable NOW',tr2V:'The first deployable thing',tr2D:'Less ambitious on paper, but it starts Monday. Real impact that begins compounding right away — and builds you the skill for the big win.',
+s7b:'Matrix: Impact × Effort',
+matIntro:'Place your candidate tasks on two axes: how much impact they bring and how much effort they cost. Click each task to see why yes or why no as the first step. There\'s only one quadrant you\'re after.',
+matTop:'↑ High impact',matYaxis:'IMPACT',matXaxis:'EFFORT / time-to-deploy →',
+s8b:'The math of the return: compounding',
+compIntro:'Why does the small win beat the big one? Because it starts sooner and begins to compound. Look at the CUMULATIVE savings over time: 10 hours/month starting Monday versus 40 hours/month that maybe arrive in 3 months.',
+compTogA:'Small fast win',compTogB:'Compare the two',
+compLegA:'Small win — starts Monday (10h/month)',
+compLegB:'Big win — maybe in 3 months (40h/month)',
+compTake:'The big win, when (and if) it arrives, runs faster — but it sits at zero for 3 months. The small win is already ahead, at almost no risk, and meanwhile it taught you the method. <b>Better something imperfect that starts now than the perfect project you might never finish.</b>',
+prioH:'Mini-prioritizer',
+prioIntro:'Rate impact and ease-of-deploy from 1 to 5 for each task. The ranking tells you where to start: the best impact × ease ratio wins — that is, what ships fast.',
+prioOutH:'Do this first →',
+kaizenH:'Tie to the Method: Kaizen',
+kaizenP:'This is <strong>Kaizen</strong> — incremental improvement — applied to AI. You list the candidates, rate them on impact and time-to-deploy, pick the best impact/effort ratio that ships fast, deploy, compound, then level up. Not a heroic leap: <b>a ladder of small wins that add up</b>. The small win isn\'t a fallback: it\'s the engine.',
+s6:'Quick wins and trust',
+storyH:'The first successes build adoption',
+storyP:'The AI learning curve is predictable: many errors and frustration at first, then mastery. <strong>Quick wins exist to get past the first phase.</strong> A small tedious task the AI takes off your plate today is worth more than an ambitious project that fails: <b>it gives you concrete proof that the method works</b>. And trust is the fuel of adoption — in a team, "many early tests will fail," but the first visible success convinces more than a thousand explanations.',
+s7:'Concrete examples',
+ex1H:'Recurring emails',ex1P:'Follow-ups, confirmations, standard replies. Fixed structure, content that changes little: the AI churns them out in seconds, you check and send.',
+ex2H:'Summaries and minutes',ex2P:'Call transcripts, meeting notes, long documents. From raw text to an orderly summary: tedious for you, instant for the AI.',
+ex3H:'Tidying data',ex3P:'Lists to clean, tables to reformat, information to group. Mechanical work, verifiable at a glance.',
+ex4H:'Translation and rewriting',ex4P:'Rewrite a text in a different tone, translate, adjust the length. Low judgment, high frequency: the perfect candidate.',
+s8:'Common mistakes',
+errH:'Starting from the biggest, most ambitious initiative',
+errP:'The classic mistake is wanting "the system that automates everything" right away. But <strong>whoever tries to automate too soon produces poor output</strong>: you don\'t have the method yet, you botch the most visible task, and the failure kills the team\'s enthusiasm. You don\'t skip the learning phase — you just pay for it more dearly. Start small, win, then <b>raise the bar one rung at a time</b>.',
+s9:'Checkpoint',
+cpH:'Identify your first task',
+cpP:'Look at your week. Find the task that is both low-risk and high-friction: the one that bores you, that you redo the same way every time, and where a mistake costs nothing. That\'s your first task.',
+cpQ:'Write down ONE task you redo every week, that weighs on you, and that doesn\'t require your expert judgment. Delegate it to AI this week — before thinking about any big project.',
+cpNote:'You don\'t start from "what grand thing can AI do." You start from "what\'s the small thing I take off my plate today."',
+bridge:'You\'ve got the first rung. <b>Next:</b> the architect\'s mindset — how to break a complex process into the chain of simple tasks you\'ve learned to delegate.',
+foot:'Morfeus — Start simple'
+}};
+
+var SIM={it:[
+['miss','«AI, automatizza tutto il mio processo commerciale: dalla chiamata al preventivo alle slide.»','ti-x','<b>Il sistema crolla.</b> Non hai ancora il metodo, l\'AI riempie sei buchi di contesto con assunzioni sbagliate, e l\'errore è nel compito più visibile dell\'azienda. <span class="verdict">Risultato: output scadente, tempo perso, e il team che conclude «l\'AI non funziona».</span>'],
+['clear','«AI, prendimi la trascrizione di questa chiamata e trasformala in un report strutturato di 10 righe.»','ti-check','<b>Un anello solo, testato bene.</b> Basso rischio, alto attrito, verificabile in 30 secondi. Quando funziona 10 volte su 10, aggiungi l\'anello successivo. <span class="verdict">Risultato: un quick win che impari, e la catena complessa nasce un pezzo alla volta.</span>']
+],en:[
+['miss','"AI, automate my entire sales process: from the call to the quote to the slides."','ti-x','<b>The system collapses.</b> You don\'t have the method yet, the AI fills six gaps of missing context with wrong assumptions, and the error lands on the company\'s most visible task. <span class="verdict">Result: poor output, wasted time, and a team concluding "AI doesn\'t work."</span>'],
+['clear','"AI, take the transcript of this call and turn it into a structured 10-line report."','ti-check','<b>One link, tested well.</b> Low risk, high friction, verifiable in 30 seconds. Once it works 10 times out of 10, you add the next link. <span class="verdict">Result: a quick win you learn from, and the complex chain is born one piece at a time.</span>']
+]};
+
+var CRIT={it:[
+['ti-repeat','Ripetitivo','Lo rifai spesso, sempre nello stesso modo. Un pattern fisso che l\'AI può replicare.'],
+['ti-mood-boring','Tedioso','Ti annoia e ti pesa. È il lavoro che vorresti non fare — il candidato ideale da delegare.'],
+['ti-scale','Basso giudizio','Non richiede la tua competenza esperta né decisioni delicate. L\'AI può farlo senza rischi.'],
+['ti-clock-hour-4','Alta frequenza','Torna ogni giorno o ogni settimana. Ogni minuto risparmiato si moltiplica nel tempo.']
+],en:[
+['ti-repeat','Repetitive','You do it often, always the same way. A fixed pattern the AI can replicate.'],
+['ti-mood-boring','Tedious','It bores you and weighs on you. It\'s the work you\'d rather not do — the ideal candidate to delegate.'],
+['ti-scale','Low judgment','It doesn\'t require your expert competence or delicate decisions. The AI can do it without risk.'],
+['ti-clock-hour-4','High frequency','It comes back every day or every week. Every minute saved multiplies over time.']
+]};
+var CRITSCORE={it:[
+['lo','ti-hand-stop','<b>Non è il primo task.</b> <span class="verdict">Poche proprietà accese: probabilmente serve giudizio, o è raro, o rischioso. Lascialo per dopo — quando avrai il metodo.</span>'],
+['mid','ti-adjustments','<b>Candidato discreto.</b> <span class="verdict">Qualche criterio c\'è. Puoi provarci, ma cerca qualcosa di ancora più ripetitivo e a basso rischio per il primissimo passo.</span>'],
+['hi','ti-rosette-discount-check','<b>Primo task perfetto.</b> <span class="verdict">Ripetitivo, tedioso, basso giudizio, alta frequenza: è esattamente ciò da cui partire. Delegalo oggi.</span>']
+],en:[
+['lo','ti-hand-stop','<b>Not your first task.</b> <span class="verdict">Few properties lit: it probably needs judgment, or it\'s rare, or risky. Leave it for later — when you have the method.</span>'],
+['mid','ti-adjustments','<b>Decent candidate.</b> <span class="verdict">Some criteria are there. You could try it, but look for something even more repetitive and low-risk for the very first step.</span>'],
+['hi','ti-rosette-discount-check','<b>Perfect first task.</b> <span class="verdict">Repetitive, tedious, low judgment, high frequency: it\'s exactly where to start. Delegate it today.</span>']
+]};
+
+var LAD={it:[
+['ti-message-2','Task singolo','Un prompt, un output','Un compito isolato che deleghi con una richiesta ben scritta. È il gradino zero: qui impari a comunicare col modello.','L\'esempio','«Trasformami questa trascrizione in un report di 10 righe.» Un input, un output, verifica immediata.'],
+['ti-bookmarks','Prompt riutilizzabile','Il pattern salvato','Quando lo stesso prompt funziona 6 volte su 6, lo salvi. Non lo riscrivi ogni volta: diventa uno strumento pronto all\'uso.','L\'esempio','Un prompt "report da trascrizione" salvato in libreria, che richiami ogni volta che finisce una call.'],
+['ti-link','Catena di task','L\'output di uno è l\'input dell\'altro','Concateni più task semplici, ognuno già testato da solo. La complessità non è nel singolo pezzo: è nel modo in cui si agganciano.','L\'esempio','Chiamata → report → preventivo → slide. Quattro anelli semplici, ognuno solido, uniti in sequenza.'],
+['ti-settings-automation','Processo completo','La catena che gira da sola','Quando ogni anello è consistente (10 su 10), automatizzi l\'intera sequenza. Ora hai il "sistema" — ma costruito dal basso, un task alla volta.','L\'esempio','Tutto il processo commerciale che parte da una trascrizione e arriva alle slide, con te che verifichi solo i punti chiave.']
+],en:[
+['ti-message-2','Single task','One prompt, one output','An isolated task you delegate with a well-written request. It\'s rung zero: here you learn to communicate with the model.','The example','"Turn this transcript into a 10-line report." One input, one output, immediate check.'],
+['ti-bookmarks','Reusable prompt','The saved pattern','When the same prompt works 6 times out of 6, you save it. You don\'t rewrite it each time: it becomes a ready-to-use tool.','The example','A "report from transcript" prompt saved in your library, which you recall every time a call ends.'],
+['ti-link','Chain of tasks','One\'s output is the next one\'s input','You chain several simple tasks, each already tested on its own. The complexity isn\'t in the single piece: it\'s in how they link together.','The example','Call → report → quote → slides. Four simple links, each solid, joined in sequence.'],
+['ti-settings-automation','Full process','The chain that runs on its own','When every link is consistent (10 out of 10), you automate the whole sequence. Now you have the "system" — but built from the bottom up, one task at a time.','The example','The entire sales process from a transcript to the slides, with you checking only the key points.']
+]};
+
+// Matrice Impatto x Sforzo. quad: 0=alto imp/basso sforzo(LEVA) 1=alto imp/alto sforzo(BIG) 2=basso imp/basso sforzo 3=basso imp/alto sforzo
+var MAT={it:[
+['ti-mail','Email ricorrenti',0,'yes','ti-bolt','<b>Primo passo perfetto.</b> Alto impatto (le fai ogni giorno) e basso sforzo (struttura fissa, deployabile in un pomeriggio). <span class="verdict">È la PRIMA LEVA: parte subito e inizia a comporre.</span>'],
+['ti-file-text','Riassunti di call',0,'yes','ti-bolt','<b>Altra leva pronta.</b> Tedioso e frequente, ma verificabile in 30 secondi. <span class="verdict">Basso sforzo, alto attrito tolto: shippabile questa settimana.</span>'],
+['ti-settings-automation','Automazione totale del commerciale',1,'no','ti-hourglass-high','<b>Grande progetto — NON il primo passo.</b> Impatto enorme, ma sforzo enorme: mesi, skill alta, tanti anelli non testati. <span class="verdict">Alto impatto/alto sforzo: è la meta, non la partenza. Ci arrivi componendo i piccoli win.</span>'],
+['ti-robot','Chatbot su misura sul sito',1,'no','ti-hourglass-high','<b>Ambizioso e lento.</b> Sembra strategico ma richiede dati, tuning e verifiche continue. <span class="verdict">Rimandalo: senza metodo, si arena e alimenta il «l\'AI non funziona».</span>'],
+['ti-palette','Restyling del logo con l\'AI',2,'no','ti-minus','<b>Facile ma poco utile.</b> Basso sforzo, ma anche basso impatto: lo fai una volta e finisce lì. <span class="verdict">Non spreca, ma non ti costruisce nulla: non è la leva.</span>'],
+['ti-database','Migrazione dati legacy',3,'no','ti-alert-triangle','<b>Il peggior primo passo.</b> Basso impatto ricorrente e alto sforzo/rischio. <span class="verdict">Tanta fatica per poco ritorno: evitalo del tutto all\'inizio.</span>']
+],en:[
+['ti-mail','Recurring emails',0,'yes','ti-bolt','<b>Perfect first step.</b> High impact (you do them daily) and low effort (fixed structure, deployable in an afternoon). <span class="verdict">This is the FIRST LEVER: it starts now and begins to compound.</span>'],
+['ti-file-text','Call summaries',0,'yes','ti-bolt','<b>Another ready lever.</b> Tedious and frequent, yet verifiable in 30 seconds. <span class="verdict">Low effort, high friction removed: shippable this week.</span>'],
+['ti-settings-automation','Full sales automation',1,'no','ti-hourglass-high','<b>Big project — NOT the first step.</b> Huge impact, but huge effort: months, high skill, many untested links. <span class="verdict">High impact/high effort: it\'s the destination, not the start. You get there by composing small wins.</span>'],
+['ti-robot','Custom website chatbot',1,'no','ti-hourglass-high','<b>Ambitious and slow.</b> Looks strategic but needs data, tuning and constant checks. <span class="verdict">Postpone it: without the method, it stalls and feeds the "AI doesn\'t work" story.</span>'],
+['ti-palette','AI logo restyling',2,'no','ti-minus','<b>Easy but not very useful.</b> Low effort, but also low impact: you do it once and it\'s over. <span class="verdict">No waste, but it builds you nothing: it\'s not the lever.</span>'],
+['ti-database','Legacy data migration',3,'no','ti-alert-triangle','<b>The worst first step.</b> Low recurring impact and high effort/risk. <span class="verdict">A lot of effort for little return: avoid it entirely at the start.</span>']
+]};
+// Compounding: risparmio CUMULATO per mese 1..6. small: 10h/mese da subito. big: 0 per 3 mesi, poi 40h/mese.
+var COMP_SMALL=[10,20,30,40,50,60];
+var COMP_BIG=[0,0,0,40,80,120];
+// Prioritizzatore: [nome_it, nome_en, impatto default, facilita default]
+var PRIO={it:[['Email ricorrenti',4,5],['Riassunti di call',4,4],['Automazione totale',5,1]],
+en:[['Recurring emails',4,5],['Call summaries',4,4],['Full automation',5,1]]};
+var prioState=[[4,5],[4,4],[5,1]];
+
+var LANG='it',curSim=0,critState=[false,false,false,false],curRung=0,curMat=0,curComp=0,compAnimated=false;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  showSim(curSim);
+  renderCrit();
+  renderLadder();
+  renderMat();
+  showComp(curComp);
+  renderPrio();
+}
+function showSim(i){curSim=i;var s=SIM[LANG][i];document.querySelectorAll('.tog button').forEach(function(b,k){b.classList.toggle('on',k===i)});document.getElementById('simWrap').innerHTML='<div class="simbox '+s[0]+'"><div class="sq">'+(LANG==='it'?'Il percorso':'The path')+'</div><div class="sp">'+s[1]+'</div><div class="sr"><div class="sri"><i class="ti '+s[2]+'"></i></div><div class="srt">'+s[3]+'</div></div></div>'}
+function renderCrit(){
+  document.getElementById('critWrap').innerHTML=CRIT[LANG].map(function(c,i){return '<div class="critc'+(critState[i]?' on':'')+'" onclick="toggleCrit('+i+')"><div class="cci"><i class="ti '+c[0]+'"></i></div><div><h4>'+c[1]+'</h4><p>'+c[2]+'</p></div><i class="ti ti-circle-check cchk"></i></div>'}).join('');
+  var n=critState.filter(Boolean).length;var band=n<=1?0:(n<=2?1:2);var s=CRITSCORE[LANG][band];
+  document.getElementById('critScore').innerHTML='<div class="critscore '+s[0]+'"><div class="csi"><i class="ti '+s[1]+'"></i></div><div class="cst">'+s[2]+'</div></div>';
+}
+function toggleCrit(i){critState[i]=!critState[i];renderCrit()}
+function renderLadder(){
+  document.getElementById('ladderWrap').innerHTML=LAD[LANG].map(function(r,i){return '<div class="rung'+(i===curRung?' on':'')+'" onclick="setRung('+i+')"><span class="rbar"></span><div class="rlv">'+(i+1)+'</div><div class="rmain"><div class="rt">'+r[1]+'</div><div class="rs">'+r[2]+'</div></div></div>'}).join('');
+  var r=LAD[LANG][curRung];
+  document.getElementById('ladderDetail').innerHTML='<div class="rungdetail"><div class="rdh"><div class="rdi"><i class="ti '+r[0]+'"></i></div><h4>'+r[1]+'</h4></div><div class="rdesc">'+r[3]+'</div><div class="rex"><span class="rel">'+r[4]+'</span>'+r[5]+'</div></div>';
+}
+function setRung(i){curRung=i;renderLadder()}
+
+function renderMat(){
+  var qlabels=LANG==='it'
+    ?['Alto impatto · Basso sforzo — PRIMA LEVA','Alto impatto · Alto sforzo — grande progetto','Basso impatto · Basso sforzo','Basso impatto · Alto sforzo']
+    :['High impact · Low effort — FIRST LEVER','High impact · High effort — big project','Low impact · Low effort','Low impact · High effort'];
+  // grid order: [0]=top-left(alto imp/basso sforzo=leva) [1]=top-right(alto/alto=big) [2]=bottom-left [3]=bottom-right
+  var cls=['quad lever','quad big','quad','quad'];
+  var html='';
+  for(var q=0;q<4;q++){
+    var tasks=MAT[LANG].map(function(t,i){return t[2]===q?'<span class="mtask'+(i===curMat?' on':'')+'" onclick="setMat('+i+')"><i class="ti '+t[0]+'"></i>'+t[1]+'</span>':''}).join('');
+    html+='<div class="'+cls[q]+'"><span class="ql">'+qlabels[q]+'</span>'+tasks+'</div>';
+  }
+  document.getElementById('matGrid').innerHTML=html;
+  var m=MAT[LANG][curMat];
+  document.getElementById('matExpl').innerHTML='<div class="matexpl '+m[3]+'"><div class="mei"><i class="ti '+m[4]+'"></i></div><div class="met">'+m[5]+'</div></div>';
+}
+function setMat(i){curMat=i;renderMat()}
+
+function showComp(i){
+  curComp=i;
+  document.querySelectorAll('.comp').forEach(function(){});
+  var togs=document.querySelectorAll('.tog');
+  // second tog belongs to compounding (first tog is the sim in sec 03)
+  var t=togs[togs.length-1];
+  if(t)t.querySelectorAll('button').forEach(function(b,k){b.classList.toggle('on',k===i)});
+  var showBig=(i===1);
+  var lb=document.getElementById('compLegBig');if(lb)lb.style.display=showBig?'flex':'none';
+  var mx=6,max=showBig?120:60;
+  var chart=document.getElementById('compChart');
+  var unit=LANG==='it'?'h':'h';
+  var html='';
+  for(var mo=0;mo<mx;mo++){
+    var sh=Math.round(COMP_SMALL[mo]/max*100);
+    var bh=Math.round(COMP_BIG[mo]/max*100);
+    var bars='<div class="cbar small" data-h="'+sh+'"><span class="cval">'+COMP_SMALL[mo]+unit+'</span></div>';
+    if(showBig)bars+='<div class="cbar big" data-h="'+bh+'"><span class="cval">'+COMP_BIG[mo]+unit+'</span></div>';
+    html+='<div class="compcol"><div class="cbars">'+bars+'</div></div>';
+  }
+  chart.innerHTML=html;chart.classList.remove('reveal');
+  var xr=document.getElementById('compX');
+  var mlab=LANG==='it'?'Mese':'Month';
+  var xh='';for(var mo2=1;mo2<=mx;mo2++)xh+='<span>'+mlab+' '+mo2+'</span>';
+  xr.innerHTML=xh;
+  // animate heights
+  setTimeout(function(){chart.querySelectorAll('.cbar').forEach(function(b){b.style.height=b.getAttribute('data-h')+'%'});chart.classList.add('reveal')},60);
+}
+
+function renderPrio(){
+  var rowsEl=document.getElementById('prioRows');
+  var impL=LANG==='it'?'Impatto':'Impact',easeL=LANG==='it'?'Facilità':'Ease';
+  rowsEl.innerHTML=PRIO[LANG].map(function(p,i){
+    return '<div class="priorow"><div class="pname">'+p[0]+'</div>'
+      +'<div class="prioctl"><label>'+impL+' <b id="piv'+i+'">'+prioState[i][0]+'</b></label><input type="range" min="1" max="5" value="'+prioState[i][0]+'" oninput="setPrio('+i+',0,this.value)"></div>'
+      +'<div class="prioctl"><label>'+easeL+' <b id="pev'+i+'">'+prioState[i][1]+'</b></label><input type="range" min="1" max="5" value="'+prioState[i][1]+'" oninput="setPrio('+i+',1,this.value)"></div></div>';
+  }).join('');
+  renderPrioRank();
+}
+function setPrio(i,axis,v){prioState[i][axis]=parseInt(v,10);var el=document.getElementById((axis===0?'piv':'pev')+i);if(el)el.textContent=v;renderPrioRank()}
+function renderPrioRank(){
+  var arr=PRIO[LANG].map(function(p,i){return {name:p[0],score:prioState[i][0]*prioState[i][1],idx:i}});
+  arr.sort(function(a,b){return b.score-a.score||a.idx-b.idx});
+  var tag=LANG==='it'?'Parti da qui':'Start here';
+  document.getElementById('prioRank').innerHTML=arr.map(function(r,k){
+    return '<div class="porank"><div class="porn">'+(k+1)+'</div><div class="porname">'+r.name+'</div><div class="poscore">'+r.score+'</div><div class="potag">'+tag+'</div></div>';
+  }).join('');
+}
+
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

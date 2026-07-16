@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonus · Sicurezza (anticipazione) — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--warn:#c98a1e;--warn-soft:#faf1dd;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;
+--warn:#e6bd6b;--warn-soft:#3a2f18;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--agent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em;display:flex;align-items:center;gap:5px}
+.brand .lz i{font-size:12px}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.bonusband{display:inline-flex;align-items:center;gap:8px;background:var(--agent-soft);border:1px solid var(--agent-line);color:var(--agent);font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 13px;border-radius:30px;margin-bottom:18px}
+.bonusband i{font-size:14px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+.cross{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.crossc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px;text-align:center}
+.crossc .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 10px}
+.crossc h4{font-size:13.5px;font-weight:600;margin-bottom:4px}.crossc p{font-size:12px;color:var(--ink-2);line-height:1.5}
+.tlintro{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.tl{display:flex;flex-direction:column;gap:10px}
+.tlrow{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left-width:4px;border-radius:var(--r);box-shadow:var(--sh);padding:15px 17px;cursor:pointer;transition:.18s}
+.tlrow:hover{border-color:var(--line-2)}
+.tlrow .dot{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;margin-top:1px}
+.tlrow.red{border-left-color:var(--bad)}.tlrow.red .dot{background:var(--bad)}
+.tlrow.yellow{border-left-color:var(--warn)}.tlrow.yellow .dot{background:var(--warn)}
+.tlrow.green{border-left-color:var(--good)}.tlrow.green .dot{background:var(--good)}
+.tlrow .tlmain{flex:1}
+.tlrow .tlt{font-size:14.5px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tlrow .tlex{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.tlrow .chev{font-size:16px;color:var(--ink-3);transition:.25s}
+.tlrow.open .chev{transform:rotate(90deg)}
+.tlrow .tld{font-size:13.5px;color:var(--ink-2);margin-top:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .3s,opacity .25s,margin-top .3s}
+.tlrow.open .tld{max-height:200px;opacity:1;margin-top:9px}
+.tlrow .verdict{font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.tlrow.red .verdict{background:var(--bad-soft);color:var(--bad)}
+.tlrow.yellow .verdict{background:var(--warn-soft);color:var(--warn)}
+.tlrow.green .verdict{background:var(--good-soft);color:var(--good)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px;cursor:pointer;transition:.18s}
+.card3:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card3 .vb{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;padding:2px 7px;border-radius:20px}
+.card3.red .vb{background:var(--bad-soft);color:var(--bad)}.card3.green .vb{background:var(--good-soft);color:var(--good)}.card3.yellow .vb{background:var(--warn-soft);color:var(--warn)}
+.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.card3 .rev{max-height:0;overflow:hidden;opacity:0;transition:.3s;margin-top:0}
+.card3.open .rev{max-height:180px;opacity:1;margin-top:9px}
+.card3 .hint{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);margin-top:8px;display:flex;align-items:center;gap:5px}
+.card3.open .hint{display:none}
+.card3 .rev p{font-size:13px}.card3 .rev b{color:var(--ink);font-weight:600}
+.plist{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.plist h4{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;gap:8px;align-items:center}.plist h4 i{color:var(--accent)}
+.plist ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.plist li{font-size:13.5px;color:var(--ink-2);display:flex;gap:10px}.plist li i{font-size:16px;color:var(--accent);margin-top:1px;flex-shrink:0}
+.plist li b{color:var(--ink);font-weight:600}
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:18px;align-items:flex-start}
+.story .si{width:48px;height:48px;border-radius:12px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.story h4{font-size:15px;font-weight:600;margin-bottom:6px}.story p{font-size:14px;color:var(--ink-2)}.story p b{color:var(--ink);font-weight:600}
+.exlist{display:flex;flex-direction:column;gap:10px}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.ex .exi{width:32px;height:32px;border-radius:9px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:var(--accent)}
+.ex p{font-size:13.5px;color:var(--ink-2)}.ex p b{color:var(--ink);font-weight:600}
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px;flex-shrink:0}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.cross{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.story{flex-direction:column}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.tlrow .tld,.card3 .rev{max-height:none!important;opacity:1!important;margin-top:9px!important}.note,.crossc,.card3,.cp,.tlrow,.story,.key,.plist,.ex{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker"><i class="ti ti-star"></i>Bonus · Sicurezza</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="bonusband rv"><i class="ti ti-shield-half-filled"></i><span data-i="bonusBand">Lezione Bonus · Anticipazione</span></div>
+  <div class="eyebrow rv" data-i="eyebrow">Il pilastro trasversale</div>
+  <h1 class="rv" data-i="h1">Sicurezza: presidiala fin dal primo giorno</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-alarm"></i><span class="no">01</span><h2 data-i="s1">Perché parlarne già ora</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-shield-lock"></i></div><div><h4 data-i="note1H">Un riflesso, non un modulo finale</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="goldKey"></p><div class="cap" data-i="goldCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-affiliate"></i><span class="no">02</span><h2 data-i="s2">La sicurezza attraversa tutti gli altri pilastri</h2></div>
+  <p class="tlintro rv" data-i="crossIntro"></p>
+  <div class="cross rv" id="crossWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-traffic-lights"></i><span class="no">03</span><h2 data-i="s3">Cosa NON caricare — il semaforo</h2></div>
+  <p class="tlintro rv" data-i="tlIntro"></p>
+  <div class="tl rv" id="tlWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-clipboard-check"></i><span class="no">04</span><h2 data-i="s4">Dati sensibili &amp; policy: cosa concordare</h2></div>
+  <div class="plist rv">
+    <h4><i class="ti ti-list-details"></i> <span data-i="polH">Le regole base da mettere per iscritto</span></h4>
+    <ul id="polL"></ul>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-user-check"></i><span class="no">05</span><h2 data-i="s5">Il principio del buon senso</h2></div>
+  <div class="story rv"><div class="si"><i class="ti ti-users"></i></div><div><h4 data-i="storyH">Trattala come un collaboratore esterno</h4><p data-i-html="storyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-cards"></i><span class="no">06</span><h2 data-i="s6">Metti alla prova il tuo verdetto</h2></div>
+  <p class="tlintro rv" data-i="cardIntro"></p>
+  <div class="cards rv" id="cardWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">07</span><h2 data-i="s7">Esempi concreti</h2></div>
+  <div class="exlist rv" id="exWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">08</span><h2 data-i="s8">Questo è solo l'inizio</h2></div>
+  <div class="note rv" style="background:var(--agent-soft);border-color:var(--agent-line)"><div class="ni" style="background:var(--agent)"><i class="ti ti-arrow-big-right-lines"></i></div><div><h4 style="color:var(--agent)" data-i="antiH">L'approfondimento completo è nel modulo A9</h4><p data-i-html="antiP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Applica il test del collaboratore esterno</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Bonus · Sicurezza (anticipazione)</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Bonus · Sicurezza',pdfT:'Scarica PDF',themeT:'Cambia tema',
+bonusBand:'Lezione Bonus · Anticipazione',
+eyebrow:'Il pilastro trasversale',
+h1:'Sicurezza: presidiala fin dal primo giorno',
+lede:'Questa è una lezione bonus, un\'anticipazione. La sicurezza non è un tema da rimandare alla fine: è un riflesso da prendere subito, dal primo prompt. Qui vedi le basi; la trattazione completa arriva nel modulo A9.',
+s1:'Perché parlarne già ora',
+note1H:'Un riflesso, non un modulo finale',
+note1P:'Molti scoprono la sicurezza <em>dopo</em> aver già caricato mezzi archivi aziendali in chat. Troppo tardi. La sicurezza va introdotta <strong>lo stesso giorno in cui inizi a usare l\'AI</strong>, perché le decisioni sbagliate qui non si annullano: quello che carichi, è caricato. Non ti serve diventare esperto oggi — ti serve un <strong>riflesso base</strong>: prima di incollare qualcosa, fermati un istante e chiediti se puoi.',
+goldKey:'La domanda da farsi ogni volta, prima di premere invio: «Questa informazione, la mostrerei a un collaboratore esterno appena arrivato?»',
+goldCap:'Se la risposta è no, non incollarla. Il buon senso che useresti con un estraneo è lo stesso che ti protegge con l\'AI.',
+s2:'La sicurezza attraversa tutti gli altri pilastri',
+crossIntro:'La sicurezza non è un pilastro isolato da spuntare a parte. È una lente che attraversa tutto ciò che fai con l\'AI — formazione, cultura e dati. Tocca ognuno di essi.',
+s3:'Cosa NON caricare — il semaforo',
+tlIntro:'Un semaforo mentale prima di ogni incolla. Tocca ogni riga per vedere perché e cosa fare. Regola: nel dubbio, tratta come rosso.',
+s4:'Dati sensibili & policy: cosa concordare',
+polH:'Le regole base da mettere per iscritto',
+s5:'Il principio del buon senso',
+storyH:'Trattala come un collaboratore esterno',
+storyP:'Immagina di aver assunto un collaboratore <b>bravissimo ma esterno</b>, appena arrivato, che non hai ancora fatto firmare nulla. Gli affideresti la lista clienti completa con i contatti? Il contratto riservato del socio? Le password? <strong>Probabilmente no.</strong> Con l\'AI vale lo stesso principio: non perché sia «cattiva», ma perché stai facendo uscire l\'informazione dal tuo perimetro. Il buon senso che applichi con una persona nuova è già il 90% della policy di sicurezza.',
+s6:'Metti alla prova il tuo verdetto',
+cardIntro:'Per ogni tipo di dato, dai il tuo verdetto: si può caricare o no? Tocca la card per scoprire la risposta e il perché.',
+s7:'Esempi concreti',
+s8:'Questo è solo l\'inizio',
+antiH:'L\'approfondimento completo è nel modulo A9',
+antiP:'Quello che hai visto qui è la <strong>versione riflesso</strong>: il minimo per non farti male fin da subito. La trattazione seria — <strong>governance dei dati, normative (GDPR, AI Act), ruoli e responsabilità, modelli locali per dati confidenziali, etica dell\'uso</strong> — vive nel <b>modulo A9 · Sicurezza, Governance, Normative &amp; Etica</b>. Quando ci arrivi, avrai già il riflesso giusto: lì lo trasformi in sistema.',
+s9:'Checkpoint',
+cpH:'Applica il test del collaboratore esterno',
+cpP:'Prima della prossima sessione con l\'AI, scegli un\'attività reale che vuoi delegare e guarda che dati richiede. Poi passa ognuno al test: «lo mostrerei a un esterno appena arrivato?».',
+cpQ:'Fai la lista dei dati che stai per incollare. Per ognuno: verde (pubblico o innocuo), giallo (dipende, va anonimizzato) o rosso (mai, senza autorizzazione). Se anche uno solo è rosso, cambia approccio prima di procedere.',
+cpNote:'Non parti da «cosa può fare l\'AI». Parti da «cosa posso farle vedere in sicurezza».',
+bridge:'Hai il riflesso di sicurezza di base. <b>Prossimo:</b> il modulo A9 lo porta a sistema — governance, normative, etica e strumenti per i dati davvero confidenziali.',
+foot:'Morfeus — Bonus · Sicurezza (anticipazione)'
+},
+en:{
+kicker:'Bonus · Security',pdfT:'Download PDF',themeT:'Toggle theme',
+bonusBand:'Bonus Lesson · Preview',
+eyebrow:'The cross-cutting pillar',
+h1:'Security: guard it from day one',
+lede:'This is a bonus lesson, a preview. Security is not something to postpone to the end: it\'s a reflex to build immediately, from your very first prompt. Here you get the basics; the full treatment comes in module A9.',
+s1:'Why talk about it already',
+note1H:'A reflex, not a final module',
+note1P:'Many people discover security <em>after</em> they\'ve already pasted half the company\'s files into a chat. Too late. Security must be introduced <strong>the same day you start using AI</strong>, because bad decisions here can\'t be undone: what you upload is uploaded. You don\'t need to become an expert today — you need a <strong>basic reflex</strong>: before you paste anything, pause for a second and ask whether you can.',
+goldKey:'The question to ask every time, before hitting enter: "Would I show this information to a freshly hired external collaborator?"',
+goldCap:'If the answer is no, don\'t paste it. The common sense you\'d use with an outsider is the same that protects you with AI.',
+s2:'Security cuts across all the other pillars',
+crossIntro:'Security is not an isolated box to tick separately. It\'s a lens that runs through everything you do with AI — training, culture and data. It touches each of them.',
+s3:'What NOT to upload — the traffic light',
+tlIntro:'A mental traffic light before every paste. Tap each row to see why and what to do. Rule: when in doubt, treat it as red.',
+s4:'Sensitive data & policy: what to agree on',
+polH:'The base rules to put in writing',
+s5:'The common-sense principle',
+storyH:'Treat it like an external collaborator',
+storyP:'Imagine you\'ve hired a <b>brilliant but external</b> collaborator, just arrived, who hasn\'t signed anything yet. Would you hand them the full client list with contacts? Your partner\'s confidential contract? The passwords? <strong>Probably not.</strong> The same principle applies to AI: not because it\'s "evil", but because you\'re letting information leave your perimeter. The common sense you\'d apply with a new person is already 90% of your security policy.',
+s6:'Test your verdict',
+cardIntro:'For each type of data, give your verdict: can it be uploaded or not? Tap the card to reveal the answer and the reason.',
+s7:'Concrete examples',
+s8:'This is just the beginning',
+antiH:'The full treatment lives in module A9',
+antiP:'What you saw here is the <strong>reflex version</strong>: the minimum to avoid hurting yourself from the start. The serious treatment — <strong>data governance, regulations (GDPR, AI Act), roles and responsibilities, local models for confidential data, ethics of use</strong> — lives in <b>module A9 · Security, Governance, Regulations &amp; Ethics</b>. By the time you get there, you\'ll already have the right reflex: that\'s where you turn it into a system.',
+s9:'Checkpoint',
+cpH:'Apply the external-collaborator test',
+cpP:'Before your next AI session, pick a real task you want to delegate and look at what data it requires. Then run each item through the test: "would I show this to a freshly arrived outsider?".',
+cpQ:'List the data you\'re about to paste. For each: green (public or harmless), yellow (depends, must be anonymized) or red (never, without authorization). If even one is red, change your approach before proceeding.',
+cpNote:'You don\'t start from "what can AI do." You start from "what can I safely let it see."',
+bridge:'You have the basic security reflex. <b>Next:</b> module A9 turns it into a system — governance, regulations, ethics and tools for truly confidential data.',
+foot:'Morfeus — Bonus · Security (preview)'
+}};
+
+var CROSS={it:[
+['ti-school','Formazione','Le persone devono sapere non solo COME usare l\'AI, ma cosa NON metterci dentro. Un team formato è un team che non fa leak per ingenuità.'],
+['ti-users-group','Cultura','Condividere prompt e assistenti è ottimo — ma va concordato cosa si condivide. La cultura aperta ha bisogno di confini chiari.'],
+['ti-database','Dati','I dati vanno mappati per sensibilità e regolati per accesso. Governance dei dati e sicurezza sono la stessa conversazione.']
+],en:[
+['ti-school','Training','People must know not only HOW to use AI, but what NOT to put in. A trained team is one that doesn\'t leak out of naivety.'],
+['ti-users-group','Culture','Sharing prompts and assistants is great — but you must agree on what gets shared. An open culture needs clear boundaries.'],
+['ti-database','Data','Data must be mapped by sensitivity and gated by access. Data governance and security are the same conversation.']
+]};
+
+var TL={it:[
+['red','ti-x','Mai (senza autorizzazione)','Segreti industriali, brevetti, codice proprietario','Sono l\'asset dell\'azienda. Una volta usciti dal perimetro non li recuperi. Per questi servono modelli locali o server privati — argomento del modulo A9.'],
+['red','ti-x','Mai (senza autorizzazione)','Dati personali di terzi (clienti, dipendenti)','Nomi, email, dati sanitari o finanziari di altre persone sono protetti dalla legge. Caricarli senza base giuridica ti espone, non solo tecnicamente ma legalmente.'],
+['red','ti-x','Mai (senza autorizzazione)','Credenziali e segreti di accesso','Password, chiavi API, token: non vanno mai incollati in una chat. Punto. Se ti serve automatizzare, esistono modi sicuri — non è mai «incollo la password».'],
+['yellow','ti-alert-triangle','Dipende — prima anonimizza','Documenti interni con dati misti','Un report può contenere numeri utili e nomi sensibili insieme. Soluzione: togli/oscura i dati identificativi e carichi solo la parte che serve al lavoro.'],
+['green','ti-check','Via libera','Materiale già pubblico o generico','Testi del tuo sito, brochure pubbliche, dati inventati per un test, esempi generici: nessun problema. È esattamente ciò che useresti in una demo.']
+],en:[
+['red','ti-x','Never (without authorization)','Trade secrets, patents, proprietary code','These are the company\'s asset. Once they leave the perimeter you can\'t get them back. For these you need local models or private servers — a module A9 topic.'],
+['red','ti-x','Never (without authorization)','Third parties\' personal data (clients, employees)','Other people\'s names, emails, health or financial data are protected by law. Uploading them without a legal basis exposes you, not just technically but legally.'],
+['red','ti-x','Never (without authorization)','Credentials and access secrets','Passwords, API keys, tokens: never paste them into a chat. Period. If you need to automate, there are safe ways — it\'s never "I paste the password".'],
+['yellow','ti-alert-triangle','Depends — anonymize first','Internal documents with mixed data','A report can hold useful numbers and sensitive names together. Solution: remove/mask the identifying data and upload only the part the task needs.'],
+['green','ti-check','Go ahead','Already public or generic material','Your website copy, public brochures, made-up test data, generic examples: no problem. It\'s exactly what you\'d use in a demo.']
+]};
+
+var POL={it:[
+['ti-map-2','<b>Mappa i dati per sensibilità.</b> Prima di tutto: quali dati sono pubblici, quali interni, quali riservati. Non puoi proteggere ciò che non hai classificato.'],
+['ti-user-shield','<b>Definisci ruoli e accessi.</b> Chi può caricare cosa. Un tirocinante e un responsabile non hanno lo stesso perimetro.'],
+['ti-building-bank','<b>Concorda lo strumento giusto.</b> Piattaforma pubblica per il generico, ambiente aziendale/privato per il confidenziale. In azienda si decide una volta, per tutti.'],
+['ti-eye-check','<b>Valida sempre l\'output.</b> Mai fidarsi ciecamente: l\'azienda resta legalmente responsabile di ciò che l\'AI produce e di come viene usato.'],
+['ti-message-report','<b>Sappi a chi chiedere.</b> Se hai un dubbio su un dato, esiste una persona (l\'AI Champion, il responsabile) a cui domandare prima di procedere.']
+],en:[
+['ti-map-2','<b>Map data by sensitivity.</b> First of all: which data is public, which internal, which confidential. You can\'t protect what you haven\'t classified.'],
+['ti-user-shield','<b>Define roles and access.</b> Who can upload what. An intern and a manager don\'t share the same perimeter.'],
+['ti-building-bank','<b>Agree on the right tool.</b> Public platform for the generic, company/private environment for the confidential. In a company you decide once, for everyone.'],
+['ti-eye-check','<b>Always validate the output.</b> Never trust blindly: the company stays legally responsible for what the AI produces and how it\'s used.'],
+['ti-message-report','<b>Know who to ask.</b> If you\'re unsure about a piece of data, there\'s a person (the AI Champion, the manager) to ask before proceeding.']
+]};
+
+var CARDS={it:[
+['red','ti-id-badge-2','Anagrafica completa di un cliente','NO','<b>Rosso.</b> Nome, email, telefono di una persona reale sono dati personali di terzi. Se ti serve testare, inventa un cliente fittizio o anonimizza.'],
+['green','ti-file-text','Il testo pubblico del tuo sito','SÌ','<b>Verde.</b> È già pubblico, chiunque può leggerlo. Usalo liberamente come contesto o materiale di partenza.'],
+['yellow','ti-report-analytics','Un report vendite interno','DIPENDE','<b>Giallo.</b> I numeri aggregati spesso vanno bene; i nomi dei clienti dentro no. Togli le colonne identificative e procedi con la parte utile.'],
+['red','ti-key','La chiave API di un servizio','NO','<b>Rosso.</b> Le credenziali non si incollano mai in chat. Se ti serve un\'integrazione, si fa in modo sicuro, non copiando segreti nel prompt.']
+],en:[
+['red','ti-id-badge-2','A client\'s full contact record','NO','<b>Red.</b> A real person\'s name, email and phone are third-party personal data. If you need to test, invent a fictional client or anonymize.'],
+['green','ti-file-text','Your website\'s public copy','YES','<b>Green.</b> It\'s already public, anyone can read it. Use it freely as context or starting material.'],
+['yellow','ti-report-analytics','An internal sales report','DEPENDS','<b>Yellow.</b> Aggregate numbers are often fine; the client names inside are not. Remove the identifying columns and proceed with the useful part.'],
+['red','ti-key','A service\'s API key','NO','<b>Red.</b> Credentials never go into a chat. If you need an integration, it\'s done securely, not by copying secrets into the prompt.']
+]};
+
+var EX={it:[
+['ti-mail','<b>Email al cliente:</b> incolli la bozza e il contesto della trattativa senza il listino riservato interno. L\'AI scrive benissimo lo stesso.'],
+['ti-chart-bar','<b>Analisi dati:</b> carichi il file vendite dopo aver sostituito i nomi reali con «Cliente A, B, C». I pattern restano, i dati personali no.'],
+['ti-code','<b>Aiuto tecnico:</b> chiedi come strutturare un\'integrazione descrivendo il flusso, senza mai incollare la chiave d\'accesso vera.']
+],en:[
+['ti-mail','<b>Client email:</b> you paste the draft and the deal context without the internal confidential price list. The AI still writes it perfectly.'],
+['ti-chart-bar','<b>Data analysis:</b> you upload the sales file after replacing real names with "Client A, B, C". The patterns stay, the personal data doesn\'t.'],
+['ti-code','<b>Technical help:</b> you ask how to structure an integration by describing the flow, without ever pasting the real access key.']
+]};
+
+var LANG='it';
+function esc(s){return s}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title='Bonus · Sicurezza (anticipazione) — Morfeus';
+  document.getElementById('crossWrap').innerHTML=CROSS[LANG].map(function(x){return '<div class="crossc"><div class="ci"><i class="ti '+x[0]+'"></i></div><h4>'+x[1]+'</h4><p>'+x[2]+'</p></div>'}).join('');
+  document.getElementById('tlWrap').innerHTML=TL[LANG].map(function(x,i){return '<div class="tlrow '+x[0]+'" onclick="tgTl('+i+')"><div class="dot"><i class="ti '+x[1]+'"></i></div><div class="tlmain"><div class="tlt"><span>'+x[3]+'</span><span class="verdict">'+x[2]+'</span></div><div class="tlex">'+x[4].split('.')[0]+'.</div><div class="tld">'+x[4]+'</div></div><i class="ti ti-chevron-right chev"></i></div>'}).join('');
+  document.getElementById('polL').innerHTML=POL[LANG].map(function(x){return '<li><i class="ti '+x[0]+'"></i><span>'+x[1]+'</span></li>'}).join('');
+  var rev=(LANG==='it'?'Tocca per il verdetto':'Tap for the verdict');
+  document.getElementById('cardWrap').innerHTML=CARDS[LANG].map(function(x,i){return '<div class="card3 '+x[0]+'" onclick="tgCard('+i+')"><div class="ci"><i class="ti '+x[1]+'"></i></div><h4><span>'+x[2]+'</span><span class="vb">'+x[3]+'</span></h4><div class="hint"><i class="ti ti-hand-finger"></i>'+rev+'</div><div class="rev"><p>'+x[4]+'</p></div></div>'}).join('');
+  document.getElementById('exWrap').innerHTML=EX[LANG].map(function(x){return '<div class="ex"><div class="exi"><i class="ti '+x[0]+'"></i></div><p>'+x[1]+'</p></div>'}).join('');
+}
+function tgTl(i){var el=document.querySelectorAll('#tlWrap .tlrow')[i];if(el)el.classList.toggle('open')}
+function tgCard(i){var el=document.querySelectorAll('#cardWrap .card3')[i];if(el)el.classList.toggle('open')}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilastro 1 — La Formazione — Morfeus</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+--bg:#f5f4f0;--bg-2:#efeee8;--bg-3:#e8e7df;--card:#fffdf9;
+--ink:#1a1a18;--ink-2:#52524e;--ink-3:#84847e;
+--line:rgba(0,0,0,.09);--line-2:rgba(0,0,0,.16);--grid:rgba(0,0,0,.045);
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+--mono:'SF Mono',ui-monospace,Consolas,'Liberation Mono',monospace;
+--accent:#6B5FE5;--accent-soft:#eeedfd;--accent-line:#cdc9f6;
+--agent:#E8682A;--agent-soft:#fdeee3;--agent-line:#f6c9aa;
+--good:#3b9e57;--good-soft:#e6f4ea;--bad:#d44a3e;--bad-soft:#fbe9e6;
+--sh:0 1px 2px rgba(20,18,10,.05),0 6px 20px rgba(20,18,10,.05);--r:9px;--r-l:13px;
+}
+html.dark{
+--bg:#1e1e1c;--bg-2:#272725;--bg-3:#2e2e2b;--card:#232320;
+--ink:#f5f4ed;--ink-2:#c6c4b8;--ink-3:#928f82;
+--line:rgba(255,255,255,.11);--line-2:rgba(255,255,255,.19);--grid:rgba(255,255,255,.045);
+--accent:#9b92f2;--accent-soft:#2b2560;--accent-line:#4a4290;
+--agent:#f5915c;--agent-soft:#3f2817;--agent-line:#8a5630;
+--good:#86d098;--good-soft:#22382a;--bad:#ee8a80;--bad-soft:#412420;--sh:0 1px 2px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);font-weight:500}
+.mk{height:15px;color:var(--accent)}
+.brand .sep{width:1px;height:15px;background:var(--line-2)}
+.brand .lz{font-family:var(--mono);background:var(--accent);color:#fff;padding:3px 10px;border-radius:30px;font-size:11.5px;font-weight:500;letter-spacing:.02em}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;font-family:var(--mono);font-size:12px;font-weight:600;box-shadow:var(--sh)}
+.lang button{background:transparent;border:none;color:var(--ink-3);padding:6px 12px;cursor:pointer;font-family:var(--mono);transition:.18s}
+.lang button.on{background:var(--accent);color:#fff}
+.ic-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--sh);transition:.18s}
+.ic-btn:hover{color:var(--ink);border-color:var(--line-2)}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;box-shadow:var(--sh);transition:.18s;white-space:nowrap}
+.pdf-btn:hover{color:var(--ink);border-color:var(--line-2)}.pdf-btn i{font-size:16px;color:var(--accent)}
+.wrap{max-width:740px;margin:0 auto;padding:92px 24px 60px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--agent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'//';opacity:.55}
+h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-bottom:14px}
+.lede{font-size:17px;color:var(--ink-2);max-width:620px}
+.sh{display:flex;align-items:center;gap:11px;margin:54px 0 20px;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.sh>i{font-size:16px;color:var(--accent)}
+.sh .no{color:var(--accent)}.sh .no::before{content:'['}.sh .no::after{content:']'}
+.sh h2{font-size:12px;font-family:var(--mono)}
+.sh::after{content:'';flex:1;border-top:1px dashed var(--line-2)}
+.note{display:flex;gap:16px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-l);padding:22px;margin:0}
+.note .ni{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.note h4{font-size:15px;font-weight:600;margin-bottom:5px;color:var(--accent)}.note p{font-size:14.5px;color:var(--ink-2)}.note p strong{color:var(--ink);font-weight:600}
+.note.warn{background:var(--agent-soft);border-color:var(--agent-line)}.note.warn .ni{background:var(--agent)}.note.warn h4{color:var(--agent)}
+.key{text-align:center;padding:42px 20px;margin:0;border-top:1px dashed var(--line-2);border-bottom:1px dashed var(--line-2)}
+.key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:600px;margin:0 auto;letter-spacing:-.01em}
+.key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
+
+/* toggle formata vs non-formata */
+.tog{display:flex;background:var(--card);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:var(--sh);width:max-content;margin:0 auto 14px}
+.tog button{background:transparent;border:none;color:var(--ink-3);padding:9px 20px;cursor:pointer;font-family:var(--mono);font-size:13px;font-weight:600;transition:.18s}
+.tog button.on{background:var(--accent);color:#fff}
+.cmpbox{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px}
+.cmpbox.bad{background:var(--bad-soft);border-color:var(--bad)}
+.cmpbox.good{background:var(--good-soft);border-color:var(--good)}
+.cmpbox .cbh{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.cmpbox .cbi{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0}
+.cmpbox.bad .cbi{background:var(--bad)}.cmpbox.good .cbi{background:var(--good)}
+.cmpbox .cbt{font-size:15px;font-weight:600}
+.cmpbox.bad .cbt{color:var(--bad)}.cmpbox.good .cbt{color:var(--good)}
+.cmpbox ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.cmpbox li{font-size:14px;color:var(--ink-2);display:flex;gap:9px;line-height:1.5}.cmpbox li i{font-size:15px;margin-top:2px;flex-shrink:0}
+.cmpbox.bad li i{color:var(--bad)}.cmpbox.good li i{color:var(--good)}
+
+/* mappa ruoli cliccabile */
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.role{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 12px 14px;cursor:pointer;transition:.18s}
+.role:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.role.on{border-color:var(--accent);background:var(--accent-soft)}
+.role .rn{position:absolute;top:8px;left:10px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink-3)}
+.role.on .rn{color:var(--accent)}
+.role .ric{width:42px;height:42px;border-radius:12px;background:var(--bg-2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;transition:.18s}
+.role.on .ric{background:var(--accent);color:#fff}
+.role .rt{font-size:13px;font-weight:600;line-height:1.25}
+.role.champ{border-style:dashed}
+.role.champ .ric{color:var(--agent)}.role.champ.on{border-color:var(--agent);background:var(--agent-soft)}
+.role.champ.on .ric{background:var(--agent);color:#fff}.role.champ.on .rn{color:var(--agent)}
+.role .rbadge{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;background:var(--agent);padding:2px 6px;border-radius:20px;line-height:1.4}
+.roledetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;border-top:3px solid var(--accent)}
+.roledetail.champaccent{border-top-color:var(--agent)}
+.roledetail .rdh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.roledetail .rdh .rdi{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.roledetail.champaccent .rdh .rdi{background:var(--agent-soft);color:var(--agent)}
+.roledetail .rdh h4{font-size:16px;font-weight:600}
+.roledetail .why{font-size:14.5px;color:var(--ink-2);margin-bottom:14px}.roledetail .why b{color:var(--ink);font-weight:600}
+.roledetail .gl{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.roledetail.champaccent .gl{color:var(--agent)}
+.roledetail ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.roledetail li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px;line-height:1.5}.roledetail li i{font-size:14px;margin-top:2px;flex-shrink:0;color:var(--accent)}
+.roledetail.champaccent li i{color:var(--agent)}
+
+/* stepper percorso formativo */
+.steps{display:flex;flex-direction:column;gap:8px}
+.stp{border:1.5px solid var(--line);border-radius:var(--r-l);background:var(--bg-2);overflow:hidden;transition:.18s}
+.stp.on{border-color:var(--accent)}
+.stphead{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.stphead .sn{width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ink-3);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stp.on .stphead .sn{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stphead .stt{font-size:14px;font-weight:600;flex:1}
+.stphead .sst{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.stphead .chev{color:var(--ink-3);font-size:16px;transition:.2s}
+.stp.on .stphead .chev{transform:rotate(180deg);color:var(--accent)}
+.stpbody{display:none;padding:0 16px 16px 58px}
+.stp.on .stpbody{display:block;padding-top:12px}
+.stpbody p{font-size:14px;color:var(--ink-2);margin-bottom:10px}.stpbody p b{color:var(--ink);font-weight:600}
+.stpbody ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.stpbody li{font-size:13.5px;color:var(--ink-2);display:flex;gap:8px;line-height:1.5}.stpbody li i{font-size:14px;margin-top:2px;flex-shrink:0;color:var(--accent)}
+
+.story{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:22px;display:flex;gap:18px;align-items:flex-start}
+.story .si{width:48px;height:48px;border-radius:12px;background:var(--agent-soft);color:var(--agent);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.story h4{font-size:15px;font-weight:600;margin-bottom:6px}.story p{font-size:14px;color:var(--ink-2)}.story p b{color:var(--ink);font-weight:600}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card3{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px}
+.card3 .ci{width:34px;height:34px;border-radius:10px;background:var(--bad-soft);color:var(--bad);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.card3 h4{font-size:14px;font-weight:600;margin-bottom:5px}.card3 p{font-size:13px;color:var(--ink-2);line-height:1.55}
+
+.cp{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.cp h4{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:8px;align-items:center}.cp h4 i{color:var(--accent)}
+.cp p{font-size:14px;color:var(--ink-2)}
+.cp .cpq{margin-top:12px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--bg-2);border-radius:0 var(--r) var(--r) 0;font-size:14.5px;color:var(--ink);font-weight:500}
+.cp .cpnote{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.bridge{display:flex;gap:14px;align-items:center;background:var(--agent-soft);border:1px solid var(--agent-line);border-radius:var(--r-l);padding:18px;margin-top:28px}
+.bridge i{color:var(--agent);font-size:22px}.bridge p{font-size:14px;color:var(--ink-2)}.bridge b{color:var(--agent)}
+.foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
+@media(max-width:640px){h1{font-size:28px}.roles{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.story{flex-direction:column}.role .rt{font-size:12.5px}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn,.tog{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.stpbody{display:block!important}.note,.card3,.cp,.cmpbox,.role,.roledetail,.stp,.key,.story{break-inside:avoid;box-shadow:none!important}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">
+    <svg class="mk" viewBox="0 0 1000 476" fill="currentColor" aria-label="Morfeus"><path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z"/><path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z"/><path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z"/></svg>
+    <span class="sep"></span>
+    <span class="lz" data-i="kicker">Lezione A1.4a</span>
+  </div>
+  <div class="tools">
+    <div class="lang"><button data-l="it" class="on" onclick="setLang('it')">IT</button><button data-l="en" onclick="setLang('en')">EN</button></div>
+    <button class="pdf-btn" onclick="window.print()" data-ti="pdfT"><i class="ti ti-download"></i><span>PDF</span></button>
+    <button class="ic-btn" onclick="toggleTheme()" data-ti="themeT"><i class="ti ti-sun-moon"></i></button>
+  </div>
+</div>
+<div class="wrap">
+  <div class="eyebrow rv" data-i="eyebrow">Pilastro 1 · Approfondimento</div>
+  <h1 class="rv" data-i="h1">La Formazione</h1>
+  <p class="lede rv" data-i="lede"></p>
+
+  <div class="sh rv"><i class="ti ti-school"></i><span class="no">01</span><h2 data-i="s1">Perché è il primo pilastro</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-users"></i></div><div><h4 data-i="note1H">Le persone vengono prima del modello</h4><p data-i-html="note1P"></p></div></div>
+  <div class="key rv" style="margin-top:24px"><p data-i="goldKey"></p><div class="cap" data-i="goldCap"></div></div>
+
+  <div class="sh rv"><i class="ti ti-books"></i><span class="no">02</span><h2 data-i="s2">Cos'è davvero la formazione AI</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="whatIntro"></p>
+  <div class="cards rv" id="whatCards"></div>
+
+  <div class="sh rv"><i class="ti ti-git-compare"></i><span class="no">03</span><h2 data-i="s3">Cosa si rompe se manca</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="cmpIntro"></p>
+  <div class="tog rv">
+    <button onclick="showCmp(0)" data-i="togA">Azienda non formata</button>
+    <button class="on" onclick="showCmp(1)" data-i="togB">Azienda formata</button>
+  </div>
+  <div class="rv" id="cmpWrap"></div>
+
+  <div class="sh rv"><i class="ti ti-sitemap"></i><span class="no">04</span><h2 data-i="s4">Chi va formato</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="rolesIntro"></p>
+  <div class="roles rv" id="roles"></div>
+  <div class="roledetail rv" id="roledetail"></div>
+
+  <div class="sh rv"><i class="ti ti-stairs-up"></i><span class="no">05</span><h2 data-i="s5">Come si struttura il percorso</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="stepsIntro"></p>
+  <div class="steps rv" id="steps"></div>
+
+  <div class="sh rv"><i class="ti ti-refresh"></i><span class="no">06</span><h2 data-i="s6">Non è un evento, è un ritmo</h2></div>
+  <div class="note rv"><div class="ni"><i class="ti ti-rotate-clockwise"></i></div><div><h4 data-i="contH">La formazione continua</h4><p data-i-html="contP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-bulb"></i><span class="no">07</span><h2 data-i="s7">Esempi concreti</h2></div>
+  <div class="story rv"><div class="si"><i class="ti ti-friends"></i></div><div><h4 data-i="storyH">La formazione che attecchisce</h4><p data-i-html="storyP"></p></div></div>
+
+  <div class="sh rv"><i class="ti ti-alert-triangle"></i><span class="no">08</span><h2 data-i="s8">Errori comuni</h2></div>
+  <div class="cards rv" id="errCards"></div>
+
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s9">Checkpoint</h2></div>
+  <div class="cp rv">
+    <h4><i class="ti ti-target"></i> <span data-i="cpH">Mappa la tua formazione</span></h4>
+    <p data-i="cpP"></p>
+    <div class="cpq" data-i="cpQ"></div>
+    <div class="cpnote" data-i="cpNote"></div>
+  </div>
+
+  <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
+  <div class="foot rv"><span data-i="foot">Morfeus — Pilastro 1 · La Formazione</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
+  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<script>
+var DICT={
+it:{
+kicker:'Lezione A1.4a',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Pilastro 1 · Approfondimento',
+h1:'La Formazione',
+lede:'È il primo dei quattro pilastri dell\'adozione AI, e non per caso: è la base su cui poggiano tutti gli altri. Prima del tool, prima dei dati, prima di qualsiasi automazione, vengono le persone che devono saper usare l\'AI. Questo è l\'approfondimento dedicato.',
+s1:'Perché è il primo pilastro',
+note1H:'Le persone vengono prima del modello',
+note1P:'La formazione è <strong>la base di tutto</strong>. Senza saperlo usare, lo strumento più potente resta inutile o pericoloso: dati esposti, tempo perso a testare a caso, nessuno standard condiviso. Gli altri pilastri — cultura, dati, avvio — non decollano se le persone non hanno prima capito <strong>cos\'è l\'AI e come si delega</strong>. Ecco perché è il pilastro numero uno: tutto il resto si costruisce sopra.',
+goldKey:'La formazione non è «insegnare un tool». È alfabetizzare l\'intera struttura a un nuovo modo di lavorare.',
+goldCap:'Il tool cambierà tra sei mesi. La capacità di pensare e delegare all\'AI resta.',
+s2:'Cos\'è davvero la formazione AI',
+whatIntro:'Il primo malinteso da smontare: formazione AI non significa «insegnare ai tecnici a usare un software». Significa portare tutta la struttura — non solo chi ha competenze digitali — a un livello base comune.',
+s3:'Cosa si rompe se manca',
+cmpIntro:'La differenza tra un\'azienda formata e una non formata non è nel tool: è identico. È in quello che succede quando quel tool entra in mano alle persone. Confronta i due scenari.',
+togA:'Azienda non formata',togB:'Azienda formata',
+s4:'Chi va formato',
+rolesIntro:'Errore fatale: formare solo i tecnici. La formazione va calibrata per ruolo — ognuno usa l\'AI in modo diverso e ha bisogni diversi. Clicca ogni profilo per vedere cosa deve imparare.',
+s5:'Come si struttura il percorso',
+stepsIntro:'Un percorso di formazione AI non è una lezione unica: è una progressione in quattro tappe, dove ognuna poggia sulla precedente. Clicca ogni tappa per aprirla.',
+s6:'Non è un evento, è un ritmo',
+contH:'La formazione continua',
+contP:'La formazione AI <strong>non è un one-shot</strong>: un corso fatto una volta e archiviato. I modelli evolvono ogni pochi mesi, nascono funzioni nuove, cambiano le best practice. Una formazione ferma a un anno fa forma su un\'AI che non esiste più. Serve un <strong>ritmo</strong>: momenti ricorrenti di aggiornamento, condivisione di quello che funziona, spazio per sperimentare. La competenza AI è una manutenzione, non un traguardo.',
+s7:'Esempi concreti',
+storyH:'La formazione che attecchisce',
+storyP:'Un\'azienda parte formando <b>solo il reparto IT</b>: sei mesi dopo, l\'AI è un progetto tecnico di cui nessun altro capisce il valore. Un\'altra azienda forma <b>tutti</b>, per ruolo: dopo un mese l\'ufficio commerciale automatizza i report, l\'amministrazione riscrive le procedure, e nasce spontaneamente un <b>AI Champion</b> che aiuta i colleghi. Stesso tool, stesso mese: cambia solo chi è stato formato.',
+s8:'Errori comuni',
+s9:'Checkpoint',
+cpH:'Mappa la tua formazione',
+cpP:'La formazione è il pilastro più facile da sottovalutare, perché sembra «ovvia». Prima di comprare un tool o lanciare un progetto AI, fai l\'inventario onesto di chi in azienda è davvero formato.',
+cpQ:'Prendi i tre livelli — operativi, manager, leadership. Per ciascuno, quanti nella tua azienda saprebbero oggi delegare un compito reale all\'AI? Il livello più scoperto è il primo su cui investire.',
+cpNote:'Non parti da «quale tool compro». Parti da «chi sa già usarlo, e chi no».',
+bridge:'Hai il primo pilastro in profondità. <b>Prossimo:</b> la Cultura aziendale AI-ready — perché la formazione senza una cultura che le dà spazio resta lettera morta.',
+foot:'Morfeus — Pilastro 1 · La Formazione'
+},
+en:{
+kicker:'Lesson A1.4a',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Pillar 1 · Deep-dive',
+h1:'Training',
+lede:'It\'s the first of the four pillars of AI adoption, and not by accident: it\'s the base every other pillar rests on. Before the tool, before the data, before any automation, come the people who must know how to use AI. This is the dedicated deep-dive.',
+s1:'Why it\'s the first pillar',
+note1H:'People come before the model',
+note1P:'Training is <strong>the base of everything</strong>. Without knowing how to use it, even the most powerful tool stays useless or dangerous: exposed data, time wasted testing at random, no shared standard. The other pillars — culture, data, kickoff — never take off if people haven\'t first understood <strong>what AI is and how to delegate</strong>. That\'s why it\'s pillar number one: everything else is built on top of it.',
+goldKey:'Training isn\'t "teaching a tool." It\'s making the entire organization literate in a new way of working.',
+goldCap:'The tool will change in six months. The ability to think and delegate to AI stays.',
+s2:'What AI training really is',
+whatIntro:'The first misconception to dismantle: AI training doesn\'t mean "teaching the tech team to use a piece of software." It means bringing the whole organization — not just the digitally skilled — to a common baseline.',
+s3:'What breaks if it\'s missing',
+cmpIntro:'The difference between a trained and an untrained company isn\'t in the tool: it\'s identical. It\'s in what happens when that tool lands in people\'s hands. Compare the two scenarios.',
+togA:'Untrained company',togB:'Trained company',
+s4:'Who needs training',
+rolesIntro:'Fatal mistake: training only the tech team. Training must be calibrated by role — everyone uses AI differently and has different needs. Click each profile to see what they need to learn.',
+s5:'How the path is structured',
+stepsIntro:'An AI training path isn\'t a single lesson: it\'s a four-stage progression where each stage rests on the previous one. Click each stage to open it.',
+s6:'It\'s not an event, it\'s a rhythm',
+contH:'Continuous training',
+contP:'AI training <strong>isn\'t a one-shot</strong>: a course done once and filed away. Models evolve every few months, new features appear, best practices shift. Training frozen at a year ago trains people on an AI that no longer exists. You need a <strong>rhythm</strong>: recurring moments of updating, sharing what works, room to experiment. AI competence is maintenance, not a finish line.',
+s7:'Concrete examples',
+storyH:'Training that takes root',
+storyP:'One company starts by training <b>only the IT department</b>: six months later, AI is a technical project whose value no one else understands. Another company trains <b>everyone</b>, by role: after a month sales automates its reports, admin rewrites its procedures, and an <b>AI Champion</b> emerges spontaneously to help colleagues. Same tool, same month: the only difference is who got trained.',
+s8:'Common mistakes',
+s9:'Checkpoint',
+cpH:'Map your training',
+cpP:'Training is the easiest pillar to underestimate, because it seems "obvious." Before buying a tool or launching an AI project, take an honest inventory of who in the company is actually trained.',
+cpQ:'Take the three levels — operators, managers, leadership. For each, how many in your company could delegate a real task to AI today? The most exposed level is the first one to invest in.',
+cpNote:'You don\'t start from "which tool do I buy." You start from "who already knows how to use it, and who doesn\'t."',
+bridge:'You have the first pillar in depth. <b>Next:</b> the AI-ready company culture — because training without a culture that gives it room stays a dead letter.',
+foot:'Morfeus — Pillar 1 · Training'
+}};
+
+/* WHAT cards: [icon, title, text] */
+var WHAT={it:[
+['ti-alphabet-latin','Alfabetizzazione, non tecnica','Portare tutti a capire cos\'è un LLM, come ragiona, dove sbaglia. Non serve saper programmare: serve saper pensare all\'AI come a un collaboratore da indirizzare.'],
+['ti-users-group','Tutta la struttura, non solo i tecnici','Dall\'operativo al leader, passando per chi non ha mai toccato codice. L\'AI entra in ogni ruolo: la formazione deve arrivare ovunque, calibrata sul mestiere di ciascuno.'],
+['ti-message-2','Il metodo prima dello strumento','Si insegna a delegare, scomporre, dare contesto — competenze che sopravvivono al cambio di tool. GPT oggi, Claude domani: il modo di pensare resta.'],
+['ti-shield-check','Uso consapevole e sicuro','Sapere cosa si può e cosa non si può fare: quali dati non caricare, come validare un output, quando fidarsi e quando no. La formazione include i confini, non solo le possibilità.']
+],en:[
+['ti-alphabet-latin','Literacy, not tech skills','Getting everyone to understand what an LLM is, how it reasons, where it fails. You don\'t need to code: you need to think of AI as a collaborator you steer.'],
+['ti-users-group','The whole organization, not just tech','From operators to leaders, including those who\'ve never touched code. AI enters every role: training must reach everywhere, calibrated to each job.'],
+['ti-message-2','Method before the tool','You teach how to delegate, break down, give context — skills that survive a tool change. GPT today, Claude tomorrow: the way of thinking stays.'],
+['ti-shield-check','Conscious and safe use','Knowing what you can and can\'t do: which data not to upload, how to validate an output, when to trust and when not to. Training includes the boundaries, not just the possibilities.']
+]};
+
+/* COMPARE: [class, icon, title, [lines...]] index 0 = not trained, 1 = trained */
+var CMP={it:[
+['bad','ti-mood-sad','Il tool amplifica il caos',[
+ 'Ognuno usa un tool diverso, a modo suo: nessuno standard, risultati incoerenti',
+ 'Dati sensibili caricati senza pensarci: rischio invisibile finché non esplode',
+ 'Prompt vaghi, output mediocri, e la conclusione «l\'AI non funziona»',
+ 'Chi scopre qualcosa che funziona se lo tiene per sé: zero effetto rete',
+ 'Investimento nel tool sprecato: la potenza non compensa l\'ignoranza di chi lo usa']],
+['good','ti-mood-happy','Il tool amplifica il valore',[
+ 'Standard condiviso: tutti sanno come e quando usare l\'AI, con quali confini',
+ 'Consapevolezza dei rischi: si sa cosa non caricare, si valida sempre l\'output',
+ 'Delega strutturata: istruzioni chiare, output utili, meno iterazioni sprecate',
+ 'Chi scopre un prompt che funziona lo condivide: la competenza si moltiplica',
+ 'Investimento che rende: le persone estraggono davvero il valore del tool']]
+],en:[
+['bad','ti-mood-sad','The tool amplifies the chaos',[
+ 'Everyone uses a different tool, their own way: no standard, inconsistent results',
+ 'Sensitive data uploaded without thinking: an invisible risk until it blows up',
+ 'Vague prompts, mediocre output, and the conclusion "AI doesn\'t work"',
+ 'Whoever finds something that works keeps it to themselves: zero network effect',
+ 'The tool investment is wasted: power doesn\'t compensate for the user\'s ignorance']],
+['good','ti-mood-happy','The tool amplifies the value',[
+ 'Shared standard: everyone knows how and when to use AI, and within which limits',
+ 'Awareness of risks: people know what not to upload, they always validate output',
+ 'Structured delegation: clear instructions, useful output, fewer wasted iterations',
+ 'Whoever finds a prompt that works shares it: competence multiplies',
+ 'An investment that pays off: people actually extract the tool\'s value']]
+]};
+
+/* ROLES: [title, icon, why(html), goal-label, [what-to-learn...]] last = champion */
+var ROLES={it:[
+['Operativi','ti-user-cog',
+ 'Chi fa il lavoro ogni giorno. Usano l\'AI sulle task concrete: report, mail, sintesi, ricerche. Sono <b>il fronte</b> dove l\'AI porta benefici immediati e visibili.',
+ 'Cosa deve imparare',
+ ['Cos\'è l\'AI e quali problemi risolve nei processi operativi','Quali tool sono adatti e sicuri per il proprio ruolo','Come scrivere prompt strutturati per le task quotidiane','Come integrarla nelle routine senza creare dipendenze inefficaci']],
+['Manager','ti-clipboard-check',
+ 'Chi coordina team e processi. Non devono diventare esperti tecnici, ma <b>saper decidere</b> dove l\'AI ha senso e guidare l\'adozione della squadra senza subirla.',
+ 'Cosa deve imparare',
+ ['Comprendere il potenziale dell\'AI per efficienza e scalabilità','Identificare i processi automatizzabili o migliorabili','Coordinare le nuove competenze del team','Bilanciare innovazione, sicurezza e conformità']],
+['Leadership','ti-crown',
+ 'Imprenditori e dirigenti. Il loro compito non è usare il tool, ma <b>capire la trasformazione</b>: dove investire, quali rischi, come guidare il cambiamento dall\'alto.',
+ 'Cosa deve imparare',
+ ['Visione di mercato: come l\'AI trasforma il settore','Valutazione degli investimenti: ROI e rischi dei progetti AI','Pianificazione strategica di lungo termine','Leadership del cambiamento: guidare un\'adozione consapevole']],
+['Non-tecnici','ti-brush',
+ 'Chi non ha mai toccato codice: creativi, commerciali, amministrativi, HR. <b>Spesso i più diffidenti</b>, e proprio per questo i più importanti da coinvolgere: l\'AI non è un tema da informatici.',
+ 'Cosa deve imparare',
+ ['Sbloccare la diffidenza: l\'AI si guida col linguaggio, non col codice','Casi d\'uso concreti nel proprio mestiere specifico','Uso base e sicuro dei principali modelli','Che chiedere aiuto e sperimentare è incoraggiato, non un segno di debolezza']],
+['AI Champion','ti-star',
+ 'Non è un ruolo aziendale: è <b>una figura che emerge</b>. Una persona particolarmente capace che aiuta tutti gli altri, crea sistemi e li condivide. È il moltiplicatore interno della formazione.',
+ 'Cosa fa',
+ ['Aiuta i colleghi a risolvere problemi concreti con l\'AI','Crea prompt e assistenti e li condivide con il team','Diffonde le best practice e tiene alto lo standard','È il ponte tra la formazione ufficiale e l\'uso reale quotidiano']]
+],en:[
+['Operators','ti-user-cog',
+ 'The people doing the work every day. They use AI on concrete tasks: reports, emails, summaries, research. They\'re <b>the front line</b> where AI brings immediate, visible benefits.',
+ 'What to learn',
+ ['What AI is and which problems it solves in operational processes','Which tools are suitable and safe for their role','How to write structured prompts for everyday tasks','How to embed it into routines without creating ineffective dependencies']],
+['Managers','ti-clipboard-check',
+ 'The people coordinating teams and processes. They don\'t need to become tech experts, but to <b>know how to decide</b> where AI makes sense and guide the team\'s adoption rather than endure it.',
+ 'What to learn',
+ ['Understanding AI\'s potential for efficiency and scalability','Identifying processes that can be automated or improved','Coordinating the team\'s new skills','Balancing innovation, security and compliance']],
+['Leadership','ti-crown',
+ 'Entrepreneurs and executives. Their job isn\'t to use the tool, but to <b>understand the transformation</b>: where to invest, which risks, how to lead change from the top.',
+ 'What to learn',
+ ['Market vision: how AI transforms the sector','Investment assessment: ROI and risks of AI projects','Long-term strategic planning','Leadership of change: guiding a conscious adoption']],
+['Non-technical','ti-brush',
+ 'Those who\'ve never touched code: creatives, sales, admin, HR. <b>Often the most skeptical</b>, and precisely for that the most important to involve: AI isn\'t a topic for IT people only.',
+ 'What to learn',
+ ['Unlocking skepticism: AI is steered with language, not code','Concrete use cases in their own specific trade','Basic, safe use of the main models','That asking for help and experimenting is encouraged, not a sign of weakness']],
+['AI Champion','ti-star',
+ 'Not a job title: it\'s <b>a figure that emerges</b>. A particularly capable person who helps everyone else, builds systems and shares them. They\'re the internal multiplier of training.',
+ 'What they do',
+ ['Help colleagues solve concrete problems with AI','Build prompts and assistants and share them with the team','Spread best practices and keep the standard high','They\'re the bridge between official training and real daily use']]
+]};
+
+/* STEPS: [title, subtitle, intro(html), [bullets...]] */
+var STEPS={it:[
+['Alfabetizzazione','Tappa 1','Si parte dalle <b>basi comuni</b>: cos\'è un LLM, come ragiona in modo probabilistico, dove allucina, perché il contesto conta. Nessuno tocca ancora un tool per lavoro serio — prima si capisce con cosa si ha a che fare.',
+ ['Vocabolario condiviso: prompt, contesto, token, allucinazione','L\'analogia del junior da indirizzare','I confini di sicurezza: cosa non caricare mai','Obiettivo: togliere la paura e il mito, creare una base comune']],
+['Pratica guidata','Tappa 2','Si mette le mani in pasta, ma <b>con la rete</b>. Esercizi su task reali ma a basso rischio, con qualcuno che corregge. Si impara facendo, non guardando slide: il prompt si scrive, si testa, si migliora.',
+ ['Task quotidiane a basso rischio: mail, sintesi, riscritture','Il ciclo scrivi → testa → correggi → rifai','Feedback immediato da chi guida la sessione','Obiettivo: primi risultati visibili, fiducia che sale']],
+['Casi reali','Tappa 3','Si passa alle <b>attività vere del proprio ruolo</b>. Ogni persona porta un processo del suo lavoro e impara a delegarne dei pezzi all\'AI. Qui la formazione diventa specifica per mestiere.',
+ ['Scomporre un processo reale in step delegabili','Costruire prompt riutilizzabili per le proprie task ricorrenti','Capire dove l\'AI aiuta e dove resta meglio l\'umano','Obiettivo: l\'AI entra nel lavoro quotidiano, non resta un esercizio']],
+['Autonomia','Tappa 4','L\'obiettivo finale: <b>non aver più bisogno del formatore</b>. La persona sa prendere un problema nuovo, scomporlo e farsi aiutare dall\'AI da sola. La competenza è interiorizzata.',
+ ['Applicare il metodo a problemi mai visti prima','Creare i propri strumenti senza istruzioni esterne','Riconoscere quando serve aggiornarsi (formazione continua)','Obiettivo: autonomia piena — e, per i più bravi, diventare AI Champion']]
+],en:[
+['Literacy','Stage 1','You start from the <b>common basics</b>: what an LLM is, how it reasons probabilistically, where it hallucinates, why context matters. Nobody touches a tool for serious work yet — first you understand what you\'re dealing with.',
+ ['Shared vocabulary: prompt, context, token, hallucination','The analogy of the junior to steer','The safety boundaries: what to never upload','Goal: remove fear and myth, build a common baseline']],
+['Guided practice','Stage 2','You get your hands dirty, but <b>with a safety net</b>. Exercises on real but low-risk tasks, with someone correcting. You learn by doing, not by watching slides: the prompt is written, tested, improved.',
+ ['Low-risk everyday tasks: emails, summaries, rewrites','The cycle write → test → correct → redo','Immediate feedback from whoever leads the session','Goal: first visible results, growing confidence']],
+['Real cases','Stage 3','You move to the <b>real activities of your role</b>. Each person brings a process from their work and learns to delegate parts of it to AI. Here training becomes job-specific.',
+ ['Break down a real process into delegable steps','Build reusable prompts for your recurring tasks','Understand where AI helps and where the human stays better','Goal: AI enters daily work, doesn\'t stay an exercise']],
+['Autonomy','Stage 4','The final goal: <b>no longer needing the trainer</b>. The person can take a new problem, break it down and get AI\'s help on their own. The competence is internalized.',
+ ['Apply the method to problems never seen before','Build your own tools without external instructions','Recognize when it\'s time to update (continuous training)','Goal: full autonomy — and, for the best, becoming an AI Champion']]
+]};
+
+/* ERR cards: [icon, title, text] */
+var ERR={it:[
+['ti-tools','Formare solo i tecnici','L\'errore più comune: si pensa che l\'AI sia «roba da informatici». Ma l\'AI entra in ogni ruolo. Se formi solo il reparto IT, il valore resta bloccato lì e il resto dell\'azienda la subisce.'],
+['ti-presentation','Formazione solo teorica','Slide, definizioni, video guardati una volta. Senza pratica su task reali, nessuno cambia davvero come lavora. La teoria senza mani-in-pasta si dimentica in una settimana.'],
+['ti-calendar-off','Trattarla come un evento','Un corso fatto una volta e archiviato. I modelli cambiano ogni pochi mesi: una formazione ferma diventa obsoleta. Serve un ritmo, non un evento singolo.'],
+['ti-copy','Copiare il percorso di un altro','Prendere il programma di un\'altra azienda e applicarlo identico. La formazione va calibrata sui ruoli, sui processi e sul punto di partenza reale della tua struttura.']
+],en:[
+['ti-tools','Training only the tech team','The most common mistake: thinking AI is "an IT thing." But AI enters every role. If you train only the IT department, the value stays stuck there and the rest of the company endures it.'],
+['ti-presentation','Theory-only training','Slides, definitions, videos watched once. Without practice on real tasks, no one truly changes how they work. Theory without hands-on is forgotten within a week.'],
+['ti-calendar-off','Treating it as an event','A course done once and filed away. Models change every few months: frozen training becomes obsolete. You need a rhythm, not a single event.'],
+['ti-copy','Copying someone else\'s path','Taking another company\'s program and applying it identically. Training must be calibrated to the roles, processes and real starting point of your own organization.']
+]};
+
+var LANG='it',curRole=0,curStep=0,curCmp=1;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('whatCards').innerHTML=WHAT[LANG].map(function(w){return '<div class="card3" style="--_a:1"><div class="ci" style="background:var(--accent-soft);color:var(--accent)"><i class="ti '+w[0]+'"></i></div><h4>'+w[1]+'</h4><p>'+w[2]+'</p></div>'}).join('');
+  document.getElementById('errCards').innerHTML=ERR[LANG].map(function(w){return '<div class="card3"><div class="ci"><i class="ti '+w[0]+'"></i></div><h4>'+w[1]+'</h4><p>'+w[2]+'</p></div>'}).join('');
+  var rolesEl=document.getElementById('roles');
+  rolesEl.innerHTML=ROLES[LANG].map(function(r,i){var champ=(i===ROLES[LANG].length-1);return '<div class="role'+(champ?' champ':'')+(i===curRole?' on':'')+'" onclick="showRole('+i+')"><span class="rn">0'+(i+1)+'</span>'+(champ?'<span class="rbadge">'+(LANG==='it'?'Emerge':'Emerges')+'</span>':'')+'<div class="ric"><i class="ti '+r[1]+'"></i></div><div class="rt">'+r[0]+'</div></div>'}).join('');
+  showRole(curRole);
+  var stepsEl=document.getElementById('steps');
+  stepsEl.innerHTML=STEPS[LANG].map(function(s,k){
+    return '<div class="stp'+(k===curStep?' on':'')+'"><div class="stphead" onclick="showStep('+k+')"><div class="sn">'+(k+1)+'</div><div class="stt">'+s[0]+'</div><div class="sst">'+s[1]+'</div><i class="ti ti-chevron-down chev"></i></div>'+
+      '<div class="stpbody"><p>'+s[2]+'</p><ul>'+s[3].map(function(b){return '<li><i class="ti ti-point"></i>'+b+'</li>'}).join('')+'</ul></div></div>';
+  }).join('');
+  showCmp(curCmp);
+}
+function showRole(i){
+  curRole=i;
+  var champ=(i===ROLES[LANG].length-1);
+  document.querySelectorAll('#roles .role').forEach(function(el,k){el.classList.toggle('on',k===i)});
+  var r=ROLES[LANG][i],d=document.getElementById('roledetail');
+  d.classList.toggle('champaccent',champ);
+  d.innerHTML='<div class="rdh"><div class="rdi"><i class="ti '+r[1]+'"></i></div><h4>'+r[0]+'</h4></div>'+
+    '<div class="why">'+r[2]+'</div>'+
+    '<div class="gl"><i class="ti ti-check"></i>'+r[3]+'</div>'+
+    '<ul>'+r[4].map(function(x){return '<li><i class="ti ti-check"></i>'+x+'</li>'}).join('')+'</ul>';
+}
+function showStep(k){curStep=k;document.querySelectorAll('#steps .stp').forEach(function(el,j){el.classList.toggle('on',j===k)})}
+function showCmp(i){curCmp=i;var c=CMP[LANG][i];document.querySelectorAll('.tog button').forEach(function(b,k){b.classList.toggle('on',k===i)});document.getElementById('cmpWrap').innerHTML='<div class="cmpbox '+c[0]+'"><div class="cbh"><div class="cbi"><i class="ti '+c[1]+'"></i></div><div class="cbt">'+c[2]+'</div></div><ul>'+c[3].map(function(l){return '<li><i class="ti '+(c[0]==='bad'?'ti-x':'ti-check')+'"></i>'+l+'</li>'}).join('')+'</ul></div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

@@ -286,4 +286,81 @@ var AX={it:{
  ['Qualità','Non conta solo quanti dati sono, ma <b>come</b> sono: puliti, strutturati, aggiornati. Dati di qualità sono leggibili dalla macchina e privi di rumore e contraddizioni.','puliti · strutturati · aggiornati\nniente rumore, niente contraddizioni']
 ],
 '2':[
- ['Quantitativi','I dati misurabili: numeri, tabelle, metriche, importi. È l\'immagine classica di "dato"
+ ['Quantitativi','I dati misurabili: numeri, tabelle, metriche, importi. È l\'immagine classica di "dato": bilanci, listini, KPI, quantità. Facili da leggere per la macchina, ma sono solo metà del quadro.','fatturato · unità vendute · prezzi\ntabelle, metriche, importi'],
+ ['Qualitativi','I dati descrittivi, fatti di parole: report, contratti, procedure, email, verbali. Sono dati <b>a tutti gli effetti</b>, esattamente come i numeri — spesso i più preziosi, perché contengono il tuo know-how.','un report, un contratto, una procedura\ntesto = dato, non decorazione']
+]},
+en:{
+'1':[
+ ['Quantity','The more data and examples you give the AI, the more the output improves and <b>stays faithful</b> to the examples. Without examples it "does whatever it wants": little context, more freedom to get it wrong.','more examples → stays more faithful\nzero examples → does what it wants'],
+ ['Quality','It\'s not only how much data there is, but <b>how</b> it is: clean, structured, up to date. Quality data is machine-readable and free of noise and contradictions.','clean · structured · up to date\nno noise, no contradictions']
+],
+'2':[
+ ['Quantitative','Measurable data: numbers, tables, metrics, amounts. It\'s the classic image of "data": balance sheets, price lists, KPIs, quantities. Easy for the machine to read, but only half the picture.','revenue · units sold · prices\ntables, metrics, amounts'],
+ ['Qualitative','Descriptive data, made of words: reports, contracts, procedures, emails, minutes. These are data <b>in every respect</b>, exactly like numbers — often the most valuable, because they hold your know-how.','a report, a contract, a procedure\ntext = data, not decoration']
+]}};
+
+// Data requirements (selector) — id, icon, title, description, example
+var REQ={it:[
+ ['struct','ti-table','Strutturati','Organizzati in un formato che la macchina legge: tabelle, righe e colonne, campi con nomi chiari. Un mucchio disordinato di file è illeggibile per l\'AI tanto quanto per un nuovo collega.','file ordinati · formati uniformi\ncampi con nomi chiari'],
+ ['clean','ti-wash','Puliti','Senza errori, duplicati, celle vuote o dati contraddittori. Il rumore confonde l\'AI: garbage in, garbage out. Pulire prima di dare in pasto è metà del lavoro.','niente duplicati · niente celle vuote\nniente contraddizioni'],
+ ['fresh','ti-refresh','Aggiornati','Che riflettano la realtà di oggi, non quella di tre anni fa. Dati vecchi portano l\'AI a risposte vecchie: per l\'ultimo bilancio servono i numeri dell\'ultimo bilancio.','riflettono la realtà attuale\nnon dati scaduti'],
+ ['rel','ti-filter','Rilevanti','Pertinenti al problema che stai affrontando. Più contesto rilevante dai, più restringi lo spazio delle risposte; il contesto irrilevante è solo rumore che allontana dalla risposta giusta.','pertinenti al problema\ntolto tutto il superfluo']
+],en:[
+ ['struct','ti-table','Structured','Organized in a format the machine reads: tables, rows and columns, clearly named fields. A messy pile of files is as unreadable to AI as it is to a new colleague.','tidy files · uniform formats\nclearly named fields'],
+ ['clean','ti-wash','Clean','Free of errors, duplicates, empty cells or contradictory data. Noise confuses the AI: garbage in, garbage out. Cleaning before you feed it is half the job.','no duplicates · no empty cells\nno contradictions'],
+ ['fresh','ti-refresh','Up to date','Reflecting today\'s reality, not that of three years ago. Old data leads the AI to old answers: for the latest balance sheet you need the latest figures.','reflect current reality\nnot expired data'],
+ ['rel','ti-filter','Relevant','Pertinent to the problem you\'re facing. The more relevant context you give, the more you narrow the answer space; irrelevant context is just noise that pulls away from the right answer.','pertinent to the problem\neverything superfluous removed']
+]};
+
+// Other quality requirements (chips)
+var QCHIP={it:['Rilevanti','Completi','Senza duplicati','Aggiornati','Coerenti','Senza rumore'],en:['Relevant','Complete','No duplicates','Up to date','Consistent','No noise']};
+
+// From dirty to clean (cards) — icon, title, text
+var CLEAN={it:[
+ ['ti-eraser','Togli il rumore','Elimina duplicati, righe vuote, dati fuori tema. Ciò che non serve al problema va tolto: distrae l\'AI e basta.'],
+ ['ti-tag','Uniforma i nomi','Un solo standard per ogni campo, in tutti i documenti. "prodotto" resta "prodotto" ovunque, così l\'AI collega tutto.'],
+ ['ti-table','Dai una struttura','Porta tutto in un formato leggibile dalla macchina: tabelle, campi chiari, formati uniformi. Ordine visibile = ordine per l\'AI.'],
+ ['ti-archive','Archivia con metodo','Un metodo univoco per tutti aumenta l\'efficienza e riduce i costi nel tempo: i dati puliti oggi si riusano domani.']
+],en:[
+ ['ti-eraser','Cut the noise','Remove duplicates, empty rows, off-topic data. Whatever doesn\'t serve the problem must go: it only distracts the AI.'],
+ ['ti-tag','Standardize names','One standard per field, across every document. "product" stays "product" everywhere, so the AI connects everything.'],
+ ['ti-table','Give it structure','Bring everything into a machine-readable format: tables, clear fields, uniform formats. Visible order = order for the AI.'],
+ ['ti-archive','Store with method','One method for everyone raises efficiency and lowers costs over time: data cleaned today is reused tomorrow.']
+]};
+
+var LANG='it',axSel={'1':0,'2':0},reqSel=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  renderReqs();
+  document.getElementById('qchips').innerHTML=QCHIP[LANG].map(function(x){return '<span class="chip"><i class="ti ti-check"></i>'+x+'</span>'}).join('');
+  document.getElementById('cleanCards').innerHTML=CLEAN[LANG].map(function(c){return '<div class="card3"><div class="ci"><i class="ti '+c[0]+'"></i></div><h4>'+c[1]+'</h4><p>'+c[2]+'</p></div>'}).join('');
+  showAx(1,axSel['1']);showAx(2,axSel['2']);
+}
+function showAx(axis,side){
+  axSel[String(axis)]=side;
+  var seg=AX[LANG][String(axis)][side];
+  document.querySelectorAll('.axis')[axis-1].querySelectorAll('.seg').forEach(function(b,k){b.classList.toggle('on',k===side)});
+  var det=document.getElementById('ax'+axis+'Detail');
+  det.innerHTML='<b>'+seg[0]+'.</b> '+seg[1]+'<div class="ex">'+seg[2]+'</div>';
+}
+function renderReqs(){
+  document.getElementById('reqs').innerHTML=REQ[LANG].map(function(r,i){return '<div class="req'+(i===reqSel?' on':'')+'" onclick="showReq('+i+')"><div class="ri"><i class="ti '+r[1]+'"></i></div><span class="rt">'+r[2]+'</span></div>'}).join('');
+  showReq(reqSel);
+}
+function showReq(i){
+  reqSel=i;var r=REQ[LANG][i];
+  document.querySelectorAll('#reqs .req').forEach(function(el,k){el.classList.toggle('on',k===i)});
+  document.getElementById('reqdetail').innerHTML='<p><b>'+r[2]+'.</b> '+r[3]+'</p><div class="ex">'+r[4]+'</div>';
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

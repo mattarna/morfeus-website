@@ -234,4 +234,42 @@ t2H:'After: all on the table',t2P:'The Transformer "spreads the words on the tab
 t3H:'The result',t3P:'It\'s the technology that makes ChatGPT, Claude and Perplexity possible. Without 2017, models like these were simply impossible.',
 s5:'Checkpoint',
 cpH:'Break down one of your processes',
-cpP:'Understanding the algorithm serves one practical purpose: if you can describe a routine of yours as a recipe, you can delegate it. AI excels precisely at replicating well-writt
+cpP:'Understanding the algorithm serves one practical purpose: if you can describe a routine of yours as a recipe, you can delegate it. AI excels precisely at replicating well-written recipes — and at bringing them to scale.',
+cpQ:'Take an activity you repeat every week (a report, a stock reply, a check). Write it as a recipe: ingredients, step-by-step instructions, expected result. It\'s the first step toward delegation.',
+bridge:'You know what an algorithm is, where LLMs come from and what it means to bring them to scale. <b>Next:</b> data — the fuel without which even the best recipe stays just paper.',
+foot:'Morfeus — Algorithm & glossary'
+}};
+
+var CHAIN={it:[
+['ti-cake','Algoritmo','la ricetta','Anno','—','Un <strong>set finito di istruzioni consistenti</strong>, come una ricetta: stessi ingredienti, stessi passi, stesso risultato ogni volta. È il concetto più ampio; tutto il resto è una sua specializzazione.','Rispondere a una mail-tipo seguendo sempre gli stessi passi.'],
+['ti-trending-up','Machine Learning','la macchina che migliora','Anni \'80–\'90','—','La tecnologia che permette alla macchina di <strong>migliorare nel tempo</strong> a partire dagli esempi, invece di ricevere ogni regola scritta a mano. Più dati vede, più diventa precisa.','Il filtro anti-spam che impara dalle mail che segni come indesiderate.'],
+['ti-stack-2','Deep Learning','a più strati','Anni 2010','—','Un ramo del machine learning che <strong>replica i collegamenti neurali</strong> su più strati per analizzare dati complessi. È il livello che rende possibili gli LLM.','Riconoscere un volto in una foto tra migliaia di dettagli.'],
+['ti-topology-star-3','Reti Neurali','ispirate al cervello','Ispirazione: anni \'50','—','Il <strong>modello computazionale ispirato al cervello umano</strong>: nodi collegati che si passano segnali. Sono i mattoni con cui si costruisce il deep learning.','La struttura interna che "accende" i nodi giusti per capire una frase.'],
+['ti-bolt','Transformer','tutto sul tavolo','2017','2017','L\'<strong>architettura del 2017</strong> che ha reso possibili gli LLM moderni. Invece di leggere parola per parola, mette tutte le parole "sul tavolo" e le fa parlare tra loro. È la tecnologia dietro ChatGPT, Claude, Perplexity.','La differenza tra un traduttore lento del 2015 e ChatGPT oggi.']
+],en:[
+['ti-cake','Algorithm','the recipe','Year','—','A <strong>finite set of consistent instructions</strong>, like a recipe: same ingredients, same steps, same result every time. It\'s the broadest concept; everything else is a specialization of it.','Answering a stock email by always following the same steps.'],
+['ti-trending-up','Machine Learning','the machine that improves','1980s–90s','—','The technology that lets the machine <strong>improve over time</strong> from examples, instead of being handed every rule by hand. The more data it sees, the more accurate it gets.','The spam filter that learns from the emails you flag as junk.'],
+['ti-stack-2','Deep Learning','multi-layered','2010s','—','A branch of machine learning that <strong>replicates neural connections</strong> across multiple layers to analyze complex data. It\'s the level that makes LLMs possible.','Recognizing a face in a photo among thousands of details.'],
+['ti-topology-star-3','Neural Networks','inspired by the brain','Idea: 1950s','—','The <strong>computational model inspired by the human brain</strong>: connected nodes passing signals to each other. They\'re the building blocks deep learning is made of.','The inner structure that "lights up" the right nodes to understand a sentence.'],
+['ti-bolt','Transformer','all on the table','2017','2017','The <strong>2017 architecture</strong> that made modern LLMs possible. Instead of reading word by word, it puts all the words "on the table" and lets them talk to each other. It\'s the technology behind ChatGPT, Claude, Perplexity.','The gap between a slow 2015 translator and ChatGPT today.']
+]};
+
+var LANG='it',curC=0;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('chain').innerHTML=CHAIN[LANG].map(function(c,i){return '<div class="clink'+(i===curC?' on':'')+'" onclick="showC('+i+')"><div class="cn"><i class="ti '+c[0]+'"></i></div><div class="ct">'+c[1]+'<span class="cs">'+c[2]+'</span></div><span class="cy">'+c[3]+'</span>'+(i<CHAIN[LANG].length-1?'<span class="nest"></span>':'')+'</div>'}).join('');
+  showC(curC);
+}
+function showC(i){curC=i;var c=CHAIN[LANG][i];document.querySelectorAll('.clink').forEach(function(x,k){x.classList.toggle('on',k===i)});document.getElementById('cdetail').innerHTML='<h4><i class="ti '+c[0]+'"></i> '+c[1]+'</h4><p>'+c[5]+'</p><div class="ex"><i class="ti ti-arrow-badge-right"></i><span>'+(LANG==='it'?'Esempio: ':'Example: ')+c[6]+'</span></div>'}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

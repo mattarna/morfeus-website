@@ -65,17 +65,6 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 .step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:16px 18px}
 .step .sn{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step h4{font-size:14.5px;font-weight:600;margin-bottom:3px}.step p{font-size:13.5px;color:var(--ink-2)}
-.pillars{display:flex;flex-direction:column;gap:8px}
-.pl{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:14px 16px;cursor:pointer;transition:.18s}
-.pl:hover{border-color:var(--line-2)}.pl.on{border-color:var(--accent);background:var(--accent-soft)}
-.pl .pli{width:34px;height:34px;border-radius:9px;background:var(--bg-2);color:var(--ink-3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:.18s}
-.pl.on .pli{background:var(--accent);color:#fff}
-.pl .plt{font-size:14.5px;font-weight:600}
-.pl .plx{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);margin-left:auto;flex-shrink:0}
-.pldetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 var(--r-l) var(--r-l) 0;box-shadow:var(--sh);padding:18px}
-.pldetail p{font-size:14.5px;color:var(--ink-2)}.pldetail p b{color:var(--ink);font-weight:600}
-.pldetail .ex{font-size:13px;background:var(--bg-2);border-radius:var(--r);padding:11px 13px;color:var(--ink-2);margin-top:11px;border-left:2px solid var(--accent-line)}
-.pldetail .ex b{color:var(--accent)}
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cmpc{border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
 .cmpc.bad{background:var(--bad-soft);border-color:var(--bad)}
@@ -107,8 +96,137 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 .foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
 .foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
 .rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
-@media(max-width:640px){h1{font-size:28px}.cmp{grid-template-columns:1fr}.cards,.cards.two{grid-template-columns:1fr}}
-@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.pl,.pldetail,.flow,.key,.step,.quote{break-inside:avoid;box-shadow:none!important}}
+
+/* --- RETE INTERATTIVA --- */
+.net-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);overflow:hidden}
+.net-hint{display:flex;align-items:center;gap:8px;padding:12px 16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.net-hint i{color:var(--accent);font-size:15px}
+.net-svg{display:block;width:100%;height:auto;touch-action:manipulation}
+.net-edge{stroke:var(--line-2);stroke-width:1.4;transition:stroke .25s,stroke-width .25s,opacity .25s;opacity:.55}
+.net-edge.hot{stroke:var(--accent);stroke-width:2.6;opacity:1}
+.net-edge.dim{opacity:.08}
+.net-node{cursor:pointer}
+.net-node circle.nd-c{fill:var(--card);stroke:var(--accent-line);stroke-width:2;transition:.25s}
+.net-node .nd-hit{fill:transparent;stroke:none}
+.net-node .nd-ico,.net-node text{pointer-events:none}
+.net-node .nd-ico{width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--accent);transition:color .25s}
+.net-node .nd-lab{font-family:var(--sans);font-size:11px;font-weight:600;fill:var(--ink-2);text-anchor:middle;transition:.25s}
+.net-node:hover circle.nd-c{stroke:var(--accent)}
+.net-node.sel circle.nd-c{fill:var(--accent);stroke:var(--accent)}
+.net-node.sel .nd-ico{color:#fff}
+.net-node.sel .nd-lab{fill:var(--ink);font-weight:700}
+.net-node.adj circle.nd-c{fill:var(--accent-soft);stroke:var(--accent)}
+.net-node.adj .nd-lab{fill:var(--ink)}
+.net-node.dim{opacity:.28}
+.net-panel{border-top:1px solid var(--line);padding:18px 20px;background:var(--bg-2);min-height:96px}
+.net-panel .npt{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.net-panel .npi{width:32px;height:32px;border-radius:9px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.net-panel h4{font-size:15px;font-weight:700}
+.net-panel .npdesc{font-size:13.5px;color:var(--ink-2);margin-bottom:12px}.net-panel .npdesc b{color:var(--ink)}
+.net-panel .nplk{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:7px}
+.net-links{display:flex;flex-direction:column;gap:7px}
+.net-links .nl{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:8px 11px}
+.net-links .nl b{color:var(--accent);font-weight:600}
+.net-links .nl i{color:var(--accent);font-size:14px;margin-top:2px;flex-shrink:0}
+.net-cut{font-size:13px;color:var(--ink-2);margin-top:12px;padding:10px 12px;border-radius:var(--r);background:var(--bad-soft);border:1px solid var(--bad)}
+.net-cut b{color:var(--bad)}
+.net-cut i{color:var(--bad);margin-right:5px}
+
+/* --- BOTTONE ESPANDI + MODAL FULLSCREEN --- */
+.net-fs-bar{display:flex;justify-content:flex-end;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.net-fs-btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 15px;border-radius:30px;border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;transition:.18s}
+.net-fs-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.net-fs-btn i{font-size:16px}
+.nfs-overlay{position:fixed;inset:0;z-index:200;background:color-mix(in srgb,var(--bg) 60%,rgba(0,0,0,.55));backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:2.2vh 2vw}
+.nfs-overlay.open{display:flex}
+.nfs-modal{position:relative;width:96vw;height:95.6vh;max-width:1500px;background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-l);box-shadow:0 24px 80px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+.nfs-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--bg-2);flex-shrink:0}
+.nfs-head .nfs-ico{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.nfs-head h3{font-size:16px;font-weight:700;line-height:1.2}
+.nfs-head .nfs-sub{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:1px}
+.nfs-close{margin-left:auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:.18s;flex-shrink:0}
+.nfs-close:hover{color:var(--ink);border-color:var(--line-2);background:var(--bg-3)}
+.nfs-body{flex:1;display:grid;grid-template-columns:1fr 380px;min-height:0}
+.nfs-stage{position:relative;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px;background:radial-gradient(circle at 50% 45%,var(--bg-2),var(--card))}
+.nfs-svg{display:block;width:100%;height:100%;touch-action:manipulation}
+.nfs-side{border-left:1px solid var(--line);background:var(--bg-2);overflow-y:auto;min-height:0}
+.nfs-panel{padding:22px 22px 28px}
+.nfs-panel .npt{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.nfs-panel .npi{width:38px;height:38px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.nfs-panel h4{font-size:18px;font-weight:700}
+.nfs-panel .npdesc{font-size:14.5px;color:var(--ink-2);margin-bottom:16px;line-height:1.6}.nfs-panel .npdesc b{color:var(--ink)}
+.nfs-panel .nplk{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:9px}
+.nfs-links{display:flex;flex-direction:column;gap:8px}
+.nfs-links .nl{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--ink-2);background:var(--card);border:1px solid var(--line);border-left:2px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:9px 12px}
+.nfs-links .nl b{color:var(--accent);font-weight:600}
+.nfs-links .nl i{color:var(--accent);font-size:14px;margin-top:2px;flex-shrink:0}
+.nfs-cut{font-size:13.5px;color:var(--ink-2);margin-top:16px;padding:12px 14px;border-radius:var(--r);background:var(--bad-soft);border:1px solid var(--bad);line-height:1.55}
+.nfs-cut b{color:var(--bad)}
+.nfs-cut i{color:var(--bad);margin-right:5px}
+.nfs-hint{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;align-items:center;gap:7px}
+.nfs-hint i{color:var(--accent);font-size:15px}
+body.nfs-lock{overflow:hidden}
+.nfs-svg .net-node .nd-ico{width:60px;height:60px;font-size:25px}
+.nfs-svg .net-node .nd-lab{font-size:13px;font-weight:600}
+.nfs-svg .net-edge{stroke-width:1.6}
+.nfs-svg .net-edge.hot{stroke-width:3}
+/* cluster: colori per gruppo (var --cl impostata inline per nodo) */
+.nfs-svg .net-node circle.nd-c{stroke:var(--cl,var(--accent-line))}
+.nfs-svg .net-node .nd-ico{color:var(--cl,var(--accent))}
+.nfs-svg .net-node:hover circle.nd-c{stroke:var(--cl,var(--accent))}
+.nfs-svg .net-node.sel circle.nd-c{fill:var(--cl,var(--accent));stroke:var(--cl,var(--accent))}
+.nfs-svg .net-node.sel .nd-ico{color:#fff}
+.nfs-svg .net-node.adj circle.nd-c{fill:var(--cl-soft,var(--accent-soft));stroke:var(--cl,var(--accent))}
+.nfs-svg .net-node.adj .nd-ico{color:var(--cl,var(--accent))}
+.nfs-legend{display:flex;flex-wrap:wrap;gap:14px;padding:12px 20px;border-top:1px solid var(--line);background:var(--bg-2);flex-shrink:0}
+.nfs-lg{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--ink-2);font-family:var(--sans)}
+.nfs-lg .dot{width:13px;height:13px;border-radius:50%;flex-shrink:0}
+.nfs-panel .npcl{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:30px;margin-bottom:10px}
+.nfs-panel .npcl .dot{width:9px;height:9px;border-radius:50%}
+
+/* --- COSA MANCA (toggle rimuovi nodo) --- */
+.miss-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 20px}
+.miss-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.miss-chip{font-family:var(--mono);font-size:11.5px;font-weight:600;padding:7px 12px;border-radius:30px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2);cursor:pointer;transition:.18s;display:flex;align-items:center;gap:6px}
+.miss-chip i{font-size:13px}
+.miss-chip:hover{border-color:var(--line-2)}
+.miss-chip.on{background:var(--bad);border-color:var(--bad);color:#fff}
+.miss-chip.on i{color:#fff}
+.miss-out{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.miss-side{border-radius:var(--r-l);padding:16px;border:1px solid var(--line)}
+.miss-side.on-side{background:var(--good-soft);border-color:var(--good)}
+.miss-side.off-side{background:var(--bad-soft);border-color:var(--bad)}
+.miss-side .mtag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:4px;margin-bottom:9px}
+.miss-side.on-side .mtag{background:var(--good);color:#fff}.miss-side.off-side .mtag{background:var(--bad);color:#fff}
+.miss-side p{font-size:13px;color:var(--ink-2);line-height:1.55}.miss-side p b{color:var(--ink)}
+.miss-side.off-side p b{color:var(--bad)}
+
+/* --- MINI DIAGNOSTICO --- */
+.dg-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px}
+.dg-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line)}
+.dg-row:last-of-type{border-bottom:none}
+.dg-q{flex:1;font-size:13.5px;color:var(--ink)}
+.dg-scale{display:flex;gap:5px;flex-shrink:0}
+.dg-dot{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line-2);background:var(--bg-2);color:var(--ink-3);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center}
+.dg-dot:hover{border-color:var(--accent)}
+.dg-dot.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.dg-result{margin-top:16px;padding:16px 18px;border-radius:var(--r-l);border:1px solid var(--accent-line);background:var(--accent-soft);display:flex;gap:14px;align-items:center}
+.dg-score{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--accent);line-height:1;flex-shrink:0}
+.dg-score span{font-size:14px;color:var(--ink-3)}
+.dg-verdict h4{font-size:14.5px;font-weight:700;margin-bottom:3px}
+.dg-verdict p{font-size:13px;color:var(--ink-2)}
+.dg-bar{height:7px;border-radius:5px;background:var(--bg-3);overflow:hidden;margin-top:14px}
+.dg-fill{height:100%;background:linear-gradient(90deg,var(--agent),var(--accent));width:0;transition:width .5s}
+
+.mf-legal{max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3);font-family:inherit;background:var(--bg-2)}
+@media(max-width:640px){h1{font-size:28px}.cmp,.miss-out{grid-template-columns:1fr}.cards,.cards.two{grid-template-columns:1fr}.net-node .nd-lab{font-size:13px}.dg-row{flex-direction:column;align-items:flex-start;gap:8px}
+.nfs-overlay{padding:0}.nfs-modal{width:100vw;height:100vh;max-width:none;border-radius:0;border:none}
+.nfs-body{grid-template-columns:1fr;grid-template-rows:minmax(240px,46vh) 1fr}
+.nfs-stage{padding:6px}.nfs-side{border-left:none;border-top:1px solid var(--line)}
+.nfs-panel{padding:16px 16px 24px}.nfs-panel h4{font-size:16px}
+.nfs-svg .net-node .nd-lab{font-size:17px;font-weight:700}
+.net-fs-btn span{display:inline}}
+@media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.note,.cmpc,.card3,.cp,.flow,.key,.step,.quote,.net-wrap,.miss-wrap,.dg-wrap{break-inside:avoid;box-shadow:none!important}}
 </style>
 </head>
 <body>
@@ -142,18 +260,36 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
   <div class="sh rv"><i class="ti ti-rocket"></i><span class="no">02</span><h2 data-i="s2">La postura, non lo strumento</h2></div>
   <div class="note rv"><div class="ni"><i class="ti ti-rocket"></i></div><div><h4 data-i="note1H">Una cultura «alla Y Combinator»</h4><p data-i-html="note1P"></p><p data-i-html="note1P2"></p></div></div>
 
-  <div class="sh rv"><i class="ti ti-columns-3"></i><span class="no">03</span><h2 data-i="s3">I tratti di una cultura AI-ready</h2></div>
-  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="pillIntro"></p>
-  <div class="pillars rv" id="pillars"></div>
-  <div class="pldetail rv" id="pldetail"></div>
+  <div class="sh rv"><i class="ti ti-affiliate"></i><span class="no">03</span><h2 data-i="s3">La rete: tutto si tiene</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="netIntro"></p>
+  <div class="net-wrap rv">
+    <div class="net-hint"><i class="ti ti-hand-finger"></i><span data-i="netHint">Clicca un nodo: si accendono i suoi collegamenti.</span></div>
+    <div class="net-fs-bar"><button class="net-fs-btn" onclick="openNetFS()" data-ti="fsBtnT"><i class="ti ti-arrows-maximize"></i><span data-i="fsBtn">Espandi la rete</span></button></div>
+    <svg class="net-svg" id="netSvg" viewBox="0 0 640 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rete della cultura AI-ready">
+      <g id="netEdges"></g>
+      <g id="netNodes"></g>
+    </svg>
+    <div class="net-panel" id="netPanel"></div>
+  </div>
+  <p class="lede rv" style="font-size:14px;margin-top:14px" data-i-html="netOutro"></p>
 
-  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">04</span><h2 data-i="s3b">Cultura rigida vs cultura AI-ready</h2></div>
+  <div class="sh rv"><i class="ti ti-unlink"></i><span class="no">04</span><h2 data-i="s4">Cosa succede se togli un pezzo</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="missIntro"></p>
+  <div class="miss-wrap rv">
+    <div class="miss-chips" id="missChips"></div>
+    <div class="miss-out">
+      <div class="miss-side on-side"><span class="mtag" data-i="missOnT">Rete intera</span><p data-i-html="missOnP"></p></div>
+      <div class="miss-side off-side" id="missOff"></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-arrows-diff"></i><span class="no">05</span><h2 data-i="s5">Cultura rigida vs cultura AI-ready</h2></div>
   <div class="cmp rv">
     <div class="cmpc bad"><span class="cmptag" data-i="rigT">Cultura rigida</span><p data-i-html="rigP1"></p><p data-i-html="rigP2"></p><p data-i-html="rigP3"></p></div>
     <div class="cmpc good"><span class="cmptag" data-i="readyT">Cultura AI-ready</span><p data-i-html="readyP1"></p><p data-i-html="readyP2"></p><p data-i-html="readyP3"></p></div>
   </div>
 
-  <div class="sh rv"><i class="ti ti-flask-2"></i><span class="no">05</span><h2 data-i="s4">Sperimentare bene: 1 su 4</h2></div>
+  <div class="sh rv"><i class="ti ti-flask-2"></i><span class="no">06</span><h2 data-i="s6">Sperimentare bene: 1 su 4</h2></div>
   <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="expIntro"></p>
   <div class="cmp rv">
     <div class="cmpc good"><span class="cmptag" data-i="expWinT">L'1 che funziona</span><p data-i-html="expWinP"></p></div>
@@ -161,7 +297,7 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
   </div>
   <p class="lede rv" style="font-size:14.5px;margin-top:16px" data-i-html="expNote"></p>
 
-  <div class="sh rv"><i class="ti ti-calendar-month"></i><span class="no">06</span><h2 data-i="s5">La riunione mensile: moltiplicare, non sommare</h2></div>
+  <div class="sh rv"><i class="ti ti-calendar-month"></i><span class="no">07</span><h2 data-i="s7">La riunione mensile: moltiplicare, non sommare</h2></div>
   <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="multIntro"></p>
   <div class="key rv"><p data-i="multKey"></p><div class="cap" data-i="multCap"></div></div>
   <div class="cards rv" style="margin-top:18px">
@@ -170,7 +306,7 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
     <div class="card3"><div class="ci"><i class="ti ti-affiliate"></i></div><h4 data-i="m3H">Ecosistema</h4><p data-i="m3P"></p></div>
   </div>
 
-  <div class="sh rv"><i class="ti ti-arrows-up"></i><span class="no">07</span><h2 data-i="s6">La scala è leva, non sostituzione</h2></div>
+  <div class="sh rv"><i class="ti ti-arrows-up"></i><span class="no">08</span><h2 data-i="s8">La scala è leva, non sostituzione</h2></div>
   <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i="scaleIntro"></p>
   <div class="flow rv">
     <div class="flnode"><div class="fv" data-i="scN1">10</div><div class="fl" data-i="scL1"></div></div>
@@ -189,11 +325,22 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
   </div>
   <div class="note amber rv" style="margin-top:18px"><div class="ni"><i class="ti ti-bulb-filled"></i></div><div><h4 data-i="rdH">L'R&S non è più una unit separata</h4><p data-i-html="rdP"></p></div></div>
 
-  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">08</span><h2 data-i="s7">Persone pensanti, non esecutori</h2></div>
+  <div class="sh rv"><i class="ti ti-gauge"></i><span class="no">09</span><h2 data-i="s9">Quanto è AI-ready la tua cultura?</h2></div>
+  <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="dgIntro"></p>
+  <div class="dg-wrap rv">
+    <div id="dgRows"></div>
+    <div class="dg-bar"><div class="dg-fill" id="dgFill"></div></div>
+    <div class="dg-result" id="dgResult" style="display:none">
+      <div class="dg-score" id="dgScore">0<span>/24</span></div>
+      <div class="dg-verdict"><h4 id="dgVh"></h4><p id="dgVp"></p></div>
+    </div>
+  </div>
+
+  <div class="sh rv"><i class="ti ti-brain"></i><span class="no">10</span><h2 data-i="s10">Persone pensanti, non esecutori</h2></div>
   <p class="lede rv" style="font-size:14.5px;margin-bottom:16px" data-i-html="thinkIntro"></p>
   <div class="quote rv"><span data-i="thinkQ"></span></div>
 
-  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">09</span><h2 data-i="s8">Checkpoint</h2></div>
+  <div class="sh rv"><i class="ti ti-pencil"></i><span class="no">11</span><h2 data-i="s11">Checkpoint</h2></div>
   <div class="cp rv">
     <h4><i class="ti ti-bulb"></i> <span data-i="cpH">La cultura viene prima del tool</span></h4>
     <p data-i="cpP"></p>
@@ -203,7 +350,31 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 
   <div class="bridge rv"><i class="ti ti-arrow-right-circle"></i><p data-i-html="bridge"></p></div>
   <div class="foot rv"><span data-i="foot">Morfeus — La cultura AI-ready</span> · <a href="https://morfeushub.com" target="_blank" rel="noopener">morfeushub.com</a></div>
-  <div class="mf-legal" style="max-width:920px;margin:34px auto 0;padding:14px 18px;border:1px solid var(--line,rgba(0,0,0,.14));border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3,#84847e);font-family:inherit;background:var(--bg-2,transparent)"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+  <div class="mf-legal"><p style="margin:0 0 8px">&copy; Morfeus &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p><p style="margin:0">&copy; Morfeus &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p></div>
+</div>
+
+<!-- MODAL RETE FULLSCREEN -->
+<div class="nfs-overlay" id="netFsOverlay" onclick="if(event.target===this)closeNetFS()" role="dialog" aria-modal="true" aria-label="Rete della cultura AI-ready">
+  <div class="nfs-modal">
+    <div class="nfs-head">
+      <div class="nfs-ico"><i class="ti ti-affiliate"></i></div>
+      <div>
+        <h3 data-i="fsTitle">La rete della cultura AI-ready</h3>
+        <div class="nfs-sub"><span class="nfs-hint"><i class="ti ti-hand-finger"></i><span data-i="fsHint">Clicca un nodo: si accendono i suoi collegamenti. Tocca di nuovo per deselezionare.</span></span></div>
+      </div>
+      <button class="nfs-close" onclick="closeNetFS()" data-ti="fsCloseT" aria-label="Chiudi"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="nfs-body">
+      <div class="nfs-stage">
+        <svg class="nfs-svg" id="netSvgFs" viewBox="0 0 1100 760" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rete completa della cultura AI-ready">
+          <g id="netEdgesFs"></g>
+          <g id="netNodesFs"></g>
+        </svg>
+      </div>
+      <div class="nfs-side"><div class="nfs-panel" id="netPanelFs"></div></div>
+    </div>
+    <div class="nfs-legend" id="netLegendFs"></div>
+  </div>
 </div>
 
 <script>
@@ -211,7 +382,7 @@ var DICT={
 it:{
 kicker:'Lezione A1.5',pdfT:'Scarica PDF',themeT:'Cambia tema',eyebrow:'Prima del tool',
 h1:'La cultura AI-ready',
-lede:'Prima del modello, prima del prompt, viene la cultura. È la postura aziendale — e personale — che decide se l\'AI attecchisce o resta un giocattolo. Puoi avere il miglior strumento sui processi: senza la cultura giusta, tra tre mesi si rompe tutto.',
+lede:'Prima del modello, prima del prompt, viene la cultura. È la postura aziendale — e personale — che decide se l\'AI attecchisce o resta un giocattolo. E non è una lista di buone intenzioni: è una rete. Ogni pezzo tiene in piedi gli altri, e se ne togli uno la struttura si indebolisce.',
 s1:'La rivoluzione che arriva dal basso',
 botIntro:'Questa è la <strong>prima rivoluzione tecnologica e industriale che arriva dal basso</strong>. Non è il vertice a imporla: sono le persone a scoprirla per prime, e solo dopo diventa una priorità aziendale. Succede così nel 90% dei casi.',
 bot1H:'Qualcuno prova',bot1P:'Un collaboratore, per curiosità, inizia a usare l\'AI su un pezzo del proprio lavoro. Senza che nessuno glielo abbia chiesto.',
@@ -223,9 +394,15 @@ s2:'La postura, non lo strumento',
 note1H:'Una cultura «alla Y Combinator»',
 note1P:'Cos\'è una cultura pronta a immergersi nell\'AI? È un approccio <strong>«alla Y Combinator»</strong>: molto americano, da startup. È <strong>quasi utopico averlo al 100%</strong>, ma è lì che bisogna puntare.',
 note1P2:'Se non punti lì, integrare l\'AI diventa una fatica continua — il tool da solo non basta mai. Questi tratti non sono un di più «buonista»: sono <strong>una delle cose più importanti per far funzionare l\'AI in un\'azienda</strong>.',
-s3:'I tratti di una cultura AI-ready',
-pillIntro:'Sette tratti compongono una cultura pronta. Non sono optional: sono il terreno in cui l\'AI cresce. Clicca ogni tratto per il dettaglio e l\'esempio Morfeus.',
-s3b:'Cultura rigida vs cultura AI-ready',
+s3:'La rete: tutto si tiene',
+netIntro:'La cultura AI-ready non è un elenco di tratti staccati: è <strong>una rete di nodi interconnessi</strong>. Ognuno alimenta gli altri — la curiosità nutre la sperimentazione, la sperimentazione ha bisogno dell\'apertura al fallimento, il fallimento insegna solo se condividi. <strong>Clicca un nodo</strong> per vedere da cosa dipende e cosa regge: capirai perché, se ne togli uno, l\'intera rete si sfilaccia.',
+netHint:'Clicca un nodo: si accendono i suoi collegamenti. Tocca di nuovo per deselezionare.',
+netOutro:'Non c\'è un nodo «più importante»: contano i <strong>legami</strong>. È il tessuto, non i singoli fili, a reggere l\'AI in azienda. Ecco perché comprarti il miglior tool non basta: il tool si appoggia su questa rete.',
+s4:'Cosa succede se togli un pezzo',
+missIntro:'Prova a spegnere un nodo. La rete non «perde una voce»: <strong>si rompe a catena</strong>, perché ogni tratto teneva in piedi altri. È la prova che la cultura AI-ready è un sistema, non una checklist.',
+missOnT:'Rete intera',
+missOnP:'Con tutti i nodi accesi: la scintilla dal basso viene <b>raccolta, testata, spiegata e condivisa</b>. Una scoperta di uno diventa il punto di partenza di tutti. Il tool si appoggia su un terreno solido.',
+s5:'Cultura rigida vs cultura AI-ready',
 rigT:'Cultura rigida',
 rigP1:'«<b>Non lo dico a nessuno</b>: o mi superano, o mi riempiono di lavoro». La scoperta resta nel cassetto.',
 rigP2:'«No, secondo me non è così». <b>Si chiude</b> davanti all\'evidenza, per difendere la propria opinione.',
@@ -234,21 +411,21 @@ readyT:'Cultura AI-ready',
 readyP1:'«Faccio una scoperta, <b>la condivido col team</b>»: capisco se serve a un collega e diventa veloce anche lui.',
 readyP2:'«<b>Parliamone e decidiamo assieme</b>»: curiosi, aperti, disposti a cambiare idea davanti ai dati.',
 readyP3:'Ognuno ha tempo per sperimentare e mettersi in gioco: <b>si fa innovazione dall\'interno</b>, senza freni.',
-s4:'Sperimentare bene: 1 su 4',
+s6:'Sperimentare bene: 1 su 4',
 expIntro:'Tollerare il fallimento non vuol dire fare test a caso. Vuol dire dare a una persona il permesso di provare — sapendo che <strong>su quattro test, magari uno solo va a segno</strong>. Ma quell\'uno cambia le carte.',
 expWinT:'L\'1 che funziona',
 expWinP:'Su 4 test, magari <b>1 solo funziona</b> — ma quell\'1 porta un <b>ROI importante</b>. Può farti fare in un giorno il lavoro di una settimana. Vale tutti gli altri tre. Per questo si sperimenta.',
 expLoseT:'I 3 che falliscono',
 expLoseP:'I <b>3 test falliti vanno spiegati</b>, non nascosti: «devi dirmi perché non hanno funzionato». È da lì che si impara, si capisce, e non si ripetono gli stessi errori.',
 expNote:'La tolleranza al fallimento non è caos: è metodo. <strong>«Non test a caso»: vanno fatti in maniera precisa.</strong> Chi non sperimenta non scopre mai dove l\'AI fa davvero la differenza — e quel segreto, una volta trovato, è incredibile.',
-s5:'La riunione mensile: moltiplicare, non sommare',
+s7:'La riunione mensile: moltiplicare, non sommare',
 multIntro:'Se condividi le scoperte col team, si crea <strong>un ecosistema di informazioni</strong>. È qui che la collaborazione diventa un meccanismo concreto, non uno slogan.',
 multKey:'In Morfeus, ogni mese, circa 3 ore di riunione dove ognuno mette sul tavolo le scoperte dei propri esperimenti. Marketing, sviluppo, operations: tutto converge.',
 multCap:'È un fattore moltiplicativo, non una somma: la scoperta di uno diventa il punto di partenza di tutti.',
 m1H:'Marketing scopre',m1P:'Chi segue il marketing trova un modo nuovo di usare l\'AI su un\'attività e lo porta in riunione.',
 m2H:'Sviluppo riusa',m2P:'Chi segue lo sviluppo realizza che quella stessa cosa serve anche a lui: la prova, e spesso funziona.',
 m3H:'Ecosistema',m3P:'Una scoperta, due reparti più veloci. Tutti sulla stessa nave, nella stessa direzione.',
-s6:'La scala è leva, non sostituzione',
+s8:'La scala è leva, non sostituzione',
 scaleIntro:'«La usiamo per scalare le nostre competenze, non per sostituirci o licenziarci». Un team maturo vede l\'AI come una leva. La differenza è tutta in cosa fai del tempo che liberi.',
 scN1:'10',scL1:'Produzione di partenza',
 scN2:'20',scL2:'Potenziale con l\'AI',
@@ -260,12 +437,458 @@ sc2H:'Studiare le AI',sc2P:'Tempo dedicato a ricerca e sviluppo sul proprio lavo
 sc3H:'Filtrare il rumore',sc3P:'Ogni giorno una valanga di notizie sull\'AI: studiarle è un secondo lavoro. Servono strumenti per filtrare.',
 rdH:'L\'R&S non è più una unit separata',
 rdP:'La ricerca e sviluppo non vive più in un reparto a parte. <strong>Ognuno deve avere del tempo, anche piccolo</strong>, per fare test sul proprio lavoro. Così si fa innovazione dall\'interno, senza dipendere sempre dai consulenti: l\'obiettivo è renderti autonomo.',
-s7:'Persone pensanti, non esecutori',
+s9:'Quanto è AI-ready la tua cultura?',
+dgIntro:'Sei domande, un colpo d\'occhio. Per ognuna, <strong>quanto ti riconosci</strong> da 1 (per niente) a 4 (totalmente)? Non c\'è voto giusto: serve a vedere <strong>quale nodo della rete è più debole</strong> nel tuo contesto.',
+s10:'Persone pensanti, non esecutori',
 thinkIntro:'Tutto questo regge su una cosa sola: servono <strong>persone pensanti</strong>, con le idee chiare, non meri esecutori che fanno A e B aspettando la pausa caffè. Perché l\'AI fa una cosa benissimo — prende quello che hai in testa e lo realizza. <strong>Più chiara è l\'idea, più sai spiegarla, più te la realizza identica.</strong>',
 thinkQ:'«Più persone con un\'idea e una direzione, più propositive nel proprio lavoro. È anche più stimolante lavorare così, invece di aspettare le cinque di sera. L\'AI non sostituisce chi sa dirigere: amplifica chi pensa.»',
-s8:'Checkpoint',
+s11:'Checkpoint',
 cpH:'La cultura viene prima del tool',
-cpP:'Una cultura AI-ready non si compra: si costruisce. Proattività, sperimentazione, collaborazione, dati, apertura, curiosità, creatività — sono il terreno senza cui nessun modello attecchisce.',
-cpQ:'Quale dei tratti manca di più nel tuo contesto? E qual è una scoperta utile che hai tenuto per te invece di condividerla? Quello è il primo nodo da sciogliere, prima ancora di scegliere lo strumento.',
-cpNote:'Il modello cambia ogni sei mesi. La cultura che lo fa funzionare resta.',
-bridge:'La cultura è pronta. <b>Prossimo:</b> l\'analogia che regge tutto il percorso — l\'AI è un junior che non sa niente, e la regola aurea per delegargli il lavor
+cpP:'Una cultura AI-ready non si compra: si costruisce. E non è una lista di tratti da spuntare — è una rete dove proattività, sperimentazione, condivisione, dati, apertura, curiosità e tempo per l\'R&S si tengono a vicenda.',
+cpQ:'Guarda la rete: qual è il nodo più debole nel tuo contesto? E qual è una scoperta utile che hai tenuto per te invece di condividerla? Quello è il primo filo da riannodare, prima ancora di scegliere lo strumento.',
+cpNote:'Il modello cambia ogni sei mesi. La rete che lo fa funzionare resta.',
+bridge:'La cultura è pronta. <b>Prossimo:</b> l\'analogia che regge tutto il percorso — l\'AI è un junior che non sa niente, e la regola aurea per delegargli il lavoro.',
+foot:'Morfeus — La cultura AI-ready',
+fsBtn:'Espandi la rete',fsBtnT:'Apri la rete a schermo intero',fsTitle:'La rete della cultura AI-ready',fsHint:'Clicca un nodo: si accendono i suoi collegamenti. Tocca di nuovo per deselezionare.',fsCloseT:'Chiudi (Esc)'
+},
+en:{
+kicker:'Lesson A1.5',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'Before the tool',
+h1:'The AI-ready culture',
+lede:'Before the model, before the prompt, comes culture. It\'s the company — and personal — posture that decides whether AI takes root or stays a toy. And it isn\'t a list of good intentions: it\'s a network. Every piece holds up the others, and remove one and the whole structure weakens.',
+s1:'The revolution that comes from the bottom',
+botIntro:'This is the <strong>first technological and industrial revolution that comes from the bottom</strong>. It isn\'t imposed from the top: people discover it first, and only afterward does it become a company priority. That\'s how it goes 90% of the time.',
+bot1H:'Someone tries it',bot1P:'A team member, out of curiosity, starts using AI on a piece of their own work. Without anyone asking them to.',
+bot2H:'They see results',bot2P:'It works. It saves time, raises quality. It\'s no longer an impression: it\'s a concrete benefit, right there in front of them.',
+bot3H:'Word spreads',bot3P:'They tell colleagues, they compare notes. The discovery leaves the drawer and becomes a team conversation.',
+bot4H:'It becomes a company priority',bot4P:'At that point leadership notices: "this needs to be understood, it needs to be put into practice." From personal play to strategy.',
+botNote:'That\'s why you can\'t wait for an order from above. An AI-ready culture exists precisely to <strong>keep that spark from the bottom from going out</strong>: it recognizes it, feeds it, and turns it into a system.',
+s2:'The posture, not the tool',
+note1H:'A "Y Combinator" culture',
+note1P:'What is a culture ready to dive into AI? It\'s a <strong>"Y Combinator" approach</strong>: very American, startup-like. It\'s <strong>almost utopian to have it at 100%</strong>, but that\'s what you aim for.',
+note1P2:'If you don\'t aim there, integrating AI becomes a constant struggle — the tool alone is never enough. These traits aren\'t a "feel-good" extra: they are <strong>one of the most important things to make AI work in a company</strong>.',
+s3:'The network: it all holds together',
+netIntro:'An AI-ready culture isn\'t a list of separate traits: it\'s <strong>a network of interconnected nodes</strong>. Each one feeds the others — curiosity fuels experimentation, experimentation needs openness to failure, failure only teaches if you share. <strong>Click a node</strong> to see what it depends on and what it holds up: you\'ll get why, if you remove one, the whole network frays.',
+netHint:'Click a node: its connections light up. Tap again to deselect.',
+netOutro:'There\'s no "most important" node: the <strong>links</strong> are what count. It\'s the fabric, not the single threads, that holds up AI in a company. That\'s why buying the best tool isn\'t enough: the tool rests on this network.',
+s4:'What happens if you remove a piece',
+missIntro:'Try switching off a node. The network doesn\'t just "lose an item": <strong>it breaks in a chain</strong>, because each trait was holding up others. It\'s the proof that an AI-ready culture is a system, not a checklist.',
+missOnT:'Full network',
+missOnP:'With every node on: the spark from the bottom gets <b>picked up, tested, explained and shared</b>. One person\'s discovery becomes everyone\'s starting point. The tool rests on solid ground.',
+s5:'Rigid culture vs AI-ready culture',
+rigT:'Rigid culture',
+rigP1:'"<b>I tell no one</b>: either they overtake me, or they pile work on me." The discovery stays in the drawer.',
+rigP2:'"No, I don\'t think that\'s right." <b>It shuts down</b> in front of the evidence, to defend its own opinion.',
+rigP3:'Out of fear people don\'t train, they only use restrictions: <b>"they pull the brake"</b> and people stay stuck.',
+readyT:'AI-ready culture',
+readyP1:'"I make a discovery, <b>I share it with the team</b>": I check if it helps a colleague and they get fast too.',
+readyP2:'"<b>Let\'s talk and decide together</b>": curious, open, willing to change their mind in front of the data.',
+readyP3:'Everyone has time to experiment and put themselves on the line: <b>innovation happens from within</b>, no brakes.',
+s6:'Experimenting well: 1 out of 4',
+expIntro:'Tolerating failure doesn\'t mean running random tests. It means giving a person permission to try — knowing that <strong>out of four tests, maybe only one hits</strong>. But that one changes the game.',
+expWinT:'The 1 that works',
+expWinP:'Out of 4 tests, maybe <b>only 1 works</b> — but that 1 brings a <b>major ROI</b>. It can let you do a week\'s work in a day. It\'s worth all the other three. That\'s why you experiment.',
+expLoseT:'The 3 that fail',
+expLoseP:'The <b>3 failed tests must be explained</b>, not hidden: "you have to tell me why they didn\'t work." That\'s where you learn, you understand, and you don\'t repeat the same mistakes.',
+expNote:'Tolerance for failure isn\'t chaos: it\'s method. <strong>"Not random tests": they must be run in a precise way.</strong> Whoever doesn\'t experiment never discovers where AI truly makes the difference — and that secret, once found, is incredible.',
+s7:'The monthly meeting: multiply, don\'t add',
+multIntro:'If you share discoveries with the team, you create <strong>an ecosystem of information</strong>. This is where collaboration becomes a concrete mechanism, not a slogan.',
+multKey:'At Morfeus, every month, about 3 hours of meeting where everyone puts the discoveries from their own experiments on the table. Marketing, development, operations: it all converges.',
+multCap:'It\'s a multiplying factor, not a sum: one person\'s discovery becomes everyone\'s starting point.',
+m1H:'Marketing discovers',m1P:'Whoever runs marketing finds a new way to use AI on a task and brings it to the meeting.',
+m2H:'Development reuses',m2P:'Whoever runs development realizes that same thing helps them too: they try it, and it often works.',
+m3H:'Ecosystem',m3P:'One discovery, two departments faster. Everyone on the same ship, heading the same way.',
+s8:'Scale is a lever, not a replacement',
+scaleIntro:'"We use it to scale our skills, not to replace or lay ourselves off." A mature team sees AI as a lever. The whole difference is in what you do with the time you free up.',
+scN1:'10',scL1:'Starting output',
+scN2:'20',scL2:'Potential with AI',
+scN3:'15-16',scL3:'Work you ask for',
+scN4:'+1-2h',scL4:'Time given back',
+scaleNote:'If team members go <strong>from 10 to 20</strong>, you don\'t ask for 25 — you\'d only get unhappy people and the same old system. You ask for <strong>15-16</strong> of work — more productive — and give back <strong>1-2 hours</strong> to study and experiment.',
+sc1H:'Improve the company',sc1P:'Time to study how to make the company better from within, putting your brain into it.',
+sc2H:'Study the AIs',sc2P:'Time devoted to research and development on your own work: innovation is born from inside.',
+sc3H:'Filter the noise',sc3P:'Every day an avalanche of AI news: studying it is a second job. You need tools to filter.',
+rdH:'R&D is no longer a separate unit',
+rdP:'Research and development no longer lives in a separate department. <strong>Everyone must have some time, even a little</strong>, to run tests on their own work. That\'s how you innovate from within, without always depending on consultants: the goal is to make you autonomous.',
+s9:'How AI-ready is your culture?',
+dgIntro:'Six questions, one glance. For each, <strong>how much does it sound like you</strong> from 1 (not at all) to 4 (totally)? There\'s no right score: it\'s here to show <strong>which node of the network is weakest</strong> in your context.',
+s10:'Thinking people, not executors',
+thinkIntro:'All of this rests on one thing: you need <strong>thinking people</strong>, with clear ideas, not mere executors who do A and B waiting for the coffee break. Because AI does one thing brilliantly — it takes what you have in your head and makes it real. <strong>The clearer the idea, the better you can explain it, the more faithfully it builds it.</strong>',
+thinkQ:'"More people with an idea and a direction, more proactive in their work. It\'s also more stimulating to work this way, instead of waiting for five o\'clock. AI doesn\'t replace those who can direct: it amplifies those who think."',
+s11:'Checkpoint',
+cpH:'Culture comes before the tool',
+cpP:'An AI-ready culture can\'t be bought: it\'s built. And it isn\'t a list of traits to tick off — it\'s a network where proactivity, experimentation, sharing, data, openness, curiosity and time for R&D hold each other up.',
+cpQ:'Look at the network: which node is weakest in your context? And what\'s a useful discovery you kept to yourself instead of sharing it? That\'s the first thread to re-tie, before even choosing the tool.',
+cpNote:'The model changes every six months. The network that makes it work stays.',
+bridge:'The culture is ready. <b>Next:</b> the analogy that holds up the whole path — AI is a junior who knows nothing, and the golden rule for delegating work to it.',
+foot:'Morfeus — The AI-ready culture',
+fsBtn:'Expand the network',fsBtnT:'Open the network fullscreen',fsTitle:'The AI-ready culture network',fsHint:'Click a node: its connections light up. Tap again to deselect.',fsCloseT:'Close (Esc)'
+}};
+
+/* ===== RETE: nodi (id + posizione su viewBox 640x470) ===== */
+var NODES=[
+  {id:'proatt',x:320,y:62},
+  {id:'curio',x:524,y:120},
+  {id:'sperim',x:570,y:268},
+  {id:'fall',x:468,y:400},
+  {id:'condiv',x:250,y:412},
+  {id:'collab',x:88,y:300},
+  {id:'dati',x:68,y:152},
+  {id:'form',x:188,y:66}
+];
+/* archi: coppie di id (relazioni reali) */
+var EDGES=[
+  ['proatt','curio'],['proatt','sperim'],['proatt','condiv'],
+  ['curio','sperim'],['curio','form'],['curio','dati'],
+  ['sperim','fall'],['sperim','dati'],['sperim','condiv'],
+  ['fall','condiv'],['fall','collab'],
+  ['condiv','collab'],
+  ['collab','dati'],['collab','form'],
+  ['dati','form']
+];
+var NET={it:{
+  proatt:{n:'Proattività',ic:'ti-run',d:'Non aspetti l\'ordine dall\'alto: <b>provi per primo</b> sul tuo lavoro. È la scintilla che accende tutta la rete.',links:{curio:'Provi per primo perché sei <b>curioso</b> di cosa può fare.',sperim:'La proattività si traduce in <b>esperimenti</b> reali, non in buoni propositi.',condiv:'Ha senso solo se poi <b>condividi</b> quello che scopri.'},cut:'Senza proattività la rete non si accende mai: nessuno prova, non c\'è niente da testare né da condividere.'},
+  curio:{n:'Curiosità',ic:'ti-bulb',d:'<b>Vuoi capire come funziona</b>, non solo usarla. È la benzina che tiene viva la voglia di provare e di studiare.',links:{proatt:'La curiosità è ciò che ti fa essere <b>proattivo</b> invece di aspettare.',sperim:'Ti spinge a <b>sperimentare</b> strade nuove, non le solite.',form:'Ti porta a <b>formarti</b> di continuo, a studiare un po\' ogni giorno.',dati:'Ti fa <b>guardare i numeri</b> per capire davvero cos\'è successo.'},cut:'Senza curiosità nessuno studia né esplora: la sperimentazione si spegne e la formazione diventa un obbligo vuoto.'},
+  sperim:{n:'Sperimentazione',ic:'ti-flask-2',d:'<b>Testi, sbagli, impari.</b> Su quattro test magari uno solo va a segno, ma quell\'uno vale gli altri tre.',links:{proatt:'Nasce dalla <b>proattività</b>: provi tu, senza aspettare il permesso.',curio:'È alimentata dalla <b>curiosità</b> di scoprire dove l\'AI fa la differenza.',fall:'Regge solo se c\'è <b>apertura al fallimento</b>: 3 test su 4 falliscono.',dati:'Si giudica sui <b>dati</b>: funziona o no, lo dicono i numeri.',condiv:'Ha valore se poi <b>condividi</b> l\'esito, vittoria o errore.'},cut:'Senza sperimentazione non scopri mai dove l\'AI fa la differenza: la rete gira a vuoto, sai tutto ma non provi niente.'},
+  fall:{n:'Apertura al fallimento',ic:'ti-mood-happy',d:'<b>Dai il permesso di sbagliare.</b> Non è caos: i test falliti vanno spiegati, non nascosti. È da lì che si impara.',links:{sperim:'È la condizione che rende possibile <b>sperimentare</b> davvero.',condiv:'Un fallimento insegna solo se lo <b>condividi</b>: «dimmi perché non ha funzionato».',collab:'Regge la <b>collaborazione</b>: si sbaglia insieme, senza paura di essere giudicati.'},cut:'Senza apertura al fallimento nessuno rischia: si fanno solo cose sicure, e le cose sicure non scoprono niente.'},
+  condiv:{n:'Condivisione',ic:'ti-share',d:'<b>Non tieni la scoperta nell\'orticello.</b> Quello che trovi tu rende veloce anche il collega: da somma a moltiplicazione.',links:{proatt:'Chiude il cerchio della <b>proattività</b>: provi, e poi lo passi agli altri.',sperim:'Trasforma un <b>esperimento</b> singolo in un vantaggio per tutti.',fall:'Vale anche per i <b>fallimenti</b>: spiegarli evita di ripeterli.',collab:'È il motore della <b>collaborazione</b>: senza condividere non c\'è squadra.'},cut:'Senza condivisione ogni scoperta muore nel cassetto: la rete si spezza in tanti orticelli isolati, niente moltiplicazione.'},
+  collab:{n:'Collaborazione',ic:'ti-users-group',d:'<b>Una scoperta, due reparti più veloci.</b> La riunione mensile dove tutto converge: marketing, sviluppo, operations sulla stessa nave.',links:{condiv:'Vive di <b>condivisione</b>: senza, non c\'è niente da mettere in comune.',fall:'Serve <b>apertura al fallimento</b> per confrontarsi senza difendersi.',dati:'Si allinea sui <b>dati</b> condivisi, non sulle opinioni di ciascuno.',form:'Alza il livello di tutti: è <b>formazione</b> reciproca tra pari.'},cut:'Senza collaborazione ognuno reinventa la ruota: le scoperte non si moltiplicano, l\'azienda somma invece di moltiplicare.'},
+  dati:{n:'Orientamento ai dati',ic:'ti-chart-dots',d:'<b>Decidi sui numeri, non sulle opinioni.</b> «Secondo me» lascia il posto a «i dati dicono»: così cambi idea davanti all\'evidenza.',links:{sperim:'Dà un verdetto agli <b>esperimenti</b>: hanno portato ROI o no?',curio:'Nutre la <b>curiosità</b>: i numeri fanno nascere le domande giuste.',collab:'Dà alla <b>collaborazione</b> un linguaggio comune e oggettivo.',form:'Indirizza la <b>formazione</b> su ciò che conta davvero.'},cut:'Senza dati si decide per anzianità o per simpatia: gli esperimenti non hanno giudice e la collaborazione litiga sulle opinioni.'},
+  form:{n:'Formazione & tempo R&S',ic:'ti-school',d:'<b>Tempo, anche poco, per studiare e testare.</b> L\'R&S non è una unit separata: è dentro il lavoro di ognuno.',links:{curio:'Dà spazio alla <b>curiosità</b>: senza tempo, resta un\'intenzione.',collab:'Diventa <b>collaborazione</b>: si impara gli uni dagli altri.',dati:'Insegna a leggere i <b>dati</b> e a filtrare il rumore.'},cut:'Senza tempo per formarsi la curiosità muore soffocata dall\'operatività: la rete ha voglia ma non ha spazio per crescere.'}
+},en:{
+  proatt:{n:'Proactivity',ic:'ti-run',d:'You don\'t wait for the order from above: <b>you try it first</b> on your own work. It\'s the spark that lights the whole network.',links:{curio:'You try first because you\'re <b>curious</b> about what it can do.',sperim:'Proactivity turns into real <b>experiments</b>, not good intentions.',condiv:'It only matters if you then <b>share</b> what you find.'},cut:'Without proactivity the network never lights up: no one tries, so there\'s nothing to test or share.'},
+  curio:{n:'Curiosity',ic:'ti-bulb',d:'<b>You want to understand how it works</b>, not just use it. It\'s the fuel that keeps the urge to try and to study alive.',links:{proatt:'Curiosity is what makes you <b>proactive</b> instead of waiting.',sperim:'It pushes you to <b>experiment</b> with new paths, not the usual ones.',form:'It leads you to keep <b>learning</b>, studying a little every day.',dati:'It makes you <b>look at the numbers</b> to really understand what happened.'},cut:'Without curiosity no one studies or explores: experimentation dies out and training becomes an empty obligation.'},
+  sperim:{n:'Experimentation',ic:'ti-flask-2',d:'<b>You test, you fail, you learn.</b> Out of four tests maybe only one hits, but that one is worth the other three.',links:{proatt:'It\'s born of <b>proactivity</b>: you try, without waiting for permission.',curio:'It\'s fueled by <b>curiosity</b> to find where AI makes the difference.',fall:'It only holds with <b>openness to failure</b>: 3 out of 4 tests fail.',dati:'It\'s judged on <b>data</b>: whether it works, the numbers say.',condiv:'It has value if you then <b>share</b> the outcome, win or mistake.'},cut:'Without experimentation you never find where AI makes the difference: the network spins in place — you know everything, try nothing.'},
+  fall:{n:'Openness to failure',ic:'ti-mood-happy',d:'<b>You give permission to be wrong.</b> It isn\'t chaos: failed tests are explained, not hidden. That\'s where learning happens.',links:{sperim:'It\'s the condition that makes real <b>experimentation</b> possible.',condiv:'A failure only teaches if you <b>share</b> it: "tell me why it didn\'t work."',collab:'It underpins <b>collaboration</b>: you fail together, without fear of judgment.'},cut:'Without openness to failure no one takes risks: only safe things get done, and safe things discover nothing.'},
+  condiv:{n:'Sharing',ic:'ti-share',d:'<b>You don\'t keep the discovery in your own little garden.</b> What you find makes your colleague fast too: from adding to multiplying.',links:{proatt:'It closes the <b>proactivity</b> loop: you try, then you pass it on.',sperim:'It turns a single <b>experiment</b> into an advantage for everyone.',fall:'It applies to <b>failures</b> too: explaining them avoids repeating them.',collab:'It\'s the engine of <b>collaboration</b>: without sharing there\'s no team.'},cut:'Without sharing every discovery dies in the drawer: the network splits into isolated little gardens, no multiplication.'},
+  collab:{n:'Collaboration',ic:'ti-users-group',d:'<b>One discovery, two departments faster.</b> The monthly meeting where it all converges: marketing, dev, operations on the same ship.',links:{condiv:'It lives on <b>sharing</b>: without it, there\'s nothing to pool.',fall:'It needs <b>openness to failure</b> to compare notes without defensiveness.',dati:'It aligns on shared <b>data</b>, not on everyone\'s opinions.',form:'It raises everyone\'s level: it\'s peer-to-peer <b>learning</b>.'},cut:'Without collaboration everyone reinvents the wheel: discoveries don\'t multiply, the company adds instead of multiplying.'},
+  dati:{n:'Data orientation',ic:'ti-chart-dots',d:'<b>You decide on numbers, not opinions.</b> "In my opinion" gives way to "the data says": so you change your mind in front of the evidence.',links:{sperim:'It gives a verdict to <b>experiments</b>: did they bring ROI or not?',curio:'It feeds <b>curiosity</b>: numbers raise the right questions.',collab:'It gives <b>collaboration</b> a common, objective language.',form:'It points <b>learning</b> at what truly matters.'},cut:'Without data you decide by seniority or by favor: experiments have no judge and collaboration argues over opinions.'},
+  form:{n:'Learning & R&D time',ic:'ti-school',d:'<b>Time, even a little, to study and test.</b> R&D isn\'t a separate unit: it\'s inside everyone\'s work.',links:{curio:'It gives room to <b>curiosity</b>: without time, it stays an intention.',collab:'It becomes <b>collaboration</b>: you learn from one another.',dati:'It teaches you to read the <b>data</b> and filter the noise.'},cut:'Without time to learn, curiosity suffocates under day-to-day ops: the network has the will but no room to grow.'}
+}};
+
+/* ===== RETE FULLSCREEN: dataset ESTESO e SEPARATO (16 nodi, 3 cluster) ===== */
+/* cluster: id -> colore (light/dark gestiti via valori diretti, coerenti con la palette) */
+var CLUSTERS={
+  mind:{lit:'Mentalità individuale',len:'Individual mindset',c:'#6B5FE5',soft:'#eeedfd',cDark:'#9b92f2',softDark:'#2b2560'},
+  team:{lit:'Pratiche di team',len:'Team practices',c:'#E8682A',soft:'#fdeee3',cDark:'#f5915c',softDark:'#3f2817'},
+  lead:{lit:'Leadership & sistema',len:'Leadership & system',c:'#3b9e57',soft:'#e6f4ea',cDark:'#86d098',softDark:'#22382a'}
+};
+/* nodi con posizione su viewBox 1100x760, in 3 colonne per cluster */
+var NODES_FULL=[
+  /* --- MENTALITÀ INDIVIDUALE (colonna sinistra) --- */
+  {id:'curio', cl:'mind', x:175, y:96},
+  {id:'proatt',cl:'mind', x:175, y:210},
+  {id:'critic',cl:'mind', x:175, y:324},
+  {id:'delega',cl:'mind', x:175, y:438},
+  {id:'fall',  cl:'mind', x:175, y:552},
+  {id:'adapt', cl:'mind', x:175, y:666},
+  /* --- PRATICHE DI TEAM (colonna centrale) --- */
+  {id:'sperim',cl:'team', x:550, y:130},
+  {id:'dati',  cl:'team', x:550, y:272},
+  {id:'condiv',cl:'team', x:550, y:414},
+  {id:'collab',cl:'team', x:550, y:556},
+  {id:'docu',  cl:'team', x:550, y:672},
+  /* --- LEADERSHIP & SISTEMA (colonna destra) --- */
+  {id:'commit',cl:'lead', x:925, y:110},
+  {id:'formaz',cl:'lead', x:925, y:238},
+  {id:'simple',cl:'lead', x:925, y:366},
+  {id:'owner', cl:'lead', x:925, y:494},
+  {id:'sicur', cl:'lead', x:925, y:640}
+];
+/* archi estesi: molti legami reali e cross-cluster */
+var EDGES_FULL=[
+  /* dentro Mentalità */
+  ['curio','proatt'],['curio','critic'],['curio','adapt'],
+  ['proatt','fall'],['proatt','delega'],
+  ['critic','delega'],['fall','adapt'],
+  /* Mentalità -> Team */
+  ['curio','sperim'],['proatt','sperim'],['fall','sperim'],
+  ['critic','dati'],['critic','docu'],['delega','docu'],
+  ['proatt','condiv'],['adapt','sperim'],
+  /* dentro Team */
+  ['sperim','dati'],['sperim','condiv'],['sperim','docu'],
+  ['dati','condiv'],['condiv','collab'],['collab','docu'],
+  ['dati','collab'],
+  /* Team -> Leadership */
+  ['sperim','formaz'],['collab','formaz'],['docu','simple'],
+  ['dati','owner'],['collab','commit'],['docu','formaz'],
+  /* dentro Leadership */
+  ['commit','formaz'],['commit','owner'],['formaz','simple'],
+  ['simple','owner'],['formaz','adapt'],
+  /* Leadership -> Mentalità (chiusura del cerchio) */
+  ['commit','proatt'],['formaz','curio'],['owner','delega'],['simple','proatt'],
+  /* Sicurezza: nodo trasversale, collegato a molti */
+  ['sicur','delega'],['sicur','critic'],['sicur','dati'],['sicur','docu'],['sicur','owner'],['sicur','commit']
+];
+/* descrizioni ricche bilingue, fedeli a M1_FONDAMENTA */
+var NET_FULL={it:{
+  curio:{n:'Curiosità',ic:'ti-bulb',cl:'mind',d:'La benzina di tutto: <b>vuoi capire come funziona</b>, non solo usarla. È la voglia di provare strade nuove e di studiare un po\' ogni giorno. Senza curiosità l\'AI resta un giocattolo che non tocchi mai.',links:{proatt:'Ti fa essere <b>proattivo</b> invece di aspettare l\'ordine dall\'alto.',critic:'Alimenta il <b>pensiero critico</b>: fai le domande giuste, non ti accontenti.',adapt:'È il motore dell\'<b>adattabilità</b>: un campo che cambia ogni 6 mesi va inseguito con curiosità.',sperim:'Si traduce in <b>sperimentazione</b>: la curiosità senza test resta chiacchiera.',formaz:'Ha bisogno di <b>tempo per formarsi</b>, altrimenti muore soffocata dall\'operatività.'},cut:'Senza curiosità nessuno esplora: la sperimentazione si spegne, la formazione diventa un obbligo vuoto e l\'adattabilità si blocca.'},
+  proatt:{n:'Proattività',ic:'ti-run',cl:'mind',d:'<b>Provi per primo</b> sul tuo lavoro, senza aspettare il permesso. È la scintilla dal basso: nel 90% dei casi l\'AI entra così, non per ordine del vertice. Bias all\'azione, non alla riunione infinita.',links:{curio:'Nasce dalla <b>curiosità</b> di vedere cosa può fare.',fall:'Regge solo con <b>apertura al fallimento</b>: chi prova per primo, a volte sbaglia.',delega:'Si concretizza nella <b>delega</b> all\'AI: provo a darle un pezzo del mio lavoro.',sperim:'È la benzina della <b>sperimentazione</b>: nessuno prova, niente da testare.',condiv:'Ha senso se poi <b>condividi</b> quello che scopri.',commit:'Fiorisce se c\'è <b>commitment dall\'alto</b> che la incoraggia invece di frenarla.',simple:'Si sposa col <b>partire dal semplice</b>: agisci ora, in piccolo.'},cut:'Senza proattività la rete non si accende mai: nessuno prova, non c\'è scintilla né materia da testare o condividere.'},
+  critic:{n:'Pensiero critico',ic:'ti-eye-check',cl:'mind',d:'<b>Persone pensanti, non esecutori.</b> L\'AI allucina e va a compiacere: l\'output va sempre validato, mai preso per oro colato. «10% colpa della macchina, 90% nostra»: chi pensa amplifica, chi si accontenta si fa male.',links:{curio:'Si nutre di <b>curiosità</b>: le domande giuste nascono da lì.',delega:'Rende sana la <b>delega</b>: deleghi, ma verifichi il junior.',dati:'Decide sui <b>dati</b>, non sulle opinioni o sulla prima risposta dell\'AI.',docu:'Serve a valutare se la <b>procedura</b> regge davvero.',sicur:'È il primo presidio di <b>sicurezza</b>: non ti fidi ciecamente.'},cut:'Senza pensiero critico si prende per buono ogni output: le allucinazioni passano, la qualità crolla e l\'AI diventa un rischio invece di una leva.'},
+  delega:{n:'Mentalità da delega',ic:'ti-user-share',cl:'mind',d:'<b>L\'AI è un junior geniale ma senza esperienza nel tuo contesto.</b> Se dai istruzioni chiare performa meglio di te; se sei vago, produce mediocrità. Delegare bene — ruolo, contesto, output, limiti — è la competenza centrale.',links:{proatt:'È la <b>proattività</b> messa in pratica: provo a delegare un pezzo.',critic:'Va tenuta sana dal <b>pensiero critico</b>: deleghi ma controlli.',docu:'Funziona se c\'è una <b>procedura</b> chiara da passare al junior.',owner:'Non toglie l\'<b>ownership</b>: resti tu il responsabile dell\'output.',sicur:'Richiede <b>sicurezza e buon senso</b> su cosa puoi davvero delegare.'},cut:'Senza mentalità da delega l\'AI resta un gadget: la usi per curiosità ma non le affidi mai lavoro vero, e il moltiplicatore non parte.'},
+  fall:{n:'Apertura al fallimento',ic:'ti-mood-happy',cl:'mind',d:'<b>Dai il permesso di sbagliare — fail fast.</b> Su quattro test magari uno solo va a segno, ma quell\'uno vale gli altri tre. Non è caos: i test falliti si spiegano, non si nascondono. È da lì che si impara.',links:{proatt:'Rende possibile la <b>proattività</b>: chi rischia a volte sbaglia.',sperim:'È la condizione della <b>sperimentazione</b> vera: 3 su 4 falliscono.',adapt:'Allena l\'<b>adattabilità</b>: sbagliare in fretta è cambiare in fretta.',condiv:'Un fallimento insegna solo se lo <b>condividi</b>: «dimmi perché non ha funzionato».'},cut:'Senza apertura al fallimento nessuno rischia: si fanno solo cose sicure, e le cose sicure non scoprono mai dove l\'AI fa la differenza.'},
+  adapt:{n:'Adattabilità',ic:'ti-refresh',cl:'mind',d:'<b>Il campo cambia ogni sei mesi.</b> Il modello di oggi è superato domani; chi si irrigidisce resta indietro. Adattarsi è cambiare metodo davanti all\'evidenza, non difendere l\'abitudine. L\'ego basso è il prerequisito.',links:{curio:'Si alimenta di <b>curiosità</b> verso ciò che è nuovo.',fall:'Cresce sull\'<b>apertura al fallimento</b>: cambiare implica sbagliare.',sperim:'Si esercita <b>sperimentando</b> il nuovo appena esce.',formaz:'Ha bisogno di <b>formazione continua</b> per non restare indietro.'},cut:'Senza adattabilità la cultura si fossilizza: si continua col metodo vecchio mentre gli strumenti corrono, e il vantaggio evapora.'},
+  sperim:{n:'Sperimentazione',ic:'ti-flask-2',cl:'team',d:'<b>Testi, sbagli, impari — in modo preciso, non a caso.</b> È la pratica dove la mentalità diventa risultato: 1 test su 4 funziona, ma quell\'1 può farti fare in un giorno il lavoro di una settimana.',links:{proatt:'Nasce dalla <b>proattività</b>: provi tu, senza aspettare.',curio:'È alimentata dalla <b>curiosità</b> di scoprire dove l\'AI fa la differenza.',fall:'Regge solo con <b>apertura al fallimento</b>: 3 test su 4 falliscono.',dati:'Si giudica sui <b>dati</b>: funziona o no, lo dicono i numeri.',condiv:'Ha valore se poi <b>condividi</b> l\'esito, vittoria o errore.',formaz:'Ha bisogno di <b>tempo di R&S</b> dedicato per esistere davvero.'},cut:'Senza sperimentazione non scopri mai dove l\'AI fa la differenza: la rete gira a vuoto, sai tutto ma non provi niente.'},
+  dati:{n:'Orientamento ai dati',ic:'ti-chart-dots',cl:'team',d:'<b>Decidi sui numeri, non sulle opinioni.</b> «Secondo me» lascia il posto a «i dati dicono»: così cambi idea davanti all\'evidenza e dai un giudizio oggettivo agli esperimenti. Garbage in, garbage out: senza dati puliti l\'AI è cieca.',links:{sperim:'Dà un verdetto agli <b>esperimenti</b>: hanno portato ROI o no?',critic:'È lo strumento del <b>pensiero critico</b>: validi coi numeri.',condiv:'Dà alla <b>condivisione</b> un linguaggio comune e oggettivo.',collab:'Allinea la <b>collaborazione</b> sui fatti, non sulle simpatie.',owner:'Rende misurabile l\'<b>ownership</b>: l\'output si giudica sui risultati.',sicur:'È parte della <b>sicurezza</b>: dati governati e affidabili.'},cut:'Senza dati si decide per anzianità o simpatia: gli esperimenti non hanno giudice e la collaborazione litiga sulle opinioni.'},
+  condiv:{n:'Condivisione delle scoperte',ic:'ti-share',cl:'team',d:'<b>Non tieni la scoperta nell\'orticello.</b> Quello che trovi tu rende veloce anche il collega: da somma a moltiplicazione. Condividere prompt e assistenti — non tenerli per sé — è il cuore della cultura collaborativa.',links:{proatt:'Chiude il cerchio della <b>proattività</b>: provi, poi lo passi agli altri.',sperim:'Trasforma un <b>esperimento</b> singolo in vantaggio per tutti.',fall:'Vale anche per i <b>fallimenti</b>: spiegarli evita di ripeterli.',dati:'Si appoggia sui <b>dati</b> per mostrare cosa ha funzionato.',collab:'È il motore della <b>collaborazione</b>: senza condividere non c\'è squadra.'},cut:'Senza condivisione ogni scoperta muore nel cassetto: la rete si spezza in orticelli isolati, si somma invece di moltiplicare.'},
+  collab:{n:'Collaborazione cross-team',ic:'ti-users-group',cl:'team',d:'<b>Una scoperta, due reparti più veloci.</b> La riunione mensile dove tutto converge: marketing, sviluppo, operations sulla stessa nave. È il fattore moltiplicativo: la scoperta di uno diventa il punto di partenza di tutti.',links:{condiv:'Vive di <b>condivisione</b>: senza, non c\'è niente da mettere in comune.',dati:'Si allinea sui <b>dati</b> condivisi, non sulle opinioni di ciascuno.',docu:'Si appoggia sulle <b>procedure</b> per riusare ciò che funziona.',formaz:'È <b>formazione</b> reciproca: si impara gli uni dagli altri.',commit:'Ha bisogno di <b>commitment dall\'alto</b> che crei lo spazio (la riunione).'},cut:'Senza collaborazione ognuno reinventa la ruota: le scoperte non si moltiplicano, l\'azienda somma invece di moltiplicare.'},
+  docu:{n:'Documentazione & procedure',ic:'ti-clipboard-text',cl:'team',d:'<b>La ricetta prima dell\'AI.</b> L\'AI replica un processo: se la ricetta fa schifo, la torta farà schifo anche in scala. Scomporre il lavoro in step chiari (chi, cosa, dove, quando, come) è ciò che rende delegabile un\'attività.',links:{critic:'Nasce dal <b>pensiero critico</b>: capire davvero il processo prima di scriverlo.',delega:'Rende possibile la <b>delega</b>: un junior senza istruzioni chiare non performa.',sperim:'Cattura ciò che la <b>sperimentazione</b> ha validato, per riusarlo.',collab:'Permette la <b>collaborazione</b>: procedure condivise, non teste singole.',simple:'Va tenuta al minimo: <b>partire dal semplice</b>, non proceduralizzare tutto.',sicur:'È parte della <b>sicurezza</b>: processi tracciabili e ripetibili.'},cut:'Senza documentazione l\'AI amplifica il caos: replichi un processo confuso su scala, e ogni scoperta resta nella testa di una persona sola.'},
+  commit:{n:'Commitment dall\'alto',ic:'ti-flag',cl:'lead',d:'<b>Change leadership.</b> La scintilla nasce dal basso, ma senza un vertice che la riconosce e la mette a sistema, si spegne. Il commitment libera tempo, budget e permesso: trasforma il gioco personale in strategia aziendale.',links:{proatt:'Dà ossigeno alla <b>proattività</b>: incoraggia invece di frenare.',formaz:'Finanzia la <b>formazione</b> e il tempo di R&S.',collab:'Crea lo spazio della <b>collaborazione</b>: la riunione mensile esiste perché voluta.',owner:'Distribuisce l\'<b>ownership</b>: responsabilizza, non accentra.',sicur:'Definisce le regole di <b>sicurezza</b>: cosa è lecito, cosa no.'},cut:'Senza commitment dall\'alto la scintilla dal basso si spegne: le persone provano di nascosto, non c\'è tempo né permesso, e tutto resta un hobby.'},
+  formaz:{n:'Formazione & tempo R&S',ic:'ti-school',cl:'lead',d:'<b>Tempo, anche poco, per studiare e testare.</b> L\'R&S non è più una unit separata: è dentro il lavoro di ognuno. La formazione è per ruolo, con l\'AI Champion che aiuta gli altri. L\'obiettivo finale è renderti autonomo.',links:{curio:'Dà spazio alla <b>curiosità</b>: senza tempo, resta un\'intenzione.',adapt:'Sostiene l\'<b>adattabilità</b>: ci si aggiorna su ciò che cambia.',sperim:'È il <b>tempo</b> in cui la sperimentazione può accadere.',commit:'Esiste solo col <b>commitment</b> che la finanzia e la protegge.',docu:'Produce e diffonde le <b>procedure</b> apprese.'},cut:'Senza formazione e tempo di R&S la curiosità muore soffocata dall\'operatività: la rete ha voglia ma non ha spazio per crescere.'},
+  simple:{n:'Partire dal semplice',ic:'ti-stairs-up',cl:'lead',d:'<b>Start simple: non si salta.</b> Prima il prompt, poi la libreria, poi gli assistenti. Bias all\'azione: parti in piccolo, oggi, con un problema concreto — non con il progetto faraonico che non decolla mai.',links:{proatt:'È la <b>proattività</b> ben indirizzata: agisci ora, in piccolo.',docu:'Chiede di non <b>proceduralizzare</b> tutto: complessità minima necessaria.',formaz:'È il primo gradino della <b>formazione</b>: si impara facendo.',owner:'Rende l\'<b>ownership</b> gestibile: pezzi piccoli, responsabilità chiare.'},cut:'Senza partire dal semplice ci si paralizza nel progetto perfetto: si teorizza senza mai testare, e l\'AI non entra mai davvero nel lavoro.'},
+  owner:{n:'Ownership dell\'output',ic:'ti-user-check',cl:'lead',d:'<b>Resti tu il responsabile.</b> L\'AI esegue, ma la firma sull\'output è tua: l\'azienda resta legalmente e professionalmente responsabile. Ownership significa non «l\'ha fatto l\'AI», ma «l\'ho validato io».',links:{delega:'Bilancia la <b>delega</b>: affidi il lavoro, non la responsabilità.',dati:'Si misura sui <b>dati</b>: l\'output si giudica sui risultati.',critic:'Richiede <b>pensiero critico</b> per validare prima di firmare.',commit:'È distribuita dal <b>commitment</b>: leadership che responsabilizza.',sicur:'È il volto operativo della <b>sicurezza</b>: rispondi di ciò che pubblichi.'},cut:'Senza ownership l\'output non ha padrone: gli errori dell\'AI passano inosservati e nessuno risponde della qualità di ciò che esce.'},
+  sicur:{n:'Sicurezza & buon senso',ic:'ti-shield-check',cl:'lead',d:'<b>Nodo trasversale.</b> Mai fidarsi ciecamente; validare sempre. Non caricare dati sensibili senza autorizzazione; per il confidenziale, modelli locali o server privati. Il buon senso è il tessuto che protegge tutta la rete.',links:{critic:'Cammina col <b>pensiero critico</b>: non ti fidi dell\'output ad occhi chiusi.',delega:'Definisce i confini della <b>delega</b>: cosa puoi davvero affidare.',dati:'Protegge i <b>dati</b>: governance, accessi, riservatezza.',docu:'Chiede processi <b>tracciabili</b> e ripetibili.',owner:'Si concretizza nell\'<b>ownership</b>: rispondi di ciò che pubblichi.',commit:'È definita dal <b>commitment</b>: la leadership fissa le regole.'},cut:'Senza sicurezza e buon senso un solo errore diventa un danno: dati esposti, output sbagliati pubblicati, e la fiducia nell\'AI crolla di colpo.'}
+},en:{
+  curio:{n:'Curiosity',ic:'ti-bulb',cl:'mind',d:'The fuel for everything: <b>you want to understand how it works</b>, not just use it. It\'s the urge to try new paths and study a little every day. Without curiosity AI stays a toy you never touch.',links:{proatt:'It makes you <b>proactive</b> instead of waiting for the order from above.',critic:'It feeds <b>critical thinking</b>: you ask the right questions, never settle.',adapt:'It\'s the engine of <b>adaptability</b>: a field that shifts every 6 months must be chased with curiosity.',sperim:'It turns into <b>experimentation</b>: curiosity without tests is just talk.',formaz:'It needs <b>time to learn</b>, or it suffocates under day-to-day ops.'},cut:'Without curiosity no one explores: experimentation dies out, training becomes an empty obligation and adaptability freezes.'},
+  proatt:{n:'Proactivity',ic:'ti-run',cl:'mind',d:'<b>You try it first</b> on your own work, without waiting for permission. It\'s the spark from the bottom: 90% of the time AI enters this way, not by top-down order. Bias to action, not to the endless meeting.',links:{curio:'It\'s born of <b>curiosity</b> to see what it can do.',fall:'It only holds with <b>openness to failure</b>: whoever tries first sometimes fails.',delega:'It becomes real through <b>delegation</b> to AI: I try giving it a piece of my work.',sperim:'It\'s the fuel of <b>experimentation</b>: no one tries, nothing to test.',condiv:'It matters if you then <b>share</b> what you find.',commit:'It flourishes with <b>top-down commitment</b> that encourages instead of braking.',simple:'It pairs with <b>starting simple</b>: act now, small.'},cut:'Without proactivity the network never lights up: no one tries, there\'s no spark and nothing to test or share.'},
+  critic:{n:'Critical thinking',ic:'ti-eye-check',cl:'mind',d:'<b>Thinking people, not executors.</b> AI hallucinates and tends to please: the output must always be validated, never taken as gospel. "10% the machine\'s fault, 90% ours": those who think amplify, those who settle get hurt.',links:{curio:'It feeds on <b>curiosity</b>: the right questions come from there.',delega:'It keeps <b>delegation</b> healthy: you delegate, but you check the junior.',dati:'It decides on <b>data</b>, not opinions or the AI\'s first answer.',docu:'It\'s needed to judge whether the <b>procedure</b> really holds.',sicur:'It\'s the first line of <b>safety</b>: you don\'t trust blindly.'},cut:'Without critical thinking every output is taken at face value: hallucinations slip through, quality collapses and AI becomes a risk instead of a lever.'},
+  delega:{n:'Delegation mindset',ic:'ti-user-share',cl:'mind',d:'<b>AI is a brilliant junior with no experience in your context.</b> Given clear instructions it outperforms you; given vague ones, it produces mediocrity. Delegating well — role, context, output, limits — is the core skill.',links:{proatt:'It\'s <b>proactivity</b> in practice: I try delegating a piece.',critic:'It\'s kept healthy by <b>critical thinking</b>: you delegate but you check.',docu:'It works with a clear <b>procedure</b> to hand to the junior.',owner:'It doesn\'t remove <b>ownership</b>: you stay responsible for the output.',sicur:'It requires <b>safety and common sense</b> about what you can really delegate.'},cut:'Without a delegation mindset AI stays a gadget: you use it out of curiosity but never trust it with real work, and the multiplier never starts.'},
+  fall:{n:'Openness to failure',ic:'ti-mood-happy',cl:'mind',d:'<b>You give permission to be wrong — fail fast.</b> Out of four tests maybe only one hits, but that one is worth the other three. It isn\'t chaos: failed tests are explained, not hidden. That\'s where learning happens.',links:{proatt:'It makes <b>proactivity</b> possible: whoever risks sometimes fails.',sperim:'It\'s the condition for real <b>experimentation</b>: 3 out of 4 fail.',adapt:'It trains <b>adaptability</b>: failing fast is changing fast.',condiv:'A failure only teaches if you <b>share</b> it: "tell me why it didn\'t work."'},cut:'Without openness to failure no one takes risks: only safe things get done, and safe things never find where AI makes the difference.'},
+  adapt:{n:'Adaptability',ic:'ti-refresh',cl:'mind',d:'<b>The field changes every six months.</b> Today\'s model is outdated tomorrow; those who stiffen fall behind. Adapting means changing method in front of the evidence, not defending the habit. Low ego is the prerequisite.',links:{curio:'It\'s fueled by <b>curiosity</b> toward what\'s new.',fall:'It grows on <b>openness to failure</b>: changing means being wrong sometimes.',sperim:'It\'s practiced by <b>experimenting</b> with the new as soon as it ships.',formaz:'It needs <b>continuous learning</b> to keep up.'},cut:'Without adaptability the culture fossilizes: you keep the old method while the tools race ahead, and the advantage evaporates.'},
+  sperim:{n:'Experimentation',ic:'ti-flask-2',cl:'team',d:'<b>You test, you fail, you learn — precisely, not randomly.</b> It\'s the practice where mindset turns into results: 1 test in 4 works, but that 1 can let you do a week\'s work in a day.',links:{proatt:'It\'s born of <b>proactivity</b>: you try, without waiting.',curio:'It\'s fueled by <b>curiosity</b> to find where AI makes the difference.',fall:'It only holds with <b>openness to failure</b>: 3 out of 4 tests fail.',dati:'It\'s judged on <b>data</b>: whether it works, the numbers say.',condiv:'It has value if you then <b>share</b> the outcome, win or mistake.',formaz:'It needs dedicated <b>R&D time</b> to truly exist.'},cut:'Without experimentation you never find where AI makes the difference: the network spins in place — you know everything, try nothing.'},
+  dati:{n:'Data orientation',ic:'ti-chart-dots',cl:'team',d:'<b>You decide on numbers, not opinions.</b> "In my opinion" gives way to "the data says": you change your mind in front of evidence and give experiments an objective verdict. Garbage in, garbage out: without clean data AI is blind.',links:{sperim:'It gives a verdict to <b>experiments</b>: did they bring ROI or not?',critic:'It\'s the tool of <b>critical thinking</b>: you validate with numbers.',condiv:'It gives <b>sharing</b> a common, objective language.',collab:'It aligns <b>collaboration</b> on facts, not on favor.',owner:'It makes <b>ownership</b> measurable: output is judged on results.',sicur:'It\'s part of <b>safety</b>: governed, reliable data.'},cut:'Without data you decide by seniority or favor: experiments have no judge and collaboration argues over opinions.'},
+  condiv:{n:'Sharing discoveries',ic:'ti-share',cl:'team',d:'<b>You don\'t keep the discovery in your own little garden.</b> What you find makes your colleague fast too: from adding to multiplying. Sharing prompts and assistants — not hoarding them — is the heart of a collaborative culture.',links:{proatt:'It closes the <b>proactivity</b> loop: you try, then you pass it on.',sperim:'It turns a single <b>experiment</b> into an advantage for everyone.',fall:'It applies to <b>failures</b> too: explaining them avoids repeating them.',dati:'It leans on <b>data</b> to show what worked.',collab:'It\'s the engine of <b>collaboration</b>: without sharing there\'s no team.'},cut:'Without sharing every discovery dies in the drawer: the network splits into isolated gardens, adding instead of multiplying.'},
+  collab:{n:'Cross-team collaboration',ic:'ti-users-group',cl:'team',d:'<b>One discovery, two departments faster.</b> The monthly meeting where it all converges: marketing, dev, operations on the same ship. It\'s the multiplying factor: one person\'s discovery becomes everyone\'s starting point.',links:{condiv:'It lives on <b>sharing</b>: without it, there\'s nothing to pool.',dati:'It aligns on shared <b>data</b>, not on everyone\'s opinions.',docu:'It leans on <b>procedures</b> to reuse what works.',formaz:'It\'s peer-to-peer <b>learning</b>: you learn from one another.',commit:'It needs <b>top-down commitment</b> to create the space (the meeting).'},cut:'Without collaboration everyone reinvents the wheel: discoveries don\'t multiply, the company adds instead of multiplying.'},
+  docu:{n:'Documentation & procedures',ic:'ti-clipboard-text',cl:'team',d:'<b>The recipe before the AI.</b> AI replicates a process: if the recipe is bad, the cake is bad even at scale. Breaking work into clear steps (who, what, where, when, how) is what makes an activity delegable.',links:{critic:'It\'s born of <b>critical thinking</b>: truly understanding the process before writing it.',delega:'It makes <b>delegation</b> possible: a junior without clear instructions underperforms.',sperim:'It captures what <b>experimentation</b> validated, to reuse it.',collab:'It enables <b>collaboration</b>: shared procedures, not single heads.',simple:'Keep it minimal: <b>start simple</b>, don\'t proceduralize everything.',sicur:'It\'s part of <b>safety</b>: traceable, repeatable processes.'},cut:'Without documentation AI amplifies chaos: you replicate a messy process at scale, and every discovery stays in one person\'s head.'},
+  commit:{n:'Top-down commitment',ic:'ti-flag',cl:'lead',d:'<b>Change leadership.</b> The spark starts from the bottom, but without a leadership that recognizes it and systematizes it, it goes out. Commitment frees time, budget and permission: it turns personal play into company strategy.',links:{proatt:'It gives oxygen to <b>proactivity</b>: it encourages instead of braking.',formaz:'It funds <b>training</b> and R&D time.',collab:'It creates the space for <b>collaboration</b>: the monthly meeting exists because it\'s willed.',owner:'It distributes <b>ownership</b>: it empowers, doesn\'t centralize.',sicur:'It sets the <b>safety</b> rules: what\'s allowed, what isn\'t.'},cut:'Without top-down commitment the spark from the bottom goes out: people try in secret, there\'s no time or permission, and it all stays a hobby.'},
+  formaz:{n:'Learning & R&D time',ic:'ti-school',cl:'lead',d:'<b>Time, even a little, to study and test.</b> R&D is no longer a separate unit: it\'s inside everyone\'s work. Training is role-specific, with the AI Champion helping others. The end goal is to make you autonomous.',links:{curio:'It gives room to <b>curiosity</b>: without time, it stays an intention.',adapt:'It sustains <b>adaptability</b>: you keep up with what changes.',sperim:'It\'s the <b>time</b> in which experimentation can happen.',commit:'It only exists with the <b>commitment</b> that funds and protects it.',docu:'It produces and spreads the learned <b>procedures</b>.'},cut:'Without learning and R&D time curiosity suffocates under day-to-day ops: the network has the will but no room to grow.'},
+  simple:{n:'Start simple',ic:'ti-stairs-up',cl:'lead',d:'<b>Start simple: you don\'t skip.</b> First the prompt, then the library, then the assistants. Bias to action: start small, today, with a concrete problem — not the grand project that never takes off.',links:{proatt:'It\'s well-aimed <b>proactivity</b>: act now, small.',docu:'It asks not to <b>proceduralize</b> everything: minimum necessary complexity.',formaz:'It\'s the first rung of <b>learning</b>: you learn by doing.',owner:'It keeps <b>ownership</b> manageable: small pieces, clear responsibility.'},cut:'Without starting simple you get paralyzed by the perfect project: you theorize without ever testing, and AI never really enters the work.'},
+  owner:{n:'Output ownership',ic:'ti-user-check',cl:'lead',d:'<b>You stay responsible.</b> AI executes, but the signature on the output is yours: the company stays legally and professionally accountable. Ownership means not "the AI did it" but "I validated it."',links:{delega:'It balances <b>delegation</b>: you hand off the work, not the responsibility.',dati:'It\'s measured on <b>data</b>: output is judged on results.',critic:'It requires <b>critical thinking</b> to validate before signing.',commit:'It\'s distributed by <b>commitment</b>: leadership that empowers.',sicur:'It\'s the operational face of <b>safety</b>: you answer for what you publish.'},cut:'Without ownership the output has no owner: AI\'s mistakes go unnoticed and no one answers for the quality of what ships.'},
+  sicur:{n:'Safety & common sense',ic:'ti-shield-check',cl:'lead',d:'<b>A cross-cutting node.</b> Never trust blindly; always validate. Don\'t upload sensitive data without authorization; for confidential work, use local models or private servers. Common sense is the fabric that protects the whole network.',links:{critic:'It walks with <b>critical thinking</b>: you don\'t trust the output blindly.',delega:'It defines the boundaries of <b>delegation</b>: what you can really hand off.',dati:'It protects the <b>data</b>: governance, access, confidentiality.',docu:'It calls for <b>traceable</b>, repeatable processes.',owner:'It becomes concrete as <b>ownership</b>: you answer for what you publish.',commit:'It\'s defined by <b>commitment</b>: leadership sets the rules.'},cut:'Without safety and common sense a single mistake becomes damage: exposed data, wrong outputs published, and trust in AI collapses at once.'}
+}};
+
+/* ===== DIAGNOSTICO ===== */
+var DIAG={it:[
+  ['Quando scopro un modo utile di usare l\'AI, lo condivido subito col team.','condiv'],
+  ['Ho del tempo (anche poco) ogni settimana per testare e studiare l\'AI.','form'],
+  ['Provo cose nuove senza aspettare che me lo chieda qualcuno dall\'alto.','proatt'],
+  ['Accettiamo che molti test falliscano, purché si spieghi il perché.','fall'],
+  ['Decidiamo se una cosa funziona guardando i numeri, non le opinioni.','dati'],
+  ['Sono disposto a cambiare idea se l\'AI fa meglio del mio metodo di sempre.','curio']
+],en:[
+  ['When I find a useful way to use AI, I share it with the team right away.','condiv'],
+  ['I have time (even a little) each week to test and study AI.','form'],
+  ['I try new things without waiting for someone above to ask me to.','proatt'],
+  ['We accept that many tests fail, as long as the reason is explained.','fall'],
+  ['We decide whether something works by looking at numbers, not opinions.','dati'],
+  ['I\'m willing to change my mind if AI does better than my usual method.','curio']
+]};
+var DGV={it:[
+  {min:0,h:'Rete da riannodare',p:'Diversi nodi sono scoperti. Parti dal più debole: senza quello, gli altri fanno più fatica.'},
+  {min:12,h:'Rete in costruzione',p:'La struttura c\'è ma ha maglie larghe. Rinforza i due tratti col punteggio più basso e vedrai il resto reggere meglio.'},
+  {min:19,h:'Rete solida',p:'La cultura è un vero tessuto: proattività, condivisione e dati si tengono. Il tool qui attecchisce davvero.'}
+],en:[
+  {min:0,h:'A network to re-tie',p:'Several nodes are exposed. Start from the weakest: without it, the others struggle more.'},
+  {min:12,h:'A network under construction',p:'The structure is there but loose. Reinforce the two lowest-scoring traits and the rest will hold better.'},
+  {min:19,h:'A solid network',p:'The culture is real fabric: proactivity, sharing and data hold together. The tool truly takes root here.'}
+]};
+
+var LANG='it',selNode=null,selNodeFs=null,netFsOpen=false,netFsBuilt=false,missOffId=null,dgScores=[0,0,0,0,0,0];
+var SVGNS='http://www.w3.org/2000/svg',XHTML='http://www.w3.org/1999/xhtml';
+
+function edgeKey(a,b){return a<b?a+'|'+b:b+'|'+a}
+function neighbors(id){var s={};EDGES.forEach(function(e){if(e[0]===id)s[e[1]]=1;if(e[1]===id)s[e[0]]=1});return s}
+
+function buildNet(){
+  var eg=document.getElementById('netEdges'),ng=document.getElementById('netNodes');
+  var pos={};NODES.forEach(function(n){pos[n.id]=n});
+  eg.innerHTML='';ng.innerHTML='';
+  EDGES.forEach(function(e){var a=pos[e[0]],b=pos[e[1]];
+    var ln=document.createElementNS(SVGNS,'line');
+    ln.setAttribute('class','net-edge');ln.setAttribute('data-e',edgeKey(e[0],e[1]));
+    ln.setAttribute('x1',a.x);ln.setAttribute('y1',a.y);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y);
+    eg.appendChild(ln);
+  });
+  NODES.forEach(function(n){
+    var d=NET[LANG][n.id],below=n.y<90,ly=below?n.y+46:n.y-38;
+    var g=document.createElementNS(SVGNS,'g');
+    g.setAttribute('class','net-node');g.setAttribute('data-n',n.id);
+    g.addEventListener('click',function(){pickNode(n.id)});
+    var c=document.createElementNS(SVGNS,'circle');
+    c.setAttribute('class','nd-c');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r','26');
+    g.appendChild(c);
+    var fo=document.createElementNS(SVGNS,'foreignObject');
+    fo.setAttribute('x',n.x-26);fo.setAttribute('y',n.y-26);fo.setAttribute('width','52');fo.setAttribute('height','52');
+    var div=document.createElementNS(XHTML,'div');div.setAttribute('class','nd-ico');
+    var ic=document.createElementNS(XHTML,'i');ic.setAttribute('class','ti '+d.ic);
+    div.appendChild(ic);fo.appendChild(div);g.appendChild(fo);
+    var t=document.createElementNS(SVGNS,'text');
+    t.setAttribute('class','nd-lab');t.setAttribute('x',n.x);t.setAttribute('y',ly);t.textContent=d.n;
+    g.appendChild(t);
+    var hit=document.createElementNS(SVGNS,'circle');
+    hit.setAttribute('class','nd-hit');hit.setAttribute('cx',n.x);hit.setAttribute('cy',n.y);hit.setAttribute('r','34');
+    g.appendChild(hit);
+    ng.appendChild(g);
+  });
+}
+function paintNet(){
+  var sel=selNode,nb=sel?neighbors(sel):{};
+  document.querySelectorAll('.net-node').forEach(function(g){
+    var id=g.getAttribute('data-n');g.classList.remove('sel','adj','dim');
+    if(!sel)return;
+    if(id===sel)g.classList.add('sel');
+    else if(nb[id])g.classList.add('adj');
+    else g.classList.add('dim');
+  });
+  document.querySelectorAll('.net-edge').forEach(function(l){
+    l.classList.remove('hot','dim');
+    if(!sel)return;
+    var pair=l.getAttribute('data-e').split('|');
+    if(pair[0]===sel||pair[1]===sel)l.classList.add('hot');else l.classList.add('dim');
+  });
+}
+function pickNode(id){selNode=(selNode===id)?null:id;paintNet();renderPanel()}
+function renderPanel(){
+  var p=document.getElementById('netPanel'),T=(LANG==='it');
+  if(!selNode){p.innerHTML='<div class="npt"><div class="npi"><i class="ti ti-affiliate"></i></div><h4>'+(T?'La rete della cultura AI-ready':'The AI-ready culture network')+'</h4></div><div class="npdesc">'+(T?'Clicca un nodo per vedere <b>da cosa dipende</b> e <b>cosa regge</b>. Ogni legame è una relazione reale: togline uno e capirai perché la rete si indebolisce.':'Click a node to see <b>what it depends on</b> and <b>what it holds up</b>. Every link is a real relationship: remove one and you\'ll see why the network weakens.')+'</div>';return}
+  var d=NET[LANG][selNode];
+  var lk=Object.keys(d.links).map(function(k){return '<div class="nl"><i class="ti ti-arrows-left-right"></i><span>'+d.links[k]+'</span></div>'}).join('');
+  p.innerHTML='<div class="npt"><div class="npi"><i class="ti '+d.ic+'"></i></div><h4>'+d.n+'</h4></div>'+
+    '<div class="npdesc">'+d.d+'</div>'+
+    '<div class="nplk">'+(T?'Come si collega':'How it connects')+'</div><div class="net-links">'+lk+'</div>'+
+    '<div class="net-cut"><i class="ti ti-alert-triangle-filled"></i>'+d.cut+'</div>';
+}
+
+/* ===== RETE FULLSCREEN — dataset ESTESO (NODES_FULL/EDGES_FULL/NET_FULL, 16 nodi/3 cluster) ===== */
+function isDark(){return document.documentElement.classList.contains('dark')}
+function clColor(clid){var c=CLUSTERS[clid];return isDark()?c.cDark:c.c}
+function clSoft(clid){var c=CLUSTERS[clid];return isDark()?c.softDark:c.soft}
+function neighborsFull(id){var s={};EDGES_FULL.forEach(function(e){if(e[0]===id)s[e[1]]=1;if(e[1]===id)s[e[0]]=1});return s}
+function buildNetFs(){
+  var eg=document.getElementById('netEdgesFs'),ng=document.getElementById('netNodesFs');
+  if(!eg||!ng)return;
+  var pos={};NODES_FULL.forEach(function(n){pos[n.id]=n});
+  eg.innerHTML='';ng.innerHTML='';
+  EDGES_FULL.forEach(function(e){var a=pos[e[0]],b=pos[e[1]];if(!a||!b)return;
+    var ln=document.createElementNS(SVGNS,'line');
+    ln.setAttribute('class','net-edge');ln.setAttribute('data-e',edgeKey(e[0],e[1]));
+    ln.setAttribute('x1',a.x);ln.setAttribute('y1',a.y);ln.setAttribute('x2',b.x);ln.setAttribute('y2',b.y);
+    eg.appendChild(ln);
+  });
+  NODES_FULL.forEach(function(n){
+    var d=NET_FULL[LANG][n.id],ly=n.y+62;
+    var g=document.createElementNS(SVGNS,'g');
+    g.setAttribute('class','net-node');g.setAttribute('data-n',n.id);
+    g.setAttribute('style','--cl:'+clColor(n.cl)+';--cl-soft:'+clSoft(n.cl));
+    g.addEventListener('click',function(){pickNodeFs(n.id)});
+    var c=document.createElementNS(SVGNS,'circle');
+    c.setAttribute('class','nd-c');c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);c.setAttribute('r','32');
+    g.appendChild(c);
+    var fo=document.createElementNS(SVGNS,'foreignObject');
+    fo.setAttribute('x',n.x-30);fo.setAttribute('y',n.y-30);fo.setAttribute('width','60');fo.setAttribute('height','60');
+    var div=document.createElementNS(XHTML,'div');div.setAttribute('class','nd-ico');
+    var ic=document.createElementNS(XHTML,'i');ic.setAttribute('class','ti '+d.ic);
+    div.appendChild(ic);fo.appendChild(div);g.appendChild(fo);
+    var t=document.createElementNS(SVGNS,'text');
+    t.setAttribute('class','nd-lab');t.setAttribute('x',n.x);t.setAttribute('y',ly);t.textContent=d.n;
+    g.appendChild(t);
+    var hit=document.createElementNS(SVGNS,'circle');
+    hit.setAttribute('class','nd-hit');hit.setAttribute('cx',n.x);hit.setAttribute('cy',n.y);hit.setAttribute('r','42');
+    g.appendChild(hit);
+    ng.appendChild(g);
+  });
+  buildLegendFs();
+  netFsBuilt=true;
+}
+function buildLegendFs(){
+  var el=document.getElementById('netLegendFs');if(!el)return;var T=(LANG==='it');
+  el.innerHTML=Object.keys(CLUSTERS).map(function(k){var c=CLUSTERS[k];
+    return '<span class="nfs-lg"><span class="dot" style="background:'+clColor(k)+'"></span>'+(T?c.lit:c.len)+'</span>'
+  }).join('');
+}
+function paintNetFs(){
+  var sel=selNodeFs,nb=sel?neighborsFull(sel):{},sv=document.getElementById('netSvgFs');
+  if(!sv)return;
+  sv.querySelectorAll('.net-node').forEach(function(g){
+    var id=g.getAttribute('data-n');g.classList.remove('sel','adj','dim');
+    if(!sel)return;
+    if(id===sel)g.classList.add('sel');
+    else if(nb[id])g.classList.add('adj');
+    else g.classList.add('dim');
+  });
+  sv.querySelectorAll('.net-edge').forEach(function(l){
+    l.classList.remove('hot','dim');
+    if(!sel)return;
+    var pair=l.getAttribute('data-e').split('|');
+    if(pair[0]===sel||pair[1]===sel)l.classList.add('hot');else l.classList.add('dim');
+  });
+}
+function pickNodeFs(id){selNodeFs=(selNodeFs===id)?null:id;paintNetFs();renderPanelFs()}
+function renderPanelFs(){
+  var p=document.getElementById('netPanelFs'),T=(LANG==='it');
+  if(!p)return;
+  if(!selNodeFs){p.innerHTML='<div class="npt"><div class="npi"><i class="ti ti-affiliate"></i></div><h4>'+(T?'Il quadro completo':'The full picture')+'</h4></div><div class="npdesc">'+(T?'16 tasselli della cultura AI-ready in 3 cluster: <b>mentalità individuale</b>, <b>pratiche di team</b>, <b>leadership & sistema</b>. Clicca un nodo per la descrizione, i suoi legami e <b>cosa crolla senza di lui</b>. Ri-clicca per deselezionare.':'16 pieces of the AI-ready culture across 3 clusters: <b>individual mindset</b>, <b>team practices</b>, <b>leadership & system</b>. Click a node for its description, its links and <b>what collapses without it</b>. Click again to deselect.')+'</div>';return}
+  var d=NET_FULL[LANG][selNodeFs],cl=CLUSTERS[d.cl],col=clColor(d.cl);
+  var lk=Object.keys(d.links).map(function(k){return '<div class="nl"><i class="ti ti-arrows-left-right"></i><span>'+d.links[k]+'</span></div>'}).join('');
+  p.innerHTML='<span class="npcl" style="background:'+clSoft(d.cl)+';color:'+col+'"><span class="dot" style="background:'+col+'"></span>'+(T?cl.lit:cl.len)+'</span>'+
+    '<div class="npt"><div class="npi" style="background:'+col+'"><i class="ti '+d.ic+'"></i></div><h4>'+d.n+'</h4></div>'+
+    '<div class="npdesc">'+d.d+'</div>'+
+    '<div class="nplk" style="color:'+col+'">'+(T?'Come si collega':'How it connects')+'</div><div class="nfs-links">'+lk+'</div>'+
+    '<div class="nfs-cut"><i class="ti ti-alert-triangle-filled"></i>'+d.cut+'</div>';
+}
+function openNetFS(){
+  var ov=document.getElementById('netFsOverlay');if(!ov)return;
+  if(!netFsBuilt)buildNetFs();
+  paintNetFs();renderPanelFs();
+  ov.classList.add('open');document.body.classList.add('nfs-lock');netFsOpen=true;
+}
+function closeNetFS(){
+  var ov=document.getElementById('netFsOverlay');if(!ov)return;
+  ov.classList.remove('open');document.body.classList.remove('nfs-lock');netFsOpen=false;
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&netFsOpen)closeNetFS()});
+
+/* ---- cosa manca ---- */
+function buildMiss(){
+  var box=document.getElementById('missChips');
+  box.innerHTML=NODES.map(function(n){var d=NET[LANG][n.id];return '<button class="miss-chip'+(missOffId===n.id?' on':'')+'" data-m="'+n.id+'" onclick="toggleMiss(\''+n.id+'\')"><i class="ti '+d.ic+'"></i>'+d.n+'</button>'}).join('');
+  renderMissOff();
+}
+function toggleMiss(id){missOffId=(missOffId===id)?null:id;buildMiss()}
+function renderMissOff(){
+  var el=document.getElementById('missOff'),T=(LANG==='it');
+  if(!missOffId){el.innerHTML='<span class="mtag">'+(T?'Togli un nodo':'Remove a node')+'</span><p>'+(T?'Seleziona un tratto qui sopra per <b>spegnerlo</b> e vedere l\'effetto a catena sul resto della rete.':'Pick a trait above to <b>switch it off</b> and see the chain effect on the rest of the network.')+'</p>';return}
+  var d=NET[LANG][missOffId];
+  el.innerHTML='<span class="mtag">'+(T?'Senza «'+d.n+'»':'Without "'+d.n+'"')+'</span><p><b>'+d.cut+'</b></p>';
+}
+
+/* ---- diagnostico ---- */
+function buildDiag(){
+  var box=document.getElementById('dgRows');
+  box.innerHTML=DIAG[LANG].map(function(q,i){
+    var dots='';for(var v=1;v<=4;v++){dots+='<div class="dg-dot'+(dgScores[i]===v?' on':'')+'" onclick="setDg('+i+','+v+')">'+v+'</div>'}
+    return '<div class="dg-row"><div class="dg-q">'+q[0]+'</div><div class="dg-scale">'+dots+'</div></div>'
+  }).join('');
+  renderDg();
+}
+function setDg(i,v){dgScores[i]=v;buildDiag()}
+function renderDg(){
+  var answered=dgScores.filter(function(x){return x>0}).length;
+  var tot=dgScores.reduce(function(a,b){return a+b},0);
+  var pct=Math.round(tot/24*100);
+  document.getElementById('dgFill').style.width=pct+'%';
+  var res=document.getElementById('dgResult');
+  if(answered<6){res.style.display='none';return}
+  res.style.display='flex';
+  document.getElementById('dgScore').innerHTML=tot+'<span>/24</span>';
+  var v=DGV[LANG][0];for(var k=0;k<DGV[LANG].length;k++){if(tot>=DGV[LANG][k].min)v=DGV[LANG][k]}
+  document.getElementById('dgVh').textContent=v.h;document.getElementById('dgVp').textContent=v.p;
+}
+
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  buildNet();paintNet();renderPanel();buildMiss();buildDiag();
+  netFsBuilt=false;
+  if(netFsOpen){buildNetFs();paintNetFs();renderPanelFs()}
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light');if(netFsOpen){buildNetFs();paintNetFs();renderPanelFs()}}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>

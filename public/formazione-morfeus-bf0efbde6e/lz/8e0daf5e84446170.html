@@ -334,4 +334,90 @@ s8:'Checkpoint',
 cpH:'Find your procedure',
 cpP:'Don\'t ask "how do I use AI?". Ask: what is the repetitive thing I do every week that steals my time and energy?',
 cpQ:'Think of ONE procedure of yours — recurring and clear: a report, a stock reply, a check. It\'s the perfect candidate to start from.',
-cpNote:'Start from 
+cpNote:'Start from the easy, near-certain one, not the most complex task: you raise the difficulty as you get to know the machine.',
+bridge:'You\'ve seen the benefits, the agents and the condition. <b>Next:</b> understanding the machine from the inside — how a model works, why it sometimes gets it wrong, and how to talk to it to get what you want.',
+foot:'Morfeus — The concrete benefits of AI'
+}};
+
+var FLOW={it:[
+['ti-message-2','Lo usi a parole','Il salto d\'accessibilità','La prima tappa è capire che non serve saper programmare: parli al modello in linguaggio naturale, come a una persona.',['Nessuna competenza tecnica richiesta','Chiunque sappia spiegare cosa vuole, può usarla','Applicabile in ogni settore'],'«Se lo sai spiegare a parole, lo sai delegare.»'],
+['ti-gift','Vedi i benefici','Effetti concreti, non promesse','La seconda tappa è misurare cosa cambia davvero: tempo liberato, output moltiplicato, errori ridotti. Benefici che vedi dal primo giorno.',['Il lavoro ripetitivo si libera','Poche persone producono come molte','Gli errori ricorrenti calano'],'«Non è futuro: è quello che succede appena inizi.»'],
+['ti-puzzle','Riconosci i pattern','Il superpotere del modello','La terza tappa è capire dov\'è forte: riconoscere pattern e replicare procedure con qualità costante. Ogni cosa ripetitiva è un pattern.',['Addestrata su testo: pattern-matching nativo','Replica una procedura sempre uguale','Più forte lì che nel ragionamento libero'],'«Ogni procedura che fai è un algoritmo — e lì è imbattibile.»'],
+['ti-robot','Deleghi agli agenti','Dal rispondere all\'agire','La quarta tappa è il livello avanzato: non solo risposte, ma compiti interi delegati ad agenti che decidono in autonomia per raggiungere un obiettivo.',['Non «segui gli step», ma «raggiungi l\'obiettivo»','L\'agente sceglie il percorso e usa gli strumenti','Approfondimento completo in A7'],'«Gli dai una meta e gli strumenti: al percorso ci pensa lui.»']
+],en:[
+['ti-message-2','You use it in words','The accessibility leap','The first step is realizing you don\'t need to code: you talk to the model in natural language, like to a person.',['No technical skill required','Anyone who can explain what they want can use it','Applicable in every sector'],'"If you can explain it in words, you can delegate it."'],
+['ti-gift','You see the benefits','Concrete effects, not promises','The second step is measuring what actually changes: time freed, output multiplied, errors reduced. Benefits you see from day one.',['Repetitive work is freed up','A few people produce like many','Recurring errors drop'],'"It\'s not the future: it\'s what happens the moment you start."'],
+['ti-puzzle','You spot the patterns','The model\'s superpower','The third step is understanding where it\'s strong: spotting patterns and replicating procedures with consistent quality. Every repetitive thing is a pattern.',['Trained on text: native pattern-matching','Replicates a procedure always the same way','Stronger there than at free reasoning'],'"Every procedure you run is an algorithm — and there it\'s unbeatable."'],
+['ti-robot','You delegate to agents','From answering to acting','The fourth step is the advanced level: not just answers, but whole tasks delegated to agents that decide on their own to reach a goal.',['Not "follow the steps", but "reach the goal"','The agent picks the path and uses the tools','Full deep dive in A7'],'"You give it a goal and the tools: it figures out the path."']
+]};
+
+var BENS={it:[
+['ti-clock-hour-4','Tempo liberato','Il lavoro noioso e ripetitivo — report, email-tipo, controlli — passa alla macchina. Recuperi le ore per ciò che conta davvero.'],
+['ti-copy','Output moltiplicato','Ciò che prima richiedeva un team, ora lo fai con poche persone. Non lavori di più: produci di più con lo stesso sforzo.'],
+['ti-shield-check','Errori ridotti','L\'errore umano da ripetizione e stanchezza sparisce: la macchina esegue la stessa procedura con qualità costante, sempre.'],
+['ti-world','Vale ovunque','Non è un vantaggio di nicchia: manifatturiero, ufficio, intrattenimento, ricerca. Cambia il dominio, non il beneficio.']
+],en:[
+['ti-clock-hour-4','Time freed up','The boring, repetitive work — reports, stock emails, checks — passes to the machine. You get back the hours for what really matters.'],
+['ti-copy','Output multiplied','What used to need a team, you now do with a few people. You don\'t work more: you produce more with the same effort.'],
+['ti-shield-check','Errors reduced','Human error from repetition and fatigue disappears: the machine runs the same procedure with consistent quality, every time.'],
+['ti-world','Works everywhere','It\'s not a niche advantage: manufacturing, office, entertainment, research. The domain changes, not the benefit.']
+]};
+
+var USES={it:[
+['ti-file-text','Il report ricorrente','Quel documento che rifai ogni settimana o mese con la stessa struttura: dati dentro, sintesi fuori. Procedura chiara, candidato perfetto.'],
+['ti-mail-fast','Le risposte-tipo','Le email e i messaggi che scrivi sempre uguali — conferme, follow-up, risposte standard. Le imposti una volta, le deleghi per sempre.'],
+['ti-checkup-list','I controlli di routine','Verifiche ripetitive su dati o documenti: coerenza, completezza, refusi. Un compito a regola fissa, ideale da affidare.'],
+['ti-arrow-guide','Il primo da cui partire','Non il task più complesso: il più facile e chiaro. Parti da lì, prendi confidenza, poi alzi l\'asticella.']
+],en:[
+['ti-file-text','The recurring report','That document you redo every week or month with the same structure: data in, summary out. Clear procedure, perfect candidate.'],
+['ti-mail-fast','The stock replies','The emails and messages you always write the same way — confirmations, follow-ups, standard answers. Set them up once, delegate them forever.'],
+['ti-checkup-list','The routine checks','Repetitive verifications on data or documents: consistency, completeness, typos. A fixed-rule task, ideal to hand over.'],
+['ti-arrow-guide','The one to start from','Not the most complex task: the easiest and clearest one. Start there, build confidence, then raise the bar.']
+]};
+
+var EXROW={it:[['ti-microphone','Assistenti vocali','Siri, Alexa'],['ti-device-mobile','Sul telefono','già in tasca'],['ti-bolt','Comando → azione','a voce'],['ti-messages','Comprende e agisce','non solo risponde']],
+en:[['ti-microphone','Voice assistants','Siri, Alexa'],['ti-device-mobile','On your phone','already in your pocket'],['ti-bolt','Command → action','by voice'],['ti-messages','Understands and acts','not just answers']]};
+
+var LANG='it',curFlow=0,vsPlaying=false;
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  document.getElementById('flow').innerHTML=FLOW[LANG].map(function(f,i){return '<div class="fstep'+(i===curFlow?' on':'')+'" onclick="showFlow('+i+')"><div class="fn">0'+(i+1)+'</div><i class="ti '+f[0]+' fi"></i><div class="ft">'+f[1]+'</div></div>'}).join('');
+  showFlow(curFlow);
+  document.getElementById('bens').innerHTML=BENS[LANG].map(function(b){return '<div class="card3"><div class="ci"><i class="ti '+b[0]+'"></i></div><h4>'+b[1]+'</h4><p>'+b[2]+'</p></div>'}).join('');
+  document.getElementById('uses').innerHTML=USES[LANG].map(function(u){return '<div class="card3"><div class="ci"><i class="ti '+u[0]+'"></i></div><h4>'+u[1]+'</h4><p>'+u[2]+'</p></div>'}).join('');
+  document.getElementById('exRow').innerHTML=EXROW[LANG].map(function(x){return '<div class="ex-chip"><i class="ti '+x[0]+'"></i><b>'+x[1]+'</b> '+x[2]+'</div>'}).join('');
+  renderVS();
+}
+function showFlow(i){curFlow=i;var f=FLOW[LANG][i];document.querySelectorAll('.fstep').forEach(function(b,k){b.classList.toggle('on',k===i)});document.getElementById('fdetail').innerHTML='<h4><i class="ti '+f[0]+'"></i>'+f[2]+'</h4><p>'+f[3]+'</p><ul>'+f[4].map(function(li){return '<li><i class="ti ti-point-filled"></i>'+li+'</li>'}).join('')+'</ul><div class="fq">'+f[5]+'</div>'}
+function renderVS(){
+  var d=DICT[LANG];
+  document.getElementById('vsAuto').innerHTML=d.vsAuto.map(function(s){return '<div class="vs-step"><div class="ss-n">'+s[0]+'</div><div class="ss-x">'+s[1]+'</div></div>'}).join('')+'<div class="vs-end"><i class="ti ti-alert-triangle"></i>'+d.vsAutoEnd+'</div>';
+  document.getElementById('vsAg').innerHTML=d.vsAg.map(function(s){return '<div class="vs-step"><div class="ss-n">'+s[0]+'</div><div class="ss-x">'+s[1]+'</div></div>'}).join('')+'<div class="vs-end"><i class="ti ti-circle-check"></i>'+d.vsAgEnd+'</div>';
+}
+function runVS(){
+  if(vsPlaying)return;vsPlaying=true;
+  var btn=document.getElementById('vsBtn');
+  document.querySelectorAll('#vsAuto .vs-step,#vsAuto .vs-end,#vsAg .vs-step,#vsAg .vs-end').forEach(function(el){el.classList.remove('live')});
+  var seq=[].slice.call(document.querySelectorAll('#vsAuto .vs-step')).map(function(el){return el});
+  var stepsAuto=[].slice.call(document.querySelectorAll('#vsAuto .vs-step,#vsAuto .vs-end'));
+  var stepsAg=[].slice.call(document.querySelectorAll('#vsAg .vs-step,#vsAg .vs-end'));
+  var n=Math.max(stepsAuto.length,stepsAg.length),i=0;
+  var timer=setInterval(function(){
+    if(stepsAuto[i])stepsAuto[i].classList.add('live');
+    if(stepsAg[i])stepsAg[i].classList.add('live');
+    i++;
+    if(i>=n){clearInterval(timer);vsPlaying=false;btn.innerHTML='<i class="ti ti-refresh"></i><span>'+DICT[LANG].vsReset+'</span>'}
+  },820);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});var btn=document.getElementById('vsBtn');if(btn)btn.innerHTML='<i class="ti ti-player-play"></i><span>'+DICT[LANG].vsRunL+'</span>';applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html> 

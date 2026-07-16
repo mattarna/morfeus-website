@@ -60,8 +60,9 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 .key p{font-size:22px;font-weight:600;line-height:1.4;color:var(--accent);max-width:580px;margin:0 auto;letter-spacing:-.01em}
 .key .cap{font-size:13.5px;color:var(--ink-3);margin-top:12px;font-weight:400;font-style:italic}
 
-/* 4 pilastri */
+/* 4 pilastri (+1 bonus) */
 .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pillars.has-bonus{grid-template-columns:repeat(5,1fr)}
 .pil{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:18px 12px 14px;cursor:pointer;transition:.18s}
 .pil:hover{border-color:var(--line-2);transform:translateY(-2px)}
 .pil.on{border-color:var(--accent);background:var(--accent-soft)}
@@ -73,6 +74,12 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 .pil.bridge4{border-style:dashed}
 .pil.bridge4 .pic{color:var(--agent)}.pil.bridge4.on{border-color:var(--agent);background:var(--agent-soft)}
 .pil.bridge4.on .pic{background:var(--agent);color:#fff}.pil.bridge4.on .pn{color:var(--agent)}
+.pil.bonus{border-style:dotted}
+.pil.bonus .pic{color:var(--bad)}.pil.bonus.on{border-color:var(--bad);background:var(--bad-soft)}
+.pil.bonus.on .pic{background:var(--bad);color:#fff}.pil.bonus.on .pn{color:var(--bad)}
+.pil .pbadge{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;background:var(--bad);padding:2px 6px;border-radius:20px;line-height:1.4}
+.pildetail.bonusaccent{border-top-color:var(--bad)}
+.pildetail.bonusaccent .pdh .pdi{background:var(--bad-soft);color:var(--bad)}
 .pildetail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--sh);padding:20px;border-top:3px solid var(--accent)}
 .pildetail.agentaccent{border-top-color:var(--agent)}
 .pildetail .pdh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -122,7 +129,7 @@ h1{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.13;margin-
 .foot{border-top:1px solid var(--line);padding-top:26px;margin-top:32px;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
 .foot a{color:var(--accent);text-decoration:none}.foot a:hover{text-decoration:underline}
 .rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.show{opacity:1;transform:none}
-@media(max-width:640px){h1{font-size:28px}.pillars{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.pil .pt{font-size:13px}}
+@media(max-width:640px){h1{font-size:28px}.pillars,.pillars.has-bonus{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.pil .pt{font-size:13px}}
 @media print{body{background-image:none}.bar,.ic-btn,.lang,.pdf-btn{display:none!important}body,html.dark{background:#fff!important;color:#000!important}.wrap{padding:0;max-width:100%}.rv{opacity:1!important;transform:none!important}.lvlbody{display:block!important}.note,.card3,.cp,.pil,.pildetail,.lvl,.key,.miss{break-inside:avoid;box-shadow:none!important}}
 </style>
 </head>
@@ -184,8 +191,8 @@ s1:'Quattro condizioni, prima del tool',
 note1H:'Il modello viene per ultimo',
 note1P:'Quattro pilastri fondamentali vengono <strong>prima del modello</strong>: prima del cloud, prima di scegliere lo strumento. Sono <strong>Formazione · Cultura aziendale · Dati · How-To-basics</strong>. Valgono più del tool stesso — perché un\'azienda senza questi pilastri non adotta l\'AI: la subisce.',
 q1:'«Il modello è l\'ultima cosa di cui preoccuparsi. Se le quattro fondamenta non ci sono, anche il modello migliore lavora sulla sabbia.»',
-s2:'I quattro pilastri',
-pillarsIntro:'Quattro pilastri pari. I primi tre sono le fondamenta; il quarto è il ponte all\'azione — quello da cui parti davvero. Clicca ogni pilastro per vedere perché viene prima del tool e cosa succede se manca.',
+s2:'I quattro pilastri (+1 bonus)',
+pillarsIntro:'Quattro pilastri pari. I primi tre sono le fondamenta; il quarto è il ponte all\'azione — quello da cui parti davvero. C\'è poi un quinto elemento, <b>bonus</b>: la Sicurezza, un tema trasversale da presidiare fin da subito. Clicca ogni pilastro per vedere perché viene prima del tool e cosa succede se manca.',
 s3:'Se ne manca uno',
 note2H:'Il tool amplifica ciò che trova',
 note2P:'L\'AI è un moltiplicatore, e <strong>un moltiplicatore non distingue il segno</strong>: se le persone non sono formate, moltiplica gli errori; se la cultura è chiusa, moltiplica la resistenza; se i dati sono caotici, moltiplica il rumore; se parti dal task più complesso, moltiplica la frustrazione. La potenza del tool non compensa una fondamenta mancante: la espone.',
@@ -199,7 +206,8 @@ cpH:'Quale pilastro ti manca?',
 cpP:'I quattro pilastri sono una diagnosi, non una checklist da spuntare in fretta. Prima di toccare qualsiasi tool, guarda quale dei quattro è il tuo punto debole.',
 cpQ:'Pensa alla tua azienda oggi: tra Formazione, Cultura, Dati e How-To-basics, qual è il pilastro più fragile? È lì che il prossimo tool amplificherebbe il caos invece del valore.',
 bridge:'Le fondamenta sono chiare. <b>Prossimo:</b> la Cultura aziendale AI-ready in dettaglio — come si costruisce un\'azienda che sperimenta, condivide e innova dal basso.',
-foot:'Morfeus — I 4 pilastri dell\'adozione AI'
+foot:'Morfeus — I 4 pilastri dell\'adozione AI',
+bonusL:'Bonus'
 },
 en:{
 kicker:'Lesson A1.4',pdfT:'Download PDF',themeT:'Toggle theme',eyebrow:'The method',
@@ -209,8 +217,8 @@ s1:'Four conditions, before the tool',
 note1H:'The model comes last',
 note1P:'Four fundamental pillars come <strong>before the model</strong>: before the cloud, before choosing the tool. They are <strong>Training · Company culture · Data · How-To-basics</strong>. They matter more than the tool itself — because a company without these pillars doesn\'t adopt AI: it endures it.',
 q1:'"The model is the last thing to worry about. If the four foundations aren\'t there, even the best model works on sand."',
-s2:'The four pillars',
-pillarsIntro:'Four equal pillars. The first three are the foundations; the fourth is the bridge to action — where you actually start. Click each pillar to see why it comes before the tool and what happens when it\'s missing.',
+s2:'The four pillars (+1 bonus)',
+pillarsIntro:'Four equal pillars. The first three are the foundations; the fourth is the bridge to action — where you actually start. Then there\'s a fifth, <b>bonus</b> element: Security, a cross-cutting theme to keep under control from day one. Click each pillar to see why it comes before the tool and what happens when it\'s missing.',
 s3:'If one is missing',
 note2H:'The tool amplifies what it finds',
 note2P:'AI is a multiplier, and <strong>a multiplier doesn\'t care about the sign</strong>: if people aren\'t trained, it multiplies errors; if the culture is closed, it multiplies resistance; if data is chaotic, it multiplies noise; if you start from the hardest task, it multiplies frustration. The tool\'s power doesn\'t compensate for a missing foundation: it exposes it.',
@@ -224,7 +232,8 @@ cpH:'Which pillar are you missing?',
 cpP:'The four pillars are a diagnosis, not a checklist to tick off fast. Before touching any tool, look at which of the four is your weak point.',
 cpQ:'Think about your company today: among Training, Culture, Data and How-To-basics, which pillar is the most fragile? That\'s where the next tool would amplify chaos instead of value.',
 bridge:'The foundations are clear. <b>Next:</b> the AI-ready company culture in detail — how to build a company that experiments, shares and innovates from the bottom up.',
-foot:'Morfeus — The 4 pillars of AI adoption'
+foot:'Morfeus — The 4 pillars of AI adoption',
+bonusL:'Bonus'
 }};
 
 /* PILLARS: [title, icon, why-before-tool(html), missing-label, missing-text, link-text(or '') ] */
@@ -244,6 +253,10 @@ var PILLARS={it:[
 ['How-To-basics','ti-flag',
  'È il <b>pilastro dell\'avvio</b>: il ponte tra teoria e azione. Non si parte dal task più complesso, ma dalle basi — uso consapevole dei principali LLM sulle attività di tutti i giorni. È piccolo, sicuro, e porta subito risultati visibili.',
  'Se manca','Si resta bloccati nella teoria, oppure si parte dal task più difficile e si fallisce. Senza un primo passo concreto, l\'adozione non decolla mai.',
+ ''],
+['Sicurezza','ti-shield-lock',
+ 'Non è un quinto pilastro alla pari: è un <b>tema trasversale</b> che attraversa tutti gli altri quattro, da presidiare fin dal primo giorno. Significa sapere <b>cosa non caricare</b> in un modello — dati sensibili, informazioni riservate su clienti o azienda — e avere policy chiare su cosa è permesso e cosa no.',
+ 'Se manca','Dati sensibili finiscono in strumenti non controllati, senza che nessuno se ne accorga: il danno si vede solo dopo, quando è già successo.',
  '']
 ],en:[
 ['Training','ti-school',
@@ -261,6 +274,10 @@ var PILLARS={it:[
 ['How-To-basics','ti-flag',
  'It\'s the <b>starting pillar</b>: the bridge between theory and action. You don\'t start from the most complex task, but from the basics — conscious use of the main LLMs on everyday work. It\'s small, safe, and brings visible results right away.',
  'If missing','You stay stuck in theory, or you start from the hardest task and fail. Without a concrete first step, adoption never takes off.',
+ ''],
+['Security','ti-shield-lock',
+ 'It isn\'t a fifth pillar on equal footing: it\'s a <b>cross-cutting theme</b> that runs through all the other four, to be kept under control from day one. It means knowing <b>what not to upload</b> to a model — sensitive data, confidential information about clients or the company — and having clear policies on what\'s allowed and what isn\'t.',
+ 'If missing','Sensitive data ends up in uncontrolled tools without anyone noticing: the damage only becomes visible after it has already happened.',
  '']
 ]};
 
@@ -274,4 +291,60 @@ var LEVELS={it:[
  ['Comprendere il potenziale dell\'AI per efficienza e scalabilità','Identificare i processi automatizzabili o migliorabili','Definire strategie che bilancino innovazione e sicurezza','Costruire un linguaggio comune con team e dirigenti']],
 ['Imprenditori e leader','Livello 3',
  ['Perdere opportunità di mercato a favore di concorrenti più agili','Investire male: adottare tecnologie senza una strategia chiara','Rimanere indietro rispetto ai trend del settore'],
- ['Visione di mercato: come l\'AI trasforma il settore','Valutazione degli investimenti: ROI e rischi dei progetti AI','Pianificazione strategica: l\'AI nelle decisioni di lungo termine','Leadership del cambiamento: guidare un\'adozione consapevole'
+ ['Visione di mercato: come l\'AI trasforma il settore','Valutazione degli investimenti: ROI e rischi dei progetti AI','Pianificazione strategica: l\'AI nelle decisioni di lungo termine','Leadership del cambiamento: guidare un\'adozione consapevole']]
+],en:[
+['Operational staff','Level 1',
+ ['Using unsuitable or unsafe tools, exposing sensitive data','Wasting time testing inefficient solutions','Not tapping the full potential of the tools'],
+ ['What AI is and which problems it can solve in operational processes','Which tools are the most suitable and safe for their role','How to embed them into routines without creating ineffective dependencies']],
+['Managers','Level 2',
+ ['Introducing technologies in an unplanned way','Not knowing how to coordinate the team\'s new skills','Overlooking security and compliance risks'],
+ ['Understanding AI\'s potential for efficiency and scalability','Identifying processes that can be automated or improved','Defining strategies that balance innovation and security','Building a common language with teams and executives']],
+['Entrepreneurs and leaders','Level 3',
+ ['Losing market opportunities to more agile competitors','Investing poorly: adopting technologies without a clear strategy','Falling behind industry trends'],
+ ['Market vision: how AI transforms the sector','Investment assessment: ROI and risks of AI projects','Strategic planning: AI in long-term decisions','Leadership of change: guiding a conscious adoption']]
+]};
+
+var LANG='it',curPil=0,curLvl=0;
+function pillDetail(i){
+  var p=PILLARS[LANG][i],ag=(i===3);
+  var h='<div class="pdh"><div class="pdi"><i class="ti '+p[1]+'"></i></div><h4>'+p[0]+'</h4></div>'+
+        '<div class="why">'+p[2]+'</div>'+
+        '<div class="miss"><i class="ti ti-alert-triangle"></i><div><span class="ml">'+p[3]+'</span><p>'+p[4]+'</p></div></div>';
+  if(i===0){
+    h+='<div class="levels" id="levels">'+LEVELS[LANG].map(function(l,k){
+      return '<div class="lvl'+(k===curLvl?' on':'')+'"><div class="lvlhead" onclick="showLvl('+k+')"><div class="ln">'+(k+1)+'</div><div class="lh">'+l[0]+'</div><div class="lsub">'+l[1]+'</div><i class="ti ti-chevron-down chev"></i></div>'+
+        '<div class="lvlbody"><div class="grp"><div class="gl risk"><i class="ti ti-alert-triangle"></i>'+(LANG==='it'?'Rischi se manca':'Risks if missing')+'</div><ul>'+l[2].map(function(r){return '<li><i class="ti ti-x"></i>'+r+'</li>'}).join('')+'</ul></div>'+
+        '<div class="grp"><div class="gl todo"><i class="ti ti-check"></i>'+(LANG==='it'?'Cosa deve imparare':'What to learn')+'</div><ul>'+l[3].map(function(t){return '<li><i class="ti ti-check"></i>'+t+'</li>'}).join('')+'</ul></div></div></div>';
+    }).join('')+'</div>';
+  }
+  if(p[5])h+='<div class="pdlink"><i class="ti ti-arrow-right"></i>'+p[5]+'</div>';
+  return h;
+}
+function showPil(i){
+  curPil=i;
+  document.querySelectorAll('#pillars .pil').forEach(function(el,k){el.classList.toggle('on',k===i)});
+  var d=document.getElementById('pildetail');
+  d.classList.toggle('agentaccent',i===3);
+  d.classList.toggle('bonusaccent',i===4);
+  d.innerHTML=pillDetail(i);
+}
+function showLvl(k){curLvl=k;var d=document.getElementById('levels');if(!d)return;d.querySelectorAll('.lvl').forEach(function(el,j){el.classList.toggle('on',j===k)})}
+function applyI18n(){
+  document.querySelectorAll('[data-i]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i')];if(v!=null)e.textContent=v});
+  document.querySelectorAll('[data-i-html]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-i-html')];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ti]').forEach(function(e){var v=DICT[LANG][e.getAttribute('data-ti')];if(v!=null)e.title=v});
+  document.documentElement.lang=LANG;document.title=DICT[LANG].h1+' — Morfeus';
+  var pillarsEl=document.getElementById('pillars');
+  pillarsEl.classList.toggle('has-bonus',PILLARS[LANG].length>4);
+  pillarsEl.innerHTML=PILLARS[LANG].map(function(p,i){return '<div class="pil'+(i===3?' bridge4':'')+(i===4?' bonus':'')+(i===curPil?' on':'')+'" onclick="showPil('+i+')"><span class="pn">0'+(i+1)+'</span>'+(i===4?'<span class="pbadge">'+DICT[LANG].bonusL+'</span>':'')+'<div class="pic"><i class="ti '+p[1]+'"></i></div><div class="pt">'+p[0]+'</div></div>'}).join('');
+  showPil(curPil);
+}
+function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function toggleTheme(){var e=document.documentElement;e.classList.toggle('dark');localStorage.setItem('mf-th',e.classList.contains('dark')?'dark':'light')}
+(function(){if(localStorage.getItem('mf-th')==='dark')document.documentElement.classList.add('dark')})();
+var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
+applyI18n();
+</script>
+</body>
+</html>
