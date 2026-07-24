@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="it" data-lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.2 · Workshop · Calcolare LTV e CAC massimo · Marketing Mastery</title>
+<script>try{if((localStorage.getItem('sp-theme')||'light')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
+<link rel="stylesheet" href="../_engine/fonts.css">
+<link rel="stylesheet" href="../_engine/skin.css">
+<link rel="stylesheet" href="../_engine/stile-core.css">
+<style>
+  .mf-legal{max-width:920px;margin:28px auto 0;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3);background:var(--bg-2)}
+  .mf-legal p{margin:0 0 8px}.mf-legal p:last-child{margin:0}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <span class="mk" role="img" aria-label="Marketing Mastery"></span>
+    <span class="sep"></span>
+    <span class="atto-badge" data-i="badge">Workshop · calcolare · 20 min</span>
+  </div>
+  <div class="tools">
+    <div class="lang" role="group" aria-label="Lingua">
+      <button data-l="it" class="on" onclick="setLang('it')">IT</button>
+      <button data-l="en" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="pdf-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      <span data-i="pdf">PDF</span>
+    </button>
+    <button class="ic-btn" onclick="toggleTheme()" aria-label="Tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow rv" data-i="eyebrow">Fase 4 · M4.3 · lezione 2 di 5</div>
+  <h1 class="rv" data-i-html="h1">Fai i conti prima di comprare traffico: <span class="hl">LTV e CAC massimo</span>.</h1>
+  <p class="tesi rv" data-i-html="tesi">Prima di comprare un cliente sai quanto vale e quanto puoi pagarlo. L'LTV si legge a margine, non a fatturato: due formule sole, una per i prodotti, una per i ricorrenti. Da lì ricavi il CAC massimo sostenibile e leggi se il funnel regge o perde, con la soglia LTV/CAC del percorso.</p>
+
+  <div class="prosa rv" style="margin-top:22px">
+    <p data-i-html="p1">Questa è la seconda lezione di M4.3, il principio C.2: vince chi può spendere di più per acquisire un cliente. Nella 4.3.1 hai visto che il conto si chiude sull'intero sistema, ben oltre il primo scontrino. Qui fai i numeri: calcoli l'LTV a margine, il CAC massimo che puoi permetterti, e dai un verdetto su due business dati. È un drill di calcolo, e in fondo un prompt porta lo standard dentro una qualsiasi AI per dirti se il conto torna.</p>
+  </div>
+
+  <div class="note rv">
+    <div class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+    <div><h4 data-i="note1t">Come funziona questo workshop (e il criterio reale)</h4><p data-i-html="note1p">Qui il lavoro è aritmetica applicata: fai i conti e li verifichi con uno standard oggettivo. Produci tre cose per ciascun business: l'LTV a margine, il CAC massimo sostenibile, e un verdetto LTV/CAC con la fascia. Il criterio è lo <strong>standard di calcolo del corso</strong>: le due formule, le assunzioni dichiarate, il churn trattato bene, la soglia 3:1. Un conto torna o non torna. In fondo un prompt porta quello standard dentro una qualsiasi AI: le passi il tuo conto e ti restituisce torna / non torna, con l'errore esatto.</p></div>
+  </div>
+
+  <div class="sh rv"><span class="no">01</span><span data-i="sh1">Il gross profit per transazione: si ragiona a margine</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p2">Ogni conto di LTV parte da un solo numero: il gross profit per transazione, cioè il ricavo meno il costo di consegnare il prodotto o il servizio (materiali, spedizione, commissioni, ore di lavoro). È quello che resta in mano dopo aver consegnato. Il playbook LTV di Hormozi ($100M Playbook) insiste su questo prima di ogni formula: fallo per ogni prodotto e per il business intero, e scopri che alcune cose su cui perdi tempo rendono meno di quanto credevi.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">1</span><p data-i-html="gpEx1"><strong>Prodotto</strong> · un widget venduto 100€ che ti costa 20€ di consegna ha 80€ di gross profit, l'80%. È il margine reale sull'ordine, quello che resta dopo aver consegnato. Esempio dal playbook LTV di Hormozi ($100M Playbook).</p></div>
+    <div class="checklist-item num"><span class="ci-mark">2</span><p data-i-html="gpEx2"><strong>Servizio</strong> · un account rep gestisce 10 clienti da 3.000€/mese (30.000€) e costa 6.000€: restano 24.000€, l'80% del ricavo. Il gross profit per cliente è 3.000€ × 80% = 2.400€. Anche questo dal playbook LTV ($100M Playbook).</p></div>
+  </div>
+
+  <div class="sh rv"><span class="no">02</span><span data-i="sh2">Le due formule dell'LTV</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p3">Dal gross profit escono due sole formule, a seconda del tipo di business. Per un prodotto con acquisti ripetuti, moltiplichi il gross profit per il numero medio di transazioni. Per un ricorrente, dividi il gross profit di un periodo per il churn di quel periodo. Sono le due formule del playbook LTV di Hormozi ($100M Playbook), e coprono la quasi totalità dei modelli.</p>
+  </div>
+
+  <div class="figure rv">
+    <svg viewBox="0 0 1080 300" role="img" aria-label="Le due formule dell'LTV: prodotti uguale gross profit per transazione moltiplicato per le transazioni medie; ricorrente uguale gross profit per periodo diviso il churn">
+      <text class="svg-sub" x="30" y="88" fill="var(--steel)" style="font-size:12px">PRODOTTI</text>
+      <g class="pop" data-delay="120"><rect class="k-node" style="--c:var(--accent)" x="150" y="44" width="210" height="72" rx="13"/><text class="svg-lbl" x="255" y="78" text-anchor="middle" fill="var(--accent)" style="font-size:17px">30€</text><text class="svg-sub" x="255" y="100" text-anchor="middle" fill="var(--ink-3)">gross profit / transazione</text></g>
+      <text class="svg-lbl" x="385" y="88" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px">&#215;</text>
+      <g class="pop" data-delay="220"><rect class="k-node" style="--c:var(--steel)" x="410" y="44" width="210" height="72" rx="13"/><text class="svg-lbl" x="515" y="78" text-anchor="middle" fill="var(--steel)" style="font-size:17px">4</text><text class="svg-sub" x="515" y="100" text-anchor="middle" fill="var(--ink-3)">transazioni medie</text></g>
+      <text class="svg-lbl" x="645" y="88" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px">=</text>
+      <g class="pop k-glow" data-delay="320"><rect class="k-node" style="--c:var(--good)" x="670" y="44" width="230" height="72" rx="13"/><text class="svg-lbl" x="785" y="78" text-anchor="middle" fill="var(--good)" style="font-size:17px">120€</text><text class="svg-sub" x="785" y="100" text-anchor="middle" fill="var(--good)">LTV</text></g>
+      <path class="draw k-line" data-delay="440" d="M40 150 L1040 150" stroke="var(--line-2)" fill="none"/>
+      <text class="svg-sub" x="30" y="226" fill="var(--steel)" style="font-size:12px">RICORRENTE</text>
+      <g class="pop" data-delay="540"><rect class="k-node" style="--c:var(--accent)" x="150" y="182" width="210" height="72" rx="13"/><text class="svg-lbl" x="255" y="216" text-anchor="middle" fill="var(--accent)" style="font-size:17px">72€</text><text class="svg-sub" x="255" y="238" text-anchor="middle" fill="var(--ink-3)">gross profit / mese</text></g>
+      <text class="svg-lbl" x="385" y="226" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px">&#247;</text>
+      <g class="pop" data-delay="640"><rect class="k-node" style="--c:var(--steel)" x="410" y="182" width="210" height="72" rx="13"/><text class="svg-lbl" x="515" y="216" text-anchor="middle" fill="var(--steel)" style="font-size:17px">4%</text><text class="svg-sub" x="515" y="238" text-anchor="middle" fill="var(--ink-3)">churn mensile</text></g>
+      <text class="svg-lbl" x="645" y="226" text-anchor="middle" fill="var(--ink-3)" style="font-size:18px">=</text>
+      <g class="pop k-glow" data-delay="740"><rect class="k-node" style="--c:var(--good)" x="670" y="182" width="230" height="72" rx="13"/><text class="svg-lbl" x="785" y="216" text-anchor="middle" fill="var(--good)" style="font-size:17px">1.800€</text><text class="svg-sub" x="785" y="238" text-anchor="middle" fill="var(--good)">LTV</text></g>
+    </svg>
+    <div class="cap" data-i="fig1">Le due formule ai numeri del drill: Business A (prodotto) 30€ × 4 = 120€ di LTV; Business B (ricorrente) 72€ ÷ 4% = 1.800€ di LTV. Il churn basso moltiplica: un cliente al 4% resta in media venticinque mesi.</div>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">A</span><p data-i-html="fProd"><strong>Prodotti con acquisti ripetuti</strong> · LTV = gross profit per transazione × numero medio di transazioni. Esempio canonico del playbook: 80€ × 4 acquisti = 320€ di LTV.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">B</span><p data-i-html="fRec"><strong>Ricorrente / subscription</strong> · LTV = gross profit per periodo ÷ churn. Esempio del playbook: 2.400€ ÷ 5% = 48.000€ di LTV. Il denominatore piccolo fa esplodere il numero.</p></div>
+  </div>
+
+  <div class="sh rv"><span class="no">03</span><span data-i="sh3">Il churn: contalo bene, o l'LTV mente</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p4">La formula del ricorrente vive o muore sul churn, e il churn è dove quasi tutti sbagliano. Il churn è la percentuale di clienti persa tra due periodi, e si misura sul pool iniziale. La trappola è includere i nuovi iscritti del periodo: falsano il conto e gonfiano l'LTV. Ecco i due metodi per stimare la durata di un cliente e la trappola da evitare.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">1</span><p data-i-html="chM1"><strong>Metodo 1 · esporta e media</strong> · per un business a transazioni ripetute, esporta i clienti, ordinali per numero di acquisti e fai la media. Ti dà il numero medio di transazioni da mettere nella formula prodotti.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">2</span><p data-i-html="chM2"><strong>Metodo 2 · il churn</strong> · per un ricorrente, churn = clienti usciti ÷ pool iniziale × 100. Cento clienti a inizio periodo, ne restano 95: hai perso 5, churn 5%. Da lì, gross profit ÷ churn.</p></div>
+    <div class="checklist-item bad"><span class="ci-mark">✕</span><p data-i-html="chTrap"><strong>La trappola</strong> · i nuovi iscritti del periodo non entrano nel churn. Zero o mille nuovi clienti lasciano il churn al 5% se hai comunque perso gli stessi 5. Conta chi è uscito, non chi si è appena iscritto.</p></div>
+  </div>
+
+  <div class="prompt-box rv">
+    <span class="pb-k" data-i="pbk1">Prompt da copiare, per impostare il calcolo sul tuo business</span>
+    <pre data-i="pbtext1">Aiutami a calcolare LTV e CAC massimo sostenibile per il mio business, corso Marketing Mastery. Guidami passo per passo e obbligami a dichiarare ogni assunzione con la sua unita di misura.
+
+I MIEI NUMERI (compila):
+- Tipo di business: [prodotto con acquisti ripetuti / ricorrente-subscription]
+- Ricavo per transazione o canone per periodo: [importo + unita]
+- Costo di consegna per transazione o periodo: [materiali, spedizione, commissioni, ore di lavoro]
+- Se prodotto: numero medio di transazioni per cliente: [come l'hai ricavato]
+- Se ricorrente: churn del periodo: [clienti persi diviso pool iniziale x100; i nuovi iscritti NON contano]
+- Quanto pago oggi per acquisire un cliente (CAC): [spesa acquisizione diviso clienti nuovi]
+
+FAMMI I CONTI COSI:
+1. Gross profit per transazione o periodo = ricavo meno costo di consegna. A margine, mai a fatturato.
+2. LTV: se prodotto, gross profit x transazioni medie; se ricorrente, gross profit diviso churn.
+3. CAC massimo sostenibile = LTV diviso 3 (soglia LTV/CAC >= 3:1 del percorso).
+4. Confronta il mio CAC attuale col massimo e dammi la fascia: sotto 3 sotto pressione, 3-5 sano, oltre 5 posso spingere.
+
+Non inventare numeri al posto miei: se manca un dato, chiedimelo prima di calcolare. Dichiara ogni assunzione, e mostrami i passaggi.</pre>
+    <button class="pb-copy" type="button" data-copied="Copiato!">Copia</button>
+  </div>
+
+  <div class="sh rv"><span class="no">04</span><span data-i="sh4">Il CAC massimo sostenibile e la soglia 3:1</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p5">Con l'LTV a margine in mano, il CAC massimo sostenibile è quanto puoi pagare per un cliente restando in utile. Il percorso adotta una soglia-standard del direct response: LTV/CAC ≥ 3:1, cioè un cliente deve valere almeno tre volte quel che lo paghi. Da lì, il CAC massimo è l'LTV diviso 3. La soglia 3:1 è una convenzione del percorso, non una legge universale: serve come metro comune per leggere le fasce.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">&#9660;</span><p data-i-html="fa1"><strong>Sotto 3 · sotto pressione</strong> · l'LTV non copre abbastanza il costo di acquisizione: il modello fatica a scalare, ogni cliente in più stringe la cassa.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">&#9654;</span><p data-i-html="fa2"><strong>Tra 3 e 5 · sano</strong> · c'è margine fra quanto vale un cliente e quanto lo paghi: puoi crescere senza soffocare la cassa.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">&#9650;</span><p data-i-html="fa3"><strong>Oltre 5 · puoi spingere</strong> · stai lasciando acquisizione sul tavolo: puoi permetterti un CAC più alto e comprare traffico che altri non reggono.</p></div>
+  </div>
+
+  <div class="sh rv"><span class="no">05</span><span data-i="sh5">Il funnel in perdita, letto coi numeri</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p6">Ecco perché il conto conta. Un funnel a una sola offerta si legge come una catena: CPC (costo per click), CPL (costo per lead), CPA (costo per acquisizione). Questo è un esempio reale dal corso Funnel Secrets: mille click che diventano cinque vendite, e un CPA che sfonda il prezzo. Senza un backend che monetizza dopo, o un front-end che ripaga le ads, il funnel classico chiude in perdita.</p>
+  </div>
+
+  <div class="figure rv">
+    <svg viewBox="0 0 1080 320" role="img" aria-label="La lettura di un funnel dal costo per click al costo per acquisizione: mille click a 0,70 euro fanno 700 euro spesi, 250 lead, 5 vendite a 97 euro per 485 euro di incasso, con un buco di 215 euro">
+      <g class="pop" data-delay="120"><rect class="k-node" style="--c:var(--accent)" x="40" y="40" width="300" height="80" rx="13"/><text class="svg-lbl" x="190" y="74" text-anchor="middle" fill="var(--accent)" style="font-size:15px">1.000 click × 0,70€</text><text class="svg-sub" x="190" y="98" text-anchor="middle" fill="var(--ink-3)">= 700€ spesi · CPC 0,70€</text></g>
+      <path class="draw k-line" data-delay="220" d="M340 80 L392 80" stroke="var(--ink-3)" fill="none"/><path d="M392 80 L378 74 M392 80 L378 86" stroke="var(--ink-3)" stroke-width="var(--dw)" fill="none" stroke-linecap="round"/>
+      <g class="pop" data-delay="300"><rect class="k-node" style="--c:var(--steel)" x="392" y="40" width="290" height="80" rx="13"/><text class="svg-lbl" x="537" y="74" text-anchor="middle" fill="var(--steel)" style="font-size:15px">250 lead</text><text class="svg-sub" x="537" y="98" text-anchor="middle" fill="var(--ink-3)">CPL 2,80€ · 25% click&#8594;lead</text></g>
+      <path class="draw k-line" data-delay="400" d="M682 80 L734 80" stroke="var(--ink-3)" fill="none"/><path d="M734 80 L720 74 M734 80 L720 86" stroke="var(--ink-3)" stroke-width="var(--dw)" fill="none" stroke-linecap="round"/>
+      <g class="pop" data-delay="480"><rect class="k-node" style="--c:var(--agent)" x="734" y="40" width="306" height="80" rx="13"/><text class="svg-lbl" x="887" y="74" text-anchor="middle" fill="var(--agent)" style="font-size:15px">5 vendite × 97€</text><text class="svg-sub" x="887" y="98" text-anchor="middle" fill="var(--ink-3)">CPA 140€ · incasso 485€</text></g>
+      <text class="svg-sub" x="40" y="182" fill="var(--ink-3)" style="font-size:12px">SPESO</text>
+      <rect x="150" y="166" width="560" height="30" rx="6" fill="var(--accent)" opacity="0.85"/><text class="svg-lbl" x="430" y="186" text-anchor="middle" fill="var(--bg-2)" style="font-size:13px">700€</text>
+      <text class="svg-sub" x="40" y="234" fill="var(--ink-3)" style="font-size:12px">INCASSATO</text>
+      <rect x="150" y="218" width="388" height="30" rx="6" fill="var(--good)" opacity="0.85"/><text class="svg-lbl" x="344" y="238" text-anchor="middle" fill="var(--bg-2)" style="font-size:13px">485€</text>
+      <rect x="538" y="218" width="172" height="30" rx="6" fill="var(--bad-soft)" stroke="var(--bad)" stroke-width="1.5"/><text class="svg-lbl" x="624" y="238" text-anchor="middle" fill="var(--bad)" style="font-size:13px">buco 215€</text>
+      <text class="svg-sub" x="150" y="286" fill="var(--bad)" style="font-size:13px">Il funnel a una sola offerta chiude sotto: CPA 140€ contro un prezzo di 97€.</text>
+    </svg>
+    <div class="cap" data-i="fig2">La catena CPC → CPL → CPA di un Classic Funnel (esempio dal corso Funnel Secrets). Mille click a 0,70€ sono 700€ spesi; 250 lead; 5 vendite a 97€ per 485€ incassati. Il CPA (140€) supera il prezzo (97€): buco di 215€. È qui che l'LTV alto e il backend cambiano il verdetto.</div>
+  </div>
+
+  <div class="sh rv"><span class="no">06</span><span data-i="sh6">Il drill: due business, due conti</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p7">Ora tocca a te. Qui sotto due business, dichiarati illustrativi: uno è un prodotto con acquisti ripetuti, l'altro un ricorrente in abbonamento. Per ciascuno calcoli l'LTV a margine, il CAC massimo sostenibile a 3:1, e il verdetto confrontando il CAC attuale con il massimo. I numeri sono coerenti con gli esempi del playbook, non dati reali di mercato.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">A</span><p data-i-html="dsA"><strong>Business A · e-commerce di integratori</strong> (illustrativo). Ricavo medio per ordine 50€, costo di consegna 20€. Numero medio di transazioni per cliente: 4. Oggi paga 50€ per acquisire un cliente (3.000€ di ads, 60 clienti nuovi).</p></div>
+    <div class="checklist-item num"><span class="ci-mark">B</span><p data-i-html="dsB"><strong>Business B · gestionale in abbonamento</strong> (illustrativo). Canone 90€/mese, costo di consegna 18€/mese per cliente. Churn mensile 4%. Oggi paga 400€ per acquisire un cliente.</p></div>
+  </div>
+
+  <div class="lab rv" data-bet="b1"></div>
+
+  <div class="sh rv"><span class="no">07</span><span data-i="sh7">Il drill: i passi</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="pstep">Esegui i cinque passi per ciascun business, e scrivi ogni numero con l'assunzione che lo genera. Il valore del drill è nel conto visibile: è così che il giudizio economico diventa allenabile.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item num"><span class="ci-mark">1</span><p data-i-html="step1"><strong>Gross profit</strong> · per ciascun business, ricavo meno costo di consegna. A margine, mai il fatturato.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">2</span><p data-i-html="step2"><strong>LTV</strong> · applica la formula giusta per il tipo: prodotti gross profit × transazioni medie, ricorrente gross profit ÷ churn.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">3</span><p data-i-html="step3"><strong>CAC massimo sostenibile</strong> · LTV ÷ 3, la soglia del percorso. È il massimo che puoi pagare restando dentro il 3:1.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">4</span><p data-i-html="step4"><strong>Verdetto</strong> · confronta il CAC attuale con il massimo e assegna la fascia: sotto pressione, sano, puoi spingere.</p></div>
+    <div class="checklist-item num"><span class="ci-mark">5</span><p data-i-html="step5"><strong>Dichiara le assunzioni</strong> · ogni stima con la sua unità: transazioni medie, churn, costo di consegna. Un numero senza assunzione non vale.</p></div>
+  </div>
+
+  <div class="lab rv" data-bet="b2"></div>
+
+  <div class="lab rv" data-sort="s1"></div>
+
+  <div class="sh rv"><span class="no">08</span><span data-i="sh8">Il gate: lo standard di calcolo ti dà un referto</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p8">Le voci sotto sono lo standard con cui il corso giudica un conto LTV/CAC. Prima fai tu una scansione onesta; poi copia il prompt del gate e fai verificare il tuo calcolo da una qualsiasi AI. Applica lo stesso standard e ti dà un verdetto torna / non torna con l'errore da correggere.</p>
+  </div>
+
+  <div class="checklist rv">
+    <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="g1"><strong>Gross profit a margine</strong>: ricavo meno costo di consegna, mai il fatturato al posto del margine.</p></div>
+    <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="g2"><strong>Formula giusta per il tipo</strong>: transazioni medie per i prodotti, churn per i ricorrenti.</p></div>
+    <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="g3"><strong>Churn pulito</strong>: clienti persi ÷ pool iniziale, i nuovi iscritti fuori dal conto.</p></div>
+    <div class="checklist-item good"><span class="ci-mark">✓</span><p data-i-html="g4"><strong>Assunzioni dichiarate e CAC massimo dall'LTV</strong>: ogni stima esplicita, il CAC massimo derivato dall'LTV a margine sulla soglia 3:1.</p></div>
+    <div class="checklist-item bad"><span class="ci-mark">✕</span><p data-i-html="g5"><strong>Segnale che il conto non torna</strong>: fatturato al posto del margine, churn coi nuovi iscritti dentro, un'assunzione nascosta o numeri senza unità di misura.</p></div>
+  </div>
+
+  <div class="prosa rv">
+    <p data-i-html="gatep">Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto il tuo conto per uno dei due business (o per il tuo): gross profit, LTV, CAC massimo e verdetto. L'AI applica lo standard di calcolo, severo com'è giusto, e ti dice dove il conto regge e dove crolla.</p>
+  </div>
+
+  <div class="prompt-box rv">
+    <span class="pb-k" data-i="pbkgate">Prompt del gate · copia, incolla il tuo conto, ottieni il referto</span>
+    <pre data-i="pbtextgate">Sei il mio reviewer per il drill di calcolo LTV/CAC del corso Marketing Mastery. Giudichi sullo standard di calcolo del corso e sei severo: meglio bocciare un conto sbagliato che promuoverne uno che non torna. Non conosci il corso oltre a cio che ti do qui.
+
+SOTTO TI INCOLLO il mio lavoro: per uno dei due business (o per il mio) ho calcolato gross profit per transazione, LTV, CAC massimo sostenibile e un verdetto LTV/CAC.
+
+LO STANDARD DI CALCOLO (verificalo passo per passo):
+1. GROSS PROFIT per transazione = ricavo meno il costo di consegna (materiali, spedizione, commissioni, ore di servizio). SI RAGIONA A MARGINE, MAI A FATTURATO. Se ho usato il fatturato al posto del gross profit, e un errore.
+2. FORMULA GIUSTA PER IL TIPO:
+   - Prodotto con acquisti ripetuti: LTV = gross profit per transazione x numero medio di transazioni.
+   - Ricorrente / subscription: LTV = gross profit (per periodo) diviso churn (dello stesso periodo).
+3. CHURN corretto = clienti persi nel periodo diviso il pool iniziale, per 100. I NUOVI ISCRITTI NON ENTRANO NEL CHURN del periodo: se li ho contati dentro, e un errore.
+4. ASSUNZIONI DICHIARATE: ogni stima (transazioni medie, churn, costo di consegna) esplicita, con la sua unita di misura. Un numero senza unita o un'assunzione nascosta e un errore.
+5. CAC MASSIMO SOSTENIBILE = LTV (a margine) diviso la soglia scelta. La soglia-standard del percorso e LTV/CAC >= 3:1, quindi CAC massimo = LTV diviso 3.
+6. VERDETTO con le fasce: LTV/CAC sotto 3 = sotto pressione (non scalabile); 3-5 = sano; sopra 5 = puoi spingere di piu. (La soglia 3:1 e una convenzione del direct response del percorso, non una legge universale.)
+
+BOCCIATURE AUTOMATICHE (bocciano il conto a prescindere dal risultato):
+- Churn calcolato con i nuovi iscritti dentro il denominatore.
+- Fatturato usato al posto del gross profit (margine).
+- Nessuna assunzione dichiarata, o numeri senza unita di misura.
+- Formula sbagliata per il tipo: churn applicato a un prodotto one-shot, o transazioni medie applicate a un ricorrente.
+- CAC massimo derivato dal fatturato invece che dall'LTV a margine.
+
+GATE (torna / non torna): il conto TORNA se e solo se nessuna bocciatura automatica e scattata, E la formula e quella giusta per il tipo di business, E il CAC massimo e derivato dall'LTV a margine con la soglia 3:1.
+
+DAMMI L'OUTPUT ESATTAMENTE COSI:
+VERDETTO: TORNA / NON TORNA
+GROSS PROFIT/TRANSAZIONE: _ (e come l'hai ricavato)
+LTV: _ (con la formula usata e il tipo di business)
+CAC MASSIMO SOSTENIBILE: _ (LTV diviso 3)
+LTV/CAC E FASCIA: _ (sotto pressione / sano / puoi spingere)
+ERRORE PRIMARIO: (la bocciatura o il passo sbagliato in una riga; se il conto torna, scrivi "nessuno")
+DA RISTUDIARE: (la lezione esatta: 4.3.1 CAC contro LTV, 4.3.2 fare i conti, 4.3.3 la value ladder, 4.3.4 le otto leve, 4.3.5 retention)
+
+Sii severo e specifico. Se ho usato il fatturato o ho sporcato il churn coi nuovi iscritti, bocciami e dimmi dove. Comincia.</pre>
+    <button class="pb-copy" type="button" data-copied="Copiato!">Copia</button>
+  </div>
+
+  <div class="key rv"><p data-i="key1">Il tuo valore non è aver riempito una formula: è saper dire, con un numero difendibile, quanto vale un cliente e quanto puoi pagarlo restando in utile.</p></div>
+
+  <div class="sh rv"><span class="no">09</span><span data-i="sh9">Il tuo lavoro: consegna il drill</span></div>
+
+  <div class="journal-c rv">
+    <span class="lab-k" data-i="jk">Consegna qui il drill completo</span>
+    <p data-i-html="jp"><strong>Un esempio tuo, adesso.</strong> Consegna qui il drill completo: per Business A e Business B, il gross profit per transazione, l'LTV con la formula giusta, il CAC massimo sostenibile e il verdetto con la fascia. Poi rifai il conto sul tuo business reale, coi tuoi numeri e ogni assunzione dichiarata.</p>
+    <textarea data-journal="j1" data-saved="salvato sul tuo dispositivo" placeholder="BUSINESS A (prodotto):&#10;- Gross profit / transazione: 50 - 20 = _&#10;- LTV (GP × transazioni): _&#10;- CAC massimo (LTV / 3): _&#10;- CAC attuale: 50 · LTV/CAC: _ · fascia: _&#10;&#10;BUSINESS B (ricorrente):&#10;- Gross profit / mese: 90 - 18 = _&#10;- LTV (GP ÷ churn): _&#10;- CAC massimo (LTV / 3): _&#10;- CAC attuale: 400 · LTV/CAC: _ · fascia: _&#10;&#10;IL MIO BUSINESS REALE:&#10;- Tipo: ... · Gross profit: ... · LTV: ... · CAC massimo: ... · verdetto: ...&#10;- Assunzioni dichiarate: ..."></textarea>
+    <span class="saved"></span>
+  </div>
+
+  <div class="xref rv">
+    <span class="x-tag" data-i="xt">Cross-reference · dopo 4.3.1, verso la value ladder</span>
+    <p data-i-html="xp">Sai leggere il tabellone: LTV a margine, CAC massimo, il verdetto sulla soglia. È il cuore aritmetico del principio C.2. Nella 4.3.1 hai visto perché vince chi può spendere di più; qui hai i numeri per dire quanto. Da qui si passa a dove nasce un LTV alto: la value ladder e l'architettura del backend (4.3.3).</p>
+  </div>
+
+  <div class="closing rv">
+    <div class="ct" data-i-html="closet">Il test più onesto lo fai da solo, in pochi secondi: <span class="a-w">quanto puoi pagare per un cliente e restare comunque in utile</span>.</div>
+    <div class="cs" data-i="closes">Allenamento: nelle prossime 48 ore prendi un tuo prodotto e un tuo servizio ricorrente (o due che conosci bene), e per ciascuno calcola gross profit a margine, LTV con la formula giusta e CAC massimo a 3:1. Dichiara ogni assunzione, poi fai passare i due conti dal gate.</div>
+  </div>
+
+  <nav class="nav rv">
+    <a href="C3-1-cac-ltv.html"><span class="nc" data-i="navp">Torna</span><span class="nt" data-i="navpt">4.3.1 · CAC contro LTV</span></a>
+    <a class="next" href="C3-3-value-ladder.html"><span class="nc" data-i="navn">Prossima</span><span class="nt" data-i="navnt">4.3.3 · La value ladder</span></a>
+  </nav>
+
+  <div class="foot" data-i-html="foot">Marketing Mastery · Fase 4 · L'offerta e l'economia · costruito sullo <span class="mono">Spiegatore Standard</span></div>
+  <div class="mf-legal rv">
+    <p>&copy; Matteo Arnaboldi &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p>
+    <p>&copy; Matteo Arnaboldi &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p>
+  </div>
+</div>
+
+<script>
+window.PAGE={id:'mm-c3-2'};
+window.DICT={
+  it:{
+    badge:"Workshop · calcolare · 20 min", pdf:"PDF",
+    eyebrow:"Fase 4 · M4.3 · lezione 2 di 5",
+    h1:"Fai i conti prima di comprare traffico: <span class=\"hl\">LTV e CAC massimo</span>.",
+    tesi:"Prima di comprare un cliente sai quanto vale e quanto puoi pagarlo. L'LTV si legge a margine, non a fatturato: due formule sole, una per i prodotti, una per i ricorrenti. Da lì ricavi il CAC massimo sostenibile e leggi se il funnel regge o perde, con la soglia LTV/CAC del percorso.",
+    p1:"Questa è la seconda lezione di M4.3, il principio C.2: vince chi può spendere di più per acquisire un cliente. Nella 4.3.1 hai visto che il conto si chiude sull'intero sistema, ben oltre il primo scontrino. Qui fai i numeri: calcoli l'LTV a margine, il CAC massimo che puoi permetterti, e dai un verdetto su due business dati. È un drill di calcolo, e in fondo un prompt porta lo standard dentro una qualsiasi AI per dirti se il conto torna.",
+    note1t:"Come funziona questo workshop (e il criterio reale)",
+    note1p:"Qui il lavoro è aritmetica applicata: fai i conti e li verifichi con uno standard oggettivo. Produci tre cose per ciascun business: l'LTV a margine, il CAC massimo sostenibile, e un verdetto LTV/CAC con la fascia. Il criterio è lo <strong>standard di calcolo del corso</strong>: le due formule, le assunzioni dichiarate, il churn trattato bene, la soglia 3:1. Un conto torna o non torna. In fondo un prompt porta quello standard dentro una qualsiasi AI: le passi il tuo conto e ti restituisce torna / non torna, con l'errore esatto.",
+    sh1:"Il gross profit per transazione: si ragiona a margine",
+    p2:"Ogni conto di LTV parte da un solo numero: il gross profit per transazione, cioè il ricavo meno il costo di consegnare il prodotto o il servizio (materiali, spedizione, commissioni, ore di lavoro). È quello che resta in mano dopo aver consegnato. Il playbook LTV di Hormozi ($100M Playbook) insiste su questo prima di ogni formula: fallo per ogni prodotto e per il business intero, e scopri che alcune cose su cui perdi tempo rendono meno di quanto credevi.",
+    gpEx1:"<strong>Prodotto</strong> · un widget venduto 100€ che ti costa 20€ di consegna ha 80€ di gross profit, l'80%. È il margine reale sull'ordine, quello che resta dopo aver consegnato. Esempio dal playbook LTV di Hormozi ($100M Playbook).",
+    gpEx2:"<strong>Servizio</strong> · un account rep gestisce 10 clienti da 3.000€/mese (30.000€) e costa 6.000€: restano 24.000€, l'80% del ricavo. Il gross profit per cliente è 3.000€ × 80% = 2.400€. Anche questo dal playbook LTV ($100M Playbook).",
+    sh2:"Le due formule dell'LTV",
+    p3:"Dal gross profit escono due sole formule, a seconda del tipo di business. Per un prodotto con acquisti ripetuti, moltiplichi il gross profit per il numero medio di transazioni. Per un ricorrente, dividi il gross profit di un periodo per il churn di quel periodo. Sono le due formule del playbook LTV di Hormozi ($100M Playbook), e coprono la quasi totalità dei modelli.",
+    fig1:"Le due formule ai numeri del drill: Business A (prodotto) 30€ × 4 = 120€ di LTV; Business B (ricorrente) 72€ ÷ 4% = 1.800€ di LTV. Il churn basso moltiplica: un cliente al 4% resta in media venticinque mesi.",
+    fProd:"<strong>Prodotti con acquisti ripetuti</strong> · LTV = gross profit per transazione × numero medio di transazioni. Esempio canonico del playbook: 80€ × 4 acquisti = 320€ di LTV.",
+    fRec:"<strong>Ricorrente / subscription</strong> · LTV = gross profit per periodo ÷ churn. Esempio del playbook: 2.400€ ÷ 5% = 48.000€ di LTV. Il denominatore piccolo fa esplodere il numero.",
+    sh3:"Il churn: contalo bene, o l'LTV mente",
+    p4:"La formula del ricorrente vive o muore sul churn, e il churn è dove quasi tutti sbagliano. Il churn è la percentuale di clienti persa tra due periodi, e si misura sul pool iniziale. La trappola è includere i nuovi iscritti del periodo: falsano il conto e gonfiano l'LTV. Ecco i due metodi per stimare la durata di un cliente e la trappola da evitare.",
+    chM1:"<strong>Metodo 1 · esporta e media</strong> · per un business a transazioni ripetute, esporta i clienti, ordinali per numero di acquisti e fai la media. Ti dà il numero medio di transazioni da mettere nella formula prodotti.",
+    chM2:"<strong>Metodo 2 · il churn</strong> · per un ricorrente, churn = clienti usciti ÷ pool iniziale × 100. Cento clienti a inizio periodo, ne restano 95: hai perso 5, churn 5%. Da lì, gross profit ÷ churn.",
+    chTrap:"<strong>La trappola</strong> · i nuovi iscritti del periodo non entrano nel churn. Zero o mille nuovi clienti lasciano il churn al 5% se hai comunque perso gli stessi 5. Conta chi è uscito, non chi si è appena iscritto.",
+    pbk1:"Prompt da copiare, per impostare il calcolo sul tuo business",
+    pbtext1:"Aiutami a calcolare LTV e CAC massimo sostenibile per il mio business, corso Marketing Mastery. Guidami passo per passo e obbligami a dichiarare ogni assunzione con la sua unita di misura.\n\nI MIEI NUMERI (compila):\n- Tipo di business: [prodotto con acquisti ripetuti / ricorrente-subscription]\n- Ricavo per transazione o canone per periodo: [importo + unita]\n- Costo di consegna per transazione o periodo: [materiali, spedizione, commissioni, ore di lavoro]\n- Se prodotto: numero medio di transazioni per cliente: [come l'hai ricavato]\n- Se ricorrente: churn del periodo: [clienti persi diviso pool iniziale x100; i nuovi iscritti NON contano]\n- Quanto pago oggi per acquisire un cliente (CAC): [spesa acquisizione diviso clienti nuovi]\n\nFAMMI I CONTI COSI:\n1. Gross profit per transazione o periodo = ricavo meno costo di consegna. A margine, mai a fatturato.\n2. LTV: se prodotto, gross profit x transazioni medie; se ricorrente, gross profit diviso churn.\n3. CAC massimo sostenibile = LTV diviso 3 (soglia LTV/CAC >= 3:1 del percorso).\n4. Confronta il mio CAC attuale col massimo e dammi la fascia: sotto 3 sotto pressione, 3-5 sano, oltre 5 posso spingere.\n\nNon inventare numeri al posto miei: se manca un dato, chiedimelo prima di calcolare. Dichiara ogni assunzione, e mostrami i passaggi.",
+    sh4:"Il CAC massimo sostenibile e la soglia 3:1",
+    p5:"Con l'LTV a margine in mano, il CAC massimo sostenibile è quanto puoi pagare per un cliente restando in utile. Il percorso adotta una soglia-standard del direct response: LTV/CAC ≥ 3:1, cioè un cliente deve valere almeno tre volte quel che lo paghi. Da lì, il CAC massimo è l'LTV diviso 3. La soglia 3:1 è una convenzione del percorso, non una legge universale: serve come metro comune per leggere le fasce.",
+    fa1:"<strong>Sotto 3 · sotto pressione</strong> · l'LTV non copre abbastanza il costo di acquisizione: il modello fatica a scalare, ogni cliente in più stringe la cassa.",
+    fa2:"<strong>Tra 3 e 5 · sano</strong> · c'è margine fra quanto vale un cliente e quanto lo paghi: puoi crescere senza soffocare la cassa.",
+    fa3:"<strong>Oltre 5 · puoi spingere</strong> · stai lasciando acquisizione sul tavolo: puoi permetterti un CAC più alto e comprare traffico che altri non reggono.",
+    sh5:"Il funnel in perdita, letto coi numeri",
+    p6:"Ecco perché il conto conta. Un funnel a una sola offerta si legge come una catena: CPC (costo per click), CPL (costo per lead), CPA (costo per acquisizione). Questo è un esempio reale dal corso Funnel Secrets: mille click che diventano cinque vendite, e un CPA che sfonda il prezzo. Senza un backend che monetizza dopo, o un front-end che ripaga le ads, il funnel classico chiude in perdita.",
+    fig2:"La catena CPC → CPL → CPA di un Classic Funnel (esempio dal corso Funnel Secrets). Mille click a 0,70€ sono 700€ spesi; 250 lead; 5 vendite a 97€ per 485€ incassati. Il CPA (140€) supera il prezzo (97€): buco di 215€. È qui che l'LTV alto e il backend cambiano il verdetto.",
+    sh6:"Il drill: due business, due conti",
+    p7:"Ora tocca a te. Qui sotto due business, dichiarati illustrativi: uno è un prodotto con acquisti ripetuti, l'altro un ricorrente in abbonamento. Per ciascuno calcoli l'LTV a margine, il CAC massimo sostenibile a 3:1, e il verdetto confrontando il CAC attuale con il massimo. I numeri sono coerenti con gli esempi del playbook, non dati reali di mercato.",
+    dsA:"<strong>Business A · e-commerce di integratori</strong> (illustrativo). Ricavo medio per ordine 50€, costo di consegna 20€. Numero medio di transazioni per cliente: 4. Oggi paga 50€ per acquisire un cliente (3.000€ di ads, 60 clienti nuovi).",
+    dsB:"<strong>Business B · gestionale in abbonamento</strong> (illustrativo). Canone 90€/mese, costo di consegna 18€/mese per cliente. Churn mensile 4%. Oggi paga 400€ per acquisire un cliente.",
+    sh7:"Il drill: i passi",
+    pstep:"Esegui i cinque passi per ciascun business, e scrivi ogni numero con l'assunzione che lo genera. Il valore del drill è nel conto visibile: è così che il giudizio economico diventa allenabile.",
+    step1:"<strong>Gross profit</strong> · per ciascun business, ricavo meno costo di consegna. A margine, mai il fatturato.",
+    step2:"<strong>LTV</strong> · applica la formula giusta per il tipo: prodotti gross profit × transazioni medie, ricorrente gross profit ÷ churn.",
+    step3:"<strong>CAC massimo sostenibile</strong> · LTV ÷ 3, la soglia del percorso. È il massimo che puoi pagare restando dentro il 3:1.",
+    step4:"<strong>Verdetto</strong> · confronta il CAC attuale con il massimo e assegna la fascia: sotto pressione, sano, puoi spingere.",
+    step5:"<strong>Dichiara le assunzioni</strong> · ogni stima con la sua unità: transazioni medie, churn, costo di consegna. Un numero senza assunzione non vale.",
+    sh8:"Il gate: lo standard di calcolo ti dà un referto",
+    p8:"Le voci sotto sono lo standard con cui il corso giudica un conto LTV/CAC. Prima fai tu una scansione onesta; poi copia il prompt del gate e fai verificare il tuo calcolo da una qualsiasi AI. Applica lo stesso standard e ti dà un verdetto torna / non torna con l'errore da correggere.",
+    g1:"<strong>Gross profit a margine</strong>: ricavo meno costo di consegna, mai il fatturato al posto del margine.",
+    g2:"<strong>Formula giusta per il tipo</strong>: transazioni medie per i prodotti, churn per i ricorrenti.",
+    g3:"<strong>Churn pulito</strong>: clienti persi ÷ pool iniziale, i nuovi iscritti fuori dal conto.",
+    g4:"<strong>Assunzioni dichiarate e CAC massimo dall'LTV</strong>: ogni stima esplicita, il CAC massimo derivato dall'LTV a margine sulla soglia 3:1.",
+    g5:"<strong>Segnale che il conto non torna</strong>: fatturato al posto del margine, churn coi nuovi iscritti dentro, un'assunzione nascosta o numeri senza unità di misura.",
+    gatep:"Fatta la scansione, ecco il gate vero. Copia il prompt, incolla sotto il tuo conto per uno dei due business (o per il tuo): gross profit, LTV, CAC massimo e verdetto. L'AI applica lo standard di calcolo, severo com'è giusto, e ti dice dove il conto regge e dove crolla.",
+    pbkgate:"Prompt del gate · copia, incolla il tuo conto, ottieni il referto",
+    pbtextgate:"Sei il mio reviewer per il drill di calcolo LTV/CAC del corso Marketing Mastery. Giudichi sullo standard di calcolo del corso e sei severo: meglio bocciare un conto sbagliato che promuoverne uno che non torna. Non conosci il corso oltre a cio che ti do qui.\n\nSOTTO TI INCOLLO il mio lavoro: per uno dei due business (o per il mio) ho calcolato gross profit per transazione, LTV, CAC massimo sostenibile e un verdetto LTV/CAC.\n\nLO STANDARD DI CALCOLO (verificalo passo per passo):\n1. GROSS PROFIT per transazione = ricavo meno il costo di consegna (materiali, spedizione, commissioni, ore di servizio). SI RAGIONA A MARGINE, MAI A FATTURATO. Se ho usato il fatturato al posto del gross profit, e un errore.\n2. FORMULA GIUSTA PER IL TIPO:\n   - Prodotto con acquisti ripetuti: LTV = gross profit per transazione x numero medio di transazioni.\n   - Ricorrente / subscription: LTV = gross profit (per periodo) diviso churn (dello stesso periodo).\n3. CHURN corretto = clienti persi nel periodo diviso il pool iniziale, per 100. I NUOVI ISCRITTI NON ENTRANO NEL CHURN del periodo: se li ho contati dentro, e un errore.\n4. ASSUNZIONI DICHIARATE: ogni stima (transazioni medie, churn, costo di consegna) esplicita, con la sua unita di misura. Un numero senza unita o un'assunzione nascosta e un errore.\n5. CAC MASSIMO SOSTENIBILE = LTV (a margine) diviso la soglia scelta. La soglia-standard del percorso e LTV/CAC >= 3:1, quindi CAC massimo = LTV diviso 3.\n6. VERDETTO con le fasce: LTV/CAC sotto 3 = sotto pressione (non scalabile); 3-5 = sano; sopra 5 = puoi spingere di piu. (La soglia 3:1 e una convenzione del direct response del percorso, non una legge universale.)\n\nBOCCIATURE AUTOMATICHE (bocciano il conto a prescindere dal risultato):\n- Churn calcolato con i nuovi iscritti dentro il denominatore.\n- Fatturato usato al posto del gross profit (margine).\n- Nessuna assunzione dichiarata, o numeri senza unita di misura.\n- Formula sbagliata per il tipo: churn applicato a un prodotto one-shot, o transazioni medie applicate a un ricorrente.\n- CAC massimo derivato dal fatturato invece che dall'LTV a margine.\n\nGATE (torna / non torna): il conto TORNA se e solo se nessuna bocciatura automatica e scattata, E la formula e quella giusta per il tipo di business, E il CAC massimo e derivato dall'LTV a margine con la soglia 3:1.\n\nDAMMI L'OUTPUT ESATTAMENTE COSI:\nVERDETTO: TORNA / NON TORNA\nGROSS PROFIT/TRANSAZIONE: _ (e come l'hai ricavato)\nLTV: _ (con la formula usata e il tipo di business)\nCAC MASSIMO SOSTENIBILE: _ (LTV diviso 3)\nLTV/CAC E FASCIA: _ (sotto pressione / sano / puoi spingere)\nERRORE PRIMARIO: (la bocciatura o il passo sbagliato in una riga; se il conto torna, scrivi \"nessuno\")\nDA RISTUDIARE: (la lezione esatta: 4.3.1 CAC contro LTV, 4.3.2 fare i conti, 4.3.3 la value ladder, 4.3.4 le otto leve, 4.3.5 retention)\n\nSii severo e specifico. Se ho usato il fatturato o ho sporcato il churn coi nuovi iscritti, bocciami e dimmi dove. Comincia.",
+    key1:"Il tuo valore non è aver riempito una formula: è saper dire, con un numero difendibile, quanto vale un cliente e quanto puoi pagarlo restando in utile.",
+    sh9:"Il tuo lavoro: consegna il drill",
+    jk:"Consegna qui il drill completo",
+    jp:"<strong>Un esempio tuo, adesso.</strong> Consegna qui il drill completo: per Business A e Business B, il gross profit per transazione, l'LTV con la formula giusta, il CAC massimo sostenibile e il verdetto con la fascia. Poi rifai il conto sul tuo business reale, coi tuoi numeri e ogni assunzione dichiarata.",
+    xt:"Cross-reference · dopo 4.3.1, verso la value ladder",
+    xp:"Sai leggere il tabellone: LTV a margine, CAC massimo, il verdetto sulla soglia. È il cuore aritmetico del principio C.2. Nella 4.3.1 hai visto perché vince chi può spendere di più; qui hai i numeri per dire quanto. Da qui si passa a dove nasce un LTV alto: la value ladder e l'architettura del backend (4.3.3).",
+    closet:"Il test più onesto lo fai da solo, in pochi secondi: <span class=\"a-w\">quanto puoi pagare per un cliente e restare comunque in utile</span>.",
+    closes:"Allenamento: nelle prossime 48 ore prendi un tuo prodotto e un tuo servizio ricorrente (o due che conosci bene), e per ciascuno calcola gross profit a margine, LTV con la formula giusta e CAC massimo a 3:1. Dichiara ogni assunzione, poi fai passare i due conti dal gate.",
+    navp:"Torna", navpt:"4.3.1 · CAC contro LTV",
+    navn:"Prossima", navnt:"4.3.3 · La value ladder",
+    foot:"Marketing Mastery · Fase 4 · L'offerta e l'economia · costruito sullo <span class=\"mono\">Spiegatore Standard</span>"
+  },
+  en:{
+    badge:"Workshop · calculate · 20 min", pdf:"PDF",
+    eyebrow:"Phase 4 · M4.3 · lesson 2 of 5",
+    h1:"Run the numbers before you buy traffic: <span class=\"hl\">LTV and max CAC</span>.",
+    tesi:"Before you buy a customer you know what they're worth and how much you can pay for them. LTV is read on margin, not on revenue: just two formulas, one for products, one for recurring. From there you derive the maximum sustainable CAC and read whether the funnel holds or loses, with the path's LTV/CAC threshold.",
+    p1:"This is the second lesson of M4.3, the C.2 principle: whoever can spend more to acquire a customer wins. In 4.3.1 you saw that the math closes on the whole system, far beyond the first receipt. Here you run the numbers: you calculate LTV on margin, the maximum CAC you can afford, and give a verdict on two given businesses. It's a calculation drill, and at the bottom a prompt carries the standard into any AI to tell you whether the math holds.",
+    note1t:"How this workshop works (and the real criterion)",
+    note1p:"Here the work is applied arithmetic: you run the numbers and check them against an objective standard. You produce three things for each business: LTV on margin, the maximum sustainable CAC, and an LTV/CAC verdict with its band. The criterion is the <strong>course calculation standard</strong>: the two formulas, declared assumptions, churn handled right, the 3:1 threshold. Math holds or it doesn't. At the bottom a prompt carries that standard into any AI: you hand it your math and it returns holds / doesn't hold, with the exact error.",
+    sh1:"Gross profit per transaction: you reason on margin",
+    p2:"Every LTV calculation starts from one number: gross profit per transaction, that is revenue minus the cost of delivering the product or service (materials, shipping, fees, labor hours). It's what stays in hand after you've delivered. Hormozi's LTV playbook ($100M Playbook) insists on this before any formula: do it for every product and for the whole business, and you find that some things you spend a lot of time on make less than you thought.",
+    gpEx1:"<strong>Product</strong> · a widget sold for 100€ that costs you 20€ to deliver has 80€ of gross profit, 80%. It's the real margin on the order, what's left after delivery. Example from Hormozi's LTV playbook ($100M Playbook).",
+    gpEx2:"<strong>Service</strong> · an account rep handles 10 clients at 3,000€/month (30,000€) and costs 6,000€: 24,000€ remain, 80% of revenue. Gross profit per client is 3,000€ × 80% = 2,400€. Also from the LTV playbook ($100M Playbook).",
+    sh2:"The two LTV formulas",
+    p3:"From gross profit come just two formulas, depending on the business type. For a product with repeat purchases, you multiply gross profit by the average number of transactions. For a recurring one, you divide the gross profit of a period by the churn of that period. They're the two formulas of Hormozi's LTV playbook ($100M Playbook), and they cover almost every model.",
+    fig1:"The two formulas on the drill's numbers: Business A (product) 30€ × 4 = 120€ of LTV; Business B (recurring) 72€ ÷ 4% = 1,800€ of LTV. Low churn multiplies: a customer at 4% stays on average twenty-five months.",
+    fProd:"<strong>Products with repeat purchases</strong> · LTV = gross profit per transaction × average number of transactions. Canonical playbook example: 80€ × 4 purchases = 320€ of LTV.",
+    fRec:"<strong>Recurring / subscription</strong> · LTV = gross profit per period ÷ churn. Playbook example: 2,400€ ÷ 5% = 48,000€ of LTV. The small denominator makes the number explode.",
+    sh3:"Churn: count it right, or LTV lies",
+    p4:"The recurring formula lives or dies on churn, and churn is where almost everyone goes wrong. Churn is the percentage of customers lost between two periods, and it's measured on the starting pool. The trap is including the period's new sign-ups: they skew the math and inflate LTV. Here are the two methods to estimate a customer's lifespan and the trap to avoid.",
+    chM1:"<strong>Method 1 · export and average</strong> · for a repeat-transaction business, export the customers, sort them by number of purchases and take the average. It gives you the average number of transactions to put in the product formula.",
+    chM2:"<strong>Method 2 · churn</strong> · for a recurring one, churn = customers lost ÷ starting pool × 100. A hundred customers at the start of the period, 95 remain: you lost 5, churn 5%. From there, gross profit ÷ churn.",
+    chTrap:"<strong>The trap</strong> · the period's new sign-ups don't enter the churn. Zero or a thousand new customers leave churn at 5% if you still lost the same 5. Count who left, not who just signed up.",
+    pbk1:"Prompt to copy, to set up the calculation on your business",
+    pbtext1:"Help me calculate LTV and maximum sustainable CAC for my business, Marketing Mastery course. Guide me step by step and force me to declare every assumption with its unit of measure.\n\nMY NUMBERS (fill in):\n- Business type: [product with repeat purchases / recurring-subscription]\n- Revenue per transaction or fee per period: [amount + unit]\n- Delivery cost per transaction or period: [materials, shipping, fees, labor hours]\n- If product: average number of transactions per customer: [how you derived it]\n- If recurring: churn of the period: [customers lost divided by starting pool x100; new sign-ups do NOT count]\n- What I pay today to acquire a customer (CAC): [acquisition spend divided by new customers]\n\nRUN THE MATH LIKE THIS:\n1. Gross profit per transaction or period = revenue minus delivery cost. On margin, never on revenue.\n2. LTV: if product, gross profit x average transactions; if recurring, gross profit divided by churn.\n3. Maximum sustainable CAC = LTV divided by 3 (LTV/CAC >= 3:1 threshold of the path).\n4. Compare my current CAC with the maximum and give me the band: below 3 under pressure, 3-5 healthy, over 5 I can push.\n\nDon't invent numbers for me: if a datum is missing, ask me before calculating. Declare every assumption, and show me the steps.",
+    sh4:"The maximum sustainable CAC and the 3:1 threshold",
+    p5:"With LTV on margin in hand, the maximum sustainable CAC is how much you can pay for a customer and still stay in profit. The path adopts a direct-response standard threshold: LTV/CAC ≥ 3:1, meaning a customer must be worth at least three times what you pay for them. From there, the maximum CAC is LTV divided by 3. The 3:1 threshold is a convention of the path, not a universal law: it serves as a common yardstick to read the bands.",
+    fa1:"<strong>Below 3 · under pressure</strong> · LTV doesn't cover the acquisition cost enough: the model struggles to scale, every extra customer tightens the cash.",
+    fa2:"<strong>Between 3 and 5 · healthy</strong> · there's margin between what a customer is worth and what you pay: you can grow without choking the cash.",
+    fa3:"<strong>Over 5 · you can push</strong> · you're leaving acquisition on the table: you can afford a higher CAC and buy traffic others can't sustain.",
+    sh5:"The funnel at a loss, read with numbers",
+    p6:"This is why the math matters. A single-offer funnel reads like a chain: CPC (cost per click), CPL (cost per lead), CPA (cost per acquisition). This is a real example from the Funnel Secrets course: a thousand clicks that become five sales, and a CPA that blows past the price. Without a backend that monetizes after, or a front-end that repays the ads, the classic funnel closes at a loss.",
+    fig2:"The CPC → CPL → CPA chain of a Classic Funnel (example from the Funnel Secrets course). A thousand clicks at 0.70€ are 700€ spent; 250 leads; 5 sales at 97€ for 485€ collected. The CPA (140€) exceeds the price (97€): a 215€ hole. This is where high LTV and the backend change the verdict.",
+    sh6:"The drill: two businesses, two calculations",
+    p7:"Now it's your turn. Below, two businesses, declared illustrative: one is a product with repeat purchases, the other a recurring subscription. For each you calculate LTV on margin, the maximum sustainable CAC at 3:1, and the verdict comparing the current CAC with the maximum. The numbers are consistent with the playbook examples, not real market data.",
+    dsA:"<strong>Business A · supplements e-commerce</strong> (illustrative). Average revenue per order 50€, delivery cost 20€. Average number of transactions per customer: 4. Today it pays 50€ to acquire a customer (3,000€ of ads, 60 new customers).",
+    dsB:"<strong>Business B · subscription management software</strong> (illustrative). Fee 90€/month, delivery cost 18€/month per customer. Monthly churn 4%. Today it pays 400€ to acquire a customer.",
+    sh7:"The drill: the steps",
+    pstep:"Run the five steps for each business, and write every number with the assumption that generates it. The drill's value is in the visible calculation: that's how economic judgment becomes trainable.",
+    step1:"<strong>Gross profit</strong> · for each business, revenue minus delivery cost. On margin, never the revenue.",
+    step2:"<strong>LTV</strong> · apply the right formula for the type: products gross profit × average transactions, recurring gross profit ÷ churn.",
+    step3:"<strong>Maximum sustainable CAC</strong> · LTV ÷ 3, the path's threshold. It's the most you can pay while staying inside 3:1.",
+    step4:"<strong>Verdict</strong> · compare the current CAC with the maximum and assign the band: under pressure, healthy, you can push.",
+    step5:"<strong>Declare the assumptions</strong> · every estimate with its unit: average transactions, churn, delivery cost. A number with no assumption doesn't count.",
+    sh8:"The gate: the calculation standard gives you a report",
+    p8:"The items below are the standard the course judges an LTV/CAC calculation with. First run an honest scan yourself; then copy the gate prompt and have any AI check your calculation. It applies the same standard and gives you a holds / doesn't-hold verdict with the error to fix.",
+    g1:"<strong>Gross profit on margin</strong>: revenue minus delivery cost, never revenue in place of margin.",
+    g2:"<strong>Right formula for the type</strong>: average transactions for products, churn for recurring.",
+    g3:"<strong>Clean churn</strong>: customers lost ÷ starting pool, new sign-ups out of the count.",
+    g4:"<strong>Declared assumptions and max CAC from LTV</strong>: every estimate explicit, the max CAC derived from LTV on margin at the 3:1 threshold.",
+    g5:"<strong>Sign the math doesn't hold</strong>: revenue in place of margin, churn with new sign-ups inside, a hidden assumption or numbers with no unit of measure.",
+    gatep:"Once you've scanned, here's the real gate. Copy the prompt, paste below your calculation for one of the two businesses (or your own): gross profit, LTV, max CAC and verdict. The AI applies the calculation standard, strict as it should be, and tells you where the math holds and where it collapses.",
+    pbkgate:"Gate prompt · copy, paste your calculation, get the report",
+    pbtextgate:"You are my reviewer for the LTV/CAC calculation drill of the Marketing Mastery course. You judge on the course calculation standard and you're strict: better to fail a wrong calculation than to promote one that doesn't hold. You don't know the course beyond what I give you here.\n\nBELOW I PASTE my work: for one of the two businesses (or my own) I calculated gross profit per transaction, LTV, maximum sustainable CAC and an LTV/CAC verdict.\n\nTHE CALCULATION STANDARD (check it step by step):\n1. GROSS PROFIT per transaction = revenue minus the delivery cost (materials, shipping, fees, service hours). YOU REASON ON MARGIN, NEVER ON REVENUE. If I used revenue in place of gross profit, it's an error.\n2. RIGHT FORMULA FOR THE TYPE:\n   - Product with repeat purchases: LTV = gross profit per transaction x average number of transactions.\n   - Recurring / subscription: LTV = gross profit (per period) divided by churn (of the same period).\n3. CORRECT CHURN = customers lost in the period divided by the starting pool, times 100. NEW SIGN-UPS DO NOT ENTER THE CHURN of the period: if I counted them in, it's an error.\n4. DECLARED ASSUMPTIONS: every estimate (average transactions, churn, delivery cost) explicit, with its unit of measure. A number with no unit or a hidden assumption is an error.\n5. MAXIMUM SUSTAINABLE CAC = LTV (on margin) divided by the chosen threshold. The path's standard threshold is LTV/CAC >= 3:1, so max CAC = LTV divided by 3.\n6. VERDICT with the bands: LTV/CAC below 3 = under pressure (not scalable); 3-5 = healthy; over 5 = you can push more. (The 3:1 threshold is a direct-response convention of the path, not a universal law.)\n\nAUTOMATIC FAILS (fail the calculation regardless of the result):\n- Churn calculated with new sign-ups inside the denominator.\n- Revenue used in place of gross profit (margin).\n- No declared assumptions, or numbers with no unit of measure.\n- Wrong formula for the type: churn applied to a one-shot product, or average transactions applied to a recurring one.\n- Max CAC derived from revenue instead of LTV on margin.\n\nGATE (holds / doesn't hold): the calculation HOLDS if and only if no automatic fail triggered, AND the formula is the right one for the business type, AND the max CAC is derived from LTV on margin with the 3:1 threshold.\n\nGIVE ME THE OUTPUT EXACTLY LIKE THIS:\nVERDICT: HOLDS / DOESN'T HOLD\nGROSS PROFIT/TRANSACTION: _ (and how you derived it)\nLTV: _ (with the formula used and the business type)\nMAXIMUM SUSTAINABLE CAC: _ (LTV divided by 3)\nLTV/CAC AND BAND: _ (under pressure / healthy / you can push)\nPRIMARY ERROR: (the fail or the wrong step in one line; if the math holds, write \"none\")\nTO RESTUDY: (the exact lesson: 4.3.1 CAC vs LTV, 4.3.2 running the numbers, 4.3.3 the value ladder, 4.3.4 the eight levers, 4.3.5 retention)\n\nBe strict and specific. If I used revenue or dirtied the churn with new sign-ups, fail me and tell me where. Begin.",
+    key1:"Your value isn't having filled in a formula: it's being able to say, with a defensible number, what a customer is worth and how much you can pay for them while staying in profit.",
+    sh9:"Your work: deliver the drill",
+    jk:"Deliver the complete drill here",
+    jp:"<strong>One example of your own, now.</strong> Deliver here the complete drill: for Business A and Business B, the gross profit per transaction, the LTV with the right formula, the maximum sustainable CAC and the verdict with its band. Then redo the calculation on your real business, with your numbers and every assumption declared.",
+    xt:"Cross-reference · after 4.3.1, toward the value ladder",
+    xp:"You can read the scoreboard: LTV on margin, max CAC, the verdict on the threshold. It's the arithmetic core of the C.2 principle. In 4.3.1 you saw why whoever can spend more wins; here you have the numbers to say how much. From here you move to where a high LTV comes from: the value ladder and the backend architecture (4.3.3).",
+    closet:"The most honest test is the one you run yourself, in a few seconds: <span class=\"a-w\">how much you can pay for a customer and still stay in profit</span>.",
+    closes:"Training: in the next 48 hours take a product of yours and a recurring service of yours (or two you know well), and for each calculate gross profit on margin, LTV with the right formula and max CAC at 3:1. Declare every assumption, then run the two calculations through the gate.",
+    navp:"Back", navpt:"4.3.1 · CAC vs LTV",
+    navn:"Next", navnt:"4.3.3 · The value ladder",
+    foot:"Marketing Mastery · Phase 4 · The offer and the economics · built on the <span class=\"mono\">Spiegatore Standard</span>"
+  }
+};
+window.LAB={
+  it:{
+    bet:{
+      b1:{k:"Scommetti prima di sapere", q:"Business A (prodotto, LTV 120€) e Business B (ricorrente, LTV 1.800€): chi può permettersi il CAC più alto?",
+        opts:[
+          {t:"Business A: vende un prodotto fisico e incassa il margine subito, a ogni ordine", ok:false, fb:"No: incassare prima aiuta la cassa, ma il CAC massimo sostenibile scala con l'LTV assoluto, non con la velocità dell'incasso. A ha 120€ di LTV, il suo tetto è 40€."},
+          {t:"Business B: l'LTV ricorrente (gross profit ÷ churn) accumula molti cicli, quindi regge un CAC massimo molto più alto", ok:true, fb:"Esatto. Con churn 4% il cliente resta in media venticinque mesi: LTV 1.800€, CAC massimo a 3:1 = 600€. B può pagare quindici volte quanto A per lo stesso cliente."},
+          {t:"Pari: entrambi hanno un margine alto (60% e 80%), quindi lo stesso spazio di CAC", ok:false, fb:"No: il margine in percentuale non è l'LTV. Conta l'LTV in euro, 120€ contro 1.800€. La percentuale simile nasconde un tetto di CAC quindici volte diverso."}
+        ]}
+      ,
+      b2:{k:"Fissa il metodo", q:"Da cosa dipende il CAC massimo sostenibile?",
+        opts:[
+          {t:"Dal fatturato per cliente e dal prezzo di listino", ok:false, fb:"No: il fatturato ignora il costo di consegna. Il CAC massimo parte dall'LTV a margine, non dal giro d'affari."},
+          {t:"Dall'LTV a margine e dalla soglia LTV/CAC che adotti, qui 3:1", ok:true, fb:"Esatto. CAC massimo = LTV a margine ÷ soglia. Alzi l'LTV o accetti una soglia più bassa e il tetto sale, ma 3:1 è lo standard del percorso."},
+          {t:"Dal CAC che pagano i concorrenti nel tuo mercato", ok:false, fb:"No: il CAC dei concorrenti è un dato di contesto, non il tuo limite. Il tuo tetto lo fissa il tuo LTV a margine sulla soglia."}
+        ]}
+    },
+    sort:{
+      s1:{k:"Smista · il conto torna o è un auto-fail?", q:"Per ciascun pezzo di calcolo: è corretto sullo standard, o scatta un auto-fail da rifare?",
+        labels:["Calcolo corretto","Auto-fail: da rifare"],
+        scoreLabel:"Punteggio",
+        win:"· hai l'occhio per il conto che regge: margine pulito, formula giusta per il tipo, churn trattato bene.",
+        lose:"· gli auto-fail affondano il conto anche quando il risultato sembra bello: fatturato al posto del margine, churn coi nuovi dentro, assunzioni nascoste.",
+        items:[
+          {t:"GP = ricavo 50€ − consegna 20€ = 30€, poi 30€ × 4 transazioni = 120€ di LTV", a:true, fb:"<strong>Corretto.</strong> Gross profit a margine, formula giusta per un prodotto con acquisti ripetuti."},
+          {t:"Ricorrente: uso il canone pieno 90€ come valore per periodo, senza togliere i 18€ di consegna", a:false, fb:"<strong>Auto-fail.</strong> Quello è fatturato. A margine il valore per periodo è 72€, e la formula ÷ churn va applicata a 72€."},
+          {t:"Churn del mese: ho perso 6 clienti sui 150 di inizio periodo e ne ho acquisiti 40, quindi 6 ÷ 190", a:false, fb:"<strong>Auto-fail.</strong> I 40 nuovi non entrano nel churn. È 6 ÷ 150 = 4%, sul pool iniziale."},
+          {t:"CAC massimo = LTV 1.800€ ÷ 3 = 600€, contro un CAC attuale di 400€: fascia sana", a:true, fb:"<strong>Corretto.</strong> CAC massimo dall'LTV a margine sulla soglia 3:1, con il verdetto e la fascia giusti."},
+          {t:"Transazioni medie: le ho messe a 4 perché mi sembrava giusto, senza dire come", a:false, fb:"<strong>Auto-fail.</strong> Assunzione non dichiarata. Il numero va ricavato (esporta e media) e reso esplicito."},
+          {t:"Gross profit del servizio = 30.000€ − 6.000€ = 24.000€ (80%), per cliente 3.000€ × 80% = 2.400€", a:true, fb:"<strong>Corretto.</strong> Margine reale a monte, gross profit per cliente calcolato bene."}
+        ]}
+    }
+  },
+  en:{
+    bet:{
+      b1:{k:"Bet before you know", q:"Business A (product, LTV 120€) and Business B (recurring, LTV 1,800€): which can afford the higher CAC?",
+        opts:[
+          {t:"Business A: it sells a physical product and collects the margin at once, on every order", ok:false, fb:"No: collecting sooner helps the cash, but the maximum sustainable CAC scales with absolute LTV, not with how fast you collect. A has 120€ of LTV, its ceiling is 40€."},
+          {t:"Business B: the recurring LTV (gross profit ÷ churn) accumulates many cycles, so it sustains a much higher max CAC", ok:true, fb:"Exactly. With 4% churn the customer stays on average twenty-five months: LTV 1,800€, max CAC at 3:1 = 600€. B can pay fifteen times what A can for the same customer."},
+          {t:"Even: both have a high margin (60% and 80%), so the same CAC room", ok:false, fb:"No: margin as a percentage isn't LTV. What counts is LTV in euros, 120€ against 1,800€. The similar percentage hides a CAC ceiling fifteen times apart."}
+        ]}
+      ,
+      b2:{k:"Lock the method", q:"What does the maximum sustainable CAC depend on?",
+        opts:[
+          {t:"On revenue per customer and the list price", ok:false, fb:"No: revenue ignores the delivery cost. The max CAC starts from LTV on margin, not from turnover."},
+          {t:"On LTV on margin and the LTV/CAC threshold you adopt, here 3:1", ok:true, fb:"Exactly. Max CAC = LTV on margin ÷ threshold. Raise the LTV or accept a lower threshold and the ceiling rises, but 3:1 is the path's standard."},
+          {t:"On the CAC competitors pay in your market", ok:false, fb:"No: competitors' CAC is context, not your limit. Your ceiling is set by your LTV on margin against the threshold."}
+        ]}
+    },
+    sort:{
+      s1:{k:"Sort · does the math hold or is it an auto-fail?", q:"For each piece of calculation: is it correct against the standard, or does it trigger an auto-fail to redo?",
+        labels:["Correct calculation","Auto-fail: redo it"],
+        scoreLabel:"Score",
+        win:"· you have the eye for the math that holds: clean margin, right formula for the type, churn handled well.",
+        lose:"· auto-fails sink the math even when the result looks nice: revenue in place of margin, churn with new sign-ups inside, hidden assumptions.",
+        items:[
+          {t:"GP = revenue 50€ − delivery 20€ = 30€, then 30€ × 4 transactions = 120€ of LTV", a:true, fb:"<strong>Correct.</strong> Gross profit on margin, right formula for a product with repeat purchases."},
+          {t:"Recurring: I use the full 90€ fee as value per period, without removing the 18€ delivery cost", a:false, fb:"<strong>Auto-fail.</strong> That's revenue. On margin the value per period is 72€, and the ÷ churn formula must be applied to 72€."},
+          {t:"Month's churn: I lost 6 customers out of the 150 at the start and acquired 40, so 6 ÷ 190", a:false, fb:"<strong>Auto-fail.</strong> The 40 new ones don't enter the churn. It's 6 ÷ 150 = 4%, on the starting pool."},
+          {t:"Max CAC = LTV 1,800€ ÷ 3 = 600€, against a current CAC of 400€: healthy band", a:true, fb:"<strong>Correct.</strong> Max CAC from LTV on margin at the 3:1 threshold, with the right verdict and band."},
+          {t:"Average transactions: I set them at 4 because it felt right, without saying how", a:false, fb:"<strong>Auto-fail.</strong> Undeclared assumption. The number must be derived (export and average) and made explicit."},
+          {t:"Service gross profit = 30,000€ − 6,000€ = 24,000€ (80%), per customer 3,000€ × 80% = 2,400€", a:true, fb:"<strong>Correct.</strong> Real margin upstream, gross profit per customer calculated well."}
+        ]}
+    }
+  }
+};
+</script>
+<script src="../_engine/motore.js"></script>
+</body>
+</html>
