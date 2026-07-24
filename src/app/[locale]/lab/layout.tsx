@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SmoothScrollProvider } from "@/components/shared/SmoothScroll";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 
 export async function generateMetadata({
@@ -23,5 +22,5 @@ export default function LabLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <SmoothScrollProvider>{children}</SmoothScrollProvider>;
+  return <>{children}</>;
 }

@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getIndexableCaseStudyEntries, getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import { getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
 import { funnelRegistry, getRegisteredFunnelConfig } from "@/funnels/registry";
 
 /**
@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const localizedEntries = [
     ...getIndexableLocalizedEntries(baseUrl),
-    ...getIndexableCaseStudyEntries(baseUrl),
   ];
 
   const localizedSitemapEntries: MetadataRoute.Sitemap = localizedEntries.map(({ locale, path, url }) => {

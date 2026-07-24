@@ -38,6 +38,29 @@ function isNonIndexableLocalePath(segments: string[]): boolean {
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // AI Playground (staging). Sotto-brand su sottodominio playground.morfeushub.com.
+  // Sull'host del sottodominio, ogni path e` servito dal ramo /playground/*.
+  // Sempre noindex: e` materiale in anteprima, non deve finire in produzione/indice.
+  const host = request.headers.get("host") ?? "";
+  if (host.startsWith("playground.")) {
+    const url = request.nextUrl.clone();
+    if (!url.pathname.startsWith("/playground")) {
+      url.pathname = url.pathname === "/" ? "/playground" : `/playground${url.pathname}`;
+    }
+    const response = NextResponse.rewrite(url);
+    response.headers.set("x-next-intl-locale", routing.defaultLocale);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
+  }
+  // Accesso diretto via path (preview Vercel: /playground/...): bypassa next-intl
+  // (pagine IT-only, fuori dall'albero [locale]) e resta comunque noindex.
+  if (pathname === "/playground" || pathname.startsWith("/playground/")) {
+    const response = NextResponse.next();
+    response.headers.set("x-next-intl-locale", routing.defaultLocale);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
+  }
+
   // Path senza locale (come funnel): mockup per design review
   if (pathname.startsWith("/mockup")) {
     const response = NextResponse.next();

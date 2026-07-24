@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webinar Claude — Morfeus</title>
+
+<link rel="stylesheet" href="../../colors_and_type.css">
+
+<!-- Resources referenced from JS (logos) — bundler inlines these and exposes via window.__resources -->
+<meta name="ext-resource-dependency" content="../../assets/logo/m-w.png" data-resource-id="logoSymbol" />
+<meta name="ext-resource-dependency" content="../../assets/logo/m-w2.png" data-resource-id="logoHorizontal" />
+<meta name="ext-resource-dependency" content="../../assets/logo/m-w3.png" data-resource-id="logoStacked" />
+
+<style>
+  body { margin: 0; min-height: 100vh; }
+
+  @keyframes badge-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+  @keyframes btn-pulse {
+    0%   { box-shadow: 0 4px 20px rgba(235,122,46,.35), 0 0 0 0 rgba(235,122,46,0.45); }
+    70%  { box-shadow: 0 4px 20px rgba(235,122,46,.35), 0 0 0 14px rgba(235,122,46,0); }
+    100% { box-shadow: 0 4px 20px rgba(235,122,46,.35), 0 0 0 0 rgba(235,122,46,0); }
+  }
+  @keyframes reveal-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #root { position: relative; z-index: 1; }
+  img { display: block; }
+
+  /* --- Tweaks panel --- */
+  #tweaks-panel {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    display: none;
+    min-width: 240px;
+    padding: 18px;
+    background: rgba(15,14,26,0.92);
+    border: 1px solid rgba(123,104,238,0.3);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    color: var(--ghost);
+    font-family: var(--font-body);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  #tweaks-panel.active { display: block; }
+  #tweaks-panel h4 {
+    margin: 0 0 12px 0; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.20em; text-transform: uppercase; color: var(--violet);
+  }
+  #tweaks-panel label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 8px;
+    font-size: 13px; cursor: pointer;
+    border: 1px solid transparent;
+    transition: background .15s, border-color .15s;
+  }
+  #tweaks-panel label:hover { background: rgba(255,255,255,0.04); }
+  #tweaks-panel label.sel {
+    background: rgba(235,122,46,0.1);
+    border-color: rgba(235,122,46,0.35);
+  }
+  #tweaks-panel input[type=radio] { accent-color: var(--orange); }
+  #tweaks-panel .hint { font-size: 11px; color: var(--muted); margin-top: 10px; line-height: 1.4; }
+
+  /* --- Responsive helpers --- */
+  @media (max-width: 640px) {
+    .sp-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#0B0B0C">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0B0B0C"/>
+    <g transform="translate(600 400)">
+      <circle r="180" fill="none" stroke="#EB7A2E" stroke-width="3" opacity="0.35"/>
+      <circle r="110" fill="#EB7A2E" opacity="0.15"/>
+      <text x="0" y="14" text-anchor="middle"
+            font-family="Georgia, serif" font-style="italic" font-weight="500"
+            font-size="120" fill="#EB7A2E">M</text>
+    </g>
+    <text x="600" y="660" text-anchor="middle"
+          font-family="system-ui, sans-serif" font-weight="700"
+          font-size="26" fill="#E4E7F0" letter-spacing="6">MORFEUS × CLAUDE</text>
+  </svg>
+</template>
+
+<div id="root"></div>
+
+<div id="tweaks-panel">
+  <h4>Tweaks</h4>
+  <div class="hint">Nessun tweak attivo in questa versione. Contattami se vuoi esplorare alternative.</div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="_standalone_Primitives.jsx"></script>
+<script type="text/babel" src="FormSections.jsx"></script>
+<script type="text/babel" src="ContentSections.jsx"></script>
+<script type="text/babel" src="ChangeSection.jsx"></script>
+<script type="text/babel" src="ThankYou.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+// Webinar target — 5 Maggio 2026, 18:00 CEST (UTC+2)
+// ISO: 2026-05-05T18:00:00+02:00 → 2026-05-05T16:00:00Z
+const TARGET = /*EDITMODE-BEGIN*/{
+  "target_iso": "2026-05-05T18:00:00+02:00"
+}/*EDITMODE-END*/;
+
+function App() {
+  const [screen, setScreen] = useState("landing"); // landing | thankyou
+  const [submission, setSubmission] = useState(null);
+
+  const targetMs = new Date(TARGET.target_iso).getTime();
+
+  const onComplete = (data) => {
+    setSubmission(data);
+    setScreen("thankyou");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // ==== Tweaks panel protocol ====
+  useEffect(() => {
+    const onMsg = (e) => {
+      if (!e.data || !e.data.type) return;
+      if (e.data.type === "__activate_edit_mode") {
+        document.getElementById("tweaks-panel").classList.add("active");
+      } else if (e.data.type === "__deactivate_edit_mode") {
+        document.getElementById("tweaks-panel").classList.remove("active");
+      }
+    };
+    window.addEventListener("message", onMsg);
+    // announce AFTER listener is live
+    window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+
+
+  return (
+    <div data-screen-label={screen === "landing" ? "01 Landing" : "02 Thank you"}>
+      <window.Header />
+
+      {screen === "landing" && (
+        <>
+          <window.Hero
+            target={targetMs}
+            onComplete={onComplete}
+          />
+          <window.SocialProofBar />
+          <window.LearnSection
+            onCtaClick={() => {
+              const el = document.getElementById("final-form-anchor");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          />
+          <window.LetterSection
+            onCtaClick={() => {
+              const el = document.getElementById("final-form-anchor");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          />
+          <window.AudienceSection />
+          <window.HostSection />
+          <window.ChangeSection />
+          <span id="final-form-anchor" />
+          <window.FinalCTA
+            target={targetMs}
+            onComplete={onComplete}
+          />
+        </>
+      )}
+
+      {screen === "thankyou" && (
+        <window.ThankYou
+          submission={submission}
+          onBack={() => setScreen("landing")}
+        />
+      )}
+
+      <window.Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

@@ -1,25 +1,11 @@
 import Link from "next/link";
 
-/**
- * Official-site footer — brand 2026 ("Progettato. Provato.").
- * Re-adaptation of the home footer (HomeFooter) onto the 2026 design system:
- * inchiostro surface + blueprint grid + mono mark watermark + "System Operational"
- * log device. Cross-page nav uses real links (the home footer's scroll-index
- * buttons are dead on content pages). Server component, crawlable.
- */
-
 const GRID_BG = {
-  backgroundColor: "#14132E",
+  backgroundColor: "#101A2E",
   backgroundImage:
-    "linear-gradient(rgba(169,156,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(169,156,255,.09) 1px,transparent 1px)",
-  backgroundSize: "28px 28px",
+    "linear-gradient(rgba(169,156,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(169,156,255,.055) 1px,transparent 1px)",
+  backgroundSize: "36px 36px",
 } as const;
-
-const MARK_PATHS = [
-  "M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z",
-  "M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z",
-  "M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z",
-];
 
 const SOCIAL = [
   ["LinkedIn", "https://www.linkedin.com/company/morfeus-hub-ai/"],
@@ -43,13 +29,15 @@ const COPY = {
     socialTitle: "Seguici",
     infoTitle: "Info",
     info: [
+      ["marf", "MARF"],
+      ["playground", "Playground"],
       ["privacy", "Privacy"],
       ["cookies", "Cookie Policy"],
     ],
     quote: { a: "Pillola rossa", or: "o", b: "pillola blu", end: ". A te la scelta." },
     loc: "Milano, Italia",
     copyright: "Numanity S.r.l.",
-    made: "Fatto con tanta AI",
+    made: "Made with love, by Morfeus and a lot of AI.",
     status: "System Operational",
   },
   en: {
@@ -67,13 +55,15 @@ const COPY = {
     socialTitle: "Follow us",
     infoTitle: "Info",
     info: [
+      ["marf", "MARF"],
+      ["playground", "Playground"],
       ["privacy", "Privacy"],
       ["cookies", "Cookie Policy"],
     ],
     quote: { a: "Red pill", or: "or", b: "blue pill", end: ". The choice is yours." },
     loc: "Milan, Italy",
     copyright: "Numanity S.r.l.",
-    made: "Made with a lot of AI",
+    made: "Made with love, by Morfeus and a lot of AI.",
     status: "System Operational",
   },
 } as const;
@@ -89,12 +79,21 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
 
   return (
     <footer className="relative overflow-hidden text-carta" style={GRID_BG}>
-      <div className="relative z-10 mx-auto max-w-[1200px] px-6 md:px-10 pt-20 pb-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 md:gap-x-14">
-          {/* Col 1 — Navigazione (link reali cross-pagina) */}
-          <nav className="flex flex-col gap-4" aria-label={t.navTitle}>
+      {/* Gradiente di stacco in cima */}
+      <div
+        className="absolute inset-x-0 top-0 h-[120px] pointer-events-none z-[1]"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0B1526 0%, rgba(11,21,38,0.6) 40%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-16 lg:px-20 pt-24 pb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 md:gap-x-20 lg:gap-x-28">
+          {/* Col 1 — Navigazione */}
+          <nav className="flex flex-col gap-5 md:gap-8" aria-label={t.navTitle}>
             <h4 className={colTitle}>{t.navTitle}</h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2.5 md:gap-3">
               {t.nav.map(([slug, label]) => (
                 <Link key={label} href={slug ? `${base}/${slug}` : base} className={linkCls}>
                   {label}
@@ -104,9 +103,9 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
           </nav>
 
           {/* Col 2 — Social */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5 md:gap-8">
             <h4 className={colTitle}>{t.socialTitle}</h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2.5 md:gap-3">
               {SOCIAL.map(([label, href]) => (
                 <a
                   key={label}
@@ -122,9 +121,9 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
           </div>
 
           {/* Col 3 — Info */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5 md:gap-8">
             <h4 className={colTitle}>{t.infoTitle}</h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2.5 md:gap-3">
               {t.info.map(([slug, label]) => (
                 <Link key={slug} href={`${base}/${slug}`} className={linkCls}>
                   {label}
@@ -133,15 +132,16 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
             </div>
           </div>
 
-          {/* Col 4 — Contatto + firma */}
-          <div className="flex flex-col gap-5 col-span-2 md:col-span-1 md:items-end md:text-right">
-            <p className="font-plex text-[11px] tracking-[0.14em] uppercase">
+          {/* Col 4 — Contatto + firma + copyright */}
+          <div className="flex flex-col gap-6 md:gap-8 col-span-2 md:col-span-1 md:items-end md:text-right">
+            <p className="font-plex text-[11px] md:text-[12px] tracking-[0.14em] uppercase font-semibold">
               <span className="text-anomalia">{t.quote.a}</span>
               <span className="text-ombra"> {t.quote.or} </span>
               <span className="text-lilla">{t.quote.b}</span>
               <span className="text-carta/70">{t.quote.end}</span>
             </p>
-            <div className="flex flex-col gap-1.5 md:items-end">
+
+            <div className="flex flex-col gap-2 md:items-end mt-2">
               <a
                 href="mailto:hello@morfeushub.com"
                 className="font-clash text-[17px] text-carta hover:text-lilla transition-colors"
@@ -153,31 +153,41 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
                 P.IVA 14209210963
               </span>
             </div>
+
+            <div className="flex flex-col items-start md:items-end gap-2 mt-8">
+              <span className="font-plex text-[11px] text-ombra tracking-wide">
+                &copy;{year} Morfeus &middot; {t.copyright}
+              </span>
+              <span className="font-plex text-[11px] text-carta/50 flex items-center gap-1.5">
+                <span className="text-firma">&#x1F49C;</span>
+                <span className="italic">{t.made}</span>
+              </span>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Barra finale */}
-        <div className="mt-16 pt-6 border-t border-riga-scuro flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-          <span className="font-plex text-[11px] text-ombra tracking-wide">
-            &copy; {year} Morfeus &middot; {t.copyright}
-          </span>
-          <span className="font-plex text-[11px] text-ombra tracking-wide italic">{t.made}</span>
+      {/* Logo wordmark filigrana — stesso asset della home */}
+      <div
+        className="pointer-events-none select-none absolute bottom-0 left-0 right-0 hidden md:block"
+        style={{ opacity: 0.15 }}
+        aria-hidden="true"
+      >
+        <div className="relative w-full max-w-[1400px] aspect-[4/1] mx-auto translate-y-[30%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/brand/morfeus-mark.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-contain"
+            style={{
+              filter: "brightness(0.9) saturate(1.3)",
+              mixBlendMode: "lighten",
+            }}
+          />
         </div>
       </div>
 
-      {/* Mark mono gigante in filigrana (currentColor, nessun gradiente) */}
-      <div
-        className="pointer-events-none select-none absolute -bottom-[8%] left-1/2 -translate-x-1/2 w-[min(1100px,120%)] text-carta/[0.05] hidden md:block"
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 1000 476" fill="currentColor" className="w-full h-auto">
-          {MARK_PATHS.map((d) => (
-            <path key={d} d={d} />
-          ))}
-        </svg>
-      </div>
-
-      {/* System Operational — dispositivo log a vista */}
+      {/* System Operational */}
       <div className="absolute right-6 md:right-10 bottom-5 z-20 flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-ok animate-pulse" />
         <span className="font-plex text-[10px] uppercase tracking-[0.18em] text-ombra">

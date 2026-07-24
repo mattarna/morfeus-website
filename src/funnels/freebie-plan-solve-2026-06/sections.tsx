@@ -1,23 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import type { FunnelStepConfig } from "@/funnels/types";
 import "@tabler/icons-webfont/dist/tabler-icons.min.css";
 import styles from "./PlanSolve.module.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--ps-font-inter",
-  display: "swap",
-});
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--ps-font-mono",
-  display: "swap",
-});
 
 interface SectionProps {
   accentColor: string;
@@ -479,7 +465,7 @@ export function PlanSolveSection({ step }: SectionProps) {
   const pp = ppSteps[ppI];
 
   return (
-    <div className={`${styles.psRoot} ${inter.variable} ${mono.variable}`} ref={rootRef}>
+    <div className={styles.psRoot} ref={rootRef}>
       <div className={styles["bp-grid"]} />
       <div className={styles["bp-glow"]} />
       <div className={styles["cursor-glow"]} ref={cursorGlowRef} />

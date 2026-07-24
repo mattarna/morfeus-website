@@ -145,6 +145,26 @@ const nextConfig = {
         destination: '/forge',
         permanent: true,
       },
+      {
+        source: '/:locale(en|it)/case-study',
+        destination: '/:locale/casi',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|it)/case-study/:slug',
+        destination: '/:locale/casi',
+        permanent: true,
+      },
+      {
+        source: '/case-study',
+        destination: '/casi',
+        permanent: true,
+      },
+      {
+        source: '/case-study/:slug',
+        destination: '/casi',
+        permanent: true,
+      },
     ];
   },
 };

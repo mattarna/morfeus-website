@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Accent colors</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 240px; }
+  .group { margin-bottom: 14px; }
+  .group:last-child { margin-bottom: 0; }
+  .group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .swatch { height: 70px; color: #fff; }
+  .o1 { background: #EB7A2E; }
+  .o2 { background: #F09A5C; }
+  .o3 { background: #D4652A; }
+  .v1 { background: #7B68EE; }
+  .v2 { background: #6558D4; }
+  .swatch .hex { color: rgba(255,255,255,0.85); }
+</style></head>
+<body>
+  <div class="card">
+    <div class="group">
+      <div class="group-label">Action — Orange (Claude)</div>
+      <div class="row">
+        <div class="swatch o1"><span class="name">Orange</span><span class="hex">#EB7A2E</span></div>
+        <div class="swatch o2"><span class="name">Hover</span><span class="hex">#F09A5C</span></div>
+        <div class="swatch o3"><span class="name">Pressed</span><span class="hex">#D4652A</span></div>
+      </div>
+    </div>
+    <div class="group">
+      <div class="group-label">Structure — Violet (Morfeus)</div>
+      <div class="row">
+        <div class="swatch v1"><span class="name">Violet</span><span class="hex">#7B68EE</span></div>
+        <div class="swatch v2"><span class="name">Purple</span><span class="hex">#6558D4</span></div>
+        <div style="align-self:center;color:var(--muted);font-size:12px;line-height:1.4;padding:0 8px">
+          ≤ 1 % of any screen.<br>Never competes with orange.
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>

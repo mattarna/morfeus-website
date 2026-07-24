@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Signature gradient</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 210px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; align-items: center; }
+  .hero {
+    font-family: 'Clash Display', system-ui, sans-serif;
+    font-weight: 600; font-size: 48px; line-height: 1.02; letter-spacing: -0.025em;
+    color: #fff; margin: 0;
+  }
+  .grad-text {
+    background: linear-gradient(135deg, #6558D4 0%, #EB7A2E 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .bar { height: 56px; border-radius: 10px; background: linear-gradient(135deg, #6558D4 0%, #EB7A2E 100%); }
+  .mark {
+    width: 44px; height: 44px; border-radius: 11px;
+    background: linear-gradient(135deg, #6558D4 0%, #EB7A2E 100%);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 22px;
+  }
+  .lab { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; color: #9B9BB0; font-weight: 700; margin-bottom: 10px; }
+  .val { font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #9B9BB0; margin-top: 10px; line-height: 1.5; }
+  .right { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  .pair { display: flex; align-items: center; gap: 14px; }
+</style></head>
+<body>
+  <div class="card">
+    <div>
+      <span class="lab">Hero · accent text</span>
+      <h1 class="hero"><span class="grad-text">Pronto</span> a partire.</h1>
+      <div class="val">linear-gradient(135deg, #6558D4 → #EB7A2E)</div>
+    </div>
+    <div class="right">
+      <div class="pair"><span class="mark">M</span><span style="color:#fff;font-weight:700">Logo mark fallback</span></div>
+      <div class="bar" style="width:100%"></div>
+      <div class="val">Use ONCE per screen · never as a large background · always 135°</div>
+    </div>
+  </div>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Form input</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 240px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .field { display: flex; flex-direction: column; gap: 10px; }
+  .lbl { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; color: #9B9BB0; font-weight: 700; }
+  .input {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: #fff; font-family: 'Satoshi', Inter, sans-serif; font-weight: 500; font-size: 16px;
+    padding: 15px 16px;
+    outline: none;
+    transition: border-color .2s, background .2s;
+    width: 100%; box-sizing: border-box;
+  }
+  .input.focus { border-color: #EB7A2E; background: rgba(0,0,0,0.6); box-shadow: 0 0 0 4px rgba(235,122,46,0.08); }
+  .input::placeholder { color: #9B9BB0; }
+  .input[placeholder]:empty::before { content: attr(placeholder); color: #9B9BB0; }
+  .form-row { display: flex; gap: 12px; margin-top: 16px; }
+  .form-row .input { flex: 1; }
+  .btn {
+    font-family: 'Satoshi', Inter, sans-serif; font-weight: 700; font-size: 15px; color: #fff;
+    padding: 0 22px; border-radius: 10px; background: #EB7A2E;
+    box-shadow: 0 4px 20px rgba(235,122,46,0.35); border: none; white-space: nowrap;
+  }
+  .footer { font-size: 12px; color: #9B9BB0; margin-top: 12px; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="row">
+      <div class="field">
+        <span class="lbl">Default</span>
+        <div class="input" role="textbox">nome@esempio.com</div>
+      </div>
+      <div class="field">
+        <span class="lbl">Focus</span>
+        <div class="input focus" role="textbox">matt|</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="input" role="textbox" style="color:#9B9BB0">Il tuo indirizzo email</div>
+      <button class="btn">Iscriviti</button>
+    </div>
+    <div class="footer">Niente spam. Disiscrizione in un click.</div>
+  </div>
+</body></html>

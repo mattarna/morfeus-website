@@ -1,0 +1,46 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Spacing rhythm</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 280px; padding: 0; display: grid; grid-template-columns: 260px 1fr; }
+  .tokens { padding: 22px 24px; border-right: 1px solid rgba(255,255,255,0.06); }
+  .tok-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: #9B9BB0; }
+  .tok-row b { color: #fff; font-family: 'Satoshi', Inter, sans-serif; font-weight: 700; width: 40px; letter-spacing: 0.02em; }
+  .bar { height: 10px; background: rgba(235,122,46,0.35); border-radius: 2px; }
+  .tok-head { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; font-family: 'Satoshi', Inter, sans-serif; font-weight: 700; color: #7B68EE; margin-bottom: 10px; }
+
+  .demo { padding: 22px 24px; position: relative; }
+  .label { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; font-family: 'Satoshi', Inter, sans-serif; font-weight: 700; color: #7B68EE; }
+  .title { font-family: 'Clash Display', system-ui, sans-serif; font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: #fff; margin: 0; }
+  .body { font-family: 'Satoshi', Inter, sans-serif; font-size: 14px; line-height: 1.55; color: #E4E7F0; opacity: 0.80; margin: 0; max-width: 340px; }
+  .g48 { height: 48px; }
+  .g12 { height: 12px; }
+  .g20 { height: 20px; }
+  /* gap rulers */
+  .ruler { position: absolute; right: 14px; font-family: ui-monospace,Menlo,monospace; font-size: 9px; color: #EB7A2E; letter-spacing: 0.05em; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="tokens">
+      <div class="tok-head">Tokens</div>
+      <div class="tok-row"><b>8</b><div class="bar" style="width:8px"></div></div>
+      <div class="tok-row"><b>12</b><div class="bar" style="width:12px"></div></div>
+      <div class="tok-row"><b>16</b><div class="bar" style="width:16px"></div></div>
+      <div class="tok-row"><b>24</b><div class="bar" style="width:24px"></div></div>
+      <div class="tok-row"><b>32</b><div class="bar" style="width:32px"></div></div>
+      <div class="tok-row"><b>48</b><div class="bar" style="width:48px"></div></div>
+      <div class="tok-row"><b>64</b><div class="bar" style="width:64px"></div></div>
+      <div class="tok-row"><b>96</b><div class="bar" style="width:96px"></div></div>
+      <div class="tok-row"><b>120</b><div class="bar" style="width:120px"></div></div>
+    </div>
+    <div class="demo">
+      <span class="label">In practice</span>
+      <div class="g48"></div>
+      <h3 class="title">Tre moduli, un risultato.</h3>
+      <div class="g12"></div>
+      <p class="body">Label → 48 px → Title → 12 px → Body. Section blocks breathe at 80–120 px vertical. Card gap 20–24 px.</p>
+      <div class="ruler" style="top: 52px">48</div>
+      <div class="ruler" style="top: 118px">12</div>
+    </div>
+  </div>
+</body></html>

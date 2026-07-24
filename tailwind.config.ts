@@ -1,12 +1,15 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/funnels/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: {
+    relative: true,
+    files: [
+      "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/funnels/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
+  },
   safelist: [
     // OptinMockup theme classes (dynamic from optin-themes.ts)
     "bg-white",
@@ -106,9 +109,8 @@ const config: Config = {
         outfit: ["var(--font-outfit)", "sans-serif"],
         "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
         prodigy: ["var(--font-prodigy)", "sans-serif"],
-        // Brand 2026: Clash/Satoshi self-host TODO (fallback Outfit/DM Sans finche i woff2 non sono in public/fonts)
-        clash: ["'Clash Display'", "var(--font-outfit)", "system-ui", "sans-serif"],
-        satoshi: ["'Satoshi'", "var(--font-dm-sans)", "system-ui", "sans-serif"],
+        clash: ["var(--font-clash)", "var(--font-outfit)", "system-ui", "sans-serif"],
+        satoshi: ["var(--font-satoshi)", "var(--font-dm-sans)", "system-ui", "sans-serif"],
         playfair: ["var(--font-playfair)", "Georgia", "serif"],
         plex: ["var(--f-mono)", "'IBM Plex Mono'", "monospace"],
       },

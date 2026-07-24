@@ -6,10 +6,15 @@
    CSS Variables
    ================================ */
 :root {
-  --background: #0B0B0C; /* Night */
-  --foreground: #E4E7F0; /* Ghost White */
-  --accent: #E8650A;     /* Forge */
-  --accent-secondary: #533DFC; /* Majorelle Blue */
+  --background: #0b0b0c; /* Night */
+  --foreground: #e4e7f0; /* Ghost White */
+  --accent: #e8650a; /* Forge */
+  --accent-secondary: #533dfc; /* Majorelle Blue */
+  --font-outfit: system-ui;
+  --font-dm-sans: system-ui;
+  --font-playfair: Georgia;
+  --f-mono: "SF Mono";
+  --font-jetbrains: "SF Mono";
 }
 
 /* ================================
@@ -59,7 +64,11 @@ a:focus:not(:focus-visible) {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  font-family:
+    var(--font-dm-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -135,21 +144,21 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .bg-gradient-radial {
     background-image: radial-gradient(var(--tw-gradient-stops));
   }
-  
+
   /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Screen reader only */
   .sr-only {
     position: absolute;
@@ -179,7 +188,7 @@ body {
     z-index: 1000;
     transition: top 0.3s;
   }
-  
+
   .skip-link:focus-visible {
     top: 0;
   }
@@ -195,7 +204,7 @@ body {
     outline-offset: 2px;
     border-radius: 4px;
   }
-  
+
   /* Remove Tailwind ring on focus for cleaner look */
   button:focus,
   a:focus,
@@ -226,10 +235,20 @@ body {
 
 /* Problem Section Animations */
 @keyframes scan-line {
-  0% { transform: translateY(0vh); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(0vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 .animate-scan-line {
@@ -237,8 +256,15 @@ body {
 }
 
 @keyframes pulse-slow {
-  0%, 100% { opacity: 1; filter: brightness(1); }
-  50% { opacity: 0.8; filter: brightness(1.2); }
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
 }
 
 .animate-pulse-slow {

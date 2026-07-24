@@ -1,0 +1,38 @@
+---
+description: Persistent growth governance for site and funnels
+alwaysApply: true
+---
+
+# Growth Governance
+
+Use this rule to keep long-term structure clean while the project grows.
+
+## Decide the domain first
+
+- If work targets `src/app/[locale]/...`, follow **sito madre** standards (i18n copy, SEO metadata, localized routes).
+- If work targets `src/funnels/**` or `src/app/funnel-internal/**`, follow **funnel** standards (registry-driven routing, conversion tracking, no locale prefixes).
+- Never mix page components between site and funnel areas.
+
+## Mandatory references before implementing
+
+- Read architecture rules in `.cursor/rules/site-architecture.mdc` and `.cursor/rules/funnel-architecture.mdc`.
+- For SEO-sensitive site pages, apply `.cursor/rules/site-seo.mdc` and `.cursor/rules/release-checklist.mdc`.
+- For funnels, apply tracking + config rules and keep behavior declarative in `src/funnels/registry.ts`.
+
+## Anti-regression checks
+
+- Prefer registry/config changes over slug hardcoding in page/layout files.
+- Keep funnel component contract in a single source (`src/funnels/component-contract.ts`).
+- When changing public assets or docs for release quality, follow:
+  - `docs/public-asset-policy.md`
+  - `docs/growth-governance.md`
+  - `docs/funnel-and-page-checklist.md`
+
+## Validation loop after substantive changes
+
+- Run relevant checks before closure:
+  - `npm run lint`
+  - `npm run typecheck`
+  - `npm run test`
+  - `npm run check:public-assets`
+  - `npm run report:health` for structural trend visibility

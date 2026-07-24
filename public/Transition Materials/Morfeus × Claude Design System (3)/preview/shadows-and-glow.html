@@ -1,0 +1,48 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Shadows & glow</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 260px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cell { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 28px; padding-bottom: 12px; }
+  .sh {
+    width: 180px; height: 70px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px; font-weight: 700;
+  }
+  .glow-rest  { background: #EB7A2E; border-color: transparent; box-shadow: 0 4px 20px rgba(235,122,46,0.35); }
+  .glow-hover { background: #F09A5C; border-color: transparent; box-shadow: 0 6px 28px rgba(235,122,46,0.50); }
+  .card-hov   { box-shadow: 0 10px 30px rgba(0,0,0,0.30); border-color: rgba(235,122,46,0.4); }
+  .tok { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.10em; text-transform: uppercase; }
+  .val { font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #9B9BB0; line-height: 1.5; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="grid">
+      <div class="cell">
+        <div class="sh glow-rest">CTA rest</div>
+        <div>
+          <div class="tok">Glow · orange</div>
+          <div class="val">0 4px 20px rgba(235,122,46,.35)</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="sh glow-hover">CTA hover</div>
+        <div>
+          <div class="tok">Glow · intensified</div>
+          <div class="val">0 6px 28px rgba(235,122,46,.50)</div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="sh card-hov">Card hover</div>
+        <div>
+          <div class="tok">Drop · lift</div>
+          <div class="val">0 10px 30px rgba(0,0,0,.30)<br>+ translateY(−4px)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>

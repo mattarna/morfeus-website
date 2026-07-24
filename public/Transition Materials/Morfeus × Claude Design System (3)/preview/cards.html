@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cards</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 280px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .demo-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 26px;
+    transition: border-color .3s cubic-bezier(.4,0,.2,1), transform .3s, background .3s, box-shadow .3s;
+  }
+  .demo-card.hover {
+    border-color: rgba(235,122,46,0.4);
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.30);
+  }
+  .num {
+    font-family: 'Clash Display', system-ui, sans-serif;
+    font-weight: 600; font-size: 28px; color: #EB7A2E; letter-spacing: -0.02em;
+    margin-bottom: 10px; display: block;
+  }
+  .title {
+    font-family: 'Clash Display', system-ui, sans-serif;
+    font-weight: 600; font-size: 20px; line-height: 1.15; color: #fff;
+    margin: 0 0 10px 0; letter-spacing: -0.01em;
+  }
+  .body {
+    margin: 0; font-size: 14px; line-height: 1.55; color: #E4E7F0; opacity: 0.80;
+  }
+  .state {
+    font-family: 'Satoshi', Inter, sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.20em; text-transform: uppercase; color: #9B9BB0;
+    margin-bottom: 10px; display: block;
+  }
+</style></head>
+<body>
+  <div class="card">
+    <div class="row">
+      <div>
+        <span class="state">Rest</span>
+        <div class="demo-card">
+          <span class="num">01</span>
+          <h3 class="title">Tre moduli, un risultato.</h3>
+          <p class="body">Breve descrizione del modulo. Le card a riposo sono quasi invisibili — 3 % di bianco, 6 % di bordo.</p>
+        </div>
+      </div>
+      <div>
+        <span class="state">Hover</span>
+        <div class="demo-card hover">
+          <span class="num">02</span>
+          <h3 class="title">Dal webinar al risultato.</h3>
+          <p class="body">Al hover prendono vita: bordo arancione, sollevamento 4 px, ombra scura, sfondo più chiaro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>

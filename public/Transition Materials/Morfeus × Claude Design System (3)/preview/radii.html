@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Radii</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 200px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sh {
+    width: 72px; height: 72px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .r-sm   { border-radius: 6px; }
+  .r-md   { border-radius: 10px; }
+  .r-lg   { border-radius: 14px; }
+  .r-xl   { border-radius: 16px; }
+  .r-2xl  { border-radius: 20px; }
+  .r-pill { border-radius: 100px; }
+  .tok  { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
+  .use  { font-size: 10px; color: #9B9BB0; text-align: center; line-height: 1.3; letter-spacing: 0.02em; }
+  .val  { font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #9B9BB0; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="grid">
+      <div class="cell"><div class="sh r-sm"></div><span class="tok">6 px</span><span class="use">tag</span></div>
+      <div class="cell"><div class="sh r-md"></div><span class="tok">10 px</span><span class="use">button · input</span></div>
+      <div class="cell"><div class="sh r-lg"></div><span class="tok">14 px</span><span class="use">card</span></div>
+      <div class="cell"><div class="sh r-xl"></div><span class="tok">16 px</span><span class="use">form · screenshot</span></div>
+      <div class="cell"><div class="sh r-2xl"></div><span class="tok">20 px</span><span class="use">photo · placeholder</span></div>
+      <div class="cell"><div class="sh r-pill"></div><span class="tok">100 px</span><span class="use">badge · pill</span></div>
+    </div>
+  </div>
+</body></html>

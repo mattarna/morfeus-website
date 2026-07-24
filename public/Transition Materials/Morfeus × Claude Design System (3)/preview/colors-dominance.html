@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Color dominance</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 220px; }
+  .bar { display: grid; grid-template-columns: 85fr 10fr 4fr 1fr; height: 72px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+  .bar > div { display: flex; align-items: flex-end; justify-content: flex-start; padding: 10px 12px; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; }
+  .b1 { background: #0B0B0C; }
+  .b2 { background: #E4E7F0; color: #0B0B0C; }
+  .b3 { background: #EB7A2E; }
+  .b4 { background: #7B68EE; }
+  .legend { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
+  .legend .item { display: flex; align-items: center; gap: 8px; color: var(--ghost); opacity: 0.85; font-size: 12px; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .title { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: #fff; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="title">Dominance ratio</div>
+    <div class="sub">Per screen · background 85 / text 10 / orange 4 / violet 1</div>
+    <div class="bar">
+      <div class="b1">85%</div>
+      <div class="b2">10%</div>
+      <div class="b3">4%</div>
+      <div class="b4">1%</div>
+    </div>
+    <div class="legend">
+      <div class="item"><span class="dot" style="background:#0B0B0C;border:1px solid rgba(255,255,255,0.2)"></span>Foundation</div>
+      <div class="item"><span class="dot" style="background:#E4E7F0"></span>Text</div>
+      <div class="item"><span class="dot" style="background:#EB7A2E"></span>Action</div>
+      <div class="item"><span class="dot" style="background:#7B68EE"></span>Structure</div>
+    </div>
+  </div>
+</body></html>

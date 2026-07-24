@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Logo system</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 280px; padding: 0; font-family: 'Satoshi', Inter, sans-serif; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .pane { padding: 20px; display: flex; flex-direction: column; gap: 14px; border-right: 1px solid rgba(255,255,255,0.06); }
+  .pane:last-child { border-right: 0; }
+  .pane.dark  { background: #0B0B0C; }
+  .pane.light { background: #E4E7F0; color: #0B0B0C; }
+  .pane.color { background: #0F0E1A; }
+
+  .lab { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; font-weight: 700; color: #9B9BB0; }
+  .pane.light .lab { color: #6558D4; }
+  .row { display: flex; align-items: center; gap: 18px; }
+  .logo-mark { height: 34px; }
+  .logo-line { height: 24px; }
+  .caption { font-size: 10px; color: #9B9BB0; font-family: ui-monospace, Menlo, monospace; }
+  .pane.light .caption { color: #555; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="pane dark">
+      <span class="lab">White · on dark</span>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-w.png" alt="Morfeus symbol white"><span class="caption">m-w</span></div>
+      <div class="row"><img class="logo-line" src="../assets/logo/m-w2.png" alt="Morfeus wordmark white"><span class="caption">m-w2</span></div>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-w3.png" alt="Morfeus stacked white" style="height:60px"><span class="caption">m-w3</span></div>
+    </div>
+    <div class="pane light">
+      <span class="lab">Black · on light</span>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-b.png" alt="Morfeus symbol black"><span class="caption">m-b</span></div>
+      <div class="row"><img class="logo-line" src="../assets/logo/m-b2.png" alt="Morfeus wordmark black"><span class="caption">m-b2</span></div>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-b3.png" alt="Morfeus stacked black" style="height:60px"><span class="caption">m-b3</span></div>
+    </div>
+    <div class="pane color">
+      <span class="lab">Color · accent</span>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-c.png" alt="Morfeus symbol color"><span class="caption">m-c</span></div>
+      <div class="row"><img class="logo-line" src="../assets/logo/m-c2.png" alt="Morfeus wordmark color"><span class="caption">m-c2</span></div>
+      <div class="row"><img class="logo-mark" src="../assets/logo/m-c3.png" alt="Morfeus stacked color" style="height:60px"><span class="caption">m-c3</span></div>
+    </div>
+  </div>
+</body></html>

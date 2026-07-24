@@ -1,0 +1,256 @@
+/* ============================================================
+   Morfeus × Claude — Colors & Type Foundation
+   ============================================================
+   Source of truth: BRAND_GUIDELINES.md
+   Fonts are self-hosted from /assets/fonts/ — no CDN required.
+   ============================================================ */
+
+/* ---- Fonts (self-hosted, variable) -------------------------
+   Paths are resolved relative to THIS css file's location,
+   so any page that links to colors_and_type.css gets fonts.
+   ------------------------------------------------------------ */
+
+@font-face {
+  font-family: 'Clash Display';
+  src: url('assets/fonts/ClashDisplay-Variable.ttf') format('truetype-variations'),
+       url('assets/fonts/ClashDisplay-Variable.ttf') format('truetype');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype-variations'),
+       url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('assets/fonts/Satoshi-VariableItalic.ttf') format('truetype-variations'),
+       url('assets/fonts/Satoshi-VariableItalic.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('assets/fonts/PlayfairDisplay-Variable.ttf') format('truetype-variations'),
+       url('assets/fonts/PlayfairDisplay-Variable.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('assets/fonts/PlayfairDisplay-Italic-Variable.ttf') format('truetype-variations'),
+       url('assets/fonts/PlayfairDisplay-Italic-Variable.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* -------- Foundation (sfondi) -------- */
+  --night:       #0B0B0C;  /* primary bg — almost black */
+  --deep-space:  #0F0E1A;  /* alternate sections */
+  --dusk:        #1A1535;  /* gradient depth, special cards */
+
+  /* -------- Accent primary (Claude orange) -------- */
+  --orange:         #EB7A2E;  /* CTA, highlights, numbers */
+  --orange-hover:   #F09A5C;  /* hover */
+  --orange-pressed: #D4652A;  /* active / pressed */
+
+  /* -------- Accent secondary (Morfeus violet) -------- */
+  --violet: #7B68EE;  /* labels, tags, structural icons */
+  --purple: #6558D4;  /* deep gradients, glow, subtle borders */
+
+  /* -------- Text -------- */
+  --white: #FFFFFF;
+  --ghost: #E4E7F0;   /* body — use at opacity .85–.90 on dark */
+  --muted: #9B9BB0;   /* captions, labels, metadata */
+
+  /* -------- Utility -------- */
+  --hairline: rgba(255,255,255,0.06);
+  --hairline-strong: rgba(255,255,255,0.12);
+  --card-bg: rgba(255,255,255,0.03);
+  --card-bg-hover: rgba(255,255,255,0.05);
+  --input-bg: rgba(0,0,0,0.4);
+  --input-bg-focus: rgba(0,0,0,0.6);
+
+  /* -------- Glow / Shadow system -------- */
+  --glow-orange:       0 4px 20px rgba(235,122,46,0.35);
+  --glow-orange-hover: 0 6px 28px rgba(235,122,46,0.50);
+  --shadow-card-hover: 0 10px 30px rgba(0,0,0,0.30);
+  --shadow-image:      0 10px 40px rgba(0,0,0,0.40);
+
+  /* -------- Gradients -------- */
+  --grad-signature: linear-gradient(135deg, #6558D4 0%, #EB7A2E 100%);
+  --grad-border:    linear-gradient(135deg, rgba(123,104,238,0.3), rgba(235,122,46,0.2));
+  --grad-section:   linear-gradient(180deg, transparent 0%, rgba(15,14,26,0.6) 50%, transparent 100%);
+  --grad-atmosphere:
+    radial-gradient(ellipse at 15% 10%, rgba(101,88,212,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(235,122,46,0.08)  0%, transparent 50%);
+
+  /* -------- Radii -------- */
+  --radius-sm:  6px;   /* tag */
+  --radius-md:  10px;  /* button, input */
+  --radius-lg:  14px;  /* card */
+  --radius-xl:  16px;  /* form card, screenshot */
+  --radius-2xl: 20px;  /* placeholder image */
+  --radius-pill: 100px;
+
+  /* -------- Spacing scale (informational — flexible principle-based system) -------- */
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+
+  /* -------- Layout -------- */
+  --content-max: 1120px;
+  --content-pad: 24px;
+  --prose-max:   680px;
+
+  /* -------- Motion -------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:  0.2s;
+  --dur-base:  0.3s;
+  --dur-slow:  0.4s;
+
+  /* -------- Fonts -------- */
+  --font-display: 'Clash Display', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-italic:  'Playfair Display', Georgia, serif;
+  --font-body:    'Satoshi', 'Inter', system-ui, sans-serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+html, body {
+  background: var(--night);
+  color: var(--ghost);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  /* Atmosphere gradient — always present, always subtle */
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--grad-atmosphere);
+  pointer-events: none;
+  z-index: 0;
+}
+
+::selection { background: rgba(235,122,46,0.30); color: #fff; }
+
+/* ============================================================
+   TYPOGRAPHY — semantic
+   ============================================================ */
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  text-wrap: balance;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.italic-accent,
+em.accent,
+.accent {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--orange);
+  /* font-size: inherit; */
+}
+
+p, .body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ghost);
+  opacity: 0.88;
+  max-width: var(--prose-max);
+  text-wrap: pretty;
+}
+
+.body-card {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ghost);
+  opacity: 0.80;
+}
+
+.label,
+.tag-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+
+.caption, .micro {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+code, kbd, pre, .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.93em;
+  color: var(--ghost);
+}
+
+/* Links */
+a {
+  color: var(--orange);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+a:hover { color: var(--orange-hover); }

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Morfeus × Claude — Slide templates</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+
+<style>
+  body { margin: 0; background: #05050a; }
+  body::before { display: none; }
+  #root > * { margin: 0; display: block; }
+  deck-stage { display: block; }
+  img { display: block; }
+</style>
+</head>
+<body>
+
+<deck-stage id="deck"></deck-stage>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="deck-stage.js"></script>
+
+<script type="text/babel" src="SlideBase.jsx"></script>
+<script type="text/babel" src="TitleSlide.jsx"></script>
+<script type="text/babel" src="Slides.jsx"></script>
+
+<script type="text/babel">
+const TOTAL = 5;
+
+function Deck() {
+  return (
+    <>
+      <window.TitleSlide
+        eyebrow="Webinar gratuito · Live"
+        title="Come usare Claude al massimo nel tuo lavoro."
+        italicWord="al massimo"
+        subtitle="60 minuti con Matt. I workflow che oggi mi fanno finire in 30 minuti quello che prima richiedeva un'intera giornata."
+        meta={["Giovedì 2 maggio · 20:30", "Online · Zoom", "60 min + Q&A"]}
+        pageNum={1} total={TOTAL}
+      />
+
+      <window.SectionSlide
+        number={1} label="Parte 1"
+        title="Le fondamenta giuste."
+        italicWord="giuste"
+        pageNum={2} total={TOTAL}
+      />
+
+      <window.BulletSlide
+        label="Cosa imparerai"
+        title="Workflow reali, non demo finte."
+        italicWord="reali"
+        items={[
+          "Projects di Claude configurati per il tuo lavoro.",
+          "Artifacts come mini-app usate ogni giorno.",
+          "Scrittura, analisi, ricerca — workflow completi.",
+          "Gli errori che fanno perdere tempo — e come evitarli."
+        ]}
+        pageNum={3} total={TOTAL}
+      />
+
+      <window.ProductSlide
+        label="Cos'è Claude"
+        title="L'assistente che impara come lavori."
+        italicWord="come lavori"
+        body="Claude non è un chatbot qualunque. Con Projects e Artifacts diventa un collaboratore che conosce il tuo contesto, i tuoi documenti, il tuo modo di scrivere."
+        pageNum={4} total={TOTAL}
+      />
+
+      <window.BigQuoteSlide
+        quote="Non ti insegno prompt engineering. Ti mostro il lavoro vero."
+        attribution="Matt · Morfeus"
+        pageNum={5} total={TOTAL}
+      />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("deck")).render(<Deck />);
+</script>
+</body>
+</html>

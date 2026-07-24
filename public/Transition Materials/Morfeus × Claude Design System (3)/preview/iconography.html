@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Iconography</title>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="_card.css">
+<style>
+  .card { height: 280px; padding: 26px 28px; font-family: 'Satoshi', Inter, sans-serif; display: grid; grid-template-rows: auto auto auto; gap: 16px; }
+  .lab { font-size: 10px; letter-spacing: 0.20em; text-transform: uppercase; color: #9B9BB0; font-weight: 700; display: block; margin-bottom: 10px; }
+  .row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .check {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: rgba(235,122,46,0.1); border: 1px solid #EB7A2E;
+    color: #EB7A2E; font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lucide-box {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lucide-box i { color: #E4E7F0; opacity: 0.88; }
+  .glyph {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(123,104,238,0.08); border: 1px solid rgba(123,104,238,0.20);
+    display: flex; align-items: center; justify-content: center;
+    color: #7B68EE; font-size: 18px; font-weight: 700; font-family: 'Satoshi', sans-serif;
+  }
+  .note { font-family: ui-monospace, Menlo, monospace; font-size: 10px; color: #9B9BB0; line-height: 1.5; max-width: 460px; }
+  .flag {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
+    color: #F09A5C; background: rgba(235,122,46,0.08); border: 1px solid rgba(235,122,46,0.20);
+    padding: 3px 8px; border-radius: 4px;
+  }
+</style></head>
+<body>
+  <div class="card">
+    <div>
+      <span class="lab">Brand-native — the orange check</span>
+      <div class="row">
+        <span class="check">✓</span>
+        <span class="check">✓</span>
+        <span class="check">✓</span>
+        <span class="note">The only bespoke glyph in the system — 26 px rounded chip, orange-10 fill, orange border, ✓ in orange. Used in authority / feature lists.</span>
+      </div>
+    </div>
+    <div>
+      <span class="lab">Lucide · 1.5 stroke · 24 px <span class="flag">substitution</span></span>
+      <div class="row" id="lucide-row">
+        <div class="lucide-box"><i data-lucide="check" style="width:22px;height:22px"></i></div>
+        <div class="lucide-box"><i data-lucide="arrow-right" style="width:22px;height:22px"></i></div>
+        <div class="lucide-box"><i data-lucide="play" style="width:22px;height:22px"></i></div>
+        <div class="lucide-box"><i data-lucide="calendar" style="width:22px;height:22px"></i></div>
+        <div class="lucide-box"><i data-lucide="sparkles" style="width:22px;height:22px;color:#EB7A2E;opacity:1"></i></div>
+        <div class="lucide-box"><i data-lucide="zap" style="width:22px;height:22px"></i></div>
+        <div class="lucide-box"><i data-lucide="layers" style="width:22px;height:22px"></i></div>
+        <span class="note">No icon family ships with the brand. Lucide is a stand-in — rounded-join, geometric — confirm before production.</span>
+      </div>
+    </div>
+    <div>
+      <span class="lab">Unicode stand-ins</span>
+      <div class="row">
+        <div class="glyph">·</div>
+        <div class="glyph">—</div>
+        <div class="glyph">✓</div>
+        <div class="glyph">→</div>
+        <span class="note">Middle-dot · em-dash — checkmark ✓ arrow →. Emoji is OFF by default in layout.</span>
+      </div>
+    </div>
+  </div>
+  <script>if (window.lucide) lucide.createIcons();</script>
+</body></html>

@@ -11,8 +11,40 @@ export const INDEXABLE_LOCALE_PATHS = [
   "forge",
   "lab",
   "chi-siamo",
+  "metodo",
+  "marf",
+  "playground",
+  "casi",
+  "insights",
+  "impara-ai",
+  "glossario",
+  "faq",
+  "roiometro",
   "privacy",
   "cookies",
+  // Casi studio (dettaglio) — brand 2026
+  "casi/brainiac-tesoreria-riconciliata",
+  "casi/cyberangels-sales-advisor",
+  "casi/cyberangels-report-cfo",
+  "casi/globia-scoring-deterministico",
+  "casi/marf-lead-caldo",
+  "casi/scalers-pre-sales",
+  "casi/valueize-best-seller",
+  "casi/ag-academy-onboarding",
+  // Insights — articoli (13)
+  "insights/value-leak",
+  "insights/agenti-ai-in-azienda",
+  "insights/ai-act-pmi-alfabetizzazione",
+  "insights/ai-intelligenza-artificiale-posti-di-lavoro",
+  "insights/ai-per-le-pmi-da-dove-iniziare",
+  "insights/automazione-preventivi-documenti-ai",
+  "insights/come-integrare-ai-nei-processi",
+  "insights/come-misurare-il-roi-dell-ai",
+  "insights/come-scegliere-consulenza-ai",
+  "insights/competenze-ai-azienda-ai-champion",
+  "insights/perche-progetti-ai-falliscono",
+  "insights/quanto-costa-l-ai-in-azienda",
+  "insights/saas-o-sistema-ai-su-misura",
 ] as const;
 
 export const INDEXABLE_CASE_STUDY_SLUGS = [
@@ -61,15 +93,6 @@ export function getIndexableLocalizedEntries(baseUrl: string) {
   );
 }
 
-export function getIndexableCaseStudyEntries(baseUrl: string) {
-  return SUPPORTED_LOCALES.flatMap((locale) =>
-    INDEXABLE_CASE_STUDY_SLUGS.map((slug) => {
-      const path = `case-study/${slug}`;
-      return {
-        locale,
-        path,
-        url: buildLocalizedUrl(baseUrl, locale, path),
-      };
-    })
-  );
+export function getIndexableCaseStudyEntries() {
+  return [];
 }

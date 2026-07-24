@@ -21,6 +21,17 @@ export const RESERVED_SITE_SLUGS = new Set([
   "call-confirmed",
   "aperitalk",
   "aperitivo",
+  // Brand 2026 content pages (sito madre indicizzato)
+  "chi-siamo",
+  "metodo",
+  "marf",
+  "playground",
+  "casi",
+  "insights",
+  "impara-ai",
+  "glossario",
+  "faq",
+  "roiometro",
 
   // System routes
   "api",

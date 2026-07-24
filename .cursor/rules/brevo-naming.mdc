@@ -1,0 +1,38 @@
+---
+description: Morfeus Brevo Naming Standard — naming coerente per liste/form creati dal sito e per le campagne collegate
+globs: src/lib/brevo/**, src/app/api/funnels/**/optin/**
+alwaysApply: false
+---
+
+# Brevo Naming Standard (Morfeus Hub)
+
+Fonte canonica: `01_MORFEUS/Brevo_Naming_Standard.docx` nell'OS Morfeus (CLAUDE).
+Questa regola riflette la parte rilevante per il **codice del sito**.
+
+## Cosa controlla il codice (rispetta SEMPRE)
+
+- **Chiave logica lista** in `src/lib/brevo/lists.ts` e **env var** `BREVO_<...>_LIST_ID`:
+  usa lo stesso nome-progetto/segmento dello standard (es. freebie → segmento `FB-<nome>`).
+- **`DEFAULT_FORM_NAME`** nelle route optin: nomina il form in modo riconoscibile e coerente
+  col progetto/segmento (no caratteri speciali: niente `/ " !`, solo testo, `·` e trattini).
+- Una lista Brevo va **creata nella UI** e referenziata per ID via env var — il codice non la nomina,
+  ma la chiave logica e il form devono restare allineati al naming sotto.
+
+## Formato nome campagna (chi crea campagne in Brevo UI)
+
+```
+[TIPO] PROGETTO · SEGMENTO · POS · Descrizione breve · YYYY-MM-DD
+```
+
+- **[TIPO]**: `[WEB]` webinar · `[NL]` newsletter · `[AUTO]` automazioni · `[PROMO]` sales · `[IST]` istituzionale
+- **PROGETTO**: nome breve consistente (es. `ClaudeMAG26`, `WeeklyNL`, `SoapOp-AI`)
+- **SEGMENTO**: `ALL` · `MEM` · `ISC` · `FB-<nome>` (freebie, es. `FB-Claude`) · `PRE` · `VIP` · `NL-ALL` · `NL-MEM`
+- **POS**: posizione sequenza, min 2 cifre (`01`, `02`); webinar `A1/B1/R1/PW1/TY1/AQ1/AB1`; automazioni `S1E1`
+- **YYYY-MM-DD**: data ISO (mai "28 aprile"); la data va SOLO qui, mai nella descrizione
+- Separatore: `·` (Win: Alt+0183) o `|`
+
+## Regole dure
+- Data sempre ISO, solo nell'ultimo campo.
+- Nome-progetto identico in tutte le campagne dello stesso progetto.
+- POS a 2 cifre minimo. Nessun carattere speciale nei nomi.
+- 5 cartelle Brevo: WEBINAR · NEWSLETTER · AUTOMAZIONI · PROMOZIONI · ISTITUZIONALE — ogni campagna nella sua.
