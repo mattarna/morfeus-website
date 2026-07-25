@@ -1,3 +1,5 @@
+// React 19 non espone piu' il namespace globale JSX: va importato da "react".
+import type { JSX } from "react";
 import {
   FunnelAgenda,
   FunnelCTABox,

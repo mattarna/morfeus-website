@@ -35,7 +35,7 @@ function isNonIndexableLocalePath(segments: string[]): boolean {
   );
 }
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Path senza locale (come funnel): mockup per design review

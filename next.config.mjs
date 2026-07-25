@@ -39,22 +39,22 @@ const nextConfig = {
   
   // Compress responses
   compress: true,
-  
-  // Enable SWC minification (faster than Terser)
-  swcMinify: true,
-  
+
   // Power the bundle analyzer in production builds
   productionBrowserSourceMaps: false,
-  
-  // Optimize fonts
-  optimizeFonts: true,
+
+  // NB: `swcMinify` e `optimizeFonts` sono stati RIMOSSI in Next 15/16
+  // (ora sono il comportamento predefinito): tenerli fa fallire il build.
+
+  // Il content dei funnel deve finire nel bundle serverless: in Next 15+
+  // `outputFileTracingIncludes` non sta piu' sotto `experimental`.
+  outputFileTracingIncludes: {
+    '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
+  },
 
   // Optimize package imports
   experimental: {
     optimizePackageImports: ['@iconify/react', 'lucide-react', 'framer-motion'],
-    outputFileTracingIncludes: {
-      '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
-    },
   },
 
   // ============================================

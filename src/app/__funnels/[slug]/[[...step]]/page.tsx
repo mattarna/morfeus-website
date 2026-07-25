@@ -5,13 +5,14 @@ import { FunnelTrackingBridge } from "@/components/funnels/FunnelTrackingBridge"
 import { getFunnelStepByPath, loadFunnelConfig } from "@/funnels/loader";
 
 interface FunnelPageProps {
-  params: {
+  params: Promise<{
     slug: string;
     step?: string[];
-  };
+  }>;
 }
 
-export default function FunnelPage({ params }: FunnelPageProps) {
+export default async function FunnelPage(props: FunnelPageProps) {
+  const params = await props.params;
   const funnel = loadFunnelConfig(params.slug);
   if (!funnel) {
     notFound();
@@ -23,7 +24,7 @@ export default function FunnelPage({ params }: FunnelPageProps) {
   }
 
   const cookieName = `mf_ab_${params.slug}`;
-  const variantCookie = cookies().get(cookieName)?.value;
+  const variantCookie = (await cookies()).get(cookieName)?.value;
   const variant = variantCookie === "A" || variantCookie === "B" ? variantCookie : undefined;
   const isConversionStep = step.isConversion === true;
 

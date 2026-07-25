@@ -33,13 +33,18 @@ function FunnelRuntimeStyles({ fontPack }: { fontPack: "webinar" | "playbook" })
   );
 }
 
-export default function FunnelSlugLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { slug: string };
-}) {
+export default async function FunnelSlugLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const runtime = getFunnelRegistryItem(params.slug)?.runtime;
   const fontPack = runtime?.fontPack;

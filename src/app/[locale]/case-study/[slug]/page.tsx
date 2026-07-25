@@ -7,15 +7,20 @@ import { buildLocaleAlternates, INDEXABLE_CASE_STUDY_SLUGS } from "@/lib/seo/pub
 const ALLOWED_CASE_SLUGS = new Set<string>(INDEXABLE_CASE_STUDY_SLUGS);
 
 interface CaseStudyRouteProps {
-  params: {
+  params: Promise<{
     locale: string;
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({
-  params: { locale, slug }
-}: CaseStudyRouteProps): Promise<Metadata> {
+export async function generateMetadata(props: CaseStudyRouteProps): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale,
+    slug
+  } = params;
+
   const safeLocale = locale === "it" ? "it" : "en";
 
   if (!ALLOWED_CASE_SLUGS.has(slug)) {
@@ -38,7 +43,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function CaseStudyRoute({ params: { locale, slug } }: CaseStudyRouteProps) {
+export default async function CaseStudyRoute(props: CaseStudyRouteProps) {
+  const params = await props.params;
+
+  const {
+    locale,
+    slug
+  } = params;
+
   if (!ALLOWED_CASE_SLUGS.has(slug)) {
     notFound();
   }

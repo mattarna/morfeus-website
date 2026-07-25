@@ -3,8 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { ServiceFooter } from "@/components/sections/ServiceFooter";
 
 interface ThankYouProps {
-  params: { locale: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 function getSingle(value: string | string[] | undefined): string {
@@ -26,7 +26,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default function CallConfirmedThankYouPage({ params: { locale }, searchParams }: ThankYouProps) {
+export default async function CallConfirmedThankYouPage(props: ThankYouProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   const isIt = locale === "it";
   const name = getSingle(searchParams.name);
   const date = getSingle(searchParams.date);
