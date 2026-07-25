@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-sm border-b border-white/5">
+      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-xs border-b border-white/5">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
           <Link href={`/${locale}`} className="text-white/80 hover:text-white transition-colors text-sm">
             ← {isIT ? "Torna al sito" : "Back to site"}
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-2xl font-semibold text-white mb-4">
               {isIT ? "Titolare del Trattamento" : "Data Controller"}
             </h2>
-            <div className="text-slate-300 space-y-2 p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="text-slate-300 space-y-2 p-6 bg-white/2 rounded-xl border border-white/5">
               <p><strong>NUMANITY S.R.L.</strong></p>
               <p>P.IVA: 14209210963</p>
               <p>Via Jacopo Dal Verme 7, CAP 20159</p>

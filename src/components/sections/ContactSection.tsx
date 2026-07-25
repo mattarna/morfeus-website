@@ -26,12 +26,12 @@ export function ContactSection({ scrollToContact, namespace = "Offerta.contact",
   const footerPills = t.raw("footer_pills") as string[];
 
   return (
-    <section id="contact" className="relative z-[130] py-32 md:py-48 px-6 xl:px-40 bg-night border-t border-white/[0.05] overflow-visible">
+    <section id="contact" className="relative z-130 py-32 md:py-48 px-6 xl:px-40 bg-night border-t border-white/5 overflow-visible">
       <GridPattern />
 
       <div className="relative z-10 max-w-[1100px] mx-auto">
         <div className="relative">
-          <div className="px-8 md:px-16 lg:px-20 py-16 md:py-24 bg-white/[0.02] border border-white/[0.05] rounded-[3rem] backdrop-blur-sm">
+          <div className="px-8 md:px-16 lg:px-20 py-16 md:py-24 bg-white/2 border border-white/5 rounded-[3rem] backdrop-blur-xs">
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/5 mb-8">
                 <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
@@ -54,7 +54,7 @@ export function ContactSection({ scrollToContact, namespace = "Offerta.contact",
                   rel="noopener noreferrer"
                   className="on-page-cta group relative px-12 py-6 rounded-full font-black text-base uppercase tracking-widest transition-all duration-500 overflow-hidden shadow-[0_0_50px_-10px_rgba(79,70,229,0.5)] hover:shadow-[0_0_80px_-10px_rgba(79,70,229,0.7)] hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+                  <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-blue-800" />
                   <span className="relative z-10 flex items-center gap-3 text-white">
                     {t("cta")}
                     <Icon icon="solar:arrow-right-linear" className="w-5 h-5 transition-transform group-hover:translate-x-2" />
@@ -74,7 +74,7 @@ export function ContactSection({ scrollToContact, namespace = "Offerta.contact",
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
             {(["1", "2", "3"] as const).map((key) => (
               <div key={key} className="relative group">
-                <span className="absolute -top-8 -left-4 text-6xl md:text-8xl font-black text-white/[0.03] group-hover:text-indigo-500/[0.05] transition-colors">{key}</span>
+                <span className="absolute -top-8 -left-4 text-6xl md:text-8xl font-black text-white/3 group-hover:text-indigo-500/5 transition-colors">{key}</span>
                 <div className="relative z-10">
                   <h5 className="text-xl font-bold text-white mb-4 uppercase tracking-tight">
                     {t(`call_steps.${key}.title`)}
@@ -87,7 +87,7 @@ export function ContactSection({ scrollToContact, namespace = "Offerta.contact",
             ))}
           </div>
 
-          <div className="mt-32 pt-12 border-t border-white/[0.05] text-center">
+          <div className="mt-32 pt-12 border-t border-white/5 text-center">
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-10 text-[11px] font-bold text-slate-100 uppercase tracking-[0.2em]">
               <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/5 border border-rose-500/20">
                 <Icon icon="solar:close-circle-linear" className="w-3.5 h-3.5 text-rose-500" />
@@ -103,7 +103,7 @@ export function ContactSection({ scrollToContact, namespace = "Offerta.contact",
               </span>
             </div>
 
-            <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 px-10 py-5 rounded-full bg-white/[0.05] border border-white/10 text-[11px] font-mono text-slate-200 uppercase tracking-[0.2em] shadow-xl">
+            <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 px-10 py-5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-slate-200 uppercase tracking-[0.2em] shadow-xl">
               {footerPills.map((pill, i) => (
                 <Fragment key={pill}>
                   <span>{pill}</span>

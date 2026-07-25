@@ -123,7 +123,7 @@ export default function NotFound() {
         {/* 404 Number with Glitch Effect */}
         <div className="relative mb-8">
           <h1 
-            className="text-[150px] sm:text-[200px] md:text-[280px] font-bold tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-white/80 to-white/20 select-none"
+            className="text-[150px] sm:text-[200px] md:text-[280px] font-bold tracking-tighter leading-none text-transparent bg-clip-text bg-linear-to-b from-white via-white/80 to-white/20 select-none"
             style={{
               textShadow: "0 0 80px rgba(77, 57, 235, 0.5)",
             }}

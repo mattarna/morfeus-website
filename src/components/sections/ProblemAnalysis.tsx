@@ -24,7 +24,7 @@ export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: Prob
   const t = useTranslations(namespace);
 
   return (
-    <section id="problem-analysis" className="relative z-30 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-y border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
+    <section id="problem-analysis" className="relative z-30 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-y border-white/5 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
       <div className="max-w-[1200px] mx-auto">
         <div className="mb-32 md:mb-48">
           <div className="max-w-3xl mb-16 md:mb-24">
@@ -45,8 +45,8 @@ export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: Prob
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {(["1", "2", "3", "4"] as const).map((key, idx) => (
-              <div key={key} className="group relative p-8 md:p-10 rounded-[2rem] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:border-indigo-500/30 transition-all duration-500 hover:bg-white/[0.05]">
-                <div className="absolute top-0 right-0 p-8 text-white/[0.02] group-hover:text-indigo-500/[0.05] transition-colors duration-500">
+              <div key={key} className="group relative p-8 md:p-10 rounded-4xl bg-linear-to-br from-white/3 to-transparent border border-white/5 hover:border-indigo-500/30 transition-all duration-500 hover:bg-white/5">
+                <div className="absolute top-0 right-0 p-8 text-white/2 group-hover:text-indigo-500/5 transition-colors duration-500">
                   <Icon icon={SYMPTOM_ICONS[idx]} className="w-32 h-32" />
                 </div>
                 <div className="relative z-10">
@@ -81,7 +81,7 @@ export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: Prob
           </div>
 
           <div className="relative mb-16 md:mb-24 p-8 md:p-10 rounded-[2.5rem] border border-forge/20 bg-[#1a110a] overflow-hidden group">
-            <div className="absolute top-0 right-0 p-12 text-forge/[0.03] group-hover:text-forge/[0.05] transition-colors duration-700">
+            <div className="absolute top-0 right-0 p-12 text-forge/3 group-hover:text-forge/5 transition-colors duration-700">
               <Icon icon="solar:danger-bold" className="w-48 h-48" />
             </div>
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -102,8 +102,8 @@ export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: Prob
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-24 md:mb-32">
             {(["1", "2", "3"] as const).map((key, idx) => (
-              <div key={key} className="group relative p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-forge/20 transition-all duration-500 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-forge/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div key={key} className="group relative p-8 rounded-4xl bg-white/2 border border-white/5 hover:border-forge/20 transition-all duration-500 overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-forge/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="mb-6 w-12 h-12 rounded-xl bg-forge/5 flex items-center justify-center border border-forge/10 group-hover:scale-110 transition-transform">
                   <Icon icon={TRAP_CARD_ICONS[idx]} className="w-6 h-6 text-forge/60" />
                 </div>
@@ -117,7 +117,7 @@ export function ProblemAnalysis({ namespace = "Offerta.problem_analysis" }: Prob
 
           <div className="flex justify-center">
             <div className="relative py-8 px-12 md:py-12 md:px-20 text-center">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/3 to-transparent" />
               <p className="relative z-10 text-2xl md:text-4xl font-black text-white uppercase tracking-tight max-w-4xl leading-tight">
                 {t("trap_closing")}
               </p>

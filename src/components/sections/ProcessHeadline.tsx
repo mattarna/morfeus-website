@@ -14,7 +14,7 @@ export function ProcessHeadline() {
   
   return (
     <section className="relative z-0 h-screen w-full hidden xl:flex items-center justify-center bg-black">
-      <h2 className="relative z-10 text-6xl md:text-8xl xl:text-9xl font-normal tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
+      <h2 className="relative z-10 text-6xl md:text-8xl xl:text-9xl font-normal tracking-tighter text-center bg-clip-text text-transparent bg-linear-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
         {t("headline")}
       </h2>
     </section>

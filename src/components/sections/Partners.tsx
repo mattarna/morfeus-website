@@ -35,7 +35,7 @@ export function Partners() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-[3.35rem] 2xl:text-6xl short:!text-5xl font-medium text-white tracking-tighter leading-tight uppercase mb-4">
             {t("title")}
           </h2>
-          <div className="h-[2px] w-24 bg-gradient-to-r from-transparent via-[#4e39ec] to-transparent mx-auto" />
+          <div className="h-[2px] w-24 bg-linear-to-r from-transparent via-[#4e39ec] to-transparent mx-auto" />
         </div>
         
         {/* New Grid Layout - High Visibility */}
@@ -43,10 +43,10 @@ export function Partners() {
           {PARTNERS.map((partner) => (
             <div 
               key={partner.name}
-              className="group relative h-36 md:h-44 xl:h-48 2xl:h-56 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col items-center justify-center p-5 md:p-6 2xl:p-8 transition-all duration-500 hover:bg-white/[0.05] hover:border-[#4e39ec]/30 hover:shadow-[0_0_30px_rgba(78,57,236,0.1)] overflow-hidden"
+              className="group relative h-36 md:h-44 xl:h-48 2xl:h-56 rounded-2xl bg-white/2 border border-white/10 flex flex-col items-center justify-center p-5 md:p-6 2xl:p-8 transition-all duration-500 hover:bg-white/5 hover:border-[#4e39ec]/30 hover:shadow-[0_0_30px_rgba(78,57,236,0.1)] overflow-hidden"
             >
               {/* Animated Glow on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#4e39ec]/0 via-[#4e39ec]/0 to-[#4e39ec]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-br from-[#4e39ec]/0 via-[#4e39ec]/0 to-[#4e39ec]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Logo Container */}
               <div className="relative w-full h-14 md:h-18 xl:h-20 2xl:h-24 mb-3 2xl:mb-4 transition-transform duration-500 group-hover:scale-110">
@@ -64,7 +64,7 @@ export function Partners() {
                 <span className="text-xs md:text-sm font-medium text-slate-400 group-hover:text-white transition-colors duration-300 tracking-wider uppercase">
                   {partner.name}
                 </span>
-                <div className="h-[1px] w-0 group-hover:w-full bg-[#4e39ec] transition-all duration-500 mx-auto mt-1" />
+                <div className="h-px w-0 group-hover:w-full bg-[#4e39ec] transition-all duration-500 mx-auto mt-1" />
               </div>
             </div>
           ))}

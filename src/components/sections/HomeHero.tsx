@@ -50,7 +50,7 @@ export function HomeHero() {
   };
 
   return (
-    <section className="relative min-h-[100svh] xl:h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent pt-28 pb-20 sm:pt-32 xl:py-0">
+    <section className="relative min-h-svh xl:h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent pt-28 pb-20 sm:pt-32 xl:py-0">
       <style jsx>{`
         @keyframes pulse-glow {
           0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.7; }
@@ -69,30 +69,30 @@ export function HomeHero() {
       <div className="relative z-10 flex flex-col items-center text-center px-5 sm:px-6 max-w-6xl mx-auto xl:-translate-y-4">
         {/* Alert Bar (Over-headline) - DESIGN UPGRADE */}
         <div className="mb-8 md:mb-10 xl:mb-14 short:!mb-6 w-fit mx-auto px-4 sm:px-5 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_4px_30px_-10px_rgba(0,0,0,0.5)] flex items-center justify-center gap-3 animate-fadeIn hover:scale-[1.02] hover:bg-white/10 hover:border-white/20 transition-all duration-300 group/alert cursor-default max-w-full">
-          <div className="relative flex h-2.5 w-2.5 flex-shrink-0">
+          <div className="relative flex h-2.5 w-2.5 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forge opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-forge shadow-[0_0_10px_rgba(232,101,10,0.8)]"></span>
           </div>
-          <span className="text-[10px] md:text-[13px] uppercase font-bold text-ghost-white tracking-[0.1em] md:tracking-[0.25em] group-hover/alert:tracking-[0.3em] transition-all duration-500 leading-tight">
+          <span className="text-[10px] md:text-[13px] uppercase font-bold text-ghost-white tracking-widest md:tracking-[0.25em] group-hover/alert:tracking-[0.3em] transition-all duration-500 leading-tight">
             {t("over_headline")}
           </span>
         </div>
 
         {/* Headline - REFINED FOR IMPACT */}
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto w-full">
-          <h1 className="text-[2.5rem] sm:text-[3.35rem] md:text-[4.15rem] lg:text-[4.55rem] xl:text-[clamp(3.25rem,9.2vh,5.2rem)] short:!text-[4.15rem] leading-[1.08] md:leading-[1.03] font-black tracking-tighter uppercase break-words w-full">
-            <span className="bg-gradient-to-br from-white via-white to-white/60 bg-clip-text text-transparent block pb-1">
+          <h1 className="text-[2.5rem] sm:text-[3.35rem] md:text-[4.15rem] lg:text-[4.55rem] xl:text-[clamp(3.25rem,9.2vh,5.2rem)] short:!text-[4.15rem] leading-[1.08] md:leading-[1.03] font-black tracking-tighter uppercase wrap-break-word w-full">
+            <span className="bg-linear-to-br from-white via-white to-white/60 bg-clip-text text-transparent block pb-1">
               {t("headline_part1")}
             </span>
             <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)] block pb-1">
               {t("headline_part2")}
             </span>
             <span className="relative block">
-              <span className="bg-gradient-to-t from-white via-white to-white/90 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+              <span className="bg-linear-to-t from-white via-white to-white/90 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
                 {t("headline_part3")}
               </span>
               {/* Subtle underline/accent for the "punch" line */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-[3px] bg-gradient-to-r from-transparent via-forge to-transparent opacity-60 rounded-full blur-[1px]" />
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-[3px] bg-linear-to-r from-transparent via-forge to-transparent opacity-60 rounded-full blur-[1px]" />
             </span>
           </h1>
         </div>
@@ -109,7 +109,7 @@ export function HomeHero() {
           <a 
             href="#section-13"
             onClick={(e) => handleCtaClick(e, 13, t("cta_primary"))}
-            className="group h-14 px-10 bg-white text-black text-[15px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:min-w-[240px] sm:w-auto focus:outline-none focus:ring-0 cursor-pointer"
+            className="group h-14 px-10 bg-white text-black text-[15px] font-bold rounded-full hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] w-full sm:min-w-[240px] sm:w-auto focus:outline-hidden focus:ring-0 cursor-pointer"
           >
             {t("cta_primary")}
             <Icon icon="lucide:arrow-right" width={18} className="transition-transform group-hover:translate-x-0.5" />
@@ -117,7 +117,7 @@ export function HomeHero() {
           <a 
             href="#section-10"
             onClick={(e) => handleCtaClick(e, 10, t("cta_secondary"))}
-            className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-none focus:ring-0 cursor-pointer py-2"
+            className="text-[15px] font-medium text-slate-400 hover:text-white transition-colors tracking-wide focus:outline-hidden focus:ring-0 cursor-pointer py-2"
           >
             {t("cta_secondary")}
           </a>

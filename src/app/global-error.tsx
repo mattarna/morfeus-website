@@ -27,7 +27,7 @@ export default function GlobalError({
             {/* Animated Icon */}
             <div className="relative w-24 h-24 mx-auto mb-8">
               <div className="absolute inset-0 rounded-full border-2 border-[#4D39EB]/30 animate-ping" />
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[#4D39EB]/20 to-[#8B5CF6]/20 flex items-center justify-center border border-[#4D39EB]/40">
+              <div className="absolute inset-2 rounded-full bg-linear-to-br from-[#4D39EB]/20 to-[#8B5CF6]/20 flex items-center justify-center border border-[#4D39EB]/40">
                 <svg 
                   className="w-10 h-10 text-[#4D39EB]" 
                   fill="none" 

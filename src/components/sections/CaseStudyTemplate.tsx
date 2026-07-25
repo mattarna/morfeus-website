@@ -120,7 +120,7 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
             </div>
           </motion.div>
           <motion.h1 variants={fadeInUp} className="max-w-4xl text-[2.5rem] font-black uppercase tracking-[-0.03em] leading-[1.1] md:text-6xl lg:text-7xl">
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/70">
+            <span className="bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/70">
               {content.heroHeadline}
             </span>
           </motion.h1>
@@ -184,7 +184,7 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
               <motion.div
                 key={`${metric.label}-${metric.after}`}
                 variants={fadeInUp}
-                className="group relative flex flex-col items-center text-center rounded-[2rem] border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-10 transition-all duration-500 hover:border-majorelle/30 hover:bg-white/[0.05]"
+                className="group relative flex flex-col items-center text-center rounded-4xl border border-white/5 bg-linear-to-br from-white/3 to-transparent p-10 transition-all duration-500 hover:border-majorelle/30 hover:bg-white/5"
               >
                 <span className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-slate-500 group-hover:text-majorelle transition-colors">{metric.label}</span>
                 <div className="flex items-baseline gap-2 mb-4">
@@ -203,7 +203,7 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
                     whileInView={{ width: "100%" }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.5, ease: "circOut", delay: 0.2 }}
-                    className="h-full bg-gradient-to-r from-majorelle via-vista to-majorelle shadow-[0_0_15px_rgba(79,70,229,0.4)]"
+                    className="h-full bg-linear-to-r from-majorelle via-vista to-majorelle shadow-[0_0_15px_rgba(79,70,229,0.4)]"
                   />
                 </div>
               </motion.div>
@@ -214,7 +214,7 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
         <PreCallSectionShell number="05" variant="transparent">
           <motion.div 
             variants={fadeInUp}
-            className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent p-10 backdrop-blur-xl md:p-16 lg:p-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+            className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-linear-to-br from-white/5 to-transparent p-10 backdrop-blur-xl md:p-16 lg:p-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
           >
             <div className="absolute top-0 right-0 p-12 text-majorelle/5 pointer-events-none">
               <Icon icon="solar:double-quotes-l-bold" className="w-48 h-48" />
@@ -226,7 +226,7 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
             <div className="relative z-10 flex flex-col items-center text-center">
               <div className="mb-12 relative">
                 <div className="absolute inset-0 rounded-full bg-majorelle/20 blur-xl animate-pulse" />
-                <div className="relative h-24 w-24 rounded-full bg-gradient-to-br from-majorelle to-indigo-800 p-[2px] shadow-2xl">
+                <div className="relative h-24 w-24 rounded-full bg-linear-to-br from-majorelle to-indigo-800 p-[2px] shadow-2xl">
                   <div className="h-full w-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
                     <Icon icon="solar:user-circle-bold" className="h-16 w-16 text-majorelle/80" />
                   </div>
@@ -244,10 +244,10 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
               </blockquote>
               
               <div className="mt-12 flex flex-col items-center">
-                <span className="text-xl font-black uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
+                <span className="text-xl font-black uppercase tracking-tight bg-clip-text text-transparent bg-linear-to-b from-white to-white/60">
                   {content.attribution.split(' · ')[0]}
                 </span>
-                <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
+                <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-xs">
                   <div className="h-1.5 w-1.5 rounded-full bg-majorelle shadow-[0_0_8px_rgba(79,70,229,0.8)]" />
                   <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
                     {content.attribution.split(' · ').slice(1).join(' · ')}
@@ -299,8 +299,8 @@ export function CaseStudyTemplate({ locale, slug, content }: CaseStudyTemplatePr
                 variants={fadeInUp}
                 className={`group relative flex flex-col rounded-[2.5rem] border p-8 transition-all duration-500 overflow-hidden ${
                   card.primary 
-                    ? 'border-majorelle/30 bg-majorelle/[0.03] hover:bg-majorelle/[0.06]' 
-                    : 'border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04]'
+                    ? 'border-majorelle/30 bg-majorelle/3 hover:bg-majorelle/6' 
+                    : 'border-white/5 bg-white/2 hover:border-white/10 hover:bg-white/4'
                 }`}
               >
                 {card.primary && (

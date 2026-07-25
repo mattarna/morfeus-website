@@ -7,7 +7,7 @@ export function WayoutSection() {
   const t = useTranslations("Offerta.way_out");
 
   return (
-    <section id="way-out" className="relative z-[120] py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
+    <section id="way-out" className="relative z-120 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-t border-white/5 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
       <div className="relative z-10 max-w-[1200px] mx-auto">
         <div className="text-center mb-20 md:mb-32">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/5 mb-6">
@@ -60,8 +60,8 @@ export function WayoutSection() {
           </div>
         </div>
 
-        <div className="mt-24 p-10 md:p-16 rounded-[3rem] bg-white/[0.06] border border-white/20 relative overflow-hidden group/exit transition-all duration-700 hover:bg-white/[0.08] hover:border-white/30">
-          <div className="absolute inset-0 bg-gradient-to-br from-forge/5 via-transparent to-transparent opacity-0 group-hover/exit:opacity-100 transition-opacity duration-700" />
+        <div className="mt-24 p-10 md:p-16 rounded-[3rem] bg-white/6 border border-white/20 relative overflow-hidden group/exit transition-all duration-700 hover:bg-white/8 hover:border-white/30">
+          <div className="absolute inset-0 bg-linear-to-br from-forge/5 via-transparent to-transparent opacity-0 group-hover/exit:opacity-100 transition-opacity duration-700" />
           <div className="relative z-10">
             <h4 className="text-xl font-bold text-slate-200 mb-8 uppercase tracking-[0.2em] flex items-center gap-4">
               <div className="relative flex items-center justify-center w-4 h-4">

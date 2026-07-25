@@ -202,11 +202,11 @@ export function CallConfirmedPage({ locale, searchParams, hideForm = false, text
           </motion.div>
           <motion.p variants={fadeInUp} className="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-6">{text.preTitle}</motion.p>
           <motion.h1 variants={fadeInUp} className="max-w-4xl text-[2.5rem] font-black uppercase tracking-[-0.03em] leading-[1.1] md:text-6xl lg:text-7xl">
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/70">
+            <span className="bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/70">
               {headline}
             </span>
           </motion.h1>
-          <motion.div variants={fadeInUp} className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-vista/80 backdrop-blur-sm">
+          <motion.div variants={fadeInUp} className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.2em] text-vista/80 backdrop-blur-xs">
             <Icon icon="solar:calendar-bold" className="h-4 w-4" />
             {slotText}
           </motion.div>
@@ -214,7 +214,7 @@ export function CallConfirmedPage({ locale, searchParams, hideForm = false, text
           {/* VSL - Moved here for Above the Fold visibility */}
           {locale === "it" && (
             <motion.div variants={fadeInUp} className="mt-16 mb-24">
-              <div className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/30 shadow-2xl">
+              <div className="group relative overflow-hidden rounded-4xl border border-white/10 bg-black/30 shadow-2xl">
                 {/* Removed the absolute blur element to prevent purple glow */}
                 {isPlaceholderVideo ? (
                   <div className="flex aspect-video items-center justify-center gap-3 text-slate-300">
@@ -285,7 +285,7 @@ export function CallConfirmedPage({ locale, searchParams, hideForm = false, text
               <motion.article 
                 key={card.step} 
                 variants={fadeInUp}
-                className="group relative rounded-[2rem] border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-10 transition-all duration-500 hover:border-majorelle/30 hover:bg-white/[0.05]"
+                className="group relative rounded-4xl border border-white/5 bg-linear-to-br from-white/3 to-transparent p-10 transition-all duration-500 hover:border-majorelle/30 hover:bg-white/5"
               >
                 <div className="mb-8 flex items-center justify-between">
                   <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-majorelle">{card.step}</span>
@@ -323,9 +323,9 @@ export function CallConfirmedPage({ locale, searchParams, hideForm = false, text
               <motion.div 
                 key={stat} 
                 variants={fadeInUp}
-                className="rounded-2xl border border-white/5 bg-white/[0.02] p-6 text-center"
+                className="rounded-2xl border border-white/5 bg-white/2 p-6 text-center"
               >
-                <span className="text-lg font-bold uppercase tracking-[0.1em] text-vista/70">{stat}</span>
+                <span className="text-lg font-bold uppercase tracking-widest text-vista/70">{stat}</span>
               </motion.div>
             ))}
           </div>

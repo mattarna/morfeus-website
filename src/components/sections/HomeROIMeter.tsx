@@ -204,7 +204,7 @@ export function HomeROIMeter() {
           
           {/* Inputs Section */}
           <div className="xl:col-span-5">
-            <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-5 md:p-6 backdrop-blur-sm flex flex-col h-full">
+            <div className="rounded-4xl border border-white/10 bg-white/3 p-5 md:p-6 backdrop-blur-xs flex flex-col h-full">
               <div className="mb-3">
                 <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white mb-1.5 uppercase leading-[1.1]">
                   {t.rich("headline", {
@@ -225,7 +225,7 @@ export function HomeROIMeter() {
                     className={`px-2.5 py-1.5 rounded-full text-[9px] font-bold transition-all border uppercase tracking-wider ${
                       dep.key === department
                         ? "bg-[#4D39EB] border-[#7d6dff] text-white shadow-[0_0_10px_rgba(77,57,235,0.3)]"
-                        : "bg-white/[0.02] border-white/10 text-slate-400 hover:text-white hover:border-white/20"
+                        : "bg-white/2 border-white/10 text-slate-400 hover:text-white hover:border-white/20"
                     }`}
                   >
                     {t(`departments.${dep.key}`)}
@@ -233,7 +233,7 @@ export function HomeROIMeter() {
                 ))}
               </div>
 
-              <div className="space-y-4 flex-grow flex flex-col justify-center">
+              <div className="space-y-4 grow flex flex-col justify-center">
                 <MetricSlider
                   label={t("inputs.people")}
                   value={people}
@@ -266,11 +266,11 @@ export function HomeROIMeter() {
           </div>
 
           {/* Results Section */}
-          <div className="xl:col-span-7 rounded-[2rem] border border-white/15 bg-gradient-to-br from-[#111118] to-[#07070d] p-5 md:p-6 backdrop-blur-sm shadow-[0_30px_90px_-30px_rgba(77,57,235,0.45)] flex flex-col justify-between">
+          <div className="xl:col-span-7 rounded-4xl border border-white/15 bg-linear-to-br from-[#111118] to-[#07070d] p-5 md:p-6 backdrop-blur-xs shadow-[0_30px_90px_-30px_rgba(77,57,235,0.45)] flex flex-col justify-between">
             
             <div className="space-y-2.5">
               {/* Losing Per Month */}
-              <div className="rounded-xl border border-rose-500/20 bg-rose-500/[0.05] p-3.5 md:p-4">
+              <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-3.5 md:p-4">
                 <p className="text-[8px] uppercase tracking-[0.25em] text-rose-400 font-bold mb-1">{t("results.loss_label")}</p>
                 <p className="text-2xl md:text-3xl font-black tracking-tighter text-rose-100 tabular-nums">
                   {formatCurrency(Math.max(0, displayedLoss))}
@@ -279,7 +279,7 @@ export function HomeROIMeter() {
               </div>
 
               {/* Impact Per Month */}
-              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3.5 md:p-4">
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3.5 md:p-4">
                 <p className="text-[8px] uppercase tracking-[0.25em] text-emerald-400 font-bold mb-1">{t("results.impact_label")}</p>
                 <p className="text-2xl md:text-3xl font-black tracking-tighter text-emerald-100 tabular-nums">
                   {formatCurrency(Math.max(0, displayedImpactMin))} – {formatCurrency(Math.max(0, displayedImpactMax))}
@@ -288,7 +288,7 @@ export function HomeROIMeter() {
               </div>
 
               {/* Annual Impact (MOST PROMINENT) */}
-              <div className="rounded-[2rem] border-2 border-indigo-500/30 bg-indigo-500/[0.1] p-4 md:p-5 relative overflow-hidden group">
+              <div className="rounded-4xl border-2 border-indigo-500/30 bg-indigo-500/10 p-4 md:p-5 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[80px] rounded-full -z-10" />
                 <p className="text-[9px] uppercase tracking-[0.3em] text-indigo-400 font-bold mb-1.5">{t("results.annual_label")}</p>
                 <p className="text-3xl md:text-5xl font-black tracking-tighter text-white tabular-nums drop-shadow-[0_0_20px_rgba(83,61,252,0.5)]">

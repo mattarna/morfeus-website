@@ -79,7 +79,7 @@ export function HomeHeader() {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 w-full z-[100] px-6 py-4 md:px-10 md:py-6 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-100 px-6 py-4 md:px-10 md:py-6 transition-all duration-500 ${
           !isDesktop && isScrolled 
             ? "bg-black/40 backdrop-blur-xl border-b border-white/5 py-3" 
             : "bg-transparent"
@@ -97,7 +97,7 @@ export function HomeHeader() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
               }} 
-              className="relative select-none focus:outline-none focus:ring-0"
+              className="relative select-none focus:outline-hidden focus:ring-0"
             >
               <div className="h-3 md:h-4 w-[100px] md:w-[130px] relative">
                 <Image
@@ -121,7 +121,7 @@ export function HomeHeader() {
                   });
                 }
               }}
-              className="hidden md:flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-[10px] font-semibold uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-all focus:outline-none focus:ring-0"
+              className="hidden md:flex items-center gap-2 py-2 px-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-xs text-[10px] font-semibold uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-all focus:outline-hidden focus:ring-0"
             >
               <span className={locale === 'en' ? 'text-white' : 'text-white/40'}>EN</span>
               <span className="text-white/30 select-none font-thin">|</span>
@@ -136,7 +136,7 @@ export function HomeHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackCta("Book a call", "navbar", "external_link")}
-              className={`group flex items-center gap-2 rounded-full backdrop-blur-md uppercase tracking-widest transition-all focus:outline-none focus:ring-0 ${
+              className={`group flex items-center gap-2 rounded-full backdrop-blur-md uppercase tracking-widest transition-all focus:outline-hidden focus:ring-0 ${
                 isDesktop 
                   ? "bg-white/5 border border-white/10 text-white py-3 px-8 text-xs font-semibold hover:bg-white/10" 
                   : "bg-[#4e39ec] border border-white/10 text-white py-2 px-5 text-[10px] font-bold shadow-[0_0_15px_-5px_rgba(78,57,234,0.4)]"
@@ -153,7 +153,7 @@ export function HomeHeader() {
 
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden flex items-center justify-center px-4 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white transition-all focus:outline-none focus:ring-0"
+              className="md:hidden flex items-center justify-center px-4 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white transition-all focus:outline-hidden focus:ring-0"
             >
               {isMenuOpen ? t("close") : t("menu")}
             </button>
@@ -195,15 +195,15 @@ function MobileMenu({
 
   return (
     <div 
-      className={`fixed inset-0 z-[90] bg-black md:hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`fixed inset-0 z-90 bg-black md:hidden transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
       }`}
     >
       {/* Subtle grid lines */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div className="absolute left-1/4 top-0 bottom-0 w-[1px] bg-white" />
-        <div className="absolute left-2/4 top-0 bottom-0 w-[1px] bg-white" />
-        <div className="absolute left-3/4 top-0 bottom-0 w-[1px] bg-white" />
+        <div className="absolute left-1/4 top-0 bottom-0 w-px bg-white" />
+        <div className="absolute left-2/4 top-0 bottom-0 w-px bg-white" />
+        <div className="absolute left-3/4 top-0 bottom-0 w-px bg-white" />
       </div>
 
       <div className="flex flex-col h-full justify-between pt-20 pb-8 px-6 relative z-10 overflow-y-auto">
@@ -217,7 +217,7 @@ function MobileMenu({
               <button
                 key={point.label}
                 onClick={() => onNavClick(point.index)}
-                className={`group flex items-center gap-3 text-xl font-normal tracking-tight text-left transition-all duration-700 focus:outline-none focus:ring-0 ${
+                className={`group flex items-center gap-3 text-xl font-normal tracking-tight text-left transition-all duration-700 focus:outline-hidden focus:ring-0 ${
                   isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
                 } ${
                   isBook 
@@ -243,13 +243,13 @@ function MobileMenu({
         </div>
         
         {/* Bottom Section */}
-        <div className="flex flex-col gap-4 mt-6 flex-shrink-0">
+        <div className="flex flex-col gap-4 mt-6 shrink-0">
           {/* Language Toggle */}
           <div className="flex items-center gap-3">
             <p className="text-[10px] uppercase tracking-[0.2em] text-slate-600 font-bold">Language</p>
             <a 
               href={`/${otherLocale}`}
-              className="flex items-center gap-2 py-1.5 px-3 rounded-full border border-white/10 bg-white/5 text-[10px] font-semibold uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-all focus:outline-none focus:ring-0"
+              className="flex items-center gap-2 py-1.5 px-3 rounded-full border border-white/10 bg-white/5 text-[10px] font-semibold uppercase tracking-wider cursor-pointer hover:bg-white/10 transition-all focus:outline-hidden focus:ring-0"
             >
               <span className={currentLocale === 'en' ? 'text-white' : 'text-white/40'}>EN</span>
               <span className="text-white/20 select-none font-thin">|</span>

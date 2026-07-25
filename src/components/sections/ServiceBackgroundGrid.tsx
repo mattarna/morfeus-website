@@ -22,7 +22,7 @@ export function ServiceBackgroundGrid() {
           y: [0, -20, 0]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -top-[10%] -left-[5%] w-[50%] h-[50%] rounded-full bg-majorelle/10 blur-[120px]"
+        className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-majorelle/10 blur-[120px]"
       />
       
       <motion.div 
@@ -33,7 +33,7 @@ export function ServiceBackgroundGrid() {
           y: [0, 30, 0]
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute top-[30%] -right-[10%] w-[40%] h-[40%] rounded-full bg-midnight-blue/20 blur-[150px]"
+        className="absolute top-[30%] right-[-10%] w-[40%] h-[40%] rounded-full bg-midnight-blue/20 blur-[150px]"
       />
 
       <motion.div 
@@ -43,7 +43,7 @@ export function ServiceBackgroundGrid() {
           y: [0, 20, 0]
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute -bottom-[10%] left-[10%] w-[60%] h-[60%] rounded-full bg-persian-blue/10 blur-[150px]"
+        className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] rounded-full bg-persian-blue/10 blur-[150px]"
       />
 
       <div className="absolute inset-0 flex justify-between px-[10%]">

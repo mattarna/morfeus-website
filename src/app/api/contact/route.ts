@@ -98,7 +98,7 @@ Language: ${data.locale?.toUpperCase()}
               <p style="font-size: 16px; line-height: 1.8; color: #d1d1d1; margin-bottom: 30px;">
                 ${isIt 
                   ? "In Morfeus, crediamo che l'intelligenza artificiale non sia solo uno strumento, ma un moltiplicatore di potenziale umano. Il nostro team sta già analizzando i dettagli della tua sfida per delineare il percorso più efficace verso i tuoi obiettivi."
-                  : "At Morfeus, we believe AI is not just a tool, but a multiplier of human potential. Our team is already analyzing your challenge details to outline the most effective path toward your goals."}
+                  : "At Morfeus, we believe AI is not just a tool, but a multiplier of human potential. Our team is already analyzing your challenge details to outline-solid the most effective path toward your goals."}
               </p>
 
               <!-- Next Steps Box -->

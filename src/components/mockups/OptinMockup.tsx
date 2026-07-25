@@ -128,7 +128,7 @@ export function OptinMockup({
           >
             {MOCKUP_COPY.headline}{" "}
             <span
-              className={`inline-block px-1.5 py-0.5 rounded ${t.highlightBg} ${t.highlightText} font-semibold`}
+              className={`inline-block px-1.5 py-0.5 rounded-sm ${t.highlightBg} ${t.highlightText} font-semibold`}
             >
               {MOCKUP_COPY.headlineHighlight}
             </span>
@@ -143,7 +143,7 @@ export function OptinMockup({
         {/* VSL */}
         <section className="w-full">
           <div
-            className={`relative overflow-hidden rounded-xl ${variant === "infobiz" ? "shadow-[0_8px_32px_rgba(0,0,0,0.3)]" : "border border-white/[0.08] shadow-xl"}`}
+            className={`relative overflow-hidden rounded-xl ${variant === "infobiz" ? "shadow-[0_8px_32px_rgba(0,0,0,0.3)]" : "border border-white/8 shadow-xl"}`}
           >
             <div className="relative aspect-video w-full bg-black/40 flex items-center justify-center group">
               {hasVideo && isPlaying ? (
@@ -179,7 +179,7 @@ export function OptinMockup({
                   ) : (
                     <>
                       <div
-                        className={`absolute inset-0 ${variant === "infobiz" ? "bg-gray-800/60" : "bg-white/[0.03]"}`}
+                        className={`absolute inset-0 ${variant === "infobiz" ? "bg-gray-800/60" : "bg-white/3"}`}
                       />
                       <div className="relative z-10 flex flex-col items-center gap-3">
                         <div
@@ -272,7 +272,7 @@ export function OptinMockup({
             {MOCKUP_COPY.benefits.map((item, i) => (
               <li
                 key={i}
-                className={`flex gap-3 rounded-xl p-4 ${variant === "infobiz" ? "bg-gray-50" : "border border-white/[0.06]"} ${t.cardTextColor}`}
+                className={`flex gap-3 rounded-xl p-4 ${variant === "infobiz" ? "bg-gray-50" : "border border-white/6"} ${t.cardTextColor}`}
               >
                 <span
                   className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${t.highlightText} ${variant === "infobiz" ? "bg-amber-100" : "bg-amber-500/20"}`}
@@ -341,7 +341,7 @@ export function OptinMockup({
                 id="mockup-name"
                 type="text"
                 placeholder="Il tuo nome"
-                className={`w-full rounded-xl px-4 py-3 text-sm ${t.inputBg} ${t.inputBorder} ${t.inputFocusBorder} ${t.cardTextColor} placeholder-zinc-500 focus:outline-none transition-colors`}
+                className={`w-full rounded-xl px-4 py-3 text-sm ${t.inputBg} ${t.inputBorder} ${t.inputFocusBorder} ${t.cardTextColor} placeholder-zinc-500 focus:outline-hidden transition-colors`}
               />
             </div>
             <div>
@@ -356,7 +356,7 @@ export function OptinMockup({
                 type="email"
                 placeholder="tua@email.com"
                 required
-                className={`w-full rounded-xl px-4 py-3 text-sm ${t.inputBg} ${t.inputBorder} ${t.inputFocusBorder} ${t.cardTextColor} placeholder-zinc-500 focus:outline-none transition-colors`}
+                className={`w-full rounded-xl px-4 py-3 text-sm ${t.inputBg} ${t.inputBorder} ${t.inputFocusBorder} ${t.cardTextColor} placeholder-zinc-500 focus:outline-hidden transition-colors`}
               />
             </div>
             <button

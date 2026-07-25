@@ -53,7 +53,7 @@ export function TimelineNav() {
     <>
       <nav
         aria-label="Section navigation"
-        className={`fixed inset-y-0 left-6 2xl:left-12 z-[100] hidden 2xl:flex items-center pointer-events-none transition-all duration-700 ${
+        className={`fixed inset-y-0 left-6 2xl:left-12 z-100 hidden 2xl:flex items-center pointer-events-none transition-all duration-700 ${
           shouldHide ? "opacity-0 -translate-x-10" : "opacity-100 translate-x-0"
         }`}
       >
@@ -78,7 +78,7 @@ export function TimelineNav() {
                     }`}
                   />
                   <span
-                    className={`absolute inset-0 bg-white/40 rounded-full blur-sm transition-transform duration-500 ${
+                    className={`absolute inset-0 bg-white/40 rounded-full blur-xs transition-transform duration-500 ${
                       active ? "scale-150" : "scale-0"
                     }`}
                   />
@@ -95,7 +95,7 @@ export function TimelineNav() {
 
       <nav
         aria-label="Compact section navigation"
-        className={`fixed right-3 lg:right-5 top-1/2 z-[100] hidden md:flex 2xl:hidden -translate-y-1/2 pointer-events-none transition-all duration-700 ${
+        className={`fixed right-3 lg:right-5 top-1/2 z-100 hidden md:flex 2xl:hidden -translate-y-1/2 pointer-events-none transition-all duration-700 ${
           shouldHide ? "opacity-0 translate-x-8" : "opacity-100 translate-x-0"
         }`}
       >
@@ -109,7 +109,7 @@ export function TimelineNav() {
                 onClick={() => handleNavClick(point)}
                 aria-label={t(point.label)}
                 aria-current={active ? "step" : undefined}
-                className="group relative flex h-7 w-7 items-center justify-center rounded-full outline-none"
+                className="group relative flex h-7 w-7 items-center justify-center rounded-full outline-hidden"
               >
                 <span
                   className={`block rounded-full transition-all duration-300 ${
@@ -131,7 +131,7 @@ export function TimelineNav() {
       </nav>
 
       <div
-        className={`fixed bottom-4 left-4 right-4 z-[100] md:hidden transition-all duration-500 ${
+        className={`fixed bottom-4 left-4 right-4 z-100 md:hidden transition-all duration-500 ${
           shouldHide ? "opacity-0 translate-y-6 pointer-events-none" : "opacity-100 translate-y-0"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
@@ -160,14 +160,14 @@ export function TimelineNav() {
       </div>
 
       <div
-        className={`fixed inset-0 z-[120] md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-120 md:hidden transition-all duration-300 ${
           isMobileSwitcherOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden={!isMobileSwitcherOpen}
       >
         <button
           type="button"
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/70 backdrop-blur-xs"
           onClick={() => setIsMobileSwitcherOpen(false)}
           aria-label="Close section navigation"
         />
@@ -204,8 +204,8 @@ export function TimelineNav() {
                   onClick={() => handleNavClick(point)}
                   className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-left transition-colors ${
                     active
-                      ? "border-white/25 bg-white/[0.08] text-white"
-                      : "border-white/8 bg-white/[0.02] text-slate-400"
+                      ? "border-white/25 bg-white/8 text-white"
+                      : "border-white/8 bg-white/2 text-slate-400"
                   }`}
                 >
                   <span className="flex min-w-0 items-center gap-3">

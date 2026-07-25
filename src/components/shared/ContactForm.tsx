@@ -385,7 +385,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm transition-opacity duration-500 ${
+        className={`fixed inset-0 z-200 bg-black/80 backdrop-blur-xs transition-opacity duration-500 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
@@ -393,7 +393,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
 
       {/* Sidebar Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[550px] lg:w-[600px] xl:w-[650px] z-[999] bg-[#0a0a12] border-l border-white/20 shadow-2xl transition-transform duration-500 ease-out ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[550px] lg:w-[600px] xl:w-[650px] z-999 bg-[#0a0a12] border-l border-white/20 shadow-2xl transition-transform duration-500 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -416,7 +416,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
         {/* Content */}
         <div className="relative h-full flex flex-col">
           {/* Header */}
-          <div className="flex-shrink-0 px-8 pt-8 pb-6 border-b border-white/5">
+          <div className="shrink-0 px-8 pt-8 pb-6 border-b border-white/5">
             {/* Close Button - SVG for 100% visibility */}
             <button
               onClick={onClose}
@@ -466,7 +466,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
                     className="flex-1 h-1.5 rounded-full overflow-hidden bg-white/10"
                   >
                     <div
-                      className={`h-full bg-gradient-to-r from-[#4D39EB] to-[#8B7CF7] transition-all duration-700 ease-out ${
+                      className={`h-full bg-linear-to-r from-[#4D39EB] to-[#8B7CF7] transition-all duration-700 ease-out ${
                         step < currentStep 
                           ? "w-full" 
                           : step === currentStep 
@@ -526,7 +526,7 @@ export function ContactForm({ isOpen, onClose, locale }: ContactFormProps) {
 
           {/* Footer - Actions */}
           {!isSuccess && (
-            <div className="flex-shrink-0 px-8 py-6 border-t border-white/5 bg-[#0a0a12]/80 backdrop-blur-sm">
+            <div className="shrink-0 px-8 py-6 border-t border-white/5 bg-[#0a0a12]/80 backdrop-blur-xs">
               <div className="flex gap-4">
                 {currentStep > 1 && (
                   <button
@@ -602,7 +602,7 @@ function Step1({
           onChange={(e) => updateField("fullName", e.target.value)}
           className={`w-full h-12 px-4 rounded-xl bg-white/5 border ${
             errors.fullName ? "border-red-500/50" : "border-white/10"
-          } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
+          } text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
           placeholder="John Doe"
         />
       </div>
@@ -617,7 +617,7 @@ function Step1({
           onChange={(e) => updateField("email", e.target.value)}
           className={`w-full h-12 px-4 rounded-xl bg-white/5 border ${
             errors.email ? "border-red-500/50" : "border-white/10"
-          } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
+          } text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
           placeholder="john@company.com"
         />
       </div>
@@ -628,7 +628,7 @@ function Step1({
           {t.phone} *
         </label>
         <div className="flex gap-2">
-          <div className="relative w-[120px] flex-shrink-0">
+          <div className="relative w-[120px] shrink-0">
             <select
               value={`${formData.phonePrefix}|${formData.phoneCountry}`}
               onChange={(e) => {
@@ -636,7 +636,7 @@ function Step1({
                 updateField("phonePrefix", prefix);
                 updateField("phoneCountry", country);
               }}
-              className="w-full h-12 px-3 pl-10 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
+              className="w-full h-12 px-3 pl-10 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer text-sm"
             >
               {COUNTRY_CODES.map((cc) => (
                 <option key={`${cc.code}-${cc.country}`} value={`${cc.code}|${cc.country}`} className="bg-[#0a0a12]">
@@ -650,7 +650,7 @@ function Step1({
                 src={`https://flagcdn.com/w20/${formData.phoneCountry.toLowerCase()}.png`}
                 alt=""
                 fill
-                className="object-contain rounded-sm"
+                className="object-contain rounded-xs"
                 unoptimized
               />
             </div>
@@ -666,7 +666,7 @@ function Step1({
             onChange={(e) => updateField("phone", e.target.value.replace(/[^0-9]/g, ''))}
             className={`flex-1 h-12 px-4 rounded-xl bg-white/5 border ${
               errors.phone ? "border-red-500/50" : "border-white/10"
-            } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
+            } text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
             placeholder={t.phonePlaceholder}
           />
         </div>
@@ -682,7 +682,7 @@ function Step1({
           onChange={(e) => updateField("company", e.target.value)}
           className={`w-full h-12 px-4 rounded-xl bg-white/5 border ${
             errors.company ? "border-red-500/50" : "border-white/10"
-          } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
+          } text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all`}
           placeholder="Acme Inc."
         />
       </div>
@@ -697,7 +697,7 @@ function Step1({
             onChange={(e) => updateField("role", e.target.value)}
             className={`w-full h-12 px-4 rounded-xl bg-white/5 border ${
               errors.role ? "border-red-500/50" : "border-white/10"
-            } text-white focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer`}
+            } text-white focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all appearance-none cursor-pointer`}
           >
             <option value="" className="bg-[#0a0a12]">
               {t.selectRole}
@@ -856,7 +856,7 @@ function Step3({
           rows={4}
           className={`w-full p-4 rounded-xl bg-white/5 border ${
             errors.challenge ? "border-red-500/50" : "border-white/10"
-          } text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all resize-none`}
+          } text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all resize-none`}
           placeholder={t.challengePlaceholder}
         />
         <div className="flex justify-between items-center mt-2">
@@ -924,7 +924,7 @@ function Step3({
           value={formData.notes}
           onChange={(e) => updateField("notes", e.target.value)}
           rows={3}
-          className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all resize-none"
+          className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-hidden focus:border-[#4D39EB]/50 focus:bg-white/[0.07] transition-all resize-none"
           placeholder={t.notesPlaceholder}
         />
       </div>

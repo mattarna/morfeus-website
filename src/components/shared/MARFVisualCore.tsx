@@ -38,7 +38,7 @@ export function MARFVisualCore() {
   return (
     <div 
       id="marf-core-container"
-      className="relative w-full aspect-video md:aspect-[21/9] flex items-center justify-center overflow-hidden rounded-[2.5rem] bg-[#030508]/40 border border-white/5 backdrop-blur-sm group/core perspective-[1000px]"
+      className="relative w-full aspect-video md:aspect-21/9 flex items-center justify-center overflow-hidden rounded-[2.5rem] bg-[#030508]/40 border border-white/5 backdrop-blur-xs group/core perspective-[1000px]"
     >
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(77,57,235,0.1),transparent_70%)] opacity-50 group-hover/core:opacity-100 transition-opacity duration-1000" />
@@ -129,13 +129,13 @@ export function MARFVisualCore() {
             className="relative w-28 h-28 md:w-36 md:h-36 flex items-center justify-center cursor-pointer"
             whileHover={{ scale: 1.1 }}
           >
-            <div className="absolute inset-0 bg-white/[0.03] rotate-90 clip-hex backdrop-blur-xl border border-white/10" />
+            <div className="absolute inset-0 bg-white/3 rotate-90 clip-hex backdrop-blur-xl border border-white/10" />
             <motion.div 
               className="absolute inset-3 md:inset-5 bg-majorelle/20 rotate-90 clip-hex border border-majorelle/40 shadow-[inset_0_0_20px_rgba(77,57,235,0.2)]"
               animate={{ opacity: [0.4, 0.8, 0.4], scale: [0.98, 1.02, 0.98] }}
               transition={{ duration: 3, repeat: Infinity }}
             />
-            <div className="relative z-20 w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-majorelle via-majorelle to-vista rounded-xl flex items-center justify-center shadow-[0_0_40px_rgba(77,57,235,0.5)] rotate-45 border border-white/20">
+            <div className="relative z-20 w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-majorelle via-majorelle to-vista rounded-xl flex items-center justify-center shadow-[0_0_40px_rgba(77,57,235,0.5)] rotate-45 border border-white/20">
               <Icon icon="solar:cpu-bolt-bold" className="w-6 h-6 md:w-8 md:h-8 text-white -rotate-45" />
             </div>
 

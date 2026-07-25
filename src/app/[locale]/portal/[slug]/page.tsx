@@ -112,7 +112,7 @@ END:VCARD`;
         {/* Architectural Grid Lines */}
         <div className="absolute inset-0 flex justify-around opacity-10">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="w-px h-full bg-gradient-to-b from-transparent via-slate-500 to-transparent" />
+            <div key={i} className="w-px h-full bg-linear-to-b from-transparent via-slate-500 to-transparent" />
           ))}
         </div>
       </div>
@@ -151,9 +151,9 @@ END:VCARD`;
         {/* SECTION 1: DIRECT CONTACT */}
         <div className="w-full mb-12 animate-fadeIn" style={{ animationDelay: "400ms" }}>
           <div className="flex items-center gap-3 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-slate-800" />
+            <div className="h-px flex-1 bg-linear-to-r from-transparent to-slate-800" />
             <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Contatto Diretto</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-800" />
+            <div className="h-px flex-1 bg-linear-to-l from-transparent to-slate-800" />
           </div>
 
           <div className="grid grid-cols-4 gap-4 mb-8">
@@ -190,7 +190,7 @@ END:VCARD`;
           {/* HERO ACTION: SAVE CONTACT */}
           <button 
             onClick={generateVCard}
-            className="w-full py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-700 text-white font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
+            className="w-full py-5 rounded-2xl bg-linear-to-r from-indigo-600 to-blue-700 text-white font-black uppercase tracking-widest text-sm flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
           >
             <Icon icon="solar:user-plus-bold" className="w-5 h-5" />
             {t("save_contact")}
@@ -200,9 +200,9 @@ END:VCARD`;
         {/* SECTION 2: MORFEUS ECOSYSTEM */}
         <div className="w-full mb-12 animate-fadeIn" style={{ animationDelay: "600ms" }}>
           <div className="flex items-center gap-3 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-slate-800" />
+            <div className="h-px flex-1 bg-linear-to-r from-transparent to-slate-800" />
             <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Morfeus Ecosystem</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-800" />
+            <div className="h-px flex-1 bg-linear-to-l from-transparent to-slate-800" />
           </div>
 
           <div className="space-y-4">
@@ -214,7 +214,7 @@ END:VCARD`;
                 rel="noopener noreferrer"
                 className="group relative block w-full active:scale-[0.98] transition-all"
               >
-                <div className="relative flex items-center gap-4 px-6 py-5 rounded-xl bg-white/[0.03] border border-white/5 backdrop-blur-sm overflow-hidden group-hover:bg-white/[0.06] transition-colors">
+                <div className="relative flex items-center gap-4 px-6 py-5 rounded-xl bg-white/3 border border-white/5 backdrop-blur-xs overflow-hidden group-hover:bg-white/6 transition-colors">
                   <Icon icon={link.icon} className="w-6 h-6 text-slate-400 group-hover:text-indigo-400 transition-colors" />
                   <span className="flex-1 text-base font-medium text-slate-300 group-hover:text-white transition-colors">
                     {t(`links.${link.key}`)}
@@ -253,9 +253,9 @@ END:VCARD`;
 
       {/* QR MODAL */}
       {showQR && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6">
+        <div className="fixed inset-0 z-1000 flex items-center justify-center px-6">
           <div className="absolute inset-0 bg-[#030508]/80 backdrop-blur-xl transition-all" onClick={() => setShowQR(false)} />
-          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-[2rem] p-8 flex flex-col items-center animate-modalIn">
+          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-4xl p-8 flex flex-col items-center animate-modalIn">
             <div className="mb-6 text-center">
               <h3 className="text-xl font-black uppercase tracking-tight mb-2">Il tuo QR Code</h3>
               <p className="text-slate-400 text-[10px] font-mono uppercase tracking-widest">Scansiona per accedere al profilo</p>
@@ -270,7 +270,7 @@ END:VCARD`;
                 unoptimized
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-sm relative">
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-xs relative">
                    <Image src="/favicon.ico" alt="M" fill className="object-contain p-1" />
                 </div>
               </div>
@@ -288,7 +288,7 @@ END:VCARD`;
 
       {/* TOAST NOTIFICATION */}
       {showToast && (
-        <div className="fixed bottom-10 left-0 right-0 z-[1000] flex justify-center px-6 pointer-events-none">
+        <div className="fixed bottom-10 left-0 right-0 z-1000 flex justify-center px-6 pointer-events-none">
           <div className="px-6 py-3 rounded-full bg-indigo-600 text-white text-[10px] font-mono uppercase tracking-widest shadow-2xl border border-white/20 animate-modalIn">
             [ SISTEMA: LINK COPIATO ]
           </div>

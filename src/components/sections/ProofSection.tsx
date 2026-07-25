@@ -12,13 +12,13 @@ export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
   const closing = t("proof.closing").trim();
 
   return (
-    <section id="proof" className="relative z-20 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
+    <section id="proof" className="relative z-20 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/5 overflow-visible">
       <GridPattern />
       <div className="max-w-[1200px] mx-auto">
         
         {/* Section Title */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-center mb-16 md:mb-20">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-300">
+          <span className="bg-clip-text text-transparent bg-linear-to-r from-white to-slate-300">
             {t("proof.title")}
           </span>
         </h2>
@@ -29,7 +29,7 @@ export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
           {/* Block 1 */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="mb-4">
-              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-400">
+              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-linear-to-b from-white via-slate-200 to-slate-400">
                 {t("proof.blocks.1.number")}
               </span>
             </div>
@@ -44,7 +44,7 @@ export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
           {/* Block 2 */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="mb-4">
-              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-400">
+              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-linear-to-b from-white via-slate-200 to-slate-400">
                 {t("proof.blocks.2.number")}
               </span>
             </div>
@@ -59,7 +59,7 @@ export function ProofSection({ namespace = "Offerta" }: ProofSectionProps) {
           {/* Block 3 */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="mb-4">
-              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-400">
+              <span className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] bg-clip-text text-transparent bg-linear-to-b from-white via-slate-200 to-slate-400">
                 {t("proof.blocks.3.number")}
               </span>
             </div>

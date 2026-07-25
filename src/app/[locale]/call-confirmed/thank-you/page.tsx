@@ -51,7 +51,7 @@ export default function CallConfirmedThankYouPage({ params: { locale }, searchPa
   return (
     <main className="min-h-screen bg-[#050508] px-6 py-20 text-white">
       <div className="mx-auto max-w-5xl space-y-10">
-        <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-10 md:p-14">
+        <section className="rounded-3xl border border-white/10 bg-white/4 p-10 md:p-14">
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">
             {isIt ? "Prenotazione confermata" : "Booking confirmed"}
           </p>
@@ -66,7 +66,7 @@ export default function CallConfirmedThankYouPage({ params: { locale }, searchPa
           </p>
         </section>
 
-        <section className="rounded-3xl border border-white/10 bg-white/[0.02] p-10 md:p-12">
+        <section className="rounded-3xl border border-white/10 bg-white/2 p-10 md:p-12">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-vista/80">
             {isIt ? "Case study consigliati" : "Recommended case studies"}
           </p>
@@ -78,7 +78,7 @@ export default function CallConfirmedThankYouPage({ params: { locale }, searchPa
               <Link
                 key={item.slug}
                 href={`/case-study/${item.slug}`}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm font-bold uppercase tracking-wide transition hover:border-majorelle/40 hover:bg-white/[0.07]"
+                className="rounded-2xl border border-white/10 bg-white/4 px-5 py-4 text-sm font-bold uppercase tracking-wide transition hover:border-majorelle/40 hover:bg-white/[0.07]"
               >
                 {item.label}
               </Link>

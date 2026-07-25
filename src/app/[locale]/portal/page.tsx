@@ -32,7 +32,7 @@ export default function GeneralPortalPage() {
         {/* Architectural Grid Lines */}
         <div className="absolute inset-0 flex justify-around opacity-10">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="w-px h-full bg-gradient-to-b from-transparent via-slate-500 to-transparent" />
+            <div key={i} className="w-px h-full bg-linear-to-b from-transparent via-slate-500 to-transparent" />
           ))}
         </div>
       </div>
@@ -63,9 +63,9 @@ export default function GeneralPortalPage() {
 
         {/* SEPARATOR */}
         <div className="w-full flex items-center gap-4 mb-12 opacity-20">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white" />
+          <div className="h-px flex-1 bg-linear-to-r from-transparent to-white" />
           <Icon icon="solar:planet-linear" className="w-4 h-4 text-white" />
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white" />
+          <div className="h-px flex-1 bg-linear-to-l from-transparent to-white" />
         </div>
 
         {/* LINKS LIST */}
@@ -82,9 +82,9 @@ export default function GeneralPortalPage() {
                 opacity: 0 
               }}
             >
-              <div className={`absolute -inset-[1px] rounded-xl bg-gradient-to-r ${link.color} opacity-20 blur-sm group-hover:opacity-100 transition-opacity duration-500`} />
+              <div className={`absolute -inset-px rounded-xl bg-linear-to-r ${link.color} opacity-20 blur-xs group-hover:opacity-100 transition-opacity duration-500`} />
               <div className="relative flex items-center gap-5 px-6 py-5 rounded-xl bg-[#0a0c10]/80 border border-white/5 backdrop-blur-md overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-r ${link.color} translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 opacity-10`} />
+                <div className={`absolute inset-0 bg-linear-to-r ${link.color} -translate-x-full group-hover:translate-x-0 transition-transform duration-500 opacity-10`} />
                 <Icon 
                   icon={link.icon} 
                   className="w-7 h-7 text-slate-300 group-hover:text-white transition-colors duration-300 relative z-10" 
@@ -119,9 +119,9 @@ export default function GeneralPortalPage() {
 
       {/* QR MODAL */}
       {showQR && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6">
+        <div className="fixed inset-0 z-1000 flex items-center justify-center px-6">
           <div className="absolute inset-0 bg-[#030508]/80 backdrop-blur-xl transition-all" onClick={() => setShowQR(false)} />
-          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-[2rem] p-8 flex flex-col items-center animate-modalIn">
+          <div className="relative w-full max-w-sm bg-[#0a0c10] border border-white/10 rounded-4xl p-8 flex flex-col items-center animate-modalIn">
             <div className="mb-6 text-center">
               <h3 className="text-xl font-black uppercase tracking-tight mb-2">Portal QR Code</h3>
               <p className="text-slate-400 text-[10px] font-mono uppercase tracking-widest">Scansiona per esplorare Morfeus</p>
@@ -136,7 +136,7 @@ export default function GeneralPortalPage() {
                 unoptimized
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-sm relative">
+                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 border border-slate-100 shadow-xs relative">
                    <Image src="/favicon.ico" alt="M" fill className="object-contain p-1" />
                 </div>
               </div>

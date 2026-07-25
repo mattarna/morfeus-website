@@ -71,7 +71,7 @@ export function ServiceTimelineNav({ sectionIds = DEFAULT_SECTION_IDS, namespace
   };
 
   return (
-    <nav className="fixed left-4 md:left-6 xl:left-4 top-1/2 -translate-y-1/2 z-[200] hidden xl:flex flex-col gap-4">
+    <nav className="fixed left-4 md:left-6 xl:left-4 top-1/2 -translate-y-1/2 z-200 hidden xl:flex flex-col gap-4">
       {sectionIds.map((id) => {
         const isActive = activeSection === id;
         const isHovered = hoveredSection === id;

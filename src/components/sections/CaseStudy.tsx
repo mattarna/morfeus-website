@@ -138,7 +138,7 @@ export function CaseStudy() {
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-black/70 z-10" />
-                {cs.featured && <div className="absolute inset-0 bg-gradient-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
+                {cs.featured && <div className="absolute inset-0 bg-linear-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
                 <Image
                   src={cs.image}
                   alt={cs.name}
@@ -151,12 +151,12 @@ export function CaseStudy() {
               <div className="relative z-20 p-6 sm:p-8 flex flex-col gap-4">
                 {/* Metric */}
                 <h2 className="text-3xl sm:text-4xl font-medium tracking-tighter leading-none">
-                  <span className={`text-transparent bg-clip-text bg-gradient-to-r ${
+                  <span className={`text-transparent bg-clip-text bg-linear-to-r ${
                     cs.featured ? "from-[#8B7BFF] to-[#4D39EB]" : "from-[#4D39EB] to-[#4D39EB]/60"
                   }`}>
                     {cs.metric}
                   </span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/80 to-white/20 ml-2">
+                  <span className="text-transparent bg-clip-text bg-linear-to-r from-white/80 to-white/20 ml-2">
                     {cs.metricLabel}
                   </span>
                 </h2>
@@ -176,7 +176,7 @@ export function CaseStudy() {
                   {cs.tags.map((tag) => (
                     <div
                       key={tag}
-                      className="px-4 py-1.5 rounded-full bg-[#4D39EB]/15 border border-[#4D39EB]/30 backdrop-blur-sm"
+                      className="px-4 py-1.5 rounded-full bg-[#4D39EB]/15 border border-[#4D39EB]/30 backdrop-blur-xs"
                     >
                       <span className="text-xs font-medium text-white/90">{tag}</span>
                     </div>
@@ -204,7 +204,7 @@ export function CaseStudy() {
           >
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/70 z-10" />
-            {cs.featured && <div className="absolute inset-0 bg-gradient-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
+            {cs.featured && <div className="absolute inset-0 bg-linear-to-br from-[#8B7BFF]/20 via-transparent to-[#4D39EB]/10 z-10" />}
             {/* Image */}
             <Image
               src={cs.image}
@@ -229,14 +229,14 @@ export function CaseStudy() {
         <div className="flex flex-col justify-center">
           <div 
             className={`transition-all duration-500 ease-out ${
-              isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
+              isTransitioning ? "opacity-0 translate-y-4 blur-xs" : "opacity-100 translate-y-0 blur-0"
             }`}
           >
             <h2 className="text-5xl xl:text-6xl 2xl:text-8xl short:!text-5xl font-medium tracking-tighter leading-none">
-              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${metricGradient}`}>
+              <span className={`text-transparent bg-clip-text bg-linear-to-r ${metricGradient}`}>
                 {currentData.metric}
               </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/80 to-white/20 ml-4">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white/80 to-white/20 ml-4">
                 {currentData.metricLabel}
               </span>
             </h2>
@@ -259,7 +259,7 @@ export function CaseStudy() {
                   key={cs.id}
                   onClick={() => handleCaseClick(index)}
                   onMouseEnter={() => handleCaseHover(index)}
-                  className="group flex items-center gap-4 xl:gap-5 2xl:gap-6 text-left transition-all duration-300 outline-none select-none focus:outline-none focus:ring-0 focus:border-none active:outline-none"
+                  className="group flex items-center gap-4 xl:gap-5 2xl:gap-6 text-left transition-all duration-300 outline-hidden select-none focus:outline-hidden focus:ring-0 focus:border-none active:outline-hidden"
                 >
                   {/* Number */}
                   <span 
@@ -295,7 +295,7 @@ export function CaseStudy() {
           {/* Description & Tags */}
           <div 
             className={`flex flex-col gap-5 xl:gap-6 2xl:gap-8 max-w-xl transition-all duration-500 ease-out ${
-              isTransitioning ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"
+              isTransitioning ? "opacity-0 translate-y-4 blur-xs" : "opacity-100 translate-y-0 blur-0"
             }`}
           >
             {/* Description */}
@@ -308,7 +308,7 @@ export function CaseStudy() {
               {currentData.tags.map((tag, tagIndex) => (
                 <div
                   key={tag}
-                  className={`px-4 2xl:px-6 py-2 2xl:py-2.5 rounded-full backdrop-blur-sm transition-all duration-300 ${
+                  className={`px-4 2xl:px-6 py-2 2xl:py-2.5 rounded-full backdrop-blur-xs transition-all duration-300 ${
                     currentData.featured
                       ? "bg-[#8B7BFF]/15 border border-[#8B7BFF]/35 hover:bg-[#8B7BFF]/25 hover:border-[#8B7BFF]/55"
                       : "bg-[#4D39EB]/15 border border-[#4D39EB]/30 hover:bg-[#4D39EB]/25 hover:border-[#4D39EB]/50"
@@ -328,7 +328,7 @@ export function CaseStudy() {
       </div>
 
       {/* Subtle gradient overlay at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-black to-transparent z-10 pointer-events-none" />
     </section>
   );
 }

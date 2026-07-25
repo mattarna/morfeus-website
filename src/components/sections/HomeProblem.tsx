@@ -99,12 +99,12 @@ export function HomeProblem() {
               {cards.map((card, index) => (
                 <div 
                   key={card.key}
-                  className={`group flex items-start gap-4 2xl:gap-5 p-4 2xl:p-5 rounded-2xl bg-white/[0.06] border border-white/10 transition-all duration-700 hover:bg-white/[0.1] hover:border-white/20 ${
+                  className={`group flex items-start gap-4 2xl:gap-5 p-4 2xl:p-5 rounded-2xl bg-white/6 border border-white/10 transition-all duration-700 hover:bg-white/10 hover:border-white/20 ${
                     isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                   }`}
                   style={{ transitionDelay: `${300 + index * 50}ms` }}
                 >
-                  <div className={`p-2 rounded-xl bg-white/10 border border-white/20 flex-shrink-0 mt-1 ${card.color}`}>
+                  <div className={`p-2 rounded-xl bg-white/10 border border-white/20 shrink-0 mt-1 ${card.color}`}>
                     <Icon icon={card.icon} width={20} />
                   </div>
                   <div className="flex flex-col gap-1">
@@ -127,7 +127,7 @@ export function HomeProblem() {
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
               }`}
             >
-              <div className="relative p-6 md:p-8 2xl:p-10 short:!p-6 rounded-[28px] 2xl:rounded-[32px] bg-gradient-to-br from-[#121212] to-[#080808] border border-white/20 shadow-2xl overflow-hidden min-h-[420px] md:min-h-[460px] xl:min-h-[500px] short:!min-h-0 flex flex-col">
+              <div className="relative p-6 md:p-8 2xl:p-10 short:!p-6 rounded-[28px] 2xl:rounded-[32px] bg-linear-to-br from-[#121212] to-[#080808] border border-white/20 shadow-2xl overflow-hidden min-h-[420px] md:min-h-[460px] xl:min-h-[500px] short:!min-h-0 flex flex-col">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none" />
                 
                 <div className="flex justify-between items-start mb-10 short:!mb-6">
@@ -157,7 +157,7 @@ export function HomeProblem() {
                       </div>
                       <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
                         <div 
-                          className={`h-full ${item.color} opacity-70 transition-all duration-[1500ms] ease-out delay-[1000ms]`}
+                          className={`h-full ${item.color} opacity-70 transition-all duration-1500 ease-out delay-1000`}
                           style={{ width: isVisible ? `${item.value}%` : '0%' }}
                         />
                       </div>

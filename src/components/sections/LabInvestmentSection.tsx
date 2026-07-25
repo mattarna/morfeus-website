@@ -21,7 +21,7 @@ export function LabInvestmentSection({
   return (
     <section
       id="investment"
-      className="relative z-[85] py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible"
+      className="relative z-85 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/5 overflow-visible"
     >
       <GridPattern />
 
@@ -42,7 +42,7 @@ export function LabInvestmentSection({
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto rounded-[2.5rem] p-8 md:p-12 bg-gradient-to-br from-white/[0.03] to-transparent border border-white/[0.08] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.45)]">
+        <div className="max-w-4xl mx-auto rounded-[2.5rem] p-8 md:p-12 bg-linear-to-br from-white/3 to-transparent border border-white/8 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.45)]">
           <div className="text-center mb-10 md:mb-12">
             <p className="text-4xl md:text-6xl font-black tracking-[-0.03em] text-white">
               {t("card.price")}
@@ -68,7 +68,7 @@ export function LabInvestmentSection({
               onClick={scrollToContact}
               className="on-page-cta group relative px-12 py-5 rounded-full font-black text-[13px] uppercase tracking-[0.2em] transition-all duration-500 overflow-hidden shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)] active:scale-95"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+              <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-blue-800" />
               <div className="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity" />
               <span className="relative z-10 flex items-center gap-3 text-white">
                 {t("card.cta")}

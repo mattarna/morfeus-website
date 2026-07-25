@@ -14,7 +14,7 @@ export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }:
   const t = useTranslations(namespace);
 
   return (
-    <section id="filter" className="relative z-[90] py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
+    <section id="filter" className="relative z-90 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/5 overflow-visible">
       <GridPattern />
       
       <div className="relative z-10 max-w-[1200px] mx-auto">
@@ -30,9 +30,9 @@ export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }:
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
           {/* Column A — È PER TE SE (Green) */}
-          <div className="relative p-10 md:p-14 rounded-[2.5rem] bg-[#0A0C10] border border-white/[0.05] flex flex-col h-full overflow-hidden transition-all duration-500">
+          <div className="relative p-10 md:p-14 rounded-[2.5rem] bg-[#0A0C10] border border-white/5 flex flex-col h-full overflow-hidden transition-all duration-500">
             {/* Top Highlight Bar */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0" />
             
             <h3 className="text-2xl md:text-3xl font-bold text-emerald-400 mb-12">
               {t("for_you.title")}
@@ -41,7 +41,7 @@ export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }:
             <ul className="space-y-8">
               {(Object.values(t.raw("for_you.bullets")) as string[]).map((bullet, idx) => (
                 <li key={idx} className="flex items-start gap-4">
-                  <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)] flex-shrink-0" />
+                  <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)] shrink-0" />
                   <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
                     {bullet.split(/\*\*(.*?)\*\*/g).map((part, i) =>
                       i % 2 === 1 ? (
@@ -57,9 +57,9 @@ export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }:
           </div>
 
           {/* Column B — NON È PER TE SE (Red) */}
-          <div className="relative p-10 md:p-14 rounded-[2.5rem] bg-[#0A0C10] border border-white/[0.05] flex flex-col h-full overflow-hidden transition-all duration-500">
+          <div className="relative p-10 md:p-14 rounded-[2.5rem] bg-[#0A0C10] border border-white/5 flex flex-col h-full overflow-hidden transition-all duration-500">
             {/* Top Highlight Bar */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-red-500/0 via-red-500 to-red-500/0" />
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-red-500/0 via-red-500 to-red-500/0" />
             
             <h3 className="text-2xl md:text-3xl font-bold text-red-400 mb-12">
               {t("not_for_you.title")}
@@ -68,7 +68,7 @@ export function FilterSection({ scrollToContact, namespace = "Offerta.filter" }:
             <ul className="space-y-8">
               {(Object.values(t.raw("not_for_you.bullets")) as string[]).map((bullet, idx) => (
                 <li key={idx} className="flex items-start gap-4">
-                  <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] flex-shrink-0" />
+                  <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)] shrink-0" />
                   <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
                     {bullet.split(/\*\*(.*?)\*\*/g).map((part, i) =>
                       i % 2 === 1 ? (

@@ -12,7 +12,7 @@ export function LabOutcomesSection({ namespace = "Lab.outcomes" }: LabOutcomesSe
   const items = t.raw("items") as Record<string, { title: string; desc: string; icon: string }>;
 
   return (
-    <section id="outcomes" className="relative z-[80] py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
+    <section id="outcomes" className="relative z-80 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-t border-white/5 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
       <div className="relative z-10 max-w-[1200px] mx-auto">
         <div className="text-center mb-20 md:mb-32">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/5 mb-6">
@@ -34,9 +34,9 @@ export function LabOutcomesSection({ namespace = "Lab.outcomes" }: LabOutcomesSe
           {Object.entries(items).map(([key, item]) => (
             <div
               key={key}
-              className="group relative p-8 rounded-[2rem] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/[0.05] transition-all duration-500 hover:border-indigo-500/30 hover:bg-white/[0.05] overflow-hidden"
+              className="group relative p-8 rounded-4xl bg-linear-to-br from-white/3 to-transparent border border-white/5 transition-all duration-500 hover:border-indigo-500/30 hover:bg-white/5 overflow-hidden"
             >
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/5 group-hover:bg-indigo-500/10 blur-[40px] rounded-full transition-colors duration-500" />
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/5 group-hover:bg-indigo-500/10 blur-2xl rounded-full transition-colors duration-500" />
 
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-2xl bg-[#030508] border border-white/10 flex items-center justify-center mb-8 shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:border-indigo-500/30 relative">

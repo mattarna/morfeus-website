@@ -27,20 +27,20 @@ export function ServiceHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
         <div className="mb-6 md:mb-8">
           <h1 className="text-[2.25rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-[-0.03em] leading-[1.05] uppercase">
             <span 
-              className="bg-clip-text text-transparent bg-gradient-to-b from-white via-[#e2e8f0] to-[#94a3b8] drop-shadow-[0_2px_10px_rgba(255,255,255,0.15)]"
+              className="bg-clip-text text-transparent bg-linear-to-b from-white via-[#e2e8f0] to-[#94a3b8] drop-shadow-[0_2px_10px_rgba(255,255,255,0.15)]"
               style={{ WebkitBackgroundClip: 'text' }}
             >
               {t("hero.headline_1")}
             </span>
             <span 
-              className="bg-clip-text text-transparent bg-gradient-to-b from-white via-[#cbd5e1] to-[#64748b] drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)]"
+              className="bg-clip-text text-transparent bg-linear-to-b from-white via-[#cbd5e1] to-[#64748b] drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)]"
               style={{ WebkitBackgroundClip: 'text' }}
             >
               {t("hero.headline_2")}
             </span>
             <br className="hidden lg:block" />
             <span 
-              className="bg-clip-text text-transparent bg-gradient-to-b from-indigo-400 via-indigo-500 to-blue-700 drop-shadow-[0_0_20px_rgba(79,70,229,0.25)]"
+              className="bg-clip-text text-transparent bg-linear-to-b from-indigo-400 via-indigo-500 to-blue-700 drop-shadow-[0_0_20px_rgba(79,70,229,0.25)]"
               style={{ WebkitBackgroundClip: 'text' }}
             >
               {t("hero.headline_3")}
@@ -49,14 +49,14 @@ export function ServiceHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
         </div>
 
         {/* 2. SUBHEADLINE */}
-        <p className="max-w-5xl text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-400/90 font-light leading-[1.5] mb-10 px-4">
+        <p className="max-w-5xl text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-400/90 font-light leading-normal mb-10 px-4">
           {t("hero.subtitle")}
         </p>
 
         {/* 3. VSL FRAME */}
         <div className="relative w-full max-w-4xl mb-8">
           <div className="absolute -inset-2 rounded-xl opacity-20 blur-2xl bg-cyan-500/30 pointer-events-none" />
-          <div className="relative rounded-lg overflow-hidden border border-slate-700/50 bg-slate-900/80 backdrop-blur-sm shadow-2xl">
+          <div className="relative rounded-lg overflow-hidden border border-slate-700/50 bg-slate-900/80 backdrop-blur-xs shadow-2xl">
             <div className="flex items-center justify-between px-3 py-2 border-b border-slate-700/50 bg-slate-800/50">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
@@ -120,7 +120,7 @@ export function ServiceHero({ contentVisible, isPlaying, setIsPlaying, scrollToC
           onClick={scrollToContact}
           className="on-page-cta group relative px-12 py-5 rounded-full font-bold text-sm uppercase tracking-[0.15em] transition-all duration-500 overflow-hidden shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)]"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+          <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-blue-800" />
           <div className="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity" />
           <span className="relative z-10 flex items-center gap-2 text-white">
             {t("hero.cta_primary")}

@@ -64,17 +64,17 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
       {/* Horizontal grid lines - hidden on mobile */}
       <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block">
         {/* Line above content area */}
-        <div className="absolute top-[25%] left-0 right-0 h-[1px] bg-white/[0.04]" />
+        <div className="absolute top-[25%] left-0 right-0 h-px bg-white/4" />
         {/* Line at content start */}
-        <div className="absolute top-[38%] left-0 right-0 h-[1px] bg-white/[0.04]" />
+        <div className="absolute top-[38%] left-0 right-0 h-px bg-white/4" />
       </div>
 
       {/* Vertical grid lines - hidden on mobile */}
       <div className="absolute inset-0 pointer-events-none z-0 hidden lg:flex justify-between max-w-[1920px] mx-auto px-6 md:px-10">
-        <div className="w-[1px] h-full bg-white/[0.04]" />
-        <div className="w-[1px] h-full bg-white/[0.04]" />
-        <div className="w-[1px] h-full bg-white/[0.04]" />
-        <div className="w-[1px] h-full bg-white/[0.04]" />
+        <div className="w-px h-full bg-white/4" />
+        <div className="w-px h-full bg-white/4" />
+        <div className="w-px h-full bg-white/4" />
+        <div className="w-px h-full bg-white/4" />
       </div>
 
       {/* 1. MAIN FOOTER CONTENT GRID - single column on mobile */}
@@ -91,7 +91,7 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
               <button 
                 key={item.label}
                 onClick={() => setIndex(item.index)}
-                className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-none"
+                className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-hidden"
               >
                 {item.label}
               </button>
@@ -115,13 +115,13 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
           <div className="flex flex-col gap-2 md:gap-3 items-start">
             <a 
               href={`/${locale}/privacy`}
-              className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-none"
+              className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-hidden"
             >
               {t("privacy")}
             </a>
             <a 
               href={`/${locale}/cookies`}
-              className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-none"
+              className="text-slate-300 hover:text-white transition-colors text-[17px] font-light outline-hidden"
             >
               Cookie Policy
             </a>
@@ -173,7 +173,7 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
           isActive ? "opacity-[0.15] translate-y-[30%]" : "opacity-0 translate-y-[50%]"
         }`}
       >
-        <div className="relative w-full max-w-[1400px] aspect-[4/1] mx-auto">
+        <div className="relative w-full max-w-[1400px] aspect-4/1 mx-auto">
           <Image 
             src="/images/brand/morfeus-mark.png" 
             alt="Morfeus Logo Large" 

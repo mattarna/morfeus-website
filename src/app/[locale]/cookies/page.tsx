@@ -14,7 +14,7 @@ export default function CookiePolicy() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-sm border-b border-white/5">
+      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-xs border-b border-white/5">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
           <Link href={`/${locale}`} className="text-white/80 hover:text-white transition-colors text-sm">
             ← {isIT ? "Torna al sito" : "Back to site"}
@@ -52,7 +52,7 @@ export default function CookiePolicy() {
             </h2>
 
             {/* Necessary */}
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold text-white">
                   {isIT ? "Cookie Funzionali (Necessari)" : "Functional Cookies (Necessary)"}
@@ -69,7 +69,7 @@ export default function CookiePolicy() {
             </div>
 
             {/* Preferences */}
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">
                 {isIT ? "Cookie di Preferenze" : "Preference Cookies"}
               </h3>
@@ -81,7 +81,7 @@ export default function CookiePolicy() {
             </div>
 
             {/* Statistics */}
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">
                 {isIT ? "Cookie Statistici" : "Statistics Cookies"}
               </h3>
@@ -93,7 +93,7 @@ export default function CookiePolicy() {
             </div>
 
             {/* Marketing */}
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <h3 className="text-lg font-semibold text-white mb-3">
                 {isIT ? "Cookie di Marketing" : "Marketing Cookies"}
               </h3>
