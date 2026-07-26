@@ -5943,7 +5943,7 @@ function ScreenshotCard({ src, alt }: { src: string; alt: string }) {
         aspectRatio: "9 / 16",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      { }
       <img
         src={src}
         alt={alt}
@@ -8168,14 +8168,14 @@ export function SalesV2FooterSection() {
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 28 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          { }
           <img src="/logo/m-w.png" alt="Morfeus" style={{ height: 20, display: "block" }} />
           <span style={{ fontSize: 13, color: "var(--muted)", fontFamily: "var(--font-body)" }}>
             morfeushub.com
           </span>
           <span aria-hidden style={{ color: "var(--muted)", opacity: 0.4 }}>·</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img
               src="/claude-unlocked/logo-mark-light.png"
               alt="Claude Unlocked"

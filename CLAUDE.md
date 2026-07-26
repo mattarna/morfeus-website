@@ -4,7 +4,9 @@ Guida operativa per agenti AI (Claude Code). Leggi questo PRIMA di esplorare: ti
 
 ## Cos'è
 
-Sito marketing **Next.js 14** (App Router, TypeScript) con un **sistema funnel config-driven** (landing, freebie, sales, bootcamp). Deploy su **Vercel**: push su `main` → deploy automatico. Email/lead via **Brevo**.
+Sito marketing **Next.js 16 / React 19 / Tailwind CSS 4** (App Router, TypeScript) con un **sistema funnel config-driven** (landing, freebie, sales, bootcamp). Deploy su **Vercel**: push su `main` → deploy automatico. Email/lead via **Brevo**.
+
+Versioni **bloccate senza caret** (`next` 16.2.11, `react`/`react-dom` 19.2.4, `eslint-config-next` 16.2.11): è un sito che fattura, non si lascia decidere a un range quale versione builda su Vercel.
 
 ## Comandi
 
@@ -13,7 +15,7 @@ npm run dev               # sviluppo
 npm run build             # build di produzione (autorevole)
 npm run typecheck         # tsc --noEmit
 npm run test              # vitest
-npm run lint              # next lint
+npm run lint              # eslint (flat config: eslint.config.mjs)
 npm run check:public-assets[:strict]  # policy asset in public/
 ```
 
@@ -21,17 +23,17 @@ npm run check:public-assets[:strict]  # policy asset in public/
 
 ## Mappa del repo
 
-| Percorso                                              | Cosa                                                                       |
-| ----------------------------------------------------- | -------------------------------------------------------------------------- |
-| `src/funnels/<nome>/config.json`                      | Definizione di un funnel (step, `componentOrder`, `content`)               |
-| `src/funnels/registry.ts`                             | Registra ogni funnel (slug, locale, `indexable`, runtime/metadataPreset)   |
-| `src/components/funnels/componentMap.tsx`             | Mappa nome-componente → sezione React                                      |
-| `src/funnels/component-contract.ts`                   | Elenco nomi-componente validi (+ `loader.ts` valida)                       |
-| `src/middleware.ts`                                   | Routing `/<slug>` → `/funnel-internal/<slug>` + X-Robots per non-indexable |
-| `src/app/funnel-internal/[slug]/[[...step]]/page.tsx` | Render funnel + `generateMetadata` (preset SEO)                            |
-| `src/lib/brevo/lists.ts`                              | Mapping chiave logica → env var della lista Brevo                          |
-| `src/app/api/funnels/<freebie>/optin/route.ts`        | Endpoint optin → Brevo                                                     |
-| `src/lib/reserved-slugs.ts`                           | Slug riservati (non usabili come funnel)                                   |
+| Percorso                                              | Cosa                                                                                                              |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `src/funnels/<nome>/config.json`                      | Definizione di un funnel (step, `componentOrder`, `content`)                                                      |
+| `src/funnels/registry.ts`                             | Registra ogni funnel (slug, locale, `indexable`, runtime/metadataPreset)                                          |
+| `src/components/funnels/componentMap.tsx`             | Mappa nome-componente → sezione React                                                                             |
+| `src/funnels/component-contract.ts`                   | Elenco nomi-componente validi (+ `loader.ts` valida)                                                              |
+| `src/proxy.ts`                                        | Routing `/<slug>` → `/funnel-internal/<slug>` + X-Robots per non-indexable (era `middleware.ts` prima di Next 16) |
+| `src/app/funnel-internal/[slug]/[[...step]]/page.tsx` | Render funnel + `generateMetadata` (preset SEO)                                                                   |
+| `src/lib/brevo/lists.ts`                              | Mapping chiave logica → env var della lista Brevo                                                                 |
+| `src/app/api/funnels/<freebie>/optin/route.ts`        | Endpoint optin → Brevo                                                                                            |
+| `src/lib/reserved-slugs.ts`                           | Slug riservati (non usabili come funnel)                                                                          |
 
 ## Come aggiungere un FREEBIE (runbook)
 
@@ -51,6 +53,12 @@ I componenti freebie condivisi (`FreebieHero`, `FreebieThankYou`, `FreebieWebina
 - **Tieni `package-lock.json` in sync** con `package.json` (`npm ci` è strict; un lock disallineato = CI rossa). Dopo `npm install` di una dep, committa anche il lock.
 - **Niente garanzia "14 giorni" / "soddisfatti o rimborsati"** nelle copy: **non esiste**, è pubblicità ingannevole. (Eccezioni reali e diverse: rimborso regionale Formazione Finanziata, garanzia di _trasferimento_ dei bootcamp.)
 - **Gira la sequenza CI in locale prima del push.** Vercel e GitHub Actions buildano su clone pulito: ciò che funziona solo localmente non basta.
+- **Il chatbot NON è nel repo, e 3 file hanno `skip-worktree`.** `.git/info/exclude` (ignore locale, non committato) tiene fuori `src/chatbot/`, `src/app/api/chatbot/`, `src/components/shared/ChatbotWidget.tsx`, `.chatbot-data/`. Perché le modifiche locali che li _importano_ non finissero nei commit, questi 3 file hanno il bit `skip-worktree`: **`src/app/[locale]/layout.tsx`, `src/app/[locale]/page.tsx`, `src/app/hooks/useCustomScroll.ts`**.
+  Conseguenza: **git ignora le loro modifiche** — `git status` dice "pulito" mentre disco e `HEAD` divergono, `git add -A` non li vede, e il build locale (che usa il disco) passa mentre Vercel (che usa il commit) fallisce. È già successo: ha rotto la CI nella migrazione a Next 16.
+  Regole: non rimuovere il bit; **non committare quei file con la versione su disco** (importano il chatbot → Vercel `Module not found`); se uno va corretto, parti da `git show HEAD:<file>` e committa **solo** la modifica necessaria. Per vedere i file marcati: `git ls-files -v | grep -v "^H "`.
+- **La verifica autorevole è il build da CLONE PULITO del branch committato**, non il build nella tua cartella: `git clone --branch <branch> --single-branch . <tmp> && cd <tmp> && npm ci && npm run build`. È l'unico modo di accorgersi che disco e repo divergono.
+- **Mai passare `npm run build` dentro una pipe** (`| grep`, `| tail`): il codice di uscita diventa quello dell'ultimo comando della pipe e **un build fallito sembra riuscito**. Controlla `$?` di ogni passo.
+- **`tsc --noEmit` non basta per le rotte.** I tipi `PageProps`/`LayoutProps` che validano `params`/`searchParams` li genera Next durante `next build`: non sono nel sorgente. Solo il build li vede.
 - **Niente backup (`*.bak`) né immagini >8MB in git.** Ottimizza gli asset (resize + re-encode) prima di committare.
 - **Telefono utente → sempre l'attributo Brevo `TELEFONO_`** (`BREVO_ATTR.TELEFONO`). MAI `SMS`/`WHATSAPP`/`LANDLINE_NUMBER` per l'input utente: i campi nativi validano il formato (E.164) e fanno fallire l'intero optin. `TELEFONO_` è testo libero. Vedi `docs/brevo.md` (REGOLA TELEFONO).
 

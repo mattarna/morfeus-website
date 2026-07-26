@@ -5823,7 +5823,7 @@ function ScreenshotCard({ src, alt }: { src: string; alt: string }) {
         aspectRatio: "9 / 16",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      { }
       <img
         src={src}
         alt={alt}

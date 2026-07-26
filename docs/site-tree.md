@@ -1,7 +1,7 @@
 # Site tree — Morfeus (codice attuale)
 
 **Base URL pubblica:** `https://morfeushub.com`
-**Generato da:** struttura `src/app/`, `src/middleware.ts`, slug ammessi nel codice, `src/lib/reserved-slugs.ts`, `src/funnels/registry.ts`.
+**Generato da:** struttura `src/app/`, `src/proxy.ts`, slug ammessi nel codice, `src/lib/reserved-slugs.ts`, `src/funnels/registry.ts`.
 **Aggiorna questo file** quando aggiungi route, slug o funnel registrati.
 
 **Anteprima grafico:** apri l'anteprima Markdown (es. in Cursor: anteprima del file) oppure carica il repo su GitHub: il blocco Mermaid sotto viene renderizzato automaticamente.
@@ -20,77 +20,77 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 ### Area A — Ingresso e lingua
 
-| Ruolo | EN | IT |
-|--------|----|----|
-| Root (redirect verso EN di default) | [→ /en](https://morfeushub.com/) | — |
-| Homepage | [/en](https://morfeushub.com/en) | [/it](https://morfeushub.com/it) |
+| Ruolo                               | EN                               | IT                               |
+| ----------------------------------- | -------------------------------- | -------------------------------- |
+| Root (redirect verso EN di default) | [→ /en](https://morfeushub.com/) | —                                |
+| Homepage                            | [/en](https://morfeushub.com/en) | [/it](https://morfeushub.com/it) |
 
 ---
 
 ### Area B — Landing "Operating system" / Lab
 
-| Pagina | EN | IT |
-|----|----|----|
-| Forge | [/forge](https://morfeushub.com/en/forge) | [/forge](https://morfeushub.com/it/forge) |
-| Lab | [/lab](https://morfeushub.com/en/lab) | [/lab](https://morfeushub.com/it/lab) |
+| Pagina | EN                                        | IT                                        |
+| ------ | ----------------------------------------- | ----------------------------------------- |
+| Forge  | [/forge](https://morfeushub.com/en/forge) | [/forge](https://morfeushub.com/it/forge) |
+| Lab    | [/lab](https://morfeushub.com/en/lab)     | [/lab](https://morfeushub.com/it/lab)     |
 
 ---
 
 ### Area C — Note legali
 
-| Pagina | EN | IT |
-|--------|----|----|
-| Privacy | [/privacy](https://morfeushub.com/en/privacy) | [/privacy](https://morfeushub.com/it/privacy) |
-| Cookie policy | [/cookies](https://morfeushub.com/en/cookies) | [/cookies](https://morfeushub.com/it/cookies) |
-| Termini Corso (Claude Unlocked) | [/termini-corso](https://morfeushub.com/en/termini-corso) | [/termini-corso](https://morfeushub.com/it/termini-corso) |
-| Termini Bootcamp (AI Champion) | [/termini-bootcamp](https://morfeushub.com/en/termini-bootcamp) | [/termini-bootcamp](https://morfeushub.com/it/termini-bootcamp) |
+| Pagina                          | EN                                                              | IT                                                              |
+| ------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| Privacy                         | [/privacy](https://morfeushub.com/en/privacy)                   | [/privacy](https://morfeushub.com/it/privacy)                   |
+| Cookie policy                   | [/cookies](https://morfeushub.com/en/cookies)                   | [/cookies](https://morfeushub.com/it/cookies)                   |
+| Termini Corso (Claude Unlocked) | [/termini-corso](https://morfeushub.com/en/termini-corso)       | [/termini-corso](https://morfeushub.com/it/termini-corso)       |
+| Termini Bootcamp (AI Champion)  | [/termini-bootcamp](https://morfeushub.com/en/termini-bootcamp) | [/termini-bootcamp](https://morfeushub.com/it/termini-bootcamp) |
 
 ---
 
 ### Area D — Flusso post-chiamata
 
-| Pagina | EN | IT |
-|--------|----|----|
-| Call confirmed | [/call-confirmed](https://morfeushub.com/en/call-confirmed) | [/call-confirmed](https://morfeushub.com/it/call-confirmed) |
-| Intro confirmed | [/intro-confirmed](https://morfeushub.com/en/intro-confirmed) | [/intro-confirmed](https://morfeushub.com/it/intro-confirmed) |
-| Booking confirmed | [/booking-confirmed](https://morfeushub.com/en/booking-confirmed) | [/booking-confirmed](https://morfeushub.com/it/booking-confirmed) |
-| Thank you | [/call-confirmed/thank-you](https://morfeushub.com/en/call-confirmed/thank-you) | [/call-confirmed/thank-you](https://morfeushub.com/it/call-confirmed/thank-you) |
+| Pagina            | EN                                                                              | IT                                                                              |
+| ----------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Call confirmed    | [/call-confirmed](https://morfeushub.com/en/call-confirmed)                     | [/call-confirmed](https://morfeushub.com/it/call-confirmed)                     |
+| Intro confirmed   | [/intro-confirmed](https://morfeushub.com/en/intro-confirmed)                   | [/intro-confirmed](https://morfeushub.com/it/intro-confirmed)                   |
+| Booking confirmed | [/booking-confirmed](https://morfeushub.com/en/booking-confirmed)               | [/booking-confirmed](https://morfeushub.com/it/booking-confirmed)               |
+| Thank you         | [/call-confirmed/thank-you](https://morfeushub.com/en/call-confirmed/thank-you) | [/call-confirmed/thank-you](https://morfeushub.com/it/call-confirmed/thank-you) |
 
 ---
 
 ### Area E — Portal team (schede membri)
 
-| Pagina | EN | IT |
-|--------|----|----|
-| Indice portal | [/portal](https://morfeushub.com/en/portal) | [/portal](https://morfeushub.com/it/portal) |
-| Matteo Arnaboldi | [/portal/matteo](https://morfeushub.com/en/portal/matteo) | [/portal/matteo](https://morfeushub.com/it/portal/matteo) |
-| Alex Carofiglio | [/portal/alex](https://morfeushub.com/en/portal/alex) | [/portal/alex](https://morfeushub.com/it/portal/alex) |
-| Simone Zin | [/portal/simone](https://morfeushub.com/en/portal/simone) | [/portal/simone](https://morfeushub.com/it/portal/simone) |
-| Matteo Alvazzi | [/portal/matteo-alvazzi](https://morfeushub.com/en/portal/matteo-alvazzi) | [/portal/matteo-alvazzi](https://morfeushub.com/it/portal/matteo-alvazzi) |
-| Davide Bertolini | [/portal/davide](https://morfeushub.com/en/portal/davide) | [/portal/davide](https://morfeushub.com/it/portal/davide) |
+| Pagina           | EN                                                                        | IT                                                                        |
+| ---------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Indice portal    | [/portal](https://morfeushub.com/en/portal)                               | [/portal](https://morfeushub.com/it/portal)                               |
+| Matteo Arnaboldi | [/portal/matteo](https://morfeushub.com/en/portal/matteo)                 | [/portal/matteo](https://morfeushub.com/it/portal/matteo)                 |
+| Alex Carofiglio  | [/portal/alex](https://morfeushub.com/en/portal/alex)                     | [/portal/alex](https://morfeushub.com/it/portal/alex)                     |
+| Simone Zin       | [/portal/simone](https://morfeushub.com/en/portal/simone)                 | [/portal/simone](https://morfeushub.com/it/portal/simone)                 |
+| Matteo Alvazzi   | [/portal/matteo-alvazzi](https://morfeushub.com/en/portal/matteo-alvazzi) | [/portal/matteo-alvazzi](https://morfeushub.com/it/portal/matteo-alvazzi) |
+| Davide Bertolini | [/portal/davide](https://morfeushub.com/en/portal/davide)                 | [/portal/davide](https://morfeushub.com/it/portal/davide)                 |
 
 ---
 
 ### Area F — Case study (proof)
 
-*Stesse URL con prefisso `/it` o `/en`.*
+_Stesse URL con prefisso `/it` o `/en`._
 
-| Verticale | EN | IT |
-|-----------|----|----|
-| Sales | [/case-study/sales](https://morfeushub.com/en/case-study/sales) | [/case-study/sales](https://morfeushub.com/it/case-study/sales) |
-| Operations | [/case-study/operations](https://morfeushub.com/en/case-study/operations) | [/case-study/operations](https://morfeushub.com/it/case-study/operations) |
+| Verticale      | EN                                                                                | IT                                                                                |
+| -------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Sales          | [/case-study/sales](https://morfeushub.com/en/case-study/sales)                   | [/case-study/sales](https://morfeushub.com/it/case-study/sales)                   |
+| Operations     | [/case-study/operations](https://morfeushub.com/en/case-study/operations)         | [/case-study/operations](https://morfeushub.com/it/case-study/operations)         |
 | Administrative | [/case-study/administrative](https://morfeushub.com/en/case-study/administrative) | [/case-study/administrative](https://morfeushub.com/it/case-study/administrative) |
-| E-commerce | [/case-study/ecommerce](https://morfeushub.com/en/case-study/ecommerce) | [/case-study/ecommerce](https://morfeushub.com/it/case-study/ecommerce) |
-| Info-business | [/case-study/info-business](https://morfeushub.com/en/case-study/info-business) | [/case-study/info-business](https://morfeushub.com/it/case-study/info-business) |
+| E-commerce     | [/case-study/ecommerce](https://morfeushub.com/en/case-study/ecommerce)           | [/case-study/ecommerce](https://morfeushub.com/it/case-study/ecommerce)           |
+| Info-business  | [/case-study/info-business](https://morfeushub.com/en/case-study/info-business)   | [/case-study/info-business](https://morfeushub.com/it/case-study/info-business)   |
 
 ---
 
 ### Area G — Mockup (niente prefisso lingua)
 
-*Middleware tratta `/mockup` a parte dal sito madre.*
+_Middleware tratta `/mockup` a parte dal sito madre._
 
-| Pagina | Link |
-|--------|------|
+| Pagina         | Link                                                                 |
+| -------------- | -------------------------------------------------------------------- |
 | Opt-in premium | [/mockup/optin-premium](https://morfeushub.com/mockup/optin-premium) |
 | Opt-in infobiz | [/mockup/optin-infobiz](https://morfeushub.com/mockup/optin-infobiz) |
 
@@ -98,16 +98,16 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 ### Area H — Strumenti e API (non pagine di contenuto)
 
-| Risorsa | URL | Note |
-|---------|-----|------|
-| Sitemap XML | [/sitemap.xml](https://morfeushub.com/sitemap.xml) | Elenca pagine pubbliche core + case study EN/IT |
-| Contact API | `/api/contact` | `POST` — vedi `src/app/api/contact/route.ts` |
-| Precall intake API | `/api/precall-intake` | `POST` — vedi `src/app/api/precall-intake/route.ts` |
-| Optin webinar Claude | `/api/funnels/webinar-claude/optin` | `POST` — Brevo subscription |
-| Optin freebie Cowork Skill | `/api/funnels/freebie-cowork-setup-skill/optin` | `POST` — Brevo subscription |
-| Optin freebie IG Carousel | `/api/funnels/freebie-instagram-carousel-skills/optin` | `POST` — Brevo subscription |
-| Optin freebie Design System | `/api/funnels/freebie-design-system-blueprint/optin` | `POST` — Brevo subscription |
-| Chat / Chatbot APIs | `/api/chat`, `/api/chatbot/*` | Legacy (chatbot custom dismesso, sostituito da piattaforma proprietaria esterna) |
+| Risorsa                     | URL                                                    | Note                                                                             |
+| --------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| Sitemap XML                 | [/sitemap.xml](https://morfeushub.com/sitemap.xml)     | Elenca pagine pubbliche core + case study EN/IT                                  |
+| Contact API                 | `/api/contact`                                         | `POST` — vedi `src/app/api/contact/route.ts`                                     |
+| Precall intake API          | `/api/precall-intake`                                  | `POST` — vedi `src/app/api/precall-intake/route.ts`                              |
+| Optin webinar Claude        | `/api/funnels/webinar-claude/optin`                    | `POST` — Brevo subscription                                                      |
+| Optin freebie Cowork Skill  | `/api/funnels/freebie-cowork-setup-skill/optin`        | `POST` — Brevo subscription                                                      |
+| Optin freebie IG Carousel   | `/api/funnels/freebie-instagram-carousel-skills/optin` | `POST` — Brevo subscription                                                      |
+| Optin freebie Design System | `/api/funnels/freebie-design-system-blueprint/optin`   | `POST` — Brevo subscription                                                      |
+| Chat / Chatbot APIs         | `/api/chat`, `/api/chatbot/*`                          | Legacy (chatbot custom dismesso, sostituito da piattaforma proprietaria esterna) |
 
 ---
 
@@ -115,15 +115,15 @@ Le **aree** qui sotto separano ingresso, marketing, legale, post-call, portal, p
 
 Tutti i funnel sono registrati in `src/funnels/registry.ts` e riscritti dal middleware su `/funnel-internal/{slug}/...`.
 
-| Funnel | URL pubbliche | Indexable | Stato |
-|--------|---------------|-----------|-------|
-| **Webinar Claude** | [/webinar-claude](https://morfeushub.com/webinar-claude) · [/webinar-claude/thank-you](https://morfeushub.com/webinar-claude/thank-you) | ✅ true | Lead-magnet webinar registrato (replay) |
-| **Corso Claude Unlocked** | [/claude-unlocked](https://morfeushub.com/claude-unlocked) · [/claude-unlocked/access-9x4q2k7n](https://morfeushub.com/claude-unlocked/access-9x4q2k7n) | ✅ true | Sales page corso (palette arancione, sezioni alternate dark/cream). Versioni v1/v2 oscurate. |
-| **Bootcamp AI Champion (3a Edizione)** | [/bootcamp-ai-champion-3a-edizione](https://morfeushub.com/bootcamp-ai-champion-3a-edizione) · [/bootcamp-ai-champion-3a-edizione/access-25-m3p8r7q4](https://morfeushub.com/bootcamp-ai-champion-3a-edizione/access-25-m3p8r7q4) | ✅ true | Sales page bootcamp (palette lime + dark olive, sezioni alternate dark/cream). URL precedenti `/bootcamp-ai-champion`, `/bootcamp-ai-champion-v2`, `/bootcamp-ai-champion-v3` oscurati. |
-| **Vocabolario AI** | [/vocabolario-ai](https://morfeushub.com/vocabolario-ai) | ✅ true | Glossario AI/Claude pubblicamente indicizzabile (60+ termini) |
-| **Freebie · Claude Skill Anatomy** | [/claude-skill-anatomy](https://morfeushub.com/claude-skill-anatomy) · [/claude-skill-anatomy/thank-you](https://morfeushub.com/claude-skill-anatomy/thank-you) | ❌ false | Lead-magnet skill cowork setup |
-| **Freebie · Instagram Carousel Skills** | [/instagram-carousel-skills](https://morfeushub.com/instagram-carousel-skills) · [/instagram-carousel-skills/thank-you](https://morfeushub.com/instagram-carousel-skills/thank-you) | ❌ false | Lead-magnet skill IG carousel |
-| **Freebie · AI Design System Blueprint** | [/design-system-skill](https://morfeushub.com/design-system-skill) | ❌ false | Lead-magnet skill design system |
+| Funnel                                   | URL pubbliche                                                                                                                                                                                                                     | Indexable | Stato                                                                                                                                                                                   |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Webinar Claude**                       | [/webinar-claude](https://morfeushub.com/webinar-claude) · [/webinar-claude/thank-you](https://morfeushub.com/webinar-claude/thank-you)                                                                                           | ✅ true   | Lead-magnet webinar registrato (replay)                                                                                                                                                 |
+| **Corso Claude Unlocked**                | [/claude-unlocked](https://morfeushub.com/claude-unlocked) · [/claude-unlocked/access-9x4q2k7n](https://morfeushub.com/claude-unlocked/access-9x4q2k7n)                                                                           | ✅ true   | Sales page corso (palette arancione, sezioni alternate dark/cream). Versioni v1/v2 oscurate.                                                                                            |
+| **Bootcamp AI Champion (3a Edizione)**   | [/bootcamp-ai-champion-3a-edizione](https://morfeushub.com/bootcamp-ai-champion-3a-edizione) · [/bootcamp-ai-champion-3a-edizione/access-25-m3p8r7q4](https://morfeushub.com/bootcamp-ai-champion-3a-edizione/access-25-m3p8r7q4) | ✅ true   | Sales page bootcamp (palette lime + dark olive, sezioni alternate dark/cream). URL precedenti `/bootcamp-ai-champion`, `/bootcamp-ai-champion-v2`, `/bootcamp-ai-champion-v3` oscurati. |
+| **Vocabolario AI**                       | [/vocabolario-ai](https://morfeushub.com/vocabolario-ai)                                                                                                                                                                          | ✅ true   | Glossario AI/Claude pubblicamente indicizzabile (60+ termini)                                                                                                                           |
+| **Freebie · Claude Skill Anatomy**       | [/claude-skill-anatomy](https://morfeushub.com/claude-skill-anatomy) · [/claude-skill-anatomy/thank-you](https://morfeushub.com/claude-skill-anatomy/thank-you)                                                                   | ❌ false  | Lead-magnet skill cowork setup                                                                                                                                                          |
+| **Freebie · Instagram Carousel Skills**  | [/instagram-carousel-skills](https://morfeushub.com/instagram-carousel-skills) · [/instagram-carousel-skills/thank-you](https://morfeushub.com/instagram-carousel-skills/thank-you)                                               | ❌ false  | Lead-magnet skill IG carousel                                                                                                                                                           |
+| **Freebie · AI Design System Blueprint** | [/design-system-skill](https://morfeushub.com/design-system-skill)                                                                                                                                                                | ❌ false  | Lead-magnet skill design system                                                                                                                                                         |
 
 **URL oscurati (404)**: `/bootcamp-ai-champion`, `/bootcamp-ai-champion-v2`, `/bootcamp-ai-champion-v3`, `/claude-unlocked-v1`, `/claude-unlocked-v2`, `/claude-unlocked-v3`. Componenti restano in codebase per rollback.
 
@@ -131,16 +131,16 @@ Tutti i funnel sono registrati in `src/funnels/registry.ts` e riscritti dal midd
 
 ### Mappa rapida aree → scopo
 
-| Area | Scopo navigazione |
-|------|-------------------|
-| **A** | Entrata sito e scelta lingua |
-| **B** | Landing operating system + lab |
-| **C** | Privacy, cookie, termini di servizio |
-| **D** | Stato / ringraziamento dopo call |
-| **E** | Mini-sito team / contatti |
-| **F** | Case study proof (indexabili e visibili a crawler AI) |
-| **G** | Mock interni / design |
-| **H** | SEO sitemap, API contact + funnel optin |
+| Area  | Scopo navigazione                                              |
+| ----- | -------------------------------------------------------------- |
+| **A** | Entrata sito e scelta lingua                                   |
+| **B** | Landing operating system + lab                                 |
+| **C** | Privacy, cookie, termini di servizio                           |
+| **D** | Stato / ringraziamento dopo call                               |
+| **E** | Mini-sito team / contatti                                      |
+| **F** | Case study proof (indexabili e visibili a crawler AI)          |
+| **G** | Mock interni / design                                          |
+| **H** | SEO sitemap, API contact + funnel optin                        |
 | **I** | Campagne funnel a slug dedicato (sales, lead-magnet, glossari) |
 
 ---
@@ -344,8 +344,8 @@ Esempi:
 
 Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next-intl-locale` di default per `pathname.startsWith("/mockup")`.
 
-| URL |
-|-----|
+| URL                                           |
+| --------------------------------------------- |
 | `https://morfeushub.com/mockup/optin-premium` |
 | `https://morfeushub.com/mockup/optin-infobiz` |
 
@@ -353,7 +353,7 @@ Path che **non** passano dal prefisso locale; il middleware imposta solo `x-next
 
 ## Funnel (root `/` senza locale)
 
-- **Comportamento:** se il primo segmento del path è uno **slug funnel registrato**, `src/middleware.ts` riscrive verso `/funnel-internal/{slug}/...`.
+- **Comportamento:** se il primo segmento del path è uno **slug funnel registrato**, `src/proxy.ts` riscrive verso `/funnel-internal/{slug}/...`.
 - **Stato attuale (registry.ts):**
   - `webinar-claude` (indexable)
   - `claude-unlocked` (indexable) — corso v3 cream
@@ -392,15 +392,15 @@ URL **oscurate** (404 dopo l'oscuramento dei v1/v2/v3):
 
 ## API
 
-| Metodo / path | File |
-|---------------|------|
-| `POST` `/api/contact` | `src/app/api/contact/route.ts` |
-| `POST` `/api/precall-intake` | `src/app/api/precall-intake/route.ts` |
-| `POST` `/api/funnels/webinar-claude/optin` | Brevo subscription |
-| `POST` `/api/funnels/freebie-cowork-setup-skill/optin` | Brevo subscription |
-| `POST` `/api/funnels/freebie-instagram-carousel-skills/optin` | Brevo subscription |
-| `POST` `/api/funnels/freebie-design-system-blueprint/optin` | Brevo subscription |
-| `/api/chat`, `/api/chatbot/*` | Legacy — chatbot custom dismesso, sostituito da piattaforma proprietaria esterna |
+| Metodo / path                                                 | File                                                                             |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `POST` `/api/contact`                                         | `src/app/api/contact/route.ts`                                                   |
+| `POST` `/api/precall-intake`                                  | `src/app/api/precall-intake/route.ts`                                            |
+| `POST` `/api/funnels/webinar-claude/optin`                    | Brevo subscription                                                               |
+| `POST` `/api/funnels/freebie-cowork-setup-skill/optin`        | Brevo subscription                                                               |
+| `POST` `/api/funnels/freebie-instagram-carousel-skills/optin` | Brevo subscription                                                               |
+| `POST` `/api/funnels/freebie-design-system-blueprint/optin`   | Brevo subscription                                                               |
+| `/api/chat`, `/api/chatbot/*`                                 | Legacy — chatbot custom dismesso, sostituito da piattaforma proprietaria esterna |
 
 ---
 
@@ -441,4 +441,4 @@ Da `src/lib/reserved-slugs.ts`:
 
 ---
 
-*Ultimo allineamento al codice: 2026-05-04 — dopo canonicalizzazione URL `claude-unlocked` + `bootcamp-ai-champion-3a-edizione` e oscuramento v1/v2/v3 (commit 1846e03).*
+_Ultimo allineamento al codice: 2026-05-04 — dopo canonicalizzazione URL `claude-unlocked` + `bootcamp-ai-champion-3a-edizione` e oscuramento v1/v2/v3 (commit 1846e03)._

@@ -1,6 +1,6 @@
 # PROJECT — Morfeus Website
 
-**Stack:** Next.js 14 (App Router), TypeScript, deploy su Vercel (push su `main` → deploy automatico).
+**Stack:** Next.js 16 / React 19 / Tailwind CSS 4 (App Router), TypeScript, deploy su Vercel (push su `main` → deploy automatico).
 **Dominio:** sito marketing + sistema funnel config-driven (landing, freebie, sales, bootcamp). Email via **Brevo**.
 
 ## Architettura funnel (essenziale)
@@ -9,7 +9,7 @@
 - Registrazione: `src/funnels/registry.ts` (slug, locale, `indexable`, runtime/metadataPreset).
 - Render: `src/components/funnels/componentMap.tsx` mappa i nomi-componente alle sezioni React.
 - Contratto: `src/funnels/component-contract.ts` (nomi validi) + `loader.ts` (validazione).
-- Routing: URL pubblico `/<slug>` → riscritto a `/funnel-internal/<slug>` da `src/middleware.ts`.
+- Routing: URL pubblico `/<slug>` → riscritto a `/funnel-internal/<slug>` da `src/proxy.ts`.
 - Optin → Brevo: `src/app/api/funnels/<freebie>/optin/route.ts` + mapping liste in `src/lib/brevo/lists.ts`.
 
 ## CI/CD
