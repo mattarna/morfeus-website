@@ -26,7 +26,9 @@ export function Services() {
       ctaPrimary: t("items.forge.cta_primary"),
       ctaSecondary: t("items.forge.cta_secondary"),
       href: "#section-13", // Book a call section
-      secondaryHref: "/forge" as ServiceSecondaryHref,
+      // Nessuna pagina MARF dedicata ancora: l'etichetta resta visibile ma inerte.
+      // (Prima puntava a /forge, che parla di Operating Partner, non di Context Hub.)
+      secondaryHref: null,
     },
     {
       icon: "lucide:library",
@@ -84,7 +86,7 @@ function ServiceCard({
   ctaPrimary: string;
   ctaSecondary: string;
   href: string;
-  secondaryHref: ServiceSecondaryHref;
+  secondaryHref: ServiceSecondaryHref | null;
 }) {
   const setIndex = useScrollStore((state) => state.setIndex);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -151,12 +153,21 @@ function ServiceCard({
             {ctaPrimary}
             <Icon icon="solar:arrow-right-bold" width={16} />
           </a>
-          <Link 
-            href={secondaryHref}
-            className="text-[13px] font-bold text-slate-500 hover:text-white transition-colors tracking-wider cursor-pointer uppercase whitespace-nowrap"
-          >
-            {ctaSecondary}
-          </Link>
+          {secondaryHref ? (
+            <Link
+              href={secondaryHref}
+              className="text-[13px] font-bold text-slate-500 hover:text-white transition-colors tracking-wider cursor-pointer uppercase whitespace-nowrap"
+            >
+              {ctaSecondary}
+            </Link>
+          ) : (
+            <span
+              aria-disabled="true"
+              className="text-[13px] font-bold text-slate-600 tracking-wider uppercase whitespace-nowrap cursor-default select-none"
+            >
+              {ctaSecondary}
+            </span>
+          )}
         </div>
       </div>
     </div>
