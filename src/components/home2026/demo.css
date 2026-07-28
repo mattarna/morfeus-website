@@ -523,6 +523,24 @@
   /* 30ch mandava il manifesto a otto righe: allargato quel tanto che
      basta per starci in sei/sette, senza sfondare la colonna leggibile. */
   max-width: 34ch;
+
+  /* Sfumatura del testo, stesso concetto della home di produzione (li'
+     bianco che degrada verso il grigio): qui e' ribaltato perche' la
+     fascia e' chiara, quindi si parte da inchiostro pieno e si scarica
+     verso un grigio della palette. Il degrado segue la lettura, cosi'
+     l'ultima riga chiude in dissolvenza invece di fermarsi netta.
+     background-clip:text con color:transparent — il color impostato
+     direttamente batte quello ereditato da .band.carta. */
+  background: linear-gradient(
+    168deg,
+    var(--inchiostro) 0%,
+    var(--inchiostro) 38%,
+    rgba(11, 11, 12, 0.62) 72%,
+    rgba(11, 11, 12, 0.4) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .d26 .manifesto-sign {
   margin-top: 40px;
