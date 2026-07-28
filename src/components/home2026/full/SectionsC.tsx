@@ -29,8 +29,13 @@ export function RoiSystemPanel({ active }: { active: boolean }) {
     <section className="panel band carta tight" data-active={active}>
       <div className="wrap rsys">
         <div className="eye fx d1">{t("label")}</div>
+        {/* a capo fisso fra le due meta': "DA VALUE LEAK" sopra,
+            "A VALORE CHE SI ACCUMULA" sotto. Lasciato al flusso, il
+            titolo spezzava in mezzo alla seconda frase. */}
         <h2 className="h-sect fx d2" style={{ marginInline: "auto", maxWidth: "24ch" }}>
-          {t("headline_1")} <span className="emph">{t("headline_2")}</span>
+          {t("headline_1")}
+          <br />
+          <span className="emph">{t("headline_2")}</span>
         </h2>
 
         {/* palco del contenuto: cambia con lo stadio selezionato */}

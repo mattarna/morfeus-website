@@ -205,7 +205,8 @@ export function FooterPanel({ active }: { active: boolean }) {
           <div className="foot-legal">
             ©{year} Morfeus. {t("copyright")}
             <br />
-            <span className="love">Made with love, by Morfeus and a lot of AI. 💜</span>
+            {/* cuore prima del testo, come sullo standard */}
+            <span className="love">💜 Made with love, by Morfeus and a lot of AI.</span>
           </div>
         </div>
       </div>

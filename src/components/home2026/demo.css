@@ -850,7 +850,7 @@
 .d26 .met-eye {
   position: relative;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px; /* un gradino sotto: il fuoco e' la parola grande */
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -867,7 +867,7 @@
   position: relative;
   margin: 20px auto 0;
   max-width: 50ch;
-  font-size: clamp(15px, 1.8vw, 18px);
+  font-size: clamp(14px, 1.5vw, 16px); /* idem: satellite, non protagonista */
   line-height: 1.65;
   color: var(--testo-ink-2);
 }
@@ -941,7 +941,7 @@
   position: relative;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(22px, 2.8vw, 34px);
+  font-size: clamp(24px, 3.2vw, 40px);
   letter-spacing: -0.02em;
   line-height: 1.25;
   max-width: 26ch;
@@ -950,7 +950,7 @@
 .d26 .rsys .expl {
   position: relative;
   margin: 14px auto 0;
-  font-size: 15px;
+  font-size: clamp(15px, 1.4vw, 18px);
   line-height: 1.6;
   color: var(--testo-carta-2);
   max-width: 52ch;
@@ -1017,7 +1017,7 @@
 .d26 .rsys .dot-labels span {
   flex: 1;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -1036,7 +1036,7 @@
   padding-top: 18px;
   border-top: 1px solid rgba(11, 11, 12, 0.12);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -1440,7 +1440,7 @@
   color: var(--carta);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 16px;
+  font-size: clamp(16px, 1.5vw, 19px);
   letter-spacing: -0.01em;
 }
 .d26 .faq-item .plus {
@@ -1470,7 +1470,7 @@
 }
 .d26 .faq-item .body p {
   padding: 0 18px 18px;
-  font-size: 14px;
+  font-size: clamp(14.5px, 1.3vw, 16.5px);
   line-height: 1.6;
   color: var(--testo-ink-2);
 }
@@ -1529,12 +1529,16 @@
 }
 
 /* ---------- FOOTER ---------- */
-.d26 .foot-grid {
+/* .ms .band .wrap impone max-width 1000px con specificita' 0,3,0, che
+   batteva il 1240px di .foot-grid (0,2,0): il footer restava schiacciato
+   in mezza pagina invece di distendersi come sullo standard. Serve un
+   selettore piu' specifico, non un valore piu' grande. */
+.d26 .band .wrap.foot-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 34px;
+  gap: 40px;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1560px;
   margin: 0 auto;
 }
 @media (min-width: 900px) {
@@ -1544,7 +1548,7 @@
 }
 .d26 .foot-grid h4 {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -1560,7 +1564,7 @@
   cursor: pointer;
   text-align: left;
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16.5px;
   color: var(--testo-ink-2);
   line-height: 2.1;
   transition: color 0.25s;
@@ -1579,24 +1583,24 @@
 }
 .d26 .foot-pill {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 .d26 .foot-meta {
   margin-top: 18px;
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--testo-ink-2);
   line-height: 1.9;
 }
 .d26 .foot-meta .mail {
   color: var(--carta);
-  font-size: 16px;
+  font-size: 19px;
 }
 .d26 .foot-legal {
   margin-top: 26px;
-  font-size: 11.5px;
+  font-size: 12.5px;
   color: var(--ombra);
   line-height: 1.8;
 }
