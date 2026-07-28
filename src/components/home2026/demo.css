@@ -322,7 +322,7 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -366,7 +366,7 @@
    di cosi' la headline supera meta' schermo, piu' stretta e va a
    quattro righe. */
 .d26 .hero-h1 {
-  font-size: clamp(34px, 5.6vw, 66px);
+  font-size: clamp(38px, 6.2vw, 78px);
   line-height: 1.12;
   max-width: min(100%, 1340px);
   margin-top: 40px;
@@ -374,41 +374,73 @@
 .d26 .hero-h1 .u26 {
   position: relative;
 }
-/* SOTTOLINEATURA a mano libera, disegnata come SFONDO RIPETUTO.
-   Le versioni precedenti erano un SVG in position:absolute sopra .u26.
-   Non poteva funzionare: .u26 e' un elemento inline, e quando il testo
-   va a capo la sua scatola si spezza in piu' frammenti — il tracciato
-   restava ancorato al riquadro complessivo e si vedeva spezzato in due
-   segmenti scollegati. Allargare la headline lo nascondeva soltanto:
-   bastava una parola in piu' o una lingua diversa per rirompersi.
-
-   Come background-image invece il segno si ridisegna per OGNI frammento
-   di riga, che e' esattamente il comportamento richiesto, e
-   box-decoration-break:clone lo rende esplicito. Il tratto e' un piccolo
-   SVG ondulato che si ripete in orizzontale: resta disegnato a mano e
-   non si rompe mai piu', a qualsiasi larghezza. */
+/* SOTTOLINEATURA a mano libera, sotto la sola ultima parola.
+   Storia degli errori, perche' non si ripetano: .u26 conteneva l'intera
+   frase, che va a capo. Come SVG assoluto si spezzava in due segmenti;
+   come background ripetuto compariva sotto entrambe le righe — corretto
+   ma brutto, il tile faceva l'onda da correttore ortografico.
+   Ora .u26 avvolge una parola sola, che non si spezza mai: si torna a un
+   tratto UNICO, lungo esattamente quanto la parola. */
 .d26 .hero-h1 .u26 {
   position: relative;
-  padding-bottom: 0.16em;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 8' preserveAspectRatio='none'%3E%3Cpath d='M0 5.2 Q 11 2.2 22 5 T 44 4.6' fill='none' stroke='%23E8650A' stroke-width='2.1' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-position: 0 100%;
-  background-size: 2.2em 0.2em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+  white-space: nowrap;
+}
+.d26 .hero-h1 .u26 .uline {
+  position: absolute;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: -0.16em;
+  width: calc(100% + 0.1em);
+  height: 0.26em;
+  overflow: visible;
+  pointer-events: none;
+}
+.d26 .hero-h1 .u26 .uline path {
+  fill: none;
+  stroke: var(--marker);
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.d26 .hero-h1 .u26 .uline .p1 {
+  stroke-width: 3.2;
+  opacity: 0.95;
+}
+/* seconda passata: piu' sottile e scarica, e' quella che da' il tocco
+   di mano invece dell'aspetto di una riga tirata col righello */
+.d26 .hero-h1 .u26 .uline .p2 {
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+/* si tracciano in sequenza quando la hero entra */
+.d26 .hero-h1 .u26 .uline path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.d26 [data-active="true"] .hero-h1 .u26 .uline .p1 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.6s var(--ease) 0.9s;
+}
+.d26 [data-active="true"] .hero-h1 .u26 .uline .p2 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s var(--ease) 1.15s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .d26 .hero-h1 .u26 .uline path {
+    stroke-dashoffset: 0;
+  }
 }
 
 .d26 .hero-sub {
   margin-top: 34px;
-  max-width: 56ch;
-  font-size: clamp(17px, 2vw, 21px);
+  max-width: 54ch;
+  font-size: clamp(18px, 2.2vw, 24px);
   color: var(--testo-ink-2);
 }
 /* i bottoni della hero sono il primo invito all'azione: piu' grandi
    del default del DS (14px / 13px 22px) */
 .d26 .hero-ctas .btn {
-  font-size: 17px;
-  padding: 17px 30px;
+  font-size: 18px;
+  padding: 19px 34px;
 }
 .d26 .hero-ctas .btn-1 {
   display: inline-flex;

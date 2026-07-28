@@ -14,6 +14,13 @@ import { jumpToIndex } from "../engine/useDemoScroll";
 export function Hero({ active }: { active: boolean }) {
   const t = useTranslations("Hero");
 
+  /* Spezza l'ultima parola della riga enfatizzata: e' quella che porta
+     la sottolineatura. */
+  const p3 = t("headline_part3");
+  const cut = p3.trimEnd().lastIndexOf(" ");
+  const headlineTail =
+    cut > -1 ? { head: p3.slice(0, cut + 1), last: p3.slice(cut + 1) } : { head: "", last: p3 };
+
   return (
     <section className="panel band ink hero-panel" data-active={active}>
       <div className="grid-anim" aria-hidden="true" />
@@ -36,7 +43,26 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph u26">{t("headline_part3")}</span>
+            <span className="emph">
+              {/* La sottolineatura sta SOLO sull'ultima parola. Cosi' non
+                  attraversa tutta la frase, e soprattutto smette di essere
+                  un problema se la riga va a capo: una parola singola non
+                  si spezza mai. Ultima parola calcolata, non scritta a
+                  mano, cosi' regge anche le altre lingue. */}
+              {headlineTail.head}
+              <span className="u26">
+                {headlineTail.last}
+                {/* Tratto unico, non un motivo ripetuto: la versione a
+                    tile faceva l'onda da correttore ortografico. Due
+                    passate come un pennarello, la seconda piu' scarica.
+                    non-scaling-stroke tiene lo spessore costante mentre
+                    il tracciato si adatta alla larghezza della parola. */}
+                <svg className="uline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+                  <path className="p1" d="M2 5.6 C 26 2.9, 62 3.3, 98 4.6" pathLength={1} />
+                  <path className="p2" d="M6 8.6 C 34 7.1, 68 7.4, 95 8.1" pathLength={1} />
+                </svg>
+              </span>
+            </span>
           </span>
         </h1>
 
