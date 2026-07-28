@@ -81,8 +81,8 @@
      scriveva la sua misura a mano, quasi sempre piu' piccola. Da qui in giu'
      la soglia e' 18/29 su desktop, 16 il minimo assoluto per un testo che
      porta significato. Regola: piuttosto un pixel in piu' che uno in meno. */
-  font-size: 18px;
-  line-height: 1.62;
+  font-size: 19px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 /* h4-h6 inclusi: prima la regola si fermava a h3 e i pochi <h4> della
@@ -174,7 +174,7 @@
   margin: 12px 0 20px;
 }
 .ms .lead {
-  font-size: clamp(16px, 1.8vw, 19px);
+  font-size: clamp(19px, 2vw, 22px);
   max-width: 58ch;
 }
 .ms .band.carta .lead {
@@ -283,7 +283,7 @@
   margin-top: 10px;
 }
 .ms .card p {
-  font-size: 16.5px;
+  font-size: 17.5px;
   margin-top: 8px;
 }
 .ms .band.carta .card p {
@@ -335,7 +335,7 @@
   max-width: 19ch;
 }
 .ms .hero .copy {
-  font-size: clamp(16px, 1.9vw, 19px);
+  font-size: clamp(19px, 2.1vw, 22px);
   color: var(--testo-ink-2);
   max-width: 56ch;
   margin-top: 20px;
@@ -349,6 +349,23 @@
   margin-top: 26px;
   max-width: 34ch;
 }
+/* .cta-row GLOBALE - aggiunta 2026-07-28.
+   Esisteva solo sotto .hero, .ctaq e .collaudo: usata altrove non era
+   nemmeno flex, quindi i bottoni si impilavano a sinistra invece di
+   allinearsi in riga. Era il motivo per cui Metodo, Investimento e
+   Ponte uscivano storti. La regola dell'hero resta sotto e vince per
+   specificita' dove serve. */
+.ms .cta-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.ms .cta-row.centrata {
+  justify-content: center;
+}
+
 .ms .hero .cta-row {
   display: flex;
   gap: 14px;
@@ -426,7 +443,7 @@
 }
 .ms .cell .l {
   color: var(--testo-carta-2);
-  font-size: 16px;
+  font-size: 17px;
   margin-top: 8px;
 }
 
@@ -546,7 +563,7 @@
 }
 .ms .mem .bio {
   color: var(--testo-ink-2);
-  font-size: 16px;
+  font-size: 17px;
   margin-top: 10px;
 }
 
@@ -578,7 +595,7 @@
 }
 .ms .caso .who {
   margin-top: 16px;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--testo-carta-2);
 }
 .ms .caso .who b {
@@ -664,7 +681,7 @@
 .ms .compound {
   font-family: var(--font-emph);
   font-style: italic;
-  font-size: clamp(16px, 1.9vw, 19px);
+  font-size: clamp(19px, 2.1vw, 22px);
   line-height: 1.5;
   margin-top: 24px;
   padding-left: 20px;
@@ -816,7 +833,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.4;
 }
 .ms .band.carta .curve-card li {
@@ -1079,7 +1096,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.4;
 }
 .ms .band.ink .blist li {
@@ -1211,7 +1228,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
-  font-size: 16.5px;
+  font-size: 17.5px;
   line-height: 1.45;
 }
 .ms .band.ink .vstep .vlist li {
@@ -1392,7 +1409,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 11px;
-  font-size: 16.5px;
+  font-size: 17.5px;
   color: var(--inchiostro);
 }
 .ms .isnot .m {
@@ -1426,7 +1443,7 @@
   font-weight: 600;
 }
 .ms .rcard p {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
@@ -1533,7 +1550,7 @@
   font-weight: 600;
 }
 .ms .prod p {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
