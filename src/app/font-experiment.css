@@ -39,6 +39,10 @@ html.font-exp-clash {
 
   --exp-fw-display: 500; /* Clash Medium: a corpo grande respira meglio */
   --exp-fw-heading: 600;
+  --exp-fw-bold: 600; /* era 700: un grado meno sui font-black/font-bold */
+  --exp-fw-num: 700; /* era 900 (font-black) sui numeroni in Satoshi */
+
+  --exp-display-scale: 0.87; /* i display grandi rientrano in meno righe */
 }
 
 /* ============================================================
@@ -60,6 +64,10 @@ html.font-exp-jakarta {
 
   --exp-fw-display: 600;
   --exp-fw-heading: 600;
+  --exp-fw-bold: 700;
+  --exp-fw-num: 700;
+
+  --exp-display-scale: 1; /* Jakarta sta gia' nelle righe previste */
 }
 
 /* ============================================================
@@ -91,11 +99,64 @@ html[class*="font-exp-"] :is(h3, h4, h5, h6) {
   font-weight: var(--exp-fw-heading);
 }
 
-/* Grassetti espliciti: rispettali, ma cappati sul peso massimo reale
-   della famiglia (Clash arriva a 700, non a 900 di font-black). */
+/* Grassetti espliciti (font-black = 900, font-bold = 700): cappati sul
+   peso massimo reale della famiglia e poi scesi di un grado ancora.
+   Clash e' una display: a corpo grande i pesi alti si impastano. */
 html[class*="font-exp-"] :is(h1, h2, h3).font-black,
 html[class*="font-exp-"] :is(h1, h2, h3).font-bold {
-  font-weight: 700;
+  font-weight: var(--exp-fw-bold);
+}
+
+/* I numeroni del ROIometro NON sono heading: sono <p class="font-black
+   tabular-nums">, quindi ereditano il body (Satoshi) e restano a 900.
+   Le regole sui titoli non li toccano — servono di loro. */
+html[class*="font-exp-"] p.tabular-nums.font-black,
+html[class*="font-exp-"] :is(p, span, div).tabular-nums.font-black {
+  font-weight: var(--exp-fw-num);
+}
+
+/* ---- 2b. DIMENSIONE DEI DISPLAY GRANDI -----------------------
+   Il titolo della sezione Problema andava a 5 righe: Clash occupa piu'
+   larghezza di DM Sans, e allentare il tracking (necessario per non far
+   collidere le parole) ne aggiunge altra. Rientra scalando il corpo.
+
+   L'aggancio e' la COPPIA di classi arbitrarie text-[2.35rem] +
+   xl:text-[3.35rem], che insieme identificano solo quel titolo. Presa
+   singolarmente nessuna delle due basta: text-[3.35rem] la usano anche
+   l'h1 dell'hero e l'h2 di Partners, e text-[2.35rem] anche l'h2 della
+   CTA — tutti con scale diverse, che verrebbero riscritte sbagliate.
+   Cosi' invece non serve toccare HomeProblem.tsx e l'esperimento resta
+   cancellabile buttando via questo solo file.
+
+   I valori replicano la scala Tailwind originale (2.35rem / 4xl / 5xl /
+   3.35rem / 6xl) moltiplicata per --exp-display-scale, che vale 1 nella
+   variante jakarta: la regola c'e' ma non fa nulla.
+
+   Nota: la pagina ha anche short:!text-5xl per i viewport bassi. E'
+   !important, quindi su quelli vince lui e la scala non si applica —
+   va bene cosi': e' una valvola di sicurezza del layout esistente. */
+html[class*="font-exp-"] h2[class*="text-[2.35rem]"][class*="text-[3.35rem]"] {
+  font-size: calc(2.35rem * var(--exp-display-scale));
+}
+@media (min-width: 640px) {
+  html[class*="font-exp-"] h2[class*="text-[2.35rem]"][class*="text-[3.35rem]"] {
+    font-size: calc(2.25rem * var(--exp-display-scale));
+  }
+}
+@media (min-width: 768px) {
+  html[class*="font-exp-"] h2[class*="text-[2.35rem]"][class*="text-[3.35rem]"] {
+    font-size: calc(3rem * var(--exp-display-scale));
+  }
+}
+@media (min-width: 1280px) {
+  html[class*="font-exp-"] h2[class*="text-[2.35rem]"][class*="text-[3.35rem]"] {
+    font-size: calc(3.35rem * var(--exp-display-scale));
+  }
+}
+@media (min-width: 1536px) {
+  html[class*="font-exp-"] h2[class*="text-[2.35rem]"][class*="text-[3.35rem]"] {
+    font-size: calc(3.75rem * var(--exp-display-scale));
+  }
 }
 
 /* ---- 3. EYEBROW / MICRO-LABEL → mono -------------------------
