@@ -36,12 +36,9 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph u26">
-              {t("headline_part3")}
-              <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
-                <path className="dr" d="M2 7 Q 30 3 55 6 T 98 5" pathLength={1} />
-              </svg>
-            </span>
+            {/* la sottolineatura e' un ::after in CSS (barra sfumata),
+                non piu' uno squiggle SVG disegnato a mano */}
+            <span className="emph u26">{t("headline_part3")}</span>
           </span>
         </h1>
 
@@ -50,6 +47,15 @@ export function Hero({ active }: { active: boolean }) {
         <div className="hero-ctas fx d6">
           <button className="btn btn-1" type="button" onClick={() => jumpToIndex(13)}>
             {t("cta_primary")}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
           <button className="btn btn-3" type="button" onClick={() => jumpToIndex(10)}>
             {t("cta_secondary")}
