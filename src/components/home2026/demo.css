@@ -172,7 +172,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-display);
+  /* niente font: il logo e' un'immagine */
   font-weight: 600;
   font-size: 19px;
   letter-spacing: -0.02em;
@@ -374,88 +374,30 @@
 .d26 .hero-h1 .u26 {
   position: relative;
 }
-/* SOTTOLINEATURA a mano libera.
-   La versione originale era brutta per un motivo preciso: con
-   preserveAspectRatio="none" l'SVG viene stirato in orizzontale e con
-   lui lo SPESSORE del tratto, che diventava una lama piatta e disuguale.
-   vector-effect:non-scaling-stroke tiene lo spessore costante mentre il
-   tracciato si adatta alla larghezza: il segno resta disegnato, non
-   deformato. Due passate sfalsate, come un pennarello che ripassa. */
-.d26 .hero-h1 .u26 .uline {
-  position: absolute;
-  left: -0.06em;
-  right: -0.06em;
-  bottom: -0.2em;
-  width: calc(100% + 0.12em);
-  height: 0.3em;
-  overflow: visible;
-  pointer-events: none;
-}
-.d26 .hero-h1 .u26 .uline path {
-  fill: none;
-  stroke: var(--marker);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-.d26 .hero-h1 .u26 .uline .p1 {
-  stroke-width: 3.4;
-  opacity: 0.95;
-}
-/* seconda passata: piu' sottile e piu' scarica, da' l'irregolarita' */
-.d26 .hero-h1 .u26 .uline .p2 {
-  stroke-width: 1.8;
-  opacity: 0.45;
+/* SOTTOLINEATURA a mano libera, disegnata come SFONDO RIPETUTO.
+   Le versioni precedenti erano un SVG in position:absolute sopra .u26.
+   Non poteva funzionare: .u26 e' un elemento inline, e quando il testo
+   va a capo la sua scatola si spezza in piu' frammenti — il tracciato
+   restava ancorato al riquadro complessivo e si vedeva spezzato in due
+   segmenti scollegati. Allargare la headline lo nascondeva soltanto:
+   bastava una parola in piu' o una lingua diversa per rirompersi.
+
+   Come background-image invece il segno si ridisegna per OGNI frammento
+   di riga, che e' esattamente il comportamento richiesto, e
+   box-decoration-break:clone lo rende esplicito. Il tratto e' un piccolo
+   SVG ondulato che si ripete in orizzontale: resta disegnato a mano e
+   non si rompe mai piu', a qualsiasi larghezza. */
+.d26 .hero-h1 .u26 {
+  position: relative;
+  padding-bottom: 0.16em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 8' preserveAspectRatio='none'%3E%3Cpath d='M0 5.2 Q 11 2.2 22 5 T 44 4.6' fill='none' stroke='%23E8650A' stroke-width='2.1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  background-size: 2.2em 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-/* Sfumatura sul testo, come sulla home di produzione: il colore pieno
-   tiene per meta' riga e poi degrada. background-clip:text non tocca il
-   sottolineato SVG, che ha stroke proprio (--firma) e non currentColor. */
-.d26 .hero-h1 .fade-1 {
-  background: linear-gradient(
-    130deg,
-    var(--carta) 0%,
-    var(--carta) 55%,
-    rgba(228, 231, 240, 0.62) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-/* Era vista (#8CA5F7) su viola: due toni vicini, si leggeva male. Passa
-   su ghost-white, con solo un velo di vista in coda; a distinguerla dalla
-   prima riga bastano il corsivo serif e la sottolineatura Forge — che e'
-   la stessa scelta fatta sulla home di produzione. */
-.d26 .hero-h1 .emph.u26 {
-  background: linear-gradient(
-    20deg,
-    var(--carta) 0%,
-    var(--carta) 58%,
-    rgba(140, 165, 247, 0.92) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-/* Le due passate si tracciano in sequenza, non insieme: e' quello che
-   fa leggere il gesto come disegnato invece che come una comparsa. */
-.d26 .hero-h1 .u26 .uline path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p1 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.7s var(--ease) 0.85s;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p2 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.55s var(--ease) 1.15s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .d26 .hero-h1 .u26 .uline path {
-    stroke-dashoffset: 0;
-  }
-}
 .d26 .hero-sub {
   margin-top: 34px;
   max-width: 56ch;
@@ -1874,20 +1816,39 @@ html.hero-center .hero-test-badge {
   pointer-events: none;
 }
 
-/* La sottolineatura disegnata funziona solo se la riga enfatizzata sta
-   intera: l'SVG e' posizionato sulla scatola inline, che andando a capo
-   si spezza in due frammenti e produce due segmenti scollegati.
-   Sotto la larghezza in cui la riga ci sta, si passa a un underline
-   nativo — segue le righe per costruzione. */
-@media (max-width: 1279px) {
-  .d26 .hero-h1 .u26 .uline {
-    display: none;
-  }
-  .d26 .hero-h1 .u26 {
-    text-decoration: underline;
-    text-decoration-color: var(--marker);
-    text-decoration-thickness: 0.05em;
-    text-underline-offset: 0.18em;
-    text-decoration-skip-ink: none;
-  }
+/* ---------- header: nav centrata sulla PAGINA ----------
+   Con justify-content:space-between la nav finisce al centro dello
+   spazio RESIDUO fra logo e CTA, che hanno larghezze diverse: quindi
+   sembra spostata. Ancorandola al 50% del contenitore e' centrata sulla
+   pagina davvero, indipendentemente da cosa le sta ai lati. */
+.d26 .top-header .topnav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.d26 .top-header .topright {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.d26 .top-header .langswitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: inherit;
+  opacity: 0.55;
+  transition: opacity var(--dur) var(--ease);
+}
+.d26 .top-header .langswitch:hover {
+  opacity: 1;
+}
+.d26 .top-header .langswitch span[data-on="true"] {
+  font-weight: 700;
+  opacity: 1;
+}
+.d26 .top-header .langswitch span[data-on="false"] {
+  opacity: 0.7;
 }

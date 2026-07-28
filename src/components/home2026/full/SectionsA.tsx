@@ -36,26 +36,7 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph u26">
-              {t("headline_part3")}
-              {/* Sottolineatura tracciata a mano, in due passate come un
-                  pennarello: la seconda e' piu' sottile e sfalsata, cosi'
-                  il segno non sembra geometrico. Lo stiramento orizzontale
-                  non deforma piu' lo spessore grazie a non-scaling-stroke
-                  (era quello a rendere brutta la versione precedente). */}
-              <svg className="uline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true">
-                <path
-                  className="p1"
-                  d="M5 10.2 C 58 6.4, 104 7.4, 152 8.2 S 244 9.4, 295 6.2"
-                  pathLength={1}
-                />
-                <path
-                  className="p2"
-                  d="M14 13.4 C 76 10.8, 148 11.6, 212 11.1 S 272 11.4, 288 10.2"
-                  pathLength={1}
-                />
-              </svg>
-            </span>
+            <span className="emph u26">{t("headline_part3")}</span>
           </span>
         </h1>
 
