@@ -4,6 +4,7 @@ import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import "./site.css";
 import "./site-font-experiment.css";
+import "./site-palette-experiment.css";
 
 /**
  * Shared shell for every official-site content page.
