@@ -370,6 +370,39 @@
   line-height: 1.12;
   max-width: min(100%, 1340px);
   margin-top: 40px;
+  /* Stacca la headline dal bagliore, che essendo animato cambia
+     luminosita' di continuo. text-shadow non servirebbe: con
+     color:transparent non c'e' testo da ombreggiare — drop-shadow
+     agisce invece sui pixel gia' resi. */
+  filter: drop-shadow(0 2px 22px rgba(11, 11, 12, 0.5));
+}
+
+/* SFUMATURE DEL TESTO.
+   Erano andate perse: una sostituzione a intervallo su questo file le
+   aveva cancellate insieme al vecchio blocco della sottolineatura. La
+   riga enfatizzata era cosi' ricaduta sul default del DS
+   (.band.ink .emph -> --lilla, cioe' vista), che sul punto piu'
+   luminoso del bagliore da' 2.42:1: sotto il minimo di 3:1 anche per il
+   testo grande. Era quello il motivo per cui non si leggeva. */
+.d26 .hero-h1 .fade-1 {
+  background: linear-gradient(
+    130deg,
+    var(--carta) 0%,
+    var(--carta) 55%,
+    rgba(228, 231, 240, 0.62) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Coda su lavanda chiara invece che su vista: stesso tono, ma 4.33:1
+   contro 2.42:1. A distinguere questa riga dalla prima bastano il
+   corsivo serif e la sottolineatura Forge, non serve il colore. */
+.d26 .hero-h1 .emph {
+  background: linear-gradient(20deg, var(--carta) 0%, var(--carta) 60%, #d7dffb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .d26 .hero-h1 .u26 {
   position: relative;
