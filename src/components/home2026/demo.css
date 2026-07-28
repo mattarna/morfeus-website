@@ -1696,12 +1696,18 @@
    animato finiva dietro ogni sezione scura della pagina: e' un fondale
    di apertura, non un tema. Le altre restano com'erano (notte + griglia
    blueprint), quindi coprono il layer fixed e non lo lasciano passare. */
-.d26-bg .hero-panel {
+/* .band.ink.hero-panel (0,4,0) batte .ms .band.ink (0,3,0), che
+   altrimenti rimette il fondo notte e lascia la hero nera: e' successo,
+   il selettore precedente valeva solo 0,2,0 e perdeva.
+   Sia il colore SIA l'immagine vanno azzerati: .band.ink porta anche la
+   griglia blueprint, e la hero ha gia' la sua (.grid-anim, animata). */
+.d26-bg .band.ink.hero-panel {
   background-color: transparent;
-  /* La griglia resta, ma molto piu' leggera: sopra l'animazione basta
-     un accenno per tenere il segno del quadrettato. */
+  background-image: none;
+}
+/* la griglia della hero resta, ma appena accennata sopra l'animazione */
+.d26-bg .hero-panel .grid-anim {
   background-image:
-    linear-gradient(rgba(228, 231, 240, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(228, 231, 240, 0.035) 1px, transparent 1px);
-  background-size: var(--grid) var(--grid);
+    linear-gradient(rgba(228, 231, 240, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 231, 240, 0.045) 1px, transparent 1px);
 }
