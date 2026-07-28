@@ -57,12 +57,20 @@ export function SchemaCentrale({
         );
       })}
 
-      {/* il centro */}
+      {/* IL CENTRO.
+          La didascalia sta SOTTO il riquadro, non dentro: a 11px con
+          tracking 0.12em "DATI · PROCESSI · PERSONE" misura circa 195
+          unita' contro i 152 del riquadro, quindi sbordava da entrambi
+          i lati e il bordo del riquadro la tagliava a meta'. Un testo
+          piu' largo della scatola che lo contiene non e' un dettaglio
+          di stile: e' un disegno rotto.
+          Sotto, e' una legenda: dice di cosa e' fatto il centro senza
+          dover stare dentro al centro. */}
       <rect x="374" y="106" width="152" height="88" rx="8" fill="none" stroke="var(--lavoro)" strokeWidth="1.5" />
-      <text x="450" y="145" textAnchor="middle" fill="var(--carta)" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 26, letterSpacing: "-0.02em" }}>
+      <text x="450" y="159" textAnchor="middle" fill="var(--carta)" style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 26, letterSpacing: "-0.02em" }}>
         {centro}
       </text>
-      <text x="450" y="170" textAnchor="middle" fill="var(--ombra)" style={{ ...MONO, fontSize: 11 }}>
+      <text x="450" y="220" textAnchor="middle" fill="var(--ombra)" style={{ ...MONO, fontSize: 11 }}>
         DATI · PROCESSI · PERSONE
       </text>
 

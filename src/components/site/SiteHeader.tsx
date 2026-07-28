@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LangSwitch } from "./LangSwitch";
 
 /**
  * La voce MARF punta a /marf, non piu' a /forge. Erano due pagine
@@ -46,6 +47,7 @@ const COPY = {
     ],
     cta: "Prenota una chiamata",
     home: "Morfeus, home",
+    langLabel: "Passa all'inglese",
   },
   en: {
     nav: [
@@ -58,6 +60,7 @@ const COPY = {
     ],
     cta: "Book a call",
     home: "Morfeus, home",
+    langLabel: "Passa all'italiano",
   },
 } as const;
 
@@ -101,17 +104,21 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
           ))}
         </div>
 
-        {/* CTA firma. `btn-bar` la rimpicciolisce: il .btn del sistema e'
-            tarato sui bottoni dentro le sezioni, dove deve pesare; in una
-            barra alta 68px lo stesso bottone diventa il primo oggetto che
-            vedi, prima del logo. La classe sta in site.css perche' le
-            utility Tailwind (0,1,0) perdono contro `.ms .btn` (0,2,0). */}
-        <a
-          href={`${base}/roiometro`}
-          className="btn btn-1 btn-bar"
-        >
-          {t.cta}
-        </a>
+        <div className="flex items-center gap-[clamp(14px,1.6vw,22px)]">
+          {/* Toggle lingua: stessa forma e stessa posizione della home,
+              accanto alla CTA. E' un'isola client perche' deve sapere su
+              quale pagina sei, per portarti alla stessa nell'altra lingua. */}
+          <LangSwitch locale={locale} label={t.langLabel} />
+
+          {/* CTA firma. `btn-bar` la rimpicciolisce: il .btn del sistema e'
+              tarato sui bottoni dentro le sezioni, dove deve pesare; in una
+              barra alta 68px lo stesso bottone diventa il primo oggetto che
+              vedi, prima del logo. La classe sta in site.css perche' le
+              utility Tailwind (0,1,0) perdono contro `.ms .btn` (0,2,0). */}
+          <a href={`${base}/roiometro`} className="btn btn-1 btn-bar">
+            {t.cta}
+          </a>
+        </div>
       </nav>
     </header>
   );

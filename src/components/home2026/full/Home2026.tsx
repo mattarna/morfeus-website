@@ -10,6 +10,7 @@
 import "@/components/site/site.css";
 import "../demo.css";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
@@ -71,13 +72,6 @@ export function Home2026() {
     { label: tFooter("links.book"), index: 13, range: [13, 14] },
   ];
 
-  /* Marchio ufficiale (stesso SVG di SiteHeader, tre "onde"). */
-  const MARK_PATHS = [
-    "M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z",
-    "M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z",
-    "M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z",
-  ];
-
   /* Nav reale cross-pagina (esce dalla home verso le pagine 2026). */
   const navItems: [string, string][] =
     locale === "en"
@@ -100,13 +94,16 @@ export function Home2026() {
 
   const header = (
     <header className="top-header" data-band={BAND[i]}>
-      <button className="wordmark" type="button" onClick={() => jumpToIndex(0)} aria-label="Morfeus, torna all'inizio">
-        <svg viewBox="0 0 1000 476" fill="currentColor" width="28" aria-hidden="true">
-          {MARK_PATHS.map((d) => (
-            <path key={d} d={d} />
-          ))}
-        </svg>
-        <span>Morfeus</span>
+      {/* Logo ufficiale: e' un'immagine (mark + wordmark gia' disegnati),
+          non un SVG piu' la parola "Morfeus" scritta in Clash Display. Il
+          wordmark del brand ha un lettering proprio, non e' un font. */}
+      <button
+        className="wordmark"
+        type="button"
+        onClick={() => jumpToIndex(0)}
+        aria-label="Morfeus, torna all'inizio"
+      >
+        <Image src="/images/brand/morfeus-mark.png" alt="Morfeus" width={130} height={16} priority />
       </button>
 
       <nav className="topnav" aria-label="Pagine del sito">
@@ -117,9 +114,18 @@ export function Home2026() {
         ))}
       </nav>
 
-      <button className="btn btn-1" type="button" onClick={() => jumpToIndex(13)}>
-        {tHero("cta_primary")}
-      </button>
+      <div className="topright">
+        {/* Toggle lingua: mancava del tutto. Sta accanto alla CTA, dove
+            l'utente lo cerca. */}
+        <a className="langswitch" href={`/${locale === "it" ? "en" : "it"}/home-2026`}>
+          <span data-on={locale === "it"}>IT</span>
+          <span aria-hidden="true">/</span>
+          <span data-on={locale === "en"}>EN</span>
+        </a>
+        <button className="btn btn-1" type="button" onClick={() => jumpToIndex(13)}>
+          {tHero("cta_primary")}
+        </button>
+      </div>
     </header>
   );
 

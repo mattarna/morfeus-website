@@ -381,21 +381,25 @@
 }
 .d26 .hero-h1 .u26 {
   position: relative;
+  /* la parola sottolineata non si spezza: e' l'intero presupposto del
+     tratto unico qui sotto */
+  white-space: nowrap;
 }
-/* SOTTOLINEATURA a mano libera.
-   La versione originale era brutta per un motivo preciso: con
-   preserveAspectRatio="none" l'SVG viene stirato in orizzontale e con
-   lui lo SPESSORE del tratto, che diventava una lama piatta e disuguale.
-   vector-effect:non-scaling-stroke tiene lo spessore costante mentre il
-   tracciato si adatta alla larghezza: il segno resta disegnato, non
-   deformato. Due passate sfalsate, come un pennarello che ripassa. */
+/* SOTTOLINEATURA a mano libera, sotto la sola ultima parola.
+   Storia degli errori, perche' non si ripetano: .u26 conteneva l'intera
+   frase, che va a capo. Un inline spezzato su due righe non ha una
+   scatola sola, quindi l'SVG in position:absolute ci finiva sopra in due
+   segmenti scollegati. Come background ripetuto veniva corretto ma
+   brutto: il tile faceva l'onda da correttore ortografico.
+   Ora .u26 avvolge una parola sola, che non si spezza mai: torna un
+   tratto UNICO, lungo esattamente quanto la parola. */
 .d26 .hero-h1 .u26 .uline {
   position: absolute;
-  left: -0.06em;
-  right: -0.06em;
-  bottom: -0.2em;
-  width: calc(100% + 0.12em);
-  height: 0.3em;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: -0.16em;
+  width: calc(100% + 0.1em);
+  height: 0.26em;
   overflow: visible;
   pointer-events: none;
 }
@@ -403,22 +407,27 @@
   fill: none;
   stroke: var(--marker);
   stroke-linecap: round;
-  stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 .d26 .hero-h1 .u26 .uline .p1 {
-  stroke-width: 3.4;
+  stroke-width: 3.2;
   opacity: 0.95;
 }
-/* seconda passata: piu' sottile e piu' scarica, da' l'irregolarita' */
+/* seconda passata: piu' sottile e scarica, e' quella che da' il tocco di
+   mano invece dell'aspetto di una riga tirata col righello */
 .d26 .hero-h1 .u26 .uline .p2 {
-  stroke-width: 1.8;
-  opacity: 0.45;
+  stroke-width: 1.5;
+  opacity: 0.4;
 }
+/* NIENTE animazione di tracciamento su questo tratto.
+   Era fatta con stroke-dasharray:1 + pathLength=1, la tecnica standard
+   per "disegnare" un path. Qui pathLength non normalizzava come previsto,
+   probabilmente per la combinazione di preserveAspectRatio:none e
+   vector-effect:non-scaling-stroke che cambiano lo spazio in cui il dash
+   viene calcolato, e il risultato era una fila di trattini invece di un
+   tratto. Su questo elemento l'affidabilita' vale piu' dell'effetto
+   d'ingresso: il segno resta pieno e sempre disegnato. */
 
-/* Sfumatura sul testo, come sulla home di produzione: il colore pieno
-   tiene per meta' riga e poi degrada. background-clip:text non tocca il
-   sottolineato SVG, che ha stroke proprio (--firma) e non currentColor. */
 .d26 .hero-h1 .fade-1 {
   background: linear-gradient(
     130deg,
@@ -434,7 +443,7 @@
    su ghost-white, con solo un velo di vista in coda; a distinguerla dalla
    prima riga bastano il corsivo serif e la sottolineatura Forge — che e'
    la stessa scelta fatta sulla home di produzione. */
-.d26 .hero-h1 .emph.u26 {
+.d26 .hero-h1 .emph {
   background: linear-gradient(
     20deg,
     var(--carta) 0%,
@@ -444,25 +453,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-/* Le due passate si tracciano in sequenza, non insieme: e' quello che
-   fa leggere il gesto come disegnato invece che come una comparsa. */
-.d26 .hero-h1 .u26 .uline path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p1 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.7s var(--ease) 0.85s;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p2 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.55s var(--ease) 1.15s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .d26 .hero-h1 .u26 .uline path {
-    stroke-dashoffset: 0;
-  }
 }
 .d26 .hero-sub {
   margin-top: 24px;
@@ -1750,8 +1740,10 @@
   .d26 .fx,
   .d26 .swap,
   .d26 .met-pane[data-state="active"],
-  .d26 .scheda .sk-bar .fill,
-  .d26 .hero-h1 .u26 path {
+  /* .hero-h1 .u26 path non sta piu' in questo elenco: la sottolineatura
+     non e' piu' animata, e l'opacity:1 !important qui sotto le avrebbe
+     spento la seconda passata scarica. */
+  .d26 .scheda .sk-bar .fill {
     transition: none !important;
     animation: none !important;
     opacity: 1 !important;
@@ -1872,4 +1864,46 @@
     rgba(11, 11, 12, 0.12) 78%,
     rgba(11, 11, 12, 0) 100%
   );
+}
+
+/* ---------- header: nav centrata sulla PAGINA, toggle lingua ----------
+   Con justify-content:space-between la nav finisce al centro dello
+   spazio RESIDUO fra logo e blocco destro, che hanno larghezze diverse:
+   quindi sembra spostata. Ancorandola al 50% del contenitore e' centrata
+   sulla pagina davvero, a prescindere da cosa le sta ai lati. */
+.d26 .top-header .topnav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.d26 .top-header .topright {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.d26 .top-header .langswitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: inherit;
+  opacity: 0.55;
+  transition: opacity var(--dur) var(--ease);
+}
+.d26 .top-header .langswitch:hover {
+  opacity: 1;
+}
+.d26 .top-header .langswitch span[data-on="true"] {
+  font-weight: 700;
+  opacity: 1;
+}
+.d26 .top-header .langswitch span[data-on="false"] {
+  opacity: 0.7;
+}
+/* Il logo e' ora un'immagine: l'altezza la decide qui, non l'asset. */
+.d26 .top-header .wordmark img {
+  height: 20px;
+  width: auto;
 }

@@ -67,7 +67,7 @@ export function LabMsContatto() {
             </span>
           </div>
 
-          {PASSI.map((p, i) => (
+          {PASSI.map((p) => (
             <div
               key={p.k}
               className="riga-ordine"

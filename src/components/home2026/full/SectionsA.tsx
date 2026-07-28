@@ -14,6 +14,14 @@ import { jumpToIndex } from "../engine/useDemoScroll";
 export function Hero({ active }: { active: boolean }) {
   const t = useTranslations("Hero");
 
+  /* Spezza l'ultima parola della riga enfatizzata: e' quella che porta
+     la sottolineatura. Calcolata, non scritta a mano, cosi' regge anche
+     in inglese. */
+  const p3 = t("headline_part3");
+  const cut = p3.trimEnd().lastIndexOf(" ");
+  const headlineTail =
+    cut > -1 ? { head: p3.slice(0, cut + 1), last: p3.slice(cut + 1) } : { head: "", last: p3 };
+
   return (
     <section className="panel band ink hero-panel" data-active={active}>
       <div className="grid-anim" aria-hidden="true" />
@@ -36,25 +44,26 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph u26">
-              {t("headline_part3")}
-              {/* Sottolineatura tracciata a mano, in due passate come un
-                  pennarello: la seconda e' piu' sottile e sfalsata, cosi'
-                  il segno non sembra geometrico. Lo stiramento orizzontale
-                  non deforma piu' lo spessore grazie a non-scaling-stroke
-                  (era quello a rendere brutta la versione precedente). */}
-              <svg className="uline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true">
-                <path
-                  className="p1"
-                  d="M5 10.2 C 58 6.4, 104 7.4, 152 8.2 S 244 9.4, 295 6.2"
-                  pathLength={1}
-                />
-                <path
-                  className="p2"
-                  d="M14 13.4 C 76 10.8, 148 11.6, 212 11.1 S 272 11.4, 288 10.2"
-                  pathLength={1}
-                />
-              </svg>
+            <span className="emph">
+              {/* La sottolineatura sta SOLO sull'ultima parola. Non e' una
+                  scelta estetica: .u26 conteneva l'intera frase, che va a
+                  capo, ed era la radice di tutti i modi in cui il segno si
+                  e' rotto. Un elemento inline spezzato su due righe non ha
+                  una scatola sola, quindi l'SVG assoluto dentro ci finiva
+                  sopra a pezzi. Una parola sola non si spezza mai: il
+                  problema sparisce invece di essere aggirato. */}
+              {headlineTail.head}
+              <span className="u26">
+                {headlineTail.last}
+                {/* Tratto unico in due passate, la seconda piu' scarica,
+                    come un pennarello che ripassa. non-scaling-stroke
+                    tiene lo spessore costante mentre il tracciato si
+                    adatta alla larghezza della parola. */}
+                <svg className="uline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+                  <path className="p1" d="M2 5.6 C 26 2.9, 62 3.3, 98 4.6" />
+                  <path className="p2" d="M6 8.6 C 34 7.1, 68 7.4, 95 8.1" />
+                </svg>
+              </span>
             </span>
           </span>
         </h1>

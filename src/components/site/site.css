@@ -253,6 +253,30 @@
 .ms .btn.btn-bar {
   padding: 9px 18px;
 }
+/* Toggle lingua della barra. Stesse misure della home (.langswitch in
+   demo.css): mono a 13px, la lingua attiva in grassetto e piena, l'altra
+   sbiadita. E' un interruttore, non un menu: due stati e basta. */
+.ms .lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity var(--dur) var(--ease);
+}
+.ms .lang-switch:hover {
+  opacity: 1;
+}
+.ms .lang-switch span[data-on="true"] {
+  font-weight: 700;
+  opacity: 1;
+}
+.ms .lang-switch span[data-on="false"] {
+  opacity: 0.7;
+}
 .ms .btn-2-ink {
   background: transparent;
   color: var(--inchiostro);
