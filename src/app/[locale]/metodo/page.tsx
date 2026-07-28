@@ -1,358 +1,412 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { MappaLavoro } from "@/components/pagine/metodo/MappaLavoro";
+import "@/components/pagine/kit.css";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
-type Props = { params: { locale: string } };
+/* ============================================================
+   METODO. Rifatta sul copy approvato 2026-07-28.
+   ------------------------------------------------------------
+   LE FASCE seguono un principio, non un'alternanza decorativa:
+   la CARTA e' il registro del DOCUMENTO. Va sulle tre sezioni che
+   un documento lo sono davvero:
+     03  il caso reale        un dossier
+     05  il perimetro         un confronto, due colonne a stampa
+     07  il patto             un contratto, tre clausole
+   Tutto il resto resta inchiostro, che e' la voce che parla.
+   Cosi' ogni stacco annuncia un cambio di natura del discorso.
 
-const GLOSSARY_CHIP_MAP: Record<string, string> = {
-  ROIometro: "roiometro",
-  "Value Leak": "value-leak",
-  MARF: "marf",
-  embedded: "marf",
-  "Value Report": "value-report",
-  "AI Champion": "ai-champion",
-};
+   I DISPOSITIVI arrivano dalla direzione visiva del brief, uno per
+   uno: catena nell'hero, colonne editoriali (non card) nel metodo,
+   dossier nel caso, mappa scroll-driven con rail, confronto
+   asimmetrico, mockup sobrio del Value Report, patto contrattuale.
+
+   Una sola isola client: il rail della mappa. Le cinque tappe sono
+   server rendered e stanno nel DOM anche senza JavaScript.
+   ============================================================ */
+
+type Props = { params: { locale: string } };
 
 const COPY = {
   it: {
-    metaTitle: "Metodo — Morfeus",
+    metaTitle: "Il Metodo Morfeus · Come portiamo l'AI nei processi",
     metaDesc:
-      "Il metodo Morfeus: dalla perdita invisibile (Value Leak) al valore misurato in euro. Diagnosi col ROIometro, sistema MARF embedded, Value Report mensile, autonomia con l'AI Champion. Modello Pilot to Retainer: il rischio lo prendiamo noi.",
+      "Il Metodo Morfeus parte da dove perdi valore, non da un tool: mappatura del Value Leak, AI Champion, Context Hub, agenti in produzione e valore verificato nel Value Report.",
     hero: {
-      eye: "Il metodo",
-      h1a: "Dalla perdita invisibile al ",
-      h1emph: "valore misurato",
+      eye: "Il metodo di lavoro Morfeus",
+      h1a: "L'AI non crea valore da sola. Lo crea quando cambia il modo in cui ",
+      h1emph: "l'azienda lavora",
       h1b: ".",
-      copy: "Non un servizio a progetto, ma un sistema ripetibile. Troviamo dove la tua azienda perde margine, costruiamo i sistemi di AI che lo recuperano, e ti diciamo ogni mese quanto valore hai generato. In euro.",
-      cta1: "Prova il ROIometro",
-      cta2: "Parla con noi",
-      proof: { pre: "▸ IL PATTO · ", b: "Dimostriamo prima", post: " · il rischio lo prendiamo noi · misurato in euro" },
-      model: {
-        k: "Il modello",
-        step1: "Pilot",
-        arr: "↓ criteri di accettazione oggettivi",
-        step2: "Retainer",
-        pBold: "Dimostriamo prima su un perimetro delimitato. Il rischio lo prendiamo noi.",
-        pRest: " Superato il Pilot, diventiamo Operating Partner continuativo.",
-      },
-    },
-    frame: {
-      eye: "Il frame",
-      h2a: "Non «come uso l'AI». ",
-      h2emph: "Dove perdo valore",
-      h2b: " mentre scalo.",
-      lead: "Mentre un'azienda cresce, errori, tempo e dati frammentati degradano il margine senza che nessuno se ne accorga. Sono i Value Leak: le perdite invisibili. Noi le quantifichiamo in euro e costruiamo i sistemi che le prevengono. Non è taglio costi: è recupero strutturale di margine.",
-      stats: [
-        { n: "Value Leak", l: "le perdite di margine che le PMI non vedono" },
-        { n: "Margin Recovery", l: "trovarle, quantificarle, chiuderle con l'AI" },
+      copy: "Morfeus prende il sapere del tuo team, lo trasmette all'AI e lo trasforma in sistemi che supportano nei processi di tutti i giorni. Il valore recuperato viene verificato, migliorato e poi esteso dove conta.",
+      cta1: "Prenota una call di diagnosi",
+      cta2: "Scopri il metodo",
+      catenaTitolo: "La catena",
+      catena: [
+        { v: "Value Leak", n: "dove il margine esce" },
+        { v: "Il sapere del team", n: "chi conosce il lavoro" },
+        { v: "Context Hub", n: "il sapere diventa base" },
+        { v: "Agenti AI", n: "il sapere diventa azione" },
+        { v: "Valore misurato", n: "verificato, non promesso" },
       ],
-      lameA: "Senza governance, l'AI scala il caos. Con governance, scala il ",
-      lameEmph: "valore",
-      lameB: ".",
     },
-    log: {
-      eye: "Il dispositivo di prova",
-      h2a: "La diagnosi non è una slide. È un ",
-      h2emph: "log",
+    metodo: {
+      eye: "Il Metodo Morfeus",
+      h2a: "Non partiamo dall'AI. Partiamo da ",
+      h2emph: "dove perdi valore",
       h2b: ".",
-      lead: "Quando entriamo, il sistema gira e lascia traccia. Ogni perdita trovata è un numero, non un'impressione.",
-      tt: "morfeus · diagnose",
-      cmd: "morfeus diagnose",
-      l1: "03:47 · scanning processi · reparto per reparto...",
-      hit: "▸ 12 perdite trovate · €31.400/mese",
-      l2: "03:47 · report pronto · CRM aggiornato",
-    },
-    fasi: {
-      eye: "Come lavoriamo · 4 fasi",
-      h2a: "Quattro fasi, una sola ",
-      h2emph: "disciplina",
-      h2b: ".",
-      lead: "Dalla diagnosi in euro all'autonomia interna: ogni fase ha un deliverable concreto, non una promessa.",
-    },
-    deliverLabel: "Deliverable",
-    phases: [
-      {
-        pn: "01",
-        h3: "Diagnosi",
-        chips: ["ROIometro", "Value Leak"],
-        p: "Mappiamo i processi reparto per reparto e troviamo dove si perde margine. Con il ROIometro la conversazione si sposta da «quanto costa Morfeus» a «quanto ti costa il problema»: una perdita mensile, in euro.",
-        points: [
-          "Diagnosi reparto per reparto, sui dati reali",
-          "Perdita mensile quantificata in euro",
-          "Nessuna slide: numeri su cui decidere",
-        ],
-        deliver: "La mappa dei Value Leak, in euro.",
-      },
-      {
-        pn: "02",
-        h3: "Sistema",
-        chips: ["MARF", "embedded"],
-        p: "Installiamo MARF dentro l'azienda: l'infrastruttura AI proprietaria di Morfeus. Non un SaaS, ma un layer embedded che raccoglie e pulisce i dati operativi, automatizza il lavoro ripetitivo e fa parlare tra loro i reparti per proteggere il margine.",
-        points: [
-          "Installata e personalizzata nei tuoi sistemi",
-          "Dati operativi puliti e connessi",
-          "Ogni progetto la rende più potente",
-        ],
-        deliver: "MARF in produzione, che gira ogni giorno.",
-      },
-      {
-        pn: "03",
-        h3: "Valore",
-        chips: ["Value Report"],
-        p: "I criteri di valore si definiscono oggettivamente all'inizio e si verificano ogni mese. Il COO riceve il log settimanale di cosa è stato fatto; il CEO il Value Report mensile: quanto valore è stato generato, in euro. Il rinnovo diventa una non-decisione.",
-        points: [
-          "Criteri di valore definiti a monte",
-          "Log settimanale operativo al COO",
-          "Value Report mensile al CEO",
-        ],
-        deliver: "Il Value Report mensile.",
-      },
-      {
-        pn: "04",
-        h3: "Autonomia",
-        chips: ["AI Champion"],
-        p: "Formiamo gli AI Champion: una persona per reparto, non necessariamente IT, che sperimenta, capisce cosa funziona, lo trasforma in procedura e lo passa ai colleghi. Così l'AI passa da dipendenza esterna a competenza interna scalabile.",
-        points: [
-          "Una persona per reparto, autonoma",
-          "Procedure che restano in azienda",
-          "Il sistema regge e cresce senza di noi",
-        ],
-        deliver: "La capability interna, permanente.",
-      },
-    ],
-    model: {
-      eye: "Il modello commerciale",
-      h2a: "Dimostriamo prima. Decidi ",
-      h2emph: "dopo",
-      h2b: ".",
-      lead: "Due fasi, un solo patto: il rischio della prova lo prendiamo noi. Superato il Pilot, il rinnovo diventa una non-decisione.",
-      cards: [
+      lead: "Non partiamo da un tool da installare. Partiamo da un punto preciso in cui persone, informazioni e processi stanno già facendo perdere margine. Da lì costruiamo un sistema che resta in azienda, viene usato dalle persone e migliora nel tempo.",
+      colonne: [
         {
-          ck: "Fase 1 · Pilot",
-          ct: "Un perimetro, criteri chiari.",
-          p: "Partiamo da un Pilot delimitato, con criteri di accettazione oggettivi e nessun impegno annuale a monte. Mostriamo il valore su un caso reale prima di chiederti di scalare.",
-          sel: true,
+          n: "01",
+          t: "Prima il margine. Poi la tecnologia.",
+          p: "Non iniziamo chiedendoci dove mettere l'AI. Entriamo nei processi, individuiamo il Value Leak e lo traduciamo in un numero. Solo quando sappiamo quale valore va recuperato scegliamo cosa costruire.",
         },
         {
-          ck: "Fase 2 · Retainer",
-          ct: "Operating Partner continuativo.",
-          p: "Superato il Pilot, diventiamo il tuo Operating Partner: presenza continuativa, sistemi che evolvono, valore misurato ogni mese nel Value Report. Il rinnovo diventa una non-decisione.",
-          sel: false,
+          n: "02",
+          t: "Il sapere delle persone diventa un sistema.",
+          p: "L'AI non sostituisce chi conosce il lavoro. Rende quel sapere disponibile, replicabile e utilizzabile da tutto il team. Formiamo gli AI Champion, raccogliamo procedure, contesto e regole operative e li rendiamo parte del Context Hub aziendale.",
+        },
+        {
+          n: "03",
+          t: "In produzione. Misurato. Migliorato.",
+          p: "Un progetto non vale perché è stato presentato, né perché una demo ha funzionato una volta. Vale quando entra nei processi reali, aiuta il team ogni giorno e produce un risultato verificabile. Per questo mettiamo in produzione, misuriamo nel Value Report e rafforziamo ciò che funziona.",
         },
       ],
     },
-    prodotti: {
-      eye: "I due prodotti",
-      h2a: "Lo stesso metodo prende ",
-      h2emph: "due forme",
+    caso: {
+      eye: "Un sistema vale quando risolve un problema reale",
+      h2a: "Un report tecnico non doveva restare ",
+      h2emph: "un report",
       h2b: ".",
-      lead: "Uno costruisce i sistemi che restano in azienda. L'altro forma le persone che li usano. Spesso viaggiano insieme.",
-      link: "Scopri",
-      cards: [
+      p1: "In Cyberangels, le informazioni necessarie per proporre servizi di sicurezza erano bloccate in documenti tecnici difficili da usare per un commerciale. Ogni conversazione richiedeva passaggi, interpretazioni e il coinvolgimento di chi conosceva già il tema.",
+      p2: "Abbiamo trasformato quel sapere in un sistema che legge il contesto, struttura un brief utile alla vendita e segnala quando le informazioni non sono sufficienti per procedere.",
+      p3: "Il risultato non è un documento più bello. È un team che può iniziare conversazioni commerciali più preparate, senza dipendere ogni volta da una singola persona tecnica.",
+      readout: "Dossier · Cyberangels",
+      stato: "Verificato",
+      passi: ["Value leak", "Sistema", "Valore"],
+      stazioni: [
+        "Il sapere tecnico restava separato da chi doveva usarlo.",
+        "Le informazioni diventano un brief operativo, con regole e controlli.",
+        "Meno passaggi. Più autonomia. Una conversazione commerciale che parte dal contesto giusto.",
+      ],
+      cta: "Leggi il caso completo",
+    },
+    lavoro: {
+      eye: "Dal primo confronto al valore che si accumula",
+      h2a: "Il metodo è sempre lo stesso. Ciò che costruiamo ",
+      h2emph: "cambia con la tua azienda",
+      h2b: ".",
+      lead: "Non applichiamo un pacchetto standard. Seguiamo una sequenza precisa per capire dove intervenire, coinvolgere le persone giuste e mettere in produzione un sistema che abbia un impatto concreto.",
+      tappe: [
         {
-          ck: "Operating Partner",
-          ct: "MARF",
-          p: "L'AI si installa in azienda in circa 30 giorni e migliora ogni mese. Non un progetto: un'infrastruttura che resta.",
-          bullets: ["Sistemi che recuperano margine", "Value Report mensile, in euro", "Canone, non giornate"],
-          href: "forge",
+          id: "mappatura",
+          indice: "01 · Mappatura",
+          titolo: "Troviamo il costo prima del tool.",
+          testo: "Parliamo con le persone, osserviamo i flussi, mettiamo in fila dati, decisioni e passaggi operativi. Il ROIometro serve a isolare il Value Leak: dove il margine si sta già perdendo e dove ha senso intervenire.",
         },
         {
-          ck: "Formazione",
-          ct: "LAB",
-          p: "Il team impara a usare l'AI sui casi veri della tua azienda, fino a diventare autonomo.",
-          bullets: ["Sui tuoi processi, non su slide", "Un LAB, tre porte", "AI Champion interni"],
-          href: "lab",
+          id: "ai-champion",
+          indice: "02 · AI Champion",
+          titolo: "Partiamo da chi il lavoro lo conosce.",
+          testo: "Le persone non sono un ostacolo all'adozione. Sono la fonte del sistema. Formiamo gli AI Champion e lavoriamo con chi conosce davvero il processo, così l'AI nasce dal lavoro reale e non da ipotesi fatte dall'esterno.",
         },
+        {
+          id: "context-hub",
+          indice: "03 · Context Hub",
+          titolo: "Il know-how smette di restare nella testa di pochi.",
+          testo: "Procedure, regole, informazioni e contesto operativo vengono raccolti e resi utilizzabili dentro MARF, il Context Hub aziendale. Il sapere non resta disperso tra file, chat e persone chiave: diventa una base su cui il team può lavorare.",
+        },
+        {
+          id: "agenti-ai",
+          indice: "04 · Agenti AI",
+          titolo: "Il sapere diventa azione.",
+          testo: "Costruiamo e mettiamo in produzione gli agenti AI nei punti in cui servono davvero. Non chatbot da mostrare in una demo, ma sistemi con un compito chiaro, regole chiare e un ruolo dentro il processo.",
+        },
+        {
+          id: "compound",
+          indice: "05 · Compound",
+          titolo: "Ciò che funziona non resta isolato.",
+          testo: "Quando un sistema dimostra valore, lo miglioriamo, lo rendiamo più affidabile e lo estendiamo dove può generare un impatto ulteriore. Il valore non si ferma al primo progetto: si accumula dentro l'organizzazione.",
+        },
+      ],
+    },
+    perimetro: {
+      eye: "Un problema alla volta. Ma quello giusto.",
+      h2a: "Non trasformiamo tutto. Risolviamo prima ciò che ",
+      h2emph: "ti sta costando",
+      h2b: ".",
+      p1: "Un'azienda non ha bisogno di una roadmap infinita sull'AI. Ha bisogno di capire dove intervenire per primo, costruire qualcosa che venga davvero usato e verificare che stia generando valore.",
+      p2: "Per questo scegliamo un perimetro ristretto, ma ad alto impatto. È il modo più rapido per togliere rischio, coinvolgere il team e separare un sistema utile da un progetto che finisce in una presentazione.",
+      testaNo: "Non facciamo",
+      testaSi: "Facciamo",
+      righe: [
+        ["Audit che producono solo slide", "Mappature che identificano un Value Leak"],
+        ["Tool distribuiti senza contesto", "Sistemi integrati in un processo reale"],
+        ["Formazione senza applicazione", "AI Champion che lavorano su casi concreti"],
+        ["Pilot senza conseguenze", "Sistemi messi in produzione e misurati"],
+      ],
+    },
+    report: {
+      eye: "Il valore non è una sensazione",
+      h2a: "Ogni mese una domanda: cosa ha ",
+      h2emph: "recuperato questo sistema",
+      h2b: "?",
+      p1: "Implementare non basta. Un sistema AI deve dimostrare di stare liberando tempo, riducendo passaggi inutili, migliorando decisioni o moltiplicando l'output del team.",
+      p2: "Il Value Report rende visibile questo impatto. Guardiamo cosa sta funzionando, dove il sistema va migliorato e dove esiste spazio per estendere il valore. Se non possiamo verificarlo, non lo chiamiamo risultato.",
+      readout: "Value Report · cadenza mensile",
+      stato: "Verificabile",
+      indicatori: [
+        { nome: "Ore recuperate", misura: "tempo restituito al team" },
+        { nome: "Costi ottimizzati", misura: "spesa che non serviva più" },
+        { nome: "Output moltiplicato", misura: "stesso organico, più lavoro" },
+        { nome: "Decisioni accelerate", misura: "tempo fra domanda e scelta" },
+      ],
+      nota: "Nessuna percentuale che non possiamo mostrarti da dove viene.",
+    },
+    patto: {
+      eye: "Prima la prova. Poi la scala.",
+      h2a: "Non ti chiediamo di crederci. Ti chiediamo di ",
+      h2emph: "guardarlo funzionare",
+      h2b: ".",
+      p1: "Prima capiamo se esiste un Value Leak concreto e se possiamo intervenire con un sistema utile. Poi lavoriamo su un perimetro definito, con le persone coinvolte e criteri chiari per valutare il risultato.",
+      p2: "Solo ciò che funziona entra nel passo successivo. Questo protegge il tuo investimento, evita progetti infiniti e ci obbliga a lavorare sul valore, non sulle promesse.",
+      clausole: [
+        "Partiamo da un problema che si può osservare e misurare.",
+        "Costruiamo sistemi che restano nella tua azienda.",
+        "Estendiamo solo ciò che ha dimostrato di funzionare.",
       ],
     },
     cta: {
-      eye: "Parliamone",
-      h2a: "Il problema che non vedi ha un ",
-      h2emph: "prezzo",
-      h2b: ". Calcolalo.",
-      p: "Il primo passo non è un preventivo. È capire, in euro, dove la tua azienda perde valore ogni giorno.",
-      cta1: "Prova il ROIometro ▸",
-      cta2: "Parla con noi",
+      eye: "Il primo passo non è una demo",
+      h2a: "Dove stai perdendo margine ",
+      h2emph: "senza accorgertene",
+      h2b: "?",
+      p: "Prenota una call di diagnosi. Guardiamo insieme i processi in cui il valore si blocca, si disperde o dipende ancora dalla testa di poche persone. Se c'è un Value Leak su cui intervenire, saprai da dove iniziare.",
+      btn: "Prenota una call di diagnosi",
+      micro: "Nessuna demo generica. Nessuna roadmap preconfezionata. Solo un problema concreto da capire.",
+    },
+    faq: {
+      eye: "Domande",
+      titolo: "Il Metodo, in chiaro.",
+      voci: [
+        {
+          q: "Cos'è il Metodo Morfeus?",
+          a: "Il Metodo Morfeus è un approccio per introdurre l'AI nei processi aziendali partendo da un problema operativo misurabile. Prima identifica il Value Leak, poi attiva le persone e il know-how, mette in produzione sistemi AI e ne verifica il valore nel tempo.",
+        },
+        {
+          q: "Da dove parte un progetto AI con Morfeus?",
+          a: "Parte dalla mappatura di un processo in cui valore, tempo o informazioni si stanno disperdendo. Non dalla scelta di un tool. L'obiettivo iniziale è capire se esiste un Value Leak concreto su cui intervenire.",
+        },
+        {
+          q: "Che ruolo ha MARF nel Metodo Morfeus?",
+          a: "MARF è il Context Hub in cui procedure, regole, informazioni e contesto operativo vengono resi utilizzabili dai sistemi AI. Permette al sapere aziendale di non restare disperso tra persone, file e conversazioni.",
+        },
+        {
+          q: "Chi sono gli AI Champion?",
+          a: "Gli AI Champion sono le persone dell'azienda che conoscono i processi da vicino e imparano a lavorare con l'AI sui casi reali. Il loro ruolo è rendere il sistema utile, adottato e radicato nell'operatività quotidiana.",
+        },
+        {
+          q: "L'AI sostituisce le persone?",
+          a: "No. Il Metodo Morfeus usa l'AI per togliere lavoro ripetitivo, rendere il know-how disponibile e aumentare l'autonomia del team. Le persone che conoscono il processo restano centrali nella costruzione e nell'evoluzione del sistema.",
+        },
+        {
+          q: "Come viene misurato il valore di un sistema AI?",
+          a: "Attraverso il Value Report. Morfeus verifica gli effetti del sistema sul processo, come ore recuperate, costi ottimizzati, output moltiplicato o decisioni accelerate. Se il valore non è verificabile, il sistema va migliorato prima di essere esteso.",
+        },
+      ],
     },
   },
   en: {
-    metaTitle: "Method — Morfeus",
+    metaTitle: "The Morfeus Method · How we bring AI into workflows",
     metaDesc:
-      "The Morfeus method: from the invisible loss (Value Leak) to value measured in euros. Diagnosis with the ROIometro, embedded MARF system, monthly Value Report, autonomy with the AI Champion. Pilot to Retainer model: we take the risk.",
+      "The Morfeus Method starts where you are losing value, not with a tool: Value Leak mapping, AI Champions, Context Hub, agents in production and value verified in the Value Report.",
     hero: {
-      eye: "The method",
-      h1a: "From the invisible loss to ",
-      h1emph: "measured value",
+      eye: "The Morfeus way of working",
+      h1a: "AI does not create value on its own. It creates value when it changes ",
+      h1emph: "how a company works",
       h1b: ".",
-      copy: "Not a project-based service, but a repeatable system. We find where your company loses margin, build the AI systems that recover it, and tell you every month how much value you generated. In euros.",
-      cta1: "Try the ROIometro",
-      cta2: "Talk to us",
-      proof: { pre: "▸ THE PACT · ", b: "We prove it first", post: " · we take the risk · measured in euros" },
-      model: {
-        k: "The model",
-        step1: "Pilot",
-        arr: "↓ objective acceptance criteria",
-        step2: "Retainer",
-        pBold: "We prove it first on a bounded scope. We take the risk.",
-        pRest: " Once the Pilot is passed, we become your continuous Operating Partner.",
-      },
-    },
-    frame: {
-      eye: "The frame",
-      h2a: "Not «how I use AI». ",
-      h2emph: "Where I lose value",
-      h2b: " as I scale.",
-      lead: "As a company grows, errors, time and fragmented data erode margin without anyone noticing. These are the Value Leaks: the invisible losses. We quantify them in euros and build the systems that prevent them. It's not cost-cutting: it's structural margin recovery.",
-      stats: [
-        { n: "Value Leak", l: "the margin losses SMEs don't see" },
-        { n: "Margin Recovery", l: "find them, quantify them, close them with AI" },
+      copy: "Morfeus takes your team's know-how, transfers it into AI and turns it into systems that support everyday work. The value recovered is verified, improved and extended where it matters most.",
+      cta1: "Book a diagnostic call",
+      cta2: "Explore the method",
+      catenaTitolo: "The chain",
+      catena: [
+        { v: "Value Leak", n: "where margin leaks out" },
+        { v: "The team's know-how", n: "the people who know the work" },
+        { v: "Context Hub", n: "know-how becomes a base" },
+        { v: "AI agents", n: "know-how becomes action" },
+        { v: "Measured value", n: "verified, not promised" },
       ],
-      lameA: "Without governance, AI scales chaos. With governance, it scales ",
-      lameEmph: "value",
-      lameB: ".",
     },
-    log: {
-      eye: "The proof device",
-      h2a: "The diagnosis isn't a slide. It's a ",
-      h2emph: "log",
+    metodo: {
+      eye: "The Morfeus Method",
+      h2a: "We do not start with AI. We start with ",
+      h2emph: "where you are losing value",
       h2b: ".",
-      lead: "When we come in, the system runs and leaves a trace. Every loss found is a number, not an impression.",
-      tt: "morfeus · diagnose",
-      cmd: "morfeus diagnose",
-      l1: "03:47 · scanning processes · department by department...",
-      hit: "▸ 12 losses found · €31,400/month",
-      l2: "03:47 · report ready · CRM updated",
-    },
-    fasi: {
-      eye: "How we work · 4 phases",
-      h2a: "Four phases, one single ",
-      h2emph: "discipline",
-      h2b: ".",
-      lead: "From the diagnosis in euros to internal autonomy: every phase has a concrete deliverable, not a promise.",
-    },
-    deliverLabel: "Deliverable",
-    phases: [
-      {
-        pn: "01",
-        h3: "Diagnosis",
-        chips: ["ROIometro", "Value Leak"],
-        p: "We map processes department by department and find where margin is lost. With the ROIometro the conversation shifts from «how much does Morfeus cost» to «how much is the problem costing you»: a monthly loss, in euros.",
-        points: [
-          "Department-by-department diagnosis, on real data",
-          "Monthly loss quantified in euros",
-          "No slides: numbers to decide on",
-        ],
-        deliver: "The map of Value Leaks, in euros.",
-      },
-      {
-        pn: "02",
-        h3: "System",
-        chips: ["MARF", "embedded"],
-        p: "We install MARF inside the company: Morfeus's proprietary AI infrastructure. Not a SaaS, but an embedded layer that collects and cleans operational data, automates repetitive work, and makes departments talk to each other to protect margin.",
-        points: [
-          "Installed and customized in your systems",
-          "Operational data cleaned and connected",
-          "Every project makes it more powerful",
-        ],
-        deliver: "MARF in production, running every day.",
-      },
-      {
-        pn: "03",
-        h3: "Value",
-        chips: ["Value Report"],
-        p: "Value criteria are defined objectively upfront and verified every month. The COO gets the weekly log of what was done; the CEO the monthly Value Report: how much value was generated, in euros. Renewal becomes a non-decision.",
-        points: [
-          "Value criteria agreed upfront",
-          "Weekly operational log to the COO",
-          "Monthly Value Report to the CEO",
-        ],
-        deliver: "The monthly Value Report.",
-      },
-      {
-        pn: "04",
-        h3: "Autonomy",
-        chips: ["AI Champion"],
-        p: "We train the AI Champions: one person per department, not necessarily IT, who experiments, understands what works, turns it into a procedure and passes it on to colleagues. AI goes from external dependency to a scalable internal skill.",
-        points: [
-          "One autonomous person per department",
-          "Procedures that stay in the company",
-          "The system holds and grows without us",
-        ],
-        deliver: "The internal capability, permanent.",
-      },
-    ],
-    model: {
-      eye: "The commercial model",
-      h2a: "We prove it first. You decide ",
-      h2emph: "after",
-      h2b: ".",
-      lead: "Two phases, one single pact: we take the risk of the proof. Once the Pilot is passed, renewal becomes a non-decision.",
-      cards: [
+      lead: "We do not begin with a tool to install. We begin with a specific point where people, information and processes are already eroding margin. From there, we build a system that stays in the company, is used by the people who do the work and improves over time.",
+      colonne: [
         {
-          ck: "Phase 1 · Pilot",
-          ct: "One scope, clear criteria.",
-          p: "We start from a bounded Pilot, with objective acceptance criteria and no upfront annual commitment. We show value on a real case before asking you to scale.",
-          sel: true,
+          n: "01",
+          t: "Margin first. Technology second.",
+          p: "We do not begin by asking where AI should go. We go inside the workflow, identify the Value Leak and put a number on it. Only once we know what value needs to be recovered do we decide what to build.",
         },
         {
-          ck: "Phase 2 · Retainer",
-          ct: "Continuous Operating Partner.",
-          p: "Once the Pilot is passed, we become your Operating Partner: continuous presence, systems that evolve, value measured every month in the Value Report. Renewal becomes a non-decision.",
-          sel: false,
+          n: "02",
+          t: "People's know-how becomes a system.",
+          p: "AI does not replace the people who know the work. It makes their knowledge available, repeatable and useful to the whole team. We train AI Champions, gather procedures, context and operating rules, and turn them into part of the company's Context Hub.",
+        },
+        {
+          n: "03",
+          t: "In production. Measured. Improved.",
+          p: "A project is not valuable because it was presented, or because a demo worked once. It is valuable when it enters real workflows, helps the team every day and produces a verifiable result. That is why we put systems into production, measure them through the Value Report and strengthen what works.",
         },
       ],
     },
-    prodotti: {
-      eye: "Two products",
-      h2a: "The same method takes ",
-      h2emph: "two forms",
+    caso: {
+      eye: "A system matters when it solves a real problem",
+      h2a: "A technical report was never meant to ",
+      h2emph: "stay a report",
       h2b: ".",
-      lead: "One builds the systems that stay in the company. The other trains the people who use them. Often they travel together.",
-      link: "Discover",
-      cards: [
+      p1: "At Cyberangels, the information needed to sell security services was locked inside technical documents that a salesperson could not easily use. Every conversation required handoffs, interpretation and the involvement of someone who already knew the subject.",
+      p2: "We turned that knowledge into a system that reads the context, creates a sales-ready brief and flags when there is not enough information to proceed.",
+      p3: "The outcome is not a nicer document. It is a team that can start better-prepared sales conversations without having to depend on the same technical person every time.",
+      readout: "Dossier · Cyberangels",
+      stato: "Verified",
+      passi: ["Value leak", "System", "Value"],
+      stazioni: [
+        "Technical knowledge was separated from the people who needed to use it.",
+        "Information becomes an operational brief, with rules and controls built in.",
+        "Fewer handoffs. More autonomy. Sales conversations that start from the right context.",
+      ],
+      cta: "Read the full case",
+    },
+    lavoro: {
+      eye: "From the first conversation to compounding value",
+      h2a: "The method stays the same. What we build ",
+      h2emph: "changes with your company",
+      h2b: ".",
+      lead: "We do not apply a standard package. We follow a clear sequence to understand where to intervene, involve the right people and put a system into production that makes a concrete difference.",
+      tappe: [
         {
-          ck: "Operating Partner",
-          ct: "MARF",
-          p: "AI installs inside the company in about 30 days and improves every month. Not a project: infrastructure that stays.",
-          bullets: ["Systems that recover margin", "Monthly Value Report, in euros", "A retainer, not billed days"],
-          href: "forge",
+          id: "mappatura",
+          indice: "01 · Mapping",
+          titolo: "Find the cost before the tool.",
+          testo: "We speak to the people, observe the workflows and map the data, decisions and operating handoffs. ROIometro isolates the Value Leak: where margin is already being lost and where intervention makes sense.",
         },
         {
-          ck: "Training",
-          ct: "LAB",
-          p: "The team learns to use AI on your company's real cases, all the way to autonomy.",
-          bullets: ["On your processes, not slides", "One LAB, three doors", "Internal AI Champions"],
-          href: "lab",
+          id: "ai-champion",
+          indice: "02 · AI Champions",
+          titolo: "Start with the people who know the work.",
+          testo: "People are not an obstacle to adoption. They are the source of the system. We train AI Champions and work with the people closest to the process, so AI is built around reality rather than outside assumptions.",
         },
+        {
+          id: "context-hub",
+          indice: "03 · Context Hub",
+          titolo: "Know-how stops living in a few heads.",
+          testo: "Procedures, rules, information and operating context are gathered and made usable inside MARF, the company's Context Hub. Knowledge stops being scattered across files, chats and key people and becomes a base the team can work from.",
+        },
+        {
+          id: "agenti-ai",
+          indice: "04 · AI agents",
+          titolo: "Know-how becomes action.",
+          testo: "We build and deploy AI agents where they are genuinely useful. Not chatbots made for a demo, but systems with a clear job, clear rules and a defined role inside a workflow.",
+        },
+        {
+          id: "compound",
+          indice: "05 · Compound",
+          titolo: "What works does not stay isolated.",
+          testo: "When a system proves its value, we improve it, make it more reliable and extend it where it can create further impact. Value does not stop at the first project. It compounds inside the organisation.",
+        },
+      ],
+    },
+    perimetro: {
+      eye: "One problem at a time. The right one.",
+      h2a: "We do not transform everything. We solve ",
+      h2emph: "what is costing you first",
+      h2b: ".",
+      p1: "Your company does not need an endless AI roadmap. It needs to know where to intervene first, build something people will actually use and verify that it is creating value.",
+      p2: "That is why we choose a narrow, high-impact scope. It is the fastest way to reduce risk, involve the team and separate a useful system from a project that ends in a presentation.",
+      testaNo: "We do not do",
+      testaSi: "We do",
+      righe: [
+        ["Audits that produce slides only", "Mapping that identifies a Value Leak"],
+        ["Tools handed out without context", "Systems embedded in a real workflow"],
+        ["Training without application", "AI Champions working on real cases"],
+        ["Pilots without consequences", "Systems deployed and measured"],
+      ],
+    },
+    report: {
+      eye: "Value is not a feeling",
+      h2a: "One question, every month: what has this ",
+      h2emph: "system recovered",
+      h2b: "?",
+      p1: "Implementation is not enough. An AI system has to show that it is freeing time, removing unnecessary handoffs, improving decisions or multiplying the team's output.",
+      p2: "The Value Report makes that impact visible. We look at what is working, where the system needs improving and where there is room to extend the value. If we cannot verify it, we do not call it a result.",
+      readout: "Value Report · monthly cadence",
+      stato: "Verifiable",
+      indicatori: [
+        { nome: "Hours recovered", misura: "time given back to the team" },
+        { nome: "Costs optimised", misura: "spend that was no longer needed" },
+        { nome: "Output multiplied", misura: "same headcount, more work" },
+        { nome: "Decisions accelerated", misura: "time between question and choice" },
+      ],
+      nota: "No percentage we cannot show you the source of.",
+    },
+    patto: {
+      eye: "Proof first. Scale second.",
+      h2a: "We do not ask you to believe us. We ask you to ",
+      h2emph: "watch it work",
+      h2b: ".",
+      p1: "First, we establish whether there is a concrete Value Leak and whether a useful system can address it. Then we work within a defined scope, with the right people involved and clear criteria for evaluating the result.",
+      p2: "Only what works moves to the next step. That protects your investment, avoids endless projects and keeps us accountable to value rather than promises.",
+      clausole: [
+        "We start with a problem that can be observed and measured.",
+        "We build systems that stay inside your company.",
+        "We extend only what has proven it works.",
       ],
     },
     cta: {
-      eye: "Let's talk",
-      h2a: "The problem you don't see has a ",
-      h2emph: "price",
-      h2b: ". Calculate it.",
-      p: "The first step isn't a quote. It's understanding, in euros, where your company loses value every day.",
-      cta1: "Try the ROIometro ▸",
-      cta2: "Talk to us",
+      eye: "The first step is not a demo",
+      h2a: "Where are you losing margin ",
+      h2emph: "without realising it",
+      h2b: "?",
+      p: "Book a diagnostic call. We will look at the workflows where value is getting stuck, leaking away or still depends on the knowledge of a few people. If there is a Value Leak worth addressing, you will know where to begin.",
+      btn: "Book a diagnostic call",
+      micro: "No generic demo. No off-the-shelf roadmap. Just a real problem worth understanding.",
+    },
+    faq: {
+      eye: "Questions",
+      titolo: "The Method, in plain terms.",
+      voci: [
+        {
+          q: "What is the Morfeus Method?",
+          a: "The Morfeus Method is an approach to bringing AI into a company through a measurable operating problem. It identifies the Value Leak first, activates the people and know-how around it, deploys AI systems and verifies the value over time.",
+        },
+        {
+          q: "Where does an AI project with Morfeus start?",
+          a: "It starts by mapping a workflow where value, time or information is being lost. Not by choosing a tool.",
+        },
+        {
+          q: "What role does MARF play?",
+          a: "MARF is the Context Hub where procedures, rules, information and operating context are made usable by AI systems.",
+        },
+        {
+          q: "Who are AI Champions?",
+          a: "AI Champions are the people who know their workflows first-hand and learn to work with AI on real cases. They make the system useful, adopted and embedded in daily operations.",
+        },
+        {
+          q: "Will AI replace people?",
+          a: "No. It removes repetitive work, makes know-how available and increases team autonomy. People remain central to how systems are built and improved.",
+        },
+        {
+          q: "How is value measured?",
+          a: "Through the Value Report: Morfeus verifies outcomes such as hours recovered, costs optimised, output multiplied and decisions accelerated.",
+        },
+      ],
     },
   },
 } as const;
-
-/* Icone dei due prodotti (stroke = currentColor, colorate via .card .ico). */
-const PROD_ICONS = [
-  // MARF → infrastruttura / chip
-  <svg key="p0" className="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="6" y="6" width="12" height="12" rx="1.5" />
-    <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" />
-  </svg>,
-  // LAB → formazione / tocco
-  <svg key="p1" className="ico" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M22 10 12 5 2 10l10 5 10-5Z" />
-    <path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5" />
-  </svg>,
-];
 
 export function generateMetadata({ params: { locale } }: Props): Metadata {
   const isIt = locale === "it";
@@ -396,21 +450,27 @@ export default function MetodoPage({ params: { locale } }: Props) {
       {
         "@type": "HowTo",
         "@id": `${SITE_URL}/${safeLocale}/metodo#howto`,
-        name: t.metaTitle,
-        description: t.metaDesc,
-        inLanguage: isIt ? "it-IT" : "en-US",
-        step: t.phases.map((p, i) => ({
+        name: t.metodo.h2a + t.metodo.h2emph,
+        description: t.metodo.lead,
+        step: t.lavoro.tappe.map((tp, i) => ({
           "@type": "HowToStep",
           position: i + 1,
-          name: p.h3,
-          text: p.p,
+          name: tp.titolo,
+          text: tp.testo,
+          url: `${SITE_URL}/${safeLocale}/metodo#${tp.id}`,
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/${safeLocale}/metodo#faq`,
+        mainEntity: t.faq.voci.map((v) => ({
+          "@type": "Question",
+          name: v.q,
+          acceptedAnswer: { "@type": "Answer", text: v.a },
         })),
       },
     ],
   };
-
-  const chipClass =
-    "font-plex text-[11px] tracking-[0.02em] text-firma bg-firma/[0.07] border border-firma/30 rounded-md px-2.5 py-[5px]";
 
   return (
     <SiteShell locale={safeLocale}>
@@ -420,10 +480,10 @@ export default function MetodoPage({ params: { locale } }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 01 · HERO · INCHIOSTRO */}
-      <section className="band ink hero" id="hero">
+      {/* 01 · HERO · ink */}
+      <section className="band ink hero pg" id="hero">
         <div className="wrap">
-          <div className="grid gap-10 md:grid-cols-[1.45fr_.85fr] items-start">
+          <div className="grid-hero-metodo">
             <div>
               <div className="eye">{t.hero.eye}</div>
               <h1>
@@ -436,247 +496,262 @@ export default function MetodoPage({ params: { locale } }: Props) {
                 <Link className="btn btn-1" href={`${base}/roiometro`}>
                   {t.hero.cta1}
                 </Link>
-                <a className="btn btn-2-carta" href="mailto:hello@morfeushub.com">
+                <a className="btn btn-2-carta" href="#metodo">
                   {t.hero.cta2}
                 </a>
               </div>
-              <p className="proofline">
-                {t.hero.proof.pre}
-                <b>{t.hero.proof.b}</b>
-                {t.hero.proof.post}
-              </p>
             </div>
-            <div className="rounded-xl p-6 border border-riga-scuro bg-white/[0.02]">
-              <div className="font-plex text-[10px] tracking-[0.14em] uppercase text-lilla">
-                {t.hero.model.k}
+
+            <div>
+              <div className="quota">{t.hero.catenaTitolo}</div>
+              <div className="catena" style={{ marginTop: 26 }}>
+                {t.hero.catena.map((a, i) => (
+                  <div
+                    className={`anello${i === t.hero.catena.length - 1 ? " ultimo" : ""}`}
+                    key={a.v}
+                  >
+                    <span className="segno">{`0${i + 1}`}</span>
+                    <span>
+                      <span className="voce-catena">{a.v}</span>
+                      <span className="nota-catena">{a.n}</span>
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-3 mt-4 font-clash font-semibold text-[19px] text-carta">
-                <span className="w-[7px] h-[7px] rounded-full bg-firma shrink-0" aria-hidden />
-                {t.hero.model.step1}
-              </div>
-              <div className="font-plex text-[11px] text-ombra my-2 ml-[3px] pl-3.5 border-l border-riga-scuro">
-                {t.hero.model.arr}
-              </div>
-              <div className="flex items-center gap-3 mt-2 font-clash font-semibold text-[19px] text-carta">
-                <span className="w-[7px] h-[7px] rounded-full bg-firma shrink-0" aria-hidden />
-                {t.hero.model.step2}
-              </div>
-              <p className="text-[#c2c6d4] text-[13.5px] mt-4 leading-relaxed">
-                <b className="text-carta font-semibold">{t.hero.model.pBold}</b>
-                {t.hero.model.pRest}
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 02 · IL FRAME · CARTA */}
-      <section className="band carta" id="frame">
+      {/* 02 · IL METODO · ink */}
+      <section className="band ink pg" id="metodo">
         <div className="wrap">
-          <div className="eye">{t.frame.eye}</div>
+          <div className="eye">{t.metodo.eye}</div>
           <h2 className="h-sect">
-            {t.frame.h2a}
-            <span className="emph">{t.frame.h2emph}</span>
-            {t.frame.h2b}
+            {t.metodo.h2a}
+            <span className="emph">{t.metodo.h2emph}</span>
+            {t.metodo.h2b}
           </h2>
-          <p className="lead">{t.frame.lead}</p>
-          <div className="grid sm:grid-cols-2 gap-5 mt-8 border-t border-[rgba(11,11,12,0.16)]">
-            {t.frame.stats.map((s) => (
-              <div className="pt-6" key={s.n}>
-                <div className="font-clash font-semibold text-[clamp(24px,3.2vw,32px)] tracking-[-0.02em] text-firma">
-                  {s.n}
-                </div>
-                <div className="text-[#3a3b45] text-sm mt-2 max-w-[30ch]">{s.l}</div>
+          <p className="lead">{t.metodo.lead}</p>
+
+          <div className="colonne">
+            {t.metodo.colonne.map((c) => (
+              <div className="colonna" key={c.n}>
+                <span className="cifra-fondo" aria-hidden="true">
+                  {c.n}
+                </span>
+                <h3>{c.t}</h3>
+                <p>{c.p}</p>
               </div>
             ))}
           </div>
-          <p className="font-clash font-medium text-[clamp(18px,2.4vw,26px)] leading-[1.3] mt-11 max-w-[26ch] text-inchiostro">
-            {t.frame.lameA}
-            <span className="emph">{t.frame.lameEmph}</span>
-            {t.frame.lameB}
+        </div>
+      </section>
+
+      {/* 03 · CASO REALE · CARTA, e' un dossier */}
+      <section className="band carta pg" id="caso">
+        <div className="wrap">
+          <div className="eye">{t.caso.eye}</div>
+          <h2 className="h-sect">
+            {t.caso.h2a}
+            <span className="emph">{t.caso.h2emph}</span>
+            {t.caso.h2b}
+          </h2>
+          <div className="read" style={{ margin: 0 }}>
+            <p className="lead">{t.caso.p1}</p>
+            <p className="lead" style={{ marginTop: 18 }}>
+              {t.caso.p2}
+            </p>
+            <p className="lead" style={{ marginTop: 18 }}>
+              {t.caso.p3}
+            </p>
+          </div>
+
+          <div className="quadro" style={{ marginTop: 44 }}>
+            <div className="readout">
+              <span>{t.caso.readout}</span>
+              <span className="on">
+                <i />
+                {t.caso.stato}
+              </span>
+            </div>
+            <div className="dossier dossier-tre">
+              {t.caso.stazioni.map((s, i) => (
+                <div className="stazione" key={s}>
+                  <div className="passo">{t.caso.passi[i]}</div>
+                  <div className="valore">{s}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="cta-row">
+            <Link className="btn btn-1" href={`${base}/casi/cyberangels-sales-advisor`}>
+              {t.caso.cta}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 04 · IL MODO DI LAVORARE · ink */}
+      <section className="band ink pg" id="come-lavoriamo">
+        <div className="wrap">
+          <div className="eye">{t.lavoro.eye}</div>
+          <h2 className="h-sect">
+            {t.lavoro.h2a}
+            <span className="emph">{t.lavoro.h2emph}</span>
+            {t.lavoro.h2b}
+          </h2>
+          <p className="lead">{t.lavoro.lead}</p>
+
+          <MappaLavoro tappe={[...t.lavoro.tappe]} />
+        </div>
+      </section>
+
+      {/* 05 · PERIMETRO · CARTA, e' un confronto a stampa */}
+      <section className="band carta pg" id="perimetro">
+        <div className="wrap">
+          <div className="eye">{t.perimetro.eye}</div>
+          <h2 className="h-sect">
+            {t.perimetro.h2a}
+            <span className="emph">{t.perimetro.h2emph}</span>
+            {t.perimetro.h2b}
+          </h2>
+          <p className="lead">{t.perimetro.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.perimetro.p2}
+          </p>
+
+          <div className="confronto">
+            <div className="colonna-testa">{t.perimetro.testaNo}</div>
+            <div className="colonna-testa si">{t.perimetro.testaSi}</div>
+            {t.perimetro.righe.map(([no, si]) => (
+              <ContrastoRiga key={si} no={no} si={si} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 06 · VALUE REPORT · ink */}
+      <section className="band ink pg" id="value-report">
+        <div className="wrap">
+          <div className="eye">{t.report.eye}</div>
+          <h2 className="h-sect">
+            {t.report.h2a}
+            <span className="emph">{t.report.h2emph}</span>
+            {t.report.h2b}
+          </h2>
+          <p className="lead">{t.report.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.report.p2}
+          </p>
+
+          <div className="quadro" style={{ marginTop: 40 }}>
+            <div className="readout">
+              <span>{t.report.readout}</span>
+              <span className="on">
+                <i />
+                {t.report.stato}
+              </span>
+            </div>
+            <div className="indicatori">
+              {t.report.indicatori.map((ind) => (
+                <div className="indicatore" key={ind.nome}>
+                  <div className="nome">{ind.nome}</div>
+                  <span className="misura">{ind.misura}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="compound centrato" style={{ marginTop: 30 }}>
+            {t.report.nota}
           </p>
         </div>
       </section>
 
-      {/* 03 · LOG A VISTA · INCHIOSTRO */}
-      <section className="band ink" id="log">
+      {/* 07 · IL PATTO · CARTA, e' un contratto */}
+      <section className="band carta pg" id="patto">
         <div className="wrap">
-          <div className="eye">{t.log.eye}</div>
+          <div className="eye">{t.patto.eye}</div>
           <h2 className="h-sect">
-            {t.log.h2a}
-            <span className="emph">{t.log.h2emph}</span>
-            {t.log.h2b}
+            {t.patto.h2a}
+            <span className="emph">{t.patto.h2emph}</span>
+            {t.patto.h2b}
           </h2>
-          <p className="lead">{t.log.lead}</p>
-          <div className="mt-6 border border-riga-scuro rounded-xl bg-black/[0.28] overflow-hidden max-w-[640px]">
-            <div className="flex items-center gap-2 px-4 py-[11px] border-b border-riga-scuro">
-              <span className="w-[9px] h-[9px] rounded-full bg-riga-scuro" aria-hidden />
-              <span className="w-[9px] h-[9px] rounded-full bg-riga-scuro" aria-hidden />
-              <span className="w-[9px] h-[9px] rounded-full bg-riga-scuro" aria-hidden />
-              <span className="font-plex text-[10px] tracking-[0.12em] uppercase text-ombra ml-1.5">
-                {t.log.tt}
-              </span>
+          <p className="lead">{t.patto.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.patto.p2}
+          </p>
+
+          <div className="patto">
+            {t.patto.clausole.map((c, i) => (
+              <div className="clausola" key={c}>
+                <span className="sigla">{`Art. 0${i + 1}`}</span>
+                <span className="testo-clausola">{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 08 · CTA · ink */}
+      <section className="band ink pg" id="cta">
+        <div className="wrap">
+          <div className="ctaq">
+            <div className="eye justify-center">{t.cta.eye}</div>
+            <h2 className="h-sect">
+              {t.cta.h2a}
+              <span className="emph">{t.cta.h2emph}</span>
+              {t.cta.h2b}
+            </h2>
+            <p>{t.cta.p}</p>
+            <div className="cta-row centrata">
+              <Link className="btn btn-1" href={`${base}/roiometro`}>
+                {t.cta.btn}
+              </Link>
             </div>
-            <pre className="font-plex text-[13px] leading-[1.9] text-[#aeb2c2] px-5 py-[18px] whitespace-pre-wrap break-words">
-              <span className="text-lilla">$</span> <span className="text-lilla">{t.log.cmd}</span>
-              {"\n"}
-              {t.log.l1}
-              {"\n"}
-              <span className="text-ok font-semibold">{t.log.hit}</span>
-              {"\n"}
-              {t.log.l2}
-            </pre>
+            <p className="quota" style={{ marginTop: 30, justifyContent: "center" }}>
+              {t.cta.micro}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 04 · LE 4 FASI · CARTA */}
-      <section className="band carta" id="fasi">
+      {/* 09 · FAQ · ink */}
+      <section className="band ink pg" id="faq">
         <div className="wrap">
-          <div className="eye">{t.fasi.eye}</div>
-          <h2 className="h-sect">
-            {t.fasi.h2a}
-            <span className="emph">{t.fasi.h2emph}</span>
-            {t.fasi.h2b}
-          </h2>
-          <p className="lead">{t.fasi.lead}</p>
-          <div className="mt-8">
-            {t.phases.map((p) => (
-              <div
-                className="grid md:grid-cols-[.72fr_1.28fr] gap-11 items-start py-11 border-t border-[rgba(11,11,12,0.16)] first:border-t-0 first:pt-1.5"
-                id={p.pn}
-                key={p.pn}
-              >
-                <div>
-                  <div className="font-plex text-[13px] tracking-[0.04em] text-firma">{p.pn}</div>
-                  <h3 className="font-clash font-semibold text-[clamp(22px,3vw,30px)] mt-2.5 text-inchiostro">
-                    {p.h3}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {p.chips.map((c) => {
-                      const glossaryId = GLOSSARY_CHIP_MAP[c];
-                      if (!glossaryId) {
-                        return (
-                          <span className={chipClass} key={c}>
-                            {c}
-                          </span>
-                        );
-                      }
-
-                      return (
-                        <Link className={chipClass} href={`${base}/glossario#${glossaryId}`} key={c}>
-                          {c}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-base text-[#3a3b45]">{p.p}</p>
-                  <ul className="list-none mt-[18px] flex flex-col gap-2.5">
-                    {p.points.map((pt) => (
-                      <li
-                        className="grid grid-cols-[auto_1fr] gap-3 text-[#3a3b45] text-[15px]"
-                        key={pt}
-                      >
-                        <span className="text-firma font-plex" aria-hidden>
-                          →
-                        </span>
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-[22px] inline-flex items-center gap-3 font-playfair italic text-[17px] text-inchiostro">
-                    <span className="font-plex not-italic text-[10px] font-semibold tracking-[0.12em] uppercase text-firma border border-[rgba(11,11,12,0.14)] rounded-md px-[9px] py-[5px]">
-                      {t.deliverLabel}
-                    </span>
-                    {p.deliver}
-                  </div>
-                </div>
+          <div className="eye">{t.faq.eye}</div>
+          <h2 className="h-sect">{t.faq.titolo}</h2>
+          <div className="two mt-10 items-start" style={{ marginTop: 34 }}>
+            {[t.faq.voci.slice(0, 3), t.faq.voci.slice(3)].map((colonna, i) => (
+              <div key={i}>
+                {colonna.map((v) => (
+                  <details className="faq" key={v.q}>
+                    <summary>
+                      <span>{v.q}</span>
+                      <span className="segno" aria-hidden="true" />
+                    </summary>
+                    <p className="risposta">{v.a}</p>
+                  </details>
+                ))}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 05 · MODELLO COMMERCIALE · INCHIOSTRO */}
-      <section className="band ink" id="modello">
-        <div className="wrap">
-          <div className="eye">{t.model.eye}</div>
-          <h2 className="h-sect">
-            {t.model.h2a}
-            <span className="emph">{t.model.h2emph}</span>
-            {t.model.h2b}
-          </h2>
-          <p className="lead">{t.model.lead}</p>
-          <div className="two" style={{ marginTop: 26 }}>
-            {t.model.cards.map((c) => (
-              <div className={c.sel ? "card sel" : "card"} key={c.ck}>
-                <div className="ck">{c.ck}</div>
-                <div className="ct">{c.ct}</div>
-                <p>{c.p}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 06 · I DUE PRODOTTI · CARTA */}
-      <section className="band carta" id="prodotti">
-        <div className="wrap">
-          <div className="eye">{t.prodotti.eye}</div>
-          <h2 className="h-sect">
-            {t.prodotti.h2a}
-            <span className="emph">{t.prodotti.h2emph}</span>
-            {t.prodotti.h2b}
-          </h2>
-          <p className="lead">{t.prodotti.lead}</p>
-          <div className="two" style={{ marginTop: 28 }}>
-            {t.prodotti.cards.map((c, i) => (
-              <div className="card" key={c.ct}>
-                {PROD_ICONS[i]}
-                <div className="ck">{c.ck}</div>
-                <div className="ct">{c.ct}</div>
-                <p>{c.p}</p>
-                <ul className="blist gain">
-                  {c.bullets.map((b, j) => (
-                    <li key={j}>
-                      <span className="bd" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p style={{ marginTop: 16 }}>
-                  <Link className="btn btn-3" href={`${base}/${c.href}`}>
-                    {t.prodotti.link} {c.ct} ▸
-                  </Link>
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 07 · CTA QUOTA · INCHIOSTRO */}
-      <section className="band ink ctaq" id="cta">
-        <div className="wrap">
-          <div className="eye">{t.cta.eye}</div>
-          <h2>
-            {t.cta.h2a}
-            <span className="emph">{t.cta.h2emph}</span>
-            {t.cta.h2b}
-          </h2>
-          <p>{t.cta.p}</p>
-          <div className="cta-row">
-            <Link className="btn btn-1" href={`${base}/roiometro`}>
-              {t.cta.cta1}
-            </Link>
-            <a className="btn btn-2-carta" href="mailto:hello@morfeushub.com">
-              {t.cta.cta2}
-            </a>
           </div>
         </div>
       </section>
     </SiteShell>
+  );
+}
+
+/* Le due celle di una riga del confronto. Componente minuscolo, ma
+   serve: dentro una griglia CSS le due celle devono essere fratelli
+   diretti, quindi non possono stare dentro un <div> di riga. */
+function ContrastoRiga({ no, si }: { no: string; si: string }) {
+  return (
+    <>
+      <div className="riga-no">{no}</div>
+      <div className="riga-si">{si}</div>
+    </>
   );
 }

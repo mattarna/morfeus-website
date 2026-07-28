@@ -1137,3 +1137,402 @@
   flex: 1;
   min-width: 200px;
 }
+
+/* ===========================================================
+   DISPOSITIVI DELLA PAGINA METODO (2026-07-28)
+   =========================================================== */
+
+/* ---------- CATENA, i cinque anelli dell'hero ----------
+   Il brief chiede, accanto alla dichiarazione: Value Leak, sapere
+   del team, Context Hub, agenti AI, valore misurato. E' una catena,
+   non un elenco: ogni anello esiste perche' esiste il precedente.
+   Quindi il collegamento e' disegnato, e l'ultimo anello e' l'unico
+   pieno, perche' e' l'unico che si misura. */
+.ms .pg .catena {
+  display: flex;
+  flex-direction: column;
+}
+.ms .pg .anello {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 0 0 30px;
+}
+.ms .pg .anello:last-child {
+  padding-bottom: 0;
+}
+.ms .pg .anello::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 26px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(140, 165, 247, 0.28);
+}
+.ms .pg .anello:last-child::before {
+  display: none;
+}
+.ms .pg .anello .segno {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  border: 1px solid var(--lilla);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--lilla);
+  background: var(--inchiostro);
+  position: relative;
+  z-index: 1;
+}
+.ms .pg .anello.ultimo .segno {
+  background: var(--lilla);
+  color: var(--inchiostro);
+  font-weight: 600;
+}
+.ms .pg .anello .voce-catena {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18.5px;
+  letter-spacing: -0.01em;
+  padding-top: 4px;
+}
+.ms .pg .anello .nota-catena {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+
+/* ---------- COLONNE EDITORIALI ----------
+   "Tre colonne editoriali, non card commerciali. Numero grande
+   sullo sfondo e linee sottili." Quindi nessuna scatola: un filetto
+   in cima, la cifra fantasma dietro, il testo che respira. La
+   differenza fra una colonna editoriale e una card e' che la card
+   dice "sono un prodotto" e la colonna dice "leggimi". */
+.ms .pg .colonne {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin-top: 52px;
+}
+@media (max-width: 900px) {
+  .ms .pg .colonne {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+}
+.ms .pg .colonna {
+  position: relative;
+  padding-top: 26px;
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .pg .colonna .cifra-fondo {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(70px, 7vw, 104px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(140, 165, 247, 0.08);
+}
+.ms .band.carta .pg .colonna .cifra-fondo {
+  color: rgba(83, 61, 252, 0.07);
+}
+.ms .pg .colonna h3 {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(19px, 2vw, 23px);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  max-width: 20ch;
+}
+.ms .pg .colonna p {
+  position: relative;
+  z-index: 1;
+  margin-top: 16px;
+  font-size: 17.5px;
+  line-height: 1.62;
+  color: var(--testo-ink-2);
+}
+.ms .band.carta .pg .colonna p {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- MAPPA, il modo di lavorare ----------
+   "Mappa scroll-driven: rail laterale su desktop, accordion
+   progressivo su mobile." Il rail resta fermo mentre le tappe
+   scorrono e segna a che punto sei. Senza JavaScript le tappe
+   restano tutte leggibili e il rail non evidenzia niente: si perde
+   l'indicazione, non il contenuto. */
+.ms .pg .mappa {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 64px;
+  margin-top: 56px;
+}
+@media (max-width: 900px) {
+  .ms .pg .mappa {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ms .pg .rail-mappa {
+    display: none;
+  }
+}
+.ms .pg .rail-mappa {
+  position: sticky;
+  top: 120px;
+  align-self: start;
+  border-left: 1px solid var(--surf-bd);
+}
+.ms .pg .rail-mappa a {
+  display: block;
+  padding: 13px 0 13px 22px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  transition:
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.ms .pg .rail-mappa a:hover {
+  color: var(--lilla);
+}
+.ms .pg .rail-mappa a[aria-current="true"] {
+  color: var(--lilla);
+  border-left-color: var(--lilla);
+}
+.ms .band.carta .pg .rail-mappa a:hover,
+.ms .band.carta .pg .rail-mappa a[aria-current="true"] {
+  color: var(--firma);
+}
+.ms .band.carta .pg .rail-mappa a[aria-current="true"] {
+  border-left-color: var(--firma);
+}
+.ms .pg .tappa {
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--surf-bd);
+  margin-bottom: 56px;
+  scroll-margin-top: 120px;
+}
+.ms .pg .tappa:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.ms .pg .tappa .indice {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lilla);
+}
+.ms .band.carta .pg .tappa .indice {
+  color: var(--firma);
+}
+.ms .pg .tappa h3 {
+  margin-top: 14px;
+  font-size: clamp(21px, 2.4vw, 28px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  max-width: 24ch;
+}
+.ms .pg .tappa p {
+  margin-top: 16px;
+  font-size: 17.5px;
+  line-height: 1.62;
+  color: var(--testo-ink-2);
+  max-width: 60ch;
+}
+.ms .band.carta .pg .tappa p {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- CONFRONTO, il perimetro stretto ----------
+   "Layout asimmetrico e confronto netto." Due colonne di peso
+   diverso: cio' che NON facciamo sta in tono spento, cio' che
+   facciamo ha il peso pieno. L'asimmetria non e' un vezzo: dice
+   quale delle due colonne conta. */
+.ms .pg .confronto {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  margin-top: 48px;
+  border-top: 1px solid var(--surf-bd);
+}
+@media (max-width: 860px) {
+  .ms .pg .confronto {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .pg .confronto .colonna-testa {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 20px 26px 20px 0;
+  border-bottom: 1px solid var(--surf-bd);
+  color: var(--ombra);
+}
+.ms .pg .confronto .colonna-testa.si {
+  padding-left: 30px;
+  color: var(--firma);
+  border-left: 1px solid var(--surf-bd);
+}
+.ms .band.ink .pg .confronto .colonna-testa.si {
+  color: var(--lilla);
+}
+.ms .pg .confronto .riga-no,
+.ms .pg .confronto .riga-si {
+  padding: 24px 26px 24px 0;
+  border-bottom: 1px solid var(--surf-bd);
+  font-size: 17px;
+  line-height: 1.5;
+}
+.ms .pg .confronto .riga-no {
+  color: var(--ombra);
+}
+.ms .pg .confronto .riga-si {
+  padding-left: 30px;
+  border-left: 1px solid var(--surf-bd);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- PATTO, i tre impegni ----------
+   "Impostazione quasi contrattuale." Tre clausole numerate, con la
+   sigla in mono come in un articolo di contratto e il filetto che
+   le separa. Nessuna icona: un contratto non ha icone. */
+.ms .pg .patto {
+  margin-top: 44px;
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .pg .clausola {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 26px;
+  align-items: baseline;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--surf-bd);
+}
+@media (max-width: 700px) {
+  .ms .pg .clausola {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+.ms .pg .clausola .sigla {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--firma);
+}
+.ms .band.ink .pg .clausola .sigla {
+  color: var(--lilla);
+}
+.ms .pg .clausola .testo-clausola {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(18px, 2vw, 22px);
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+/* ---------- INDICATORI del Value Report ---------- */
+.ms .pg .indicatori {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 860px) {
+  .ms .pg .indicatori {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .ms .pg .indicatori {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .pg .indicatore {
+  padding: 34px 28px 38px;
+  border-left: 1px solid var(--surf-bd);
+}
+.ms .pg .indicatore:first-child {
+  border-left: none;
+}
+@media (max-width: 860px) {
+  .ms .pg .indicatore:nth-child(odd) {
+    border-left: none;
+  }
+  .ms .pg .indicatore:nth-child(n + 3) {
+    border-top: 1px solid var(--surf-bd);
+  }
+}
+.ms .pg .indicatore .nome {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.ms .pg .indicatore .misura {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+
+/* hero del Metodo: dichiarazione a sinistra, catena a destra */
+.ms .pg .grid-hero-metodo {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 72px;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .ms .pg .grid-hero-metodo {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+}
+/* il dossier del caso ha tre stazioni, non quattro */
+.ms .pg .dossier.dossier-tre {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 860px) {
+  .ms .pg .dossier.dossier-tre {
+    grid-template-columns: 1fr;
+  }
+  .ms .pg .dossier.dossier-tre .stazione {
+    border-left: none;
+    border-top: 1px solid var(--surf-bd);
+  }
+  .ms .pg .dossier.dossier-tre .stazione:first-child {
+    border-top: none;
+  }
+  .ms .pg .dossier.dossier-tre .stazione::before {
+    display: none;
+  }
+}
