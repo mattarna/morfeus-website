@@ -534,19 +534,23 @@
      verso un grigio della palette. Il degrado segue la lettura, cosi'
      l'ultima riga chiude in dissolvenza invece di fermarsi netta.
 
-     ATTENZIONE alla profondita': su fondo CHIARO il contrasto crolla
-     molto piu' in fretta che su fondo scuro. Inchiostro al 40% su
-     ghost-white da' 2.6:1, sotto la soglia minima di 3:1 anche per il
-     testo grande — era illeggibile. Si chiude al 62% (5.2:1), che si
-     vede come dissolvenza ma resta leggibile.
+     La dissolvenza NON va verso il chiaro: su un fondo chiaro schiarire
+     vuol dire per forza perdere contrasto (inchiostro al 40% su
+     ghost-white da' 2.6:1, sotto la soglia di 3:1 anche per il testo
+     grande — era illeggibile). Vira invece sul viola della palette, che
+     resta saturo: l'effetto e' metallizzato, il contrasto tiene.
+       night     15.9:1
+       persian    7.6:1
+       majorelle  4.9:1   <- chiusura
+     (vista sarebbe 1.9:1, fuori discussione.)
      background-clip:text con color:transparent — il color impostato
      direttamente batte quello ereditato da .band.carta. */
   background: linear-gradient(
     168deg,
     var(--inchiostro) 0%,
-    var(--inchiostro) 52%,
-    rgba(11, 11, 12, 0.8) 78%,
-    rgba(11, 11, 12, 0.62) 100%
+    var(--inchiostro) 34%,
+    var(--firma-hover) 72%,
+    var(--firma) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
