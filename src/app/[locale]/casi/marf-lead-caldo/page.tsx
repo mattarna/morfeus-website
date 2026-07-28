@@ -234,13 +234,13 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
   // Palette shared with mockup
   const C = {
     firma: "#533DFC",
-    lilla: "#A99CFF",
-    ombra: "#7A7890",
+    lilla: "#8CA5F7",
+    ombra: "#7E8091",
     anom: "#FF5C5C",
     ok: "#1E9E5A",
-    ink: "#14132E",
-    gridInk: "rgba(169,156,255,.15)",
-    gridCarta: "rgba(20,19,46,.08)",
+    ink: "#0B0B0C",
+    gridInk: "rgba(140,165,247,.15)",
+    gridCarta: "rgba(11,11,12,.08)",
   };
 
   return (
@@ -273,7 +273,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   color: C.lilla,
-                  border: `1px solid rgba(169,156,255,.3)`,
+                  border: `1px solid rgba(140,165,247,.3)`,
                   borderRadius: 999,
                   padding: "4px 11px",
                 }}
@@ -292,7 +292,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
               fontFamily: "var(--font-emph)",
               fontStyle: "italic",
               fontSize: "clamp(18px,2.2vw,24px)",
-              color: "#c6c4d8",
+              color: "#c2c6d4",
               maxWidth: "56ch",
               marginTop: 12,
             }}
@@ -378,8 +378,8 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
           </div>
           <div
             style={{
-              border: "1px solid rgba(20,19,46,.14)",
-              background: "rgba(20,19,46,.02)",
+              border: "1px solid rgba(11,11,12,.14)",
+              background: "rgba(11,11,12,.02)",
               borderRadius: 12,
               padding: "26px 24px",
             }}
@@ -390,8 +390,8 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
               aria-label={t.s2.figTitle}
               style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
             >
-              <line x1="60" y1="30" x2="60" y2="240" stroke="rgba(20,19,46,.22)" />
-              <line x1="60" y1="240" x2="680" y2="240" stroke="rgba(20,19,46,.22)" />
+              <line x1="60" y1="30" x2="60" y2="240" stroke="rgba(11,11,12,.22)" />
+              <line x1="60" y1="240" x2="680" y2="240" stroke="rgba(11,11,12,.22)" />
               <g stroke={C.gridCarta}>
                 <line x1="60" y1="90" x2="680" y2="90" />
                 <line x1="60" y1="140" x2="680" y2="140" />
@@ -478,7 +478,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                 marginTop: 14,
                 fontSize: 14,
                 maxWidth: "64ch",
-                color: "#34324a",
+                color: "#3a3b45",
               }}
             >
               {t.s2.figCapA}
@@ -526,7 +526,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                   gridTemplateColumns: "auto 1fr",
                   gap: 16,
                   padding: "16px 0",
-                  borderTop: i === 0 ? "none" : "1px solid rgba(20,19,46,.14)",
+                  borderTop: i === 0 ? "none" : "1px solid rgba(11,11,12,.14)",
                 }}
               >
                 <span
@@ -546,7 +546,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                   >
                     {r.b}
                   </b>
-                  <p style={{ color: "#34324a", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
+                  <p style={{ color: "#3a3b45", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
                 </div>
               </div>
             ))}
@@ -592,7 +592,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
               aria-label={t.s5.figTitle}
               style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
             >
-              <line x1="40" y1="205" x2="420" y2="205" stroke="rgba(169,156,255,.3)" />
+              <line x1="40" y1="205" x2="420" y2="205" stroke="rgba(140,165,247,.3)" />
               <g stroke={C.gridInk}>
                 <line x1="40" y1="155" x2="420" y2="155" />
                 <line x1="40" y1="105" x2="420" y2="105" />
@@ -604,7 +604,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                 x="145"
                 y="92"
                 textAnchor="middle"
-                fill="#c6c4d8"
+                fill="#c2c6d4"
                 fontFamily="var(--font-mono)"
                 fontSize="15"
                 fontWeight="600"
@@ -625,7 +625,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
               <g
                 fontFamily="var(--font-mono)"
                 fontSize="12"
-                fill="#c6c4d8"
+                fill="#c2c6d4"
                 textAnchor="middle"
               >
                 <text x="145" y="228">{t.s5.figLabels.pre}</text>
@@ -649,7 +649,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                 marginTop: 14,
                 fontSize: 14,
                 maxWidth: "64ch",
-                color: "#c6c4d8",
+                color: "#c2c6d4",
               }}
             >
               {t.s5.figCapA}
@@ -701,7 +701,7 @@ export default function CasoMarfLeadCaldoPage({ params: { locale } }: Props) {
                 >
                   {tile.n}
                 </div>
-                <p style={{ fontSize: 13, color: "#c6c4d8" }}>{tile.p}</p>
+                <p style={{ fontSize: 13, color: "#c2c6d4" }}>{tile.p}</p>
               </div>
             ))}
           </div>

@@ -97,7 +97,7 @@ function MetricSlider({
         onChange={(e) => onChange(Number(e.target.value))}
         className="site-roi-slider"
         style={{
-          background: `linear-gradient(90deg, #533DFC ${fill}%, rgba(169,156,255,0.12) ${fill}%)`,
+          background: `linear-gradient(90deg, #533DFC ${fill}%, rgba(140,165,247,0.12) ${fill}%)`,
         }}
       />
       <div className="flex items-center justify-between font-plex text-[10px] uppercase tracking-[0.1em] text-ombra">
@@ -171,7 +171,7 @@ export function SiteROIMeter() {
           height: 6px;
           border-radius: 999px;
           outline: none;
-          border: 1px solid rgba(169, 156, 255, 0.16);
+          border: 1px solid rgba(140, 165, 247, 0.16);
         }
         .site-roi-slider::-webkit-slider-thumb {
           -webkit-appearance: none;
@@ -179,7 +179,7 @@ export function SiteROIMeter() {
           width: 16px;
           height: 16px;
           border-radius: 999px;
-          background: #f4f3ef;
+          background: #e4e7f0;
           border: 2px solid #533dfc;
           box-shadow: 0 0 0 4px rgba(83, 61, 252, 0.16);
           cursor: pointer;
@@ -188,7 +188,7 @@ export function SiteROIMeter() {
           width: 16px;
           height: 16px;
           border-radius: 999px;
-          background: #f4f3ef;
+          background: #e4e7f0;
           border: 2px solid #533dfc;
           box-shadow: 0 0 0 4px rgba(83, 61, 252, 0.16);
           cursor: pointer;
@@ -202,7 +202,7 @@ export function SiteROIMeter() {
               spanIndigo: (chunks) => <span style={{ color: "var(--lilla)" }}>{chunks}</span>,
             })}
           </div>
-          <p className="mt-3 text-[15px] text-[#c6c4d8]">{t("subtitle")}</p>
+          <p className="mt-3 text-[15px] text-[#c2c6d4]">{t("subtitle")}</p>
 
           <div className="mt-6 flex flex-wrap gap-2">
             {DEPARTMENTS_CONFIG.map((dep) => (
@@ -215,13 +215,13 @@ export function SiteROIMeter() {
                   dep.key === department
                     ? {
                         background: "rgba(83,61,252,0.18)",
-                        borderColor: "rgba(169,156,255,0.4)",
-                        color: "#f4f3ef",
+                        borderColor: "rgba(140,165,247,0.4)",
+                        color: "#e4e7f0",
                       }
                     : {
                         background: "transparent",
-                        borderColor: "rgba(169,156,255,0.16)",
-                        color: "#a99cff",
+                        borderColor: "rgba(140,165,247,0.16)",
+                        color: "#8ca5f7",
                       }
                 }
               >
@@ -270,7 +270,7 @@ export function SiteROIMeter() {
               <div className="mt-2 font-clash text-[clamp(28px,3.4vw,40px)] font-semibold leading-none text-carta">
                 {formatCurrency(Math.max(0, displayedLoss))}
               </div>
-              <p className="mt-2 text-[13px] text-[#c6c4d8]">{t("results.loss_desc")}</p>
+              <p className="mt-2 text-[13px] text-[#c2c6d4]">{t("results.loss_desc")}</p>
             </div>
 
             <div className="rounded-[12px] border border-[color:rgba(30,158,90,0.28)] bg-[rgba(30,158,90,0.06)] p-4">
@@ -282,11 +282,11 @@ export function SiteROIMeter() {
                 <span className="mx-2 text-lilla">-</span>
                 {formatCurrency(Math.max(0, displayedImpactMax))}
               </div>
-              <p className="mt-2 text-[13px] text-[#c6c4d8]">{t("results.impact_desc")}</p>
+              <p className="mt-2 text-[13px] text-[#c2c6d4]">{t("results.impact_desc")}</p>
             </div>
           </div>
 
-          <div className="mt-4 rounded-[18px] border border-[color:rgba(169,156,255,0.22)] bg-[rgba(255,255,255,0.02)] p-5">
+          <div className="mt-4 rounded-[18px] border border-[color:rgba(140,165,247,0.22)] bg-[rgba(255,255,255,0.02)] p-5">
             <div className="font-plex text-[10px] uppercase tracking-[0.18em] text-lilla">
               {t("results.annual_label")}
             </div>
@@ -295,7 +295,7 @@ export function SiteROIMeter() {
               <span className="mx-2 text-lilla">-</span>
               {formatCurrency(Math.max(0, displayedAnnualMax))}
             </div>
-            <p className="mt-3 max-w-[44ch] text-[14px] text-[#c9c7dd]">{t(`impact_descs.${department}`)}</p>
+            <p className="mt-3 max-w-[44ch] text-[14px] text-[#aeb2c2]">{t(`impact_descs.${department}`)}</p>
           </div>
 
           <div className="mt-5 flex flex-wrap gap-3">

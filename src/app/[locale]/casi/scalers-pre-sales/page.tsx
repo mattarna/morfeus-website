@@ -263,7 +263,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                 className="font-plex text-[10px] uppercase tracking-[0.08em]"
                 style={{
                   color: "var(--lilla)",
-                  border: "1px solid rgba(169,156,255,.3)",
+                  border: "1px solid rgba(140,165,247,.3)",
                   borderRadius: "999px",
                   padding: "4px 11px",
                 }}
@@ -281,7 +281,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
             className="font-playfair italic"
             style={{
               fontSize: "clamp(18px,2.2vw,24px)",
-              color: "#c6c4d8",
+              color: "#c2c6d4",
               maxWidth: "56ch",
               marginTop: 16,
             }}
@@ -351,8 +351,8 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
             </div>
             <div
               style={{
-                border: "1px solid rgba(20,19,46,.14)",
-                background: "rgba(20,19,46,.02)",
+                border: "1px solid rgba(11,11,12,.14)",
+                background: "rgba(11,11,12,.02)",
                 borderRadius: 12,
                 padding: "26px 24px",
               }}
@@ -363,11 +363,11 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                 aria-label={t.problema.svgAria}
                 style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
               >
-                <rect x="60" y="70" width="600" height="46" rx="8" fill="rgba(20,19,46,.05)" stroke="rgba(20,19,46,.14)" />
+                <rect x="60" y="70" width="600" height="46" rx="8" fill="rgba(11,11,12,.05)" stroke="rgba(11,11,12,.14)" />
                 <rect x="60" y="70" width="100" height="46" rx="8" fill="#FF5C5C" />
-                <rect x="160" y="70" width="500" height="46" fill="#7A7890" opacity="0.22" />
-                <line x1="160" y1="70" x2="160" y2="116" stroke="rgba(20,19,46,.3)" strokeWidth="1.5" />
-                <g fontFamily="IBM Plex Mono, monospace" fontSize="11" fill="#7A7890">
+                <rect x="160" y="70" width="500" height="46" fill="#7E8091" opacity="0.22" />
+                <line x1="160" y1="70" x2="160" y2="116" stroke="rgba(11,11,12,.3)" strokeWidth="1.5" />
+                <g fontFamily="IBM Plex Mono, monospace" fontSize="11" fill="#7E8091">
                   <text x="60" y="140">0 min</text>
                   <text x="150" y="140" fill="#FF5C5C" fontWeight="600">5 min</text>
                   <text x="640" y="140">30 min</text>
@@ -387,7 +387,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   x="110"
                   y="150"
                   textAnchor="middle"
-                  fill="#14132E"
+                  fill="#0B0B0C"
                   fontFamily="IBM Plex Mono, monospace"
                   fontSize="11"
                 >
@@ -397,7 +397,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   x="410"
                   y="58"
                   textAnchor="middle"
-                  fill="#7A7890"
+                  fill="#7E8091"
                   fontFamily="IBM Plex Mono, monospace"
                   fontSize="11"
                 >
@@ -406,7 +406,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
               </svg>
               <p
                 className="font-plex"
-                style={{ marginTop: 14, fontSize: 14, color: "#34324a", maxWidth: "64ch" }}
+                style={{ marginTop: 14, fontSize: 14, color: "#3a3b45", maxWidth: "64ch" }}
               >
                 {t.problema.figCap}
               </p>
@@ -449,7 +449,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   gridTemplateColumns: "auto 1fr",
                   gap: 16,
                   padding: "16px 0",
-                  borderTop: i === 0 ? "none" : "1px solid rgba(20,19,46,.14)",
+                  borderTop: i === 0 ? "none" : "1px solid rgba(11,11,12,.14)",
                 }}
               >
                 <span
@@ -465,7 +465,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   >
                     {r.b}
                   </b>
-                  <p style={{ color: "#34324a", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
+                  <p style={{ color: "#3a3b45", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
                 </div>
               </div>
             ))}
@@ -510,8 +510,8 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                 aria-label={t.risultato.svgAria}
                 style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
               >
-                <line x1="60" y1="40" x2="60" y2="250" stroke="rgba(169,156,255,.3)" />
-                <line x1="60" y1="250" x2="670" y2="250" stroke="rgba(169,156,255,.3)" />
+                <line x1="60" y1="40" x2="60" y2="250" stroke="rgba(140,165,247,.3)" />
+                <line x1="60" y1="250" x2="670" y2="250" stroke="rgba(140,165,247,.3)" />
                 <g stroke="rgba(255,255,255,.06)">
                   <line x1="60" y1="90" x2="670" y2="90" />
                   <line x1="60" y1="140" x2="670" y2="140" />
@@ -524,15 +524,15 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   strokeWidth="3"
                   strokeLinecap="round"
                 />
-                <circle cx="60" cy="225" r="4" fill="#A99CFF" />
-                <circle cx="360" cy="150" r="4" fill="#A99CFF" />
+                <circle cx="60" cy="225" r="4" fill="#8CA5F7" />
+                <circle cx="360" cy="150" r="4" fill="#8CA5F7" />
                 <circle cx="660" cy="70" r="5" fill="#1E9E5A" />
-                <g fontFamily="IBM Plex Mono, monospace" fontSize="12" fill="#c6c4d8" textAnchor="middle">
+                <g fontFamily="IBM Plex Mono, monospace" fontSize="12" fill="#c2c6d4" textAnchor="middle">
                   <text x="60" y="272">{t.risultato.figMonths[0]}</text>
                   <text x="360" y="272">{t.risultato.figMonths[1]}</text>
                   <text x="660" y="272">{t.risultato.figMonths[2]}</text>
                 </g>
-                <text x="110" y="245" fill="#c6c4d8" fontFamily="IBM Plex Mono, monospace" fontSize="12">
+                <text x="110" y="245" fill="#c2c6d4" fontFamily="IBM Plex Mono, monospace" fontSize="12">
                   {t.risultato.figBase}
                 </text>
                 <text
@@ -546,7 +546,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                   {t.risultato.figDelta}
                 </text>
               </svg>
-              <p style={{ marginTop: 14, fontSize: 14, color: "#c6c4d8", maxWidth: "64ch" }}>
+              <p style={{ marginTop: 14, fontSize: 14, color: "#c2c6d4", maxWidth: "64ch" }}>
                 {t.risultato.figCapA}
                 <b style={{ color: "var(--carta)", fontWeight: 700 }}>{t.risultato.figCapB}</b>
               </p>
@@ -570,8 +570,8 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
               <div
                 key={i}
                 style={{
-                  border: "1px solid rgba(20,19,46,.14)",
-                  background: "rgba(20,19,46,.02)",
+                  border: "1px solid rgba(11,11,12,.14)",
+                  background: "rgba(11,11,12,.02)",
                   borderRadius: 12,
                   padding: 22,
                 }}
@@ -594,7 +594,7 @@ export default function ScalersPreSalesCasePage({ params: { locale } }: Props) {
                 >
                   {tile.n}
                 </div>
-                <p style={{ fontSize: 13, color: "#34324a" }}>{tile.p}</p>
+                <p style={{ fontSize: 13, color: "#3a3b45" }}>{tile.p}</p>
               </div>
             ))}
           </div>

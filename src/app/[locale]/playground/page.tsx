@@ -75,7 +75,7 @@ const COPY = {
         p: "Per chi vuole delegare pezzi interi del proprio lavoro o portare la disciplina nel team.",
       },
       {
-        c: "#FFE14D",
+        c: "#E8650A",
         t: "Community",
         p: "La stanza dove chi costruisce con l'AI si dice cosa funziona davvero. Aperta, operativa, viva.",
       },
@@ -152,7 +152,7 @@ const COPY = {
         p: "For those who want to delegate whole chunks of their work or bring the discipline into the team.",
       },
       {
-        c: "#FFE14D",
+        c: "#E8650A",
         t: "Community",
         p: "The room where people building with AI tell each other what actually works. Open, practical, alive.",
       },

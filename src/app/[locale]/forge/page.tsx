@@ -841,7 +841,7 @@ export default function ForgePage({ params: { locale } }: Props) {
             <span className="emph">{t.cta.h2emph}</span>
             {t.cta.h2b}
           </h2>
-          <p style={{ color: "#34324a" }}>{t.cta.p}</p>
+          <p style={{ color: "#3a3b45" }}>{t.cta.p}</p>
           <div className="cta-row">
             <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               {t.cta.cta1}

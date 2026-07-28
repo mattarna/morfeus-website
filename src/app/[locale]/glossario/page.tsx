@@ -345,7 +345,7 @@ export default function GlossarioPage({ params: { locale } }: Props) {
                   >
                     {BADGE[l.tag].label}
                   </span>
-                  <span className="text-[13px] text-[#c6c4d8]">{l.note}</span>
+                  <span className="text-[13px] text-[#c2c6d4]">{l.note}</span>
                 </li>
               ))}
             </ul>
@@ -400,7 +400,7 @@ export default function GlossarioPage({ params: { locale } }: Props) {
                         {BADGE[term.tag].label}
                       </span>
                     </div>
-                    <p className="mt-2 max-w-[74ch] text-[15px] text-[#34324a]">
+                    <p className="mt-2 max-w-[74ch] text-[15px] text-[#3a3b45]">
                       {isIt ? term.it : term.en}
                     </p>
                   </div>

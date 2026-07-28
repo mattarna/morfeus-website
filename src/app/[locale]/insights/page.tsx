@@ -155,7 +155,7 @@ export default function InsightsPage({ params: { locale } }: Props) {
             <span className="emph">{t.hero.h1emph}</span>
             {t.hero.h1b}
           </h1>
-          <p className="mt-[18px] max-w-[58ch] text-[clamp(15px,1.8vw,17.5px)]" style={{ color: "#34324a" }}>
+          <p className="mt-[18px] max-w-[58ch] text-[clamp(15px,1.8vw,17.5px)]" style={{ color: "#3a3b45" }}>
             {t.hero.copy}
           </p>
 
@@ -185,7 +185,7 @@ export default function InsightsPage({ params: { locale } }: Props) {
             >
               <div
                 className="relative w-full overflow-hidden rounded-[12px] border"
-                style={{ aspectRatio: "16 / 9", borderColor: "#2A2850" }}
+                style={{ aspectRatio: "16 / 9", borderColor: "#26262B" }}
               >
                 <InsightCover
                   kind={(featured.coverKind as CoverKind) || coverKindFromCategory(featured.category)}
@@ -199,14 +199,14 @@ export default function InsightsPage({ params: { locale } }: Props) {
                     <span
                       key={i}
                       className="rounded-full border px-2.5 py-[5px] font-plex text-[10px] font-semibold uppercase tracking-[.04em] text-lilla"
-                      style={{ background: "rgba(169,156,255,.1)", borderColor: "rgba(169,156,255,.28)" }}
+                      style={{ background: "rgba(140,165,247,.1)", borderColor: "rgba(140,165,247,.28)" }}
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <h3 className="my-3 text-[clamp(24px,3.4vw,36px)] font-semibold">{featured.title}</h3>
-                <p className="mb-[18px] max-w-[48ch] text-[16px]" style={{ color: "#c6c4d8" }}>
+                <p className="mb-[18px] max-w-[48ch] text-[16px]" style={{ color: "#c2c6d4" }}>
                   {featured.tldr || featured.metaDescription}
                 </p>
                 <span className="inline-flex items-center gap-1.5 font-plex text-[12px] font-semibold tracking-[.04em] text-lilla">
@@ -250,7 +250,7 @@ export default function InsightsPage({ params: { locale } }: Props) {
             <span className="emph">{t.news.h2emph}</span>
             {t.news.h2b}
           </h2>
-          <p className="mx-auto mt-4 max-w-[46ch] text-[15.5px]" style={{ color: "#c6c4d8" }}>
+          <p className="mx-auto mt-4 max-w-[46ch] text-[15.5px]" style={{ color: "#c2c6d4" }}>
             {t.news.p}
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-2.5">
@@ -261,7 +261,7 @@ export default function InsightsPage({ params: { locale } }: Props) {
               placeholder={t.news.placeholder}
               aria-label={t.news.placeholder}
               className="min-w-[280px] rounded-[8px] border px-[18px] py-[11px] font-satoshi text-[14.5px]"
-              style={{ borderColor: "#2A2850", background: "rgba(255,255,255,.04)", color: "#F4F3EF" }}
+              style={{ borderColor: "#26262B", background: "rgba(255,255,255,.04)", color: "#E4E7F0" }}
             />
             <Link className="btn btn-1" href={`${base}/roiometro`}>
               {t.news.cta}

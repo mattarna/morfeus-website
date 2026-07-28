@@ -170,18 +170,18 @@ export default function InsightArticlePage({ params }: Props) {
           {article.tldr ? (
             <p
               className="mt-4 max-w-[60ch] text-[clamp(18px,2.2vw,22px)] italic"
-              style={{ fontFamily: "var(--font-emph,'Playfair Display',Georgia,serif)", color: "#c6c4d8" }}
+              style={{ fontFamily: "var(--font-emph,'Playfair Display',Georgia,serif)", color: "#c2c6d4" }}
             >
               {article.tldr}
             </p>
           ) : null}
-          <div className="mt-7 flex items-center gap-3 border-t pt-5" style={{ borderColor: "#2A2850" }}>
+          <div className="mt-7 flex items-center gap-3 border-t pt-5" style={{ borderColor: "#26262B" }}>
             <span
               className="inline-flex h-11 w-11 items-center justify-center rounded-full font-plex text-[14px] font-semibold"
               style={{
-                background: "rgba(169,156,255,.14)",
-                color: "#A99CFF",
-                border: "1px solid rgba(169,156,255,.3)",
+                background: "rgba(140,165,247,.14)",
+                color: "#8CA5F7",
+                border: "1px solid rgba(140,165,247,.3)",
               }}
             >
               {initials(article.author)}
@@ -202,7 +202,7 @@ export default function InsightArticlePage({ params }: Props) {
           {/* Cover banner — visuale astratta on-brand del tema */}
           <div
             className="mt-9 overflow-hidden rounded-[12px] border"
-            style={{ aspectRatio: "16 / 9", borderColor: "#2A2850" }}
+            style={{ aspectRatio: "16 / 9", borderColor: "#26262B" }}
           >
             <InsightCover
               kind={(article.coverKind as CoverKind) || coverKindFromCategory(article.category)}
@@ -220,8 +220,8 @@ export default function InsightArticlePage({ params }: Props) {
             <div
               className="mb-9 rounded-[12px] border px-[26px] py-[22px]"
               style={{
-                background: "rgba(20,19,46,.02)",
-                borderColor: "rgba(20,19,46,.14)",
+                background: "rgba(11,11,12,.02)",
+                borderColor: "rgba(11,11,12,.14)",
                 borderLeft: "3px solid #533DFC",
               }}
             >
@@ -248,73 +248,73 @@ export default function InsightArticlePage({ params }: Props) {
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: `
-              .insight-body h2{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:clamp(22px,3vw,30px);margin:40px 0 12px;letter-spacing:-.02em;line-height:1.15;color:#14132E}
-              .insight-body h3{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:19px;margin:28px 0 8px;color:#14132E}
+              .insight-body h2{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:clamp(22px,3vw,30px);margin:40px 0 12px;letter-spacing:-.02em;line-height:1.15;color:#0B0B0C}
+              .insight-body h3{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:19px;margin:28px 0 8px;color:#0B0B0C}
               .insight-body p{margin:14px 0}
               .insight-body a{color:#533DFC;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-              .insight-body a:hover{color:#4230D6}
-              .insight-body strong{font-weight:700;color:#14132E}
+              .insight-body a:hover{color:#392CB8}
+              .insight-body strong{font-weight:700;color:#0B0B0C}
               .insight-body em{font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;color:#533DFC;font-weight:500}
-              .insight-body blockquote{font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#14132E;border-left:2px solid #533DFC;padding:4px 0 4px 24px;margin:32px 0}
+              .insight-body blockquote{font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#0B0B0C;border-left:2px solid #533DFC;padding:4px 0 4px 24px;margin:32px 0}
               .insight-body ul,.insight-body ol{margin:14px 0 14px 22px;padding:0}
               .insight-body li{margin:8px 0}
               .insight-body ul li::marker{color:#533DFC}
               .insight-body ol li::marker{color:#533DFC;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-weight:600}
-              .insight-body table{width:100%;border-collapse:collapse;margin:32px 0;font-size:14.5px;border:1px solid rgba(20,19,46,.16);border-radius:12px;overflow:hidden;display:block;overflow-x:auto}
-              .insight-body table th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7A7890;padding:12px 18px;border-bottom:1px solid rgba(20,19,46,.16);background:rgba(83,61,252,.04)}
-              .insight-body table td{padding:13px 18px;border-bottom:1px solid rgba(20,19,46,.09);vertical-align:top;color:#23222e}
+              .insight-body table{width:100%;border-collapse:collapse;margin:32px 0;font-size:14.5px;border:1px solid rgba(11,11,12,.16);border-radius:12px;overflow:hidden;display:block;overflow-x:auto}
+              .insight-body table th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
+              .insight-body table td{padding:13px 18px;border-bottom:1px solid rgba(11,11,12,.09);vertical-align:top;color:#23222e}
               .insight-body table tr:last-child td{border-bottom:none}
-              .insight-body code{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:.9em;background:rgba(83,61,252,.08);padding:2px 6px;border-radius:4px;color:#14132E}
-              .insight-body hr{border:none;border-top:1px solid rgba(20,19,46,.14);margin:36px 0}
-              .insight-body img{max-width:100%;height:auto;border-radius:12px;margin:28px 0;border:1px solid rgba(20,19,46,.10)}
+              .insight-body code{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:.9em;background:rgba(83,61,252,.08);padding:2px 6px;border-radius:4px;color:#0B0B0C}
+              .insight-body hr{border:none;border-top:1px solid rgba(11,11,12,.14);margin:36px 0}
+              .insight-body img{max-width:100%;height:auto;border-radius:12px;margin:28px 0;border:1px solid rgba(11,11,12,.10)}
               /* --- componenti visual del mockup (HTML raw nei .md) --- */
-              .insight-body .figure{margin:36px 0;background:rgba(20,19,46,.02);border:1px solid rgba(20,19,46,.14);border-radius:12px;padding:26px 26px 20px}
+              .insight-body .figure{margin:36px 0;background:rgba(11,11,12,.02);border:1px solid rgba(11,11,12,.14);border-radius:12px;padding:26px 26px 20px}
               .insight-body .figure .ft{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#533DFC;margin-bottom:6px}
-              .insight-body .figure h4{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:20px;margin:0 0 18px;color:#14132E;letter-spacing:-.02em;line-height:1.15}
-              .insight-body .figure figcaption{margin-top:14px;font-size:14px;color:#34324a;max-width:64ch}
-              .insight-body .figure figcaption b{color:#14132E;font-weight:600}
+              .insight-body .figure h4{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:20px;margin:0 0 18px;color:#0B0B0C;letter-spacing:-.02em;line-height:1.15}
+              .insight-body .figure figcaption{margin-top:14px;font-size:14px;color:#3a3b45;max-width:64ch}
+              .insight-body .figure figcaption b{color:#0B0B0C;font-weight:600}
               .insight-body .chart{width:100%;height:auto;display:block;overflow:visible}
-              .insight-body .chart .gridln{stroke:rgba(20,19,46,.10)}
-              .insight-body .chart .axis{stroke:rgba(20,19,46,.22)}
+              .insight-body .chart .gridln{stroke:rgba(11,11,12,.10)}
+              .insight-body .chart .axis{stroke:rgba(11,11,12,.22)}
               .insight-body .chart .leak{fill:rgba(83,61,252,.10)}
               .insight-body .chart .lineR{fill:none;stroke:#533DFC;stroke-width:3;stroke-linecap:round}
-              .insight-body .chart .lineM{fill:none;stroke:#7A7890;stroke-width:3;stroke-linecap:round}
-              .insight-body .chart text{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;fill:#7A7890}
+              .insight-body .chart .lineM{fill:none;stroke:#7E8091;stroke-width:3;stroke-linecap:round}
+              .insight-body .chart text{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;fill:#7E8091}
               .insight-body .chart .lblR{fill:#533DFC;font-weight:600}
-              .insight-body .chart .lblM{fill:#7A7890;font-weight:600}
+              .insight-body .chart .lblM{fill:#7E8091;font-weight:600}
               .insight-body .chart .lblK{fill:#533DFC;font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:15px}
-              .insight-body .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;color:#34324a}
+              .insight-body .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;color:#3a3b45}
               .insight-body .legend span{display:inline-flex;align-items:center;gap:8px}
               .insight-body .legend i{width:16px;height:3px;border-radius:2px;display:inline-block}
               .insight-body .legend i.r{background:#533DFC}
-              .insight-body .legend i.m{background:#7A7890}
+              .insight-body .legend i.m{background:#7E8091}
               .insight-body .legend i.k{width:13px;height:13px;border-radius:3px;background:rgba(83,61,252,.14);border:1px solid rgba(83,61,252,.4)}
-              .insight-body .pquote{font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#14132E;border-left:2px solid #533DFC;padding:4px 0 4px 24px;margin:32px 0}
+              .insight-body .pquote{font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#0B0B0C;border-left:2px solid #533DFC;padding:4px 0 4px 24px;margin:32px 0}
               .insight-body .drivers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
-              .insight-body .driver{background:rgba(20,19,46,.02);border:1px solid rgba(20,19,46,.14);border-radius:12px;padding:22px}
+              .insight-body .driver{background:rgba(11,11,12,.02);border:1px solid rgba(11,11,12,.14);border-radius:12px;padding:22px}
               .insight-body .driver .ic{width:28px;height:28px;color:#533DFC;margin-bottom:12px;display:block}
-              .insight-body .driver h5{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:17px;margin:0 0 6px;color:#14132E}
-              .insight-body .driver p{font-size:14px;color:#34324a;margin:0}
+              .insight-body .driver h5{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:17px;margin:0 0 6px;color:#0B0B0C}
+              .insight-body .driver p{font-size:14px;color:#3a3b45;margin:0}
               @media(max-width:640px){.insight-body .drivers{grid-template-columns:1fr}}
-              .insight-body .gtable{margin:32px 0;border:1px solid rgba(20,19,46,.16);border-radius:12px;overflow:hidden;display:block}
-              .insight-body .gtable .cap{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#533DFC;padding:14px 18px;border-bottom:1px solid rgba(20,19,46,.16);background:rgba(83,61,252,.04)}
+              .insight-body .gtable{margin:32px 0;border:1px solid rgba(11,11,12,.16);border-radius:12px;overflow:hidden;display:block}
+              .insight-body .gtable .cap{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#533DFC;padding:14px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
               .insight-body table.rng{width:100%;border-collapse:collapse;font-size:14.5px;display:table;margin:0;border:none;border-radius:0}
-              .insight-body table.rng th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7A7890;padding:12px 18px;border-bottom:1px solid rgba(20,19,46,.16);background:transparent}
-              .insight-body table.rng td{padding:13px 18px;border-bottom:1px solid rgba(20,19,46,.09);vertical-align:top;color:#23222e}
+              .insight-body table.rng th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:transparent}
+              .insight-body table.rng td{padding:13px 18px;border-bottom:1px solid rgba(11,11,12,.09);vertical-align:top;color:#23222e}
               .insight-body table.rng tr:last-child td{border-bottom:none}
-              .insight-body table.rng td.v{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-weight:600;color:#14132E;white-space:nowrap}
-              .insight-body table.rng .note-td{color:#34324a;font-size:13.5px}
-              .insight-body .logbox{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;line-height:1.9;background:#0E0E1C;border:1px solid #2A2850;border-radius:12px;padding:22px 24px;color:#c7c7d2;margin:24px 0}
-              .insight-body .logbox .p{color:#A99CFF}
-              .insight-body .logbox .d{color:#7A7890}
+              .insight-body table.rng td.v{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-weight:600;color:#0B0B0C;white-space:nowrap}
+              .insight-body table.rng .note-td{color:#3a3b45;font-size:13.5px}
+              .insight-body .logbox{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;line-height:1.9;background:#0E0E1C;border:1px solid #26262B;border-radius:12px;padding:22px 24px;color:#c7c7d2;margin:24px 0}
+              .insight-body .logbox .p{color:#8CA5F7}
+              .insight-body .logbox .d{color:#7E8091}
               .insight-body .logbox .g{color:#1E9E5A}
-              .insight-body .callout-txt{margin-top:18px;font-size:16px;color:#34324a;max-width:60ch}
-              .insight-body .callout-txt b{color:#14132E;font-weight:700}
-              .insight-body .inlinecta{background:rgba(20,19,46,.02);border:1px solid rgba(20,19,46,.14);border-radius:12px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:36px 0}
-              .insight-body .inlinecta h3{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-size:22px;font-weight:600;color:#14132E;margin:0}
-              .insight-body .inlinecta p{color:#34324a;font-size:14px;margin-top:4px}
+              .insight-body .callout-txt{margin-top:18px;font-size:16px;color:#3a3b45;max-width:60ch}
+              .insight-body .callout-txt b{color:#0B0B0C;font-weight:700}
+              .insight-body .inlinecta{background:rgba(11,11,12,.02);border:1px solid rgba(11,11,12,.14);border-radius:12px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:36px 0}
+              .insight-body .inlinecta h3{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-size:22px;font-weight:600;color:#0B0B0C;margin:0}
+              .insight-body .inlinecta p{color:#3a3b45;font-size:14px;margin-top:4px}
               .insight-body .inlinecta .btn{display:inline-block;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;font-weight:600;padding:11px 18px;border-radius:8px;background:#533DFC;color:#fff;text-decoration:none}
-              .insight-body .inlinecta .btn:hover{background:#4230D6}
+              .insight-body .inlinecta .btn:hover{background:#392CB8}
             `,
             }}
           />
@@ -338,7 +338,7 @@ export default function InsightArticlePage({ params }: Props) {
                     key={id}
                     id={id}
                     className="border-t py-5"
-                    style={{ borderColor: "#2A2850" }}
+                    style={{ borderColor: "#26262B" }}
                   >
                     <summary
                       className="cursor-pointer text-[18px] font-semibold text-carta"
@@ -346,7 +346,7 @@ export default function InsightArticlePage({ params }: Props) {
                     >
                       {f.q}
                     </summary>
-                    <p className="mt-2 text-[15.5px]" style={{ color: "#c6c4d8" }}>
+                    <p className="mt-2 text-[15.5px]" style={{ color: "#c2c6d4" }}>
                       {f.a}
                     </p>
                   </details>
@@ -453,7 +453,7 @@ export default function InsightArticlePage({ params }: Props) {
                     key={a.slug}
                     href={`${base}/insights/${a.slug}`}
                     className="block border-t pt-4"
-                    style={{ borderColor: "rgba(20,19,46,.16)" }}
+                    style={{ borderColor: "rgba(11,11,12,.16)" }}
                   >
                     <div className="font-plex text-[10px] uppercase tracking-[.12em] text-firma">
                       {a.category}
@@ -478,7 +478,7 @@ export default function InsightArticlePage({ params }: Props) {
             {isIt ? "Il problema che non vedi ha un " : "The problem you don't see has a "}
             <span className="emph">{isIt ? "prezzo" : "price"}</span>.
           </h2>
-          <p className="mx-auto mt-4 max-w-[48ch] text-[15.5px]" style={{ color: "#c6c4d8" }}>
+          <p className="mx-auto mt-4 max-w-[48ch] text-[15.5px]" style={{ color: "#c2c6d4" }}>
             {isIt
               ? "Prova il ROIometro: seleziona un reparto e vedi, in euro, dove la tua azienda perde valore ogni giorno."
               : "Try the ROIometro: pick a department and see, in euros, where your company loses value every day."}

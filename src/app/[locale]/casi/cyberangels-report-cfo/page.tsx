@@ -378,7 +378,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
             <span className="emph">{t.h1emph}</span>
             {t.h1b}
           </h1>
-          <p className="font-playfair italic text-[clamp(18px,2.2vw,24px)] text-[#c6c4d8] max-w-[56ch]">
+          <p className="font-playfair italic text-[clamp(18px,2.2vw,24px)] text-[#c2c6d4] max-w-[56ch]">
             {t.standfirst}
           </p>
           <div className="flex gap-8 flex-wrap mt-7 pt-6 border-t border-riga-scuro">
@@ -433,19 +433,19 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 className="w-full h-auto block overflow-visible font-plex"
               >
                 <g>
-                  <rect x="30" y="40" width="260" height="150" rx="10" fill="#14132E" />
+                  <rect x="30" y="40" width="260" height="150" rx="10" fill="#0B0B0C" />
                   <text
                     x="160"
                     y="70"
                     textAnchor="middle"
-                    fill="#F4F3EF"
+                    fill="#E4E7F0"
                     fontWeight="600"
                     fontSize="14"
                   >
                     {t.s2.svgReport}
                   </text>
                   {t.s2.svgReportLines.map((line, i) => (
-                    <text key={i} x="55" y={100 + i * 22} fill="#c6c4d8" fontSize="12">
+                    <text key={i} x="55" y={100 + i * 22} fill="#c2c6d4" fontSize="12">
                       {line}
                     </text>
                   ))}
@@ -457,21 +457,21 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                     height="150"
                     rx="10"
                     fill="none"
-                    stroke="rgba(20,19,46,.25)"
+                    stroke="rgba(11,11,12,.25)"
                     strokeDasharray="6 6"
                   />
                   <text
                     x="560"
                     y="70"
                     textAnchor="middle"
-                    fill="#14132E"
+                    fill="#0B0B0C"
                     fontWeight="600"
                     fontSize="14"
                   >
                     {t.s2.svgBoard}
                   </text>
                   {t.s2.svgBoardLines.map((line, i) => (
-                    <text key={i} x="455" y={102 + i * 24} fill="#7A7890" fontSize="12">
+                    <text key={i} x="455" y={102 + i * 24} fill="#7E8091" fontSize="12">
                       {line}
                     </text>
                   ))}
@@ -507,7 +507,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                   {t.s2.svgRotto}
                 </text>
               </svg>
-              <p className="mt-3.5 text-[14px] max-w-[64ch] text-[#34324a]">
+              <p className="mt-3.5 text-[14px] max-w-[64ch] text-[#3a3b45]">
                 {t.s2.figCapA}
                 <b className="font-bold text-inchiostro">{t.s2.figCapB}</b>
               </p>
@@ -552,7 +552,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 </span>
                 <div>
                   <b className="font-clash font-semibold text-[17px] text-inchiostro">{r.b}</b>
-                  <p className="text-[14.5px] text-[#34324a] mt-1">{r.p}</p>
+                  <p className="text-[14.5px] text-[#3a3b45] mt-1">{r.p}</p>
                 </div>
               </div>
             ))}
@@ -582,7 +582,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 aria-label={t.s5.svgTitle}
                 className="w-full h-auto block overflow-visible font-plex"
               >
-                <g fontSize="11" fill="#c6c4d8">
+                <g fontSize="11" fill="#c2c6d4">
                   <text x="30" y="30" fill="#FF5C5C" fontWeight="600">
                     {t.s5.prima}
                   </text>
@@ -593,11 +593,11 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 {/* PRIMA */}
                 <g>
                   <rect x="30" y="50" width="300" height="34" rx="4" fill="#533DFC" />
-                  <text x="40" y="72" fill="#F4F3EF" fontSize="12">
+                  <text x="40" y="72" fill="#E4E7F0" fontSize="12">
                     {t.s5.inviato}
                   </text>
-                  <rect x="30" y="104" width="220" height="34" rx="4" fill="#7A7890" />
-                  <text x="40" y="126" fill="#F4F3EF" fontSize="12">
+                  <rect x="30" y="104" width="220" height="34" rx="4" fill="#7E8091" />
+                  <text x="40" y="126" fill="#E4E7F0" fontSize="12">
                     {t.s5.aperto}
                   </text>
                   <rect x="30" y="158" width="26" height="34" rx="4" fill="#FF5C5C" />
@@ -618,15 +618,15 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 {/* DOPO */}
                 <g>
                   <rect x="390" y="50" width="300" height="34" rx="4" fill="#533DFC" />
-                  <text x="400" y="72" fill="#F4F3EF" fontSize="12">
+                  <text x="400" y="72" fill="#E4E7F0" fontSize="12">
                     {t.s5.inviato}
                   </text>
-                  <rect x="390" y="104" width="280" height="34" rx="4" fill="#A99CFF" />
-                  <text x="400" y="126" fill="#14132E" fontSize="12">
+                  <rect x="390" y="104" width="280" height="34" rx="4" fill="#8CA5F7" />
+                  <text x="400" y="126" fill="#0B0B0C" fontSize="12">
                     {t.s5.aperto}
                   </text>
                   <rect x="390" y="158" width="255" height="34" rx="4" fill="#1E9E5A" />
-                  <text x="400" y="180" fill="#F4F3EF" fontSize="12">
+                  <text x="400" y="180" fill="#E4E7F0" fontSize="12">
                     {t.s5.firmato}
                   </text>
                 </g>
@@ -641,7 +641,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                   {t.s5.dopoNote}
                 </text>
               </svg>
-              <p className="mt-3.5 text-[14px] max-w-[64ch] text-[#c6c4d8]">
+              <p className="mt-3.5 text-[14px] max-w-[64ch] text-[#c2c6d4]">
                 {t.s5.figCapA}
                 <b className="font-bold text-carta">{t.s5.figCapB}</b>
                 {t.s5.figCapC}
@@ -670,7 +670,7 @@ export default function CasoCyberangelsReportCfoPage({ params: { locale } }: Pro
                 >
                   {tile.n}
                 </div>
-                <p className="text-[13px] text-[#34324a]">{tile.p}</p>
+                <p className="text-[13px] text-[#3a3b45]">{tile.p}</p>
               </div>
             ))}
           </div>

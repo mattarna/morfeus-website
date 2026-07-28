@@ -27,21 +27,21 @@ type Palette = {
 };
 
 const PAL_CARTA: Palette = {
-  bg: "#F4F3EF",
+  bg: "#E4E7F0",
   grid: "rgba(83,61,252,.08)",
   primary: "#533DFC",
-  secondary: "#7A7890",
+  secondary: "#7E8091",
   faint: "rgba(83,61,252,.10)",
-  text: "#14132E",
+  text: "#0B0B0C",
 };
 
 const PAL_INK: Palette = {
-  bg: "#14132E",
-  grid: "rgba(169,156,255,.11)",
-  primary: "#A99CFF",
-  secondary: "#7A7890",
-  faint: "rgba(169,156,255,.10)",
-  text: "#F4F3EF",
+  bg: "#0B0B0C",
+  grid: "rgba(140,165,247,.11)",
+  primary: "#8CA5F7",
+  secondary: "#7E8091",
+  faint: "rgba(140,165,247,.10)",
+  text: "#E4E7F0",
 };
 
 function Grid({ p }: { p: Palette }) {

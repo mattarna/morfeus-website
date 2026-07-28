@@ -532,7 +532,7 @@ export default function FaqPage({ params: { locale } }: Props) {
               <a
                 key={g.anchor}
                 href={`#${g.anchor}`}
-                className="rounded-[var(--r-pill)] border border-[var(--riga-scuro)] px-4 py-[9px] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#c6c4d8] [font-family:var(--font-mono)] transition-colors [transition-duration:var(--dur)] hover:border-[var(--lilla)] hover:text-[var(--carta)]"
+                className="rounded-[var(--r-pill)] border border-[var(--riga-scuro)] px-4 py-[9px] text-[11px] font-semibold uppercase tracking-[0.08em] text-[#c2c6d4] [font-family:var(--font-mono)] transition-colors [transition-duration:var(--dur)] hover:border-[var(--lilla)] hover:text-[var(--carta)]"
               >
                 {g.title}
               </a>
@@ -554,7 +554,7 @@ export default function FaqPage({ params: { locale } }: Props) {
                 {g.items.map((qa) => (
                   <details
                     key={qa.id}
-                    className="group border-t border-[rgba(20,19,46,0.14)]"
+                    className="group border-t border-[rgba(11,11,12,0.14)]"
                   >
                     <summary className="flex cursor-pointer list-none items-start justify-between gap-5 py-[22px] pr-1 pl-1 [&::-webkit-details-marker]:hidden">
                       <h3
@@ -566,7 +566,7 @@ export default function FaqPage({ params: { locale } }: Props) {
                       {plus}
                     </summary>
                     <div className="pb-[26px] pr-[44px] pl-1">
-                      <p className="max-w-[78ch] text-[clamp(15px,1.6vw,16.5px)] leading-[1.62] text-[color:#34324a]">
+                      <p className="max-w-[78ch] text-[clamp(15px,1.6vw,16.5px)] leading-[1.62] text-[color:#3a3b45]">
                         {qa.a}
                       </p>
                     </div>

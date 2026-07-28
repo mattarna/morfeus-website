@@ -1,12 +1,14 @@
 import Link from "next/link";
 
-/* I colori passano da variabili CSS con il valore storico come fallback:
-   a palette spenta la resa e' identica, ma cosi' una palette alternativa
-   puo' raggiungerli. Erano inline, e l'inline batte qualsiasi classe. */
+/* I colori passano da variabili CSS (definite nei token .ms di site.css)
+   invece che da hex inline: l'inline batte ogni classe, quindi cablati
+   qui il footer restava fuori da qualsiasi cambio di palette.
+   I fallback replicano i token e servono solo se il footer finisse
+   renderizzato fuori da .ms. */
 const GRID_BG = {
-  backgroundColor: "var(--footer-bg, #101A2E)",
+  backgroundColor: "var(--footer-bg, #0B0B0C)",
   backgroundImage:
-    "linear-gradient(var(--footer-grid, rgba(169,156,255,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--footer-grid, rgba(169,156,255,.055)) 1px,transparent 1px)",
+    "linear-gradient(var(--footer-grid, rgba(140,165,247,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--footer-grid, rgba(140,165,247,.055)) 1px,transparent 1px)",
   backgroundSize: "36px 36px",
 } as const;
 
@@ -87,7 +89,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
         className="absolute inset-x-0 top-0 h-[120px] pointer-events-none z-[1]"
         style={{
           background:
-            "linear-gradient(to bottom, var(--footer-fade, #0B1526) 0%, var(--footer-fade-mid, rgba(11,21,38,0.6)) 40%, transparent 100%)",
+            "linear-gradient(to bottom, var(--footer-fade, #0B0B0C) 0%, var(--footer-fade-mid, rgba(11,11,12,0.6)) 40%, transparent 100%)",
         }}
       />
 

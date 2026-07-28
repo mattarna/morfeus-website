@@ -106,33 +106,13 @@ export default function RootLayout({
                 } catch (e) {}
               })();
 
-              /* Asse PALETTE, indipendente dal font: si combinano.
-                   ?palette=morfeus      → palette ufficiale, fasce alternate
-                   ?palette=morfeus-dark → palette ufficiale, tutto scuro
-                   ?palette=off          → torna al carta/inchiostro 2026 */
+              /* La palette ufficiale non e' piu' un esperimento: e' il
+                 default del DS (token in site.css + tailwind.config.ts).
+                 Il toggle ?palette e' stato rimosso; per chi avesse la
+                 vecchia scelta in localStorage, ripuliamo la chiave. */
               (function () {
                 try {
-                  var KEY = "morfeus-palette-exp";
-                  var LABELS = {
-                    morfeus: "palette ufficiale · fasce alternate",
-                    "morfeus-dark": "palette ufficiale · tutto scuro",
-                  };
-
-                  var q = new URLSearchParams(window.location.search).get("palette");
-                  if (q && LABELS[q]) localStorage.setItem(KEY, q);
-                  else if (q) localStorage.removeItem(KEY);
-
-                  var name = localStorage.getItem(KEY);
-                  if (!name || !LABELS[name]) return;
-
-                  document.documentElement.classList.add("palette-" + name);
-
-                  document.addEventListener("DOMContentLoaded", function () {
-                    var b = document.createElement("div");
-                    b.className = "palette-exp-badge";
-                    b.textContent = LABELS[name] + " · ?palette=off";
-                    document.body.appendChild(b);
-                  });
+                  localStorage.removeItem("morfeus-palette-exp");
                 } catch (e) {}
               })();
             `,

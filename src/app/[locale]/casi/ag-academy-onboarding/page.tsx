@@ -222,9 +222,9 @@ const CASE_CSS = `
 .ms .case-013 .crumbs{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra)}
 .ms .case-013 .crumbs a{color:var(--lilla)}
 .ms .case-013 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.ms .case-013 .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(169,156,255,.3);border-radius:var(--r-pill);padding:4px 11px}
+.ms .case-013 .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
 .ms .case-013 .ahead h1{font-size:clamp(30px,5.2vw,54px);font-weight:600;margin:16px 0;max-width:17ch;line-height:1.08}
-.ms .case-013 .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c6c4d8;max-width:56ch}
+.ms .case-013 .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c2c6d4;max-width:56ch}
 .ms .case-013 .headstats{display:flex;gap:32px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--riga-scuro)}
 .ms .case-013 .headstats .s .n{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1}
 .ms .case-013 .headstats .s .n.gain{color:var(--ok)}
@@ -238,13 +238,13 @@ const CASE_CSS = `
 .ms .band.carta .case-013 .figure .ft{color:var(--firma)}
 .ms .band.ink .case-013 .figure .ft{color:var(--lilla)}
 .ms .case-013 .figbox{border-radius:var(--r-m);padding:26px 24px}
-.ms .band.carta .case-013 .figbox{border:1px solid rgba(20,19,46,.14);background:rgba(20,19,46,.02)}
+.ms .band.carta .case-013 .figbox{border:1px solid rgba(11,11,12,.14);background:rgba(11,11,12,.02)}
 .ms .band.ink .case-013 .figbox{border:1px solid var(--riga-scuro);background:rgba(255,255,255,.02)}
 .ms .case-013 .chart{width:100%;height:auto;display:block;overflow:visible}
 .ms .case-013 .chart text{font-family:var(--font-mono);font-size:12px}
 .ms .case-013 .figcap{margin-top:14px;font-size:14px;max-width:64ch}
-.ms .band.carta .case-013 .figcap{color:#34324a}
-.ms .band.ink .case-013 .figcap{color:#c6c4d8}
+.ms .band.carta .case-013 .figcap{color:#3a3b45}
+.ms .band.ink .case-013 .figcap{color:#c2c6d4}
 .ms .band.carta .case-013 .figcap b{color:var(--inchiostro);font-weight:700}
 .ms .band.ink .case-013 .figcap b{color:var(--carta);font-weight:700}
 .ms .case-013 .pquote{font-family:var(--font-emph);font-style:italic;font-size:clamp(20px,2.8vw,28px);line-height:1.35;max-width:22ch;margin:0;color:var(--carta)}
@@ -252,11 +252,11 @@ const CASE_CSS = `
 .ms .case-013 .two-col{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
 @media(max-width:760px){.ms .case-013 .two-col{grid-template-columns:1fr}}
 .ms .case-013 .built{display:flex;flex-direction:column;gap:2px;margin-top:24px}
-.ms .case-013 .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(20,19,46,.14)}
+.ms .case-013 .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(11,11,12,.14)}
 .ms .case-013 .built .row:first-child{border-top:none}
 .ms .case-013 .built .ix{font-family:var(--font-mono);font-size:12px;color:var(--firma);padding-top:3px}
 .ms .case-013 .built .row b{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--inchiostro);display:block}
-.ms .case-013 .built .row p{color:#34324a;font-size:14.5px;margin-top:4px}
+.ms .case-013 .built .row p{color:#3a3b45;font-size:14.5px;margin-top:4px}
 .ms .case-013 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;max-width:var(--maxw);margin-left:auto;margin-right:auto}
 @media(max-width:760px){.ms .case-013 .tiles{grid-template-columns:1fr}}
 .ms .case-013 .tile{border:1px solid var(--riga-scuro);background:rgba(255,255,255,.02);border-radius:var(--r-m);padding:22px}
@@ -266,13 +266,13 @@ const CASE_CSS = `
 .ms .case-013 .tile p{font-size:13px;color:#c3c1d6}
 .ms .case-013 .rgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
 @media(max-width:760px){.ms .case-013 .rgrid{grid-template-columns:1fr}}
-.ms .case-013 .rcard{border:1px solid rgba(20,19,46,.14);border-radius:var(--r-m);background:rgba(20,19,46,.02);padding:20px;display:block}
+.ms .case-013 .rcard{border:1px solid rgba(11,11,12,.14);border-radius:var(--r-m);background:rgba(11,11,12,.02);padding:20px;display:block}
 .ms .case-013 .rcard .cat{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--firma)}
 .ms .case-013 .rcard h3{font-size:16px;font-weight:600;margin:8px 0 10px;color:var(--inchiostro);font-family:var(--font-display)}
 .ms .case-013 .rcard .soon{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra);text-transform:uppercase}
 .ms .case-013 .cta-center{text-align:center}
 .ms .case-013 .cta-center h2{font-size:clamp(26px,4.2vw,40px);max-width:22ch;margin:12px auto 0}
-.ms .case-013 .cta-center p{color:#34324a;max-width:48ch;margin:16px auto 0;font-size:15.5px}
+.ms .case-013 .cta-center p{color:#3a3b45;max-width:48ch;margin:16px auto 0;font-size:15.5px}
 .ms .case-013 .cta-center .cta-row{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:28px}
 .ms .case-013 .emph-loss{color:var(--anomalia);font-weight:600}
 `;
@@ -375,19 +375,19 @@ export default function CaseAgAcademyPage({ params: { locale } }: Props) {
                 >
                   <g>
                     <path d="M30,40 L690,40 L690,90 L30,90 Z" fill="rgba(83,61,252,.10)" stroke="#533DFC" strokeWidth="2" />
-                    <text x="360" y="70" textAnchor="middle" fill="#14132E" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
+                    <text x="360" y="70" textAnchor="middle" fill="#0B0B0C" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
                       {t.s2.funnel[0]}
                     </text>
                     <path d="M70,105 L650,105 L650,150 L70,150 Z" fill="rgba(83,61,252,.09)" stroke="#533DFC" strokeWidth="2" />
-                    <text x="360" y="132" textAnchor="middle" fill="#14132E" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
+                    <text x="360" y="132" textAnchor="middle" fill="#0B0B0C" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
                       {t.s2.funnel[1]}
                     </text>
                     <path d="M110,165 L610,165 L610,210 L110,210 Z" fill="rgba(83,61,252,.08)" stroke="#533DFC" strokeWidth="2" />
-                    <text x="360" y="192" textAnchor="middle" fill="#14132E" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
+                    <text x="360" y="192" textAnchor="middle" fill="#0B0B0C" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
                       {t.s2.funnel[2]}
                     </text>
                     <path d="M150,225 L570,225 L570,270 L150,270 Z" fill="rgba(83,61,252,.07)" stroke="#533DFC" strokeWidth="2" />
-                    <text x="360" y="252" textAnchor="middle" fill="#14132E" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
+                    <text x="360" y="252" textAnchor="middle" fill="#0B0B0C" fontFamily="var(--font-mono)" fontWeight="600" fontSize="14">
                       {t.s2.funnel[3]}
                     </text>
                   </g>
@@ -402,7 +402,7 @@ export default function CaseAgAcademyPage({ params: { locale } }: Props) {
                   <text x="520" y="322" textAnchor="middle" fill="#FF5C5C" fontFamily="var(--font-display)" fontWeight="600" fontSize="14">
                     {t.s2.refundBig}
                   </text>
-                  <text x="520" y="340" textAnchor="middle" fill="#7A7890" fontFamily="var(--font-mono)" fontSize="11">
+                  <text x="520" y="340" textAnchor="middle" fill="#7E8091" fontFamily="var(--font-mono)" fontSize="11">
                     {t.s2.refundSmall}
                   </text>
                 </svg>
@@ -482,7 +482,7 @@ export default function CaseAgAcademyPage({ params: { locale } }: Props) {
                   role="img"
                   aria-label={t.s5.figTitle}
                 >
-                  <line x1="40" y1="205" x2="420" y2="205" stroke="rgba(169,156,255,.3)" />
+                  <line x1="40" y1="205" x2="420" y2="205" stroke="rgba(140,165,247,.3)" />
                   <rect x="90" y="55" width="90" height="150" rx="6" fill="#FF5C5C" />
                   <rect x="280" y="169" width="90" height="36" rx="6" fill="#1E9E5A" />
                   <text x="135" y="45" textAnchor="middle" fill="#FF5C5C" fontFamily="var(--font-display)" fontWeight="600" fontSize="20">
@@ -491,10 +491,10 @@ export default function CaseAgAcademyPage({ params: { locale } }: Props) {
                   <text x="325" y="159" textAnchor="middle" fill="#1E9E5A" fontFamily="var(--font-display)" fontWeight="600" fontSize="20">
                     6%
                   </text>
-                  <text x="135" y="225" textAnchor="middle" fill="#c6c4d8" fontFamily="var(--font-mono)" fontSize="12">
+                  <text x="135" y="225" textAnchor="middle" fill="#c2c6d4" fontFamily="var(--font-mono)" fontSize="12">
                     {t.s5.prima}
                   </text>
-                  <text x="325" y="225" textAnchor="middle" fill="#c6c4d8" fontFamily="var(--font-mono)" fontSize="12">
+                  <text x="325" y="225" textAnchor="middle" fill="#c2c6d4" fontFamily="var(--font-mono)" fontSize="12">
                     {t.s5.dopo}
                   </text>
                   <text

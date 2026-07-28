@@ -244,7 +244,7 @@ const S = {
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     color: "var(--lilla)",
-    border: "1px solid rgba(169,156,255,.3)",
+    border: "1px solid rgba(140,165,247,.3)",
     borderRadius: 999,
     padding: "4px 11px",
   } as React.CSSProperties,
@@ -258,7 +258,7 @@ const S = {
     fontFamily: "var(--font-emph)",
     fontStyle: "italic",
     fontSize: "clamp(18px,2.2vw,24px)",
-    color: "#c6c4d8",
+    color: "#c2c6d4",
     maxWidth: "56ch",
   } as React.CSSProperties,
   headstats: {
@@ -302,8 +302,8 @@ const S = {
   figBoxCarta: {
     borderRadius: 12,
     padding: "26px 24px",
-    border: "1px solid rgba(20,19,46,.14)",
-    background: "rgba(20,19,46,.02)",
+    border: "1px solid rgba(11,11,12,.14)",
+    background: "rgba(11,11,12,.02)",
   } as React.CSSProperties,
   figCap: { marginTop: 14, fontSize: 14, maxWidth: "64ch" } as React.CSSProperties,
   chart: { width: "100%", height: "auto", display: "block", overflow: "visible" } as React.CSSProperties,
@@ -313,7 +313,7 @@ const S = {
     gridTemplateColumns: "auto 1fr",
     gap: 16,
     padding: "16px 0",
-    borderTop: "1px solid rgba(20,19,46,.14)",
+    borderTop: "1px solid rgba(11,11,12,.14)",
   } as React.CSSProperties,
   builtRowFirst: {
     display: "grid",
@@ -329,7 +329,7 @@ const S = {
     fontSize: 17,
     color: "var(--inchiostro)",
   } as React.CSSProperties,
-  builtP: { color: "#34324a", fontSize: 14.5, marginTop: 4 } as React.CSSProperties,
+  builtP: { color: "#3a3b45", fontSize: 14.5, marginTop: 4 } as React.CSSProperties,
   tiles: {
     display: "grid",
     gridTemplateColumns: "repeat(3,1fr)",
@@ -365,7 +365,7 @@ const S = {
     margin: "10px 0 6px",
     color: "var(--ok)",
   } as React.CSSProperties,
-  tileP: { fontSize: 13, color: "#c6c4d8" } as React.CSSProperties,
+  tileP: { fontSize: 13, color: "#c2c6d4" } as React.CSSProperties,
   rgrid: {
     display: "grid",
     gridTemplateColumns: "repeat(2,1fr)",
@@ -523,11 +523,11 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
             <div style={{ ...S.figFt, color: "var(--firma)" }}>{t.fig1Ft}</div>
             <div style={S.figBoxCarta}>
               <svg style={S.chart} viewBox="0 0 720 220" role="img" aria-label={t.fig1AriaLabel}>
-                <g fontFamily="var(--font-mono)" fontSize={12} fill="#14132E">
+                <g fontFamily="var(--font-mono)" fontSize={12} fill="#0B0B0C">
                   <text x={20} y={42}>{t.fig1RowA}</text>
                   <text x={20} y={140}>{t.fig1RowB}</text>
                 </g>
-                <rect x={20} y={56} width={640} height={30} rx={6} fill="rgba(20,19,46,.06)" />
+                <rect x={20} y={56} width={640} height={30} rx={6} fill="rgba(11,11,12,.06)" />
                 <rect x={20} y={56} width={630} height={30} rx={6} fill="#533DFC" />
                 <text
                   x={660}
@@ -541,13 +541,13 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
                 >
                   {t.fig1LabelA}
                 </text>
-                <rect x={20} y={154} width={640} height={30} rx={6} fill="rgba(20,19,46,.06)" />
+                <rect x={20} y={154} width={640} height={30} rx={6} fill="rgba(11,11,12,.06)" />
                 <rect x={20} y={154} width={26} height={30} rx={6} fill="#FF5C5C" />
                 <text x={60} y={174} fontFamily="var(--font-mono)" fontSize={12} fill="#FF5C5C" fontWeight={600}>
                   {t.fig1LabelB}
                 </text>
               </svg>
-              <p style={{ ...S.figCap, color: "#34324a" }}>
+              <p style={{ ...S.figCap, color: "#3a3b45" }}>
                 {t.fig1Cap1}
                 <span className="loss">{t.fig1CapLoss}</span>
                 {t.fig1Cap2}
@@ -623,16 +623,16 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
             <div style={{ ...S.figFt, color: "var(--lilla)" }}>{t.fig2Ft}</div>
             <div style={S.figBoxInk}>
               <svg style={S.chart} viewBox="0 0 460 240" role="img" aria-label={t.fig2AriaLabel}>
-                <line x1={40} y1={195} x2={440} y2={195} stroke="rgba(169,156,255,.3)" />
+                <line x1={40} y1={195} x2={440} y2={195} stroke="rgba(140,165,247,.3)" />
                 <g>
-                  <rect x={90} y={180} width={90} height={15} rx={4} fill="#7A7890" />
+                  <rect x={90} y={180} width={90} height={15} rx={4} fill="#7E8091" />
                   <rect x={280} y={55} width={90} height={140} rx={4} fill="#1E9E5A" />
                 </g>
                 <text
                   x={135}
                   y={60}
                   textAnchor="middle"
-                  fill="#c6c4d8"
+                  fill="#c2c6d4"
                   fontFamily="var(--font-mono)"
                   fontSize={14}
                 >
@@ -648,12 +648,12 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
                 >
                   70%+
                 </text>
-                <g fontFamily="var(--font-mono)" fontSize={11} fill="#c6c4d8" textAnchor="middle">
+                <g fontFamily="var(--font-mono)" fontSize={11} fill="#c2c6d4" textAnchor="middle">
                   <text x={135} y={215}>{t.fig2Before}</text>
                   <text x={325} y={215}>{t.fig2After}</text>
                 </g>
               </svg>
-              <p style={{ ...S.figCap, color: "#c6c4d8" }}>
+              <p style={{ ...S.figCap, color: "#c2c6d4" }}>
                 {t.fig2Cap1}
                 <span className="loss">{t.fig2CapLoss}</span>
                 {t.fig2Cap2}
@@ -675,8 +675,8 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
                 key={i}
                 style={{
                   ...S.tile,
-                  border: "1px solid rgba(20,19,46,.14)",
-                  background: "rgba(20,19,46,.02)",
+                  border: "1px solid rgba(11,11,12,.14)",
+                  background: "rgba(11,11,12,.02)",
                 }}
               >
                 <div style={S.tileK}>{tile.k}</div>
@@ -688,7 +688,7 @@ export default function CyberangelsSalesAdvisorPage({ params: { locale } }: Prop
                 >
                   {tile.n}
                 </div>
-                <p style={{ ...S.tileP, color: "#34324a" }}>{tile.p}</p>
+                <p style={{ ...S.tileP, color: "#3a3b45" }}>{tile.p}</p>
               </div>
             ))}
           </div>

@@ -7,28 +7,47 @@
    Font: Clash/Satoshi via Fontshare (SiteShell), Playfair/Plex via next/font.
    =========================================================== */
 
+/* ===========================================================
+   PALETTE — MORFEUS Official Palette v1.0
+   Fonte di verita': tailwind.config.ts del sito in produzione.
+     night #0B0B0C · midnight #201F6E · persian #392CB8
+     majorelle #533DFC · neon #6475FA · vista #8CA5F7
+     ghost-white #E4E7F0 · forge #E8650A
+
+   I nomi dei token restano quelli del brand 2026 (carta/inchiostro/
+   firma...) perche' li usano ~200 regole in questo file: rinominarli
+   sarebbe rumore senza valore. Sono i VALORI ad essere allineati.
+   Attenzione quindi: "carta" ora e' ghost-white, non piu' la crema.
+
+   La palette ufficiale ha 8 colori e nessun grigio: i neutri di
+   servizio (pannelli, righe, testi secondari) sono DERIVATI da
+   night/ghost-white e segnati uno per uno.
+   =========================================================== */
 .ms {
-  --carta: #f4f3ef;
-  --inchiostro: #101a2e;
-  --inchiostro-2: #1b2742;
-  --riga-scuro: #2a2850;
-  --firma: #533dfc;
-  --firma-hover: #4230d6;
-  --lilla: #a99cff;
-  --ombra: #7a7890;
-  --anomalia: #ff5c5c;
-  --ok: #1e9e5a;
-  --grid-chiaro: rgba(83, 61, 252, 0.04);
-  --grid-scuro: rgba(169, 156, 255, 0.055);
+  --carta: #e4e7f0; /* ghost-white */
+  --inchiostro: #0b0b0c; /* night */
+  --inchiostro-2: #16161a; /* DERIVATO: pannello su night */
+  --riga-scuro: #26262b; /* DERIVATO: righe su fondo scuro */
+  --firma: #533dfc; /* majorelle */
+  --firma-hover: #392cb8; /* persian */
+  --lilla: #8ca5f7; /* vista */
+  --ombra: #7e8091; /* DERIVATO: testo attenuato */
+  --anomalia: #ff5c5c; /* stato: errore — fuori palette, resta */
+  --ok: #1e9e5a; /* stato: ok — fuori palette, resta */
+  --grid-chiaro: rgba(83, 61, 252, 0.05);
+  --grid-scuro: rgba(140, 165, 247, 0.06);
   --grid: 36px;
-  /* Testi secondari e marker: erano hex cablati sparsi in questo file
-     (34 occorrenze). Tokenizzati a parita' di valore — la resa di
-     default non cambia — cosi' una palette alternativa puo' spostarli
-     senza dover riscrivere ogni selettore. */
-  --testo-carta-2: #34324a; /* testo secondario sulle fasce carta */
-  --testo-ink-2: #c6c4d8; /* testo secondario sulle fasce ink */
-  --testo-ink-3: #c9c7dd; /* testo terziario sulle fasce ink */
-  --marker: #ffe14d; /* evidenziatore giallo */
+  --testo-carta-2: #3a3b45; /* DERIVATO: secondario su ghost-white */
+  --testo-ink-2: #c2c6d4; /* DERIVATO: secondario su night */
+  --testo-ink-3: #aeb2c2; /* DERIVATO: terziario su night */
+  --marker: #e8650a; /* forge — era un giallo fuori palette */
+
+  /* Footer: erano hex inline in SiteFooter.tsx (l'inline batte le
+     classi), passati da variabile per poterli governare da qui. */
+  --footer-bg: #0b0b0c;
+  --footer-grid: rgba(140, 165, 247, 0.055);
+  --footer-fade: #0b0b0c;
+  --footer-fade-mid: rgba(11, 11, 12, 0.6);
   --font-display: var(--font-clash), var(--font-outfit), system-ui, sans-serif;
   --font-body: var(--font-satoshi), var(--font-dm-sans), system-ui, sans-serif;
   --font-emph: var(--font-playfair), Georgia, serif;
@@ -48,8 +67,8 @@
      copre la griglia blueprint, così si legge come scatola.
      I valori reali sono ridefiniti per fascia in .band.ink / .band.carta. */
   --surf-bg: #ffffff;
-  --surf-bd: rgba(20, 19, 46, 0.16);
-  --surf-sh: 0 1px 3px rgba(20, 19, 46, 0.06);
+  --surf-bd: rgba(11, 11, 12, 0.16);
+  --surf-sh: 0 1px 3px rgba(11, 11, 12, 0.06);
 
   position: relative;
   min-height: 100vh;
@@ -104,9 +123,10 @@
     linear-gradient(var(--grid-scuro) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-scuro) 1px, transparent 1px);
   background-size: var(--grid) var(--grid);
-  /* pannello opaco più chiaro della fascia, copre la griglia */
-  --surf-bg: #1b2742;
-  --surf-bd: rgba(255, 255, 255, 0.16);
+  /* pannello opaco più chiaro della fascia, copre la griglia.
+     Idioma del sito: quasi-nero + bordo bianco traslucido. */
+  --surf-bg: #111113;
+  --surf-bd: rgba(255, 255, 255, 0.22);
   --surf-sh: none;
 }
 .ms .band.carta {
@@ -118,8 +138,8 @@
   background-size: var(--grid) var(--grid);
   /* pannello bianco opaco su carta, staccato da bordo + ombra leggera */
   --surf-bg: #ffffff;
-  --surf-bd: rgba(20, 19, 46, 0.16);
-  --surf-sh: 0 1px 3px rgba(20, 19, 46, 0.06);
+  --surf-bd: rgba(11, 11, 12, 0.16);
+  --surf-sh: 0 1px 3px rgba(11, 11, 12, 0.06);
 }
 
 /* ---------- tipografia ---------- */
@@ -360,13 +380,13 @@
 .ms .statgrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-top: 1px solid rgba(20, 19, 46, 0.16);
-  border-left: 1px solid rgba(20, 19, 46, 0.16);
+  border-top: 1px solid rgba(11, 11, 12, 0.16);
+  border-left: 1px solid rgba(11, 11, 12, 0.16);
 }
 .ms .cell {
   padding: 26px 24px;
-  border-bottom: 1px solid rgba(20, 19, 46, 0.16);
-  border-right: 1px solid rgba(20, 19, 46, 0.16);
+  border-bottom: 1px solid rgba(11, 11, 12, 0.16);
+  border-right: 1px solid rgba(11, 11, 12, 0.16);
 }
 .ms .cell .k {
   font-family: var(--font-mono);
@@ -733,7 +753,7 @@
   fill: rgba(169, 156, 255, 0.12);
 }
 .ms .curve-card .grid-l {
-  stroke: rgba(20, 19, 46, 0.08);
+  stroke: rgba(11, 11, 12, 0.08);
   stroke-width: 1;
 }
 .ms .band.ink .curve-card .grid-l {
@@ -857,7 +877,7 @@
 }
 .ms .band.carta .door:hover {
   border-color: var(--firma);
-  box-shadow: 0 2px 10px rgba(20, 19, 46, 0.1);
+  box-shadow: 0 2px 10px rgba(11, 11, 12, 0.1);
 }
 .ms .door .arrow {
   display: inline-block;
@@ -904,7 +924,7 @@
 .ms .savings .track {
   height: 28px;
   border-radius: 6px;
-  background: rgba(20, 19, 46, 0.06);
+  background: rgba(11, 11, 12, 0.06);
   overflow: hidden;
 }
 .ms .band.ink .savings .track {
@@ -988,7 +1008,7 @@
   fill: rgba(201, 199, 221, 0.3);
 }
 .ms .band.carta .ichart .bar-dim {
-  fill: rgba(20, 19, 46, 0.3);
+  fill: rgba(11, 11, 12, 0.3);
 }
 .ms .ichart .bar-on {
   fill: var(--lilla);
@@ -1462,7 +1482,7 @@
   flex: 1;
   height: 8px;
   border-radius: 4px;
-  background: rgba(20, 19, 46, 0.1);
+  background: rgba(11, 11, 12, 0.1);
 }
 .ms .livelli .l.on {
   background: var(--marker);

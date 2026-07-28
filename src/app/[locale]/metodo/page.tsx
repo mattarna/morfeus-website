@@ -461,7 +461,7 @@ export default function MetodoPage({ params: { locale } }: Props) {
                 <span className="w-[7px] h-[7px] rounded-full bg-firma shrink-0" aria-hidden />
                 {t.hero.model.step2}
               </div>
-              <p className="text-[#c6c4d8] text-[13.5px] mt-4 leading-relaxed">
+              <p className="text-[#c2c6d4] text-[13.5px] mt-4 leading-relaxed">
                 <b className="text-carta font-semibold">{t.hero.model.pBold}</b>
                 {t.hero.model.pRest}
               </p>
@@ -480,13 +480,13 @@ export default function MetodoPage({ params: { locale } }: Props) {
             {t.frame.h2b}
           </h2>
           <p className="lead">{t.frame.lead}</p>
-          <div className="grid sm:grid-cols-2 gap-5 mt-8 border-t border-[rgba(20,19,46,0.16)]">
+          <div className="grid sm:grid-cols-2 gap-5 mt-8 border-t border-[rgba(11,11,12,0.16)]">
             {t.frame.stats.map((s) => (
               <div className="pt-6" key={s.n}>
                 <div className="font-clash font-semibold text-[clamp(24px,3.2vw,32px)] tracking-[-0.02em] text-firma">
                   {s.n}
                 </div>
-                <div className="text-[#34324a] text-sm mt-2 max-w-[30ch]">{s.l}</div>
+                <div className="text-[#3a3b45] text-sm mt-2 max-w-[30ch]">{s.l}</div>
               </div>
             ))}
           </div>
@@ -517,7 +517,7 @@ export default function MetodoPage({ params: { locale } }: Props) {
                 {t.log.tt}
               </span>
             </div>
-            <pre className="font-plex text-[13px] leading-[1.9] text-[#c9c7dd] px-5 py-[18px] whitespace-pre-wrap break-words">
+            <pre className="font-plex text-[13px] leading-[1.9] text-[#aeb2c2] px-5 py-[18px] whitespace-pre-wrap break-words">
               <span className="text-lilla">$</span> <span className="text-lilla">{t.log.cmd}</span>
               {"\n"}
               {t.log.l1}
@@ -543,7 +543,7 @@ export default function MetodoPage({ params: { locale } }: Props) {
           <div className="mt-8">
             {t.phases.map((p) => (
               <div
-                className="grid md:grid-cols-[.72fr_1.28fr] gap-11 items-start py-11 border-t border-[rgba(20,19,46,0.16)] first:border-t-0 first:pt-1.5"
+                className="grid md:grid-cols-[.72fr_1.28fr] gap-11 items-start py-11 border-t border-[rgba(11,11,12,0.16)] first:border-t-0 first:pt-1.5"
                 id={p.pn}
                 key={p.pn}
               >
@@ -572,11 +572,11 @@ export default function MetodoPage({ params: { locale } }: Props) {
                   </div>
                 </div>
                 <div>
-                  <p className="text-base text-[#34324a]">{p.p}</p>
+                  <p className="text-base text-[#3a3b45]">{p.p}</p>
                   <ul className="list-none mt-[18px] flex flex-col gap-2.5">
                     {p.points.map((pt) => (
                       <li
-                        className="grid grid-cols-[auto_1fr] gap-3 text-[#34324a] text-[15px]"
+                        className="grid grid-cols-[auto_1fr] gap-3 text-[#3a3b45] text-[15px]"
                         key={pt}
                       >
                         <span className="text-firma font-plex" aria-hidden>
@@ -587,7 +587,7 @@ export default function MetodoPage({ params: { locale } }: Props) {
                     ))}
                   </ul>
                   <div className="mt-[22px] inline-flex items-center gap-3 font-playfair italic text-[17px] text-inchiostro">
-                    <span className="font-plex not-italic text-[10px] font-semibold tracking-[0.12em] uppercase text-firma border border-[rgba(20,19,46,0.14)] rounded-md px-[9px] py-[5px]">
+                    <span className="font-plex not-italic text-[10px] font-semibold tracking-[0.12em] uppercase text-firma border border-[rgba(11,11,12,0.14)] rounded-md px-[9px] py-[5px]">
                       {t.deliverLabel}
                     </span>
                     {p.deliver}

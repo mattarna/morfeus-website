@@ -463,7 +463,7 @@ export default function ImparaAiPage({ params: { locale } }: Props) {
               className={
                 i === 0
                   ? "scroll-mt-24"
-                  : "mt-[clamp(44px,6vw,64px)] scroll-mt-24 border-t border-[color:rgba(20,19,46,0.14)] pt-[clamp(44px,6vw,64px)]"
+                  : "mt-[clamp(44px,6vw,64px)] scroll-mt-24 border-t border-[color:rgba(11,11,12,0.14)] pt-[clamp(44px,6vw,64px)]"
               }
             >
               <span className="eye">{p.eye}</span>
@@ -475,14 +475,14 @@ export default function ImparaAiPage({ params: { locale } }: Props) {
                 <span className="rounded-[var(--r-pill)] border border-[color:rgba(83,61,252,0.22)] bg-[rgba(83,61,252,0.07)] px-3 py-[5px] font-plex text-[10px] font-semibold uppercase tracking-[0.1em] text-[color:var(--firma)]">
                   {p.tag}
                 </span>
-                <span className="font-plex text-[12px] text-[#34324a]">{p.meta}</span>
+                <span className="font-plex text-[12px] text-[#3a3b45]">{p.meta}</span>
               </div>
 
               <div className="mt-[26px]">
                 {p.lessons.map((l) => (
                   <details
                     key={l.n}
-                    className="group border-t border-[color:rgba(20,19,46,0.12)]"
+                    className="group border-t border-[color:rgba(11,11,12,0.12)]"
                   >
                     <summary className="flex cursor-pointer list-none items-baseline gap-4 py-5 pr-11 [&::-webkit-details-marker]:hidden">
                       <span className="w-6 flex-shrink-0 font-plex text-[13px] text-[color:var(--firma)]">
@@ -503,7 +503,7 @@ export default function ImparaAiPage({ params: { locale } }: Props) {
                       </svg>
                     </summary>
                     <div className="pb-6 pl-10 pr-11">
-                      <p className="max-w-[72ch] text-[15.5px] text-[#34324a]">{l.a}</p>
+                      <p className="max-w-[72ch] text-[15.5px] text-[#3a3b45]">{l.a}</p>
                       {l.glo ? (
                         <Link
                           href={`${base}/glossario${l.glo}`}

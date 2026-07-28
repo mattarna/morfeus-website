@@ -406,7 +406,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   color: "var(--lilla)",
-                  border: "1px solid rgba(169,156,255,.3)",
+                  border: "1px solid rgba(140,165,247,.3)",
                   borderRadius: 999,
                   padding: "4px 11px",
                 }}
@@ -432,7 +432,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               fontFamily: "var(--font-emph)",
               fontStyle: "italic",
               fontSize: "clamp(18px, 2.2vw, 24px)",
-              color: "#c6c4d8",
+              color: "#c2c6d4",
               maxWidth: "56ch",
             }}
           >
@@ -519,8 +519,8 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
             style={{
               borderRadius: 12,
               padding: "26px 24px",
-              border: "1px solid rgba(20,19,46,.14)",
-              background: "rgba(20,19,46,.02)",
+              border: "1px solid rgba(11,11,12,.14)",
+              background: "rgba(11,11,12,.02)",
             }}
           >
             <svg
@@ -529,9 +529,9 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               aria-label={t.figA_ariaLabel}
               style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
             >
-              <line x1="60" y1="40" x2="60" y2="210" stroke="rgba(20,19,46,.22)" />
-              <line x1="60" y1="210" x2="670" y2="210" stroke="rgba(20,19,46,.22)" />
-              <g stroke="rgba(20,19,46,.08)">
+              <line x1="60" y1="40" x2="60" y2="210" stroke="rgba(11,11,12,.22)" />
+              <line x1="60" y1="210" x2="670" y2="210" stroke="rgba(11,11,12,.22)" />
+              <g stroke="rgba(11,11,12,.08)">
                 <line x1="60" y1="80" x2="670" y2="80" />
                 <line x1="60" y1="120" x2="670" y2="120" />
                 <line x1="60" y1="160" x2="670" y2="160" />
@@ -550,7 +550,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               <g
                 fontFamily="var(--font-mono)"
                 fontSize="12"
-                fill="#14132E"
+                fill="#0B0B0C"
                 textAnchor="middle"
                 fontWeight="600"
               >
@@ -559,7 +559,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 <text x="460" y="172">61</text>
                 <text x="640" y="78">70</text>
               </g>
-              <g fontFamily="var(--font-mono)" fontSize="11" fill="#7A7890" textAnchor="middle">
+              <g fontFamily="var(--font-mono)" fontSize="11" fill="#7E8091" textAnchor="middle">
                 {t.figA_xticks.map((tick, i) => (
                   <text key={i} x={100 + i * 180} y="228">
                     {tick}
@@ -571,13 +571,13 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 y="45"
                 fontFamily="var(--font-mono)"
                 fontSize="11"
-                fill="#7A7890"
+                fill="#7E8091"
                 textAnchor="middle"
                 transform="rotate(-90 30 45)"
               >
                 {t.figA_axis}
               </text>
-              <text x="365" y="248" fontFamily="var(--font-mono)" fontSize="11" fill="#7A7890" textAnchor="middle">
+              <text x="365" y="248" fontFamily="var(--font-mono)" fontSize="11" fill="#7E8091" textAnchor="middle">
                 {t.figA_xlabel}
               </text>
               <text
@@ -598,7 +598,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 marginTop: 14,
                 fontSize: 14,
                 maxWidth: "64ch",
-                color: "#34324a",
+                color: "#3a3b45",
               }}
             >
               {t.figA_capA}
@@ -647,7 +647,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                   gridTemplateColumns: "auto 1fr",
                   gap: 16,
                   padding: "16px 0",
-                  borderTop: i === 0 ? "none" : "1px solid rgba(20,19,46,.14)",
+                  borderTop: i === 0 ? "none" : "1px solid rgba(11,11,12,.14)",
                 }}
               >
                 <span
@@ -667,7 +667,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                   >
                     {r.b}
                   </b>
-                  <p style={{ color: "#34324a", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
+                  <p style={{ color: "#3a3b45", fontSize: 14.5, marginTop: 4 }}>{r.p}</p>
                 </div>
               </div>
             ))}
@@ -713,8 +713,8 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               aria-label={t.figB_ariaLabel}
               style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
             >
-              <line x1="60" y1="30" x2="60" y2="150" stroke="rgba(169,156,255,.3)" />
-              <line x1="60" y1="150" x2="670" y2="150" stroke="rgba(169,156,255,.3)" />
+              <line x1="60" y1="30" x2="60" y2="150" stroke="rgba(140,165,247,.3)" />
+              <line x1="60" y1="150" x2="670" y2="150" stroke="rgba(140,165,247,.3)" />
               <path
                 d="M100,90 L280,90 L460,90 L640,90"
                 fill="none"
@@ -729,7 +729,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               <g
                 fontFamily="var(--font-mono)"
                 fontSize="12"
-                fill="#c6c4d8"
+                fill="#c2c6d4"
                 textAnchor="middle"
                 fontWeight="600"
               >
@@ -738,7 +738,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 <text x="460" y="78">82</text>
                 <text x="640" y="78">82</text>
               </g>
-              <g fontFamily="var(--font-mono)" fontSize="11" fill="#c6c4d8" textAnchor="middle">
+              <g fontFamily="var(--font-mono)" fontSize="11" fill="#c2c6d4" textAnchor="middle">
                 {t.figA_xticks.map((tick, i) => (
                   <text key={i} x={100 + i * 180} y="168">
                     {tick}
@@ -764,7 +764,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 fontFamily="var(--font-mono)"
                 fontSize="10"
                 letterSpacing=".14em"
-                fill="#A99CFF"
+                fill="#8CA5F7"
                 style={{ textTransform: "uppercase" }}
               >
                 {t.figB_breakdown}
@@ -774,12 +774,12 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                   const y = 235 + i * 31;
                   const rectY = y - 13;
                   const widths = [220, 170, 140, 120];
-                  const fills = ["#533DFC", "#A99CFF", "#533DFC", "#A99CFF"];
+                  const fills = ["#533DFC", "#8CA5F7", "#533DFC", "#8CA5F7"];
                   return (
                     <g key={i}>
                       <text x="60" y={y}>{layer.name}</text>
                       <rect x="230" y={rectY} width={widths[i]} height="16" rx="4" fill={fills[i]} />
-                      <text x="460" y={y} fill="#c6c4d8">{layer.val}</text>
+                      <text x="460" y={y} fill="#c2c6d4">{layer.val}</text>
                     </g>
                   );
                 })}
@@ -790,7 +790,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 marginTop: 14,
                 fontSize: 14,
                 maxWidth: "64ch",
-                color: "#c6c4d8",
+                color: "#c2c6d4",
               }}
             >
               {t.figB_capA}
@@ -820,8 +820,8 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
               <div
                 key={i}
                 style={{
-                  border: "1px solid rgba(20,19,46,.14)",
-                  background: "rgba(20,19,46,.02)",
+                  border: "1px solid rgba(11,11,12,.14)",
+                  background: "rgba(11,11,12,.02)",
                   borderRadius: 12,
                   padding: 22,
                 }}
@@ -850,7 +850,7 @@ export default function CasoGlobiaScoringPage({ params: { locale } }: Props) {
                 >
                   {tile.n}
                 </div>
-                <p style={{ fontSize: 13, color: "#34324a" }}>{tile.p}</p>
+                <p style={{ fontSize: 13, color: "#3a3b45" }}>{tile.p}</p>
               </div>
             ))}
           </div>

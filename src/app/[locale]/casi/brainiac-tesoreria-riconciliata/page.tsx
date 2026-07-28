@@ -329,7 +329,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
               <span className="emph">{t.h1emph}</span>
               {t.h1b}
             </h1>
-            <p className="font-playfair italic text-[clamp(18px,2.2vw,24px)] text-[#c6c4d8] max-w-[56ch]">
+            <p className="font-playfair italic text-[clamp(18px,2.2vw,24px)] text-[#c2c6d4] max-w-[56ch]">
               {t.standfirst}
             </p>
             <div className="flex flex-wrap gap-8 mt-7 pt-[22px] border-t border-riga-scuro">
@@ -386,17 +386,17 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 aria-label={t.fig1Ft}
               >
                 <g fontFamily="var(--f-mono), 'IBM Plex Mono', monospace">
-                  <rect x="20" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(20,19,46,.3)" />
-                  <text x="110" y="58" textAnchor="middle" fill="#14132E" fontWeight="600" fontSize="14">{t.fig1Box[0]}</text>
-                  <text x="110" y="80" textAnchor="middle" fill="#7A7890" fontSize="12">{t.fig1Box[1]}</text>
+                  <rect x="20" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(11,11,12,.3)" />
+                  <text x="110" y="58" textAnchor="middle" fill="#0B0B0C" fontWeight="600" fontSize="14">{t.fig1Box[0]}</text>
+                  <text x="110" y="80" textAnchor="middle" fill="#7E8091" fontSize="12">{t.fig1Box[1]}</text>
 
-                  <rect x="270" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(20,19,46,.3)" />
-                  <text x="360" y="58" textAnchor="middle" fill="#14132E" fontWeight="600" fontSize="14">{t.fig1Box[2]}</text>
-                  <text x="360" y="80" textAnchor="middle" fill="#7A7890" fontSize="12">{t.fig1Box[3]}</text>
+                  <rect x="270" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(11,11,12,.3)" />
+                  <text x="360" y="58" textAnchor="middle" fill="#0B0B0C" fontWeight="600" fontSize="14">{t.fig1Box[2]}</text>
+                  <text x="360" y="80" textAnchor="middle" fill="#7E8091" fontSize="12">{t.fig1Box[3]}</text>
 
-                  <rect x="520" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(20,19,46,.3)" />
-                  <text x="610" y="58" textAnchor="middle" fill="#14132E" fontWeight="600" fontSize="14">{t.fig1Box[4]}</text>
-                  <text x="610" y="80" textAnchor="middle" fill="#7A7890" fontSize="12">{t.fig1Box[5]}</text>
+                  <rect x="520" y="30" width="180" height="72" rx="10" fill="none" stroke="rgba(11,11,12,.3)" />
+                  <text x="610" y="58" textAnchor="middle" fill="#0B0B0C" fontWeight="600" fontSize="14">{t.fig1Box[4]}</text>
+                  <text x="610" y="80" textAnchor="middle" fill="#7E8091" fontSize="12">{t.fig1Box[5]}</text>
                 </g>
                 <g stroke="#FF5C5C" strokeWidth="2" strokeDasharray="5 5">
                   <line x1="200" y1="66" x2="270" y2="66" />
@@ -404,7 +404,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 </g>
                 <text x="235" y="56" textAnchor="middle" fill="#FF5C5C" fontFamily="var(--f-mono), monospace" fontSize="16">×</text>
                 <text x="485" y="56" textAnchor="middle" fill="#FF5C5C" fontFamily="var(--f-mono), monospace" fontSize="16">×</text>
-                <g stroke="#A99CFF" strokeWidth="2" fill="none">
+                <g stroke="#8CA5F7" strokeWidth="2" fill="none">
                   <path d="M110,102 L110,150 L360,150" />
                   <path d="M360,102 L360,150" />
                   <path d="M610,102 L610,150 L360,150" />
@@ -414,11 +414,11 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 <text x="360" y="206" textAnchor="middle" fill="#533DFC" fontFamily="'Clash Display', var(--font-outfit), sans-serif" fontWeight="600" fontSize="15">
                   {t.fig1Unified}
                 </text>
-                <text x="360" y="226" textAnchor="middle" fill="#7A7890" fontFamily="var(--f-mono), monospace" fontSize="11">
+                <text x="360" y="226" textAnchor="middle" fill="#7E8091" fontFamily="var(--f-mono), monospace" fontSize="11">
                   {t.fig1UnifiedSub}
                 </text>
               </svg>
-              <p className="mt-[14px] text-[14px] leading-[1.6] text-[#34324a] max-w-[64ch]">
+              <p className="mt-[14px] text-[14px] leading-[1.6] text-[#3a3b45] max-w-[64ch]">
                 {t.fig1Cap1}
                 <b className="font-bold text-inchiostro">{t.fig1CapB}</b>
               </p>
@@ -453,14 +453,14 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                   role="img"
                   aria-label={t.fig2Ft}
                 >
-                  <line x1="40" y1="185" x2="440" y2="185" stroke="rgba(169,156,255,.3)" />
+                  <line x1="40" y1="185" x2="440" y2="185" stroke="rgba(140,165,247,.3)" />
                   <g>
-                    <rect x="60" y="110" width="60" height="75" rx="4" fill="#7A7890" />
-                    <rect x="160" y="130" width="60" height="55" rx="4" fill="#7A7890" />
+                    <rect x="60" y="110" width="60" height="75" rx="4" fill="#7E8091" />
+                    <rect x="160" y="130" width="60" height="55" rx="4" fill="#7E8091" />
                     <rect x="260" y="95" width="60" height="90" rx="4" fill="#FF5C5C" />
                     <rect x="360" y="70" width="60" height="115" rx="4" fill="#FF5C5C" />
                   </g>
-                  <g fontFamily="var(--f-mono), monospace" fontSize="11" fill="#c6c4d8" textAnchor="middle">
+                  <g fontFamily="var(--f-mono), monospace" fontSize="11" fill="#c2c6d4" textAnchor="middle">
                     <text x="90" y="205">{t.fig2Labels[0]}</text>
                     <text x="190" y="205">{t.fig2Labels[1]}</text>
                     <text x="290" y="205">{t.fig2Labels[2]}</text>
@@ -479,7 +479,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                   </text>
                   <path d="M340,58 L390,66" stroke="#FF5C5C" strokeWidth="1.5" fill="none" />
                 </svg>
-                <p className="mt-[14px] text-[14px] leading-[1.6] text-[#c6c4d8] max-w-[64ch]">
+                <p className="mt-[14px] text-[14px] leading-[1.6] text-[#c2c6d4] max-w-[64ch]">
                   {t.fig2Cap1}
                   <span className="loss">{t.fig2CapLoss}</span>
                   {t.fig2Cap2}
@@ -535,7 +535,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                   </span>
                   <div>
                     <b className="font-clash font-semibold text-[17px] text-carta block">{r.b}</b>
-                    <p className="text-[#c6c4d8] text-[14.5px] mt-1">{r.p}</p>
+                    <p className="text-[#c2c6d4] text-[14.5px] mt-1">{r.p}</p>
                   </div>
                 </div>
               ))}
@@ -568,9 +568,9 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 role="img"
                 aria-label={t.fig3Ft}
               >
-                <line x1="60" y1="40" x2="60" y2="250" stroke="rgba(20,19,46,.22)" />
-                <line x1="60" y1="250" x2="670" y2="250" stroke="rgba(20,19,46,.22)" />
-                <g stroke="rgba(20,19,46,.08)">
+                <line x1="60" y1="40" x2="60" y2="250" stroke="rgba(11,11,12,.22)" />
+                <line x1="60" y1="250" x2="670" y2="250" stroke="rgba(11,11,12,.22)" />
+                <g stroke="rgba(11,11,12,.08)">
                   <line x1="60" y1="90" x2="670" y2="90" />
                   <line x1="60" y1="140" x2="670" y2="140" />
                   <line x1="60" y1="190" x2="670" y2="190" />
@@ -589,7 +589,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 <circle cx="60" cy="70" r="4" fill="#533DFC" />
                 <circle cx="360" cy="150" r="4" fill="#533DFC" />
                 <circle cx="660" cy="225" r="4" fill="#1E9E5A" />
-                <g fontFamily="var(--f-mono), monospace" fontSize="12" fill="#7A7890" textAnchor="middle">
+                <g fontFamily="var(--f-mono), monospace" fontSize="12" fill="#7E8091" textAnchor="middle">
                   <text x="60" y="272">{t.fig3Months[0]}</text>
                   <text x="360" y="272">{t.fig3Months[1]}</text>
                   <text x="660" y="272">{t.fig3Months[2]}</text>
@@ -613,7 +613,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                   ↓ {t.fig3Foot}
                 </text>
               </svg>
-              <p className="mt-[14px] text-[14px] leading-[1.6] text-[#34324a] max-w-[64ch]">
+              <p className="mt-[14px] text-[14px] leading-[1.6] text-[#3a3b45] max-w-[64ch]">
                 {t.fig3Cap1}
                 <b className="font-bold text-inchiostro">{t.fig3CapB}</b>
                 {t.fig3Cap2}
@@ -637,7 +637,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                 >
                   {tile.n}
                 </div>
-                <p className="text-[13px] text-[#34324a]">{tile.p}</p>
+                <p className="text-[13px] text-[#3a3b45]">{tile.p}</p>
               </div>
             ))}
           </div>

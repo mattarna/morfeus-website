@@ -79,7 +79,7 @@ export function InsightsBrowser({
       {/* Toolbar filtri (sopra la griglia): chip categoria + search. */}
       <div
         className="mt-[34px] flex flex-wrap items-center justify-between gap-[18px] border-b pb-[18px]"
-        style={{ borderColor: "rgba(20,19,46,.14)" }}
+        style={{ borderColor: "rgba(11,11,12,.14)" }}
       >
         <div className="flex flex-wrap gap-2.5">
           <button
@@ -89,7 +89,7 @@ export function InsightsBrowser({
             style={
               activeCat === "__ALL__"
                 ? { background: "#533DFC", borderColor: "#533DFC", color: "#fff" }
-                : { borderColor: "rgba(20,19,46,.18)", color: "#34324a", background: "transparent" }
+                : { borderColor: "rgba(11,11,12,.18)", color: "#3A3B45", background: "transparent" }
             }
           >
             {ui.allLabel}
@@ -103,7 +103,7 @@ export function InsightsBrowser({
               style={
                 activeCat === c
                   ? { background: "#533DFC", borderColor: "#533DFC", color: "#fff" }
-                  : { borderColor: "rgba(20,19,46,.18)", color: "#34324a", background: "transparent" }
+                  : { borderColor: "rgba(11,11,12,.18)", color: "#3A3B45", background: "transparent" }
               }
             >
               {c}
@@ -112,9 +112,9 @@ export function InsightsBrowser({
         </div>
         <div
           className="flex min-w-[240px] items-center gap-2 rounded-full border px-3.5 py-2"
-          style={{ borderColor: "rgba(20,19,46,.18)", background: "rgba(20,19,46,.02)" }}
+          style={{ borderColor: "rgba(11,11,12,.18)", background: "rgba(11,11,12,.02)" }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A7890" strokeWidth={2}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7E8091" strokeWidth={2}>
             <circle cx="11" cy="11" r="7" />
             <path d="M21 21l-4-4" />
           </svg>
@@ -124,7 +124,7 @@ export function InsightsBrowser({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={ui.searchPlaceholder}
             className="min-w-[180px] flex-1 border-0 bg-transparent font-satoshi text-[14px] outline-none"
-            style={{ color: "#14132E" }}
+            style={{ color: "#0B0B0C" }}
             aria-label={ui.searchPlaceholder}
           />
           {query ? (
@@ -149,7 +149,7 @@ export function InsightsBrowser({
 
       {/* Griglia risultati */}
       {filtered.length === 0 ? (
-        <p className="mt-[30px] font-satoshi text-[16px]" style={{ color: "#34324a" }}>
+        <p className="mt-[30px] font-satoshi text-[16px]" style={{ color: "#3A3B45" }}>
           {ui.emptyState}
         </p>
       ) : (
@@ -162,8 +162,8 @@ export function InsightsBrowser({
                 href={`${base}/insights/${a.slug}`}
                 className="group flex flex-col overflow-hidden rounded-[12px] border transition-colors hover:border-firma/50"
                 style={{
-                  borderColor: "rgba(20,19,46,.14)",
-                  background: "rgba(20,19,46,.015)",
+                  borderColor: "rgba(11,11,12,.14)",
+                  background: "rgba(11,11,12,.015)",
                 }}
               >
                 <div className="relative w-full" style={{ aspectRatio: "16 / 9" }}>
@@ -187,10 +187,10 @@ export function InsightsBrowser({
                   <span className="mt-2 font-plex text-[11px] tracking-[.06em] text-ombra">
                     {formatDateIt(a.datePublished)} · {a.readingTime}
                   </span>
-                  <h3 className="my-[6px] text-[20px] font-semibold" style={{ color: "#14132E" }}>
+                  <h3 className="my-[6px] text-[20px] font-semibold" style={{ color: "#0B0B0C" }}>
                     {a.title}
                   </h3>
-                  <p className="mt-1.5 flex-1 text-[14.5px]" style={{ color: "#34324a" }}>
+                  <p className="mt-1.5 flex-1 text-[14.5px]" style={{ color: "#3A3B45" }}>
                     {a.tldr || a.metaDescription}
                   </p>
                   <span className="mt-4 inline-flex items-center gap-1 font-plex text-[12px] font-semibold tracking-[.04em] text-firma">

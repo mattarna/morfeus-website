@@ -77,18 +77,23 @@ const config: Config = {
         vista: "#8CA5F7",
         "ghost-white": "#E4E7F0",
         forge: "#E8650A",
-        // MORFEUS Brand 2026 ("Progettato. Provato.") — content pages (sito madre non-home)
-        carta: "#F4F3EF",
-        inchiostro: "#14132E",
-        "inchiostro-2": "#211F45",
-        "riga-scuro": "#2A2850",
-        firma: "#533DFC",
-        "firma-hover": "#4230D6",
-        lilla: "#A99CFF",
-        ombra: "#7A7890",
-        anomalia: "#FF5C5C",
-        ok: "#1E9E5A",
-        marker: "#FFE14D",
+        // Content pages (sito madre non-home). I NOMI restano quelli del
+        // brand 2026, i VALORI sono allineati alla Official Palette v1.0
+        // qui sopra — stessa scelta fatta nei token di site.css, dove i
+        // nomi sono usati da ~200 regole. Quindi: "carta" = ghost-white,
+        // "inchiostro" = night. I neutri sono DERIVATI (la palette
+        // ufficiale ha 8 colori e nessun grigio).
+        carta: "#E4E7F0", // ghost-white (era #F4F3EF crema)
+        inchiostro: "#0B0B0C", // night (era #14132E)
+        "inchiostro-2": "#16161A", // DERIVATO (era #211F45)
+        "riga-scuro": "#26262B", // DERIVATO (era #2A2850)
+        firma: "#533DFC", // majorelle — era gia' allineato
+        "firma-hover": "#392CB8", // persian (era #4230D6)
+        lilla: "#8CA5F7", // vista (era #A99CFF)
+        ombra: "#7E8091", // DERIVATO (era #7A7890)
+        anomalia: "#FF5C5C", // stato: errore — fuori palette, resta
+        ok: "#1E9E5A", // stato: ok — fuori palette, resta
+        marker: "#E8650A", // forge (era il giallo #FFE14D)
         // Legacy/Generic mapping (mapping majorelle to purple for backward compat if needed)
         purple: {
           DEFAULT: "#533DFC", // Majorelle Blue

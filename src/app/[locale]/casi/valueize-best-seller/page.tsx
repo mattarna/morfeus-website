@@ -249,9 +249,9 @@ const PAGE_STYLES = `
 .ms .caso-page .crumbs{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra)}
 .ms .caso-page .crumbs a{color:var(--lilla)}
 .ms .caso-page .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.ms .caso-page .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(169,156,255,.3);border-radius:var(--r-pill);padding:4px 11px}
+.ms .caso-page .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
 .ms .caso-page .ahead h1{font-size:clamp(30px,5.2vw,54px);font-weight:600;margin:16px 0;max-width:17ch;line-height:1.08;font-family:var(--font-display);letter-spacing:-.02em}
-.ms .caso-page .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c6c4d8;max-width:56ch}
+.ms .caso-page .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c2c6d4;max-width:56ch}
 .ms .caso-page .headstats{display:flex;gap:32px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--riga-scuro)}
 .ms .caso-page .headstats .s .n{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1}
 .ms .caso-page .headstats .s .n.loss{color:var(--anomalia)}
@@ -268,13 +268,13 @@ const PAGE_STYLES = `
 .ms .caso-page .band.carta .figure .ft{color:var(--firma)}
 .ms .caso-page .band.ink .figure .ft{color:var(--lilla)}
 .ms .caso-page .figbox{border-radius:var(--r-m);padding:26px 24px}
-.ms .caso-page .band.carta .figbox{border:1px solid rgba(20,19,46,.14);background:rgba(20,19,46,.02)}
+.ms .caso-page .band.carta .figbox{border:1px solid rgba(11,11,12,.14);background:rgba(11,11,12,.02)}
 .ms .caso-page .band.ink .figbox{border:1px solid var(--riga-scuro);background:rgba(255,255,255,.02)}
 .ms .caso-page .chart{width:100%;height:auto;display:block;overflow:visible}
 .ms .caso-page .chart text{font-family:var(--font-mono);font-size:12px}
 .ms .caso-page .figcap{margin-top:14px;font-size:14px;max-width:64ch}
-.ms .caso-page .band.carta .figcap{color:#34324a}
-.ms .caso-page .band.ink .figcap{color:#c6c4d8}
+.ms .caso-page .band.carta .figcap{color:#3a3b45}
+.ms .caso-page .band.ink .figcap{color:#c2c6d4}
 .ms .caso-page .figcap b{font-weight:700}
 .ms .caso-page .band.carta .figcap b{color:var(--inchiostro)}
 .ms .caso-page .band.ink .figcap b{color:var(--carta)}
@@ -283,7 +283,7 @@ const PAGE_STYLES = `
 .ms .caso-page .twogrid{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
 @media(max-width:860px){.ms .caso-page .twogrid{grid-template-columns:1fr;gap:28px}}
 .ms .caso-page .built{display:flex;flex-direction:column;gap:2px;margin-top:24px}
-.ms .caso-page .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(20,19,46,.14)}
+.ms .caso-page .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(11,11,12,.14)}
 .ms .caso-page .band.ink .built .row{border-top-color:var(--riga-scuro)}
 .ms .caso-page .built .row:first-child{border-top:none}
 .ms .caso-page .built .ix{font-family:var(--font-mono);font-size:12px;color:var(--firma);padding-top:3px}
@@ -292,16 +292,16 @@ const PAGE_STYLES = `
 .ms .caso-page .band.carta .built .row b{color:var(--inchiostro)}
 .ms .caso-page .band.ink .built .row b{color:var(--carta)}
 .ms .caso-page .built .row p{font-size:14.5px;margin-top:4px}
-.ms .caso-page .band.carta .built .row p{color:#34324a}
-.ms .caso-page .band.ink .built .row p{color:#c6c4d8}
+.ms .caso-page .band.carta .built .row p{color:#3a3b45}
+.ms .caso-page .band.ink .built .row p{color:#c2c6d4}
 .ms .caso-page .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:760px){.ms .caso-page .tiles{grid-template-columns:1fr}}
-.ms .caso-page .tile{border:1px solid rgba(20,19,46,.14);background:rgba(20,19,46,.02);border-radius:var(--r-m);padding:22px}
+.ms .caso-page .tile{border:1px solid rgba(11,11,12,.14);background:rgba(11,11,12,.02);border-radius:var(--r-m);padding:22px}
 .ms .caso-page .tile .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra)}
 .ms .caso-page .tile .n{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.6vw,40px);line-height:1;margin:10px 0 6px;color:var(--inchiostro)}
 .ms .caso-page .tile .n.loss{color:var(--anomalia)}
 .ms .caso-page .tile .n.gain{color:var(--ok)}
-.ms .caso-page .tile p{font-size:13px;color:#34324a}
+.ms .caso-page .tile p{font-size:13px;color:#3a3b45}
 .ms .caso-page .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
 @media(max-width:760px){.ms .caso-page .rgrid{grid-template-columns:1fr}}
 .ms .caso-page .rcard{border:1px solid var(--riga-scuro);border-radius:var(--r-m);background:rgba(255,255,255,.02);padding:20px;display:block}
@@ -400,11 +400,11 @@ export default function CasoValueizePage({ params: { locale } }: Props) {
             <div className="ft">{t.s2.figFt}</div>
             <div className="figbox">
               <svg className="chart" viewBox="0 0 720 300" role="img" aria-label={t.s2.figAria}>
-                <line x1="10" y1="220" x2="710" y2="220" stroke="rgba(20,19,46,.3)" strokeDasharray="3 4" />
-                <text x="712" y="224" fontSize="10" fill="#7A7890">
+                <line x1="10" y1="220" x2="710" y2="220" stroke="rgba(11,11,12,.3)" strokeDasharray="3 4" />
+                <text x="712" y="224" fontSize="10" fill="#7E8091">
                   {t.s2.figLabels.zero}
                 </text>
-                <g stroke="#A99CFF" strokeWidth="1.5" strokeDasharray="4 4">
+                <g stroke="#8CA5F7" strokeWidth="1.5" strokeDasharray="4 4">
                   <line x1="115" y1="60" x2="145" y2="90" />
                   <line x1="230" y1="90" x2="260" y2="120" />
                   <line x1="345" y1="120" x2="375" y2="145" />
@@ -413,13 +413,13 @@ export default function CasoValueizePage({ params: { locale } }: Props) {
                 </g>
                 <g>
                   <rect x="30" y="60" width="85" height="160" rx="6" fill="#533DFC" />
-                  <rect x="145" y="90" width="85" height="130" rx="6" fill="#A99CFF" />
-                  <rect x="260" y="120" width="85" height="100" rx="6" fill="#A99CFF" />
-                  <rect x="375" y="145" width="85" height="75" rx="6" fill="#A99CFF" />
-                  <rect x="490" y="170" width="85" height="50" rx="6" fill="#A99CFF" />
+                  <rect x="145" y="90" width="85" height="130" rx="6" fill="#8CA5F7" />
+                  <rect x="260" y="120" width="85" height="100" rx="6" fill="#8CA5F7" />
+                  <rect x="375" y="145" width="85" height="75" rx="6" fill="#8CA5F7" />
+                  <rect x="490" y="170" width="85" height="50" rx="6" fill="#8CA5F7" />
                   <rect x="605" y="220" width="85" height="40" rx="6" fill="#FF5C5C" />
                 </g>
-                <g fontSize="10.5" fill="#7A7890" textAnchor="middle">
+                <g fontSize="10.5" fill="#7E8091" textAnchor="middle">
                   <text x="72" y="238">{t.s2.figLabels.v1[0]}</text>
                   <text x="72" y="250">{t.s2.figLabels.v1[1]}</text>
                   <text x="187" y="238">{t.s2.figLabels.v2[0]}</text>
@@ -514,8 +514,8 @@ export default function CasoValueizePage({ params: { locale } }: Props) {
             <div className="ft">{t.s5.figFt}</div>
             <div className="figbox">
               <svg className="chart" viewBox="0 0 640 260" role="img" aria-label={t.s5.figAria}>
-                <line x1="300" y1="20" x2="300" y2="240" stroke="rgba(169,156,255,.35)" />
-                <text x="300" y="14" textAnchor="middle" fontSize="10" fill="#c6c4d8">
+                <line x1="300" y1="20" x2="300" y2="240" stroke="rgba(140,165,247,.35)" />
+                <text x="300" y="14" textAnchor="middle" fontSize="10" fill="#c2c6d4">
                   {t.s5.lbl.zero}
                 </text>
 
@@ -527,11 +527,11 @@ export default function CasoValueizePage({ params: { locale } }: Props) {
                   {t.s5.lbl.sano}
                 </text>
 
-                <rect x="288" y="112" width="24" height="42" rx="5" fill="#A99CFF" />
+                <rect x="288" y="112" width="24" height="42" rx="5" fill="#8CA5F7" />
                 <text x="80" y="138" fontSize="12.5" fill="#c3c1d6">
                   {t.s5.lbl.terzi}
                 </text>
-                <text x="322" y="138" fontSize="12.5" fill="#A99CFF">
+                <text x="322" y="138" fontSize="12.5" fill="#8CA5F7">
                   {t.s5.lbl.pareggio}
                 </text>
 
