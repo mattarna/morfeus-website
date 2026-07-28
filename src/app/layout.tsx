@@ -65,53 +65,21 @@ export default function RootLayout({
           name="facebook-domain-verification"
           content="241durpovws57gda4slstym71fhjnf"
         />
-        {/* ============================================================
-            ESPERIMENTO FONT (temporaneo, branch exp/font-jakarta)
-              ?font=jakarta → Plus Jakarta Sans + Geist Mono
-              ?font=off     → torna a Clash Display + Satoshi (stato attuale)
-            La scelta resta in localStorage.
-            Spento di default: senza il flag non aggiunge classi e non
-            scarica nulla — le pagine restano identiche a prima.
-            Regole in src/components/site/site-font-experiment.css.
-            Geist Mono arriva da CDN perche' next/font/google su Next 14
-            non ce l'ha in lista; Plus Jakarta Sans e' self-hostata da
-            next/font (vedi components/site/fonts.ts).
-            Per rimuovere l'esperimento: cancella questo blocco.
-            ============================================================ */}
+        {/* Gli esperimenti tipografico e di palette sono chiusi: Clash
+            Display e la Official Palette v1.0 sono il default del design
+            system (fonts.ts, site.css, tailwind.config.ts). I toggle
+            ?font e ?palette non esistono piu'.
+            Questo blocco serve solo a ripulire le vecchie scelte rimaste
+            in localStorage: senza, chi aveva provato una variante se la
+            ritroverebbe incollata addosso per sempre. Rimuovibile fra
+            qualche settimana. */}
         <script
-          id="font-experiment"
+          id="font-experiment-cleanup"
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
                 try {
-                  var KEY = "morfeus-font-exp";
-                  var q = new URLSearchParams(window.location.search).get("font");
-                  if (q === "jakarta") localStorage.setItem(KEY, "jakarta");
-                  else if (q) localStorage.removeItem(KEY);
-                  if (localStorage.getItem(KEY) !== "jakarta") return;
-
-                  document.documentElement.classList.add("font-exp-jakarta");
-
-                  var l = document.createElement("link");
-                  l.rel = "stylesheet";
-                  l.href = "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap";
-                  document.head.appendChild(l);
-
-                  document.addEventListener("DOMContentLoaded", function () {
-                    var b = document.createElement("div");
-                    b.className = "font-exp-badge";
-                    b.textContent = "font exp · plus jakarta sans + geist mono · ?font=off";
-                    document.body.appendChild(b);
-                  });
-                } catch (e) {}
-              })();
-
-              /* La palette ufficiale non e' piu' un esperimento: e' il
-                 default del DS (token in site.css + tailwind.config.ts).
-                 Il toggle ?palette e' stato rimosso; per chi avesse la
-                 vecchia scelta in localStorage, ripuliamo la chiave. */
-              (function () {
-                try {
+                  localStorage.removeItem("morfeus-font-exp");
                   localStorage.removeItem("morfeus-palette-exp");
                 } catch (e) {}
               })();

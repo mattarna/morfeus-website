@@ -411,7 +411,7 @@ export default function BrainiacCasePage({ params: { locale } }: Props) {
                   <path d="M360,150 L360,178" />
                 </g>
                 <rect x="250" y="180" width="220" height="60" rx="10" fill="rgba(83,61,252,.08)" stroke="#533DFC" strokeWidth="2" />
-                <text x="360" y="206" textAnchor="middle" fill="#533DFC" fontFamily="'Clash Display', var(--font-outfit), sans-serif" fontWeight="600" fontSize="15">
+                <text x="360" y="206" textAnchor="middle" fill="#533DFC" fontFamily="var(--font-display)" fontWeight="600" fontSize="15">
                   {t.fig1Unified}
                 </text>
                 <text x="360" y="226" textAnchor="middle" fill="#7E8091" fontFamily="var(--f-mono), monospace" fontSize="11">
