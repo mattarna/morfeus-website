@@ -70,9 +70,7 @@ export function LabMsContatto() {
           {PASSI.map((p, i) => (
             <div
               key={p.k}
-              className={`grid grid-cols-[62px_1fr] gap-6 px-8 py-8 md:px-10 ${
-                i > 0 ? "border-t border-[color:var(--surf-bd)]" : ""
-              }`}
+              className="riga-ordine"
             >
               <span className="font-mono text-[12.5px] tracking-[0.12em] text-[color:var(--ombra)]">
                 {p.quando}
@@ -89,7 +87,7 @@ export function LabMsContatto() {
           ))}
 
           {/* cosa NON e': trattino, non spunta */}
-          <div className="border-t border-[color:var(--surf-bd)] px-8 py-6 md:px-10">
+          <div className="riga-chiusa">
             <div className="flex flex-wrap gap-x-8 gap-y-2">
               {[t("badges.no_demo"), t("badges.no_sales"), t("badges.no_info")].map(
                 (b) => (

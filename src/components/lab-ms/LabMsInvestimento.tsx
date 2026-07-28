@@ -43,7 +43,7 @@ export function LabMsInvestimento() {
             </span>
           </div>
 
-          <div className="p-9 md:p-12">
+          <div className="corpo-modulo">
             <div className="quota">Investimento</div>
             <p
               className="mt-4 text-[clamp(26px,4vw,42px)] leading-none tracking-[-0.03em]"

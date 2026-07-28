@@ -46,11 +46,7 @@ export function LabMsProof() {
             {BLOCCHI.map((n, i) => (
               <div
                 key={n}
-                className={`relative overflow-hidden px-9 py-11 ${
-                  i > 0
-                    ? "border-t border-[color:var(--surf-bd)] md:border-l md:border-t-0"
-                    : ""
-                }`}
+                className="quadrante"
               >
                 {/* la cifra fantasma: e' l'indice del quadrante, non un dato */}
                 <span className="ghost -right-1 -top-4">{`0${i + 1}`}</span>

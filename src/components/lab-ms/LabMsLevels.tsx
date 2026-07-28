@@ -46,7 +46,7 @@ export function LabMsLevels() {
         </div>
 
         {/* la scaletta del DS: tre gradini che salgono */}
-        <div className="ladder mx-auto mt-12 max-w-[420px]" aria-hidden="true">
+        <div className="ladder dopo-lede" aria-hidden="true">
           <div className="rung" />
           <div className="rung" />
           <div className="rung" />

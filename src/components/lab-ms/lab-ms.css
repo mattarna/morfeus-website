@@ -492,3 +492,229 @@
 .ms .lab .ctaq p {
   margin-inline: auto;
 }
+
+/* ===========================================================
+   QUADRANTI E RIGHE (2026-07-28)
+   -----------------------------------------------------------
+   Le imbottiture interne al .quadro erano scritte con utility
+   Tailwind (px-9 py-11). Sbagliato: dentro un componente del DS
+   il respiro deve stare nel CSS del componente, dove posso
+   verificarlo nel bundle e dove non dipende da cosa vince fra
+   due fogli diversi. Qui sono classi mie, esplicite.
+   =========================================================== */
+.ms .lab .quadrante {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 36px 44px;
+}
+@media (min-width: 1100px) {
+  .ms .lab .quadrante {
+    padding: 48px 44px 52px;
+  }
+}
+.ms .lab .quadrante + .quadrante {
+  border-top: 1px solid var(--surf-bd);
+}
+@media (min-width: 768px) {
+  .ms .lab .quadrante + .quadrante {
+    border-top: none;
+    border-left: 1px solid var(--surf-bd);
+  }
+}
+.ms .lab .riga-ordine {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 26px;
+  padding: 30px 36px;
+}
+@media (min-width: 768px) {
+  .ms .lab .riga-ordine {
+    padding: 32px 44px;
+  }
+}
+.ms .lab .riga-ordine + .riga-ordine,
+.ms .lab .riga-chiusa {
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .lab .riga-chiusa {
+  padding: 26px 36px;
+}
+@media (min-width: 768px) {
+  .ms .lab .riga-chiusa {
+    padding: 28px 44px;
+  }
+}
+.ms .lab .corpo-modulo {
+  padding: 40px 36px 44px;
+}
+@media (min-width: 768px) {
+  .ms .lab .corpo-modulo {
+    padding: 52px 48px 56px;
+  }
+}
+
+/* ---------- la scaletta dei livelli, riallineata ----------
+   Prima era un gruppetto centrato largo 420px: i tre gradini non
+   avevano niente a che vedere con le tre schede sotto. Ora e' la
+   STESSA griglia delle schede, cosi' ogni gradino sta esattamente
+   sopra il livello che rappresenta, e la crescita si legge. */
+.ms .lab .ladder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: none;
+  height: 84px;
+  margin: 0 0 34px;
+}
+.ms .lab .ladder .rung {
+  align-self: end;
+}
+
+/* piu' stacco fra il sottotitolo e la grafica che segue */
+.ms .lab .dopo-lede {
+  margin-top: 72px;
+}
+@media (max-width: 768px) {
+  .ms .lab .dopo-lede {
+    margin-top: 48px;
+  }
+}
+
+/* ===========================================================
+   LE FASI DEL METODO, struttura alternata come nell'originale
+   -----------------------------------------------------------
+   L'originale alterna i passi a sinistra e a destra di una linea
+   centrale, con la cifra gigante dietro e il perno sulla linea.
+   La .vtimeline del DS e' a colonna sola: buona per un indice,
+   ma perde il passo del racconto. Qui rifaccio l'alternanza,
+   restando nei colori e nei caratteri del sistema.
+   =========================================================== */
+.ms .lab .fasi {
+  position: relative;
+  margin-top: 64px;
+}
+.ms .lab .fasi::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.ink .lab .fasi::before {
+  background: rgba(140, 165, 247, 0.22);
+}
+.ms .lab .fase {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  padding-bottom: 84px;
+}
+.ms .lab .fase:last-child {
+  padding-bottom: 0;
+}
+.ms .lab .fase .contenuto {
+  grid-column: 1;
+  position: relative;
+  z-index: 1;
+}
+.ms .lab .fase.dx .contenuto {
+  grid-column: 2;
+  text-align: right;
+}
+.ms .lab .fase .perno {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--firma);
+  box-shadow: 0 0 0 6px rgba(83, 61, 252, 0.12);
+  z-index: 2;
+}
+.ms .band.ink .lab .fase .perno {
+  background: var(--lilla);
+  box-shadow: 0 0 0 6px rgba(140, 165, 247, 0.14);
+}
+.ms .lab .fase .cifra {
+  position: absolute;
+  top: -26px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: clamp(78px, 9vw, 140px);
+  color: rgba(83, 61, 252, 0.09);
+}
+.ms .band.ink .lab .fase .cifra {
+  color: rgba(140, 165, 247, 0.09);
+}
+.ms .lab .fase.sx .cifra {
+  left: 34%;
+}
+.ms .lab .fase.dx .cifra {
+  right: 34%;
+}
+/* nella colonna di destra il marcatore dell'elenco passa a destra,
+   o l'elenco allineato a destra resterebbe con i puntini orfani */
+.ms .lab .fase.dx .vlist li {
+  grid-template-columns: 1fr auto;
+}
+.ms .lab .fase.dx .vlist li .dm {
+  order: 2;
+}
+.ms .lab .fase.dx .vnote {
+  margin-left: auto;
+}
+@media (max-width: 860px) {
+  .ms .lab .fasi::before {
+    left: 7px;
+  }
+  .ms .lab .fase {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-left: 38px;
+    padding-bottom: 56px;
+  }
+  .ms .lab .fase .contenuto,
+  .ms .lab .fase.dx .contenuto {
+    grid-column: 1;
+    text-align: left;
+  }
+  .ms .lab .fase .perno {
+    left: 7px;
+  }
+  .ms .lab .fase .cifra {
+    left: auto;
+    right: 0;
+    font-size: 96px;
+  }
+  .ms .lab .fase.dx .vlist li {
+    grid-template-columns: auto 1fr;
+  }
+  .ms .lab .fase.dx .vlist li .dm {
+    order: 0;
+  }
+}
+
+/* .vstep dentro una .fase: tengo la TIPOGRAFIA del DS (.vp, .vsub,
+   .vlist, .vnote, h3) e spengo la sua IMPAGINAZIONE, che qui la fa
+   l'alternanza: niente incolonnamento a 92px e niente linea di
+   collegamento, perche' la linea e' gia' quella centrale di .fasi. */
+.ms .lab .fase .vstep {
+  padding: 0;
+}
+.ms .lab .fase .vstep::before {
+  display: none;
+}
+.ms .lab .fase.dx .vstep h3,
+.ms .lab .fase.dx .vstep .vnote {
+  margin-left: auto;
+}
