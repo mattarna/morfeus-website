@@ -13,14 +13,8 @@
  */
 
 import { useState } from "react";
-import {
-  bodyInter,
-  bodyJakarta,
-  bodyManrope,
-  clashDisplay,
-  jetbrainsMono,
-  satoshi,
-} from "@/components/site/fonts";
+import { clashDisplay, jetbrainsMono, plusJakarta } from "@/components/site/fonts";
+import { bodyInter, bodyManrope, satoshi } from "./lab-fonts";
 
 /* x-height e cap-height sono misurati sulla tabella OS/2 dei file reali
    per Satoshi e Clash. Per i tre da Google sono i valori pubblicati dalle
@@ -30,7 +24,7 @@ const FONTS = [
   {
     key: "satoshi",
     label: "Satoshi",
-    note: "attuale",
+    note: "precedente",
     varName: satoshi.variable,
     css: "var(--font-satoshi)",
     x: "0.500",
@@ -39,9 +33,9 @@ const FONTS = [
   {
     key: "jakarta",
     label: "Plus Jakarta Sans",
-    note: "scelta del DS B2B",
-    varName: bodyJakarta.variable,
-    css: "var(--font-body-jakarta)",
+    note: "ATTUALE — font del corpo del DS",
+    varName: plusJakarta.variable,
+    css: "var(--font-jakarta)",
     x: "~0.53",
     misurato: false,
   },

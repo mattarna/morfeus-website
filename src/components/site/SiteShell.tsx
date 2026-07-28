@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { clashDisplay, jetbrainsMono, playfair, satoshi } from "./fonts";
+import { clashDisplay, jetbrainsMono, playfair, plusJakarta } from "./fonts";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import "./site.css";
@@ -11,7 +11,7 @@ import "./site.css";
  */
 export function SiteShell({ locale, children }: { locale: "it" | "en"; children: ReactNode }) {
   return (
-    <div className={`ms ${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
+    <div className={`ms ${clashDisplay.variable} ${plusJakarta.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
       <SiteHeader locale={locale} />
       <main>{children}</main>
       <SiteFooter locale={locale} />

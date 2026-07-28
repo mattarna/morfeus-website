@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const ARTICLES_DIR =
-  "C:/Users/Matteo/Desktop/CLAUDE/01_MORFEUS/06_PROJECTS/SEO-GEO-WEBSITE/articoli";
+  "C:/Users/Matteo/Desktop/CLAUDE/01_MORFEUS/06_PROJECTS/BRAND-2026/99_ARCHIVIO/SEO-GEO-WEBSITE/articoli";
 
 export type FaqItem = { q: string; a: string };
 

@@ -1,256 +1,255 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Glifo } from "@/components/pagine/Glifo";
+import { ArchivioCasi } from "@/components/pagine/casi/ArchivioCasi";
+import "@/components/pagine/kit.css";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
+import { CASI, PROBLEMI, getCaso, CASO_IN_EVIDENZA, type ChiaveProblema } from "@/lib/casi";
+
+/* ============================================================
+   CASI, pagina hub. Rifatta sul copy approvato 2026-07-28.
+   ------------------------------------------------------------
+   RITMO dichiarato nel brief: tesi, riconoscimento, prova,
+   esplorazione, azione. Le fasce lo seguono:
+     hero            ink     la tesi, senza linguaggio da portfolio
+     per problema    CARTA   il riconoscimento, registro diagnostico
+     in evidenza     ink     la prova, dossier con la sequenza fissa
+     archivio        CARTA   l'esplorazione, righe editoriali
+     come si legge   ink     la chiave di lettura
+     CTA             ink     l'azione
+
+   I CONTENUTI dei casi non stanno qui: vengono da src/lib/casi.ts,
+   che a sua volta porta le schede gia' approvate in
+   BRAND-2026/site/casi.html. Questa pagina non conosce nessun caso
+   per nome, tranne quello in evidenza, dichiarato nel registro.
+
+   Le quattro stazioni del caso in evidenza sono la struttura
+   obbligatoria del brief (Value Leak, sistema costruito, cosa
+   cambia, valore verificato) e il loro testo e' preso dalla pagina
+   Cyberangels gia' approvata, non riscritto.
+   ============================================================ */
 
 type Props = { params: { locale: string } };
-
-const CASE_HREFS = [
-  "brainiac-tesoreria-riconciliata",
-  "cyberangels-sales-advisor",
-  "valueize-best-seller",
-  "globia-scoring-deterministico",
-  "ag-academy-onboarding",
-  "marf-lead-caldo",
-  "scalers-pre-sales",
-  "cyberangels-report-cfo",
-] as const;
 
 const COPY = {
   it: {
     metaTitle: "Casi · Morfeus",
     metaDesc:
-      "Lo schedario dei casi Morfeus: aziende reali, la perdita trovata, il sistema costruito, il valore recuperato in euro. Ogni caso col timbro è stato verificato sul campo.",
+      "Ogni caso parte da un punto in cui il valore si stava perdendo: il problema operativo, il sistema costruito, cosa cambia nel lavoro e il valore verificato.",
     hero: {
-      eye: "Lo schedario",
-      h1a: "Ogni cliente è un caso ",
-      h1emph: "schedato",
+      eye: "Casi reali. Sistemi in produzione.",
+      h1a: "Ogni caso parte da un punto in cui il valore ",
+      h1emph: "si stava perdendo",
       h1b: ".",
-      copy: "Non raccontiamo l'AI: mostriamo cosa abbiamo trovato e cosa abbiamo recuperato. Per ogni azienda: la perdita localizzata, il sistema costruito, il valore misurato in euro. Ogni caso col timbro è stato verificato sul campo.",
-      lame: "«Ogni perdita ha un colpevole. Lo troviamo.»",
-      stats: [
-        { n: "€4M+", l: "margine recuperato per i clienti", gain: true },
-        { n: "75", l: "casi documentati in libreria", gain: false },
-        { n: "8", l: "prodotti in produzione", gain: false },
-      ],
+      copy: "Persone bloccate, sapere disperso, processi lenti, decisioni che arrivano tardi. In ogni caso partiamo dal problema operativo, costruiamo il sistema e verifichiamo cosa cambia.",
+      prova: "casi in archivio",
+      prova2: "verificati sul campo",
     },
-    indice: {
-      eye: "L'indice",
-      h2a: "I casi, per ",
-      h2emph: "prodotto",
+    problemi: {
+      eye: "Parti da quello che riconosci",
+      h2a: "Non cercare il tuo settore. Cerca il tuo ",
+      h2emph: "problema",
       h2b: ".",
-      lead: "Un caso per ciascun prodotto in produzione. Per ognuno: la casa che bruciava, perché restava irrisolto, il sistema, il risultato misurato.",
-      stamp: "Confermato",
-      open: "Apri il dossier ▸",
-      note: "▸ 8 casi, uno per prodotto in produzione. Dalla libreria Morfeus di 75 casi documentati.",
-      cards: [
-        {
-          meta: "CASO #049 · BRAINIAC · STUDIO E COSTRUZIONI ~€10M",
-          qa: "«Le fatture le emetti tu. Chi le ",
-          qEmph: "incassa",
-          qb: "?»",
-          whoB: "65.000€",
-          whoRest: " recuperati nel primo trimestre · -18 giorni d'incasso · riconciliazione automatica",
-        },
-        {
-          meta: "CASO #016 · CYBERANGELS SALES ADVISOR · MSP / RESELLER IT",
-          qa: "«Vendono tutto tranne la cosa a margine più ",
-          qEmph: "alto",
-          qb: ".»",
-          whoB: "70%+",
-          whoRest: " delle call con la sicurezza dentro · ticket medio +30% · prep chiamata in un clic",
-        },
-        {
-          meta: "CASO #032 · VALUEIZE · E-COMMERCE / DTC",
-          qa: "«Il best-seller che ti stava ",
-          qEmph: "mangiando",
-          qb: " vivo.»",
-          whoB: "3 SKU in rosso",
-          whoRest: " scoperti · recupero margine a doppia cifra · in un trimestre",
-        },
-        {
-          meta: "CASO #068 · GLOBIA · CONSULENZA & DUE DILIGENCE",
-          qa: "«Il numero cambiava a ogni click, e ci mettevano la ",
-          qEmph: "firma",
-          qb: ".»",
-          whoB: "-60%",
-          whoRest: " sul tempo di valutazione · riproducibilità 100% · numero difendibile in due diligence",
-        },
-        {
-          meta: "CASO #013 · AG ACADEMY · ACADEMY HIGH-TICKET",
-          qa: "«Chiudi la vendita. Poi lo studente sparisce nel ",
-          qEmph: "buco nero",
-          qb: ".»",
-          whoB: "25% → 6%",
-          whoRest: " rimborsi a 14 giorni · primo accesso da giorni a ore · zero studenti persi",
-        },
-        {
-          meta: "CASO #001 · MARF · CALL CENTER VENDITA ENERGIA",
-          qa: "«Ogni lead caldo che non richiami stasera, domani è ",
-          qEmph: "morto",
-          qb: ".»",
-          whoB: "50% → 90%+",
-          whoRest: " sul secondo contatto · primo richiamo da ore a minuti · chiusura a doppia cifra",
-        },
-        {
-          meta: "CASO #067 · SCALERS · SERVIZI PROFESSIONALI B2B",
-          qa: "«Entravano in call senza sapere con chi stavano ",
-          qEmph: "parlando",
-          qb: ".»",
-          whoB: "+11 punti",
-          whoRest: " di call chiuse · prep da 20 minuti a zero · in un trimestre",
-        },
-        {
-          meta: "CASO #027 · CYBERANGELS REPORT ENGINE · MODA STRUTTURATA",
-          qa: "«Il tuo report tecnico finisce nel cassetto del CFO, e con lui il ",
-          qEmph: "rinnovo",
-          qb: ".»",
-          whoB: "Rinnovi più alti",
-          whoRest: " · cicli di approvazione più corti · scritto per il CFO, non per il tecnico",
-        },
-      ],
+      lead: "Le aziende qui dentro fanno mestieri diversi e perdono valore negli stessi punti. Riconosci il tuo e vai ai casi che lo trattano.",
+      conta: (n: number) => `${n} ${n === 1 ? "caso" : "casi"}`,
     },
-    formato: {
-      eye: "Il formato",
-      h2a: "Come si legge un ",
-      h2emph: "caso",
+    evidenza: {
+      eye: "Caso in evidenza",
+      readout: "Dossier · sequenza verificata",
+      stato: "Confermato",
+      passi: [
+        "Value leak",
+        "Sistema costruito",
+        "Cosa cambia nel lavoro",
+        "Valore verificato",
+      ],
+      apri: "Leggi il dossier completo",
+    },
+    archivio: {
+      eye: "L'archivio",
+      h2a: "Otto aziende, otto punti in cui il valore ",
+      h2emph: "usciva",
       h2b: ".",
-      lead: "Ogni dossier segue la stessa struttura. È il patto reso formato: mostriamo solo quello che è stato fatto davvero, con le prove.",
-      steps: [
-        { ix: "01", h3: "Il problema", p: "Dove l'azienda perdeva valore, prima di noi. Il contesto reale, non un'ipotesi." },
-        { ix: "02", h3: "I numeri di partenza", p: "La perdita quantificata in euro col ROIometro. Il punto zero, misurato." },
-        { ix: "03", h3: "Il sistema", p: "Cosa abbiamo costruito e messo in produzione. MARF, agenti, o formazione." },
-        { ix: "04", h3: "Il risultato", p: "Il valore recuperato, verificato. Il timbro Confermato arriva solo qui." },
+      lead: "Per ogni caso: chi è, dove perdeva valore, cosa abbiamo costruito e cosa è cambiato. I filtri sono per problema e per area, mai per tecnologia usata.",
+      tutti: "Tutti",
+      perProblema: "Problema",
+      perArea: "Area",
+      nessuno: "Nessun caso con questa combinazione di filtri. Togline uno.",
+      uno: "caso",
+      molti: "casi",
+      suffisso: "in archivio",
+    },
+    lettura: {
+      eye: "Come si legge un caso Morfeus",
+      h2a: "Tutti i dossier hanno la ",
+      h2emph: "stessa forma",
+      h2b: ".",
+      lead: "Non è una scelta editoriale, è il metodo. Se un caso non regge questa sequenza, non è un caso: è un aneddoto.",
+      readout: "Struttura comune · tre atti",
+      sempre: "sempre uguale",
+      passi: [
+        {
+          k: "01 · Il problema",
+          t: "Dove usciva il valore",
+          p: "Il punto operativo preciso, con il contesto reale dell'azienda. Non un'ipotesi e non una categoria: un fatto che qualcuno viveva ogni giorno.",
+        },
+        {
+          k: "02 · Il sistema",
+          t: "Cosa abbiamo costruito",
+          p: "Il sistema che chiude quella perdita, descritto per quello che fa nel lavoro delle persone, non per la tecnologia con cui è fatto.",
+        },
+        {
+          k: "03 · Il valore",
+          t: "Cosa è cambiato",
+          p: "Il numero verificato sul campo, con la sua unità e il suo periodo. Dove il numero non c'è, c'è il cambiamento operativo. Mai una stima travestita da risultato.",
+        },
       ],
     },
     cta: {
-      eye: "Il tuo caso",
-      h2a: "Il prossimo dossier potrebbe essere il ",
-      h2emph: "tuo",
+      eye: "Il tuo caso non deve ancora esistere",
+      h2a: "Deve esistere un problema che ",
+      h2emph: "vale la pena risolvere",
       h2b: ".",
-      p: "Il primo passo non è un preventivo. È capire, in euro, dove la tua azienda perde valore ogni giorno.",
-      cta1: "Calcola cosa perdi ▸",
-      cta2: "Parla con noi",
+      p: "Se riconosci un Value Leak nella tua azienda, partiamo da lì. Nessun caso è identico a un altro. Il metodo per capire dove intervenire, invece, è sempre lo stesso.",
+      btn: "Parliamo del tuo caso",
+      btn2: "Vedi il Metodo",
     },
   },
   en: {
     metaTitle: "Cases · Morfeus",
     metaDesc:
-      "The Morfeus case file: real companies, the loss found, the system built, the value recovered in euros. Every case with the stamp was verified in the field.",
+      "Every case starts at a point where value was leaking away: the operating problem, the system built, what changes in the work and the verified value.",
     hero: {
-      eye: "The case file",
-      h1a: "Every client is a filed ",
-      h1emph: "case",
+      eye: "Real cases. Systems in production.",
+      h1a: "Every case starts at a point where value ",
+      h1emph: "was leaking away",
       h1b: ".",
-      copy: "We don't talk about AI: we show what we found and what we recovered. For every company: the loss located, the system built, the value measured in euros. Every case with the stamp was verified in the field.",
-      lame: "«Every loss has a culprit. We find it.»",
-      stats: [
-        { n: "€4M+", l: "margin recovered for clients", gain: true },
-        { n: "75", l: "documented cases in the library", gain: false },
-        { n: "8", l: "products in production", gain: false },
-      ],
+      copy: "People blocked, knowledge scattered, workflows slowed down, decisions arriving late. In every case, we start with the operating problem, build the system and verify what changes.",
+      prova: "cases in the archive",
+      prova2: "verified in the field",
     },
-    indice: {
-      eye: "The index",
-      h2a: "The cases, by ",
-      h2emph: "product",
+    problemi: {
+      eye: "Start from what you recognise",
+      h2a: "Don't look for your industry. Look for your ",
+      h2emph: "problem",
       h2b: ".",
-      lead: "One case per product in production. For each: the house on fire, why it stayed unsolved, the system, the measured result.",
-      stamp: "Confirmed",
-      open: "Open the dossier ▸",
-      note: "▸ 8 cases, one per product in production. From the Morfeus library of 75 documented cases.",
-      cards: [
-        {
-          meta: "CASE #049 · BRAINIAC · ACCOUNTING & CONSTRUCTION ~€10M",
-          qa: "«You issue the invoices. Who ",
-          qEmph: "collects",
-          qb: " them?»",
-          whoB: "€65,000",
-          whoRest: " recovered in the first quarter · -18 days on collection · automatic reconciliation",
-        },
-        {
-          meta: "CASE #016 · CYBERANGELS SALES ADVISOR · MSP / IT RESELLER",
-          qa: "«They sell everything except the highest-",
-          qEmph: "margin",
-          qb: " thing.»",
-          whoB: "70%+",
-          whoRest: " of calls with security in the pitch · avg ticket +30% · one-click call prep",
-        },
-        {
-          meta: "CASE #032 · VALUEIZE · E-COMMERCE / DTC",
-          qa: "«The best-seller that was ",
-          qEmph: "eating",
-          qb: " you alive.»",
-          whoB: "3 SKUs in the red",
-          whoRest: " uncovered · double-digit margin recovery · in one quarter",
-        },
-        {
-          meta: "CASE #068 · GLOBIA · CONSULTING & DUE DILIGENCE",
-          qa: "«The number changed on every click, and they put their ",
-          qEmph: "signature",
-          qb: " on it.»",
-          whoB: "-60%",
-          whoRest: " on assessment time · 100% reproducibility · a defensible number in due diligence",
-        },
-        {
-          meta: "CASE #013 · AG ACADEMY · HIGH-TICKET ACADEMY",
-          qa: "«You close the sale. Then the student vanishes into a ",
-          qEmph: "black hole",
-          qb: ".»",
-          whoB: "25% → 6%",
-          whoRest: " refunds at 14 days · first access from days to hours · zero students lost",
-        },
-        {
-          meta: "CASE #001 · MARF · ENERGY SALES CALL CENTER",
-          qa: "«Every hot lead you don't call back tonight is ",
-          qEmph: "dead",
-          qb: " by morning.»",
-          whoB: "50% → 90%+",
-          whoRest: " on second contact · first callback from hours to minutes · double-digit close rate",
-        },
-        {
-          meta: "CASE #067 · SCALERS · B2B PROFESSIONAL SERVICES",
-          qa: "«They entered the call not knowing who they were ",
-          qEmph: "talking",
-          qb: " to.»",
-          whoB: "+11 points",
-          whoRest: " of calls closed · prep from 20 minutes to zero · in one quarter",
-        },
-        {
-          meta: "CASE #027 · CYBERANGELS REPORT ENGINE · STRUCTURED FASHION",
-          qa: "«Your technical report ends up in the CFO's drawer, and the ",
-          qEmph: "renewal",
-          qb: " with it.»",
-          whoB: "Higher renewals",
-          whoRest: " · shorter approval cycles · written for the CFO, not the technician",
-        },
-      ],
+      lead: "The companies in here do different jobs and lose value in the same places. Recognise yours and go to the cases that deal with it.",
+      conta: (n: number) => `${n} ${n === 1 ? "case" : "cases"}`,
     },
-    formato: {
-      eye: "The format",
-      h2a: "How to read a ",
-      h2emph: "case",
+    evidenza: {
+      eye: "Featured case",
+      readout: "Dossier · verified sequence",
+      stato: "Confirmed",
+      passi: [
+        "Value leak",
+        "System built",
+        "What changes in the work",
+        "Verified value",
+      ],
+      apri: "Read the full dossier",
+    },
+    archivio: {
+      eye: "The archive",
+      h2a: "Eight companies, eight points where value was ",
+      h2emph: "leaking out",
       h2b: ".",
-      lead: "Every dossier follows the same structure. It's the pact made a format: we show only what was actually done, with the proof.",
-      steps: [
-        { ix: "01", h3: "The problem", p: "Where the company was losing value, before us. The real context, not a hypothesis." },
-        { ix: "02", h3: "The starting numbers", p: "The loss quantified in euros with the ROIometer. The zero point, measured." },
-        { ix: "03", h3: "The system", p: "What we built and put into production. MARF, agents, or training." },
-        { ix: "04", h3: "The result", p: "The value recovered, verified. The Confirmed stamp lands only here." },
+      lead: "For each case: who they are, where value was leaking, what we built and what changed. Filters are by problem and by area, never by the technology used.",
+      tutti: "All",
+      perProblema: "Problem",
+      perArea: "Area",
+      nessuno: "No case matches this combination of filters. Remove one.",
+      uno: "case",
+      molti: "cases",
+      suffisso: "in the archive",
+    },
+    lettura: {
+      eye: "How to read a Morfeus case",
+      h2a: "Every dossier has the ",
+      h2emph: "same shape",
+      h2b: ".",
+      lead: "It isn't an editorial choice, it's the method. If a case doesn't hold this sequence, it isn't a case: it's an anecdote.",
+      readout: "Common structure · three acts",
+      sempre: "always the same",
+      passi: [
+        {
+          k: "01 · The problem",
+          t: "Where value was leaking",
+          p: "The precise operating point, with the company's real context. Not a hypothesis and not a category: something someone lived every day.",
+        },
+        {
+          k: "02 · The system",
+          t: "What we built",
+          p: "The system that closes that leak, described by what it does in people's work, not by the technology it is made of.",
+        },
+        {
+          k: "03 · The value",
+          t: "What changed",
+          p: "The number verified in the field, with its unit and its period. Where there is no number, there is the operational change. Never an estimate dressed up as a result.",
+        },
       ],
     },
     cta: {
-      eye: "Your case",
-      h2a: "The next dossier could be ",
-      h2emph: "yours",
+      eye: "Your case doesn't have to exist yet",
+      h2a: "There just has to be a problem ",
+      h2emph: "worth solving",
       h2b: ".",
-      p: "The first step isn't a quote. It's understanding, in euros, where your company loses value every day.",
-      cta1: "Calculate what you lose ▸",
-      cta2: "Talk to us",
+      p: "If you recognise a Value Leak in your company, we start there. No two cases are alike. The method for finding where to act, on the other hand, is always the same.",
+      btn: "Let's talk about your case",
+      btn2: "See the Method",
     },
   },
 } as const;
+
+/* Le quattro stazioni del caso in evidenza, dal dossier approvato.
+   Stanno qui e non nel registro perche' appartengono alla pagina:
+   il registro tiene cio' che serve a TUTTI i casi. */
+const EVIDENZA_STAZIONI = {
+  it: [
+    {
+      titolo: "Un report solidissimo, per la persona sbagliata",
+      p: "Il lavoro tecnico era fatto bene, ma restava scritto nella lingua di chi lo produce. Chi firma la spesa apriva il PDF, vedeva una lista di sigle e lo chiudeva.",
+    },
+    {
+      titolo: "Lo stesso assessment, letto dal board",
+      p: "Gli stessi dati tecnici, riscritti nel linguaggio con cui un board ragiona: collezioni, margine, reputazione del marchio.",
+    },
+    {
+      titolo: "Pronto da portare in consiglio così com'è",
+      p: "Nessuno deve più ripulirlo o tradurlo a voce. Chi firma capisce perché quella spesa protegge il marchio, e decide invece di rimandare.",
+    },
+    {
+      titolo: "Il report arriva integro fino al tavolo che firma",
+      p: "Non una lista piatta di vulnerabilità: le poche cose che decidono davvero l'esposizione del marchio.",
+    },
+  ],
+  en: [
+    {
+      titolo: "A rock-solid report, for the wrong person",
+      p: "The technical work was done well, but it stayed written in the language of the people who produced it. Whoever signs off opened the PDF, saw a list of acronyms and closed it.",
+    },
+    {
+      titolo: "The same assessment, read by the board",
+      p: "The same technical data, rewritten in the language a board thinks in: collections, margin, brand reputation.",
+    },
+    {
+      titolo: "Ready to take into the boardroom as it is",
+      p: "Nobody has to clean it up or translate it out loud any more. Whoever signs understands why that spend protects the brand, and decides instead of postponing.",
+    },
+    {
+      titolo: "The report arrives intact at the table that signs",
+      p: "Not a flat list of vulnerabilities: the few things that actually decide the brand's exposure.",
+    },
+  ],
+} as const;
+
+const GLIFI_PROBLEMA: Record<ChiaveProblema, string> = {
+  sapere: "elenco",
+  ripetitivo: "ingranaggio",
+  decisioni: "curvaGiu",
+  commerciale: "carrello",
+};
 
 export function generateMetadata({ params: { locale } }: Props): Metadata {
   const isIt = locale === "it";
@@ -278,6 +277,9 @@ export default function CasiPage({ params: { locale } }: Props) {
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
 
+  const evidenza = getCaso(CASO_IN_EVIDENZA);
+  const stazioni = EVIDENZA_STAZIONI[safeLocale];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -292,11 +294,12 @@ export default function CasiPage({ params: { locale } }: Props) {
         about: { "@id": ORGANIZATION_ID },
         mainEntity: {
           "@type": "ItemList",
-          numberOfItems: t.indice.cards.length,
-          itemListElement: t.indice.cards.map((c, i) => ({
+          numberOfItems: CASI.length,
+          itemListElement: CASI.map((c, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: c.meta,
+            name: c.titolo[safeLocale],
+            url: `${SITE_URL}/${safeLocale}/casi/${c.slug}`,
           })),
         },
       },
@@ -311,8 +314,8 @@ export default function CasiPage({ params: { locale } }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 01 · TESTATA (lo schedario) · INCHIOSTRO */}
-      <section className="band ink hero" id="hero">
+      {/* 01 · HERO · ink */}
+      <section className="band ink hero pg" id="hero">
         <div className="wrap">
           <div className="eye">{t.hero.eye}</div>
           <h1>
@@ -321,113 +324,158 @@ export default function CasiPage({ params: { locale } }: Props) {
             {t.hero.h1b}
           </h1>
           <p className="copy">{t.hero.copy}</p>
-          <p className="lame">{t.hero.lame}</p>
-          <div className="mt-9 flex flex-wrap gap-8 border-t border-[color:var(--riga-scuro)] pt-5">
-            {t.hero.stats.map((s, i) => (
-              <div key={i}>
-                <div
-                  className="font-clash text-[clamp(26px,3.2vw,34px)] font-semibold leading-none"
-                  style={s.gain ? { color: "var(--ok)" } : undefined}
-                >
-                  {s.n}
-                </div>
-                <div className="mt-2 font-plex text-[10.5px] uppercase tracking-[0.1em] text-[color:var(--ombra)]">
-                  {s.l}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 02 · INDICE CASI · CARTA */}
-      <section className="band carta" id="indice">
-        <div className="wrap">
-          <div className="eye">{t.indice.eye}</div>
-          <h2 className="h-sect">
-            {t.indice.h2a}
-            <span className="emph">{t.indice.h2emph}</span>
-            {t.indice.h2b}
-          </h2>
-          <p className="lead">{t.indice.lead}</p>
-          <div className="two" style={{ marginTop: 26 }}>
-            {t.indice.cards.map((c, i) => (
-              <Link
-                className="caso transition-colors hover:border-firma/50"
-                href={`${base}/casi/${CASE_HREFS[i]}`}
-                key={i}
-              >
-                <div className="meta">{c.meta}</div>
-                <p className="q">
-                  {c.qa}
-                  <span className="emph">{c.qEmph}</span>
-                  {c.qb}
-                </p>
-                <p className="who">
-                  <b>{c.whoB}</b>
-                  {c.whoRest}
-                </p>
-                <div className="row-bottom">
-                  <span className="stamp">{t.indice.stamp}</span>
-                  <span className="btn btn-3" style={{ margin: 0 }}>
-                    {t.indice.open}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <p
-            className="font-plex text-[11px]"
-            style={{ marginTop: 22, color: "var(--ombra)" }}
-          >
-            {t.indice.note}
+          <p className="proofline" style={{ marginTop: 40 }}>
+            <b>{CASI.length}</b> {t.hero.prova} · <b>
+              {CASI.filter((c) => c.confermato).length}
+            </b>{" "}
+            {t.hero.prova2}
           </p>
         </div>
       </section>
 
-      {/* 03 · COME LEGGIAMO UN CASO · INCHIOSTRO */}
-      <section className="band ink" id="formato">
+      {/* 02 · PER PROBLEMA · carta */}
+      <section className="band carta pg" id="problemi">
         <div className="wrap">
-          <div className="eye">{t.formato.eye}</div>
+          <div className="eye">{t.problemi.eye}</div>
           <h2 className="h-sect">
-            {t.formato.h2a}
-            <span className="emph">{t.formato.h2emph}</span>
-            {t.formato.h2b}
+            {t.problemi.h2a}
+            <span className="emph">{t.problemi.h2emph}</span>
+            {t.problemi.h2b}
           </h2>
-          <p className="lead">{t.formato.lead}</p>
-          <div className="four" style={{ marginTop: 28 }}>
-            {t.formato.steps.map((s, i) => (
-              <div className="card" key={i}>
-                <div className="font-plex text-[11px] tracking-[0.08em] text-[color:var(--lilla)]">
-                  {s.ix}
-                </div>
-                <h3 className="mt-[10px] text-[17px] font-semibold text-[color:var(--carta)]">
-                  {s.h3}
-                </h3>
-                <p>{s.p}</p>
-              </div>
+          <p className="lead">{t.problemi.lead}</p>
+
+          <div className="diagnosi">
+            {(Object.keys(PROBLEMI) as ChiaveProblema[]).map((k) => (
+              <Link key={k} href={`${base}/casi#archivio`} className="sintomo">
+                <Glifo nome={GLIFI_PROBLEMA[k]} />
+                <span className="testo">{PROBLEMI[k][safeLocale]}</span>
+                <span className="conta">
+                  {t.problemi.conta(CASI.filter((c) => c.problema === k).length)}
+                </span>
+                <span className="freccia" aria-hidden="true">
+                  &rarr;
+                </span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 04 · CTA QUOTA · CARTA */}
-      <section className="band carta ctaq" id="cta">
+      {/* 03 · CASO IN EVIDENZA · ink */}
+      {evidenza && (
+        <section className="band ink pg" id="in-evidenza">
+          <div className="wrap">
+            <div className="eye">{t.evidenza.eye}</div>
+            <h2 className="h-sect">{evidenza.titolo[safeLocale]}</h2>
+            <p className="lead">{evidenza.sintesi[safeLocale]}</p>
+
+            <div className="quadro" style={{ marginTop: 40 }}>
+              <div className="readout">
+                <span>{t.evidenza.readout}</span>
+                <span className="on">
+                  <i />
+                  {t.evidenza.stato}
+                </span>
+              </div>
+
+              <div className="dossier">
+                {stazioni.map((s, i) => (
+                  <div className="stazione" key={s.titolo}>
+                    <div className="passo">{t.evidenza.passi[i]}</div>
+                    <div className="valore">{s.titolo}</div>
+                    <p>{s.p}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="cta-row">
+              <Link className="btn btn-1" href={`${base}/casi/${evidenza.slug}`}>
+                {t.evidenza.apri}
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 04 · ARCHIVIO · carta */}
+      <section className="band carta pg" id="archivio">
         <div className="wrap">
-          <div className="eye">{t.cta.eye}</div>
-          <h2>
-            {t.cta.h2a}
-            <span className="emph">{t.cta.h2emph}</span>
-            {t.cta.h2b}
+          <div className="eye">{t.archivio.eye}</div>
+          <h2 className="h-sect">
+            {t.archivio.h2a}
+            <span className="emph">{t.archivio.h2emph}</span>
+            {t.archivio.h2b}
           </h2>
-          <p style={{ color: "#3a3b45" }}>{t.cta.p}</p>
-          <div className="cta-row">
-            <a className="btn btn-1" href={`${base}/roiometro`}>
-              {t.cta.cta1}
-            </a>
-            <a className="btn btn-2-ink" href="mailto:hello@morfeushub.com">
-              {t.cta.cta2}
-            </a>
+          <p className="lead">{t.archivio.lead}</p>
+
+          <ArchivioCasi
+            locale={safeLocale}
+            etichette={{
+              tutti: t.archivio.tutti,
+              perProblema: t.archivio.perProblema,
+              perArea: t.archivio.perArea,
+              nessuno: t.archivio.nessuno,
+              uno: t.archivio.uno,
+              molti: t.archivio.molti,
+              suffisso: t.archivio.suffisso,
+            }}
+          />
+        </div>
+      </section>
+
+      {/* 05 · COME SI LEGGE · ink */}
+      <section className="band ink pg" id="come-si-legge">
+        <div className="wrap">
+          <div className="eye">{t.lettura.eye}</div>
+          <h2 className="h-sect">
+            {t.lettura.h2a}
+            <span className="emph">{t.lettura.h2emph}</span>
+            {t.lettura.h2b}
+          </h2>
+          <p className="lead">{t.lettura.lead}</p>
+
+          <div className="quadro" style={{ marginTop: 36 }}>
+            <div className="readout">
+              <span>{t.lettura.readout}</span>
+              <span className="on">
+                <i />
+                {t.lettura.sempre}
+              </span>
+            </div>
+            <div className="tre-quadranti">
+              {t.lettura.passi.map((p) => (
+                <div className="quadrante" key={p.k}>
+                  <div className="cod">{p.k}</div>
+                  <div className="titolo-quadrante">{p.t}</div>
+                  <div className="quota" style={{ marginTop: 20 }} />
+                  <p className="testo-quadrante">{p.p}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 06 · CTA · ink */}
+      <section className="band ink pg" id="cta">
+        <div className="wrap">
+          <div className="ctaq">
+            <div className="eye justify-center">{t.cta.eye}</div>
+            <h2 className="h-sect">
+              {t.cta.h2a}
+              <span className="emph">{t.cta.h2emph}</span>
+              {t.cta.h2b}
+            </h2>
+            <p>{t.cta.p}</p>
+            <div className="cta-row centrata">
+              <Link className="btn btn-1" href={`${base}/roiometro`}>
+                {t.cta.btn}
+              </Link>
+              <Link className="btn btn-2-carta" href={`${base}/metodo`}>
+                {t.cta.btn2}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
