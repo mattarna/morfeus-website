@@ -3,24 +3,73 @@
 import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useEffect, useState } from "react";
-import { Icon } from "@iconify/react";
 
 /**
  * HomeProblem Section - Index 2
  *
  * "I Value Leak": la mappa dei punti in cui il margine esce dall'azienda.
  * Non e' un metodo in tre fasi, quindi non usa card verticali numerate:
- * tre righe orizzontali a tutta larghezza (numero, icona, titolo, testo)
+ * tre righe orizzontali a tutta larghezza (numero, mini visual, titolo, testo)
  * fra un blocco di apertura e una riga di chiusura.
  *
- * Le icone sono colorate a riposo (una tinta per riga) e virano all'arancio
- * del brand in hover. Tutte e tre sono gia' usate altrove nel sito: nomi
- * verificati, niente rischio di segnaposto vuoti.
+ * I visual rappresentano il problema, non il servizio. Ereditano il colore
+ * dalla riga (currentColor): una tinta piena a riposo, arancio brand in hover.
+ * Le opacita' interne sono tarate per restare leggibili senza hover — i tratti
+ * "spenti" servono a raccontare il degrado, non a nascondere il disegno.
  */
+
+/** Le informazioni si fermano: un percorso che si interrompe a meta'. */
+function LeakVisualFlow() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <line x1="10" y1="24" x2="44" y2="24" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M58 24 H110" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 5" opacity="0.55" />
+      <line x1="51" y1="13" x2="51" y2="35" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="10" cy="24" r="4" fill="currentColor" />
+      <circle cx="44" cy="24" r="4" fill="currentColor" />
+      <circle cx="110" cy="24" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+    </svg>
+  );
+}
+
+/** Il sapere resta nella testa di pochi: tutto converge su un nodo solo. */
+function LeakVisualKnowledge() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.25" opacity="0.55">
+        <line x1="60" y1="24" x2="16" y2="10" />
+        <line x1="60" y1="24" x2="16" y2="38" />
+        <line x1="60" y1="24" x2="104" y2="10" />
+        <line x1="60" y1="24" x2="104" y2="38" />
+      </g>
+      <g stroke="currentColor" strokeWidth="1.5" opacity="0.8">
+        <circle cx="16" cy="10" r="3" />
+        <circle cx="16" cy="38" r="3" />
+        <circle cx="104" cy="10" r="3" />
+        <circle cx="104" cy="38" r="3" />
+      </g>
+      <circle cx="60" cy="24" r="12" stroke="currentColor" strokeWidth="1.25" opacity="0.5" />
+      <circle cx="60" cy="24" r="6.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Lavoro che un sistema dovrebbe assorbire: una coda che si accumula. */
+function LeakVisualManual() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <rect x="10" y="7" width="44" height="5" rx="2.5" fill="currentColor" opacity="0.4" />
+      <rect x="10" y="18" width="62" height="5" rx="2.5" fill="currentColor" opacity="0.6" />
+      <rect x="10" y="29" width="82" height="5" rx="2.5" fill="currentColor" opacity="0.8" />
+      <rect x="10" y="40" width="100" height="5" rx="2.5" fill="currentColor" opacity="1" />
+    </svg>
+  );
+}
+
 const LEAKS = [
-  { key: "flow", icon: "solar:history-bold-duotone", color: "text-blue-400" },
-  { key: "knowledge", icon: "solar:users-group-rounded-bold-duotone", color: "text-indigo-400" },
-  { key: "manual", icon: "solar:refresh-circle-bold-duotone", color: "text-purple-400" },
+  { key: "flow", Visual: LeakVisualFlow, color: "text-blue-400" },
+  { key: "knowledge", Visual: LeakVisualKnowledge, color: "text-indigo-400" },
+  { key: "manual", Visual: LeakVisualManual, color: "text-purple-400" },
 ] as const;
 
 export function HomeProblem() {
@@ -68,7 +117,7 @@ export function HomeProblem() {
 
         {/* LE TRE RIGHE */}
         <div className="border-t border-white/10">
-          {LEAKS.map(({ key, icon, color }, index) => (
+          {LEAKS.map(({ key, Visual, color }, index) => (
             <div
               key={key}
               className={`group grid grid-cols-1 xl:grid-cols-12 gap-x-8 2xl:gap-x-10 gap-y-2 xl:items-center border-b border-white/10 py-6 xl:py-7 2xl:py-8 short:!py-5 px-2 -mx-2 rounded-xl transition-all duration-700 hover:bg-white/[0.03] ${
@@ -80,8 +129,8 @@ export function HomeProblem() {
                 0{index + 1}
               </span>
 
-              <div className={`xl:col-span-2 flex xl:justify-center ${color} group-hover:text-forge transition-colors duration-500`}>
-                <Icon icon={icon} className="w-9 h-9 2xl:w-11 2xl:h-11" aria-hidden="true" />
+              <div className={`xl:col-span-2 w-28 h-11 2xl:h-14 xl:w-full ${color} group-hover:text-forge transition-colors duration-500`}>
+                <Visual />
               </div>
 
               <h3 className="xl:col-span-4 text-base md:text-lg 2xl:text-xl font-medium text-white tracking-tight leading-snug">
