@@ -19,7 +19,7 @@ export function Services() {
 
   const SERVICES = [
     {
-      icon: "lucide:target",
+      icon: "lucide:network",
       name: t("items.forge.name"),
       headline: t("items.forge.headline"),
       description: t("items.forge.description"),

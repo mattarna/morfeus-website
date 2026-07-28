@@ -54,8 +54,12 @@ export function ProcessMaster() {
       <section className="relative w-full bg-black py-20 px-6">
         {/* Section Header */}
         <div className="max-w-[1400px] mx-auto mb-12 text-center">
-          <h2 className="text-4xl sm:text-5xl font-normal tracking-tighter bg-clip-text text-transparent bg-linear-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
-            {t("headline")}
+          <span className="block text-[11px] font-bold tracking-[0.25em] text-blue-500 uppercase mb-4">
+            {t("eyebrow")}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-normal tracking-tighter bg-clip-text text-transparent bg-linear-to-b from-white to-[#E0CCFA]/70 leading-[1.05] text-balance">
+            {t("headline_1")}<br />
+            {t("headline_2")}
           </h2>
         </div>
 
