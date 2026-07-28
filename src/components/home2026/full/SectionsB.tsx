@@ -6,14 +6,17 @@
  */
 
 import Image from "next/image";
+import { Icon } from "@iconify/react";
 import { useLocale, useTranslations } from "next-intl";
 import { jumpToIndex } from "../engine/useDemoScroll";
 
 /* ============ [3] SERVICES · CARTA ============ */
 
+/* Le icone sono le stesse della home di produzione: lucide:network per
+   MARF (il Context Hub e' una rete di nodi) e lucide:library per Morf Lab. */
 const SERVICE_KEYS = [
-  { key: "forge", href: "/forge" },
-  { key: "lab", href: "/lab" },
+  { key: "forge", href: "/forge", icon: "lucide:network" },
+  { key: "lab", href: "/lab", icon: "lucide:library" },
 ] as const;
 
 export function ServicesPanel({ active }: { active: boolean }) {
@@ -33,9 +36,14 @@ export function ServicesPanel({ active }: { active: boolean }) {
         </div>
 
         <div className="svc-grid">
-          {SERVICE_KEYS.map(({ key, href }, i) => (
+          {SERVICE_KEYS.map(({ key, href, icon }, i) => (
             <div className={`svc-card fx d${3 + i}`} key={key}>
-              <span className="ck">{t(`items.${key}.name`)}</span>
+              <div className="ck-row">
+                <span className="ck-icon" aria-hidden="true">
+                  <Icon icon={icon} width={22} />
+                </span>
+                <span className="ck">{t(`items.${key}.name`)}</span>
+              </div>
               <h3>{t(`items.${key}.headline`)}</h3>
               <p>{t(`items.${key}.description`)}</p>
               <div className="ctas">

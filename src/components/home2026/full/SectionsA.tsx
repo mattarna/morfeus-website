@@ -24,7 +24,7 @@ export function Hero({ active }: { active: boolean }) {
         </div>
 
         <h1 className="hero-h1">
-          <span className="fx d2" style={{ display: "block" }}>
+          <span className="fx d2 fade-1" style={{ display: "block" }}>
             {t("headline_part1")}
           </span>
           {/* part2 e' vuota nel copy B2B (la headline sta in due righe di
@@ -99,7 +99,66 @@ export function ManifestoPanel({ active }: { active: boolean }) {
    inventata), ma tre righe che nominano dove esce il margine.
    La cifra della vecchia scheda era un placeholder: toglierla e' parte
    del punto, il numero arriva dalla diagnosi, non dalla home. */
-const LEAK_KEYS = ["flow", "knowledge", "manual"] as const;
+/* I mini visual della home di produzione. Rappresentano il problema, non
+   il servizio, ed ereditano il colore dalla riga (currentColor): tinta
+   piena a riposo, Forge in hover. Le opacita' interne raccontano il
+   degrado e sono tarate per restare leggibili anche senza hover. */
+
+/** Le informazioni si fermano: un percorso che si interrompe a meta'. */
+function LeakVisualFlow() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" aria-hidden="true">
+      <line x1="10" y1="24" x2="44" y2="24" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M58 24 H110" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 5" opacity="0.55" />
+      <line x1="51" y1="13" x2="51" y2="35" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="10" cy="24" r="4" fill="currentColor" />
+      <circle cx="44" cy="24" r="4" fill="currentColor" />
+      <circle cx="110" cy="24" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+    </svg>
+  );
+}
+
+/** Il sapere resta nella testa di pochi: tutto converge su un nodo solo. */
+function LeakVisualKnowledge() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.25" opacity="0.55">
+        <line x1="60" y1="24" x2="16" y2="10" />
+        <line x1="60" y1="24" x2="16" y2="38" />
+        <line x1="60" y1="24" x2="104" y2="10" />
+        <line x1="60" y1="24" x2="104" y2="38" />
+      </g>
+      <g stroke="currentColor" strokeWidth="1.5" opacity="0.8">
+        <circle cx="16" cy="10" r="3" />
+        <circle cx="16" cy="38" r="3" />
+        <circle cx="104" cy="10" r="3" />
+        <circle cx="104" cy="38" r="3" />
+      </g>
+      <circle cx="60" cy="24" r="12" stroke="currentColor" strokeWidth="1.25" opacity="0.5" />
+      <circle cx="60" cy="24" r="6.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Lavoro che un sistema dovrebbe assorbire: una coda che si accumula. */
+function LeakVisualManual() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" aria-hidden="true">
+      <rect x="10" y="7" width="44" height="5" rx="2.5" fill="currentColor" opacity="0.4" />
+      <rect x="10" y="18" width="62" height="5" rx="2.5" fill="currentColor" opacity="0.6" />
+      <rect x="10" y="29" width="82" height="5" rx="2.5" fill="currentColor" opacity="0.8" />
+      <rect x="10" y="40" width="100" height="5" rx="2.5" fill="currentColor" opacity="1" />
+    </svg>
+  );
+}
+
+/* I colori sono quelli della palette ufficiale, non i blue/indigo/purple
+   di Tailwind usati in produzione: stessa progressione, tinte nostre. */
+const LEAKS = [
+  { key: "flow", Visual: LeakVisualFlow, tint: "var(--lilla)" },
+  { key: "knowledge", Visual: LeakVisualKnowledge, tint: "#6475fa" },
+  { key: "manual", Visual: LeakVisualManual, tint: "var(--firma)" },
+] as const;
 
 export function Problem({ active }: { active: boolean }) {
   const t = useTranslations("Problem");
@@ -120,9 +179,12 @@ export function Problem({ active }: { active: boolean }) {
         </div>
 
         <div className="leaks fx d4">
-          {LEAK_KEYS.map((key, i) => (
+          {LEAKS.map(({ key, Visual, tint }, i) => (
             <div className="leak-row" key={key}>
               <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <div className="viz" style={{ color: tint }}>
+                <Visual />
+              </div>
               <h3>{t(`leaks.${key}.title`)}</h3>
               <p>{t(`leaks.${key}.desc`)}</p>
             </div>

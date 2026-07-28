@@ -150,7 +150,7 @@
 /* ---------- tipografia ---------- */
 .ms .eye {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -166,7 +166,7 @@
   margin: 12px 0 20px;
 }
 .ms .lead {
-  font-size: clamp(15px, 1.7vw, 17px);
+  font-size: clamp(16px, 1.8vw, 19px);
   max-width: 58ch;
 }
 .ms .band.carta .lead {
@@ -199,12 +199,16 @@
 }
 
 /* ---------- bottoni ---------- */
+/* Scala rialzata: 12px/11px erano tarati su schermi ~1440. Su monitor
+   piu' larghi i clamp arrivano subito al tetto e tutto il testo si legge
+   piccolo rispetto alla pagina. Vale per tutte le pagine del DS, non
+   solo per la home-2026, cosi' la scala resta coerente fra loro. */
 .ms .btn {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 11px 18px;
+  padding: 13px 22px;
   border-radius: var(--r-s);
   cursor: pointer;
   border: 1px solid transparent;
@@ -323,7 +327,7 @@
   max-width: 19ch;
 }
 .ms .hero .copy {
-  font-size: clamp(15px, 1.8vw, 17.5px);
+  font-size: clamp(16px, 1.9vw, 19px);
   color: var(--testo-ink-2);
   max-width: 56ch;
   margin-top: 20px;
