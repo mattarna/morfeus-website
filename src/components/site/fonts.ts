@@ -1,4 +1,25 @@
 import localFont from "next/font/local";
+import { JetBrains_Mono } from "next/font/google";
+
+/**
+ * Il mono del DS era una catena rotta: --font-mono puntava a
+ * "SF Mono" (font Apple, assente su Windows e mai caricato) e poi al nome
+ * LETTERALE "IBM Plex Mono", che non corrisponde a nessun @font-face —
+ * next/font genera nomi offuscati, e l'unico Plex caricato in questo repo
+ * e' legato al playground. La catena cadeva su `monospace`, cioe' Courier
+ * New: aste sottilissime e altezza-x bassa, il peggio possibile per le
+ * etichette a 13px. Non era un problema di corpo, era il font sbagliato.
+ *
+ * JetBrains Mono e' scelto per l'altezza-x, la piu' alta fra i mono
+ * disponibili in next/font/google su Next 14 (Geist Mono, che usa il DS
+ * B2B, non c'e' ancora in questa versione).
+ */
+export const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jbmono",
+  display: "swap",
+});
 
 /**
  * I tre font sono variabili sull'asse wght (verificato nella tabella fvar
@@ -48,4 +69,4 @@ export const playfair = localFont({
   weight: "400 900", // fvar: wght 400-900
 });
 
-export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable}`;
+export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable}`;
