@@ -5,23 +5,28 @@ import { LabMsProblem } from "@/components/lab-ms/LabMsProblem";
 import { LabMsLevels } from "@/components/lab-ms/LabMsLevels";
 
 /* ============================================================
-   /lab-ms — /lab riadattata al DS "brand 2026 · Progettato. Provato."
+   /lab-ms — /lab rivestita col brand 2026.
    ------------------------------------------------------------
    Confronto a tre: /it/lab (originale) · /it/lab-ds (l'altro DS, che
    resta) · /it/lab-ms (questa).
 
-   ORDINE E FLUSSO: identici all'originale. Le 13 sezioni nella stessa
-   sequenza, stessi id di ancora, stessa copy dai namespace Lab.*.
-   L'unica cosa che cambia e' come sono vestite.
+   IL PRINCIPIO, dopo la prima versione sbagliata: la pagina resta
+   quella. Stessa composizione, stessi dispositivi, stessa densita'
+   visiva — icone, filigrane, aloni, hover, l'animazione del nucleo.
+   Cambia la MATERIA: caratteri Clash/Satoshi/Plex e palette ufficiale.
 
-   L'ALTERNANZA e' la regola madre del sistema — "carta e inchiostro,
-   alternati fascia per fascia" (site.css, riga 4). L'originale gia'
-   alterna due fondi ("Blue" / "Grid"): la mappatura e' 1:1, Blue
-   diventa ink e Grid diventa carta. Quindi il ritmo dello scroll che
-   avevi non si perde, cambia di materia.
+   La prima volta avevo fatto il contrario: avevo adottato i componenti
+   piatti del sistema (.card, .statgrid) e buttato via tutto il resto.
+   Il risultato era una pagina asettica su due colori soli. Qui la
+   rampa e' usata per intero — vista, neon, majorelle, persian, forge —
+   perche' esiste per quello.
 
-   STATO: prime 4 sezioni. Le altre 9 arrivano dopo la validazione —
-   la nota in fondo le elenca e sparisce quando sono tutte in piedi.
+   Il fondo resta INCHIOSTRO per tutta la pagina, come l'originale, con
+   le superfici che variano di un gradino (inchiostro / inchiostro-2 /
+   night) invece di alternare col chiaro: e' la lettura giusta di
+   "quella scura".
+
+   STATO: prime 4 sezioni, da validare. Le altre 9 a seguire.
    ============================================================ */
 
 const ANCORA_DA_FARE = [
@@ -51,16 +56,15 @@ export default async function LabMsPage({
       <LabMsProblem />
       <LabMsLevels />
 
-      <section className="band ink">
-        <div className="wrap">
-          <div className="eye">Cantiere</div>
-          <p className="lead" style={{ marginTop: 12 }}>
-            Variante di design in costruzione. Sezioni ancora da riadattare:
-          </p>
-          <p
-            className="mono"
-            style={{ fontSize: 12, color: "var(--ombra)", marginTop: 14 }}
-          >
+      <section className="border-t border-carta/5 bg-inchiostro px-6 py-16 xl:px-40">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-carta/10 bg-carta/5 px-3 py-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-carta/30" />
+            <span className="font-plex text-[10px] font-semibold uppercase tracking-[0.2em] text-carta/40">
+              Cantiere
+            </span>
+          </div>
+          <p className="font-plex text-xs uppercase tracking-[0.15em] text-carta/30">
             {ANCORA_DA_FARE.join("  ·  ")}
           </p>
         </div>
