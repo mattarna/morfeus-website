@@ -4,7 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
 /* ============================================================
-   SCHEMA D'INNESTO — il disegno animato dell'hero.
+   SCHEMA D'INNESTO, il disegno animato dell'hero.
    ------------------------------------------------------------
    Stesso POSTO e stesso RUOLO dell'animazione originale: sta sotto il
    sottotitolo e dice "questo programma innesta quattro cose in un
@@ -20,7 +20,7 @@ import { useEffect } from "react";
      · il segnale e' un punto che PERCORRE il tracciato e, arrivando,
        fa pulsare l'anello del nucleo: la luce RIVELA, non decora
      · il nucleo e' tre cerchi concentrici e un quadrato ruotato, tutti
-       a filo — nessun volume dipinto
+       a filo, nessun volume dipinto
      · niente sfumature di riempimento: solo tratto, quote e mono
 
    E' la stessa lezione che il DS scrive altrove: se illumini le linee
@@ -78,7 +78,7 @@ export function LabMsCore() {
           className="block w-full"
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           role="img"
-          aria-label="Schema: quattro innesti — Champions, Compliance, Processes, Autonomy — collegati a un nucleo comune"
+          aria-label="Schema: quattro innesti, Champions, Compliance, Processes, Autonomy, collegati a un nucleo comune"
         >
           {/* reticolo di fondo del disegno */}
           <defs>

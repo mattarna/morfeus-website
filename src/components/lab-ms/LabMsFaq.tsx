@@ -1,14 +1,14 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   12 · FAQ — fascia INCHIOSTRO
+   12 · FAQ, fascia INCHIOSTRO
    ------------------------------------------------------------
    WIREFRAME invariato: titolo di sezione e le domande su due
    colonne, apribili una alla volta.
 
    DISEGNO: l'accordion e' <details>/<summary> NATIVI. Non e' pigrizia,
    e' la scelta giusta su tre fronti:
-     · zero JavaScript — la sezione resta un server component, come
+     · zero JavaScript, la sezione resta un server component, come
        tutta la pagina tranne lo schema animato
      · funziona da tastiera senza che io scriva un gestore, e gli
        screen reader annunciano gia' aperto/chiuso

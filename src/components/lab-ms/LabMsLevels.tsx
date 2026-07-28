@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
    evidenziata, i risultati come chip.
 
    DISEGNO nuovo, costruito su due tuoi dispositivi:
-   · .ladder — la scaletta a tre gradini che sale. Esiste gia' nel DS
+   · .ladder, la scaletta a tre gradini che sale. Esiste gia' nel DS
      ed e' nata per questa sezione: non l'ho reinventata.
    · la rotaia: e' la tua .vtimeline coricata. Le fasi verticali hanno
      senso quando si susseguono nel tempo; i livelli si leggono in
@@ -17,7 +17,7 @@ import { useTranslations } from "next-intl";
 
    IL COLORE segue il significato, non l'ordine: 01 e 02 sono lilla
    perche' si fanno dentro l'azienda; 03 passa a forge perche' la copy
-   dice che quel livello "si porta dentro con Morf Forge" — cioe' non
+   dice che quel livello "si porta dentro con Morf Forge", cioe' non
    e' piu' LAB. Il cambio di tono dice la stessa cosa del testo.
    ============================================================ */
 
@@ -79,16 +79,9 @@ export function LabMsLevels() {
                 <span className="ghost -right-2 -top-6">{liv.cifra}</span>
 
                 <div className="sopra flex h-full flex-col">
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="cod" style={{ color: liv.tono }}>
-                      {tag}
-                    </span>
-                    {eIlTarget && (
-                      <span className="stamp shrink-0" style={{ marginTop: -4 }}>
-                        Target
-                      </span>
-                    )}
-                  </div>
+                  <span className="cod" style={{ color: liv.tono }}>
+                    {tag}
+                  </span>
 
                   <h3 style={{ color: liv.tono }}>{t(`tiers.${liv.id}.name`)}</h3>
 

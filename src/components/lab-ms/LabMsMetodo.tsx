@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   06 · COME FUNZIONA — fascia CARTA (primo stacco)
+   06 · COME FUNZIONA, fascia CARTA (primo stacco)
    ------------------------------------------------------------
    Qui la pagina smette di diagnosticare e spiega COME SI FA. Il
    cambio di fondo annuncia il cambio di discorso: su carta il
@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
    timeline verticale con numero grande, marcatore, titolo,
    sottotitolo, elenco puntato e la frase chiave a chiudere.
 
-   DISEGNO: .vtimeline del DS, usata per quello per cui e' nata —
+   DISEGNO: .vtimeline del DS, usata per quello per cui e' nata -
    ha gia' il pallino, la linea di collegamento, la cifra fantasma,
    la pill di fase, l'elenco con i trattini e la nota in corsivo, e
    ha gia' le varianti carta. Non c'era niente da inventare: c'era
@@ -62,7 +62,7 @@ export function LabMsMetodo() {
                 <ul className="vlist">
                   {bullets.map((b) => (
                     <li key={b}>
-                      <span className="dm">—</span>
+                      <span className="dm">·</span>
                       <span>{b}</span>
                     </li>
                   ))}

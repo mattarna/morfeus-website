@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
    ognuno con etichetta e descrizione.
 
    DISEGNO nuovo: i tre numeri non galleggiano piu' nel vuoto. Stanno
-   dentro UN pannello solo — uno strumento a tre quadranti — con la
+   dentro UN pannello solo, uno strumento a tre quadranti, con la
    striscia di stato in cima e i quadranti divisi da filetti. Dietro
    ogni numero c'e' la sua cifra fantasma.
 

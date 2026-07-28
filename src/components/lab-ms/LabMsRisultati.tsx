@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { LabMsGlifo } from "./LabMsGlifo";
 
 /* ============================================================
-   07 · I RISULTATI — fascia INCHIOSTRO
+   07 · I RISULTATI, fascia INCHIOSTRO
    ------------------------------------------------------------
    Si torna al buio: dopo il metodo, si torna a misurare.
 
@@ -11,7 +11,7 @@ import { LabMsGlifo } from "./LabMsGlifo";
 
    DISEGNO: sei schede di esito con codice progressivo R01..R06 e il
    glifo a tratto. La cifra fantasma dietro tiene il passo della
-   griglia — con sei riquadri uguali serve qualcosa che dia ordine di
+   griglia, con sei riquadri uguali serve qualcosa che dia ordine di
    lettura, altrimenti l'occhio non sa da dove cominciare.
 
    I glifi riusano la stessa gabbia degli altri: due sono nuovi

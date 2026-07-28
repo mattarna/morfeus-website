@@ -3,7 +3,7 @@
    -----------------------------------------------------------
    site.css NON si tocca: e' vendorato e va ri-portato quando il DS
    a monte cambia. Tutto quello che serve solo a questa pagina vive
-   qui, sotto `.ms .lab` per non calpettare la libreria — stessa
+   qui, sotto `.ms .lab` per non calpettare la libreria, stessa
    disciplina con cui t-hub.css namespacia i suoi `.hub-*`.
 
    L'IDEA che tiene insieme tutto: la pagina e' uno STRUMENTO DI
@@ -88,7 +88,7 @@
 /* ---------- NUMERO FANTASMA · la cifra gigante dietro ----------
    Preso dal tuo .vstep .num e reso riusabile: da' il passo allo
    scorrimento senza aggiungere colore. Decorativo, mai portatore di
-   dato — infatti sta dietro e non si seleziona. */
+   dato, infatti sta dietro e non si seleziona. */
 .ms .lab .ghost {
   position: absolute;
   z-index: 0;
@@ -191,13 +191,13 @@
 }
 .ms .lab .scheda h3,
 .ms .lab .scheda h4 {
-  font-size: 20px;
+  font-size: 21px;
   margin-top: 12px;
   letter-spacing: -0.015em;
 }
 .ms .lab .scheda p {
   margin-top: 10px;
-  font-size: 16.5px;
+  font-size: 17.5px;
   line-height: 1.6;
   color: var(--testo-ink-2);
 }
@@ -217,7 +217,7 @@
 
 /* ---------- GLIFO · l'icona come disegno tecnico ----------
    Le icone non sono duotone piene: sono tratti. Stroke legato alla
-   misura, mai riempimento — resta coerente col registro del disegno. */
+   misura, mai riempimento, resta coerente col registro del disegno. */
 .ms .lab .glifo {
   width: 28px;
   height: 28px;
@@ -256,7 +256,7 @@
    VARIANTI CARTA
    -----------------------------------------------------------
    I dispositivi qui sopra sono tarati sull'inchiostro. Due fasce
-   della pagina sono carta — il Metodo e l'Investimento — e li' il
+   della pagina sono carta, il Metodo e l'Investimento, e li' il
    segnale non e' piu' il lilla ma la firma, perche' su fondo chiaro
    il lilla non regge il contrasto.
 
@@ -365,7 +365,7 @@
   padding: 20px 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 19px;
   letter-spacing: -0.01em;
   border-bottom: 1px solid var(--surf-bd);
   transition: color var(--dur) var(--ease);
@@ -410,8 +410,8 @@
 .ms .lab .faq .risposta {
   padding: 4px 0 22px;
   max-width: 62ch;
-  font-size: 17px;
-  line-height: 1.62;
+  font-size: 18px;
+  line-height: 1.6;
   color: var(--testo-ink-2);
   border-bottom: 1px solid var(--surf-bd);
 }
@@ -420,5 +420,41 @@
 @media (prefers-reduced-motion: reduce) {
   .ms .lab .readout .on i {
     animation: none;
+  }
+}
+
+/* ---------- correzioni di allineamento (2026-07-28) ----------
+   1 · .ladder: site.css le da' `margin: 6px 0 24px`, uno shorthand che
+       azzera i margini laterali e vince per specificita' su mx-auto.
+       Nella pagina la scaletta finiva incollata a sinistra mentre il
+       resto della sezione era centrato.
+   2 · .quadro dentro una fascia: gli serve poter stare centrato con una
+       larghezza propria senza dipendere da utility che perdono. */
+.ms .lab .ladder {
+  margin-inline: auto;
+}
+.ms .lab .centrato {
+  margin-inline: auto;
+}
+
+/* la cifra fantasma stava troppo in alto e finiva sotto l'etichetta di
+   riga: scesa e schiarita, cosi' resta passo di lettura e non rumore */
+.ms .lab .ghost {
+  font-size: clamp(64px, 7.5vw, 104px);
+  color: rgba(140, 165, 247, 0.07);
+}
+.ms .band.carta .lab .ghost {
+  color: rgba(83, 61, 252, 0.06);
+}
+
+/* intestazione delle schede a confronto: senza un'altezza minima i due
+   grafici partivano a quote diverse, perche' un sottotitolo andava a capo
+   e l'altro no. E' quello che faceva sembrare la sezione sbilenca. */
+.ms .lab .testa-confronto {
+  min-height: 92px;
+}
+@media (max-width: 860px) {
+  .ms .lab .testa-confronto {
+    min-height: 0;
   }
 }

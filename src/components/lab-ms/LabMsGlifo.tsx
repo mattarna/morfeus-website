@@ -1,5 +1,5 @@
 /* ============================================================
-   GLIFI — le icone come disegno tecnico.
+   GLIFI, le icone come disegno tecnico.
    ------------------------------------------------------------
    L'originale usa le Solar "bold-duotone": sagome piene a due toni.
    In questo sistema non funzionano: ogni altro segno della pagina e'

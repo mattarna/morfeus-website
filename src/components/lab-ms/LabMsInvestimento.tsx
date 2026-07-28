@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   08 · INVESTIMENTO — fascia CARTA (secondo stacco)
+   08 · INVESTIMENTO, fascia CARTA (secondo stacco)
    ------------------------------------------------------------
    Il secondo stacco chiaro, e cade dove si parla di soldi. Su carta
    il blocco legge come un preventivo stampato invece che come una
@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
    riquadro con il prezzo grande, quattro voci di cosa comprende, la
    CTA, e la nota sotto.
 
-   DISEGNO: il riquadro diventa un modulo — striscia di stato in
+   DISEGNO: il riquadro diventa un modulo, striscia di stato in
    cima, prezzo come voce di quota, requisiti con la spunta
    disegnata a bordo. Niente card lucida: un documento.
    ============================================================ */
@@ -34,7 +34,7 @@ export function LabMsInvestimento() {
           <p className="lead mx-auto">{t("subtitle")}</p>
         </div>
 
-        <div className="quadro mx-auto mt-12 max-w-[720px]">
+        <div className="quadro centrato mt-12 max-w-[760px]">
           <div className="readout">
             <span>Programma · su misura</span>
             <span className="on">
@@ -63,7 +63,7 @@ export function LabMsInvestimento() {
               ))}
             </ul>
 
-            <div className="cta-row" style={{ marginTop: 32 }}>
+            <div className="cta-row centrata" style={{ marginTop: 32 }}>
               <a className="btn btn-1" href="#contact">
                 {t("card.cta")}
               </a>
@@ -71,7 +71,7 @@ export function LabMsInvestimento() {
           </div>
         </div>
 
-        <p className="compound mx-auto mt-8 max-w-[62ch]">{t("note")}</p>
+        <p className="compound centrato mt-8 max-w-[62ch]">{t("note")}</p>
       </div>
     </section>
   );

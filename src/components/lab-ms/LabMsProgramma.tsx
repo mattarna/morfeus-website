@@ -1,20 +1,20 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   09 · AI CHAMP PROGRAM — fascia INCHIOSTRO
+   09 · AI CHAMP PROGRAM, fascia INCHIOSTRO
    ------------------------------------------------------------
    WIREFRAME invariato: intestazione centrata, due numeri grandi
    affiancati con etichetta e sottotitolo, poi la riga di etichette.
 
    NOTA: la copy contiene anche un case_study (28 processi, 6
-   Champion...) che la pagina online NON mostra — il componente si
+   Champion...) che la pagina online NON mostra, il componente si
    ferma alle etichette. L'ho lasciato fuori anche qui: la richiesta
    e' riadattare la pagina che esiste, non aggiungerle contenuti.
    Ma e' materiale buono, e la sezione lo reggerebbe: se lo vuoi
    dentro e' mezz'ora.
 
    DISEGNO: i due numeri entrano nello stesso strumento a due
-   quadranti gia' usato per le prove — e' la stessa natura di dato,
+   quadranti gia' usato per le prove, e' la stessa natura di dato,
    quindi merita la stessa forma. La ripetizione qui e' voluta: e'
    cosi' che un vocabolario diventa riconoscibile.
    ============================================================ */

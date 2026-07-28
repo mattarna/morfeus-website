@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   13 · LA CHIUSA — fascia INCHIOSTRO
+   13 · LA CHIUSA, fascia INCHIOSTRO
    ------------------------------------------------------------
    Nell'originale la sezione 13 e' un footer tutto suo (ServiceFooter)
    con navigazione, link legali, contatti e la frase di marca.
 
    QUI NON LO RICOSTRUISCO, e la ragione e' che sarebbe un doppione:
-   SiteShell monta gia' il SiteFooter del sistema — quello vero, che
+   SiteShell monta gia' il SiteFooter del sistema, quello vero, che
    sta anche su /insights e su tutte le altre pagine del sito madre.
    Due footer uno sopra l'altro sarebbero un errore, non una fedelta'.
 
@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
    La copy usa quattro tag rich diversi (spanRose, spanOr, spanIndigo,
    spanSub) ereditati dalla vecchia palette. Li mappo sul vocabolario
    nuovo: il soggetto in Playfair corsivo, il resto in tono pieno o
-   attenuato. Dichiararli tutti e' obbligatorio — un tag non
+   attenuato. Dichiararli tutti e' obbligatorio, un tag non
    dichiarato next-intl lo stampa grezzo in pagina.
    ============================================================ */
 

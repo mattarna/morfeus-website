@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { LabMsGlifo } from "./LabMsGlifo";
 
 /* ============================================================
-   10 · IL PONTE LAB → FORGE — fascia INCHIOSTRO
+   10 · IL PONTE LAB → FORGE, fascia INCHIOSTRO
    ------------------------------------------------------------
    WIREFRAME invariato: intestazione centrata, due riquadri
    affiancati (Lab e Forge) con icona, titolo, riga di ruolo e
@@ -11,13 +11,13 @@ import { LabMsGlifo } from "./LabMsGlifo";
    chiusura e il bottone verso Forge.
 
    DISEGNO: il connettore era una pillola con un "+" dentro. Qui
-   diventa un GIUNTO da disegno tecnico — due tratti che entrano da
+   diventa un GIUNTO da disegno tecnico, due tratti che entrano da
    sinistra e da destra e un rombo di innesto al centro, mezzo lilla
    e mezzo forge, uno per insegna. Dice "queste due cose si
    incastrano", che e' esattamente l'argomento della sezione.
 
    Il Forge tiene il suo tono caldo: e' l'unico altro punto della
-   pagina dove il forge compare, e qui non e' allarme — e' l'altra
+   pagina dove il forge compare, e qui non e' allarme, e' l'altra
    insegna. Stesso colore, ruolo diverso, e si capisce dal contesto.
    ============================================================ */
 
@@ -97,9 +97,9 @@ export function LabMsBridge() {
           <span className="h-px w-16 bg-[rgba(232,101,10,.45)]" />
         </div>
 
-        <p className="compound mx-auto mt-8 max-w-[68ch]">{t("closing")}</p>
+        <p className="compound centrato mt-8 max-w-[68ch]">{t("closing")}</p>
 
-        <div className="cta-row justify-center" style={{ marginTop: 26 }}>
+        <div className="cta-row centrata" style={{ marginTop: 26 }}>
           <Link
             className="btn btn-2-carta"
             href="/forge"

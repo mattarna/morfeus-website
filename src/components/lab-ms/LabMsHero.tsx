@@ -10,7 +10,7 @@ import { LabMsCore } from "./LabMsCore";
 
    DISEGNO tutto nuovo:
    · il titolo non e' piu' un blocco maiuscolo in font-black con tre
-     gradienti sovrapposti. E' Clash in tondo minuscolo, peso 500 —
+     gradienti sovrapposti. E' Clash in tondo minuscolo, peso 500 -
      la scala del DS (.hero h1). L'accento non lo da' un gradiente,
      lo da' UNA PAROLA in Playfair corsivo: "DNA". E' l'idioma .emph,
      ed e' l'unico punto di enfasi del titolo.
@@ -25,7 +25,7 @@ export function LabMsHero() {
   const t = useTranslations("Lab.hero");
   const prove = Object.values(t.raw("proof_items") as Record<string, string>);
 
-  /* L'accento cade sull'ULTIMA parola della seconda riga — "DNA".
+  /* L'accento cade sull'ULTIMA parola della seconda riga, "DNA".
      La prendo dalla copy invece di scriverla nel codice: se domani la
      riga cambia, l'enfasi si sposta con lei e non resta orfana. */
   const riga2 = t("headline.line2").trim();

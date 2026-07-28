@@ -10,8 +10,8 @@ import { LabMsGlifo } from "./LabMsGlifo";
 
    DISEGNO nuovo, e qui c'e' l'idea che tiene la sezione: il tema e'
    "sta gia' succedendo e non lo vedi". Quindi i sintomi sono SCHEDE DI
-   RILEVAMENTO — codice progressivo, glifo a tratto, cifra fantasma
-   dietro — e il filetto che si accende sul bordo quando ci passi
+   RILEVAMENTO, codice progressivo, glifo a tratto, cifra fantasma
+   dietro, e il filetto che si accende sul bordo quando ci passi
    sopra e' letteralmente la riga che si rivela.
 
    L'aggravante cambia registro perche' cambia natura: non e' piu' una

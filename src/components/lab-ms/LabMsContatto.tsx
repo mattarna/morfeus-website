@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   11 · CONTATTO — fascia INCHIOSTRO
+   11 · CONTATTO, fascia INCHIOSTRO
    ------------------------------------------------------------
    WIREFRAME invariato: intestazione con CTA, il blocco "cosa
    succede durante la call" con tre passi numerati, i tre badge di
    cosa NON e', e la riga finale di pill.
 
-   DISEGNO: i tre passi della call diventano un ORDINE DI SERVIZIO —
+   DISEGNO: i tre passi della call diventano un ORDINE DI SERVIZIO -
    tre righe dentro un solo pannello, divise da filetti, con l'orario
    progressivo in mono a sinistra. Sono venti minuti scanditi, e
    scriverlo cosi' lo rende una promessa verificabile invece di tre
@@ -58,7 +58,7 @@ export function LabMsContatto() {
         </div>
 
         {/* l'ordine di servizio della call */}
-        <div className="quadro mx-auto mt-14 max-w-[760px]">
+        <div className="quadro centrato mt-14 max-w-[800px]">
           <div className="readout">
             <span>{t("call_section_title")}</span>
             <span className="on">

@@ -1,14 +1,14 @@
 import { useTranslations } from "next-intl";
 
 /* ============================================================
-   05 · IL BIVIO — fascia INCHIOSTRO
+   05 · IL BIVIO, fascia INCHIOSTRO
    ------------------------------------------------------------
    WIREFRAME invariato: due colonne a confronto, ognuna con titolo,
    sottotitolo, un grafico che mostra l'andamento, un'etichetta di
    verdetto e tre voci di elenco.
 
    DISEGNO: i due grafici sono l'unico posto della pagina dove serve
-   una CURVA, e qui la curva e' l'argomento — una decade, l'altra
+   una CURVA, e qui la curva e' l'argomento, una decade, l'altra
    compone. Disegnate come diagrammi tecnici: assi a filo, tacche di
    quota, tratteggio sotto la curva che perde e riempimento pieno
    sotto quella che accumula.
@@ -97,7 +97,7 @@ export function LabMsBivio() {
           {/* A · senza Champion */}
           <article className="scheda">
             <div className="sopra">
-              <div className="flex items-start justify-between gap-4">
+              <div className="testa-confronto flex items-start justify-between gap-4">
                 <div>
                   <h3 style={{ marginTop: 0, color: "var(--testo-ink-3)" }}>
                     {t("chart_a.title")}
@@ -125,11 +125,11 @@ export function LabMsBivio() {
             </div>
           </article>
 
-          {/* B · con Champion — e' la strada scelta, quindi il bordo e' acceso */}
+          {/* B · con Champion, e' la strada scelta, quindi il bordo e' acceso */}
           <article className="scheda" style={{ borderColor: "rgba(140,165,247,.55)" }}>
             <span className="filo" style={{ opacity: 0.9 }} />
             <div className="sopra">
-              <div className="flex items-start justify-between gap-4">
+              <div className="testa-confronto flex items-start justify-between gap-4">
                 <div>
                   <h3 style={{ marginTop: 0 }}>{t("chart_b.title")}</h3>
                   <p style={{ marginTop: 6, color: "var(--lilla)" }}>
