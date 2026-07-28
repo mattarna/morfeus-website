@@ -365,28 +365,38 @@
 .d26 .hero-h1 .u26 {
   position: relative;
 }
-/* Sottolineatura rifatta: lo squiggle SVG disegnato a mano restava un
-   tratto piatto e staccato dal testo. Ora e' una barra sfumata che
-   sfuma ai due capi, arrotondata, in Forge — che sul viola dello sfondo
-   stacca, mentre il majorelle di prima ci si confondeva. */
-.d26 .hero-h1 .u26::after {
-  content: "";
+/* SOTTOLINEATURA a mano libera.
+   La versione originale era brutta per un motivo preciso: con
+   preserveAspectRatio="none" l'SVG viene stirato in orizzontale e con
+   lui lo SPESSORE del tratto, che diventava una lama piatta e disuguale.
+   vector-effect:non-scaling-stroke tiene lo spessore costante mentre il
+   tracciato si adatta alla larghezza: il segno resta disegnato, non
+   deformato. Due passate sfalsate, come un pennarello che ripassa. */
+.d26 .hero-h1 .u26 .uline {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.14em;
-  height: 0.055em;
-  min-height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--marker) 14%,
-    var(--marker) 86%,
-    transparent 100%
-  );
-  opacity: 0.85;
+  left: -0.06em;
+  right: -0.06em;
+  bottom: -0.2em;
+  width: calc(100% + 0.12em);
+  height: 0.3em;
+  overflow: visible;
   pointer-events: none;
+}
+.d26 .hero-h1 .u26 .uline path {
+  fill: none;
+  stroke: var(--marker);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.d26 .hero-h1 .u26 .uline .p1 {
+  stroke-width: 3.4;
+  opacity: 0.95;
+}
+/* seconda passata: piu' sottile e piu' scarica, da' l'irregolarita' */
+.d26 .hero-h1 .u26 .uline .p2 {
+  stroke-width: 1.8;
+  opacity: 0.45;
 }
 
 /* Sfumatura sul testo, come sulla home di produzione: il colore pieno
@@ -414,19 +424,23 @@
   background-clip: text;
   color: transparent;
 }
-/* La barra entra tracciando da sinistra quando la hero diventa attiva,
-   com'era per lo squiggle che ha sostituito. */
-.d26 .hero-h1 .u26::after {
-  transform: scaleX(0);
-  transform-origin: left center;
+/* Le due passate si tracciano in sequenza, non insieme: e' quello che
+   fa leggere il gesto come disegnato invece che come una comparsa. */
+.d26 .hero-h1 .u26 .uline path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
-.d26 [data-active="true"] .hero-h1 .u26::after {
-  transform: scaleX(1);
-  transition: transform 0.9s var(--ease) 0.9s;
+.d26 [data-active="true"] .hero-h1 .u26 .uline .p1 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.7s var(--ease) 0.85s;
+}
+.d26 [data-active="true"] .hero-h1 .u26 .uline .p2 {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.55s var(--ease) 1.15s;
 }
 @media (prefers-reduced-motion: reduce) {
-  .d26 .hero-h1 .u26::after {
-    transform: scaleX(1);
+  .d26 .hero-h1 .u26 .uline path {
+    stroke-dashoffset: 0;
   }
 }
 .d26 .hero-sub {
@@ -438,8 +452,8 @@
 /* i bottoni della hero sono il primo invito all'azione: piu' grandi
    del default del DS (14px / 13px 22px) */
 .d26 .hero-ctas .btn {
-  font-size: 15.5px;
-  padding: 15px 26px;
+  font-size: 17px;
+  padding: 17px 30px;
 }
 .d26 .hero-ctas .btn-1 {
   display: inline-flex;
@@ -447,8 +461,8 @@
   gap: 10px;
 }
 .d26 .hero-ctas .btn-1 svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex: none;
   transition: transform var(--dur) var(--ease);
 }
