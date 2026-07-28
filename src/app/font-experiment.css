@@ -1,0 +1,79 @@
+/* ============================================================
+   ESPERIMENTO FONT — Clash Display / Satoshi / Playfair / Plex Mono
+   ------------------------------------------------------------
+   Palette tipografica presa da BRAND-2026/design-v2/metodo.html.
+
+   TUTTO è scoped sotto `html.font-exp`: senza quella classe questo
+   file è inerte e il sito resta identico a prima (DM Sans / Outfit).
+
+   Attivazione runtime (nessun rebuild):
+     /?font=clash   → accende e ricorda (localStorage)
+     /?font=off     → spegne e dimentica
+
+   RIMOZIONE DEFINITIVA (se l'esperimento non convince):
+     1. cancella questo file
+     2. togli l'@import in globals.css
+     3. togli il blocco <script id="font-experiment"> in layout.tsx
+     ...oppure semplicemente: git checkout copy/home-b2b
+   ============================================================ */
+
+html.font-exp {
+  --exp-display: "Clash Display", "Outfit", system-ui, sans-serif;
+  --exp-body: "Satoshi", "DM Sans", system-ui, sans-serif;
+  --exp-emph: "Playfair Display", Georgia, serif;
+  --exp-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ---- 1. CORPO TESTO → Satoshi -------------------------------- */
+html.font-exp body {
+  font-family: var(--exp-body);
+}
+
+/* ---- 2. TITOLI → Clash Display ------------------------------- */
+html.font-exp :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--exp-display);
+}
+
+/* Clash Display arriva a 700: font-black (900) verrebbe sintetizzato
+   dal browser e imbrattato. Cappiamo i display sui pesi reali. */
+html.font-exp :is(h1, h2) {
+  font-weight: 600;
+}
+html.font-exp :is(h1, h2).font-black,
+html.font-exp :is(h1, h2).font-bold {
+  font-weight: 700;
+}
+
+/* ---- 3. EYEBROW / MICRO-LABEL → IBM Plex Mono ----------------
+   Il pattern del sito è "uppercase + tracking-*" per le etichette.
+   BLOCCO ISOLATO: se il mono dà fastidio, commenta solo questo. */
+html.font-exp :is(h1, h2, h3, h4, h5, h6, p, span, div).uppercase[class*="tracking-"] {
+  font-family: var(--exp-mono);
+  font-weight: 500;
+}
+
+/* ---- 4. ENFASI CORSIVA → Playfair Display italic -------------
+   Non usata oggi sulla home: disponibile via <em> o classe .emph. */
+html.font-exp :is(h1, h2, h3, h4) em,
+html.font-exp .emph {
+  font-family: var(--exp-emph);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ---- 5. Badge di stato dell'esperimento ---------------------- */
+html.font-exp .font-exp-badge {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 9999;
+  font-family: var(--exp-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0b0b0c;
+  background: rgba(232, 101, 10, 0.92);
+  border-radius: 999px;
+  padding: 5px 11px;
+  pointer-events: none;
+}

@@ -83,6 +83,50 @@ export default function RootLayout({
           name="facebook-domain-verification"
           content="241durpovws57gda4slstym71fhjnf"
         />
+        {/* ============================================================
+            ESPERIMENTO FONT (temporaneo, branch exp/font-clash-satoshi)
+            Attiva Clash Display / Satoshi / Playfair / IBM Plex Mono.
+            Spento di default: senza il flag non scarica NULLA e non
+            aggiunge nessuna classe — il sito resta identico a prima.
+              ?font=clash → accende (ricordato in localStorage)
+              ?font=off   → spegne
+            Regole tipografiche in src/app/font-experiment.css.
+            Per rimuovere l'esperimento: cancella questo blocco.
+            ============================================================ */}
+        <script
+          id="font-experiment"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var KEY = "morfeus-font-exp";
+                  var q = new URLSearchParams(window.location.search).get("font");
+                  if (q === "clash") localStorage.setItem(KEY, "clash");
+                  else if (q) localStorage.removeItem(KEY);
+                  if (localStorage.getItem(KEY) !== "clash") return;
+
+                  document.documentElement.classList.add("font-exp");
+                  [
+                    "https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap",
+                    "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+                  ].forEach(function (href) {
+                    var l = document.createElement("link");
+                    l.rel = "stylesheet";
+                    l.href = href;
+                    document.head.appendChild(l);
+                  });
+
+                  document.addEventListener("DOMContentLoaded", function () {
+                    var b = document.createElement("div");
+                    b.className = "font-exp-badge";
+                    b.textContent = "font exp · clash + satoshi · ?font=off";
+                    document.body.appendChild(b);
+                  });
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         {/* Consent Mode v2 Inizializzazione */}
         <Script
           id="consent-mode"
