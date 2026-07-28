@@ -13,6 +13,7 @@ import "../demo.css";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
+import { HomeBackground } from "@/components/fixed/HomeBackground";
 import { DemoStage, type RailPoint } from "../engine/DemoStage";
 import {
   getDemoProcessStep,
@@ -123,7 +124,11 @@ export function Home2026() {
   );
 
   return (
-    <div className={`ms d26 ${siteFontVars}`}>
+    <div className={`ms d26 d26-bg ${siteFontVars}`}>
+      {/* Sfondo animato UnicornStudio, lo stesso della home di produzione.
+          E' fixed a z-index:-1: perche' si veda, le fasce scure devono
+          essere trasparenti (vedi .d26-bg in demo.css). */}
+      <HomeBackground />
       <DemoStage points={railPoints} header={header}>
         <div id="h26-0">
           <Hero active={act(0)} />

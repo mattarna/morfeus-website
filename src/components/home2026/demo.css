@@ -850,7 +850,7 @@
 .d26 .met-eye {
   position: relative;
   font-family: var(--font-mono);
-  font-size: 10px; /* un gradino sotto: il fuoco e' la parola grande */
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -859,7 +859,7 @@
 .d26 .met-title {
   position: relative;
   margin-top: 18px;
-  font-size: clamp(46px, 7vw, 92px);
+  font-size: clamp(40px, 5.6vw, 74px);
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -867,7 +867,7 @@
   position: relative;
   margin: 20px auto 0;
   max-width: 50ch;
-  font-size: clamp(14px, 1.5vw, 16px); /* idem: satellite, non protagonista */
+  font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.65;
   color: var(--testo-ink-2);
 }
@@ -899,6 +899,12 @@
 }
 
 /* ---------- ROI SYSTEM ---------- */
+/* Gerarchia: il titolo di sezione e' la struttura, il principio dello
+   stadio e' subordinato. Prima erano entrambi verso il 600 e il secondo,
+   piu' scuro e piu' compatto, pesava piu' del primo. */
+.d26 .rsys .h-sect {
+  font-weight: 600;
+}
 .d26 .rsys {
   width: 100%;
   text-align: center;
@@ -940,7 +946,7 @@
 .d26 .rsys .principle {
   position: relative;
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(24px, 3.2vw, 40px);
   letter-spacing: -0.02em;
   line-height: 1.25;
@@ -1541,8 +1547,10 @@
   max-width: 1560px;
   margin: 0 auto;
 }
+/* stessa specificita' della regola base sopra (0,4,0), altrimenti la
+   base vince e il footer resta a colonna unica anche da desktop */
 @media (min-width: 900px) {
-  .d26 .foot-grid {
+  .d26 .band .wrap.foot-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -1667,4 +1675,23 @@
   .d26 .met-rings .ring {
     transition: none !important;
   }
+}
+
+/* ===========================================================
+   TEST · sfondo animato al posto della griglia blueprint
+   -----------------------------------------------------------
+   HomeBackground e' fixed con z-index:-1. Nell'ordine di pittura i
+   figli a z-index negativo vengono PRIMA degli sfondi dei discendenti
+   in flusso: quindi il fondo opaco di .ms e quello delle fasce lo
+   coprivano comunque. Vanno resi trasparenti, non basta montarlo.
+
+   Le fasce chiare (.carta) restano opache: sono testo scuro su fondo
+   chiaro, sopra un'animazione viola sarebbero illeggibili.
+   =========================================================== */
+.d26-bg.ms {
+  background: transparent;
+}
+.d26-bg .band.ink {
+  background-color: transparent;
+  background-image: none;
 }
