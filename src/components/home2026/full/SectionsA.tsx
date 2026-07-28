@@ -192,7 +192,14 @@ export function Problem({ active }: { active: boolean }) {
         <div className="prob-head">
           <div>
             <div className="eye fx d1">{t("label")}</div>
-            <h2 className="h-sect fx d2" style={{ maxWidth: "20ch", margin: "10px 0 0" }}>
+            {/* 20ch spezzava "Il margine non sparisce in un giorno." (36
+                caratteri) in due righe. Allargato quanto basta perche' ogni
+                frase stia su una riga sola: la headline passa da tre righe
+                a due, e la riga risparmiata va ai contenuti sotto. */}
+            <h2
+              className="h-sect fx d2"
+              style={{ maxWidth: "min(100%, 820px)", margin: "10px 0 0" }}
+            >
               {t("headline_1")}
               <br />
               <span style={{ color: "var(--ombra)" }}>{t("headline_2")}</span>
