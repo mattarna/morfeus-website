@@ -74,14 +74,14 @@ export function LabMsContatto() {
                 i > 0 ? "border-t border-[color:var(--surf-bd)]" : ""
               }`}
             >
-              <span className="font-mono text-[11px] tracking-[0.12em] text-[color:var(--ombra)]">
+              <span className="font-mono text-[12.5px] tracking-[0.12em] text-[color:var(--ombra)]">
                 {p.quando}
               </span>
               <div>
-                <h3 className="text-[17px] tracking-[-0.01em]">
+                <h3 className="text-[19px] tracking-[-0.01em]">
                   {t(`call_steps.${p.k}.title`)}
                 </h3>
-                <p className="mt-2 text-[14.5px] leading-[1.55] text-[color:var(--testo-ink-2)]">
+                <p className="mt-2 text-[16.5px] leading-[1.6] text-[color:var(--testo-ink-2)]">
                   {t(`call_steps.${p.k}.desc`)}
                 </p>
               </div>
@@ -95,7 +95,7 @@ export function LabMsContatto() {
                 (b) => (
                   <span
                     key={b}
-                    className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.12em] text-[color:var(--ombra)]"
+                    className="flex items-center gap-3 font-mono text-[12.5px] uppercase tracking-[0.12em] text-[color:var(--ombra)]"
                   >
                     <span className="h-px w-4 bg-[color:var(--ombra)]" />
                     {b}

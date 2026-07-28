@@ -56,7 +56,7 @@ export function LabMsProof() {
                 <span className="ghost -right-1 -top-4">{`0${i + 1}`}</span>
 
                 <div className="sopra">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[color:var(--ombra)]">
+                  <div className="font-mono text-[12px] uppercase tracking-[0.16em] text-[color:var(--ombra)]">
                     {t(`blocks.${n}.label`)}
                   </div>
 
@@ -66,7 +66,7 @@ export function LabMsProof() {
 
                   <div className="quota mt-5" />
 
-                  <p className="mt-4 text-[14.5px] leading-[1.55] text-[color:var(--testo-ink-2)]">
+                  <p className="mt-4 text-[16.5px] leading-[1.6] text-[color:var(--testo-ink-2)]">
                     {t(`blocks.${n}.description`)}
                   </p>
                 </div>

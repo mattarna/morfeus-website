@@ -63,11 +63,11 @@ export function LabMsProgramma() {
                   <div className="statnum text-[clamp(40px,5.5vw,66px)]">
                     {t(`stats.${n}.number`)}
                   </div>
-                  <p className="mt-4 text-[17px] font-medium">
+                  <p className="mt-4 text-[19px] font-medium">
                     {t(`stats.${n}.label`)}
                   </p>
                   <div className="quota mt-5" />
-                  <p className="mt-4 text-[14px] text-[color:var(--testo-ink-3)]">
+                  <p className="mt-4 text-[16px] text-[color:var(--testo-ink-3)]">
                     {t(`stats.${n}.sub`)}
                   </p>
                 </div>

@@ -153,7 +153,7 @@ export function LabMsCore() {
             y={CY + 78}
             textAnchor="middle"
             fill="#7E8091"
-            style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.18em" }}
+            style={{ fontFamily: "var(--font-mono)", fontSize: 11.5, letterSpacing: "0.18em" }}
           >
             NUCLEO
           </text>
@@ -195,7 +195,7 @@ export function LabMsCore() {
                   fill="#E4E7F0"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: 11,
+                    fontSize: 12.5,
                     letterSpacing: "0.14em",
                   }}
                 >
@@ -208,7 +208,7 @@ export function LabMsCore() {
                   fill="#7E8091"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: 9.5,
+                    fontSize: 11,
                     letterSpacing: "0.18em",
                   }}
                 >

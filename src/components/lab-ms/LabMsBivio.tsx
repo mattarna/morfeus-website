@@ -68,7 +68,7 @@ function Curva({ tipo }: { tipo: "perde" | "accumula" }) {
         y="166"
         textAnchor="middle"
         fill="#7E8091"
-        style={{ fontFamily: "var(--font-mono)", fontSize: 8.5, letterSpacing: "0.16em" }}
+        style={{ fontFamily: "var(--font-mono)", fontSize: 10.5, letterSpacing: "0.16em" }}
       >
         18 MESI
       </text>

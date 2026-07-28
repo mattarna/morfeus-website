@@ -58,7 +58,7 @@ export function LabMsInvestimento() {
               {voci.map((v) => (
                 <li className="spunta" key={v}>
                   <i />
-                  <span className="text-[15px] leading-[1.55]">{v}</span>
+                  <span className="text-[16.5px] leading-[1.6]">{v}</span>
                 </li>
               ))}
             </ul>
