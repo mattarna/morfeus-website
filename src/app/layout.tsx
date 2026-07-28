@@ -74,36 +74,14 @@ export default function RootLayout({
             ritroverebbe incollata addosso per sempre. Rimuovibile fra
             qualche settimana. */}
         <script
-          id="body-font-test"
+          id="font-experiment-cleanup"
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
                 try {
                   localStorage.removeItem("morfeus-font-exp");
                   localStorage.removeItem("morfeus-palette-exp");
-
-                  /* TEST font del corpo (temporaneo):
-                       ?body=jakarta|inter|manrope   ?body=off */
-                  var KEY = "morfeus-body-test";
-                  var LABELS = {
-                    jakarta: "corpo · plus jakarta sans",
-                    inter: "corpo · inter",
-                    manrope: "corpo · manrope",
-                  };
-                  var q = new URLSearchParams(window.location.search).get("body");
-                  if (q && LABELS[q]) localStorage.setItem(KEY, q);
-                  else if (q) localStorage.removeItem(KEY);
-
-                  var name = localStorage.getItem(KEY);
-                  if (!name || !LABELS[name]) return;
-                  document.documentElement.classList.add("body-" + name);
-
-                  document.addEventListener("DOMContentLoaded", function () {
-                    var b = document.createElement("div");
-                    b.className = "body-test-badge";
-                    b.textContent = LABELS[name] + " · ?body=off";
-                    document.body.appendChild(b);
-                  });
+                  localStorage.removeItem("morfeus-body-test");
                 } catch (e) {}
               })();
             `,

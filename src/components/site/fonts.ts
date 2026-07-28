@@ -99,6 +99,7 @@ export const playfair = localFont({
   weight: "400 900", // fvar: wght 400-900
 });
 
+/* Usati SOLO da /font-lab, non dal sito. */
 export const bodyTestVars = `${bodyJakarta.variable} ${bodyInter.variable} ${bodyManrope.variable}`;
 
-export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable} ${bodyTestVars}`;
+export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable}`;
