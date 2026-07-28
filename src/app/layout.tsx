@@ -82,6 +82,21 @@ export default function RootLayout({
                   localStorage.removeItem("morfeus-font-exp");
                   localStorage.removeItem("morfeus-palette-exp");
                   localStorage.removeItem("morfeus-body-test");
+
+                  /* TEST hero centrata (temporaneo): ?hero=center | ?hero=off */
+                  var KEY = "morfeus-hero-test";
+                  var q = new URLSearchParams(window.location.search).get("hero");
+                  if (q === "center") localStorage.setItem(KEY, "center");
+                  else if (q) localStorage.removeItem(KEY);
+                  if (localStorage.getItem(KEY) !== "center") return;
+
+                  document.documentElement.classList.add("hero-center");
+                  document.addEventListener("DOMContentLoaded", function () {
+                    var b = document.createElement("div");
+                    b.className = "hero-test-badge";
+                    b.textContent = "hero centrata · ?hero=off";
+                    document.body.appendChild(b);
+                  });
                 } catch (e) {}
               })();
             `,
