@@ -1,186 +1,137 @@
-"use client";
-
 import { useTranslations } from "next-intl";
-import { Icon } from "@iconify/react";
+import { LabMsGlifo } from "./LabMsGlifo";
 
 /* ============================================================
-   03 · IL PROBLEMA CHE NON VEDI.
+   03 · IL PROBLEMA CHE NON VEDI
    ------------------------------------------------------------
-   Porto tutti i dispositivi dell'originale, nessuno escluso:
-     · pill rossa col pallino per l'occhiello del problema
-     · 4 carte, ognuna con l'icona GIGANTE in filigrana nell'angolo
-       (w-32) che si accende all'hover, piu' il chip-icona che cresce
-     · pill FORGE per "l'aggravante"
-     · il pannello del dato: bordo forge, fondo caldo, icona pericolo
-       in filigrana w-48, medaglione tondo, dato grande, fonte in mono
-       con il filetto
-     · 3 carte trappola col filo di luce in alto all'hover
-     · la chiusa centrata sul lavaggio in gradiente
+   WIREFRAME invariato, tutto intero: 4 sintomi in griglia 2x2 →
+   blocco "l'aggravante" → il dato con la sua fonte → 3 carte trappola
+   → la chiusa. Stesso ordine, stessa copy.
 
-   Cambia la materia: i grigi slate diventano carta/ombra, l'indigo
-   generico diventa majorelle/vista, i caratteri passano a
-   Clash/Satoshi/Plex. Il forge resta forge: e' gia' il colore
-   ufficiale dell'allarme in palette, ed e' l'unico tono caldo.
+   DISEGNO nuovo, e qui c'e' l'idea che tiene la sezione: il tema e'
+   "sta gia' succedendo e non lo vedi". Quindi i sintomi sono SCHEDE DI
+   RILEVAMENTO — codice progressivo, glifo a tratto, cifra fantasma
+   dietro — e il filetto che si accende sul bordo quando ci passi
+   sopra e' letteralmente la riga che si rivela.
+
+   L'aggravante cambia registro perche' cambia natura: non e' piu' una
+   rilevazione, e' un obbligo di legge. Diventa una PIASTRA con la
+   campitura a righe dei cartelli di pericolo e il timbro ruotato. E'
+   l'unico punto della pagina dove entra il forge, ed e' per quello
+   che si nota.
    ============================================================ */
 
-const ICONE_SINTOMI = [
-  "solar:bill-list-bold-duotone",
-  "solar:wallet-money-bold-duotone",
-  "solar:settings-minimalistic-bold-duotone",
-  "solar:fire-bold-duotone",
+const SINTOMI = [
+  { k: "1", glifo: "elenco" },
+  { k: "2", glifo: "denaro" },
+  { k: "3", glifo: "ingranaggio" },
+  { k: "4", glifo: "fiamma" },
 ] as const;
 
-const ICONE_TRAPPOLE = [
-  "solar:cart-large-bold-duotone",
-  "solar:user-block-bold-duotone",
-  "solar:graph-down-bold-duotone",
+const TRAPPOLE = [
+  { k: "1", glifo: "carrello" },
+  { k: "2", glifo: "personaEsclusa" },
+  { k: "3", glifo: "curvaGiu" },
 ] as const;
 
 export function LabMsProblem() {
   const t = useTranslations("Lab.problem_analysis");
 
+  const rich = {
+    br: () => <br />,
+    spanSub: (chunks: React.ReactNode) => <span className="emph">{chunks}</span>,
+  };
+
   return (
-    <section
-      id="problem-analysis"
-      className="relative overflow-visible border-y border-carta/5 bg-inchiostro-2 px-6 py-24 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] md:py-40 xl:px-40"
-    >
-      <div className="mx-auto max-w-[1200px]">
+    <section className="band ink lab" id="problem-analysis">
+      <div className="wrap">
         {/* ---- i quattro sintomi ---- */}
-        <div className="mb-32 md:mb-48">
-          <div className="mb-16 max-w-3xl md:mb-24">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-anomalia/25 bg-anomalia/5 px-3 py-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-anomalia" />
-              <span className="font-plex text-[10px] font-semibold uppercase tracking-[0.2em] text-anomalia/90">
-                {t("label")}
-              </span>
-            </div>
+        <div className="eye">{t("label")}</div>
+        <h2 className="h-sect">{t.rich("headline", rich)}</h2>
+        <p className="lead">{t("subtitle")}</p>
 
-            <h2 className="mb-8 text-4xl font-semibold leading-[1.08] tracking-tight text-carta md:text-5xl lg:text-6xl">
-              {t.rich("headline", {
-                br: () => <br />,
-                spanSub: (chunks) => (
-                  <span className="text-carta/45">{chunks}</span>
-                ),
-              })}
-            </h2>
+        <div className="two mt-8">
+          {SINTOMI.map((s, i) => (
+            <article className="scheda" key={s.k}>
+              <span className="filo" />
+              <span className="ghost -right-2 -top-6">{`S0${i + 1}`}</span>
 
-            <p className="text-xl font-light leading-relaxed text-carta/55 md:text-2xl">
-              {t("subtitle")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-            {(["1", "2", "3", "4"] as const).map((k, i) => (
-              <div
-                key={k}
-                className="group relative overflow-hidden rounded-4xl border border-carta/5 bg-linear-to-br from-carta/[0.03] to-transparent p-8 transition-all duration-500 hover:border-majorelle/30 hover:bg-carta/5 md:p-10"
-              >
-                {/* la filigrana: enorme, quasi invisibile, si scalda all'hover */}
-                <div className="absolute right-0 top-0 p-8 text-carta/[0.02] transition-colors duration-500 group-hover:text-majorelle/[0.07]">
-                  <Icon icon={ICONE_SINTOMI[i]} className="h-32 w-32" />
+              <div className="sopra">
+                <div className="flex items-center justify-between gap-4">
+                  <LabMsGlifo nome={s.glifo} />
+                  <span className="cod">{`Rilevato · S0${i + 1}`}</span>
                 </div>
-
-                <div className="relative z-10">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-majorelle/10 transition-transform duration-500 group-hover:scale-110">
-                    <Icon
-                      icon={ICONE_SINTOMI[i]}
-                      className="h-6 w-6 text-vista"
-                    />
-                  </div>
-                  <h3 className="mb-4 text-xl font-semibold tracking-tight text-carta md:text-2xl">
-                    {t(`symptoms.${k}.title`)}
-                  </h3>
-                  <p className="font-light leading-relaxed text-carta/55">
-                    {t(`symptoms.${k}.desc`)}
-                  </p>
-                </div>
+                <h3>{t(`symptoms.${s.k}.title`)}</h3>
+                <p>{t(`symptoms.${s.k}.desc`)}</p>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
 
-        {/* ---- l'aggravante ---- */}
-        <div id="aggravante" className="relative">
-          <div className="mb-16 max-w-3xl md:mb-24">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-forge/25 bg-forge/5 px-3 py-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-forge" />
-              <span className="font-plex text-[10px] font-semibold uppercase tracking-[0.2em] text-forge">
-                {t("trap_label")}
-              </span>
-            </div>
-
-            <h2 className="mb-8 text-4xl font-semibold leading-[1.08] tracking-tight text-carta md:text-5xl lg:text-6xl">
-              {t.rich("trap_headline", {
-                br: () => <br />,
-                spanSub: (chunks) => (
-                  <span className="text-forge/60">{chunks}</span>
-                ),
-              })}
-            </h2>
-
-            <p className="text-xl font-light leading-relaxed text-carta/55 md:text-2xl">
-              {t("trap_subtitle")}
-            </p>
+        {/* ---- l'aggravante: cambia registro, entra il forge ---- */}
+        <div id="aggravante" className="mt-24">
+          <div
+            className="eye"
+            style={{ color: "var(--marker)" }}
+          >
+            {t("trap_label")}
           </div>
+          <h2 className="h-sect">{t.rich("trap_headline", rich)}</h2>
+          <p className="lead">{t("trap_subtitle")}</p>
 
-          {/* il dato, col suo medaglione e la sua fonte */}
-          <div className="group relative mb-16 overflow-hidden rounded-[2.5rem] border border-forge/20 bg-[#1a110a] p-8 md:mb-24 md:p-10">
-            <div className="absolute right-0 top-0 p-12 text-forge/[0.03] transition-colors duration-700 group-hover:text-forge/[0.06]">
-              <Icon icon="solar:danger-bold" className="h-48 w-48" />
-            </div>
-
-            <div className="relative z-10 flex flex-col items-center gap-8 md:flex-row md:gap-12">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-forge/20 bg-forge/10 md:h-24 md:w-24">
-                <Icon
-                  icon="solar:danger-bold"
-                  className="h-10 w-10 text-forge/80 md:h-12 md:w-12"
-                />
+          {/* la piastra: il dato, la fonte, il timbro */}
+          <div className="piastra mt-8 p-7 md:p-9">
+            <div className="flex flex-col gap-7 md:flex-row md:items-start md:gap-10">
+              <div className="shrink-0">
+                <LabMsGlifo nome="fiamma" allarme />
               </div>
-              <div>
-                <p className="mb-4 text-2xl font-semibold leading-tight tracking-tight text-carta md:text-3xl">
+
+              <div className="min-w-0 flex-1">
+                <p
+                  className="text-[clamp(19px,2.2vw,26px)] leading-[1.3] tracking-[-0.02em]"
+                  style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
+                >
                   {t("trap_stat")}
                 </p>
-                <div className="flex items-center gap-2 font-plex text-[10px] uppercase tracking-[0.2em] text-forge/60 md:text-xs">
-                  <span className="h-px w-8 bg-forge/25" />
+
+                <div className="quota mt-6">Fonte</div>
+                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--ombra)]">
                   {t("trap_source")}
-                </div>
+                </p>
+              </div>
+
+              <div className="shrink-0 self-start md:self-center">
+                <span
+                  className="stamp"
+                  style={{ borderColor: "var(--marker)", color: "var(--marker)" }}
+                >
+                  Obbligo · 2025
+                </span>
               </div>
             </div>
           </div>
 
           {/* le tre trappole */}
-          <div className="mb-24 grid grid-cols-1 gap-6 md:mb-32 md:grid-cols-3 md:gap-8">
-            {(["1", "2", "3"] as const).map((k, i) => (
-              <div
-                key={k}
-                className="group relative overflow-hidden rounded-4xl border border-carta/5 bg-carta/[0.02] p-8 transition-all duration-500 hover:border-forge/25"
-              >
-                <div className="absolute left-0 top-0 h-px w-full bg-linear-to-r from-transparent via-forge/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-forge/10 bg-forge/5 transition-transform duration-500 group-hover:scale-110">
-                  <Icon
-                    icon={ICONE_TRAPPOLE[i]}
-                    className="h-6 w-6 text-forge/70"
-                  />
+          <div className="three mt-6">
+            {TRAPPOLE.map((tr, i) => (
+              <article className="scheda" key={tr.k}>
+                <span className="filo" />
+                <div className="sopra">
+                  <div className="flex items-center justify-between gap-4">
+                    <LabMsGlifo nome={tr.glifo} allarme />
+                    <span className="cod" style={{ color: "var(--marker)" }}>
+                      {`T0${i + 1}`}
+                    </span>
+                  </div>
+                  <h4>{t(`trap_cards.${tr.k}.title`)}</h4>
+                  <p>{t(`trap_cards.${tr.k}.desc`)}</p>
                 </div>
-                <h4 className="mb-4 text-lg font-semibold text-carta md:text-xl">
-                  {t(`trap_cards.${k}.title`)}
-                </h4>
-                <p className="text-sm font-light leading-relaxed text-carta/55 md:text-base">
-                  {t(`trap_cards.${k}.desc`)}
-                </p>
-              </div>
+              </article>
             ))}
           </div>
 
-          {/* la chiusa */}
-          <div className="flex justify-center">
-            <div className="relative px-12 py-8 text-center md:px-20 md:py-12">
-              <div className="absolute inset-0 bg-linear-to-r from-transparent via-carta/[0.04] to-transparent" />
-              <p className="relative z-10 max-w-4xl text-2xl font-semibold leading-tight tracking-tight text-carta md:text-4xl">
-                {t("trap_closing")}
-              </p>
-            </div>
-          </div>
+          {/* la chiusa: e' una voce umana, quindi Playfair corsivo */}
+          <p className="compound mt-12">{t("trap_closing")}</p>
         </div>
       </div>
     </section>

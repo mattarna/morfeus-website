@@ -1,4 +1,5 @@
 import { SiteShell } from "@/components/site";
+import "@/components/lab-ms/lab-ms.css";
 import { LabMsHero } from "@/components/lab-ms/LabMsHero";
 import { LabMsProof } from "@/components/lab-ms/LabMsProof";
 import { LabMsProblem } from "@/components/lab-ms/LabMsProblem";
@@ -56,15 +57,10 @@ export default async function LabMsPage({
       <LabMsProblem />
       <LabMsLevels />
 
-      <section className="border-t border-carta/5 bg-inchiostro px-6 py-16 xl:px-40">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-carta/10 bg-carta/5 px-3 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-carta/30" />
-            <span className="font-plex text-[10px] font-semibold uppercase tracking-[0.2em] text-carta/40">
-              Cantiere
-            </span>
-          </div>
-          <p className="font-plex text-xs uppercase tracking-[0.15em] text-carta/30">
+      <section className="band ink lab">
+        <div className="wrap">
+          <div className="quota">Cantiere</div>
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--ombra)]">
             {ANCORA_DA_FARE.join("  ·  ")}
           </p>
         </div>

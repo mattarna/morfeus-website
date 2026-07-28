@@ -1,0 +1,260 @@
+/* ===========================================================
+   LAB · dispositivi propri della pagina.
+   -----------------------------------------------------------
+   site.css NON si tocca: e' vendorato e va ri-portato quando il DS
+   a monte cambia. Tutto quello che serve solo a questa pagina vive
+   qui, sotto `.ms .lab` per non calpettare la libreria — stessa
+   disciplina con cui t-hub.css namespacia i suoi `.hub-*`.
+
+   L'IDEA che tiene insieme tutto: la pagina e' uno STRUMENTO DI
+   MISURA. La griglia blueprint e' la carta da disegno; i pannelli
+   sono scatole opache appoggiate sopra; il lilla e' il SEGNALE che
+   attraversa e rivela; il forge e' l'allarme. Niente vetro, niente
+   neon: linee nette e quote, come un disegno tecnico.
+   =========================================================== */
+
+/* ---------- QUADRO · l'area di disegno con le quote d'angolo ----------
+   Il riquadro tecnico che incornicia un disegno. Gli angoli non sono un
+   bordo continuo: sono quattro squadrette, come le crocette di registro
+   di una tavola. Dice "qui dentro si misura". */
+.ms .lab .quadro {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-l);
+  overflow: hidden;
+}
+.ms .lab .quadro::before,
+.ms .lab .quadro::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-color: rgba(140, 165, 247, 0.5);
+}
+.ms .lab .quadro::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.ms .lab .quadro::after {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* ---------- READOUT · la striscia di stato in mono ----------
+   Una riga di strumento: a sinistra cosa sta misurando, a destra lo
+   stato. Ricorre in cima ai pannelli e da' il registro "macchina". */
+.ms .lab .readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--surf-bd);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .lab .readout .on {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--lilla);
+}
+.ms .lab .readout .on i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lilla);
+  animation: lab-batte 2.4s infinite;
+}
+@keyframes lab-batte {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ---------- NUMERO FANTASMA · la cifra gigante dietro ----------
+   Preso dal tuo .vstep .num e reso riusabile: da' il passo allo
+   scorrimento senza aggiungere colore. Decorativo, mai portatore di
+   dato — infatti sta dietro e non si seleziona. */
+.ms .lab .ghost {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: clamp(72px, 9vw, 128px);
+  color: rgba(140, 165, 247, 0.09);
+}
+.ms .lab .sopra {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- PIASTRA · il pannello d'allarme ----------
+   Il forge non si spalma: si usa come una piastra di segnalazione,
+   con la campitura a righe dei cartelli di pericolo. Tenuta bassa
+   (alpha .07) perche' resti un fondo, non un motivo. */
+.ms .lab .piastra {
+  position: relative;
+  border: 1px solid rgba(232, 101, 10, 0.32);
+  border-radius: var(--r-l);
+  background-color: #150e08;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(232, 101, 10, 0.07) 0 10px,
+    transparent 10px 24px
+  );
+  overflow: hidden;
+}
+
+/* ---------- GAUGE · la barra di misura ----------
+   Variante del tuo .savings .track, ridotta a strumento: traccia
+   incassata, riempimento a filo con bordo pieno. Il numero sta
+   fuori, la barra da' solo la proporzione. */
+.ms .lab .gauge {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.ms .lab .gauge i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--firma), var(--lilla));
+}
+
+/* ---------- RAIL · la rotaia orizzontale che collega i livelli ----------
+   E' la .vtimeline coricata: la stessa idea di progressione, ma su
+   una riga sola perche' i livelli si leggono in parallelo. */
+.ms .lab .rail {
+  position: relative;
+  height: 1px;
+  background: rgba(140, 165, 247, 0.22);
+  margin: 0 0 26px;
+}
+.ms .lab .rail span {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: var(--inchiostro);
+  border: 1px solid var(--lilla);
+}
+.ms .lab .rail span.pieno {
+  background: var(--lilla);
+  box-shadow: 0 0 0 5px rgba(140, 165, 247, 0.13);
+}
+
+/* ---------- SCHEDA · il pannello opaco base ----------
+   Ripete lo STANDARD SUPERFICI del DS invece di inventare un fondo:
+   opaco, cosi' copre la griglia e si legge come scatola. La regola
+   e' scritta nei token di site.css e vale anche qui. */
+.ms .lab .scheda {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-m);
+  padding: 26px;
+  overflow: hidden;
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.ms .lab .scheda:hover {
+  border-color: rgba(140, 165, 247, 0.55);
+}
+.ms .lab .scheda .cod {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lilla);
+}
+.ms .lab .scheda h3,
+.ms .lab .scheda h4 {
+  font-size: 19px;
+  margin-top: 12px;
+  letter-spacing: -0.015em;
+}
+.ms .lab .scheda p {
+  margin-top: 10px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--testo-ink-2);
+}
+
+/* il filetto che si accende sul bordo alto quando passi sopra */
+.ms .lab .scheda .filo {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lilla), transparent);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.ms .lab .scheda:hover .filo {
+  opacity: 0.9;
+}
+
+/* ---------- GLIFO · l'icona come disegno tecnico ----------
+   Le icone non sono duotone piene: sono tratti. Stroke legato alla
+   misura, mai riempimento — resta coerente col registro del disegno. */
+.ms .lab .glifo {
+  width: 26px;
+  height: 26px;
+  stroke: var(--lilla);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ms .lab .glifo.allarme {
+  stroke: var(--marker);
+}
+
+/* ---------- QUOTA · la riga di misura con i trattini ----------
+   Come le quote di una tavola tecnica: due barrette e una linea, con
+   l'etichetta in mono sopra. Serve a marcare una distanza dichiarata. */
+.ms .lab .quota {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .lab .quota::before,
+.ms .lab .quota::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgba(140, 165, 247, 0.22);
+}
+
+/* ---------- movimento ridotto ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ms .lab .readout .on i {
+    animation: none;
+  }
+}
