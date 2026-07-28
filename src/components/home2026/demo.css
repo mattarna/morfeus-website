@@ -315,7 +315,7 @@
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  padding: 12px 22px;
+  padding: 13px 24px;
   border: 1px solid rgba(228, 231, 240, 0.16);
   border-radius: var(--r-pill);
   background: rgba(11, 11, 12, 0.55);
@@ -333,7 +333,7 @@
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: var(--anomalia);
+  background: var(--marker);
   flex-shrink: 0;
 }
 .d26 .chip26 .dot::after {
@@ -341,7 +341,7 @@
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: var(--anomalia);
+  background: var(--marker);
   animation: d26-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 @keyframes d26-ping {
@@ -368,8 +368,8 @@
 .d26 .hero-h1 {
   font-size: clamp(34px, 5.6vw, 66px);
   line-height: 1.12;
-  max-width: min(100%, 1100px);
-  margin-top: 26px;
+  max-width: min(100%, 1340px);
+  margin-top: 40px;
 }
 .d26 .hero-h1 .u26 {
   position: relative;
@@ -457,7 +457,7 @@
   }
 }
 .d26 .hero-sub {
-  margin-top: 24px;
+  margin-top: 34px;
   max-width: 56ch;
   font-size: clamp(17px, 2vw, 21px);
   color: var(--testo-ink-2);
@@ -483,7 +483,7 @@
   transform: translateX(3px);
 }
 .d26 .hero-ctas {
-  margin-top: 34px;
+  margin-top: 48px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1872,4 +1872,22 @@ html.hero-center .hero-test-badge {
   border-radius: 999px;
   padding: 7px 14px;
   pointer-events: none;
+}
+
+/* La sottolineatura disegnata funziona solo se la riga enfatizzata sta
+   intera: l'SVG e' posizionato sulla scatola inline, che andando a capo
+   si spezza in due frammenti e produce due segmenti scollegati.
+   Sotto la larghezza in cui la riga ci sta, si passa a un underline
+   nativo — segue le righe per costruzione. */
+@media (max-width: 1279px) {
+  .d26 .hero-h1 .u26 .uline {
+    display: none;
+  }
+  .d26 .hero-h1 .u26 {
+    text-decoration: underline;
+    text-decoration-color: var(--marker);
+    text-decoration-thickness: 0.05em;
+    text-underline-offset: 0.18em;
+    text-decoration-skip-ink: none;
+  }
 }
