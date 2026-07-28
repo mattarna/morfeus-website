@@ -413,12 +413,16 @@
   background-clip: text;
   color: transparent;
 }
+/* Era vista (#8CA5F7) su viola: due toni vicini, si leggeva male. Passa
+   su ghost-white, con solo un velo di vista in coda; a distinguerla dalla
+   prima riga bastano il corsivo serif e la sottolineatura Forge — che e'
+   la stessa scelta fatta sulla home di produzione. */
 .d26 .hero-h1 .emph.u26 {
   background: linear-gradient(
     20deg,
-    var(--lilla) 0%,
-    var(--lilla) 62%,
-    rgba(140, 165, 247, 0.7) 100%
+    var(--carta) 0%,
+    var(--carta) 58%,
+    rgba(140, 165, 247, 0.92) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -529,14 +533,20 @@
      fascia e' chiara, quindi si parte da inchiostro pieno e si scarica
      verso un grigio della palette. Il degrado segue la lettura, cosi'
      l'ultima riga chiude in dissolvenza invece di fermarsi netta.
+
+     ATTENZIONE alla profondita': su fondo CHIARO il contrasto crolla
+     molto piu' in fretta che su fondo scuro. Inchiostro al 40% su
+     ghost-white da' 2.6:1, sotto la soglia minima di 3:1 anche per il
+     testo grande — era illeggibile. Si chiude al 62% (5.2:1), che si
+     vede come dissolvenza ma resta leggibile.
      background-clip:text con color:transparent — il color impostato
      direttamente batte quello ereditato da .band.carta. */
   background: linear-gradient(
     168deg,
     var(--inchiostro) 0%,
-    var(--inchiostro) 38%,
-    rgba(11, 11, 12, 0.62) 72%,
-    rgba(11, 11, 12, 0.4) 100%
+    var(--inchiostro) 52%,
+    rgba(11, 11, 12, 0.8) 78%,
+    rgba(11, 11, 12, 0.62) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -1769,6 +1779,27 @@
 .d26-bg .band.ink.hero-panel {
   background-color: transparent;
   background-image: none;
+}
+/* Velina sotto il testo. L'animazione e' in movimento: la luminosita'
+   dietro la headline cambia di continuo, quindi affidarsi al solo colore
+   del testo non regge. Scurisce la colonna di sinistra e si dissolve
+   verso destra, dove l'animazione resta pulita.
+   z-index 0 come .grid-anim, ma il ::before viene prima nel DOM: la
+   griglia resta sopra la velina, il contenuto (.wrap, z-index 1) sopra
+   entrambe. */
+.d26-bg .hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(11, 11, 12, 0.82) 0%,
+    rgba(11, 11, 12, 0.66) 34%,
+    rgba(11, 11, 12, 0.28) 62%,
+    rgba(11, 11, 12, 0) 88%
+  );
 }
 /* la griglia della hero resta, ma appena accennata sopra l'animazione */
 .d26-bg .hero-panel .grid-anim {
