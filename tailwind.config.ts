@@ -115,9 +115,17 @@ const config: Config = {
         "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
         prodigy: ["var(--font-prodigy)", "sans-serif"],
         clash: ["var(--font-clash)", "var(--font-outfit)", "system-ui", "sans-serif"],
-        satoshi: ["var(--font-satoshi)", "var(--font-dm-sans)", "system-ui", "sans-serif"],
+        // I NOMI restano (12 usi di font-satoshi, 89 di font-plex nelle
+        // pagine): sono i VALORI ad essere allineati al sistema attuale,
+        // stessa scelta fatta per i token della palette.
+        // "satoshi" ora e' Plus Jakarta Sans, il font del corpo del DS.
+        satoshi: ["var(--font-jakarta)", "system-ui", "sans-serif"],
         playfair: ["var(--font-playfair)", "Georgia", "serif"],
-        plex: ["var(--f-mono)", "'IBM Plex Mono'", "monospace"],
+        // Era la stessa catena rotta di --font-mono: var(--f-mono) e' "SF Mono"
+        // (assente su Windows, mai caricato) e "IBM Plex Mono" e' un nome
+        // letterale che non corrisponde a nessun @font-face. 89 elementi
+        // renderizzavano in Courier New.
+        plex: ["var(--font-jbmono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       transitionDuration: {
         "1000": "1000ms",

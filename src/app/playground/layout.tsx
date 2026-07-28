@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { clashDisplay, playfair, satoshi } from "@/components/site/fonts";
-import { plexMono, inter } from "@/components/playground/fonts";
+import { clashDisplay, playfair } from "@/components/site/fonts";
+import { plexMono, inter, satoshi } from "@/components/playground/fonts";
 import "@/components/playground/playground.css";
 
 /**

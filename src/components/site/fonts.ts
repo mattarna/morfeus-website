@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Inter, JetBrains_Mono, Manrope, Plus_Jakarta_Sans } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 
 /* ---------------------------------------------------------------
    TEST font del corpo (temporaneo) — ?body=jakarta|inter|manrope
@@ -9,26 +9,16 @@ import { Inter, JetBrains_Mono, Manrope, Plus_Jakarta_Sans } from "next/font/goo
    pagina vera invece che a stimarla.
    preload:false: a test spento non scaricano nulla.
    --------------------------------------------------------------- */
-export const bodyJakarta = Plus_Jakarta_Sans({
+/** Font del corpo del DS. Scelto al posto di Satoshi, che ha altezza-x
+ *  0.500 e rapporto cap/x 1.48 (misurati sul .ttf): le minuscole
+ *  apparivano ~10% piu' piccole a parita' di font-size, ed e' il motivo
+ *  per cui il testo sembrava piccolo anche dopo aver alzato i corpi. */
+export const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-body-jakarta",
+  variable: "--font-jakarta",
   display: "swap",
-  preload: false,
-});
-export const bodyInter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body-inter",
-  display: "swap",
-  preload: false,
-});
-export const bodyManrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-body-manrope",
-  display: "swap",
-  preload: false,
+  preload: true,
 });
 
 /**
@@ -67,21 +57,6 @@ export const clashDisplay = localFont({
   weight: "200 700", // fvar: wght 200-700
 });
 
-export const satoshi = localFont({
-  src: [
-    {
-      path: "../../../public/fonts/webinar-claude/Satoshi-Variable.ttf",
-      style: "normal",
-    },
-    {
-      path: "../../../public/fonts/webinar-claude/Satoshi-VariableItalic.ttf",
-      style: "italic",
-    },
-  ],
-  variable: "--font-satoshi",
-  display: "swap",
-  weight: "300 900", // fvar: wght 300-900
-});
 
 export const playfair = localFont({
   src: [
@@ -100,6 +75,4 @@ export const playfair = localFont({
 });
 
 /* Usati SOLO da /font-lab, non dal sito. */
-export const bodyTestVars = `${bodyJakarta.variable} ${bodyInter.variable} ${bodyManrope.variable}`;
-
-export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable}`;
+export const siteFontVars = `${clashDisplay.variable} ${playfair.variable} ${jetbrainsMono.variable} ${plusJakarta.variable}`;
