@@ -68,6 +68,18 @@
   letter-spacing: -0.02em;
   line-height: 1.08;
 }
+
+/* Scala ottica dei pesi — ha senso solo ora che l'asse variabile di Clash
+   e' davvero attivo (vedi fonts.ts: prima ogni peso era finto grassetto).
+   Clash e' una display: piu' cresce il corpo, piu' il peso va alleggerito,
+   altrimenti le aste si chiudono e il titolo si impasta. Sotto i ~24px
+   resta 600, dove serve presenza. */
+.ms .hero h1 {
+  font-weight: 500; /* clamp 34-60px: il corpo piu' grande della pagina */
+}
+.ms .h-sect {
+  font-weight: 500; /* clamp 30-50px */
+}
 .ms a {
   color: inherit;
   text-decoration: none;
