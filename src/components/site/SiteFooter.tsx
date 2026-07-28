@@ -87,7 +87,17 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
     "text-[17px] text-carta/90 hover:text-carta transition-colors w-fit";
 
   return (
-    <footer className="relative overflow-hidden text-carta" style={GRID_BG}>
+    /* ALTO QUANTO LO SCHERMO (2026-07-28). Sulla home il footer non e'
+       una striscia in fondo alla pagina: e' l'ultimo pannello del deck,
+       e occupa una schermata intera. Qui era una fascia alta quanto il
+       suo contenuto, ed era l'ultima cosa che faceva sembrare i due
+       footer due oggetti diversi.
+       min-height e non height: se un giorno le colonne crescono, il
+       footer si allunga invece di tagliare. */
+    <footer
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden text-carta"
+      style={GRID_BG}
+    >
       {/* Gradiente di stacco in cima */}
       <div
         className="absolute inset-x-0 top-0 h-[120px] pointer-events-none z-[1]"
@@ -97,7 +107,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-16 lg:px-20 pt-24 pb-16">
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 py-24 md:px-16 lg:px-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 md:gap-x-20 lg:gap-x-28">
           {/* Col 1 — Navigazione */}
           <nav className="flex flex-col gap-5 md:gap-8" aria-label={t.navTitle}>
