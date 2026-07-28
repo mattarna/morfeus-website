@@ -4,43 +4,50 @@ import { LabMsHero } from "@/components/lab-ms/LabMsHero";
 import { LabMsProof } from "@/components/lab-ms/LabMsProof";
 import { LabMsProblem } from "@/components/lab-ms/LabMsProblem";
 import { LabMsLevels } from "@/components/lab-ms/LabMsLevels";
+import { LabMsBivio } from "@/components/lab-ms/LabMsBivio";
+import { LabMsMetodo } from "@/components/lab-ms/LabMsMetodo";
+import { LabMsRisultati } from "@/components/lab-ms/LabMsRisultati";
+import { LabMsInvestimento } from "@/components/lab-ms/LabMsInvestimento";
+import { LabMsProgramma } from "@/components/lab-ms/LabMsProgramma";
+import { LabMsBridge } from "@/components/lab-ms/LabMsBridge";
+import { LabMsContatto } from "@/components/lab-ms/LabMsContatto";
+import { LabMsFaq } from "@/components/lab-ms/LabMsFaq";
+import { LabMsChiusa } from "@/components/lab-ms/LabMsChiusa";
 
 /* ============================================================
    /lab-ms — /lab rivestita col brand 2026.
    ------------------------------------------------------------
-   Confronto a tre: /it/lab (originale) · /it/lab-ds (l'altro DS, che
-   resta) · /it/lab-ms (questa).
+   Confronto a tre: /it/lab (originale) · /it/lab-ds (l'altro DS,
+   tenuto) · /it/lab-ms (questa).
 
-   IL PRINCIPIO, dopo la prima versione sbagliata: la pagina resta
-   quella. Stessa composizione, stessi dispositivi, stessa densita'
-   visiva — icone, filigrane, aloni, hover, l'animazione del nucleo.
-   Cambia la MATERIA: caratteri Clash/Satoshi/Plex e palette ufficiale.
+   IL PATTO: il WIREFRAME e' quello della pagina online — stessi
+   blocchi, stesso ordine, stessi id di ancora, stessa copy dai
+   namespace Lab.*. Il DISEGNO e' rifatto nel linguaggio del sistema.
 
-   La prima volta avevo fatto il contrario: avevo adottato i componenti
-   piatti del sistema (.card, .statgrid) e buttato via tutto il resto.
-   Il risultato era una pagina asettica su due colori soli. Qui la
-   rampa e' usata per intero — vista, neon, majorelle, persian, forge —
-   perche' esiste per quello.
+   L'IDEA: la pagina e' uno strumento di misura. Griglia blueprint
+   come carta da disegno, pannelli opachi appoggiati sopra, il lilla
+   e' il segnale che attraversa e rivela, il forge e' l'allarme.
 
-   Il fondo resta INCHIOSTRO per tutta la pagina, come l'originale, con
-   le superfici che variano di un gradino (inchiostro / inchiostro-2 /
-   night) invece di alternare col chiaro: e' la lettura giusta di
-   "quella scura".
+   IL RITMO DELLE FASCE — scuro d'impianto, carta come punteggiatura.
+   Non alternanza a scacchiera: due stacchi soli, messi dove cambia
+   la NATURA del discorso.
 
-   STATO: prime 4 sezioni, da validare. Le altre 9 a seguire.
+     01-05  ink     diagnosi: si misura al buio, strumento acceso
+     06     CARTA   il metodo: si smette di diagnosticare e si spiega
+                    come si fa. Su carta legge come scheda tecnica
+     07     ink     si torna alla prova
+     08     CARTA   i soldi: su carta legge come preventivo stampato,
+                    ed e' anche l'unica fascia dove .statgrid del DS
+                    funziona davvero (ha i filetti cablati su inchiostro)
+     09-13  ink     programma, ponte, contatto, FAQ, chiusa
+
+   Cosi' ogni stacco ANNUNCIA un cambio di registro invece di essere
+   un ritmo decorativo, e il forge dell'aggravante resta l'unico
+   picco caldo della pagina.
+
+   Client component uno solo: lo schema animato dell'hero. Tutto il
+   resto e' server-rendered, FAQ comprese (details/summary nativi).
    ============================================================ */
-
-const ANCORA_DA_FARE = [
-  "05 · Bivio",
-  "06 · Metodo",
-  "07 · Risultati",
-  "08 · Investimento",
-  "09 · Programma",
-  "10 · Bridge",
-  "11 · Contatto",
-  "12 · FAQ",
-  "13 · Footer",
-];
 
 export default async function LabMsPage({
   params,
@@ -56,15 +63,15 @@ export default async function LabMsPage({
       <LabMsProof />
       <LabMsProblem />
       <LabMsLevels />
-
-      <section className="band ink lab">
-        <div className="wrap">
-          <div className="quota">Cantiere</div>
-          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-[color:var(--ombra)]">
-            {ANCORA_DA_FARE.join("  ·  ")}
-          </p>
-        </div>
-      </section>
+      <LabMsBivio />
+      <LabMsMetodo />
+      <LabMsRisultati />
+      <LabMsInvestimento />
+      <LabMsProgramma />
+      <LabMsBridge />
+      <LabMsContatto />
+      <LabMsFaq />
+      <LabMsChiusa />
     </SiteShell>
   );
 }

@@ -252,6 +252,170 @@
   background: rgba(140, 165, 247, 0.22);
 }
 
+/* ===========================================================
+   VARIANTI CARTA
+   -----------------------------------------------------------
+   I dispositivi qui sopra sono tarati sull'inchiostro. Due fasce
+   della pagina sono carta — il Metodo e l'Investimento — e li' il
+   segnale non e' piu' il lilla ma la firma, perche' su fondo chiaro
+   il lilla non regge il contrasto.
+
+   .quadro, .scheda e .gauge non compaiono: usano gia' --surf-bg e
+   --surf-bd, che le pelli ridefiniscono da sole. E' il vantaggio di
+   essere partiti dallo STANDARD SUPERFICI invece di scrivere colori
+   a mano.
+   =========================================================== */
+.ms .band.carta .lab .quadro::before,
+.ms .band.carta .lab .quadro::after {
+  border-color: rgba(83, 61, 252, 0.45);
+}
+.ms .band.carta .lab .readout {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .readout .on,
+.ms .band.carta .lab .scheda .cod {
+  color: var(--firma);
+}
+.ms .band.carta .lab .readout .on i {
+  background: var(--firma);
+}
+.ms .band.carta .lab .ghost {
+  color: rgba(83, 61, 252, 0.08);
+}
+.ms .band.carta .lab .scheda p {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .scheda:hover {
+  border-color: rgba(83, 61, 252, 0.5);
+}
+.ms .band.carta .lab .scheda .filo {
+  background: linear-gradient(90deg, transparent, var(--firma), transparent);
+}
+.ms .band.carta .lab .glifo {
+  stroke: var(--firma);
+}
+.ms .band.carta .lab .quota {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .quota::before,
+.ms .band.carta .lab .quota::after {
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.carta .lab .rail {
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.carta .lab .rail span {
+  background: var(--carta);
+  border-color: var(--firma);
+}
+.ms .band.carta .lab .rail span.pieno {
+  background: var(--firma);
+  box-shadow: 0 0 0 5px rgba(83, 61, 252, 0.12);
+}
+
+/* ---------- spunta della lista requisiti (Investimento) ----------
+   Non un'icona: un segno di spunta disegnato col bordo, come le
+   caselle di un modulo compilato a mano. */
+.ms .lab .spunta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.ms .lab .spunta i {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  border: 1px solid var(--firma);
+  border-radius: 3px;
+  position: relative;
+  flex: none;
+}
+.ms .lab .spunta i::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border-right: 1.5px solid var(--firma);
+  border-bottom: 1.5px solid var(--firma);
+  transform: rotate(42deg);
+}
+.ms .band.ink .lab .spunta i,
+.ms .band.ink .lab .spunta i::after {
+  border-color: var(--lilla);
+}
+
+/* ---------- FAQ · accordion senza JavaScript ----------
+   <details>/<summary> nativi: si aprono senza uno script, restano
+   navigabili da tastiera e il contenuto e' nel DOM per i crawler.
+   L'unica cosa che serve e' togliere il triangolino di sistema e
+   ruotare il nostro segno. */
+.ms .lab .faq {
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .lab .faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 20px 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16.5px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--surf-bd);
+  transition: color var(--dur) var(--ease);
+}
+.ms .lab .faq summary::-webkit-details-marker {
+  display: none;
+}
+.ms .lab .faq summary:hover {
+  color: var(--lilla);
+}
+.ms .lab .faq summary .segno {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+.ms .lab .faq summary .segno::before,
+.ms .lab .faq summary .segno::after {
+  content: "";
+  position: absolute;
+  background: var(--lilla);
+  transition: transform var(--dur) var(--ease);
+}
+.ms .lab .faq summary .segno::before {
+  left: 0;
+  top: 6px;
+  width: 13px;
+  height: 1px;
+}
+.ms .lab .faq summary .segno::after {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 13px;
+}
+.ms .lab .faq[open] summary .segno::after {
+  transform: scaleY(0);
+}
+.ms .lab .faq[open] summary {
+  color: var(--lilla);
+}
+.ms .lab .faq .risposta {
+  padding: 4px 0 22px;
+  max-width: 62ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  border-bottom: 1px solid var(--surf-bd);
+}
+
 /* ---------- movimento ridotto ---------- */
 @media (prefers-reduced-motion: reduce) {
   .ms .lab .readout .on i {

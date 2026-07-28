@@ -64,6 +64,59 @@ const TRATTI: Record<string, React.ReactNode> = {
       <path d="M18.5 12v4h-4" />
     </>
   ),
+  // 6 esiti
+  orologio: (
+    <>
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M12 7v5.2l3.4 2" />
+    </>
+  ),
+  bersaglio: (
+    <>
+      <circle cx="12" cy="12" r="8.6" />
+      <circle cx="12" cy="12" r="4.6" />
+      <circle cx="12" cy="12" r="1" />
+    </>
+  ),
+  curvaSu: (
+    <>
+      <path d="M3 4v16h18" />
+      <path d="M6.5 16.5 11 12l3 2.6 4.5-5.6" />
+      <path d="M14.5 9h4v4" />
+    </>
+  ),
+  scudo: (
+    <>
+      <path d="M12 3l7 2.6v5.6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V5.6L12 3Z" />
+      <path d="m8.8 12 2.2 2.2 4.2-4.4" />
+    </>
+  ),
+  stella: (
+    <>
+      <path d="m12 3.4 2.5 5.3 5.6.8-4 4 .9 5.7-5-2.7-5 2.7.9-5.7-4-4 5.6-.8L12 3.4Z" />
+    </>
+  ),
+  chiave: (
+    <>
+      <circle cx="8" cy="8" r="4.2" />
+      <path d="m11 11 8.4 8.4" />
+      <path d="m16.6 16.6 2-2M14 14l1.6-1.6" />
+    </>
+  ),
+  // 2 per il bridge
+  medaglia: (
+    <>
+      <circle cx="12" cy="9.5" r="5.4" />
+      <path d="m8.4 14.2-1.7 6.3 5.3-2.7 5.3 2.7-1.7-6.3" />
+    </>
+  ),
+  cpu: (
+    <>
+      <rect x="6.5" y="6.5" width="11" height="11" rx="1.6" />
+      <rect x="10" y="10" width="4" height="4" rx="0.8" />
+      <path d="M10 3v3.5M14 3v3.5M10 17.5V21M14 17.5V21M3 10h3.5M3 14h3.5M17.5 10H21M17.5 14H21" />
+    </>
+  ),
 };
 
 export function LabMsGlifo({
