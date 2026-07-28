@@ -1,0 +1,51 @@
+/* ===========================================================
+   TEST · font del corpo a confronto  (temporaneo)
+   -----------------------------------------------------------
+   Perche' esiste: Satoshi ha altezza-x 0.500 e rapporto cap/x 1.48
+   (misurati sulla tabella OS/2 di Satoshi-Variable.ttf). Un font pensato
+   per il testo di lettura sta fra 0.52 e 0.55. Conseguenza pratica: a
+   parita' di font-size le minuscole di Satoshi appaiono circa il 10% piu'
+   piccole — ed e' il motivo per cui alzando i corpi il testo continuava
+   a sembrare piccolo.
+
+   Questi tre candidati cambiano SOLO --font-body. Clash Display resta
+   sui titoli e JetBrains Mono sui dati: si confronta una variabile alla
+   volta, altrimenti non si capisce cosa ha fatto la differenza.
+
+     ?body=jakarta   Plus Jakarta Sans  — la scelta del DS B2B
+     ?body=inter     Inter              — il piu' leggibile, il piu' neutro
+     ?body=manrope   Manrope            — via di mezzo, vicino a Clash
+     ?body=off       torna a Satoshi
+
+   RIMOZIONE: cancella questo file, il suo import in SiteShell.tsx, il
+   blocco dei font di test in fonts.ts e lo <script id="body-font-test">
+   in app/layout.tsx.
+   =========================================================== */
+
+html.body-jakarta .ms {
+  --font-body: var(--font-body-jakarta), system-ui, sans-serif;
+}
+html.body-inter .ms {
+  --font-body: var(--font-body-inter), system-ui, sans-serif;
+}
+html.body-manrope .ms {
+  --font-body: var(--font-body-manrope), system-ui, sans-serif;
+}
+
+/* Badge di stato: senza, dopo tre ricariche non si sa piu' quale si sta
+   guardando — e' successo con il test Clash/Jakarta. */
+html[class*="body-"] .body-test-badge {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 9999;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0b0b0c;
+  background: #e8650a;
+  border-radius: 999px;
+  padding: 7px 14px;
+  pointer-events: none;
+}

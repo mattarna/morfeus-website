@@ -1,5 +1,35 @@
 import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Manrope, Plus_Jakarta_Sans } from "next/font/google";
+
+/* ---------------------------------------------------------------
+   TEST font del corpo (temporaneo) — ?body=jakarta|inter|manrope
+   Satoshi ha altezza-x 0.500 e rapporto cap/x 1.48 (misurati sul .ttf):
+   le minuscole appaiono ~10% piu' piccole di un font da testo a parita'
+   di font-size. Questi tre candidati servono a vedere la differenza sulla
+   pagina vera invece che a stimarla.
+   preload:false: a test spento non scaricano nulla.
+   --------------------------------------------------------------- */
+export const bodyJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body-jakarta",
+  display: "swap",
+  preload: false,
+});
+export const bodyInter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body-inter",
+  display: "swap",
+  preload: false,
+});
+export const bodyManrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body-manrope",
+  display: "swap",
+  preload: false,
+});
 
 /**
  * Il mono del DS era una catena rotta: --font-mono puntava a
@@ -69,4 +99,6 @@ export const playfair = localFont({
   weight: "400 900", // fvar: wght 400-900
 });
 
-export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable}`;
+export const bodyTestVars = `${bodyJakarta.variable} ${bodyInter.variable} ${bodyManrope.variable}`;
+
+export const siteFontVars = `${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${jetbrainsMono.variable} ${bodyTestVars}`;
