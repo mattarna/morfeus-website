@@ -59,9 +59,20 @@ export function getDemoProcessStep(index: number): 0 | 1 | 2 | 3 {
   return 3;
 }
 
+/* Altezza minima per il pinning. I pannelli desktop sono height:100vh
+   con overflow:hidden e scroll nativo bloccato: se il viewport si
+   accorcia, il contenuto viene TAGLIATO e nessuno puo' raggiungerlo.
+   E' il caso dello zoom al 200% (WCAG 1.4.4), che dimezza sia larghezza
+   sia altezza in pixel CSS: su schermi molto larghi la larghezza resta
+   sopra 1280 e il ramo desktop non scattava indietro da solo.
+   Sotto questa soglia si passa al comportamento mobile — pannelli che
+   crescono e scroll nativo — invece di nascondere contenuto. */
+const DESKTOP_MIN_HEIGHT = 660;
+
 export function isDesktopMode(): boolean {
   if (typeof window === "undefined") return false;
   if (window.innerWidth < DESKTOP_BREAKPOINT) return false;
+  if (window.innerHeight < DESKTOP_MIN_HEIGHT) return false;
   if (
     window.matchMedia("(pointer: coarse)").matches &&
     window.matchMedia("(hover: none)").matches

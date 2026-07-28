@@ -52,8 +52,8 @@
   --font-body: var(--font-satoshi), var(--font-dm-sans), system-ui, sans-serif;
   --font-emph: var(--font-playfair), Georgia, serif;
   --font-mono: var(--f-mono), "IBM Plex Mono", monospace;
-  --maxw: 1000px;
-  --read: 720px;
+  --maxw: 1120px; /* era 1000: col corpo a 18px servono righe piu' lunghe */
+  --read: 760px; /* era 720: 65-75 caratteri a 18px */
   --r-s: 8px;
   --r-m: 12px;
   --r-l: 18px;
@@ -76,7 +76,13 @@
   background: var(--inchiostro);
   color: var(--carta);
   font-family: var(--font-body);
-  line-height: 1.6;
+  /* CORPO DI BASE — aggiunto 2026-07-28.
+     Prima non c'era: .ms ereditava i 16px del documento e ogni componente
+     scriveva la sua misura a mano, quasi sempre piu' piccola. Da qui in giu'
+     la soglia e' 18/29 su desktop, 16 il minimo assoluto per un testo che
+     porta significato. Regola: piuttosto un pixel in piu' che uno in meno. */
+  font-size: 18px;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
 }
 /* h4-h6 inclusi: prima la regola si fermava a h3 e i pochi <h4> della
@@ -111,7 +117,9 @@
 
 /* ---------- fasce: una superficie per sezione, alternate ---------- */
 .ms .band {
-  padding: clamp(64px, 9vw, 104px) clamp(20px, 5vw, 40px);
+  /* era clamp(64px,9vw,104px): 104px su desktop contro i 160px della
+     pagina da cui il sistema e' nato. Il 35% d'aria perso si sentiva. */
+  padding: clamp(88px, 11vw, 152px) clamp(20px, 5vw, 40px);
 }
 .ms .band .wrap {
   max-width: var(--maxw);
@@ -150,7 +158,7 @@
 /* ---------- tipografia ---------- */
 .ms .eye {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -206,9 +214,9 @@
 .ms .btn {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 16px; /* soglia CTA: mai sotto 16px */
   font-weight: 600;
-  padding: 13px 22px;
+  padding: 14px 24px;
   border-radius: var(--r-s);
   cursor: pointer;
   border: 1px solid transparent;
@@ -258,7 +266,7 @@
 }
 .ms .card .ck {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -275,7 +283,7 @@
   margin-top: 10px;
 }
 .ms .card p {
-  font-size: 14px;
+  font-size: 16.5px;
   margin-top: 8px;
 }
 .ms .band.carta .card p {
@@ -350,7 +358,7 @@
 }
 .ms .proofline {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 13px;
   letter-spacing: 0.06em;
   color: var(--ombra);
   margin-top: 36px;
@@ -378,7 +386,7 @@
 }
 .ms .measure .copy p {
   color: var(--testo-carta-2);
-  font-size: 15.5px;
+  font-size: 17px;
   margin-top: 14px;
   max-width: 46ch;
 }
@@ -399,7 +407,7 @@
 }
 .ms .cell .k {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -418,7 +426,7 @@
 }
 .ms .cell .l {
   color: var(--testo-carta-2);
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 8px;
 }
 
@@ -448,7 +456,7 @@
   font-style: italic;
   color: var(--testo-ink-2);
   margin-top: 16px;
-  font-size: 16px;
+  font-size: 17px;
 }
 .ms .def .r {
   display: grid;
@@ -463,13 +471,13 @@
 }
 .ms .def .r .neg {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.04em;
   color: var(--anomalia);
   padding-top: 4px;
 }
 .ms .def .r .pos {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--carta);
 }
 .ms .def .r .pos b {
@@ -478,7 +486,7 @@
 .ms .cat {
   margin-top: 30px;
   color: var(--testo-ink-2);
-  font-size: 15.5px;
+  font-size: 17px;
   max-width: 60ch;
 }
 .ms .cat b {
@@ -495,7 +503,7 @@
 /* ---------- due offerte (firma dell'insegna) ---------- */
 .ms .off-foot {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 16px;
@@ -530,7 +538,7 @@
 }
 .ms .mem .role {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lilla);
@@ -538,7 +546,7 @@
 }
 .ms .mem .bio {
   color: var(--testo-ink-2);
-  font-size: 13.5px;
+  font-size: 16px;
   margin-top: 10px;
 }
 
@@ -554,7 +562,7 @@
 }
 .ms .caso .meta {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -570,7 +578,7 @@
 }
 .ms .caso .who {
   margin-top: 16px;
-  font-size: 13.5px;
+  font-size: 16px;
   color: var(--testo-carta-2);
 }
 .ms .caso .who b {
@@ -588,7 +596,7 @@
 .ms .stamp {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
@@ -597,6 +605,15 @@
   color: var(--firma);
   border-radius: var(--r-s);
   transform: rotate(-4deg);
+}
+
+/* CONTRASTO · il timbro su fascia scura.
+   --firma (#533DFC) su --inchiostro (#0B0B0C) misura 3.22:1, sotto il
+   minimo AA di 4.5 per il testo normale. Sulla carta invece regge (4.94:1)
+   e resta com'e'. Sul buio passa a --lilla, che sta a 8.28:1. */
+.ms .band.ink .stamp {
+  border-color: var(--lilla);
+  color: var(--lilla);
 }
 
 /* ---------- CTA quota ---------- */
@@ -612,7 +629,7 @@
   color: var(--testo-ink-2);
   max-width: 48ch;
   margin: 16px auto 0;
-  font-size: 15.5px;
+  font-size: 17px;
 }
 .ms .ctaq .cta-row {
   display: flex;
@@ -701,7 +718,7 @@
 }
 .ms .curve-card .csub {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -709,7 +726,7 @@
 }
 .ms .curve-card .ctag {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 11.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 600;
@@ -779,7 +796,7 @@
 }
 .ms .curve-card .axis {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -799,7 +816,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 13.5px;
+  font-size: 16px;
   line-height: 1.4;
 }
 .ms .band.carta .curve-card li {
@@ -860,7 +877,7 @@
   display: inline-block;
   margin-top: 14px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 4px 10px;
@@ -892,7 +909,7 @@
   display: inline-block;
   margin-top: 16px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
 }
 .ms .band.ink .door .arrow {
   color: var(--lilla);
@@ -915,7 +932,7 @@
   align-items: baseline;
   gap: 12px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -960,7 +977,7 @@
 .ms .savings .delta {
   margin-top: 14px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.04em;
 }
 .ms .band.carta .savings .delta {
@@ -994,7 +1011,7 @@
   justify-content: space-between;
   gap: 16px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -1062,7 +1079,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 13.5px;
+  font-size: 16px;
   line-height: 1.4;
 }
 .ms .band.ink .blist li {
@@ -1156,7 +1173,7 @@
 .ms .vstep .vp {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 5px 11px;
@@ -1175,7 +1192,7 @@
 }
 .ms .vstep .vsub {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lilla);
@@ -1194,7 +1211,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
-  font-size: 15px;
+  font-size: 16.5px;
   line-height: 1.45;
 }
 .ms .band.ink .vstep .vlist li {
@@ -1205,7 +1222,7 @@
 }
 .ms .vstep .vlist .dm {
   color: var(--lilla);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 4px;
 }
 .ms .band.carta .vstep .vlist .dm {
@@ -1214,7 +1231,7 @@
 .ms .vstep .vnote {
   font-family: var(--font-emph);
   font-style: italic;
-  font-size: 16px;
+  font-size: 17.5px;
   margin-top: 18px;
   padding-top: 15px;
   border-top: 1px solid var(--surf-bd);
@@ -1234,7 +1251,7 @@
   align-items: center;
   gap: 7px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: var(--r-pill);
@@ -1256,7 +1273,7 @@
 }
 .ms .crumbs {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.08em;
   color: var(--ombra);
   margin-bottom: 20px;
@@ -1296,7 +1313,7 @@
 }
 .ms .defbox .k {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--firma);
@@ -1320,7 +1337,7 @@
 }
 .ms .howcard .n {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
 }
 .ms .band.ink .howcard .n {
   color: var(--lilla);
@@ -1354,7 +1371,7 @@
 }
 .ms .isnot .t {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 14px;
@@ -1375,12 +1392,12 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 11px;
-  font-size: 15px;
+  font-size: 16.5px;
   color: var(--inchiostro);
 }
 .ms .isnot .m {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.5;
 }
 .ms .isnot .no .m {
@@ -1409,7 +1426,7 @@
   font-weight: 600;
 }
 .ms .rcard p {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
@@ -1445,14 +1462,14 @@
   font-family: var(--font-mono);
 }
 .ms .collaudo .ref {
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ombra);
 }
 .ms .collaudo .tag {
   display: inline-block;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: var(--marker);
@@ -1472,7 +1489,7 @@
 .ms .collaudo .meta {
   gap: 22px;
   margin: 18px 0;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ombra);
 }
 .ms .collaudo .meta b {
@@ -1480,7 +1497,7 @@
   display: block;
   margin-top: 2px;
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 16px;
 }
 .ms .livelli {
   display: flex;
@@ -1512,17 +1529,17 @@
 }
 .ms .prod h4 {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 .ms .prod p {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
 .ms .nota {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--ombra);
   margin-top: 18px;
 }
