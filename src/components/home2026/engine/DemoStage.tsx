@@ -67,13 +67,16 @@ export function DemoStage({
     <>
       {header}
 
-      {/* Il rail e' l'indice delle sezioni del deck. Oltre l'ultimo punto
-          c'e' il footer, che sezione non e': li' il rail sconfinava sopra
-          la prima colonna e sembrava un secondo menu. Si spegne. */}
+      {/* Il rail e' l'indice delle sezioni del deck. L'ultimo pannello e'
+          il footer, che sezione non e': li' il rail restava acceso sopra
+          la prima colonna e sembrava un secondo menu.
+          La condizione e' >= e non >, perche' l'ultima voce dell'indice
+          ("Prenota") copre due pannelli, [13,14], e il footer e' il 14:
+          con il > non si spegneva mai. */}
       <nav
         className="demo-ui demo-rail"
         aria-label="Sezioni"
-        data-oltre={currentIndex > (points[points.length - 1]?.range[1] ?? 99)}
+        data-oltre={currentIndex >= (points[points.length - 1]?.range[1] ?? 99)}
       >
         {points.map((p) => (
           <button

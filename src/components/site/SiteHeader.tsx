@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 /**
- * ALLINEATO ALLA HOME (2026-07-28). Le voci, la tipografia della nav e
+ * ALLINEATO ALLA HOME (2026-07-28).
+ * Anche nella LARGHEZZA: la barra non ha piu' un contenitore da 1180px
+ * centrato, che spingeva logo e bottone verso il centro mentre sulla
+ * home stanno agli estremi dello schermo. Ora l'imbottitura e' la
+ * stessa della home, clamp(20px,3vw,34px), e i due capi sono ai bordi. Le voci, la tipografia della nav e
  * l'etichetta della CTA sono ora quelle della barra della home-2026:
  * stesse sei destinazioni (senza "Home", che si raggiunge dal logo),
  * corpo a 16px maiuscolo con tracking .06em invece del mono a 12, e
@@ -56,7 +60,7 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[68px] border-b border-riga-scuro/70 bg-inchiostro/80 text-carta backdrop-blur-[14px]">
       <nav
-        className="mx-auto flex h-full max-w-[1180px] items-center justify-between gap-6 px-4 md:px-10"
+        className="flex h-full items-center justify-between gap-6 px-[clamp(20px,3vw,34px)]"
         aria-label="Principale"
       >
         {/* Marchio: il lockup UFFICIALE, non una ricostruzione.

@@ -12,15 +12,23 @@ const GRID_BG = {
   backgroundSize: "36px 36px",
 } as const;
 
+/* Gli stessi tre della home, nello stesso ordine. Prima qui c'era
+   Instagram al posto di X: due footer che elencano social diversi
+   sono due footer diversi, e basta quello a farli sembrare tali. */
 const SOCIAL = [
   ["LinkedIn", "https://www.linkedin.com/company/morfeus-hub-ai/"],
-  ["Instagram", "https://www.instagram.com/morfeushub.ai/"],
-  ["YouTube", "https://www.youtube.com/@MorfeusHub"],
+  ["X (Twitter)", "https://x.com"],
+  ["Youtube", "https://youtube.com"],
 ] as const;
 
 const COPY = {
   it: {
     navTitle: "Navigazione",
+    /* NOTA: sulla home questa colonna elenca le SEZIONI del deck
+       (Inizio, Visione, Il Problema...). Qui elenca le PAGINE, perche'
+       quelle sezioni fuori dalla home non esistono. E' l'unica
+       differenza rimasta fra i due footer, ed e' una differenza di
+       destinazione, non di forma. */
     nav: [
       ["", "Home"],
       ["chi-siamo", "Chi siamo"],
@@ -31,17 +39,15 @@ const COPY = {
       ["glossario", "Glossario"],
       ["faq", "FAQ"],
     ],
-    socialTitle: "Seguici",
-    infoTitle: "Info",
+    socialTitle: "Social",
+    infoTitle: "Informazioni",
     info: [
-      ["marf", "MARF"],
-      ["playground", "Playground"],
-      ["privacy", "Privacy"],
+      ["privacy", "Privacy Policy"],
       ["cookies", "Cookie Policy"],
     ],
     quote: { a: "Pillola rossa", or: "o", b: "pillola blu", end: ". A te la scelta." },
     loc: "Milano, Italia",
-    copyright: "Numanity S.r.l.",
+    copyright: "Tutti i diritti riservati.",
     made: "Made with love, by Morfeus and a lot of AI.",
     status: "System Operational",
   },
@@ -57,17 +63,15 @@ const COPY = {
       ["glossario", "Glossary"],
       ["faq", "FAQ"],
     ],
-    socialTitle: "Follow us",
-    infoTitle: "Info",
+    socialTitle: "Social",
+    infoTitle: "Information",
     info: [
-      ["marf", "MARF"],
-      ["playground", "Playground"],
-      ["privacy", "Privacy"],
+      ["privacy", "Privacy Policy"],
       ["cookies", "Cookie Policy"],
     ],
     quote: { a: "Red pill", or: "or", b: "blue pill", end: ". The choice is yours." },
     loc: "Milan, Italy",
-    copyright: "Numanity S.r.l.",
+    copyright: "All rights reserved.",
     made: "Made with love, by Morfeus and a lot of AI.",
     status: "System Operational",
   },
@@ -161,7 +165,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
 
             <div className="flex flex-col items-start md:items-end gap-2 mt-8">
               <span className="font-plex text-[13px] text-carta/60 tracking-wide">
-                &copy;{year} Morfeus &middot; {t.copyright}
+                &copy;{year} Morfeus. {t.copyright}
               </span>
               <span className="font-plex text-[13px] text-carta/60 flex items-center gap-1.5">
                 <span className="text-firma">&#x1F49C;</span>
