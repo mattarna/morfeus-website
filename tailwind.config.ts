@@ -24,6 +24,21 @@ const config: Config = {
         vista: "#8CA5F7",
         "ghost-white": "#E4E7F0",
         forge: "#E8650A",
+        // ---- brand 2026 "Progettato. Provato." (pagine contenuto, scope .ms)
+        // PORTATI da exp/font-jakarta: stessi nomi, stessi valori. I NOMI
+        // restano quelli del brand 2026 perche' li usano ~200 regole in
+        // site.css; i VALORI sono allineati alla Official Palette qui sopra
+        // ("carta" = ghost-white, "inchiostro" = night). I neutri sono
+        // DERIVATI: la palette ufficiale ha 8 colori e nessun grigio.
+        // Serve a SiteHeader/SiteFooter, che sono scritti in utility Tailwind.
+        carta: "#E4E7F0", // ghost-white
+        inchiostro: "#0B0B0C", // night
+        "inchiostro-2": "#16161A", // DERIVATO: pannello su night
+        "riga-scuro": "#26262B", // DERIVATO: righe su fondo scuro
+        firma: "#533DFC", // majorelle
+        "firma-hover": "#392CB8", // persian
+        lilla: "#8CA5F7", // vista
+        ombra: "#7E8091", // DERIVATO: testo attenuato
         // Legacy/Generic mapping (mapping majorelle to purple for backward compat if needed)
         purple: {
           DEFAULT: "#533DFC", // Majorelle Blue
@@ -44,6 +59,12 @@ const config: Config = {
         outfit: ["var(--font-outfit)", "sans-serif"],
         "dm-sans": ["var(--font-dm-sans)", "sans-serif"],
         prodigy: ["var(--font-prodigy)", "sans-serif"],
+        // brand 2026: i tre font del sistema .ms (variabili, self-hostati in
+        // public/fonts/webinar-claude/ — vedi src/components/site/fonts.ts)
+        clash: ["var(--font-clash)", "var(--font-outfit)", "system-ui", "sans-serif"],
+        satoshi: ["var(--font-satoshi)", "var(--font-dm-sans)", "system-ui", "sans-serif"],
+        playfair: ["var(--font-playfair)", "Georgia", "serif"],
+        plex: ["var(--f-mono)", "'IBM Plex Mono'", "monospace"],
       },
       transitionDuration: {
         "1000": "1000ms",

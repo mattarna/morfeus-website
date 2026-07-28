@@ -1,0 +1,1553 @@
+/* ===========================================================
+   Morfeus official-site design system — brand 2026 "Progettato. Provato."
+   Source of truth: SEO-GEO-WEBSITE/design-v2/*.html (mockup approvati).
+   Regola madre: carta E inchiostro, alternati fascia per fascia.
+   Ogni fascia = un elemento di progetto (griglia blueprint) + uno di prova.
+   Scoped under .ms cosi non tocca il tema globale / la home v1.
+   Font: Clash/Satoshi via Fontshare (SiteShell), Playfair/Plex via next/font.
+   =========================================================== */
+
+/* ===========================================================
+   PALETTE — MORFEUS Official Palette v1.0
+   Fonte di verita': tailwind.config.ts del sito in produzione.
+     night #0B0B0C · midnight #201F6E · persian #392CB8
+     majorelle #533DFC · neon #6475FA · vista #8CA5F7
+     ghost-white #E4E7F0 · forge #E8650A
+
+   I nomi dei token restano quelli del brand 2026 (carta/inchiostro/
+   firma...) perche' li usano ~200 regole in questo file: rinominarli
+   sarebbe rumore senza valore. Sono i VALORI ad essere allineati.
+   Attenzione quindi: "carta" ora e' ghost-white, non piu' la crema.
+
+   La palette ufficiale ha 8 colori e nessun grigio: i neutri di
+   servizio (pannelli, righe, testi secondari) sono DERIVATI da
+   night/ghost-white e segnati uno per uno.
+   =========================================================== */
+.ms {
+  --carta: #e4e7f0; /* ghost-white */
+  --inchiostro: #0b0b0c; /* night */
+  --inchiostro-2: #16161a; /* DERIVATO: pannello su night */
+  --riga-scuro: #26262b; /* DERIVATO: righe su fondo scuro */
+  --firma: #533dfc; /* majorelle */
+  --firma-hover: #392cb8; /* persian */
+  --lilla: #8ca5f7; /* vista */
+  --ombra: #7e8091; /* DERIVATO: testo attenuato */
+  --anomalia: #ff5c5c; /* stato: errore — fuori palette, resta */
+  --ok: #1e9e5a; /* stato: ok — fuori palette, resta */
+  --grid-chiaro: rgba(83, 61, 252, 0.05);
+  --grid-scuro: rgba(140, 165, 247, 0.06);
+  --grid: 36px;
+  --testo-carta-2: #3a3b45; /* DERIVATO: secondario su ghost-white */
+  --testo-ink-2: #c2c6d4; /* DERIVATO: secondario su night */
+  --testo-ink-3: #aeb2c2; /* DERIVATO: terziario su night */
+  --marker: #e8650a; /* forge — era un giallo fuori palette */
+
+  /* Footer: erano hex inline in SiteFooter.tsx (l'inline batte le
+     classi), passati da variabile per poterli governare da qui. */
+  --footer-bg: #0b0b0c;
+  --footer-grid: rgba(140, 165, 247, 0.055);
+  --footer-fade: #0b0b0c;
+  --footer-fade-mid: rgba(11, 11, 12, 0.6);
+  --font-display: var(--font-clash), var(--font-outfit), system-ui, sans-serif;
+  --font-body: var(--font-satoshi), var(--font-dm-sans), system-ui, sans-serif;
+  --font-emph: var(--font-playfair), Georgia, serif;
+  --font-mono: var(--f-mono), "IBM Plex Mono", monospace;
+  --maxw: 1000px;
+  --read: 720px;
+  --r-s: 8px;
+  --r-m: 12px;
+  --r-l: 18px;
+  --r-pill: 999px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 0.16s;
+
+  /* ===== STANDARD SUPERFICI (box/pannelli) — fonte unica di contrasto =====
+     Ogni box (card, caso, curve-card, door, isnot, defbox, prod) DEVE usare
+     questi 3 token, mai sfondi translucidi custom: un pannello è opaco e
+     copre la griglia blueprint, così si legge come scatola.
+     I valori reali sono ridefiniti per fascia in .band.ink / .band.carta. */
+  --surf-bg: #ffffff;
+  --surf-bd: rgba(11, 11, 12, 0.16);
+  --surf-sh: 0 1px 3px rgba(11, 11, 12, 0.06);
+
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--inchiostro);
+  color: var(--carta);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+/* h4-h6 inclusi: prima la regola si fermava a h3 e i pochi <h4> della
+   pagina cadevano sul font del corpo (Satoshi) invece che su Clash. */
+.ms h1,
+.ms h2,
+.ms h3,
+.ms h4,
+.ms h5,
+.ms h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+/* Scala ottica dei pesi — ha senso solo ora che l'asse variabile di Clash
+   e' davvero attivo (vedi fonts.ts: prima ogni peso era finto grassetto).
+   Clash e' una display: piu' cresce il corpo, piu' il peso va alleggerito,
+   altrimenti le aste si chiudono e il titolo si impasta. Sotto i ~24px
+   resta 600, dove serve presenza. */
+.ms .hero h1 {
+  font-weight: 500; /* clamp 34-60px: il corpo piu' grande della pagina */
+}
+.ms .h-sect {
+  font-weight: 500; /* clamp 30-50px */
+}
+.ms a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- fasce: una superficie per sezione, alternate ---------- */
+.ms .band {
+  padding: clamp(64px, 9vw, 104px) clamp(20px, 5vw, 40px);
+}
+.ms .band .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.ms .band .read {
+  max-width: var(--read);
+  margin: 0 auto;
+}
+.ms .band.ink {
+  color: var(--carta);
+  background-color: var(--inchiostro);
+  background-image:
+    linear-gradient(var(--grid-scuro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-scuro) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+  /* pannello opaco più chiaro della fascia, copre la griglia.
+     Idioma del sito: quasi-nero + bordo bianco traslucido. */
+  --surf-bg: #111113;
+  --surf-bd: rgba(255, 255, 255, 0.22);
+  --surf-sh: none;
+}
+.ms .band.carta {
+  color: var(--inchiostro);
+  background-color: var(--carta);
+  background-image:
+    linear-gradient(var(--grid-chiaro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-chiaro) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+  /* pannello bianco opaco su carta, staccato da bordo + ombra leggera */
+  --surf-bg: #ffffff;
+  --surf-bd: rgba(11, 11, 12, 0.16);
+  --surf-sh: 0 1px 3px rgba(11, 11, 12, 0.06);
+}
+
+/* ---------- tipografia ---------- */
+.ms .eye {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.ms .band.carta .eye {
+  color: var(--firma);
+}
+.ms .band.ink .eye {
+  color: var(--lilla);
+}
+.ms .h-sect {
+  font-size: clamp(32px, 5.2vw, 58px);
+  margin: 12px 0 20px;
+}
+.ms .lead {
+  font-size: clamp(16px, 1.8vw, 19px);
+  max-width: 58ch;
+}
+.ms .band.carta .lead {
+  color: var(--testo-carta-2);
+}
+.ms .band.ink .lead {
+  color: var(--testo-ink-2);
+}
+.ms .emph {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-weight: 500;
+}
+.ms .band.carta .emph {
+  color: var(--firma);
+}
+.ms .band.ink .emph {
+  color: var(--lilla);
+}
+.ms .mono {
+  font-family: var(--font-mono);
+}
+.ms .loss {
+  color: var(--anomalia);
+  font-weight: 600;
+}
+.ms .gain {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+/* ---------- bottoni ---------- */
+/* Scala rialzata: 12px/11px erano tarati su schermi ~1440. Su monitor
+   piu' larghi i clamp arrivano subito al tetto e tutto il testo si legge
+   piccolo rispetto alla pagina. Vale per tutte le pagine del DS, non
+   solo per la home-2026, cosi' la scala resta coerente fra loro. */
+.ms .btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 22px;
+  border-radius: var(--r-s);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.ms .btn-1 {
+  background: var(--firma);
+  color: #fff;
+}
+.ms .btn-1:hover {
+  background: var(--firma-hover);
+}
+.ms .btn-2-ink {
+  background: transparent;
+  color: var(--inchiostro);
+  border-color: var(--inchiostro);
+}
+.ms .btn-2-carta {
+  background: transparent;
+  color: var(--carta);
+  border-color: var(--carta);
+}
+.ms .btn-3 {
+  background: transparent;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.ms .band.carta .btn-3 {
+  color: var(--firma);
+}
+.ms .band.ink .btn-3 {
+  color: var(--lilla);
+}
+
+/* ---------- card (usa lo STANDARD SUPERFICI: --surf-*) ---------- */
+.ms .card {
+  border-radius: var(--r-m);
+  padding: 24px;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+}
+.ms .card.sel {
+  border: 2px solid var(--firma);
+}
+.ms .card .ck {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ms .band.carta .card .ck {
+  color: var(--firma);
+}
+.ms .band.ink .card .ck {
+  color: var(--lilla);
+}
+.ms .card .ct {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
+}
+.ms .card p {
+  font-size: 14px;
+  margin-top: 8px;
+}
+.ms .band.carta .card p {
+  color: var(--testo-carta-2);
+}
+.ms .band.ink .card p {
+  color: var(--testo-ink-2);
+}
+
+/* ---------- griglie ---------- */
+.ms .two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.ms .three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.ms .four {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 860px) {
+  .ms .two {
+    grid-template-columns: 1fr;
+  }
+  .ms .three {
+    grid-template-columns: 1fr;
+  }
+  .ms .four {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .ms .four {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- HERO ---------- */
+.ms .hero {
+  padding-top: calc(60px + clamp(56px, 8vw, 96px));
+}
+.ms .hero h1 {
+  font-size: clamp(34px, 5.6vw, 60px);
+  max-width: 19ch;
+}
+.ms .hero .copy {
+  font-size: clamp(16px, 1.9vw, 19px);
+  color: var(--testo-ink-2);
+  max-width: 56ch;
+  margin-top: 20px;
+}
+.ms .hero .lame {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--carta);
+  opacity: 0.9;
+  margin-top: 26px;
+  max-width: 34ch;
+}
+.ms .hero .cta-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.ms .proofline {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--ombra);
+  margin-top: 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--riga-scuro);
+}
+.ms .proofline b {
+  color: var(--lilla);
+  font-weight: 600;
+}
+
+/* ---------- statgrid (la prova in numeri) ---------- */
+.ms .measure {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 24px;
+}
+@media (max-width: 860px) {
+  .ms .measure {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+.ms .measure .copy p {
+  color: var(--testo-carta-2);
+  font-size: 15.5px;
+  margin-top: 14px;
+  max-width: 46ch;
+}
+.ms .measure .copy p b {
+  color: var(--inchiostro);
+  font-weight: 700;
+}
+.ms .statgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(11, 11, 12, 0.16);
+  border-left: 1px solid rgba(11, 11, 12, 0.16);
+}
+.ms .cell {
+  padding: 26px 24px;
+  border-bottom: 1px solid rgba(11, 11, 12, 0.16);
+  border-right: 1px solid rgba(11, 11, 12, 0.16);
+}
+.ms .cell .k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .cell .n {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 10px;
+  color: var(--inchiostro);
+}
+.ms .cell .n.gain {
+  color: var(--ok);
+}
+.ms .cell .l {
+  color: var(--testo-carta-2);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* ---------- cosa siamo (non-è / è) ---------- */
+.ms .def {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+  margin-top: 28px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .ms .def {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+.ms .def .state {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(24px, 3.2vw, 34px);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+}
+.ms .def .note {
+  font-family: var(--font-emph);
+  font-style: italic;
+  color: var(--testo-ink-2);
+  margin-top: 16px;
+  font-size: 16px;
+}
+.ms .def .r {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  padding: 18px 0;
+  border-top: 1px solid var(--riga-scuro);
+}
+.ms .def .r:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.ms .def .r .neg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--anomalia);
+  padding-top: 4px;
+}
+.ms .def .r .pos {
+  font-size: 16px;
+  color: var(--carta);
+}
+.ms .def .r .pos b {
+  font-weight: 700;
+}
+.ms .cat {
+  margin-top: 30px;
+  color: var(--testo-ink-2);
+  font-size: 15.5px;
+  max-width: 60ch;
+}
+.ms .cat b {
+  color: var(--carta);
+  font-weight: 700;
+}
+@media (max-width: 520px) {
+  .ms .def .r {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+/* ---------- due offerte (firma dell'insegna) ---------- */
+.ms .off-foot {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+.ms .band.carta .off-foot.f1 {
+  color: var(--firma);
+}
+.ms .band.carta .off-foot.f2 {
+  color: var(--ombra);
+}
+
+/* ---------- founder ---------- */
+.ms .face {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(140, 165, 247, 0.14);
+  border: 1px solid rgba(140, 165, 247, 0.3);
+}
+.ms .face .face-img {
+  object-fit: cover;
+}
+.ms .mem h3 {
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+.ms .mem .role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lilla);
+  margin-top: 6px;
+}
+.ms .mem .bio {
+  color: var(--testo-ink-2);
+  font-size: 13.5px;
+  margin-top: 10px;
+}
+
+/* ---------- caso + timbro ---------- */
+.ms .caso {
+  border-radius: var(--r-m);
+  padding: 26px;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+  display: flex;
+  flex-direction: column;
+}
+.ms .caso .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .caso .q {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--inchiostro);
+  margin-top: 12px;
+  flex: 1;
+}
+.ms .caso .who {
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--testo-carta-2);
+}
+.ms .caso .who b {
+  color: var(--inchiostro);
+  font-weight: 700;
+}
+.ms .caso .row-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.ms .stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: 2px solid var(--firma);
+  color: var(--firma);
+  border-radius: var(--r-s);
+  transform: rotate(-4deg);
+}
+
+/* ---------- CTA quota ---------- */
+.ms .ctaq {
+  text-align: center;
+}
+.ms .ctaq h2 {
+  font-size: clamp(28px, 4.6vw, 44px);
+  max-width: 20ch;
+  margin: 12px auto 0;
+}
+.ms .ctaq p {
+  color: var(--testo-ink-2);
+  max-width: 48ch;
+  margin: 16px auto 0;
+  font-size: 15.5px;
+}
+.ms .ctaq .cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* ---------- fix: .cat leggibile anche su carta ---------- */
+.ms .band.carta .cat {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .cat b {
+  color: var(--inchiostro);
+}
+
+/* ---------- icone nelle card ---------- */
+.ms .card .ico {
+  display: block;
+  margin-bottom: 12px;
+}
+.ms .band.ink .card .ico {
+  color: var(--lilla);
+}
+.ms .band.carta .card .ico {
+  color: var(--firma);
+}
+
+/* ---------- riga "compound" (il valore che si accumula) ---------- */
+.ms .compound {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.5;
+  margin-top: 24px;
+  padding-left: 20px;
+  border-left: 2px solid var(--lilla);
+  max-width: 60ch;
+}
+.ms .band.ink .compound {
+  color: var(--testo-ink-3);
+}
+.ms .band.carta .compound {
+  color: var(--testo-carta-2);
+  border-left-color: var(--firma);
+}
+
+/* ---------- curve: valore che decade vs valore che compone ---------- */
+.ms .curve {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 26px;
+}
+@media (max-width: 860px) {
+  .ms .curve {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .curve-card {
+  border-radius: var(--r-m);
+  padding: 22px 22px 24px;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+  overflow: hidden;
+}
+.ms .curve-card.gain {
+  border-color: rgba(83, 61, 252, 0.45);
+}
+.ms .band.ink .curve-card.gain {
+  border-color: rgba(140, 165, 247, 0.45);
+}
+.ms .curve-card .chead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.ms .curve-card .ctit {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+}
+.ms .curve-card .csub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  margin-top: 5px;
+}
+.ms .curve-card .ctag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.ms .curve-card.loss .ctag {
+  color: var(--anomalia);
+  border: 1px solid rgba(255, 92, 92, 0.4);
+  background: rgba(255, 92, 92, 0.08);
+}
+.ms .curve-card.gain .ctag {
+  color: var(--firma);
+  border: 1px solid rgba(83, 61, 252, 0.4);
+  background: rgba(83, 61, 252, 0.08);
+}
+.ms .band.ink .curve-card.gain .ctag {
+  color: var(--lilla);
+  border-color: rgba(140, 165, 247, 0.4);
+  background: rgba(140, 165, 247, 0.1);
+}
+.ms .curve-card .plot {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 18px 0 6px;
+}
+.ms .curve-card .line {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.ms .curve-card.loss .line {
+  stroke: var(--anomalia);
+}
+.ms .curve-card.gain .line {
+  stroke: var(--firma);
+}
+.ms .band.ink .curve-card.gain .line {
+  stroke: var(--lilla);
+}
+.ms .curve-card.loss .area {
+  fill: rgba(255, 92, 92, 0.1);
+}
+.ms .curve-card.gain .area {
+  fill: rgba(83, 61, 252, 0.1);
+}
+.ms .band.ink .curve-card.gain .area {
+  fill: rgba(140, 165, 247, 0.12);
+}
+.ms .curve-card .grid-l {
+  stroke: rgba(11, 11, 12, 0.08);
+  stroke-width: 1;
+}
+.ms .band.ink .curve-card .grid-l {
+  stroke: rgba(140, 165, 247, 0.1);
+}
+.ms .curve-card.loss .end {
+  fill: var(--anomalia);
+}
+.ms .curve-card.gain .end {
+  fill: var(--firma);
+}
+.ms .band.ink .curve-card.gain .end {
+  fill: var(--lilla);
+}
+.ms .curve-card .axis {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+.ms .curve-card ul {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ms .curve-card li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+.ms .band.carta .curve-card li {
+  color: var(--testo-carta-2);
+}
+.ms .band.ink .curve-card li {
+  color: var(--testo-ink-2);
+}
+.ms .curve-card li .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+.ms .curve-card.loss li .dot {
+  background: var(--anomalia);
+}
+.ms .curve-card.gain li .dot {
+  background: var(--firma);
+}
+.ms .band.ink .curve-card.gain li .dot {
+  background: var(--lilla);
+}
+
+/* ---------- LAB · scala dei livelli (motivo ascendente) ---------- */
+.ms .ladder {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 68px;
+  margin: 6px 0 24px;
+}
+.ms .ladder .rung {
+  flex: 1;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid rgba(83, 61, 252, 0.32);
+  border-bottom: none;
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.26), rgba(83, 61, 252, 0.04));
+}
+.ms .ladder .rung:nth-child(1) {
+  height: 40%;
+}
+.ms .ladder .rung:nth-child(2) {
+  height: 68%;
+}
+.ms .ladder .rung:nth-child(3) {
+  height: 100%;
+  background: linear-gradient(180deg, var(--firma), rgba(83, 61, 252, 0.12));
+}
+.ms .band.ink .ladder .rung {
+  border-color: rgba(140, 165, 247, 0.32);
+  background: linear-gradient(180deg, rgba(140, 165, 247, 0.28), rgba(140, 165, 247, 0.05));
+}
+.ms .band.ink .ladder .rung:nth-child(3) {
+  background: linear-gradient(180deg, var(--lilla), rgba(140, 165, 247, 0.15));
+}
+.ms .otag {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(83, 61, 252, 0.3);
+  color: var(--firma);
+}
+.ms .band.ink .otag {
+  border-color: rgba(140, 165, 247, 0.3);
+  color: var(--lilla);
+}
+
+/* ---------- LAB · selettore a porte ---------- */
+.ms .door {
+  display: block;
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.ms .band.ink .door:hover {
+  border-color: var(--lilla);
+  box-shadow: 0 0 0 1px var(--lilla);
+}
+.ms .band.carta .door:hover {
+  border-color: var(--firma);
+  box-shadow: 0 2px 10px rgba(11, 11, 12, 0.1);
+}
+.ms .door .arrow {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.ms .band.ink .door .arrow {
+  color: var(--lilla);
+}
+.ms .band.carta .door .arrow {
+  color: var(--firma);
+}
+
+/* ---------- LAB · barra risparmio licenze ---------- */
+.ms .savings {
+  margin-top: 26px;
+  max-width: 580px;
+}
+.ms .savings .row {
+  margin-top: 16px;
+}
+.ms .savings .rl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  margin-bottom: 7px;
+}
+.ms .savings .rl b {
+  font-weight: 600;
+}
+.ms .band.carta .savings .rl b {
+  color: var(--inchiostro);
+}
+.ms .band.ink .savings .rl b {
+  color: var(--carta);
+}
+.ms .savings .track {
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(11, 11, 12, 0.06);
+  overflow: hidden;
+}
+.ms .band.ink .savings .track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.ms .savings .fill {
+  height: 100%;
+  border-radius: 6px;
+}
+.ms .savings .fill.now {
+  width: 100%;
+  background: rgba(255, 92, 92, 0.22);
+  border: 1px solid rgba(255, 92, 92, 0.45);
+}
+.ms .savings .fill.right {
+  width: 40%;
+  background: rgba(83, 61, 252, 0.2);
+  border: 1px solid rgba(83, 61, 252, 0.55);
+}
+.ms .band.ink .savings .fill.right {
+  background: rgba(140, 165, 247, 0.22);
+  border-color: rgba(140, 165, 247, 0.6);
+}
+.ms .savings .delta {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.ms .band.carta .savings .delta {
+  color: var(--firma);
+}
+.ms .band.ink .savings .delta {
+  color: var(--lilla);
+}
+
+/* ---------- LAB · numeri grandi (case study) ---------- */
+.ms .statnum {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.ms .band.ink .statnum {
+  color: var(--carta);
+}
+.ms .band.carta .statnum {
+  color: var(--inchiostro);
+}
+
+/* ---------- LAB · grafico a barre con punto di svolta (il bivio) ---------- */
+.ms .inflect {
+  margin-top: 24px;
+}
+.ms .inflect .cap {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.ms .inflect .cap .s {
+  color: var(--ombra);
+}
+.ms .inflect .cap .c {
+  color: var(--lilla);
+}
+.ms .band.carta .inflect .cap .c {
+  color: var(--firma);
+}
+.ms .ichart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ms .ichart .bar-dim {
+  fill: rgba(201, 199, 221, 0.3);
+}
+.ms .band.carta .ichart .bar-dim {
+  fill: rgba(11, 11, 12, 0.3);
+}
+.ms .ichart .bar-on {
+  fill: var(--lilla);
+}
+.ms .band.carta .ichart .bar-on {
+  fill: var(--firma);
+}
+.ms .ichart .dot {
+  fill: var(--lilla);
+}
+.ms .band.carta .ichart .dot {
+  fill: var(--firma);
+}
+.ms .ichart .lab {
+  fill: var(--carta);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.ms .band.carta .ichart .lab {
+  fill: var(--inchiostro);
+}
+.ms .ichart .divider {
+  stroke: rgba(140, 165, 247, 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+.ms .band.carta .ichart .divider {
+  stroke: rgba(83, 61, 252, 0.22);
+}
+
+/* ---------- lista bullet colorata (senza / con) ---------- */
+.ms .blist {
+  list-style: none;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ms .blist li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+.ms .band.ink .blist li {
+  color: var(--testo-ink-2);
+}
+.ms .band.carta .blist li {
+  color: var(--testo-carta-2);
+}
+.ms .blist li .bd {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+.ms .blist.loss li .bd {
+  background: var(--anomalia);
+}
+.ms .blist.gain li .bd {
+  background: var(--lilla);
+}
+.ms .band.carta .blist.gain li .bd {
+  background: var(--firma);
+}
+
+/* ---------- LAB · timeline verticale delle fasi (01 / 02 / 03) ---------- */
+.ms .vtimeline {
+  position: relative;
+  margin-top: 34px;
+}
+.ms .vstep {
+  position: relative;
+  padding: 0 0 48px 92px;
+}
+.ms .vstep:last-child {
+  padding-bottom: 0;
+}
+.ms .vstep::before {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(140, 165, 247, 0.25);
+}
+.ms .band.carta .vstep::before {
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .vstep:last-child::before {
+  display: none;
+}
+.ms .vstep .dot {
+  position: absolute;
+  left: 20px;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--lilla);
+  box-shadow: 0 0 0 5px rgba(140, 165, 247, 0.14);
+  z-index: 2;
+}
+.ms .band.carta .vstep .dot {
+  background: var(--firma);
+  box-shadow: 0 0 0 5px rgba(83, 61, 252, 0.12);
+}
+.ms .vstep .num {
+  position: absolute;
+  left: 50px;
+  top: -14px;
+  z-index: 0;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-size: clamp(56px, 8vw, 98px);
+  line-height: 1;
+  color: rgba(140, 165, 247, 0.1);
+}
+.ms .band.carta .vstep .num {
+  color: rgba(83, 61, 252, 0.09);
+}
+.ms .vstep .vp,
+.ms .vstep h3,
+.ms .vstep .vsub,
+.ms .vstep .vlist,
+.ms .vstep .vnote {
+  position: relative;
+  z-index: 1;
+}
+.ms .vstep .vp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(140, 165, 247, 0.4);
+  color: var(--lilla);
+}
+.ms .band.carta .vstep .vp {
+  border-color: rgba(83, 61, 252, 0.4);
+  color: var(--firma);
+}
+.ms .vstep h3 {
+  font-size: clamp(20px, 2.7vw, 27px);
+  margin: 16px 0 4px;
+  max-width: 22ch;
+}
+.ms .vstep .vsub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lilla);
+}
+.ms .band.carta .vstep .vsub {
+  color: var(--firma);
+}
+.ms .vstep .vlist {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.ms .vstep .vlist li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.ms .band.ink .vstep .vlist li {
+  color: var(--testo-ink-3);
+}
+.ms .band.carta .vstep .vlist li {
+  color: var(--testo-carta-2);
+}
+.ms .vstep .vlist .dm {
+  color: var(--lilla);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.ms .band.carta .vstep .vlist .dm {
+  color: var(--firma);
+}
+.ms .vstep .vnote {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-size: 16px;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--surf-bd);
+  max-width: 48ch;
+}
+.ms .band.ink .vstep .vnote {
+  color: var(--testo-ink-3);
+}
+.ms .band.carta .vstep .vnote {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- term pages / playground ---------- */
+.ms .termtag,
+.ms .badge-madre {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+}
+.ms .termtag {
+  color: var(--firma);
+  background: rgba(83, 61, 252, 0.07);
+  border: 1px solid rgba(83, 61, 252, 0.28);
+  padding: 6px 12px;
+}
+.ms .badge-madre {
+  color: var(--lilla);
+  border: 1px solid var(--lilla);
+  padding: 5px 12px 5px 8px;
+}
+.ms .badge-madre svg {
+  width: 14px;
+  height: 14px;
+}
+.ms .crumbs {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ombra);
+  margin-bottom: 20px;
+}
+.ms .crumbs a {
+  color: var(--firma);
+}
+.ms .term-h1 {
+  font-size: clamp(44px, 8vw, 84px);
+  letter-spacing: -0.03em;
+  margin-top: 22px;
+}
+.ms .tldr {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(19px, 2.4vw, 26px);
+  line-height: 1.34;
+  max-width: 34ch;
+  margin-top: 18px;
+}
+.ms .band.carta .tldr {
+  color: var(--testo-carta-2);
+}
+.ms .band.ink .tldr {
+  color: var(--testo-ink-3);
+}
+.ms .defbox {
+  max-width: var(--read);
+  margin: 40px auto 0;
+  padding: 28px 32px;
+  border-radius: var(--r-m);
+  border: 1px solid var(--surf-bd);
+  border-left: 4px solid var(--firma);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+}
+.ms .defbox .k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--firma);
+}
+.ms .defbox p {
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.62;
+  margin-top: 12px;
+  color: var(--inchiostro);
+}
+.ms .readsec {
+  max-width: var(--read);
+  margin: 44px auto 0;
+}
+.ms .readsec p {
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.65;
+  color: var(--testo-carta-2);
+  margin-top: 12px;
+  max-width: 68ch;
+}
+.ms .howcard .n {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.ms .band.ink .howcard .n {
+  color: var(--lilla);
+}
+.ms .howcard h3 {
+  font-size: 18px;
+  margin: 10px 0 8px;
+}
+.ms .howcard p {
+  margin: 0;
+}
+.ms .isnot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 26px;
+}
+.ms .isnot .col {
+  padding: 24px;
+  border-radius: var(--r-m);
+}
+.ms .isnot .no {
+  background: var(--surf-bg);
+  border: 1px solid var(--surf-bd);
+  box-shadow: var(--surf-sh);
+}
+.ms .isnot .yes {
+  background: var(--surf-bg);
+  border: 1px solid rgba(83, 61, 252, 0.4);
+  box-shadow: var(--surf-sh);
+}
+.ms .isnot .t {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.ms .isnot .no .t {
+  color: var(--ombra);
+}
+.ms .isnot .yes .t {
+  color: var(--firma);
+}
+.ms .isnot ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.ms .isnot li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 11px;
+  font-size: 15px;
+  color: var(--inchiostro);
+}
+.ms .isnot .m {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.ms .isnot .no .m {
+  color: var(--anomalia);
+}
+.ms .isnot .yes .m {
+  color: var(--firma);
+}
+.ms .example {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-size: clamp(20px, 2.8vw, 30px);
+  line-height: 1.42;
+  color: var(--carta);
+  border-left: 2px solid var(--lilla);
+  padding-left: 26px;
+  max-width: 34ch;
+  margin-top: 22px;
+}
+.ms .rcard {
+  display: block;
+}
+.ms .rcard .term {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+}
+.ms .rcard p {
+  font-size: 13px;
+  color: var(--testo-carta-2);
+  margin-top: 6px;
+}
+.ms .mk {
+  background: linear-gradient(180deg, transparent 62%, var(--marker) 62%);
+  padding: 0 0.06em;
+}
+.ms .collaudo {
+  border-radius: var(--r-l);
+  border: 2px solid var(--marker);
+  background: var(--carta);
+  padding: clamp(24px, 4vw, 36px);
+  margin-top: 26px;
+  background-image:
+    linear-gradient(var(--grid-chiaro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-chiaro) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+}
+.ms .collaudo .top,
+.ms .collaudo .cta-row,
+.ms .collaudo .meta {
+  display: flex;
+  flex-wrap: wrap;
+}
+.ms .collaudo .top {
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+.ms .collaudo .ref,
+.ms .collaudo .tag,
+.ms .collaudo .meta {
+  font-family: var(--font-mono);
+}
+.ms .collaudo .ref {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .collaudo .tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--marker);
+  color: var(--inchiostro);
+  border-radius: 5px;
+  padding: 4px 9px;
+  font-weight: 600;
+}
+.ms .collaudo h3 {
+  font-size: clamp(22px, 3.2vw, 30px);
+  margin: 14px 0 10px;
+  color: var(--inchiostro);
+}
+.ms .collaudo p {
+  color: var(--testo-carta-2);
+}
+.ms .collaudo .meta {
+  gap: 22px;
+  margin: 18px 0;
+  font-size: 12px;
+  color: var(--ombra);
+}
+.ms .collaudo .meta b {
+  color: var(--inchiostro);
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+.ms .livelli {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0;
+}
+.ms .livelli .l {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(11, 11, 12, 0.1);
+}
+.ms .livelli .l.on {
+  background: var(--marker);
+}
+.ms .prod {
+  border-radius: var(--r-m);
+  padding: 20px;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+}
+.ms .prod .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.ms .prod h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+.ms .prod p {
+  font-size: 13px;
+  color: var(--testo-carta-2);
+  margin-top: 6px;
+}
+.ms .nota {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ombra);
+  margin-top: 18px;
+}
+@media (max-width: 860px) {
+  .ms .isnot {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- motion ---------- */
+.ms .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+}
+.ms .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
