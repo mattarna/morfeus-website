@@ -1644,12 +1644,12 @@
 }
 .d26 .foot-grid h4 {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--ombra);
-  margin-bottom: 16px;
+  color: var(--lilla);
+  margin-bottom: 18px;
 }
 .d26 .foot-grid a,
 .d26 .foot-grid button.flink {
@@ -1660,9 +1660,9 @@
   cursor: pointer;
   text-align: left;
   font-family: var(--font-body);
-  font-size: 16.5px;
-  color: var(--testo-ink-2);
-  line-height: 2.1;
+  font-size: 17.5px;
+  color: var(--carta);
+  line-height: 2.05;
   transition: color 0.25s;
 }
 .d26 .foot-grid a:hover,
@@ -1686,18 +1686,18 @@
 }
 .d26 .foot-meta {
   margin-top: 18px;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--testo-ink-2);
   line-height: 1.9;
 }
 .d26 .foot-meta .mail {
   color: var(--carta);
-  font-size: 19px;
+  font-size: 21px;
 }
 .d26 .foot-legal {
   margin-top: 26px;
-  font-size: 13px;
-  color: var(--ombra);
+  font-size: 14px;
+  color: var(--testo-ink-3);
   line-height: 1.8;
 }
 .d26 .foot-legal .love {
@@ -1819,4 +1819,12 @@
   background-image:
     linear-gradient(rgba(228, 231, 240, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(228, 231, 240, 0.045) 1px, transparent 1px);
+}
+
+/* il rail si spegne oltre l'ultima sezione: sul footer non e' un indice,
+   e' un menu di troppo appoggiato sulla prima colonna */
+.d26 .demo-rail[data-oltre="true"] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
 }

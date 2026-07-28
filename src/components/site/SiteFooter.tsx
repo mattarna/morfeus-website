@@ -78,9 +78,9 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
   const base = `/${locale}`;
   const year = new Date().getFullYear();
   const colTitle =
-    "font-plex text-[11px] uppercase tracking-[0.22em] text-lilla/70 font-medium";
+    "font-plex text-[13px] uppercase tracking-[0.22em] text-lilla font-semibold";
   const linkCls =
-    "font-satoshi text-[15px] text-carta/75 hover:text-carta transition-colors w-fit";
+    "text-[17px] text-carta/90 hover:text-carta transition-colors w-fit";
 
   return (
     <footer className="relative overflow-hidden text-carta" style={GRID_BG}>
@@ -139,7 +139,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
 
           {/* Col 4 — Contatto + firma + copyright */}
           <div className="flex flex-col gap-6 md:gap-8 col-span-2 md:col-span-1 md:items-end md:text-right">
-            <p className="font-plex text-[11px] md:text-[12px] tracking-[0.14em] uppercase font-semibold">
+            <p className="font-plex text-[13px] tracking-[0.14em] uppercase font-semibold">
               <span className="text-anomalia">{t.quote.a}</span>
               <span className="text-ombra"> {t.quote.or} </span>
               <span className="text-lilla">{t.quote.b}</span>
@@ -149,21 +149,21 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
             <div className="flex flex-col gap-2 md:items-end mt-2">
               <a
                 href="mailto:hello@morfeushub.com"
-                className="font-clash text-[17px] text-carta hover:text-lilla transition-colors"
+                className="font-clash text-[20px] text-carta hover:text-lilla transition-colors"
               >
                 hello@morfeushub.com
               </a>
-              <span className="font-satoshi text-[14px] text-carta/60">{t.loc}</span>
+              <span className="text-[16px] text-carta/75">{t.loc}</span>
               <span className="font-plex text-[11px] text-ombra tracking-wide">
                 P.IVA 14209210963
               </span>
             </div>
 
             <div className="flex flex-col items-start md:items-end gap-2 mt-8">
-              <span className="font-plex text-[11px] text-ombra tracking-wide">
+              <span className="font-plex text-[13px] text-carta/60 tracking-wide">
                 &copy;{year} Morfeus &middot; {t.copyright}
               </span>
-              <span className="font-plex text-[11px] text-carta/50 flex items-center gap-1.5">
+              <span className="font-plex text-[13px] text-carta/60 flex items-center gap-1.5">
                 <span className="text-firma">&#x1F49C;</span>
                 <span className="italic">{t.made}</span>
               </span>
@@ -195,7 +195,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
       {/* System Operational */}
       <div className="absolute right-6 md:right-10 bottom-5 z-20 flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-ok animate-pulse" />
-        <span className="font-plex text-[10px] uppercase tracking-[0.18em] text-ombra">
+        <span className="font-plex text-[12px] uppercase tracking-[0.18em] text-carta/60">
           {t.status}
         </span>
       </div>

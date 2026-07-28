@@ -2,6 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 /**
+ * ALLINEATO ALLA HOME (2026-07-28). Le voci, la tipografia della nav e
+ * l'etichetta della CTA sono ora quelle della barra della home-2026:
+ * stesse sei destinazioni (senza "Home", che si raggiunge dal logo),
+ * corpo a 16px maiuscolo con tracking .06em invece del mono a 12, e
+ * "Prenota una chiamata" al posto di "Prova il ROIometro".
+ *
+ * UNA DIFFERENZA RESTA, ed e' voluta: qui la barra ha un fondo velato
+ * e un filetto, mentre sulla home e' trasparente. Sulla home il fondo
+ * cambia fascia per fascia e la barra si ricolora di conseguenza; su
+ * una pagina che scorre sotto, una barra trasparente lascia il testo
+ * che passa dietro alle voci del menu. Se la vuoi trasparente anche
+ * qui, si toglie una riga.
+ *
  * Official-site header — brand 2026 ("Progettato. Provato.").
  * Fixed inchiostro bar + blur, mono mark watermark + wordmark, real cross-page
  * nav (sito madre), firma CTA. Server component (crawlable).
@@ -12,7 +25,6 @@ import Link from "next/link";
 const COPY = {
   it: {
     nav: [
-      ["home-2026", "Home"],
       ["chi-siamo", "Chi siamo"],
       ["metodo", "Metodo"],
       ["forge", "MARF"],
@@ -20,12 +32,11 @@ const COPY = {
       ["casi", "Casi"],
       ["insights", "Insights"],
     ],
-    cta: "Prova il ROIometro",
+    cta: "Prenota una chiamata",
     home: "Morfeus, home",
   },
   en: {
     nav: [
-      ["home-2026", "Home"],
       ["chi-siamo", "About"],
       ["metodo", "Method"],
       ["forge", "MARF"],
@@ -33,7 +44,7 @@ const COPY = {
       ["casi", "Cases"],
       ["insights", "Insights"],
     ],
-    cta: "Try the ROIometro",
+    cta: "Book a call",
     home: "Morfeus, home",
   },
 } as const;
@@ -43,7 +54,7 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
   const base = `/${locale}`;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-[60px] border-b border-riga-scuro bg-inchiostro/85 text-carta backdrop-blur-[14px]">
+    <header className="fixed inset-x-0 top-0 z-50 h-[68px] border-b border-riga-scuro/70 bg-inchiostro/80 text-carta backdrop-blur-[14px]">
       <nav
         className="mx-auto flex h-full max-w-[1180px] items-center justify-between gap-6 px-4 md:px-10"
         aria-label="Principale"
@@ -66,12 +77,12 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
         </Link>
 
         {/* Nav reale cross-pagina */}
-        <div className="hidden items-center gap-[26px] lg:gap-[30px] font-plex text-[12px] uppercase tracking-[0.14em] text-carta/75 md:flex">
+        <div className="hidden items-center gap-[clamp(22px,2.2vw,34px)] text-[16px] uppercase tracking-[0.06em] text-carta/75 lg:flex">
           {t.nav.map(([slug, label]) => (
             <Link
               key={label}
               href={slug ? `${base}/${slug}` : base}
-              className="whitespace-nowrap transition-colors hover:text-carta"
+              className="whitespace-nowrap opacity-90 transition-opacity hover:opacity-100"
             >
               {label}
             </Link>
@@ -81,7 +92,7 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
         {/* CTA firma */}
         <a
           href={`${base}/roiometro`}
-          className="rounded-[8px] bg-firma px-[18px] py-[11px] font-plex text-[12px] font-semibold text-white transition-colors hover:bg-firma-hover"
+          className="btn btn-1"
         >
           {t.cta}
         </a>

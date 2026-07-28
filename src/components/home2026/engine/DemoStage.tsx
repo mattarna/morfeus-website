@@ -67,7 +67,14 @@ export function DemoStage({
     <>
       {header}
 
-      <nav className="demo-ui demo-rail" aria-label="Sezioni">
+      {/* Il rail e' l'indice delle sezioni del deck. Oltre l'ultimo punto
+          c'e' il footer, che sezione non e': li' il rail sconfinava sopra
+          la prima colonna e sembrava un secondo menu. Si spegne. */}
+      <nav
+        className="demo-ui demo-rail"
+        aria-label="Sezioni"
+        data-oltre={currentIndex > (points[points.length - 1]?.range[1] ?? 99)}
+      >
         {points.map((p) => (
           <button
             key={p.index}
