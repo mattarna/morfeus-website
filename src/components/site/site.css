@@ -21,6 +21,14 @@
   --grid-chiaro: rgba(83, 61, 252, 0.04);
   --grid-scuro: rgba(169, 156, 255, 0.055);
   --grid: 36px;
+  /* Testi secondari e marker: erano hex cablati sparsi in questo file
+     (34 occorrenze). Tokenizzati a parita' di valore — la resa di
+     default non cambia — cosi' una palette alternativa puo' spostarli
+     senza dover riscrivere ogni selettore. */
+  --testo-carta-2: #34324a; /* testo secondario sulle fasce carta */
+  --testo-ink-2: #c6c4d8; /* testo secondario sulle fasce ink */
+  --testo-ink-3: #c9c7dd; /* testo terziario sulle fasce ink */
+  --marker: #ffe14d; /* evidenziatore giallo */
   --font-display: var(--font-clash), var(--font-outfit), system-ui, sans-serif;
   --font-body: var(--font-satoshi), var(--font-dm-sans), system-ui, sans-serif;
   --font-emph: var(--font-playfair), Georgia, serif;
@@ -125,10 +133,10 @@
   max-width: 58ch;
 }
 .ms .band.carta .lead {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .band.ink .lead {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
 }
 .ms .emph {
   font-family: var(--font-emph);
@@ -230,10 +238,10 @@
   margin-top: 8px;
 }
 .ms .band.carta .card p {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .band.ink .card p {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
 }
 
 /* ---------- griglie ---------- */
@@ -279,7 +287,7 @@
 }
 .ms .hero .copy {
   font-size: clamp(15px, 1.8vw, 17.5px);
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
   max-width: 56ch;
   margin-top: 20px;
 }
@@ -328,7 +336,7 @@
   }
 }
 .ms .measure .copy p {
-  color: #34324a;
+  color: var(--testo-carta-2);
   font-size: 15.5px;
   margin-top: 14px;
   max-width: 46ch;
@@ -368,7 +376,7 @@
   color: var(--ok);
 }
 .ms .cell .l {
-  color: #34324a;
+  color: var(--testo-carta-2);
   font-size: 13px;
   margin-top: 8px;
 }
@@ -397,7 +405,7 @@
 .ms .def .note {
   font-family: var(--font-emph);
   font-style: italic;
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
   margin-top: 16px;
   font-size: 16px;
 }
@@ -428,7 +436,7 @@
 }
 .ms .cat {
   margin-top: 30px;
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
   font-size: 15.5px;
   max-width: 60ch;
 }
@@ -488,7 +496,7 @@
   margin-top: 6px;
 }
 .ms .mem .bio {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
   font-size: 13.5px;
   margin-top: 10px;
 }
@@ -522,7 +530,7 @@
 .ms .caso .who {
   margin-top: 16px;
   font-size: 13.5px;
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .caso .who b {
   color: var(--inchiostro);
@@ -560,7 +568,7 @@
   margin: 12px auto 0;
 }
 .ms .ctaq p {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
   max-width: 48ch;
   margin: 16px auto 0;
   font-size: 15.5px;
@@ -576,7 +584,7 @@
 
 /* ---------- fix: .cat leggibile anche su carta ---------- */
 .ms .band.carta .cat {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .band.carta .cat b {
   color: var(--inchiostro);
@@ -606,10 +614,10 @@
   max-width: 60ch;
 }
 .ms .band.ink .compound {
-  color: #c9c7dd;
+  color: var(--testo-ink-3);
 }
 .ms .band.carta .compound {
-  color: #34324a;
+  color: var(--testo-carta-2);
   border-left-color: var(--firma);
 }
 
@@ -754,10 +762,10 @@
   line-height: 1.4;
 }
 .ms .band.carta .curve-card li {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .band.ink .curve-card li {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
 }
 .ms .curve-card li .dot {
   width: 6px;
@@ -1017,10 +1025,10 @@
   line-height: 1.4;
 }
 .ms .band.ink .blist li {
-  color: #c6c4d8;
+  color: var(--testo-ink-2);
 }
 .ms .band.carta .blist li {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .blist li .bd {
   width: 6px;
@@ -1149,10 +1157,10 @@
   line-height: 1.45;
 }
 .ms .band.ink .vstep .vlist li {
-  color: #c9c7dd;
+  color: var(--testo-ink-3);
 }
 .ms .band.carta .vstep .vlist li {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .vstep .vlist .dm {
   color: var(--lilla);
@@ -1172,10 +1180,10 @@
   max-width: 48ch;
 }
 .ms .band.ink .vstep .vnote {
-  color: #c9c7dd;
+  color: var(--testo-ink-3);
 }
 .ms .band.carta .vstep .vnote {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 
 /* ---------- term pages / playground ---------- */
@@ -1230,10 +1238,10 @@
   margin-top: 18px;
 }
 .ms .band.carta .tldr {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .band.ink .tldr {
-  color: #c9c7dd;
+  color: var(--testo-ink-3);
 }
 .ms .defbox {
   max-width: var(--read);
@@ -1265,7 +1273,7 @@
 .ms .readsec p {
   font-size: clamp(15px, 1.7vw, 17px);
   line-height: 1.65;
-  color: #34324a;
+  color: var(--testo-carta-2);
   margin-top: 12px;
   max-width: 68ch;
 }
@@ -1361,16 +1369,16 @@
 }
 .ms .rcard p {
   font-size: 13px;
-  color: #34324a;
+  color: var(--testo-carta-2);
   margin-top: 6px;
 }
 .ms .mk {
-  background: linear-gradient(180deg, transparent 62%, #ffe14d 62%);
+  background: linear-gradient(180deg, transparent 62%, var(--marker) 62%);
   padding: 0 0.06em;
 }
 .ms .collaudo {
   border-radius: var(--r-l);
-  border: 2px solid #ffe14d;
+  border: 2px solid var(--marker);
   background: var(--carta);
   padding: clamp(24px, 4vw, 36px);
   margin-top: 26px;
@@ -1406,7 +1414,7 @@
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: #ffe14d;
+  background: var(--marker);
   color: var(--inchiostro);
   border-radius: 5px;
   padding: 4px 9px;
@@ -1418,7 +1426,7 @@
   color: var(--inchiostro);
 }
 .ms .collaudo p {
-  color: #34324a;
+  color: var(--testo-carta-2);
 }
 .ms .collaudo .meta {
   gap: 22px;
@@ -1445,7 +1453,7 @@
   background: rgba(20, 19, 46, 0.1);
 }
 .ms .livelli .l.on {
-  background: #ffe14d;
+  background: var(--marker);
 }
 .ms .prod {
   border-radius: var(--r-m);
@@ -1468,7 +1476,7 @@
 }
 .ms .prod p {
   font-size: 13px;
-  color: #34324a;
+  color: var(--testo-carta-2);
   margin-top: 6px;
 }
 .ms .nota {
