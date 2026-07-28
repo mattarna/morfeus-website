@@ -1,199 +1,318 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { SiteShell } from "@/components/site";
+import "@/components/pagine/kit.css";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { ORGANIZATION_ID, WEBSITE_ID, SITE_URL } from "@/lib/seo/entity-ids";
-import { teamMembers } from "@/app/lib/team-data";
-import { SiteShell } from "@/components/site";
+
+/* ============================================================
+   CHI SIAMO. Rifatta sul copy approvato 2026-07-28.
+   ------------------------------------------------------------
+   RITMO del brief: identita', criterio, personalita', persone,
+   prova, azione. Le fasce seguono la direzione visiva riga per riga,
+   compresa la CTA, che qui il brief vuole "chiara o neutra" ed e'
+   l'unica pagina che chiude sulla carta.
+
+   I RUOLI dei quattro founder sono quelli del copy approvato (CEO &
+   Growth, Head of Product & Delivery, Operations & Partnership,
+   CTO), non quelli generici di src/app/lib/team-data.ts, che dice
+   ancora "Co-founder" per tre persone su quattro. Le FOTO invece
+   arrivano da li': sono le stesse del resto del sito.
+   ============================================================ */
 
 type Props = { params: { locale: string } };
 
-const FOUNDER_SLUGS = ["matteo", "alex", "simone", "matteo-alvazzi"] as const;
+const FOTO = {
+  arnaboldi: "/images/team/Profile-matt.jpg",
+  carofiglio: "/images/team/Profile-alex.webp",
+  zin: "/images/team/Profile-Simo.webp",
+  alvazzi: "/images/team/Profile-matteo-alvazzi.webp",
+} as const;
 
 const COPY = {
   it: {
-    metaTitle: "Chi siamo — Morfeus",
+    metaTitle: "Chi siamo · AI Operating Partner | Morfeus",
     metaDesc:
-      "Morfeus è l'AI Operating Partner delle aziende in scaling: troviamo i Value Leak, costruiamo i sistemi che recuperano margine e formiamo i team. Misurato in euro, ogni mese.",
+      "Morfeus è un AI Operating Partner: entriamo nei processi dove valore, tempo e sapere si disperdono, costruiamo i sistemi che li rendono utilizzabili e lavoriamo col team finché diventano operatività.",
     hero: {
       eye: "Chi siamo",
-      h1a: "Recuperiamo il ",
-      h1emph: "margine",
-      h1b: " che la tua azienda perde mentre scala.",
-      copy: "Morfeus entra nelle aziende in scaling come AI Operating Partner. Troviamo dove si perde valore ogni giorno, i Value Leak, costruiamo i sistemi che lo recuperano e formiamo chi resta. Il risultato si riporta al CEO ogni mese: in euro, misurato, non promesso.",
-      lame: "«Scaling doesn't fix your problems, it multiplies them.»",
-      cta1: "Calcola cosa perdi",
-      cta2: "Il nostro metodo",
-      proof: { pre: "▸ PROVA · ", b1: "60+ sistemi in produzione", mid: " · margine recuperato per i clienti ", b2: "€4M+", post: " · dal 2023" },
-    },
-    numeri: {
-      eye: "La prova, in numeri",
-      h2a: "Misuriamo il ",
-      h2emph: "valore",
-      h2b: ", non l'attività.",
-      pa: "Ogni mese il CEO riceve un ",
-      pb: "Value Report",
-      pc: ": il valore generato in euro, non un elenco di cose fatte. I criteri si definiscono a monte e si verificano sul campo. È quello che rende il rinnovo una non-decisione.",
-      cells: [
-        { k: "Formazione", n: "2.500+", l: "persone formate sull'AI applicata" },
-        { k: "Produzione", n: "60+", l: "sistemi in produzione, non prototipi" },
-        { k: "Valore recuperato", n: "€4M+", l: "margine recuperato per i clienti", gain: true },
-        { k: "Sul campo", n: "dal 2023", l: "Operating Partner, dentro le aziende" },
-      ],
+      h1a: "Non ci interessa parlare di AI. Ci interessa ",
+      h1emph: "farla funzionare",
+      h1b: ".",
+      copy: "Morfeus è un AI Operating Partner. Entriamo nei processi in cui valore, tempo e sapere si stanno disperdendo, costruiamo sistemi che li rendono utilizzabili e lavoriamo con il team finché diventano parte dell'operatività.",
+      micro: "Sì, anche dopo che la demo ha smesso di fare effetto.",
     },
     cosa: {
-      eye: "Cosa siamo",
-      h2a: "Un Operating Partner, non un ",
-      h2emph: "fornitore",
+      eye: "Un partner operativo, non un fornitore di tool",
+      h2a: "Mettiamo insieme strategia, ",
+      h2emph: "sistemi e persone",
       h2b: ".",
-      state: "Restiamo dentro i processi, con ownership diretta sui risultati.",
-      note: "Vediamo dove perde la tua azienda, anche dove tu non puoi.",
-      rows: [
-        { neg: "non un'AI agency", a: "Un ", b: "team operativo embedded", c: " che lavora dentro la tua azienda." },
-        { neg: "non a progetto", a: "Una ", b: "presenza continuativa", c: ", misurata ogni mese sui risultati." },
-        { neg: "non un vendor", a: "Valutati su ", b: "quanto valore generiamo", c: ", in euro." },
+      p1: "Un'azienda non cambia perché compra un software. Cambia quando identifica un problema reale, costruisce un sistema che lo risolve e mette le persone nelle condizioni di usarlo ogni giorno.",
+      p2: "Morfeus lavora su tutte e tre le parti. Troviamo il Value Leak, progettiamo il sistema AI o operativo che lo chiude e formiamo le persone che lo renderanno utile nel tempo.",
+      p3: "Non consegniamo una strategia da presentare al board. Costruiamo ciò che deve funzionare dentro l'azienda.",
+      vertici: ["Strategia", "Sistemi", "Persone"],
+      callout:
+        "Una demo che funziona davanti a tre persone in call non è ancora un sistema. È una demo che funziona davanti a tre persone in call.",
+    },
+    perche: {
+      eye: "Il problema non è mai solo tecnologico",
+      h2a: "Il valore si perde nei passaggi ",
+      h2emph: "che nessuno guarda",
+      h2b: ".",
+      p1: "Si perde quando una persona deve rifare un lavoro che esiste già. Quando un'informazione resta bloccata in una chat, in un file o nella testa di chi è più esperto. Quando marketing, vendite, amministrazione e delivery lavorano su versioni diverse della stessa realtà.",
+      p2: "Ogni perdita, presa da sola, sembra gestibile. Insieme rallentano le decisioni, sovraccaricano il team e comprimono il margine.",
+      p3: "Noi le chiamiamo Value Leak. Perché ciò che non ha un nome e un numero non viene mai risolto davvero.",
+      frammenti: [
+        { r: "Lavoro rifatto", d: "Esisteva già", m: "nessuno lo sapeva" },
+        { r: "Informazione", d: "Ferma in una chat", m: "irrecuperabile" },
+        { r: "Sapere", d: "Nella testa di uno", m: "non trasferibile" },
+        { r: "Reparti", d: "Versioni diverse", m: "della stessa realtà" },
       ],
-      cata: "La categoria che ci diamo è ",
-      catb: "Control System as a Service",
-      catc: ": sistemi in produzione, non slide.",
     },
-    offerte: {
-      eye: "Le due offerte",
-      h2a: "Entriamo noi. Oppure formiamo i ",
-      h2emph: "tuoi",
+    criterio: {
+      eye: "Tre convinzioni che guidano il nostro lavoro",
+      h2a: "Il criterio prima del ",
+      h2emph: "codice",
       h2b: ".",
-      lead: "Due porte, la stessa disciplina: quello che insegniamo è quello che pratichiamo ogni giorno nelle aziende clienti.",
-      c1: { ck: "Offerta 1 · Operating Partner", ct: "Entriamo noi.", pa: "Sistemi e agenti AI in produzione dentro l'azienda, col nome sui risultati. Il valore si accumula come ", pb: "MARF", pc: ", l'infrastruttura proprietaria che migliora a ogni progetto, ed è misurato mese su mese nel Value Report.", foot: "SISTEMI · AGENTI · MARF CHE SI ACCUMULA" },
-      c2: { ck: "Offerta 2 · Formazione aziendale", ct: "Formiamo i tuoi.", pa: "Workshop, policy AI e la figura dell'", pb: "AI Champion", pc: " interno: una persona per reparto che diventa autonoma e diffonde la pratica. La stessa dottrina che ha già formato 2.500+ persone, portata dentro i tuoi team.", foot: "WORKSHOP · POLICY AI · AI CHAMPION · 2.500+ FORMATI" },
-    },
-    founder: {
-      eye: "Le persone",
-      h2a: "Quattro founder, una sola ",
-      h2emph: "accountability",
-      h2b: ".",
-      bios: {
-        matteo: { role: "CEO & Co-Founder", bio: "Tiene insieme visione e mercato. È la voce di Morfeus verso l'esterno." },
-        alex: { role: "Co-Founder · AI Architecture", bio: "Disegna l'architettura dei sistemi in produzione. Un modello che non gira non esiste." },
-        simone: { role: "Co-Founder · Operations", bio: "Porta ogni progetto davvero in produzione, dentro i processi del cliente." },
-        "matteo-alvazzi": { role: "CTO & Partner", bio: "Guida tecnologia e standard. Trasforma l'AI in infrastruttura affidabile." },
-      } as Record<string, { role: string; bio: string }>,
-    },
-    casi: {
-      eye: "Il patto, reso formato",
-      h2a: "Ogni cliente è un caso ",
-      h2emph: "schedato",
-      h2b: ".",
-      lead: "Non testimonianze generiche: evidenze, numeri di partenza, risultato misurato. Se porta il timbro, è stato verificato sul campo.",
-      stamp: "Confermato",
-      open: "Apri il dossier ▸",
-      all: "Vedi tutti i casi ▸",
-      cards: [
-        { meta: "CASO #049 · BRAINIAC · TESORERIA RICONCILIATA", q: "«Non è fatturato che ti manca: è l'incassato che nessuno stava inseguendo.»", who: { b: "65.000€", rest: " recuperati nel primo trimestre · -18gg sui tempi d'incasso" } },
-        { meta: "CASO #016 · CYBERANGELS SALES ADVISOR", q: "«I tuoi venditori smettono di evitare il servizio più redditizio perché non sanno spiegarlo: ora lo aprono in un clic.»", who: { b: "70%+", rest: " delle call con la sicurezza dentro · ticket medio +30%" } },
+      colonne: [
+        { n: "01", t: "L'AI non risolve un processo che non hai capito.", p: "Prima del tool c'è sempre una domanda: dove si sta perdendo valore? Se non sappiamo rispondere, non ha senso costruire niente." },
+        { n: "02", t: "Le persone non sono il collo di bottiglia.", p: "Le persone che conoscono il lavoro sono la fonte del sistema. L'AI serve a rendere il loro sapere disponibile, replicabile e più utile a tutto il team. Non a sostituirle." },
+        { n: "03", t: "Se non si vede nel lavoro, non è un risultato.", p: "Un progetto non vale perché una demo è andata bene. Vale quando entra nei processi reali, viene adottato dalle persone e produce un miglioramento che si può verificare." },
       ],
+    },
+    allarmi: {
+      eye: "Cose che ci mettono subito in allarme",
+      frasi: ["«Basta un prompt.»", "«L'AI fa tutto.»", "«Poi la usano da soli.»"],
+      p: "Di solito è il momento in cui iniziano i problemi. Un sistema utile ha un processo, un contesto, persone coinvolte e un modo per capire quando sta sbagliando. Il resto è entusiasmo. Che va benissimo, ma non paga le inefficienze.",
+    },
+    standard: {
+      eye: "Non chiediamo fiducia cieca",
+      h2a: "Un sistema affidabile sa anche dire: ",
+      h2emph: "non ho abbastanza dati",
+      h2b: ".",
+      p1: "L'AI può produrre una risposta credibile anche quando non ha elementi sufficienti per farlo. Per questo non costruiamo sistemi che riempiono i vuoti con sicurezza apparente.",
+      p2: "Lavoriamo perché ogni output abbia contesto, regole e un modo per essere verificato. Quando un dato manca, il sistema deve renderlo visibile. Quando una decisione ha bisogno di una persona, deve lasciarla alla persona.",
+      p3: "Questa è la differenza tra automazione e responsabilità.",
+      testaNo: "Dato insufficiente",
+      testaSi: "Dato sufficiente",
+      righe: [
+        ["Risponde comunque, con sicurezza", "Dichiara cosa manca"],
+        ["Riempie i vuoti con plausibilità", "Mostra il contesto su cui ha deciso"],
+        ["Nessun modo di verificarlo", "Regole visibili, output controllabile"],
+        ["Decide al posto della persona", "Lascia la decisione a chi risponde"],
+      ],
+      micro: "L'AI che sembra sicura di tutto è spesso quella da controllare di più. Vale anche per le persone, ma con loro è più facile parlarne.",
+    },
+    persone: {
+      eye: "Chi ci mette la faccia",
+      h2a: "Un team che unisce business, ",
+      h2emph: "operations e prodotto",
+      h2b: ".",
+      lista: [
+        { nome: "Matteo Arnaboldi", ruolo: "CEO & Growth", foto: FOTO.arnaboldi, bio: "Trasforma problemi vaghi in priorità su cui vale la pena mettere persone, tempo e budget. Ha una certa allergia alle frasi che iniziano con «dobbiamo fare qualcosa con l'AI»." },
+        { nome: "Alex Carofiglio", ruolo: "Head of Product & Delivery", foto: FOTO.carofiglio, bio: "Se una cosa non arriva in produzione, per lui non è ancora una cosa. È, al massimo, una promessa con una bella interfaccia." },
+        { nome: "Simone Zin", ruolo: "Operations & Partnership", foto: FOTO.zin, bio: "Tiene insieme persone, partnership e i dettagli che fanno la differenza tra «partiamo» e «funziona». Il secondo è notoriamente più difficile." },
+        { nome: "Matteo Alvazzi", ruolo: "CTO", foto: FOTO.alvazzi, bio: "Costruisce l'architettura. Di solito intercetta il problema prima che diventi una call urgente. Se non lo intercetta, probabilmente è già al lavoro per risolverlo." },
+      ],
+    },
+    prova: {
+      eye: "Non chiediamo di essere creduti",
+      h2a: "Un sistema va giudicato da ciò che ",
+      h2emph: "cambia nel lavoro",
+      h2b: ".",
+      p1: "Per questo raccontiamo i casi partendo dal problema, non dalla tecnologia usata. Mostriamo il Value Leak, il sistema costruito e ciò che è cambiato per il team e per l'azienda.",
+      p2: "Non tutti i problemi sono uguali. Il criterio con cui li affrontiamo sì.",
+      readout: "Estratto · dossier reale",
+      stato: "Confermato",
+      passi: ["Value leak", "Sistema", "Valore"],
+      stazioni: [
+        "Il sapere tecnico restava separato da chi doveva usarlo.",
+        "Le informazioni diventano un brief operativo, con regole e controlli.",
+        "Meno passaggi. Più autonomia. Una conversazione che parte dal contesto giusto.",
+      ],
+      cta: "Vedi i casi reali",
     },
     cta: {
-      eye: "La misura, prima di tutto",
-      h2a: "Il problema che non vedi ha un ",
-      h2emph: "prezzo",
+      eye: "Il primo confronto non è un pitch",
+      h2a: "Prima capiamo dove si sta perdendo valore. Poi decidiamo se ",
+      h2emph: "possiamo recuperarlo",
       h2b: ".",
-      p: "Il primo passo non è un preventivo. È capire, in euro, dove la tua azienda perde valore ogni giorno.",
-      cta1: "Calcolalo ▸",
-      cta2: "Parla con noi",
+      p: "Prenota una call di diagnosi. Guardiamo il problema, il processo e le persone coinvolte. Se esiste un Value Leak su cui possiamo intervenire, saprai quale sistema ha senso costruire e perché.",
+      btn: "Prenota una call di diagnosi",
+    },
+    faq: {
+      eye: "Domande",
+      titolo: "Morfeus, in chiaro.",
+      voci: [
+        { q: "Chi è Morfeus?", a: "Morfeus è un AI Operating Partner che aiuta le aziende a individuare perdite operative di valore, costruire sistemi AI e rendere le persone autonome nell'usarli dentro i processi reali." },
+        { q: "Cosa fa Morfeus?", a: "Morfeus parte dai Value Leak nei processi aziendali, progetta sistemi AI e operativi per ridurli, forma il team e misura nel tempo il valore recuperato." },
+        { q: "Cos'è un AI Operating Partner?", a: "Un AI Operating Partner non si limita a consigliare una tecnologia. Lavora insieme all'azienda per identificare un problema operativo, costruire il sistema che lo risolve e renderlo parte del lavoro quotidiano." },
+        { q: "Morfeus sostituisce le persone con l'AI?", a: "No. Morfeus usa l'AI per togliere lavoro inefficiente, rendere il know-how disponibile e aumentare l'autonomia delle persone. Il team resta centrale nella progettazione e nell'evoluzione dei sistemi." },
+      ],
     },
   },
   en: {
-    metaTitle: "About — Morfeus",
+    metaTitle: "About us · AI Operating Partner | Morfeus",
     metaDesc:
-      "Morfeus is the AI Operating Partner for scaling companies: we find the Value Leaks, build the systems that recover margin, and train the teams. Measured in euros, every month.",
+      "Morfeus is an AI Operating Partner: we go into the workflows where value, time and know-how leak away, build the systems that make them usable and work with the team until they become operations.",
     hero: {
       eye: "About us",
-      h1a: "We recover the ",
-      h1emph: "margin",
-      h1b: " your company loses as it scales.",
-      copy: "Morfeus embeds into scaling companies as an AI Operating Partner. We find where value leaks every day, build the systems that recover it, and train the people who stay. The result is reported to the CEO every month: in euros, measured, not promised.",
-      lame: "«Scaling doesn't fix your problems, it multiplies them.»",
-      cta1: "Calculate what you lose",
-      cta2: "Our method",
-      proof: { pre: "▸ PROOF · ", b1: "60+ systems in production", mid: " · margin recovered for clients ", b2: "€4M+", post: " · since 2023" },
-    },
-    numeri: {
-      eye: "The proof, in numbers",
-      h2a: "We measure ",
-      h2emph: "value",
-      h2b: ", not activity.",
-      pa: "Every month the CEO receives a ",
-      pb: "Value Report",
-      pc: ": the value generated in euros, not a list of things done. Criteria are set upfront and verified in the field. It's what makes renewal a non-decision.",
-      cells: [
-        { k: "Training", n: "2,500+", l: "people trained on applied AI" },
-        { k: "Production", n: "60+", l: "systems in production, not prototypes" },
-        { k: "Value recovered", n: "€4M+", l: "margin recovered for clients", gain: true },
-        { k: "In the field", n: "since 2023", l: "Operating Partner, inside companies" },
-      ],
+      h1a: "We are not interested in talking about AI. We are interested in ",
+      h1emph: "making it work",
+      h1b: ".",
+      copy: "Morfeus is an AI Operating Partner. We go into the workflows where value, time and know-how are leaking away, build systems that make them usable and work with the team until they become part of day-to-day operations.",
+      micro: "Yes, even after the demo has stopped being impressive.",
     },
     cosa: {
-      eye: "What we are",
-      h2a: "An Operating Partner, not a ",
-      h2emph: "vendor",
+      eye: "An operating partner, not a tool vendor",
+      h2a: "We bring together strategy, ",
+      h2emph: "systems and people",
       h2b: ".",
-      state: "We stay inside the processes, with direct ownership of the results.",
-      note: "We see where your company leaks, even where you can't.",
-      rows: [
-        { neg: "not an AI agency", a: "An ", b: "embedded operating team", c: " working inside your company." },
-        { neg: "not project-based", a: "A ", b: "continuous presence", c: ", measured every month on results." },
-        { neg: "not a vendor", a: "Judged on ", b: "how much value we generate", c: ", in euros." },
+      p1: "A company does not change because it buys software. It changes when it identifies a real problem, builds a system that solves it and gives people the conditions to use it every day.",
+      p2: "Morfeus works across all three. We find the Value Leak, design the AI or operating system that closes it and train the people who will keep it useful over time.",
+      p3: "We do not hand over a strategy for the board to discuss. We build what needs to work inside the company.",
+      vertici: ["Strategy", "Systems", "People"],
+      callout:
+        "A demo that works in a call with three people is not a system yet. It is a demo that works in a call with three people.",
+    },
+    perche: {
+      eye: "The problem is never only technological",
+      h2a: "Value leaks out through the handoffs ",
+      h2emph: "no one sees",
+      h2b: ".",
+      p1: "It leaks when someone repeats work that already exists. When information is trapped in a chat, a file or the head of the most experienced person. When marketing, sales, administration and delivery work from different versions of the same reality.",
+      p2: "Each loss looks manageable on its own. Together, they slow decisions, overload teams and compress margin.",
+      p3: "We call them Value Leaks. Because what has no name and no number rarely gets fixed.",
+      frammenti: [
+        { r: "Repeated work", d: "It already existed", m: "no one knew" },
+        { r: "Information", d: "Stuck in a chat", m: "unrecoverable" },
+        { r: "Know-how", d: "In one person's head", m: "not transferable" },
+        { r: "Departments", d: "Different versions", m: "of the same reality" },
       ],
-      cata: "The category we give ourselves is ",
-      catb: "Control System as a Service",
-      catc: ": systems in production, not slides.",
     },
-    offerte: {
-      eye: "The two offers",
-      h2a: "We embed. Or we train ",
-      h2emph: "yours",
+    criterio: {
+      eye: "The principles we work by",
+      h2a: "The criterion before the ",
+      h2emph: "code",
       h2b: ".",
-      lead: "Two doors, the same discipline: what we teach is what we practice every day inside client companies.",
-      c1: { ck: "Offer 1 · Operating Partner", ct: "We embed.", pa: "AI systems and agents in production inside the company, with our name on the results. Value compounds as ", pb: "MARF", pc: ", the proprietary infrastructure that improves with every project, measured month over month in the Value Report.", foot: "SYSTEMS · AGENTS · COMPOUNDING MARF" },
-      c2: { ck: "Offer 2 · Corporate training", ct: "We train yours.", pa: "Workshops, AI policy and the internal ", pb: "AI Champion", pc: ": one person per department who becomes autonomous and spreads the practice. The same doctrine that has already trained 2,500+ people, brought inside your teams.", foot: "WORKSHOPS · AI POLICY · AI CHAMPION · 2,500+ TRAINED" },
-    },
-    founder: {
-      eye: "The people",
-      h2a: "Four founders, one single ",
-      h2emph: "accountability",
-      h2b: ".",
-      bios: {
-        matteo: { role: "CEO & Co-Founder", bio: "Holds vision and market together. He is the voice of Morfeus to the outside." },
-        alex: { role: "Co-Founder · AI Architecture", bio: "Designs the architecture of systems in production. A model that doesn't run doesn't exist." },
-        simone: { role: "Co-Founder · Operations", bio: "Takes every project truly into production, inside the client's processes." },
-        "matteo-alvazzi": { role: "CTO & Partner", bio: "Leads technology and standards. Turns AI into reliable infrastructure." },
-      } as Record<string, { role: string; bio: string }>,
-    },
-    casi: {
-      eye: "The pact, made a record",
-      h2a: "Every client is a filed ",
-      h2emph: "case",
-      h2b: ".",
-      lead: "Not generic testimonials: evidence, starting numbers, measured result. If it carries the stamp, it was verified in the field.",
-      stamp: "Confirmed",
-      open: "Open the dossier ▸",
-      all: "See all cases ▸",
-      cards: [
-        { meta: "CASE #049 · BRAINIAC · RECONCILED TREASURY", q: "«It's not the revenue you're missing: it's the cash no one was chasing.»", who: { b: "€65,000", rest: " recovered in the first quarter · -18 days on collection times" } },
-        { meta: "CASE #016 · CYBERANGELS SALES ADVISOR", q: "«Your sales reps stop avoiding the most profitable service because they can't explain it: now they open it in one click.»", who: { b: "70%+", rest: " of calls with security in the pitch · avg ticket +30%" } },
+      colonne: [
+        { n: "01", t: "AI cannot fix a workflow you do not understand.", p: "Before the tool, there is always one question: where is value being lost? If we cannot answer that, there is no point building anything." },
+        { n: "02", t: "People are not the bottleneck.", p: "The people who know the work are the source of the system. AI makes their know-how available, repeatable and more useful to the whole team. It does not replace them." },
+        { n: "03", t: "If it does not show up in the work, it is not a result.", p: "A project is not valuable because a demo went well. It is valuable when it enters real workflows, is adopted by people and produces an improvement that can be verified." },
       ],
+    },
+    allarmi: {
+      eye: "Things that set off an alarm",
+      frasi: ["“One prompt is all you need.”", "“AI does everything.”", "“The team will figure it out.”"],
+      p: "This is usually where the problems begin. A useful system has a workflow, context, people involved and a way of knowing when it is wrong. The rest is enthusiasm. Enthusiasm is great, but it does not pay for inefficiency.",
+    },
+    standard: {
+      eye: "We do not ask for blind trust",
+      h2a: "A reliable system knows how to say: ",
+      h2emph: "I do not have enough data",
+      h2b: ".",
+      p1: "AI can produce a convincing answer even when it does not have enough evidence to do so. That is why we do not build systems that fill gaps with false confidence.",
+      p2: "Every output needs context, rules and a way to be checked. When data is missing, the system should make that visible. When a decision needs a person, it should leave that decision to the person.",
+      p3: "That is the difference between automation and responsibility.",
+      testaNo: "Not enough data",
+      testaSi: "Enough data",
+      righe: [
+        ["Answers anyway, confidently", "States what is missing"],
+        ["Fills gaps with plausibility", "Shows the context it decided on"],
+        ["No way to check it", "Visible rules, checkable output"],
+        ["Decides for the person", "Leaves the decision to whoever answers for it"],
+      ],
+      micro: "The AI that sounds certain about everything is usually the one worth checking most closely. The same is true of people, but they are easier to talk to.",
+    },
+    persone: {
+      eye: "The people who put their name on the work",
+      h2a: "A team that brings together business, ",
+      h2emph: "operations and product",
+      h2b: ".",
+      lista: [
+        { nome: "Matteo Arnaboldi", ruolo: "CEO & Growth", foto: FOTO.arnaboldi, bio: "Turns vague problems into priorities worth putting people, time and budget behind. Has a healthy allergy to sentences that begin with “we should do something with AI”." },
+        { nome: "Alex Carofiglio", ruolo: "Head of Product & Delivery", foto: FOTO.carofiglio, bio: "If something does not reach production, it is not really a thing yet. At best, it is a promise with a good-looking interface." },
+        { nome: "Simone Zin", ruolo: "Operations & Partnerships", foto: FOTO.zin, bio: "Holds together people, partnerships and the details that separate “we have started” from “it works”. The latter is notoriously harder." },
+        { nome: "Matteo Alvazzi", ruolo: "CTO", foto: FOTO.alvazzi, bio: "Builds the architecture. Usually finds the problem before it becomes an urgent call. If he does not, he is probably already fixing it." },
+      ],
+    },
+    prova: {
+      eye: "We do not ask to be believed",
+      h2a: "A system should be judged by what it ",
+      h2emph: "changes in the work",
+      h2b: ".",
+      p1: "That is why we tell cases from the problem, not from the technology used. We show the Value Leak, the system built and what changed for the team and the company.",
+      p2: "Not all problems are alike. The criterion we use on them is.",
+      readout: "Extract · real dossier",
+      stato: "Confirmed",
+      passi: ["Value leak", "System", "Value"],
+      stazioni: [
+        "Technical knowledge was separated from the people who needed to use it.",
+        "Information becomes an operational brief, with rules and controls built in.",
+        "Fewer handoffs. More autonomy. A conversation that starts from the right context.",
+      ],
+      cta: "View real cases",
     },
     cta: {
-      eye: "The measure, first of all",
-      h2a: "The problem you don't see has a ",
-      h2emph: "price",
+      eye: "The first conversation is not a pitch",
+      h2a: "First we find where value is being lost. Then we decide whether ",
+      h2emph: "we can recover it",
       h2b: ".",
-      p: "The first step isn't a quote. It's understanding, in euros, where your company loses value every day.",
-      cta1: "Calculate it ▸",
-      cta2: "Talk to us",
+      p: "Book a diagnostic call. We look at the problem, the workflow and the people involved. If there is a Value Leak we can address, you will know what system makes sense to build and why.",
+      btn: "Book a diagnostic call",
+    },
+    faq: {
+      eye: "Questions",
+      titolo: "Morfeus, in plain terms.",
+      voci: [
+        { q: "Who is Morfeus?", a: "Morfeus is an AI Operating Partner that helps companies identify operating value losses, build AI systems and make teams autonomous in using them inside real workflows." },
+        { q: "What does Morfeus do?", a: "Morfeus starts with Value Leaks in company workflows, designs AI and operating systems to reduce them, trains the team and measures the value recovered over time." },
+        { q: "What is an AI Operating Partner?", a: "An AI Operating Partner does more than advise on technology. It works with a company to identify an operating problem, build the system that addresses it and make it part of daily work." },
+        { q: "Does Morfeus replace people with AI?", a: "No. Morfeus uses AI to remove inefficient work, make know-how available and increase people's autonomy. The team stays central to designing and evolving the systems." },
+      ],
     },
   },
 } as const;
+
+/* Il triangolo: strategia, sistemi e persone sono interconnessi, e
+   una figura lo dice meglio di tre riquadri affiancati. */
+function Triade({ vertici }: { vertici: readonly string[] }) {
+  const punti = [
+    { x: 260, y: 44 },
+    { x: 68, y: 250 },
+    { x: 452, y: 250 },
+  ];
+  return (
+    <svg viewBox="0 0 520 300" className="triade" role="img" aria-label={vertici.join(", ")}>
+      <polygon
+        points={punti.map((p) => `${p.x},${p.y}`).join(" ")}
+        fill="none"
+        stroke="var(--lavoro)"
+        strokeOpacity="0.45"
+        strokeWidth="1"
+      />
+      {punti.map((p, i) => (
+        <g key={vertici[i]}>
+          <circle cx={p.x} cy={p.y} r="5" fill="var(--lavoro)" />
+          <text
+            x={p.x}
+            y={i === 0 ? p.y - 20 : p.y + 32}
+            textAnchor="middle"
+            fill="currentColor"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 14,
+              letterSpacing: "0.14em",
+            }}
+          >
+            {vertici[i]?.toUpperCase()}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 export function generateMetadata({ params: { locale } }: Props): Metadata {
   const isIt = locale === "it";
@@ -221,15 +340,6 @@ export default function ChiSiamoPage({ params: { locale } }: Props) {
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
 
-  const founders = FOUNDER_SLUGS.map((slug) => ({
-    slug,
-    name: teamMembers[slug].name,
-    linkedin: teamMembers[slug].linkedin,
-    image: teamMembers[slug].image,
-    role: t.founder.bios[slug].role,
-    bio: t.founder.bios[slug].bio,
-  }));
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -242,16 +352,23 @@ export default function ChiSiamoPage({ params: { locale } }: Props) {
         inLanguage: isIt ? "it-IT" : "en-US",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": ORGANIZATION_ID },
-        mainEntity: { "@id": ORGANIZATION_ID },
       },
-      ...founders.map((f) => ({
+      ...t.persone.lista.map((p) => ({
         "@type": "Person",
-        "@id": `${SITE_URL}/${safeLocale}/chi-siamo#${f.slug}`,
-        name: f.name,
-        jobTitle: f.role,
+        name: p.nome,
+        jobTitle: p.ruolo,
+        image: `${SITE_URL}${p.foto}`,
         worksFor: { "@id": ORGANIZATION_ID },
-        sameAs: [f.linkedin],
       })),
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/${safeLocale}/chi-siamo#faq`,
+        mainEntity: t.faq.voci.map((v) => ({
+          "@type": "Question",
+          name: v.q,
+          acceptedAnswer: { "@type": "Answer", text: v.a },
+        })),
+      },
     ],
   };
 
@@ -263,215 +380,270 @@ export default function ChiSiamoPage({ params: { locale } }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 01 · HERO · INCHIOSTRO */}
-      <section className="band ink hero" id="hero">
-          <div className="wrap">
-            <div className="eye">{t.hero.eye}</div>
-            <h1>
-              {t.hero.h1a}
-              <span className="emph">{t.hero.h1emph}</span>
-              {t.hero.h1b}
-            </h1>
-            <p className="copy">{t.hero.copy}</p>
-            <p className="lame">{t.hero.lame}</p>
-            <div className="cta-row">
-              <a className="btn btn-1" href={`${base}/roiometro`}>
-                {t.hero.cta1}
-              </a>
-              <Link className="btn btn-2-carta" href={`${base}/metodo`}>
-                {t.hero.cta2}
-              </Link>
-            </div>
-            <p className="proofline">
-              {t.hero.proof.pre}
-              <b>{t.hero.proof.b1}</b>
-              {t.hero.proof.mid}
-              <b>{t.hero.proof.b2}</b>
-              {t.hero.proof.post}
-            </p>
-          </div>
-        </section>
+      {/* 01 · HERO · ink, nessun visual tecnologico */}
+      <section className="band ink hero pg" id="hero">
+        <div className="wrap">
+          <div className="eye">{t.hero.eye}</div>
+          <h1>
+            {t.hero.h1a}
+            <span className="emph">{t.hero.h1emph}</span>
+            {t.hero.h1b}
+          </h1>
+          <p className="copy">{t.hero.copy}</p>
+          <p className="compound" style={{ marginTop: 34 }}>
+            {t.hero.micro}
+          </p>
+        </div>
+      </section>
 
-        {/* 02 · LA PROVA IN NUMERI · CARTA */}
-        <section className="band carta" id="numeri">
-          <div className="wrap">
-            <div className="eye">{t.numeri.eye}</div>
-            <div className="measure">
-              <div className="copy">
-                <h2 className="h-sect">
-                  {t.numeri.h2a}
-                  <span className="emph">{t.numeri.h2emph}</span>
-                  {t.numeri.h2b}
-                </h2>
-                <p>
-                  {t.numeri.pa}
-                  <b>{t.numeri.pb}</b>
-                  {t.numeri.pc}
-                </p>
-              </div>
-              <div className="statgrid">
-                {t.numeri.cells.map((c, i) => (
-                  <div className="cell" key={i}>
-                    <div className="k">{c.k}</div>
-                    <div className={"gain" in c && c.gain ? "n gain" : "n"}>{c.n}</div>
-                    <div className="l">{c.l}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* 02 · COSA SIAMO · CARTA, i tre elementi interconnessi */}
+      <section className="band carta pg" id="cosa-siamo">
+        <div className="wrap">
+          <div className="eye">{t.cosa.eye}</div>
+          <h2 className="h-sect">
+            {t.cosa.h2a}
+            <span className="emph">{t.cosa.h2emph}</span>
+            {t.cosa.h2b}
+          </h2>
+          <p className="lead">{t.cosa.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.cosa.p2}
+          </p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.cosa.p3}
+          </p>
 
-        {/* 03 · COSA SIAMO · INCHIOSTRO */}
-        <section className="band ink" id="cosa-siamo">
-          <div className="wrap">
-            <div className="eye">{t.cosa.eye}</div>
-            <h2 className="h-sect">
-              {t.cosa.h2a}
-              <span className="emph">{t.cosa.h2emph}</span>
-              {t.cosa.h2b}
-            </h2>
-            <div className="def">
-              <div>
-                <p className="state">{t.cosa.state}</p>
-                <p className="note">{t.cosa.note}</p>
-              </div>
-              <div className="rows">
-                {t.cosa.rows.map((r, i) => (
-                  <div className="r" key={i}>
-                    <div className="neg">{r.neg}</div>
-                    <div className="pos">
-                      {r.a}
-                      <b>{r.b}</b>
-                      {r.c}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <p className="cat">
-              {t.cosa.cata}
-              <b>{t.cosa.catb}</b>
-              {t.cosa.catc}
-            </p>
-          </div>
-        </section>
+          <Triade vertici={t.cosa.vertici} />
 
-        {/* 04 · LE DUE OFFERTE · CARTA */}
-        <section className="band carta" id="offerte">
-          <div className="wrap">
-            <div className="eye">{t.offerte.eye}</div>
-            <h2 className="h-sect">
-              {t.offerte.h2a}
-              <span className="emph">{t.offerte.h2emph}</span>
-              {t.offerte.h2b}
-            </h2>
-            <p className="lead">{t.offerte.lead}</p>
-            <div className="two" style={{ marginTop: 26 }}>
-              <div className="card sel">
-                <div className="ck">{t.offerte.c1.ck}</div>
-                <div className="ct">{t.offerte.c1.ct}</div>
-                <p>
-                  {t.offerte.c1.pa}
-                  <b>{t.offerte.c1.pb}</b>
-                  {t.offerte.c1.pc}
-                </p>
-                <div className="off-foot f1">{t.offerte.c1.foot}</div>
-              </div>
-              <div className="card">
-                <div className="ck">{t.offerte.c2.ck}</div>
-                <div className="ct">{t.offerte.c2.ct}</div>
-                <p>
-                  {t.offerte.c2.pa}
-                  <b>{t.offerte.c2.pb}</b>
-                  {t.offerte.c2.pc}
-                </p>
-                <div className="off-foot f2">{t.offerte.c2.foot}</div>
-              </div>
-            </div>
-          </div>
-        </section>
+          <p className="compound centrato" style={{ marginTop: 10 }}>
+            {t.cosa.callout}
+          </p>
+        </div>
+      </section>
 
-        {/* 05 · LE PERSONE · INCHIOSTRO */}
-        <section className="band ink" id="founder">
-          <div className="wrap">
-            <div className="eye">{t.founder.eye}</div>
-            <h2 className="h-sect">
-              {t.founder.h2a}
-              <span className="emph">{t.founder.h2emph}</span>
-              {t.founder.h2b}
-            </h2>
-            <div className="four" style={{ marginTop: 30 }}>
-              {founders.map((f) => (
-                <div className="mem" key={f.slug} id={f.slug}>
-                  <span className="face">
-                    <Image src={f.image} alt={f.name} fill sizes="64px" className="face-img" />
-                  </span>
-                  <h3>{f.name}</h3>
-                  <div className="role">{f.role}</div>
-                  <p className="bio">{f.bio}</p>
+      {/* 03 · PERCHE' ESISTIAMO · ink, i passaggi che perdono contesto */}
+      <section className="band ink pg" id="perche">
+        <div className="wrap">
+          <div className="eye">{t.perche.eye}</div>
+          <h2 className="h-sect">
+            {t.perche.h2a}
+            <span className="emph">{t.perche.h2emph}</span>
+            {t.perche.h2b}
+          </h2>
+          <p className="lead">{t.perche.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.perche.p2}
+          </p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.perche.p3}
+          </p>
+
+          <div className="frammenti">
+            {t.perche.frammenti.map((f) => (
+              <div className="frammento" key={f.r}>
+                <div className="reparto">{f.r}</div>
+                <div className="dato">{f.d}</div>
+                <span className="monco">{f.m}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 04 · IL CRITERIO · ink, tre blocchi editoriali */}
+      <section className="band ink pg" id="criterio">
+        <div className="wrap">
+          <div className="eye">{t.criterio.eye}</div>
+          <h2 className="h-sect">
+            {t.criterio.h2a}
+            <span className="emph">{t.criterio.h2emph}</span>
+            {t.criterio.h2b}
+          </h2>
+          <div className="colonne">
+            {t.criterio.colonne.map((c) => (
+              <div className="colonna" key={c.n}>
+                <span className="cifra-fondo" aria-hidden="true">
+                  {c.n}
+                </span>
+                <h3>{c.t}</h3>
+                <p>{c.p}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 05 · GLI ALLARMI · CARTA, dichiarazioni grandi */}
+      <section className="band carta pg" id="allarmi">
+        <div className="wrap">
+          <div className="eye">{t.allarmi.eye}</div>
+          <div className="negazioni">
+            {t.allarmi.frasi.map((f) => (
+              <div className="negazione" key={f}>
+                <span className="taglio" aria-hidden="true" />
+                <span>{f}</span>
+              </div>
+            ))}
+          </div>
+          <p className="lead" style={{ marginTop: 36 }}>
+            {t.allarmi.p}
+          </p>
+        </div>
+      </section>
+
+      {/* 06 · LO STANDARD · ink, dato sufficiente e insufficiente */}
+      <section className="band ink pg" id="standard">
+        <div className="wrap">
+          <div className="eye">{t.standard.eye}</div>
+          <h2 className="h-sect">
+            {t.standard.h2a}
+            <span className="emph">{t.standard.h2emph}</span>
+            {t.standard.h2b}
+          </h2>
+          <p className="lead">{t.standard.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.standard.p2}
+          </p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.standard.p3}
+          </p>
+
+          <div className="confronto">
+            <div className="colonna-testa">{t.standard.testaNo}</div>
+            <div className="colonna-testa si">{t.standard.testaSi}</div>
+            {t.standard.righe.map(([no, si]) => (
+              <RigaConfronto key={si} no={no} si={si} />
+            ))}
+          </div>
+
+          <p className="compound" style={{ marginTop: 34 }}>
+            {t.standard.micro}
+          </p>
+        </div>
+      </section>
+
+      {/* 07 · LE PERSONE · CARTA, foto vere */}
+      <section className="band carta pg" id="persone">
+        <div className="wrap">
+          <div className="eye">{t.persone.eye}</div>
+          <h2 className="h-sect">
+            {t.persone.h2a}
+            <span className="emph">{t.persone.h2emph}</span>
+            {t.persone.h2b}
+          </h2>
+
+          <div className="persone">
+            {t.persone.lista.map((p) => (
+              <div className="persona" key={p.nome}>
+                <Image
+                  src={p.foto}
+                  alt={p.nome}
+                  width={264}
+                  height={264}
+                  className="ritratto"
+                />
+                <div>
+                  <div className="nome">{p.nome}</div>
+                  <span className="ruolo">{p.ruolo}</span>
+                  <p>{p.bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 08 · LA PROVA · ink, estratto da dossier reale */}
+      <section className="band ink pg" id="prova">
+        <div className="wrap">
+          <div className="eye">{t.prova.eye}</div>
+          <h2 className="h-sect">
+            {t.prova.h2a}
+            <span className="emph">{t.prova.h2emph}</span>
+            {t.prova.h2b}
+          </h2>
+          <p className="lead">{t.prova.p1}</p>
+          <p className="lead" style={{ marginTop: 18 }}>
+            {t.prova.p2}
+          </p>
+
+          <div className="quadro" style={{ marginTop: 40 }}>
+            <div className="readout">
+              <span>{t.prova.readout}</span>
+              <span className="on">
+                <i />
+                {t.prova.stato}
+              </span>
+            </div>
+            <div className="dossier dossier-tre">
+              {t.prova.stazioni.map((s, i) => (
+                <div className="stazione" key={s}>
+                  <div className="passo">{t.prova.passi[i]}</div>
+                  <div className="valore">{s}</div>
                 </div>
               ))}
             </div>
           </div>
-        </section>
 
-        {/* 06 · I CASI COL TIMBRO · CARTA */}
-        <section className="band carta" id="casi">
-          <div className="wrap">
-            <div className="eye">{t.casi.eye}</div>
-            <h2 className="h-sect">
-              {t.casi.h2a}
-              <span className="emph">{t.casi.h2emph}</span>
-              {t.casi.h2b}
-            </h2>
-            <p className="lead">{t.casi.lead}</p>
-            <div className="two" style={{ marginTop: 26 }}>
-              {t.casi.cards.map((c, i) => (
-                <div className="caso" key={i}>
-                  <div className="meta">{c.meta}</div>
-                  <p className="q">{c.q}</p>
-                  <p className="who">
-                    <b>{c.who.b}</b>
-                    {c.who.rest}
-                  </p>
-                  <div className="row-bottom">
-                    <span className="stamp">{t.casi.stamp}</span>
-                    <Link className="btn btn-3" href={`${base}/casi`} style={{ margin: 0 }}>
-                      {t.casi.open}
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p style={{ marginTop: 22 }}>
-              <Link className="btn btn-3" href={`${base}/casi`}>
-                {t.casi.all}
-              </Link>
-            </p>
+          <div className="cta-row">
+            <Link className="btn btn-1" href={`${base}/casi`}>
+              {t.prova.cta}
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 07 · CTA QUOTA · INCHIOSTRO */}
-        <section className="band ink ctaq" id="cta">
-          <div className="wrap">
-            <div className="eye">{t.cta.eye}</div>
-            <h2>
+      {/* 09 · CTA · CARTA, il brief la vuole chiara o neutra */}
+      <section className="band carta pg" id="cta">
+        <div className="wrap">
+          <div className="ctaq">
+            <div className="eye justify-center">{t.cta.eye}</div>
+            <h2 className="h-sect">
               {t.cta.h2a}
               <span className="emph">{t.cta.h2emph}</span>
               {t.cta.h2b}
             </h2>
             <p>{t.cta.p}</p>
-            <div className="cta-row">
-              <a className="btn btn-1" href={`${base}/roiometro`}>
-                {t.cta.cta1}
-              </a>
-              <a className="btn btn-2-carta" href="mailto:hello@morfeushub.com">
-                {t.cta.cta2}
-              </a>
+            <div className="cta-row centrata">
+              <Link className="btn btn-1" href={`${base}/roiometro`}>
+                {t.cta.btn}
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+      {/* 10 · FAQ · ink */}
+      <section className="band ink pg" id="faq">
+        <div className="wrap">
+          <div className="eye">{t.faq.eye}</div>
+          <h2 className="h-sect">{t.faq.titolo}</h2>
+          <div className="two" style={{ marginTop: 34, alignItems: "start" }}>
+            {[t.faq.voci.slice(0, 2), t.faq.voci.slice(2)].map((colonna, i) => (
+              <div key={i}>
+                {colonna.map((v) => (
+                  <details className="faq" key={v.q}>
+                    <summary>
+                      <span>{v.q}</span>
+                      <span className="segno" aria-hidden="true" />
+                    </summary>
+                    <p className="risposta">{v.a}</p>
+                  </details>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </SiteShell>
+  );
+}
+
+function RigaConfronto({ no, si }: { no: string; si: string }) {
+  return (
+    <>
+      <div className="riga-no">{no}</div>
+      <div className="riga-si">{si}</div>
+    </>
   );
 }

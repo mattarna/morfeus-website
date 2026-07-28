@@ -1740,3 +1740,83 @@
     gap: 16px;
   }
 }
+
+/* ---------- LE PERSONE ----------
+   "Fotografie vere, layout editoriale asimmetrico, ruoli nitidi."
+   Le foto ci sono gia', in public/images/team. Asimmetrico vuol dire
+   che la riga non e' una griglia di ritratti uguali: il ritratto sta
+   a sinistra, stretto, e il testo prende il resto. Un team non e' un
+   catalogo di facce.
+
+   Il bianco e nero che torna a colori al passaggio non e' un vezzo:
+   tiene la pagina sobria quando la scorri e restituisce la persona
+   quando ti ci fermi. */
+.ms .pg .persone {
+  margin-top: 44px;
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .pg .persona {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 34px;
+  align-items: start;
+  padding: 34px 0;
+  border-bottom: 1px solid var(--surf-bd);
+}
+@media (max-width: 700px) {
+  .ms .pg .persona {
+    grid-template-columns: 92px 1fr;
+    gap: 22px;
+  }
+}
+.ms .pg .persona .ritratto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--r-m);
+  border: 1px solid var(--surf-bd);
+  filter: grayscale(1) contrast(1.05);
+  transition: filter var(--dur) var(--ease);
+}
+.ms .pg .persona:hover .ritratto {
+  filter: grayscale(0);
+}
+.ms .pg .persona .nome {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(21px, 2.2vw, 26px);
+  letter-spacing: -0.02em;
+}
+.ms .pg .persona .ruolo {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lavoro);
+}
+.ms .pg .persona p {
+  margin-top: 16px;
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  max-width: 62ch;
+}
+.ms .band.carta .pg .persona p {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- TRIADE, i tre elementi interconnessi ----------
+   Strategia, sistemi e persone: il brief li vuole "interconnessi",
+   non elencati. Un triangolo con i tre lati disegnati lo dice in una
+   figura sola, e sta nel registro del disegno tecnico come il resto. */
+.ms .pg .triade {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
