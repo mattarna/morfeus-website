@@ -65,32 +65,32 @@ export function ROISystem() {
       explanation: t("steps.mapping.explanation"),
     },
     {
-      key: "architecture",
-      label: t("steps.architecture.label"),
-      concept: t("steps.architecture.concept"),
-      principle: t("steps.architecture.principle"),
-      explanation: t("steps.architecture.explanation"),
+      key: "champions",
+      label: t("steps.champions.label"),
+      concept: t("steps.champions.concept"),
+      principle: t("steps.champions.principle"),
+      explanation: t("steps.champions.explanation"),
     },
     {
-      key: "execution",
-      label: t("steps.execution.label"),
-      concept: t("steps.execution.concept"),
-      principle: t("steps.execution.principle"),
-      explanation: t("steps.execution.explanation"),
+      key: "context",
+      label: t("steps.context.label"),
+      concept: t("steps.context.concept"),
+      principle: t("steps.context.principle"),
+      explanation: t("steps.context.explanation"),
     },
     {
-      key: "optimization",
-      label: t("steps.optimization.label"),
-      concept: t("steps.optimization.concept"),
-      principle: t("steps.optimization.principle"),
-      explanation: t("steps.optimization.explanation"),
+      key: "agents",
+      label: t("steps.agents.label"),
+      concept: t("steps.agents.concept"),
+      principle: t("steps.agents.principle"),
+      explanation: t("steps.agents.explanation"),
     },
     {
-      key: "scale",
-      label: t("steps.scale.label"),
-      concept: t("steps.scale.concept"),
-      principle: t("steps.scale.principle"),
-      explanation: t("steps.scale.explanation"),
+      key: "compound",
+      label: t("steps.compound.label"),
+      concept: t("steps.compound.concept"),
+      principle: t("steps.compound.principle"),
+      explanation: t("steps.compound.explanation"),
     },
   ];
 
@@ -263,17 +263,22 @@ export function ROISystem() {
         }`}
       >
         <div className="text-center flex flex-col items-center w-full relative">
-          {/* Large Concept Word (Background) - slightly more visible */}
-          <h3 
-            className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[160px] font-semibold text-white/6 tracking-tighter select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap transition-all duration-500 ease-out ${
-              isTransitioning ? "opacity-0 scale-95 blur-xs" : "opacity-100 scale-100 blur-0"
-            }`}
-            style={{ 
-              transform: `translate(calc(-50% + ${mousePos.x}px), calc(-50% + ${mousePos.y}px))` 
-            }}
-          >
-            {currentStep.concept}
-          </h3>
+          {/* Large Concept Word (Background) - slightly more visible.
+              Centered with flexbox, not with a percentage translate: the inline
+              transform below carries the parallax offset and the transition
+              scale, and would otherwise override the centering utilities. */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <h3
+              className={`text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[160px] font-semibold text-white/6 tracking-tighter select-none whitespace-nowrap transition-all duration-500 ease-out ${
+                isTransitioning ? "opacity-0 blur-xs" : "opacity-100 blur-0"
+              }`}
+              style={{
+                transform: `translate(${mousePos.x}px, ${mousePos.y}px) scale(${isTransitioning ? 0.95 : 1})`
+              }}
+            >
+              {currentStep.concept}
+            </h3>
+          </div>
 
           {/* Text Content */}
           <div className="relative z-20 flex flex-col items-center gap-4 md:gap-6 py-16 md:py-20">
