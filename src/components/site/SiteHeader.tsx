@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 /**
@@ -7,11 +8,6 @@ import Link from "next/link";
  * Pairs with SiteFooter; both use the 2026 Tailwind tokens (no site.css).
  */
 
-const MARK_PATHS = [
-  "M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z",
-  "M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z",
-  "M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z",
-];
 
 const COPY = {
   it: {
@@ -52,14 +48,21 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
         className="mx-auto flex h-full max-w-[1180px] items-center justify-between gap-6 px-4 md:px-10"
         aria-label="Principale"
       >
-        {/* Marchio: mark mono + wordmark */}
-        <Link href={`${base}/home-2026`} className="flex items-center gap-2.5" aria-label={t.home}>
-          <svg viewBox="0 0 1000 476" fill="currentColor" className="w-[26px] shrink-0" aria-hidden="true">
-            {MARK_PATHS.map((d) => (
-              <path key={d} d={d} />
-            ))}
-          </svg>
-          <span className="font-clash text-[17px] font-semibold tracking-[-0.01em]">Morfeus</span>
+        {/* Marchio: il lockup UFFICIALE, non una ricostruzione.
+            Prima qui c'erano il mark ridisegnato in SVG e la parola
+            "Morfeus" composta in Clash: due approssimazioni del logo
+            vero, che vive in public/images/brand/morfeus-mark.png ed
+            e' gia' quello usato da home, footer e header dei funnel.
+            Un logo non si ricompone a mano, si usa. */}
+        <Link href={`${base}/home-2026`} className="flex items-center" aria-label={t.home}>
+          <Image
+            src="/images/brand/morfeus-mark.png"
+            alt="Morfeus"
+            width={2064}
+            height={267}
+            priority
+            className="h-[26px] w-auto"
+          />
         </Link>
 
         {/* Nav reale cross-pagina */}

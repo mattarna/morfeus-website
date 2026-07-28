@@ -1384,7 +1384,7 @@
 }
 .ms .pg .confronto .colonna-testa {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 20px 26px 20px 0;
@@ -1401,10 +1401,10 @@
 }
 .ms .pg .confronto .riga-no,
 .ms .pg .confronto .riga-si {
-  padding: 24px 26px 24px 0;
+  padding: 28px 26px 28px 0;
   border-bottom: 1px solid var(--surf-bd);
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 19px;
+  line-height: 1.45;
 }
 .ms .pg .confronto .riga-no {
   color: var(--ombra);
@@ -1415,6 +1415,9 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.01em;
+}
+.ms .band.carta .pg .confronto .riga-si {
+  color: var(--firma-hover);
 }
 
 /* ---------- PATTO, i tre impegni ----------
@@ -1535,4 +1538,71 @@
   .ms .pg .dossier.dossier-tre .stazione::before {
     display: none;
   }
+}
+
+/* ===========================================================
+   LA NARRATIVA DEL COLORE (2026-07-28)
+   -----------------------------------------------------------
+   Finora la pagina usava un accento solo. La palette ne ha otto, e
+   misurandoli si scopre che si dividono da soli in due gruppi:
+
+     su INCHIOSTRO reggono   neon 5.12  vista 8.28  forge 5.90
+                             verde 5.71  rosso 6.50
+     su CARTA reggono        midnight 11.46  persian 7.63
+                             majorelle 4.94
+
+   I toni caldi e chiari muoiono sulla carta (forge 2.70, vista
+   1.92), i blu profondi muoiono sull'inchiostro (persian 2.09,
+   midnight 1.39). Non e' un limite: e' la regola che tiene il
+   colore onesto su entrambe le fasce.
+
+   Sopra a questa divisione c'e' un SIGNIFICATO, uguale su tutto il
+   sito, perche' il colore non decori ma dica qualcosa:
+     perdita   = forge      dove il valore esce
+     lavoro    = vista/firma  quello che costruiamo
+     guadagno  = verde      il valore recuperato e verificato
+   =========================================================== */
+.ms .pg {
+  --perdita: var(--marker);
+  --lavoro: var(--lilla);
+  --guadagno: var(--ok);
+}
+.ms .band.carta .pg {
+  --lavoro: var(--firma);
+  /* sulla carta il forge sta a 2.70:1 e il verde a 2.79: sotto
+     soglia entrambi. Il racconto li' lo portano i blu profondi. */
+  --perdita: var(--firma-hover);
+  --guadagno: var(--firma-hover);
+}
+
+/* la catena dell'hero racconta il passaggio: si parte dalla perdita,
+   si attraversa il lavoro, si arriva al valore misurato */
+.ms .pg .anello.perdita .segno {
+  border-color: var(--perdita);
+  color: var(--perdita);
+}
+.ms .pg .anello.ultimo .segno {
+  border-color: var(--guadagno);
+  background: var(--guadagno);
+  color: var(--inchiostro);
+}
+.ms .pg .anello.ultimo .voce-catena {
+  color: var(--guadagno);
+}
+.ms .pg .anello.perdita .voce-catena {
+  color: var(--perdita);
+}
+
+/* il Value Report e' la sezione del valore recuperato: prende il
+   verde come colore di famiglia, ed e' l'unico posto in cui compare */
+.ms .pg .indicatore .nome {
+  color: var(--guadagno);
+}
+.ms .pg .indicatori-verde .readout .on,
+.ms .pg .indicatori-verde .readout .on i {
+  color: var(--guadagno);
+  background: initial;
+}
+.ms .pg .indicatori-verde .readout .on i {
+  background: var(--guadagno);
 }

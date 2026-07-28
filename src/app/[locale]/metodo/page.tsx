@@ -507,7 +507,9 @@ export default function MetodoPage({ params: { locale } }: Props) {
               <div className="catena" style={{ marginTop: 26 }}>
                 {t.hero.catena.map((a, i) => (
                   <div
-                    className={`anello${i === t.hero.catena.length - 1 ? " ultimo" : ""}`}
+                    className={`anello${i === 0 ? " perdita" : ""}${
+                      i === t.hero.catena.length - 1 ? " ultimo" : ""
+                    }`}
                     key={a.v}
                   >
                     <span className="segno">{`0${i + 1}`}</span>
@@ -646,7 +648,7 @@ export default function MetodoPage({ params: { locale } }: Props) {
             {t.report.p2}
           </p>
 
-          <div className="quadro" style={{ marginTop: 40 }}>
+          <div className="quadro indicatori-verde" style={{ marginTop: 40 }}>
             <div className="readout">
               <span>{t.report.readout}</span>
               <span className="on">
