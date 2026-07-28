@@ -1,68 +1,135 @@
 /* ============================================================
-   ESPERIMENTO FONT — Clash Display / Satoshi / Playfair / Plex Mono
+   ESPERIMENTO FONT — due varianti a confronto
    ------------------------------------------------------------
-   Palette tipografica presa da BRAND-2026/design-v2/metodo.html.
+   A) "clash"   → Clash Display / Satoshi / Playfair / IBM Plex Mono
+                  (da BRAND-2026/99_ARCHIVIO/design-v2/metodo.html)
+   B) "jakarta" → Plus Jakarta Sans / Geist Mono
+                  (da BRAND-2026/02_MORFEUS-B2B/site/, il DS piu' recente:
+                   li' Clash Display e' declassato al solo wordmark del logo)
 
-   TUTTO è scoped sotto `html.font-exp`: senza quella classe questo
-   file è inerte e il sito resta identico a prima (DM Sans / Outfit).
+   TUTTO e' scoped sotto html.font-exp-*: senza quella classe questo file
+   e' inerte e il sito resta identico a prima (DM Sans ovunque).
 
    Attivazione runtime (nessun rebuild):
-     /?font=clash   → accende e ricorda (localStorage)
-     /?font=off     → spegne e dimentica
+     /?font=clash    /?font=jakarta    /?font=off
 
-   RIMOZIONE DEFINITIVA (se l'esperimento non convince):
-     1. cancella questo file
-     2. togli l'@import in globals.css
-     3. togli il blocco <script id="font-experiment"> in layout.tsx
-     ...oppure semplicemente: git checkout copy/home-b2b
+   RIMOZIONE DEFINITIVA:
+     git checkout copy/home-b2b
+   ...oppure a mano: cancella questo file, l'@import in globals.css e il
+   blocco <script id="font-experiment"> in layout.tsx.
    ============================================================ */
 
-html.font-exp {
+/* ============================================================
+   VARIANTE A — Clash Display + Satoshi
+   ------------------------------------------------------------
+   ls-display allentata: il sito usa tracking-tighter (-0.05em), tarata
+   su DM Sans che e' larga. Clash Display e' stretta, e a -0.05em le
+   parole si toccano ("Ilmarginenon"). Torniamo verso il -0.02em che
+   usava il file originale, e restituiamo respiro agli spazi.
+   ============================================================ */
+html.font-exp-clash {
   --exp-display: "Clash Display", "Outfit", system-ui, sans-serif;
   --exp-body: "Satoshi", "DM Sans", system-ui, sans-serif;
   --exp-emph: "Playfair Display", Georgia, serif;
   --exp-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --exp-ls-display: -0.015em; /* era -0.05em via tracking-tighter */
+  --exp-ls-heading: -0.005em;
+  --exp-ws-display: 0.09em; /* gli spazi tra parole, ricostruiti */
+
+  --exp-fw-display: 500; /* Clash Medium: a corpo grande respira meglio */
+  --exp-fw-heading: 600;
 }
 
-/* ---- 1. CORPO TESTO → Satoshi -------------------------------- */
-html.font-exp body {
+/* ============================================================
+   VARIANTE B — Plus Jakarta Sans + Geist Mono
+   ------------------------------------------------------------
+   Valori presi dai token del DS B2B (tokens-core.css):
+   --ls-title:-0.03em, --fw-semibold:600. Jakarta e' piu' larga e
+   umanista: regge -0.03em senza chiudersi.
+   ============================================================ */
+html.font-exp-jakarta {
+  --exp-display: "Plus Jakarta Sans", "Geist", system-ui, sans-serif;
+  --exp-body: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --exp-emph: "Plus Jakarta Sans", system-ui, sans-serif;
+  --exp-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --exp-ls-display: -0.03em;
+  --exp-ls-heading: -0.015em;
+  --exp-ws-display: normal;
+
+  --exp-fw-display: 600;
+  --exp-fw-heading: 600;
+}
+
+/* ============================================================
+   REGOLE CONDIVISE — quali elementi ricevono cosa.
+   Selettore [class*="font-exp-"]: vale per entrambe le varianti.
+   ============================================================ */
+
+/* ---- 1. CORPO TESTO ------------------------------------------ */
+html[class*="font-exp-"] body {
   font-family: var(--exp-body);
 }
 
-/* ---- 2. TITOLI → Clash Display ------------------------------- */
-html.font-exp :is(h1, h2, h3, h4, h5, h6) {
+/* ---- 2. TITOLI ----------------------------------------------- */
+html[class*="font-exp-"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--exp-display);
 }
 
-/* Clash Display arriva a 700: font-black (900) verrebbe sintetizzato
-   dal browser e imbrattato. Cappiamo i display sui pesi reali. */
-html.font-exp :is(h1, h2) {
-  font-weight: 600;
+/* Display grandi (h1/h2): tracking e word-spacing ritarati.
+   Serve sovrascrivere le utility tracking-* di Tailwind, tarate su
+   DM Sans: e' proprio quello il motivo per cui le parole collidevano. */
+html[class*="font-exp-"] :is(h1, h2) {
+  letter-spacing: var(--exp-ls-display);
+  word-spacing: var(--exp-ws-display);
+  font-weight: var(--exp-fw-display);
 }
-html.font-exp :is(h1, h2).font-black,
-html.font-exp :is(h1, h2).font-bold {
+
+html[class*="font-exp-"] :is(h3, h4, h5, h6) {
+  letter-spacing: var(--exp-ls-heading);
+  font-weight: var(--exp-fw-heading);
+}
+
+/* Grassetti espliciti: rispettali, ma cappati sul peso massimo reale
+   della famiglia (Clash arriva a 700, non a 900 di font-black). */
+html[class*="font-exp-"] :is(h1, h2, h3).font-black,
+html[class*="font-exp-"] :is(h1, h2, h3).font-bold {
   font-weight: 700;
 }
 
-/* ---- 3. EYEBROW / MICRO-LABEL → IBM Plex Mono ----------------
-   Il pattern del sito è "uppercase + tracking-*" per le etichette.
-   BLOCCO ISOLATO: se il mono dà fastidio, commenta solo questo. */
-html.font-exp :is(h1, h2, h3, h4, h5, h6, p, span, div).uppercase[class*="tracking-"] {
+/* ---- 3. EYEBROW / MICRO-LABEL → mono -------------------------
+   Il pattern del sito e' "uppercase + tracking POSITIVO" per le
+   etichette. Il tracking positivo va discriminato da quello negativo:
+   l'h1 dell'hero e' "uppercase tracking-tighter", e' un display, NON
+   un'etichetta — senza questo filtro finirebbe in mono.
+   Qui il tracking largo va LASCIATO com'e': serve alla leggibilita'
+   del maiuscoletto. BLOCCO ISOLATO: se il mono non piace, commenta
+   solo questo. */
+html[class*="font-exp-"]
+  :is(h1, h2, h3, h4, h5, h6, p, span, div).uppercase:is(
+    [class*="tracking-[0."],
+    .tracking-widest,
+    .tracking-wider,
+    .tracking-wide
+  ) {
   font-family: var(--exp-mono);
   font-weight: 500;
+  letter-spacing: revert-layer; /* riprende il tracking-* di Tailwind */
+  word-spacing: normal;
 }
 
-/* ---- 4. ENFASI CORSIVA → Playfair Display italic -------------
+/* ---- 4. ENFASI CORSIVA ---------------------------------------
    Non usata oggi sulla home: disponibile via <em> o classe .emph. */
-html.font-exp :is(h1, h2, h3, h4) em,
-html.font-exp .emph {
+html[class*="font-exp-"] :is(h1, h2, h3, h4) em,
+html[class*="font-exp-"] .emph {
   font-family: var(--exp-emph);
   font-style: italic;
   font-weight: 500;
 }
 
 /* ---- 5. Badge di stato dell'esperimento ---------------------- */
-html.font-exp .font-exp-badge {
+html[class*="font-exp-"] .font-exp-badge {
   position: fixed;
   left: 12px;
   bottom: 12px;

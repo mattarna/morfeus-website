@@ -85,11 +85,13 @@ export default function RootLayout({
         />
         {/* ============================================================
             ESPERIMENTO FONT (temporaneo, branch exp/font-clash-satoshi)
-            Attiva Clash Display / Satoshi / Playfair / IBM Plex Mono.
+            Due varianti a confronto sulla tipografia dei titoli:
+              ?font=clash   → Clash Display / Satoshi / Playfair / Plex Mono
+              ?font=jakarta → Plus Jakarta Sans / Geist Mono
+              ?font=off     → torna a DM Sans (stato attuale del sito)
+            La scelta resta in localStorage.
             Spento di default: senza il flag non scarica NULLA e non
             aggiunge nessuna classe — il sito resta identico a prima.
-              ?font=clash → accende (ricordato in localStorage)
-              ?font=off   → spegne
             Regole tipografiche in src/app/font-experiment.css.
             Per rimuovere l'esperimento: cancella questo blocco.
             ============================================================ */}
@@ -100,16 +102,32 @@ export default function RootLayout({
               (function () {
                 try {
                   var KEY = "morfeus-font-exp";
-                  var q = new URLSearchParams(window.location.search).get("font");
-                  if (q === "clash") localStorage.setItem(KEY, "clash");
-                  else if (q) localStorage.removeItem(KEY);
-                  if (localStorage.getItem(KEY) !== "clash") return;
+                  var VARIANTS = {
+                    clash: {
+                      label: "clash display + satoshi",
+                      css: [
+                        "https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap",
+                        "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+                      ],
+                    },
+                    jakarta: {
+                      label: "plus jakarta sans + geist mono",
+                      css: [
+                        "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap",
+                      ],
+                    },
+                  };
 
-                  document.documentElement.classList.add("font-exp");
-                  [
-                    "https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap",
-                    "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
-                  ].forEach(function (href) {
+                  var q = new URLSearchParams(window.location.search).get("font");
+                  if (q && VARIANTS[q]) localStorage.setItem(KEY, q);
+                  else if (q) localStorage.removeItem(KEY);
+
+                  var name = localStorage.getItem(KEY);
+                  var variant = name && VARIANTS[name];
+                  if (!variant) return;
+
+                  document.documentElement.classList.add("font-exp-" + name);
+                  variant.css.forEach(function (href) {
                     var l = document.createElement("link");
                     l.rel = "stylesheet";
                     l.href = href;
@@ -119,7 +137,7 @@ export default function RootLayout({
                   document.addEventListener("DOMContentLoaded", function () {
                     var b = document.createElement("div");
                     b.className = "font-exp-badge";
-                    b.textContent = "font exp · clash + satoshi · ?font=off";
+                    b.textContent = "font exp · " + variant.label + " · ?font=off";
                     document.body.appendChild(b);
                   });
                 } catch (e) {}
