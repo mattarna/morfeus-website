@@ -46,7 +46,7 @@ export function LabMsProof() {
             {BLOCCHI.map((n, i) => (
               <div
                 key={n}
-                className={`relative overflow-hidden px-7 py-9 ${
+                className={`relative overflow-hidden px-9 py-11 ${
                   i > 0
                     ? "border-t border-[color:var(--surf-bd)] md:border-l md:border-t-0"
                     : ""

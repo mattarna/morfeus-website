@@ -81,7 +81,7 @@
      scriveva la sua misura a mano, quasi sempre piu' piccola. Da qui in giu'
      la soglia e' 18/29 su desktop, 16 il minimo assoluto per un testo che
      porta significato. Regola: piuttosto un pixel in piu' che uno in meno. */
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -113,6 +113,18 @@
 .ms a {
   color: inherit;
   text-decoration: none;
+}
+
+/* CENTRATURA DEI TITOLI, corretta 2026-07-28.
+   .h-sect porta `margin: 12px 0 20px`: uno shorthand che azzera i margini
+   laterali e batte per specificita' qualunque utility mx-auto. Ogni titolo
+   con una max-width dentro un blocco centrato finiva quindi appoggiato a
+   sinistra, e la sezione sembrava storta pur essendo il testo centrato.
+   Stessa trappola della .ladder. */
+.ms .text-center .h-sect,
+.ms .text-center .lead,
+.ms .text-center .t-lede {
+  margin-inline: auto;
 }
 
 /* ---------- fasce: una superficie per sezione, alternate ---------- */
@@ -158,7 +170,7 @@
 /* ---------- tipografia ---------- */
 .ms .eye {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -174,7 +186,7 @@
   margin: 12px 0 20px;
 }
 .ms .lead {
-  font-size: clamp(19px, 2vw, 22px);
+  font-size: clamp(20px, 2.2vw, 25px);
   max-width: 58ch;
 }
 .ms .band.carta .lead {
@@ -256,7 +268,10 @@
 /* ---------- card (usa lo STANDARD SUPERFICI: --surf-*) ---------- */
 .ms .card {
   border-radius: var(--r-m);
-  padding: 24px;
+  /* 24 -> 34: con il corpo a 18.5px l'imbottitura di prima schiacciava il
+     testo contro il bordo. La regola e' che il respiro cresce col corpo,
+     altrimenti la scatola si stringe mentre il testo si allarga. */
+  padding: 34px;
   border: 1px solid var(--surf-bd);
   background: var(--surf-bg);
   box-shadow: var(--surf-sh);
@@ -266,7 +281,7 @@
 }
 .ms .card .ck {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -283,7 +298,7 @@
   margin-top: 10px;
 }
 .ms .card p {
-  font-size: 17.5px;
+  font-size: 18.5px;
   margin-top: 8px;
 }
 .ms .band.carta .card p {
@@ -335,7 +350,7 @@
   max-width: 19ch;
 }
 .ms .hero .copy {
-  font-size: clamp(19px, 2.1vw, 22px);
+  font-size: clamp(20px, 2.2vw, 25px);
   color: var(--testo-ink-2);
   max-width: 56ch;
   margin-top: 20px;
@@ -375,7 +390,7 @@
 }
 .ms .proofline {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.06em;
   color: var(--ombra);
   margin-top: 36px;
@@ -403,7 +418,7 @@
 }
 .ms .measure .copy p {
   color: var(--testo-carta-2);
-  font-size: 17px;
+  font-size: 18px;
   margin-top: 14px;
   max-width: 46ch;
 }
@@ -424,7 +439,7 @@
 }
 .ms .cell .k {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -443,7 +458,7 @@
 }
 .ms .cell .l {
   color: var(--testo-carta-2);
-  font-size: 17px;
+  font-size: 18px;
   margin-top: 8px;
 }
 
@@ -503,7 +518,7 @@
 .ms .cat {
   margin-top: 30px;
   color: var(--testo-ink-2);
-  font-size: 17px;
+  font-size: 18px;
   max-width: 60ch;
 }
 .ms .cat b {
@@ -520,7 +535,7 @@
 /* ---------- due offerte (firma dell'insegna) ---------- */
 .ms .off-foot {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 16px;
@@ -555,7 +570,7 @@
 }
 .ms .mem .role {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lilla);
@@ -563,14 +578,14 @@
 }
 .ms .mem .bio {
   color: var(--testo-ink-2);
-  font-size: 17px;
+  font-size: 18px;
   margin-top: 10px;
 }
 
 /* ---------- caso + timbro ---------- */
 .ms .caso {
   border-radius: var(--r-m);
-  padding: 26px;
+  padding: 34px;
   border: 1px solid var(--surf-bd);
   background: var(--surf-bg);
   box-shadow: var(--surf-sh);
@@ -579,7 +594,7 @@
 }
 .ms .caso .meta {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -595,7 +610,7 @@
 }
 .ms .caso .who {
   margin-top: 16px;
-  font-size: 17px;
+  font-size: 18px;
   color: var(--testo-carta-2);
 }
 .ms .caso .who b {
@@ -613,7 +628,7 @@
 .ms .stamp {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
@@ -646,7 +661,7 @@
   color: var(--testo-ink-2);
   max-width: 48ch;
   margin: 16px auto 0;
-  font-size: 17px;
+  font-size: 18px;
 }
 .ms .ctaq .cta-row {
   display: flex;
@@ -681,7 +696,7 @@
 .ms .compound {
   font-family: var(--font-emph);
   font-style: italic;
-  font-size: clamp(19px, 2.1vw, 22px);
+  font-size: clamp(20px, 2.2vw, 25px);
   line-height: 1.5;
   margin-top: 24px;
   padding-left: 20px;
@@ -735,7 +750,7 @@
 }
 .ms .curve-card .csub {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -833,7 +848,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.4;
 }
 .ms .band.carta .curve-card li {
@@ -894,7 +909,7 @@
   display: inline-block;
   margin-top: 14px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 4px 10px;
@@ -949,7 +964,7 @@
   align-items: baseline;
   gap: 12px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 13.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -1028,7 +1043,7 @@
   justify-content: space-between;
   gap: 16px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -1096,7 +1111,7 @@
   grid-template-columns: auto 1fr;
   gap: 10px;
   align-items: start;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.4;
 }
 .ms .band.ink .blist li {
@@ -1190,7 +1205,7 @@
 .ms .vstep .vp {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 5px 11px;
@@ -1209,7 +1224,7 @@
 }
 .ms .vstep .vsub {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 13.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lilla);
@@ -1228,7 +1243,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
-  font-size: 17.5px;
+  font-size: 18.5px;
   line-height: 1.45;
 }
 .ms .band.ink .vstep .vlist li {
@@ -1248,7 +1263,7 @@
 .ms .vstep .vnote {
   font-family: var(--font-emph);
   font-style: italic;
-  font-size: 17.5px;
+  font-size: 18.5px;
   margin-top: 18px;
   padding-top: 15px;
   border-top: 1px solid var(--surf-bd);
@@ -1268,7 +1283,7 @@
   align-items: center;
   gap: 7px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: var(--r-pill);
@@ -1330,7 +1345,7 @@
 }
 .ms .defbox .k {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--firma);
@@ -1388,7 +1403,7 @@
 }
 .ms .isnot .t {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 14px;
@@ -1409,7 +1424,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 11px;
-  font-size: 17.5px;
+  font-size: 18.5px;
   color: var(--inchiostro);
 }
 .ms .isnot .m {
@@ -1443,7 +1458,7 @@
   font-weight: 600;
 }
 .ms .rcard p {
-  font-size: 17px;
+  font-size: 18px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
@@ -1486,7 +1501,7 @@
 }
 .ms .collaudo .tag {
   display: inline-block;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: var(--marker);
@@ -1550,13 +1565,13 @@
   font-weight: 600;
 }
 .ms .prod p {
-  font-size: 17px;
+  font-size: 18px;
   color: var(--testo-carta-2);
   margin-top: 6px;
 }
 .ms .nota {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ombra);
   margin-top: 18px;
 }

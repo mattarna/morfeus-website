@@ -80,7 +80,7 @@ export function LabMsProblem() {
           <p className="lead">{t("trap_subtitle")}</p>
 
           {/* la piastra: il dato, la fonte, il timbro */}
-          <div className="piastra mt-8 p-7 md:p-9">
+          <div className="piastra mt-8 p-9 md:p-12">
             <div className="flex flex-col gap-7 md:flex-row md:items-start md:gap-10">
               <div className="shrink-0">
                 <LabMsGlifo nome="fiamma" allarme />

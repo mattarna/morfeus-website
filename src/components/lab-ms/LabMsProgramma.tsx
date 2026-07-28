@@ -52,7 +52,7 @@ export function LabMsProgramma() {
             {STAT.map((n, i) => (
               <div
                 key={n}
-                className={`relative overflow-hidden px-7 py-10 ${
+                className={`relative overflow-hidden px-9 py-12 ${
                   i > 0
                     ? "border-t border-[color:var(--surf-bd)] md:border-l md:border-t-0"
                     : ""

@@ -57,7 +57,7 @@
   padding: 11px 18px;
   border-bottom: 1px solid var(--surf-bd);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -173,7 +173,10 @@
   border: 1px solid var(--surf-bd);
   background: var(--surf-bg);
   border-radius: var(--r-m);
-  padding: 26px;
+  /* 26 -> 34, e 40 sopra i 1100px. Con un corpo a 18.5px l'imbottitura
+     stretta comprime: il testo tocca quasi il bordo e la scatola sembra
+     piena prima di esserlo. Il respiro cresce insieme al corpo. */
+  padding: 34px;
   overflow: hidden;
   transition:
     border-color var(--dur) var(--ease),
@@ -184,20 +187,20 @@
 }
 .ms .lab .scheda .cod {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lilla);
 }
 .ms .lab .scheda h3,
 .ms .lab .scheda h4 {
-  font-size: 21px;
+  font-size: 22px;
   margin-top: 12px;
   letter-spacing: -0.015em;
 }
 .ms .lab .scheda p {
   margin-top: 10px;
-  font-size: 17.5px;
+  font-size: 18.5px;
   line-height: 1.6;
   color: var(--testo-ink-2);
 }
@@ -239,7 +242,7 @@
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ombra);
@@ -365,7 +368,7 @@
   padding: 20px 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 19px;
+  font-size: 20px;
   letter-spacing: -0.01em;
   border-bottom: 1px solid var(--surf-bd);
   transition: color var(--dur) var(--ease);
@@ -410,7 +413,7 @@
 .ms .lab .faq .risposta {
   padding: 4px 0 22px;
   max-width: 62ch;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.6;
   color: var(--testo-ink-2);
   border-bottom: 1px solid var(--surf-bd);
@@ -457,4 +460,35 @@
   .ms .lab .testa-confronto {
     min-height: 0;
   }
+}
+
+/* ---------- respiro nei box (2026-07-28) ----------
+   Detto da Matteo guardando la pagina: nei box il testo sta troppo vicino
+   ai bordi, ed e' anche il motivo per cui il corpo non poteva crescere.
+   Aria e dimensione vanno mosse insieme, non una alla volta. */
+@media (min-width: 1100px) {
+  .ms .lab .scheda {
+    padding: 40px;
+  }
+}
+.ms .lab .readout {
+  padding: 15px 26px;
+}
+
+/* la scaletta si appoggiava alla rotaia: le serve stacco sotto */
+.ms .lab .ladder {
+  margin-bottom: 40px;
+}
+.ms .lab .rail {
+  margin-bottom: 34px;
+}
+
+/* CENTRATURA, secondo colpo. Oltre a .h-sect e .lead corretti a monte,
+   qui coprono anche .ctaq. La causa e' sempre la stessa: gli shorthand
+   `margin` del DS battono le utility mx-auto per specificita'. */
+.ms .lab .text-center .h-sect,
+.ms .lab .text-center .lead,
+.ms .lab .ctaq .h-sect,
+.ms .lab .ctaq p {
+  margin-inline: auto;
 }
