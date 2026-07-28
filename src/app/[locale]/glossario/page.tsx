@@ -232,7 +232,16 @@ export default function GlossarioPage({ params: { locale } }: Props) {
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
 
-  const tuttiTermini = [...t.gruppi.flatMap((g) => g.termini), ...t.operativi.voci];
+  /* Il tipo va dichiarato: con `as const` ogni gruppo ha una tupla di
+     termini con tipi LETTERALI diversi, e il flatMap non riesce a
+     unificarli ("Value Leak" non e' assegnabile a "Coordination Tax").
+     Qui i termini servono solo come coppie nome/descrizione per i dati
+     strutturati, quindi li riporto a quel tipo e il problema sparisce. */
+  type Termine = { t: string; d: string };
+  const tuttiTermini: Termine[] = [
+    ...t.gruppi.flatMap((g) => g.termini.map((v): Termine => ({ t: v.t, d: v.d }))),
+    ...t.operativi.voci.map((v): Termine => ({ t: v.t, d: v.d })),
+  ];
 
   const jsonLd = {
     "@context": "https://schema.org",

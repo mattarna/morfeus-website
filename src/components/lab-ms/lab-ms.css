@@ -1,0 +1,720 @@
+/* ===========================================================
+   LAB · dispositivi propri della pagina.
+   -----------------------------------------------------------
+   site.css NON si tocca: e' vendorato e va ri-portato quando il DS
+   a monte cambia. Tutto quello che serve solo a questa pagina vive
+   qui, sotto `.ms .lab` per non calpettare la libreria, stessa
+   disciplina con cui t-hub.css namespacia i suoi `.hub-*`.
+
+   L'IDEA che tiene insieme tutto: la pagina e' uno STRUMENTO DI
+   MISURA. La griglia blueprint e' la carta da disegno; i pannelli
+   sono scatole opache appoggiate sopra; il lilla e' il SEGNALE che
+   attraversa e rivela; il forge e' l'allarme. Niente vetro, niente
+   neon: linee nette e quote, come un disegno tecnico.
+   =========================================================== */
+
+/* ---------- QUADRO · l'area di disegno con le quote d'angolo ----------
+   Il riquadro tecnico che incornicia un disegno. Gli angoli non sono un
+   bordo continuo: sono quattro squadrette, come le crocette di registro
+   di una tavola. Dice "qui dentro si misura". */
+.ms .lab .quadro {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-l);
+  overflow: hidden;
+}
+.ms .lab .quadro::before,
+.ms .lab .quadro::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-color: rgba(140, 165, 247, 0.5);
+}
+.ms .lab .quadro::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.ms .lab .quadro::after {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* ---------- READOUT · la striscia di stato in mono ----------
+   Una riga di strumento: a sinistra cosa sta misurando, a destra lo
+   stato. Ricorre in cima ai pannelli e da' il registro "macchina". */
+.ms .lab .readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--surf-bd);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .lab .readout .on {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--lilla);
+}
+.ms .lab .readout .on i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lilla);
+  animation: lab-batte 2.4s infinite;
+}
+@keyframes lab-batte {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ---------- NUMERO FANTASMA · la cifra gigante dietro ----------
+   Preso dal tuo .vstep .num e reso riusabile: da' il passo allo
+   scorrimento senza aggiungere colore. Decorativo, mai portatore di
+   dato, infatti sta dietro e non si seleziona. */
+.ms .lab .ghost {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: clamp(72px, 9vw, 128px);
+  color: rgba(140, 165, 247, 0.09);
+}
+.ms .lab .sopra {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- PIASTRA · il pannello d'allarme ----------
+   Il forge non si spalma: si usa come una piastra di segnalazione,
+   con la campitura a righe dei cartelli di pericolo. Tenuta bassa
+   (alpha .07) perche' resti un fondo, non un motivo. */
+.ms .lab .piastra {
+  position: relative;
+  border: 1px solid rgba(232, 101, 10, 0.32);
+  border-radius: var(--r-l);
+  background-color: #150e08;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(232, 101, 10, 0.07) 0 10px,
+    transparent 10px 24px
+  );
+  overflow: hidden;
+}
+
+/* ---------- GAUGE · la barra di misura ----------
+   Variante del tuo .savings .track, ridotta a strumento: traccia
+   incassata, riempimento a filo con bordo pieno. Il numero sta
+   fuori, la barra da' solo la proporzione. */
+.ms .lab .gauge {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.ms .lab .gauge i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--firma), var(--lilla));
+}
+
+/* ---------- RAIL · la rotaia orizzontale che collega i livelli ----------
+   E' la .vtimeline coricata: la stessa idea di progressione, ma su
+   una riga sola perche' i livelli si leggono in parallelo. */
+.ms .lab .rail {
+  position: relative;
+  height: 1px;
+  background: rgba(140, 165, 247, 0.22);
+  margin: 0 0 26px;
+}
+.ms .lab .rail span {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: var(--inchiostro);
+  border: 1px solid var(--lilla);
+}
+.ms .lab .rail span.pieno {
+  background: var(--lilla);
+  box-shadow: 0 0 0 5px rgba(140, 165, 247, 0.13);
+}
+
+/* ---------- SCHEDA · il pannello opaco base ----------
+   Ripete lo STANDARD SUPERFICI del DS invece di inventare un fondo:
+   opaco, cosi' copre la griglia e si legge come scatola. La regola
+   e' scritta nei token di site.css e vale anche qui. */
+.ms .lab .scheda {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-m);
+  /* 26 -> 34, e 40 sopra i 1100px. Con un corpo a 18.5px l'imbottitura
+     stretta comprime: il testo tocca quasi il bordo e la scatola sembra
+     piena prima di esserlo. Il respiro cresce insieme al corpo. */
+  padding: 34px;
+  overflow: hidden;
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.ms .lab .scheda:hover {
+  border-color: rgba(140, 165, 247, 0.55);
+}
+.ms .lab .scheda .cod {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lilla);
+}
+.ms .lab .scheda h3,
+.ms .lab .scheda h4 {
+  font-size: 22px;
+  margin-top: 12px;
+  letter-spacing: -0.015em;
+}
+.ms .lab .scheda p {
+  margin-top: 10px;
+  font-size: 18.5px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+}
+
+/* il filetto che si accende sul bordo alto quando passi sopra */
+.ms .lab .scheda .filo {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lilla), transparent);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.ms .lab .scheda:hover .filo {
+  opacity: 0.9;
+}
+
+/* ---------- GLIFO · l'icona come disegno tecnico ----------
+   Le icone non sono duotone piene: sono tratti. Stroke legato alla
+   misura, mai riempimento, resta coerente col registro del disegno. */
+.ms .lab .glifo {
+  width: 28px;
+  height: 28px;
+  stroke: var(--lilla);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ms .lab .glifo.allarme {
+  stroke: var(--marker);
+}
+
+/* ---------- QUOTA · la riga di misura con i trattini ----------
+   Come le quote di una tavola tecnica: due barrette e una linea, con
+   l'etichetta in mono sopra. Serve a marcare una distanza dichiarata. */
+.ms .lab .quota {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .lab .quota::before,
+.ms .lab .quota::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgba(140, 165, 247, 0.22);
+}
+
+/* ===========================================================
+   VARIANTI CARTA
+   -----------------------------------------------------------
+   I dispositivi qui sopra sono tarati sull'inchiostro. Due fasce
+   della pagina sono carta, il Metodo e l'Investimento, e li' il
+   segnale non e' piu' il lilla ma la firma, perche' su fondo chiaro
+   il lilla non regge il contrasto.
+
+   .quadro, .scheda e .gauge non compaiono: usano gia' --surf-bg e
+   --surf-bd, che le pelli ridefiniscono da sole. E' il vantaggio di
+   essere partiti dallo STANDARD SUPERFICI invece di scrivere colori
+   a mano.
+   =========================================================== */
+.ms .band.carta .lab .quadro::before,
+.ms .band.carta .lab .quadro::after {
+  border-color: rgba(83, 61, 252, 0.45);
+}
+.ms .band.carta .lab .readout {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .readout .on,
+.ms .band.carta .lab .scheda .cod {
+  color: var(--firma);
+}
+.ms .band.carta .lab .readout .on i {
+  background: var(--firma);
+}
+.ms .band.carta .lab .ghost {
+  color: rgba(83, 61, 252, 0.08);
+}
+.ms .band.carta .lab .scheda p {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .scheda:hover {
+  border-color: rgba(83, 61, 252, 0.5);
+}
+.ms .band.carta .lab .scheda .filo {
+  background: linear-gradient(90deg, transparent, var(--firma), transparent);
+}
+.ms .band.carta .lab .glifo {
+  stroke: var(--firma);
+}
+.ms .band.carta .lab .quota {
+  color: var(--testo-carta-2);
+}
+.ms .band.carta .lab .quota::before,
+.ms .band.carta .lab .quota::after {
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.carta .lab .rail {
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.carta .lab .rail span {
+  background: var(--carta);
+  border-color: var(--firma);
+}
+.ms .band.carta .lab .rail span.pieno {
+  background: var(--firma);
+  box-shadow: 0 0 0 5px rgba(83, 61, 252, 0.12);
+}
+
+/* ---------- spunta della lista requisiti (Investimento) ----------
+   Non un'icona: un segno di spunta disegnato col bordo, come le
+   caselle di un modulo compilato a mano. */
+.ms .lab .spunta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.ms .lab .spunta i {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  border: 1px solid var(--firma);
+  border-radius: 3px;
+  position: relative;
+  flex: none;
+}
+.ms .lab .spunta i::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border-right: 1.5px solid var(--firma);
+  border-bottom: 1.5px solid var(--firma);
+  transform: rotate(42deg);
+}
+.ms .band.ink .lab .spunta i,
+.ms .band.ink .lab .spunta i::after {
+  border-color: var(--lilla);
+}
+
+/* ---------- FAQ · accordion senza JavaScript ----------
+   <details>/<summary> nativi: si aprono senza uno script, restano
+   navigabili da tastiera e il contenuto e' nel DOM per i crawler.
+   L'unica cosa che serve e' togliere il triangolino di sistema e
+   ruotare il nostro segno. */
+.ms .lab .faq {
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .lab .faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 20px 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--surf-bd);
+  transition: color var(--dur) var(--ease);
+}
+.ms .lab .faq summary::-webkit-details-marker {
+  display: none;
+}
+.ms .lab .faq summary:hover {
+  color: var(--lilla);
+}
+.ms .lab .faq summary .segno {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+.ms .lab .faq summary .segno::before,
+.ms .lab .faq summary .segno::after {
+  content: "";
+  position: absolute;
+  background: var(--lilla);
+  transition: transform var(--dur) var(--ease);
+}
+.ms .lab .faq summary .segno::before {
+  left: 0;
+  top: 6px;
+  width: 13px;
+  height: 1px;
+}
+.ms .lab .faq summary .segno::after {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 13px;
+}
+.ms .lab .faq[open] summary .segno::after {
+  transform: scaleY(0);
+}
+.ms .lab .faq[open] summary {
+  color: var(--lilla);
+}
+.ms .lab .faq .risposta {
+  padding: 4px 0 22px;
+  max-width: 62ch;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  border-bottom: 1px solid var(--surf-bd);
+}
+
+/* ---------- movimento ridotto ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ms .lab .readout .on i {
+    animation: none;
+  }
+}
+
+/* ---------- correzioni di allineamento (2026-07-28) ----------
+   1 · .ladder: site.css le da' `margin: 6px 0 24px`, uno shorthand che
+       azzera i margini laterali e vince per specificita' su mx-auto.
+       Nella pagina la scaletta finiva incollata a sinistra mentre il
+       resto della sezione era centrato.
+   2 · .quadro dentro una fascia: gli serve poter stare centrato con una
+       larghezza propria senza dipendere da utility che perdono. */
+.ms .lab .ladder {
+  margin-inline: auto;
+}
+.ms .lab .centrato {
+  margin-inline: auto;
+}
+
+/* la cifra fantasma stava troppo in alto e finiva sotto l'etichetta di
+   riga: scesa e schiarita, cosi' resta passo di lettura e non rumore */
+.ms .lab .ghost {
+  font-size: clamp(64px, 7.5vw, 104px);
+  color: rgba(140, 165, 247, 0.07);
+}
+.ms .band.carta .lab .ghost {
+  color: rgba(83, 61, 252, 0.06);
+}
+
+/* intestazione delle schede a confronto: senza un'altezza minima i due
+   grafici partivano a quote diverse, perche' un sottotitolo andava a capo
+   e l'altro no. E' quello che faceva sembrare la sezione sbilenca. */
+.ms .lab .testa-confronto {
+  min-height: 92px;
+}
+@media (max-width: 860px) {
+  .ms .lab .testa-confronto {
+    min-height: 0;
+  }
+}
+
+/* ---------- respiro nei box (2026-07-28) ----------
+   Detto da Matteo guardando la pagina: nei box il testo sta troppo vicino
+   ai bordi, ed e' anche il motivo per cui il corpo non poteva crescere.
+   Aria e dimensione vanno mosse insieme, non una alla volta. */
+@media (min-width: 1100px) {
+  .ms .lab .scheda {
+    padding: 40px;
+  }
+}
+.ms .lab .readout {
+  padding: 15px 26px;
+}
+
+/* la scaletta si appoggiava alla rotaia: le serve stacco sotto */
+.ms .lab .ladder {
+  margin-bottom: 40px;
+}
+.ms .lab .rail {
+  margin-bottom: 34px;
+}
+
+/* CENTRATURA, secondo colpo. Oltre a .h-sect e .lead corretti a monte,
+   qui coprono anche .ctaq. La causa e' sempre la stessa: gli shorthand
+   `margin` del DS battono le utility mx-auto per specificita'. */
+.ms .lab .text-center .h-sect,
+.ms .lab .text-center .lead,
+.ms .lab .ctaq .h-sect,
+.ms .lab .ctaq p {
+  margin-inline: auto;
+}
+
+/* ===========================================================
+   QUADRANTI E RIGHE (2026-07-28)
+   -----------------------------------------------------------
+   Le imbottiture interne al .quadro erano scritte con utility
+   Tailwind (px-9 py-11). Sbagliato: dentro un componente del DS
+   il respiro deve stare nel CSS del componente, dove posso
+   verificarlo nel bundle e dove non dipende da cosa vince fra
+   due fogli diversi. Qui sono classi mie, esplicite.
+   =========================================================== */
+.ms .lab .quadrante {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 36px 44px;
+}
+@media (min-width: 1100px) {
+  .ms .lab .quadrante {
+    padding: 48px 44px 52px;
+  }
+}
+.ms .lab .quadrante + .quadrante {
+  border-top: 1px solid var(--surf-bd);
+}
+@media (min-width: 768px) {
+  .ms .lab .quadrante + .quadrante {
+    border-top: none;
+    border-left: 1px solid var(--surf-bd);
+  }
+}
+.ms .lab .riga-ordine {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 26px;
+  padding: 30px 36px;
+}
+@media (min-width: 768px) {
+  .ms .lab .riga-ordine {
+    padding: 32px 44px;
+  }
+}
+.ms .lab .riga-ordine + .riga-ordine,
+.ms .lab .riga-chiusa {
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .lab .riga-chiusa {
+  padding: 26px 36px;
+}
+@media (min-width: 768px) {
+  .ms .lab .riga-chiusa {
+    padding: 28px 44px;
+  }
+}
+.ms .lab .corpo-modulo {
+  padding: 40px 36px 44px;
+}
+@media (min-width: 768px) {
+  .ms .lab .corpo-modulo {
+    padding: 52px 48px 56px;
+  }
+}
+
+/* ---------- la scaletta dei livelli, riallineata ----------
+   Prima era un gruppetto centrato largo 420px: i tre gradini non
+   avevano niente a che vedere con le tre schede sotto. Ora e' la
+   STESSA griglia delle schede, cosi' ogni gradino sta esattamente
+   sopra il livello che rappresenta, e la crescita si legge. */
+.ms .lab .ladder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: none;
+  height: 84px;
+  margin: 0 0 34px;
+}
+.ms .lab .ladder .rung {
+  align-self: end;
+}
+
+/* piu' stacco fra il sottotitolo e la grafica che segue */
+.ms .lab .dopo-lede {
+  margin-top: 72px;
+}
+@media (max-width: 768px) {
+  .ms .lab .dopo-lede {
+    margin-top: 48px;
+  }
+}
+
+/* ===========================================================
+   LE FASI DEL METODO, struttura alternata come nell'originale
+   -----------------------------------------------------------
+   L'originale alterna i passi a sinistra e a destra di una linea
+   centrale, con la cifra gigante dietro e il perno sulla linea.
+   La .vtimeline del DS e' a colonna sola: buona per un indice,
+   ma perde il passo del racconto. Qui rifaccio l'alternanza,
+   restando nei colori e nei caratteri del sistema.
+   =========================================================== */
+.ms .lab .fasi {
+  position: relative;
+  margin-top: 64px;
+}
+.ms .lab .fasi::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(83, 61, 252, 0.22);
+}
+.ms .band.ink .lab .fasi::before {
+  background: rgba(140, 165, 247, 0.22);
+}
+.ms .lab .fase {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  padding-bottom: 84px;
+}
+.ms .lab .fase:last-child {
+  padding-bottom: 0;
+}
+.ms .lab .fase .contenuto {
+  grid-column: 1;
+  position: relative;
+  z-index: 1;
+}
+.ms .lab .fase.dx .contenuto {
+  grid-column: 2;
+  text-align: right;
+}
+.ms .lab .fase .perno {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--firma);
+  box-shadow: 0 0 0 6px rgba(83, 61, 252, 0.12);
+  z-index: 2;
+}
+.ms .band.ink .lab .fase .perno {
+  background: var(--lilla);
+  box-shadow: 0 0 0 6px rgba(140, 165, 247, 0.14);
+}
+.ms .lab .fase .cifra {
+  position: absolute;
+  top: -26px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: clamp(78px, 9vw, 140px);
+  color: rgba(83, 61, 252, 0.09);
+}
+.ms .band.ink .lab .fase .cifra {
+  color: rgba(140, 165, 247, 0.09);
+}
+.ms .lab .fase.sx .cifra {
+  left: 34%;
+}
+.ms .lab .fase.dx .cifra {
+  right: 34%;
+}
+/* nella colonna di destra il marcatore dell'elenco passa a destra,
+   o l'elenco allineato a destra resterebbe con i puntini orfani */
+.ms .lab .fase.dx .vlist li {
+  grid-template-columns: 1fr auto;
+}
+.ms .lab .fase.dx .vlist li .dm {
+  order: 2;
+}
+.ms .lab .fase.dx .vnote {
+  margin-left: auto;
+}
+@media (max-width: 860px) {
+  .ms .lab .fasi::before {
+    left: 7px;
+  }
+  .ms .lab .fase {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-left: 38px;
+    padding-bottom: 56px;
+  }
+  .ms .lab .fase .contenuto,
+  .ms .lab .fase.dx .contenuto {
+    grid-column: 1;
+    text-align: left;
+  }
+  .ms .lab .fase .perno {
+    left: 7px;
+  }
+  .ms .lab .fase .cifra {
+    left: auto;
+    right: 0;
+    font-size: 96px;
+  }
+  .ms .lab .fase.dx .vlist li {
+    grid-template-columns: auto 1fr;
+  }
+  .ms .lab .fase.dx .vlist li .dm {
+    order: 0;
+  }
+}
+
+/* .vstep dentro una .fase: tengo la TIPOGRAFIA del DS (.vp, .vsub,
+   .vlist, .vnote, h3) e spengo la sua IMPAGINAZIONE, che qui la fa
+   l'alternanza: niente incolonnamento a 92px e niente linea di
+   collegamento, perche' la linea e' gia' quella centrale di .fasi. */
+.ms .lab .fase .vstep {
+  padding: 0;
+}
+.ms .lab .fase .vstep::before {
+  display: none;
+}
+.ms .lab .fase.dx .vstep h3,
+.ms .lab .fase.dx .vstep .vnote {
+  margin-left: auto;
+}

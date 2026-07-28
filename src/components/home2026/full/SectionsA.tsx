@@ -80,19 +80,10 @@ export function Hero({ active }: { active: boolean }) {
         </div>
       </div>
 
-      <div className="cartiglio fx d7">
-        {[
-          ["Tavola", "01 / 14"],
-          ["Revisione", "2026.07"],
-          ["Scala", "1 : 1"],
-          ["Oggetto", "Recupero margine"],
-        ].map(([k, v]) => (
-          <div className="row" key={k}>
-            <span>{k}</span>
-            <span>{v}</span>
-          </div>
-        ))}
-      </div>
+      {/* Il cartiglio (TAVOLA / REVISIONE / SCALA / OGGETTO) stava qui in
+          basso a destra ed era l'unico elemento che teneva la hero
+          asimmetrica. Con la hero centrata (approvata 2026-07-28) non c'e'
+          piu' un lato libero dove appoggiarlo senza sbilanciare tutto. */}
     </section>
   );
 }

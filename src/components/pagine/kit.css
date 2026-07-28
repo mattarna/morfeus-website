@@ -268,50 +268,50 @@
    essere partiti dallo STANDARD SUPERFICI invece di scrivere colori
    a mano.
    =========================================================== */
-.ms .band.carta .pg .quadro::before,
-.ms .band.carta .pg .quadro::after {
+.ms :is(.band.carta.pg, .band.carta .pg) .quadro::before,
+.ms :is(.band.carta.pg, .band.carta .pg) .quadro::after {
   border-color: rgba(83, 61, 252, 0.45);
 }
-.ms .band.carta .pg .readout {
+.ms :is(.band.carta.pg, .band.carta .pg) .readout {
   color: var(--testo-carta-2);
 }
-.ms .band.carta .pg .readout .on,
-.ms .band.carta .pg .scheda .cod {
+.ms :is(.band.carta.pg, .band.carta .pg) .readout .on,
+.ms :is(.band.carta.pg, .band.carta .pg) .scheda .cod {
   color: var(--firma);
 }
-.ms .band.carta .pg .readout .on i {
+.ms :is(.band.carta.pg, .band.carta .pg) .readout .on i {
   background: var(--firma);
 }
-.ms .band.carta .pg .ghost {
+.ms :is(.band.carta.pg, .band.carta .pg) .ghost {
   color: rgba(83, 61, 252, 0.08);
 }
-.ms .band.carta .pg .scheda p {
+.ms :is(.band.carta.pg, .band.carta .pg) .scheda p {
   color: var(--testo-carta-2);
 }
-.ms .band.carta .pg .scheda:hover {
+.ms :is(.band.carta.pg, .band.carta .pg) .scheda:hover {
   border-color: rgba(83, 61, 252, 0.5);
 }
-.ms .band.carta .pg .scheda .filo {
+.ms :is(.band.carta.pg, .band.carta .pg) .scheda .filo {
   background: linear-gradient(90deg, transparent, var(--firma), transparent);
 }
-.ms .band.carta .pg .glifo {
+.ms :is(.band.carta.pg, .band.carta .pg) .glifo {
   stroke: var(--firma);
 }
-.ms .band.carta .pg .quota {
+.ms :is(.band.carta.pg, .band.carta .pg) .quota {
   color: var(--testo-carta-2);
 }
-.ms .band.carta .pg .quota::before,
-.ms .band.carta .pg .quota::after {
+.ms :is(.band.carta.pg, .band.carta .pg) .quota::before,
+.ms :is(.band.carta.pg, .band.carta .pg) .quota::after {
   background: rgba(83, 61, 252, 0.22);
 }
-.ms .band.carta .pg .rail {
+.ms :is(.band.carta.pg, .band.carta .pg) .rail {
   background: rgba(83, 61, 252, 0.22);
 }
-.ms .band.carta .pg .rail span {
+.ms :is(.band.carta.pg, .band.carta .pg) .rail span {
   background: var(--carta);
   border-color: var(--firma);
 }
-.ms .band.carta .pg .rail span.pieno {
+.ms :is(.band.carta.pg, .band.carta .pg) .rail span.pieno {
   background: var(--firma);
   box-shadow: 0 0 0 5px rgba(83, 61, 252, 0.12);
 }
@@ -418,6 +418,11 @@
   color: var(--testo-ink-2);
   border-bottom: 1px solid var(--surf-bd);
 }
+/* mancava la controparte su carta: la risposta restava grigio chiaro
+   anche sui fondi chiari. */
+.ms :is(.band.carta.pg, .band.carta .pg) .faq .risposta {
+  color: var(--testo-carta-2);
+}
 
 /* ---------- movimento ridotto ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -446,7 +451,7 @@
   font-size: clamp(64px, 7.5vw, 104px);
   color: rgba(140, 165, 247, 0.07);
 }
-.ms .band.carta .pg .ghost {
+.ms :is(.band.carta.pg, .band.carta .pg) .ghost {
   color: rgba(83, 61, 252, 0.06);
 }
 
@@ -749,7 +754,7 @@
   background: rgba(83, 61, 252, 0.04);
   padding-left: 18px;
 }
-.ms .band.ink .pg .sintomo:hover {
+.ms :is(.band.ink.pg, .band.ink .pg) .sintomo:hover {
   background: rgba(140, 165, 247, 0.05);
 }
 .ms .pg .sintomo .testo {
@@ -771,7 +776,7 @@
   color: var(--firma);
   transition: transform var(--dur) var(--ease);
 }
-.ms .band.ink .pg .sintomo .freccia {
+.ms :is(.band.ink.pg, .band.ink .pg) .sintomo .freccia {
   color: var(--lilla);
 }
 .ms .pg .sintomo:hover .freccia {
@@ -815,7 +820,7 @@
   align-items: center;
   gap: 10px;
 }
-.ms .band.carta .pg .stazione .passo {
+.ms :is(.band.carta.pg, .band.carta .pg) .stazione .passo {
   color: var(--firma);
 }
 .ms .pg .stazione .valore {
@@ -832,7 +837,7 @@
   line-height: 1.6;
   color: var(--testo-ink-2);
 }
-.ms .band.carta .pg .stazione p {
+.ms :is(.band.carta.pg, .band.carta .pg) .stazione p {
   color: var(--testo-carta-2);
 }
 /* il connettore: una punta sul filetto, non una freccia disegnata */
@@ -848,7 +853,7 @@
   transform: rotate(45deg);
   background: var(--surf-bg);
 }
-.ms .band.carta .pg .stazione:not(:first-child)::before {
+.ms :is(.band.carta.pg, .band.carta .pg) .stazione:not(:first-child)::before {
   border-color: var(--firma);
 }
 @media (max-width: 980px) {
@@ -969,7 +974,7 @@
   color: var(--testo-carta-2);
   flex: 1;
 }
-.ms .band.ink .pg .voce p {
+.ms :is(.band.ink.pg, .band.ink .pg) .voce p {
   color: var(--testo-ink-2);
 }
 .ms .pg .voce .piede {
@@ -1034,10 +1039,10 @@
 }
 /* su fondo scuro il majorelle pieno scende a 3.22:1: sulle fasce ink
    l'area Vendite usa il gradino chiaro della stessa rampa */
-.ms .band.ink .pg .voce.area-vendite {
+.ms :is(.band.ink.pg, .band.ink .pg) .voce.area-vendite {
   --ac: var(--lilla);
 }
-.ms .band.ink .pg .voce.area-reporting {
+.ms :is(.band.ink.pg, .band.ink .pg) .voce.area-reporting {
   --ac: #9fb4f9;
 }
 
@@ -1063,14 +1068,14 @@
     border-color var(--dur) var(--ease),
     color var(--dur) var(--ease);
 }
-.ms .band.ink .pg .filtro {
+.ms :is(.band.ink.pg, .band.ink .pg) .filtro {
   color: var(--testo-ink-2);
 }
 .ms .pg .filtro:hover {
   border-color: var(--firma);
   color: var(--firma);
 }
-.ms .band.ink .pg .filtro:hover {
+.ms :is(.band.ink.pg, .band.ink .pg) .filtro:hover {
   border-color: var(--lilla);
   color: var(--lilla);
 }
@@ -1079,7 +1084,7 @@
   color: var(--firma);
   background: rgba(83, 61, 252, 0.08);
 }
-.ms .band.ink .pg .filtro[aria-pressed="true"] {
+.ms :is(.band.ink.pg, .band.ink .pg) .filtro[aria-pressed="true"] {
   border-color: var(--lilla);
   color: var(--lilla);
   background: rgba(140, 165, 247, 0.1);
@@ -1109,7 +1114,7 @@
   line-height: 1.6;
   color: var(--testo-ink-2);
 }
-.ms .band.carta .pg .testo-quadrante {
+.ms :is(.band.carta.pg, .band.carta .pg) .testo-quadrante {
   color: var(--testo-carta-2);
 }
 
@@ -1125,7 +1130,7 @@
   background: rgba(83, 61, 252, 0.05);
   border-radius: 0 var(--r-s) var(--r-s) 0;
 }
-.ms .band.ink .pg .filtro-attivo {
+.ms :is(.band.ink.pg, .band.ink .pg) .filtro-attivo {
   border-left-color: var(--lilla);
   background: rgba(140, 165, 247, 0.06);
 }
@@ -1249,7 +1254,7 @@
   letter-spacing: -0.04em;
   color: rgba(140, 165, 247, 0.08);
 }
-.ms .band.carta .pg .colonna .cifra-fondo {
+.ms :is(.band.carta.pg, .band.carta .pg) .colonna .cifra-fondo {
   color: rgba(83, 61, 252, 0.07);
 }
 .ms .pg .colonna h3 {
@@ -1268,7 +1273,7 @@
   line-height: 1.62;
   color: var(--testo-ink-2);
 }
-.ms .band.carta .pg .colonna p {
+.ms :is(.band.carta.pg, .band.carta .pg) .colonna p {
   color: var(--testo-carta-2);
 }
 
@@ -1320,11 +1325,11 @@
   color: var(--lilla);
   border-left-color: var(--lilla);
 }
-.ms .band.carta .pg .rail-mappa a:hover,
-.ms .band.carta .pg .rail-mappa a[aria-current="true"] {
+.ms :is(.band.carta.pg, .band.carta .pg) .rail-mappa a:hover,
+.ms :is(.band.carta.pg, .band.carta .pg) .rail-mappa a[aria-current="true"] {
   color: var(--firma);
 }
-.ms .band.carta .pg .rail-mappa a[aria-current="true"] {
+.ms :is(.band.carta.pg, .band.carta .pg) .rail-mappa a[aria-current="true"] {
   border-left-color: var(--firma);
 }
 .ms .pg .tappa {
@@ -1345,7 +1350,7 @@
   text-transform: uppercase;
   color: var(--lilla);
 }
-.ms .band.carta .pg .tappa .indice {
+.ms :is(.band.carta.pg, .band.carta .pg) .tappa .indice {
   color: var(--firma);
 }
 .ms .pg .tappa h3 {
@@ -1362,7 +1367,7 @@
   color: var(--testo-ink-2);
   max-width: 60ch;
 }
-.ms .band.carta .pg .tappa p {
+.ms :is(.band.carta.pg, .band.carta .pg) .tappa p {
   color: var(--testo-carta-2);
 }
 
@@ -1396,7 +1401,7 @@
   color: var(--firma);
   border-left: 1px solid var(--surf-bd);
 }
-.ms .band.ink .pg .confronto .colonna-testa.si {
+.ms :is(.band.ink.pg, .band.ink .pg) .confronto .colonna-testa.si {
   color: var(--lilla);
 }
 .ms .pg .confronto .riga-no,
@@ -1416,7 +1421,7 @@
   font-weight: 600;
   letter-spacing: -0.01em;
 }
-.ms .band.carta .pg .confronto .riga-si {
+.ms :is(.band.carta.pg, .band.carta .pg) .confronto .riga-si {
   color: var(--firma-hover);
 }
 
@@ -1449,7 +1454,7 @@
   text-transform: uppercase;
   color: var(--firma);
 }
-.ms .band.ink .pg .clausola .sigla {
+.ms :is(.band.ink.pg, .band.ink .pg) .clausola .sigla {
   color: var(--lilla);
 }
 .ms .pg .clausola .testo-clausola {
@@ -1567,7 +1572,7 @@
   --lavoro: var(--lilla);
   --guadagno: var(--ok);
 }
-.ms .band.carta .pg {
+.ms :is(.band.carta.pg, .band.carta .pg) {
   --lavoro: var(--firma);
   /* sulla carta il forge sta a 2.70:1 e il verde a 2.79: sotto
      soglia entrambi. Il racconto li' lo portano i blu profondi. */
@@ -1741,6 +1746,19 @@
   }
 }
 
+/* ============================================================
+   PERCHE' .band.carta.pg E NON .band.carta .pg
+   ------------------------------------------------------------
+   Nelle pagine la fascia e il contenitore sono LO STESSO
+   elemento: <section class="band carta pg">. Il selettore
+   discendente ".band.carta .pg" chiede un .pg DENTRO la fascia,
+   quindi non ha mai fatto match: tutte le regole di questo file
+   pensate per la carta restavano spente, e sui fondi chiari i
+   testi secondari continuavano a usare il colore dell'inchiostro
+   (#c2c6d4 su ghost-white: illeggibile).
+   :is() tiene entrambe le forme, cosi' funziona sia con .pg
+   sull'elemento della fascia sia annidato piu' in basso.
+   ============================================================ */
 /* ---------- LE PERSONE ----------
    "Fotografie vere, layout editoriale asimmetrico, ruoli nitidi."
    Le foto ci sono gia', in public/images/team. Asimmetrico vuol dire
@@ -1748,9 +1766,9 @@
    a sinistra, stretto, e il testo prende il resto. Un team non e' un
    catalogo di facce.
 
-   Il bianco e nero che torna a colori al passaggio non e' un vezzo:
-   tiene la pagina sobria quando la scorri e restituisce la persona
-   quando ti ci fermi. */
+   I ritratti stanno a colori da subito: il bianco e nero che
+   tornava a colori al passaggio nascondeva le persone a chi
+   scorre e basta, e su touch non si attiva mai. */
 .ms .pg .persone {
   margin-top: 44px;
   border-top: 1px solid var(--surf-bd);
@@ -1776,11 +1794,6 @@
   object-fit: cover;
   border-radius: var(--r-m);
   border: 1px solid var(--surf-bd);
-  filter: grayscale(1) contrast(1.05);
-  transition: filter var(--dur) var(--ease);
-}
-.ms .pg .persona:hover .ritratto {
-  filter: grayscale(0);
 }
 .ms .pg .persona .nome {
   font-family: var(--font-display);
@@ -1804,7 +1817,7 @@
   color: var(--testo-ink-2);
   max-width: 62ch;
 }
-.ms .band.carta .pg .persona p {
+.ms :is(.band.carta.pg, .band.carta .pg) .persona p {
   color: var(--testo-carta-2);
 }
 

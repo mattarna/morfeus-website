@@ -2,6 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 /**
+ * La voce MARF punta a /marf, non piu' a /forge. Erano due pagine
+ * diverse con lo stesso nome: /forge e' la VECCHIA pagina MARF (il suo
+ * metaTitle dice ancora "MARF · Operating Partner AI"), /marf e' quella
+ * rifatta sul copy approvato. Il menu mandava alla vecchia.
+ * /forge resta raggiungibile: e' la pagina dell'offerta Morf Forge, ed
+ * e' linkata dal Lab. Il suo metaTitle pero' e' rimasto quello di MARF
+ * e andra' sistemato quando si tocca quella pagina.
+ *
  * ALLINEATO ALLA HOME (2026-07-28).
  * Anche nella LARGHEZZA: la barra non ha piu' un contenitore da 1180px
  * centrato, che spingeva logo e bottone verso il centro mentre sulla
@@ -31,7 +39,7 @@ const COPY = {
     nav: [
       ["chi-siamo", "Chi siamo"],
       ["metodo", "Metodo"],
-      ["forge", "MARF"],
+      ["marf", "MARF"],
       ["lab", "LAB"],
       ["casi", "Casi"],
       ["insights", "Insights"],
@@ -43,7 +51,7 @@ const COPY = {
     nav: [
       ["chi-siamo", "About"],
       ["metodo", "Method"],
-      ["forge", "MARF"],
+      ["marf", "MARF"],
       ["lab", "LAB"],
       ["casi", "Cases"],
       ["insights", "Insights"],
@@ -76,7 +84,7 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
             width={2064}
             height={267}
             priority
-            className="h-[26px] w-auto"
+            className="h-[20px] w-auto"
           />
         </Link>
 
@@ -93,10 +101,14 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
           ))}
         </div>
 
-        {/* CTA firma */}
+        {/* CTA firma. `btn-bar` la rimpicciolisce: il .btn del sistema e'
+            tarato sui bottoni dentro le sezioni, dove deve pesare; in una
+            barra alta 68px lo stesso bottone diventa il primo oggetto che
+            vedi, prima del logo. La classe sta in site.css perche' le
+            utility Tailwind (0,1,0) perdono contro `.ms .btn` (0,2,0). */}
         <a
           href={`${base}/roiometro`}
-          className="btn btn-1"
+          className="btn btn-1 btn-bar"
         >
           {t.cta}
         </a>

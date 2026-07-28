@@ -84,7 +84,7 @@ export function Home2026() {
       ? [
           ["chi-siamo", "About"],
           ["metodo", "Method"],
-          ["forge", "MARF"],
+          ["marf", "MARF"],
           ["lab", "LAB"],
           ["casi", "Cases"],
           ["insights", "Insights"],
@@ -92,7 +92,7 @@ export function Home2026() {
       : [
           ["chi-siamo", "Chi siamo"],
           ["metodo", "Metodo"],
-          ["forge", "MARF"],
+          ["marf", "MARF"],
           ["lab", "LAB"],
           ["casi", "Casi"],
           ["insights", "Insights"],

@@ -174,16 +174,24 @@
   gap: 10px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 19px;
+  font-size: 17px;
   letter-spacing: -0.02em;
   background: none;
   border: 0;
   color: inherit;
   cursor: pointer;
 }
+/* Il marchio nella barra si legge come firma, non come insegna: deve
+   stare sotto la soglia di attenzione della nav, non sopra. */
 .d26 .top-header .wordmark svg {
   height: auto;
+  width: 22px;
   flex-shrink: 0;
+}
+/* Stessa taglia della CTA nella barra delle altre pagine (.btn-bar):
+   il .btn del sistema e' tarato sulle CTA dentro le sezioni. */
+.d26 .top-header .btn {
+  padding: 9px 18px;
 }
 
 /* nav cross-pagina: link reali verso le altre pagine 2026 */
@@ -1827,4 +1835,41 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
+}
+
+/* ===========================================================
+   HERO CENTRATA (approvata 2026-07-28)
+   -----------------------------------------------------------
+   Il cartiglio (TAVOLA / REVISIONE / SCALA / OGGETTO) era l'unico
+   elemento che teneva la hero asimmetrica: tolto quello, la colonna
+   di testo puo' stare al centro. Era una prova dietro ?hero=center;
+   ora e' la hero e basta, senza flag ne' badge.
+
+   Due cose che non bastava centrare con text-align:
+   - hero-h1 e hero-sub hanno un max-width proprio, quindi serve
+     margin-inline:auto: text-align centra il testo DENTRO la
+     scatola, non la scatola nel contenitore
+   - la velina era una diagonale che scuriva solo la colonna di
+     sinistra; col testo al centro diventa radiale, altrimenti la
+     meta' destra della headline resta senza fondo sull'animazione
+   =========================================================== */
+.d26 .hero-panel > .wrap {
+  text-align: center;
+  margin-inline: auto;
+}
+.d26 .hero-h1,
+.d26 .hero-sub {
+  margin-inline: auto;
+}
+.d26 .hero-ctas {
+  justify-content: center;
+}
+.d26-bg .hero-panel::before {
+  background: radial-gradient(
+    ellipse 78% 62% at 50% 52%,
+    rgba(11, 11, 12, 0.8) 0%,
+    rgba(11, 11, 12, 0.6) 45%,
+    rgba(11, 11, 12, 0.12) 78%,
+    rgba(11, 11, 12, 0) 100%
+  );
 }
