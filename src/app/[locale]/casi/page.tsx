@@ -31,7 +31,10 @@ import { CASI, PROBLEMI, getCaso, CASO_IN_EVIDENZA, type ChiaveProblema } from "
    Cyberangels gia' approvata, non riscritto.
    ============================================================ */
 
-type Props = { params: { locale: string } };
+type Props = {
+  params: { locale: string };
+  searchParams?: { problema?: string };
+};
 
 const COPY = {
   it: {
@@ -73,9 +76,11 @@ const COPY = {
       h2emph: "usciva",
       h2b: ".",
       lead: "Per ogni caso: chi è, dove perdeva valore, cosa abbiamo costruito e cosa è cambiato. I filtri sono per problema e per area, mai per tecnologia usata.",
-      tutti: "Tutti",
-      perProblema: "Problema",
       perArea: "Area",
+      tutte: "Tutte",
+      filtroAttivo: "Stai guardando",
+      togli: "Mostra tutti",
+      timbro: "Confermato",
       nessuno: "Nessun caso con questa combinazione di filtri. Togline uno.",
       uno: "caso",
       molti: "casi",
@@ -156,9 +161,11 @@ const COPY = {
       h2emph: "leaking out",
       h2b: ".",
       lead: "For each case: who they are, where value was leaking, what we built and what changed. Filters are by problem and by area, never by the technology used.",
-      tutti: "All",
-      perProblema: "Problem",
       perArea: "Area",
+      tutte: "All",
+      filtroAttivo: "You are viewing",
+      togli: "Show all",
+      timbro: "Confirmed",
       nessuno: "No case matches this combination of filters. Remove one.",
       uno: "case",
       molti: "cases",
@@ -271,11 +278,18 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function CasiPage({ params: { locale } }: Props) {
+export default function CasiPage({ params: { locale }, searchParams }: Props) {
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
+
+  /* Il problema arriva dall'URL, non da un click: cosi' la sezione
+     "per problema" filtra davvero, la pagina si condivide gia'
+     filtrata e funziona anche senza JavaScript. */
+  const daUrl = searchParams?.problema;
+  const problemaIniziale =
+    daUrl && daUrl in PROBLEMI ? (daUrl as ChiaveProblema) : null;
 
   const evidenza = getCaso(CASO_IN_EVIDENZA);
   const stazioni = EVIDENZA_STAZIONI[safeLocale];
@@ -346,7 +360,11 @@ export default function CasiPage({ params: { locale } }: Props) {
 
           <div className="diagnosi">
             {(Object.keys(PROBLEMI) as ChiaveProblema[]).map((k) => (
-              <Link key={k} href={`${base}/casi#archivio`} className="sintomo">
+              <Link
+                key={k}
+                href={`${base}/casi?problema=${k}#archivio`}
+                className="sintomo"
+              >
                 <Glifo nome={GLIFI_PROBLEMA[k]} />
                 <span className="testo">{PROBLEMI[k][safeLocale]}</span>
                 <span className="conta">
@@ -411,10 +429,13 @@ export default function CasiPage({ params: { locale } }: Props) {
 
           <ArchivioCasi
             locale={safeLocale}
+            problemaIniziale={problemaIniziale}
             etichette={{
-              tutti: t.archivio.tutti,
-              perProblema: t.archivio.perProblema,
               perArea: t.archivio.perArea,
+              tutte: t.archivio.tutte,
+              filtroAttivo: t.archivio.filtroAttivo,
+              togli: t.archivio.togli,
+              timbro: t.archivio.timbro,
               nessuno: t.archivio.nessuno,
               uno: t.archivio.uno,
               molti: t.archivio.molti,

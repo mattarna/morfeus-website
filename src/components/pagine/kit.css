@@ -878,74 +878,117 @@
   }
 }
 
-/* ---------- ARCHIVIO, righe editoriali ----------
-   Il brief dice "griglia editoriale, non card SaaS ripetute".
-   Quindi righe larghe divise da filetti: ogni caso si legge come
-   una voce di indice, con l'azienda a sinistra, il fatto al
-   centro e il numero verificato a destra. Le card tutte uguali
-   sono proprio la forma che stiamo evitando. */
+/* ---------- ARCHIVIO, schede-dossier ----------
+   Prima erano righe editoriali larghe. Letta la pagina intera, era
+   un muro: otto casi tutti dello stesso peso, senza niente che li
+   staccasse uno dall'altro.
+
+   Il brief dice "griglia editoriale, non card SaaS ripetute". Il
+   nemico non e' la scheda: e' la scheda GENERICA, tutte uguali,
+   senza gerarchia. Quindi schede, ma dossier: barra d'area colorata
+   in cima, numero verificato grande, timbro.
+
+   IL COLORE viene dal .prodotto del DS, che e' esattamente il
+   dispositivo per "un colore per cosa": il colore vive in accento
+   (barra, nome, filetto), MAI come fondo pieno. Le quattro aree
+   usano tre blu della rampa ufficiale piu' il forge: si legge come
+   una famiglia, non come un arcobaleno. */
 .ms .pg .archivio {
-  border-top: 1px solid var(--surf-bd);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
   margin-top: 36px;
 }
+@media (max-width: 900px) {
+  .ms .pg .archivio {
+    grid-template-columns: 1fr;
+  }
+}
+
 .ms .pg .voce {
-  display: grid;
-  grid-template-columns: 210px 1fr 200px;
-  gap: 36px;
-  padding: 34px 8px;
-  border-bottom: 1px solid var(--surf-bd);
-  align-items: start;
+  --ac: var(--firma);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--surf-bd);
+  border-radius: var(--r-frame, 12px);
+  background: var(--surf-bg);
+  box-shadow: var(--surf-sh);
+  overflow: hidden;
   transition:
-    background var(--dur) var(--ease),
-    padding-left var(--dur) var(--ease);
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
 }
 .ms .pg .voce:hover {
-  background: rgba(83, 61, 252, 0.04);
-  padding-left: 18px;
+  border-color: var(--ac);
+  transform: translateY(-2px);
 }
-.ms .band.ink .pg .voce:hover {
-  background: rgba(140, 165, 247, 0.05);
+.ms .pg .voce .barra {
+  height: 4px;
+  background: var(--ac);
+  flex: none;
+}
+.ms .pg .voce .corpo {
+  padding: 30px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.ms .pg .voce .testata {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.ms .pg .voce .area {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ac);
 }
 .ms .pg .voce .chi {
   font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ombra);
-  line-height: 1.6;
-}
-.ms .pg .voce .chi b {
-  display: block;
-  color: var(--firma);
-  font-weight: 600;
-}
-.ms .band.ink .pg .voce .chi b {
-  color: var(--lilla);
+  text-align: right;
 }
 .ms .pg .voce h3 {
-  font-size: clamp(19px, 2.1vw, 24px);
+  margin-top: 16px;
+  font-size: clamp(20px, 2.2vw, 25px);
   letter-spacing: -0.02em;
-  line-height: 1.25;
+  line-height: 1.22;
 }
 .ms .pg .voce p {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 16.5px;
   line-height: 1.6;
   color: var(--testo-carta-2);
-  max-width: 62ch;
+  flex: 1;
 }
 .ms .band.ink .pg .voce p {
   color: var(--testo-ink-2);
 }
-.ms .pg .voce .esito {
-  text-align: right;
+.ms .pg .voce .piede {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--surf-bd);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
 }
 .ms .pg .voce .esito .n {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(22px, 2.4vw, 30px);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: clamp(24px, 2.6vw, 32px);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ac);
+  display: block;
 }
 .ms .pg .voce .esito .k {
   display: block;
@@ -955,15 +998,47 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ombra);
+  max-width: 26ch;
 }
-@media (max-width: 900px) {
-  .ms .pg .voce {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .ms .pg .voce .esito {
-    text-align: left;
-  }
+.ms .pg .voce .timbro {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ac);
+  border: 1px solid var(--ac);
+  border-radius: var(--r-s);
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+.ms .pg .voce .freccia-caso {
+  font-family: var(--font-mono);
+  color: var(--ac);
+  margin-left: 8px;
+}
+
+/* le quattro aree: tre blu della rampa ufficiale piu' il forge */
+.ms .pg .voce.area-vendite {
+  --ac: var(--firma);
+}
+.ms .pg .voce.area-operations {
+  --ac: #6475fa;
+}
+.ms .pg .voce.area-margine {
+  --ac: var(--marker);
+}
+.ms .pg .voce.area-reporting {
+  --ac: var(--lilla);
+}
+/* su fondo scuro il majorelle pieno scende a 3.22:1: sulle fasce ink
+   l'area Vendite usa il gradino chiaro della stessa rampa */
+.ms .band.ink .pg .voce.area-vendite {
+  --ac: var(--lilla);
+}
+.ms .band.ink .pg .voce.area-reporting {
+  --ac: #9fb4f9;
 }
 
 /* ---------- FILTRI ---------- */
@@ -1036,4 +1111,29 @@
 }
 .ms .band.carta .pg .testo-quadrante {
   color: var(--testo-carta-2);
+}
+
+/* la riga che dichiara il filtro arrivato dalla sezione "per problema" */
+.ms .pg .filtro-attivo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 16px 18px;
+  border-left: 2px solid var(--firma);
+  background: rgba(83, 61, 252, 0.05);
+  border-radius: 0 var(--r-s) var(--r-s) 0;
+}
+.ms .band.ink .pg .filtro-attivo {
+  border-left-color: var(--lilla);
+  background: rgba(140, 165, 247, 0.06);
+}
+.ms .pg .filtro-attivo .frase {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17.5px;
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 200px;
 }
