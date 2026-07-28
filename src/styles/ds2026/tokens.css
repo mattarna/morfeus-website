@@ -1,0 +1,230 @@
+/* ============================================================
+   MORFEUS DS 2026 · TOKEN (core + pelle notte "Morfeus")
+   ------------------------------------------------------------
+   PORTATO da BRAND-2026/02_MORFEUS-B2B/site/assets/css/
+     tokens-core.css (v1.0, 2026-07-19) + tokens-morfeus.css
+   Sorgente autorevole: quei file. Qui NON si inventano valori:
+   se un token va cambiato, si cambia là e si ri-porta.
+
+   UNICA MODIFICA rispetto all'originale: `:root` diventa `.ds2026`.
+   Motivo: questa CSS convive con Tailwind e con il resto del sito.
+   Su `:root` le variabili sarebbero globali e, nel dev server dove i
+   fogli di stile delle route coesistono, potrebbero toccare pagine
+   che non c'entrano. Scopate sulla classe, l'esperimento e' chiuso
+   dentro `/lab-ds` per costruzione — stessa disciplina di
+   font-experiment.css, che vive sotto `html.font-exp-*`.
+
+   Architettura a 3 strati, da rispettare:
+     PRIMITIVI (--p-*)  →  FONDAMENTA (type/space/motion)  →  SEMANTICI
+   I componenti usano SOLO i semantici. Mai un --p-* in un componente:
+   e' quello che permette di cambiare pelle senza toccare nulla.
+   ============================================================ */
+
+.ds2026 {
+  /* ========== 1 · PRIMITIVI · colore (mai usati diretti nei componenti) ========== */
+
+  /* rampa notte (Morfeus) */
+  --p-night-900: #06050c;
+  --p-night-800: #0b0a14;
+  --p-night-700: #100e1c;
+  --p-night-600: #161327;
+  --p-night-500: #1d1b2e;
+  --p-night-400: #332f52;
+  --p-night-300: #7f7c9a;
+  --p-night-200: #a7a7bc;
+  --p-night-100: #edeff7;
+  /* night-300 alzato da #67647F il 2026-07-26: il vecchio valore stava a
+     3.2-3.6:1 su tutte le superfici notte, sotto il minimo AA di 4.5.
+     Ora 4.54:1 nel caso peggiore (surface-3). Misurato, non stimato. */
+
+  /* rampa viola (la lampada / firma) */
+  --p-viola-900: #23226c;
+  --p-viola-600: #5946f0;
+  --p-viola-500: #7a6bf3;
+  --p-viola-300: #9a8fff;
+  --p-viola-100: #d6d1ff;
+
+  /* semaforo dati (versione scura) */
+  --p-green-dark: #2ee08a;
+  --p-red-dark: #ff5c4a;
+
+  /* ========== 2 · FONDAMENTA · tipografia ==========
+     FONT · deciso 2026-07-26: Plus Jakarta Sans, il carattere delle ORIGINI
+     di Morfeus (sostituto operativo di Prodigy Sans dei deck storici).
+     Il mono resta Geist Mono, il logo resta Clash Display.
+     Le tre famiglie arrivano da next/font (vedi lab-ds/layout.tsx): qui si
+     leggono solo le variabili che quel layout espone. */
+  --font-logo: var(--font-clash-display), "Plus Jakarta Sans", sans-serif; /* SOLO wordmark */
+  --font-title: var(--font-jakarta), system-ui, sans-serif; /* titoli H1-H4 */
+  --font-body: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  /* scala tipografica fluida, clamp integrato */
+  --fs-hero: clamp(48px, 9vw, 150px);
+  --fs-h2: clamp(28px, 3.4vw, 42px);
+  --fs-h3: 22px;
+  --fs-lede: 20px;
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-data: 14px; /* mono */
+  --fs-label: 11px; /* mono uppercase */
+
+  --lh-tight: 1.08;
+  --lh-title: 1.15;
+  --lh-body: 1.6;
+  --lh-loose: 1.65;
+  --ls-title: -0.03em;
+  --ls-body: 0;
+  --ls-label: 0.15em;
+  --ls-mono: 0.06em;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ========== 3 · FONDAMENTA · spazio (scala 8pt, ENFORCED) ========== */
+  --sp-0: 0;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 40px;
+  --sp-8: 48px;
+  --sp-9: 64px;
+  --sp-10: 80px;
+  --sp-11: 96px;
+  --sp-12: 128px;
+
+  /* ========== 4 · FONDAMENTA · griglia & layout ========== */
+  --container: 1200px;
+  --container-text: 720px; /* testo lungo: 45-75 caratteri per riga */
+  --gutter: 24px;
+  --cols: 12;
+
+  /* ========== 5 · FONDAMENTA · raggi & bordi ========== */
+  --radius-badge: 4px;
+  --radius-btn: 6px;
+  --radius-input: 6px;
+  --radius-card: 8px;
+  --radius-frame: 12px;
+  --radius-pill: 99px;
+  --border-w: 1px;
+  --border-w-strong: 1.5px;
+
+  /* ========== 6 · FONDAMENTA · motion ========== */
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 320ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  /* consentito: fade, slide. VIETATO: spin, 3D flip, scale elastico. */
+
+  /* ========== 7 · FONDAMENTA · z-index ========== */
+  --z-base: 1;
+  --z-sticky: 50;
+  --z-overlay: 100;
+
+  /* ============================================================
+     PELLE · MORFEUS (B2B · notte · SEGNALE)
+     ============================================================ */
+
+  /* superfici */
+  --surface-bg: var(--p-night-900);
+  --surface-1: var(--p-night-800);
+  --surface-2: var(--p-night-700);
+  --surface-3: var(--p-night-600);
+  --line: var(--p-night-500);
+  --line-strong: var(--p-night-400);
+  --grid-line: rgba(122, 107, 243, 0.05);
+  --grid-cell: 56px; /* Morfeus respira piu' stretto */
+
+  /* ========== RITMO · RICALIBRATO (2026-07-27, pomeriggio) ==========
+     WALK-BACK dell'"aria" del mattino. La versione precedente (display fino
+     a 92px, sezioni a 200px) nasceva da una lettura sbagliata: era stato
+     copiato lo SPAZIO senza la densita' visiva che lo riempie. Risultato
+     bocciato: titoli GIGANTI e pagine vuote.
+     Regola nuova: dimensioni sane e professionali, un filo sotto il core.
+     Display come TITOLO DI SEZIONE (~48px max), non come manifesto.
+     L'impatto lo danno composizione e massa, non la scala bruta del testo. */
+  --sp-section: 128px;
+  --sp-section-sm: 80px;
+  --fs-display: clamp(30px, 3.4vw, 48px);
+  --fw-display: var(--fw-semibold); /* 600: pulito, non greve e non esile */
+
+  /* intensita' della luce d'ambiente alle giunzioni (vedi .section--luce) */
+  --luce: rgba(122, 107, 243, 0.1);
+  --luce-coda: rgba(89, 70, 240, 0.03);
+
+  /* ========== FLUSSO CONTINUO (2026-07-27) ==========
+     Variante approvata: le pagine NON sono fasce con stacchi, ma una
+     superficie sola attraversata da luci larghe. Il nero pieno sparisce:
+     la base e' alzata a --flow-base, cosi' la pagina resta leggibile senza
+     affaticare. Si implementa con .flow (vedi components.css).
+     E' la differenza strutturale piu' grande rispetto a /lab, che oggi
+     alterna 13 fasce "Blue"/"Grid" su #030508. */
+  --flow-base: #0a0913;
+
+  /* testo · TRE LIVELLI VERI (regola fissata 2026-07-26, tutti sopra AA)
+       1 essenziale  --text        sempre alta leggibilita'
+       2 contesto    --text-muted  lede, descrizioni, note
+       3 metadata    --text-faint  etichette, numeri di sezione, intestazioni
+
+     LEGGE DEL FLUSSO (2026-07-27): il livello 3 si usa SOLO dove il fondo e'
+     CONTROLLATO e SCURO (surface-bg, dentro .prev). Dove il fondo e' VIVO
+     (.flow, luci sovrapposte) o ALZATO (.card--rilievo) il minimo e' il
+     livello 2. Misurato: --text-faint sul picco del flusso = 3,59:1.
+     Stessa cosa per l'accento: sul flusso il testo viola e' --accent-fine. */
+  --text: var(--p-night-100); /* 17.9:1 */
+  --text-muted: var(--p-night-200); /* 7.7:1  */
+  --text-faint: var(--p-night-300); /* 4.54:1 nel caso peggiore */
+
+  /* azione (CTA primaria) */
+  --action: var(--p-viola-600);
+  --action-hover: var(--p-viola-500);
+  --action-text: #ffffff;
+
+  /* accento = la LAMPADA (viola che agisce e rivela)
+     REGOLA "IN GAMMA" (2026-07-26): l'accento NON e' un valore piatto, e'
+     una rampa a tre. Appiattirlo su un valore solo e' cio' che rende il
+     viola "decorazione" invece che segnale. */
+  --accent: var(--p-viola-500); /* testo/accento su scuro · 5.05:1 */
+  --accent-strong: var(--p-viola-600); /* cio' che si clicca */
+  --accent-fine: var(--p-viola-300); /* testo minuto · 7.49:1 */
+  --accent-soft: rgba(89, 70, 240, 0.13);
+  --accent-line: rgba(122, 107, 243, 0.32);
+  --on-accent: #ffffff;
+
+  /* evidenziatore UV · parola piena (token della dottrina) */
+  --hl-bg: rgba(89, 70, 240, 0.13);
+  --hl-border: rgba(122, 107, 243, 0.32);
+  --hl-text: var(--p-viola-100);
+
+  /* semaforo dati (contesto scuro) */
+  --verify: var(--p-green-dark);
+  --verify-soft: rgba(46, 224, 138, 0.1);
+  --loss: var(--p-red-dark);
+  --loss-soft: rgba(255, 92, 74, 0.1);
+
+  /* focus da tastiera */
+  --focus: var(--p-viola-500);
+
+  /* OTTONE · l'unico tono caldo (2026-07-26). In un sistema tutto freddo
+     scalda la temperatura da "clinica" a "officina". USO SOTTO IL 5%: solo
+     etichette, occhielli, filetti, meta. MAI su superfici grandi o titoli.
+     8:1 nel caso peggiore, largamente AA. */
+  --warm: #c6a96b;
+  --warm-line: rgba(198, 169, 107, 0.34);
+}
+
+/* riduzione movimento: onora la preferenza di sistema */
+@media (prefers-reduced-motion: reduce) {
+  .ds2026 *,
+  .ds2026 *::before,
+  .ds2026 *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

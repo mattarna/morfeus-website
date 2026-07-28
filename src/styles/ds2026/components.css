@@ -1,0 +1,1187 @@
+/* ============================================================
+   MORFEUS DS 2026 · COMPONENTI
+   ------------------------------------------------------------
+   PORTATO da BRAND-2026/02_MORFEUS-B2B/site/assets/css/components.css
+   Usa SOLO token semantici (--surface-*, --text, --accent, --action...).
+   Mai un primitivo --p-*: e' quello che tiene i componenti neutri
+   rispetto alla pelle.
+
+   TRE MODIFICHE rispetto all'originale, tutte obbligate dal contesto:
+
+   1. Ogni selettore e' preceduto da `.ds2026`. Vedi la nota in tokens.css:
+      questa CSS convive con Tailwind e con il resto del sito.
+
+   2. Via il reset `*{margin:0;padding:0;box-sizing:border-box}` e la regola
+      su `body`. Il preflight di Tailwind fa gia' il reset, e `body` qui non
+      e' nostro: appartiene a src/app/[locale]/layout.tsx, che ha il bit
+      skip-worktree e NON si tocca. La base la porta `.ds2026` stesso.
+
+   3. Fuori i componenti della pelle Playground (.campo, .pass, .prodotto):
+      usano token che esistono solo li' e il DS scrive esplicitamente
+      "sotto la pelle Morfeus non usarli".
+   ============================================================ */
+
+/* ---------- base (al posto della regola su body) ---------- */
+.ds2026 {
+  background: var(--surface-bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+.ds2026 ::selection {
+  background: var(--action);
+  color: var(--action-text);
+}
+.ds2026 a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* focus da tastiera visibile ovunque · niente outline col mouse */
+.ds2026 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: var(--border-w-strong) solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---------- layout ---------- */
+.ds2026 .container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.ds2026 .container--text {
+  max-width: var(--container-text);
+}
+.ds2026 .section {
+  padding: var(--sp-section) 0;
+}
+@media (max-width: 768px) {
+  .ds2026 .section {
+    padding: var(--sp-section-sm) 0;
+  }
+}
+
+.ds2026 .grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--gutter);
+}
+.ds2026 .col-3 {
+  grid-column: span 3;
+}
+.ds2026 .col-4 {
+  grid-column: span 4;
+}
+.ds2026 .col-5 {
+  grid-column: span 5;
+}
+.ds2026 .col-6 {
+  grid-column: span 6;
+}
+.ds2026 .col-7 {
+  grid-column: span 7;
+}
+.ds2026 .col-8 {
+  grid-column: span 8;
+}
+.ds2026 .col-12 {
+  grid-column: span 12;
+}
+@media (max-width: 768px) {
+  .ds2026 .col-3,
+  .ds2026 .col-4,
+  .ds2026 .col-5,
+  .ds2026 .col-6,
+  .ds2026 .col-7,
+  .ds2026 .col-8 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* griglia blueprint di fondo */
+.ds2026 .gridbg {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+}
+
+/* ---------- tipografia ---------- */
+.ds2026 .t-hero {
+  font-family: var(--font-title);
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  overflow-wrap: break-word;
+}
+.ds2026 .t-display {
+  font-family: var(--font-title);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-display, var(--fw-bold));
+  letter-spacing: var(--ls-title);
+  line-height: var(--lh-tight);
+}
+
+/* TITOLO A DUE TONI · la seconda meta' cede il passo.
+   Ricorrente in tutti i riferimenti B2B che funzionano. Da' un accento
+   senza aggiungere colore alla pagina. L'<em> NON e' corsivo: e' un
+   cambio di tono. */
+.ds2026 .t-duo em {
+  font-style: normal;
+  color: var(--accent-fine);
+}
+.ds2026 .t-duo em.quiet {
+  color: var(--text-faint);
+}
+.ds2026 .t-h2 {
+  font-family: var(--font-title);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.025em;
+  line-height: var(--lh-title);
+}
+.ds2026 .t-h3 {
+  font-family: var(--font-title);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.01em;
+}
+.ds2026 .t-lede {
+  font-size: var(--fs-lede);
+  color: var(--text-muted);
+  max-width: var(--container-text);
+}
+.ds2026 .t-body {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+}
+.ds2026 .t-small {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+.ds2026 .t-data {
+  font-family: var(--font-mono);
+  font-size: var(--fs-data);
+  letter-spacing: var(--ls-mono);
+  color: var(--text);
+}
+.ds2026 .t-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* occhiello in OTTONE (--warm): l'unico tono caldo del DS. */
+.ds2026 .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm, var(--accent));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ds2026 .eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--warm, var(--accent-strong));
+  flex: none;
+}
+
+/* evidenziatore della dottrina · parola piena */
+.ds2026 .hl {
+  background: var(--hl-bg);
+  border: 1px solid var(--hl-border);
+  border-radius: var(--radius-badge);
+  color: var(--hl-text);
+  padding: 1px 7px;
+}
+
+/* ---------- LOGO ---------- (mark prominente, wordmark Clash 600)
+   scala tutto cambiando SOLO .lock{font-size} */
+.ds2026 .lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 26px;
+}
+.ds2026 .lock .mark {
+  height: 1.12em;
+  width: auto;
+  flex: none;
+  color: var(--text);
+}
+.ds2026 .lock .wm {
+  font-family: var(--font-logo);
+  font-weight: 600;
+  font-size: 1em;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  line-height: 1;
+}
+
+/* ---------- BOTTONI (stati completi) ---------- */
+.ds2026 .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  font-weight: var(--fw-semibold);
+  padding: 14px 26px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  border: var(--border-w-strong) solid transparent;
+  letter-spacing: -0.005em;
+  transition:
+    background var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+.ds2026 .btn .arr {
+  font-family: var(--font-mono);
+}
+.ds2026 .btn:active {
+  transform: translateY(1px);
+}
+.ds2026 .btn:disabled,
+.ds2026 .btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.ds2026 .btn--primary {
+  background: var(--action);
+  color: var(--action-text);
+}
+.ds2026 .btn--primary:hover {
+  background: var(--action-hover);
+}
+.ds2026 .btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+.ds2026 .btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ds2026 .btn--quiet {
+  background: var(--surface-3);
+  color: var(--text-muted);
+  border-color: var(--line);
+}
+.ds2026 .btn--quiet:hover {
+  color: var(--text);
+}
+
+/* ---------- BADGE / STATO ---------- */
+.ds2026 .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.13em;
+  padding: 6px 12px;
+  border-radius: var(--radius-badge);
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.ds2026 .badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: none;
+}
+.ds2026 .badge--verify {
+  color: var(--verify);
+  border-color: var(--verify);
+  background: var(--verify-soft);
+}
+.ds2026 .badge--verify .dot {
+  background: var(--verify);
+  animation: ds-pulse 2s infinite;
+}
+/* il testo usa --accent-fine, non --accent: dentro il badge il fondo soft
+   alza il fondo quel tanto che porta --accent a 4,49:1, cioe' sotto AA di
+   un soffio. Misurato compositando il fondo trasparente, non a occhio.
+   Il pallino resta --accent: e' decorativo, non regge la soglia. */
+.ds2026 .badge--accent {
+  color: var(--accent-fine);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.ds2026 .badge--accent .dot {
+  background: var(--accent);
+}
+.ds2026 .badge--loss {
+  color: var(--loss);
+  border-color: var(--loss);
+  background: var(--loss-soft);
+}
+.ds2026 .badge--loss .dot {
+  background: var(--loss);
+}
+@keyframes ds-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ---------- CARD ---------- */
+.ds2026 .card {
+  background: var(--surface-2);
+  border: var(--border-w) solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--motion-base);
+}
+.ds2026 .card:hover {
+  border-color: var(--line-strong);
+}
+.ds2026 .card--lit::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
+}
+.ds2026 .card .card-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.ds2026 .card h4 {
+  font-family: var(--font-title);
+  font-size: 21px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.ds2026 .card p {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+/* ---------- CARD IN RILIEVO · il bisello ----------
+   Luce sopra, ombra sotto, e un alone dall'angolo illuminato: e' questo
+   che da' lo spessore, piu' del gradiente. DOSE: dislivello sotto il 7%,
+   oltre diventa plastica lucida invece di materia. */
+.ds2026 .card--rilievo {
+  background:
+    radial-gradient(
+      130% 96% at 5% 0%,
+      rgba(122, 107, 243, 0.14) 0%,
+      rgba(122, 107, 243, 0.042) 34%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 44%, var(--surface-1) 100%);
+  border-color: var(--line-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 20px 48px -14px rgba(0, 0, 0, 0.72);
+}
+.ds2026 .card--rilievo:hover {
+  background:
+    radial-gradient(
+      130% 96% at 5% 0%,
+      rgba(122, 107, 243, 0.24) 0%,
+      rgba(122, 107, 243, 0.06) 34%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 44%, var(--surface-1) 100%);
+  border-color: var(--accent-line);
+}
+/* CONSEGUENZA MISURATA DEL RILIEVO · alzare la superficie costa contrasto.
+   --text-faint passa da 4,54:1 a 3,87:1 nell'angolo illuminato, cioe' SOTTO
+   AA. --text-muted regge ovunque (6,5-8:1). REGOLA: dentro .card--rilievo
+   niente testo al livello 3. Le .prev interne sono esentate. */
+.ds2026 .card--rilievo .t-label,
+.ds2026 .card--rilievo .src,
+.ds2026 .card--rilievo .field label {
+  color: var(--text-muted);
+}
+
+/* ---------- TABELLA DATI ---------- */
+.ds2026 .table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.ds2026 .table th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: var(--border-w) solid var(--line-strong);
+  font-weight: var(--fw-medium);
+}
+.ds2026 .table td {
+  padding: 15px 16px;
+  border-bottom: var(--border-w) solid var(--line);
+  color: var(--text-muted);
+}
+.ds2026 .table td:first-child {
+  color: var(--text);
+}
+.ds2026 .table .num {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.ds2026 .table .num.pos {
+  color: var(--verify);
+  font-weight: var(--fw-semibold);
+}
+.ds2026 .table .num.neg {
+  color: var(--loss);
+  font-weight: var(--fw-semibold);
+}
+.ds2026 .table tr:last-child td {
+  border-bottom: none;
+}
+.ds2026 .table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ds2026 .table-wrap .table {
+  min-width: 520px;
+}
+@media (max-width: 700px) {
+  /* .table-wrap .table (0,2,0) batteva .table--schede (0,1,0): dentro un
+     wrap il min-width vinceva e la modalita' a schede non si attivava mai.
+     Serve pari specificita' per disinnescarlo. */
+  .ds2026 .table--schede,
+  .ds2026 .table-wrap .table--schede {
+    min-width: 0;
+  }
+  .ds2026 .table--schede thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .ds2026 .table--schede tr {
+    display: block;
+    border: var(--border-w) solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--sp-4);
+    margin-bottom: var(--sp-4);
+  }
+  .ds2026 .table--schede td {
+    display: grid;
+    grid-template-columns: minmax(88px, 38%) 1fr;
+    gap: var(--sp-4);
+    padding: 8px 0;
+    border: 0;
+  }
+  .ds2026 .table--schede td::before {
+    content: attr(data-l);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .ds2026 .table--schede td:first-child {
+    color: var(--text);
+    font-weight: var(--fw-semibold);
+  }
+}
+
+/* ---------- PANNELLO SCANSIONE (righe rivelate a filo, mai alone) ---------- */
+.ds2026 .scan {
+  background: var(--surface-1);
+  border: var(--border-w) solid var(--line-strong);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.ds2026 .scan-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: var(--border-w) solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.ds2026 .scan-head .on {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.ds2026 .scan-head .on .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: ds-pulse 2.4s infinite;
+}
+.ds2026 .scan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: 13px 20px;
+  border-bottom: var(--border-w) solid var(--line);
+  opacity: 0.42;
+  transition:
+    opacity var(--motion-slow) var(--ease-out),
+    background var(--motion-slow) var(--ease-out);
+}
+.ds2026 .scan-row:last-child {
+  border-bottom: none;
+}
+.ds2026 .scan-row .k {
+  font-size: 14.5px;
+  color: var(--text-muted);
+}
+.ds2026 .scan-row .v {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  flex: none;
+}
+.ds2026 .scan-row.lit {
+  opacity: 1;
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent-strong);
+}
+.ds2026 .scan-row.lit .v {
+  color: var(--accent-fine);
+  font-weight: var(--fw-semibold);
+}
+.ds2026 .scan-row.lit-verify {
+  opacity: 1;
+  background: var(--verify-soft);
+  box-shadow: inset 2px 0 0 var(--verify);
+}
+.ds2026 .scan-row.lit-verify .v {
+  color: var(--verify);
+}
+.ds2026 .scan-row.lit-loss {
+  opacity: 1;
+  background: var(--loss-soft);
+  box-shadow: inset 2px 0 0 var(--loss);
+}
+.ds2026 .scan-row.lit-loss .v {
+  color: var(--loss);
+}
+.ds2026 .scan-foot {
+  padding: 14px 20px;
+  border-top: var(--border-w) solid var(--line-strong);
+  background: var(--surface-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ds2026 .scan-foot .lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ds2026 .scan-foot .tot {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+/* ---------- LOG A VISTA · dispositivo di prova ---------- */
+.ds2026 .log {
+  border: var(--border-w) solid var(--line-strong);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--surface-1);
+}
+.ds2026 .log-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: var(--border-w) solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.ds2026 .log-row {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 9px 20px;
+  border-bottom: var(--border-w) solid var(--line);
+  display: flex;
+  gap: 14px;
+}
+.ds2026 .log-row:last-child {
+  border-bottom: none;
+}
+.ds2026 .log-row .tm {
+  color: var(--text-faint);
+}
+.ds2026 .log-row .ac {
+  color: var(--text-muted);
+  flex: 1;
+}
+.ds2026 .log-row .ok {
+  color: var(--verify);
+}
+
+/* ---------- DIVIDER dichiarato (annuncia il cambio, mai switch brusco) ---------- */
+.ds2026 .divider {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--warm, var(--text-muted));
+  padding: 11px 0;
+}
+.ds2026 .divider::before,
+.ds2026 .divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: var(--line-strong);
+  opacity: 0.4;
+}
+
+/* ---------- ICONE (stroke legato alla size) ---------- */
+.ds2026 .icon {
+  width: 1.25em;
+  height: 1.25em;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.15em;
+}
+.ds2026 .icon--sm {
+  stroke-width: 2;
+}
+.ds2026 .icon--lg {
+  stroke-width: 1.5;
+}
+
+/* ---------- crosshair d'angolo (Legge 1 · le coordinate) ---------- */
+.ds2026 .xh {
+  position: relative;
+}
+.ds2026 .xh::before,
+.ds2026 .xh::after {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  color: var(--line-strong);
+  font-size: 14px;
+  line-height: 1;
+}
+.ds2026 .xh::before {
+  top: -8px;
+  left: -8px;
+}
+.ds2026 .xh::after {
+  bottom: -8px;
+  right: -8px;
+}
+
+/* ---------- RIGA DI STATISTICHE ----------
+   REGOLA NOSTRA, che i riferimenti non hanno: ogni numero porta la FONTE.
+   Un "93+" nudo impressiona per un secondo e non regge la seconda domanda.
+   Con la fonte diventa una cosa su cui un CFO ci puo' litigare, che e'
+   esattamente quello che vogliamo. Se la fonte non c'e', il numero non entra. */
+.ds2026 .stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--gutter);
+  border-top: var(--border-w) solid var(--line-strong);
+}
+.ds2026 .stat {
+  padding: var(--sp-6) var(--sp-5) var(--sp-6) 0;
+  border-right: var(--border-w) solid var(--line);
+}
+.ds2026 .stat:last-child {
+  border-right: none;
+}
+.ds2026 .stat .n {
+  font-family: var(--font-title);
+  font-size: clamp(38px, 4.4vw, 64px);
+  font-weight: var(--fw-display, var(--fw-semibold));
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+}
+.ds2026 .stat .n.pos {
+  color: var(--verify);
+}
+.ds2026 .stat .n.neg {
+  color: var(--loss);
+}
+.ds2026 .stat .n.act {
+  color: var(--accent-fine);
+}
+.ds2026 .stat .k {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: var(--sp-4);
+  display: block;
+  max-width: 24ch;
+}
+.ds2026 .stat .src {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 8px;
+  display: block;
+}
+@media (max-width: 600px) {
+  .ds2026 .stat {
+    border-right: none;
+    border-bottom: var(--border-w) solid var(--line);
+    padding-right: 0;
+  }
+  .ds2026 .stat:last-child {
+    border-bottom: none;
+  }
+}
+
+/* ---------- OGGETTO A FILO CON ALONE ----------
+   Il disegno tecnico resta disegno tecnico (hairline, nessun volume
+   dipinto), ma guadagna profondita' da un alone morbido DIETRO, non da un
+   glow sui tratti. Se illumini le linee ottieni il neon; se illumini lo
+   sfondo dietro ottieni un oggetto che sta in uno spazio. */
+.ds2026 .iso {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6);
+}
+.ds2026 .iso::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(78%, 340px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    var(--accent-soft) 0%,
+    var(--luce-coda, rgba(89, 70, 240, 0.03)) 46%,
+    transparent 70%
+  );
+}
+.ds2026 .iso > * {
+  position: relative;
+  z-index: 1;
+}
+.ds2026 .iso svg {
+  overflow: visible;
+}
+
+/* ---------- LUCE DI CUCITURA · come si illumina una sezione ----------
+   NON una bolla che galleggia: il centro sta SUL bordo superiore e
+   l'ellisse e' piu' larga della sezione, cosi' si vede solo la coda che
+   scende. Il lato alterna in modo regolare: ritmo, non caso.
+   Non contraddice la LEGGE 03 "la luce taglia, non sbava": quella governa
+   come un DISPOSITIVO RIVELA UN DATO (li' il bordo resta netto). Questa e'
+   illuminazione d'AMBIENTE, e non porta dati. */
+.ds2026 .section--luce {
+  position: relative;
+  overflow: hidden;
+}
+.ds2026 .section--luce > * {
+  position: relative;
+  z-index: 2;
+}
+.ds2026 .section--luce::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(560px, 62%);
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    135% 100% at 14% 0%,
+    var(--accent-soft) 0%,
+    var(--luce, rgba(122, 107, 243, 0.11)) 32%,
+    var(--luce-coda, rgba(89, 70, 240, 0.03)) 55%,
+    transparent 72%
+  );
+}
+.ds2026 .section--luce-dx::before {
+  background: radial-gradient(
+    135% 100% at 86% 0%,
+    var(--accent-soft) 0%,
+    var(--luce, rgba(122, 107, 243, 0.11)) 32%,
+    var(--luce-coda, rgba(89, 70, 240, 0.03)) 55%,
+    transparent 72%
+  );
+}
+
+/* ---------- FILIGRANA · il numero di sezione gigante, dietro il titolo ----------
+   Da' il passo allo scroll. Solo decorativo: non ci puo' vivere un dato. */
+.ds2026 .filigrana {
+  position: relative;
+}
+.ds2026 .filigrana::after {
+  content: attr(data-n);
+  position: absolute;
+  top: 64px;
+  right: 1vw;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-title);
+  font-weight: var(--fw-bold);
+  font-size: clamp(150px, 20vw, 300px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent-soft);
+}
+.ds2026 .filigrana > * {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .ds2026 .filigrana::after {
+    font-size: 130px;
+    top: 36px;
+    right: -10px;
+    -webkit-text-stroke: 1px var(--accent-soft);
+  }
+}
+
+/* ---------- ANTEPRIMA DISPOSITIVO · la finestra scavata ----------
+   Dentro una card in rilievo il riquadro va nell'ALTRA direzione: se la
+   scatola sale, il riquadro scende, o l'anatomia non si legge piu'.
+   Il contenuto tiene la sua larghezza naturale e viene TAGLIATO dal
+   riquadro: e' il taglio che fa leggere l'anteprima come "finestra su
+   qualcosa di piu' grande". Qui dentro il livello 3 e' consentito: il
+   fondo e' controllato e scuro. */
+.ds2026 .prev {
+  height: 210px;
+  min-width: 0;
+  border-radius: 11px;
+  border: var(--border-w) solid var(--line-strong);
+  background: var(--flow-base, var(--surface-bg));
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+}
+.ds2026 .prev > * {
+  width: 100%;
+  flex: none;
+  min-width: 0;
+}
+.ds2026 .prev--mid {
+  align-items: center;
+  justify-content: center;
+}
+.ds2026 .prev::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--flow-base, var(--surface-bg)));
+}
+
+/* ---------- FLUSSO CONTINUO · lo strato vivo dietro la pagina ----------
+   Un solo div alto quanto tutto il documento, dietro a ogni cosa.
+   Le luci (radial-gradient) e le scintille (.flow i) le configura la
+   pagina: il DS fornisce la struttura, la pagina fornisce i gradienti. */
+.ds2026 .flow {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ds2026 .flow i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent-fine);
+  box-shadow: 0 0 10px 2px rgba(154, 143, 255, 0.55);
+}
+
+/* ---------- NASTRO · il marquee ----------
+   UNO per pagina, tra la copertina e il corpo. Con reduced-motion si ferma
+   e resta leggibile (la regola sta nei token). */
+.ds2026 .nastro {
+  border-top: var(--border-w) solid var(--line);
+  border-bottom: var(--border-w) solid var(--line);
+  overflow: hidden;
+  padding: 15px 0;
+  background:
+    repeating-linear-gradient(135deg, rgba(89, 70, 240, 0.2) 0 10px, transparent 10px 26px),
+    var(--surface-1);
+}
+.ds2026 .nastro .track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: ds-scorre 40s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-fine);
+}
+.ds2026 .nastro span {
+  padding: 0 30px;
+}
+.ds2026 .nastro b {
+  color: var(--text);
+  font-weight: var(--fw-semibold);
+}
+@keyframes ds-scorre {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- NAVIGAZIONE ---------- */
+.ds2026 .nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background: color-mix(in srgb, var(--surface-bg) 90%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: var(--border-w) solid var(--line);
+}
+.ds2026 .nav-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  height: 72px;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.ds2026 .nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  font-size: var(--fs-small);
+}
+.ds2026 .nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--motion-base) var(--ease-out);
+}
+.ds2026 .nav-links a:hover {
+  color: var(--text);
+}
+.ds2026 .nav-links a[aria-current="page"] {
+  color: var(--text);
+  box-shadow: inset 0 -1px 0 var(--accent);
+}
+.ds2026 .nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: var(--border-w) solid var(--line-strong);
+  border-radius: var(--radius-btn);
+  color: var(--text);
+  cursor: pointer;
+}
+.ds2026 .nav-toggle:hover {
+  border-color: var(--accent);
+}
+
+/* PANNELLO a tutta altezza · sotto i 900px.
+   OBBLIGHI DI MARKUP (il CSS da solo non basta): aria-expanded +
+   aria-controls sul tasto; [inert] sul pannello quando e' chiuso; il fuoco
+   va sul primo link all'apertura e torna al tasto alla chiusura; Esc chiude.
+   NON si usa visibility:hidden nella transizione: resterebbe "hidden" anche
+   dopo il cambio di stato e mettere a fuoco il primo link fallirebbe in
+   silenzio. Con [inert] il pannello e' sempre "visibile" per il browser. */
+.ds2026 .nav-panel {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--surface-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 96px var(--gutter) var(--sp-8);
+  transform: translateY(-100%);
+  transition: transform var(--motion-slow) var(--ease-out);
+}
+.ds2026 .nav-panel[inert] {
+  pointer-events: none;
+}
+.ds2026 .nav-panel[data-aperto="true"] {
+  transform: translateY(0);
+}
+.ds2026 .nav-panel a {
+  font-family: var(--font-title);
+  font-size: clamp(28px, 7vw, 44px);
+  line-height: 1.15;
+  letter-spacing: var(--ls-title);
+  color: var(--text);
+  text-decoration: none;
+  padding: var(--sp-4) 0;
+  border-bottom: var(--border-w) solid var(--line);
+  min-height: 44px;
+}
+.ds2026 .nav-panel a[aria-current="page"] {
+  color: var(--accent-fine);
+}
+@media (max-width: 900px) {
+  .ds2026 .nav-links {
+    display: none;
+  }
+  .ds2026 .nav-toggle {
+    display: inline-flex;
+  }
+}
+
+/* ---------- FORM (con stato focus + error + esito) ---------- */
+.ds2026 .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ds2026 .field label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.ds2026 .field input,
+.ds2026 .field textarea {
+  background: var(--surface-bg);
+  border: var(--border-w) solid var(--line-strong);
+  border-radius: var(--radius-input);
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  outline: none;
+  transition: border-color var(--motion-base);
+}
+.ds2026 .field input:hover {
+  border-color: var(--accent-line);
+}
+.ds2026 .field input:focus,
+.ds2026 .field textarea:focus {
+  border-color: var(--accent);
+}
+.ds2026 .field .hint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+.ds2026 .field.is-error input {
+  border-color: var(--loss);
+}
+.ds2026 .field.is-error .hint {
+  color: var(--loss);
+}
+.ds2026 .field.is-success input,
+.ds2026 .field.is-success textarea {
+  border-color: var(--verify);
+}
+.ds2026 .field.is-success .hint {
+  color: var(--verify);
+}
+.ds2026 .feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-card);
+  border: var(--border-w) solid;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+.ds2026 .feedback--ok {
+  color: var(--verify);
+  border-color: var(--verify);
+  background: var(--verify-soft);
+}
+.ds2026 .feedback--ko {
+  color: var(--loss);
+  border-color: var(--loss);
+  background: var(--loss-soft);
+}
+
+/* ---------- battito · l'unico movimento a riposo consentito ----------
+   Il DS anima gia' cosi' i pallini di stato (.badge--verify .dot,
+   .scan-head .on .dot): un'opacita' che respira, niente scale ne' glow.
+   Serve al nucleo dell'hero, che altrimenti sarebbe un disegno morto.
+   Con prefers-reduced-motion si ferma (regola in tokens.css). */
+.ds2026 .ds-battito {
+  animation: ds-pulse 2.6s infinite;
+}
+
+/* ---------- SCALA · la regola della gerarchia ----------
+   Niente supera l'hero. Misurato: su una landing i titoli di sezione erano
+   a 66px e l'H1 a 58px, cioe' il titolo piu' importante era il piu' piccolo.
+   I token rispettano gia' l'ordine (--fs-hero > --fs-display > --fs-h2):
+   non alzarli a mano nelle pagine. */
