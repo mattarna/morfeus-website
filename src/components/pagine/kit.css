@@ -1606,3 +1606,137 @@
 .ms .pg .indicatori-verde .readout .on i {
   background: var(--guadagno);
 }
+
+/* ===========================================================
+   DISPOSITIVI DELLA PAGINA MARF (2026-07-28)
+   =========================================================== */
+
+/* ---------- FRAMMENTI, il problema ----------
+   "Dati e reparti appaiono come frammenti che non condividono il
+   contesto." Quindi riquadri sfalsati, ognuno con la sua etichetta
+   e il suo dato monco, e i collegamenti tratteggiati che partono e
+   non arrivano da nessuna parte. La disposizione irregolare non e'
+   casuale: e' il punto. Un allineamento perfetto direbbe che il
+   sistema c'e' gia'. */
+.ms .pg .frammenti {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) {
+  .ms .pg .frammenti {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .ms .pg .frammenti {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .pg .frammento {
+  position: relative;
+  border: 1px dashed var(--surf-bd);
+  border-radius: var(--r-s);
+  padding: 22px 20px 24px;
+  background: var(--surf-bg);
+}
+.ms .pg .frammento:nth-child(2) {
+  margin-top: 26px;
+}
+.ms .pg .frammento:nth-child(3) {
+  margin-top: 12px;
+}
+.ms .pg .frammento:nth-child(4) {
+  margin-top: 34px;
+}
+@media (max-width: 900px) {
+  .ms .pg .frammento {
+    margin-top: 0 !important;
+  }
+}
+.ms .pg .frammento .reparto {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .pg .frammento .dato {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.ms .pg .frammento .monco {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ombra);
+}
+/* il collegamento che parte e non arriva */
+.ms .pg .frammento::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -18px;
+  width: 18px;
+  border-top: 1px dashed var(--surf-bd);
+}
+.ms .pg .frammento:last-child::after {
+  display: none;
+}
+@media (max-width: 900px) {
+  .ms .pg .frammento::after {
+    display: none;
+  }
+}
+
+/* ---------- SCHEMA e CONVERGENZA ----------
+   Due diagrammi, stesso registro del disegno tecnico: tratto a filo,
+   nessun riempimento pieno, etichette in mono. Vivono dentro un
+   .quadro e sono l'unico modo onesto di dire "questa cosa collega":
+   una figura lo mostra, un elenco lo promette. */
+.ms .pg .diagramma {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 34px 24px 30px;
+}
+
+/* ---------- COSA NON E' ----------
+   "Tipografia grande e confronto netto, senza icone decorative."
+   Tre negazioni in fila, ognuna barrata da un filetto: il segno che
+   nega e' una riga, non un'icona. */
+.ms .pg .negazioni {
+  margin-top: 40px;
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .pg .negazione {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--surf-bd);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(21px, 2.6vw, 32px);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--ombra);
+}
+.ms .pg .negazione .taglio {
+  height: 2px;
+  background: var(--perdita);
+  border-radius: 2px;
+}
+@media (max-width: 620px) {
+  .ms .pg .negazione {
+    grid-template-columns: 30px 1fr;
+    gap: 16px;
+  }
+}
