@@ -106,7 +106,7 @@ export function HomeProblem() {
             </h2>
           </div>
 
-          <p className={`xl:col-span-5 text-[15px] md:text-base 2xl:text-lg text-slate-400 font-light leading-relaxed transition-all duration-1000 delay-200 ${
+          <p className={`xl:col-span-5 text-[15px] md:text-base 2xl:text-lg text-slate-300 font-light leading-relaxed transition-all duration-1000 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}>
             {t("intro")}
@@ -123,11 +123,11 @@ export function HomeProblem() {
               }`}
               style={{ transitionDelay: `${300 + index * 120}ms` }}
             >
-              <span className="xl:col-span-1 text-[11px] font-bold tracking-[0.2em] text-slate-600 group-hover:text-blue-500 transition-colors duration-500">
+              <span className="xl:col-span-1 text-[11px] font-bold tracking-[0.2em] text-slate-400 group-hover:text-blue-500 transition-colors duration-500">
                 0{index + 1}
               </span>
 
-              <div className="hidden xl:block xl:col-span-2 h-12 2xl:h-14 text-slate-600 group-hover:text-blue-500 transition-colors duration-700">
+              <div className="hidden xl:block xl:col-span-2 h-12 2xl:h-14 text-slate-500 group-hover:text-blue-500 transition-colors duration-700">
                 <Visual />
               </div>
 
@@ -135,7 +135,7 @@ export function HomeProblem() {
                 {t(`leaks.${key}.title`)}
               </h3>
 
-              <p className="xl:col-span-5 text-sm 2xl:text-base text-slate-500 font-light leading-relaxed group-hover:text-slate-400 transition-colors duration-500">
+              <p className="xl:col-span-5 text-sm 2xl:text-base text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-500">
                 {t(`leaks.${key}.desc`)}
               </p>
             </div>
