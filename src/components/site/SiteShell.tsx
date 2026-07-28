@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { clashDisplay, playfair, satoshi } from "./fonts";
+import { clashDisplay, playfair, plusJakarta, satoshi } from "./fonts";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import "./site.css";
+import "./site-font-experiment.css";
 
 /**
  * Shared shell for every official-site content page.
@@ -11,7 +12,9 @@ import "./site.css";
  */
 export function SiteShell({ locale, children }: { locale: "it" | "en"; children: ReactNode }) {
   return (
-    <div className={`ms ${clashDisplay.variable} ${satoshi.variable} ${playfair.variable}`}>
+    <div
+      className={`ms ${clashDisplay.variable} ${satoshi.variable} ${playfair.variable} ${plusJakarta.variable}`}
+    >
       <SiteHeader locale={locale} />
       <main>{children}</main>
       <SiteFooter locale={locale} />

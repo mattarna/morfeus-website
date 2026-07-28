@@ -65,6 +65,49 @@ export default function RootLayout({
           name="facebook-domain-verification"
           content="241durpovws57gda4slstym71fhjnf"
         />
+        {/* ============================================================
+            ESPERIMENTO FONT (temporaneo, branch exp/font-jakarta)
+              ?font=jakarta → Plus Jakarta Sans + Geist Mono
+              ?font=off     → torna a Clash Display + Satoshi (stato attuale)
+            La scelta resta in localStorage.
+            Spento di default: senza il flag non aggiunge classi e non
+            scarica nulla — le pagine restano identiche a prima.
+            Regole in src/components/site/site-font-experiment.css.
+            Geist Mono arriva da CDN perche' next/font/google su Next 14
+            non ce l'ha in lista; Plus Jakarta Sans e' self-hostata da
+            next/font (vedi components/site/fonts.ts).
+            Per rimuovere l'esperimento: cancella questo blocco.
+            ============================================================ */}
+        <script
+          id="font-experiment"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var KEY = "morfeus-font-exp";
+                  var q = new URLSearchParams(window.location.search).get("font");
+                  if (q === "jakarta") localStorage.setItem(KEY, "jakarta");
+                  else if (q) localStorage.removeItem(KEY);
+                  if (localStorage.getItem(KEY) !== "jakarta") return;
+
+                  document.documentElement.classList.add("font-exp-jakarta");
+
+                  var l = document.createElement("link");
+                  l.rel = "stylesheet";
+                  l.href = "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap";
+                  document.head.appendChild(l);
+
+                  document.addEventListener("DOMContentLoaded", function () {
+                    var b = document.createElement("div");
+                    b.className = "font-exp-badge";
+                    b.textContent = "font exp · plus jakarta sans + geist mono · ?font=off";
+                    document.body.appendChild(b);
+                  });
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         {/* Consent Mode v2 Inizializzazione */}
         <Script
           id="consent-mode"
