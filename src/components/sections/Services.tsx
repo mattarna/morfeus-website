@@ -119,7 +119,7 @@ function ServiceCard({
   };
 
   return (
-    <div className="group relative flex flex-col p-6 sm:p-8 xl:p-10 2xl:p-12 min-h-[340px] sm:min-h-[360px] xl:min-h-[400px] 2xl:min-h-[460px] bg-[#080808]/40 border border-white/10 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/20 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
+    <div className="group relative flex flex-col p-6 sm:p-8 xl:p-10 2xl:p-12 min-h-[340px] sm:min-h-[360px] xl:min-h-[400px] 2xl:min-h-[460px] bg-[#080808]/40 border border-white/25 rounded-2xl transition-all duration-500 hover:bg-[#0a0a0a] hover:border-white/40 shadow-[0_0_50px_-12px_rgba(77,57,235,0.05)] hover:shadow-[0_0_50px_-12px_rgba(77,57,235,0.15)]">
       {/* Gradient Overlay - More defined */}
       <div className="absolute inset-0 bg-linear-to-br from-majorelle/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl" />
       
