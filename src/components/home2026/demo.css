@@ -366,7 +366,7 @@
    di cosi' la headline supera meta' schermo, piu' stretta e va a
    quattro righe. */
 .d26 .hero-h1 {
-  font-size: clamp(38px, 6.2vw, 78px);
+  font-size: clamp(40px, 6.6vw, 84px);
   line-height: 1.12;
   max-width: min(100%, 1340px);
   margin-top: 40px;
@@ -411,29 +411,19 @@
   stroke-width: 1.5;
   opacity: 0.4;
 }
-/* si tracciano in sequenza quando la hero entra */
-.d26 .hero-h1 .u26 .uline path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p1 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.6s var(--ease) 0.9s;
-}
-.d26 [data-active="true"] .hero-h1 .u26 .uline .p2 {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.5s var(--ease) 1.15s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .d26 .hero-h1 .u26 .uline path {
-    stroke-dashoffset: 0;
-  }
-}
+/* NIENTE animazione di tracciamento su questo tratto.
+   Era fatta con stroke-dasharray:1 + pathLength=1, la tecnica standard
+   per "disegnare" un path. Qui pathLength non normalizzava come previsto
+   — probabilmente per la combinazione di preserveAspectRatio:none e
+   vector-effect:non-scaling-stroke, che cambiano lo spazio in cui il
+   dash viene calcolato — e il risultato era una fila di trattini invece
+   di un tratto. Il segno resta pieno e sempre disegnato: su questo
+   elemento l'affidabilita' vale piu' dell'effetto d'ingresso. */
 
 .d26 .hero-sub {
   margin-top: 34px;
   max-width: 54ch;
-  font-size: clamp(18px, 2.2vw, 24px);
+  font-size: clamp(19px, 2.4vw, 26px);
   color: var(--testo-ink-2);
 }
 /* i bottoni della hero sono il primo invito all'azione: piu' grandi

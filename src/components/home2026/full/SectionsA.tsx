@@ -58,8 +58,8 @@ export function Hero({ active }: { active: boolean }) {
                     non-scaling-stroke tiene lo spessore costante mentre
                     il tracciato si adatta alla larghezza della parola. */}
                 <svg className="uline" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
-                  <path className="p1" d="M2 5.6 C 26 2.9, 62 3.3, 98 4.6" pathLength={1} />
-                  <path className="p2" d="M6 8.6 C 34 7.1, 68 7.4, 95 8.1" pathLength={1} />
+                  <path className="p1" d="M2 5.6 C 26 2.9, 62 3.3, 98 4.6" />
+                  <path className="p2" d="M6 8.6 C 34 7.1, 68 7.4, 95 8.1" />
                 </svg>
               </span>
             </span>
