@@ -98,6 +98,59 @@ html.palette-morfeus-dark .ms .band.carta .eye {
   color: var(--lilla);
 }
 
+/* -----------------------------------------------------------
+   HEADER E FOOTER
+   -----------------------------------------------------------
+   Non usano i token .ms: hanno classi Tailwind con gli hex del brand
+   2026 cablati nel config (carta/inchiostro/lilla/ombra...), quindi lo
+   swap di variabili non li raggiungeva ed erano rimasti navy mentre la
+   pagina passava a night. Qui le utility vengono ridipinte, ristrette a
+   <header> e <footer> per non toccare i contenuti che usano le stesse
+   classi altrove.
+
+   Il fondo del footer arrivava da uno style inline (#101A2E), che batte
+   ogni classe: e' stato reso variabile in SiteFooter.tsx e si imposta
+   qui sotto. */
+html[class*="palette-morfeus"] .ms {
+  --footer-bg: #0b0b0c; /* night, come le fasce ink */
+  --footer-grid: rgba(140, 165, 247, 0.055); /* griglia su vista */
+  --footer-fade: #0b0b0c;
+  --footer-fade-mid: rgba(11, 11, 12, 0.6);
+}
+
+/* Header: la barra era #14132E all'85%, piu' viola del corpo pagina */
+html[class*="palette-morfeus"] header.fixed {
+  background-color: rgba(11, 11, 12, 0.85);
+  border-bottom-color: #26262b;
+}
+
+html[class*="palette-morfeus"] :is(header, footer) .text-carta {
+  color: #e4e7f0;
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-carta\/75 {
+  color: rgba(228, 231, 240, 0.75);
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-carta\/70 {
+  color: rgba(228, 231, 240, 0.7);
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-carta\/60 {
+  color: rgba(228, 231, 240, 0.6);
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-carta\/50 {
+  color: rgba(228, 231, 240, 0.5);
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-ombra {
+  color: #7e8091;
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-lilla {
+  color: #8ca5f7;
+}
+html[class*="palette-morfeus"] :is(header, footer) .text-lilla\/70 {
+  color: rgba(140, 165, 247, 0.7);
+}
+
+/* .text-firma e .bg-firma restano: erano gia' majorelle #533DFC. */
+
 /* Badge di stato dell'esperimento */
 html[class*="palette-morfeus"] .palette-exp-badge {
   position: fixed;

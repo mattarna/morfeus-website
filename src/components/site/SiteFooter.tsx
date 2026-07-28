@@ -1,9 +1,12 @@
 import Link from "next/link";
 
+/* I colori passano da variabili CSS con il valore storico come fallback:
+   a palette spenta la resa e' identica, ma cosi' una palette alternativa
+   puo' raggiungerli. Erano inline, e l'inline batte qualsiasi classe. */
 const GRID_BG = {
-  backgroundColor: "#101A2E",
+  backgroundColor: "var(--footer-bg, #101A2E)",
   backgroundImage:
-    "linear-gradient(rgba(169,156,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(169,156,255,.055) 1px,transparent 1px)",
+    "linear-gradient(var(--footer-grid, rgba(169,156,255,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--footer-grid, rgba(169,156,255,.055)) 1px,transparent 1px)",
   backgroundSize: "36px 36px",
 } as const;
 
@@ -84,7 +87,7 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
         className="absolute inset-x-0 top-0 h-[120px] pointer-events-none z-[1]"
         style={{
           background:
-            "linear-gradient(to bottom, #0B1526 0%, rgba(11,21,38,0.6) 40%, transparent 100%)",
+            "linear-gradient(to bottom, var(--footer-fade, #0B1526) 0%, var(--footer-fade-mid, rgba(11,21,38,0.6)) 40%, transparent 100%)",
         }}
       />
 
