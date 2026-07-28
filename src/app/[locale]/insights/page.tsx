@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
 import { Glifo } from "@/components/pagine/Glifo";
-import {
-  ArchivioArticoli,
-  type VoceArticolo,
-} from "@/components/pagine/insights/ArchivioArticoli";
+import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
+import { InsightsBrowser, type BrowserArticle } from "@/components/site/InsightsBrowser";
 import "@/components/pagine/kit.css";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
@@ -13,21 +11,32 @@ import { getAllArticles } from "@/lib/insights";
 import { PILASTRI, pilastroDi, ARTICOLO_IN_EVIDENZA, type ChiavePilastro } from "@/lib/pilastri";
 
 /* ============================================================
-   INSIGHTS, pagina hub. Rifatta sul copy approvato 2026-07-28.
+   INSIGHTS, pagina hub.
    ------------------------------------------------------------
-   RITMO del brief: tesi, riconoscimento, approfondimento,
-   esplorazione, definizioni, azione.
-     01 hero        ink     editoriale, e NIENTE contatore di
-                            articoli: il brief lo vieta esplicitamente
-     02 domande     CARTA   tre accessi grandi e diagnostici
-     03 in evidenza ink     l'articolo da cui parte tutto
-     04 archivio    CARTA   ricerca leggibile
-     05 termini     ink     fascia quasi enciclopedica
-     06 CTA         ink
+   SECONDA VERSIONE. La prima aveva buttato via le copertine SVG e
+   la griglia visiva per rifare tutto con le schede degli altri hub.
+   Sbagliato due volte: quelle copertine erano gia' state chieste da
+   Matteo perche' la pagina "era troppo piatta", e una pagina di
+   contenuti senza immagini e' esattamente il piatto da cui si era
+   usciti. Qui torna la struttura precedente:
 
-   Le tre domande riusano .diagnosi dei Casi: e' lo stesso gesto,
-   riconoscere il proprio punto di partenza, e va fatto con la stessa
-   forma. L'archivio riusa le schede dei Casi per la stessa ragione.
+     01 testata      CARTA  la pagina apre chiara, non scura: e'
+                            l'unico hub che si legge, non si consulta
+     02 in evidenza  ink    copertina 16:9 grande accanto al titolo
+     03 griglia      CARTA  InsightsBrowser, copertina per articolo,
+                            ricerca e filtri
+     04 termini      ink    il ponte verso il Glossario
+     05 CTA          ink
+
+   Del copy nuovo resta tutto: headline, le tre domande d'ingresso
+   (che stanno nella testata, dove il brief le vuole), la sezione
+   dei termini e la CTA. Cio' che era gia' buono nel disegno non si
+   tocca; cio' che era vecchio nella copy si cambia.
+
+   I FILTRI usano i quattro pilastri approvati, non le vecchie
+   categorie: al browser passo il pilastro come `category`, cosi'
+   il componente resta identico e la pagina rispetta il brief, che
+   vieta "PMI" come categoria editoriale.
    ============================================================ */
 
 type Props = { params: { locale: string } };
@@ -43,43 +52,32 @@ const COPY = {
       h1emph: "margine",
       h1b: ".",
       copy: "Guide operative per capire dove intervenire, come costruire sistemi AI utili e come verificarne il valore nel tempo.",
+      cerca: "Cerca fra le guide…",
     },
     domande: {
-      eye: "Parti dalla domanda giusta",
-      h2a: "Prima di leggere, ",
-      h2emph: "riconosci dove sei",
-      h2b: ".",
-      lead: "Tre punti di partenza. Non sono categorie di un blog: sono le domande da cui parte davvero chi ha un problema operativo.",
+      titolo: "Parti dalla domanda giusta",
       conta: { uno: "guida", molti: "guide" },
     },
     evidenza: {
       eye: "Il concetto da cui partiamo",
-      h2a: "Cos'è un Value Leak, e perché ",
-      h2emph: "ti sta già costando",
-      h2b: ".",
-      lead: "Il punto in cui tempo, informazioni, decisioni o lavoro manuale fanno perdere margine senza comparire in nessun bilancio. È la parola con cui inizia ogni conversazione seria sull'AI in azienda.",
-      readout: "Articolo · il primo da leggere",
-      stato: "Pilastro",
-      cta: "Leggi l'articolo",
+      h2a: "In ",
+      h2emph: "evidenza",
+      leggi: "Leggi l'articolo",
     },
-    archivio: {
-      eye: "L'archivio",
-      h2a: "Tutto quello che abbiamo scritto, ",
-      h2emph: "per pilastro",
-      h2b: ".",
-      lead: "I filtri sono per pilastro editoriale. Le PMI non sono una categoria: sono il destinatario, e gli articoli che le riguardano vivono dentro i temi.",
+    articoli: {
+      h2a: "Tutte le ",
+      h2emph: "guide",
+      h2b: ", per pilastro",
+      readMore: "Leggi",
       tutti: "Tutti",
-      uno: "guida",
-      molti: "guide",
-      suffisso: "in archivio",
-      leggi: "Leggi",
+      vuoto: "Nessuna guida per questi filtri.",
     },
     termini: {
       eye: "Termini da conoscere",
       h2a: "Prima di scegliere l'AI, ",
       h2emph: "chiariamo le parole",
       h2b: ".",
-      lead: "Cinque termini che useremo in ogni pagina. Se non sono chiari, ogni discussione sull'AI diventa una discussione su cosa intendiamo.",
+      lead: "Cinque termini che tornano in ogni pagina. Se non sono chiari, ogni discussione sull'AI diventa una discussione su cosa intendiamo.",
       lista: [
         { t: "Value Leak", d: "Il punto in cui il margine esce dal processo." },
         { t: "Context Hub", d: "Dove il sapere aziendale diventa utilizzabile." },
@@ -108,43 +106,32 @@ const COPY = {
       h1emph: "margin",
       h1b: ".",
       copy: "Practical guides to understand where to intervene, how to build useful AI systems and how to verify their value over time.",
+      cerca: "Search the guides…",
     },
     domande: {
-      eye: "Start with the right question",
-      h2a: "Before reading, ",
-      h2emph: "recognise where you are",
-      h2b: ".",
-      lead: "Three starting points. Not blog categories: the questions people with a real operating problem actually start from.",
+      titolo: "Start with the right question",
       conta: { uno: "guide", molti: "guides" },
     },
     evidenza: {
       eye: "The concept we start with",
-      h2a: "What is a Value Leak, and why is it ",
-      h2emph: "already costing you",
-      h2b: "?",
-      lead: "The point where time, information, decisions or manual work erode margin without appearing on any balance sheet. It is the word every serious conversation about AI in business starts from.",
-      readout: "Article · read this first",
-      stato: "Pillar",
-      cta: "Read the article",
+      h2a: "",
+      h2emph: "Featured",
+      leggi: "Read the article",
     },
-    archivio: {
-      eye: "The archive",
-      h2a: "Everything we have written, ",
-      h2emph: "by pillar",
-      h2b: ".",
-      lead: "Filters are by editorial pillar. SMEs are not a category: they are the audience, and the articles that concern them live inside the themes.",
+    articoli: {
+      h2a: "All the ",
+      h2emph: "guides",
+      h2b: ", by pillar",
+      readMore: "Read",
       tutti: "All",
-      uno: "guide",
-      molti: "guides",
-      suffisso: "in the archive",
-      leggi: "Read",
+      vuoto: "No guides match these filters.",
     },
     termini: {
       eye: "Terms worth knowing",
       h2a: "Before you choose AI, ",
       h2emph: "let's get the words right",
       h2b: ".",
-      lead: "Five terms we use on every page. If they are not clear, every discussion about AI becomes a discussion about what we mean.",
+      lead: "Five terms that come back on every page. If they are not clear, every discussion about AI becomes a discussion about what we mean.",
       lista: [
         { t: "Value Leak", d: "The point where margin leaks out of a workflow." },
         { t: "Context Hub", d: "Where company know-how becomes usable." },
@@ -165,9 +152,8 @@ const COPY = {
   },
 } as const;
 
-/* Le tre domande d'ingresso del brief mappano su tre pilastri. Il
-   quarto, "scelte e governance", non ha una domanda propria nel copy
-   e resta accessibile dai filtri dell'archivio. */
+/* Le tre domande d'ingresso del brief. Il quarto pilastro non ha una
+   domanda propria nel copy e resta raggiungibile dai filtri. */
 const DOMANDE: { chiave: ChiavePilastro; glifo: string }[] = [
   { chiave: "margine", glifo: "curvaGiu" },
   { chiave: "processi", glifo: "ingranaggio" },
@@ -201,15 +187,27 @@ export default function InsightsPage({ params: { locale } }: Props) {
   const base = `/${safeLocale}`;
 
   const articoli = getAllArticles();
-  const voci: VoceArticolo[] = articoli.map((a) => ({
+  const evidenza =
+    articoli.find((a) => a.slug === ARTICOLO_IN_EVIDENZA) ?? articoli[0] ?? null;
+  const resto = articoli.filter((a) => a.slug !== evidenza?.slug);
+
+  /* Al browser il pilastro arriva come `category`: il componente non
+     cambia di una riga e i filtri diventano quelli approvati. */
+  const browserArticles: BrowserArticle[] = resto.map((a) => ({
     slug: a.slug,
-    titolo: a.title,
-    descrizione: a.metaDescription,
-    pilastro: pilastroDi(a.slug),
-    lettura: a.readingTime,
-    data: a.dateModified || a.datePublished,
+    title: a.title,
+    tldr: a.tldr,
+    metaDescription: a.metaDescription,
+    category: PILASTRI[pilastroDi(a.slug)].nome[safeLocale],
+    tags: a.tags,
+    datePublished: a.datePublished,
+    readingTime: a.readingTime,
+    coverKind: a.coverKind,
   }));
-  const evidenza = voci.find((v) => v.slug === ARTICOLO_IN_EVIDENZA);
+
+  const pilastriUsati = (Object.keys(PILASTRI) as ChiavePilastro[])
+    .map((k) => PILASTRI[k].nome[safeLocale])
+    .filter((nome) => browserArticles.some((a) => a.category === nome));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -225,12 +223,12 @@ export default function InsightsPage({ params: { locale } }: Props) {
         about: { "@id": ORGANIZATION_ID },
         mainEntity: {
           "@type": "ItemList",
-          numberOfItems: voci.length,
-          itemListElement: voci.map((v, i) => ({
+          numberOfItems: articoli.length,
+          itemListElement: articoli.map((a, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: v.titolo,
-            url: `${SITE_URL}/${safeLocale}/insights/${v.slug}`,
+            name: a.title,
+            url: `${SITE_URL}/${safeLocale}/insights/${a.slug}`,
           })),
         },
       },
@@ -245,8 +243,8 @@ export default function InsightsPage({ params: { locale } }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 01 · HERO · ink. Niente contatore di articoli: lo vieta il brief */}
-      <section className="band ink hero pg" id="hero">
+      {/* 01 · TESTATA + LE TRE DOMANDE · CARTA */}
+      <section className="band carta hero pg" id="testata">
         <div className="wrap">
           <div className="eye">{t.hero.eye}</div>
           <h1>
@@ -255,31 +253,19 @@ export default function InsightsPage({ params: { locale } }: Props) {
             {t.hero.h1b}
           </h1>
           <p className="copy">{t.hero.copy}</p>
-        </div>
-      </section>
 
-      {/* 02 · LE DOMANDE · CARTA */}
-      <section className="band carta pg" id="domande">
-        <div className="wrap">
-          <div className="eye">{t.domande.eye}</div>
-          <h2 className="h-sect">
-            {t.domande.h2a}
-            <span className="emph">{t.domande.h2emph}</span>
-            {t.domande.h2b}
-          </h2>
-          <p className="lead">{t.domande.lead}</p>
-
-          <div className="diagnosi">
+          <div className="quota" style={{ marginTop: 44 }}>
+            {t.domande.titolo}
+          </div>
+          <div className="diagnosi" style={{ marginTop: 8 }}>
             {DOMANDE.map((d) => {
-              const quanti = voci.filter((v) => v.pilastro === d.chiave).length;
+              const quanti = articoli.filter((a) => pilastroDi(a.slug) === d.chiave).length;
               return (
-                <Link key={d.chiave} href={`${base}/insights#archivio`} className="sintomo">
+                <Link key={d.chiave} href={`${base}/insights#articoli`} className="sintomo">
                   <Glifo nome={d.glifo} />
                   <span className="testo">{PILASTRI[d.chiave].domanda[safeLocale]}</span>
                   <span className="conta">
-                    {`${quanti} ${
-                      quanti === 1 ? t.domande.conta.uno : t.domande.conta.molti
-                    }`}
+                    {`${quanti} ${quanti === 1 ? t.domande.conta.uno : t.domande.conta.molti}`}
                   </span>
                   <span className="freccia" aria-hidden="true">
                     &rarr;
@@ -291,71 +277,97 @@ export default function InsightsPage({ params: { locale } }: Props) {
         </div>
       </section>
 
-      {/* 03 · ARTICOLO IN EVIDENZA · ink */}
-      {evidenza && (
+      {/* 02 · IN EVIDENZA · ink, con la copertina grande */}
+      {evidenza ? (
         <section className="band ink pg" id="in-evidenza">
           <div className="wrap">
             <div className="eye">{t.evidenza.eye}</div>
             <h2 className="h-sect">
               {t.evidenza.h2a}
               <span className="emph">{t.evidenza.h2emph}</span>
-              {t.evidenza.h2b}
             </h2>
-            <p className="lead">{t.evidenza.lead}</p>
-
-            <div className="quadro" style={{ marginTop: 36 }}>
-              <div className="readout">
-                <span>{t.evidenza.readout}</span>
-                <span className="on">
-                  <i />
-                  {t.evidenza.stato}
+            <Link
+              href={`${base}/insights/${evidenza.slug}`}
+              className="mt-[30px] grid grid-cols-1 items-center gap-11 md:grid-cols-[1.05fr_.95fr]"
+            >
+              <div
+                className="relative w-full overflow-hidden rounded-[12px] border"
+                style={{ aspectRatio: "16 / 9", borderColor: "#26262B" }}
+              >
+                <InsightCover
+                  kind={
+                    (evidenza.coverKind as CoverKind) ||
+                    coverKindFromCategory(evidenza.category)
+                  }
+                  variant="ink"
+                  category={PILASTRI[pilastroDi(evidenza.slug)].nome[safeLocale]}
+                />
+              </div>
+              <div>
+                <div className="mb-1 flex flex-wrap items-center gap-2">
+                  {evidenza.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border px-2.5 py-[5px] font-plex text-[11px] font-semibold uppercase tracking-[.04em] text-lilla"
+                      style={{
+                        background: "rgba(140,165,247,.1)",
+                        borderColor: "rgba(140,165,247,.28)",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h3 className="my-3 text-[clamp(24px,3.4vw,36px)] font-semibold">
+                  {evidenza.title}
+                </h3>
+                <p
+                  className="mb-[18px] max-w-[48ch] text-[17.5px] leading-[1.6]"
+                  style={{ color: "var(--testo-ink-2)" }}
+                >
+                  {evidenza.tldr || evidenza.metaDescription}
+                </p>
+                <span className="inline-flex items-center gap-1.5 font-plex text-[13px] font-semibold tracking-[.04em] text-lilla">
+                  {t.evidenza.leggi}
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
                 </span>
               </div>
-              <div className="corpo-modulo">
-                <div className="cod">{PILASTRI[evidenza.pilastro].nome[safeLocale]}</div>
-                <h3 style={{ marginTop: 14, fontSize: "clamp(22px,2.6vw,30px)", letterSpacing: "-0.02em" }}>
-                  {evidenza.titolo}
-                </h3>
-                <p className="testo-quadrante" style={{ maxWidth: "68ch" }}>
-                  {evidenza.descrizione}
-                </p>
-                <div className="cta-row">
-                  <Link className="btn btn-1" href={`${base}/insights/${evidenza.slug}`}>
-                    {t.evidenza.cta}
-                  </Link>
-                </div>
-              </div>
-            </div>
+            </Link>
           </div>
         </section>
-      )}
+      ) : null}
 
-      {/* 04 · ARCHIVIO · CARTA */}
-      <section className="band carta pg" id="archivio">
+      {/* 03 · GRIGLIA · CARTA, copertina per articolo */}
+      <section className="band carta pg" id="articoli">
         <div className="wrap">
-          <div className="eye">{t.archivio.eye}</div>
-          <h2 className="h-sect">
-            {t.archivio.h2a}
-            <span className="emph">{t.archivio.h2emph}</span>
-            {t.archivio.h2b}
-          </h2>
-          <p className="lead">{t.archivio.lead}</p>
-
-          <ArchivioArticoli
+          <InsightsBrowser
+            articles={browserArticles}
+            categories={pilastriUsati}
             locale={safeLocale}
-            voci={voci}
-            etichette={{
-              tutti: t.archivio.tutti,
-              uno: t.archivio.uno,
-              molti: t.archivio.molti,
-              suffisso: t.archivio.suffisso,
-              leggi: t.archivio.leggi,
+            ui={{
+              h2a: t.articoli.h2a,
+              h2emph: t.articoli.h2emph,
+              h2b: t.articoli.h2b,
+              readMore: t.articoli.readMore,
+              searchPlaceholder: t.hero.cerca,
+              allLabel: t.articoli.tutti,
+              emptyState: t.articoli.vuoto,
             }}
           />
         </div>
       </section>
 
-      {/* 05 · I TERMINI · ink, fascia enciclopedica */}
+      {/* 04 · I TERMINI · ink, il ponte verso il Glossario */}
       <section className="band ink pg" id="termini">
         <div className="wrap">
           <div className="eye">{t.termini.eye}</div>
@@ -383,7 +395,7 @@ export default function InsightsPage({ params: { locale } }: Props) {
         </div>
       </section>
 
-      {/* 06 · CTA · ink */}
+      {/* 05 · CTA · ink */}
       <section className="band ink pg" id="cta">
         <div className="wrap">
           <div className="ctaq">
