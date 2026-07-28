@@ -12,7 +12,11 @@ import { RoiCalc } from "./RoiCalc";
 
 /* ============ [9] ROI SYSTEM · CARTA · timeline interattiva a 5 stadi ============ */
 
-const ROI_STEP_KEYS = ["mapping", "architecture", "execution", "optimization", "scale"] as const;
+/* Value Recovery System — gli step sono cambiati con il copy B2B della
+   home di produzione: architecture/execution/optimization/scale sono
+   diventati champions/context/agents/compound. Le vecchie chiavi restano
+   nei messages perche' le legge ancora la home v1 di questo progetto. */
+const ROI_STEP_KEYS = ["mapping", "champions", "context", "agents", "compound"] as const;
 
 export function RoiSystemPanel({ active }: { active: boolean }) {
   const t = useTranslations("ROI");

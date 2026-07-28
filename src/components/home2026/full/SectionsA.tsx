@@ -27,9 +27,14 @@ export function Hero({ active }: { active: boolean }) {
           <span className="fx d2" style={{ display: "block" }}>
             {t("headline_part1")}
           </span>
-          <span className="fx d3" style={{ display: "block" }}>
-            {t("headline_part2")}
-          </span>
+          {/* part2 e' vuota nel copy B2B (la headline sta in due righe di
+              testo + la riga enfatizzata): saltata, per non lasciare uno
+              span a vuoto in mezzo. */}
+          {t("headline_part2") ? (
+            <span className="fx d3" style={{ display: "block" }}>
+              {t("headline_part2")}
+            </span>
+          ) : null}
           <span className="fx d4" style={{ display: "block" }}>
             <span className="emph u26">
               {t("headline_part3")}
@@ -87,80 +92,44 @@ export function ManifestoPanel({ active }: { active: boolean }) {
   );
 }
 
-/* ============ [2] PROBLEM · INCHIOSTRO · ridisegnata come scheda di rilievo ============ */
+/* ============ [2] I VALUE LEAK · INCHIOSTRO ============ */
 
-const PAIN_KEYS = ["costs", "talent", "processes", "data"] as const;
-
-const BREAKDOWN = [
-  { key: "ops", value: 38 },
-  { key: "decisions", value: 27 },
-  { key: "waste", value: 22 },
-  { key: "errors", value: 13 },
-] as const;
+/* I VALUE LEAK — allineata alla home di produzione: la sezione non e'
+   piu' "Il Problema" (4 anomalie + scheda di rilievo con una cifra
+   inventata), ma tre righe che nominano dove esce il margine.
+   La cifra della vecchia scheda era un placeholder: toglierla e' parte
+   del punto, il numero arriva dalla diagnosi, non dalla home. */
+const LEAK_KEYS = ["flow", "knowledge", "manual"] as const;
 
 export function Problem({ active }: { active: boolean }) {
   const t = useTranslations("Problem");
-  const headlineParts = t("headline").split(".");
 
   return (
     <section className="panel band ink tight" data-active={active}>
       <div className="wrap" style={{ width: "100%" }}>
-        {/* testata orizzontale: titolo + lead affiancati */}
         <div className="prob-head">
-          <h2 className="h-sect fx d1" style={{ maxWidth: "20ch", margin: 0 }}>
-            {headlineParts[0]}.
-            {headlineParts[1] ? <span style={{ color: "var(--ombra)" }}>{headlineParts[1]}</span> : null}
-          </h2>
-          <p className="lead fx d2">{t("body")}</p>
+          <div>
+            <div className="eye fx d1">{t("label")}</div>
+            <h2 className="h-sect fx d2" style={{ maxWidth: "20ch", margin: "10px 0 0" }}>
+              {t("headline_1")}
+              <br />
+              <span style={{ color: "var(--ombra)" }}>{t("headline_2")}</span>
+            </h2>
+          </div>
+          <p className="lead fx d3">{t("intro")}</p>
         </div>
 
-        <div className="prob-grid">
-          {/* SINISTRA · anomalie in griglia 2×2 */}
-          <div className="anomalie fx d3">
-            {PAIN_KEYS.map((key, i) => (
-              <div className="anomalia-row" key={key}>
-                <span className="n">A{String(i + 1).padStart(2, "0")}</span>
-                <h3>{t(`cards.${key}.title`)}</h3>
-                <p>{t(`cards.${key}.desc`)}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* DESTRA · la scheda di rilievo */}
-          <div className="scheda fx d4">
-          <div className="sk-label">{t("ticker.label")}</div>
-          <div className="sk-value">
-            €47.000<small>/ MESE</small>
-          </div>
-          <p className="sk-sub">{t("ticker.sub")}</p>
-
-          <div className="sk-bars">
-            {BREAKDOWN.map((item) => (
-              <div className="sk-bar" key={item.key}>
-                <div className="top">
-                  <span>{t(`ticker.breakdown.${item.key}`)}</span>
-                  <b>{item.value}%</b>
-                </div>
-                <div className="track">
-                  <div className="fill" style={{ "--w": `${item.value}%` } as React.CSSProperties} />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="sk-cta">
-            <button
-              className="btn btn-1"
-              type="button"
-              style={{ width: "100%" }}
-              onClick={() => jumpToIndex(10)}
-            >
-              {t("cta")}
-            </button>
-            <p className="sk-note">{t("microcopy")}</p>
-          </div>
+        <div className="leaks fx d4">
+          {LEAK_KEYS.map((key, i) => (
+            <div className="leak-row" key={key}>
+              <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{t(`leaks.${key}.title`)}</h3>
+              <p>{t(`leaks.${key}.desc`)}</p>
+            </div>
+          ))}
         </div>
-        </div>
+
+        <p className="leak-closing fx d5">{t("closing")}</p>
       </div>
     </section>
   );

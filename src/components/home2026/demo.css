@@ -46,11 +46,11 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(20, 19, 46, 0.18);
+  background: rgba(11, 11, 12, 0.18);
   box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.35);
 }
 .d26 section.panel.band.ink::before {
-  background: rgba(169, 156, 255, 0.14);
+  background: rgba(140, 165, 247, 0.14);
 }
 
 /* ---------- hero: la griglia blueprint che deriva piano (opzione 1) ----------
@@ -347,15 +347,32 @@
   }
 }
 
+/* Corpo, larghezza e interlinea ritarati sul copy B2B: le righe della
+   headline arrivano a 35 caratteri ("POI COSTRUIAMO CIO' CHE LO
+   RECUPERA."), che in 18ch andavano a capo. Stessa scelta fatta sulla
+   home di produzione: corpo piu' contenuto e interlinea piu' aperta,
+   cosi' ogni parte sta su una riga sola. */
 .d26 .hero-h1 {
-  font-size: clamp(40px, 6.2vw, 76px);
-  line-height: 1.04;
-  max-width: 18ch;
+  font-size: clamp(28px, 4.6vw, 54px);
+  line-height: 1.12;
+  max-width: min(100%, 1180px);
   margin-top: 26px;
 }
 .d26 .hero-h1 .u26 {
   position: relative;
-  white-space: nowrap;
+}
+/* nowrap solo dove la riga ci sta davvero: sotto, mandarla a capo e'
+   meglio che farla uscire dallo schermo, e il sottolineato (assoluto a
+   width:100%) su piu' righe finirebbe fuori posto. */
+@media (min-width: 900px) {
+  .d26 .hero-h1 .u26 {
+    white-space: nowrap;
+  }
+}
+@media (max-width: 899px) {
+  .d26 .hero-h1 .u26 svg {
+    display: none;
+  }
 }
 .d26 .hero-h1 .u26 svg {
   position: absolute;
@@ -403,7 +420,7 @@
   color: var(--lilla);
   display: none;
   min-width: 300px;
-  background: rgba(20, 19, 46, 0.55);
+  background: rgba(11, 11, 12, 0.55);
   backdrop-filter: blur(2px);
 }
 @media (min-width: 1024px) {
@@ -464,168 +481,68 @@
   font-size: 15px;
 }
 
-.d26 .prob-grid {
+/* ---------- I VALUE LEAK · le tre righe ----------
+   Sostituisce il vecchio blocco prob-grid/anomalie/scheda, allineandosi
+   alla home di produzione: elenco di righe separate da filetti, non
+   griglia di card + pannello con una cifra. */
+.d26 .leaks {
+  margin-top: clamp(22px, 3vw, 34px);
+  border-top: 1px solid var(--riga-scuro);
+}
+.d26 .leak-row {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(28px, 3.5vw, 52px);
-  align-items: center;
-  width: 100%;
-  margin-top: clamp(20px, 3vh, 32px);
+  grid-template-columns: auto 1fr;
+  gap: 4px 16px;
+  align-items: baseline;
+  padding: clamp(14px, 1.8vw, 20px) 0;
+  border-bottom: 1px solid var(--riga-scuro);
 }
 @media (min-width: 1024px) {
-  .d26 .prob-grid {
-    grid-template-columns: 1.05fr 0.95fr;
+  .d26 .leak-row {
+    grid-template-columns: auto minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: 0 clamp(20px, 2.6vw, 40px);
   }
 }
-
-/* anomalie: griglia 2×2, compatta */
-.d26 .anomalie {
-  display: grid;
-  grid-template-columns: 1fr;
-  column-gap: 32px;
-}
-@media (min-width: 720px) {
-  .d26 .anomalie {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-.d26 .anomalia-row {
-  padding: 16px 0;
-  border-top: 1px solid var(--riga-scuro);
-}
-.d26 .anomalia-row .n {
-  display: inline-block;
+.d26 .leak-row .n {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 700;
-  color: var(--anomalia);
-  margin-bottom: 7px;
-}
-.d26 .anomalia-row h3 {
-  font-size: 16px;
   font-weight: 600;
-  line-height: 1.35;
+  letter-spacing: 0.14em;
+  color: var(--ombra);
+  transition: color var(--dur) var(--ease);
 }
-.d26 .anomalia-row p {
-  margin-top: 5px;
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--testo-ink-2);
-}
-
-/* la scheda tecnica a destra */
-.d26 .scheda {
-  position: relative;
-  border: 1px solid var(--riga-scuro);
-  background: rgba(255, 255, 255, 0.02);
-  padding: clamp(20px, 2vw, 28px);
-}
-.d26 .scheda::before,
-.d26 .scheda::after {
-  content: "";
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  border-color: var(--lilla);
-  border-style: solid;
-  opacity: 0.6;
-}
-.d26 .scheda::before {
-  top: -1px;
-  left: -1px;
-  border-width: 2px 0 0 2px;
-}
-.d26 .scheda::after {
-  bottom: -1px;
-  right: -1px;
-  border-width: 0 2px 2px 0;
-}
-.d26 .scheda .sk-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+.d26 .leak-row:hover .n {
   color: var(--lilla);
 }
-.d26 .scheda .sk-value {
-  font-family: var(--font-display);
+.d26 .leak-row h3 {
+  font-size: clamp(15px, 1.4vw, 18px);
   font-weight: 600;
-  font-size: clamp(34px, 3.8vw, 50px);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-top: 8px;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 0;
 }
-.d26 .scheda .sk-value small {
-  font-family: var(--font-mono);
-  font-size: 0.32em;
-  font-weight: 400;
-  color: var(--ombra);
-  margin-left: 8px;
-  letter-spacing: 0.08em;
-}
-.d26 .scheda .sk-sub {
-  margin-top: 14px;
-  padding-left: 14px;
-  border-left: 2px solid var(--anomalia);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  line-height: 1.7;
+.d26 .leak-row p {
+  font-size: clamp(13.5px, 1.1vw, 15px);
+  line-height: 1.6;
   color: var(--testo-ink-2);
+  margin: 0;
 }
-.d26 .scheda .sk-bars {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-}
-.d26 .scheda .sk-bar .top {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.d26 .leak-closing {
+  margin-top: clamp(20px, 2.6vw, 30px);
+  max-width: 62ch;
+  padding-left: 16px;
+  border-left: 2px solid var(--marker);
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.6;
   color: var(--testo-ink-2);
-}
-.d26 .scheda .sk-bar .top b {
-  color: var(--carta);
-}
-.d26 .scheda .sk-bar .track {
-  margin-top: 7px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.d26 .scheda .sk-bar .fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--firma), var(--lilla));
-  border-radius: 999px;
-  transition: width 1.2s var(--ease-out) 0.9s;
-}
-.d26 [data-active="true"] .scheda .sk-bar .fill {
-  width: var(--w);
-}
-.d26 .scheda .sk-cta {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--riga-scuro);
-}
-.d26 .scheda .sk-note {
-  margin-top: 12px;
-  font-family: var(--font-emph);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--ombra);
-  text-align: center;
 }
 
 /* ---------- SERVICES ---------- */
+/* heading su una riga sola, come in produzione */
+.d26 .svc-head h2 {
+  white-space: nowrap;
+}
 .d26 .svc-head {
   display: flex;
   flex-wrap: wrap;
@@ -647,8 +564,8 @@
 .d26 .svc-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(20, 19, 46, 0.14);
-  background: rgba(20, 19, 46, 0.02);
+  border: 1px solid rgba(11, 11, 12, 0.14);
+  background: rgba(11, 11, 12, 0.02);
   border-radius: var(--r-m);
   padding: clamp(24px, 2.6vw, 36px);
   min-height: 320px;
@@ -677,8 +594,12 @@
   color: var(--testo-carta-2);
   max-width: 52ch;
 }
+/* margin-top:auto ancora le CTA in fondo alla card: i titoli si
+   allineano fra le due colonne anche con descrizioni di lunghezza
+   diversa. Stessa correzione fatta sulla home di produzione. */
 .d26 .svc-card .ctas {
-  margin-top: 24px;
+  margin-top: auto;
+  padding-top: 24px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -714,7 +635,7 @@
   transition: border-color 0.3s;
 }
 .d26 .plogo:hover {
-  border-color: rgba(169, 156, 255, 0.5);
+  border-color: rgba(140, 165, 247, 0.5);
 }
 .d26 .plogo .img {
   position: relative;
@@ -786,7 +707,7 @@
 /* le tre passate: ogni anello si TRACCIA quando la sua passata arriva */
 .d26 .met-rings .ring {
   fill: none;
-  stroke: rgba(169, 156, 255, 0.28);
+  stroke: rgba(140, 165, 247, 0.28);
   stroke-width: 1.3;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -860,7 +781,7 @@
   font-weight: 600;
   font-size: clamp(200px, 40vh, 400px);
   line-height: 1;
-  color: rgba(169, 156, 255, 0.055);
+  color: rgba(140, 165, 247, 0.055);
   pointer-events: none;
   user-select: none;
 }
@@ -986,7 +907,7 @@
   left: 8%;
   right: 8%;
   height: 1px;
-  background: rgba(20, 19, 46, 0.16);
+  background: rgba(11, 11, 12, 0.16);
 }
 .d26 .rsys .dots .prog {
   position: absolute;
@@ -1012,7 +933,7 @@
   width: 13px;
   height: 13px;
   border-radius: 999px;
-  border: 1.5px solid rgba(20, 19, 46, 0.35);
+  border: 1.5px solid rgba(11, 11, 12, 0.35);
   background: var(--carta);
   transition: all 0.3s;
 }
@@ -1051,7 +972,7 @@
 .d26 .rsys .outcome {
   margin-top: clamp(20px, 3.5vh, 36px);
   padding-top: 18px;
-  border-top: 1px solid rgba(20, 19, 46, 0.12);
+  border-top: 1px solid rgba(11, 11, 12, 0.12);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.2em;
@@ -1081,7 +1002,7 @@
 .d26 .rc-depts button {
   padding: 9px 16px;
   border-radius: var(--r-pill);
-  border: 1px solid rgba(169, 156, 255, 0.18);
+  border: 1px solid rgba(140, 165, 247, 0.18);
   background: transparent;
   color: var(--lilla);
   font-family: var(--font-mono);
@@ -1096,11 +1017,11 @@
     color 0.2s;
 }
 .d26 .rc-depts button:hover {
-  border-color: rgba(169, 156, 255, 0.4);
+  border-color: rgba(140, 165, 247, 0.4);
 }
 .d26 .rc-depts button[data-on="true"] {
   background: rgba(83, 61, 252, 0.2);
-  border-color: rgba(169, 156, 255, 0.5);
+  border-color: rgba(140, 165, 247, 0.5);
   color: var(--carta);
 }
 
@@ -1119,7 +1040,7 @@
 
 /* LETTURA · il verdetto */
 .d26 .rc-readout {
-  border: 1px solid rgba(169, 156, 255, 0.28);
+  border: 1px solid rgba(140, 165, 247, 0.28);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.02);
   padding: clamp(22px, 2.4vw, 32px);
@@ -1252,7 +1173,7 @@
   height: 8px;
   border-radius: 999px;
   outline: none;
-  border: 1px solid rgba(169, 156, 255, 0.16);
+  border: 1px solid rgba(140, 165, 247, 0.16);
   cursor: pointer;
 }
 .d26 .rc-range::-webkit-slider-thumb {
@@ -1339,7 +1260,7 @@
   font-style: italic;
   font-weight: 500;
   font-size: clamp(20px, 2.2vw, 30px);
-  color: rgba(20, 19, 46, 0.55);
+  color: rgba(11, 11, 12, 0.55);
   letter-spacing: -0.01em;
 }
 .d26 .case-desc {
@@ -1377,14 +1298,14 @@
   gap: 16px;
   padding: 16px 0;
   border: 0;
-  border-top: 1px solid rgba(20, 19, 46, 0.12);
+  border-top: 1px solid rgba(11, 11, 12, 0.12);
   background: none;
   cursor: pointer;
   text-align: left;
   transition: opacity 0.3s;
 }
 .d26 .cases-menu button:last-child {
-  border-bottom: 1px solid rgba(20, 19, 46, 0.12);
+  border-bottom: 1px solid rgba(11, 11, 12, 0.12);
 }
 .d26 .cases-menu .cn {
   font-family: var(--font-mono);
@@ -1398,11 +1319,11 @@
   font-weight: 600;
   font-size: clamp(22px, 2.6vw, 34px);
   letter-spacing: -0.02em;
-  color: rgba(20, 19, 46, 0.3);
+  color: rgba(11, 11, 12, 0.3);
   transition: color 0.3s;
 }
 .d26 .cases-menu button:hover .name {
-  color: rgba(20, 19, 46, 0.6);
+  color: rgba(11, 11, 12, 0.6);
 }
 .d26 .cases-menu button[data-on="true"] .name {
   color: var(--inchiostro);
@@ -1441,7 +1362,7 @@
   align-self: start;
 }
 .d26 .faq-item[data-open="true"] {
-  border-color: rgba(169, 156, 255, 0.45);
+  border-color: rgba(140, 165, 247, 0.45);
 }
 .d26 .faq-item > button {
   width: 100%;
@@ -1519,7 +1440,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px 16px;
-  border: 1px solid rgba(20, 19, 46, 0.16);
+  border: 1px solid rgba(11, 11, 12, 0.16);
   border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 10px;

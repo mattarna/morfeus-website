@@ -84,7 +84,7 @@ function Slider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="rc-range"
-        style={{ background: `linear-gradient(90deg, #533DFC ${fill}%, rgba(169,156,255,0.14) ${fill}%)` }}
+        style={{ background: `linear-gradient(90deg, #533DFC ${fill}%, rgba(140, 165, 247,0.14) ${fill}%)` }}
       />
     </div>
   );
