@@ -1409,9 +1409,15 @@
   margin-top: 48px;
   border-top: 1px solid var(--surf-bd);
 }
+/* Da telefono il confronto NON si mostra. E' una tabella che funziona per
+   contrapposizione: "questo contro quello" si legge solo con le due colonne
+   affiancate. A colonna unica diventa un elenco alternato di frasi
+   (insufficiente, sufficiente, insufficiente...) in cui non si capisce piu'
+   quale sia quale, e i tre paragrafi sopra dicono gia' la stessa cosa a
+   parole. Meglio niente che una tabella che si legge al contrario. */
 @media (max-width: 860px) {
   .ms .pg .confronto {
-    grid-template-columns: 1fr;
+    display: none;
   }
 }
 .ms .pg .confronto .colonna-testa {

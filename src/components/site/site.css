@@ -2299,7 +2299,7 @@
   inset: 0;
   z-index: 45;
   background: var(--inchiostro);
-  padding: 92px clamp(20px, 6vw, 32px) 32px;
+  padding: 18px clamp(20px, 6vw, 32px) 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2317,6 +2317,41 @@
 .ms .smm-pannello[data-aperto="1"] {
   opacity: 1;
   transform: none;
+}
+
+/* Barra del pannello: marchio a sinistra, X a destra. Il pannello non si
+   appoggia piu' alla barra della pagina, che sulla home e' trasparente e
+   cambia colore con la fascia: aperto il menu, sopra restava una striscia
+   vuota senza logo e senza modo di uscire. */
+.ms .smm-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 26px;
+  flex-shrink: 0;
+}
+.ms .smm-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--riga-scuro);
+  background: rgba(228, 231, 240, 0.05);
+  color: var(--carta);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color var(--dur) var(--ease);
+}
+.ms .smm-x:hover {
+  border-color: var(--lilla);
+}
+.ms .smm-x svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
 }
 
 .ms .smm-voci {
@@ -2444,6 +2479,24 @@
 @media (max-width: 1023px) {
   .ms.d26 .top-header .langswitch {
     display: none;
+  }
+  /* E la barra prende un fondo. Da desktop e' trasparente e si ricolora
+     fascia per fascia, e funziona perche' i pannelli sono a schermo intero:
+     dietro la barra c'e' sempre il vuoto in cima al pannello. Da telefono i
+     pannelli si allungano e scorrono, quindi sotto la barra passa il testo:
+     il marchio bianco finiva sopra una fascia chiara, illeggibile, con le
+     righe che gli passavano attraverso. */
+  .ms.d26 .top-header[data-band="ink"] {
+    background: rgba(11, 11, 12, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--riga-scuro);
+  }
+  .ms.d26 .top-header[data-band="carta"] {
+    background: rgba(228, 231, 240, 0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--surf-bd);
   }
 }
 

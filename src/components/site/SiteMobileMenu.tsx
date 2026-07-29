@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -120,6 +121,38 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
            piu' la stringa vuota che voleva il DOM. */
         inert={!aperto}
       >
+        {/* Barra del pannello: il marchio dove sta sempre e la X per
+            chiudere. Prima il pannello si fidava del bottone nella barra
+            sotto, ma sulla home quella barra e' trasparente e cambia colore
+            con la fascia: aperto il menu, sopra restava una striscia vuota
+            senza logo e senza via d'uscita. */}
+        <div className="smm-barra">
+          <Link href={base} onClick={() => setAperto(false)} aria-label="Morfeus">
+            <Image
+              src="/images/brand/morfeus-mark.png"
+              alt="Morfeus"
+              width={2064}
+              height={267}
+              className="h-[17px] w-auto"
+            />
+          </Link>
+          <button
+            type="button"
+            className="smm-x"
+            onClick={() => setAperto(false)}
+            aria-label={t.etichettaChiudi}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6 6l12 12M18 6L6 18"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
         <nav className="smm-voci" aria-label={t.apri}>
           {t.nav.map(([slug, label], i) => {
             const attiva = pathname === `${base}/${slug}`;

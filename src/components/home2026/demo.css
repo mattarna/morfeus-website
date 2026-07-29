@@ -336,6 +336,21 @@
   text-transform: uppercase;
   color: var(--carta);
 }
+/* Da telefono l'occhiello va su due righe e pesa quanto la headline. Come
+   sulla pillola della CTA, a mangiarsi la larghezza e' soprattutto la
+   spaziatura: 0.16em su una riga maiuscola di quaranta caratteri. */
+@media (max-width: 640px) {
+  .d26 .chip26 {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    gap: 9px;
+    padding: 10px 16px;
+  }
+  .d26 .chip26 .dot {
+    width: 7px;
+    height: 7px;
+  }
+}
 .d26 .chip26 .dot {
   position: relative;
   width: 8px;
@@ -996,45 +1011,75 @@
     border-radius: 18px;
     background: rgba(228, 231, 240, 0.015);
   }
-  /* l'alone: un cerchio sfumato dietro il testo, non un'immagine */
-  .d26 .met-pane::before {
+  /* I CERCHI. Sono gli stessi tre anelli concentrici del desktop
+     (.met-rings: raggi 230, 345 e 465 su un viewBox da 1000, cioe' il 46,
+     il 69 e il 93% del mezzo lato), e come li' se ne aggiunge uno a ogni
+     passata: la prima scheda ne ha uno, la seconda due, la terza tre.
+     Sono anelli TRACCIATI, non aloni sfumati: un gradiente radiale con
+     stop netti disegna una circonferenza sottile. `closest-side` serve a
+     questo, altrimenti le percentuali si misurano sulla diagonale e i
+     raggi non corrispondono piu' a quelli del desktop. */
+  /* Stanno in ALTO, dove la scheda e' vuota, non al centro: il testo sta in
+     fondo (justify-content: flex-end) e i cerchi non devono attraversarlo.
+     E sono tenui: si vedono, ma non si leggono prima delle parole. */
+  .d26 .met-pane::before,
+  .d26 .met-pane::after {
     content: "";
     position: absolute;
-    top: -18%;
+    top: 30%;
     left: 50%;
-    width: 78%;
+    width: 82%;
     aspect-ratio: 1;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    background: radial-gradient(
-      circle at 50% 45%,
-      rgba(83, 61, 252, 0.22) 0%,
-      rgba(83, 61, 252, 0.09) 46%,
-      transparent 68%
-    );
+    transform: translate(-50%, -50%);
     pointer-events: none;
   }
-  /* la seconda e la terza passata portano un cerchio in piu', come i
-     .met-rings da desktop */
-  .d26 .met-pane:nth-child(2)::before {
+  /* strato 1: l'alone centrale, uguale per tutte e tre */
+  .d26 .met-pane::before {
+    background: radial-gradient(circle closest-side, rgba(83, 61, 252, 0.09) 0%, transparent 62%);
+  }
+  /* strato 2: gli anelli. Il primo c'e' sempre. */
+  .d26 .met-pane::after {
+    background: radial-gradient(
+      circle closest-side,
+      transparent 0 44.8%,
+      rgba(140, 165, 247, 0.13) 44.8% 46%,
+      transparent 46%
+    );
+  }
+  .d26 .met-pane:nth-child(2)::after {
     background:
-      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.2) 0%, transparent 44%),
       radial-gradient(
-        circle at 50% 45%,
-        rgba(83, 61, 252, 0.13) 46%,
-        rgba(83, 61, 252, 0.05) 62%,
-        transparent 76%
+        circle closest-side,
+        transparent 0 44.8%,
+        rgba(140, 165, 247, 0.13) 44.8% 46%,
+        transparent 46%
+      ),
+      radial-gradient(
+        circle closest-side,
+        transparent 0 67.8%,
+        rgba(140, 165, 247, 0.13) 67.8% 69%,
+        transparent 69%
       );
   }
-  .d26 .met-pane:nth-child(3)::before {
+  .d26 .met-pane:nth-child(3)::after {
     background:
-      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.22) 0%, transparent 34%),
-      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.14) 36%, transparent 54%),
       radial-gradient(
-        circle at 50% 45%,
-        rgba(83, 61, 252, 0.08) 56%,
-        rgba(83, 61, 252, 0.03) 70%,
-        transparent 82%
+        circle closest-side,
+        transparent 0 44.8%,
+        rgba(140, 165, 247, 0.13) 44.8% 46%,
+        transparent 46%
+      ),
+      radial-gradient(
+        circle closest-side,
+        transparent 0 67.8%,
+        rgba(140, 165, 247, 0.13) 67.8% 69%,
+        transparent 69%
+      ),
+      radial-gradient(
+        circle closest-side,
+        transparent 0 91.8%,
+        rgba(140, 165, 247, 0.13) 91.8% 93%,
+        transparent 93%
       );
   }
   .d26 .met-ghost {
