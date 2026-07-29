@@ -40,8 +40,11 @@ export const PESI: Record<Dimensione, number> = {
 
 export const DIMENSIONI = Object.keys(PESI) as Dimensione[];
 
-/** 0-100. Ogni punto e' tracciabile alla risposta che lo ha prodotto:
- *  4^5 = 1024 combinazioni, contro le 16 della V1. */
+/** 0-100. Ogni punto e' tracciabile alla risposta che lo ha prodotto.
+ *  Risoluzione misurata (vedi motore.test.ts): 1024 radiografie distinte,
+ *  che dopo l'arrotondamento danno 57 voti diversi. La V1 di voti ne
+ *  aveva 16 in tutto. Il livello non guarda comunque il solo voto: i
+ *  cancelli leggono la radiografia, quindi la finezza vera e' sui 1024. */
 export function calcolaVoto(r: Radiografia): number {
   const grezzo = DIMENSIONI.reduce((somma, d) => somma + (r[d] / 3) * PESI[d], 0);
   return Math.round(grezzo);
@@ -199,16 +202,27 @@ export function calcolaProposta(
         listaAttesaBootcamp: false,
       };
     }
-    if (livello <= 3) {
+    if (livello <= 2) {
       return {
         gradino: "community",
         motivo: "Tasca aziendale, livello iniziale: si entra gratis, il corso resta il passo dopo.",
         listaAttesaBootcamp: false,
       };
     }
+    if (livello <= 4) {
+      return {
+        gradino: "claude-unlocked",
+        motivo: "Tasca aziendale: percorso individuale, mai una call commerciale.",
+        listaAttesaBootcamp: false,
+      };
+    }
+    /* Da LV5 in su il corso d'ingresso non ha piu' niente da dargli: sa gia'
+       usare Claude con metodo. Con la tasca dell'azienda l'high-ticket e'
+       fuori portata, quindi l'unica proposta onesta e' la stanza, dove trova
+       gente al suo livello. Meglio non vendergli niente che vendergli sotto. */
     return {
-      gradino: "claude-unlocked",
-      motivo: "Tasca aziendale: percorso individuale, mai una call commerciale.",
+      gradino: "community",
+      motivo: "Tasca aziendale ma livello alto: il corso d'ingresso sarebbe sotto di lui, e l'high-ticket non lo paga di tasca sua.",
       listaAttesaBootcamp: false,
     };
   }

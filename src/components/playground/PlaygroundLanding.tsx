@@ -408,6 +408,12 @@ export function PlaygroundLanding() {
           <div className="prose">
             <p>Se hai fatto sì con la testa almeno tre volte, questo posto è tuo. Ecco cosa ci trovi dentro.</p>
           </div>
+          <div className="cta-mid">
+            <p>Se ti sei riconosciuto in tre di questi, la porta è una sola.</p>
+            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+            <span className="under-cta">2 min 30 · 11 domande · gratis</span>
+          </div>
+
         </div>
       </section>
 
@@ -510,6 +516,12 @@ export function PlaygroundLanding() {
             </div>
             <span className="stampone">GRATIS VERO</span>
           </div>
+          <div className="cta-mid">
+            <p>Tutto quello che hai letto qui sopra si apre col collaudo.</p>
+            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Entra nel Playground →</button>
+            <span className="under-cta">1100+ builder dentro · ingresso gratis</span>
+          </div>
+
         </div>
       </section>
 
@@ -545,6 +557,12 @@ export function PlaygroundLanding() {
               <p>Bastano quei pochi a tenere la stanza <b>aperta e gratis</b> per tutti gli altri.</p>
             </div>
           </div>
+          <div className="cta-mid">
+            <p>Nessun euro, nessuna chiamata a sorpresa. Due minuti e mezzo.</p>
+            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Inizia il collaudo →</button>
+            <span className="under-cta">e il primo mattone te lo porti a casa comunque</span>
+          </div>
+
         </div>
       </section>
 
@@ -754,7 +772,7 @@ export function PlaygroundLanding() {
               </ul>
             </div>
           </div>
-          <div className="pairclose"><strong>Se ti sei riconosciuto almeno tre volte nella colonna di sinistra, la stanza è tua.</strong> Si entra da qui sotto.</div>
+          <div className="pairclose"><strong>Se ti sei riconosciuto almeno tre volte nella colonna di sinistra, la stanza è tua.</strong> <button className="lnk-cta" type="button" onClick={onCollaudo}>Si entra da qui sotto.</button></div>
         </div>
       </section>
 
@@ -855,6 +873,12 @@ export function PlaygroundLanding() {
             <div className="gstep g-fine"><span className="gt">La differenza</span>
             <p><strong>Non stai più imparando l'AI da solo, di notte, sperando di indovinare. La stai costruendo in mezzo a gente che la costruisce.</strong> È tutta qui la differenza.</p></div>
           </div>
+          <div className="cta-mid">
+            <p>Quel martedì può essere il martedì della settimana prossima.</p>
+            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+            <span className="under-cta">2 min 30 · gratis</span>
+          </div>
+
         </div>
       </section>
 

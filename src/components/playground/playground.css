@@ -4278,4 +4278,49 @@
   .pg26 .cl-riga img[alt="Asseprim"] {
     height: 25px;
   }
+} /* --- I BOTTONI LUNGO LA PAGINA ---
+   Non sono pannelli: un filetto, una riga, il bottone. Devono leggersi
+   come una porta lasciata aperta a fine ragionamento, non come una
+   sezione di vendita che interrompe la lettura.
+   Piu' piccoli di quello della soglia, che resta il momento principale:
+   se pesassero uguale, la soglia smetterebbe di essere una soglia. */
+.pg26 .cta-mid {
+  margin-top: 52px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+.pg26 .cta-mid p {
+  font-family: var(--title);
+  font-weight: 600;
+  font-size: clamp(19px, 2.1vw, 24px);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 34ch;
+  line-height: 1.3;
+}
+.pg26 .cta-mid .under-cta {
+  margin-top: 0;
+} /* --- LA FRASE CHE E' GIA' UN INVITO ---
+   In §09 il copy dice "si entra da qui sotto": non serve un bottone in
+   piu' a due schermate da quello della soglia, serve che quella frase
+   faccia quello che promette. */
+.pg26 .lnk-cta {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--uv);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(214, 209, 255, 0.45);
+  transition: text-decoration-color 0.15s;
+}
+.pg26 .lnk-cta:hover {
+  text-decoration-color: var(--uv);
 }
