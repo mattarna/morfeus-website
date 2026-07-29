@@ -92,10 +92,17 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
             width={2064}
             height={267}
             priority
+            /* Appiglio per il loader C: e' qui che la M composta va ad
+               atterrare. Il loader MISURA questo rettangolo invece di
+               tenersi coordinate scritte a mano, che sarebbero giuste
+               su un solo schermo. Se sparisce, il loader rinuncia al
+               volo e chiude in dissolvenza. */
+            data-marchio="testata"
             /* Il lockup e' largo 7,7 volte la sua altezza: a 20px occupa
                155px, che su uno schermo da 375 sono il 41% della barra e
-               non lasciano spazio a CTA e menu. */
-            className="h-[17px] w-auto sm:h-[20px]"
+               non lasciano spazio a CTA e menu. A 15px sta sui 116, la
+               misura che ha sulla barra del sito vecchio. */
+            className="h-[15px] w-auto sm:h-[20px]"
           />
         </Link>
 
@@ -131,6 +138,16 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
           <a href={`${base}/roiometro`} className="btn btn-1 btn-bar whitespace-nowrap">
             <span className="hidden sm:inline">{t.cta}</span>
             <span className="sm:hidden">{t.ctaBreve}</span>
+            {/* freccia in salita: la stessa della barra del sito vecchio */}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M7 17L17 7M17 7H8M17 7v9"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </a>
 
           {/* Menu mobile: bottone MENU/CHIUDI piu' il pannello a tutto

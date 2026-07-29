@@ -262,8 +262,30 @@
    68px diventava l'oggetto piu' grosso dello schermo, prima del logo.
    Il corpo resta a 16px (soglia CTA, non si scende): si stringe solo
    l'imbottitura, che e' quello che lo faceva sembrare enorme. */
+/* La CTA della barra e' una PILLOLA, non un rettangolo: maiuscolo spaziato,
+   corpo compatto e freccia, come sulla barra del sito vecchio. Prima
+   ereditava `--r-s` e i 17px del `.btn` di sezione, e in una barra alta 68px
+   diventava l'oggetto piu' pesante dello schermo, piu' del marchio.
+   13px e non 16: la soglia dei 16 e' scritta per le CTA dentro le sezioni,
+   dove il bottone e' il gesto della pagina. Qui e' un elemento di
+   navigazione sempre presente, ed e' la misura del riferimento. */
 .ms .btn.btn-bar {
-  padding: 9px 18px;
+  /* inline-flex e non l'inline-block del `.btn` di base: senza, `gap` non
+     ha effetto e la freccia si appoggia alla linea di base del testo
+     invece di stargli accanto centrata. */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ms .btn.btn-bar svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 /* Toggle lingua della barra. Stesse misure della home (.langswitch in
    demo.css): mono a 13px, la lingua attiva in grassetto e piena, l'altra
@@ -2329,6 +2351,21 @@
   color: var(--carta);
 }
 
+/* Da 1024px in su il menu mobile NON esiste: le voci sono in barra.
+   Le classi `lg:hidden` sul bottone e sul pannello non bastavano: sono
+   utility Tailwind (0,1,0) e perdono contro `.ms .smm-toggle` (0,2,0), che
+   imposta `display: inline-flex`. Risultato, il bottone MENU restava
+   visibile accanto alla nav su ogni pagina.
+   E' la stessa gara di specificita' che il repo documenta per `.btn-bar`:
+   contro le regole del design system le utility non vincono, e la soluzione
+   e' una regola pari, non una classe in piu'. */
+@media (min-width: 1024px) {
+  .ms .smm-toggle,
+  .ms .smm-pannello {
+    display: none;
+  }
+}
+
 /* z-index sopra l'header (50): il pannello lo copre, e il bottone CHIUDI
    vive dentro l'header che resta visibile sopra il pannello. */
 .ms .smm-pannello {
@@ -2558,7 +2595,7 @@
     padding: 8px 14px;
   }
   .ms.d26 .top-header .wordmark img {
-    height: 14px;
+    height: 13px;
     width: auto;
   }
 }

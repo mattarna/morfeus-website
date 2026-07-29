@@ -129,6 +129,16 @@ export function Home2026() {
               soluzione della barra delle altre pagine. */}
           <span className="hidden sm:inline">{tHero("cta_primary")}</span>
           <span className="sm:hidden">{locale === "en" ? "Book" : "Prenota"}</span>
+          {/* freccia in salita: la stessa della barra del sito vecchio */}
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M7 17L17 7M17 7H8M17 7v9"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
 
         {/* Sotto `lg` la nav della barra e' `display:none` e non c'era
