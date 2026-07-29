@@ -5,9 +5,17 @@
    senza dover compilare il collaudo ogni volta. Va tolta quando il
    flusso e' cablato nella landing.
 
-   Non indicizzabile: e' una pagina interna.
+   FUORI DALLA PRODUZIONE. Non basta il noindex: una pagina che
+   risponde 200 e' pubblica anche se nessun motore la indicizza,
+   e questa mostra sei profili di persone finte con tanto di conto
+   economico. In produzione risponde 404 vero.
+
+   Resta viva in sviluppo perche' il referto lo ritocchiamo spesso
+   e rifare il collaudo da capo a ogni giro costa piu' di quanto
+   valga la pagina.
    ============================================================ */
 
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Referto, type DatiReferto } from "@/components/playground/collaudo/Referto";
 import "@/components/playground/playground.css";
@@ -16,6 +24,9 @@ export const metadata: Metadata = {
   title: "Anteprima referto · Il Collaudo",
   robots: { index: false, follow: false },
 };
+
+/** In produzione questa pagina non esiste. */
+const IN_SVILUPPO = process.env.NODE_ENV !== "production";
 
 const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
   {
@@ -111,6 +122,8 @@ export default async function AnteprimaReferto({
 }: {
   searchParams: Promise<{ caso?: string }>;
 }) {
+  if (!IN_SVILUPPO) notFound();
+
   const { caso } = await searchParams;
   const scelto = CASI.find((c) => c.id === caso) ?? CASI[0];
 

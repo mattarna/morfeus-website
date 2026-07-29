@@ -1,3 +1,5 @@
+/* il footer ha una pelle sua: footer.css */
+
 /* ============================================================
    PLAYGROUND · il CSS del prototipo, scoperchiato sotto .pg26
    ------------------------------------------------------------
@@ -1188,198 +1190,6 @@
   display: block;
   margin-bottom: 8px;
 }
-/* il footer ha una pelle sua: footer.css */
-/* ============================================================
-   IL COLLAUDO · overlay a schermo pieno
-   ============================================================ */
-.pg26 .cd-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: var(--notte);
-  display: none;
-  overflow-y: auto;
-}
-.pg26 .cd-overlay.on {
-  display: block;
-}
-.pg26 .cd-shell {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 34px 24px 80px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.pg26 .cd-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-.pg26 .cd-top .cdw {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.pg26 .cd-top .cdw svg {
-  height: 15px;
-  color: var(--text);
-}
-.pg26 .cd-top .cdw b {
-  font-family: var(--title);
-  font-weight: 600;
-  font-size: 17px;
-}
-.pg26 .cd-top .close {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mute);
-  cursor: pointer;
-  background: none;
-  border: 1px solid var(--line-hi);
-  border-radius: 99px;
-  padding: 7px 14px;
-}
-.pg26 .cd-top .close:hover {
-  color: var(--text);
-}
-.pg26 .cd-prog {
-  height: 3px;
-  background: var(--n3);
-  border-radius: 99px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-.pg26 .cd-prog i {
-  display: block;
-  height: 100%;
-  background: var(--viola);
-  width: 0%;
-  transition: width 0.3s;
-}
-.pg26 .cd-count {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  color: var(--mute);
-  text-transform: uppercase;
-}
-.pg26 .cd-stage {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 34px 0;
-}
-.pg26 .cd-block {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--viola-hi);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.pg26 .cd-block::before {
-  content: "";
-  width: 26px;
-  height: 1px;
-  background: var(--viola);
-}
-.pg26 .cd-q {
-  font-family: var(--title);
-  font-size: clamp(23px, 3.4vw, 32px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.16;
-  max-width: 640px;
-}
-.pg26 .cd-sub {
-  color: var(--body);
-  margin-top: 12px;
-  font-size: 17px;
-  max-width: 560px;
-}
-.pg26 .cd-opts {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.pg26 .cd-opt {
-  background: var(--n1);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 17px 20px;
-  font-size: 17px;
-  color: var(--text);
-  cursor: pointer;
-  text-align: left;
-  font-family: var(--font);
-  transition:
-    border-color 0.12s,
-    background 0.12s;
-  line-height: 1.45;
-}
-.pg26 .cd-opt:hover {
-  border-color: var(--viola-hi);
-  background: var(--n2);
-}
-.pg26 .cd-opt.sel {
-  border-color: var(--viola);
-  background: rgba(89, 70, 240, 0.12);
-}
-.pg26 .cd-opt.dim {
-  opacity: 0.35;
-  pointer-events: none;
-}
-.pg26 .cd-fb {
-  margin-top: 22px;
-  border-left: 2px solid var(--viola);
-  padding: 6px 0 6px 20px;
-  color: var(--body);
-  font-size: 17px;
-  max-width: 600px;
-  display: none;
-}
-.pg26 .cd-fb.on {
-  display: block;
-}
-.pg26 .cd-fb b {
-  color: var(--text);
-}
-.pg26 .cd-next {
-  margin-top: 26px;
-  display: none;
-}
-.pg26 .cd-next.on {
-  display: inline-flex;
-} /* slider */
-.pg26 .cd-sliderbox {
-  margin-top: 36px;
-  max-width: 560px;
-}
-.pg26 .cd-slidernum {
-  font-family: var(--title);
-  font-weight: 700;
-  font-size: 56px;
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-.pg26 .cd-slidernum i {
-  font-style: normal;
-  font-size: 18px;
-  color: var(--mute);
-  font-family: var(--mono);
-  letter-spacing: 0.08em;
-  margin-left: 8px;
-}
 .pg26 input[type="range"] {
   width: 100%;
   margin-top: 22px;
@@ -1407,81 +1217,6 @@
   background: var(--viola);
   border: 3px solid #fff;
   cursor: pointer;
-}
-.pg26 .cd-sliderfb {
-  margin-top: 16px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: var(--mute);
-  min-height: 20px;
-} /* calcolo */
-.pg26 .cd-calc {
-  max-width: 560px;
-  margin: 0 auto;
-  width: 100%;
-}
-.pg26 .cd-calc .logbox {
-  max-width: none;
-} /* gate */
-.pg26 .cd-gate input[type="text"],
-.pg26 .cd-gate input[type="email"] {
-  width: 100%;
-  max-width: 440px;
-  background: var(--n1);
-  border: 1px solid var(--line-hi);
-  border-radius: 12px;
-  padding: 15px 18px;
-  font-size: 17px;
-  color: var(--text);
-  font-family: var(--font);
-  margin-top: 12px;
-  display: block;
-}
-.pg26 .cd-gate input:focus {
-  outline: none;
-  border-color: var(--viola);
-}
-.pg26 .cd-gate label.consent {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  margin-top: 18px;
-  font-size: 17px;
-  color: var(--mute);
-  max-width: 440px;
-  cursor: pointer;
-}
-.pg26 .cd-gate label.consent input {
-  margin-top: 3px;
-  accent-color: var(--viola);
-} /* referto */
-.pg26 .cd-ref {
-  padding: 20px 0 40px;
-}
-.pg26 .cd-ref .rhead {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--viola-hi);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.pg26 .cd-ref .rhead::before {
-  content: "";
-  width: 26px;
-  height: 1px;
-  background: var(--viola);
-}
-.pg26 .cd-ref h2 {
-  font-family: var(--title);
-  font-size: clamp(26px, 4vw, 40px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
 }
 .pg26 .refgrid {
   display: grid;
@@ -1871,8 +1606,6 @@
 .pg26 section .wrap {
   position: relative;
   z-index: 2;
-} /* filigrana: il numero di sezione gigante, outline, dietro il titolo */
-@media (max-width: 760px) {
 } /* fasce alternate: lo scroll respira a piani */
 .pg26 section:nth-of-type(even) {
   background: linear-gradient(180deg, #0c0b18 0%, var(--notte) 72%);
@@ -1981,15 +1714,6 @@
 .pg26 .faq .a {
   font-size: 17px;
   padding: 0 34px 30px;
-}
-.pg26 .cd-opt {
-  font-size: 17px;
-}
-.pg26 .cd-q {
-  font-size: clamp(24px, 3.6vw, 34px);
-}
-.pg26 .cd-sub {
-  font-size: 17px;
 } /* piani elevati: le card staccano dalla notte (ombra nera, mai glow) */
 .pg26 .selfrows,
 .pg26 .grid3,
@@ -4499,43 +4223,6 @@
   .pg26 section {
     padding: 62px 0;
   }
-} /* --- 2 · LE ALTEZZE PIENE SUL TELEFONO ---
-   La vh sui browser mobili comprende la barra degli indirizzi, che
-   compare e sparisce mentre scorri: un elemento alto 100vh salta e si
-   fa tagliare il fondo. La dvh e' l'altezza VERA in quel momento.
-   La copertina lo gestisce gia'; il collaudo no, ed e' l'unica porta
-   della pagina. La riga con vh resta prima come ripiego per i browser
-   che la dvh non la conoscono. */
-.pg26 .cd-shell {
-  min-height: 100vh;
-}
-@supports (min-height: 100dvh) {
-  .pg26 .cd-shell {
-    min-height: 100dvh;
-  }
-}
-@media (max-width: 600px) {
-  .pg26 .cd-shell {
-    padding: 22px 18px 64px;
-  }
-  .pg26 .cd-stage {
-    padding: 24px 0;
-  }
-  .pg26 .cd-q {
-    font-size: 22px;
-  }
-  .pg26 .cd-opt {
-    padding: 15px 16px;
-  }
-  .pg26 .cd-slidernum {
-    font-size: 44px;
-  }
-  .pg26 .cd-top .cdw b {
-    font-size: 16px;
-  }
-  .pg26 .cd-ref {
-    padding: 14px 0 30px;
-  }
 } /* --- 3 · I BERSAGLI TATTILI ---
    Legato al PUNTATORE, non alla larghezza: un tablet grande si usa col
    dito e un portatile piccolo col mouse, quindi la larghezza e' il
@@ -4547,12 +4234,6 @@
   }
   .pg26 .chip-pill {
     padding: 12px 18px;
-  }
-  .pg26 .cd-top .close {
-    padding: 12px 16px;
-  }
-  .pg26 .cd-opt {
-    min-height: 52px;
   }
   .pg26 .lnk-cta {
     padding: 6px 0;
@@ -4582,14 +4263,6 @@
   }
   .pg26 .island {
     top: 8px;
-  }
-  .pg26 .cd-shell {
-    min-height: auto;
-    padding-top: 18px;
-  }
-  .pg26 .cd-stage {
-    padding: 16px 0;
-    justify-content: flex-start;
   }
 } /* --- 5 · IL NASTRO DELLE VOCI ---
    La larghezza della scheda era rimasta a 380 dopo che la base e'
