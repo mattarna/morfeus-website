@@ -81,10 +81,6 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
   const t = COPY[locale];
   const base = `/${locale}`;
   const year = new Date().getFullYear();
-  const colTitle =
-    "font-plex text-[13px] uppercase tracking-[0.22em] text-lilla font-semibold";
-  const linkCls =
-    "text-[17px] text-carta/90 hover:text-carta transition-colors w-fit";
 
   return (
     /* ALTO QUANTO LO SCHERMO (2026-07-28). Sulla home il footer non e'
@@ -107,111 +103,89 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
         }}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 py-24 md:px-16 lg:px-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 md:gap-x-20 lg:gap-x-28">
+      {/* Stessa imbottitura del pannello footer della home
+          (`.d26 section.panel`): con px-6/md:px-16/lg:px-20 le colonne
+          partivano piu' verso il centro e la quarta si stringeva, ed e' da
+          li' che nascevano gli a-capo nel blocco legale. */}
+      <div
+        className="relative z-10 w-full"
+        style={{ padding: "clamp(72px, 7vw, 92px) clamp(20px, 5vw, 40px)" }}
+      >
+        <div className="msf-grid">
           {/* Col 1 — Navigazione */}
-          <nav className="flex flex-col gap-5 md:gap-8" aria-label={t.navTitle}>
-            <h4 className={colTitle}>{t.navTitle}</h4>
-            <div className="flex flex-col gap-2.5 md:gap-3">
-              {t.nav.map(([slug, label]) => (
-                <Link key={label} href={slug ? `${base}/${slug}` : base} className={linkCls}>
-                  {label}
-                </Link>
-              ))}
-            </div>
+          <nav aria-label={t.navTitle}>
+            <h4>{t.navTitle}</h4>
+            {t.nav.map(([slug, label]) => (
+              <Link key={label} href={slug ? `${base}/${slug}` : base}>
+                {label}
+              </Link>
+            ))}
           </nav>
 
           {/* Col 2 — Social */}
-          <div className="flex flex-col gap-5 md:gap-8">
-            <h4 className={colTitle}>{t.socialTitle}</h4>
-            <div className="flex flex-col gap-2.5 md:gap-3">
-              {SOCIAL.map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkCls}
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
+          <div>
+            <h4>{t.socialTitle}</h4>
+            {SOCIAL.map(([label, href]) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer">
+                {label}
+              </a>
+            ))}
           </div>
 
           {/* Col 3 — Info */}
-          <div className="flex flex-col gap-5 md:gap-8">
-            <h4 className={colTitle}>{t.infoTitle}</h4>
-            <div className="flex flex-col gap-2.5 md:gap-3">
-              {t.info.map(([slug, label]) => (
-                <Link key={slug} href={`${base}/${slug}`} className={linkCls}>
-                  {label}
-                </Link>
-              ))}
-            </div>
+          <div>
+            <h4>{t.infoTitle}</h4>
+            {t.info.map(([slug, label]) => (
+              <Link key={slug} href={`${base}/${slug}`}>
+                {label}
+              </Link>
+            ))}
           </div>
 
           {/* Col 4 — Contatto + firma + copyright */}
-          <div className="flex flex-col gap-6 md:gap-8 col-span-2 md:col-span-1 md:items-end md:text-right">
-            <p className="font-plex text-[13px] tracking-[0.14em] uppercase font-semibold">
-              <span className="text-anomalia">{t.quote.a}</span>
-              <span className="text-ombra"> {t.quote.or} </span>
-              <span className="text-lilla">{t.quote.b}</span>
-              <span className="text-carta/70">{t.quote.end}</span>
+          <div className="msf-brandcol">
+            <p className="msf-pill">
+              <span style={{ color: "var(--anomalia)" }}>{t.quote.a}</span>
+              <span style={{ color: "var(--ombra)" }}> {t.quote.or} </span>
+              <span style={{ color: "var(--lilla)" }}>{t.quote.b}</span>
+              <span style={{ color: "#c6c4d8" }}>{t.quote.end}</span>
             </p>
 
-            <div className="flex flex-col gap-2 md:items-end mt-2">
-              <a
-                href="mailto:hello@morfeushub.com"
-                className="font-clash text-[20px] text-carta hover:text-lilla transition-colors"
-              >
+            <div className="msf-meta">
+              <a className="mail" href="mailto:hello@morfeushub.com">
                 hello@morfeushub.com
               </a>
-              <span className="text-[16px] text-carta/75">{t.loc}</span>
-              <span className="font-plex text-[11px] text-ombra tracking-wide">
+              <br />
+              {t.loc}
+              <br />
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
                 P.IVA 14209210963
               </span>
             </div>
 
-            <div className="flex flex-col items-start md:items-end gap-2 mt-8">
-              <span className="font-plex text-[13px] text-carta/60 tracking-wide">
-                &copy;{year} Morfeus. {t.copyright}
-              </span>
-              <span className="font-plex text-[13px] text-carta/60 flex items-center gap-1.5">
-                <span className="text-firma">&#x1F49C;</span>
-                <span className="italic">{t.made}</span>
-              </span>
+            <div className="msf-legal">
+              &copy;{year} Morfeus. {t.copyright}
+              <br />
+              <span className="love">&#x1F49C; {t.made}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Logo wordmark filigrana — stesso asset della home */}
-      <div
-        className="pointer-events-none select-none absolute bottom-0 left-0 right-0 hidden md:block"
-        style={{ opacity: 0.15 }}
+      {/* Logo wordmark filigrana — stesso asset e stesse misure della home */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/brand/morfeus-mark.png"
+        alt=""
         aria-hidden="true"
-      >
-        <div className="relative w-full max-w-[1400px] aspect-[4/1] mx-auto translate-y-[30%]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/brand/morfeus-mark.png"
-            alt=""
-            className="absolute inset-0 w-full h-full object-contain"
-            style={{
-              filter: "brightness(0.9) saturate(1.3)",
-              mixBlendMode: "lighten",
-            }}
-          />
-        </div>
-      </div>
+        className="msf-mark select-none"
+        style={{ filter: "brightness(0.9) saturate(1.3)" }}
+      />
 
       {/* System Operational */}
-      <div className="absolute right-6 md:right-10 bottom-5 z-20 flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-ok animate-pulse" />
-        <span className="font-plex text-[12px] uppercase tracking-[0.18em] text-carta/60">
-          {t.status}
-        </span>
+      <div className="msf-status">
+        <span className="dot" />
+        {t.status}
       </div>
     </footer>
   );

@@ -547,7 +547,11 @@ export default async function CaseAgAcademyPage({ params }: Props) {
                 <Link className="btn btn-1" href={`${base}/roiometro`}>
                   {t.cta.cta1}
                 </Link>
-                <Link className="btn btn-2-carta" href={`${base}/casi`}>
+                {/* btn-2-ink, non btn-2-carta: qui la sezione e' `band carta`,
+                    a differenza delle altre schede caso dove la CTA sta su
+                    fondo scuro. Testo e bordo color carta su carta erano
+                    invisibili (1.00:1). */}
+                <Link className="btn btn-2-ink" href={`${base}/casi`}>
                   {t.cta.cta2}
                 </Link>
               </div>

@@ -157,6 +157,18 @@
   --surf-sh: none;
 }
 .ms .band.carta {
+  /* Gli accenti sono tarati sul fondo SCURO, dove reggono (4.8-6.5:1). Sulla
+     fascia chiara crollano: anomalia 2.45:1, ok 2.79:1, ombra 3.16:1, tutti
+     sotto la soglia. Invece di correggere una per una le regole che li usano
+     (sono una decina, e la prossima nascerebbe già sbagliata), si ridefinisce
+     il TOKEN dentro la fascia: le variabili CSS si ereditano, quindi ogni uso
+     dentro `.band.carta` prende da solo la variante leggibile.
+     Tinta identica, solo più scura: canali moltiplicati finché il contrasto
+     su `--carta` non arriva a 4.5:1. */
+  --anomalia: #b44141; /* DERIVATO da #ff5c5c — 4.50:1 su ghost-white */
+  --ok: #177744; /* DERIVATO da #1e9e5a — 4.52:1 */
+  --ombra: #656775; /* DERIVATO da #7e8091 — 4.53:1 */
+
   color: var(--inchiostro);
   background-color: var(--carta);
   background-image:
@@ -383,11 +395,19 @@
   font-size: clamp(34px, 5.6vw, 60px);
   max-width: 19ch;
 }
+/* Il colore qui sotto e' tarato sul fondo SCURO, che e' dove sta la hero di
+   9 pagine su 10. Su fascia chiara pero' `--testo-ink-2` (#c2c6d4) contro
+   `--carta` (#e4e7f0) fa 1.36:1: il paragrafo praticamente sparisce. E'
+   successo su /insights, l'unica hero su carta. La regola sotto lo rimette
+   sul token della fascia giusta, come gia' fa `.lead`. */
 .ms .hero .copy {
   font-size: clamp(20px, 2.2vw, 25px);
   color: var(--testo-ink-2);
   max-width: 56ch;
   margin-top: 20px;
+}
+.ms .band.carta .hero .copy {
+  color: var(--testo-carta-2);
 }
 .ms .hero .lame {
   font-family: var(--font-display);
@@ -696,6 +716,11 @@
   max-width: 48ch;
   margin: 16px auto 0;
   font-size: 18px;
+}
+/* La CTA sta su fondo scuro in 8 pagine su 9. La nona e' chi-siamo, dove la
+   fascia e' chiara: li' il paragrafo faceva 1.38:1 ed era illeggibile. */
+.ms .band.carta .ctaq p {
+  color: var(--testo-carta-2);
 }
 .ms .ctaq .cta-row {
   display: flex;
@@ -1632,5 +1657,146 @@
     transition: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---------- FOOTER DI SITO ---------- */
+/* Gli stessi valori del footer della home (`.d26 .foot-*` in demo.css). Il
+   footer deve essere identico ovunque, e qui era ricostruito con utility
+   Tailwind: aveva preso una vita sua. Le derive che si vedevano a occhio:
+   contenitore 1400 invece di 1560 (colonne spinte verso il centro), e
+   soprattutto il blocco legale a 13px di MONO invece che a 17px nel font
+   del corpo, per cui "©2026 Morfeus..." e la firma andavano a capo.
+
+   Prefisso `msf-`: classi dedicate, che non riusano nulla del DS. Cosi' non
+   c'e' nessuna gara di specificita' da vincere, che e' il modo in cui
+   questo footer si era gia' rotto una volta. */
+
+.ms .msf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+@media (min-width: 900px) {
+  .ms .msf-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ms .msf-grid h4 {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lilla);
+  margin-bottom: 18px;
+}
+
+.ms .msf-grid a,
+.ms .msf-grid button.msf-link {
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 17.5px;
+  color: var(--carta);
+  line-height: 2.05;
+  transition: color 0.25s;
+}
+
+.ms .msf-brandcol {
+  text-align: left;
+}
+@media (min-width: 900px) {
+  .ms .msf-brandcol {
+    text-align: right;
+  }
+}
+
+.ms .msf-pill {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ms .msf-meta {
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--testo-ink-2);
+  line-height: 1.9;
+}
+.ms .msf-meta .mail {
+  color: var(--carta);
+  font-size: 21px;
+}
+
+.ms .msf-legal {
+  margin-top: 26px;
+  font-size: 17px;
+  color: var(--testo-ink-3);
+  line-height: 1.8;
+}
+/* La firma e' in Playfair corsivo, non in mono: e' la riga che nello
+   standard stacca dal resto. */
+.ms .msf-legal .love {
+  font-family: var(--font-emph);
+  font-style: italic;
+}
+
+.ms .msf-mark {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 32%);
+  width: min(1100px, 86vw);
+  aspect-ratio: 4 / 1;
+  opacity: 0.13;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+}
+
+.ms .msf-status {
+  position: absolute;
+  right: 26px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .msf-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ok);
+  animation: ms-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ms-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms .msf-status .dot {
+    animation: none;
   }
 }
