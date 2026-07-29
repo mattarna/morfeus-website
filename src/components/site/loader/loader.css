@@ -1,0 +1,424 @@
+/* ===========================================================
+   LOADER · le due direzioni in gara (A e C)
+   -----------------------------------------------------------
+   Il loader vecchio (components/LoadingScreen.tsx) parla la lingua
+   sbagliata: linea di scansione al neon, logo che respira, tre
+   pallini. Registro sci-fi. Le pagine 2026 hanno un altro
+   vocabolario: il quadro con le crocette di registro, il readout in
+   mono, la quota con le tacche, il timbro. Registro strumento.
+
+   Qui dentro vivono due tentativi di dirlo in quella lingua:
+     A  .ldr   lo strumento che si accende (quadro + readout + quota)
+     C  .ldg   la griglia che compone il marchio e lo porta in testata
+
+   COSA E' RIUSATO E NON REINVENTATO: crocette d'angolo, riga readout
+   e quota sono copiati dal kit delle pagine (pagine/kit.css), stesse
+   misure e stessi colori. Se il kit cambia, questi vanno riallineati:
+   sono una citazione, non una fonte.
+
+   IL MARCHIO NON SI RIDISEGNA. Si usano i file veri:
+     /logo/m-w.png            la sola M, 1000x476, con trasparenza
+     /images/brand/...png     il lockup completo, 2064x267
+   La M dentro il lockup occupa i primi 562px di 2064, cioe' il
+   27,23%: e' quel numero che permette alla M composta di atterrare
+   ESATTAMENTE sulla M della testata. Se il lockup cambia, il numero
+   in LoaderGriglia.tsx va rimisurato.
+   =========================================================== */
+
+/* L'involucro del portal.
+   Porta .ms per avere token e font, ma .ms ha anche overflow-x:
+   hidden, min-height e fondo, e su iOS un antenato con overflow
+   nascosto rompe il position:fixed dei discendenti (gia' visto e
+   pagato sul menu del Playground). Si annullano. */
+.ldr-host {
+  overflow: visible;
+  min-height: 0;
+  background: none;
+}
+
+/* ===========================================================
+   COMUNE
+   =========================================================== */
+.ms .ldr,
+.ms .ldg {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--inchiostro);
+  /* niente transizione qui: l'uscita e' pilotata dallo stato, cosi'
+     la durata sta in un posto solo (il componente) */
+}
+.ms .ldr[data-fase="uscita"],
+.ms .ldg[data-fase="uscita"] {
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
+}
+
+/* La griglia di fondo, la stessa delle fasce.
+   Non e' decorazione: e' il foglio su cui lo strumento disegna. */
+.ms .ldr-griglia {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-scuro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-scuro) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+  /* si spegne ai bordi: una griglia piena fino al taglio sembra una
+     texture, sfumata sembra un piano di lavoro */
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 100%);
+}
+
+/* ===========================================================
+   A · LO STRUMENTO CHE SI ACCENDE
+   ===========================================================
+   Tre battute in un secondo: si presenta il telaio (le crocette),
+   si dichiara cosa sta facendo (il readout), si misura (la quota)
+   mentre il marchio si riempie. Poi il quadro si apre.
+   =========================================================== */
+.ms .ldr-quadro {
+  position: relative;
+  width: min(560px, 84vw);
+  padding: 0;
+  border: 1px solid var(--riga-scuro);
+  border-radius: var(--r-l);
+  background: var(--inchiostro-2);
+  /* l'apertura finale: cresce di poco e si dissolve. Poco, non
+     tanto: uno strumento non esplode, si spegne. */
+  transition:
+    transform 280ms cubic-bezier(0.3, 0, 0.2, 1),
+    opacity 220ms ease;
+}
+.ms .ldr[data-fase="uscita"] .ldr-quadro {
+  transform: scale(1.035);
+  opacity: 0;
+}
+
+/* --- le crocette di registro: entrano una alla volta --- */
+.ms .ldr-ang {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(140, 165, 247, 0.5);
+  opacity: 0;
+  animation: ldr-ang 260ms ease forwards;
+}
+.ms .ldr-ang.a1 {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  animation-delay: 40ms;
+}
+.ms .ldr-ang.a2 {
+  top: 12px;
+  right: 12px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  animation-delay: 100ms;
+}
+.ms .ldr-ang.a3 {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  animation-delay: 160ms;
+}
+.ms .ldr-ang.a4 {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  animation-delay: 220ms;
+}
+@keyframes ldr-ang {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- la riga di stato --- */
+.ms .ldr-readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  /* 34 e non 18: le crocette d'angolo occupano da 12 a 30px dal bordo,
+     e con 18 il testo ci finiva dentro (si vedeva la squadretta in
+     mezzo alla A di AVVIO). Il contenuto comincia dopo la crocetta,
+     sempre, altrimenti non e' una cornice ma un ostacolo. */
+  padding: 13px 40px;
+  border-bottom: 1px solid var(--riga-scuro);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  opacity: 0;
+  animation: ldr-appare 200ms ease 240ms forwards;
+}
+/* l'etichetta si scrive: mono + steps() = una battuta per carattere,
+   senza interpolazioni a meta' lettera. La larghezza in `ch` la mette
+   il componente, che sa quanti caratteri sono. */
+.ms .ldr-eti {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid var(--lilla);
+  animation:
+    ldr-scrive 420ms steps(var(--n)) 280ms both,
+    ldr-cursore 700ms steps(1) 3;
+}
+@keyframes ldr-scrive {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--w);
+  }
+}
+@keyframes ldr-cursore {
+  0%,
+  49% {
+    border-right-color: var(--lilla);
+  }
+  50%,
+  100% {
+    border-right-color: transparent;
+  }
+}
+.ms .ldr-stato {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  color: var(--ombra);
+  transition: color 200ms ease;
+}
+.ms .ldr-stato i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+/* a misura finita lo stato si accende: e' l'unico momento in cui
+   qualcosa cambia colore, quindi l'occhio ci va da solo */
+.ms .ldr[data-fase="pronto"] .ldr-stato,
+.ms .ldr[data-fase="uscita"] .ldr-stato {
+  color: var(--lilla);
+}
+
+/* --- il corpo: marchio + quota --- */
+.ms .ldr-corpo {
+  /* stessa ragione ai piedi: 42 in basso perche' la riga della quota
+     passava sopra le due crocette inferiori */
+  padding: 46px 40px 44px;
+}
+.ms .ldr-marchio {
+  display: block;
+  width: min(300px, 62%);
+  margin: 0 auto;
+  /* la passata: il marchio si riempie dall'alto invece di comparire.
+     E' la stessa idea del vecchio scan, ma dentro la forma anziche'
+     sopra lo schermo. */
+  clip-path: inset(0 0 100% 0);
+  animation: ldr-passata 460ms cubic-bezier(0.4, 0, 0.2, 1) 340ms forwards;
+}
+.ms .ldr-marchio img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@keyframes ldr-passata {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.ms .ldr-quota {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 38px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--ombra);
+  opacity: 0;
+  animation: ldr-appare 200ms ease 300ms forwards;
+}
+.ms .ldr-tacca {
+  flex: none;
+  width: 1px;
+  height: 9px;
+  background: rgba(140, 165, 247, 0.45);
+}
+.ms .ldr-linea {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: rgba(140, 165, 247, 0.18);
+}
+/* la parte percorsa. La larghezza la scrive il rAF del componente:
+   e' l'avanzamento vero, non un'animazione a tempo che finge. */
+.ms .ldr-linea i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--lilla);
+}
+.ms .ldr-num {
+  flex: none;
+  min-width: 3.4em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--lilla);
+}
+
+@keyframes ldr-appare {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===========================================================
+   C · LA GRIGLIA CHE COMPONE IL MARCHIO
+   ===========================================================
+   Le celle si accendono dentro la sagoma della M (una maschera:
+   il marchio non e' ridisegnato, e' ritagliato). Poi le celle si
+   spengono, la M piena resta e vola al suo posto in testata, dove
+   il lockup vero la raccoglie e ci aggiunge la parola.
+
+   Chiude senza taglio: l'occhio segue il marchio invece di subire
+   un cambio di schermata.
+   =========================================================== */
+.ms .ldg-campo {
+  position: relative;
+  width: min(420px, 66vw);
+  aspect-ratio: 1000 / 476; /* le proporzioni vere di m-w.png */
+}
+
+/* le celle stanno dentro la sagoma: la maschera e' il file del
+   marchio, quindi la forma e' quella ufficiale al pixel */
+.ms .ldg-celle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: 2px;
+  -webkit-mask-image: url("/logo/m-w.png");
+  mask-image: url("/logo/m-w.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+.ms .ldg-cella {
+  background: var(--lilla);
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.3, 0, 0.2, 1);
+}
+.ms .ldg-cella[data-on="1"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* la M vera, che entra quando le celle hanno finito e poi vola via.
+   Sta sopra le celle e ne prende il posto senza spostarsi di un
+   pixel: stesso riquadro, stesse proporzioni. */
+.ms .ldg-marchio {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform-origin: top left;
+  /* La transizione di `transform` sta QUI, sulla regola di base, e non
+     sulla fase "volo". Non e' pignoleria: il componente scrive la
+     trasformazione e SUBITO DOPO cambia fase, ma il cambio di fase e'
+     uno stato React e arriva al DOM un render dopo. Con la transizione
+     dichiarata solo nella fase, nell'istante in cui la trasformazione
+     viene scritta l'elemento non ce l'ha ancora: salta alla posizione
+     finale, e quando la fase arriva non c'e' piu' niente da animare.
+     Misurato: la M compariva gia' in testata al primo campione. */
+  transition:
+    transform 520ms cubic-bezier(0.6, 0, 0.2, 1),
+    opacity 200ms ease;
+}
+.ms .ldg-marchio img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ms .ldg[data-fase="marchio"] .ldg-marchio,
+.ms .ldg[data-fase="volo"] .ldg-marchio {
+  opacity: 1;
+}
+.ms .ldg[data-fase="marchio"] .ldg-celle,
+.ms .ldg[data-fase="volo"] .ldg-celle {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+/* mentre la M vola, il fondo si ritira: si vede la pagina sotto e
+   l'atterraggio avviene sulla testata vera, non su un fondale */
+.ms .ldg[data-fase="volo"] {
+  background: transparent;
+  transition: background 380ms ease;
+}
+.ms .ldg[data-fase="volo"] .ldr-griglia {
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+/* Il marchio della testata resta invisibile finche' la M non e'
+   atterrata, altrimenti se ne vedrebbero due. La classe la mette e
+   la toglie il componente sul documento. */
+html.ldg-vola [data-marchio="testata"] {
+  opacity: 0;
+}
+html.ldg-atterrato [data-marchio="testata"] {
+  animation: ldg-raccogli 260ms ease both;
+}
+@keyframes ldg-raccogli {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===========================================================
+   MOTO RIDOTTO. Chi lo chiede non vuole una versione piu' lenta
+   della stessa cosa: non vuole la cosa. Si mostra il marchio fermo
+   per il tempo minimo e si passa oltre.
+   =========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ms .ldr *,
+  .ms .ldg * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .ms .ldr-marchio {
+    clip-path: none;
+  }
+  .ms .ldr-ang,
+  .ms .ldr-readout,
+  .ms .ldr-quota {
+    opacity: 1;
+  }
+  .ms .ldg-celle {
+    display: none;
+  }
+  .ms .ldg-marchio {
+    opacity: 1;
+  }
+}
