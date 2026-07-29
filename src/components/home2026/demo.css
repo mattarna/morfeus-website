@@ -244,6 +244,17 @@
   transition: opacity 0.4s;
   animation: d26-hint 2.4s ease-in-out infinite;
 }
+/* Da telefono il suggerimento non serve e non saprebbe quando sparire: si
+   nasconde con `data-hidden` sull'ultimo passo, ma quel conteggio esiste
+   solo dove i pannelli sono agganciati. Sotto i 1280px scorrono in modo
+   nativo, l'indice resta a zero e "SCORRI" restava incollato sopra il
+   footer, sovrapposto a "SYSTEM OPERATIONAL". Su una pagina che scorre da
+   sola, dire di scorrere non aggiunge niente. */
+@media (max-width: 1279px) {
+  .d26 .demo-hint {
+    display: none;
+  }
+}
 .d26 .demo-hint[data-hidden="true"] {
   opacity: 0;
   animation: none;
@@ -2010,6 +2021,68 @@
   border-radius: 999px;
   background: var(--ok);
   animation: d26-pulse 2s ease-in-out infinite;
+}
+
+/* Il fondo del footer vira al viola salendo dal basso, come sul sito
+   vecchio: e' l'unica fascia che non resta nera, e serve a dire che la
+   pagina finisce li'. Va sotto al contenuto ma sopra il fondo della fascia,
+   quindi z-index 0 e i figli a 1 (li' ci pensa gia' `.top-header > *` e le
+   regole del pannello). */
+.d26 section.panel.foot-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    #110d33 0%,
+    rgba(17, 13, 51, 0.8) 25%,
+    rgba(17, 13, 51, 0.4) 50%,
+    transparent 75%
+  );
+}
+.d26 section.panel.foot-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Da telefono il footer era tarato sulle misure del desktop e pesava troppo:
+   i link a 17.5px, l'email a 21, il blocco legale a 17. Sul sito vecchio la
+   stessa colonna sta su corpi molto piu' piccoli, ed e' giusto: qui e' una
+   coda, non una sezione da leggere. */
+@media (max-width: 860px) {
+  .d26 .foot-grid h4 {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .d26 .foot-grid a,
+  .d26 .foot-grid button.flink {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .d26 .foot-pill {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .d26 .foot-meta {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .d26 .foot-meta .mail {
+    font-size: 17px;
+  }
+  .d26 .foot-legal {
+    margin-top: 20px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .d26 .foot-status {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
 }
 
 /* ---------- accessibilità ---------- */

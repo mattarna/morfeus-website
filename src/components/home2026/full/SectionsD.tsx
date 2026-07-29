@@ -134,7 +134,9 @@ export function FooterPanel({ active }: { active: boolean }) {
   ];
 
   return (
-    <section className="panel band ink" data-active={active}>
+    /* `foot-panel` serve solo ad agganciare il fondo viola: senza, questo
+       pannello e' indistinguibile dagli altri `panel band ink`. */
+    <section className="panel band ink foot-panel" data-active={active}>
       <div className="wrap foot-grid fx d1">
         {/* Col 1: navigazione */}
         <div>
