@@ -189,7 +189,7 @@ export function PlaygroundLanding() {
                   <div><b>I tuoi pari</b><span>1100+ che costruiscono, non che commentano.</span></div>
                 </div>
                 <div className="ctas">
-                  <button className="btn btn-bianco btn-big" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+                  <button className="btn btn-giallo btn-big" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
                 </div>
                 <div className="sysline">
                   <span><b>1100+</b> BUILDER DENTRO</span>
@@ -410,7 +410,7 @@ export function PlaygroundLanding() {
           </div>
           <div className="cta-mid">
             <p>Se ti sei riconosciuto in tre di questi, la porta è una sola.</p>
-            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+            <button className="btn btn-giallo" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
             <span className="under-cta">2 min 30 · 11 domande · gratis</span>
           </div>
 
@@ -518,7 +518,7 @@ export function PlaygroundLanding() {
           </div>
           <div className="cta-mid">
             <p>Tutto quello che hai letto qui sopra si apre col collaudo.</p>
-            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Entra nel Playground →</button>
+            <button className="btn btn-giallo" type="button" onClick={onCollaudo}>Entra nel Playground →</button>
             <span className="under-cta">1100+ builder dentro · ingresso gratis</span>
           </div>
 
@@ -559,7 +559,7 @@ export function PlaygroundLanding() {
           </div>
           <div className="cta-mid">
             <p>Nessun euro, nessuna chiamata a sorpresa. Due minuti e mezzo.</p>
-            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Inizia il collaudo →</button>
+            <button className="btn btn-giallo" type="button" onClick={onCollaudo}>Inizia il collaudo →</button>
             <span className="under-cta">e il primo mattone te lo porti a casa comunque</span>
           </div>
 
@@ -796,7 +796,7 @@ export function PlaygroundLanding() {
             <p className="porta">Serve a due cose. A te, per sapere da dove parti. Alla stanza, perché qui dentro il livello è la lingua comune: tutti sanno da dove sono partiti e dove stanno andando.</p>
             <p className="porta">E sì, <strong>è l'unica porta</strong>. Chi non ha due minuti e mezzo per capire a che punto è, probabilmente non è ancora pronto per questa stanza. E va bene così.</p>
             <div className="ctarow">
-              <button className="btn btn-viola btn-big" onClick={onCollaudo}>Inizia il collaudo d'ingresso →</button>
+              <button className="btn btn-giallo btn-big" onClick={onCollaudo}>Inizia il collaudo d'ingresso →</button>
               <span className="under-cta" style={{ marginTop: "0" }}>2 min 30 · 11 domande · gratis</span>
             </div>
             </div>
@@ -875,7 +875,7 @@ export function PlaygroundLanding() {
           </div>
           <div className="cta-mid">
             <p>Quel martedì può essere il martedì della settimana prossima.</p>
-            <button className="btn btn-viola" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+            <button className="btn btn-giallo" type="button" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
             <span className="under-cta">2 min 30 · gratis</span>
           </div>
 
@@ -891,7 +891,7 @@ export function PlaygroundLanding() {
           <h2>Ti serve stare in mezzo a chi l'AI la usa sul serio. E un modo per sapere da dove parti.</h2>
           <p className="sub">La stanza è aperta. Il collaudo sono due minuti e mezzo. Il primo mattone te lo porti a casa comunque.</p>
           <div style={{ marginTop: "36px", display: "flex", gap: "20px", alignItems: "center", flexWrap: "wrap" }}>
-            <button className="btn btn-viola btn-big" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
+            <button className="btn btn-giallo btn-big" onClick={onCollaudo}>Fai il collaudo ed entra →</button>
             <span className="under-cta" style={{ marginTop: "0" }}>1100+ builder dentro · gratis · 2 min 30</span>
           </div>
           </div>

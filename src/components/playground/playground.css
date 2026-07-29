@@ -190,7 +190,7 @@
   background: rgba(255, 255, 255, 0.07);
 }
 .pg26 .island .mcta {
-  background: #fff;
+  background: var(--stato);
   color: var(--ink);
   font-weight: 600;
   font-size: 17px;
@@ -4323,4 +4323,31 @@
 }
 .pg26 .lnk-cta:hover {
   text-decoration-color: var(--uv);
+} /* --- IL GIALLO E' LA PORTA ---
+   Un colore solo per un'azione sola: ovunque si entri nel collaudo, il
+   bottone e' giallo. Non e' una decorazione su quattro bottoni, e' come
+   il lettore impara a riconoscere la porta senza leggere l'etichetta.
+   Percio' vale anche nell'hero, sulla soglia e nella chiusa: se le CTA
+   di mezzo fossero gialle e la soglia viola, quelle di passaggio
+   urlerebbero piu' del momento principale, e la gerarchia si
+   ribalterebbe.
+   I bottoni DENTRO il collaudo restano viola: li' "Continua" non e' una
+   porta, e' un passo. Se fossero gialli anche loro, il giallo smetterebbe
+   di voler dire qualcosa.
+   Il testo e' inchiostro e non bianco: giallo e bianco danno 1.7:1, cioe'
+   illeggibile. Con --ink siamo sopra 14:1. */
+.pg26 .btn-giallo {
+  background: var(--stato);
+  color: var(--ink);
+  font-weight: 700;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 26px rgba(255, 225, 77, 0.16);
+}
+.pg26 .btn-giallo:hover {
+  background: #ffe96e;
+  box-shadow: 0 12px 30px rgba(255, 225, 77, 0.24);
+} /* sul campo viola dell'hero il bagliore giallo sparisce nel fondo: li'
+   serve uno stacco netto, non un alone */
+.pg26 .cover .btn-giallo {
+  box-shadow: 0 12px 30px rgba(11, 10, 20, 0.28);
 }
