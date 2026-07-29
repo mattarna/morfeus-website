@@ -93,10 +93,31 @@ function readArticleFile(fileName: string): Article | null {
 }
 
 function listArticleFiles(): string[] {
-  if (!fs.existsSync(ARTICLES_DIR)) return [];
-  return fs
+  /* SI ROMPE FORTE, di proposito.
+     Prima qui c'era `if (!existsSync) return []`: se la cartella non
+     c'era, la sezione Insights si costruiva con ZERO articoli e i
+     tredici slug rispondevano 404. Nessun errore, nessun build rosso,
+     nessuno che se ne accorge finche' non apre la pagina. E' gia'
+     successo una volta, quando la cartella e' stata spostata.
+     La cartella mancante non e' uno stato normale: e' un difetto di
+     deploy, e va urlato. Un /insights che esplode si nota in un minuto;
+     un /insights vuoto puo' restare online per settimane. */
+  if (!fs.existsSync(ARTICLES_DIR)) {
+    throw new Error(
+      `Articoli non trovati in ${ARTICLES_DIR}. ` +
+        "Se succede in produzione, i file non sono saliti insieme alla funzione: " +
+        "controlla outputFileTracingIncludes in next.config.mjs."
+    );
+  }
+  const files = fs
     .readdirSync(ARTICLES_DIR)
     .filter((f) => f.endsWith(".md") && !f.startsWith("_"));
+  /* Cartella presente ma vuota: non e' un difetto di deploy, quindi non
+     esplode, ma non deve nemmeno passare inosservato. */
+  if (files.length === 0) {
+    console.error(`[insights] nessun articolo in ${ARTICLES_DIR}: la sezione sara' vuota.`);
+  }
+  return files;
 }
 
 export function getAllArticles(): Article[] {

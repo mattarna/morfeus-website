@@ -5,6 +5,29 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // ============================================
+  // GLI ARTICOLI DEVONO SALIRE INSIEME ALLA FUNZIONE
+  // ============================================
+  // Gli articoli sono file markdown in src/content/insights, letti dal
+  // server a RUNTIME: le rotte /insights e /insights/[slug] sono
+  // dinamiche (lo dice il build: "ƒ server-rendered on demand"), quindi
+  // non vengono cotte a build e i file servono ancora quando la pagina
+  // risponde.
+  //
+  // Il tracciatore di Next include nel bundle serverless solo i file che
+  // riesce a VEDERE nel codice. Qui il percorso e' costruito a runtime
+  // (path.join(process.cwd(), ...) piu' readdirSync): non c'e' niente da
+  // vedere, e senza questa riga i tredici articoli non salgono su Vercel.
+  //
+  // Come si romperebbe: nessun errore. `listArticleFiles` fa
+  // `if (!fs.existsSync(ARTICLES_DIR)) return []`, quindi la sezione
+  // Insights risponde con zero articoli e i tredici slug danno 404, in
+  // silenzio, finche' qualcuno non apre la pagina.
+  outputFileTracingIncludes: {
+    '/[locale]/insights': ['./src/content/insights/**'],
+    '/[locale]/insights/[slug]': ['./src/content/insights/**'],
+  },
+
+  // ============================================
   // IMAGE OPTIMIZATION
   // ============================================
   images: {
