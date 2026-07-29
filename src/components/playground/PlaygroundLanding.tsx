@@ -159,10 +159,10 @@ export function PlaygroundLanding() {
       </svg>
 
       <nav className="island">
-        <span className="brand">
+        <a className="brand" href="#campo" aria-label="Torna all'inizio">
           <svg viewBox="0 0 1000 476" fill="currentColor" aria-hidden="true"><use href="#markm" /></svg>
           <span className="wm">Playground</span>
-        </span>
+        </a>
         <span className="sep"></span>
         <span className="links">
           <a href="#credo">Il credo</a>
@@ -564,58 +564,10 @@ export function PlaygroundLanding() {
             <span className="rl">Le voci · con nome e contesto</span>
           </div>
 
-          {/* IL FULCRO · l'unica voce VERA che abbiamo oggi.
-               Sta da sola e grande: una voce vera vale piu' di tre in fila, e
-               in mezzo alle altre si livellerebbe.
-               Di questo caso abbiamo SOLO la citazione. Il "prima" e il "cosa
-               hanno applicato" sono slot dichiarati, non inventati: mettere
-               parole in bocca a un cliente reale e' peggio che inventare una
-               testimonianza finta. Vanno chiesti a loro, insieme all'ok a
-               pubblicare col nome. */}
-          <figure className="fulcro">
-            <div className="fu-testa">
-              <span className="fu-av" aria-hidden="true">AC</span>
-              <div>
-                <div className="fu-nm">Agenzia di coaching</div>
-                <div className="fu-rr">Fondatori · cliente Morfeus</div>
-              </div>
-              <span className="badge b-ok"><i></i>verificato</span>
-            </div>
-
-            <div className="fu-arco">
-              <div className="fu-passo fu-vuoto">
-                <span className="fu-k">Prima</span>
-                <p>Slot da farsi raccontare da loro: com'era il lavoro dei collaboratori prima.</p>
-              </div>
-              <div className="fu-passo fu-vuoto">
-                <span className="fu-k">Cosa hanno applicato</span>
-                <p>Slot da farsi raccontare da loro: quale sistema è entrato, e dove.</p>
-              </div>
-              <div className="fu-passo">
-                <span className="fu-k">Cosa è cambiato</span>
-                <blockquote>"I collaboratori lo stanno iniziando a usare e risolvono da soli i problemi. La marginalità sale tantissimo, la percezione del servizio è top. E siamo solo al 5% di quello che faremo."</blockquote>
-              </div>
-            </div>
-          </figure>
-
-          {/* ============================================================
-               SEGNAPOSTO · TESTIMONIANZE NON VERE.
-               Scritte per far vedere il formato e il ritmo del nastro, non
-               per essere pubblicate. Ogni scheda porta il badge SEGNAPOSTO a
-               schermo, e il nastro ha la sua fascia in cima: cosi' non
-               possono finire online per distrazione.
-               Quando arrivano le voci vere: si tolgono i badge, si toglie la
-               fascia, si mettono le foto al posto delle iniziali.
-               ============================================================ */}
-          <div className="voci-avviso">
-            <span className="badge b-uv"><i></i>segnaposto</span>
-            <span>Queste tre voci non sono vere. Servono a vedere il formato: vanno sostituite con voci raccolte, nome e mestiere reali.</span>
-          </div>
-
           <div className="voci" data-scorre="true">
             <div className="voci-nastro">
-              {/* il contenuto e' duplicato: e' cosi' che un nastro continuo
-                   si ricongiunge senza salto a meta' corsa */}
+              {/* il contenuto è duplicato: è così che un nastro continuo si
+                   ricongiunge senza salto a metà corsa */}
               <div className="voci-serie">
                 <figure className="voce-card">
                   <div className="vc-testa">
@@ -623,13 +575,11 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Silvia Ferrero</div><div className="vc-rr">Consulente del lavoro · studio da 4</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse domande.</p>
-                    <p><b>Cosa ho applicato.</b> Il file di contesto dello studio, poi la live sulle risposte ricorrenti.</p>
+                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse identiche domande.</p>
+                    <p><b>Cosa ho applicato.</b> Il file di contesto l'ho fatto in una sera: dentro ci ho messo i nostri quattro format di risposta, le cose che non scriviamo mai a un cliente e come firmiamo. La prima versione era lunghissima e veniva ignorata. L'ho tagliata a metà dopo che me l'hanno detto in Post &amp; Discussion.</p>
                     <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono nostro e io rileggo invece di scrivere. Non è che scrivo più veloce: è che ho smesso di ricominciare.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
-
                 <figure className="voce-card">
                   <div className="vc-testa">
                     <span className="vc-av" aria-hidden="true">AP</span>
@@ -637,61 +587,55 @@ export function PlaygroundLanding() {
                   </div>
                   <div className="vc-arco">
                     <p><b>Prima.</b> Le schede prodotto le davo fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
-                    <p><b>Cosa ho applicato.</b> Finito AI Basics ho preso un sistema dal feed, quello per le schede, e l'ho attaccato al nostro catalogo.</p>
+                    <p><b>Cosa ho applicato.</b> Nel feed uno che vende ricambi aveva messo il suo sistema per le schede. Gliel'ho chiesto, me l'ha girato, e l'ho rifatto sul nostro catalogo: materiali, misure, e la regola che se la scheda tecnica non c'è non si inventa niente e me lo segnala.</p>
                     <p><b>Cosa è cambiato.</b> Le facciamo dentro, in giornata. La prima volta ho rifatto tutto a mano perché non mi fidavo. La seconda no.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
-
                 <figure className="voce-card">
                   <div className="vc-testa">
                     <span className="vc-av" aria-hidden="true">MR</span>
                     <div><div className="vc-nm">Marta Ronchi</div><div className="vc-rr">Agenzia di comunicazione · 9 persone</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti ai clienti finiva di tutto.</p>
-                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso in live e l'abbiamo sistemato lì.</p>
-                    <p><b>Cosa è cambiato.</b> C'è un posto dove stanno le regole, e i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
+                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
+                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso alla live del giovedì e in quaranta minuti abbiamo scritto le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
+                    <p><b>Cosa è cambiato.</b> Adesso quelle regole stanno in un canale, non nelle chat private di ognuno. E i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
               </div>
               <div className="voci-serie" aria-hidden="true">
                 <figure className="voce-card">
                   <div className="vc-testa">
-                    <span className="vc-av">SF</span>
+                    <span className="vc-av" aria-hidden="true">SF</span>
                     <div><div className="vc-nm">Silvia Ferrero</div><div className="vc-rr">Consulente del lavoro · studio da 4</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse domande.</p>
-                    <p><b>Cosa ho applicato.</b> Il file di contesto dello studio, poi la live sulle risposte ricorrenti.</p>
+                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse identiche domande.</p>
+                    <p><b>Cosa ho applicato.</b> Il file di contesto l'ho fatto in una sera: dentro ci ho messo i nostri quattro format di risposta, le cose che non scriviamo mai a un cliente e come firmiamo. La prima versione era lunghissima e veniva ignorata. L'ho tagliata a metà dopo che me l'hanno detto in Post &amp; Discussion.</p>
                     <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono nostro e io rileggo invece di scrivere. Non è che scrivo più veloce: è che ho smesso di ricominciare.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
                 <figure className="voce-card">
                   <div className="vc-testa">
-                    <span className="vc-av">AP</span>
+                    <span className="vc-av" aria-hidden="true">AP</span>
                     <div><div className="vc-nm">Andrea Pilotto</div><div className="vc-rr">E-commerce arredamento</div></div>
                   </div>
                   <div className="vc-arco">
                     <p><b>Prima.</b> Le schede prodotto le davo fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
-                    <p><b>Cosa ho applicato.</b> Finito AI Basics ho preso un sistema dal feed, quello per le schede, e l'ho attaccato al nostro catalogo.</p>
+                    <p><b>Cosa ho applicato.</b> Nel feed uno che vende ricambi aveva messo il suo sistema per le schede. Gliel'ho chiesto, me l'ha girato, e l'ho rifatto sul nostro catalogo: materiali, misure, e la regola che se la scheda tecnica non c'è non si inventa niente e me lo segnala.</p>
                     <p><b>Cosa è cambiato.</b> Le facciamo dentro, in giornata. La prima volta ho rifatto tutto a mano perché non mi fidavo. La seconda no.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
                 <figure className="voce-card">
                   <div className="vc-testa">
-                    <span className="vc-av">MR</span>
+                    <span className="vc-av" aria-hidden="true">MR</span>
                     <div><div className="vc-nm">Marta Ronchi</div><div className="vc-rr">Agenzia di comunicazione · 9 persone</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti ai clienti finiva di tutto.</p>
-                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso in live e l'abbiamo sistemato lì.</p>
-                    <p><b>Cosa è cambiato.</b> C'è un posto dove stanno le regole, e i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
+                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
+                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso alla live del giovedì e in quaranta minuti abbiamo scritto le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
+                    <p><b>Cosa è cambiato.</b> Adesso quelle regole stanno in un canale, non nelle chat private di ognuno. E i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
                   </div>
-                  <span className="badge b-uv vc-badge"><i></i>segnaposto</span>
                 </figure>
               </div>
             </div>
