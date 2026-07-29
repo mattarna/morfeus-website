@@ -4226,25 +4226,27 @@
   pointer-events: none;
   user-select: none;
   overflow: visible;
-}
+} /* PERCHE' NON E' PIU' UN CONTORNO.
+   Il numero era disegnato a filo, prima con -webkit-text-stroke e poi
+   con lo stroke dell'SVG. Stesso difetto in entrambi, identico: sul 5
+   compariva un rettangolo completo sopra la curva, e sull'8 delle punte
+   alla vita. Non e' la tecnica e non e' la giunzione: e' il GLIFO.
+   In questo font le cifre sono composte da forme SOVRAPPOSTE e non
+   fuse: la barra del 5 e' un rettangolo suo, appoggiato sulla pancia.
+   Riempito non si vede, perche' vedi l'unione. Ma qualunque contorno
+   ridisegna OGNI bordo, compresi quelli interni che dovrebbero sparire,
+   e ti restituisce il rettangolo.
+   Non e' aggirabile da CSS: servirebbe un font con le cifre fuse.
+   Quindi la filigrana e' piena e molto scarica, che e' anche il modo in
+   cui la stessa cosa e' fatta sul sito B2B. */
 .pg26 .filigrana text {
   font-family: var(--title);
   font-weight: 700;
   font-size: 118px;
   letter-spacing: -4px;
   text-anchor: end;
-  fill: none;
-  stroke: rgba(122, 107, 243, 0.16);
-  stroke-width: 1.5;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  /* stroke-miterlimit e' LA proprieta' che decide quando una giunzione
-     diventa una punta: sopra la soglia il browser allunga l'angolo
-     invece di smussarlo. Portata a 1 non ci sono soglie da superare,
-     quindi le punte non possono comparire nemmeno se per qualche
-     motivo linejoin venisse ignorato. */
-  stroke-miterlimit: 1;
-  vector-effect: non-scaling-stroke;
+  fill: rgba(122, 107, 243, 0.075);
+  stroke: none;
 }
 @media (max-width: 760px) {
   .pg26 .filigrana {
@@ -4253,6 +4255,6 @@
     width: 64vw;
   }
   .pg26 .filigrana text {
-    stroke: rgba(122, 107, 243, 0.13);
+    fill: rgba(122, 107, 243, 0.06);
   }
 }
