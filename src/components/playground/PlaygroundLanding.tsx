@@ -331,21 +331,21 @@ export function PlaygroundLanding() {
             <div className="fi-foto">
               {/* FOTO MATTEO · 4:5. Una foto vera, non uno scatto da palco:
                    il senso di questo blocco e' vicinanza, non autorevolezza. */}
-              <div className="fi-slot">
-                <span>FOTO MATTEO</span>
-                <span className="fi-slot-sub">segnaposto · 4:5</span>
-              </div>
+              <img src="/playground/matteo.jpg" alt="Matteo Arnaboldi" loading="lazy" decoding="async" />
             </div>
             <div className="fi-testo">
               <div className="fi-eye">Chi tiene la stanza</div>
               <h2>Matteo <span className="vh">Arnaboldi</span>.</h2>
               <p className="fi-ruolo">Fondatore di Morfeus</p>
-              <p className="fi-p">Il Playground non viene da una lavagna. Viene dalle <b>mille e passa ore al mese dentro Claude</b> che il team Morfeus passa a far funzionare cose che hanno un cliente, una scadenza, un costo. <b>Qui entra quello che resta in piedi.</b></p>
+              <p className="fi-p">Qui sopra ho scritto che i finti esperti si smascherano con una domanda sola. Vale anche per me, quindi rispondo per primo: <b>i sistemi che lavorano al posto mio ogni giorno sono tre</b>, girano dentro Morfeus su clienti che pagano, e nella stanza trovi com'è fatto ognuno.</p>
+              {/* DA RIEMPIRE COI TRE VERI: nome e una riga a testa. Finché
+                   restano "tre", questo blocco promette una prova e non la dà,
+                   che è precisamente il difetto della versione di prima. */}
               <div className="fi-regola">
-                <span className="fi-rk">La regola con cui sto qui dentro</span>
-                <p>Non ti mostro la versione bella dopo che ha funzionato. Ti mostro la strada: dove si rompe, cosa cambiamo, cosa teniamo. <b>Perché un sistema non vale quando lo racconti. Vale quando continua a girare anche dopo che hai chiuso la chat.</b></p>
+                <span className="fi-rk">Cosa porto qui, e cosa no</span>
+                <p>Non porto la versione bella, quella che si fa vedere dopo che ha funzionato. Porto quella ancora aperta: <b>dove si è rotta, cosa ho cambiato, cosa ho buttato via.</b> È l'unica parte che serve a chi sta costruendo adesso.</p>
               </div>
-              <p className="fi-chiusa">Il Playground non è un palco dove io parlo e gli altri prendono appunti. <b>È una stanza in cui porto il lavoro ancora aperto.</b></p>
+              <p className="fi-chiusa">Sto nella stanza tutti i giorni, non dietro un pannello. Se qui dentro qualcosa non funziona, me lo dici lì e ti rispondo io.</p>
             </div>
           </div>
         </div>
@@ -422,8 +422,17 @@ export function PlaygroundLanding() {
                (Welcome Hub, Claude Unlocked, Morfeus Academy) e' meta' del punto. */}
           <figure className="schermo">
             <figcaption className="sc-eye"><span>La stanza · vista dall'interno</span><span>Feed</span></figcaption>
-            <div className="sc-vetro">
-              <img src="/playground/piattaforma-feed.png" alt="Il feed del Playground: nella colonna di sinistra gli spazi della community, al centro i post dei membri." loading="lazy" decoding="async" />
+            {/* IL PORTATILE. Una schermata rettangolare appoggiata sulla
+                 pagina resta un'immagine; dentro uno schermo diventa un posto
+                 in cui qualcuno sta lavorando adesso. È disegnato in CSS, non
+                 è un mockup scaricato: nessun asset in più e i colori restano
+                 quelli della palette. */}
+            <div className="lap">
+              <div className="lap-schermo">
+                <img src="/playground/piattaforma-feed.png" alt="Il feed del Playground: nella colonna di sinistra gli spazi della community, al centro i post dei membri." loading="lazy" decoding="async" />
+                <span className="lap-riflesso" aria-hidden="true"></span>
+              </div>
+              <div className="lap-base" aria-hidden="true"></div>
             </div>
           </figure>
           {/* DUE RANGHI, non sei tessere uguali.
