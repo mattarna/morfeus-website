@@ -2339,9 +2339,13 @@
   background: rgba(228, 231, 240, 0.05);
   color: var(--testo-ink-2);
   font-family: var(--font-mono);
+  /* Stessi identici valori della CTA accanto (`.btn.btn-bar`): stanno
+     appiccicati nella stessa barra, e a corpo o peso diversi uno dei due
+     sembra sbagliato. Erano 13/700/0.14em contro 13/600/0.12em, e sotto i
+     640px il menu scendeva pure a 12: PRENOTA finiva per pesare di piu'. */
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
   white-space: nowrap;
@@ -2585,10 +2589,10 @@
     font-size: 16px;
     padding: 8px 14px;
   }
+  /* Solo l'imbottitura si stringe: corpo, peso e spaziatura restano quelli
+     della CTA accanto, o i due testi tornano a essere diversi. */
   .ms .smm-toggle {
-    font-size: 12px;
     padding: 8px 13px;
-    letter-spacing: 0.1em;
   }
   /* Stessa stretta sulla barra della home, che ha una regola sua. */
   .ms.d26 .top-header .btn {
