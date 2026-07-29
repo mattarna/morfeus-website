@@ -185,7 +185,9 @@
   color: var(--uv);
 }
 /* senza scena la domanda e' l'unico titolo, e puo' prendersi piu' spazio */
-.pg26 .cl-dentro h2:last-of-type:not(:has(~ .cl-consegna)) { max-width: 24ch; }
+.pg26 .cl-dentro h2:last-of-type:not(:has(~ .cl-consegna)) {
+  max-width: 24ch;
+}
 .pg26 .cl-aiuto {
   margin-top: 12px;
   font-size: 17px;
@@ -383,17 +385,15 @@
 }
 
 /* ---- il gate ---- */
+/* form classico: campi incolonnati. Tre campi affiancati a due a due
+   lasciavano un buco a destra e facevano saltare l'occhio avanti e
+   indietro; in colonna si compila senza pensarci. */
 .pg26 .cl-campi {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   margin-top: 30px;
-  max-width: 560px;
-}
-@media (max-width: 560px) {
-  .pg26 .cl-campi {
-    grid-template-columns: 1fr;
-  }
+  max-width: 460px;
 }
 .pg26 .cl-campi label {
   display: block;

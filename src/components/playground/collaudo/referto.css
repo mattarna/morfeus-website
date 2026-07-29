@@ -870,6 +870,44 @@
 
 /* ============ 8 · DA QUI ============ */
 
+/* Il titolo della sezione che chiude. Le altre fasce hanno solo
+   l'occhiello in mono, questa no: e' il punto in cui si decide, e un
+   occhiello da dodici pixel non basta a fermare l'occhio. */
+.pg26 .rf-titolo {
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: -6px 0 12px;
+}
+.pg26 .rf-sottotitolo {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 58ch;
+  margin-bottom: 30px;
+}
+
+/* l'icona: si riconosce la porta prima di leggerne il nome, come con
+   la barra di colore in testa alla card */
+.pg26 .rf-porta .ico,
+.pg26 .rf-parliamone .ico {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  margin-bottom: 18px;
+  background: color-mix(in oklab, var(--prod, var(--viola-hi)) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--prod, var(--viola-hi)) 34%, transparent);
+}
+.pg26 .rf-porta .ico svg,
+.pg26 .rf-parliamone .ico svg {
+  width: 23px;
+  height: 23px;
+  color: var(--prod, var(--viola-hi));
+}
+
 .pg26 .rf-gradini {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -877,6 +915,44 @@
   align-items: stretch;
 }
 @media (max-width: 820px) {
+  /* Il titolo della sezione che chiude. Le altre fasce hanno solo
+   l'occhiello in mono, questa no: e' il punto in cui si decide, e un
+   occhiello da dodici pixel non basta a fermare l'occhio. */
+  .pg26 .rf-titolo {
+    font-size: clamp(28px, 3.4vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: -6px 0 12px;
+  }
+  .pg26 .rf-sottotitolo {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--body);
+    max-width: 58ch;
+    margin-bottom: 30px;
+  }
+
+  /* l'icona: si riconosce la porta prima di leggerne il nome, come con
+   la barra di colore in testa alla card */
+  .pg26 .rf-porta .ico,
+  .pg26 .rf-parliamone .ico {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    margin-bottom: 18px;
+    background: color-mix(in oklab, var(--prod, var(--viola-hi)) 15%, transparent);
+    border: 1px solid color-mix(in oklab, var(--prod, var(--viola-hi)) 34%, transparent);
+  }
+  .pg26 .rf-porta .ico svg,
+  .pg26 .rf-parliamone .ico svg {
+    width: 23px;
+    height: 23px;
+    color: var(--prod, var(--viola-hi));
+  }
+
   .pg26 .rf-gradini {
     grid-template-columns: 1fr;
   }

@@ -75,6 +75,59 @@ const euro = (n: number) => "€ " + Math.round(n).toString().replace(/\B(?=(\d{
 
 const prod = (g: Gradino) => ({ "--prod": COLORE[g] }) as React.CSSProperties;
 
+/* Un'icona per gradino. Serve a far riconoscere la porta prima di
+   leggerne il nome, come la barra di colore: la stanza e' una porta,
+   Claude Unlocked e' un lucchetto aperto, il Bootcamp una bandiera da
+   piantare, la call un giorno sul calendario. Disegnate a tratto, con
+   lo stesso spessore delle altre del sito. */
+function Icona({ g }: { g: Gradino | "conversazione" }) {
+  const comune = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  if (g === "community")
+    return (
+      <svg {...comune}>
+        <path d="M5 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" />
+        <path d="M3 21h18" />
+        <circle cx="13.5" cy="12" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  if (g === "claude-unlocked")
+    return (
+      <svg {...comune}>
+        <rect x="4" y="10.5" width="16" height="10.5" rx="2" />
+        <path d="M8 10.5V7a4 4 0 0 1 7.5-2" />
+      </svg>
+    );
+  if (g === "bootcamp")
+    return (
+      <svg {...comune}>
+        <path d="M6 21V4" />
+        <path d="M6 4.5h11l-2.2 3.4L17 11.5H6" />
+      </svg>
+    );
+  if (g === "conversazione")
+    return (
+      <svg {...comune}>
+        <path d="M20 14a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" />
+      </svg>
+    );
+  /* call e call-b2b */
+  return (
+    <svg {...comune}>
+      <rect x="3.5" y="5" width="17" height="16" rx="2" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+      <path d="M9 15.5l2 2 4-4" />
+    </svg>
+  );
+}
+
 export function Referto(d: DatiReferto) {
   const { livello, proposta, puntoDebole } = collauda(d.radiografia, d.profilo, d.opzioni);
   const conto = calcolaConto(livello.numero, d.oreSettimana, d.valoreOra, d.personeNelTeam ?? 0);
@@ -363,10 +416,17 @@ export function Referto(d: DatiReferto) {
           <p className="rf-tag">
             <span className="n">06</span> Da qui
           </p>
+          <h2 className="rf-titolo">I tuoi prossimi passi</h2>
+          <p className="rf-sottotitolo">
+            {gradinoEComunita
+              ? "A questo livello la cosa giusta da fare è una sola, e non costa niente."
+              : "Una la puoi prendere oggi e non costa niente. L'altra serve ad accorciare i tempi."}
+          </p>
           <div className="rf-gradini">
             {gradinoEComunita ? (
               <div className="rf-porta spinta" style={prod("community")}>
                 <div className="in">
+                  <span className="ico"><Icona g="community" /></span>
                   <p className="k">{gradino.occhiello}</p>
                   <h3>{gradino.titolo}</h3>
                   <p>{gradino.testo}</p>
@@ -377,6 +437,7 @@ export function Referto(d: DatiReferto) {
               <>
                 <div className="rf-porta" style={prod("community")}>
                   <div className="in">
+                    <span className="ico"><Icona g="community" /></span>
                     <p className="k">Se parti gratis</p>
                     <h3>{GRADINI_COPY.community.titolo}</h3>
                     <p>{GRADINI_COPY.community.testo}</p>
@@ -385,6 +446,7 @@ export function Referto(d: DatiReferto) {
                 </div>
                 <div className="rf-porta spinta" style={prod(proposta.gradino)}>
                   <div className="in">
+                    <span className="ico"><Icona g={proposta.gradino} /></span>
                     <p className="k">{gradino.occhiello}</p>
                     <h3>{gradino.titolo}</h3>
                     <p>{gradino.testo}</p>
@@ -403,6 +465,7 @@ export function Referto(d: DatiReferto) {
 
           {proposta.conversazione ? (
             <div className="rf-parliamone">
+              <span className="ico"><Icona g="conversazione" /></span>
               <h3>{CONVERSAZIONE_COPY.titolo}</h3>
               <p>{CONVERSAZIONE_COPY.testo}</p>
               <button className="btn btn-linea">{CONVERSAZIONE_COPY.cta} →</button>

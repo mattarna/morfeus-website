@@ -280,9 +280,16 @@ export const URGENZE: Record<string, string> = {
   bassa: "Sta esplorando, senza fretta",
 };
 
+/* Le etichette sono identiche a quelle del questionario: nel referto la
+   riga "ti eri dato" deve suonare come l'eco della sua risposta, non come
+   una nostra parafrasi.
+   L'atteso e' dove finisce, sui 100, chi si descrive cosi'. I cinque
+   gradini distano 17-20 punti, quindi lo scarto di 15 che fa scattare il
+   verdetto del confronto resta significativo. */
 export const DICHIARATI: Record<string, { label: string; atteso: number }> = {
-  L0: { label: "La sto guardando da fuori", atteso: 10 },
-  L1: { label: "La uso ogni giorno, prompt al volo", atteso: 30 },
-  L1p: { label: "Ho prompt salvati e qualche routine", atteso: 50 },
-  L2: { label: "Ho un sistema: contesto, skill, automazioni", atteso: 75 },
+  L0: { label: "Poco. La guardo più di quanto la usi", atteso: 8 },
+  L1: { label: "Tutti i giorni, ma vado a braccio", atteso: 25 },
+  L1p: { label: "Ho i miei prompt buoni e me li riuso", atteso: 45 },
+  L2: { label: "Le ho dato un contesto fisso e ci lavoro dentro", atteso: 65 },
+  L3: { label: "Quello che ho costruito lo usa anche qualcun altro", atteso: 85 },
 };

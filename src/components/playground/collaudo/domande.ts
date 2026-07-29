@@ -73,11 +73,18 @@ export function famigliaDi(mestiere: string, ruolo: string): Famiglia {
 
 /* ---------- blocco A · il profilo ---------- */
 
+/* Cinque gradini, non quattro: con quattro il centro e' troppo largo e
+   quasi tutti finiscono sullo stesso, il che rende povero il confronto
+   fra quello che uno si da' e quello che il banco misura.
+   Scritte come uno si descrive a voce, non come le scriverebbe chi
+   progetta una scala: attacchi diversi, niente terzine, niente "qualche"
+   ripetuto due volte. */
 export const DICHIARATO_OPZIONI = [
-  { id: "L0", label: "La sto guardando da fuori" },
-  { id: "L1", label: "La uso ogni giorno, con prompt scritti al volo" },
-  { id: "L1p", label: "Ho prompt salvati e qualche routine che riuso" },
-  { id: "L2", label: "Ho un sistema: contesto, istruzioni, qualche automazione" },
+  { id: "L0", label: "Poco. La guardo più di quanto la usi" },
+  { id: "L1", label: "Tutti i giorni, ma vado a braccio" },
+  { id: "L1p", label: "Ho i miei prompt buoni e me li riuso" },
+  { id: "L2", label: "Le ho dato un contesto fisso e ci lavoro dentro" },
+  { id: "L3", label: "Quello che ho costruito lo usa anche qualcun altro" },
 ];
 
 export const INTENTO_OPZIONI: { id: Intento; label: string }[] = [

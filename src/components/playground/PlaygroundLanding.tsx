@@ -2,7 +2,10 @@
 
 import { useCallback, useState } from "react";
 import { Collaudo } from "./collaudo/Collaudo";
+import { MenuMobile } from "./MenuMobile";
 import "./playground.css";
+/* dopo playground.css, non prima: vedi la nota in MenuMobile.tsx */
+import "./menu.css";
 
 /* ============================================================
    PLAYGROUND · la landing, portata dal prototipo HTML.
@@ -171,7 +174,11 @@ export function PlaygroundLanding() {
           <a href="#prova">Chi c'è</a>
           <a href="#faq">FAQ</a>
         </span>
-        <button className="mcta" onClick={onCollaudo}>Fai il collaudo →</button>
+        <button className="mcta" onClick={onCollaudo}>
+          <span className="lungo">Fai il collaudo →</span>
+          <span className="corto">Collaudo →</span>
+        </button>
+        <MenuMobile onCollaudo={onCollaudo} />
       </nav>
 
       {/* ============ 01 · HERO · il campo ============ */}

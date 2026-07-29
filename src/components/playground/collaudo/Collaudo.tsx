@@ -91,7 +91,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
   const [r, setR] = useState<Risposte>(VUOTE);
   const [scelta, setScelta] = useState<number | null>(null);
   const [verdetto, setVerdetto] = useState<string | null>(null);
-  const [gate, setGate] = useState({ nome: "", cognome: "", email: "", telefono: "" });
+  const [gate, setGate] = useState({ nome: "", email: "", telefono: "" });
   const [erroreGate, setErroreGate] = useState(false);
 
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -211,7 +211,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
 
   function inviaGate() {
     const mailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(gate.email.trim());
-    if (!gate.nome.trim() || !gate.cognome.trim() || !mailOk) {
+    if (!gate.nome.trim() || !mailOk) {
       setErroreGate(true);
       return;
     }
@@ -222,7 +222,17 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
   const avanzamento = fase === "domande" ? PROGRESSO[passo] : fase === "intro" ? 0 : 100;
 
   return (
-    <div className="cl-overlay" role="dialog" aria-modal="true" aria-label="Il Collaudo">
+    /* Sul referto smette di essere una finestra sopra la pagina e diventa
+       la pagina: niente ruolo di dialogo e niente croce per uscire. Non e'
+       un trucco per intrappolare, e' che li' il referto E' la destinazione,
+       e le uscite sono le sue CTA. Prima della fine la croce resta, perche'
+       chi sta ancora rispondendo deve poter cambiare idea. */
+    <div
+      className="cl-overlay"
+      role={fase === "referto" ? undefined : "dialog"}
+      aria-modal={fase === "referto" ? undefined : true}
+      aria-label="Il Collaudo"
+    >
       <header className="cl-testa">
         <span className="cl-marchio">
           <svg viewBox="0 0 1000 476" fill="currentColor" aria-hidden="true">
@@ -241,7 +251,11 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
           <b style={{ left: "85%" }} />
         </div>
 
-        <button className="cl-chiudi" onClick={onChiudi} aria-label="Chiudi il collaudo">✕</button>
+        {fase === "referto" ? (
+          <span />
+        ) : (
+          <button className="cl-chiudi" onClick={onChiudi} aria-label="Chiudi il collaudo">✕</button>
+        )}
       </header>
 
       <div className="cl-palco">
@@ -341,10 +355,6 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
                 <input value={gate.nome} onChange={(e) => setGate({ ...gate, nome: e.target.value })} autoComplete="given-name" />
               </label>
               <label>
-                <span>Cognome</span>
-                <input value={gate.cognome} onChange={(e) => setGate({ ...gate, cognome: e.target.value })} autoComplete="family-name" />
-              </label>
-              <label>
                 <span>Email</span>
                 <input type="email" value={gate.email} onChange={(e) => setGate({ ...gate, email: e.target.value })} autoComplete="email" />
               </label>
@@ -353,7 +363,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
                 <input type="tel" value={gate.telefono} onChange={(e) => setGate({ ...gate, telefono: e.target.value })} autoComplete="tel" />
               </label>
             </div>
-            {erroreGate ? <p className="cl-errore">Servono nome, cognome e una mail valida.</p> : null}
+            {erroreGate ? <p className="cl-errore">Servono il nome e una mail valida.</p> : null}
             <button className="cl-via" onClick={inviaGate}>Mostrami il referto →</button>
           </div>
         ) : null}
