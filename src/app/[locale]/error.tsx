@@ -52,7 +52,7 @@ export default function Error({
           System Malfunction
         </h2>
         <p className="text-slate-400 mb-4 leading-relaxed">
-          Something unexpected happened. Don&apos;t worry — your progress is safe.
+          Something unexpected happened. Don&apos;t worry: your progress is safe.
         </p>
         
         {/* Error digest for debugging */}

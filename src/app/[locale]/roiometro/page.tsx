@@ -8,7 +8,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
-    metaTitle: "ROIometro — Morfeus",
+    metaTitle: "ROIometro | Morfeus",
     metaDesc:
       "Stima in euro quanto valore la tua azienda perde ogni mese nel lavoro manuale, e quanto puoi recuperare. Uno strumento, non un preventivo: il primo passo del metodo Morfeus.",
     eye: "Lo strumento della misura",
@@ -18,7 +18,7 @@ const COPY = {
     lead: "Sposta i cursori sulla tua realtà: persone, costo medio, quota di lavoro manuale. Il ROIometro stima in euro la perdita mensile e il valore recuperabile. È una stima onesta per iniziare a ragionare, non un preventivo.",
   },
   en: {
-    metaTitle: "ROIometro — Morfeus",
+    metaTitle: "ROIometro | Morfeus",
     metaDesc:
       "Estimate in euros how much value your company loses every month in manual work, and how much you can recover. A tool, not a quote: the first step of the Morfeus method.",
     eye: "The measurement tool",

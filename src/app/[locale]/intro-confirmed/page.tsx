@@ -19,7 +19,7 @@ export async function generateMetadata(
   } = params;
 
   return {
-    title: locale === "it" ? "Call confermata — Morfeus" : "Call confirmed — Morfeus",
+    title: locale === "it" ? "Call confermata | Morfeus" : "Call confirmed | Morfeus",
     description: locale === "it" ? "La tua intro call con Morfeus è confermata." : "Your intro call with Morfeus is confirmed.",
     robots: {
       index: false,

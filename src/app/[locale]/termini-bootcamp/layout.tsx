@@ -15,7 +15,7 @@ export async function generateMetadata(
   const safeLocale = locale === "it" ? "it" : "en";
 
   return {
-    title: "Termini e Condizioni — Bootcamp AI Champion v2 | Morfeus Hub",
+    title: "Termini e Condizioni · Bootcamp AI Champion v2 | Morfeus Hub",
     description:
       "Termini e condizioni di iscrizione e partecipazione al Bootcamp AI Champion v2 erogato da Morfeus Hub S.r.l.",
     alternates: buildLocaleAlternates("termini-bootcamp", safeLocale),

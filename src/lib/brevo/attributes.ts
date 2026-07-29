@@ -1,5 +1,5 @@
 /**
- * Brevo contact attributes — single source of truth.
+ * Brevo contact attributes: single source of truth.
  *
  * Always import from here when calling the Brevo API. Never use raw string
  * literals for attribute names: typos silently write data to the wrong field.
@@ -20,9 +20,9 @@ export const BREVO_ATTR = {
   // utente: i campi nativi SMS/WhatsApp validano il formato (E.164) e possono
   // rifiutare l'intero contatto. Normalizza a +39… quando puoi.
   TELEFONO: "TELEFONO_", // underscore finale intenzionale (matches Brevo)
-  WHATSAPP: "WHATSAPP", // ⚠️ non per input utente diretto — vedi REGOLA TELEFONO sopra
+  WHATSAPP: "WHATSAPP", // ⚠️ non per input utente diretto: vedi REGOLA TELEFONO sopra
   LANDLINE_NUMBER: "LANDLINE_NUMBER",
-  SMS: "SMS", // ⚠️ non per input utente diretto — vedi REGOLA TELEFONO sopra
+  SMS: "SMS", // ⚠️ non per input utente diretto: vedi REGOLA TELEFONO sopra
   LINKEDIN: "LINKEDIN",
 
   // Professional context

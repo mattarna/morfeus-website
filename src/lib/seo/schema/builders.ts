@@ -6,7 +6,7 @@ import { ORGANIZATION_ID, SITE_URL } from "../entity-ids";
  *
  * The site-wide entity graph (Organization/WebSite/Service/Person) lives in
  * src/components/shared/SEO/StructuredData.tsx. These builders cover the
- * page-level types — FAQPage, BreadcrumbList, Course — emitted via <JsonLd>.
+ * page-level types (FAQPage, BreadcrumbList, Course) emitted via <JsonLd>.
  */
 
 /**
@@ -62,7 +62,7 @@ export function buildBreadcrumbList(
   }));
 
   // schema-dts types ListItem.item as `Thing | IdReference`, but Google's
-  // canonical breadcrumb form uses a plain URL string — emit that.
+  // canonical breadcrumb form uses a plain URL string: emit that.
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

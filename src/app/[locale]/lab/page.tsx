@@ -18,7 +18,7 @@ import { LabMsFaq } from "@/components/lab-ms/LabMsFaq";
 import { LabMsChiusa } from "@/components/lab-ms/LabMsChiusa";
 
 /* ============================================================
-   /lab — la pagina LAB, rifatta nel sistema `.ms`.
+   /lab: la pagina LAB, rifatta nel sistema `.ms`.
    ------------------------------------------------------------
    Questa e' la versione costruita e approvata su exp/lab-ms2026,
    dove viveva come rotta parallela /lab-ms. Qui prende il posto

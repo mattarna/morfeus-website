@@ -1,7 +1,7 @@
 import crypto from "crypto";
 
 /**
- * Meta Conversions API (CAPI) — invio eventi server-side.
+ * Meta Conversions API (CAPI): invio eventi server-side.
  *
  * Modulo UNICO e riusabile: ogni route di opt-in lo richiama in una riga.
  * Principi (vedi playbook "Il Tracciamento Lato API", Biblioteca Marketing/ADV):
@@ -12,9 +12,9 @@ import crypto from "crypto";
  *  - Non-blocking: gli errori non devono mai far fallire l'opt-in.
  *
  * Env richieste (server-only, MAI pubbliche):
- *   META_CAPI_ACCESS_TOKEN   — token Conversions API (segreto)
- *   META_PIXEL_ID            — pixel target (default: pixel globale del sito)
- *   META_TEST_EVENT_CODE     — opzionale, solo per i test in Events Manager
+ *   META_CAPI_ACCESS_TOKEN: token Conversions API (segreto)
+ *   META_PIXEL_ID: pixel target (default: pixel globale del sito)
+ *   META_TEST_EVENT_CODE: opzionale, solo per i test in Events Manager
  */
 
 const GRAPH_VERSION = "v21.0";

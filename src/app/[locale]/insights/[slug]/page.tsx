@@ -200,7 +200,7 @@ export default async function InsightArticlePage({ params }: Props) {
             </p>
           ) : null}
 
-          {/* Cover banner — visuale astratta on-brand del tema */}
+          {/* Cover banner: visuale astratta on-brand del tema */}
           <div
             className="mt-9 overflow-hidden rounded-[12px] border"
             style={{ aspectRatio: "16 / 9", borderColor: "#26262B" }}

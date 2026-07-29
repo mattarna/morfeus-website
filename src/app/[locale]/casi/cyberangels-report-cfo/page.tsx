@@ -9,7 +9,7 @@ type Props = { params: Promise<{ locale: string }> };
 const COPY = {
   it: {
     metaTitle:
-      "Cyberangels Report CFO · Il report tecnico che finisce nel cassetto, e con lui il rinnovo — Caso Morfeus",
+      "Cyberangels Report CFO · Il report tecnico che finisce nel cassetto, e con lui il rinnovo | Caso Morfeus",
     metaDesc:
       "Caso #027 Cyberangels Report Engine. In un'azienda moda strutturata il report di sicurezza arrivava pieno di CVE e severità, il CFO non lo capiva e il rinnovo restava appeso. Ora arriva integro fino al tavolo che firma.",
     crumbCasi: "Casi",
@@ -150,7 +150,7 @@ const COPY = {
   },
   en: {
     metaTitle:
-      "Cyberangels CFO Report · The tech report that ends up in the drawer, and the renewal with it — Morfeus Case",
+      "Cyberangels CFO Report · The tech report that ends up in the drawer, and the renewal with it | Morfeus Case",
     metaDesc:
       "Case #027 Cyberangels Report Engine. In a structured fashion company the security report arrived full of CVEs and severity ratings, the CFO didn't understand it and renewal stayed on hold. Now it reaches the table that signs, intact.",
     crumbCasi: "Cases",

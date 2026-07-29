@@ -9,7 +9,7 @@ type Props = { params: Promise<{ locale: string }> };
 const COPY = {
   it: {
     metaTitle:
-      "Cyberangels Sales Advisor · I tuoi commerciali vendono di tutto, tranne l'unica cosa con il margine più alto — Caso Morfeus",
+      "Cyberangels Sales Advisor · I tuoi commerciali vendono di tutto, tranne l'unica cosa con il margine più alto | Caso Morfeus",
     metaDesc:
       "Caso #016: un MSP aveva l'assessment di sicurezza più redditizio del listino e i commerciali lo evitavano perché non lo capivano. Ora lo aprono in un clic: sicurezza in oltre il 70% delle call, ticket medio +30%.",
     crumbs: { casi: "Casi", sep: " · ", title: "Cyberangels Sales Advisor", num: " · Caso #016" },
@@ -107,7 +107,7 @@ const COPY = {
   },
   en: {
     metaTitle:
-      "Cyberangels Sales Advisor · Your reps sell everything except the one thing with the highest margin — Morfeus Case",
+      "Cyberangels Sales Advisor · Your reps sell everything except the one thing with the highest margin | Morfeus Case",
     metaDesc:
       "Case #016: an MSP had the most profitable security assessment in the catalog and reps avoided it because they didn't understand it. Now they open it in one click: security in over 70% of calls, avg ticket +30%.",
     crumbs: { casi: "Cases", sep: " · ", title: "Cyberangels Sales Advisor", num: " · Case #016" },

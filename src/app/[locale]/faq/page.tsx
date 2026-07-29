@@ -11,7 +11,7 @@ type Group = { anchor: string; title: string; items: QA[] };
 
 const COPY = {
   it: {
-    metaTitle: "Domande frequenti — Morfeus",
+    metaTitle: "Domande frequenti | Morfeus",
     metaDesc:
       "Domande frequenti su Morfeus: chi siamo, il metodo (Value Leak, MARF, ROIometro, Value Report), il modello Pilot to Retainer, prezzi, dati e sicurezza, formazione e AI Champion.",
     hero: {
@@ -225,7 +225,7 @@ const COPY = {
     },
   },
   en: {
-    metaTitle: "FAQ — Morfeus",
+    metaTitle: "FAQ | Morfeus",
     metaDesc:
       "Frequently asked questions about Morfeus: who we are, the method (Value Leak, MARF, ROIometer, Value Report), the Pilot to Retainer model, pricing, data and security, training and AI Champion.",
     hero: {

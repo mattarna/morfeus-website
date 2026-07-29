@@ -1,7 +1,7 @@
 /**
  * Central @id constants for JSON-LD entities (schema.org graph).
  *
- * One stable identity per entity node — referenced everywhere instead of
+ * One stable identity per entity node: referenced everywhere instead of
  * hardcoded strings, so Organization / WebSite / Service / Person stay
  * linkable and coherent across the site. Cornerstone of entity
  * disambiguation for SEO/GEO (ENT-01).

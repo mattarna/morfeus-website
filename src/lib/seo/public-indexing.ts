@@ -22,7 +22,7 @@ export const INDEXABLE_LOCALE_PATHS = [
   "roiometro",
   "privacy",
   "cookies",
-  // Casi studio (dettaglio) — brand 2026
+  // Casi studio (dettaglio): brand 2026
   "casi/brainiac-tesoreria-riconciliata",
   "casi/cyberangels-sales-advisor",
   "casi/cyberangels-report-cfo",
@@ -31,7 +31,7 @@ export const INDEXABLE_LOCALE_PATHS = [
   "casi/scalers-pre-sales",
   "casi/valueize-best-seller",
   "casi/ag-academy-onboarding",
-  // Insights — articoli (13)
+  // Insights: articoli (13)
   "insights/value-leak",
   "insights/agenti-ai-in-azienda",
   "insights/ai-act-pmi-alfabetizzazione",

@@ -18,7 +18,7 @@ function getSingle(value: string | string[] | undefined): string {
 }
 
 export const metadata: Metadata = {
-  title: "Call confirmed — Thank you — Morfeus",
+  title: "Call confirmed · Thank you | Morfeus",
   description: "Pre-call form completed.",
   robots: {
     index: false,

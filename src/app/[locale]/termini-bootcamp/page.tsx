@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 
 /**
- * Termini e Condizioni — Bootcamp AI Champion v2
+ * Termini e Condizioni · Bootcamp AI Champion v2
  * Documento ufficiale di iscrizione e partecipazione, erogato da Morfeus Hub S.r.l.
  * Ultima revisione: 30 aprile 2026
  */
@@ -28,10 +28,10 @@ export default function TerminiBootcampPage() {
       {/* Content */}
       <div className="max-w-[900px] mx-auto px-6 pt-32 pb-20">
         <h1 className="text-4xl md:text-5xl font-semibold text-white mb-3 tracking-tight">
-          Termini e Condizioni — Bootcamp AI Champion v2
+          Termini e Condizioni · Bootcamp AI Champion v2
         </h1>
         <p className="text-slate-400 text-sm mb-2">
-          Morfeus Hub S.r.l. — P.IVA 14209210963
+          Morfeus Hub S.r.l. · P.IVA 14209210963
         </p>
         <p className="text-slate-400 text-sm mb-2">
           Via Jacopo del Verme 7, 20159 Milano (MI), Italia

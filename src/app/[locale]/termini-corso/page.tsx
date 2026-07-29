@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 
 /**
- * Termini e Condizioni — Claude Unlocked (corso digitale)
+ * Termini e Condizioni · Claude Unlocked (corso digitale)
  * Pagina linkata dal checkout / footer della sales page del corso.
  * Ultima revisione: 30 aprile 2026.
  */
@@ -26,7 +26,7 @@ export default function TerminiCorsoPage() {
       {/* Content */}
       <div className="max-w-[900px] mx-auto px-6 pt-32 pb-20">
         <h1 className="text-4xl md:text-5xl font-semibold text-white mb-4 tracking-tight">
-          Termini e Condizioni — Claude Unlocked
+          Termini e Condizioni · Claude Unlocked
         </h1>
         <p className="text-slate-500 text-sm mb-2">
           Morfeus Hub S.r.l. · P.IVA 14209210963 · Via Jacopo del Verme 7, 20159 Milano (MI), Italia
@@ -107,13 +107,13 @@ export default function TerminiCorsoPage() {
               <p className="text-slate-400 text-sm mb-3">A titolo indicativo, i prezzi del Corso sono:</p>
               <ul className="list-disc pl-6 text-slate-400 text-sm space-y-1">
                 <li>
-                  <strong className="text-white">147,00 €</strong> (IVA inclusa ove applicabile) — fase flash lancio
+                  <strong className="text-white">147,00 €</strong> (IVA inclusa ove applicabile): fase flash lancio
                 </li>
                 <li>
-                  <strong className="text-white">297,00 €</strong> (IVA inclusa ove applicabile) — fase launch week
+                  <strong className="text-white">297,00 €</strong> (IVA inclusa ove applicabile): fase launch week
                 </li>
                 <li>
-                  <strong className="text-white">397,00 €</strong> (IVA inclusa ove applicabile) — prezzo evergreen standard
+                  <strong className="text-white">397,00 €</strong> (IVA inclusa ove applicabile): prezzo evergreen standard
                 </li>
               </ul>
             </div>
@@ -172,7 +172,7 @@ export default function TerminiCorsoPage() {
             <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">7.1 Titolarità</h3>
               <p className="text-slate-400 text-sm">
-                Tutti i contenuti del Corso — inclusi, senza limitazione, video, audio, testi, slide, materiali scaricabili, framework, metodologie e ogni altro materiale didattico — sono di esclusiva proprietà di Morfeus Hub S.r.l. e sono protetti dalle norme vigenti in materia di diritto d&apos;autore e proprietà intellettuale.
+                Tutti i contenuti del Corso (inclusi, senza limitazione, video, audio, testi, slide, materiali scaricabili, framework, metodologie e ogni altro materiale didattico) sono di esclusiva proprietà di Morfeus Hub S.r.l. e sono protetti dalle norme vigenti in materia di diritto d&apos;autore e proprietà intellettuale.
               </p>
             </div>
 

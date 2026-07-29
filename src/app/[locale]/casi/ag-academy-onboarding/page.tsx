@@ -8,7 +8,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
-    metaTitle: "AG Academy · Onboarding studenti · Caso #013 — Morfeus",
+    metaTitle: "AG Academy · Onboarding studenti · Caso #013 | Morfeus",
     metaDesc:
       "Caso #013: un'academy high-ticket perdeva un quarto dei ricavi nei primi 14 giorni post-vendita. Rimborsi dal 25% al 6%, primo accesso da due giorni a poche ore.",
     crumbsCasi: "Casi",
@@ -102,7 +102,7 @@ const COPY = {
     },
   },
   en: {
-    metaTitle: "AG Academy · Student onboarding · Case #013 — Morfeus",
+    metaTitle: "AG Academy · Student onboarding · Case #013 | Morfeus",
     metaDesc:
       "Case #013: a high-ticket academy was losing a quarter of its revenue in the first 14 days after the sale. Refunds from 25% to 6%, first login from two days to a few hours.",
     crumbsCasi: "Cases",

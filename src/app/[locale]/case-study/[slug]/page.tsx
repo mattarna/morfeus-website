@@ -34,7 +34,7 @@ export async function generateMetadata(props: CaseStudyRouteProps): Promise<Meta
   });
 
   return {
-    title: `${t("title")} — Morfeus`,
+    title: `${t("title")} | Morfeus`,
     description: t("description"),
     alternates: buildLocaleAlternates(`case-study/${slug}`, safeLocale),
     robots: {

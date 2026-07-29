@@ -2,7 +2,7 @@
 
 > Convenzione per gli articoli del blog. Ogni articolo è un file `.md` con front-matter YAML. Il dev renderizza il body Markdown e **genera schema + meta dal front-matter**. Obiettivo: impeccabili per SEO, GEO (citabilità LLM) e leggibilità.
 
-## Front-matter (YAML) — campi
+## Front-matter (YAML): campi
 ```yaml
 title:            # H1 dell'articolo (può essere lungo e umano)
 slug:             # url: /insights/<slug>
