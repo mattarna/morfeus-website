@@ -302,7 +302,7 @@
 }
 .pg26 .cover-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.34fr 0.66fr;
   gap: 44px;
   align-items: center;
 }
@@ -4350,4 +4350,194 @@
    serve uno stacco netto, non un alone */
 .pg26 .cover .btn-giallo {
   box-shadow: 0 12px 30px rgba(11, 10, 20, 0.28);
+} /* ============================================================
+   RESPONSIVE · passata di chiusura
+   ------------------------------------------------------------
+   La scala dei punti di rottura di questa pagina e' cresciuta per
+   accumulo: 900, 860, 820, 760, 700, 620, 600, 560. Non li tocco, sono
+   tarati su singoli blocchi e riordinarli vorrebbe dire ricollaudare
+   tutto. Qui sotto stanno solo le regole TRASVERSALI, quelle che
+   valgono per la pagina intera, su tre soglie sole:
+
+     <= 900   tablet e finestre strette
+     <= 600   telefono
+     <= 380   telefono piccolo
+
+   piu' due condizioni che non sono larghezze: il puntatore grosso
+   (dito) e lo schermo basso (telefono in orizzontale).
+   ============================================================ */ /* --- 1 · IL RITMO VERTICALE ---
+   130px sopra e sotto ogni sezione sono giusti su un monitor e assurdi
+   su un telefono: 260px di vuoto fra una sezione e l'altra, per tredici
+   volte, sono quattro schermate di niente. */
+@media (max-width: 900px) {
+  .pg26 section {
+    padding: 96px 0;
+  }
+  .pg26 .clienti {
+    margin-top: 30px;
+  }
+  .pg26 .cta-mid {
+    margin-top: 44px;
+    padding-top: 28px;
+  }
+}
+@media (max-width: 600px) {
+  .pg26 section {
+    padding: 72px 0;
+  }
+  .pg26 #firma {
+    padding-bottom: 72px;
+  }
+  .pg26 .cta-mid {
+    margin-top: 36px;
+    padding-top: 24px;
+    gap: 14px;
+  }
+  .pg26 .cta-mid p {
+    font-size: 19px;
+    max-width: 26ch;
+  } /* il bottone prende la riga: a meta' larghezza su un telefono si
+     colpisce peggio e sembra meno importante di quello che e' */
+  .pg26 .cta-mid .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .pg26 .verso-morfeus {
+    padding: 22px;
+    gap: 18px;
+  }
+  .pg26 .verso-morfeus .btn-ghost {
+    width: 100%;
+    text-align: center;
+  }
+  .pg26 .schermo {
+    margin-top: 26px;
+  }
+}
+@media (max-width: 380px) {
+  .pg26 .wrap {
+    padding: 0 16px;
+  }
+  .pg26 section {
+    padding: 62px 0;
+  }
+} /* --- 2 · LE ALTEZZE PIENE SUL TELEFONO ---
+   La vh sui browser mobili comprende la barra degli indirizzi, che
+   compare e sparisce mentre scorri: un elemento alto 100vh salta e si
+   fa tagliare il fondo. La dvh e' l'altezza VERA in quel momento.
+   La copertina lo gestisce gia'; il collaudo no, ed e' l'unica porta
+   della pagina. La riga con vh resta prima come ripiego per i browser
+   che la dvh non la conoscono. */
+.pg26 .cd-shell {
+  min-height: 100vh;
+}
+@supports (min-height: 100dvh) {
+  .pg26 .cd-shell {
+    min-height: 100dvh;
+  }
+}
+@media (max-width: 600px) {
+  .pg26 .cd-shell {
+    padding: 22px 18px 64px;
+  }
+  .pg26 .cd-stage {
+    padding: 24px 0;
+  }
+  .pg26 .cd-q {
+    font-size: 22px;
+  }
+  .pg26 .cd-opt {
+    padding: 15px 16px;
+  }
+  .pg26 .cd-slidernum {
+    font-size: 44px;
+  }
+  .pg26 .cd-top .cdw b {
+    font-size: 16px;
+  }
+  .pg26 .cd-ref {
+    padding: 14px 0 30px;
+  }
+} /* --- 3 · I BERSAGLI TATTILI ---
+   Legato al PUNTATORE, non alla larghezza: un tablet grande si usa col
+   dito e un portatile piccolo col mouse, quindi la larghezza e' il
+   criterio sbagliato. 44px e' la soglia sotto la quale il dito prende
+   sistematicamente il bersaglio accanto. */
+@media (pointer: coarse) {
+  .pg26 .island .links a {
+    padding: 11px 15px;
+  }
+  .pg26 .chip-pill {
+    padding: 12px 18px;
+  }
+  .pg26 .cd-top .close {
+    padding: 12px 16px;
+  }
+  .pg26 .cd-opt {
+    min-height: 52px;
+  }
+  .pg26 .lnk-cta {
+    padding: 6px 0;
+    display: inline-block;
+  }
+  .pg26 .cl-riga img {
+    opacity: 0.62;
+  } /* niente stati al passaggio dove non c'e' un puntatore: restano
+     "accesi" dopo il tocco e sembrano rotti */
+  .pg26 .voci:hover .voci-nastro {
+    animation-play-state: running;
+  }
+} /* --- 4 · IL TELEFONO IN ORIZZONTALE ---
+   Sotto i 520px di ALTEZZA la copertina non ci sta piu': li' il patto
+   "il campo viola sta in una schermata" va sciolto, o il contenuto
+   viene tagliato senza modo di raggiungerlo. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .pg26 .cover {
+    min-height: auto;
+  }
+  .pg26 .cover .field {
+    min-height: auto;
+    padding: 96px 0 56px;
+  }
+  .pg26 section {
+    padding: 56px 0;
+  }
+  .pg26 .island {
+    top: 8px;
+  }
+  .pg26 .cd-shell {
+    min-height: auto;
+    padding-top: 18px;
+  }
+  .pg26 .cd-stage {
+    padding: 16px 0;
+    justify-content: flex-start;
+  }
+} /* --- 5 · IL NASTRO DELLE VOCI ---
+   La larghezza della scheda era rimasta a 380 dopo che la base e'
+   passata a 400: due misure diverse per la stessa cosa. */
+@media (prefers-reduced-motion: reduce), (max-width: 760px) {
+  .pg26 .voce-card {
+    width: min(88vw, 400px);
+  }
+} /* --- 6 · SICUREZZE ---
+   Tre regole che non si vedono finche' non servono, e quando servono
+   evitano la cosa peggiore: la pagina che scorre di lato. */
+.pg26 img {
+  max-width: 100%;
+  height: auto;
+} /* iOS ingrandisce il testo da solo quando ruoti il telefono, e manda
+   in vacca ogni misura decisa qui */
+:root:has(.pg26) {
+  -webkit-text-size-adjust: 100%;
+} /* una parola lunghissima (un indirizzo, un nome di file) sfonda il suo
+   contenitore e con lui la pagina */
+.pg26 p,
+.pg26 li,
+.pg26 h1,
+.pg26 h2,
+.pg26 h3,
+.pg26 h4,
+.pg26 blockquote {
+  overflow-wrap: break-word;
 }
