@@ -214,6 +214,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 02 · IL PROBLEMA ============ */}
       <section id="problema" data-n="01">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">01</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">01</span> Il problema</div>
           <h2 className="shead">Usi l'AI venti volte al giorno.<br />E ogni mattina riparte da capo.</h2>
@@ -241,6 +242,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 03 · PERCHÉ NON HA FUNZIONATO ============ */}
       <section id="strade" data-n="02">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">02</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">02</span> Le tre strade</div>
           <h2 className="shead">Ci hai già provato, a uscirne.<br />In tre modi, probabilmente.</h2>
@@ -275,6 +277,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 04 · IL NEMICO ============ */}
       <section id="nemico" data-n="03">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">03</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">03</span> Il nemico</div>
           <h2 className="shead">Il mondo dell'AI si è riempito<br />di finti esperti.</h2>
@@ -353,6 +356,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 05 · COSA CREDIAMO ============ */}
       <section id="credo" data-n="04">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">04</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">04</span> Il credo</div>
           <h2 className="shead">Un posto lo capisci<br /><span className="grad">da quello che ci si dice dentro.</span></h2>
@@ -409,6 +413,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 06 · LA STANZA ============ */}
       <section id="stanza" data-n="05">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">05</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">05</span> Il Playground</div>
           <h2 className="shead">Cosa c'è <span className="vh">dentro</span>.</h2>
@@ -427,12 +432,8 @@ export function PlaygroundLanding() {
                  in cui qualcuno sta lavorando adesso. È disegnato in CSS, non
                  è un mockup scaricato: nessun asset in più e i colori restano
                  quelli della palette. */}
-            <div className="lap">
-              <div className="lap-schermo">
-                <img src="/playground/piattaforma-feed.png" alt="Il feed del Playground: nella colonna di sinistra gli spazi della community, al centro i post dei membri." loading="lazy" decoding="async" />
-                <span className="lap-riflesso" aria-hidden="true"></span>
-              </div>
-              <div className="lap-base" aria-hidden="true"></div>
+            <div className="sc-vetro">
+              <img src="/playground/piattaforma-feed.png" alt="Il feed del Playground: nella colonna di sinistra gli spazi della community, al centro i post dei membri." loading="lazy" decoding="async" />
             </div>
           </figure>
           {/* DUE RANGHI, non sei tessere uguali.
@@ -514,6 +515,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 07 · PERCHÉ È GRATIS ============ */}
       <section id="gratis" data-n="06">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">06</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">06</span> Perché è gratis</div>
           <h2 className="shead">Quando una cosa è gratis,<br />è giusto chiedersi dov'è la <span className="kox">fregatura</span>.</h2>
@@ -548,6 +550,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 08 · LA PROVA ============ */}
       <section id="prova" data-n="07">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">07</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">07</span> Chi c'è già dentro</div>
           <h2 className="shead"><span className="din">Non follower.</span><br />Gente che costruisce.</h2>
@@ -704,6 +707,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 08 · CHI C'È DIETRO · MORFEUS ============ */}
       <section id="morfeus" data-n="08">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">08</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">08</span> Chi c'è dietro</div>
           <h2 className="shead">Dietro il Playground<br />c'è <span className="vh">Morfeus</span>.</h2>
@@ -771,6 +775,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 09 · PER TE / NON PER TE ============ */}
       <section id="perte" data-n="09">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">09</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">09</span> Il filtro</div>
           <h2 className="shead">Questa stanza non è per tutti.</h2>
@@ -804,6 +809,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 10 · LA SOGLIA ============ */}
       <section id="soglia" data-n="10">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">10</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">10</span> La soglia</div>
           <div className="soglia">
@@ -846,6 +852,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 11 · FAQ ============ */}
       <section id="faq" data-n="11">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">11</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">11</span> Le domande</div>
           <h2 className="shead">Quello che è giusto chiedersi.</h2>
@@ -880,6 +887,7 @@ export function PlaygroundLanding() {
 
       {/* ============ 12 · UN GIORNO NELLA STANZA ============ */}
       <section id="giorno" data-n="12">
+        <svg className="filigrana" viewBox="0 0 240 130" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><text x="238" y="104">12</text></svg>
         <div className="wrap">
           <div className="stag"><span className="n">12</span> Com'è, dentro</div>
           <h2 className="shead">Immagina tra <span className="vh">un mese</span>.</h2>

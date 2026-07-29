@@ -1876,29 +1876,7 @@
   position: relative;
   z-index: 2;
 } /* filigrana: il numero di sezione gigante, outline, dietro il titolo */
-.pg26 section[data-n]::before {
-  content: attr(data-n);
-  position: absolute;
-  top: 64px;
-  right: 1vw;
-  font-family: var(--title);
-  font-weight: 700;
-  font-size: clamp(150px, 20vw, 300px);
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(122, 107, 243, 0.14);
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
-}
 @media (max-width: 760px) {
-  .pg26 section[data-n]::before {
-    font-size: 130px;
-    top: 36px;
-    right: -10px;
-    -webkit-text-stroke: 1px rgba(122, 107, 243, 0.12);
-  }
 } /* fasce alternate: lo scroll respira a piani */
 .pg26 section:nth-of-type(even) {
   background: linear-gradient(180deg, #0c0b18 0%, var(--notte) 72%);
@@ -4012,9 +3990,12 @@
    Fascia bassa e larga, non un capitolo: niente numero fantasma sullo
    sfondo, niente occhiello numerato. Deve leggersi come una pausa in
    cui qualcuno ci mette la faccia, non come la sezione cinque.
-   ============================================================ */
+   ============================================================ */ /* Niente filetto sopra: section{border-top} lo mette a ogni sezione,
+   ma questa non e' una sezione, e' la firma in calce a quella prima.
+   Un filetto la staccherebbe proprio da cio' a cui e' attaccata. */
 .pg26 #firma {
   padding-top: 0;
+  border-top: none;
 }
 .pg26 .firma {
   display: grid;
@@ -4221,5 +4202,48 @@
   .pg26 .fi-foto img {
     aspect-ratio: 3/2;
     object-position: 50% 26%;
+  }
+} /* --- LA FILIGRANA: il numero gigante dietro la sezione ---
+   Era generata con content:attr(data-n) + -webkit-text-stroke. Quella
+   tecnica centra il tratto sul contorno del glifo e NON ha controllo
+   sulle giunzioni: dove due curve si incontrano quasi tangenti, cioe'
+   la vita dell'8 e gli angoli del 5, il miter esplode in una punta.
+   Non e' un difetto del font ed e' irreparabile da CSS, perche' per il
+   testo non esiste stroke-linejoin.
+   In SVG esiste, quindi il numero e' un <text> con le giunzioni
+   arrotondate. non-scaling-stroke tiene lo spessore costante mentre il
+   riquadro si adatta alla larghezza. */
+.pg26 .filigrana {
+  position: absolute;
+  top: 44px;
+  right: 1vw;
+  width: min(46vw, 760px);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  overflow: visible;
+}
+.pg26 .filigrana text {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 118px;
+  letter-spacing: -4px;
+  text-anchor: end;
+  fill: none;
+  stroke: rgba(122, 107, 243, 0.16);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+@media (max-width: 760px) {
+  .pg26 .filigrana {
+    top: 26px;
+    right: -2vw;
+    width: 64vw;
+  }
+  .pg26 .filigrana text {
+    stroke: rgba(122, 107, 243, 0.13);
   }
 }
