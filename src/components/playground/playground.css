@@ -1002,15 +1002,24 @@
   padding: 52px 46px;
   position: relative;
   overflow: hidden;
-}
+} /* ECO: da contorno a testo scarico.
+   Il difetto delle cifre vale per TUTTO il font: anche le lettere
+   sono composte da forme sovrapposte e non fuse, e contornate
+   mostrano i bordi interni (la gamba della R sopra la pancia, gli
+   incroci della N). Non e' un problema di tecnica: qualunque
+   contorno ridisegna ogni bordo, anche quelli che nell'unione
+   sparirebbero.
+   L'intenzione dell'eco resta la stessa, ed e' quella che conta:
+   una riga piu' debole della headline, che la precede come
+   un'ombra. Un riempimento molto scarico la ottiene senza avere
+   niente da contornare. */
 .pg26 .soglia .eco {
   font-family: var(--title);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   font-size: clamp(22px, 3vw, 34px);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.5);
+  color: rgba(167, 167, 188, 0.42);
 }
 .pg26 .soglia h3 {
   font-family: var(--title);
@@ -1138,8 +1147,7 @@
   letter-spacing: -0.025em;
   font-size: clamp(26px, 4vw, 52px);
   line-height: 1.04;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.5);
+  color: rgba(167, 167, 188, 0.42);
   display: block;
 }
 .pg26 .finale h2 {
@@ -2047,14 +2055,17 @@
 .pg26 .credorow {
   padding: 44px 40px;
   grid-template-columns: 110px 1fr;
-}
+} /* PIENI, non contornati. Le cifre di questo font sono composte da
+   forme sovrapposte e non fuse: contornate mostrano anche i bordi
+   interni, e il 4 e il 5 escono con una barra di troppo. Le lettere
+   contornate della pagina (.eco, .din) non hanno il problema e
+   restano come sono. */
 .pg26 .credorow .cn {
   font-family: var(--title);
   font-weight: 700;
   font-size: 46px;
   letter-spacing: -0.03em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(122, 107, 243, 0.55);
+  color: rgba(122, 107, 243, 0.5);
   padding-top: 0;
   line-height: 1;
 }
@@ -2312,7 +2323,7 @@
   z-index: 1;
 }
 .pg26 .chiusa .eco {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.34);
 }
 .pg26 .chiusa h2 {
   color: #fff;
@@ -2341,10 +2352,10 @@
 }
 .pg26 .kox {
   color: var(--ko);
-}
+} /* stesso motivo dell'eco: contornata, "Non follower." mostrava i
+   bordi interni delle lettere */
 .pg26 .shead .din {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.55);
+  color: rgba(167, 167, 188, 0.45);
 } /* nastro più presente */
 .pg26 .nastro {
   background:
@@ -2398,7 +2409,7 @@
   background: var(--n3);
 }
 .pg26 .credorow .cn {
-  -webkit-text-stroke: 1px rgba(122, 107, 243, 0.85);
+  color: rgba(122, 107, 243, 0.62);
 } /* ============================================================
    B6 · CHI C'È DIETRO · MORFEUS (P15)
    Regola DS: quando Morfeus appare nel campo appare come PROVA,
@@ -3061,10 +3072,11 @@
 }
 .pg26 #credo::after {
   display: none;
-} /* niente luce radiale sul viola */
-.pg26 #credo::before {
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.2);
-} /* filigrana del numero in bianco */
+} /* niente luce radiale sul viola */ /* La filigrana non e' piu' un ::before contornato: si tinge il testo
+   dell'SVG. Sulla fascia viola il lilla sparirebbe, quindi bianca. */
+.pg26 #credo .filigrana text {
+  fill: rgba(255, 255, 255, 0.14);
+}
 .pg26 #credo .stag {
   color: rgba(255, 255, 255, 0.92);
 }
@@ -3105,7 +3117,7 @@
   background: rgba(9, 7, 28, 0.34);
 }
 .pg26 #credo .credorow .cn {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.5);
 }
 .pg26 #credo .credorow h3 {
   color: #fff;
