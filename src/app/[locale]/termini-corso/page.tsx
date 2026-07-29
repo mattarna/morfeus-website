@@ -15,7 +15,7 @@ export default function TerminiCorsoPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-sm border-b border-white/5">
+      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-xs border-b border-white/5">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
           <Link href={`/${locale}`} className="text-white/80 hover:text-white transition-colors text-sm">
             ← {isIT ? "Torna al sito" : "Back to site"}
@@ -66,28 +66,28 @@ export default function TerminiCorsoPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-6">3. Accesso al corso</h2>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">3.1 Modalità di accesso</h3>
               <p className="text-slate-400 text-sm">
                 L&apos;accesso al Corso avviene tramite la piattaforma <strong className="text-white">Circle (circle.so)</strong>. Completato il pagamento, l&apos;Utente riceverà entro 24 ore le istruzioni per creare o accedere al proprio account e fruire dei contenuti.
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">3.2 Durata dell&apos;accesso</h3>
               <p className="text-slate-400 text-sm">
                 L&apos;accesso al Corso è <strong className="text-white">lifetime</strong> (a tempo indeterminato), nei limiti di quanto previsto all&apos;art. 3.3. Non sono previste scadenze di accesso ai contenuti acquistati.
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">3.3 Continuità del servizio</h3>
               <p className="text-slate-400 text-sm">
                 Morfeus Hub garantisce l&apos;accesso al Corso per tutta la durata di attività della piattaforma Circle e del relativo spazio. In caso di cessazione della piattaforma o di migrazione verso altra soluzione, Morfeus Hub si impegna a garantire all&apos;Utente l&apos;accesso equivalente ai contenuti tramite soluzioni alternative, con preavviso di almeno 30 giorni ove tecnicamente possibile. Morfeus Hub non può essere ritenuta responsabile per interruzioni dipendenti da terze parti (es. malfunzionamenti della piattaforma Circle).
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <h3 className="text-lg font-semibold text-white mb-3">3.4 Requisiti tecnici</h3>
               <p className="text-slate-400 text-sm">
                 L&apos;accesso al Corso richiede una connessione internet funzionante e un dispositivo compatibile con la piattaforma Circle. È responsabilità dell&apos;Utente disporre degli strumenti tecnici necessari.
@@ -99,7 +99,7 @@ export default function TerminiCorsoPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-6">4. Prezzi e modalità di pagamento</h2>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">4.1 Prezzi</h3>
               <p className="text-slate-400 text-sm mb-4">
                 Il prezzo del Corso varia in funzione della fase di lancio e delle promozioni attive al momento dell&apos;acquisto, come indicato nella pagina di vendita ufficiale. Il prezzo mostrato al momento del checkout è quello vincolante per l&apos;acquisto.
@@ -118,14 +118,14 @@ export default function TerminiCorsoPage() {
               </ul>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">4.2 Modalità di pagamento</h3>
               <p className="text-slate-400 text-sm">
                 Il pagamento avviene in un&apos;unica soluzione, tramite i metodi indicati al checkout (carta di credito/debito, altri metodi abilitati). Il pagamento è elaborato da fornitori terzi di servizi di pagamento (es. Stripe). Morfeus Hub non memorizza dati di pagamento.
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <h3 className="text-lg font-semibold text-white mb-3">4.3 Fatturazione</h3>
               <p className="text-slate-400 text-sm">
                 Su richiesta espressa dell&apos;Utente, inviata a <a href="mailto:hello@morfeushub.com" className="text-white underline decoration-slate-700">hello@morfeushub.com</a> entro 5 giorni dall&apos;acquisto, verrà emessa fattura. Per soggetti titolari di P.IVA, la fattura verrà emessa automaticamente previa comunicazione dei dati fiscali al momento del checkout.
@@ -169,14 +169,14 @@ export default function TerminiCorsoPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-6">7. Proprietà intellettuale e licenza d&apos;uso</h2>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">7.1 Titolarità</h3>
               <p className="text-slate-400 text-sm">
                 Tutti i contenuti del Corso — inclusi, senza limitazione, video, audio, testi, slide, materiali scaricabili, framework, metodologie e ogni altro materiale didattico — sono di esclusiva proprietà di Morfeus Hub S.r.l. e sono protetti dalle norme vigenti in materia di diritto d&apos;autore e proprietà intellettuale.
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">7.2 Licenza personale non trasferibile</h3>
               <p className="text-slate-400 text-sm mb-3">
                 Con l&apos;acquisto, l&apos;Utente ottiene una <strong className="text-white">licenza personale, non esclusiva e non trasferibile</strong> per fruire dei contenuti del Corso esclusivamente per uso personale e professionale proprio. È espressamente vietato:
@@ -190,7 +190,7 @@ export default function TerminiCorsoPage() {
               </ul>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <h3 className="text-lg font-semibold text-white mb-3">7.3 Violazioni</h3>
               <p className="text-slate-400 text-sm">
                 La violazione delle disposizioni di cui all&apos;art. 7.2 comporta la revoca immediata dell&apos;accesso al Corso, senza rimborso, e l&apos;eventuale azione legale per risarcimento dei danni.
@@ -239,14 +239,14 @@ export default function TerminiCorsoPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-6">11. Limitazione di responsabilità</h2>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5 mb-4">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5 mb-4">
               <h3 className="text-lg font-semibold text-white mb-3">11.1 Risultati</h3>
               <p className="text-slate-400 text-sm">
                 I contenuti del Corso sono forniti a scopo formativo. Morfeus Hub non garantisce specifici risultati economici, professionali o di altra natura derivanti dall&apos;applicazione dei contenuti appresi. I risultati dipendono dall&apos;impegno, dall&apos;applicazione e dalle circostanze individuali di ciascun Utente.
               </p>
             </div>
 
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <h3 className="text-lg font-semibold text-white mb-3">11.2 Responsabilità massima</h3>
               <p className="text-slate-400 text-sm">
                 In nessun caso Morfeus Hub potrà essere ritenuta responsabile per danni indiretti, consequenziali, perdita di profitti o danni derivanti dall&apos;uso o dall&apos;impossibilità di usare i contenuti del Corso. La responsabilità massima di Morfeus Hub è in ogni caso limitata al prezzo pagato dall&apos;Utente per il Corso.
@@ -290,7 +290,7 @@ export default function TerminiCorsoPage() {
             <p className="text-slate-300 mb-4">
               Per qualsiasi comunicazione relativa al presente contratto, all&apos;accesso al Corso o ai pagamenti:
             </p>
-            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+            <div className="p-6 bg-white/2 rounded-xl border border-white/5">
               <p className="text-white font-semibold mb-1">Morfeus Hub S.r.l.</p>
               <p className="text-slate-400 text-sm mb-1">Via Jacopo del Verme 7, 20159 Milano (MI), Italia</p>
               <p className="text-slate-400 text-sm">

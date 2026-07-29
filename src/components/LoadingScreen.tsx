@@ -32,13 +32,13 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-all duration-700 ${
+      className={`fixed inset-0 z-9999 bg-black flex items-center justify-center transition-all duration-700 ${
         phase === "revealing" ? "opacity-0 scale-105" : "opacity-100 scale-100"
       }`}
     >
       {/* Scan Line */}
       <div
-        className={`absolute left-0 right-0 h-[2px] md:h-[3px] bg-gradient-to-r from-transparent via-majorelle to-transparent shadow-[0_0_30px_10px_rgba(83,61,252,0.5)] ${
+        className={`absolute left-0 right-0 h-[2px] md:h-[3px] bg-linear-to-r from-transparent via-majorelle to-transparent shadow-[0_0_30px_10px_rgba(83,61,252,0.5)] ${
           phase === "scanning" ? "animate-scan" : "opacity-0"
         }`}
       />

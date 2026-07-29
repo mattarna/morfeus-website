@@ -15,7 +15,7 @@ export function BeliefShift() {
   const t = useTranslations("Offerta.belief_shift");
 
   return (
-    <section id="belief-shift" className="relative z-40 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
+    <section id="belief-shift" className="relative z-40 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/5 overflow-visible">
       <GridPattern />
       
       <div className="relative z-10 max-w-[1200px] mx-auto">
@@ -38,7 +38,7 @@ export function BeliefShift() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-16 md:mb-24 items-stretch">
           {(["1", "2"] as const).map((pairId) => (
             <React.Fragment key={pairId}>
-              <div className="group relative p-8 md:p-12 rounded-3xl bg-[#0A0C10] border border-white/[0.05] transition-all duration-500 flex flex-col h-full">
+              <div className="group relative p-8 md:p-12 rounded-3xl bg-[#0A0C10] border border-white/5 transition-all duration-500 flex flex-col h-full">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20">
                     <Icon icon="solar:close-circle-bold" className="w-4 h-4 text-red-500/60" />

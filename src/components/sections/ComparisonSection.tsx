@@ -12,7 +12,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
   const t = useTranslations(namespace);
   
   return (
-    <section id="comparison" className="relative z-50 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-y border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
+    <section id="comparison" className="relative z-50 py-24 md:py-40 px-6 xl:px-40 bg-[#0a111a] border-y border-white/5 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] overflow-visible">
       
       <div className="relative z-10 max-w-[1200px] mx-auto">
         
@@ -38,7 +38,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-20 md:mb-32 items-stretch">
             
             {/* GRAFICO A — Progetto spot */}
-            <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-[#0A0C10] border border-white/[0.05] flex flex-col h-full overflow-hidden transition-all duration-500">
+            <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-[#0A0C10] border border-white/5 flex flex-col h-full overflow-hidden transition-all duration-500">
               <div className="mb-10">
                 <h3 className="text-xl md:text-2xl font-bold text-slate-400 uppercase tracking-tight mb-2">{t("chart_a.title")}</h3>
                 <p className="text-sm text-slate-500 font-medium">{t("chart_a.subtitle")}</p>
@@ -82,7 +82,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
                     </linearGradient>
                   </defs>
                 </svg>
-                <div className="absolute top-0 right-0 text-[10px] font-mono text-rose-500/50 uppercase tracking-widest bg-rose-500/5 px-2 py-1 rounded border border-rose-500/10">{t("chart_a.badge")}</div>
+                <div className="absolute top-0 right-0 text-[10px] font-mono text-rose-500/50 uppercase tracking-widest bg-rose-500/5 px-2 py-1 rounded-sm border border-rose-500/10">{t("chart_a.badge")}</div>
               </div>
 
               <div className="space-y-6 mt-auto">
@@ -96,7 +96,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
             </div>
 
             {/* GRAFICO B — Sistema cumulativo */}
-            <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-[#0d1117] to-[#0a0c10] border border-indigo-500/20 flex flex-col h-full overflow-hidden shadow-[0_20px_50px_-20px_rgba(83,61,252,0.2)] transition-all duration-500 hover:border-indigo-500/40">
+            <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-linear-to-br from-[#0d1117] to-[#0a0c10] border border-indigo-500/20 flex flex-col h-full overflow-hidden shadow-[0_20px_50px_-20px_rgba(83,61,252,0.2)] transition-all duration-500 hover:border-indigo-500/40">
               {/* Glow */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
               
@@ -143,7 +143,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
                     </linearGradient>
                   </defs>
                 </svg>
-                <div className="absolute -top-10 right-0 text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-widest bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20 shadow-[0_0_15px_rgba(83,61,252,0.3)] backdrop-blur-sm">{t("chart_b.badge")}</div>
+                <div className="absolute -top-10 right-0 text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-widest bg-indigo-500/10 px-2 py-1 rounded-sm border border-indigo-500/20 shadow-[0_0_15px_rgba(83,61,252,0.3)] backdrop-blur-xs">{t("chart_b.badge")}</div>
               </div>
 
               <div className="space-y-6 mt-auto">
@@ -158,7 +158,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
           </div>
         ) : (
           /* Split Variant Grid */
-          <div className="flex flex-col lg:flex-row w-full max-w-[1100px] mx-auto mb-20 md:mb-32 rounded-3xl md:rounded-[2.5rem] overflow-hidden border border-white/[0.05] shadow-2xl">
+          <div className="flex flex-col lg:flex-row w-full max-w-[1100px] mx-auto mb-20 md:mb-32 rounded-3xl md:rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl">
             
             {/* LEFT SIDE */}
             <div className="flex-1 p-10 md:p-16 bg-[#0A0C10] relative overflow-hidden group">
@@ -183,10 +183,10 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
             </div>
 
             {/* DIVIDER */}
-            <div className="w-full h-px lg:w-px lg:h-auto bg-gradient-to-r lg:bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+            <div className="w-full h-px lg:w-px lg:h-auto bg-linear-to-r lg:bg-linear-to-b from-transparent via-white/10 to-transparent" />
 
             {/* RIGHT SIDE */}
-            <div className="flex-1 p-10 md:p-16 bg-gradient-to-br from-[#0d1117] to-[#0a0c10] relative overflow-hidden group">
+            <div className="flex-1 p-10 md:p-16 bg-linear-to-br from-[#0d1117] to-[#0a0c10] relative overflow-hidden group">
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none transition-all duration-700 group-hover:bg-indigo-500/20 group-hover:scale-150" />
               
               <div className="mb-12 relative z-10">
@@ -212,7 +212,7 @@ export function ComparisonSection({ namespace = "Offerta.comparison", variant = 
 
         {/* Closing Sentence */}
         <div className="max-w-4xl mx-auto text-center">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
+          <div className="h-px w-24 bg-linear-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
           <p className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight leading-tight">
             {t.rich("closing", {
               br: () => <br />,

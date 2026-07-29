@@ -67,7 +67,7 @@ export default function WcThemeProvider({
 }) {
   return (
     <>
-      {/* eslint-disable-next-line react/no-danger */}
+      { }
       <style dangerouslySetInnerHTML={{ __html: WC_GLOBAL_STYLES }} />
       <div className={styles.page} data-theme={theme}>{children}</div>
     </>

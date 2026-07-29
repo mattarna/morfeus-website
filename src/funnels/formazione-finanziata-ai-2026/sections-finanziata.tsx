@@ -808,7 +808,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
       } else {
         const body = await res.json().catch(() => ({}));
         setError("Si è verificato un errore (" + res.status + "). Riprova o scrivici a " + supportEmail + ".");
-        // eslint-disable-next-line no-console
+         
         console.error("optin error", body);
         setSubmitting(false);
       }
@@ -822,7 +822,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
 
   return (
     <div className="ff-root" style={{ ["--accent" as string]: accentColor }}>
-      {/* eslint-disable-next-line react/no-danger */}
+      { }
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
       {/* BANNER */}
@@ -1549,7 +1549,7 @@ export function FinanziataThankYouSection({ accentColor, step }: ThankYouProps) 
 
   return (
     <div className="ff-root" style={{ ["--accent" as string]: accentColor }}>
-      {/* eslint-disable-next-line react/no-danger */}
+      { }
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
       {/* NAV */}

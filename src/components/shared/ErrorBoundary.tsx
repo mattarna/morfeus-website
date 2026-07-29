@@ -46,7 +46,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen bg-black flex items-center justify-center p-6">
           <div className="max-w-lg text-center">
             {/* Icon */}
-            <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center border border-red-500/30">
+            <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-linear-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center border border-red-500/30">
               <svg 
                 className="w-10 h-10 text-red-500" 
                 fill="none" 

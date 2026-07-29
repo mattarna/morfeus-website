@@ -12,14 +12,14 @@ export function CaseStudyVisuals({ slug, type }: CaseStudyVisualProps) {
   const isProblem = type === "problem";
 
   // COMMON CONTAINER STYLES
-  const containerClasses = "relative w-full aspect-square flex items-center justify-center rounded-[2.5rem] border border-white/5 bg-white/[0.02] overflow-hidden group";
+  const containerClasses = "relative w-full aspect-square flex items-center justify-center rounded-[2.5rem] border border-white/5 bg-white/2 overflow-hidden group";
 
   // SALES VISUALS
   if (slug === "sales") {
     if (isProblem) {
       return (
         <div className={containerClasses}>
-          <div className="absolute inset-0 bg-red-500/[0.03] blur-3xl" />
+          <div className="absolute inset-0 bg-red-500/3 blur-3xl" />
           <svg className="w-full h-full p-12" viewBox="0 0 200 200">
             {[...Array(8)].map((_, i) => (
               <motion.line
@@ -95,7 +95,7 @@ export function CaseStudyVisuals({ slug, type }: CaseStudyVisualProps) {
     if (isProblem) {
       return (
         <div className={containerClasses}>
-          <div className="absolute inset-0 bg-red-500/[0.03] blur-3xl" />
+          <div className="absolute inset-0 bg-red-500/3 blur-3xl" />
           <div className="flex flex-col gap-4">
             <motion.div 
               animate={{ x: [-2, 2, -2] }}
@@ -145,7 +145,7 @@ export function CaseStudyVisuals({ slug, type }: CaseStudyVisualProps) {
                 y: [Math.random() * 20 - 10, Math.random() * 20 - 10]
               }}
               transition={{ duration: 10 + i, repeat: Infinity, ease: "linear" }}
-              className="absolute w-16 h-20 bg-white/[0.03] border border-white/10 rounded-sm"
+              className="absolute w-16 h-20 bg-white/3 border border-white/10 rounded-xs"
             />
           ))}
           <Icon icon="solar:history-bold-duotone" className="w-12 h-12 text-slate-500/40" />
@@ -161,7 +161,7 @@ export function CaseStudyVisuals({ slug, type }: CaseStudyVisualProps) {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.1 }}
-              className="w-8 h-8 rounded border border-majorelle/30 bg-majorelle/10 flex items-center justify-center"
+              className="w-8 h-8 rounded-sm border border-majorelle/30 bg-majorelle/10 flex items-center justify-center"
             >
               <Icon icon="solar:check-read-bold" className="w-4 h-4 text-majorelle" />
             </motion.div>
@@ -231,17 +231,17 @@ export function CaseStudyVisuals({ slug, type }: CaseStudyVisualProps) {
     }
     return (
       <div className={containerClasses}>
-        <div className="relative w-40 h-24 bg-white/[0.03] border border-majorelle/20 rounded-xl p-4 overflow-hidden">
+        <div className="relative w-40 h-24 bg-white/3 border border-majorelle/20 rounded-xl p-4 overflow-hidden">
           <motion.div 
             initial={{ x: "-100%" }}
             animate={{ x: "100%" }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-majorelle/10 to-transparent"
+            className="absolute top-0 bottom-0 w-1/2 bg-linear-to-r from-transparent via-majorelle/10 to-transparent"
           />
           <div className="space-y-2">
-            <div className="h-2 w-2/3 bg-majorelle/20 rounded" />
-            <div className="h-2 w-full bg-white/5 rounded" />
-            <div className="h-2 w-1/2 bg-white/5 rounded" />
+            <div className="h-2 w-2/3 bg-majorelle/20 rounded-sm" />
+            <div className="h-2 w-full bg-white/5 rounded-sm" />
+            <div className="h-2 w-1/2 bg-white/5 rounded-sm" />
           </div>
           <Icon icon="solar:book-bookmark-bold-duotone" className="absolute bottom-2 right-2 w-6 h-6 text-majorelle" />
         </div>

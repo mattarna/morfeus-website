@@ -3,8 +3,8 @@ import { Link } from "@/i18n/navigation";
 import { Icon } from "@iconify/react";
 
 interface BookingConfirmedProps {
-  params: { locale: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 function getSingle(value: string | string[] | undefined): string {
@@ -26,7 +26,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default function BookingConfirmedPage({ params: { locale }, searchParams }: BookingConfirmedProps) {
+export default async function BookingConfirmedPage(props: BookingConfirmedProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   const isIt = locale === "it";
   const name = getSingle(searchParams.name);
   const date = getSingle(searchParams.date);
@@ -45,7 +52,7 @@ export default function BookingConfirmedPage({ params: { locale }, searchParams 
     : "I just sent you the calendar invite with the link to join. See you soon!";
 
   const homeLabel = isIt ? "Torna alla home" : "Back to home";
-  
+
   const slotText = date && time ? `${date} · ${time}` : "";
 
   return (

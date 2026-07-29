@@ -142,7 +142,7 @@ export function CTA() {
         </div>
 
         {/* Microcopy - Trust Badge Style */}
-        <div className="inline-flex max-w-full items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/[0.03] border border-white/5 gap-2.5 sm:gap-3 text-slate-500 text-[10px] sm:text-xs 2xl:text-sm font-medium tracking-wider uppercase backdrop-blur-sm">
+        <div className="inline-flex max-w-full items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/3 border border-white/5 gap-2.5 sm:gap-3 text-slate-500 text-[10px] sm:text-xs 2xl:text-sm font-medium tracking-wider uppercase backdrop-blur-xs">
           <div className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forge opacity-40"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-forge"></span>

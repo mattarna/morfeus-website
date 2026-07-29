@@ -141,7 +141,7 @@ export function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center sm:items-end justify-center p-4 sm:p-6 pointer-events-none">
+    <div className="fixed inset-0 z-1000 flex items-center sm:items-end justify-center p-4 sm:p-6 pointer-events-none">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/80 backdrop-blur-md pointer-events-auto z-0"
@@ -151,12 +151,12 @@ export function CookieConsent() {
       {/* Banner */}
       <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden animate-fadeIn z-10">
         {/* Gradient accent */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#4D39EB] to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-[#4D39EB] to-transparent" />
         
         <div className="p-6 sm:p-8">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 mb-6">
-            <div className="w-12 h-12 rounded-xl bg-[#4D39EB]/20 flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-[#4D39EB]/20 flex items-center justify-center shrink-0">
               <svg className="w-6 h-6 text-[#4D39EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
@@ -174,7 +174,7 @@ export function CookieConsent() {
 
           {/* Expandable Details */}
           {showDetails && (
-            <div className="mb-6 p-4 bg-white/[0.02] rounded-xl border border-white/5 space-y-4">
+            <div className="mb-6 p-4 bg-white/2 rounded-xl border border-white/5 space-y-4">
               {/* Necessary Cookies */}
               <div className="flex items-center justify-between">
                 <div>

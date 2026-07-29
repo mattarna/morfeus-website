@@ -10,7 +10,7 @@ function FunnelRuntimeStyles({ fontPack }: { fontPack: "webinar" | "playbook" })
         <link rel="preload" href="/fonts/webinar-claude/ClashDisplay-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/webinar-claude/Satoshi-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/webinar-claude/PlayfairDisplay-Italic-Variable.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line react/no-danger */}
+        { }
         <style dangerouslySetInnerHTML={{ __html: `
           @font-face { font-family: 'Clash Display'; src: url('/fonts/webinar-claude/ClashDisplay-Variable.ttf') format('truetype'); font-weight: 200 700; font-style: normal; font-display: swap; }
           @font-face { font-family: 'Satoshi'; src: url('/fonts/webinar-claude/Satoshi-Variable.ttf') format('truetype'); font-weight: 300 900; font-style: normal; font-display: swap; }
@@ -33,13 +33,18 @@ function FunnelRuntimeStyles({ fontPack }: { fontPack: "webinar" | "playbook" })
   );
 }
 
-export default function FunnelSlugLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { slug: string };
-}) {
+export default async function FunnelSlugLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const runtime = getFunnelRegistryItem(params.slug)?.runtime;
   const fontPack = runtime?.fontPack;

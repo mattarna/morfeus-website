@@ -3,15 +3,21 @@ import { CallConfirmedPage } from "@/components/sections/CallConfirmedPage";
 import { getCallConfirmedText } from "./data";
 
 interface CallConfirmedRouteProps {
-  params: { locale: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({
-  params: { locale }
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   return {
     title: locale === "it" ? "Call confermata — Morfeus" : "Call confirmed — Morfeus",
     description: locale === "it" ? "Pagina di preparazione pre-call Morfeus." : "Morfeus pre-call preparation page.",
@@ -22,7 +28,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function CallConfirmedRoute({ params: { locale }, searchParams }: CallConfirmedRouteProps) {
+export default async function CallConfirmedRoute(props: CallConfirmedRouteProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   const text = await getCallConfirmedText(locale);
 
   return (

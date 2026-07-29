@@ -10,7 +10,7 @@ const TIER_CONFIG = {
   literate: {
     icon: "solar:book-bold-duotone",
     accentColor: "text-vista",
-    borderColor: "border-white/[0.05]",
+    borderColor: "border-white/5",
     bgGlow: "",
     badgeBg: "bg-vista/10 border-vista/20",
     badgeText: "text-vista",
@@ -42,7 +42,7 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
   const insight = t("insight");
 
   return (
-    <section id="levels" className="relative z-40 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/[0.05] overflow-visible">
+    <section id="levels" className="relative z-40 py-24 md:py-40 px-6 xl:px-40 bg-night border-y border-white/5 overflow-visible">
       <GridPattern />
 
       <div className="relative z-10 max-w-[1200px] mx-auto">
@@ -70,7 +70,7 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
             return (
               <div
                 key={tierId}
-                className={`group relative p-8 md:p-10 rounded-[2.5rem] bg-gradient-to-br from-white/[0.03] to-transparent border ${config.borderColor} ${config.bgGlow} transition-all duration-500 hover:bg-white/[0.05] flex flex-col ${isTarget ? "lg:-mt-4 lg:-mb-4 lg:scale-[1.02]" : ""}`}
+                className={`group relative p-8 md:p-10 rounded-[2.5rem] bg-linear-to-br from-white/3 to-transparent border ${config.borderColor} ${config.bgGlow} transition-all duration-500 hover:bg-white/5 flex flex-col ${isTarget ? "lg:-mt-4 lg:-mb-4 lg:scale-[1.02]" : ""}`}
               >
                 {isTarget && (
                   <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/10 blur-[80px] rounded-full pointer-events-none" />
@@ -83,7 +83,7 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
                     </span>
                   </div>
 
-                  <div className={`w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
+                  <div className={`w-16 h-16 rounded-2xl bg-white/3 border border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
                     <Icon icon={config.icon} className={`w-8 h-8 ${config.accentColor}`} />
                   </div>
 
@@ -91,14 +91,14 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
                     {t(`tiers.${tierId}.name`)}
                   </h3>
 
-                  <p className="text-slate-400 font-light leading-relaxed text-base md:text-lg mb-8 flex-grow">
+                  <p className="text-slate-400 font-light leading-relaxed text-base md:text-lg mb-8 grow">
                     {t(`tiers.${tierId}.desc`)}
                   </p>
 
                   <div className="pt-6 border-t border-white/5 mt-auto">
                     <div className="flex flex-wrap gap-2">
                       {(t(`tiers.${tierId}.outcome`) as string).split(" · ").map((tag, i) => (
-                        <span key={i} className={`text-[10px] font-bold uppercase tracking-[0.1em] ${config.badgeText} ${config.badgeBg} px-3 py-1.5 rounded-full border`}>
+                        <span key={i} className={`text-[10px] font-bold uppercase tracking-widest ${config.badgeText} ${config.badgeBg} px-3 py-1.5 rounded-full border`}>
                           {tag}
                         </span>
                       ))}
@@ -118,7 +118,7 @@ export function LabLevelsSection({ namespace = "Lab.levels" }: LabLevelsSectionP
 
         {insight.trim().length > 0 && (
           <div className="mt-20 text-center">
-            <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
+            <div className="h-px w-24 bg-linear-to-r from-transparent via-white/20 to-transparent mx-auto mb-12" />
             <p className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight max-w-4xl mx-auto">
               {insight}
             </p>

@@ -14,7 +14,7 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
   const tierIds = ["1", "2", "3"];
 
   return (
-    <section id="pricing" className="relative z-[110] py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/[0.05] overflow-visible">
+    <section id="pricing" className="relative z-110 py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/5 overflow-visible">
       <GridPattern />
       
       <div className="relative z-10 max-w-[1300px] mx-auto">
@@ -55,18 +55,18 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
                 
                 <div className={`relative h-full flex flex-col rounded-[2.5rem] overflow-hidden border transition-all duration-500 ${
                   isCore 
-                  ? 'bg-gradient-to-b from-[#0d1520] to-[#080c12] border-indigo-500/30 shadow-[0_0_60px_-15px_rgba(79,70,229,0.3)]' 
-                  : 'bg-[#0a0f14] border-white/[0.08] hover:border-white/20'
+                  ? 'bg-linear-to-b from-[#0d1520] to-[#080c12] border-indigo-500/30 shadow-[0_0_60px_-15px_rgba(79,70,229,0.3)]' 
+                  : 'bg-[#0a0f14] border-white/8 hover:border-white/20'
                 }`}>
                   {/* Header */}
-                  <div className={`p-8 md:p-10 border-b ${isCore ? 'border-indigo-500/20' : 'border-white/[0.05]'}`}>
+                  <div className={`p-8 md:p-10 border-b ${isCore ? 'border-indigo-500/20' : 'border-white/5'}`}>
                     <span className={`inline-block text-[10px] font-mono tracking-[0.3em] uppercase mb-4 ${isCore ? 'text-indigo-400' : 'text-slate-500'}`}>Tier 0{id}</span>
                     <h3 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-3 uppercase">{t(`pricing.tiers.${id}.name`)}</h3>
                     <p className="text-indigo-400 font-bold text-sm leading-relaxed uppercase tracking-wide">{t(`pricing.tiers.${id}.capacity_value`)}</p>
                   </div>
 
                   {/* Content */}
-                  <div className="p-8 md:p-10 flex-grow flex flex-col">
+                  <div className="p-8 md:p-10 grow flex flex-col">
                     {/* PER CHI E */}
                     <div className="mb-10">
                       <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em] mb-4 block">{t(`pricing.tiers.${id}.for_label`)}</span>
@@ -86,7 +86,7 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
                             <li key={key} className="flex items-start gap-4">
                               <Icon 
                                 icon="solar:check-circle-bold"
-                                className={`w-5 h-5 flex-shrink-0 mt-0.5 ${isCore ? 'text-indigo-400' : 'text-emerald-500/60'}`} 
+                                className={`w-5 h-5 shrink-0 mt-0.5 ${isCore ? 'text-indigo-400' : 'text-emerald-500/60'}`} 
                               />
                               <span className="text-slate-300 text-base leading-snug font-light">
                                 {bulletText}
@@ -101,8 +101,8 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
                       onClick={scrollToContact}
                       className={`on-page-cta mt-auto w-full py-5 rounded-2xl text-base font-black uppercase tracking-widest transition-all duration-300 ${
                         isCore
-                        ? 'bg-gradient-to-r from-indigo-600 to-blue-700 text-white shadow-[0_0_30px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:scale-[1.02]'
-                        : 'border-2 border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/10 hover:border-white/30 hover:text-white'
+                        ? 'bg-linear-to-r from-indigo-600 to-blue-700 text-white shadow-[0_0_30px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:scale-[1.02]'
+                        : 'border-2 border-white/10 bg-white/3 text-slate-300 hover:bg-white/10 hover:border-white/30 hover:text-white'
                       }`}
                     >
                       {t("ctas.pricing")}
@@ -120,7 +120,7 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
           className="relative group mb-24 cursor-pointer"
         >
           <div className="relative w-full p-12 md:p-16 border border-white/5 rounded-[2.5rem] bg-[#0A0C10] text-center overflow-hidden transition-all duration-500 shadow-2xl hover:border-indigo-500/20">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-linear-to-r from-transparent via-indigo-500/20 to-transparent" />
             
             <div className="inline-flex items-center gap-3 px-6 py-1.5 rounded-full border border-white/10 bg-white/5 mb-10 transition-all duration-500">
               <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
@@ -141,8 +141,8 @@ export function PricingSection({ scrollToContact }: PricingSectionProps) {
         </div>
 
         {/* Bonus Section */}
-        <div className="relative p-8 md:p-20 rounded-[4rem] bg-[#0A0C10] border border-white/[0.05] overflow-hidden mb-16 shadow-2xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+        <div className="relative p-8 md:p-20 rounded-[4rem] bg-[#0A0C10] border border-white/5 overflow-hidden mb-16 shadow-2xl">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-linear-to-r from-transparent via-indigo-500/50 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(79,70,229,0.15),transparent_50%)]" />
           
           <h3 className="relative z-10 text-2xl md:text-3xl font-black text-white mb-16 text-center uppercase tracking-tight">{t("pricing.bonus.title")}</h3>

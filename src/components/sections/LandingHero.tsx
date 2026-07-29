@@ -36,13 +36,13 @@ export function LandingHero({ contentVisible, scrollToContact, namespace = "Offe
         {/* 1. HEADLINE */}
         <div className="mb-6 md:mb-8 max-w-4xl">
           <h1 className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.03em] leading-[1.1] uppercase">
-            <span className="block bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/70">
+            <span className="block bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/70">
               {t("headline.line1")}
             </span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/70">
+            <span className="block bg-clip-text text-transparent bg-linear-to-b from-white via-white/90 to-white/70">
               {t("headline.line2")}
             </span>
-            <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-majorelle via-neon to-vista drop-shadow-[0_0_30px_rgba(83,61,252,0.3)]">
+            <span className="block mt-2 bg-clip-text text-transparent bg-linear-to-r from-majorelle via-neon to-vista drop-shadow-[0_0_30px_rgba(83,61,252,0.3)]">
               {t("headline.line3")}
             </span>
           </h1>
@@ -70,7 +70,7 @@ export function LandingHero({ contentVisible, scrollToContact, namespace = "Offe
               onClick={scrollToContact}
               className="on-page-cta group relative px-10 py-5 rounded-full font-black text-[13px] uppercase tracking-[0.2em] transition-all duration-500 overflow-hidden shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)] active:scale-95"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+              <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-blue-800" />
               <div className="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity" />
               <span className="relative z-10 flex items-center gap-3 text-white">
                 {t("cta_primary")}
@@ -80,7 +80,7 @@ export function LandingHero({ contentVisible, scrollToContact, namespace = "Offe
 
             <button 
               onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group relative px-10 py-5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm active:scale-95"
+              className="group relative px-10 py-5 rounded-full font-bold text-[13px] uppercase tracking-[0.2em] transition-all duration-500 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-xs active:scale-95"
             >
               <span className="relative z-10 text-white/70 group-hover:text-white transition-colors">
                 {t("cta_secondary")}

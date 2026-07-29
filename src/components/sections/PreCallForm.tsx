@@ -101,7 +101,7 @@ const SelectField = ({ label, value, onChange, options }: { label: string, value
         required
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all"
+        className="w-full h-14 appearance-none rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-hidden focus:ring-4 focus:ring-majorelle/5 transition-all"
       >
         <option value="" disabled className="bg-slate-900">{label}</option>
         {options.map((option) => (
@@ -126,7 +126,7 @@ const InputField = ({ label, value, onChange, type = "text", placeholder }: { la
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder || label}
-      className="w-full h-14 rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600"
+      className="w-full h-14 rounded-2xl border border-white/10 bg-black/40 px-5 text-sm text-white focus:border-majorelle/50 focus:outline-hidden focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600"
     />
   </div>
 );
@@ -253,7 +253,7 @@ export function PreCallForm({
 
   if (isComplete) {
     return (
-      <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-10 md:p-16 backdrop-blur-sm text-center">
+      <div className="rounded-[2.5rem] border border-white/10 bg-white/3 p-10 md:p-16 backdrop-blur-xs text-center">
         <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
           <Icon icon="solar:check-circle-bold" className="h-10 w-10" />
         </div>
@@ -268,7 +268,7 @@ export function PreCallForm({
   }
 
   return (
-    <div className="rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-8 md:p-12 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+    <div className="rounded-[2.5rem] border border-white/10 bg-white/3 p-8 md:p-12 backdrop-blur-xs shadow-2xl relative overflow-hidden">
       <div className="mb-6 flex items-center justify-between">
         <div className="inline-flex items-center gap-2 rounded-full border border-forge/20 bg-forge/5 px-3 py-1">
           <div className="h-1.5 w-1.5 rounded-full bg-forge" />
@@ -435,7 +435,7 @@ export function PreCallForm({
                   value={payload.goal}
                   onChange={(event) => setPayload((prev) => ({ ...prev, goal: event.target.value }))}
                   placeholder={text.fields.goalPlaceholder}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-sm text-white focus:border-majorelle/50 focus:outline-none focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600 resize-none"
+                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-sm text-white focus:border-majorelle/50 focus:outline-hidden focus:ring-4 focus:ring-majorelle/5 transition-all placeholder:text-slate-600 resize-none"
                 />
               </div>
             </motion.div>
@@ -466,7 +466,7 @@ export function PreCallForm({
               disabled={isSubmitting}
               className="on-page-cta group relative flex-1 sm:flex-none px-12 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 overflow-hidden shadow-[0_0_40px_-10px_rgba(79,70,229,0.5)] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-800" />
+              <div className="absolute inset-0 bg-linear-to-r from-indigo-600 to-blue-800" />
               <div className="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity" />
               <span className="relative z-10 flex items-center justify-center gap-3 text-white">
                 {currentStep === totalSteps 

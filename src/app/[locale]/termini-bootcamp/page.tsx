@@ -14,7 +14,7 @@ export default function TerminiBootcampPage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-sm border-b border-white/5">
+      <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-10 bg-black/80 backdrop-blur-xs border-b border-white/5">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
           <Link
             href={`/${locale}`}
@@ -479,7 +479,7 @@ export default function TerminiBootcampPage() {
             <p className="text-slate-300 mb-3">
               Per qualsiasi comunicazione relativa al presente contratto, all&apos;accesso al Bootcamp o ai pagamenti:
             </p>
-            <div className="p-5 bg-white/[0.02] rounded-xl border border-white/5 text-slate-300">
+            <div className="p-5 bg-white/2 rounded-xl border border-white/5 text-slate-300">
               <p className="text-white font-semibold mb-1">Morfeus Hub S.r.l.</p>
               <p className="text-sm">Via Jacopo del Verme 7, 20159 Milano (MI), Italia</p>
               <p className="text-sm">

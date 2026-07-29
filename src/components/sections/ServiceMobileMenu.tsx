@@ -43,13 +43,13 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: "-100%" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[150] bg-black md:hidden flex flex-col pt-24 pb-8 px-6"
+          className="fixed inset-0 z-150 bg-black md:hidden flex flex-col pt-24 pb-8 px-6"
         >
           {/* Subtle grid lines background */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-            <div className="absolute left-1/4 top-0 bottom-0 w-[1px] bg-white" />
-            <div className="absolute left-2/4 top-0 bottom-0 w-[1px] bg-white" />
-            <div className="absolute left-3/4 top-0 bottom-0 w-[1px] bg-white" />
+            <div className="absolute left-1/4 top-0 bottom-0 w-px bg-white" />
+            <div className="absolute left-2/4 top-0 bottom-0 w-px bg-white" />
+            <div className="absolute left-3/4 top-0 bottom-0 w-px bg-white" />
           </div>
 
           <div className="relative z-10 flex flex-col h-full justify-between overflow-y-auto">

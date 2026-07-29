@@ -15,7 +15,7 @@ export function ServiceFooter({ namespace = "Offerta.landing_footer", navLinkIds
   const t = useTranslations(namespace);
 
   return (
-    <footer id="footer" className="relative z-[150] bg-[#0a111a] border-t border-white/[0.05] shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] pt-24 pb-32 px-6 xl:px-40 overflow-visible">
+    <footer id="footer" className="relative z-150 bg-[#0a111a] border-t border-white/5 shadow-[inset_0_0_150px_rgba(0,0,0,0.6)] pt-24 pb-32 px-6 xl:px-40 overflow-visible">
       <div className="max-w-[1400px] mx-auto relative z-10">
         <div className={`grid grid-cols-1 md:grid-cols-2 gap-16 mb-24 ${navLinkIds.length > 0 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
           {navLinkIds.length > 0 && (

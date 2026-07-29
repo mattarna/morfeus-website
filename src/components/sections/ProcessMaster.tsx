@@ -54,7 +54,7 @@ export function ProcessMaster() {
       <section className="relative w-full bg-black py-20 px-6">
         {/* Section Header */}
         <div className="max-w-[1400px] mx-auto mb-12 text-center">
-          <h2 className="text-4xl sm:text-5xl font-normal tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
+          <h2 className="text-4xl sm:text-5xl font-normal tracking-tighter bg-clip-text text-transparent bg-linear-to-b from-white to-[#E0CCFA]/70 leading-[0.9]">
             {t("headline")}
           </h2>
         </div>
@@ -68,7 +68,7 @@ export function ProcessMaster() {
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
+                <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent z-10" />
                 <Image
                   src={step.image}
                   alt={step.title}
@@ -224,7 +224,7 @@ function ProcessStep({
         }}
       >
         {/* Gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80 pointer-events-none z-20" />
+        <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black opacity-80 pointer-events-none z-20" />
         
         {/* Background image */}
         <Image 

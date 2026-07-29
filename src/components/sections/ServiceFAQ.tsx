@@ -23,13 +23,14 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
     ? [faqItems]
     : [faqItems.slice(0, Math.ceil(faqItems.length / 2)), faqItems.slice(Math.ceil(faqItems.length / 2))];
 
+  // classi in sintassi Tailwind 4 (da main), JsonLd dal nostro branch
   return (
-    <section id="faq" className="relative z-[130] py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/[0.05] overflow-visible">
+    <section id="faq" className="relative z-130 py-24 md:py-40 px-6 xl:px-40 bg-night border-t border-white/5 overflow-visible">
       <JsonLd schema={buildFaqPage(faqSchemaEntries)} />
       <GridPattern />
       
       {/* Module ID Tag */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-[100]">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#030303] border border-white/10 rounded-full z-100">
         <span className="text-[10px] font-mono text-slate-500 tracking-[0.3em] uppercase whitespace-nowrap">{t("tag")}</span>
       </div>
 
@@ -40,7 +41,7 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
           <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight uppercase mb-8 leading-tight">
             {t("sectionTitle")}
           </h2>
-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-indigo-500 to-transparent mx-auto shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
+          <div className="h-px w-32 bg-linear-to-r from-transparent via-indigo-500 to-transparent mx-auto shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
         </div>
 
         {/* FAQ Accordion List - Two Columns */}
@@ -57,13 +58,13 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
                 return (
                   <div 
                     key={id} 
-                    className={`relative group border border-white/[0.05] rounded-2xl transition-all duration-500 overflow-hidden ${
-                      isOpen ? 'bg-indigo-500/[0.03] border-indigo-500/20 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]' : 'hover:bg-white/[0.01]'
+                    className={`relative group border border-white/5 rounded-2xl transition-all duration-500 overflow-hidden ${
+                      isOpen ? 'bg-indigo-500/3 border-indigo-500/20 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)]' : 'hover:bg-white/1'
                     }`}
                   >
                     <button 
                       onClick={() => setActiveFaq(isOpen ? null : index)}
-                      className="w-full flex items-center justify-between px-6 py-5 md:py-6 text-left outline-none"
+                      className="w-full flex items-center justify-between px-6 py-5 md:py-6 text-left outline-hidden"
                     >
                       <div className="flex items-center gap-4 md:gap-6">
                         <span className={`text-[9px] font-mono tracking-widest uppercase transition-colors duration-300 ${
@@ -78,7 +79,7 @@ export function ServiceFAQ({ activeFaq, setActiveFaq, namespace = "Offerta.faq_o
                         </h3>
                       </div>
                       
-                      <div className={`flex-shrink-0 ml-4 transition-transform duration-500 ${isOpen ? 'rotate-180 text-indigo-500' : 'text-slate-600'}`}>
+                      <div className={`shrink-0 ml-4 transition-transform duration-500 ${isOpen ? 'rotate-180 text-indigo-500' : 'text-slate-600'}`}>
                         <Icon icon="solar:alt-arrow-down-linear" className="w-5 h-5 md:w-6 md:h-6" />
                       </div>
                     </button>

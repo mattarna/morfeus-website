@@ -233,7 +233,8 @@ function SparkCross({ p }: { p: Palette }) {
   );
 }
 
-const PATTERNS: Record<CoverKind, (p: Palette) => JSX.Element> = {
+// React 19: il namespace JSX globale non c'e' piu', si passa da React.JSX
+const PATTERNS: Record<CoverKind, (p: Palette) => React.JSX.Element> = {
   forbice: (p) => <Forbice p={p} />,
   funnel: (p) => <Funnel p={p} />,
   "loop-spezzato": (p) => <LoopSpezzato p={p} />,

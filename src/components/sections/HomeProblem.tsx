@@ -3,69 +3,85 @@
 import { useTranslations } from "next-intl";
 import { useScrollStore } from "@/app/store/useScrollStore";
 import { useEffect, useState } from "react";
-import { Icon } from "@iconify/react";
 
 /**
  * HomeProblem Section - Index 2
- * 
- * Exact layout from screenshot:
- * - Left: Headline, Body, and 4 Vertical Cards.
- * - Right: Large Diagnostic Impact Card.
- * - Optimized for 100vh fit.
+ *
+ * "I Value Leak": la mappa dei punti in cui il margine esce dall'azienda.
+ * Non e' un metodo in tre fasi, quindi non usa card verticali numerate:
+ * tre righe orizzontali a tutta larghezza (numero, mini visual, titolo, testo)
+ * fra un blocco di apertura e una riga di chiusura.
+ *
+ * I visual rappresentano il problema, non il servizio. Ereditano il colore
+ * dalla riga (currentColor): una tinta piena a riposo, arancio brand in hover.
+ * Le opacita' interne sono tarate per restare leggibili senza hover — i tratti
+ * "spenti" servono a raccontare il degrado, non a nascondere il disegno.
  */
+
+/** Le informazioni si fermano: un percorso che si interrompe a meta'. */
+function LeakVisualFlow() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <line x1="10" y1="24" x2="44" y2="24" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M58 24 H110" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 5" opacity="0.55" />
+      <line x1="51" y1="13" x2="51" y2="35" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="10" cy="24" r="4" fill="currentColor" />
+      <circle cx="44" cy="24" r="4" fill="currentColor" />
+      <circle cx="110" cy="24" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.7" />
+    </svg>
+  );
+}
+
+/** Il sapere resta nella testa di pochi: tutto converge su un nodo solo. */
+function LeakVisualKnowledge() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="1.25" opacity="0.55">
+        <line x1="60" y1="24" x2="16" y2="10" />
+        <line x1="60" y1="24" x2="16" y2="38" />
+        <line x1="60" y1="24" x2="104" y2="10" />
+        <line x1="60" y1="24" x2="104" y2="38" />
+      </g>
+      <g stroke="currentColor" strokeWidth="1.5" opacity="0.8">
+        <circle cx="16" cy="10" r="3" />
+        <circle cx="16" cy="38" r="3" />
+        <circle cx="104" cy="10" r="3" />
+        <circle cx="104" cy="38" r="3" />
+      </g>
+      <circle cx="60" cy="24" r="12" stroke="currentColor" strokeWidth="1.25" opacity="0.5" />
+      <circle cx="60" cy="24" r="6.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+/** Lavoro che un sistema dovrebbe assorbire: una coda che si accumula. */
+function LeakVisualManual() {
+  return (
+    <svg viewBox="0 0 120 48" fill="none" className="w-full h-full" aria-hidden="true">
+      <rect x="10" y="7" width="44" height="5" rx="2.5" fill="currentColor" opacity="0.4" />
+      <rect x="10" y="18" width="62" height="5" rx="2.5" fill="currentColor" opacity="0.6" />
+      <rect x="10" y="29" width="82" height="5" rx="2.5" fill="currentColor" opacity="0.8" />
+      <rect x="10" y="40" width="100" height="5" rx="2.5" fill="currentColor" opacity="1" />
+    </svg>
+  );
+}
+
+const LEAKS = [
+  { key: "flow", Visual: LeakVisualFlow, color: "text-blue-400" },
+  { key: "knowledge", Visual: LeakVisualKnowledge, color: "text-indigo-400" },
+  { key: "manual", Visual: LeakVisualManual, color: "text-purple-400" },
+] as const;
+
 export function HomeProblem() {
   const t = useTranslations("Problem");
   const currentIndex = useScrollStore((state) => state.currentIndex);
-  const setIndex = useScrollStore((state) => state.setIndex);
   const [isVisible, setIsVisible] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      if (window.innerWidth < 1280) return true;
-      if (window.matchMedia('(pointer: coarse)').matches && 
-          window.matchMedia('(hover: none)').matches) {
-        return true;
-      }
-      return false;
-    };
-    
-    const updateViewport = () => setIsDesktop(!checkIsMobile());
-    updateViewport();
-    window.addEventListener("resize", updateViewport);
-    return () => window.removeEventListener("resize", updateViewport);
-  }, []);
 
   useEffect(() => {
     if (currentIndex === 2) {
       setIsVisible(true);
     }
   }, [currentIndex]);
-
-  const handleCtaClick = (index: number) => {
-    if (isDesktop) {
-      setIndex(index);
-    } else {
-      const element = document.getElementById(`section-${index}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
-  const cards = [
-    { key: "costs", icon: "solar:bill-list-bold", color: "text-blue-400" },
-    { key: "talent", icon: "solar:users-group-two-rounded-bold", color: "text-indigo-400" },
-    { key: "processes", icon: "solar:settings-minimalistic-bold", color: "text-slate-400" },
-    { key: "data", icon: "solar:database-bold", color: "text-purple-400" },
-  ];
-
-  const breakdown = [
-    { label: t("ticker.breakdown.ops"), value: 38, color: "bg-blue-500" },
-    { label: t("ticker.breakdown.decisions"), value: 27, color: "bg-indigo-500" },
-    { label: t("ticker.breakdown.waste"), value: 22, color: "bg-purple-500" },
-    { label: t("ticker.breakdown.errors"), value: 13, color: "bg-slate-500" },
-  ];
 
   return (
     <section className="relative z-0 min-h-screen xl:h-screen w-full flex items-center justify-center bg-black pt-28 pb-16 xl:pt-28 xl:pb-20 short:!pt-24 short:!pb-10 overflow-hidden">
@@ -75,117 +91,66 @@ export function HomeProblem() {
       </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-5 sm:px-6 md:px-10 lg:px-14 xl:px-24 2xl:px-48 w-full">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 md:gap-10 xl:gap-14 2xl:gap-20 items-center">
-          
-          {/* LEFT COLUMN: Narrative & Vertical Cards */}
-          <div className="xl:col-span-7 flex flex-col gap-7 xl:gap-8 short:!gap-5">
-            <div className="max-w-2xl">
-              <h2 className={`text-[2.35rem] sm:text-4xl md:text-5xl xl:text-[3.35rem] 2xl:text-6xl short:!text-5xl font-normal tracking-tighter text-white leading-[1.1] mb-5 xl:mb-6 short:!mb-4 transition-all duration-1000 delay-100 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}>
-                {t("headline").split(".")[0]}.<br />
-                <span className="text-slate-500">{t("headline").split(".")[1]}</span>
-              </h2>
-              
-              <p className={`text-[15px] md:text-base 2xl:text-lg text-slate-400 font-light leading-relaxed transition-all duration-1000 delay-200 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}>
-                {t("body")}
-              </p>
-            </div>
 
-            {/* Vertical Cards List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:flex xl:flex-col gap-3">
-              {cards.map((card, index) => (
-                <div 
-                  key={card.key}
-                  className={`group flex items-start gap-4 2xl:gap-5 p-4 2xl:p-5 rounded-2xl bg-white/[0.06] border border-white/10 transition-all duration-700 hover:bg-white/[0.1] hover:border-white/20 ${
-                    isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
-                  }`}
-                  style={{ transitionDelay: `${300 + index * 50}ms` }}
-                >
-                  <div className={`p-2 rounded-xl bg-white/10 border border-white/20 flex-shrink-0 mt-1 ${card.color}`}>
-                    <Icon icon={card.icon} width={20} />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-sm 2xl:text-base font-bold text-white tracking-tight leading-snug group-hover:text-blue-400 transition-colors">
-                      {t(`cards.${card.key}.title`)}
-                    </h3>
-                    <p className="text-xs 2xl:text-sm text-slate-500 leading-relaxed group-hover:text-slate-300 transition-colors">
-                      {t(`cards.${card.key}.desc`)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* HEADER: headline a sinistra, introduzione a destra */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-14 2xl:gap-20 xl:items-end mb-10 xl:mb-14 short:!mb-8">
+          <div className="xl:col-span-7">
+            <span className={`block text-[11px] font-bold tracking-[0.2em] text-blue-500 uppercase mb-4 short:!mb-3 transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}>
+              {t("label")}
+            </span>
+            <h2 className={`text-[2.35rem] sm:text-4xl md:text-5xl xl:text-[3.35rem] 2xl:text-6xl short:!text-5xl font-normal tracking-tighter text-white leading-[1.1] transition-all duration-1000 delay-100 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}>
+              {t("headline_1")}<br />
+              <span className="text-slate-500">{t("headline_2")}</span>
+            </h2>
           </div>
 
-          {/* RIGHT COLUMN: Diagnostic Report Card */}
-          <div className="xl:col-span-5 flex justify-center xl:justify-end">
-            <div 
-              className={`relative w-full max-w-md transition-all duration-1000 delay-500 ${
-                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          <p className={`xl:col-span-5 text-[15px] md:text-base 2xl:text-lg text-slate-300 font-light leading-relaxed transition-all duration-1000 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}>
+            {t("intro")}
+          </p>
+        </div>
+
+        {/* LE TRE RIGHE */}
+        <div className="border-t border-white/10">
+          {LEAKS.map(({ key, Visual, color }, index) => (
+            <div
+              key={key}
+              className={`group grid grid-cols-1 xl:grid-cols-12 gap-x-8 2xl:gap-x-10 gap-y-2 xl:items-center border-b border-white/10 py-6 xl:py-7 2xl:py-8 short:!py-5 px-2 -mx-2 rounded-xl transition-all duration-700 hover:bg-white/[0.03] ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
+              style={{ transitionDelay: `${300 + index * 120}ms` }}
             >
-              <div className="relative p-6 md:p-8 2xl:p-10 short:!p-6 rounded-[28px] 2xl:rounded-[32px] bg-gradient-to-br from-[#121212] to-[#080808] border border-white/20 shadow-2xl overflow-hidden min-h-[420px] md:min-h-[460px] xl:min-h-[500px] short:!min-h-0 flex flex-col">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none" />
-                
-                <div className="flex justify-between items-start mb-10 short:!mb-6">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[11px] font-bold tracking-[0.2em] text-blue-500 uppercase">
-                      {t("ticker.label")}
-                    </span>
-                    <h4 className="text-4xl md:text-5xl 2xl:text-6xl short:!text-5xl font-black tracking-tighter text-white leading-none">
-                      €47.000<span className="text-blue-500/50 text-2xl font-normal ml-1">/m</span>
-                    </h4>
-                  </div>
-                  <div className="p-3.5 rounded-2xl bg-white/10 border border-white/20 shadow-inner">
-                    <Icon icon="solar:graph-down-bold" className="text-forge" width={28} />
-                  </div>
-                </div>
+              <span className="xl:col-span-1 text-[11px] font-bold tracking-[0.2em] text-slate-400 group-hover:text-blue-500 transition-colors duration-500">
+                0{index + 1}
+              </span>
 
-                <p className="text-[12px] text-slate-400 mb-10 short:!mb-6 leading-relaxed uppercase tracking-wider font-medium border-l-2 border-forge/40 pl-4">
-                  {t("ticker.sub")}
-                </p>
-
-                <div className="space-y-6 short:!space-y-4 mb-12 short:!mb-7 flex-1">
-                  {breakdown.map((item, idx) => (
-                    <div key={idx} className="space-y-2.5">
-                      <div className="flex justify-between items-end text-[11px] font-bold tracking-wide uppercase">
-                        <span className="text-slate-400">{item.label}</span>
-                        <span className="text-white">{item.value}%</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full ${item.color} opacity-70 transition-all duration-[1500ms] ease-out delay-[1000ms]`}
-                          style={{ width: isVisible ? `${item.value}%` : '0%' }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-8 short:!pt-5 border-t border-white/10 flex flex-col gap-4">
-                  <button 
-                    onClick={() => handleCtaClick(10)} 
-                    className="w-full flex items-center justify-between px-5 md:px-6 py-4 2xl:py-5 bg-white text-black rounded-2xl hover:bg-slate-200 transition-all duration-300 font-bold text-[15px] 2xl:text-[16px] tracking-tight"
-                  >
-                    <span>{t("cta")}</span>
-                    <Icon icon="solar:arrow-right-bold" width={22} />
-                  </button>
-                  <p className="text-[11px] text-slate-600 text-center italic">
-                    {t("microcopy")}
-                  </p>
-                </div>
+              <div className={`xl:col-span-2 w-28 h-11 2xl:h-14 xl:w-full ${color} group-hover:text-forge transition-colors duration-500`}>
+                <Visual />
               </div>
 
-              {/* Decorative brackets */}
-              <div className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-blue-500/30 rounded-tl-2xl pointer-events-none" />
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-blue-500/30 rounded-br-2xl pointer-events-none" />
-            </div>
-          </div>
+              <h3 className="xl:col-span-4 text-base md:text-lg 2xl:text-xl font-medium text-white tracking-tight leading-snug">
+                {t(`leaks.${key}.title`)}
+              </h3>
 
+              <p className="xl:col-span-5 text-sm 2xl:text-base text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-500">
+                {t(`leaks.${key}.desc`)}
+              </p>
+            </div>
+          ))}
         </div>
+
+        {/* CHIUSURA */}
+        <p className={`mt-8 xl:mt-10 short:!mt-6 max-w-3xl text-[15px] md:text-base 2xl:text-lg text-slate-300 font-light leading-relaxed border-l-2 border-forge/40 pl-4 transition-all duration-1000 delay-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}>
+          {t("closing")}
+        </p>
+
       </div>
     </section>
   );

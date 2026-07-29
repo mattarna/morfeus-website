@@ -30,7 +30,8 @@ const round100 = (v: number) => Math.round(v / 100) * 100;
 
 function useAnimatedNumber(target: number, duration = 450): number {
   const [value, setValue] = useState(target);
-  const frameRef = useRef<number>();
+  // React 19: useRef vuole un valore iniziale esplicito
+  const frameRef = useRef<number | undefined>(undefined);
   const startRef = useRef<number>(target);
   const timeRef = useRef<number>(0);
 

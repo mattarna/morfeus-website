@@ -93,10 +93,10 @@ export function HomeFAQ() {
       }`}>
         {/* Headline */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl font-normal tracking-tighter text-center mb-7 sm:mb-9 xl:mb-12 2xl:mb-16 leading-[0.98]">
-          <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 pb-1">
+          <span className="block text-transparent bg-clip-text bg-linear-to-b from-white to-white/60 pb-1">
             {t("headline_1")}
           </span>
-          <span className="block text-transparent bg-clip-text bg-gradient-to-b from-white to-[#E0CCFA]/70 pb-1">
+          <span className="block text-transparent bg-clip-text bg-linear-to-b from-white to-[#E0CCFA]/70 pb-1">
             {t("headline_2")}
           </span>
         </h2>
@@ -108,13 +108,13 @@ export function HomeFAQ() {
               key={item.id}
               className={`group border rounded-2xl transition-all duration-500 overflow-hidden ${
                 openId === item.id 
-                  ? "bg-white/[0.04] border-white/25 shadow-[0_0_40px_-15px_rgba(255,255,255,0.1)]" 
-                  : "bg-white/[0.02] border-white/10 hover:bg-white/[0.04] hover:border-white/20"
+                  ? "bg-white/4 border-white/25 shadow-[0_0_40px_-15px_rgba(255,255,255,0.1)]" 
+                  : "bg-white/2 border-white/10 hover:bg-white/4 hover:border-white/20"
               }`}
             >
               <button
                 onClick={() => toggleItem(item.id, item.question)}
-                className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 2xl:p-8 text-left outline-none select-none focus:outline-none focus:ring-0 active:outline-none group/btn"
+                className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 2xl:p-8 text-left outline-hidden select-none focus:outline-hidden focus:ring-0 active:outline-hidden group/btn"
               >
                 <span className={`text-base sm:text-lg 2xl:text-xl font-normal transition-all duration-500 tracking-tight ${
                   openId === item.id ? "text-white scale-[1.01]" : "text-white/70 group-hover/btn:text-white"

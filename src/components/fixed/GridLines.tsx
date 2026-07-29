@@ -17,7 +17,7 @@ export function GridLines() {
 
   return (
     <div
-      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1500vh] z-[2] pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
+      className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1920px] h-[1500vh] z-2 pointer-events-none px-6 md:px-10 flex justify-between transition-opacity duration-1000 ${
         isHiddenRange ? "opacity-0" : "opacity-100"
       }`}
       style={{
@@ -26,7 +26,7 @@ export function GridLines() {
       }}
     >
       {[...Array(5)].map((_, i) => (
-        <div key={i} className="w-[1px] md:w-[1.5px] h-full bg-white/[0.04] md:bg-white/[0.08]" />
+        <div key={i} className="w-px md:w-[1.5px] h-full bg-white/4 md:bg-white/8" />
       ))}
     </div>
   );
