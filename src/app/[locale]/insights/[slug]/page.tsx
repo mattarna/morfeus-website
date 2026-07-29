@@ -78,6 +78,7 @@ export function generateMetadata({ params }: Props): Metadata {
     description,
     alternates: buildLocaleAlternates(`insights/${slug}`, safeLocale),
     openGraph: {
+      images: [`${SITE_URL}/opengraph-image.png`],
       title,
       description,
       type: "article",
@@ -87,7 +88,7 @@ export function generateMetadata({ params }: Props): Metadata {
       publishedTime: article.datePublished || undefined,
       modifiedTime: article.dateModified || undefined,
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description , images: [`${SITE_URL}/opengraph-image.png`]},
   };
 }
 

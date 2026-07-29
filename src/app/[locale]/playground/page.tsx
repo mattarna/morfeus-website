@@ -182,6 +182,7 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
     description: t.metaDesc,
     alternates: buildLocaleAlternates("playground", safeLocale),
     openGraph: {
+      images: [`${SITE_URL}/opengraph-image.png`],
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
@@ -189,7 +190,7 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
-    twitter: { card: "summary_large_image", title: t.metaTitle, description: t.metaDesc },
+    twitter: { card: "summary_large_image", title: t.metaTitle, description: t.metaDesc , images: [`${SITE_URL}/opengraph-image.png`]},
   };
 }
 

@@ -54,7 +54,7 @@ export async function generateMetadata({
       siteName: "Morfeus",
       images: [
         {
-          url: "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4fa39a65-8fd6-44a2-8334-b3c76d87bb10_1600w.png",
+          url: `${baseUrl}/opengraph-image.png`,
           width: 1200,
           height: 630,
           alt: t("title"),
@@ -68,7 +68,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4fa39a65-8fd6-44a2-8334-b3c76d87bb10_1600w.png"],
+      images: [`${baseUrl}/opengraph-image.png`],
       creator: "@morfeushub",
     },
     
