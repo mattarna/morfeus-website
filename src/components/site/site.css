@@ -1800,3 +1800,465 @@
     animation: none;
   }
 }
+
+/* ---------- GLOSSARIO ---------- */
+/* Pagina unica con tutti i termini, raggruppati per lettera: ricerca e
+   filtri in cima, barra A-Z appiccicata sotto l'header, poi una sola fascia
+   chiara con l'elenco intero. Forma presa dal prototipo design-v2.
+
+   Prefisso `gl-`: `.term` e `.bd` esistono gia' nel DS (dentro `.rcard` e
+   `.blist li`) e riusarle qui sarebbe la solita gara di specificita'.
+
+   I corpi non sono quelli del prototipo: li' le etichette stavano a 9-11px,
+   sotto il pavimento di 13px che ci siamo dati, e i testi delle voci a 15px
+   invece dei 17-18 del resto del sito. */
+
+.ms .gl-search {
+  margin-top: 30px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ms .gl-search input {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 13px 18px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--riga-scuro);
+  background: var(--inchiostro-2);
+  color: var(--carta);
+  min-width: 320px;
+}
+.ms .gl-search input::placeholder {
+  color: var(--ombra);
+}
+.ms .gl-search input:focus-visible {
+  outline: none;
+  border-color: var(--lilla);
+}
+
+.ms .gl-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ms .gl-pill {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 9px 16px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--riga-scuro);
+  color: var(--testo-ink-2);
+  cursor: pointer;
+  background: none;
+  transition:
+    background var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.ms .gl-pill:hover {
+  border-color: var(--lilla);
+  color: var(--carta);
+}
+.ms .gl-pill[aria-pressed="true"] {
+  background: var(--lilla);
+  border-color: var(--lilla);
+  color: var(--inchiostro);
+}
+
+/* Barra A-Z: si ferma sotto l'header, che e' fisso e alto 68px.
+   z-index sotto quello dell'header (50), o gli passa sopra. */
+.ms .gl-az {
+  position: sticky;
+  top: 68px;
+  z-index: 40;
+  background: rgba(228, 231, 240, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--surf-bd);
+  border-bottom: 1px solid var(--surf-bd);
+}
+.ms .gl-az .row {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 11px clamp(20px, 5vw, 40px);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ms .gl-az a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--testo-carta-2);
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.ms .gl-az a:hover {
+  background: var(--firma);
+  color: #fff;
+}
+
+.ms .gl-list {
+  padding-top: clamp(32px, 5vw, 52px);
+}
+/* La lettera resta agganciata mentre scorri il suo gruppo: 118px = header
+   68 + barra A-Z. */
+.ms .gl-grp {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 28px;
+  align-items: start;
+  padding: 34px 0;
+  border-bottom: 1px solid var(--surf-bd);
+  scroll-margin-top: 118px;
+}
+.ms .gl-grp:last-child {
+  border-bottom: none;
+}
+.ms .gl-letter {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 64px);
+  color: var(--firma);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  position: sticky;
+  top: 118px;
+  margin: 0;
+}
+.ms .gl-terms {
+  display: flex;
+  flex-direction: column;
+}
+.ms .gl-term {
+  padding: 22px 0;
+  border-top: 1px solid var(--surf-bd);
+  scroll-margin-top: 120px;
+}
+.ms .gl-term:first-child {
+  border-top: none;
+}
+.ms .gl-th {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ms .gl-term h3 {
+  font-size: clamp(19px, 2.2vw, 22px);
+  font-weight: 600;
+  color: var(--inchiostro);
+  margin: 0;
+}
+.ms .gl-term p {
+  color: var(--testo-carta-2);
+  font-size: 17px;
+  line-height: 1.6;
+  margin-top: 8px;
+  max-width: 74ch;
+}
+.ms .gl-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--firma);
+}
+.ms .gl-link:hover {
+  color: var(--firma-hover);
+}
+
+.ms .gl-bd {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 5px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+.ms .gl-bd.morfeus {
+  color: var(--firma);
+  background: rgba(83, 61, 252, 0.08);
+  border: 1px solid rgba(83, 61, 252, 0.3);
+}
+.ms .gl-bd.claude {
+  color: var(--inchiostro);
+  background: rgba(140, 165, 247, 0.28);
+  border: 1px solid rgba(140, 165, 247, 0.6);
+}
+.ms .gl-bd.ai {
+  color: var(--testo-carta-2);
+  background: transparent;
+  border: 1px solid var(--surf-bd);
+}
+
+/* Filtro: gli elementi restano nell'HTML (servono all'indicizzazione), si
+   nascondono soltanto. `!important` perche' .gl-grp e' grid e .gl-terms e'
+   flex, e il display di quelle regole batterebbe l'attributo `hidden`. */
+.ms .gl-list [hidden] {
+  display: none !important;
+}
+.ms .gl-nomatch {
+  padding: 44px 0;
+  color: var(--testo-carta-2);
+  font-size: 17px;
+}
+
+@media (max-width: 860px) {
+  .ms .gl-grp {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ms .gl-letter {
+    position: static;
+  }
+  .ms .gl-search input {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ---------- IMPARA L'AI ---------- */
+/* Quattro percorsi in una sola fascia chiara, ognuno con le sue lezioni a
+   fisarmonica. Forma presa dal prototipo design-v2.
+   Prefisso `ia-` per lo stesso motivo del glossario: niente classi del DS
+   riusate, niente specificita' da vincere.
+   Anche qui i corpi sono i nostri, non quelli del prototipo: le etichette
+   stavano a 10px e le risposte a 15.5px. */
+
+.ms .ia-nav {
+  position: sticky;
+  top: 68px;
+  z-index: 40;
+  background: rgba(228, 231, 240, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--surf-bd);
+  border-bottom: 1px solid var(--surf-bd);
+}
+.ms .ia-nav .row {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 12px clamp(20px, 5vw, 40px);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ms .ia-nav .k {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--testo-carta-2);
+  margin-right: 4px;
+}
+.ms .ia-nav a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--testo-carta-2);
+  border: 1px solid var(--surf-bd);
+  border-radius: var(--r-pill);
+  padding: 7px 15px;
+  transition:
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.ms .ia-nav a:hover {
+  border-color: var(--firma);
+  color: var(--firma);
+}
+
+.ms .ia-blocco {
+  padding-top: clamp(44px, 6vw, 64px);
+  margin-top: clamp(44px, 6vw, 64px);
+  border-top: 1px solid var(--surf-bd);
+  scroll-margin-top: 130px;
+}
+.ms .ia-blocco:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+.ms .ia-blocco h2 {
+  font-size: clamp(24px, 3.6vw, 38px);
+  margin: 8px 0 0;
+}
+.ms .ia-intro {
+  color: var(--testo-carta-2);
+  font-size: 17px;
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 62ch;
+}
+.ms .ia-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.ms .ia-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--firma);
+  background: rgba(83, 61, 252, 0.07);
+  border: 1px solid rgba(83, 61, 252, 0.22);
+  border-radius: var(--r-pill);
+  padding: 6px 13px;
+}
+.ms .ia-meta .durata {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--testo-carta-2);
+}
+
+/* Avanzamento: quante lezioni sono state aperte. Il valore vive nel
+   browser di chi legge, non sul server. */
+.ms .ia-prog {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.ms .ia-prog .bar {
+  flex: 1;
+  max-width: 240px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: rgba(11, 11, 12, 0.08);
+  border: 1px solid var(--surf-bd);
+  overflow: hidden;
+}
+.ms .ia-prog .bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--firma);
+  transition: width 0.4s var(--ease);
+}
+.ms .ia-prog .pc {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--testo-carta-2);
+}
+
+.ms .ia-lezioni {
+  margin-top: 26px;
+}
+.ms .ia-lezione {
+  border-top: 1px solid var(--surf-bd);
+  scroll-margin-top: 130px;
+}
+.ms .ia-lezione .q {
+  margin: 0;
+}
+.ms .ia-lezione button {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 20px 44px 20px 0;
+  position: relative;
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+.ms .ia-lezione .n {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--firma);
+  flex-shrink: 0;
+  width: 24px;
+}
+.ms .ia-lezione[data-vista="1"] .n {
+  color: var(--ok);
+}
+.ms .ia-lezione .t {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(17px, 2vw, 19px);
+  letter-spacing: -0.01em;
+  color: var(--inchiostro);
+  line-height: 1.3;
+}
+.ms .ia-lezione .ic {
+  position: absolute;
+  right: 2px;
+  top: 22px;
+  width: 18px;
+  height: 18px;
+  color: var(--firma);
+  transition: transform 0.25s var(--ease);
+}
+.ms .ia-lezione[data-aperta="1"] .ic {
+  transform: rotate(45deg);
+}
+/* La risposta si apre con grid-template-rows: e' l'unico modo di animare da
+   "altezza zero" ad "altezza del contenuto" senza sapere quanto e' alto. */
+.ms .ia-lezione .risposta {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s var(--ease);
+}
+.ms .ia-lezione[data-aperta="1"] .risposta {
+  grid-template-rows: 1fr;
+}
+.ms .ia-lezione .risposta > div {
+  overflow: hidden;
+  min-height: 0;
+}
+.ms .ia-lezione .risposta .pad {
+  padding: 0 44px 24px 40px;
+}
+.ms .ia-lezione .risposta p {
+  color: var(--testo-carta-2);
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+.ms .ia-lezione .risposta .appro {
+  margin-top: 14px;
+  display: inline-flex;
+  gap: 0.4em;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--firma);
+}
+.ms .ia-lezione .risposta .appro:hover {
+  color: var(--firma-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms .ia-lezione .risposta,
+  .ms .ia-lezione .ic,
+  .ms .ia-prog .bar span {
+    transition: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .ms .ia-lezione .risposta .pad {
+    padding: 0 0 24px 40px;
+  }
+}

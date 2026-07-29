@@ -1,29 +1,43 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { Glifo } from "@/components/pagine/Glifo";
-import "@/components/pagine/kit.css";
+import { GlossarioFiltri } from "@/components/site/GlossarioFiltri";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
+import { GLOSSARIO, LETTERE, TUTTE_LE_VOCI } from "@/lib/glossario-voci";
 
 /* ============================================================
-   GLOSSARIO. Rifatta sul copy approvato 2026-07-28.
+   GLOSSARIO. Pagina unica, tutti i termini dentro.
    ------------------------------------------------------------
-   Le fasce qui fanno un lavoro diverso dalle altre pagine: i
-   quattro gruppi di termini restano TUTTI su inchiostro, perche'
-   sono una sola superficie di consultazione. Spezzarli con fondi
-   alternati farebbe sembrare quattro cose diverse quello che e'
-   un lessico unico.
-   La carta resta sui due punti che sono indici: la mappa in cima
-   e la tabella dei termini operativi in fondo.
+   Prima i termini erano 35 spezzati in gruppi tematici, ognuno
+   con la sua fascia e il suo fondo alternato. Sembravano cinque
+   cose diverse invece di un lessico solo, e per trovare una
+   parola bisognava sapere in quale gruppo l'avevamo messa.
 
-   Ogni termine ha un id: le altre pagine possono linkare la
-   singola definizione. Su un sito che punta anche alla
-   visibilita' negli LLM, un glossario indirizzabile termine per
-   termine vale piu' di uno leggibile solo dall'inizio.
+   Ora e' come il prototipo: una sola fascia chiara con gli 85
+   termini in ordine alfabetico, la lettera agganciata a lato
+   mentre scorri il suo gruppo, ricerca e filtri in cima, barra
+   A-Z appiccicata sotto l'header.
+
+   I termini stanno in `src/lib/glossario-voci.ts`: la stessa
+   lista serve al JSON-LD, e dentro la pagina sarebbero 85 voci
+   che rendono illeggibile tutto il resto.
+
+   Ogni termine ha il suo id: le altre pagine possono linkare la
+   singola definizione (`/glossario#value-leak`). Su un sito che
+   punta anche alla visibilita' negli LLM, un glossario
+   indirizzabile voce per voce vale piu' di uno leggibile solo
+   dall'inizio.
    ============================================================ */
 
 type Props = { params: Promise<{ locale: string }> };
+
+/* Le pagine di approfondimento che ESISTONO davvero. Nel prototipo gli
+   "Approfondisci" erano 11, ma 9 puntano a pagine mai create: renderli
+   tutti significherebbe piazzare 9 link rotti dentro la pagina che
+   dovrebbe spiegare il vocabolario. Quando una di quelle pagine nasce,
+   si aggiunge il suo slug qui e il link compare da solo. */
+const APPROFONDIMENTI_VIVI = new Set(["/marf", "/roiometro"]);
 
 const COPY = {
   it: {
@@ -35,75 +49,10 @@ const COPY = {
       h1a: "Le parole sbagliate creano ",
       h1emph: "progetti sbagliati",
       h1b: ".",
-      copy: "Quando si parla di AI in azienda, termini come agenti, automazione, piattaforme e formazione vengono usati per dire tutto e il contrario di tutto. Qui definiamo le parole con cui Morfeus lavora, senza gergo e senza promesse vaghe.",
+      copy: "Quando si parla di AI in azienda, termini come agenti, automazione, piattaforme e formazione vengono usati per dire tutto e il contrario di tutto. Qui trovi i termini dell'intelligenza artificiale e dell'ecosistema Claude spiegati in modo semplice, piu' i concetti con cui lavora Morfeus.",
     },
-    mappa: {
-      eye: "Prima il significato. Poi la tecnologia.",
-      h2a: "Quattro domande. ",
-      h2emph: "Un linguaggio comune",
-      h2b: ".",
-      voci: [
-        { id: "problema", glifo: "curvaGiu", d: "Dove si perde valore?", t: "Value Leak · Coordination Tax" },
-        { id: "metodo", glifo: "bersaglio", d: "Come si decide dove intervenire?", t: "ROIometro · Pilot · Value Report" },
-        { id: "sistema", glifo: "cpu", d: "Con che cosa si costruisce?", t: "Context Hub · MARF · Agenti · Guardrail" },
-        { id: "persone", glifo: "stella", d: "Chi lo rende parte dell'azienda?", t: "AI Champion · Adoption · Literacy" },
-      ],
-    },
-    gruppi: [
-      {
-        id: "problema",
-        eye: "Il problema",
-        titolo: "Dove si perde valore",
-        termini: [
-          { t: "Value Leak", d: "Un Value Leak è un punto in cui tempo, informazioni, decisioni o lavoro manuale fanno perdere margine dentro un processo aziendale. Non è sempre un costo visibile in bilancio: può essere un passaggio rifatto, una risposta che arriva tardi o un'informazione ferma nella testa di una persona." },
-          { t: "Coordination Tax", d: "La Coordination Tax è il costo nascosto dei passaggi di contesto tra persone, reparti e strumenti. Ogni passaggio sembra piccolo; sommati, rallentano le decisioni e comprimono il margine." },
-        ],
-      },
-      {
-        id: "metodo",
-        eye: "Il metodo",
-        titolo: "Come si decide dove intervenire",
-        termini: [
-          { t: "ROIometro", d: "Il ROIometro è lo strumento Morfeus che aiuta a stimare quanto valore si sta perdendo in un processo e dove ha senso intervenire per primo." },
-          { t: "Pilot", d: "Un Pilot è un intervento delimitato su un problema operativo concreto, con criteri chiari per capire se il sistema sta funzionando. Delimitato non vuol dire piccolo: vuol dire verificabile." },
-          { t: "Value Report", d: "Il Value Report è il momento in cui Morfeus verifica il valore prodotto da un sistema in produzione. Se il valore non è verificabile, il sistema va migliorato prima di essere esteso." },
-          { t: "AI Operating Partner", d: "Un AI Operating Partner è un partner che lavora dentro i processi aziendali per rendere l'AI utile, adottata e verificabile nel tempo. Non si limita a consigliare una tecnologia." },
-        ],
-      },
-      {
-        id: "sistema",
-        eye: "Il sistema",
-        titolo: "Con che cosa si costruisce",
-        termini: [
-          { t: "Context Hub", d: "Il Context Hub è il livello in cui conoscenza, regole, procedure e informazioni operative diventano utilizzabili dalle persone e dai sistemi AI. È il posto in cui il sapere smette di stare nella testa di pochi." },
-          { t: "MARF", d: "MARF è il cruscotto operativo aziendale proprietario di Morfeus: collega dati e processi di marketing, vendite, amministrazione, delivery e customer care." },
-          { t: "Agente AI", d: "Un agente AI è un sistema che svolge un compito definito dentro un processo, usando contesto, regole e strumenti specifici. Non è un chatbot da mostrare in una demo." },
-          { t: "Guardrail", d: "Un Guardrail è una regola che impedisce a un sistema AI di agire o rispondere oltre ciò che può fare in modo affidabile. È il modo in cui un sistema dice «non ho abbastanza dati»." },
-        ],
-      },
-      {
-        id: "persone",
-        eye: "Le persone",
-        titolo: "Chi lo rende parte dell'azienda",
-        termini: [
-          { t: "AI Champion", d: "Un AI Champion è una persona interna che rende l'AI concreta nel proprio reparto. Conosce il processo da vicino, sperimenta sul lavoro reale e aiuta i colleghi a usarla in modo continuativo." },
-        ],
-      },
-    ],
-    operativi: {
-      eye: "Termini operativi",
-      h2a: "Il resto del lessico, ",
-      h2emph: "senza slogan",
-      h2b: ".",
-      lead: "Questi termini completano il vocabolario Morfeus e rendono il glossario una risorsa consultabile.",
-      voci: [
-        { t: "AI Adoption", d: "Il processo con cui l'AI entra davvero nelle abitudini, nei ruoli e nelle procedure di un'azienda. Non coincide con l'acquisto o l'attivazione di un tool." },
-        { t: "AI Governance", d: "Regole, responsabilità e controlli che definiscono come l'AI può essere usata dentro l'azienda." },
-        { t: "AI Literacy", d: "La capacità pratica di usare, verificare e contestualizzare l'AI nel proprio lavoro." },
-        { t: "Automazione AI", d: "L'uso dell'AI per eseguire o supportare attività ripetitive dentro un processo, con un obiettivo e limiti definiti." },
-        { t: "Human in the Loop", d: "Il punto in cui una persona mantiene il controllo, verifica un output o prende una decisione che il sistema non deve prendere da solo." },
-      ],
-    },
+    az: "Indice alfabetico",
+    elenco: "Tutti i termini",
     cta: {
       eye: "Le parole servono a decidere",
       h2a: "Ora che le parole sono chiare, ",
@@ -113,6 +62,7 @@ const COPY = {
       btn: "Prenota una call di diagnosi",
       btn2: "Vedi il Metodo",
     },
+    approfondisci: "Approfondisci",
   },
   en: {
     metaTitle: "Glossary · The words we work with | Morfeus",
@@ -123,75 +73,10 @@ const COPY = {
       h1a: "The wrong words create ",
       h1emph: "the wrong projects",
       h1b: ".",
-      copy: "When people talk about AI in business, words like agents, automation, platforms and training are used to mean everything and its opposite. Here we define the words Morfeus works with, without jargon and without vague promises.",
+      copy: "When people talk about AI in business, words like agents, automation, platforms and training are used to mean everything and its opposite. Here you will find the terms of artificial intelligence and of the Claude ecosystem explained simply, plus the concepts Morfeus works with.",
     },
-    mappa: {
-      eye: "Meaning first. Technology second.",
-      h2a: "Four questions. ",
-      h2emph: "One shared language",
-      h2b: ".",
-      voci: [
-        { id: "problema", glifo: "curvaGiu", d: "Where is value lost?", t: "Value Leak · Coordination Tax" },
-        { id: "metodo", glifo: "bersaglio", d: "How do you decide where to intervene?", t: "ROIometro · Pilot · Value Report" },
-        { id: "sistema", glifo: "cpu", d: "What do you build it with?", t: "Context Hub · MARF · Agents · Guardrail" },
-        { id: "persone", glifo: "stella", d: "Who makes it part of the company?", t: "AI Champion · Adoption · Literacy" },
-      ],
-    },
-    gruppi: [
-      {
-        id: "problema",
-        eye: "The problem",
-        titolo: "Where value is lost",
-        termini: [
-          { t: "Value Leak", d: "A Value Leak is a point in a business workflow where time, information, decisions or manual work erode margin. It is not always a visible cost: it can be repeated work, an answer that arrives late or information stuck in one person's head." },
-          { t: "Coordination Tax", d: "The Coordination Tax is the hidden cost of context switching and handoffs between people, departments and tools. Each handoff looks small; together they slow decisions and compress margin." },
-        ],
-      },
-      {
-        id: "metodo",
-        eye: "The method",
-        titolo: "How you decide where to intervene",
-        termini: [
-          { t: "ROIometro", d: "ROIometro is the Morfeus diagnostic tool for estimating how much value a workflow is losing and where it makes sense to intervene first." },
-          { t: "Pilot", d: "A Pilot is a focused intervention on a concrete operating problem, with clear criteria for deciding whether the system works. Focused does not mean small: it means verifiable." },
-          { t: "Value Report", d: "The Value Report is how Morfeus verifies the value produced by a system in production. If the value cannot be verified, the system is improved before it is extended." },
-          { t: "AI Operating Partner", d: "An AI Operating Partner works inside company workflows to make AI useful, adopted and verifiable over time. It does more than advise on technology." },
-        ],
-      },
-      {
-        id: "sistema",
-        eye: "The system",
-        titolo: "What you build it with",
-        termini: [
-          { t: "Context Hub", d: "A Context Hub is the layer where knowledge, rules, procedures and operating information become usable by people and AI systems. It is where know-how stops living in a few heads." },
-          { t: "MARF", d: "MARF is Morfeus' proprietary company operating cockpit: it connects data and workflows across marketing, sales, administration, delivery and customer care." },
-          { t: "AI agent", d: "An AI agent is a system that performs a defined job inside a workflow, using specific context, rules and tools. Not a chatbot built for a demo." },
-          { t: "Guardrail", d: "A Guardrail is a rule that stops an AI system from acting or answering beyond what it can do reliably. It is how a system says “I do not have enough data”." },
-        ],
-      },
-      {
-        id: "persone",
-        eye: "The people",
-        titolo: "Who makes it part of the company",
-        termini: [
-          { t: "AI Champion", d: "An AI Champion is the person inside a company who makes AI practical for their department. They know the workflow first-hand, experiment on real work and help colleagues use it continuously." },
-        ],
-      },
-    ],
-    operativi: {
-      eye: "Operating terms",
-      h2a: "The rest of the vocabulary, ",
-      h2emph: "without slogans",
-      h2b: ".",
-      lead: "These terms complete the Morfeus vocabulary and make the glossary a resource you can actually consult.",
-      voci: [
-        { t: "AI Adoption", d: "The process by which AI genuinely enters the habits, roles and procedures of a company. It is not the same as buying or switching on a tool." },
-        { t: "AI Governance", d: "The rules, responsibilities and controls that define how AI can be used inside a company." },
-        { t: "AI Literacy", d: "The practical ability to use, check and contextualise AI in your own work." },
-        { t: "AI Automation", d: "Using AI to perform or support repetitive activities inside a workflow, with a defined goal and defined limits." },
-        { t: "Human in the Loop", d: "The point where a person keeps control, checks an output or makes a decision the system should not make alone." },
-      ],
-    },
+    az: "Alphabetical index",
+    elenco: "All terms",
     cta: {
       eye: "Words are for deciding",
       h2a: "Now that the words are clear, ",
@@ -201,10 +86,9 @@ const COPY = {
       btn: "Book a diagnostic call",
       btn2: "See the Method",
     },
+    approfondisci: "Read more",
   },
 } as const;
-
-const idTermine = (t: string) => `t-${t.toLowerCase().replace(/\s+/g, "-")}`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -224,7 +108,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
-    twitter: { card: "summary_large_image", title: t.metaTitle, description: t.metaDesc , images: [`${SITE_URL}/opengraph-image.png`]},
+    twitter: {
+      card: "summary_large_image",
+      title: t.metaTitle,
+      description: t.metaDesc,
+      images: [`${SITE_URL}/opengraph-image.png`],
+    },
   };
 }
 
@@ -234,17 +123,6 @@ export default async function GlossarioPage({ params }: Props) {
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
-
-  /* Il tipo va dichiarato: con `as const` ogni gruppo ha una tupla di
-     termini con tipi LETTERALI diversi, e il flatMap non riesce a
-     unificarli ("Value Leak" non e' assegnabile a "Coordination Tax").
-     Qui i termini servono solo come coppie nome/descrizione per i dati
-     strutturati, quindi li riporto a quel tipo e il problema sparisce. */
-  type Termine = { t: string; d: string };
-  const tuttiTermini: Termine[] = [
-    ...t.gruppi.flatMap((g) => g.termini.map((v): Termine => ({ t: v.t, d: v.d }))),
-    ...t.operativi.voci.map((v): Termine => ({ t: v.t, d: v.d })),
-  ];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -258,11 +136,11 @@ export default async function GlossarioPage({ params }: Props) {
         inLanguage: isIt ? "it-IT" : "en-US",
         isPartOf: { "@id": WEBSITE_ID },
         publisher: { "@id": ORGANIZATION_ID },
-        hasDefinedTerm: tuttiTermini.map((v) => ({
+        hasDefinedTerm: TUTTE_LE_VOCI.map((v) => ({
           "@type": "DefinedTerm",
-          name: v.t,
+          name: v.n,
           description: v.d,
-          url: `${SITE_URL}/${safeLocale}/glossario#${idTermine(v.t)}`,
+          url: `${SITE_URL}/${safeLocale}/glossario#${v.id}`,
         })),
       },
     ],
@@ -286,79 +164,68 @@ export default async function GlossarioPage({ params }: Props) {
             {t.hero.h1b}
           </h1>
           <p className="copy">{t.hero.copy}</p>
+          <GlossarioFiltri locale={safeLocale} />
         </div>
       </section>
 
-      {/* 02 · LA MAPPA · CARTA, e' un indice */}
-      <section className="band carta pg" id="mappa">
-        <div className="wrap">
-          <div className="eye">{t.mappa.eye}</div>
-          <h2 className="h-sect">
-            {t.mappa.h2a}
-            <span className="emph">{t.mappa.h2emph}</span>
-            {t.mappa.h2b}
-          </h2>
-
-          <div className="diagnosi">
-            {t.mappa.voci.map((v) => (
-              <a key={v.id} href={`#${v.id}`} className="sintomo">
-                <Glifo nome={v.glifo} />
-                <span className="testo">{v.d}</span>
-                <span className="conta">{v.t}</span>
-                <span className="freccia" aria-hidden="true">
-                  &darr;
-                </span>
-              </a>
-            ))}
-          </div>
+      {/* 02 · BARRA A-Z · sta fuori dalle fasce, si aggancia sotto l'header */}
+      <nav className="gl-az" aria-label={t.az}>
+        <div className="row">
+          {LETTERE.map((l) => (
+            <a key={l} href={`#gl-${l}`}>
+              {l}
+            </a>
+          ))}
         </div>
-      </section>
+      </nav>
 
-      {/* 03-06 · I QUATTRO GRUPPI · tutti ink: sono un lessico solo */}
-      {t.gruppi.map((g) => (
-        <section className="band ink pg" id={g.id} key={g.id}>
-          <div className="wrap">
-            <div className="eye">{g.eye}</div>
-            <h2 className="h-sect">{g.titolo}</h2>
-
-            <div className="two" style={{ marginTop: 34 }}>
-              {g.termini.map((v) => (
-                <article className="scheda" id={idTermine(v.t)} key={v.t}>
-                  <span className="filo" />
-                  <div className="sopra">
-                    <span className="cod">{v.t}</span>
+      {/* 03 · TUTTI I TERMINI · carta, una fascia sola */}
+      <section className="band carta" aria-label={t.elenco}>
+        <div className="wrap gl-list">
+          {GLOSSARIO.map((g) => (
+            <div className="gl-grp" id={`gl-${g.l}`} key={g.l} data-gl-grp="">
+              <h2 className="gl-letter">{g.l}</h2>
+              <div className="gl-terms">
+                {g.voci.map((v) => (
+                  <div
+                    className="gl-term"
+                    id={v.id}
+                    key={v.id}
+                    data-gl-term=""
+                    data-gl-tag={v.tag}
+                    /* minuscolo gia' qui: il filtro confronta senza dover
+                       normalizzare a ogni battuta */
+                    data-gl-name={v.n.toLowerCase()}
+                    data-gl-testo={v.d.toLowerCase()}
+                  >
+                    <div className="gl-th">
+                      <h3>{v.n}</h3>
+                      <span className={`gl-bd ${v.tag}`}>
+                        {v.tag === "morfeus" ? "Morfeus" : v.tag === "claude" ? "Claude" : "AI"}
+                      </span>
+                    </div>
                     <p>{v.d}</p>
+                    {v.href && APPROFONDIMENTI_VIVI.has(v.href) ? (
+                      <Link className="gl-link" href={`${base}${v.href}`}>
+                        {t.approfondisci} &#9656;
+                      </Link>
+                    ) : null}
                   </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      {/* 07 · TERMINI OPERATIVI · CARTA, e' una tabella */}
-      <section className="band carta pg" id="operativi">
-        <div className="wrap">
-          <div className="eye">{t.operativi.eye}</div>
-          <h2 className="h-sect">
-            {t.operativi.h2a}
-            <span className="emph">{t.operativi.h2emph}</span>
-            {t.operativi.h2b}
-          </h2>
-          <p className="lead">{t.operativi.lead}</p>
-
-          <div className="patto">
-            {t.operativi.voci.map((v) => (
-              <div className="clausola" id={idTermine(v.t)} key={v.t}>
-                <span className="sigla">{v.t}</span>
-                <span className="testo-clausola">{v.d}</span>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+
+          {/* Compare solo quando ricerca e filtri non lasciano niente. */}
+          <p className="gl-nomatch" id="gl-nomatch" hidden aria-live="polite">
+            {isIt
+              ? "Nessun termine corrisponde alla ricerca."
+              : "No term matches your search."}
+          </p>
         </div>
       </section>
 
-      {/* 08 · CTA · ink */}
+      {/* 04 · CTA · ink */}
       <section className="band ink pg" id="cta">
         <div className="wrap">
           <div className="ctaq">
