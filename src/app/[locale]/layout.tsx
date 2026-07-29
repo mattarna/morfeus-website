@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import { StructuredData } from "@/components/shared/SEO/StructuredData";
@@ -94,6 +94,16 @@ export default async function LocaleLayout(props: {
   if (!routing.locales.includes(locale as "en" | "it")) {
     notFound();
   }
+
+  /* QUESTA RIGA DECIDE SE IL SITO E' STATICO O NO.
+     Senza, next-intl deve leggere gli header della richiesta per capire
+     in che lingua sta rispondendo, e leggere gli header opta l'INTERO
+     sottoalbero al rendering dinamico: 46 rotte su 55 finivano
+     server-rendered a ogni visita, e le pagine degli articoli leggevano
+     i markdown dal disco mentre rispondevano invece che a build.
+     Dichiarandola qui, la lingua e' nota in anticipo e le pagine
+     tornano a essere HTML cotto una volta sola. */
+  setRequestLocale(locale);
 
   // Explicitly pass locale to getMessages to ensure correct language file is loaded
   const messages = await getMessages({ locale });

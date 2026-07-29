@@ -18,11 +18,20 @@ const nextConfig = {
   // (path.join(process.cwd(), ...) piu' readdirSync): non c'e' niente da
   // vedere, e senza questa riga i tredici articoli non salgono su Vercel.
   //
-  // Come si romperebbe: nessun errore. `listArticleFiles` fa
-  // `if (!fs.existsSync(ARTICLES_DIR)) return []`, quindi la sezione
-  // Insights risponde con zero articoli e i tredici slug danno 404, in
-  // silenzio, finche' qualcuno non apre la pagina.
+  // Come si romperebbe: `listArticleFiles` ora ALZA un errore se la
+  // cartella non c'e', invece di restituire una lista vuota in silenzio
+  // (vedi src/lib/insights.ts). Un /insights che esplode si nota subito;
+  // un /insights vuoto puo' restare online per settimane.
+  //
+  // Stessa ragione per il content dei funnel, letto allo stesso modo.
+  // NB: la chiave va scritta UNA VOLTA SOLA. In un oggetto JavaScript una
+  // chiave ripetuta non e' un errore: vince l'ultima e la prima sparisce
+  // senza dirlo. Erano finite qui due `outputFileTracingIncludes`, una con
+  // gli articoli e una con articoli piu' playbook: funzionava solo perche'
+  // la seconda arrivava dopo, e cancellare "il duplicato" sbagliato
+  // avrebbe smesso di spedire il playbook senza un errore.
   outputFileTracingIncludes: {
+    '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
     '/[locale]/insights': ['./src/content/insights/**'],
     '/[locale]/insights/[slug]': ['./src/content/insights/**'],
   },
@@ -69,16 +78,8 @@ const nextConfig = {
   // NB: `swcMinify` e `optimizeFonts` sono stati RIMOSSI in Next 15/16
   // (ora sono il comportamento predefinito): tenerli fa fallire il build.
 
-  // Il content dei funnel deve finire nel bundle serverless: in Next 15+
-  // `outputFileTracingIncludes` non sta piu' sotto `experimental`.
-  outputFileTracingIncludes: {
-    '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
-    // Stessa ragione per gli articoli Insights, letti dal filesystem a
-    // runtime in src/lib/insights.ts: senza dichiararli qui non entrano nel
-    // bundle e la sezione risponde come se non esistessero.
-    '/[locale]/insights': ['./src/content/insights/**/*'],
-    '/[locale]/insights/[slug]': ['./src/content/insights/**/*'],
-  },
+  // NB: `outputFileTracingIncludes` sta in cima al file, tutto in una
+  // chiave sola. In Next 15+ non vive piu' sotto `experimental`.
 
   // Optimize package imports
   experimental: {
