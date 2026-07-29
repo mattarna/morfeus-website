@@ -1,0 +1,4135 @@
+/* ============================================================
+   PLAYGROUND · il CSS del prototipo, scoperchiato sotto .pg26
+   ------------------------------------------------------------
+   GENERATO da landing-community_v2.html. Non modificarlo qui a mano
+   senza riportare la modifica nel prototipo, o le due versioni
+   divergono in silenzio.
+
+   PERCHE' LO SCOPERCHIAMENTO NON E' FACOLTATIVO.
+   Il prototipo e' un file singolo e dichiara :root, body e *: le
+   variabili e il reset dell'INTERO documento. Dentro l'app Next quel
+   CSS vive nello stesso documento delle pagine B2B e ne riscriverebbe
+   palette, corpo e box-sizing. E' la stessa disciplina che il sito
+   applica gia': `.ms` per il design system, `.d26` per la home.
+
+   Trasformazioni applicate:
+     :root, body   -> .pg26
+     html          -> :root:has(.pg26)
+     *             -> .pg26 *
+     ogni altro    -> .pg26 <selettore>
+     @keyframes    -> prefisso pg26- (i nomi erano generici)
+   ============================================================ */
+/* ============================================================
+   PLAYGROUND · landing community · prototipo CAMPO · 2026-07-24
+   Sistema: campo-finale.html (notte + viola, figlio di SEGNALE)
+   Copy: approvata blocco per blocco (sessione 2026-07-24)
+   TODO integrazioni: Brevo (email gate) · link Circle reale
+   ============================================================ */
+.pg26 {
+  --notte: #06050c;
+  --n1: #0b0a14;
+  --n2: #100e1c;
+  --n3: #161327;
+  --line: #1d1b2e;
+  --line-hi: #332f52;
+  --text: #edeff7;
+  --body: #a7a7bc;
+  --mute: #67647f;
+  --viola: #5946f0;
+  --viola-hi: #7a6bf3;
+  --uv: #d6d1ff;
+  --campo: #5946f0;
+  --stato: #ffe14d;
+  --ink: #17152a;
+  --ok: #2ee08a;
+  --ko: #ff5c4a;
+  --title: var(--font-pg-jakarta), system-ui, sans-serif;
+  --font: var(--font-pg-jakarta), system-ui, sans-serif;
+  --mono: var(--font-pg-mono), ui-monospace, monospace;
+}
+.pg26 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root:has(.pg26) {
+  scroll-behavior: smooth;
+}
+.pg26 {
+  background: var(--notte);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.pg26 ::selection {
+  background: var(--viola);
+  color: #fff;
+}
+.pg26 a {
+  color: inherit;
+  text-decoration: none;
+}
+.pg26 h1,
+.pg26 h2,
+.pg26 h3,
+.pg26 h4,
+.pg26 h5 {
+  font-family: var(--title);
+}
+.pg26 .wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 46px;
+}
+@media (max-width: 760px) {
+  .pg26 .wrap {
+    padding: 0 22px;
+  }
+} /* grana di casa */
+.pg26::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.pg26 .island,
+.pg26 section,
+.pg26 footer {
+  position: relative;
+  z-index: 2;
+}
+.pg26 section[id] {
+  scroll-margin-top: 92px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg26 *,
+  .pg26 *::before,
+  .pg26 *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+} /* ---- ISOLA ---- */ /* centratura con left/right:0 + margin auto invece di left:50% + translateX:
+   con left:50% lo spazio disponibile era METÀ viewport, e appena il contenuto
+   lo superava la pillola si tappava e la CTA (non comprimibile) usciva fuori. */
+.pg26 .island {
+  position: fixed;
+  top: 14px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  max-width: calc(100vw - 28px);
+  background: rgba(9, 8, 16, 0.82);
+  backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--line-hi);
+  border-radius: 999px;
+  padding: 8px 12px 8px 26px;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.pg26 .island .brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+}
+.pg26 .island .brand svg {
+  height: 17px;
+  width: auto;
+  color: var(--text);
+}
+.pg26 .island .brand .wm {
+  font-family: var(--title);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+.pg26 .island .sep {
+  width: 1px;
+  height: 20px;
+  background: var(--line-hi);
+  flex: none;
+} /* ogni voce è un campo suo: più aria dentro, non solo tra una e l'altra */
+.pg26 .island .links {
+  display: flex;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #9a96b4;
+}
+.pg26 .island .links a {
+  transition:
+    color 0.15s,
+    background 0.15s;
+  padding: 6px 15px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.pg26 .island .links a:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+}
+.pg26 .island .mcta {
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 17px;
+  border-radius: 99px;
+  padding: 8px 22px;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font);
+  flex: none;
+  transition: transform 0.12s;
+}
+.pg26 .island .mcta:hover {
+  transform: translateY(-1px);
+}
+@media (max-width: 860px) {
+  .pg26 .island .links,
+  .pg26 .island .sep {
+    display: none;
+  }
+} /* ---- sezioni ---- */
+.pg26 section {
+  padding: 130px 0;
+  border-top: 1px solid var(--line);
+}
+.pg26 section:first-of-type {
+  border-top: none;
+}
+.pg26 .stag {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.pg26 .stag::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--viola);
+}
+.pg26 .stag .n {
+  color: var(--mute);
+}
+.pg26 h2.shead {
+  font-size: clamp(32px, 4.4vw, 54px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  max-width: 880px;
+}
+.pg26 .lede {
+  font-size: 19px;
+  color: var(--body);
+  max-width: 700px;
+  margin-top: 22px;
+}
+.pg26 .lede strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.pg26 .hlv {
+  background: rgba(122, 107, 243, 0.16);
+  border: 1px solid rgba(122, 107, 243, 0.4);
+  border-radius: 4px;
+  color: var(--uv);
+  padding: 1px 7px;
+}
+.pg26 .prose {
+  max-width: 700px;
+}
+.pg26 .prose p {
+  color: var(--body);
+  margin-top: 20px;
+  font-size: 17.5px;
+}
+.pg26 .prose p strong {
+  color: var(--text);
+  font-weight: 600;
+} /* ---- COPERTINA · il campo (UNO per pagina) ---- */
+.pg26 .cover {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  border-top: none;
+  padding: 0;
+  position: relative;
+}
+.pg26 .cover .field {
+  position: relative;
+  background: var(--campo);
+  border-radius: 26px;
+  margin: 62px 16px 16px;
+  min-height: calc(100vh - 78px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+} /* la cornice di testo "Morfeus Playground ///" attorno al campo è RITIRATA
+   da questa pagina (decisione Matt 2026-07-24): il campo respira senza recinzione. */
+.pg26 .cover .inner {
+  position: relative;
+  z-index: 3;
+  padding: 90px 0;
+  width: 100%;
+}
+.pg26 .cover-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 44px;
+  align-items: center;
+}
+.pg26 .cover-grid > * {
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .pg26 .cover-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.pg26 .cover .eyebrow {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pg26 .cover .eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 2px;
+  background: #fff;
+}
+.pg26 .cover h1 {
+  font-size: clamp(34px, 4.9vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  color: #fff;
+}
+.pg26 .cover h1 .l2 {
+  color: var(--uv);
+  display: block;
+  margin-top: 10px;
+}
+.pg26 .cover .sub {
+  margin-top: 26px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+}
+.pg26 .cover .ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pg26 .sysline {
+  margin-top: 46px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.75);
+}
+.pg26 .sysline span {
+  padding: 12px 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.28);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pg26 .sysline span:last-child {
+  border-right: none;
+}
+.pg26 .sysline b {
+  color: #fff;
+  font-weight: 600;
+}
+.pg26 .chipst {
+  background: var(--stato);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  letter-spacing: 0.08em;
+}
+.pg26 .cover .trophy {
+  width: 100%;
+  max-width: 360px;
+  justify-self: center;
+  transform: rotate(-8deg);
+  z-index: 2;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .pg26 .cover .trophy {
+    max-width: 200px;
+    justify-self: start;
+    transform: rotate(-8deg) translateX(-6px);
+    opacity: 0.9;
+  }
+} /* ---- bottoni ---- */
+.pg26 .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 99px;
+  padding: 14px 26px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  font-family: var(--font);
+  transition: transform 0.12s;
+}
+.pg26 .btn:hover {
+  transform: translateY(-1px);
+}
+.pg26 .btn-bianco {
+  background: #fff;
+  color: var(--ink);
+}
+.pg26 .btn-viola {
+  background: var(--viola);
+  color: #fff;
+}
+.pg26 .btn-linea {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line-hi);
+}
+.pg26 .btn-campo-linea {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.pg26 .btn-big {
+  font-size: 17px;
+  padding: 17px 34px;
+}
+.pg26 .under-cta {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 14px;
+}
+.pg26 .cover .under-cta {
+  color: rgba(255, 255, 255, 0.75);
+} /* ---- badge/chip ---- */
+.pg26 .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.13em;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.pg26 .badge i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+}
+.pg26 .b-ok {
+  color: var(--ok);
+  border-color: rgba(46, 224, 138, 0.4);
+  background: rgba(46, 224, 138, 0.08);
+}
+.pg26 .b-ok i {
+  background: var(--ok);
+}
+.pg26 .b-st {
+  color: var(--ink);
+  border-color: var(--stato);
+  background: var(--stato);
+  font-weight: 700;
+}
+.pg26 .b-st i {
+  background: var(--ink);
+}
+.pg26 .b-uv {
+  color: var(--viola-hi);
+  border-color: rgba(122, 107, 243, 0.4);
+  background: rgba(89, 70, 240, 0.12);
+}
+.pg26 .b-uv i {
+  background: var(--viola-hi);
+}
+.pg26 .chip-pill {
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--line-hi);
+  border-radius: 99px;
+  padding: 8px 16px;
+  color: var(--body);
+  display: inline-block;
+}
+.pg26 .chip-pill.no {
+  border-style: dashed;
+  color: var(--mute);
+}
+.pg26 .chip-pill.no::before {
+  content: "✕ ";
+  color: var(--ko);
+} /* ---- il gradiente (UNO per pagina: la frase che decide) ---- */
+.pg26 .grad {
+  background: linear-gradient(92deg, #edeff7 4%, #9a8fff 55%, #7a6bf3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+} /* ---- diagnosi "sei qui se" ---- */
+.pg26 .selfrows {
+  margin-top: 56px;
+  border: 1px solid var(--line);
+  background: var(--n1);
+}
+.pg26 .selfrow {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 22px 30px;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+  color: var(--body);
+}
+.pg26 .selfrow:last-child {
+  border-bottom: none;
+}
+.pg26 .selfrow .tick {
+  color: var(--viola-hi);
+  font-family: var(--mono);
+  flex: none;
+  padding-top: 2px;
+}
+.pg26 .pullq {
+  margin-top: 56px;
+  border-left: 2px solid var(--viola);
+  padding: 8px 0 8px 30px;
+  max-width: 760px;
+}
+.pg26 .pullq p {
+  font-family: var(--title);
+  font-size: clamp(21px, 2.6vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+} /* ---- tre strade ---- */
+.pg26 .grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 56px;
+}
+.pg26 .gcell {
+  background: var(--n1);
+  padding: 40px 34px;
+}
+.pg26 .gcell .pn {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--viola-hi);
+  letter-spacing: 0.15em;
+  margin-bottom: 44px;
+  display: block;
+}
+.pg26 .gcell h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.pg26 .gcell p {
+  font-size: 17px;
+  color: var(--body);
+}
+.pg26 .gcell:hover {
+  background: var(--n2);
+}
+@media (max-width: 900px) {
+  .pg26 .grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .shift {
+  margin-top: 64px;
+  max-width: 860px;
+}
+.pg26 .shift p.big {
+  font-family: var(--title);
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+.pg26 .shift p.after {
+  margin-top: 22px;
+  color: var(--body);
+  font-size: 17.5px;
+  max-width: 700px;
+} /* ---- nemico ---- */
+.pg26 .manifesto {
+  margin-top: 56px;
+  border: 1px solid var(--viola);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b0918, var(--n1));
+  padding: 44px 40px;
+}
+.pg26 .manifesto .eye {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 16px;
+  display: block;
+}
+.pg26 .manifesto h3 {
+  font-size: clamp(23px, 3vw, 34px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  max-width: 24ch;
+  line-height: 1.2;
+}
+.pg26 .manifesto p {
+  margin-top: 16px;
+  color: var(--body);
+  max-width: 640px;
+  font-size: 17px;
+}
+.pg26 .faces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 44px;
+} /* ---- credo ---- */
+.pg26 .credo {
+  margin-top: 56px;
+  border: 1px solid var(--line);
+}
+.pg26 .credorow {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 26px;
+  padding: 36px;
+  border-bottom: 1px solid var(--line);
+  background: var(--n1);
+}
+.pg26 .credorow:last-child {
+  border-bottom: none;
+}
+.pg26 .credorow:hover {
+  background: var(--n2);
+}
+.pg26 .credorow .cn {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--viola-hi);
+  letter-spacing: 0.1em;
+  padding-top: 6px;
+}
+.pg26 .credorow h3 {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.pg26 .credorow p {
+  margin-top: 10px;
+  color: var(--body);
+  font-size: 17px;
+  max-width: 640px;
+}
+@media (max-width: 700px) {
+  .pg26 .credorow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+} /* ---- stanza (value stack) ---- */
+.pg26 .stack {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 56px;
+}
+.pg26 .stackcell {
+  background: var(--n1);
+  padding: 38px 34px;
+}
+.pg26 .stackcell:hover {
+  background: var(--n2);
+}
+.pg26 .stackcell .sl {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 18px;
+  display: block;
+}
+.pg26 .stackcell h3 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.pg26 .stackcell p {
+  font-size: 17px;
+  color: var(--body);
+}
+@media (max-width: 820px) {
+  .pg26 .stack {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .reveal {
+  border: 1px solid var(--line);
+  border-top: none;
+  background: var(--n2);
+  padding: 44px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.pg26 .reveal h3 {
+  font-family: var(--title);
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.pg26 .reveal p {
+  color: var(--body);
+  max-width: 520px;
+  font-size: 17px;
+  margin-top: 8px;
+} /* ---- gratis / prova ---- */
+.pg26 .calm {
+  border: 1px solid var(--line);
+  background: var(--n1);
+  padding: 40px 44px;
+  margin-top: 56px;
+  max-width: 860px;
+}
+.pg26 .calm p {
+  color: var(--body);
+  font-size: 17px;
+  margin-top: 18px;
+}
+.pg26 .calm p:first-child {
+  margin-top: 0;
+}
+.pg26 .calm p strong {
+  color: var(--text);
+}
+.pg26 .northstar {
+  font-family: var(--title);
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 600;
+  color: var(--text) !important;
+  letter-spacing: -0.015em;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-top: 26px !important;
+}
+.pg26 .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 56px;
+}
+.pg26 .stat {
+  background: var(--n1);
+  padding: 34px 30px;
+}
+.pg26 .stat b {
+  font-family: var(--title);
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  display: block;
+}
+.pg26 .stat span {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: block;
+  margin-top: 8px;
+}
+@media (max-width: 700px) {
+  .pg26 .stats {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .testi {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-top: none;
+}
+.pg26 .testicell {
+  background: var(--n1);
+  padding: 38px 34px;
+}
+.pg26 .testicell .tl {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pg26 .testicell blockquote {
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.pg26 .testicell .who {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+}
+@media (max-width: 820px) {
+  .pg26 .testi {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .finestra {
+  border: 1px solid var(--viola);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b0918, var(--n1));
+  padding: 42px 40px;
+  margin-top: 26px;
+}
+.pg26 .finestra .eye {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pg26 .finestra h3 {
+  font-size: clamp(22px, 2.8vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  max-width: 26ch;
+}
+.pg26 .logbox {
+  margin-top: 22px;
+  border: 1px solid var(--line-hi);
+  border-radius: 10px;
+  max-width: 600px;
+  overflow: hidden;
+}
+.pg26 .lg {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 14px;
+}
+.pg26 .lg:last-child {
+  border-bottom: none;
+}
+.pg26 .lg .tm {
+  color: var(--mute);
+}
+.pg26 .lg .ac {
+  color: var(--body);
+  flex: 1;
+}
+.pg26 .lg .ok {
+  color: var(--ok);
+}
+.pg26 .finestra .note {
+  margin-top: 20px;
+  font-size: 17px;
+  color: var(--body);
+  max-width: 640px;
+}
+.pg26 .finestra .note strong {
+  color: var(--text);
+} /* ---- per te / non per te ---- */
+.pg26 .pairs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 56px;
+}
+.pg26 .pair {
+  background: var(--n1);
+  padding: 36px 34px;
+}
+.pg26 .pair .pt {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pg26 .pair.si .pt {
+  color: var(--ok);
+}
+.pg26 .pair.si .pt::before {
+  content: "✓";
+}
+.pg26 .pair.no .pt {
+  color: var(--ko);
+}
+.pg26 .pair.no .pt::before {
+  content: "✕";
+}
+.pg26 .pair ul {
+  list-style: none;
+}
+.pg26 .pair li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+  color: var(--body);
+  display: flex;
+  gap: 12px;
+}
+.pg26 .pair li:last-child {
+  border-bottom: none;
+}
+.pg26 .pair.si li::before {
+  content: "✓";
+  color: var(--ok);
+  font-family: var(--mono);
+  flex: none;
+}
+.pg26 .pair.no li::before {
+  content: "✕";
+  color: var(--ko);
+  font-family: var(--mono);
+  flex: none;
+  opacity: 0.7;
+}
+.pg26 .pair.no li {
+  color: var(--mute);
+}
+@media (max-width: 820px) {
+  .pg26 .pairs {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .pairclose {
+  border: 1px solid var(--line);
+  border-top: none;
+  background: var(--n2);
+  padding: 28px 34px;
+  font-size: 17px;
+  color: var(--body);
+}
+.pg26 .pairclose strong {
+  color: var(--text);
+} /* ---- soglia ---- */
+.pg26 .soglia {
+  margin-top: 56px;
+  border: 1px solid var(--viola);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #0d0a20, var(--n1));
+  padding: 52px 46px;
+  position: relative;
+  overflow: hidden;
+}
+.pg26 .soglia .eco {
+  font-family: var(--title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-size: clamp(22px, 3vw, 34px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.5);
+}
+.pg26 .soglia h3 {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 38px);
+  letter-spacing: -0.025em;
+  margin-top: 2px;
+  line-height: 1.1;
+}
+.pg26 .soglia .out {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 34px;
+  max-width: 760px;
+}
+.pg26 .soglia .out div {
+  background: var(--n2);
+  padding: 20px 22px;
+}
+.pg26 .soglia .out b {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: block;
+  margin-bottom: 8px;
+}
+.pg26 .soglia .out span {
+  font-size: 17px;
+  color: var(--body);
+}
+@media (max-width: 700px) {
+  .pg26 .soglia .out {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .soglia p.porta {
+  margin-top: 26px;
+  color: var(--body);
+  max-width: 640px;
+  font-size: 17px;
+}
+.pg26 .soglia p.porta strong {
+  color: var(--text);
+}
+.pg26 .soglia .ctarow {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+} /* ---- faq ---- */
+.pg26 .faq {
+  margin-top: 56px;
+  border: 1px solid var(--line);
+  background: var(--n1);
+}
+.pg26 .faq details {
+  border-bottom: 1px solid var(--line);
+}
+.pg26 .faq details:last-child {
+  border-bottom: none;
+}
+.pg26 .faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 24px 30px;
+  font-family: var(--title);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.pg26 .faq summary::-webkit-details-marker {
+  display: none;
+}
+.pg26 .faq summary::after {
+  content: "+";
+  font-family: var(--mono);
+  color: var(--viola-hi);
+  font-size: 20px;
+  flex: none;
+}
+.pg26 .faq details[open] summary::after {
+  content: "−";
+}
+.pg26 .faq .a {
+  padding: 0 30px 26px;
+  color: var(--body);
+  font-size: 17px;
+  max-width: 720px;
+} /* ---- un giorno ---- */
+.pg26 .giorno {
+  margin-top: 56px;
+  border-left: 2px solid var(--viola);
+  padding-left: 34px;
+  max-width: 760px;
+}
+.pg26 .giorno p {
+  font-size: 18px;
+  color: var(--body);
+  margin-top: 18px;
+  line-height: 1.7;
+}
+.pg26 .giorno p:first-child {
+  margin-top: 0;
+}
+.pg26 .giorno p strong {
+  color: var(--text);
+} /* ---- finale ---- */
+.pg26 .finale {
+  text-align: left;
+}
+.pg26 .finale .eco {
+  font-family: var(--title);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  font-size: clamp(26px, 4vw, 52px);
+  line-height: 1.04;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.5);
+  display: block;
+}
+.pg26 .finale h2 {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(28px, 4.4vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-top: 6px;
+  max-width: 900px;
+}
+.pg26 .finale .sub {
+  margin-top: 24px;
+  color: var(--body);
+  font-size: 18px;
+  max-width: 620px;
+}
+.pg26 .finale .ps {
+  margin-top: 44px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  max-width: 620px;
+  color: var(--mute);
+  font-size: 17px;
+}
+.pg26 .finale .ps b {
+  color: var(--body);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+.pg26 footer {
+  border-top: 1px solid var(--line);
+  padding: 44px 0 64px;
+}
+.pg26 footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.pg26 footer p {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mute);
+  letter-spacing: 0.08em;
+}
+.pg26 footer p b {
+  color: var(--viola-hi);
+} /* ============================================================
+   IL COLLAUDO · overlay a schermo pieno
+   ============================================================ */
+.pg26 .cd-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--notte);
+  display: none;
+  overflow-y: auto;
+}
+.pg26 .cd-overlay.on {
+  display: block;
+}
+.pg26 .cd-shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 24px 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.pg26 .cd-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.pg26 .cd-top .cdw {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.pg26 .cd-top .cdw svg {
+  height: 15px;
+  color: var(--text);
+}
+.pg26 .cd-top .cdw b {
+  font-family: var(--title);
+  font-weight: 600;
+  font-size: 17px;
+}
+.pg26 .cd-top .close {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--line-hi);
+  border-radius: 99px;
+  padding: 7px 14px;
+}
+.pg26 .cd-top .close:hover {
+  color: var(--text);
+}
+.pg26 .cd-prog {
+  height: 3px;
+  background: var(--n3);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.pg26 .cd-prog i {
+  display: block;
+  height: 100%;
+  background: var(--viola);
+  width: 0%;
+  transition: width 0.3s;
+}
+.pg26 .cd-count {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+  text-transform: uppercase;
+}
+.pg26 .cd-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 34px 0;
+}
+.pg26 .cd-block {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pg26 .cd-block::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--viola);
+}
+.pg26 .cd-q {
+  font-family: var(--title);
+  font-size: clamp(23px, 3.4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.16;
+  max-width: 640px;
+}
+.pg26 .cd-sub {
+  color: var(--body);
+  margin-top: 12px;
+  font-size: 17px;
+  max-width: 560px;
+}
+.pg26 .cd-opts {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pg26 .cd-opt {
+  background: var(--n1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 17px 20px;
+  font-size: 17px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font);
+  transition:
+    border-color 0.12s,
+    background 0.12s;
+  line-height: 1.45;
+}
+.pg26 .cd-opt:hover {
+  border-color: var(--viola-hi);
+  background: var(--n2);
+}
+.pg26 .cd-opt.sel {
+  border-color: var(--viola);
+  background: rgba(89, 70, 240, 0.12);
+}
+.pg26 .cd-opt.dim {
+  opacity: 0.35;
+  pointer-events: none;
+}
+.pg26 .cd-fb {
+  margin-top: 22px;
+  border-left: 2px solid var(--viola);
+  padding: 6px 0 6px 20px;
+  color: var(--body);
+  font-size: 17px;
+  max-width: 600px;
+  display: none;
+}
+.pg26 .cd-fb.on {
+  display: block;
+}
+.pg26 .cd-fb b {
+  color: var(--text);
+}
+.pg26 .cd-next {
+  margin-top: 26px;
+  display: none;
+}
+.pg26 .cd-next.on {
+  display: inline-flex;
+} /* slider */
+.pg26 .cd-sliderbox {
+  margin-top: 36px;
+  max-width: 560px;
+}
+.pg26 .cd-slidernum {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 56px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.pg26 .cd-slidernum i {
+  font-style: normal;
+  font-size: 18px;
+  color: var(--mute);
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  margin-left: 8px;
+}
+.pg26 input[type="range"] {
+  width: 100%;
+  margin-top: 22px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--n3);
+  outline: none;
+}
+.pg26 input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--viola);
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+.pg26 input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--viola);
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+.pg26 .cd-sliderfb {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+  min-height: 20px;
+} /* calcolo */
+.pg26 .cd-calc {
+  max-width: 560px;
+  margin: 0 auto;
+  width: 100%;
+}
+.pg26 .cd-calc .logbox {
+  max-width: none;
+} /* gate */
+.pg26 .cd-gate input[type="text"],
+.pg26 .cd-gate input[type="email"] {
+  width: 100%;
+  max-width: 440px;
+  background: var(--n1);
+  border: 1px solid var(--line-hi);
+  border-radius: 12px;
+  padding: 15px 18px;
+  font-size: 17px;
+  color: var(--text);
+  font-family: var(--font);
+  margin-top: 12px;
+  display: block;
+}
+.pg26 .cd-gate input:focus {
+  outline: none;
+  border-color: var(--viola);
+}
+.pg26 .cd-gate label.consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--mute);
+  max-width: 440px;
+  cursor: pointer;
+}
+.pg26 .cd-gate label.consent input {
+  margin-top: 3px;
+  accent-color: var(--viola);
+} /* referto */
+.pg26 .cd-ref {
+  padding: 20px 0 40px;
+}
+.pg26 .cd-ref .rhead {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pg26 .cd-ref .rhead::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--viola);
+}
+.pg26 .cd-ref h2 {
+  font-family: var(--title);
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+.pg26 .refgrid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 36px;
+  margin-top: 36px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .pg26 .refgrid {
+    grid-template-columns: 1fr;
+  }
+} /* il pass (biglietto tear-off) */
+.pg26 .tickp {
+  width: 100%;
+  max-width: 300px;
+  background: linear-gradient(180deg, #f7f5ff, #e6e1ff 68%, #d9d1ff);
+  color: var(--ink);
+  border-radius: 18px;
+  overflow: hidden;
+  transform: rotate(-2.5deg);
+  box-shadow: 0 38px 68px rgba(0, 0, 0, 0.55);
+  position: relative;
+}
+@media (max-width: 760px) {
+  .pg26 .tickp {
+    transform: none;
+    margin: 0 auto;
+  }
+}
+.pg26 .tickp .head {
+  background: linear-gradient(150deg, #6a58f2, #5946f0 60%, #4536c4);
+  color: #fff;
+  padding: 20px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.pg26 .tickp .head::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 58%
+  );
+}
+.pg26 .tickp .hrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .tickp .hlock {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.pg26 .tickp .hlock svg {
+  height: 15px;
+  color: #fff;
+}
+.pg26 .tickp .hlock b {
+  font-family: var(--title);
+  font-weight: 600;
+  font-size: 14px;
+}
+.pg26 .eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  color: var(--stato);
+}
+.pg26 .eq i {
+  width: 4px;
+  border-radius: 1px;
+  display: block;
+  background: currentColor;
+}
+.pg26 .eq i:nth-child(1) {
+  height: 40%;
+}
+.pg26 .eq i:nth-child(2) {
+  height: 78%;
+}
+.pg26 .eq i:nth-child(3) {
+  height: 55%;
+}
+.pg26 .eq i:nth-child(4) {
+  height: 100%;
+}
+.pg26 .eq i:nth-child(5) {
+  height: 34%;
+}
+.pg26 .eq i:nth-child(6) {
+  height: 88%;
+}
+.pg26 .eq i:nth-child(7) {
+  height: 62%;
+}
+.pg26 .tickp h4 {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 27px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 0.94;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .tickp .hsub {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .tickp .body {
+  padding: 20px 20px 6px;
+}
+.pg26 .tickp .meter {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 42px;
+  margin-bottom: 2px;
+}
+.pg26 .tickp .meter > i {
+  display: block;
+  width: 18px;
+  background: var(--viola);
+  border-radius: 2px;
+}
+.pg26 .tickp .meter > i.m1 {
+  height: 20px;
+}
+.pg26 .tickp .meter > i.m2 {
+  height: 31px;
+}
+.pg26 .tickp .meter > i.m3 {
+  height: 42px;
+}
+.pg26 .tickp .meter > i.off {
+  background: rgba(23, 21, 42, 0.14);
+}
+.pg26 .tickp .meter .lv {
+  margin-left: auto;
+  align-self: center;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 24px;
+}
+.pg26 .tickp .meter .lv i {
+  font-style: normal;
+  font-size: 13px;
+  opacity: 0.5;
+}
+.pg26 .tickp .frow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px solid rgba(23, 21, 42, 0.14);
+  font-size: 13px;
+}
+.pg26 .tickp .frow .k {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(23, 21, 42, 0.6);
+}
+.pg26 .tickp .frow .v {
+  font-weight: 600;
+  text-align: right;
+}
+.pg26 .tickp .perf {
+  position: relative;
+  height: 0;
+  border-top: 2px dashed rgba(23, 21, 42, 0.3);
+  margin: 14px 0;
+}
+.pg26 .tickp .perf::before,
+.pg26 .tickp .perf::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--notte);
+}
+.pg26 .tickp .perf::before {
+  left: -11px;
+}
+.pg26 .tickp .perf::after {
+  right: -11px;
+}
+.pg26 .tickp .stub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 16px;
+}
+.pg26 .tickp .stamp {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  background: var(--stato);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 6px 10px;
+  transform: rotate(-5deg);
+}
+.pg26 .tickp .no {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(23, 21, 42, 0.6);
+  text-align: right;
+  line-height: 1.5;
+}
+.pg26 .tickp .no b {
+  color: var(--ink);
+} /* referto blocchi destra */
+.pg26 .refcol .rb {
+  border: 1px solid var(--line);
+  background: var(--n1);
+  padding: 26px 28px;
+  margin-bottom: 14px;
+}
+.pg26 .refcol .rb .rl {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: block;
+  margin-bottom: 12px;
+}
+.pg26 .refcol .rb p {
+  color: var(--body);
+  font-size: 17px;
+}
+.pg26 .refcol .rb p strong {
+  color: var(--text);
+}
+.pg26 .gapline {
+  font-family: var(--title);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text) !important;
+}
+.pg26 .numrow {
+  display: flex;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 6px;
+}
+.pg26 .numcell {
+  flex: 1;
+  background: var(--n2);
+  padding: 20px 22px;
+}
+.pg26 .numcell b {
+  font-family: var(--title);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  display: block;
+}
+.pg26 .numcell.rosso b {
+  color: var(--ko);
+}
+.pg26 .numcell.verde b {
+  color: var(--ok);
+}
+.pg26 .numcell span {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: block;
+  margin-top: 6px;
+}
+.pg26 .radio {
+  margin-top: 6px;
+}
+.pg26 .radiorow {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+}
+.pg26 .radiorow:last-child {
+  border-bottom: none;
+}
+.pg26 .radiorow .ax {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--body);
+  padding-top: 2px;
+}
+.pg26 .radiorow .vx {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex: none;
+}
+.pg26 .vx.v3 {
+  color: var(--ok);
+}
+.pg26 .vx.v2 {
+  color: var(--uv);
+}
+.pg26 .vx.v1 {
+  color: var(--stato);
+}
+.pg26 .vx.v0 {
+  color: var(--ko);
+}
+.pg26 .refcta {
+  border: 1px solid var(--viola);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0d0a20, var(--n1));
+  padding: 34px 32px;
+  margin-top: 10px;
+}
+.pg26 .refcta h3 {
+  font-family: var(--title);
+  font-size: clamp(21px, 2.6vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.pg26 .refcta p {
+  color: var(--body);
+  margin-top: 12px;
+  font-size: 17px;
+  max-width: 520px;
+}
+.pg26 .refcta .ctarow {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.pg26 .refcta .soft {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+} /* ============================================================
+   DEPTH PASS · scala, fasce, piani, ancore, leggibilità
+   (override 2026-07-24 · risposta al feedback "troppo piatto")
+   ============================================================ */
+.pg26 {
+  --body: #b2b1c7;
+}
+.pg26 {
+  font-size: 17.5px;
+}
+.pg26 section {
+  position: relative;
+  overflow: hidden;
+}
+.pg26 section .wrap {
+  position: relative;
+  z-index: 2;
+} /* filigrana: il numero di sezione gigante, outline, dietro il titolo */
+.pg26 section[data-n]::before {
+  content: attr(data-n);
+  position: absolute;
+  top: 64px;
+  right: 1vw;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(150px, 20vw, 300px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(122, 107, 243, 0.14);
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 760px) {
+  .pg26 section[data-n]::before {
+    font-size: 130px;
+    top: 36px;
+    right: -10px;
+    -webkit-text-stroke: 1px rgba(122, 107, 243, 0.12);
+  }
+} /* fasce alternate: lo scroll respira a piani */
+.pg26 section:nth-of-type(even) {
+  background: linear-gradient(180deg, #0c0b18 0%, var(--notte) 72%);
+} /* scala */
+.pg26 h2.shead {
+  font-size: clamp(38px, 5.4vw, 66px);
+  letter-spacing: -0.035em;
+}
+.pg26 .lede {
+  font-size: 20px;
+}
+.pg26 .prose {
+  max-width: 660px;
+}
+.pg26 .prose p {
+  font-size: 18px;
+}
+.pg26 .pullq p {
+  font-size: clamp(24px, 3.2vw, 36px);
+}
+.pg26 .shift p.big {
+  font-size: clamp(30px, 4.4vw, 54px);
+}
+.pg26 .shift p.after {
+  font-size: 18px;
+}
+.pg26 .manifesto h3 {
+  font-size: clamp(28px, 3.8vw, 46px);
+}
+.pg26 .manifesto p {
+  font-size: 17.5px;
+  margin-top: 18px;
+}
+.pg26 .reveal h3 {
+  font-size: clamp(30px, 4vw, 48px);
+}
+.pg26 .reveal {
+  padding: 52px 44px;
+}
+.pg26 .stat b {
+  font-size: clamp(44px, 6.4vw, 76px);
+}
+.pg26 .stat {
+  padding: 44px 36px;
+}
+.pg26 .finale h2 {
+  font-size: clamp(30px, 5vw, 62px);
+}
+.pg26 .finale .eco {
+  font-size: clamp(26px, 4.4vw, 56px);
+}
+.pg26 .finale .sub {
+  font-size: 19px;
+}
+.pg26 .giorno p {
+  font-size: 19px;
+} /* leggibilità dentro i piani */
+.pg26 .selfrow {
+  font-size: 17px;
+  padding: 24px 32px;
+}
+.pg26 .gcell h3 {
+  font-size: 24px;
+}
+.pg26 .gcell p {
+  font-size: 17px;
+}
+.pg26 .faces .chip-pill {
+  font-size: 17px;
+  padding: 11px 20px;
+}
+.pg26 .stackcell {
+  padding: 42px 38px;
+}
+.pg26 .stackcell h3 {
+  font-size: 23px;
+}
+.pg26 .stackcell p {
+  font-size: 17px;
+}
+.pg26 .calm {
+  padding: 48px 52px;
+  max-width: 900px;
+}
+.pg26 .calm p {
+  font-size: 18px;
+}
+.pg26 .calm .northstar {
+  font-size: clamp(21px, 2.5vw, 27px);
+}
+.pg26 .testicell blockquote {
+  font-size: 18px;
+}
+.pg26 .pair li {
+  font-size: 17px;
+  padding: 14px 0;
+}
+.pg26 .pairclose {
+  font-size: 18px;
+  padding: 32px 36px;
+}
+.pg26 .faq summary {
+  font-size: 19px;
+  padding: 28px 34px;
+}
+.pg26 .faq .a {
+  font-size: 17px;
+  padding: 0 34px 30px;
+}
+.pg26 .cd-opt {
+  font-size: 17px;
+}
+.pg26 .cd-q {
+  font-size: clamp(24px, 3.6vw, 34px);
+}
+.pg26 .cd-sub {
+  font-size: 17px;
+} /* piani elevati: le card staccano dalla notte (ombra nera, mai glow) */
+.pg26 .selfrows,
+.pg26 .grid3,
+.pg26 .credo,
+.pg26 .faq,
+.pg26 .calm,
+.pg26 .manifesto {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+  border-color: var(--line-hi);
+}
+.pg26 .stack {
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  border-color: var(--line-hi);
+}
+.pg26 .reveal {
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+  border-color: var(--line-hi);
+}
+.pg26 .stats {
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  border-color: var(--line-hi);
+}
+.pg26 .testi {
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+  border-color: var(--line-hi);
+}
+.pg26 .pairs {
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  border-color: var(--line-hi);
+}
+.pg26 .pairclose {
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+  border-color: var(--line-hi);
+} /* momenti radiali scuri (fondo, non glow) */
+.pg26 .manifesto {
+  background: radial-gradient(130% 150% at 18% 0%, #151040 0%, #0b0918 52%, var(--n1) 100%);
+}
+.pg26 .soglia {
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+  background: radial-gradient(130% 130% at 82% 8%, #171150 0%, #0d0a20 46%, var(--n1) 100%);
+} /* il credo: manifesto, non lista */
+.pg26 .credorow {
+  padding: 44px 40px;
+  grid-template-columns: 110px 1fr;
+}
+.pg26 .credorow .cn {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 46px;
+  letter-spacing: -0.03em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(122, 107, 243, 0.55);
+  padding-top: 0;
+  line-height: 1;
+}
+.pg26 .credorow h3 {
+  font-size: clamp(23px, 3vw, 32px);
+}
+.pg26 .credorow p {
+  font-size: 17px;
+  margin-top: 12px;
+}
+@media (max-width: 700px) {
+  .pg26 .credorow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .pg26 .credorow .cn {
+    font-size: 34px;
+  }
+} /* il nastro · UNO per pagina, tra copertina e corpo */
+.pg26 .nastro {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  padding: 15px 0;
+  background:
+    repeating-linear-gradient(135deg, rgba(89, 70, 240, 0.13) 0 10px, transparent 10px 26px),
+    var(--n1);
+}
+.pg26 .nastro .ntrack {
+  display: flex;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--uv);
+  animation: pg26-nastro 40s linear infinite;
+  width: max-content;
+}
+.pg26 .nastro span {
+  padding: 0 30px;
+}
+.pg26 .nastro b {
+  color: #fff;
+  font-weight: 600;
+}
+@keyframes pg26-nastro {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg26 .nastro .ntrack {
+    animation: none;
+  }
+} /* la soglia col pass fisico */
+.pg26 .sg-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 52px;
+  align-items: center;
+}
+.pg26 .sg-grid .out {
+  grid-template-columns: 1fr;
+  max-width: 560px;
+}
+.pg26 .sg-pass {
+  justify-self: center;
+}
+@media (max-width: 900px) {
+  .pg26 .sg-grid {
+    grid-template-columns: 1fr;
+  }
+  .pg26 .sg-pass {
+    margin-top: 20px;
+  }
+} /* ============================================================
+   COLOR PASS · il colore fa lavoro strutturale
+   (momenti viola, card accese, giallo che dichiara, luci di campo)
+   ============================================================ */ /* luci di campo: lavaggi radiali alternati, via il nero piatto */
+.pg26 section[data-n]::after {
+  content: "";
+  position: absolute;
+  top: -140px;
+  left: -8%;
+  width: 58%;
+  height: 560px;
+  background: radial-gradient(closest-side, rgba(89, 70, 240, 0.14), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+.pg26 section[data-n]:nth-of-type(odd)::after {
+  left: auto;
+  right: -8%;
+} /* filo viola in testa a ogni piano */
+.pg26 .selfrows,
+.pg26 .grid3,
+.pg26 .credo,
+.pg26 .stack,
+.pg26 .faq,
+.pg26 .calm,
+.pg26 .stats,
+.pg26 .pairs {
+  position: relative;
+}
+.pg26 .selfrows::before,
+.pg26 .grid3::before,
+.pg26 .credo::before,
+.pg26 .stack::before,
+.pg26 .faq::before,
+.pg26 .calm::before,
+.pg26 .stats::before,
+.pg26 .pairs::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--viola), rgba(89, 70, 240, 0) 62%);
+  z-index: 3;
+} /* IL MOMENTO · pannello viola pieno che ferma lo scroll */
+.pg26 .momento {
+  margin-top: 64px;
+  background: linear-gradient(158deg, #7161ff, #5946f0 52%, #3f30b8);
+  border-radius: 24px;
+  padding: 64px 60px;
+  color: #fff;
+  box-shadow: 0 44px 90px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+}
+.pg26 .momento::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    122deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+.pg26 .momento > * {
+  position: relative;
+  z-index: 1;
+}
+.pg26 .momento .m-eye {
+  display: inline-block;
+  margin-bottom: 22px;
+}
+.pg26 .momento .m-pre {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 640px;
+}
+.pg26 .momento h3 {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(30px, 4.6vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin-top: 18px;
+  max-width: 900px;
+}
+.pg26 .momento h3 span {
+  color: var(--uv);
+}
+.pg26 .momento .m-after {
+  margin-top: 24px;
+  font-size: 17.5px;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 680px;
+}
+@media (max-width: 760px) {
+  .pg26 .momento {
+    padding: 44px 28px;
+  }
+} /* card accesa nel gruppo */
+.pg26 .cell-accent {
+  background: linear-gradient(158deg, #7161ff, #5946f0 55%, #4536c4) !important;
+  color: #fff;
+}
+.pg26 .cell-accent h3 {
+  color: #fff;
+}
+.pg26 .cell-accent p {
+  color: rgba(255, 255, 255, 0.88);
+}
+.pg26 .cell-accent .sl {
+  color: rgba(255, 255, 255, 0.85);
+} /* timbro grande (giallo che dichiara) */
+.pg26 .stampone {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  background: var(--stato);
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  padding: 12px 20px;
+  transform: rotate(-4deg);
+  display: inline-block;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+} /* per te: la colonna sì si accende */
+.pg26 .pair.si {
+  background: linear-gradient(
+    180deg,
+    rgba(89, 70, 240, 0.15),
+    rgba(89, 70, 240, 0.04) 70%,
+    var(--n1)
+  );
+}
+.pg26 .pairclose {
+  background: linear-gradient(90deg, rgba(89, 70, 240, 0.22), var(--n2) 65%);
+  border-left: 3px solid var(--viola);
+} /* pull quote accesa */
+.pg26 .pullq {
+  border-left: none;
+  padding: 34px 38px;
+  background: linear-gradient(
+    120deg,
+    rgba(89, 70, 240, 0.2),
+    rgba(89, 70, 240, 0.05) 60%,
+    var(--n1)
+  );
+  border: 1px solid rgba(122, 107, 243, 0.38);
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+.pg26 .pullq p {
+  color: var(--text);
+} /* la chiusa viola */
+.pg26 .chiusa {
+  background: linear-gradient(158deg, #7161ff, #5946f0 52%, #3f30b8);
+  border-radius: 26px;
+  padding: 70px 64px;
+  box-shadow: 0 44px 90px rgba(0, 0, 0, 0.55);
+  position: relative;
+  overflow: hidden;
+}
+.pg26 .chiusa::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(90% 120% at 85% 10%, rgba(255, 255, 255, 0.14), transparent 55%);
+  pointer-events: none;
+}
+.pg26 .chiusa > * {
+  position: relative;
+  z-index: 1;
+}
+.pg26 .chiusa .eco {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
+}
+.pg26 .chiusa h2 {
+  color: #fff;
+}
+.pg26 .chiusa .sub {
+  color: rgba(255, 255, 255, 0.9);
+}
+.pg26 .chiusa .under-cta {
+  color: rgba(255, 255, 255, 0.8);
+}
+.pg26 .chiusa .btn-viola {
+  background: #fff;
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .pg26 .chiusa {
+    padding: 46px 28px;
+  }
+}
+.pg26 .finale .ps {
+  border-top: none;
+  margin-top: 30px;
+} /* parole accese nei titoli */
+.pg26 .vh {
+  color: var(--viola-hi);
+}
+.pg26 .kox {
+  color: var(--ko);
+}
+.pg26 .shead .din {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(167, 167, 188, 0.55);
+} /* nastro più presente */
+.pg26 .nastro {
+  background:
+    repeating-linear-gradient(135deg, rgba(89, 70, 240, 0.2) 0 10px, transparent 10px 26px),
+    var(--n1);
+} /* card corsi: testo + numerone */
+.pg26 .stackcell.corsi {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 44px;
+  align-items: center;
+}
+.pg26 .stackcell.corsi .cnum {
+  text-align: right;
+  flex: none;
+}
+.pg26 .stackcell.corsi .cnum b {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(54px, 7vw, 92px);
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  display: block;
+  color: var(--uv);
+}
+.pg26 .stackcell.corsi .cnum span {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: block;
+  margin-top: 10px;
+}
+.pg26 .stackcell.corsi .cchips {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+@media (max-width: 760px) {
+  .pg26 .stackcell.corsi {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .pg26 .stackcell.corsi .cnum {
+    text-align: left;
+  }
+} /* credo: hover più netto, numeri più accesi */
+.pg26 .credorow:hover {
+  background: var(--n3);
+}
+.pg26 .credorow .cn {
+  -webkit-text-stroke: 1px rgba(122, 107, 243, 0.85);
+} /* ============================================================
+   B6 · CHI C'È DIETRO · MORFEUS (P15)
+   Regola DS: quando Morfeus appare nel campo appare come PROVA,
+   non come sponsor: bordo viola, numeri veri, mai il giallo.
+   ============================================================ */
+.pg26 .morf {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line-hi);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 52px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+}
+.pg26 .mcard {
+  background: var(--n1);
+  padding: 38px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.pg26 .mcard:hover {
+  background: var(--n2);
+}
+.pg26 .mcard .ml {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: block;
+  margin-bottom: 24px;
+}
+.pg26 .mcard b {
+  font-family: var(--title);
+  font-size: clamp(34px, 4.2vw, 50px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+}
+.pg26 .mcard b i {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: block;
+  margin-top: 12px;
+  font-weight: 400;
+}
+.pg26 .mcard p {
+  font-size: 17px;
+  color: var(--body);
+  margin-top: auto;
+}
+.pg26 .mlogos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.pg26 .mlogos span {
+  font-family: var(--title);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--line-hi);
+  border-radius: 8px;
+  padding: 8px 13px;
+  color: var(--text);
+}
+@media (max-width: 900px) {
+  .pg26 .morf {
+    grid-template-columns: 1fr;
+  }
+} /* cosa NON siamo (anti-positioning) · 3 card: titolo su riga propria, così si allineano */
+.pg26 .nots-lab {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 52px 0 20px;
+}
+.pg26 .nots-lab::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--viola);
+}
+.pg26 .nots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.pg26 .notcard {
+  background: var(--n1);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+}
+.pg26 .notcard:hover {
+  background: var(--n2);
+}
+.pg26 .notcard i {
+  font-style: normal;
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 92, 74, 0.45);
+  background: rgba(255, 92, 74, 0.1);
+  color: var(--ko);
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.pg26 .notcard b {
+  display: block;
+  font-family: var(--title);
+  font-size: 18.5px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.24;
+  margin-bottom: 9px;
+}
+.pg26 .notcard span {
+  display: block;
+  font-size: 17px;
+  color: var(--body);
+}
+@media (max-width: 820px) {
+  .pg26 .nots {
+    grid-template-columns: 1fr;
+  }
+} /* il ponte enterprise → te */
+.pg26 .ponte {
+  margin-top: 48px;
+  max-width: 840px;
+}
+.pg26 .ponte .p-big {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(24px, 3.4vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+.pg26 .ponte .p-after {
+  margin-top: 22px;
+  font-size: 17.5px;
+  color: var(--body);
+}
+.pg26 .ponte .p-after strong {
+  color: var(--text);
+} /* ============================================================
+   B5 · ANCORE VISIVE (P6 icone delle 3 strade · P13 recensioni)
+   ============================================================ */ /* P6 · un oggetto grafico per strada, dentro una piastra viola */
+.pg26 .gcell .pn {
+  margin-bottom: 22px;
+}
+.pg26 .gico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 107, 243, 0.34);
+  color: var(--uv);
+  margin-bottom: 26px;
+  background: linear-gradient(158deg, rgba(89, 70, 240, 0.26), rgba(89, 70, 240, 0.05));
+}
+.pg26 .gico svg {
+  width: 34px;
+  height: 34px;
+}
+.pg26 .gcell:hover .gico {
+  border-color: rgba(122, 107, 243, 0.6);
+  color: #fff;
+} /* P13 · le recensioni: card che si capisce a vista che sono recensioni */
+.pg26 .revhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 64px;
+  flex-wrap: wrap;
+}
+.pg26 .revhead h3 {
+  font-family: var(--title);
+  font-size: clamp(23px, 2.9vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.pg26 .revhead .rl {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.pg26 .reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 28px;
+}
+@media (max-width: 900px) {
+  .pg26 .reviews {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .rev {
+  position: relative;
+  background: linear-gradient(180deg, var(--n2), var(--n1));
+  border: 1px solid var(--line-hi);
+  border-radius: 18px;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.45);
+}
+.pg26 .rev::before {
+  content: "”";
+  position: absolute;
+  top: 2px;
+  right: 20px;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 86px;
+  line-height: 1;
+  color: rgba(122, 107, 243, 0.18);
+  pointer-events: none;
+}
+.pg26 .rev .who {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .rev .av {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.04em;
+  background: linear-gradient(158deg, #7161ff, #5946f0 60%, #4536c4);
+  border: 1px solid rgba(214, 209, 255, 0.32);
+}
+.pg26 .rev .nm {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.pg26 .rev .rr {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 4px;
+}
+.pg26 .rev blockquote {
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.55;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .rev .tag {
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .rev.todo {
+  border-style: dashed;
+  background: var(--n1);
+  box-shadow: none;
+}
+.pg26 .rev.todo .av {
+  background: none;
+  border: 1px dashed var(--line-hi);
+  color: var(--mute);
+}
+.pg26 .rev.todo blockquote {
+  color: var(--mute);
+  font-size: 17px;
+}
+.pg26 .revnote {
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--mute);
+  max-width: 70ch;
+  line-height: 1.8;
+} /* le stat ora chiudono da sole (il vecchio blocco testimonianze non le segue più) */
+.pg26 .stats {
+  border-radius: 18px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+} /* ============================================================
+   B4 · LEGGIBILITÀ (P4 pull-quote · P7 sezione nemico)
+   ============================================================ */ /* P4 · la pull-quote diventa un blocco che si vede: barra viola,
+   etichetta, e la seconda metà della frase in UV (dove cade l'occhio) */
+.pg26 .pullq {
+  position: relative;
+  border-left: 3px solid var(--viola);
+  border-radius: 0 18px 18px 0;
+  background: linear-gradient(
+    115deg,
+    rgba(89, 70, 240, 0.34),
+    rgba(89, 70, 240, 0.1) 52%,
+    var(--n1)
+  );
+  border-top: 1px solid rgba(122, 107, 243, 0.34);
+  border-right: 1px solid rgba(122, 107, 243, 0.24);
+  border-bottom: 1px solid rgba(122, 107, 243, 0.24);
+  padding: 38px 44px 40px;
+  overflow: hidden;
+}
+.pg26 .pullq::after {
+  content: "”";
+  position: absolute;
+  right: 22px;
+  top: -26px;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 190px;
+  line-height: 1;
+  color: rgba(214, 209, 255, 0.1);
+  pointer-events: none;
+}
+.pg26 .pq-lab {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--uv);
+  margin-bottom: 18px;
+}
+.pg26 .pq-lab::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--uv);
+}
+.pg26 .pullq p {
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.pg26 .pq-hi {
+  color: var(--uv);
+} /* P7 · i quattro finti esperti: da chip illeggibili a card vere */
+.pg26 .enemies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line-hi);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 36px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+}
+.pg26 .enemy {
+  background: var(--n1);
+  padding: 32px 32px;
+}
+.pg26 .enemy:hover {
+  background: var(--n2);
+}
+.pg26 .enemy .en {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.pg26 .enemy .en i {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 92, 74, 0.45);
+  background: rgba(255, 92, 74, 0.1);
+  color: var(--ko);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  flex: none;
+  font-style: normal;
+  line-height: 1;
+}
+.pg26 .enemy h4 {
+  font-family: var(--title);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.pg26 .enemy p {
+  font-size: 17px;
+  color: var(--body);
+}
+.pg26 .enemy p strong {
+  color: var(--text);
+}
+@media (max-width: 760px) {
+  .pg26 .enemies {
+    grid-template-columns: 1fr;
+  }
+} /* P7 · il ribaltamento: chiude la sezione con una riga che pesa */
+.pg26 .ribalta {
+  margin-top: 48px;
+  max-width: 840px;
+}
+.pg26 .ribalta .r-pre {
+  font-size: 18px;
+  color: var(--body);
+}
+.pg26 .ribalta .r-pre strong {
+  color: var(--text);
+}
+.pg26 .ribalta .r-big {
+  margin-top: 26px;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(25px, 3.6vw, 44px);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+.pg26 .ribalta .r-after {
+  margin-top: 24px;
+  font-size: 17px;
+  color: var(--body);
+} /* ============================================================
+   B3 · ABOVE THE FOLD SU TUTTI GLI SCHERMI (P1)
+   Regola: il campo viola sta INTERO nella prima schermata.
+   Le misure del hero non seguono solo la larghezza (vw) ma anche
+   l'altezza del viewport (vh): su un portatile basso rientra da sé.
+   ============================================================ */ /* dvh dove supportato: su mobile la barra indirizzi non taglia più il campo */
+@supports (height: 100dvh) {
+  .pg26 .cover {
+    min-height: 100dvh;
+  }
+  .pg26 .cover .field {
+    min-height: calc(100dvh - clamp(70px, 9vh, 78px));
+  }
+}
+.pg26 .cover .field {
+  margin: clamp(54px, 7vh, 62px) 16px clamp(12px, 1.6vh, 16px);
+  min-height: calc(100vh - clamp(70px, 9vh, 78px));
+} /* il respiro interno segue l'altezza dello schermo */
+.pg26 .cover .inner {
+  padding: clamp(30px, 6vh, 90px) 0;
+}
+.pg26 .cover .eyebrow {
+  margin-bottom: clamp(14px, 2.4vh, 30px);
+  font-size: clamp(11px, 1.3vh, 13px);
+} /* il titolo è limitato ANCHE dall'altezza */
+.pg26 .cover h1 {
+  font-size: clamp(29px, min(4.9vw, 6.4vh), 62px);
+}
+.pg26 .cover h1 .l2 {
+  margin-top: clamp(3px, 0.9vh, 10px);
+}
+.pg26 .cover .sub {
+  margin-top: clamp(13px, 2.2vh, 26px);
+  font-size: clamp(15.5px, 1.85vh, 18px);
+}
+.pg26 .cover .ctas {
+  margin-top: clamp(18px, 3.2vh, 36px);
+}
+.pg26 .cover .ctas .btn-big {
+  font-size: clamp(15px, 1.85vh, 17px);
+  padding: clamp(12px, 1.7vh, 17px) clamp(22px, 2.6vw, 34px);
+}
+.pg26 .sysline {
+  margin-top: clamp(20px, 3.6vh, 46px);
+  font-size: clamp(11px, 1.3vh, 13px);
+}
+.pg26 .sysline span {
+  padding: clamp(8px, 1.4vh, 12px) clamp(12px, 1.4vw, 20px);
+  flex: 1 1 auto;
+}
+.pg26 .cover .trophy {
+  max-width: min(360px, 40vh);
+} /* portatili bassi (MacBook Air e simili) */
+@media (max-height: 880px) {
+  .pg26 .cover .inner {
+    padding: clamp(24px, 4vh, 56px) 0;
+  }
+  .pg26 .cover .trophy {
+    max-width: min(290px, 34vh);
+  }
+} /* stretto: il trofeo esce dal flusso e taglia l'angolo, non ruba altezza al testo */
+@media (max-width: 900px) {
+  .pg26 .cover .inner {
+    z-index: 3;
+  }
+  .pg26 .cover .trophy {
+    position: absolute;
+    right: -7%;
+    bottom: -3%;
+    width: 58%;
+    max-width: 250px;
+    max-height: none;
+    opacity: 0.4;
+    transform: rotate(-8deg);
+    z-index: 1;
+    justify-self: auto;
+    margin: 0;
+  }
+  .pg26 .cover .sub {
+    max-width: 38ch;
+  }
+} /* telefoni: la sysline a 3 righe mangerebbe la piega, va in una riga sola
+   (gli stessi 3 fatti tornano subito sotto nel nastro e nelle stat) */
+.pg26 .sys-mob {
+  display: none;
+}
+@media (max-width: 560px) {
+  .pg26 .sysline {
+    display: none;
+  }
+  .pg26 .sys-mob {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .pg26 .sys-mob b {
+    color: #fff;
+  }
+  .pg26 .cover .trophy {
+    width: 66%;
+    max-width: 200px;
+    opacity: 0.32;
+    right: -13%;
+  }
+} /* ============================================================
+   LUCE PASS · alleggerire la notte (2026-07-24)
+   ⟲ REVERSIBILE: cancellando SOLO questo blocco la pagina torna
+     esattamente com'era. Backup completo: landing-community_v1-notte.html
+   Tre mosse: 1) i piani salgono e virano al viola · 2) alternanza di
+   fascia visibile · 3) il credo diventa campo viola pieno.
+   ============================================================ */ /* ---- 1 · i piani salgono: il nero morto diventa notte viola ---- */
+.pg26 {
+  --notte: #08061a; /* era #06050C · base con una vena viola, non nero spento */
+  --n1: #141130; /* era #0B0A14 · le card ora staccano dal fondo */
+  --n2: #1b173e; /* era #100E1C */
+  --n3: #241f52; /* era #161327 */
+  --line: #2b2557; /* era #1D1B2E · i bordi si vedono */
+  --line-hi: #453d7c; /* era #332F52 */
+  --body: #bcbbd0; /* era #B2B1C7 · un filo più chiaro sul corpo */
+} /* materia: un filo di luce in alto su ogni superficie (come sull'isola) */
+.pg26 .gcell,
+.pg26 .stackcell,
+.pg26 .enemy,
+.pg26 .mcard,
+.pg26 .notcard,
+.pg26 .stat,
+.pg26 .credorow,
+.pg26 .rev,
+.pg26 .pair,
+.pg26 .calm,
+.pg26 .selfrows,
+.pg26 .faq,
+.pg26 .reveal,
+.pg26 .manifesto {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+.pg26 .grid3,
+.pg26 .stack,
+.pg26 .enemies,
+.pg26 .morf,
+.pg26 .stats,
+.pg26 .reviews,
+.pg26 .credo,
+.pg26 .pairs {
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.45);
+} /* ---- 2 · l'alternanza di fascia adesso si vede ---- */
+.pg26 section:nth-of-type(even) {
+  background: linear-gradient(180deg, #120f32 0%, #0d0a24 42%, var(--notte) 86%);
+} /* ---- le luci: non bolle che galleggiano, ma luce che entra dalla cucitura ----
+   Il difetto delle bolle era geometrico: centro DENTRO la sezione = bordo del
+   cerchio visibile. Qui il centro sta SUL bordo superiore (y=0) e l'ellisse è
+   più larga della sezione: si vede solo la coda che scende. E il lato alterna
+   in modo regolare (pari a sinistra, dispari a destra): ritmo, non caso. */
+.pg26 section[data-n]::after {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: min(560px, 62%);
+  background: radial-gradient(
+    135% 100% at 14% 0%,
+    rgba(122, 107, 243, 0.26) 0%,
+    rgba(110, 92, 245, 0.11) 32%,
+    rgba(89, 70, 240, 0.03) 55%,
+    transparent 72%
+  );
+}
+.pg26 section[data-n]:nth-of-type(odd)::after {
+  left: 0;
+  right: 0;
+  background: radial-gradient(
+    135% 100% at 86% 0%,
+    rgba(122, 107, 243, 0.26) 0%,
+    rgba(110, 92, 245, 0.11) 32%,
+    rgba(89, 70, 240, 0.03) 55%,
+    transparent 72%
+  );
+} /* il taglio tra sezioni non è più una riga secca: sfuma ai bordi */
+.pg26 section {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--line-hi) 20%,
+      var(--line-hi) 80%,
+      transparent
+    )
+    1;
+}
+.pg26 section:first-of-type,
+.pg26 .cover {
+  border-top: none;
+  border-image: none;
+} /* ---- 3 · IL CREDO · campo viola pieno: lo stacco grande a metà pagina ---- */
+.pg26 #credo {
+  background: linear-gradient(168deg, #6e5cf5 0%, #5946f0 44%, #3e2fb4 100%);
+  border-top: none;
+  border-image: none;
+}
+.pg26 #credo::after {
+  display: none;
+} /* niente luce radiale sul viola */
+.pg26 #credo::before {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.2);
+} /* filigrana del numero in bianco */
+.pg26 #credo .stag {
+  color: rgba(255, 255, 255, 0.92);
+}
+.pg26 #credo .stag::before {
+  background: #fff;
+}
+.pg26 #credo .stag .n {
+  color: rgba(255, 255, 255, 0.6);
+}
+.pg26 #credo h2.shead {
+  color: #fff;
+} /* su viola il gradiente bianco→viola non si legge: diventa UV pieno */
+.pg26 #credo h2.shead .grad {
+  background: none;
+  color: #e9e4ff;
+  -webkit-text-fill-color: #e9e4ff;
+}
+.pg26 #credo .lede {
+  color: #fff;
+}
+.pg26 #credo .lede strong {
+  color: #fff;
+}
+.pg26 #credo .credo {
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: 0 44px 88px rgba(0, 0, 0, 0.34);
+} /* vetro SCURO sotto il testo (non chiaro): sul viola è l'unico modo di tenere
+   il corpo sopra il contrasto minimo 4.5 senza spegnere il campo */
+.pg26 #credo .credorow {
+  background: rgba(9, 7, 28, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.pg26 #credo .credorow:last-child {
+  border-bottom: none;
+}
+.pg26 #credo .credorow:hover {
+  background: rgba(9, 7, 28, 0.34);
+}
+.pg26 #credo .credorow .cn {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+}
+.pg26 #credo .credorow h3 {
+  color: #fff;
+}
+.pg26 #credo .credorow p {
+  color: rgba(255, 255, 255, 0.9);
+}
+.pg26 #credo .prose p {
+  color: rgba(255, 255, 255, 0.95);
+} /* ============================================================
+   SCALA · rimettere la gerarchia (2026-07-24)
+   ⟲ REVERSIBILE come il LUCE PASS: si cancella solo questo blocco.
+   Il difetto era misurabile: a 1440×900 i titoli di sezione stavano
+   a 66px e l'H1 dell'hero a 58px. Il titolo più importante della
+   pagina era il più piccolo. Ora niente supera l'hero.
+   ============================================================ */
+.pg26 h2.shead {
+  font-size: clamp(32px, 4.2vw, 52px);
+}
+.pg26 .momento h3 {
+  font-size: clamp(28px, 4vw, 48px);
+}
+.pg26 .finale h2 {
+  font-size: clamp(28px, 4.2vw, 52px);
+}
+.pg26 .finale .eco {
+  font-size: clamp(24px, 3.5vw, 44px);
+}
+.pg26 .stat b {
+  font-size: clamp(36px, 4.6vw, 54px);
+} /* ============================================================
+   TEST · GRADIENTI NELLE BOX (2026-07-24) — ⟲ REVERSIBILE
+   Si annulla cancellando SOLO questo blocco.
+   Stato precedente salvato in: landing-community_v2-luce.html
+   Principio: la luce entra dall'alto, come nelle sezioni. Ogni box è
+   più chiara in cima e si spegne verso il basso, con un alone viola
+   nell'angolo illuminato. Dislivello tenuto sotto il 7% e bisello di
+   1px: sopra quella soglia diventa plastica lucida, non materia.
+   ============================================================ */
+.pg26 .gcell,
+.pg26 .stackcell,
+.pg26 .enemy,
+.pg26 .mcard,
+.pg26 .notcard,
+.pg26 .stat,
+.pg26 .pair,
+.pg26 .calm,
+.pg26 .selfrows,
+.pg26 .faq,
+.pg26 .reveal,
+.pg26 .rev {
+  background:
+    radial-gradient(
+      120% 92% at 5% 0%,
+      rgba(122, 107, 243, 0.15) 0%,
+      rgba(122, 107, 243, 0.035) 36%,
+      transparent 64%
+    ),
+    linear-gradient(180deg, #1b1740 0%, #151231 46%, #121027 100%);
+} /* bisello: luce in cima, ombra sotto. È quello che dà lo spessore */
+.pg26 .gcell,
+.pg26 .stackcell,
+.pg26 .enemy,
+.pg26 .mcard,
+.pg26 .notcard,
+.pg26 .stat,
+.pg26 .pair,
+.pg26 .rev,
+.pg26 .calm,
+.pg26 .selfrows,
+.pg26 .faq,
+.pg26 .reveal {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.075),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+} /* al passaggio del mouse la luce sale, non cambia colore */
+.pg26 .gcell:hover,
+.pg26 .stackcell:hover,
+.pg26 .enemy:hover,
+.pg26 .mcard:hover,
+.pg26 .notcard:hover,
+.pg26 .credorow:hover {
+  background:
+    radial-gradient(
+      120% 92% at 5% 0%,
+      rgba(122, 107, 243, 0.26) 0%,
+      rgba(122, 107, 243, 0.06) 36%,
+      transparent 64%
+    ),
+    linear-gradient(180deg, #241e58 0%, #1b1740 46%, #161233 100%);
+} /* i pannelli che hanno già una loro identità NON si toccano */
+.pg26 .stackcell.cell-accent,
+.pg26 .stackcell.cell-accent:hover {
+  background: linear-gradient(158deg, #7161ff, #5946f0 55%, #4536c4);
+}
+.pg26 .pair.si {
+  background:
+    radial-gradient(120% 92% at 5% 0%, rgba(122, 107, 243, 0.2) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(89, 70, 240, 0.2) 0%, rgba(89, 70, 240, 0.05) 62%, #141130 100%);
+}
+.pg26 .rev.todo {
+  background: linear-gradient(180deg, #171434 0%, #121028 100%);
+  box-shadow: none;
+} /* dentro il campo viola del credo comanda il vetro scuro, non questo test */
+.pg26 #credo .credorow,
+.pg26 #credo .credorow:hover {
+  background: rgba(9, 7, 28, 0.22);
+}
+.pg26 #credo .credorow:hover {
+  background: rgba(9, 7, 28, 0.34);
+} /* ============================================================
+   SCALA v3 · GERARCHIA CHIUSA (2026-07-26)
+   ⟲ REVERSIBILE: cancellando SOLO questo blocco la pagina torna
+     esatta com'era (riprende il blocco "SCALA" del 24/7).
+     Backup completo: landing-community_pre-gerarchia-v3_2026-07-26.html
+   PERCHÉ: il fix del 24/7 cappava i titoli di sezione a 52px ma non
+   teneva conto che l'hero è vincolato in ALTEZZA (per stare nella
+   piega) e a schermo scendeva a ~46px. Risultato misurato a 1280px:
+   sezioni 52 > hero 46 = gerarchia rovesciata, e 17 titoli ≥48px sulla
+   stessa pagina ("tutto grande = niente grande").
+   COSA FA: nessun titolo del flusso supera più l'hero; le sezioni
+   restano confidenti (~40px) ma sotto il vertice; i titoli secondari
+   scendono di un gradino; i numeri restano il grafico più forte ma
+   non oltre l'hero. Fix bonus: line-height del reveal (era 1.6).
+   Riduzione volutamente MISURATA ("un pelino"), non un appiattimento.
+   ============================================================ */ /* ---- v4 (2026-07-26, sostituisce i valori v3 qui sopra) --------------
+   DIAGNOSI MISURATA a 1440×800: il problema non era "titoli piccoli", era
+   un AMMASSO. Otto elementi stavano tra 36 e 46px e il titolo di sezione
+   (40) stava in mezzo a loro: numeri stat 46, ribalta 44, finale 42
+   lo superavano; momento, manifesto e ponte lo pareggiavano a 40; la
+   pull-quote gli stava 4px sotto. Senza gradini, il titolo non legge
+   come titolo, e infatti la citazione pesava quanto l'intestazione.
+   CORREZIONE: non alzare solo i titoli (rifaremmo l'inversione di ieri)
+   ma creare i GRADINI: alzo il vertice, abbasso la banda sotto.
+   Scala a 1440×800 → 56 · 48 · 38 · 34 · 30 · 18 (rapporti 1,17-1,27).
+   Titolo/corpo passa da 2,2× a 2,7×.
+   ------------------------------------------------------------------- */ /* vertice · l'hero resta legato all'altezza (deve stare nella piega) */
+.pg26 .cover h1 {
+  font-size: clamp(29px, min(4.9vw, 7vh), 62px);
+} /* 56 */ /* il titolo di sezione: unico vertice del flusso.
+   Legato anche all'ALTEZZA come l'hero: senza questo, su schermi bassi e
+   larghi l'hero (vincolato in altezza) e il titolo (vincolato in larghezza)
+   convergono e il rapporto si stringe. Con 6vh contro i 7vh dell'hero il
+   rapporto resta costante a 0,86 su tutte le taglie. */ /* nota sul minimo: 26 e non 30, perché su telefono l'hero scende al suo
+   minimo (29) e con 30 il titolo di sezione lo superava di 1px, rimettendo
+   l'inversione proprio dove lo schermo è più stretto. */
+.pg26 h2.shead {
+  font-size: clamp(26px, min(3.4vw, 6vh), 48px);
+} /* 48 */ /* tier A · i due momenti grandi */
+.pg26 .momento h3 {
+  font-size: clamp(24px, 2.7vw, 38px);
+} /* 38 */
+.pg26 .finale h2 {
+  font-size: clamp(24px, 2.7vw, 38px);
+} /* 38 */
+.pg26 .shift p.big {
+  font-size: clamp(24px, 2.7vw, 38px);
+} /* tier B · i display di sezione: un gradino netto sotto il titolo */
+.pg26 .manifesto h3 {
+  font-size: clamp(22px, 2.4vw, 34px);
+} /* 34 */
+.pg26 .reveal h3 {
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.12;
+}
+.pg26 .ribalta .r-big {
+  font-size: clamp(22px, 2.4vw, 34px);
+}
+.pg26 .ponte .p-big {
+  font-size: clamp(22px, 2.4vw, 34px);
+}
+.pg26 .soglia h3 {
+  font-size: clamp(22px, 2.4vw, 34px);
+}
+.pg26 .finale .eco {
+  font-size: clamp(22px, 2.4vw, 34px);
+} /* l'eco non batte il pieno */ /* numeri: sono grafica di prova, non intestazioni. Sotto i titoli. */
+.pg26 .stat b {
+  font-size: clamp(28px, 2.8vw, 40px);
+} /* 40 */ /* citazioni e righe di manifesto: il peso glielo dà il pannello, non il corpo */
+.pg26 .pullq p {
+  font-size: clamp(21px, 2.1vw, 30px);
+} /* 30 */
+.pg26 .credorow h3 {
+  font-size: clamp(20px, 2.1vw, 30px);
+} /* 30 */ /* ---- CTA DELL'HERO IN GIALLO (decisione Matt 2026-07-26) ----
+   Deroga voluta alla regola "il giallo dichiara solo lo stato": nell'hero
+   il giallo va anche sull'azione, perché è il punto di massimo contrasto
+   sul campo viola. Contrasti verificati: inchiostro sul giallo 13,9:1 ·
+   il bottone sul campo viola 4,5:1 (soglia UI 3:1). Vale SOLO qui:
+   le altre CTA della pagina restano viola/bianche. */
+.pg26 .cover .ctas .btn-bianco {
+  background: var(--stato);
+  color: var(--ink);
+  border-color: var(--stato);
+}
+.pg26 .cover .ctas .btn-bianco:hover {
+  background: #ffe96f;
+} /* schermi bassi (≤760px di altezza): l'hero più grande mangiava il margine
+   della piega (a 1280×700 restavano 5px, troppo fragile). Recupero spazio
+   dagli SPAZI, non dal corpo del titolo: il testo resta grande, respira meno. */
+@media (max-height: 760px) {
+  .pg26 .cover .inner {
+    padding: clamp(18px, 2.8vh, 40px) 0;
+  }
+  .pg26 .esito {
+    margin-top: clamp(12px, 2vh, 20px);
+    padding-top: clamp(11px, 1.8vh, 18px);
+  }
+  .pg26 .cover .sub {
+    margin-top: clamp(10px, 1.7vh, 18px);
+  }
+  .pg26 .cover .ctas {
+    margin-top: clamp(14px, 2.4vh, 26px);
+  }
+  .pg26 .sysline {
+    margin-top: clamp(14px, 2.6vh, 28px);
+  }
+} /* ============================================================
+   ESITO NELL'HERO · il trio "cosa esci con" (2026-07-26) · WIREFRAME
+   ⟲ REVERSIBILE: si cancella questo blocco + il <div class="esito">
+     dentro l'hero. Precedente: _versioni-precedenti/landing-community_v3-approvata.html
+   PERCHÉ: l'hero prometteva vicinanza e non diceva mai cosa cambia per chi
+   entra. È l'unica delle 4 obiezioni del CMO azionabile col copy (le altre
+   due cadono, la quarta è un buco di asset).
+   VINCOLO: non promette trasformazione (quella è del bootcamp). Solo cose
+   consegnabili in dieci minuti: il livello, l'artefatto, i pari.
+   ECO: rispecchia le 3 cose della Soglia → promessa in copertina,
+   mantenimento a metà pagina.
+   ============================================================ */
+.pg26 .esito {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 700px;
+  margin-top: clamp(18px, 3vh, 30px);
+  padding-top: clamp(16px, 2.6vh, 24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+}
+.pg26 .esito div {
+  min-width: 0;
+}
+.pg26 .esito b {
+  display: block;
+  font-family: var(--mono);
+  font-size: clamp(11px, 1.15vh, 13px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 7px;
+}
+.pg26 .esito span {
+  display: block;
+  font-size: clamp(13px, 1.55vh, 17px);
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.4;
+} /* su schermo stretto tre colonne di testo costano ~120px e sfondano la piega:
+   diventa una riga per voce, etichetta e testo affiancati */
+@media (max-width: 760px) {
+  .pg26 .esito {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-width: none;
+    margin-top: 18px;
+    padding-top: 16px;
+  }
+  .pg26 .esito div {
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+  }
+  .pg26 .esito b {
+    margin-bottom: 0;
+    flex: none;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .pg26 .esito span {
+    font-size: 17px;
+  }
+} /* telefono: le spiegazioni vanno a capo e costano 146px, cioè la piega.
+   Restano le tre etichette in fila: la promessa sopravvive come tre nomi,
+   il dettaglio lo trovi venti pixel più sotto nella pagina. */
+@media (max-width: 560px) {
+  .pg26 .esito {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-top: 14px;
+    padding-top: 13px;
+  }
+  .pg26 .esito div {
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .pg26 .esito span {
+    display: none;
+  }
+  .pg26 .esito b {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .pg26 .esito div:not(:last-child)::after {
+    content: "·";
+    margin-left: 12px;
+    color: rgba(255, 255, 255, 0.42);
+  }
+} /* ============================================================
+   UPGRADE DI STRUTTURA · 2026-07-29
+   Solo impaginazione: nessuna parola del copy approvato e' cambiata.
+   ============================================================ */ /* --- §12 · la linea del tempo che era gia' nel testo --- */
+.pg26 .giorno-rail {
+  border-left: none;
+  padding-left: 0;
+  max-width: 820px;
+}
+.pg26 .giorno-rail .gstep {
+  position: relative;
+  padding: 0 0 34px 34px;
+  border-left: 2px solid var(--line-hi);
+}
+.pg26 .giorno-rail .gstep:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+.pg26 .giorno-rail .gstep::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--notte);
+  border: 2px solid var(--viola);
+}
+.pg26 .giorno-rail .g-fine::before {
+  background: var(--viola);
+  box-shadow: 0 0 0 5px rgba(89, 70, 240, 0.18);
+}
+.pg26 .giorno-rail .gt {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 10px;
+}
+.pg26 .giorno-rail .g-fine .gt {
+  color: var(--uv);
+}
+.pg26 .giorno-rail p {
+  margin-top: 0;
+}
+@media (max-width: 700px) {
+  .pg26 .giorno-rail .gstep {
+    padding-left: 24px;
+  }
+} /* --- §06 · i due ranghi della dotazione --- */
+.pg26 .stack .rank {
+  background: var(--n2);
+  padding: 16px 34px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+}
+.pg26 .stack .rank .rk {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.pg26 .stack .rank .rkn {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--mute);
+}
+.pg26 .stack .rank-2 {
+  background: linear-gradient(90deg, rgba(89, 70, 240, 0.22), var(--n2) 62%);
+}
+.pg26 .stack .rank-2 .rk {
+  color: var(--uv);
+} /* --- §04 · la domanda presiede il bestiario --- */
+.pg26 .nemico-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px;
+  align-items: start;
+  margin-top: 56px;
+}
+.pg26 .nemico-grid .manifesto {
+  margin-top: 0;
+}
+.pg26 .nemico-q {
+  position: sticky;
+  top: 96px;
+} /* in colonna singola le quattro figure si leggono una dopo l'altra, che e'
+   il verso giusto: sono quattro risposte allo stesso test */
+.pg26 .nemico-grid .enemies {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+@media (max-width: 900px) {
+  .pg26 .nemico-grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+  .pg26 .nemico-q {
+    position: static;
+  }
+  .pg26 .nemico-grid .enemies {
+    grid-template-columns: 1fr 1fr;
+    margin-top: 28px;
+  }
+}
+@media (max-width: 620px) {
+  .pg26 .nemico-grid .enemies {
+    grid-template-columns: 1fr;
+  }
+} /* --- §07 · lo schema del meccanismo --- */ /* La larghezza NON e' scelta: e' la stessa della lettera qui sopra (.calm,
+   900px). Lo schema e' la stessa cosa detta in un altro modo, quindi deve
+   stare nella stessa colonna, con gli stessi due bordi verticali. Prima era
+   860 e si vedeva: due riquadri quasi allineati leggono peggio di due
+   riquadri palesemente diversi. */
+.pg26 .mecc {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 34px;
+  max-width: 900px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+@media (max-width: 760px) {
+  .pg26 .mecc {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .mstep {
+  background: var(--n1);
+  padding: 30px 30px;
+  position: relative;
+}
+.pg26 .mstep .mn {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--mute);
+  display: block;
+  margin-bottom: 14px;
+}
+.pg26 .mstep p {
+  font-size: 17px;
+  color: var(--body);
+  line-height: 1.55;
+}
+.pg26 .mstep p b {
+  color: var(--text);
+  font-weight: 600;
+} /* l'ultimo passo e' quello che ti riguarda: e' il motivo per cui la porta
+   e' aperta, quindi e' l'unico acceso */
+.pg26 .mstep-out {
+  background: linear-gradient(160deg, rgba(89, 70, 240, 0.2), var(--n1) 65%);
+}
+.pg26 .mstep-out p b {
+  color: var(--uv);
+} /* le frecce fra un passo e l'altro, solo dove le colonne sono affiancate */
+@media (min-width: 761px) {
+  .pg26 .mstep + .mstep::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 1px;
+    height: 26px;
+    transform: translateY(-50%);
+    background: var(--viola);
+  }
+} /* --- §08 · le stat smettono di gridare --- */ /* Erano tre cartelloni con gli stessi numeri gia' detti nell'hero e nel
+   nastro: terza replica, e rubavano la scena alle voci, che sono la cosa
+   che quella sezione deve far leggere. Restano, con la voce piu' bassa. */
+.pg26 #prova .stat b {
+  font-size: clamp(26px, 2.6vw, 34px);
+}
+.pg26 #prova .stat {
+  padding: 22px 26px;
+}
+.pg26 #prova .stat span {
+  font-size: 13px;
+} /* --- §06 · l'oggetto grafico di ogni voce della dotazione ---
+   Stessa piastra delle tre strade (.gico), un filo piu' piccola: li' sono
+   tre celle e l'icona e' il protagonista, qui sono sei e deve dare il tema
+   senza rubare la riga al titolo. */
+.pg26 .sico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  border: 1px solid rgba(122, 107, 243, 0.32);
+  color: var(--uv);
+  margin: 0 0 22px;
+  background: linear-gradient(158deg, rgba(89, 70, 240, 0.24), rgba(89, 70, 240, 0.04));
+  transition:
+    border-color 0.25s,
+    color 0.25s,
+    background 0.25s;
+}
+.pg26 .sico svg {
+  width: 30px;
+  height: 30px;
+}
+.pg26 .stackcell:hover .sico {
+  border-color: rgba(122, 107, 243, 0.62);
+  color: #fff;
+  background: linear-gradient(158deg, rgba(89, 70, 240, 0.34), rgba(89, 70, 240, 0.08));
+} /* sulla cella accesa la piastra viola sparirebbe nel fondo: si rovescia in
+   chiaro traslucido, come tutto il resto di quella cella */
+.pg26 .cell-accent .sico {
+  border-color: rgba(255, 255, 255, 0.42);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+.pg26 .stackcell.cell-accent:hover .sico {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
+} /* la 05 e' a due colonne (testo + numerone): l'icona sta nella sua */
+.pg26 .stackcell.corsi .sico {
+  margin-bottom: 20px;
+}
+@media (max-width: 600px) {
+  .pg26 .sico {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    margin-bottom: 18px;
+  }
+  .pg26 .sico svg {
+    width: 26px;
+    height: 26px;
+  }
+} /* --- LE SCHERMATE DELLA PIATTAFORMA ---
+   Stesso dispositivo della .finestra del run notturno: filetto viola,
+   testata in mono ai due estremi. Una schermata incollata nuda sul fondo
+   notte galleggia come un corpo estraneo; dentro una cornice che la
+   pagina usa gia' si legge come reperto, che e' quello che e'.
+   Il vetro ha un bordo interno chiaro e un velo scuro in basso: e' quello
+   che le impedisce di sembrare uno screenshot appiccicato. */
+.pg26 .schermo {
+  margin: 38px 0 0;
+  border: 1px solid var(--viola);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b0918, var(--n1));
+  padding: 18px 18px 20px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+}
+.pg26 .sc-eye {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 2px 6px 14px;
+}
+.pg26 .sc-eye span:last-child {
+  color: var(--mute);
+}
+.pg26 .sc-vetro {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line-hi);
+  background: #000;
+  line-height: 0;
+}
+.pg26 .sc-vetro img {
+  width: 100%;
+  height: auto;
+  display: block;
+} /* velo in basso: stacca l'immagine dal bordo del riquadro senza tagliarla */
+.pg26 .sc-vetro::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 70px;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(11, 10, 20, 0.55), transparent);
+} /* dentro una cella della dotazione la cornice si fa piu' discreta: li'
+   la protagonista e' la cella, non il reperto */
+.pg26 .schermo-in {
+  margin-top: 26px;
+  padding: 14px;
+  border-color: rgba(122, 107, 243, 0.42);
+  box-shadow: none;
+}
+.pg26 .schermo-in .sc-eye {
+  padding-bottom: 12px;
+  font-size: 13px;
+}
+@media (max-width: 600px) {
+  .pg26 .schermo {
+    padding: 12px 12px 14px;
+  }
+  .pg26 .sc-vetro::after {
+    height: 44px;
+  }
+} /* La cella dei corsi era a due colonne (testo + numerone) con il numerone
+   incolonnato a destra. Con la schermata dentro, il testo prende tutta la
+   riga e il numerone va sopra, o la schermata resterebbe in mezza colonna
+   e non si leggerebbe nulla. */
+@media (min-width: 761px) {
+  .pg26 .stackcell.corsi {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .pg26 .stackcell.corsi .cnum {
+    text-align: left;
+    margin-top: 26px;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .pg26 .stackcell.corsi .cnum span {
+    margin-top: 0;
+  }
+} /* ============================================================
+   §07 · IL FULCRO E IL NASTRO DELLE VOCI
+   ============================================================ */ /* --- IL FULCRO: la voce vera, da sola --- */
+.pg26 .fulcro {
+  margin-top: 28px;
+  border: 1px solid var(--viola);
+  border-radius: 18px;
+  background: radial-gradient(120% 160% at 12% 0%, #151040 0%, #0b0918 55%, var(--n1) 100%);
+  padding: 38px 36px;
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.5);
+}
+.pg26 .fu-testa {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.pg26 .fu-av {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  background: linear-gradient(158deg, var(--viola), #3b2fa8);
+  color: #fff;
+}
+.pg26 .fu-nm {
+  font-family: var(--title);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.pg26 .fu-rr {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 5px;
+}
+.pg26 .fu-testa .badge {
+  margin-left: auto;
+} /* l'arco a tre tempi: prima, cosa ha applicato, cosa e' cambiato */
+.pg26 .fu-arco {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr;
+  gap: 1px;
+  background: var(--line-hi);
+  border: 1px solid var(--line-hi);
+  border-radius: 12px;
+  overflow: hidden;
+}
+@media (max-width: 860px) {
+  .pg26 .fu-arco {
+    grid-template-columns: 1fr;
+  }
+}
+.pg26 .fu-passo {
+  background: rgba(8, 7, 16, 0.72);
+  padding: 24px 22px;
+}
+.pg26 .fu-k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 12px;
+}
+.pg26 .fu-passo p {
+  font-size: 17px;
+  color: var(--body);
+  line-height: 1.55;
+}
+.pg26 .fu-passo blockquote {
+  font-size: 19px;
+  color: var(--text);
+  line-height: 1.5;
+} /* i due tempi che mancano si vedono che mancano: tratteggio e testo spento.
+   Non li riempio io: sono parole di un cliente vero. */
+.pg26 .fu-vuoto {
+  background: rgba(8, 7, 16, 0.35);
+}
+.pg26 .fu-vuoto p {
+  color: var(--mute);
+  font-style: italic;
+}
+.pg26 .fu-vuoto .fu-k {
+  color: var(--mute);
+}
+.pg26 .fu-vuoto {
+  box-shadow: inset 0 0 0 1px transparent;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(122, 107, 243, 0.05) 0 8px,
+    transparent 8px 18px
+  );
+} /* --- L'AVVISO SEGNAPOSTO --- */
+.pg26 .voci-avviso {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 44px;
+  padding: 14px 18px;
+  border: 1px dashed rgba(122, 107, 243, 0.5);
+  border-radius: 10px;
+  background: rgba(89, 70, 240, 0.06);
+  font-size: 17px;
+  color: var(--body);
+} /* --- IL NASTRO --- */
+.pg26 .voci {
+  margin-top: 18px;
+  overflow: hidden;
+  /* sfuma ai due capi, cosi' le schede entrano ed escono invece di
+     essere tagliate di netto dal bordo */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.pg26 .voci-nastro {
+  display: flex;
+  width: max-content;
+  animation: pg26-voci-scorre 52s linear infinite;
+}
+.pg26 .voci-serie {
+  display: flex;
+  gap: 18px;
+  padding-right: 18px;
+}
+@keyframes pg26-voci-scorre {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+} /* si ferma quando ci passi sopra o ci arrivi da tastiera: un testo che
+   si muove e non si puo' fermare non e' una testimonianza, e' un'insegna */
+.pg26 .voci:hover .voci-nastro,
+.pg26 .voci:focus-within .voci-nastro {
+  animation-play-state: paused;
+}
+.pg26 .voce-card {
+  position: relative;
+  width: 380px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: linear-gradient(180deg, var(--n2), var(--n1));
+  border: 1px solid var(--line-hi);
+  border-radius: 16px;
+  padding: 26px 24px;
+}
+.pg26 .vc-testa {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.pg26 .vc-av {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background: linear-gradient(158deg, var(--viola), #3b2fa8);
+  color: #fff;
+}
+.pg26 .vc-nm {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.pg26 .vc-rr {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 4px;
+}
+.pg26 .vc-arco {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pg26 .vc-arco p {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--body);
+} /* l'etichetta del tempo sta dentro la frase, non sopra: e' una persona che
+   parla, non un modulo compilato */
+.pg26 .vc-arco p b {
+  color: var(--viola-hi);
+  font-weight: 600;
+}
+.pg26 .vc-badge {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.pg26 .voci-nota {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--mute);
+} /* Niente movimento: diventa una barra da scorrere a mano, con l'aggancio
+   sulle schede. Vale anche sotto i 760px, dove un nastro automatico su
+   touch e' solo un ostacolo. */
+@media (prefers-reduced-motion: reduce), (max-width: 760px) {
+  .pg26 .voci {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .pg26 .voci-nastro {
+    animation: none;
+    width: auto;
+  }
+  .pg26 .voci-serie:last-child {
+    display: none;
+  }
+  .pg26 .voce-card {
+    scroll-snap-align: start;
+    width: min(86vw, 380px);
+  }
+  .pg26 .voci-nota {
+    display: none;
+  }
+} /* ============================================================
+   LA FIRMA · chi tiene la stanza
+   Fascia bassa e larga, non un capitolo: niente numero fantasma sullo
+   sfondo, niente occhiello numerato. Deve leggersi come una pausa in
+   cui qualcuno ci mette la faccia, non come la sezione cinque.
+   ============================================================ */
+.pg26 #firma {
+  padding-top: 0;
+}
+.pg26 .firma {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 42px;
+  align-items: center;
+  border: 1px solid var(--line-hi);
+  border-radius: 20px;
+  padding: 34px;
+  background: linear-gradient(120deg, rgba(89, 70, 240, 0.14), var(--n1) 55%);
+  box-shadow: 0 34px 70px rgba(0, 0, 0, 0.45);
+}
+@media (max-width: 860px) {
+  .pg26 .firma {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 24px;
+  }
+}
+.pg26 .fi-foto {
+  position: relative;
+}
+.pg26 .fi-slot {
+  aspect-ratio: 4/5;
+  border-radius: 14px;
+  border: 1px dashed rgba(122, 107, 243, 0.5);
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(122, 107, 243, 0.06) 0 10px,
+    transparent 10px 22px
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.pg26 .fi-slot-sub {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--line-hi);
+}
+@media (max-width: 860px) {
+  .pg26 .fi-slot {
+    aspect-ratio: 3/2;
+  }
+}
+.pg26 .fi-eye {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 14px;
+}
+.pg26 .firma h2 {
+  font-family: var(--title);
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.pg26 .fi-ruolo {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 10px;
+}
+.pg26 .fi-p {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--body);
+  max-width: 62ch;
+}
+.pg26 .fi-p b {
+  color: var(--text);
+  font-weight: 600;
+} /* La regola sta in un riquadro suo: e' l'unica cosa di questo blocco che
+   il lettore deve poter ricordare, ed e' anche l'unica verificabile. */
+.pg26 .fi-regola {
+  margin-top: 24px;
+  border-left: 2px solid var(--viola);
+  padding: 4px 0 4px 20px;
+}
+.pg26 .fi-rk {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 10px;
+}
+.pg26 .fi-regola p {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 60ch;
+}
+.pg26 .fi-regola p b {
+  color: var(--text);
+  font-weight: 600;
+}
+.pg26 .fi-chiusa {
+  margin-top: 22px;
+  font-size: 18px;
+  color: var(--text);
+  font-weight: 600;
+  max-width: 56ch;
+}

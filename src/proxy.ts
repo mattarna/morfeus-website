@@ -35,8 +35,63 @@ function isNonIndexableLocalePath(segments: string[]): boolean {
   );
 }
 
+/* ============================================================
+   IL SOTTODOMINIO DEL PLAYGROUND
+   ------------------------------------------------------------
+   playground.morfeushub.com e' agganciato allo STESSO progetto
+   Vercel del sito. Senza una regola qui servirebbe la home B2B:
+   stesso contenuto su due host, che per Google e' un duplicato.
+
+   Quindi: su quell'host tutto viene riscritto sotto /playground, e
+   sul dominio principale /playground non risponde. Un contenuto, un
+   indirizzo. E' lo stesso patto che il sito applica gia' ai funnel,
+   che vivono su /<slug> e internamente stanno in /funnel-internal.
+
+   L'host va letto da x-forwarded-host prima che da host: dietro il
+   proxy di Vercel e' li' che arriva il nome vero.
+   ============================================================ */
+const HOST_PLAYGROUND = "playground.morfeushub.com";
+const RADICE_PLAYGROUND = "/playground";
+
+function hostRichiesta(request: NextRequest): string {
+  const raw = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  return raw.split(":")[0].toLowerCase();
+}
+
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const host = hostRichiesta(request);
+
+  if (host === HOST_PLAYGROUND) {
+    // gia' dentro: lascia passare, o si riscrive all'infinito
+    if (pathname === RADICE_PLAYGROUND || pathname.startsWith(`${RADICE_PLAYGROUND}/`)) {
+      return NextResponse.next();
+    }
+    const url = request.nextUrl.clone();
+    url.pathname = pathname === "/" ? RADICE_PLAYGROUND : `${RADICE_PLAYGROUND}${pathname}`;
+    return NextResponse.rewrite(url);
+  }
+
+  /* Sul dominio principale la rotta interna non esiste: chi ci arriva
+     va mandato all'indirizzo vero, che e' il sottodominio. 308 e non
+     307 perche' lo spostamento e' definitivo e va detto ai motori.
+     In sviluppo NO: in locale il sottodominio non esiste e il redirect
+     sbatterebbe fuori dal server di sviluppo, rendendo la pagina
+     invisibile proprio a chi la sta costruendo. */
+  if (pathname === RADICE_PLAYGROUND || pathname.startsWith(`${RADICE_PLAYGROUND}/`)) {
+    if (process.env.NODE_ENV === "production") {
+      const url = new URL(
+        pathname.slice(RADICE_PLAYGROUND.length) || "/",
+        `https://${HOST_PLAYGROUND}`
+      );
+      return NextResponse.redirect(url, 308);
+    }
+    /* In sviluppo il sottodominio non esiste: la rotta si serve com'e',
+       saltando next-intl. Senza questo salto il middleware della lingua
+       tratta "playground" come un locale sconosciuto e risponde 404,
+       cioe' la pagina resta invisibile proprio a chi la sta facendo. */
+    return NextResponse.next();
+  }
 
   // Path senza locale (come funnel): mockup per design review
   if (pathname.startsWith("/mockup")) {
