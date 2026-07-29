@@ -566,8 +566,8 @@ export function PlaygroundLanding() {
 
           <div className="voci" data-scorre="true">
             <div className="voci-nastro">
-              {/* il contenuto è duplicato: è così che un nastro continuo si
-                   ricongiunge senza salto a metà corsa */}
+              {/* il contenuto e' duplicato: e' cosi' che un nastro continuo si
+                   ricongiunge senza salto a meta' corsa */}
               <div className="voci-serie">
                 <figure className="voce-card">
                   <div className="vc-testa">
@@ -575,9 +575,9 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Silvia Ferrero</div><div className="vc-rr">Consulente del lavoro · studio da 4</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse identiche domande.</p>
-                    <p><b>Cosa ho applicato.</b> Il file di contesto l'ho fatto in una sera: dentro ci ho messo i nostri quattro format di risposta, le cose che non scriviamo mai a un cliente e come firmiamo. La prima versione era lunghissima e veniva ignorata. L'ho tagliata a metà dopo che me l'hanno detto in Post &amp; Discussion.</p>
-                    <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono nostro e io rileggo invece di scrivere. Non è che scrivo più veloce: è che ho smesso di ricominciare.</p>
+                    <p><b>Prima.</b> In studio ogni risposta ai clienti veniva riscritta da zero, e ognuno aveva il suo modo. Sulle stesse identiche domande.</p>
+                    <p><b>Cosa ha fatto.</b> Ha costruito il file di contesto dello studio in una sera: i quattro format di risposta, le cose che a un cliente non si scrivono mai, il modo in cui firmano. La prima versione era troppo lunga e veniva ignorata, l'ha tagliata a metà.</p>
+                    <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono dello studio e lei rilegge invece di scrivere. Non scrive più veloce: ha smesso di ricominciare.</p>
                   </div>
                 </figure>
                 <figure className="voce-card">
@@ -586,9 +586,9 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Andrea Pilotto</div><div className="vc-rr">E-commerce arredamento</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Le schede prodotto le davo fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
-                    <p><b>Cosa ho applicato.</b> Nel feed uno che vende ricambi aveva messo il suo sistema per le schede. Gliel'ho chiesto, me l'ha girato, e l'ho rifatto sul nostro catalogo: materiali, misure, e la regola che se la scheda tecnica non c'è non si inventa niente e me lo segnala.</p>
-                    <p><b>Cosa è cambiato.</b> Le facciamo dentro, in giornata. La prima volta ho rifatto tutto a mano perché non mi fidavo. La seconda no.</p>
+                    <p><b>Prima.</b> Le schede prodotto le affidava fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
+                    <p><b>Cosa ha fatto.</b> Ha messo in piedi il sistema sul proprio catalogo: materiali, misure, tono. Con dentro una regola che pesa più di tutte: se la scheda tecnica manca, non si inventa niente e la cosa viene segnalata.</p>
+                    <p><b>Cosa è cambiato.</b> Le schede si fanno dentro, in giornata. La prima volta ha rifatto tutto a mano perché non si fidava. La seconda no.</p>
                   </div>
                 </figure>
                 <figure className="voce-card">
@@ -597,9 +597,9 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Marta Ronchi</div><div className="vc-rr">Agenzia di comunicazione · 9 persone</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
-                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso alla live del giovedì e in quaranta minuti abbiamo scritto le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
-                    <p><b>Cosa è cambiato.</b> Adesso quelle regole stanno in un canale, non nelle chat private di ognuno. E i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
+                    <p><b>Prima.</b> L'AI la usavano tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
+                    <p><b>Cosa ha fatto.</b> Il collaudo l'ha messa a L1. Ha portato il caso alla live del giovedì e in quaranta minuti sono uscite le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
+                    <p><b>Cosa è cambiato.</b> Quelle regole stanno in un canale, non nelle chat private di ognuno. E il team ha smesso di passare da lei per ogni cosa.</p>
                   </div>
                 </figure>
               </div>
@@ -610,9 +610,9 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Silvia Ferrero</div><div className="vc-rr">Consulente del lavoro · studio da 4</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Ogni risposta ai clienti la riscrivevo da zero, e ognuno in studio aveva il suo modo. Sulle stesse identiche domande.</p>
-                    <p><b>Cosa ho applicato.</b> Il file di contesto l'ho fatto in una sera: dentro ci ho messo i nostri quattro format di risposta, le cose che non scriviamo mai a un cliente e come firmiamo. La prima versione era lunghissima e veniva ignorata. L'ho tagliata a metà dopo che me l'hanno detto in Post &amp; Discussion.</p>
-                    <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono nostro e io rileggo invece di scrivere. Non è che scrivo più veloce: è che ho smesso di ricominciare.</p>
+                    <p><b>Prima.</b> In studio ogni risposta ai clienti veniva riscritta da zero, e ognuno aveva il suo modo. Sulle stesse identiche domande.</p>
+                    <p><b>Cosa ha fatto.</b> Ha costruito il file di contesto dello studio in una sera: i quattro format di risposta, le cose che a un cliente non si scrivono mai, il modo in cui firmano. La prima versione era troppo lunga e veniva ignorata, l'ha tagliata a metà.</p>
+                    <p><b>Cosa è cambiato.</b> Le bozze escono già nel tono dello studio e lei rilegge invece di scrivere. Non scrive più veloce: ha smesso di ricominciare.</p>
                   </div>
                 </figure>
                 <figure className="voce-card">
@@ -621,9 +621,9 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Andrea Pilotto</div><div className="vc-rr">E-commerce arredamento</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> Le schede prodotto le davo fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
-                    <p><b>Cosa ho applicato.</b> Nel feed uno che vende ricambi aveva messo il suo sistema per le schede. Gliel'ho chiesto, me l'ha girato, e l'ho rifatto sul nostro catalogo: materiali, misure, e la regola che se la scheda tecnica non c'è non si inventa niente e me lo segnala.</p>
-                    <p><b>Cosa è cambiato.</b> Le facciamo dentro, in giornata. La prima volta ho rifatto tutto a mano perché non mi fidavo. La seconda no.</p>
+                    <p><b>Prima.</b> Le schede prodotto le affidava fuori. Tra briefing, giri di revisione e attese, un lancio erano tre settimane buone.</p>
+                    <p><b>Cosa ha fatto.</b> Ha messo in piedi il sistema sul proprio catalogo: materiali, misure, tono. Con dentro una regola che pesa più di tutte: se la scheda tecnica manca, non si inventa niente e la cosa viene segnalata.</p>
+                    <p><b>Cosa è cambiato.</b> Le schede si fanno dentro, in giornata. La prima volta ha rifatto tutto a mano perché non si fidava. La seconda no.</p>
                   </div>
                 </figure>
                 <figure className="voce-card">
@@ -632,19 +632,13 @@ export function PlaygroundLanding() {
                     <div><div className="vc-nm">Marta Ronchi</div><div className="vc-rr">Agenzia di comunicazione · 9 persone</div></div>
                   </div>
                   <div className="vc-arco">
-                    <p><b>Prima.</b> La usavamo tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
-                    <p><b>Cosa ho applicato.</b> Il collaudo mi ha dato L1 e mi ha dato fastidio. Aveva ragione. Ho portato il caso alla live del giovedì e in quaranta minuti abbiamo scritto le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
-                    <p><b>Cosa è cambiato.</b> Adesso quelle regole stanno in un canale, non nelle chat private di ognuno. E i ragazzi hanno smesso di chiedere a me per ogni cosa.</p>
+                    <p><b>Prima.</b> L'AI la usavano tutti, tutti i giorni, e nessuno sapeva cosa stessero facendo gli altri. Nei documenti che andavano ai clienti finiva di tutto.</p>
+                    <p><b>Cosa ha fatto.</b> Il collaudo l'ha messa a L1. Ha portato il caso alla live del giovedì e in quaranta minuti sono uscite le regole: cosa può uscire in bozza, cosa deve passare da una persona, dove finiscono i prompt che funzionano.</p>
+                    <p><b>Cosa è cambiato.</b> Quelle regole stanno in un canale, non nelle chat private di ognuno. E il team ha smesso di passare da lei per ogni cosa.</p>
                   </div>
                 </figure>
               </div>
             </div>
-          </div>
-          <p className="voci-nota">Passaci sopra e il nastro si ferma. Le foto vanno al posto delle iniziali quando arrivano.</p>
-
-          <p className="revnote">Regola della casa: su questa pagina non esistono testimonianze inventate. Gli slot restano vuoti finché non arriva una voce vera, con nome e contesto.</p>
-          <div className="prose">
-            <p>Questi sono i tuoi pari. Ma una stanza vale anche per chi la tiene aperta. Ecco chi c'è dietro.</p>
           </div>
         </div>
       </section>
