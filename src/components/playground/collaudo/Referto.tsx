@@ -39,7 +39,7 @@ import {
   nemicoPer,
   verdettoConfronto,
 } from "./copy";
-import { COMMUNITY } from "../collegamenti";
+import { COMMUNITY, DOVE } from "../collegamenti";
 import "./referto.css";
 
 export type DatiReferto = {
@@ -433,13 +433,9 @@ export function Referto(d: DatiReferto) {
                   <p className="k">{gradino.occhiello}</p>
                   <h3>{gradino.titolo}</h3>
                   <p>{gradino.testo}</p>
-                  {gradinoEComunita ? (
-                    <a className="vai" href={COMMUNITY}>
-                      {gradino.cta} →
-                    </a>
-                  ) : (
-                    <button className="vai">{gradino.cta} →</button>
-                  )}
+                  <a className="vai" href={COMMUNITY}>
+                    {gradino.cta} →
+                  </a>
                 </div>
               </div>
             ) : (
@@ -461,7 +457,9 @@ export function Referto(d: DatiReferto) {
                     <p className="k">{gradino.occhiello}</p>
                     <h3>{gradino.titolo}</h3>
                     <p>{gradino.testo}</p>
-                    <button className="vai">{gradino.cta} →</button>
+                    <a className="vai" href={DOVE[proposta.gradino]}>
+                      {gradino.cta} →
+                    </a>
                   </div>
                 </div>
               </>
