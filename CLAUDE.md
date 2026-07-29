@@ -60,9 +60,19 @@ I componenti freebie condivisi (`FreebieHero`, `FreebieThankYou`, `FreebieWebina
 - **Gira la sequenza CI in locale prima del push.** Vercel e GitHub Actions buildano su clone pulito: ciò che funziona solo localmente non basta.
 - **Niente backup (`*.bak`) né immagini >8MB in git.** Ottimizza gli asset (resize + re-encode) prima di committare.
 - **Telefono utente → sempre l'attributo Brevo `TELEFONO_`** (`BREVO_ATTR.TELEFONO`). MAI `SMS`/`WHATSAPP`/`LANDLINE_NUMBER` per l'input utente: i campi nativi validano il formato (E.164) e fanno fallire l'intero optin. `TELEFONO_` è testo libero. Vedi `docs/brevo.md` (REGOLA TELEFONO).
+- **Mai un comando in pipe se ti serve il suo exit code.** `npm run build | tail` restituisce l'exit di `tail`: un build fallito sembra riuscito. Vale per `tsc`, `lint`, `test`, `check:public-assets:strict`. Redirigi su file e leggi `$?`.
+- **Mai `next build` mentre gira `next dev` nella stessa cartella.** Si contendono `.next` e escono errori fantasma (`routes-manifest.json` mancante, `Cannot find module for page`) che non c'entrano col codice. Ferma il dev server e `rm -rf .next` prima di buildare.
+- **Il clone di verifica va in un path CORTO** (es. `C:\ck`). Con `core.longpaths` disattivo, su Windows il checkout fallisce a metà e sembra che manchi la cartella `app`.
+- **Una modifica CSS non è fatta finché non la vedi nel CSS SERVITO.** Il sorgente dice cosa hai scritto, non cosa vince: una regola può esserci ed essere battuta da una più specifica. Occhio a `.band.ink` — sono **due** classi, non una. Vedi `.cursor/rules/styling-standards.mdc`.
+- **Mai sostituire un intervallo di righe in un file CSS**, solo il blocco esatto: è così che sono sparite due regole della headline senza nessun errore.
+- **CSS a token per le fasce, Tailwind per i widget.** Il criterio: se un valore cambia significato dentro `.band.ink` / `.band.carta`, è un token. Vedi `.cursor/rules/styling-standards.mdc`.
+- **Contrasto e corpi si misurano, non si guardano.** Minimo 4.5:1 (3:1 sopra i 24px), pavimento 13px per le etichette, 16-18px per testo che spiega o converte. Un valore tarato su fondo scuro non regge su fondo chiaro.
+- **I variable font vanno dichiarati con il range dei pesi** in `next/font` (`weight: "200 700"`). Senza, l'asse non si attiva e ogni 600/700 è finto grassetto.
 
 ## Altri doc
 
+- `.cursor/rules/styling-standards.mdc` — CSS vs Tailwind, specificità, font, leggibilità
+- `.cursor/rules/verification-standards.mdc` — come verificare davvero una modifica
 - `.cursor/rules/*.mdc` — regole dettagliate (architettura, componenti, SEO, visual identity) per Cursor
 - `docs/brevo.md` — integrazione Brevo (liste, attributi, API key)
 - `docs/site-tree.md` — mappa pagine; `src/funnels/README.md` — pattern funnel

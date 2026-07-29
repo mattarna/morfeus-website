@@ -1,0 +1,126 @@
+---
+description: Quando usare il CSS a token del DS e quando Tailwind; disciplina di specificita', font e soglie di leggibilita'
+globs: src/components/**,src/app/**
+alwaysApply: false
+---
+
+# Standard di styling
+
+Ogni regola qui sotto nasce da un errore realmente commesso. Il caso che
+l'ha generata e' citato: serve a capire *perche'*, non solo *cosa*.
+
+## 1. CSS a token oppure Tailwind: come si decide
+
+Il sito ha due sistemi e devono restare separati per **ruolo**, non per gusto.
+
+**CSS a token (`site.css`, scope `.ms`) — per la struttura editoriale.**
+Fasce alternate carta/inchiostro, tipografia, superfici, griglia blueprint.
+Riconoscibile da un test: *questo valore cambia significato dentro una
+fascia?* Se si', e' un token. Sei token (`--surf-bg`, `--surf-bd`,
+`--surf-sh`, `--font-mono`, `--carta`, `--inchiostro`) valgono una cosa su
+`.band.ink` e un'altra su `.band.carta`. Le utility non lo esprimono senza
+duplicare.
+
+**Tailwind — per i widget.**
+Form, tabelle, controlli, dashboard, componenti interattivi isolati: cose
+che non partecipano al ritmo delle fasce.
+
+**Perche' non tutto in Tailwind.** Al cambio di palette le 22 pagine a token
+hanno seguito modificando *un file*; le 8 pagine con colori cablati in
+classi Tailwind hanno richiesto ~250 sostituzioni a mano. Inoltre le pagine
+a token sono immuni alle 162 classi rinominate da Tailwind 3 a 4.
+
+**Perche' non tutto in CSS.** Il CSS a mano ha due difetti che abbiamo
+pagato: guerre di specificita' e regole morte. Le due sezioni seguenti
+esistono per neutralizzarli.
+
+## 2. Specificita': non vincerla, evitarla
+
+**Mai riusare una classe del DS per un caso particolare.** Se serve un
+comportamento diverso, si crea una classe dedicata.
+
+> Caso reale: la riga enfatizzata della hero usava `.emph`, che porta con
+> se' `.ms .band.ink .emph { color: var(--lilla) }`. Vale (0,4,0) perche'
+> `.band.ink` sono **due** classi sullo stesso elemento. Sono serviti
+> quattro tentativi — e due diagnosi sbagliate — prima di capire che la
+> soluzione non era un selettore piu' lungo ma una classe diversa
+> (`.hero-emph`).
+
+Corollari:
+- Contare le classi prima di dichiarare vinta una gara di specificita'.
+  `.band.ink` = 2, non 1.
+- **L'ordine dei file conta solo a parita' di specificita'.** Che
+  `demo.css` sia importato dopo `site.css` non fa vincere una regola meno
+  specifica.
+- Se una regola base e una media query controllano la stessa proprieta',
+  devono avere la **stessa** specificita', o la base vince sempre.
+  > Caso reale: il footer restava a colonna unica da desktop perche' la
+  > regola base era (0,4,0) e la media query (0,2,0).
+- Un `color` impostato sull'elemento batte sempre quello **ereditato**,
+  a prescindere dalla specificita'. Serve solo contro regole *dirette*.
+
+## 3. CSS morto: non cancellare a intervalli
+
+**Mai sostituire un intervallo di righe in un file CSS.** Si sostituisce
+il blocco esatto, verificando prima che esista.
+
+> Caso reale: rifacendo la sottolineatura ho sostituito un intervallo e ho
+> portato via anche `.fade-1` e `.emph` della headline. Nessun errore,
+> nessun avviso: il testo e' semplicemente ricaduto sul default del DS e
+> il bug si e' manifestato come "il colore non si applica".
+
+Dopo aver rimosso o rinominato una classe, cercare i riferimenti orfani in
+**entrambe** le direzioni: classi nel markup senza regola CSS, e regole CSS
+senza markup che le usi.
+
+## 4. Font
+
+- **I variable font vanno dichiarati con il range dei pesi.** Senza il
+  descrittore `weight`, `next/font` genera un `@font-face` senza
+  `font-weight`: il font risulta disponibile al solo peso 400, l'asse
+  variabile non si attiva e ogni 600/700 diventa **grassetto sintetico**.
+  > Caso reale: tutti i titoli sembravano "impastati". Non era il font,
+  > era il finto grassetto. Il range si legge dalla tabella `fvar` del
+  > `.ttf` (Clash 200-700, Satoshi 300-900, Playfair 400-900).
+- **Una catena di fallback deve puntare a font davvero caricati.**
+  `--font-mono` puntava a `"SF Mono"` (assente su Windows, mai caricato) e
+  poi al nome letterale `"IBM Plex Mono"`, che non corrisponde a nessun
+  `@font-face` — `next/font` genera nomi offuscati. Risultato: **110
+  elementi renderizzavano in Courier New**, e stavamo alzando i corpi per
+  compensare un font sbagliato.
+- **Un font dichiarato in un modulo viene spedito a chi importa quel
+  modulo**, anche se non lo usa: `next/font` emette il `@font-face` a
+  prescindere, e per i font locali fa pure il preload. I font di
+  confronto o di sotto-brand stanno nel loro modulo.
+
+## 5. Leggibilita': si misura, non si guarda
+
+- **Contrasto minimo 4.5:1** per il testo normale, **3:1** sopra i 24px.
+  Prima di scegliere un colore su fondo colorato, calcolarlo.
+  > Casi reali: etichette a **1.50:1**, riga della hero a **2.42:1**,
+  > manifesto a **2.61:1**. Tutti "sembravano" accettabili.
+- **Attenzione a riusare valori tarati su fondo scuro.** Su fondo chiaro
+  il contrasto crolla molto piu' in fretta: una dissolvenza al 40% regge
+  su nero e diventa illeggibile su ghost-white.
+- **Su sfondo animato il colore da solo non basta**: la luminosita' dietro
+  il testo cambia a ogni fotogramma. Serve una velina o un drop-shadow.
+  `text-shadow` non funziona con `color: transparent` — usare
+  `filter: drop-shadow`, che agisce sui pixel gia' resi.
+- **Pavimento a 13px** per le etichette; **16-18px** per tutto cio' che
+  contiene una promessa, una spiegazione o una CTA.
+- L'**altezza-x** conta piu' del `font-size`: a parita' di corpo, un font
+  con altezza-x 0.50 appare ~10% piu' piccolo di uno a 0.55. Si legge
+  dalla tabella OS/2 del file.
+
+## 6. Pannelli a `height: 100vh`
+
+La home usa pannelli ad altezza fissa con `overflow: hidden` e scroll
+nativo bloccato: **quello che sfora sparisce, non si scrolla**. Prima di
+aumentare corpi o spaziature, ricordare che il budget verticale e' chiuso
+(~760px di contenuto su un viewport da 900px).
+
+Il pinning e' vincolato anche a una **altezza minima** (`DESKTOP_MIN_HEIGHT`
+in `useDemoScroll.ts`, allineata alla media query in `demo.css`): sotto
+quella soglia si torna a pannelli che crescono e scroll nativo, altrimenti
+lo zoom al 200% taglia il contenuto senza modo di raggiungerlo (WCAG 1.4.4).
+Se si cambia una delle due soglie, si cambia **anche** l'altra.

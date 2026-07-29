@@ -1,0 +1,86 @@
+---
+description: Come verificare che una modifica funzioni davvero — codici di uscita, output servito, build da clone, contese sul dev server
+alwaysApply: true
+---
+
+# Standard di verifica
+
+Regola madre: **una modifica non e' fatta finche' non l'hai vista
+nell'output servito.** Il sorgente dice cosa hai scritto, non cosa arriva
+al browser.
+
+## 1. Codici di uscita
+
+**Mai mettere un comando in una pipe se ti serve il suo codice di uscita.**
+`$?` diventa quello dell'ultimo comando della pipe.
+
+```bash
+npm run build | tail -5 ; echo $?      # ← inutile: e' l'exit di tail
+npm run build > build.log 2>&1 ; echo $?   # ← corretto
+```
+
+> Caso reale: `check:public-assets:strict` riportava `EXIT=0` dentro una
+> pipe. Senza pipe usciva **1**: la CI sarebbe stata rossa e non ce ne
+> saremmo accorti. Vale anche per `tsc`, `lint`, `test`.
+
+## 2. Verificare sul servito, non sul sorgente
+
+Dopo una modifica CSS o di markup, controllare il **CSS servito** e
+l'**HTML servito**, non il file. Motivi concreti gia' visti:
+
+- una regola puo' esserci ed essere **battuta** da un'altra piu' specifica;
+- il minificatore accorpa e riscrive i selettori (`html.body-x` diventa
+  `.body-x`), quindi un grep sul sorgente non basta a dire cosa vince;
+- il chunk CSS **cambia hash a ogni build**: se la pagina e' in cache si
+  guarda la versione vecchia. In caso di dubbio, ricaricamento forzato.
+
+Verificare anche che il selettore colpisca **quello che credi**: contare
+le occorrenze nel DOM servito.
+> Caso reale: una regola pensata per un titolo ne colpiva tre, perche' la
+> classe arbitraria usata come aggancio era condivisa da hero, Partners e
+> CTA con scale diverse.
+
+## 3. Build: la verifica autorevole
+
+- **Non lanciare `next build` mentre gira `next dev` nella stessa
+  cartella.** Si contendono `.next` e il risultato sono errori fantasma
+  (`routes-manifest.json` mancante, `Cannot find module for page`,
+  `_document` non trovato) che non c'entrano col codice.
+  Prima di buildare: fermare il dev server, `rm -rf .next`.
+- La verifica vera e' il **build da clone pulito del branch committato**,
+  non dalla cartella di lavoro: e' l'unico modo di accorgersi che disco e
+  repo divergono.
+- **Su Windows il clone va in un path corto** (es. `C:\ck`). Con
+  `core.longpaths` disattivo si supera il limite di 260 caratteri e il
+  checkout fallisce a meta': si vede come "manca la cartella `app`", che
+  sembra un problema del repo e non lo e'.
+
+## 4. Misurare invece di stimare
+
+Prima di dichiarare una causa, produrre il dato. In questa sessione hanno
+evitato diagnosi sbagliate:
+
+- rapporti di contrasto calcolati sul colore reale del fondo;
+- altezza-x letta dalla tabella OS/2 dei `.ttf`;
+- superficie di conflitto di un rebase = intersezione dei file cambiati
+  dai due rami (23 su 253 e 278 — molto meno di quanto sembrasse);
+- `git merge-base --is-ancestor` per stabilire se un commit e' in un
+  branch, invece di dedurlo dai messaggi.
+
+Quando una verifica fallisce, **prima escludere l'artefatto di misura**
+(pipe, cache, path lungo, contesa sul dev server) e poi accusare il codice.
+
+## 5. Prima di dire "e' pronto per andare online"
+
+Controllare, in quest'ordine:
+
+1. il branch e' **pushato** (nessun lavoro solo su disco);
+2. **tutti** i gate della CI, non solo il build — il primo gate di
+   `quality-gates.yml` e' `check:public-assets:strict`;
+3. build da **clone pulito** che passa;
+4. la rotta e' quella definitiva e **non ha `robots: index:false`**;
+5. metadati per pagina: senza `openGraph` proprio una pagina eredita
+   titolo e descrizione della home, e l'anteprima social risulta sbagliata;
+6. il branch **contiene** le migrazioni di framework presenti su `main`
+   (`git merge-base --is-ancestor`): un branch staccato prima non e' un
+   merge, e' un rollback.
