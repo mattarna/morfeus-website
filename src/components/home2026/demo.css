@@ -395,14 +395,15 @@
   background-clip: text;
   color: transparent;
 }
-/* Coda su lavanda chiara invece che su vista: stesso tono, ma 4.33:1
-   contro 2.42:1. A distinguere questa riga dalla prima bastano il
-   corsivo serif e la sottolineatura Forge, non serve il colore. */
+/* Bianco pieno, nessuna coda colorata. Era prima vista (2.42:1 sul
+   bagliore, illeggibile), poi lavanda chiara (4.33:1): ghost-white
+   arriva a 4.65:1 ed e' anche la scelta piu' netta. A distinguere questa
+   riga dalla prima bastano il corsivo serif e la sottolineatura Forge.
+   Niente background-clip qui: senza gradiente non serve, e un colore
+   pieno evita del tutto il rischio di restare con color:transparent se
+   la regola dovesse sparire — che e' gia' successo su questo blocco. */
 .d26 .hero-h1 .emph {
-  background: linear-gradient(20deg, var(--carta) 0%, var(--carta) 60%, #d7dffb 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--carta);
 }
 .d26 .hero-h1 .u26 {
   position: relative;
