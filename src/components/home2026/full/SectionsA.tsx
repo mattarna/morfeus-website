@@ -43,7 +43,11 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph">
+            {/* NON usa la classe .emph: quella tira dentro
+                .ms .band.ink .emph { color: var(--lilla) } del DS, e da li'
+                nascevano i giri di specificita'. Qui lo stile corsivo se
+                lo porta la classe dedicata, senza conflitti. */}
+            <span className="hero-emph">
               {/* La sottolineatura sta SOLO sull'ultima parola. Cosi' non
                   attraversa tutta la frase, e soprattutto smette di essere
                   un problema se la riga va a capo: una parola singola non
