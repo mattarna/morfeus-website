@@ -112,6 +112,14 @@
     grid-template-columns: 1fr;
     gap: 60px;
   }
+  /* Il numerale grande sparisce. Su desktop sta DIETRO al verdetto e
+     gli da' peso; quando la colonna del pass scende sotto, il verdetto
+     si allarga e il numerale finisce a galleggiare da solo nel vuoto
+     sopra l'occhiello. Un blocco decorativo senza niente dietro cui
+     stare non e' profondita', e' una macchia. */
+  .pg26 .rf-ghost {
+    display: none;
+  }
 }
 
 .pg26 .rf-verdetto {
@@ -606,9 +614,13 @@
   border-bottom: none;
 }
 @media (max-width: 820px) {
+  /* incolonnata: nome e verdetto sulla prima riga, poi la barra, poi la
+     lezione. Il respiro verticale scende da 21 a 15px, perche' cinque
+     righe da 187 facevano 844px di sola radiografia. */
   .pg26 .rf-dim {
     grid-template-columns: 1fr auto;
-    gap: 10px 14px;
+    gap: 9px 14px;
+    padding: 15px 0;
   }
   .pg26 .rf-dim .rf-barra {
     grid-column: 1 / -1;

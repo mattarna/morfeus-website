@@ -1,0 +1,205 @@
+/* ============================================================
+   PLAYGROUND · il footer
+   ------------------------------------------------------------
+   Prima era una riga di prototipo. Adesso e' l'ultima cosa che
+   una persona vede: se e' arrivata fin qui senza cliccare la CTA,
+   qui deve trovare (a) un'altra porta d'ingresso, (b) le sezioni
+   che si e' persa, (c) chi siamo davvero, (d) come scriverci.
+
+   COSA NON C'E', apposta:
+   - le pagine chi-siamo / metodo / casi / insights del sito
+     Morfeus: verificate il 2026-07-29, rispondono 404 in
+     produzione. Stanno sul branch delle pagine e non sono state
+     spedite. La lista vive in sezioni.ts, si allunga quando escono.
+   - una newsletter: non ne abbiamo una per questo pubblico, e un
+     campo email finto nel footer e' peggio di nessun campo.
+
+   Le voci di sezione arrivano da sezioni.ts, le stesse del menu
+   del telefono: due liste diventerebbero due liste diverse.
+   ============================================================ */
+
+.pg26 .pgf {
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+  /* un filo piu' scuro del corpo: il piede si stacca senza doverci
+     mettere un bordo grosso o un fondo di un altro colore */
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.28));
+}
+
+/* ---- la griglia ----
+   Il marchio prende piu' spazio delle tre colonne di link perche'
+   dentro ci sta una CTA: a un quarto della riga il bottone andava
+   a capo. */
+.pg26 .pgf-in {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.1fr;
+  gap: 40px;
+  padding-top: 62px;
+  padding-bottom: 46px;
+  align-items: start;
+}
+
+/* ---- colonna del marchio ---- */
+.pg26 .pgf-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.pg26 .pgf-logo svg {
+  width: 32px;
+  height: auto;
+  color: var(--viola-hi);
+}
+.pg26 .pgf-logo b {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.pg26 .pgf-di {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 9px 0 0;
+}
+.pg26 .pgf-motto {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 22px 0 24px;
+}
+.pg26 .pgf-nota {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+  margin: 16px 0 0;
+}
+
+/* ---- le tre colonne di link ---- */
+.pg26 .pgf-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.pg26 .pgf-tit {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin: 0 0 16px;
+}
+.pg26 .pgf-col a {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--body);
+  padding: 6px 0;
+  text-decoration: none;
+  transition: color 0.16s ease;
+}
+.pg26 .pgf-col a:hover {
+  color: var(--text);
+}
+
+/* ---- la riga legale ---- */
+.pg26 .pgf-legale {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 22px;
+  padding-bottom: 40px;
+  border-top: 1px solid var(--line);
+}
+.pg26 .pgf-legale p {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  color: var(--mute);
+  margin: 0;
+}
+.pg26 .pgf-legali {
+  display: flex;
+  gap: 20px;
+}
+.pg26 .pgf-legali a {
+  color: var(--mute);
+  text-decoration: none;
+}
+.pg26 .pgf-legali a:hover {
+  color: var(--body);
+}
+
+/* ============================================================
+   TELEFONO. Quattro colonne a 375px sono quattro colonne da 84px:
+   ogni voce andrebbe a capo. Ma nemmeno una colonna sola va bene,
+   perche' il footer diventerebbe un chilometro di link da scorrere
+   dopo che la pagina e' gia' finita.
+
+   Compromesso: il marchio resta pieno (dentro c'e' la CTA, che a
+   meta' riga sarebbe minuscola), i tre elenchi vanno a due colonne
+   e mezzo, cioe' Playground a sinistra e le altre due impilate a
+   destra. Cosi' i sei link di sezione stanno in colonna e le voci
+   corte (tre e tre) si affiancano.
+   ============================================================ */
+@media (max-width: 860px) {
+  .pg26 .pgf-in {
+    grid-template-columns: 1fr 1fr;
+    gap: 34px 26px;
+    padding-top: 48px;
+    padding-bottom: 34px;
+  }
+  .pg26 .pgf-marchio {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .pg26 .pgf-in {
+    /* min-content sulla prima colonna evita il difetto gia' visto
+       nelle celle "in dotazione": i figli di una griglia non
+       scendono sotto il loro contenuto e sbordano invece di
+       stringersi */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 30px 20px;
+  }
+  .pg26 .pgf-motto {
+    font-size: 19px;
+    margin: 18px 0 20px;
+  }
+  /* la CTA si prende la riga: sul telefono un bottone a misura di
+     testo e' un bersaglio piccolo alla fine di una pagina lunga */
+  .pg26 .pgf-marchio .btn {
+    width: 100%;
+  }
+  .pg26 .pgf-col a {
+    font-size: 14.5px;
+    padding: 7px 0;
+    /* cintura: nessun indirizzo puo' sfondare la sua cella. I figli
+       di una griglia non si stringono sotto il contenuto, quindi
+       senza questo l'elemento resta largo e viene tagliato */
+    overflow-wrap: anywhere;
+  }
+  /* Scrivici si prende la riga intera: hello@morfeushub.com misura
+     166px e la mezza colonna a 375px ne offre 161. Spezzarlo su due
+     righe per guadagnare cinque pixel non ha senso, e il footer qui
+     e' gia' impilato. */
+  .pg26 .pgf-col:last-of-type {
+    grid-column: 1 / -1;
+  }
+  .pg26 .pgf-legale {
+    /* due righe centrate: affiancate, la P.IVA e i due link legali
+       sommano piu' della larghezza disponibile e si spezzano male */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 34px;
+  }
+}

@@ -23,6 +23,21 @@
   cursor: pointer;
 }
 
+/* L'involucro del portal.
+   Porta la classe .pg26 perche' tutte le regole del menu sono scritte
+   sotto quel prefisso e fuori di li' il pannello resterebbe un div
+   nudo. Ma .pg26 porta con se' anche overflow-x: hidden, che e'
+   ESATTAMENTE il difetto da cui stiamo scappando (su iOS rompe il
+   position:fixed dei discendenti), piu' fondo e grana che qui
+   sarebbero doppi. Si annullano tutti e tre. */
+.mnu-host {
+  overflow: visible;
+  background: none;
+}
+.mnu-host::after {
+  display: none;
+}
+
 /* ---- il pannello ---- */
 .pg26 .mnu-pannello {
   position: fixed;

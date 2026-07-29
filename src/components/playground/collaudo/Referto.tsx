@@ -39,6 +39,7 @@ import {
   nemicoPer,
   verdettoConfronto,
 } from "./copy";
+import { COMMUNITY } from "../collegamenti";
 import "./referto.css";
 
 export type DatiReferto = {
@@ -191,7 +192,9 @@ export function Referto(d: DatiReferto) {
               {/* la porta gratuita sta qui, non solo in fondo: chi legge due
                   schermate e se ne va deve averla vista comunque */}
               <div className="rf-hero-cta">
-                <button className="rf-entra">Entra nella community →</button>
+                <a className="rf-entra" href={COMMUNITY}>
+                  Entra nella community →
+                </a>
                 <span className="rf-hero-nota">gratis · il referto resta tuo</span>
               </div>
             </div>
@@ -430,7 +433,13 @@ export function Referto(d: DatiReferto) {
                   <p className="k">{gradino.occhiello}</p>
                   <h3>{gradino.titolo}</h3>
                   <p>{gradino.testo}</p>
-                  <button className="vai">{gradino.cta} →</button>
+                  {gradinoEComunita ? (
+                    <a className="vai" href={COMMUNITY}>
+                      {gradino.cta} →
+                    </a>
+                  ) : (
+                    <button className="vai">{gradino.cta} →</button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -441,7 +450,9 @@ export function Referto(d: DatiReferto) {
                     <p className="k">Se parti gratis</p>
                     <h3>{GRADINI_COPY.community.titolo}</h3>
                     <p>{GRADINI_COPY.community.testo}</p>
-                    <button className="vai">{GRADINI_COPY.community.cta} →</button>
+                    <a className="vai" href={COMMUNITY}>
+                      {GRADINI_COPY.community.cta} →
+                    </a>
                   </div>
                 </div>
                 <div className="rf-porta spinta" style={prod(proposta.gradino)}>
@@ -482,7 +493,9 @@ export function Referto(d: DatiReferto) {
             costruito qualcosa: il livello si aggiorna.
           </p>
           <div className="rf-hero-cta" style={{ marginTop: 0 }}>
-            <button className="rf-entra">Entra nella community →</button>
+            <a className="rf-entra" href={COMMUNITY}>
+              Entra nella community →
+            </a>
             <button className="rf-entra linea">Condividi il livello →</button>
           </div>
         </div>

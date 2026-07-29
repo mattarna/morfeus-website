@@ -21,32 +21,52 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+/* la lista sta in un posto solo: la usa anche il footer */
+import { SEZIONI } from "./sezioni";
 /* Il css NON si importa qui ma in PlaygroundLanding, subito dopo
    playground.css: i due file hanno regole sullo stesso selettore
    (.island) con la stessa specificita', quindi vince chi arriva
    dopo. Importandolo da qui finiva prima e le regole del telefono
    venivano annullate. */
 
-/* NON tutte le sezioni: sei.
-   Un menu con dentro quattordici voci non e' un menu, e' un indice che
-   scorre, e obbliga a leggere una lista per scegliere. Queste sono le
-   quattro gia' curate sull'isola del desktop piu' due che sul telefono
-   servono davvero: chi c'e' dietro e se la cosa fa per te.
-   Restano fuori le sezioni di racconto (le strade, il nemico, un giorno
-   dentro): si incontrano scorrendo, e nessuno le cerca da un menu. */
-const VOCI = [
-  { id: "credo", label: "Il credo" },
-  { id: "stanza", label: "Cosa c'è dentro" },
-  { id: "prova", label: "Chi c'è dentro" },
-  { id: "morfeus", label: "Chi c'è dietro" },
-  { id: "perte", label: "È per te?" },
-  { id: "faq", label: "Le domande" },
-];
 
-/** Dove appendere il pannello: la radice della pelle del playground. */
-function ospite(): HTMLElement {
-  return (document.querySelector(".pg26") as HTMLElement | null) ?? document.body;
+/** Porta a una sezione SENZA animazione, e senza dipendere da
+ *  scrollIntoView({behavior:"instant"}).
+ *
+ *  Quel valore e' entrato in Safari solo dalla 17.4: sulle versioni
+ *  precedenti non viene ignorato, non e' ammesso nell'enumerazione e
+ *  SOLLEVA un'eccezione che interrompe il gestore del clic. Risultato
+ *  sul telefono: il pannello si chiudeva e non succedeva altro, mentre
+ *  su Chrome ristretto funzionava tutto. Un caso in cui provare la
+ *  versione mobile dal desktop non basta.
+ *
+ *  Qui l'animazione si spegne all'origine, mettendo scroll-behavior
+ *  auto in linea su <html> (lo stile in linea batte qualunque
+ *  selettore), si salta, e si rimette com'era. Funziona ovunque. */
+function vaiA(id: string) {
+  const meta = document.getElementById(id);
+  if (!meta) return;
+  const html = document.documentElement;
+  const prima = html.style.scrollBehavior;
+  html.style.scrollBehavior = "auto";
+  try {
+    meta.scrollIntoView({ block: "start" });
+  } finally {
+    html.style.scrollBehavior = prima;
+  }
 }
+
+/* Il pannello si appende a document.body, NON dentro .pg26.
+   .pg26 ha overflow-x: hidden, e su iOS Safari un antenato con
+   l'overflow nascosto rompe il position:fixed dei discendenti: il
+   pannello si posiziona rispetto al DOCUMENTO invece che alla
+   finestra, quindi a pagina scrollata veniva disegnato in cima al
+   documento, migliaia di pixel sopra lo schermo. Chrome non lo fa, ed
+   e' il motivo per cui restringendo il desktop sembrava a posto.
+   Fuori da .pg26 pero' si perdono palette, font e regole (le classi
+   sono tutte .pg26 .mnu-*): per questo il pannello viaggia dentro un
+   involucro che quella classe ce l'ha, con l'overflow rimesso a posto
+   e la grana spenta (vedi .mnu-host in menu.css). */
 
 export function MenuMobile({ onCollaudo }: { onCollaudo: () => void }) {
   const [aperto, setAperto] = useState(false);
@@ -86,17 +106,26 @@ export function MenuMobile({ onCollaudo }: { onCollaudo: () => void }) {
   const pannello = (
     <div className="mnu-pannello" id="menu-playground">
       <nav className="mnu-voci">
-        {VOCI.map((v, i) => (
+        {SEZIONI.map((v, i) => (
           <a
             key={v.id}
             href={`#${v.id}`}
-            onClick={() => {
-              /* si sblocca lo scorrimento SUBITO, non aspettando il
-                 giro di React: se il body e' ancora bloccato quando il
-                 browser esegue il salto all'ancora, il salto non
-                 avviene e resti dove sei */
+            onClick={(e) => {
+              /* Salto IMMEDIATO, non animato. La pagina ha
+                 scroll-behavior: smooth e fra una sezione e l'altra ci
+                 sono anche undicimila pixel: col comportamento di
+                 default tocchi una voce e parte un'animazione lunga
+                 secondi, che su un telefono si legge come "non e'
+                 successo niente". Da un menu ci si aspetta di essere
+                 gia' arrivati.
+                 Lo scorrimento va sbloccato PRIMA del salto, non
+                 aspettando il giro di React: col body ancora bloccato
+                 il salto non avverrebbe. */
+              e.preventDefault();
               document.body.style.overflow = "";
               setAperto(false);
+              vaiA(v.id);
+              history.replaceState(null, "", `#${v.id}`);
             }}
             style={{ animationDelay: `${28 + i * 22}ms` }}
           >
@@ -106,13 +135,13 @@ export function MenuMobile({ onCollaudo }: { onCollaudo: () => void }) {
         ))}
         <button
           className="mnu-cta"
-          style={{ animationDelay: `${28 + VOCI.length * 22}ms` }}
+          style={{ animationDelay: `${28 + SEZIONI.length * 22}ms` }}
           onClick={() => {
             setAperto(false);
             onCollaudo();
           }}
         >
-          <i>{String(VOCI.length + 1).padStart(2, "0")}</i>
+          <i>{String(SEZIONI.length + 1).padStart(2, "0")}</i>
           <span>Fai il collaudo →</span>
         </button>
       </nav>
@@ -136,7 +165,12 @@ export function MenuMobile({ onCollaudo }: { onCollaudo: () => void }) {
         {aperto ? "Chiudi" : "Menu"}
       </button>
 
-      {aperto ? createPortal(pannello, ospite()) : null}
+      {aperto
+        ? createPortal(
+            <div className="pg26 mnu-host">{pannello}</div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

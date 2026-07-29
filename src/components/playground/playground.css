@@ -1188,26 +1188,8 @@
   display: block;
   margin-bottom: 8px;
 }
-.pg26 footer {
-  border-top: 1px solid var(--line);
-  padding: 44px 0 64px;
-}
-.pg26 footer .wrap {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.pg26 footer p {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--mute);
-  letter-spacing: 0.08em;
-}
-.pg26 footer p b {
-  color: var(--viola-hi);
-} /* ============================================================
+/* il footer ha una pelle sua: footer.css */
+/* ============================================================
    IL COLLAUDO · overlay a schermo pieno
    ============================================================ */
 .pg26 .cd-overlay {
@@ -2914,14 +2896,17 @@
      perche' una banda che tocca il lato alto e resta staccata dai
      fianchi non e' una forma che si legge. */
   .pg26 .cover .field {
-    margin: 0 0 10px;
-    border-radius: 0 0 18px 18px;
+    /* filetto anche in cima: la card e' staccata di 8px su tre lati e
+       gli angoli sono tondi tutti e quattro. L'isola resta piu' in
+       basso e ci galleggia sopra. */
+    margin: 8px 8px 10px;
+    border-radius: 18px;
     align-items: flex-start;
     /* svh e non vh: sul telefono vh conta anche la fascia coperta dalla
        barra del browser, quindi con 100vh la card sfora sempre di un
        centinaio di pixel. svh e' la piega vera, quella con la barra
        visibile. */
-    min-height: calc(100svh - 10px);
+    min-height: calc(100svh - 18px);
   }
   /* UNA regola sola per i quattro lati: .inner E' il .wrap, e scrivere
      due regole separate significava che la seconda (piu' specifica)
@@ -2929,10 +2914,10 @@
      attaccato al bordo alto della card.
      26px di lato invece dei 22 del resto della pagina: contro un fondo
      colorato 22 sono pochi e il testo sembra appoggiato al margine. */
-  /* 84px in cima: tanto quanto serve a passare sotto l'isola, che
-     e' fissa e ora galleggia sopra il viola */
+  /* 76px in cima: l'isola finisce a 67 e la card ora parte da 8, quindi
+     ne servono 76 per passarci sotto lasciando 17px di stacco */
   .pg26 .cover .field .wrap.inner {
-    padding: 84px 24px 28px;
+    padding: 76px 24px 28px;
   }
 }
 
@@ -3007,7 +2992,9 @@
   }
   .pg26 .sys-mob {
     display: block;
-    margin-top: 18px;
+    /* la riga dei numeri stava appiccicata al bottone: era il bottone
+       a sembrare senza base, non la riga a essere alta */
+    margin-top: 30px;
     font-family: var(--mono);
     font-size: 13px;
     letter-spacing: 0.12em;
@@ -3486,6 +3473,25 @@
     font-size: 37px;
     line-height: 1.02;
   }
+  /* I TITOLI DI SEZIONE SEGUONO L'HERO.
+     La scala aveva minimo 26px con una nota precisa: "su telefono
+     l'hero scende al suo minimo (29) e con 30 il titolo di sezione lo
+     superava di 1px". Quel vincolo era legato a un'hero da 29. Ora
+     l'hero sul telefono e' 37, quindi il titolo puo' salire mantenendo
+     lo stesso rapporto di 0,86 che la scala tiene su tutte le taglie:
+     37 x 0,86 = 32. */
+  .pg26 h2.shead {
+    font-size: 32px;
+  }
+  .pg26 .momento h3,
+  .pg26 .finale h2,
+  .pg26 .shift p.big {
+    font-size: 28px;
+  }
+  .pg26 .finale .eco {
+    font-size: 25px;
+  }
+
   .pg26 .cover .sub {
     font-size: 17px;
     line-height: 1.5;
@@ -4612,4 +4618,176 @@
 .pg26 h4,
 .pg26 blockquote {
   overflow-wrap: break-word;
+}
+
+/* ============================================================
+   TELEFONO · le correzioni che devono stare IN FONDO
+   ------------------------------------------------------------
+   Non e' una scelta di ordine: e' che i selettori qui sotto hanno la
+   stessa specificita' delle regole base che sovrascrivono, e a parita'
+   di specificita' vince l'ultima che il browser legge. Messe piu' in
+   alto (dentro il blocco della copertina) venivano semplicemente
+   ignorate, senza un errore.
+   ============================================================ */
+@media (max-width: 560px) {
+  /* LA SCHERMATA ESCE DAL DOPPIO RIQUADRO.
+     Il portatile disegnato ha una cornice esterna e il vetro dentro: su
+     un telefono le due cornici si mangiano una settantina di pixel e la
+     schermata resta un francobollo. Sparisce la cornice esterna e
+     l'immagine va da bordo a bordo; resta il vetro, che e' quello che
+     la fa leggere come uno schermo. */
+  .pg26 .schermo {
+    border: none;
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0;
+  }
+  .pg26 .sc-vetro {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .pg26 .sc-eye {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  /* la riga dei numeri stava appiccicata al bottone giallo */
+  .pg26 .sys-mob {
+    margin-top: 30px;
+  }
+
+  /* piu' respiro fra la pastiglia e l'inizio del titolo */
+  .pg26 .cover .field .wrap.inner {
+    padding-top: 88px;
+  }
+}
+
+/* ============================================================
+   TELEFONO · le box che non si guadagnano il posto
+   ------------------------------------------------------------
+   Su 375px la larghezza utile e' 315. Una box con bordo e padding se
+   ne mangia fra i 45 e i 105, e il testo dentro scendeva a 26-29
+   caratteri per riga contro i 45-75 che servono per leggere senza
+   fatica. Non e' il corpo del font a essere piccolo: e' la colonna che
+   si e' ristretta.
+   La regola applicata qui: una cornice se la guadagna quando separa
+   una cosa da una SORELLA (le voci della dotazione, le tre note). Non
+   se la guadagna quando avvolge l'unico blocco di prosa della sezione,
+   perche' li' a separare ci pensa gia' la sezione. In quel caso resta
+   una linea, che fa lo stesso lavoro a costo zero.
+   ============================================================ */
+@media (max-width: 760px) {
+  /* LA DOTAZIONE ERA ROTTA, non solo stretta.
+     Griglia a due colonne senza regola per il telefono: le celle non
+     possono restringersi sotto la loro larghezza minima (i figli di una
+     griglia hanno min-width: auto), quindi restavano larghe 451px dentro
+     un contenitore da 343 e l'overflow nascosto ne tagliava 109 a
+     testa. Un quarto di ogni riga era illeggibile su tutte e sei.
+     In colonna singola i separatori della griglia diventano da soli le
+     linee orizzontali fra una voce e l'altra. */
+  .pg26 .stack {
+    grid-template-columns: 1fr;
+  }
+  .pg26 .stackcell {
+    min-width: 0;
+    padding: 26px 20px;
+  }
+
+  /* prosa sola dentro la sezione: via la cornice, resta la linea */
+  .pg26 .calm,
+  .pg26 .soglia,
+  .pg26 .pullq {
+    border: none;
+    border-left: 2px solid var(--viola-hi);
+    border-radius: 0;
+    padding: 4px 0 4px 18px;
+    background: none;
+  }
+
+  /* queste separano cose sorelle, quindi la cornice resta: si stringe
+     solo il respiro interno */
+  .pg26 .notcard {
+    padding: 22px 18px;
+  }
+  .pg26 .manifesto {
+    padding: 24px 20px;
+  }
+}
+
+/* ============================================================
+   TELEFONO · giro di correzioni 2026-07-29 (sera)
+   ============================================================ */
+@media (max-width: 760px) {
+  /* 1 · LO SCHERMO ANNIDATO NON VA A TUTTA LARGHEZZA.
+     La regola che manda a tutto schermo lo screenshot grande colpiva
+     anche quello dentro la cella "Due corsi completi": un width:100vw
+     dentro una cella da 341px forzava tutti i fratelli a 375 e li
+     faceva tagliare di 54px. Il pieno-schermo vale solo per lo
+     screenshot che sta da solo nella sezione. */
+  .pg26 .schermo.schermo-in {
+    width: auto;
+    margin-left: 0;
+    transform: none;
+    border-radius: 12px;
+  }
+
+  /* 2 · LE CHIAMATE ALL'AZIONE.
+     Il testo dentro il bottone: .btn e' inline-flex senza
+     justify-content, e quando il bottone si allarga a tutta riga il
+     contenuto resta appiccicato a sinistra invece di stare in mezzo.
+     Piu' aria sopra e sotto: una CTA schiacciata fra due paragrafi non
+     si legge come una porta. */
+  .pg26 .btn {
+    justify-content: center;
+    text-align: center;
+  }
+  .pg26 .ctas,
+  .pg26 .cta-mid {
+    margin-top: 34px;
+    margin-bottom: 10px;
+  }
+  .pg26 .cta-mid .btn,
+  .pg26 .finale .btn {
+    margin-block: 6px;
+  }
+
+  /* 3 · VIA LA LINEA DALLA PROSA.
+     Il filetto verticale a sinistra funziona su una citazione, dove
+     dice "questa e' un'altra voce". Su un blocco di prosa lungo
+     diventa una stanghetta che accompagna mezzo schermo senza dire
+     niente. Sulla prosa resta solo lo spazio; la linea resta dove ha
+     un senso, cioe' sulla citazione. */
+  .pg26 .calm,
+  .pg26 .soglia {
+    border: none;
+    padding: 0;
+  }
+
+  /* 4 · I LOGHI A DUE PER RIGA, PIU' GRANDI.
+     In fila da cinque erano alti 26px su uno schermo da 375: si
+     capiva che erano loghi, non quali. */
+  .pg26 .cl-riga {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 18px;
+    align-items: center;
+    justify-items: center;
+  }
+  .pg26 .cl-riga img {
+    height: 40px;
+    max-width: 100%;
+    object-fit: contain;
+    opacity: 0.72;
+  }
+  .pg26 .cl-riga img[alt^="Il Sole"] {
+    height: 48px;
+  }
+  .pg26 .cl-riga img[alt="Asseprim"] {
+    height: 46px;
+  }
 }

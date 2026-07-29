@@ -3,9 +3,11 @@
 import { useCallback, useState } from "react";
 import { Collaudo } from "./collaudo/Collaudo";
 import { MenuMobile } from "./MenuMobile";
+import { CONTATTI, LEGALE, MORFEUS, SEZIONI } from "./sezioni";
 import "./playground.css";
 /* dopo playground.css, non prima: vedi la nota in MenuMobile.tsx */
 import "./menu.css";
+import "./footer.css";
 
 /* ============================================================
    PLAYGROUND · la landing, portata dal prototipo HTML.
@@ -910,10 +912,49 @@ export function PlaygroundLanding() {
         </div>
       </section>
 
-      <footer>
-        <div className="wrap">
-          <p><b>PLAYGROUND</b> · di Morfeus · si guadagna, non si compra</p>
-          <p>PROTOTIPO · COPY v1 · TODO: <b>Brevo</b> (gate) · <b>link Circle</b> · foto/loghi</p>
+      <footer className="pgf">
+        <div className="wrap pgf-in">
+          <div className="pgf-marchio">
+            <span className="pgf-logo">
+              <svg viewBox="0 0 1000 476" fill="currentColor" aria-hidden="true"><use href="#markm" /></svg>
+              <b>Playground</b>
+            </span>
+            <p className="pgf-di">di Morfeus</p>
+            <p className="pgf-motto">Si guadagna,<br />non si compra.</p>
+            <button className="btn btn-giallo" type="button" onClick={onCollaudo}>
+              Fai il collaudo →
+            </button>
+            <p className="pgf-nota">1100+ builder dentro · ingresso gratis</p>
+          </div>
+
+          <nav className="pgf-col">
+            <p className="pgf-tit">Il Playground</p>
+            {SEZIONI.map((v) => (
+              <a key={v.id} href={`#${v.id}`}>{v.label}</a>
+            ))}
+          </nav>
+
+          <nav className="pgf-col">
+            <p className="pgf-tit">Morfeus</p>
+            {MORFEUS.map((v) => (
+              <a key={v.href} href={v.href}>{v.label}</a>
+            ))}
+          </nav>
+
+          <nav className="pgf-col">
+            <p className="pgf-tit">Scrivici</p>
+            <a href={`mailto:${CONTATTI.email}`}>{CONTATTI.email}</a>
+            <a href={CONTATTI.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href={CONTATTI.instagram} target="_blank" rel="noreferrer">Instagram</a>
+          </nav>
+        </div>
+
+        <div className="wrap pgf-legale">
+          <p>© 2026 Morfeus · P.IVA {LEGALE.piva}</p>
+          <p className="pgf-legali">
+            <a href={LEGALE.privacy}>Privacy</a>
+            <a href={LEGALE.cookie}>Cookie</a>
+          </p>
         </div>
       </footer>
 

@@ -268,9 +268,32 @@
     align-items: flex-start;
     gap: 8px;
     font-size: 17.5px;
+    /* Una scena con quattro opzioni chiedeva 885px su uno schermo da
+       812: la quarta restava sotto la piega, e con l'avanzamento
+       automatico si rischia di scegliere senza averle viste tutte.
+       Qui si recupera quel tanto che basta stringendo i margini, non
+       il corpo del testo. */
+    padding: 15px 18px;
   }
   .pg26 .cl-verdetto {
     white-space: normal;
+  }
+  .pg26 .cl-palco {
+    padding: 26px 20px 48px;
+  }
+  .pg26 .cl-occhio {
+    margin-bottom: 18px;
+  }
+  .pg26 .cl-opzioni {
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .pg26 .cl-consegna {
+    margin-top: 14px;
+    font-size: 21px;
+  }
+  .pg26 .cl-indietro {
+    margin-top: 18px;
   }
 }
 
