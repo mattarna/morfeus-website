@@ -5,7 +5,7 @@ metaTitle: "Come scegliere una consulenza AI in Italia | Morfeus"
 metaDescription: "Non esiste una classifica oggettiva delle migliori agenzie AI. Ecco la domanda giusta da farti, i tipi di fornitore e le 7 domande prima di firmare."
 category: "Adozione"
 tags: ["consulenza AI", "scegliere partner AI", "agenzie AI"]
-topicTags: ["Consulenza", "Partner AI", "Operating Partner", "Checklist"]
+topicTags: ["Consulenza","Partner AI","Operating Partner","Checklist"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"

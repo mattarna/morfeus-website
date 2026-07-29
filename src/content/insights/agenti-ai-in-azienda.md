@@ -5,7 +5,7 @@ metaTitle: "Agenti AI in azienda: cosa automatizzare davvero | Morfeus"
 metaDescription: "Cosa sono gli agenti AI, cosa automatizzano davvero in azienda oggi e perché senza un perimetro chiaro rischiano di creare più problemi di quanti ne risolvono."
 category: "Automazione"
 tags: ["agenti AI", "automazione", "AI in azienda"]
-topicTags: ["Agente", "Automazione", "Dipendente AI", "LLM"]
+topicTags: ["Agente","Automazione","Dipendente AI","LLM"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"

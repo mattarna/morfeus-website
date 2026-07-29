@@ -14,8 +14,7 @@ readingTime: "8 min"
 targetQuery: "quanto costa intelligenza artificiale azienda"
 tldr: "Quanto costa l'AI in azienda non è un numero solo: è il prezzo del pilot più il prezzo del sistema che resta acceso in produzione, e il secondo quasi nessuno lo mette in conto all'inizio. La spesa mondiale in AI crescerà del 44-47% nel 2026 fino a 2,5mila miliardi di dollari (Gartner), e in Italia il mercato vale 1,8 miliardi di euro con il 71% delle grandi imprese che ha già un progetto avviato contro l'8% delle PMI (Osservatorio AI, Politecnico di Milano). Il costo vero dipende dal perimetro che scegli di affrontare, non dallo strumento che compri."
 relatedTerms: ["Value Leak", "Pilot → Retainer", "MARF", "ROIometro"]
-internalLinks:
-  ["/roiometro", "/insights/value-leak", "/metodo", "/insights/perche-progetti-ai-falliscono"]
+internalLinks: ["/roiometro", "/insights/value-leak", "/metodo", "/insights/perche-progetti-ai-falliscono"]
 faq:
   - q: "Qual è il costo medio di un progetto di AI in azienda?"
     a: "Non esiste una cifra media affidabile perché il costo dipende dal perimetro scelto, non dallo strumento. Un progetto che tocca un solo processo delimitato (l'invio dei preventivi, per esempio) costa e si misura in modo completamente diverso da un rollout su tutta l'organizzazione."

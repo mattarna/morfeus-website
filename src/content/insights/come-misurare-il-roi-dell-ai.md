@@ -14,8 +14,7 @@ readingTime: "8 min"
 targetQuery: "come misurare il ROI dell'intelligenza artificiale"
 tldr: "Il ROI dell'AI non si misura contando ore risparmiate o licenze attive: quello è un criterio di utilizzo, non di valore. Si misura definendo, prima di partire, un solo numero in euro da verificare ogni mese. McKinsey (State of AI 2025, 1.993 aziende) conferma il pattern dall'esterno: l'88% delle aziende usa l'AI regolarmente, ma solo il 5,5% dichiara un impatto finanziario reale. Il divario è quasi sempre lo stesso: nessuno ha deciso a monte cosa contare."
 relatedTerms: ["Value Report", "ROIometro", "Value Leak", "MARF"]
-internalLinks:
-  ["/roiometro", "/insights/value-leak", "/insights/perche-progetti-ai-falliscono", "/marf"]
+internalLinks: ["/roiometro", "/insights/value-leak", "/insights/perche-progetti-ai-falliscono", "/marf"]
 faq:
   - q: "Perché così tante aziende usano l'AI ma non vedono ritorno?"
     a: "Secondo McKinsey, l'88% delle aziende usa l'AI regolarmente in almeno una funzione ma solo il 5,5% vede un impatto finanziario reale. Il divario nasce prima del progetto: si misura quanto si usa uno strumento, non quanto margine ha spostato, perché nessuno ha definito il criterio di valore in anticipo."

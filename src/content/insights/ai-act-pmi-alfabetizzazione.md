@@ -5,7 +5,7 @@ metaTitle: "AI Act e PMI: obbligo di alfabetizzazione AI | Morfeus"
 metaDescription: "Dal 2 febbraio 2025 l'articolo 4 dell'AI Act impone un livello adeguato di alfabetizzazione AI anche alle PMI che usano l'AI. Cosa significa e cosa fare in pratica."
 category: "Formazione"
 tags: ["AI Act", "compliance AI", "alfabetizzazione AI", "PMI"]
-topicTags: ["AI Act", "Compliance", "PMI", "Formazione"]
+topicTags: ["AI Act","Compliance","PMI","Formazione"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
@@ -29,7 +29,7 @@ schema: [Article, FAQPage, BreadcrumbList]
 coverKind: "shield-check"
 ---
 
-**In breve.** Dal 2 febbraio 2025 è in vigore l'articolo 4 dell'AI Act europeo: chi sviluppa e chi usa sistemi di AI deve garantire un livello adeguato di "alfabetizzazione AI" alle persone che ci lavorano. Vale anche per le PMI, anche se usate solo strumenti di terzi come ChatGPT o Copilot. Non sono previste ore minime o certificazioni obbligatorie, ma serve formare il personale in modo proporzionato e poterlo documentare. _Questo articolo è una guida pratica, non una consulenza legale._
+**In breve.** Dal 2 febbraio 2025 è in vigore l'articolo 4 dell'AI Act europeo: chi sviluppa e chi usa sistemi di AI deve garantire un livello adeguato di "alfabetizzazione AI" alle persone che ci lavorano. Vale anche per le PMI, anche se usate solo strumenti di terzi come ChatGPT o Copilot. Non sono previste ore minime o certificazioni obbligatorie, ma serve formare il personale in modo proporzionato e poterlo documentare. *Questo articolo è una guida pratica, non una consulenza legale.*
 
 Un imprenditore con cui ho parlato di recente ha scoperto l'articolo 4 dell'AI Act da un cliente, dentro un questionario di fornitura: "come garantite l'alfabetizzazione AI del vostro personale?". Prima reazione, legittima: un'altra scartoffia normativa europea, un altro modulo da compilare per continuare a lavorare con chi conta.
 

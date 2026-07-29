@@ -5,7 +5,7 @@ metaTitle: "AI per le PMI: da dove iniziare (guida 2026) | Morfeus"
 metaDescription: "Solo il 14% delle piccole imprese italiane usa l'AI (Istat). La guida pratica per una PMI: da dove partire, quali processi, e le competenze che servono davvero."
 category: "PMI"
 tags: ["AI per PMI", "adozione AI", "piccole e medie imprese"]
-topicTags: ["PMI", "Adozione", "Competenze", "Istat"]
+topicTags: ["PMI","Adozione","Competenze","Istat"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
@@ -35,7 +35,7 @@ Ogni imprenditore di una PMI a cui abbiamo parlato di AI, prima o poi, ci ha det
 
 ## Il divario è reale, ma non è quello che pensi
 
-Il dato c'è ed è netto. Secondo l'indagine Istat _Imprese e ICT 2025_, usa almeno una tecnologia di AI il 53% delle grandi imprese italiane, il 27% delle medie e appena il **14,2%** delle piccole. La distanza per dimensione sta crescendo, non riducendosi, e questo racconta una storia reale di ritardo.
+Il dato c'è ed è netto. Secondo l'indagine Istat *Imprese e ICT 2025*, usa almeno una tecnologia di AI il 53% delle grandi imprese italiane, il 27% delle medie e appena il **14,2%** delle piccole. La distanza per dimensione sta crescendo, non riducendosi, e questo racconta una storia reale di ritardo.
 
 <figure class="figure">
   <div class="ft">Istat, Imprese e ICT 2025</div>

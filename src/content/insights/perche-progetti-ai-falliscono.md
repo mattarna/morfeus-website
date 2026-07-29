@@ -5,7 +5,7 @@ metaTitle: "Perché il 95% dei progetti AI fallisce | Morfeus"
 metaDescription: "Il 95% dei progetti di AI in azienda non produce risultati (MIT, 2025). Non è colpa dei modelli: ecco le cause reali e come essere nel 5% che funziona."
 category: "Margine & ROI"
 tags: ["adozione AI", "ROI", "progetti AI"]
-topicTags: ["MIT", "ROI", "Adozione", "POC", "News"]
+topicTags: ["MIT","ROI","Adozione","POC","News"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
@@ -39,7 +39,7 @@ Poi qualcuno ha notato una risposta che non tornava. Non un errore clamoroso, il
 
 ## Il pattern ha un nome, e il MIT lo ha misurato su scala
 
-Quello che abbiamo visto in quel caso non è un incidente isolato. È esattamente il pattern che _The GenAI Divide: State of AI in Business_, la ricerca 2025 dell'iniziativa NANDA del MIT, ha misurato su 300 deployment pubblici, 150 interviste a manager e un sondaggio su 350 dipendenti: solo il 5% dei progetti di AI generativa in azienda porta a un'accelerazione reale di ricavi o margine. Il restante 95% resta senza impatto misurabile sul conto economico.
+Quello che abbiamo visto in quel caso non è un incidente isolato. È esattamente il pattern che *The GenAI Divide: State of AI in Business*, la ricerca 2025 dell'iniziativa NANDA del MIT, ha misurato su 300 deployment pubblici, 150 interviste a manager e un sondaggio su 350 dipendenti: solo il 5% dei progetti di AI generativa in azienda porta a un'accelerazione reale di ricavi o margine. Il restante 95% resta senza impatto misurabile sul conto economico.
 
 <figure class="figure">
   <div class="ft">Il divario partner vs interno</div>
@@ -64,7 +64,7 @@ Quello che abbiamo visto in quel caso non è un incidente isolato. È esattament
   <figcaption>Fonte: MIT NANDA, <i>The GenAI Divide 2025</i>, su 300 deployment. Non è il modello a fare la differenza: è chi ha già visto dove si rompe l'integrazione.</figcaption>
 </figure>
 
-Il dato ha fatto rumore perché suona come un giudizio sulla tecnologia. Letto da dentro un progetto reale, dice qualcos'altro: il fallimento non è un evento raro e imprevedibile, è quasi sempre la stessa cosa che si ripete. Il MIT lo chiama _learning gap_, la distanza tra un modello che sa rispondere bene in laboratorio e un'organizzazione che sa cosa farne ogni giorno.
+Il dato ha fatto rumore perché suona come un giudizio sulla tecnologia. Letto da dentro un progetto reale, dice qualcos'altro: il fallimento non è un evento raro e imprevedibile, è quasi sempre la stessa cosa che si ripete. Il MIT lo chiama *learning gap*, la distanza tra un modello che sa rispondere bene in laboratorio e un'organizzazione che sa cosa farne ogni giorno.
 
 ## Perché non è colpa dei modelli
 

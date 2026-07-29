@@ -5,7 +5,7 @@ metaTitle: "L'AI toglie il lavoro? Cosa dicono i dati | Morfeus"
 metaDescription: "L'intelligenza artificiale elimina mestieri o compiti? Un caso reale, i dati 2026 su AI e lavoro, e cosa cambia davvero per chi lo fa ogni giorno."
 category: "Adozione"
 tags: ["AI e lavoro", "competenze", "futuro del lavoro"]
-topicTags: ["Lavoro", "Competenze", "AI Act", "News"]
+topicTags: ["Lavoro","Competenze","AI Act","News"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"

@@ -5,7 +5,7 @@ metaTitle: "Come integrare l'AI nei processi aziendali | Morfeus"
 metaDescription: "Integrare l'AI in azienda non è installare un tool. La guida operativa in 4 fasi: trova dove perdi valore, costruisci il sistema, misura in euro, rendi autonomo il team."
 category: "Adozione"
 tags: ["integrare AI", "processi aziendali", "metodo"]
-topicTags: ["Adozione", "Metodo", "Processi", "MARF", "ROI"]
+topicTags: ["Adozione","Metodo","Processi","MARF","ROI"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
@@ -14,14 +14,7 @@ readingTime: "9 min"
 targetQuery: "come integrare l'intelligenza artificiale nei processi aziendali"
 tldr: "Integrare l'AI non vuol dire scegliere lo strumento giusto: vuol dire trovare il processo che sta davvero perdendo valore, spesso un problema che sembra tecnologico e non lo è. La sequenza che funziona è in quattro fasi: diagnosi (mappare il processo e quantificare la perdita in euro), sistema (costruire e mandare in produzione su un perimetro delimitato), valore (misurare ogni mese quanto è cambiato) e autonomia (formare qualcuno in azienda perché il sistema regga da solo). Saltare la diagnosi per correre allo strumento è il motivo per cui la maggior parte dei progetti AI non lascia traccia."
 relatedTerms: ["Value Leak", "ROIometro", "MARF", "Value Report", "AI Champion", "Pilot → Retainer"]
-internalLinks:
-  [
-    "/roiometro",
-    "/insights/value-leak",
-    "/marf",
-    "/ai-champion",
-    "/insights/perche-progetti-ai-falliscono",
-  ]
+internalLinks: ["/roiometro", "/insights/value-leak", "/marf", "/ai-champion", "/insights/perche-progetti-ai-falliscono"]
 faq:
   - q: "Qual è il primo passo per integrare l'AI in azienda?"
     a: "Non scegliere un tool, ma mappare il processo dove sospetti di perdere più valore e mettere quella perdita in euro. Senza un numero di partenza non puoi sapere se l'integrazione ha funzionato, né spiegarlo a chi firma il budget."

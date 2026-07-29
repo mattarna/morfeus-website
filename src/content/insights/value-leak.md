@@ -112,7 +112,7 @@ I Value Leak più comuni nelle PMI in scaling, con il segnale che li tradisce e 
 
 ## Recuperare margine non è tagliare costi
 
-Il taglio costi rimuove risorse e spesso rimuove anche capacità. Il _Margin Recovery_ fa l'opposto: lascia intatta la capacità produttiva e rimuove lo spreco strutturale, costruendo sistemi di AI che prevengono la perdita invece di rincorrerla. È un recupero che resta, non un risparmio una tantum.
+Il taglio costi rimuove risorse e spesso rimuove anche capacità. Il *Margin Recovery* fa l'opposto: lascia intatta la capacità produttiva e rimuove lo spreco strutturale, costruendo sistemi di AI che prevengono la perdita invece di rincorrerla. È un recupero che resta, non un risparmio una tantum.
 
 Il recupero, mese dopo mese, si vede nel [Value Report](/insights/value-report): non un elenco di attività svolte, ma il valore effettivamente generato in euro, la stessa unità di misura con cui si è quantificato il Value Leak all'inizio. Lo strumento che ci permette di farlo, dentro l'azienda, è [MARF](/marf).
 

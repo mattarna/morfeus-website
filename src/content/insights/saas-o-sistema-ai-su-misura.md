@@ -5,7 +5,7 @@ metaTitle: "SaaS o AI su misura: cosa scegliere | Morfeus"
 metaDescription: "Comprare un tool AI in abbonamento o costruire un sistema su misura? La differenza reale tra SaaS e AI embedded, con un caso vero, per decidere senza sbagliare."
 category: "Adozione"
 tags: ["SaaS", "build vs buy", "AI su misura"]
-topicTags: ["Build vs Buy", "SaaS", "MARF", "Architettura", "Dati"]
+topicTags: ["Build vs Buy","SaaS","MARF","Architettura","Dati"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
@@ -59,6 +59,7 @@ Abbiamo visto questo pattern con un cliente MARF, un e-commerce digitale, PMI tr
 
 <p class="callout-txt"><b>Il punto cieco.</b> Non è un bug del SaaS: è la sua architettura. I dati che servivano per vedere il problema vivevano in tre sistemi diversi (piattaforma ads, e-commerce, gestionale ordini) che nessun prodotto standard è costruito per far parlare tra loro.</p>
 
+
 Il problema è che ROAS lordo per campagna non è la stessa cosa di margine reale per canale. Serviva un sistema che leggesse insieme, sullo stesso piano, ad spend, costo per vendita effettivo (con reso, spedizione, gestione ordine) e margine su tutti i canali contemporaneamente. Quando quella lettura è stata costruita, è emerso che stavano scalando proprio la campagna che, canale per canale, si mangiava più cassa di quella che generava. Il SaaS non lo avrebbe mai mostrato: non perché fosse un cattivo strumento, ma perché quei dati vivevano in sistemi diversi della stessa azienda, e nessun prodotto standard è costruito per farli parlare tra loro. È il motivo per cui un'infrastruttura come [MARF](/marf) non è un prodotto aggiuntivo accanto al SaaS che già usi: è quello che va a leggere esattamente il punto cieco che un tool generico, per costruzione, non può vedere.
 
 ## Cos'è davvero un sistema AI su misura
@@ -94,6 +95,7 @@ In pratica, la maggior parte delle aziende sane finisce con un mix: SaaS per i p
     </tbody>
   </table>
 </div>
+
 
 ## Da dove iniziare
 

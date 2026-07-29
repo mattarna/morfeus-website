@@ -5,7 +5,7 @@ metaTitle: "Competenze AI in azienda: il ruolo dell'AI Champion | Morfeus"
 metaDescription: "Le competenze sono il freno numero uno all'AI nelle imprese italiane. Quali servono davvero, perché un corso una tantum non basta, e come funziona l'AI Champion."
 category: "Formazione"
 tags: ["competenze AI", "formazione AI", "AI Champion"]
-topicTags: ["AI Champion", "Competenze", "Formazione", "AI Act"]
+topicTags: ["AI Champion","Competenze","Formazione","AI Act"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"

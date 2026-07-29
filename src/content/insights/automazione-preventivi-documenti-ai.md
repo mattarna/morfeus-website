@@ -5,7 +5,7 @@ metaTitle: "Automatizzare preventivi con l'AI: cosa cambia davvero | Morfeus"
 metaDescription: "Il preventivo lo scrivi in fretta, poi sparisce nel silenzio. Cosa automatizzare davvero con l'AI nei preventivi e nei documenti, e cosa resta umano."
 category: "Automazione"
 tags: ["automazione", "preventivi", "documenti"]
-topicTags: ["Automazione", "Preventivi", "Salescraft", "Documenti", "Agente", "MARF"]
+topicTags: ["Automazione","Preventivi","Salescraft","Documenti","Agente","MARF"]
 author: "Matteo Arnaboldi"
 authorRole: "CEO & Co-Founder, Morfeus"
 datePublished: "2026-06-29"
