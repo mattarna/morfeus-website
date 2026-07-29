@@ -52,7 +52,7 @@ export function LabMsProof() {
                 <span className="ghost -right-1 -top-4">{`0${i + 1}`}</span>
 
                 <div className="sopra">
-                  <div className="font-mono text-[12px] uppercase tracking-[0.16em] text-[color:var(--ombra)]">
+                  <div className="font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--ombra)]">
                     {t(`blocks.${n}.label`)}
                   </div>
 

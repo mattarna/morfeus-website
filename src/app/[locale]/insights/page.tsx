@@ -311,7 +311,7 @@ export default async function InsightsPage({ params }: Props) {
                   {evidenza.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full border px-2.5 py-[5px] font-plex text-[11px] font-semibold uppercase tracking-[.04em] text-lilla"
+                      className="rounded-full border px-2.5 py-[5px] font-plex text-[13px] font-semibold uppercase tracking-[.04em] text-lilla"
                       style={{
                         background: "rgba(140,165,247,.1)",
                         borderColor: "rgba(140,165,247,.28)",

@@ -248,7 +248,7 @@ export default async function ScalersPreSalesCasePage({ params }: Props) {
       <section className="band ink hero" id="testata">
         <div className="wrap">
           <div
-            className="font-plex text-[11px] tracking-[0.08em]"
+            className="font-plex text-[13px] tracking-[0.08em]"
             style={{ color: "var(--ombra)" }}
           >
             <Link href={`${base}/casi`} style={{ color: "var(--lilla)" }}>
@@ -263,7 +263,7 @@ export default async function ScalersPreSalesCasePage({ params }: Props) {
             {t.tags.map((tag) => (
               <span
                 key={tag}
-                className="font-plex text-[10px] uppercase tracking-[0.08em]"
+                className="font-plex text-[13px] uppercase tracking-[0.08em]"
                 style={{
                   color: "var(--lilla)",
                   border: "1px solid rgba(140,165,247,.3)",
@@ -307,7 +307,7 @@ export default async function ScalersPreSalesCasePage({ params }: Props) {
                   {s.n}
                 </div>
                 <div
-                  className="mt-2 font-plex text-[10px] uppercase tracking-[0.1em]"
+                  className="mt-2 font-plex text-[13px] uppercase tracking-[0.1em]"
                   style={{ color: "var(--ombra)", maxWidth: "20ch" }}
                 >
                   {s.l}

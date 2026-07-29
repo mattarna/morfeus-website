@@ -72,7 +72,7 @@ export function LabMsContatto() {
               key={p.k}
               className="riga-ordine"
             >
-              <span className="font-mono text-[12.5px] tracking-[0.12em] text-[color:var(--ombra)]">
+              <span className="font-mono text-[13px] tracking-[0.12em] text-[color:var(--ombra)]">
                 {p.quando}
               </span>
               <div>
@@ -93,7 +93,7 @@ export function LabMsContatto() {
                 (b) => (
                   <span
                     key={b}
-                    className="flex items-center gap-3 font-mono text-[12.5px] uppercase tracking-[0.12em] text-[color:var(--ombra)]"
+                    className="flex items-center gap-3 font-mono text-[13px] uppercase tracking-[0.12em] text-[color:var(--ombra)]"
                   >
                     <span className="h-px w-4 bg-[color:var(--ombra)]" />
                     {b}

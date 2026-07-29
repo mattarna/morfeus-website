@@ -461,6 +461,57 @@
     min-height: 0;
   }
 }
+/* Sotto i 560px il badge non ci sta piu' accanto al titolo. Ha shrink-0
+   (LabMsBivio.tsx:108 e :139) perche' non deve spezzarsi a meta', quindi
+   invece di stringersi usciva dalla scheda: "Dipendenza crescente"
+   arrivava a 396px su uno schermo da 360. La riga diventa colonna e il
+   badge sale sopra il titolo, intero. column-reverse e non column
+   perche' nel markup il badge viene dopo, ma come etichetta va letto
+   prima. Stessa specificita' (0,3,0) della regola base: se fosse piu'
+   bassa la base vincerebbe comunque. */
+@media (max-width: 560px) {
+  .ms .lab .testa-confronto {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* etichetta dell'asse dei due grafici del bivio: era un <text> dentro
+   l'SVG e scalava col disegno (10.6px resi su un telefono). Ora e'
+   HTML, quindi la dimensione qui e' quella che si legge davvero. */
+.ms .lab .curva-cap {
+  margin-top: 8px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: #7e8091;
+}
+
+/* ---------- schema: smette di rimpicciolirsi (2026-07-29) ----------
+   Lo schema ha viewBox 800x392 e `w-full`. Su un telefono da 360px
+   finiva a scala 0.399, e le sue etichette rendevano a 4.4px: non
+   piccole, illeggibili. (Il codice le dichiara a 11 unita' di viewBox,
+   che su desktop diventano 15.7px reali: il numero nel sorgente non
+   dice quanto si legge a schermo, va moltiplicato per la scala.)
+   Sotto i 900px il disegno smette di stringersi e il blocco scorre.
+   940px = 800 x 1.18, la scala minima perche' l'etichetta piu' piccola
+   torni sopra il pavimento di 13px.
+   NOTA: e' un rimedio, non la soluzione. Uno schema 800x392 su un
+   telefono andrebbe ridisegnato in verticale. Qui almeno si legge. */
+@media (max-width: 900px) {
+  .ms .lab .schema-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ms .lab .schema-scroll > div {
+    /* 960 e non 940: misurato sul servito, a 940 l'etichetta piu'
+       piccola (N01) si fermava a 12.9px, un decimo sotto il pavimento. */
+    min-width: 960px;
+  }
+}
 
 /* ---------- respiro nei box (2026-07-28) ----------
    Detto da Matteo guardando la pagina: nei box il testo sta troppo vicino

@@ -95,7 +95,7 @@ export function LabMsProblem() {
                 </p>
 
                 <div className="quota mt-6">Fonte</div>
-                <p className="mt-3 font-mono text-[12.5px] uppercase tracking-[0.14em] text-[color:var(--ombra)]">
+                <p className="mt-3 font-mono text-[13px] uppercase tracking-[0.14em] text-[color:var(--ombra)]">
                   {t("trap_source")}
                 </p>
               </div>

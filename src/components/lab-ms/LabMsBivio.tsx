@@ -29,7 +29,8 @@ function Curva({ tipo }: { tipo: "perde" | "accumula" }) {
   const tinta = perde ? "#FF5C5C" : "#8CA5F7";
 
   return (
-    <svg viewBox="0 0 248 168" className="mt-6 block w-full" aria-hidden="true">
+    <>
+    <svg viewBox="0 0 248 152" className="mt-6 block w-full" aria-hidden="true">
       <defs>
         <pattern
           id={`tratteggio-${tipo}`}
@@ -63,16 +64,14 @@ function Curva({ tipo }: { tipo: "perde" | "accumula" }) {
       <path d={d} fill="none" stroke={tinta} strokeWidth="1.5" />
       <circle cx="236" cy={perde ? 142 : 16} r="3.5" fill={tinta} />
 
-      <text
-        x="124"
-        y="166"
-        textAnchor="middle"
-        fill="#7E8091"
-        style={{ fontFamily: "var(--font-mono)", fontSize: 10.5, letterSpacing: "0.16em" }}
-      >
-        18 MESI
-      </text>
     </svg>
+    {/* L'etichetta dell'asse sta FUORI dall'SVG apposta. Dentro era un
+        <text> a 10.5 unita' di viewBox: scalava col disegno, e su un
+        telefono da 360px rendeva a 10.6px reali. Come testo HTML non
+        scala e resta leggibile a ogni larghezza. Il viewBox e' sceso da
+        168 a 152 perche' quelle 16 unita' servivano solo a ospitarla. */}
+    <div className="curva-cap">18 MESI</div>
+    </>
   );
 }
 

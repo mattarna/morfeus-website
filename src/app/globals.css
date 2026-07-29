@@ -299,3 +299,57 @@
 .animate-pulse-slow {
   animation: pulse-slow 4s ease-in-out infinite;
 }
+
+/* ---------- diagrammi dei casi studio: minimo leggibile (2026-07-29) ----------
+   I 17 diagrammi delle 8 pagine /casi sono SVG a larghezza fluida con
+   viewBox disegnato per il desktop. Su un telefono da 360px finivano a
+   scala 0.38 e le loro etichette rendevano fra 4.1px e 8.8px: non
+   piccole, invisibili. Il `fontSize` scritto nel sorgente e' in unita'
+   di viewBox, non in pixel: quello che si legge e' fontSize x scala.
+
+   La regola sta QUI e non in kit.css perche' le pagine dei casi non
+   importano kit.css: usano solo SiteShell.
+
+   L'aggancio e' il viewBox e non una classe perche' i contenitori sono
+   div Tailwind diversi pagina per pagina, senza una classe condivisa.
+   Verificato che le tre larghezze (720, 460, 640) compaiono SOLO nelle
+   pagine /casi: nessun altro SVG del sito viene toccato. Se un giorno
+   nasce un diagramma con una di queste larghezze altrove, questa regola
+   lo prende: meglio dargli una classe propria che allargare il selettore.
+
+   I minimi sono 1.2 volte la larghezza del viewBox, la scala minima
+   perche' l'etichetta piu' piccola torni sopra il pavimento di 13px.
+
+   NOTA: e' un rimedio, non la soluzione. Un diagramma disegnato a 720
+   unita' su un telefono andrebbe ripensato in verticale. Qui almeno si
+   legge, al prezzo di uno scorrimento laterale dentro il riquadro. */
+@media (max-width: 900px) {
+  /* PRIMA di tutto: azzerare min-width su TUTTI i div che contengono il
+     diagramma, non solo su quello che scorre. Un elemento di griglia (o
+     di flex) ha `min-width: auto`, cioe' si rifiuta di stringersi sotto
+     la larghezza del suo contenuto: senza questa riga il riquadro di un
+     diagramma dentro `.grid` si allargava a 605px dentro una colonna da
+     320, sfondava la fascia e trascinava fuori la pagina, invece di
+     restare stretto e far scorrere il disegno. Misurato: era successo. */
+  div:has(svg[viewBox^="0 0 720 "]),
+  div:has(svg[viewBox^="0 0 640 "]),
+  div:has(svg[viewBox^="0 0 460 "]) {
+    min-width: 0;
+  }
+  div:has(> svg[viewBox^="0 0 720 "]),
+  div:has(> svg[viewBox^="0 0 640 "]),
+  div:has(> svg[viewBox^="0 0 460 "]) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  svg[viewBox^="0 0 720 "] {
+    min-width: 870px;
+  }
+  svg[viewBox^="0 0 640 "] {
+    min-width: 775px;
+  }
+  svg[viewBox^="0 0 460 "] {
+    min-width: 555px;
+  }
+}

@@ -72,9 +72,14 @@ export function LabMsCore() {
         </span>
       </div>
 
-      <div style={{ perspective: "1200px" }}>
-        <motion.svg
-          viewBox="0 0 800 392"
+      {/* Il contenitore che scorre sta FUORI da quello con la
+          prospettiva: mettere overflow sull'elemento che porta
+          `perspective` appiattisce la scena 3D e il disegno perde
+          l'inclinazione. Vedi .schema-scroll in lab-ms.css. */}
+      <div className="schema-scroll">
+        <div style={{ perspective: "1200px" }}>
+          <motion.svg
+            viewBox="0 0 800 392"
           className="block w-full"
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           role="img"
@@ -217,7 +222,8 @@ export function LabMsCore() {
               </g>
             );
           })}
-        </motion.svg>
+          </motion.svg>
+        </div>
       </div>
 
       <div className="px-[18px] pb-[14px]">

@@ -360,7 +360,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
       {/* 01 · TESTATA · INCHIOSTRO */}
       <section className="band ink" id="testata">
         <div className="wrap">
-          <div className="font-plex text-[11px] tracking-[0.08em] uppercase text-ombra">
+          <div className="font-plex text-[13px] tracking-[0.08em] uppercase text-ombra">
             <Link href={`${base}/casi`} className="text-lilla hover:text-carta">
               {t.crumbCasi}
             </Link>
@@ -370,7 +370,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
             {t.tags.map((tag) => (
               <span
                 key={tag}
-                className="font-plex text-[10px] tracking-[0.08em] uppercase text-lilla border border-lilla/30 rounded-full px-3 py-1"
+                className="font-plex text-[13px] tracking-[0.08em] uppercase text-lilla border border-lilla/30 rounded-full px-3 py-1"
               >
                 {tag}
               </span>
@@ -394,7 +394,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
                 >
                   {s.n}
                 </div>
-                <div className="font-plex text-[10px] tracking-[0.1em] uppercase text-ombra mt-2 max-w-[20ch]">
+                <div className="font-plex text-[13px] tracking-[0.1em] uppercase text-ombra mt-2 max-w-[20ch]">
                   {s.l}
                 </div>
               </div>
@@ -425,7 +425,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
           </div>
 
           <div className="mt-11">
-            <div className="font-plex text-[10px] tracking-[0.16em] uppercase text-firma mb-3.5">
+            <div className="font-plex text-[13px] tracking-[0.16em] uppercase text-firma mb-3.5">
               {t.s2.figLabel}
             </div>
             <div className="rounded-xl border border-inchiostro/[0.14] bg-inchiostro/[0.02] p-6">
@@ -550,7 +550,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
                 key={i}
                 className="grid grid-cols-[auto_1fr] gap-4 py-4 border-t border-inchiostro/[0.14] first:border-t-0"
               >
-                <span className="font-plex text-[12px] text-firma pt-0.5">
+                <span className="font-plex text-[13px] text-firma pt-0.5">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -575,7 +575,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
           <p className="lead">{t.s5.lead}</p>
 
           <div className="mt-10">
-            <div className="font-plex text-[10px] tracking-[0.16em] uppercase text-lilla mb-3.5">
+            <div className="font-plex text-[13px] tracking-[0.16em] uppercase text-lilla mb-3.5">
               {t.s5.figLabel}
             </div>
             <div className="rounded-xl border border-riga-scuro bg-white/[0.02] p-6">
@@ -663,7 +663,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
                 key={i}
                 className="border border-inchiostro/[0.14] bg-inchiostro/[0.02] rounded-xl p-6"
               >
-                <div className="font-plex text-[10px] tracking-[0.1em] uppercase text-ombra">
+                <div className="font-plex text-[13px] tracking-[0.1em] uppercase text-ombra">
                   {tile.k}
                 </div>
                 <div
@@ -708,7 +708,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
                 key={i}
                 className="border border-riga-scuro rounded-xl bg-white/[0.02] p-5 block"
               >
-                <span className="block font-plex text-[10px] tracking-[0.1em] uppercase text-lilla">
+                <span className="block font-plex text-[13px] tracking-[0.1em] uppercase text-lilla">
                   {r.cat}
                 </span>
                 <span className="block font-clash font-semibold text-[16px] text-carta mt-2 mb-2.5">

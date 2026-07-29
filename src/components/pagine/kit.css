@@ -24,6 +24,33 @@
   border-radius: var(--r-l);
   overflow: hidden;
 }
+
+/* ---------- diagrammi: smettono di rimpicciolirsi (2026-07-29) ----------
+   I due diagrammi di MARF hanno viewBox largo 900 e larghezza fluida.
+   Su un telefono da 360px finivano a scala 0.353 e le loro etichette
+   rendevano fra 3.9px e 9.2px: non piccole, invisibili. Il numero
+   scritto nel sorgente (`fontSize: 12.5`) e' in unita' di viewBox, non
+   in pixel: quanto si legge dipende dalla scala, e va moltiplicato.
+   Sotto i 900px il disegno smette di stringersi e il blocco scorre.
+   1060px = 900 x 1.18, la scala minima perche' anche l'etichetta piu'
+   piccola torni sopra il pavimento di 13px.
+   Lo scroll sta su un contenitore suo (.diagramma-scroll, aggiunto in
+   Diagrammi.tsx) e NON su .quadro: .quadro ha overflow:hidden e due
+   pseudo-elementi decorativi, e cambiargli overflow li avrebbe messi
+   a scorrere.
+   NOTA: e' un rimedio. Un diagramma 900x300 su un telefono andrebbe
+   ridisegnato in verticale; qui almeno si legge. */
+@media (max-width: 900px) {
+  .ms .pg .diagramma-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ms .pg .diagramma-scroll > .diagramma {
+    min-width: 1060px;
+  }
+}
+
 .ms .pg .quadro::before,
 .ms .pg .quadro::after {
   content: "";

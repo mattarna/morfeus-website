@@ -27,6 +27,10 @@ export function SchemaCentrale({
   uscite: string[];
 }) {
   return (
+    /* Il contenitore che scorre: il disegno ha un viewBox largo 900 e su
+       un telefono da 360px finiva a scala 0.35, con le etichette rese a
+       3.9px. Vedi .diagramma-scroll in kit.css. */
+    <div className="diagramma-scroll">
     <svg viewBox="0 0 900 300" className="diagramma" role="img" aria-label={`${ingressi.join(", ")} entrano in ${centro} ed escono come ${uscite.join(" e ")}`}>
       {/* i tre ingressi */}
       {ingressi.map((v, i) => {
@@ -94,6 +98,7 @@ export function SchemaCentrale({
         );
       })}
     </svg>
+    </div>
   );
 }
 
@@ -111,6 +116,7 @@ export function Convergenza({
   const passoDx = 300 / (reparti.length + 1);
 
   return (
+    <div className="diagramma-scroll">
     <svg viewBox="0 0 900 320" className="diagramma" role="img" aria-label={`${strumenti.join(", ")} convergono in ${centro} e tornano a ${reparti.join(", ")}`}>
       {strumenti.map((s, i) => {
         const y = passoSx * (i + 1) + 10;
@@ -155,5 +161,6 @@ export function Convergenza({
         );
       })}
     </svg>
+    </div>
   );
 }

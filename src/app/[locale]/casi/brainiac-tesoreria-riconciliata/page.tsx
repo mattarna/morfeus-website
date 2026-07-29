@@ -311,7 +311,7 @@ export default async function BrainiacCasePage({ params }: Props) {
       <section className="band ink" id="testata">
         <div className="wrap">
           <div className="max-w-[760px] mx-auto">
-            <div className="font-plex text-[11px] tracking-[0.08em] text-ombra">
+            <div className="font-plex text-[13px] tracking-[0.08em] text-ombra">
               <Link href={`${base}/casi`} className="text-lilla hover:underline">
                 {t.crumbsCasi}
               </Link>
@@ -321,7 +321,7 @@ export default async function BrainiacCasePage({ params }: Props) {
               {t.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-plex text-[10px] tracking-[0.08em] uppercase text-lilla border border-lilla/30 rounded-full px-[11px] py-1"
+                  className="font-plex text-[13px] tracking-[0.08em] uppercase text-lilla border border-lilla/30 rounded-full px-[11px] py-1"
                 >
                   {tag}
                 </span>
@@ -345,7 +345,7 @@ export default async function BrainiacCasePage({ params }: Props) {
                   >
                     {s.n}
                   </div>
-                  <div className="font-plex text-[10px] tracking-[0.1em] uppercase text-ombra mt-2 max-w-[20ch]">
+                  <div className="font-plex text-[13px] tracking-[0.1em] uppercase text-ombra mt-2 max-w-[20ch]">
                     {s.l}
                   </div>
                 </div>
@@ -378,7 +378,7 @@ export default async function BrainiacCasePage({ params }: Props) {
           </div>
 
           <div className="mt-11">
-            <div className="font-plex text-[10px] tracking-[0.16em] uppercase text-firma mb-[14px]">
+            <div className="font-plex text-[13px] tracking-[0.16em] uppercase text-firma mb-[14px]">
               {t.fig1Ft}
             </div>
             <div className="rounded-[12px] border border-inchiostro/[0.14] bg-inchiostro/[0.02] p-[26px_24px]">
@@ -440,13 +440,13 @@ export default async function BrainiacCasePage({ params }: Props) {
                 {t.s03Q1}
                 <span className="emph">{t.s03Qemph}</span>
                 {t.s03Q2}
-                <span className="block font-plex not-italic text-[11px] tracking-[0.08em] text-ombra mt-4">
+                <span className="block font-plex not-italic text-[13px] tracking-[0.08em] text-ombra mt-4">
                   ▸ {t.s03Src}
                 </span>
               </blockquote>
             </div>
             <div>
-              <div className="font-plex text-[10px] tracking-[0.16em] uppercase text-lilla mb-[14px]">
+              <div className="font-plex text-[13px] tracking-[0.16em] uppercase text-lilla mb-[14px]">
                 {t.fig2Ft}
               </div>
               <div className="rounded-[12px] border border-riga-scuro bg-white/[0.02] p-[26px_24px]">
@@ -533,7 +533,7 @@ export default async function BrainiacCasePage({ params }: Props) {
                     i > 0 ? "border-t border-riga-scuro" : ""
                   }`}
                 >
-                  <span className="font-plex text-[12px] text-lilla pt-[3px]">
+                  <span className="font-plex text-[13px] text-lilla pt-[3px]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -561,7 +561,7 @@ export default async function BrainiacCasePage({ params }: Props) {
           </div>
 
           <div className="mt-10">
-            <div className="font-plex text-[10px] tracking-[0.16em] uppercase text-firma mb-[14px]">
+            <div className="font-plex text-[13px] tracking-[0.16em] uppercase text-firma mb-[14px]">
               {t.fig3Ft}
             </div>
             <div className="rounded-[12px] border border-inchiostro/[0.14] bg-inchiostro/[0.02] p-[26px_24px]">
@@ -630,7 +630,7 @@ export default async function BrainiacCasePage({ params }: Props) {
                 key={i}
                 className="rounded-[12px] border border-inchiostro/[0.14] bg-inchiostro/[0.02] p-[22px]"
               >
-                <div className="font-plex text-[10px] tracking-[0.1em] uppercase text-ombra">
+                <div className="font-plex text-[13px] tracking-[0.1em] uppercase text-ombra">
                   {tile.k}
                 </div>
                 <div
@@ -675,11 +675,11 @@ export default async function BrainiacCasePage({ params }: Props) {
                 key={i}
                 className="rounded-[12px] border border-riga-scuro bg-white/[0.02] p-5"
               >
-                <div className="font-plex text-[10px] tracking-[0.1em] uppercase text-lilla">
+                <div className="font-plex text-[13px] tracking-[0.1em] uppercase text-lilla">
                   {r.cat}
                 </div>
                 <h3 className="font-clash font-semibold text-[16px] my-2 text-carta">{r.h}</h3>
-                <span className="font-plex text-[12px] text-ombra">{t.relatedOpen}</span>
+                <span className="font-plex text-[13px] text-ombra">{t.relatedOpen}</span>
               </div>
             ))}
           </div>

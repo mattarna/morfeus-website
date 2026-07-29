@@ -85,7 +85,7 @@ export function InsightsBrowser({
           <button
             type="button"
             onClick={() => setActiveCat("__ALL__")}
-            className="rounded-full border px-3.5 py-2 font-plex text-[11px] font-semibold tracking-[.06em] transition-colors"
+            className="min-h-[44px] rounded-full border px-3.5 py-2 font-plex text-[13px] font-semibold tracking-[.06em] transition-colors"
             style={
               activeCat === "__ALL__"
                 ? { background: "#533DFC", borderColor: "#533DFC", color: "#fff" }
@@ -99,7 +99,7 @@ export function InsightsBrowser({
               key={c}
               type="button"
               onClick={() => setActiveCat(c)}
-              className="rounded-full border px-3.5 py-2 font-plex text-[11px] font-semibold tracking-[.06em] transition-colors"
+              className="min-h-[44px] rounded-full border px-3.5 py-2 font-plex text-[13px] font-semibold tracking-[.06em] transition-colors"
               style={
                 activeCat === c
                   ? { background: "#533DFC", borderColor: "#533DFC", color: "#fff" }
@@ -111,7 +111,7 @@ export function InsightsBrowser({
           ))}
         </div>
         <div
-          className="flex min-w-[240px] items-center gap-2 rounded-full border px-3.5 py-2"
+          className="flex min-h-[44px] min-w-[240px] items-center gap-2 rounded-full border px-3.5 py-2"
           style={{ borderColor: "rgba(11,11,12,.18)", background: "rgba(11,11,12,.02)" }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7E8091" strokeWidth={2}>
@@ -123,7 +123,10 @@ export function InsightsBrowser({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={ui.searchPlaceholder}
-            className="min-w-[180px] flex-1 border-0 bg-transparent font-satoshi text-[14px] outline-none"
+            /* 16px NON e' una scelta estetica: sotto i 16px iOS Safari
+             zooma la pagina da solo quando tocchi dentro il campo, e
+             non torna indietro da solo. Era 14px. */
+          className="min-w-[180px] flex-1 border-0 bg-transparent font-satoshi text-[16px] outline-none"
             style={{ color: "#0B0B0C" }}
             aria-label={ui.searchPlaceholder}
           />
@@ -132,7 +135,7 @@ export function InsightsBrowser({
               type="button"
               onClick={() => setQuery("")}
               aria-label="Reset"
-              className="font-plex text-[12px] text-ombra hover:text-firma"
+              className="grid h-[32px] w-[32px] place-items-center font-plex text-[13px] text-ombra hover:text-firma"
             >
               ✕
             </button>
@@ -174,7 +177,7 @@ export function InsightsBrowser({
                     {a.tags.slice(0, 2).map((t, i) => (
                       <span
                         key={i}
-                        className="rounded-full border px-2.5 py-[5px] font-plex text-[10px] font-semibold uppercase tracking-[.04em] text-firma"
+                        className="rounded-full border px-2.5 py-[5px] font-plex text-[13px] font-semibold uppercase tracking-[.04em] text-firma"
                         style={{
                           background: "rgba(83,61,252,.07)",
                           borderColor: "rgba(83,61,252,.22)",
@@ -184,7 +187,7 @@ export function InsightsBrowser({
                       </span>
                     ))}
                   </div>
-                  <span className="mt-2 font-plex text-[11px] tracking-[.06em] text-ombra">
+                  <span className="mt-2 font-plex text-[13px] tracking-[.06em] text-ombra">
                     {formatDateIt(a.datePublished)} · {a.readingTime}
                   </span>
                   <h3 className="my-[6px] text-[20px] font-semibold" style={{ color: "#0B0B0C" }}>
@@ -193,7 +196,7 @@ export function InsightsBrowser({
                   <p className="mt-1.5 flex-1 text-[14.5px]" style={{ color: "#3A3B45" }}>
                     {a.tldr || a.metaDescription}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1 font-plex text-[12px] font-semibold tracking-[.04em] text-firma">
+                  <span className="mt-4 inline-flex items-center gap-1 font-plex text-[13px] font-semibold tracking-[.04em] text-firma">
                     {ui.readMore} →
                   </span>
                 </div>

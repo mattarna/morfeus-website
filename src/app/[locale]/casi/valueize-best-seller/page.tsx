@@ -248,17 +248,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const PAGE_STYLES = `
-.ms .caso-page .crumbs{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra)}
+.ms .caso-page .crumbs{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;color:var(--ombra)}
 .ms .caso-page .crumbs a{color:var(--lilla)}
 .ms .caso-page .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.ms .caso-page .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
+.ms .caso-page .tag{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
 .ms .caso-page .ahead h1{font-size:clamp(30px,5.2vw,54px);font-weight:600;margin:16px 0;max-width:17ch;line-height:1.08;font-family:var(--font-display);letter-spacing:-.02em}
 .ms .caso-page .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c2c6d4;max-width:56ch}
 .ms .caso-page .headstats{display:flex;gap:32px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--riga-scuro)}
 .ms .caso-page .headstats .s .n{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1}
 .ms .caso-page .headstats .s .n.loss{color:var(--anomalia)}
 .ms .caso-page .headstats .s .n.gain{color:var(--ok)}
-.ms .caso-page .headstats .s .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra);margin-top:8px;max-width:20ch}
+.ms .caso-page .headstats .s .l{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra);margin-top:8px;max-width:20ch}
 .ms .caso-page .headfoot{display:flex;align-items:center;gap:14px;margin-top:24px;flex-wrap:wrap}
 .ms .caso-page .headfoot .stamp{border-color:var(--lilla);color:var(--lilla)}
 .ms .caso-page .read{max-width:760px;margin:0 auto}
@@ -266,7 +266,7 @@ const PAGE_STYLES = `
 .ms .caso-page .band.carta .prose p{color:#23222e}
 .ms .caso-page .band.ink .prose p{color:#c3c1d6}
 .ms .caso-page .figure{margin:8px 0 0}
-.ms .caso-page .figure .ft{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.ms .caso-page .figure .ft{font-family:var(--font-mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
 .ms .caso-page .band.carta .figure .ft{color:var(--firma)}
 .ms .caso-page .band.ink .figure .ft{color:var(--lilla)}
 .ms .caso-page .figbox{border-radius:var(--r-m);padding:26px 24px}
@@ -281,14 +281,14 @@ const PAGE_STYLES = `
 .ms .caso-page .band.carta .figcap b{color:var(--inchiostro)}
 .ms .caso-page .band.ink .figcap b{color:var(--carta)}
 .ms .caso-page .pquote{font-family:var(--font-emph);font-style:italic;font-size:clamp(20px,2.8vw,28px);line-height:1.35;max-width:22ch;margin:0;color:var(--carta)}
-.ms .caso-page .pquote .src{display:block;font-family:var(--font-mono);font-style:normal;font-size:11px;letter-spacing:.08em;color:var(--ombra);margin-top:16px}
+.ms .caso-page .pquote .src{display:block;font-family:var(--font-mono);font-style:normal;font-size:13px;letter-spacing:.08em;color:var(--ombra);margin-top:16px}
 .ms .caso-page .twogrid{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
 @media(max-width:860px){.ms .caso-page .twogrid{grid-template-columns:1fr;gap:28px}}
 .ms .caso-page .built{display:flex;flex-direction:column;gap:2px;margin-top:24px}
 .ms .caso-page .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(11,11,12,.14)}
 .ms .caso-page .band.ink .built .row{border-top-color:var(--riga-scuro)}
 .ms .caso-page .built .row:first-child{border-top:none}
-.ms .caso-page .built .ix{font-family:var(--font-mono);font-size:12px;color:var(--firma);padding-top:3px}
+.ms .caso-page .built .ix{font-family:var(--font-mono);font-size:13px;color:var(--firma);padding-top:3px}
 .ms .caso-page .band.ink .built .ix{color:var(--lilla)}
 .ms .caso-page .built .row b{font-family:var(--font-display);font-weight:600;font-size:17px}
 .ms .caso-page .band.carta .built .row b{color:var(--inchiostro)}
@@ -299,7 +299,7 @@ const PAGE_STYLES = `
 .ms .caso-page .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:760px){.ms .caso-page .tiles{grid-template-columns:1fr}}
 .ms .caso-page .tile{border:1px solid rgba(11,11,12,.14);background:rgba(11,11,12,.02);border-radius:var(--r-m);padding:22px}
-.ms .caso-page .tile .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra)}
+.ms .caso-page .tile .k{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra)}
 .ms .caso-page .tile .n{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.6vw,40px);line-height:1;margin:10px 0 6px;color:var(--inchiostro)}
 .ms .caso-page .tile .n.loss{color:var(--anomalia)}
 .ms .caso-page .tile .n.gain{color:var(--ok)}
@@ -307,7 +307,7 @@ const PAGE_STYLES = `
 .ms .caso-page .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
 @media(max-width:760px){.ms .caso-page .rgrid{grid-template-columns:1fr}}
 .ms .caso-page .rcard{border:1px solid var(--riga-scuro);border-radius:var(--r-m);background:rgba(255,255,255,.02);padding:20px;display:block}
-.ms .caso-page .rcard .cat{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--lilla)}
+.ms .caso-page .rcard .cat{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--lilla)}
 .ms .caso-page .rcard h3{font-size:16px;font-weight:600;margin:8px 0 10px;color:var(--carta);font-family:var(--font-display);letter-spacing:-.02em}
 `;
 

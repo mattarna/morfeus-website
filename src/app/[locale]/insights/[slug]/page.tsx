@@ -151,13 +151,13 @@ export default async function InsightArticlePage({ params }: Props) {
       {/* 01 · TESTATA · INCHIOSTRO */}
       <section className="band ink" id="testata">
         <div className="read">
-          <div className="font-plex text-[11px] tracking-[.08em] text-ombra">
+          <div className="font-plex text-[13px] tracking-[.08em] text-ombra">
             <Link href={`${base}/insights`} className="text-lilla">
               Insights
             </Link>
             {article.category ? <> · {article.category}</> : null}
           </div>
-          <div className="mt-5 font-plex text-[11px] tracking-[.12em] uppercase text-lilla">
+          <div className="mt-5 font-plex text-[13px] tracking-[.12em] uppercase text-lilla">
             {article.category}
             <span className="text-ombra">
               {" · "}
@@ -195,7 +195,7 @@ export default async function InsightArticlePage({ params }: Props) {
             </div>
           </div>
           {article.dateModified && article.dateModified !== article.datePublished ? (
-            <p className="mt-3 font-plex text-[11px] text-ombra">
+            <p className="mt-3 font-plex text-[13px] text-ombra">
               ▸ {isIt ? "Aggiornato il" : "Updated on"} {formatDateIt(article.dateModified)}
             </p>
           ) : null}
@@ -226,7 +226,7 @@ export default async function InsightArticlePage({ params }: Props) {
                 borderLeft: "3px solid #533DFC",
               }}
             >
-              <div className="font-plex text-[10px] uppercase tracking-[.16em] text-firma">
+              <div className="font-plex text-[13px] uppercase tracking-[.16em] text-firma">
                 {isIt ? "In breve" : "In brief"}
               </div>
               <p className="mt-2 text-[16px]" style={{ color: "#23222e" }}>
@@ -262,7 +262,7 @@ export default async function InsightArticlePage({ params }: Props) {
               .insight-body ul li::marker{color:#533DFC}
               .insight-body ol li::marker{color:#533DFC;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-weight:600}
               .insight-body table{width:100%;border-collapse:collapse;margin:32px 0;font-size:14.5px;border:1px solid rgba(11,11,12,.16);border-radius:12px;overflow:hidden;display:block;overflow-x:auto}
-              .insight-body table th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
+              .insight-body table th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
               .insight-body table td{padding:13px 18px;border-bottom:1px solid rgba(11,11,12,.09);vertical-align:top;color:#23222e}
               .insight-body table tr:last-child td{border-bottom:none}
               .insight-body code{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:.9em;background:rgba(83,61,252,.08);padding:2px 6px;border-radius:4px;color:#0B0B0C}
@@ -270,7 +270,7 @@ export default async function InsightArticlePage({ params }: Props) {
               .insight-body img{max-width:100%;height:auto;border-radius:12px;margin:28px 0;border:1px solid rgba(11,11,12,.10)}
               /* --- componenti visual del mockup (HTML raw nei .md) --- */
               .insight-body .figure{margin:36px 0;background:rgba(11,11,12,.02);border:1px solid rgba(11,11,12,.14);border-radius:12px;padding:26px 26px 20px}
-              .insight-body .figure .ft{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#533DFC;margin-bottom:6px}
+              .insight-body .figure .ft{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#533DFC;margin-bottom:6px}
               .insight-body .figure h4{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:20px;margin:0 0 18px;color:#0B0B0C;letter-spacing:-.02em;line-height:1.15}
               .insight-body .figure figcaption{margin-top:14px;font-size:14px;color:#3a3b45;max-width:64ch}
               .insight-body .figure figcaption b{color:#0B0B0C;font-weight:600}
@@ -284,7 +284,7 @@ export default async function InsightArticlePage({ params }: Props) {
               .insight-body .chart .lblR{fill:#533DFC;font-weight:600}
               .insight-body .chart .lblM{fill:#7E8091;font-weight:600}
               .insight-body .chart .lblK{fill:#533DFC;font-family:var(--font-emph,'Playfair Display',Georgia,serif);font-style:italic;font-size:15px}
-              .insight-body .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;color:#3a3b45}
+              .insight-body .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;color:#3a3b45}
               .insight-body .legend span{display:inline-flex;align-items:center;gap:8px}
               .insight-body .legend i{width:16px;height:3px;border-radius:2px;display:inline-block}
               .insight-body .legend i.r{background:#533DFC}
@@ -297,14 +297,32 @@ export default async function InsightArticlePage({ params }: Props) {
               .insight-body .driver h5{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-weight:600;font-size:17px;margin:0 0 6px;color:#0B0B0C}
               .insight-body .driver p{font-size:14px;color:#3a3b45;margin:0}
               @media(max-width:640px){.insight-body .drivers{grid-template-columns:1fr}}
-              .insight-body .gtable{margin:32px 0;border:1px solid rgba(11,11,12,.16);border-radius:12px;overflow:hidden;display:block}
-              .insight-body .gtable .cap{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#533DFC;padding:14px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
+              /* overflow-x:auto e NON hidden. Con hidden la tabella piu'
+                 larga del contenitore veniva tagliata e la colonna di
+                 destra restava fuori schermo, irraggiungibile: su un
+                 telefono da 390px la "Range dichiarato" spariva del tutto.
+                 auto continua a rispettare il border-radius (ritaglia al
+                 padding box come hidden) ma lascia scorrere. overflow-y
+                 resta hidden: solo l'asse orizzontale deve scorrere. */
+              .insight-body .gtable{margin:32px 0;border:1px solid rgba(11,11,12,.16);border-radius:12px;overflow-x:auto;overflow-y:hidden;display:block}
+              .insight-body .gtable .cap{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#533DFC;padding:14px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:rgba(83,61,252,.04)}
               .insight-body table.rng{width:100%;border-collapse:collapse;font-size:14.5px;display:table;margin:0;border:none;border-radius:0}
-              .insight-body table.rng th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:transparent}
+              .insight-body table.rng th{text-align:left;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#7E8091;padding:12px 18px;border-bottom:1px solid rgba(11,11,12,.16);background:transparent}
               .insight-body table.rng td{padding:13px 18px;border-bottom:1px solid rgba(11,11,12,.09);vertical-align:top;color:#23222e}
               .insight-body table.rng tr:last-child td{border-bottom:none}
               .insight-body table.rng td.v{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-weight:600;color:#0B0B0C;white-space:nowrap}
               .insight-body table.rng .note-td{color:#3a3b45;font-size:13.5px}
+              /* Su telefono la tabella si stringe invece di scorrere:
+                 lo scorrimento resta come rete di sicurezza, ma una
+                 tabella che si legge senza trascinarla e' meglio.
+                 Le imbottiture scendono da 18px a 11px; i corpi NON
+                 scendono sotto i 13px (pavimento di styling-standards). */
+              @media(max-width:640px){
+                .insight-body table.rng{font-size:13.5px}
+                .insight-body table.rng th{padding:10px 11px;letter-spacing:.06em}
+                .insight-body table.rng td{padding:11px}
+                .insight-body table.rng .note-td{font-size:13px}
+              }
               .insight-body .logbox{font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;line-height:1.9;background:#0E0E1C;border:1px solid #26262B;border-radius:12px;padding:22px 24px;color:#c7c7d2;margin:24px 0}
               .insight-body .logbox .p{color:#8CA5F7}
               .insight-body .logbox .d{color:#7E8091}
@@ -314,7 +332,7 @@ export default async function InsightArticlePage({ params }: Props) {
               .insight-body .inlinecta{background:rgba(11,11,12,.02);border:1px solid rgba(11,11,12,.14);border-radius:12px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:36px 0}
               .insight-body .inlinecta h3{font-family:var(--font-display,'Clash Display','Inter',sans-serif);font-size:22px;font-weight:600;color:#0B0B0C;margin:0}
               .insight-body .inlinecta p{color:#3a3b45;font-size:14px;margin-top:4px}
-              .insight-body .inlinecta .btn{display:inline-block;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:12px;font-weight:600;padding:11px 18px;border-radius:8px;background:#533DFC;color:#fff;text-decoration:none}
+              .insight-body .inlinecta .btn{display:inline-block;font-family:var(--font-mono,'IBM Plex Mono',monospace);font-size:13px;font-weight:600;padding:11px 18px;border-radius:8px;background:#533DFC;color:#fff;text-decoration:none}
               .insight-body .inlinecta .btn:hover{background:#392CB8}
             `,
             }}
@@ -376,7 +394,7 @@ export default async function InsightArticlePage({ params }: Props) {
               <h4 className="text-[18px] font-semibold">{article.author}</h4>
               {article.authorRole ? (
                 <div
-                  className="mt-1 font-plex text-[10px] uppercase tracking-[.12em] text-firma"
+                  className="mt-1 font-plex text-[13px] uppercase tracking-[.12em] text-firma"
                 >
                   {article.authorRole}
                 </div>
@@ -387,14 +405,14 @@ export default async function InsightArticlePage({ params }: Props) {
           {/* concetti correlati (chip) */}
           {article.relatedTerms.length ? (
             <div className="mt-10">
-              <div className="font-plex text-[10px] uppercase tracking-[.16em] text-firma">
+              <div className="font-plex text-[13px] uppercase tracking-[.16em] text-firma">
                 {isIt ? "Concetti correlati" : "Related concepts"}
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
                 {article.relatedTerms.map((t, i) => (
                   <span
                     key={i}
-                    className="rounded-full border px-3 py-1 font-plex text-[11px] font-semibold tracking-[.04em] text-firma"
+                    className="rounded-full border px-3 py-1 font-plex text-[13px] font-semibold tracking-[.04em] text-firma"
                     style={{
                       background: "rgba(83,61,252,.07)",
                       borderColor: "rgba(83,61,252,.22)",
@@ -410,7 +428,7 @@ export default async function InsightArticlePage({ params }: Props) {
           {/* internal links: navigabili solo se la rotta esiste */}
           {article.internalLinks.length ? (
             <div className="mt-8">
-              <div className="font-plex text-[10px] uppercase tracking-[.16em] text-firma">
+              <div className="font-plex text-[13px] uppercase tracking-[.16em] text-firma">
                 {isIt ? "Continua nel percorso" : "Continue the path"}
               </div>
               <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
@@ -422,7 +440,7 @@ export default async function InsightArticlePage({ params }: Props) {
                       <li key={i}>
                         <Link
                           href={`${base}${href}`}
-                          className="font-plex text-[12px] font-semibold tracking-[.04em] text-firma underline underline-offset-[3px]"
+                          className="font-plex text-[13px] font-semibold tracking-[.04em] text-firma underline underline-offset-[3px]"
                         >
                           {label} →
                         </Link>
@@ -431,7 +449,7 @@ export default async function InsightArticlePage({ params }: Props) {
                   }
                   return (
                     <li key={i}>
-                      <span className="font-plex text-[12px] font-semibold tracking-[.04em] text-ombra">
+                      <span className="font-plex text-[13px] font-semibold tracking-[.04em] text-ombra">
                         {label}
                       </span>
                     </li>
@@ -456,11 +474,11 @@ export default async function InsightArticlePage({ params }: Props) {
                     className="block border-t pt-4"
                     style={{ borderColor: "rgba(11,11,12,.16)" }}
                   >
-                    <div className="font-plex text-[10px] uppercase tracking-[.12em] text-firma">
+                    <div className="font-plex text-[13px] uppercase tracking-[.12em] text-firma">
                       {a.category}
                     </div>
                     <h3 className="mt-2 text-[17px] font-semibold">{a.title}</h3>
-                    <span className="mt-3 inline-block font-plex text-[12px] font-semibold tracking-[.04em] text-firma">
+                    <span className="mt-3 inline-block font-plex text-[13px] font-semibold tracking-[.04em] text-firma">
                       {isIt ? "Leggi" : "Read"} ▸
                     </span>
                   </Link>

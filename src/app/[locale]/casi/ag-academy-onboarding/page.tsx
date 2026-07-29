@@ -221,22 +221,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const CASE_CSS = `
 .ms .case-013 .read{max-width:760px;margin:0 auto}
-.ms .case-013 .crumbs{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra)}
+.ms .case-013 .crumbs{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;color:var(--ombra)}
 .ms .case-013 .crumbs a{color:var(--lilla)}
 .ms .case-013 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.ms .case-013 .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
+.ms .case-013 .tag{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--lilla);border:1px solid rgba(140,165,247,.3);border-radius:var(--r-pill);padding:4px 11px}
 .ms .case-013 .ahead h1{font-size:clamp(30px,5.2vw,54px);font-weight:600;margin:16px 0;max-width:17ch;line-height:1.08}
 .ms .case-013 .standfirst{font-family:var(--font-emph);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:#c2c6d4;max-width:56ch}
 .ms .case-013 .headstats{display:flex;gap:32px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--riga-scuro)}
 .ms .case-013 .headstats .s .n{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.4vw,36px);line-height:1}
 .ms .case-013 .headstats .s .n.gain{color:var(--ok)}
-.ms .case-013 .headstats .s .l{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra);margin-top:8px;max-width:20ch}
+.ms .case-013 .headstats .s .l{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra);margin-top:8px;max-width:20ch}
 .ms .case-013 .headfoot{display:flex;align-items:center;gap:14px;margin-top:24px;flex-wrap:wrap}
 .ms .case-013 .prose p{font-size:17px;margin:14px 0}
 .ms .band.carta .case-013 .prose p{color:#23222e}
 .ms .band.ink .case-013 .prose p{color:#c3c1d6}
 .ms .case-013 .figure{margin:44px auto 0;max-width:var(--maxw)}
-.ms .case-013 .figure .ft{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.ms .case-013 .figure .ft{font-family:var(--font-mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
 .ms .band.carta .case-013 .figure .ft{color:var(--firma)}
 .ms .band.ink .case-013 .figure .ft{color:var(--lilla)}
 .ms .case-013 .figbox{border-radius:var(--r-m);padding:26px 24px}
@@ -250,28 +250,28 @@ const CASE_CSS = `
 .ms .band.carta .case-013 .figcap b{color:var(--inchiostro);font-weight:700}
 .ms .band.ink .case-013 .figcap b{color:var(--carta);font-weight:700}
 .ms .case-013 .pquote{font-family:var(--font-emph);font-style:italic;font-size:clamp(20px,2.8vw,28px);line-height:1.35;max-width:22ch;margin:0;color:var(--carta)}
-.ms .case-013 .pquote .src{display:block;font-family:var(--font-mono);font-style:normal;font-size:11px;letter-spacing:.08em;color:var(--ombra);margin-top:16px}
+.ms .case-013 .pquote .src{display:block;font-family:var(--font-mono);font-style:normal;font-size:13px;letter-spacing:.08em;color:var(--ombra);margin-top:16px}
 .ms .case-013 .two-col{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
 @media(max-width:760px){.ms .case-013 .two-col{grid-template-columns:1fr}}
 .ms .case-013 .built{display:flex;flex-direction:column;gap:2px;margin-top:24px}
 .ms .case-013 .built .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(11,11,12,.14)}
 .ms .case-013 .built .row:first-child{border-top:none}
-.ms .case-013 .built .ix{font-family:var(--font-mono);font-size:12px;color:var(--firma);padding-top:3px}
+.ms .case-013 .built .ix{font-family:var(--font-mono);font-size:13px;color:var(--firma);padding-top:3px}
 .ms .case-013 .built .row b{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--inchiostro);display:block}
 .ms .case-013 .built .row p{color:#3a3b45;font-size:14.5px;margin-top:4px}
 .ms .case-013 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;max-width:var(--maxw);margin-left:auto;margin-right:auto}
 @media(max-width:760px){.ms .case-013 .tiles{grid-template-columns:1fr}}
 .ms .case-013 .tile{border:1px solid var(--riga-scuro);background:rgba(255,255,255,.02);border-radius:var(--r-m);padding:22px}
-.ms .case-013 .tile .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra)}
+.ms .case-013 .tile .k{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ombra)}
 .ms .case-013 .tile .n{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.6vw,40px);line-height:1;margin:10px 0 6px;color:var(--carta)}
 .ms .case-013 .tile .n.gain{color:var(--ok)}
 .ms .case-013 .tile p{font-size:13px;color:#c3c1d6}
 .ms .case-013 .rgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
 @media(max-width:760px){.ms .case-013 .rgrid{grid-template-columns:1fr}}
 .ms .case-013 .rcard{border:1px solid rgba(11,11,12,.14);border-radius:var(--r-m);background:rgba(11,11,12,.02);padding:20px;display:block}
-.ms .case-013 .rcard .cat{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--firma)}
+.ms .case-013 .rcard .cat{font-family:var(--font-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--firma)}
 .ms .case-013 .rcard h3{font-size:16px;font-weight:600;margin:8px 0 10px;color:var(--inchiostro);font-family:var(--font-display)}
-.ms .case-013 .rcard .soon{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ombra);text-transform:uppercase}
+.ms .case-013 .rcard .soon{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;color:var(--ombra);text-transform:uppercase}
 .ms .case-013 .cta-center{text-align:center}
 .ms .case-013 .cta-center h2{font-size:clamp(26px,4.2vw,40px);max-width:22ch;margin:12px auto 0}
 .ms .case-013 .cta-center p{color:#3a3b45;max-width:48ch;margin:16px auto 0;font-size:15.5px}
