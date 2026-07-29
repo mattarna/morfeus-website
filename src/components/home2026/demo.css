@@ -341,7 +341,7 @@
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: var(--anomalia);
+  background: var(--marker);
   flex-shrink: 0;
 }
 .d26 .chip26 .dot::after {
@@ -349,7 +349,7 @@
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  background: var(--anomalia);
+  background: var(--marker);
   animation: d26-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 @keyframes d26-ping {
@@ -443,16 +443,19 @@
    su ghost-white, con solo un velo di vista in coda; a distinguerla dalla
    prima riga bastano il corsivo serif e la sottolineatura Forge — che e'
    la stessa scelta fatta sulla home di produzione. */
-.d26 .hero-h1 .emph {
-  background: linear-gradient(
-    20deg,
-    var(--carta) 0%,
-    var(--carta) 58%,
-    rgba(140, 165, 247, 0.92) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* Riga enfatizzata: bianco pieno.
+   La coda del gradiente era vista (#8CA5F7), che sul punto piu' luminoso
+   del bagliore viola misura 2.42:1 — sotto il minimo di 3:1 anche per il
+   testo grande. Ghost-white arriva a 4.65:1.
+   Niente background-clip:text: senza gradiente non serve, e un colore
+   pieno evita di restare con color:transparent (cioe' invisibile) se la
+   regola dovesse sparire. A distinguere la riga dalla prima bastano il
+   corsivo serif e la sottolineatura Forge. */
+.d26 .hero-h1 .hero-emph {
+  font-family: var(--font-emph);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--carta);
 }
 .d26 .hero-sub {
   margin-top: 24px;

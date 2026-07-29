@@ -44,7 +44,13 @@ export function Hero({ active }: { active: boolean }) {
             </span>
           ) : null}
           <span className="fx d4" style={{ display: "block" }}>
-            <span className="emph">
+            {/* NON usa .emph: quella classe tira dentro
+                .ms .band.ink .emph { color: var(--lilla) } del DS, che vale
+                (0,4,0) — .band.ink sono due classi sullo stesso elemento —
+                e rende il colore quasi impossibile da sovrascrivere senza
+                una gara di specificita'. Con una classe dedicata il
+                conflitto non esiste. */}
+            <span className="hero-emph">
               {/* La sottolineatura sta SOLO sull'ultima parola. Non e' una
                   scelta estetica: .u26 conteneva l'intera frase, che va a
                   capo, ed era la radice di tutti i modi in cui il segno si
