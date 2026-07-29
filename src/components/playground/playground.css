@@ -3990,12 +3990,15 @@
    Fascia bassa e larga, non un capitolo: niente numero fantasma sullo
    sfondo, niente occhiello numerato. Deve leggersi come una pausa in
    cui qualcuno ci mette la faccia, non come la sezione cinque.
-   ============================================================ */ /* Niente filetto sopra: section{border-top} lo mette a ogni sezione,
-   ma questa non e' una sezione, e' la firma in calce a quella prima.
-   Un filetto la staccherebbe proprio da cio' a cui e' attaccata. */
+   ============================================================ */ /* La firma NON e' una <section>, e' un <div>: cosi' resta fuori dal
+   conteggio di section:nth-of-type(even) e non ribalta l'alternanza
+   delle fasce da qui in giu'. Niente fondo suo, niente filetto: e' la
+   firma in calce alla sezione prima, non un capitolo nuovo. */
 .pg26 #firma {
-  padding-top: 0;
-  border-top: none;
+  padding: 0 0 130px;
+  position: relative;
+  z-index: 2;
+  background: none;
 }
 .pg26 .firma {
   display: grid;
@@ -4235,6 +4238,12 @@
   stroke-width: 1.5;
   stroke-linejoin: round;
   stroke-linecap: round;
+  /* stroke-miterlimit e' LA proprieta' che decide quando una giunzione
+     diventa una punta: sopra la soglia il browser allunga l'angolo
+     invece di smussarlo. Portata a 1 non ci sono soglie da superare,
+     quindi le punte non possono comparire nemmeno se per qualche
+     motivo linejoin venisse ignorato. */
+  stroke-miterlimit: 1;
   vector-effect: non-scaling-stroke;
 }
 @media (max-width: 760px) {

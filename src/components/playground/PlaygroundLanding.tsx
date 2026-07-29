@@ -328,7 +328,7 @@ export function PlaygroundLanding() {
            firma in calce. Sta qui, subito dopo il test che smaschera i finti
            esperti, perche' e' il posto in cui chi scrive la pagina ci si
            sottopone. Copy da _pre-campo/chi-siamo.html: sono parole sue. */}
-      <section id="firma">
+      <div id="firma">
         <div className="wrap">
           <div className="firma">
             <div className="fi-foto">
@@ -352,7 +352,7 @@ export function PlaygroundLanding() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ============ 05 · COSA CREDIAMO ============ */}
       <section id="credo" data-n="04">
