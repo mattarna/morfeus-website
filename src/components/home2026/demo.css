@@ -402,7 +402,15 @@
    Niente background-clip qui: senza gradiente non serve, e un colore
    pieno evita del tutto il rischio di restare con color:transparent se
    la regola dovesse sparire — che e' gia' successo su questo blocco. */
-.d26 .hero-h1 .emph {
+/* Specificita': il concorrente e' .ms .band.ink .emph, che vale (0,4,0)
+   perche' .band.ink sono DUE classi sullo stesso elemento. Il selettore
+   precedente, .d26 .hero-h1 .emph, valeva (0,3,0) e perdeva — anche se
+   demo.css viene caricato dopo site.css, l'ordine conta solo a parita'
+   di specificita'. Qui si arriva a (0,5,0).
+   La prima riga non aveva il problema: .fade-1 non ha una regola
+   concorrente diretta, eredita soltanto, e un colore impostato
+   sull'elemento batte sempre l'ereditarieta'. */
+.d26 .band.ink .hero-h1 .emph {
   color: var(--carta);
 }
 .d26 .hero-h1 .u26 {
