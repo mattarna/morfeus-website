@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LangSwitch } from "./LangSwitch";
+import { SiteMobileMenu } from "./SiteMobileMenu";
 
 /**
  * La voce MARF punta a /marf, non piu' a /forge. Erano due pagine
@@ -46,6 +47,9 @@ const COPY = {
       ["insights", "Insights"],
     ],
     cta: "Prenota una chiamata",
+    /* Da telefono l'etichetta lunga mandava il bottone su due righe, e da
+       li' nasceva l'accavallamento con logo e toggle lingua. */
+    ctaBreve: "Prenota",
     home: "Morfeus, home",
     langLabel: "Passa all'inglese",
   },
@@ -59,6 +63,7 @@ const COPY = {
       ["insights", "Insights"],
     ],
     cta: "Book a call",
+    ctaBreve: "Book",
     home: "Morfeus, home",
     langLabel: "Passa all'italiano",
   },
@@ -87,7 +92,10 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
             width={2064}
             height={267}
             priority
-            className="h-[20px] w-auto"
+            /* Il lockup e' largo 7,7 volte la sua altezza: a 20px occupa
+               155px, che su uno schermo da 375 sono il 41% della barra e
+               non lasciano spazio a CTA e menu. */
+            className="h-[17px] w-auto sm:h-[20px]"
           />
         </Link>
 
@@ -104,20 +112,31 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
           ))}
         </div>
 
-        <div className="flex items-center gap-[clamp(14px,1.6vw,22px)]">
+        <div className="flex items-center gap-[clamp(10px,1.6vw,22px)]">
           {/* Toggle lingua: stessa forma e stessa posizione della home,
               accanto alla CTA. E' un'isola client perche' deve sapere su
-              quale pagina sei, per portarti alla stessa nell'altra lingua. */}
-          <LangSwitch locale={locale} label={t.langLabel} />
+              quale pagina sei, per portarti alla stessa nell'altra lingua.
+              Sotto `lg` sparisce di qui e ricompare in fondo al pannello
+              del menu: nella barra stretta era uno dei tre oggetti che si
+              accavallavano. */}
+          <span className="hidden lg:inline-flex">
+            <LangSwitch locale={locale} label={t.langLabel} />
+          </span>
 
           {/* CTA firma. `btn-bar` la rimpicciolisce: il .btn del sistema e'
               tarato sui bottoni dentro le sezioni, dove deve pesare; in una
               barra alta 68px lo stesso bottone diventa il primo oggetto che
               vedi, prima del logo. La classe sta in site.css perche' le
               utility Tailwind (0,1,0) perdono contro `.ms .btn` (0,2,0). */}
-          <a href={`${base}/roiometro`} className="btn btn-1 btn-bar">
-            {t.cta}
+          <a href={`${base}/roiometro`} className="btn btn-1 btn-bar whitespace-nowrap">
+            <span className="hidden sm:inline">{t.cta}</span>
+            <span className="sm:hidden">{t.ctaBreve}</span>
           </a>
+
+          {/* Menu mobile: bottone MENU/CHIUDI piu' il pannello a tutto
+              schermo. Sotto `lg` e' l'unico modo di raggiungere le altre
+              pagine, che li' non sono in barra. */}
+          <SiteMobileMenu locale={locale} />
         </div>
       </nav>
     </header>

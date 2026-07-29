@@ -2262,3 +2262,188 @@
     padding: 0 0 24px 40px;
   }
 }
+
+/* ---------- MENU MOBILE ---------- */
+/* Sotto `lg` la barra non aveva nessun menu: le voci sparivano e restavano
+   logo, toggle lingua e la CTA a misura piena, che si accavallavano. Da
+   telefono non si raggiungeva nessuna pagina.
+   Forma presa dal menu della home di produzione: chiuso un bottone MENU,
+   aperto un pannello a tutto schermo con le voci numerate. */
+
+.ms .smm-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--riga-scuro);
+  background: rgba(228, 231, 240, 0.05);
+  color: var(--testo-ink-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+.ms .smm-toggle:hover {
+  color: var(--carta);
+}
+
+/* z-index sopra l'header (50): il pannello lo copre, e il bottone CHIUDI
+   vive dentro l'header che resta visibile sopra il pannello. */
+.ms .smm-pannello {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: var(--inchiostro);
+  padding: 92px clamp(20px, 6vw, 32px) 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  overflow-y: auto;
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.45s var(--ease);
+}
+.ms .smm-pannello[data-aperto="0"] {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.ms .smm-pannello[data-aperto="1"] {
+  opacity: 1;
+  transform: none;
+}
+
+.ms .smm-voci {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ms .smm-voci a {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 7px 0;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--testo-ink-2);
+  transition: color var(--dur) var(--ease);
+}
+.ms .smm-voci a .n {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ombra);
+  flex-shrink: 0;
+}
+.ms .smm-voci a[data-attiva="1"] {
+  color: var(--carta);
+}
+.ms .smm-voci a[data-attiva="1"] .n {
+  color: var(--firma);
+}
+/* L'ultima voce e' la conversione: si distingue, come sullo standard. */
+.ms .smm-voci a[data-cta="1"] {
+  color: var(--lilla);
+}
+.ms .smm-voci a[data-cta="1"] .n {
+  color: var(--lilla);
+}
+
+.ms .smm-piede {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.ms .smm-piede .riga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ms .smm-piede .riga.bordo {
+  border-top: 1px solid var(--riga-scuro);
+  padding-top: 18px;
+  align-items: flex-end;
+}
+.ms .smm-piede .k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .smm-piede .mail {
+  display: block;
+  margin-top: 4px;
+  font-size: 17px;
+  color: var(--carta);
+}
+.ms .smm-piede .social {
+  display: flex;
+  gap: 16px;
+}
+.ms .smm-piede .social a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  transition: color var(--dur) var(--ease);
+}
+.ms .smm-piede .social a:hover {
+  color: var(--carta);
+}
+
+.ms .smm-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--riga-scuro);
+  background: rgba(228, 231, 240, 0.05);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+.ms .smm-lang span {
+  color: var(--ombra);
+}
+.ms .smm-lang span[data-on="true"] {
+  color: var(--carta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms .smm-pannello {
+    transition: none;
+  }
+}
+
+/* Sotto i 640px la barra deve reggere logo + CTA + menu su una riga sola.
+   Con le misure piene sono 393px di contenuto: su un telefono da 375
+   qualcosa esce, ed e' esattamente cosi' che il bottone finiva sopra il
+   toggle lingua. Qui si stringe quel tanto che basta. */
+@media (max-width: 640px) {
+  /* 16px e non meno: la soglia della CTA e' scritta sopra, su `.ms .btn`,
+     e vale anche qui. Lo spazio si recupera dall'imbottitura e dal logo. */
+  .ms .btn.btn-bar {
+    font-size: 16px;
+    padding: 8px 14px;
+  }
+  .ms .smm-toggle {
+    font-size: 12px;
+    padding: 8px 13px;
+    letter-spacing: 0.1em;
+  }
+}
