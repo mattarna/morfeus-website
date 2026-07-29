@@ -39,13 +39,18 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
 
-    // `public/` sono asset statici serviti tali e quali, non sorgente
-    // dell'applicazione: non vanno analizzati.
     // Serviva dirlo esplicitamente qui: `next lint` (ESLint 8) guardava solo
     // le cartelle dell'app, la flat config di ESLint 9 guarda tutto quello
-    // che non e' ignorato. Con del .jsx finito dentro public/ il gate lint
-    // diventa rosso per materiale che non fa parte del build.
+    // che non e' ignorato. Senza queste due righe il gate lint diventa rosso
+    // per del codice che non fa parte del build (erano 149 errori).
+
+    // Asset statici serviti tali e quali, non sorgente dell'applicazione.
     "public/**",
+
+    // Documentazione e materiale archiviato. In docs/internal/ c'e' il
+    // design system di transizione, che porta con se' 12 .jsx: sono un
+    // reperto, non codice vivo, e non vanno corretti.
+    "docs/**",
   ]),
 ]);
 
