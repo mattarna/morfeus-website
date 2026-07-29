@@ -39,7 +39,7 @@ import { PILASTRI, pilastroDi, ARTICOLO_IN_EVIDENZA, type ChiavePilastro } from 
    vieta "PMI" come categoria editoriale.
    ============================================================ */
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
@@ -160,12 +160,13 @@ const DOMANDE: { chiave: ChiavePilastro; glifo: string }[] = [
   { chiave: "persone", glifo: "stella" },
 ];
 
-export function generateMetadata({ params: { locale } }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale = isIt ? "it" : "en";
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDesc,
     alternates: buildLocaleAlternates("insights", safeLocale),
     openGraph: {
@@ -181,7 +182,8 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function InsightsPage({ params: { locale } }: Props) {
+export default async function InsightsPage({ params }: Props) {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";

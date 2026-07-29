@@ -49,7 +49,7 @@ import { LabMsChiusa } from "@/components/lab-ms/LabMsChiusa";
    resto e' server-rendered, FAQ comprese (details/summary nativi).
    ============================================================ */
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 const META = {
   it: {
@@ -62,13 +62,14 @@ const META = {
   },
 } as const;
 
-export function generateMetadata({ params: { locale } }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const isIt = locale === "it";
   const safeLocale = isIt ? "it" : "en";
   const t = META[safeLocale];
 
   return {
-    title: t.title,
+    title: { absolute: t.title },
     description: t.desc,
     alternates: buildLocaleAlternates("lab", safeLocale),
     openGraph: {
@@ -84,7 +85,8 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function LabPage({ params: { locale } }: Props) {
+export default async function LabPage({ params }: Props) {
+  const { locale } = await params;
   const safeLocale: "it" | "en" = locale === "it" ? "it" : "en";
 
   return (

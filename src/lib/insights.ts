@@ -4,8 +4,16 @@ import { marked } from "marked";
 import fs from "node:fs";
 import path from "node:path";
 
-export const ARTICLES_DIR =
-  "C:/Users/Matteo/Desktop/CLAUDE/01_MORFEUS/06_PROJECTS/BRAND-2026/99_ARCHIVIO/SEO-GEO-WEBSITE/articoli";
+/* Gli articoli stanno DENTRO il repo, come il contenuto del playbook.
+   Prima questo era un percorso assoluto sul disco di sviluppo: in locale
+   funzionava, su Vercel la cartella non esiste e `listArticleFiles` esce
+   con una lista vuota (riga sotto, `existsSync`). Non un errore, non un
+   build rosso: la sezione Insights sarebbe stata semplicemente vuota in
+   produzione, e i 13 articoli avrebbero risposto 404.
+   Chi aggiunge un articolo lo mette qui e dichiara il percorso in
+   `outputFileTracingIncludes` (next.config.ts), altrimenti il file non
+   viene incluso nel bundle serverless. */
+export const ARTICLES_DIR = path.join(process.cwd(), "src/content/insights");
 
 export type FaqItem = { q: string; a: string };
 

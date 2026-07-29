@@ -7,7 +7,7 @@ import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { getArticleBySlug, getArticleSlugs, getAllArticles } from "@/lib/insights";
 import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
 
-type Props = { params: { locale: string; slug: string } };
+type Props = { params: Promise<{ locale: string; slug: string }> };
 
 /** Rotte che esistono davvero nel repo: le altre restano `<span>` non navigabili. */
 const NAVIGABLE_ROUTES = new Set([
@@ -60,8 +60,8 @@ export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const { locale, slug } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, slug } = await params;
   const safeLocale: "it" | "en" = locale === "en" ? "en" : "it";
   const article = getArticleBySlug(slug);
   if (!article) {
@@ -74,7 +74,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const title = article.metaTitle || `${article.title} · Morfeus`;
   const description = article.metaDescription;
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildLocaleAlternates(`insights/${slug}`, safeLocale),
     openGraph: {
@@ -92,8 +92,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function InsightArticlePage({ params }: Props) {
-  const { locale, slug } = params;
+export default async function InsightArticlePage({ params }: Props) {
+  const { locale, slug } = await params;
   const safeLocale: "it" | "en" = locale === "en" ? "en" : "it";
   const isIt = safeLocale === "it";
   const base = `/${safeLocale}`;

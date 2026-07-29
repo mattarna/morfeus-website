@@ -50,6 +50,11 @@ const nextConfig = {
   // `outputFileTracingIncludes` non sta piu' sotto `experimental`.
   outputFileTracingIncludes: {
     '/funnel-internal/[slug]/[[...step]]': ['./src/funnels/playbook-2026-05/content/**/*'],
+    // Stessa ragione per gli articoli Insights, letti dal filesystem a
+    // runtime in src/lib/insights.ts: senza dichiararli qui non entrano nel
+    // bundle e la sezione risponde come se non esistessero.
+    '/[locale]/insights': ['./src/content/insights/**/*'],
+    '/[locale]/insights/[slug]': ['./src/content/insights/**/*'],
   },
 
   // Optimize package imports

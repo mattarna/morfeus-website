@@ -4,7 +4,7 @@ import { SiteROIMeter } from "@/components/site/SiteROIMeter";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
@@ -29,12 +29,13 @@ const COPY = {
   },
 } as const;
 
-export function generateMetadata({ params: { locale } }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale = isIt ? "it" : "en";
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDesc,
     alternates: buildLocaleAlternates("roiometro", safeLocale),
     openGraph: {
@@ -50,7 +51,8 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function RoiometroPage({ params: { locale } }: Props) {
+export default async function RoiometroPage({ params }: Props) {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";

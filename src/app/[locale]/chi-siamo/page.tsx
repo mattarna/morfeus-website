@@ -21,7 +21,7 @@ import { ORGANIZATION_ID, WEBSITE_ID, SITE_URL } from "@/lib/seo/entity-ids";
    arrivano da li': sono le stesse del resto del sito.
    ============================================================ */
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 const FOTO = {
   arnaboldi: "/images/team/Profile-matt.jpg",
@@ -314,12 +314,13 @@ function Triade({ vertici }: { vertici: readonly string[] }) {
   );
 }
 
-export function generateMetadata({ params: { locale } }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale = isIt ? "it" : "en";
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDesc,
     alternates: buildLocaleAlternates("chi-siamo", safeLocale),
     openGraph: {
@@ -335,7 +336,8 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function ChiSiamoPage({ params: { locale } }: Props) {
+export default async function ChiSiamoPage({ params }: Props) {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";

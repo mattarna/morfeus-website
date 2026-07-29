@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
-type Props = { params: { locale: string } };
+type Props = { params: Promise<{ locale: string }> };
 
 const PLAYGROUND_URL =
   "https://morfeus-ai-playground.circle.so/join?invitation_token=3e3d851f1b5c16a3dcdd249f6ab67f37af107f74-57169ac8-4206-407a-914d-a1ef537dc2f7";
@@ -172,13 +172,14 @@ const MARK_PATHS = [
   "M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z",
 ];
 
-export function generateMetadata({ params: { locale } }: Props): Metadata {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale = isIt ? "it" : "en";
 
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDesc,
     alternates: buildLocaleAlternates("playground", safeLocale),
     openGraph: {
@@ -194,7 +195,8 @@ export function generateMetadata({ params: { locale } }: Props): Metadata {
   };
 }
 
-export default function PlaygroundPage({ params: { locale } }: Props) {
+export default async function PlaygroundPage({ params }: Props) {
+  const { locale } = await params;
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
