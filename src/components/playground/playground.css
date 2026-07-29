@@ -4218,4 +4218,64 @@
 .pg26 .btn-ghost:hover {
   border-color: var(--viola-hi);
   background: rgba(89, 70, 240, 0.12);
+} /* --- LA STRISCIA DEI CLIENTI ---
+   Piccoli, scarichi, in una riga sola che va a capo da sola. Non sei
+   cartelloni incorniciati: qui i loghi dicono "non siamo nati ieri",
+   non sono l'argomento della pagina, e la CTA che devono servire e' il
+   collaudo, non se stessi.
+   Il filtro li porta tutti allo stesso peso: sono sei marchi disegnati
+   da sei studi diversi, e senza livellarli uno urla e l'altro sparisce.
+   Le due altezze fuori scala sono tarate a occhio e non a regola: Sole
+   24 Ore e' un tondo pieno e Asseprim ha lo stemma sopra la scritta,
+   quindi alla stessa altezza degli altri peserebbero il doppio. */
+.pg26 .clienti {
+  margin-top: 38px;
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+}
+.pg26 .cl-lab {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 22px;
+}
+.pg26 .cl-riga {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(28px, 4.4vw, 58px);
+}
+.pg26 .cl-riga img {
+  height: 26px;
+  width: auto;
+  flex: none;
+  filter: grayscale(1) brightness(1.7);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.pg26 .cl-riga img:hover {
+  opacity: 0.85;
+}
+.pg26 .cl-riga img[alt^="Il Sole"] {
+  height: 34px;
+}
+.pg26 .cl-riga img[alt="Asseprim"] {
+  height: 32px;
+}
+@media (max-width: 700px) {
+  .pg26 .cl-riga {
+    gap: 26px;
+  }
+  .pg26 .cl-riga img {
+    height: 20px;
+  }
+  .pg26 .cl-riga img[alt^="Il Sole"] {
+    height: 27px;
+  }
+  .pg26 .cl-riga img[alt="Asseprim"] {
+    height: 25px;
+  }
 }

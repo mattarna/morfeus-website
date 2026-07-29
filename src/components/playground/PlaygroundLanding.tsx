@@ -664,8 +664,26 @@ export function PlaygroundLanding() {
             </div>
             <div className="mcard">
               <span className="ml">Con chi lavoriamo</span>
-              <div className="mlogos"><span>H-Farm</span><span>Sisal</span><span>Edison</span><span>Zara</span></div>
+              <b>6<i>anni dentro processi di aziende vere</i></b>
               <p>Aziende che vogliono portare l'AI nei processi senza lasciare tutto all'iniziativa del singolo. Il sistema deve essere utile, controllabile e usabile ogni giorno.</p>
+            </div>
+          </div>
+
+
+          {/* LA STRISCIA DEI CLIENTI.
+               Prima erano quattro nomi scritti in tondo dentro una scheda,
+               cioe' un'affermazione. Sei marchi veri sono una prova, e stando
+               fuori dalla scheda non rubano la riga al testo che la scheda
+               deve far leggere. */}
+          <div className="clienti">
+            <span className="cl-lab">Alcuni di loro</span>
+            <div className="cl-riga">
+                <img src="/playground/loghi/H-FARM.png" alt="H-FARM" loading="lazy" decoding="async" />
+                <img src="/playground/loghi/Asseprim.png" alt="Asseprim" loading="lazy" decoding="async" />
+                <img src="/playground/loghi/Sisal.png" alt="Sisal" loading="lazy" decoding="async" />
+                <img src="/playground/loghi/Sole_24_Ore.png" alt="Il Sole 24 Ore Formazione" loading="lazy" decoding="async" />
+                <img src="/playground/loghi/Edison.png" alt="Edison" loading="lazy" decoding="async" />
+                <img src="/playground/loghi/Zara.png" alt="Zara" loading="lazy" decoding="async" />
             </div>
           </div>
 
