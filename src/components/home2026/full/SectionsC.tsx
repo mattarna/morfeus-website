@@ -50,7 +50,7 @@ export function RoiSystemPanel({ active }: { active: boolean }) {
         </div>
 
         {/* stepper: 5 stadi cliccabili */}
-        <div className="fx d3">
+        <div className="fx d3 rsys-desktop">
           <div className="dots">
             <span className="prog" style={{ width: `${progress}%` }} />
             {ROI_STEP_KEYS.map((key, i) => (
@@ -74,6 +74,41 @@ export function RoiSystemPanel({ active }: { active: boolean }) {
             ))}
           </div>
         </div>
+
+        {/* Da telefono lo stesso contenuto e' una LISTA di cinque schede:
+            quella aperta mostra principio e spiegazione, le altre restano
+            righe con numero, etichetta e pallino.
+            Lo stepper orizzontale qui non funziona e basta: cinque
+            etichette su 375px si sovrappongono l'una all'altra
+            ("CONTEXTAGENTICOMPOUND"), e il testo dello stadio vive lontano
+            dal punto che si tocca.
+            E' markup a parte e non una riscrittura del palco perche' il
+            desktop e' approvato e non va toccato: l'uno esclude l'altra a
+            colpi di media query, non convivono mai. */}
+        <ul className="rsys-mobile">
+          {ROI_STEP_KEYS.map((key, i) => {
+            const aperta = i === activeStep;
+            return (
+              <li key={key} data-on={aperta}>
+                <button
+                  type="button"
+                  onClick={() => setActiveStep(i)}
+                  aria-expanded={aperta}
+                >
+                  <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="lab">{t(`steps.${key}.label`)}</span>
+                  <span className="pallino" aria-hidden="true" />
+                </button>
+                {aperta ? (
+                  <div className="corpo">
+                    <p className="principle">{t(`steps.${key}.principle`)}</p>
+                    <p className="expl">{t(`steps.${key}.explanation`)}</p>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
+        </ul>
 
         <div className="outcome fx d4">{t("outcome")}</div>
       </div>
@@ -138,6 +173,33 @@ export function CasesPanel({ active }: { active: boolean }) {
             </button>
           ))}
         </div>
+
+        {/* Da telefono i casi stanno tutti in fila, aperti, e non si
+            toccano: un menu che scambia il contenuto di un riquadro sopra
+            funziona quando i due blocchi si vedono insieme, cioe' da
+            desktop. Impilati, tocchi un nome e il testo cambia da
+            un'altra parte, fuori dallo schermo. */}
+        <ul className="cases-mobile">
+          {CASE_KEYS.map((k, i) => {
+            const caseTags = t.raw(`cases.${k}.tags`) as string[];
+            return (
+              <li key={k}>
+                <div className="cn">C{i + 1}</div>
+                <h3>{t(`cases.${k}.name`)}</h3>
+                <div className="case-metric">
+                  {t(`cases.${k}.metric`)}
+                  <small>{t(`cases.${k}.metricLabel`)}</small>
+                </div>
+                <p className="case-desc">{t(`cases.${k}.description`)}</p>
+                <div className="case-tags">
+                  {caseTags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

@@ -1,34 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { Glifo } from "@/components/pagine/Glifo";
 import { ArchivioCasi } from "@/components/pagine/casi/ArchivioCasi";
 import "@/components/pagine/kit.css";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
-import { CASI, PROBLEMI, getCaso, CASO_IN_EVIDENZA, type ChiaveProblema } from "@/lib/casi";
+import { CASI, PROBLEMI, type ChiaveProblema } from "@/lib/casi";
 
 /* ============================================================
    CASI, pagina hub. Rifatta sul copy approvato 2026-07-28.
    ------------------------------------------------------------
-   RITMO dichiarato nel brief: tesi, riconoscimento, prova,
-   esplorazione, azione. Le fasce lo seguono:
+   RITMO: tesi, esplorazione, chiave di lettura, azione.
      hero            ink     la tesi, senza linguaggio da portfolio
-     per problema    CARTA   il riconoscimento, registro diagnostico
-     in evidenza     ink     la prova, dossier con la sequenza fissa
-     archivio        CARTA   l'esplorazione, righe editoriali
+     archivio        CARTA   tutti i casi, subito
      come si legge   ink     la chiave di lettura
      CTA             ink     l'azione
+
+   TOLTE il 2026-07-29, su richiesta di Matt: la fascia "parti dal
+   tuo problema" e il caso in evidenza. Chi arriva su questa pagina
+   vuole vedere i casi, non due schermate di preambolo prima di
+   arrivarci: l'archivio filtra gia' per conto suo.
+
+   Il filtro per problema NON e' morto: l'archivio lo legge ancora
+   da ?problema=..., quindi i link condivisi e quelli in arrivo da
+   altre pagine aprono la lista gia' filtrata. E' sparito solo il
+   menu che lo pilotava da qui.
 
    I CONTENUTI dei casi non stanno qui: vengono da src/lib/casi.ts,
    che a sua volta porta le schede gia' approvate in
    BRAND-2026/site/casi.html. Questa pagina non conosce nessun caso
-   per nome, tranne quello in evidenza, dichiarato nel registro.
-
-   Le quattro stazioni del caso in evidenza sono la struttura
-   obbligatoria del brief (Value Leak, sistema costruito, cosa
-   cambia, valore verificato) e il loro testo e' preso dalla pagina
-   Cyberangels gia' approvata, non riscritto.
+   per nome.
    ============================================================ */
 
 type Props = {
@@ -49,26 +50,6 @@ const COPY = {
       copy: "Persone bloccate, sapere disperso, processi lenti, decisioni che arrivano tardi. In ogni caso partiamo dal problema operativo, costruiamo il sistema e verifichiamo cosa cambia.",
       prova: "casi in archivio",
       prova2: "verificati sul campo",
-    },
-    problemi: {
-      eye: "Parti da quello che riconosci",
-      h2a: "Non cercare il tuo settore. Cerca il tuo ",
-      h2emph: "problema",
-      h2b: ".",
-      lead: "Le aziende qui dentro fanno mestieri diversi e perdono valore negli stessi punti. Riconosci il tuo e vai ai casi che lo trattano.",
-      conta: (n: number) => `${n} ${n === 1 ? "caso" : "casi"}`,
-    },
-    evidenza: {
-      eye: "Caso in evidenza",
-      readout: "Dossier · sequenza verificata",
-      stato: "Confermato",
-      passi: [
-        "Value leak",
-        "Sistema costruito",
-        "Cosa cambia nel lavoro",
-        "Valore verificato",
-      ],
-      apri: "Leggi il dossier completo",
     },
     archivio: {
       eye: "L'archivio",
@@ -135,26 +116,6 @@ const COPY = {
       prova: "cases in the archive",
       prova2: "verified in the field",
     },
-    problemi: {
-      eye: "Start from what you recognise",
-      h2a: "Don't look for your industry. Look for your ",
-      h2emph: "problem",
-      h2b: ".",
-      lead: "The companies in here do different jobs and lose value in the same places. Recognise yours and go to the cases that deal with it.",
-      conta: (n: number) => `${n} ${n === 1 ? "case" : "cases"}`,
-    },
-    evidenza: {
-      eye: "Featured case",
-      readout: "Dossier · verified sequence",
-      stato: "Confirmed",
-      passi: [
-        "Value leak",
-        "System built",
-        "What changes in the work",
-        "Verified value",
-      ],
-      apri: "Read the full dossier",
-    },
     archivio: {
       eye: "The archive",
       h2a: "Eight companies, eight points where value was ",
@@ -209,55 +170,6 @@ const COPY = {
   },
 } as const;
 
-/* Le quattro stazioni del caso in evidenza, dal dossier approvato.
-   Stanno qui e non nel registro perche' appartengono alla pagina:
-   il registro tiene cio' che serve a TUTTI i casi. */
-const EVIDENZA_STAZIONI = {
-  it: [
-    {
-      titolo: "Un report solidissimo, per la persona sbagliata",
-      p: "Il lavoro tecnico era fatto bene, ma restava scritto nella lingua di chi lo produce. Chi firma la spesa apriva il PDF, vedeva una lista di sigle e lo chiudeva.",
-    },
-    {
-      titolo: "Lo stesso assessment, letto dal board",
-      p: "Gli stessi dati tecnici, riscritti nel linguaggio con cui un board ragiona: collezioni, margine, reputazione del marchio.",
-    },
-    {
-      titolo: "Pronto da portare in consiglio così com'è",
-      p: "Nessuno deve più ripulirlo o tradurlo a voce. Chi firma capisce perché quella spesa protegge il marchio, e decide invece di rimandare.",
-    },
-    {
-      titolo: "Il report arriva integro fino al tavolo che firma",
-      p: "Non una lista piatta di vulnerabilità: le poche cose che decidono davvero l'esposizione del marchio.",
-    },
-  ],
-  en: [
-    {
-      titolo: "A rock-solid report, for the wrong person",
-      p: "The technical work was done well, but it stayed written in the language of the people who produced it. Whoever signs off opened the PDF, saw a list of acronyms and closed it.",
-    },
-    {
-      titolo: "The same assessment, read by the board",
-      p: "The same technical data, rewritten in the language a board thinks in: collections, margin, brand reputation.",
-    },
-    {
-      titolo: "Ready to take into the boardroom as it is",
-      p: "Nobody has to clean it up or translate it out loud any more. Whoever signs understands why that spend protects the brand, and decides instead of postponing.",
-    },
-    {
-      titolo: "The report arrives intact at the table that signs",
-      p: "Not a flat list of vulnerabilities: the few things that actually decide the brand's exposure.",
-    },
-  ],
-} as const;
-
-const GLIFI_PROBLEMA: Record<ChiaveProblema, string> = {
-  sapere: "elenco",
-  ripetitivo: "ingranaggio",
-  decisioni: "curvaGiu",
-  commerciale: "carrello",
-};
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isIt = locale === "it";
@@ -294,9 +206,6 @@ export default async function CasiPage({ params, searchParams }: Props) {
   const daUrl = sp?.problema;
   const problemaIniziale =
     daUrl && daUrl in PROBLEMI ? (daUrl as ChiaveProblema) : null;
-
-  const evidenza = getCaso(CASO_IN_EVIDENZA);
-  const stazioni = EVIDENZA_STAZIONI[safeLocale];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -351,76 +260,7 @@ export default async function CasiPage({ params, searchParams }: Props) {
         </div>
       </section>
 
-      {/* 02 · PER PROBLEMA · carta */}
-      <section className="band carta pg" id="problemi">
-        <div className="wrap">
-          <div className="eye">{t.problemi.eye}</div>
-          <h2 className="h-sect">
-            {t.problemi.h2a}
-            <span className="emph">{t.problemi.h2emph}</span>
-            {t.problemi.h2b}
-          </h2>
-          <p className="lead">{t.problemi.lead}</p>
-
-          <div className="diagnosi">
-            {(Object.keys(PROBLEMI) as ChiaveProblema[]).map((k) => (
-              <Link
-                key={k}
-                href={`${base}/casi?problema=${k}#archivio`}
-                className="sintomo"
-              >
-                <Glifo nome={GLIFI_PROBLEMA[k]} />
-                <span className="testo">{PROBLEMI[k][safeLocale]}</span>
-                <span className="conta">
-                  {t.problemi.conta(CASI.filter((c) => c.problema === k).length)}
-                </span>
-                <span className="freccia" aria-hidden="true">
-                  &rarr;
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 03 · CASO IN EVIDENZA · ink */}
-      {evidenza && (
-        <section className="band ink pg" id="in-evidenza">
-          <div className="wrap">
-            <div className="eye">{t.evidenza.eye}</div>
-            <h2 className="h-sect">{evidenza.titolo[safeLocale]}</h2>
-            <p className="lead">{evidenza.sintesi[safeLocale]}</p>
-
-            <div className="quadro" style={{ marginTop: 40 }}>
-              <div className="readout">
-                <span>{t.evidenza.readout}</span>
-                <span className="on">
-                  <i />
-                  {t.evidenza.stato}
-                </span>
-              </div>
-
-              <div className="dossier">
-                {stazioni.map((s, i) => (
-                  <div className="stazione" key={s.titolo}>
-                    <div className="passo">{t.evidenza.passi[i]}</div>
-                    <div className="valore">{s.titolo}</div>
-                    <p>{s.p}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="cta-row">
-              <Link className="btn btn-1" href={`${base}/casi/${evidenza.slug}`}>
-                {t.evidenza.apri}
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 04 · ARCHIVIO · carta */}
+      {/* 02 · ARCHIVIO · carta */}
       <section className="band carta pg" id="archivio">
         <div className="wrap">
           <div className="eye">{t.archivio.eye}</div>
@@ -449,7 +289,7 @@ export default async function CasiPage({ params, searchParams }: Props) {
         </div>
       </section>
 
-      {/* 05 · COME SI LEGGE · ink */}
+      {/* 03 · COME SI LEGGE · ink */}
       <section className="band ink pg" id="come-si-legge">
         <div className="wrap">
           <div className="eye">{t.lettura.eye}</div>
@@ -482,7 +322,7 @@ export default async function CasiPage({ params, searchParams }: Props) {
         </div>
       </section>
 
-      {/* 06 · CTA · ink */}
+      {/* 04 · CTA · ink */}
       <section className="band ink pg" id="cta">
         <div className="wrap">
           <div className="ctaq">

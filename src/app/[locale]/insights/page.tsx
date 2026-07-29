@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { Glifo } from "@/components/pagine/Glifo";
 import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
 import { InsightsBrowser, type BrowserArticle } from "@/components/site/InsightsBrowser";
 import "@/components/pagine/kit.css";
@@ -54,10 +53,6 @@ const COPY = {
       copy: "Guide operative per capire dove intervenire, come costruire sistemi AI utili e come verificarne il valore nel tempo.",
       cerca: "Cerca fra le guide…",
     },
-    domande: {
-      titolo: "Parti dalla domanda giusta",
-      conta: { uno: "guida", molti: "guide" },
-    },
     evidenza: {
       eye: "Il concetto da cui partiamo",
       h2a: "In ",
@@ -108,10 +103,6 @@ const COPY = {
       copy: "Practical guides to understand where to intervene, how to build useful AI systems and how to verify their value over time.",
       cerca: "Search the guides…",
     },
-    domande: {
-      titolo: "Start with the right question",
-      conta: { uno: "guide", molti: "guides" },
-    },
     evidenza: {
       eye: "The concept we start with",
       h2a: "",
@@ -151,14 +142,6 @@ const COPY = {
     },
   },
 } as const;
-
-/* Le tre domande d'ingresso del brief. Il quarto pilastro non ha una
-   domanda propria nel copy e resta raggiungibile dai filtri. */
-const DOMANDE: { chiave: ChiavePilastro; glifo: string }[] = [
-  { chiave: "margine", glifo: "curvaGiu" },
-  { chiave: "processi", glifo: "ingranaggio" },
-  { chiave: "persone", glifo: "stella" },
-];
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -246,7 +229,7 @@ export default async function InsightsPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 01 · TESTATA + LE TRE DOMANDE · CARTA */}
+      {/* 01 · TESTATA · CARTA */}
       <section className="band carta hero pg" id="testata">
         <div className="wrap">
           <div className="eye">{t.hero.eye}</div>
@@ -256,27 +239,6 @@ export default async function InsightsPage({ params }: Props) {
             {t.hero.h1b}
           </h1>
           <p className="copy">{t.hero.copy}</p>
-
-          <div className="quota" style={{ marginTop: 44 }}>
-            {t.domande.titolo}
-          </div>
-          <div className="diagnosi" style={{ marginTop: 8 }}>
-            {DOMANDE.map((d) => {
-              const quanti = articoli.filter((a) => pilastroDi(a.slug) === d.chiave).length;
-              return (
-                <Link key={d.chiave} href={`${base}/insights#articoli`} className="sintomo">
-                  <Glifo nome={d.glifo} />
-                  <span className="testo">{PILASTRI[d.chiave].domanda[safeLocale]}</span>
-                  <span className="conta">
-                    {`${quanti} ${quanti === 1 ? t.domande.conta.uno : t.domande.conta.molti}`}
-                  </span>
-                  <span className="freccia" aria-hidden="true">
-                    &rarr;
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
         </div>
       </section>
 

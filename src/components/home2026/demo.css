@@ -602,12 +602,18 @@
   margin-top: clamp(22px, 3vw, 34px);
   border-top: 1px solid var(--riga-scuro);
 }
+/* Da telefono la riga e' una COLONNA SOLA: numero, visual, titolo, testo,
+   uno sotto l'altro e a tutta larghezza. Con `auto 1fr` i quattro figli si
+   impaginavano a due colonne (numero|visual, poi titolo|testo) e la
+   descrizione finiva in una colonna larga meno di venti caratteri: andava
+   a capo a ogni parola. Le colonne arrivano da 1024px in su, dove c'e'
+   spazio davvero. */
 .d26 .leak-row {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 16px;
-  align-items: center;
-  padding: clamp(16px, 2vw, 24px) 0;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: clamp(20px, 2.6vw, 26px) 0;
   border-bottom: 1px solid var(--riga-scuro);
 }
 @media (min-width: 1024px) {
@@ -961,29 +967,86 @@
   color: var(--testo-ink-2);
 }
 
-/* mobile: le tre passate impilate, niente pinning */
+/* Mobile: le tre passate diventano SCHEDE, come sulla home di produzione.
+   Prima erano tre blocchi di testo centrato separati da un filetto: si
+   leggevano come un elenco, non come tre momenti distinti, e l'alone che
+   da desktop porta tutto il peso visivo (.met-rings) qui spariva e basta.
+   Le schede lo rimettono, disegnato in CSS invece che con markup nuovo:
+   un alone per passata, che cresce come crescono i cerchi da desktop. */
 @media (max-width: 1279px) {
   .d26 .met-stage {
     min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
   .d26 .met-pane {
     position: relative;
+    overflow: hidden;
     opacity: 1;
     transform: none;
     filter: none;
     pointer-events: auto;
-    padding: 34px 0;
-    border-top: 1px solid var(--riga-scuro);
+    align-items: flex-start;
+    justify-content: flex-end;
+    text-align: left;
+    min-height: 300px;
+    padding: 28px 24px 26px;
+    border: 1px solid var(--riga-scuro);
+    border-radius: 18px;
+    background: rgba(228, 231, 240, 0.015);
   }
-  .d26 .met-pane:first-child {
-    border-top: 0;
-    padding-top: 0;
+  /* l'alone: un cerchio sfumato dietro il testo, non un'immagine */
+  .d26 .met-pane::before {
+    content: "";
+    position: absolute;
+    top: -18%;
+    left: 50%;
+    width: 78%;
+    aspect-ratio: 1;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 50% 45%,
+      rgba(83, 61, 252, 0.22) 0%,
+      rgba(83, 61, 252, 0.09) 46%,
+      transparent 68%
+    );
+    pointer-events: none;
+  }
+  /* la seconda e la terza passata portano un cerchio in piu', come i
+     .met-rings da desktop */
+  .d26 .met-pane:nth-child(2)::before {
+    background:
+      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.2) 0%, transparent 44%),
+      radial-gradient(
+        circle at 50% 45%,
+        rgba(83, 61, 252, 0.13) 46%,
+        rgba(83, 61, 252, 0.05) 62%,
+        transparent 76%
+      );
+  }
+  .d26 .met-pane:nth-child(3)::before {
+    background:
+      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.22) 0%, transparent 34%),
+      radial-gradient(circle at 50% 45%, rgba(83, 61, 252, 0.14) 36%, transparent 54%),
+      radial-gradient(
+        circle at 50% 45%,
+        rgba(83, 61, 252, 0.08) 56%,
+        rgba(83, 61, 252, 0.03) 70%,
+        transparent 82%
+      );
   }
   .d26 .met-ghost {
     display: none;
   }
   .d26 .met-title {
-    font-size: clamp(34px, 9vw, 52px);
+    font-size: clamp(30px, 7.4vw, 40px);
+    margin-top: 10px;
+  }
+  .d26 .met-desc {
+    margin: 12px 0 0;
+    max-width: none;
   }
 }
 
@@ -1137,6 +1200,98 @@
   color: var(--testo-carta-2);
 }
 
+/* Le due impaginazioni del Value Recovery System non convivono mai: da
+   1024px in su il palco con lo stepper orizzontale, sotto la lista di
+   schede. */
+.d26 .rsys-mobile {
+  display: none;
+  list-style: none;
+  margin: clamp(18px, 3vw, 26px) 0 0;
+  padding: 0;
+}
+@media (max-width: 1023px) {
+  .d26 .rsys .stagearea,
+  .d26 .rsys-desktop {
+    display: none;
+  }
+  .d26 .rsys-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.d26 .rsys-mobile li {
+  border: 1px solid rgba(11, 11, 12, 0.14);
+  border-radius: 14px;
+  background: rgba(11, 11, 12, 0.015);
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease);
+}
+.d26 .rsys-mobile li[data-on="true"] {
+  border-color: rgba(83, 61, 252, 0.35);
+  background: rgba(83, 61, 252, 0.04);
+}
+.d26 .rsys-mobile button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 18px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+.d26 .rsys-mobile .n {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ombra);
+  flex-shrink: 0;
+}
+.d26 .rsys-mobile li[data-on="true"] .n {
+  color: var(--firma);
+}
+.d26 .rsys-mobile .lab {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--inchiostro);
+}
+/* il pallino: vuoto sulle righe chiuse, pieno su quella aperta */
+.d26 .rsys-mobile .pallino {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(11, 11, 12, 0.28);
+  flex-shrink: 0;
+}
+.d26 .rsys-mobile li[data-on="true"] .pallino {
+  border-color: var(--firma);
+  background: radial-gradient(circle, #fff 0 34%, transparent 36%), var(--firma);
+}
+.d26 .rsys-mobile .corpo {
+  padding: 0 18px 20px;
+}
+.d26 .rsys-mobile .corpo .principle {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--inchiostro);
+  margin: 0;
+}
+.d26 .rsys-mobile .corpo .expl {
+  margin: 10px 0 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+}
+
 /* ---------- ROIOMETRO home (RoiCalc) · montaggio dedicato ----------
    Verdetto eroe in alto, metriche mensili sotto, tre slider in fila.
    Il componente /roiometro (SiteROIMeter) NON è toccato. */
@@ -1183,11 +1338,24 @@
 }
 
 /* corpo: lettura a sinistra (più larga), controlli a destra */
+/* Da telefono i due blocchi si impilano, e l'ordine e' quello della home
+   di produzione: prima si muovono gli slider, poi si legge il verdetto.
+   Al contrario il numero compare prima di aver toccato qualcosa, e chi
+   scorre non capisce da dove esce. Da 1024px in su stanno affiancati e
+   l'ordine del sorgente resta quello, col verdetto a sinistra. */
 .d26 .rc-body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 22px;
   align-items: stretch;
+}
+@media (max-width: 1023px) {
+  .d26 .rc-controls {
+    order: 1;
+  }
+  .d26 .rc-readout {
+    order: 2;
+  }
 }
 @media (min-width: 1024px) {
   .d26 .rc-body {
@@ -1498,6 +1666,53 @@
   opacity: 1;
 }
 
+/* I casi: split interattivo da 1024px in su, elenco completo sotto. */
+.d26 .cases-mobile {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 1023px) {
+  .d26 .cases-grid > .fx.d1 .swap,
+  .d26 .cases-menu {
+    display: none;
+  }
+  .d26 .cases-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+}
+.d26 .cases-mobile li {
+  padding-top: 24px;
+  border-top: 1px solid rgba(11, 11, 12, 0.14);
+}
+.d26 .cases-mobile li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.d26 .cases-mobile .cn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--firma);
+}
+.d26 .cases-mobile h3 {
+  margin: 6px 0 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--inchiostro);
+}
+.d26 .cases-mobile .case-metric {
+  margin-top: 14px;
+}
+.d26 .cases-mobile .case-desc {
+  margin-top: 10px;
+}
+
 /* ---------- FAQ ---------- */
 .d26 .faq-grid {
   margin-top: 34px;
@@ -1605,6 +1820,20 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--testo-carta-2);
+}
+/* Da telefono la pillola andava su tre righe. Il colpevole non e' tanto il
+   corpo quanto la spaziatura: 0.16em su una stringa maiuscola di sessanta
+   caratteri aggiunge quasi una riga da sola. Scendo sotto il pavimento dei
+   13px solo qui, ed e' una scelta consapevole: e' una nota di servizio, non
+   un'etichetta da leggere. */
+@media (max-width: 640px) {
+  .d26 .cta-chip {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 14px;
+    gap: 8px;
+    text-align: left;
+  }
 }
 .d26 .cta-chip .dot {
   width: 7px;
