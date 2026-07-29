@@ -40,13 +40,27 @@ export const PESI: Record<Dimensione, number> = {
 
 export const DIMENSIONI = Object.keys(PESI) as Dimensione[];
 
+/** Quanto vale ogni scalino, in frazione del peso della dimensione.
+ *
+ *  NON e' lineare, ed e' una scelta di merito prima che statistica.
+ *  Fra "ho una chat dedicata dove e' gia' tutto impostato" (2) e "do solo
+ *  i dati nuovi e l'output esce nel mio formato" (3) non c'e' un terzo di
+ *  strada: c'e' tutta la differenza fra avere un pezzo e avere un sistema.
+ *  L'ultimo scalino vale piu' del doppio del penultimo perche' e' li' che
+ *  l'AI Brain comincia a esistere.
+ *
+ *  Effetto collaterale voluto: salire costa. Sulle 1024 combinazioni
+ *  equiprobabili i ranghi bassi passano dal 37% al 61% e gli alti dal 14%
+ *  al 6%. Il tetto pero' non si abbassa di un millimetro: chi risponde da
+ *  fuoriclasse prende 100 e arriva a 8 come prima. Si stringe il centro,
+ *  non la cima. */
+const VALORE: Record<Punti, number> = { 0: 0, 1: 0.15, 2: 0.45, 3: 1 };
+
 /** 0-100. Ogni punto e' tracciabile alla risposta che lo ha prodotto.
- *  Risoluzione misurata (vedi motore.test.ts): 1024 radiografie distinte,
- *  che dopo l'arrotondamento danno 57 voti diversi. La V1 di voti ne
- *  aveva 16 in tutto. Il livello non guarda comunque il solo voto: i
- *  cancelli leggono la radiografia, quindi la finezza vera e' sui 1024. */
+ *  Il livello non guarda comunque il solo voto: i cancelli leggono la
+ *  radiografia, quindi la finezza vera e' sulle 1024 combinazioni. */
 export function calcolaVoto(r: Radiografia): number {
-  const grezzo = DIMENSIONI.reduce((somma, d) => somma + (r[d] / 3) * PESI[d], 0);
+  const grezzo = DIMENSIONI.reduce((somma, d) => somma + VALORE[r[d]] * PESI[d], 0);
   return Math.round(grezzo);
 }
 
@@ -82,9 +96,18 @@ const LIVELLI: DefLivello[] = [
     cancello: (r) => r.contesto >= 2 && r.ripetibilita >= 2 && r.diffusione === 3 && r.controllo >= 2 },
 ];
 
+/** Le dimensioni che compaiono nei cancelli, e quindi le uniche che
+ *  possono tenere fermo un livello. La correzione pesa nel voto ma non
+ *  sbarra: e' un tipo a parte cosi' il compilatore ci impedisce di
+ *  scrivere un testo di blocco per una dimensione che non blocca mai. */
+export type DimensioneCancello = Extract<
+  Dimensione,
+  "contesto" | "ripetibilita" | "diffusione" | "controllo"
+>;
+
 /** Ordine in cui si cerca il colpevole quando un cancello blocca:
  *  si nomina la mancanza piu' a monte, non la prima che capita. */
-const ORDINE_COLPA: Dimensione[] = ["contesto", "ripetibilita", "diffusione", "controllo"];
+const ORDINE_COLPA: DimensioneCancello[] = ["contesto", "ripetibilita", "diffusione", "controllo"];
 
 const MINIMI_CANCELLO: Record<NumeroLivello, Partial<Record<Dimensione, number>>> = {
   1: {}, 2: {}, 3: {}, 4: {},
@@ -104,7 +127,7 @@ export type Livello = {
   numeroAritmetico: NumeroLivello;
   /** La dimensione che ha tenuto fermo il livello, quando e' successo.
    *  E' il dato piu' utile del referto: dice PERCHE' non sale. */
-  bloccatoDa: Dimensione | null;
+  bloccatoDa: DimensioneCancello | null;
 };
 
 export function calcolaLivello(r: Radiografia): Livello {
@@ -118,7 +141,7 @@ export function calcolaLivello(r: Radiografia): Livello {
     .reverse()
     .find((l) => voto >= l.sogliaMin && l.cancello(r)) ?? LIVELLI[0];
 
-  let bloccatoDa: Dimensione | null = null;
+  let bloccatoDa: DimensioneCancello | null = null;
   if (reale.numero < perPunteggio.numero) {
     const minimi = MINIMI_CANCELLO[perPunteggio.numero];
     bloccatoDa =
@@ -175,6 +198,14 @@ export type Proposta = {
   /** Vero quando il Bootcamp sarebbe stato la risposta ma le iscrizioni
    *  sono chiuse: la persona va taggata per l'apertura. */
   listaAttesaBootcamp: boolean;
+  /** Vero quando non le vendiamo niente ma vale comunque una conversazione.
+   *  Richiesta di Mattia (2026-07-29): con chi non compra si parla lo stesso,
+   *  per raccogliere feedback e capire chi abbiamo davanti. Non e' una call
+   *  commerciale e non va presentata come tale: mezz'ora, nessuna vendita.
+   *  Oggi scatta solo da LV5 in su, dove la persona ha davvero qualcosa da
+   *  raccontare; allargarla piu' in basso e' una scelta di volume da fare
+   *  con Mattia, non un default. */
+  conversazione: boolean;
 };
 
 export type Opzioni = {
@@ -187,6 +218,20 @@ export function calcolaProposta(
   livello: NumeroLivello,
   opzioni: Opzioni,
 ): Proposta {
+  const scelta = scegliGradino(profilo, livello, opzioni);
+  return {
+    ...scelta,
+    /* La regola sta qui e in un punto solo: se non gli stiamo vendendo
+       niente ma ha abbastanza strada alle spalle, vale una conversazione. */
+    conversazione: scelta.gradino === "community" && livello >= 5,
+  };
+}
+
+function scegliGradino(
+  profilo: Profilo,
+  livello: NumeroLivello,
+  opzioni: Opzioni,
+): Omit<Proposta, "conversazione"> {
   const { tasca, leva, intento } = profilo;
 
   /* ---- chi paga con la tasca dell'azienda ----
@@ -195,10 +240,15 @@ export function calcolaProposta(
      in azienda ED e' abbastanza avanti da reggere la proposta a chi
      decide. Sotto LV5 quella conversazione e' prematura. */
   if (tasca === "azienda") {
-    if (intento === "team" && livello >= 5) {
+    /* Il ponte B2B e' per chi ha una struttura da muovere, cioe' il
+       manager: l'ICP lo chiama "lead B2B travestito" perche' ha accesso
+       a un budget che non e' il suo portafoglio. Il collaboratore, per
+       quanto avanti sia, quella conversazione non puo' portarla, e
+       proporgliela e' solo un modo per fargli perdere tempo. */
+    if (leva === "struttura" && intento === "team" && livello >= 5) {
       return {
         gradino: "call-b2b",
-        motivo: "Tasca aziendale ma intento di portarla in azienda, con un livello che regge la proposta a chi decide.",
+        motivo: "Manager con una struttura da muovere e l'intento di portarcela: il livello regge la proposta a chi decide.",
         listaAttesaBootcamp: false,
       };
     }
@@ -278,6 +328,71 @@ export function calcolaProposta(
     gradino: "claude-unlocked",
     motivo: `Livello ${livello}: prima le fondamenta, il resto viene dopo.`,
     listaAttesaBootcamp: false,
+  };
+}
+
+/* ---------- il conto ---------- */
+
+/** Quanta parte delle ore ripetitive e' realisticamente recuperabile.
+ *  Agganciata al LIVELLO e non al voto: il livello e' l'unita' di misura
+ *  che la persona vede, e resta stabile se un giorno ritariamo la curva.
+ *  Chi e' in basso ha piu' margine perche' non ha ancora recuperato niente;
+ *  chi e' in alto ha gia' preso il grosso. */
+function fattoreRecupero(livello: NumeroLivello): number {
+  if (livello <= 2) return 0.6;
+  if (livello <= 4) return 0.5;
+  if (livello <= 6) return 0.35;
+  return 0.2;
+}
+
+export type Conto = {
+  oreRecuperabili: number;
+  euroMese: number;
+  /** Le due componenti restano visibili nel referto: niente numero magico. */
+  personale: number;
+  team: number;
+  /** Vero quando il totale ha toccato il tetto di credibilita'. */
+  tetto: boolean;
+};
+
+/** Il tetto esiste per non finire nei numeri da fuffa-guru: oltre una certa
+ *  cifra il conto smette di convincere e comincia a insospettire. */
+const TETTO = 30000;
+/** Chi lavora con te eredita meta' del debito di processo di chi decide:
+ *  subisce i tuoi processi senza poterli cambiare. L'ora di chi lavora con
+ *  te vale il 35% della tua, con un minimo di 35 euro: sotto quella soglia
+ *  il costo aziendale pieno di una persona in Italia non ci sta comunque. */
+const TEAM_ORE = 0.5;
+const TEAM_VALORE = 0.35;
+const TEAM_MINIMO = 35;
+
+export function calcolaConto(
+  livello: NumeroLivello,
+  oreSettimana: number,
+  valoreOra: number,
+  personeNelTeam = 0,
+): Conto {
+  const oreRecuperabili = oreSettimana * fattoreRecupero(livello);
+  const arrotonda = (n: number) => Math.round(n / 50) * 50;
+
+  const personale = arrotonda(oreRecuperabili * 4.3 * valoreOra);
+  const team =
+    personeNelTeam > 0
+      ? arrotonda(
+          personeNelTeam *
+            (oreRecuperabili * TEAM_ORE) *
+            4.3 *
+            Math.max(TEAM_MINIMO, valoreOra * TEAM_VALORE),
+        )
+      : 0;
+
+  const totale = personale + team;
+  return {
+    oreRecuperabili: Math.round(oreRecuperabili * 10) / 10,
+    euroMese: Math.min(totale, TETTO),
+    personale,
+    team,
+    tetto: totale > TETTO,
   };
 }
 

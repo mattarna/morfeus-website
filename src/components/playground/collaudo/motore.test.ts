@@ -43,10 +43,39 @@ describe("il voto", () => {
     expect(suiPilastri).toBeGreaterThan(suiSecondari);
   });
 
+  it("salire costa, ma la cima resta raggiungibile", () => {
+    /* La curva e' convessa: chi risponde "buono ma non sistema" su tutto
+       non deve ritrovarsi a meta' scala. Chi risponde da fuoriclasse si'. */
+    expect(calcolaVoto(r(2, 2, 2, 2, 2))).toBe(45); /* Collezionista: hai i pezzi */
+    expect(calcolaVoto(r(3, 3, 3, 3, 3))).toBe(100); /* il tetto non si abbassa */
+    expect(calcolaLivello(r(2, 2, 2, 2, 2)).numero).toBe(4);
+    expect(calcolaLivello(r(3, 3, 3, 3, 3)).numero).toBe(8);
+  });
+
+  it("i ranghi bassi sono piu' affollati degli alti", () => {
+    /* Su tutte le combinazioni possibili, prese equiprobabili: non e' la
+       popolazione vera, e' un metro neutro per verificare la forma. */
+    const conteggio = new Array(9).fill(0);
+    for (let a = 0; a <= 3; a++)
+      for (let b = 0; b <= 3; b++)
+        for (let c = 0; c <= 3; c++)
+          for (let d = 0; d <= 3; d++)
+            for (let e = 0; e <= 3; e++)
+              conteggio[
+                calcolaLivello(r(a as Punti, b as Punti, c as Punti, d as Punti, e as Punti)).numero
+              ]++;
+    const bassi = conteggio[1] + conteggio[2] + conteggio[3];
+    const alti = conteggio[6] + conteggio[7] + conteggio[8];
+    expect(bassi / 1024).toBeGreaterThan(0.55);
+    expect(alti / 1024).toBeLessThan(0.08);
+    /* ma nessun livello e' irraggiungibile */
+    for (let lv = 1; lv <= 8; lv++) expect(conteggio[lv]).toBeGreaterThan(0);
+  });
+
   it("distingue molti piu' casi della V1 (che ne aveva 16)", () => {
     /* Numeri misurati, non stimati: 1024 radiografie distinte che dopo
-       l'arrotondamento collassano su 57 voti diversi. La V1 di voti
-       possibili ne aveva 16, perche' sommava cinque valori 0-3 e basta.
+       l'arrotondamento danno 89 voti diversi. La V1 di voti possibili ne
+       aveva 16, perche' sommava cinque valori 0-3 e basta.
        Il livello comunque non guarda solo il voto: guarda la radiografia
        (i cancelli), quindi la risoluzione vera resta quella dei 1024. */
     const radiografie = new Set<string>();
@@ -60,7 +89,7 @@ describe("il voto", () => {
               voti.add(calcolaVoto(r(a as Punti, b as Punti, c as Punti, d as Punti, e as Punti)));
             }
     expect(radiografie.size).toBe(1024);
-    expect(voti.size).toBe(57);
+    expect(voti.size).toBe(89);
   });
 });
 
@@ -73,8 +102,8 @@ describe("i cancelli", () => {
   });
 
   it("punteggio da AI Champion ma niente diffusione: resta Operatore, e si sa perche'", () => {
-    const l = calcolaLivello(r(3, 3, 3, 2, 1)); /* 85 punti */
-    expect(l.voto).toBe(85);
+    const l = calcolaLivello(r(3, 3, 3, 3, 1));
+    expect(l.voto).toBe(87);
     expect(l.numeroAritmetico).toBe(7);
     expect(l.numero).toBe(6);
     expect(l.nome).toBe("Operatore");
@@ -82,8 +111,8 @@ describe("i cancelli", () => {
   });
 
   it("tutto tranne il contesto: il punteggio non basta, e il colpevole e' il contesto", () => {
-    const l = calcolaLivello(r(1, 3, 3, 3, 3)); /* 83 punti */
-    expect(l.numeroAritmetico).toBe(7);
+    const l = calcolaLivello(r(1, 3, 3, 3, 3));
+    expect(l.numeroAritmetico).toBe(6);
     expect(l.numero).toBe(4);
     expect(l.bloccatoDa).toBe("contesto");
   });
@@ -146,13 +175,20 @@ describe("il gradino · tasca aziendale (dipendenti e manager)", () => {
     }
   });
 
-  it("chi vuole portarla in azienda ed e' abbastanza avanti passa al ponte B2B", () => {
-    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "team" }, 6, aperto);
+  it("il manager che vuole portarla in azienda passa al ponte B2B", () => {
+    const p = calcolaProposta({ tasca: "azienda", leva: "struttura", intento: "team" }, 6, aperto);
     expect(p.gradino).toBe("call-b2b");
   });
 
+  it("il collaboratore no, nemmeno con la stessa intenzione e lo stesso livello", () => {
+    /* non ha una struttura da muovere: quella conversazione non puo'
+       portarla, e proporgliela gli fa solo perdere tempo */
+    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "team" }, 6, aperto);
+    expect(p.gradino).not.toBe("call-b2b");
+  });
+
   it("stessa intenzione ma livello basso: la proposta a chi decide sarebbe prematura", () => {
-    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "team" }, 3, aperto);
+    const p = calcolaProposta({ tasca: "azienda", leva: "struttura", intento: "team" }, 3, aperto);
     expect(p.gradino).not.toBe("call-b2b");
     /* a LV3 il posto giusto e' il corso: prima impara, poi la porta a chi decide */
     expect(p.gradino).toBe("claude-unlocked");
@@ -228,6 +264,41 @@ describe("nessun vicolo cieco", () => {
               /* la regola dura: mai una call di vendita a chi paga con la tasca dell'azienda */
               if (tasca === "azienda") expect(p.gradino).not.toBe("call");
             }
+  });
+});
+
+describe("la conversazione (richiesta di Mattia)", () => {
+  const aperto = { bootcampAperto: true };
+
+  it("chi non compra ma ha strada alle spalle viene invitato a parlare", () => {
+    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "applicare" }, 7, aperto);
+    expect(p.gradino).toBe("community");
+    expect(p.conversazione).toBe(true);
+  });
+
+  it("chi sta iniziando no: non avrebbe ancora niente da raccontare", () => {
+    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "applicare" }, 1, aperto);
+    expect(p.conversazione).toBe(false);
+  });
+
+  it("il collaboratore avanti, a cui non vendiamo nulla, viene invitato a parlare", () => {
+    const p = calcolaProposta({ tasca: "azienda", leva: "nessuna", intento: "team" }, 6, aperto);
+    expect(p.gradino).toBe("community");
+    expect(p.conversazione).toBe(true);
+  });
+
+  it("non si somma a chi una call ce l'ha gia'", () => {
+    const call = calcolaProposta({ tasca: "mia", leva: "struttura", intento: "team" }, 6, aperto);
+    const b2b = calcolaProposta({ tasca: "azienda", leva: "struttura", intento: "team" }, 6, aperto);
+    expect(call.conversazione).toBe(false);
+    expect(b2b.conversazione).toBe(false);
+  });
+
+  it("non si propone a chi stiamo vendendo qualcosa", () => {
+    const corso = calcolaProposta({ tasca: "mia", leva: "solo", intento: "imparare" }, 2, aperto);
+    const camp = calcolaProposta({ tasca: "mia", leva: "solo", intento: "applicare" }, 5, aperto);
+    expect(corso.conversazione).toBe(false);
+    expect(camp.conversazione).toBe(false);
   });
 });
 

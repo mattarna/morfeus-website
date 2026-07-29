@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { Collaudo } from "./collaudo/Collaudo";
 import "./playground.css";
 
 /* ============================================================
@@ -912,24 +913,7 @@ export function PlaygroundLanding() {
       {/* ============================================================
            IL COLLAUDO · overlay
            ============================================================ */}
-      {collaudoAperto ? (
-        <div
-          className="cd-overlay on"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Il Collaudo"
-          onClick={() => setCollaudoAperto(false)}
-        >
-          {/* SEGNAPOSTO. Il collaudo vero (11 domande, slider, calcolo,
-              referto e gate email) e' il secondo passo del porting: e'
-              l'unico pezzo che non si converte in modo meccanico, perche'
-              nel prototipo e' JavaScript che scrive HTML a mano, e qui
-              deve diventare stato di React. */}
-          <div className="cd-wrap" style={{ textAlign: "center", paddingTop: "22vh" }}>
-            <p className="cd-sub">Il collaudo arriva nel passo successivo del porting.</p>
-          </div>
-        </div>
-      ) : null}
+      {collaudoAperto ? <Collaudo onChiudi={() => setCollaudoAperto(false)} /> : null}
     </div>
   );
 }
