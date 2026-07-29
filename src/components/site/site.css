@@ -2430,6 +2430,23 @@
   }
 }
 
+/* Sulla home la barra sta a z-index 70 e l'indicatore "scorri" a 60: il
+   pannello deve stare in mezzo, o l'indicatore gli trapassa sopra. Sulle
+   altre pagine la barra e' a 50, quindi li' resta 45: in tutti e due i casi
+   il pannello copre la pagina e la barra col bottone CHIUDI resta sopra. */
+.ms.d26 .smm-pannello {
+  z-index: 65;
+}
+
+/* La home nasconde la nav sotto i 1024px (`.topnav { display: none }`) e
+   sotto `lg` il toggle lingua esce dalla barra: sta in fondo al pannello,
+   come sulle altre pagine. */
+@media (max-width: 1023px) {
+  .ms.d26 .top-header .langswitch {
+    display: none;
+  }
+}
+
 /* Sotto i 640px la barra deve reggere logo + CTA + menu su una riga sola.
    Con le misure piene sono 393px di contenuto: su un telefono da 375
    qualcosa esce, ed e' esattamente cosi' che il bottone finiva sopra il
@@ -2445,5 +2462,13 @@
     font-size: 12px;
     padding: 8px 13px;
     letter-spacing: 0.1em;
+  }
+  /* Stessa stretta sulla barra della home, che ha una regola sua. */
+  .ms.d26 .top-header .btn {
+    padding: 8px 14px;
+  }
+  .ms.d26 .top-header .wordmark img {
+    height: 14px;
+    width: auto;
   }
 }

@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
 import { HomeBackground } from "@/components/fixed/HomeBackground";
+import { SiteMobileMenu } from "@/components/site/SiteMobileMenu";
 import { DemoStage, type RailPoint } from "../engine/DemoStage";
 import {
   getDemoProcessStep,
@@ -123,8 +124,17 @@ export function Home2026() {
           <span data-on={locale === "en"}>EN</span>
         </a>
         <button className="btn btn-1" type="button" onClick={() => jumpToIndex(13)}>
-          {tHero("cta_primary")}
+          {/* Da telefono l'etichetta piena manda il bottone su due righe e
+              da li' nasce l'accavallamento con logo e toggle. Stessa
+              soluzione della barra delle altre pagine. */}
+          <span className="hidden sm:inline">{tHero("cta_primary")}</span>
+          <span className="sm:hidden">{locale === "en" ? "Book" : "Prenota"}</span>
         </button>
+
+        {/* Sotto `lg` la nav della barra e' `display:none` e non c'era
+            nessun rimpiazzo: da telefono la home non portava a nessuna
+            delle altre pagine. Stesso menu del resto del sito. */}
+        <SiteMobileMenu locale={locale === "en" ? "en" : "it"} />
       </div>
     </header>
   );
