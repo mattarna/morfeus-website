@@ -649,36 +649,24 @@ export function PlaygroundLanding() {
         <div className="wrap">
           <div className="stag"><span className="n">08</span> Chi c'è dietro</div>
           <h2 className="shead">Dietro il Playground<br />c'è <span className="vh">Morfeus</span>.</h2>
-          <p className="lede">Non una scuola di AI: <strong>gente che costruisce questi sistemi dentro aziende vere</strong>, e che qui dentro te li fa vedere mentre li costruisce.</p>
+          <p className="lede">Morfeus è un <strong>AI Operating Partner</strong>. Entriamo nei processi in cui valore, tempo e sapere si stanno disperdendo, costruiamo i sistemi che li rendono utilizzabili, e lavoriamo col team finché diventano parte dell'operatività.</p>
 
-          <div className="morf">
-            <div className="mcard">
-              <span className="ml">Il mestiere</span>
-              <b>1000+<i>ore di Claude al mese</i></b>
-              <p>Non è una cifra per fare scena: è quanto il team ci passa dentro ogni mese, su lavoro vero. Il metodo che gira qui nasce da lì, non da un libro.</p>
-            </div>
-            <div className="mcard">
-              <span className="ml">Le aziende</span>
-              <div className="mlogos"><span>H-Farm</span><span>Sisal</span><span>Edison</span><span>Zara</span></div>
-              <p>Costruiamo <span className="hlv">AI Brain</span> dentro processi reali. Non slide da consegnare: sistemi che poi restano loro e continuano a girare.</p>
-            </div>
-            <div className="mcard">
-              <span className="ml">Le enterprise</span>
-              <b>63%<i>sotto i due minuti</i></b>
-              <p>Per aziende americane da miliardi e per i fondi costruiamo dipendenti AI veri. In una fonderia le quotazioni richiedevano dieci giorni: oggi il 63% esce in meno di due minuti.</p>
-            </div>
+          <div className="prose">
+            <p>Un'azienda non cambia perché compra un software. Cambia quando individua un problema reale, costruisce un sistema che lo risolve e mette le persone nelle condizioni di usarlo ogni giorno. <strong>Lavoriamo su tutte e tre le parti.</strong></p>
+            <p>Non consegniamo una strategia da presentare al board: costruiamo la cosa che deve funzionare dentro l'azienda. Il Playground è il posto in cui quel lavoro si vede mentre lo facciamo.</p>
           </div>
 
-          {/* TODO: sostituire il log d'esempio con un run reale anonimizzato */}
-          <div className="finestra">
-            <div className="eye"><span>Com'è fatto un run notturno · esempio</span><span>03:47</span></div>
-            <h3>Il lavoro gira mentre nessuno guarda. Al mattino un umano approva.</h3>
-            <div className="logbox">
-              <div className="lg"><span className="tm">03:47:02</span><span className="ac">agent.finance → riconciliazione fatture</span><span className="ok">OK</span></div>
-              <div className="lg"><span className="tm">03:47:15</span><span className="ac">agent.sales → lead qualificati</span><span className="ok">OK</span></div>
-              <div className="lg"><span className="tm">03:47:31</span><span className="ac">agent.ops → report pronto per revisione</span><span className="ok">OK</span></div>
+          <div className="morf morf-2">
+            <div className="mcard">
+              <span className="ml">Come lavoriamo</span>
+              <b>1000+<i>ore di Claude al mese</i></b>
+              <p>Il team ci passa dentro ogni mese, su lavoro vero: progettare, testare, far girare sistemi su casi di clienti. Quello che trovi nel Playground nasce da lì, non da un libro.</p>
             </div>
-            <p className="note">Questo è il punto di arrivo del metodo, non il punto di partenza. <strong>E non lo raccontiamo: lo facciamo per lavoro.</strong></p>
+            <div className="mcard">
+              <span className="ml">Con chi lavoriamo</span>
+              <div className="mlogos"><span>H-Farm</span><span>Sisal</span><span>Edison</span><span>Zara</span></div>
+              <p>Aziende che vogliono portare l'AI nei processi senza lasciare tutto all'iniziativa del singolo. Il sistema deve essere utile, controllabile e usabile ogni giorno.</p>
+            </div>
           </div>
 
           <span className="nots-lab">Cosa non siamo</span>
@@ -700,9 +688,16 @@ export function PlaygroundLanding() {
             </div>
           </div>
 
-          <div className="ponte">
-            <p className="p-big">Quello che le grandi aziende americane chiamano co-worker digitali, per te diventa il tuo primo <span className="vh">Dipendente AI</span>.</p>
-            <p className="p-after">Lo stesso metodo, portato alla scala della tua struttura. <strong>E il posto dove lo vedi funzionare, prima di tirare fuori un euro, è questa stanza.</strong></p>
+          {/* La porta per chi ha un'azienda. Piccola e di lato, non una
+               seconda offerta: chi e' arrivato qui sta valutando la stanza,
+               non un preventivo. Ma se ha dei processi da sistemare deve
+               sapere dove si va, e va detto una volta sola. */}
+          <div className="verso-morfeus">
+            <div>
+              <span className="vm-lab">Hai un'azienda?</span>
+              <p>Se il problema non è imparare l'AI ma <strong>metterla dentro i processi</strong>, quello è il lavoro che facciamo a pagamento. La stanza resta gratis e resta tua comunque.</p>
+            </div>
+            <a className="btn btn-ghost" href="https://morfeushub.com" target="_blank" rel="noopener">Vai su morfeushub.com →</a>
           </div>
 
           <div className="prose">

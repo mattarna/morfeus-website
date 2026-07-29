@@ -4155,4 +4155,67 @@
   .pg26 .filigrana text {
     fill: rgba(122, 107, 243, 0.06);
   }
+} /* --- MORFEUS: due schede invece di tre ---
+   La terza portava una percentuale presa da un caso di fonderia: una
+   prova vera ma di un altro mestiere, che a chi legge questa pagina non
+   dice niente e serviva solo a fare numero. */
+.pg26 .morf-2 {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 760px) {
+  .pg26 .morf-2 {
+    grid-template-columns: 1fr;
+  }
+} /* --- LA PORTA VERSO MORFEUS ---
+   Piccola e di lato: chi e' arrivato fin qui sta valutando la stanza,
+   non un preventivo. Deve solo sapere che la porta esiste. */
+.pg26 .verso-morfeus {
+  margin-top: 44px;
+  border: 1px solid var(--line-hi);
+  border-radius: 16px;
+  background: linear-gradient(120deg, rgba(89, 70, 240, 0.12), var(--n1) 60%);
+  padding: 26px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+.pg26 .vm-lab {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 10px;
+}
+.pg26 .verso-morfeus p {
+  font-size: 17px;
+  color: var(--body);
+  max-width: 62ch;
+  line-height: 1.55;
+}
+.pg26 .verso-morfeus p strong {
+  color: var(--text);
+} /* bottone in punta di penna: la CTA della pagina e' il collaudo, e
+   questa non deve competerci */
+.pg26 .btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line-hi);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 99px;
+  padding: 13px 22px;
+  white-space: nowrap;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.pg26 .btn-ghost:hover {
+  border-color: var(--viola-hi);
+  background: rgba(89, 70, 240, 0.12);
 }
