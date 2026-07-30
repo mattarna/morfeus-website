@@ -39,6 +39,17 @@
   .d26 .only-desktop {
     display: none;
   }
+  /* ARIA SOTTO LA BARRA. Dove i pannelli scorrono in modo nativo la
+     barra e' fissa e alta ~71px, e fra il suo bordo e il chip della
+     hero restavano 44px: il testo sembrava appeso alla barra. Il
+     pannello centra il contenuto (align-items:center), quindi un
+     padding in cima si divide a meta': +48 qui vale +24 di stacco
+     vero, che porta il respiro a ~68. Si puo' fare senza spingere
+     nulla fuori dallo schermo perche' sotto il bottone c'erano 193px
+     liberi, misurati sulla home in produzione. */
+  .d26 section.panel.hero-panel {
+    padding-top: calc(clamp(72px, 7vw, 92px) + 48px);
+  }
 }
 
 /* separazione a "foglio": hairline + ombra sul bordo alto di ogni pannello */
@@ -532,7 +543,11 @@
    del default del DS (14px / 13px 22px) */
 .d26 .hero-ctas .btn {
   font-size: 17px;
-  padding: 17px 30px;
+  /* 14 e non 17 di verticale: a 17 il bottone veniva 63px di altezza e
+     pesava piu' della riga che lo introduce. Ora 57: si nota che e' il
+     primo invito all'azione, senza sembrare un blocco. L'orizzontale
+     resta 30, che e' quello che gli da' la forma allungata. */
+  padding: 14px 30px;
 }
 .d26 .hero-ctas .btn-1 {
   display: inline-flex;

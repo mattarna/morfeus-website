@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
+import { LoaderSito } from "@/components/site/loader/LoaderSito";
 import { BOOKING_URL } from "@/components/site/booking";
 import { HomeBackground } from "@/components/fixed/HomeBackground";
 import { SiteMobileMenu } from "@/components/site/SiteMobileMenu";
@@ -170,6 +171,14 @@ export function Home2026() {
 
   return (
     <div className={`ms d26 d26-bg ${siteFontVars}`}>
+      {/* Il loader del sito anche qui. Prima stava solo su SiteShell, che
+          la home non usa: chi entrava dalla porta principale era l'unico
+          a non vederlo, e passando poi a un caso se lo trovava a meta'
+          visita, come se il sito ricominciasse. La regola di quando
+          mostrarlo sta dentro LoaderSito e non cambia: una volta per
+          sessione, con la stessa chiave delle altre pagine, quindi chi
+          entra da qui non lo rivede altrove e viceversa. */}
+      <LoaderSito />
       {/* Sfondo animato UnicornStudio, lo stesso della home di produzione.
           E' fixed a z-index:-1: perche' si veda, le fasce scure devono
           essere trasparenti (vedi .d26-bg in demo.css). */}
