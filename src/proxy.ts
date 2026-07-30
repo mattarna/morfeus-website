@@ -53,6 +53,11 @@ function isNonIndexableLocalePath(segments: string[]): boolean {
 const HOST_PLAYGROUND = "playground.morfeushub.com";
 const RADICE_PLAYGROUND = "/playground";
 
+/* I domini pubblici del sito: solo da qui /playground viene rimandato
+   al sottodominio. Le anteprime (*.vercel.app) e localhost non ci sono
+   apposta, cosi' li' la pagina si puo' provare. */
+const HOST_PUBBLICI = ["morfeushub.com", "www.morfeushub.com"];
+
 function hostRichiesta(request: NextRequest): string {
   const raw = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
   return raw.split(":")[0].toLowerCase();
@@ -75,11 +80,16 @@ export default function proxy(request: NextRequest) {
   /* Sul dominio principale la rotta interna non esiste: chi ci arriva
      va mandato all'indirizzo vero, che e' il sottodominio. 308 e non
      307 perche' lo spostamento e' definitivo e va detto ai motori.
-     In sviluppo NO: in locale il sottodominio non esiste e il redirect
-     sbatterebbe fuori dal server di sviluppo, rendendo la pagina
-     invisibile proprio a chi la sta costruendo. */
+
+     La condizione guarda l'HOST e non NODE_ENV. Con NODE_ENV anche le
+     ANTEPRIME di Vercel (dove NODE_ENV vale "production") mandavano
+     /playground al dominio pubblico: si finiva sul sito vero invece
+     che sulla copia in prova, cioe' il playground non era testabile
+     prima di pubblicarlo, che e' esattamente a cosa serve un'anteprima.
+     Ora il redirect scatta solo sui domini pubblici del sito; su
+     un'anteprima e in locale la pagina si serve. */
   if (pathname === RADICE_PLAYGROUND || pathname.startsWith(`${RADICE_PLAYGROUND}/`)) {
-    if (process.env.NODE_ENV === "production") {
+    if (HOST_PUBBLICI.includes(host)) {
       const url = new URL(
         pathname.slice(RADICE_PLAYGROUND.length) || "/",
         `https://${HOST_PLAYGROUND}`
