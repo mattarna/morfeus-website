@@ -203,7 +203,12 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
     const lista: Passo[] = [
       {
         tipo: "scelta",
-        domanda: "Che lavoro fai?",
+        /* "Che lavoro fai?" chiedeva il mestiere della persona, ma le
+           risposte sono tipi di ATTIVITA' (agenzia, studio, azienda di
+           servizi): uno poteva rispondere "sono un designer" e non
+           trovarsi. "Di cosa ti occupi?" combacia con le opzioni e fa
+           coppia con la domanda dopo, "Qual e' il tuo ruolo?". */
+        domanda: "Di cosa ti occupi?",
         aiuto: "Serve a parlare del tuo mestiere invece che in generale.",
         opzioni: MESTIERI_OPZIONI.map((m) => ({
           label: m.label,
