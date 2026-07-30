@@ -55,6 +55,11 @@ export type DatiReferto = {
   profilo: Profilo;
   radiografia: Radiografia;
   opzioni: Opzioni;
+  /** Chiamata quando si clicca una porta del referto, col nome della
+   *  destinazione (community, il gradino proposto). Serve al tracciamento
+   *  degli eventi: quale porta preme la gente. Opzionale: l'anteprima
+   *  del referto non la passa. */
+  onCta?: (dove: string) => void;
 };
 
 /* I colori-prodotto del brand. Servono a far riconoscere il gradino
@@ -192,7 +197,7 @@ export function Referto(d: DatiReferto) {
               {/* la porta gratuita sta qui, non solo in fondo: chi legge due
                   schermate e se ne va deve averla vista comunque */}
               <div className="rf-hero-cta">
-                <a className="rf-entra" href={COMMUNITY}>
+                <a className="rf-entra" href={COMMUNITY} onClick={() => d.onCta?.("community")}>
                   Entra nella community →
                 </a>
                 <span className="rf-hero-nota">gratis · il referto resta tuo</span>
@@ -433,7 +438,7 @@ export function Referto(d: DatiReferto) {
                   <p className="k">{gradino.occhiello}</p>
                   <h3>{gradino.titolo}</h3>
                   <p>{gradino.testo}</p>
-                  <a className="vai" href={COMMUNITY}>
+                  <a className="vai" href={COMMUNITY} onClick={() => d.onCta?.("community")}>
                     {gradino.cta} →
                   </a>
                 </div>
@@ -446,7 +451,7 @@ export function Referto(d: DatiReferto) {
                     <p className="k">Se parti gratis</p>
                     <h3>{GRADINI_COPY.community.titolo}</h3>
                     <p>{GRADINI_COPY.community.testo}</p>
-                    <a className="vai" href={COMMUNITY}>
+                    <a className="vai" href={COMMUNITY} onClick={() => d.onCta?.("community")}>
                       {GRADINI_COPY.community.cta} →
                     </a>
                   </div>
@@ -457,7 +462,7 @@ export function Referto(d: DatiReferto) {
                     <p className="k">{gradino.occhiello}</p>
                     <h3>{gradino.titolo}</h3>
                     <p>{gradino.testo}</p>
-                    <a className="vai" href={DOVE[proposta.gradino]}>
+                    <a className="vai" href={DOVE[proposta.gradino]} onClick={() => d.onCta?.(proposta.gradino)}>
                       {gradino.cta} →
                     </a>
                   </div>
@@ -491,7 +496,7 @@ export function Referto(d: DatiReferto) {
             costruito qualcosa: il livello si aggiorna.
           </p>
           <div className="rf-hero-cta" style={{ marginTop: 0 }}>
-            <a className="rf-entra" href={COMMUNITY}>
+            <a className="rf-entra" href={COMMUNITY} onClick={() => d.onCta?.("community")}>
               Entra nella community →
             </a>
             <button className="rf-entra linea">Condividi il livello →</button>

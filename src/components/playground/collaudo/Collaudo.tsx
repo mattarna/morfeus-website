@@ -40,7 +40,15 @@ import { Referto } from "./Referto";
 import "./collaudo.css";
 
 const ATTESA = 420; /* ms fra il clic e la schermata dopo */
-const BOOTCAMP_APERTO = true; /* l'interruttore della spec §6 */
+
+/* L'INTERRUTTORE DEL BOOTCAMP (spec §6).
+   Quando e' false, il referto non propone mai il Bootcamp, nemmeno ai
+   profili a cui altrimenti lo proporrebbe: si tiene la seconda porta
+   migliore (la call, o il corso). Si mette true SOLO nella finestra in
+   cui le iscrizioni al Bootcamp sono davvero aperte, e si rimette false
+   quando chiudono. E' l'unica riga da toccare per accendere/spegnere.
+   Stato al 2026-07-30: CHIUSO. */
+const BOOTCAMP_APERTO = false;
 
 type Fase = "intro" | "domande" | "calcolo" | "gate" | "referto";
 
@@ -108,6 +116,59 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
 
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  /* ---------- gli eventi di comportamento ----------
+     Manda al foglio (scheda EVENTI) chi apre e dove abbandona. Usa
+     sendBeacon: e' fatto apposta per partire mentre la pagina o
+     l'overlay si chiudono, quando una fetch normale verrebbe uccisa.
+     Non blocca niente e non tocca Brevo. */
+  const tracciaEvento = useCallback((evento: string, dettaglio = "") => {
+    try {
+      const corpo = JSON.stringify({
+        id: sessione.current.id,
+        evento,
+        dettaglio,
+        dispositivo: window.matchMedia("(max-width: 760px)").matches ? "telefono" : "computer",
+      });
+      const url = "/api/playground/evento";
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(url, new Blob([corpo], { type: "application/json" }));
+      } else {
+        void fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: corpo, keepalive: true });
+      }
+    } catch {
+      /* Un evento perso non e' un problema della persona: silenzio. */
+    }
+  }, []);
+
+  /* Chi arriva al referto ha finito: da li' in poi la chiusura non e'
+     un abbandono. statoRef tiene l'ultimo punto raggiunto, cosi' se
+     abbandona sappiamo a quale domanda. */
+  const completato = useRef(false);
+  const statoRef = useRef<{ fase: Fase; passo: number }>({ fase: "intro", passo: 0 });
+  useEffect(() => {
+    statoRef.current = { fase, passo };
+    if (fase === "referto") completato.current = true;
+  }, [fase, passo]);
+
+  useEffect(() => {
+    tracciaEvento("aperto");
+    const dettaglioUscita = () => {
+      const s = statoRef.current;
+      return s.fase === "domande" ? String(s.passo + 1) : s.fase;
+    };
+    const suUscita = () => {
+      if (!completato.current) tracciaEvento("abbandonato", dettaglioUscita());
+    };
+    window.addEventListener("pagehide", suUscita);
+    return () => {
+      window.removeEventListener("pagehide", suUscita);
+      // Chiusura dell'overlay (la ✕, o il ritorno alla landing) senza
+      // essere arrivati al referto: e' un abbandono, col numero di domanda.
+      if (!completato.current) tracciaEvento("abbandonato", dettaglioUscita());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const famiglia = useMemo(() => famigliaDi(r.mestiere, r.ruolo), [r.mestiere, r.ruolo]);
 
@@ -499,6 +560,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
               diffusione: r.punti.diffusione ?? 0,
             }}
             opzioni={{ bootcampAperto: BOOTCAMP_APERTO }}
+            onCta={(dove) => tracciaEvento("cta", dove)}
           />
         ) : null}
       </div>
