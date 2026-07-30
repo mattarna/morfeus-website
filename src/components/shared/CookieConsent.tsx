@@ -23,6 +23,59 @@ interface CookiePreferences {
 const COOKIE_CONSENT_KEY = "morfeus_cookie_consent";
 const CONSENT_EXPIRY_DAYS = 365;
 
+/* Il viola e' quello che Matt approva sul "We value your privacy", ma
+   preso dal brand invece che a mano: #533dfc e' la firma majorelle del
+   sito, praticamente identico al #4D39EB di prima. Stesso look, un
+   colore solo in tutto il sito. */
+const VIOLA = "#533dfc";
+
+/* Il banner era solo in inglese su un sito italiano. Testo per lingua:
+   la lingua la sa gia' dal path (vedi sotto), qui restano le parole. */
+const COPY = {
+  it: {
+    titolo: "Rispettiamo la tua privacy",
+    testo:
+      'Usiamo i cookie per migliorare la navigazione, analizzare il traffico e personalizzare i contenuti. Cliccando "Accetta tutti" acconsenti all\'uso dei cookie.',
+    accetta: "Accetta tutti",
+    rifiuta: "Rifiuta tutti",
+    personalizza: "Personalizza",
+    salva: "Salva le preferenze",
+    indietro: "Indietro",
+    sempreAttivi: "Sempre attivi",
+    necessariT: "Cookie necessari",
+    necessariD: "Indispensabili al funzionamento del sito",
+    analyticsT: "Cookie analitici",
+    analyticsD: "Ci aiutano a capire come le persone usano il sito",
+    marketingT: "Cookie di marketing",
+    marketingD: "Servono a mostrare annunci personalizzati",
+    leggi: "Leggi la nostra",
+    e: "e la",
+    privacy: "Privacy Policy",
+    cookie: "Cookie Policy",
+  },
+  en: {
+    titolo: "We value your privacy",
+    testo:
+      'We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies.',
+    accetta: "Accept All",
+    rifiuta: "Reject All",
+    personalizza: "Customize",
+    salva: "Save Preferences",
+    indietro: "Back",
+    sempreAttivi: "Always On",
+    necessariT: "Necessary Cookies",
+    necessariD: "Required for the website to function properly",
+    analyticsT: "Analytics Cookies",
+    analyticsD: "Help us understand how visitors interact with our site",
+    marketingT: "Marketing Cookies",
+    marketingD: "Used to deliver personalized advertisements",
+    leggi: "Read our",
+    e: "and",
+    privacy: "Privacy Policy",
+    cookie: "Cookie Policy",
+  },
+} as const;
+
 declare global {
   interface Window {
     dataLayer?: Record<string, unknown>[];
@@ -34,6 +87,7 @@ export function CookieConsent() {
   const pathname = usePathname();
   const firstSegment = pathname?.split("/")[1];
   const locale = firstSegment === "it" || firstSegment === "en" ? firstSegment : "en";
+  const t = COPY[locale];
   const [isVisible, setIsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>({
@@ -149,54 +203,62 @@ export function CookieConsent() {
       />
       
       {/* Banner */}
-      <div className="relative w-full max-w-2xl bg-[#0a0a12] border border-white/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] pointer-events-auto overflow-hidden animate-fadeIn z-10">
+      <div className="relative w-full max-w-2xl bg-[#100e1c] border border-white/12 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.55)] pointer-events-auto overflow-hidden animate-fadeIn z-10">
         {/* Gradient accent */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-[#4D39EB] to-transparent" />
-        
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background: `linear-gradient(to right, transparent, ${VIOLA}, transparent)` }}
+        />
+
         <div className="p-6 sm:p-8">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 mb-6">
-            <div className="w-12 h-12 rounded-xl bg-[#4D39EB]/20 flex items-center justify-center shrink-0">
-              <svg className="w-6 h-6 text-[#4D39EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: `${VIOLA}26` }}
+            >
+              <svg className="w-6 h-6" style={{ color: VIOLA }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white mb-2">
-                We value your privacy
+                {t.titolo}
               </h3>
               <p className="text-sm text-slate-400 leading-relaxed px-2 sm:px-0">
-                We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                By clicking &quot;Accept All&quot;, you consent to our use of cookies.
+                {t.testo}
               </p>
             </div>
           </div>
 
           {/* Expandable Details */}
           {showDetails && (
-            <div className="mb-6 p-4 bg-white/2 rounded-xl border border-white/5 space-y-4">
+            <div className="mb-6 p-4 bg-white/2 rounded-xl border border-white/8 space-y-4">
               {/* Necessary Cookies */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-medium text-white">Necessary Cookies</p>
-                  <p className="text-xs text-slate-500">Required for the website to function properly</p>
+                  <p className="text-sm font-medium text-white">{t.necessariT}</p>
+                  <p className="text-xs text-slate-500">{t.necessariD}</p>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-[#4D39EB]/20 text-[10px] font-semibold text-[#4D39EB] uppercase tracking-wider">
-                  Always On
+                <div
+                  className="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider shrink-0"
+                  style={{ background: `${VIOLA}26`, color: VIOLA }}
+                >
+                  {t.sempreAttivi}
                 </div>
               </div>
 
               {/* Analytics Cookies */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-medium text-white">Analytics Cookies</p>
-                  <p className="text-xs text-slate-500">Help us understand how visitors interact with our site</p>
+                  <p className="text-sm font-medium text-white">{t.analyticsT}</p>
+                  <p className="text-xs text-slate-500">{t.analyticsD}</p>
                 </div>
                 <button
+                  aria-label={t.analyticsT}
                   onClick={() => setPreferences(p => ({ ...p, analytics: !p.analytics }))}
-                  className={`relative w-12 h-6 rounded-full transition-colors ${
-                    preferences.analytics ? "bg-[#4D39EB]" : "bg-white/10"
-                  }`}
+                  className="relative w-12 h-6 rounded-full transition-colors shrink-0"
+                  style={{ background: preferences.analytics ? VIOLA : "rgba(255,255,255,0.1)" }}
                 >
                   <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${
                     preferences.analytics ? "left-7" : "left-1"
@@ -205,16 +267,16 @@ export function CookieConsent() {
               </div>
 
               {/* Marketing Cookies */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-medium text-white">Marketing Cookies</p>
-                  <p className="text-xs text-slate-500">Used to deliver personalized advertisements</p>
+                  <p className="text-sm font-medium text-white">{t.marketingT}</p>
+                  <p className="text-xs text-slate-500">{t.marketingD}</p>
                 </div>
                 <button
+                  aria-label={t.marketingT}
                   onClick={() => setPreferences(p => ({ ...p, marketing: !p.marketing }))}
-                  className={`relative w-12 h-6 rounded-full transition-colors ${
-                    preferences.marketing ? "bg-[#4D39EB]" : "bg-white/10"
-                  }`}
+                  className="relative w-12 h-6 rounded-full transition-colors shrink-0"
+                  style={{ background: preferences.marketing ? VIOLA : "rgba(255,255,255,0.1)" }}
                 >
                   <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${
                     preferences.marketing ? "left-7" : "left-1"
@@ -230,37 +292,39 @@ export function CookieConsent() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleSavePreferences}
-                  className="w-full sm:flex-1 h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all"
+                  className="w-full sm:flex-1 h-14 text-white text-[15px] font-semibold rounded-xl transition-all"
+                  style={{ background: VIOLA }}
                 >
-                  Save Preferences
+                  {t.salva}
                 </button>
                 <button
                   onClick={() => setShowDetails(false)}
                   className="w-full sm:flex-1 h-14 bg-white/5 border border-white/10 text-white text-[15px] font-medium rounded-xl hover:bg-white/10 transition-all"
                 >
-                  Back
+                  {t.indietro}
                 </button>
               </div>
             ) : (
               <>
                 <button
                   onClick={handleAcceptAll}
-                  className="w-full h-14 bg-[#4D39EB] text-white text-[15px] font-semibold rounded-xl hover:bg-[#5d4af7] transition-all shadow-lg shadow-[#4D39EB]/20"
+                  className="w-full h-14 text-white text-[15px] font-semibold rounded-xl transition-all"
+                  style={{ background: VIOLA, boxShadow: `0 10px 30px ${VIOLA}33` }}
                 >
-                  Accept All
+                  {t.accetta}
                 </button>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={handleRejectAll}
                     className="w-full sm:flex-1 h-14 bg-white/5 border border-white/10 text-white text-[15px] font-medium rounded-xl hover:bg-white/10 transition-all"
                   >
-                    Reject All
+                    {t.rifiuta}
                   </button>
                   <button
                     onClick={() => setShowDetails(true)}
                     className="w-full sm:flex-1 h-14 bg-transparent border border-white/10 text-slate-400 text-[15px] font-medium rounded-xl hover:text-white hover:border-white/20 transition-all"
                   >
-                    Customize
+                    {t.personalizza}
                   </button>
                 </div>
               </>
@@ -269,19 +333,13 @@ export function CookieConsent() {
 
           {/* Privacy Policy Link */}
           <p className="mt-4 text-center text-xs text-slate-500">
-            Read our{" "}
-            <a 
-              href={`/${locale}/privacy`}
-              className="text-[#4D39EB] hover:underline"
-            >
-              Privacy Policy
+            {t.leggi}{" "}
+            <a href={`/${locale}/privacy`} className="hover:underline" style={{ color: VIOLA }}>
+              {t.privacy}
             </a>
-            {" "}and{" "}
-            <a 
-              href={`/${locale}/cookies`}
-              className="text-[#4D39EB] hover:underline"
-            >
-              Cookie Policy
+            {" "}{t.e}{" "}
+            <a href={`/${locale}/cookies`} className="hover:underline" style={{ color: VIOLA }}>
+              {t.cookie}
             </a>
           </p>
         </div>
