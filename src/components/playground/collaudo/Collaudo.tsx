@@ -143,24 +143,44 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
     if (fase === "referto") completato.current = true;
   }, [fase, passo]);
 
+  /* L'abbandono si manda quando la PERSONA chiude, non quando React
+     smonta il componente. Prima stava nel cleanup dell'effect, ed era
+     sbagliato in radice: con reactStrictMode (attivo) React monta,
+     smonta e rimonta in sviluppo, quindi ogni sessione produceva un
+     "aperto" doppio e un "abbandonato" fantasma nello stesso istante
+     dell'apertura. Dati inventati, e la percentuale di chi finisce
+     falsata. Restano due sole vie d'uscita: la ✕ e la chiusura della
+     pagina. */
+  const apertoInviato = useRef(false);
+  const abbandonoInviato = useRef(false);
+
+  const dettaglioUscita = useCallback(() => {
+    const s = statoRef.current;
+    return s.fase === "domande" ? String(s.passo + 1) : s.fase;
+  }, []);
+
+  /** Una volta sola per sessione, e mai se ha finito. */
+  const tracciaAbbandono = useCallback(() => {
+    if (completato.current || abbandonoInviato.current) return;
+    abbandonoInviato.current = true;
+    tracciaEvento("abbandonato", dettaglioUscita());
+  }, [tracciaEvento, dettaglioUscita]);
+
   useEffect(() => {
-    tracciaEvento("aperto");
-    const dettaglioUscita = () => {
-      const s = statoRef.current;
-      return s.fase === "domande" ? String(s.passo + 1) : s.fase;
-    };
-    const suUscita = () => {
-      if (!completato.current) tracciaEvento("abbandonato", dettaglioUscita());
-    };
-    window.addEventListener("pagehide", suUscita);
-    return () => {
-      window.removeEventListener("pagehide", suUscita);
-      // Chiusura dell'overlay (la ✕, o il ritorno alla landing) senza
-      // essere arrivati al referto: e' un abbandono, col numero di domanda.
-      if (!completato.current) tracciaEvento("abbandonato", dettaglioUscita());
-    };
+    if (!apertoInviato.current) {
+      apertoInviato.current = true;
+      tracciaEvento("aperto");
+    }
+    window.addEventListener("pagehide", tracciaAbbandono);
+    return () => window.removeEventListener("pagehide", tracciaAbbandono);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /** La ✕: prima si registra l'abbandono, poi si chiude. */
+  const chiudi = useCallback(() => {
+    tracciaAbbandono();
+    onChiudi();
+  }, [tracciaAbbandono, onChiudi]);
 
   const famiglia = useMemo(() => famigliaDi(r.mestiere, r.ruolo), [r.mestiere, r.ruolo]);
 
@@ -394,7 +414,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
         {fase === "referto" ? (
           <span />
         ) : (
-          <button className="cl-chiudi" onClick={onChiudi} aria-label="Chiudi il collaudo">✕</button>
+          <button className="cl-chiudi" onClick={chiudi} aria-label="Chiudi il collaudo">✕</button>
         )}
       </header>
 
