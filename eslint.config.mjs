@@ -29,6 +29,16 @@ const eslintConfig = defineConfig([
       // voluti (es. src/app/error.tsx, dove <Link> puo' non funzionare perche'
       // l'app e' gia' in errore). Segnalata, non bloccante.
       "@next/next/no-html-link-for-pages": "warn",
+
+      // Stesso criterio delle righe sopra. Due regole di eslint-plugin-react
+      // che arrivano a "error" dal preset next e inciampano su codice gia'
+      // in repo (portal, the-method, error.tsx, ScrollWrapper) oltre che sul
+      // Playground. Sono rumore, non bug: no-unescaped-entities segnala gli
+      // apostrofi italiani (c'e', po', un') che sono HTML validissimo, e
+      // jsx-no-comment-textnodes scambia per commento i separatori "///" del
+      // marquee. A "warn" (visibili, non bloccano) come il resto.
+      "react/no-unescaped-entities": "warn",
+      "react/jsx-no-comment-textnodes": "warn",
     },
   },
   // Override default ignores of eslint-config-next.
