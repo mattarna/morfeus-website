@@ -1,0 +1,132 @@
+/* ============================================================
+   PLAYGROUND · la 404
+   ------------------------------------------------------------
+   Una schermata sola, centrata, alta quanto lo schermo. Non ha
+   testata ne' footer: chi ci arriva ha sbagliato indirizzo, e
+   l'unica cosa che deve vedere e' la via d'uscita. Aggiungere la
+   pastiglia flottante e il piede completo vorrebbe dire vestire
+   da pagina qualcosa che e' un cartello.
+
+   svh e non vh: sul telefono vh conta anche la fascia coperta
+   dalla barra del browser, e il blocco sfora sempre di un
+   centinaio di pixel (stessa ragione della copertina).
+   ============================================================ */
+
+.pg26 .nf {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pg26 .nf-in {
+  position: relative;
+  z-index: 2;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* ---- l'occhiello ---- */
+.pg26 .nf-occhio {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stato);
+  margin: 0 0 26px;
+}
+
+/* ---- il titolo ----
+   Grande ma non gigante: la filigrana dietro fa gia' il volume, e
+   due elementi che urlano insieme si annullano. */
+.pg26 .nf-tit {
+  font-family: var(--title);
+  font-size: clamp(34px, 5.4vw, 62px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0;
+  max-width: 15ch;
+}
+
+.pg26 .nf-sub {
+  margin: 22px 0 0;
+  font-size: clamp(16.5px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 46ch;
+}
+
+.pg26 .nf-cta {
+  margin-top: 34px;
+  text-decoration: none;
+}
+
+/* ---- il piede: le scorciatoie ---- */
+.pg26 .nf-piede {
+  margin-top: 54px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.pg26 .nf-lab {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 0 0 14px;
+}
+.pg26 .nf-voci {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+.pg26 .nf-voci a {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--body);
+  text-decoration: none;
+  transition: color 0.16s ease;
+}
+.pg26 .nf-voci a:hover {
+  color: var(--text);
+}
+
+/* ============================================================
+   TELEFONO. La filigrana resta (e' l'unica cosa che rende la
+   schermata riconoscibile) ma si sposta piu' in alto e si scarica
+   ancora, se no passa sotto il testo e lo rende faticoso.
+   ============================================================ */
+@media (max-width: 760px) {
+  .pg26 .nf {
+    /* niente centraggio verticale: su uno schermo lungo il blocco
+       finiva a meta' pagina con due vuoti sopra e sotto */
+    align-items: flex-start;
+    min-height: auto;
+    /* Il respiro verticale lo mette SOLO .nf-in, qui sotto: messo in
+       due posti si sommava e faceva 136px di vuoto in cima, che su un
+       cartello senza testata sono un buco, non aria. */
+    padding: 0;
+  }
+  /* longhand e non shorthand: `padding: 64px 16px` sovrascriverebbe il
+     padding orizzontale che .nf-in eredita da .wrap, e la 404 si
+     scollegherebbe dal resto della pagina alla prima modifica */
+  .pg26 .nf-in {
+    padding-top: 64px;
+    padding-bottom: 52px;
+  }
+  .pg26 .nf-tit {
+    max-width: none;
+  }
+  .pg26 .nf-piede {
+    margin-top: 40px;
+  }
+  /* in colonna: affiancate a due a due le voci si spezzavano a meta' */
+  .pg26 .nf-voci {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
