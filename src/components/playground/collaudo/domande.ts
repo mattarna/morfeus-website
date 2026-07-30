@@ -13,6 +13,7 @@
    ============================================================ */
 
 import type { Dimensione, Intento, Leva, Punti, Tasca } from "./motore";
+import { DICHIARATI } from "./copy";
 
 /* ---------- le famiglie di scena ----------
    Non e' il settore: e' la FORMA del lavoro, e sono tre.
@@ -79,13 +80,15 @@ export function famigliaDi(mestiere: string, ruolo: string): Famiglia {
    Scritte come uno si descrive a voce, non come le scriverebbe chi
    progetta una scala: attacchi diversi, niente terzine, niente "qualche"
    ripetuto due volte. */
-export const DICHIARATO_OPZIONI = [
-  { id: "L0", label: "Poco. La guardo più di quanto la usi" },
-  { id: "L1", label: "Tutti i giorni, ma vado a braccio" },
-  { id: "L1p", label: "Ho i miei prompt buoni e me li riuso" },
-  { id: "L2", label: "Le ho dato un contesto fisso e ci lavoro dentro" },
-  { id: "L3", label: "Quello che ho costruito lo usa anche qualcun altro" },
-];
+/* Derivate da DICHIARATI (copy.ts) e non riscritte: gli stessi cinque
+   testi stavano in due file, e il referto cita alla lettera quello che
+   la persona ha scelto ("ti eri dato: ..."). Bastava correggere una
+   frase in un posto solo per far dire al referto una cosa diversa da
+   quella che era scritta nel collaudo. L'ordine e' quello della scala,
+   dal basso in alto: e' una scala, non si mescola. */
+export const DICHIARATO_OPZIONI = (["L0", "L1", "L1p", "L2", "L3"] as const).map(
+  (id) => ({ id, label: DICHIARATI[id].label }),
+);
 
 export const INTENTO_OPZIONI: { id: Intento; label: string }[] = [
   { id: "imparare", label: "Capirla e imparare a usarla bene" },
@@ -126,8 +129,8 @@ export const SCENE: Scena[] = [
     opzioni: [
       { t: "Chiedo, e poi aggiusto quello che esce.", pt: 0, v: "pagina bianca" },
       { t: "Mi scrivo un prompt lungo, con dentro tutto quello che serve sapere.", pt: 1, v: "il prompt lo rifai" },
-      { t: "Parto da una mia vecchia che era andata bene: rifai uguale, ma per questo.", pt: 2, v: "l'esempio lo reincolli" },
-      { t: "Do solo i dati nuovi. Come lavoro e come scrivo lo sa già.", pt: 3, v: "lei ti conosce già" },
+      { t: "Parto da una mia vecchia che era andata bene e le dico di rifarla uguale, per questa.", pt: 2, v: "l'esempio lo reincolli" },
+      { t: "Do solo i dati nuovi e la trascrizione. L'AI sa già come lavoro.", pt: 3, v: "lei ti conosce già" },
     ],
   },
   {
@@ -148,9 +151,9 @@ export const SCENE: Scena[] = [
   {
     dimensione: "correzione",
     apertura: {
-      A: "L'output esce sbagliato: tono generico, niente che sappia di te.",
-      B: "L'output esce sbagliato: tono generico, niente che sappia del vostro prodotto.",
-      C: "L'output esce sbagliato: tono generico, niente che sappia come si scrive da voi.",
+      A: "L'output dell'AI esce banale: tono generico, niente che sappia di te.",
+      B: "L'output dell'AI esce banale: tono generico, niente che sappia del vostro prodotto.",
+      C: "L'output dell'AI esce banale: tono generico, niente che sappia come si scrive da voi.",
     },
     domanda: "Cosa fai?",
     opzioni: [

@@ -225,8 +225,8 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
       },
       {
         tipo: "scelta",
-        domanda: "Come ti daresti, a occhio?",
-        aiuto: "Rispondi d'istinto: fra poco il banco misura davvero.",
+        domanda: "Quanto sei forte con l'AI, secondo te?",
+        aiuto: "Rispondi d'istinto: fra poco avrai un'analisi completa.",
         opzioni: DICHIARATO_OPZIONI.map((o) => ({
           label: o.label,
           applica: (x: Risposte): Risposte => ({ ...x, dichiarato: o.id }),

@@ -287,7 +287,7 @@ export const URGENZE: Record<string, string> = {
    gradini distano 17-20 punti, quindi lo scarto di 15 che fa scattare il
    verdetto del confronto resta significativo. */
 export const DICHIARATI: Record<string, { label: string; atteso: number }> = {
-  L0: { label: "Poco. La guardo più di quanto la usi", atteso: 8 },
+  L0: { label: "Poco. Ogni tanto mi capita di usarla", atteso: 8 },
   L1: { label: "Tutti i giorni, ma vado a braccio", atteso: 25 },
   L1p: { label: "Ho i miei prompt buoni e me li riuso", atteso: 45 },
   L2: { label: "Le ho dato un contesto fisso e ci lavoro dentro", atteso: 65 },
