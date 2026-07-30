@@ -13,7 +13,6 @@ export const INDEXABLE_LOCALE_PATHS = [
   "chi-siamo",
   "metodo",
   "marf",
-  "playground",
   "casi",
   "insights",
   "impara-ai",

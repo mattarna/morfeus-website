@@ -14,11 +14,17 @@ const CASE_HREFS = ["ag-academy-onboarding", "scalers-pre-sales", "globia-scorin
 
 const COPY = {
   it: {
-    metaTitle: "MARF · Operating Partner AI · Morfeus",
+    /* Il titolo parla di FORGE, non di MARF. Erano due pagine che si
+       presentavano entrambe come "MARF" e si facevano concorrenza su
+       Google: /marf e' il prodotto (il cruscotto), Morf Forge e' la linea
+       servizio Operating Partner che lo installa e lo fa funzionare.
+       Dentro la pagina MARF resta nominato — e' il sistema che Forge
+       installa — ma il soggetto della pagina e' Forge. */
+    metaTitle: "Morf Forge · Operating Partner AI · Morfeus",
     metaDesc:
-      "MARF è il sistema operativo AI per chi vende expertise: installato in ~30 giorni, migliora ogni mese. Non sviluppo custom a giornate, ma un prodotto che resta in azienda.",
+      "Morf Forge è l'Operating Partner AI di Morfeus: installiamo il sistema in azienda in circa 30 giorni e lo facciamo migliorare ogni mese. Non sviluppo a giornate, ma un prodotto che resta.",
     hero: {
-      eye: "Operating Partner · MARF",
+      eye: "Morf Forge · Operating Partner",
       h1a: "Il sistema operativo AI per chi vende ",
       h1emph: "expertise",
       h1b: ".",
@@ -225,11 +231,11 @@ const COPY = {
     },
   },
   en: {
-    metaTitle: "MARF · AI Operating Partner · Morfeus",
+    metaTitle: "Morf Forge · AI Operating Partner · Morfeus",
     metaDesc:
-      "MARF is the AI operating system for expertise-led businesses: installed in ~30 days, better every month. Not custom dev by the day, but a product that stays in the company.",
+      "Morf Forge is Morfeus' AI Operating Partner: we install the system inside your company in about 30 days and keep it improving every month. Not custom dev by the day, but a product that stays.",
     hero: {
-      eye: "Operating Partner · MARF",
+      eye: "Morf Forge · Operating Partner",
       h1a: "The AI operating system for businesses that sell ",
       h1emph: "expertise",
       h1b: ".",
