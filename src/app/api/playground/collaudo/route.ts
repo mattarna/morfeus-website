@@ -18,6 +18,7 @@
 import { NextResponse } from "next/server";
 import { BREVO_ATTR } from "@/lib/brevo/attributes";
 import { getBrevoListId } from "@/lib/brevo/lists";
+import { getSheetWebhook } from "@/lib/sheets/webhooks";
 
 /** Quello che il gate manda. I nomi sono gli stessi delle colonne del
  *  foglio (RISPOSTE): cosi' il mapping piu' sotto e' una riga sola. */
@@ -108,12 +109,12 @@ async function salvaSuBrevo(p: CollaudoPayload, email: string): Promise<void> {
    L'indirizzo e il segreto stanno in env: finche' non ci sono, la
    scrittura si salta senza rumore, e Brevo funziona lo stesso. */
 async function salvaSuFoglio(p: CollaudoPayload): Promise<void> {
-  const url = process.env.SHEET_WEBHOOK_URL;
-  const segreto = process.env.SHEET_WEBHOOK_SECRET;
-  if (!url || !segreto) {
-    console.warn("collaudo: SHEET_WEBHOOK_URL/SECRET assenti, salto il foglio");
+  const foglio = getSheetWebhook("PLAYGROUND_COLLAUDO");
+  if (!foglio) {
+    console.warn("collaudo: env del foglio Playground assenti, salto il foglio");
     return;
   }
+  const { url, secret: segreto } = foglio;
 
   const riga = {
     id: p.id ?? "",
