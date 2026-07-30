@@ -1,0 +1,649 @@
+/* ===========================================================
+   FORGE · dispositivi propri della pagina.
+   -----------------------------------------------------------
+   Stessa disciplina del Lab (`lab-ms.css`): site.css non si tocca,
+   e tutto quello che serve solo a questa pagina vive qui sotto
+   `.ms .forge`, per non calpestare la libreria.
+
+   L'IDEA. Il Lab e' uno strumento di misura. Forge e' la cosa che
+   quello strumento installa: un IMPIANTO. Quindi non schede di
+   rilevamento ma STAZIONI, non quote sparse ma una LINEA che le
+   attraversa e le tiene insieme — il filo dell'impianto. Il lilla
+   e' il segnale che corre lungo la linea; il forge (arancio) e' il
+   punto in cui qualcosa si perde, e compare pochissimo apposta.
+
+   Il WIREFRAME della pagina non cambia: stesse otto sezioni, stesso
+   ordine, stessa copy. Cambia il modo in cui ogni blocco e' disegnato.
+   =========================================================== */
+
+/* ATTENZIONE ai selettori di fascia: la sezione porta le classi tutte
+   insieme — `<section class="band carta forge">` — quindi `.band.carta`
+   e `.forge` sono lo STESSO elemento. Va scritto `.band.carta.forge`
+   (senza spazio): con lo spazio si chiede un discendente e la regola non
+   matcha mai. Costato un testo a contrasto 1.7:1 su fondo bianco. */
+
+/* ---------- QUADRO · l'area di disegno con le crocette d'angolo ----------
+   Identico a quello del Lab e del kit: e' il segno di casa, non una
+   variante. Dice "qui dentro si misura". */
+.ms .forge .quadro {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-l);
+  overflow: hidden;
+}
+.ms .forge .quadro::before,
+.ms .forge .quadro::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-color: rgba(140, 165, 247, 0.5);
+}
+.ms .forge .quadro::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.ms .forge .quadro::after {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+/* su carta il segnale non e' il lilla ma la firma: sul chiaro il lilla
+   non regge il contrasto */
+.ms .band.carta.forge .quadro::before,
+.ms .band.carta.forge .quadro::after {
+  border-color: rgba(83, 61, 252, 0.45);
+}
+
+/* ---------- READOUT · la striscia di stato in mono ----------
+   Una riga di strumento in cima al pannello: a sinistra cosa sta
+   misurando, a destra lo stato. */
+.ms .forge .readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--surf-bd);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .forge .readout .on {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--lilla);
+}
+.ms .forge .readout .on i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lilla);
+  animation: forge-batte 2.4s infinite;
+}
+.ms .band.carta.forge .readout .on,
+.ms .band.carta.forge .readout .on i {
+  color: var(--firma);
+  background: var(--firma);
+}
+.ms .band.carta.forge .readout .on {
+  background: none;
+}
+@keyframes forge-batte {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms .forge .readout .on i {
+    animation: none;
+  }
+}
+
+/* ---------- QUOTA · la riga di misura con le tacche ----------
+   Come le quote di una tavola tecnica: due barrette e una linea, con
+   l'etichetta in mono. Marca una distanza dichiarata. */
+.ms .forge .quota {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+}
+.ms .forge .quota::before,
+.ms .forge .quota::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: rgba(140, 165, 247, 0.22);
+}
+.ms .band.carta.forge .quota::before,
+.ms .band.carta.forge .quota::after {
+  background: rgba(83, 61, 252, 0.2);
+}
+
+/* ---------- STAZIONE · il blocco base dei tre movimenti ----------
+   Sostituisce la `.card` generica. Ha un codice progressivo, la cifra
+   fantasma dietro e un filo che si accende sul bordo alto al passaggio:
+   e' l'impianto che si illumina dove lo tocchi. */
+.ms .forge .stazione {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-m);
+  padding: 30px;
+  overflow: hidden;
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+@media (min-width: 1100px) {
+  .ms .forge .stazione {
+    padding: 36px;
+  }
+}
+.ms .forge .stazione .filo {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lilla), transparent);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.ms .forge .stazione:hover .filo {
+  opacity: 1;
+}
+.ms .forge .stazione:hover {
+  border-color: rgba(140, 165, 247, 0.4);
+}
+.ms .band.carta.forge .stazione:hover {
+  border-color: rgba(83, 61, 252, 0.35);
+}
+.ms .band.carta.forge .stazione .filo {
+  background: linear-gradient(90deg, transparent, var(--firma), transparent);
+}
+
+/* la cifra fantasma: grande, dietro, quasi spenta. Da' profondita' senza
+   aggiungere un oggetto in piu' da leggere */
+.ms .forge .ghost {
+  position: absolute;
+  right: -6px;
+  top: -18px;
+  font-family: var(--font-display);
+  font-size: 92px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--lilla);
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+}
+.ms .band.carta.forge .ghost {
+  color: var(--firma);
+  opacity: 0.06;
+}
+
+/* il codice della stazione, in mono */
+.ms .forge .cod {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lilla);
+}
+.ms .band.carta.forge .cod {
+  color: var(--firma);
+}
+
+.ms .forge .stazione h3 {
+  font-size: clamp(19px, 1.9vw, 23px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
+  margin: 14px 0 8px;
+}
+.ms .forge .stazione p {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  margin: 0;
+}
+.ms .band.carta.forge .stazione p {
+  color: var(--testo-carta-2);
+}
+/* il glifo in cima alla stazione */
+.ms .forge .stazione .glifo {
+  color: var(--lilla);
+}
+.ms .band.carta.forge .stazione .glifo {
+  color: var(--firma);
+}
+
+/* ---------- LA SCALA · le quattro tappe del percorso ----------
+   Era una fila di quattro riquadri uguali, e non si capiva che fossero
+   consecutivi. Ora e' una scala: una linea li attraversa, ogni tappa ha
+   il suo perno sulla linea, e la quota fra un gradino e l'altro dice che
+   si sale. Sotto i 900px la linea diventa verticale a sinistra. */
+.ms .forge .scala {
+  position: relative;
+  display: grid;
+  gap: 18px;
+}
+@media (min-width: 900px) {
+  .ms .forge .scala {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  /* la linea che attraversa: sta all'altezza dei perni */
+  .ms .forge .scala::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 13px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(83, 61, 252, 0.35) 12%,
+      rgba(83, 61, 252, 0.35) 88%,
+      transparent
+    );
+  }
+}
+.ms .forge .gradino {
+  position: relative;
+  padding: 0 20px 0 0;
+}
+@media (max-width: 899px) {
+  .ms .forge .gradino {
+    padding: 0 0 0 26px;
+    border-left: 1px solid rgba(83, 61, 252, 0.22);
+    padding-bottom: 22px;
+  }
+  .ms .forge .gradino:last-child {
+    border-left-color: transparent;
+    padding-bottom: 0;
+  }
+}
+/* il perno: il punto della tappa sulla linea */
+.ms .forge .gradino .perno {
+  position: relative;
+  display: block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--carta);
+  border: 1px solid var(--firma);
+  margin-bottom: 20px;
+}
+@media (max-width: 899px) {
+  .ms .forge .gradino .perno {
+    position: absolute;
+    left: -6px;
+    top: 4px;
+    margin: 0;
+  }
+}
+/* la tappa raggiunta e' piena: il gradino zero e' gratis, si parte da li' */
+.ms .forge .gradino:first-child .perno {
+  background: var(--firma);
+}
+.ms .forge .gradino .tappa {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--firma);
+}
+.ms .forge .gradino h3 {
+  font-size: clamp(18px, 1.8vw, 21px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 10px 0 8px;
+  padding-right: 8px;
+}
+.ms .forge .gradino p {
+  font-size: 16px;
+  line-height: 1.58;
+  color: var(--testo-carta-2);
+  margin: 0;
+  padding-right: 12px;
+}
+
+/* ---------- LE DUE CURVE · valore che decade vs valore che compone ----- */
+.ms .forge .curve {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 30px;
+}
+@media (min-width: 900px) {
+  .ms .forge .curve {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.ms .forge .curva {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-l);
+  padding: 26px;
+  overflow: hidden;
+}
+.ms .forge .curva .chead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.ms .forge .curva .ctit {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.ms .forge .curva .csub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ombra);
+  margin-top: 4px;
+}
+.ms .forge .curva .ctag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+.ms .forge .curva.perdita .ctag {
+  color: var(--anomalia);
+  background: rgba(255, 92, 92, 0.1);
+  border: 1px solid rgba(255, 92, 92, 0.28);
+}
+.ms .forge .curva.compone .ctag {
+  color: var(--firma);
+  background: rgba(83, 61, 252, 0.1);
+  border: 1px solid rgba(83, 61, 252, 0.28);
+}
+.ms .forge .curva .plot {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ms .forge .curva .grid-l {
+  stroke: rgba(11, 11, 12, 0.08);
+  stroke-width: 1;
+}
+.ms .forge .curva.perdita .line {
+  stroke: var(--anomalia);
+  stroke-width: 2;
+}
+.ms .forge .curva.perdita .area {
+  fill: rgba(255, 92, 92, 0.09);
+}
+.ms .forge .curva.perdita .end {
+  fill: var(--anomalia);
+}
+.ms .forge .curva.compone .line {
+  stroke: var(--firma);
+  stroke-width: 2;
+}
+.ms .forge .curva.compone .area {
+  fill: rgba(83, 61, 252, 0.09);
+}
+.ms .forge .curva.compone .end {
+  fill: var(--firma);
+}
+.ms .forge .curva .axis {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ombra);
+  text-align: right;
+  margin-top: 4px;
+}
+.ms .forge .curva ul {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+.ms .forge .curva li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--testo-carta-2);
+  margin-bottom: 8px;
+}
+.ms .forge .curva li .dot {
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 0.62em;
+  background: var(--ombra);
+}
+.ms .forge .curva.compone li .dot {
+  background: var(--firma);
+}
+
+/* ---------- IL CONFRONTO · convinzione vs realta' / si' vs no --------
+   Due colonne affiancate. La differenza non la fa il colore del testo ma
+   il SEGNO davanti: una croce spenta contro una freccia che va avanti. */
+.ms .forge .confronto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 900px) {
+  .ms .forge .confronto {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+.ms .forge .colonna {
+  border: 1px solid var(--surf-bd);
+  background: var(--surf-bg);
+  border-radius: var(--r-m);
+  padding: 26px;
+}
+.ms .forge .colonna .t {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  margin-bottom: 14px;
+}
+.ms .forge .colonna.buona .t {
+  color: var(--firma);
+}
+.ms .band.ink.forge .colonna.buona .t {
+  color: var(--lilla);
+}
+.ms .forge .colonna ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ms .forge .colonna li {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.55;
+  margin-bottom: 11px;
+  color: var(--testo-carta-2);
+}
+.ms .band.ink.forge .colonna li {
+  color: var(--testo-ink-2);
+}
+.ms .forge .colonna li:last-child {
+  margin-bottom: 0;
+}
+.ms .forge .colonna li .m {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ombra);
+}
+.ms .forge .colonna.buona li .m {
+  color: var(--firma);
+}
+.ms .band.ink.forge .colonna.buona li .m {
+  color: var(--lilla);
+}
+
+/* ---------- LE PROVE · righe editoriali, come l'archivio dei Casi ------
+   Erano tre card affiancate. Ora sono righe separate da filetti: e' il
+   modo in cui /casi mostra le stesse cose, e due pagine che mostrano un
+   caso devono mostrarlo allo stesso modo. */
+.ms .forge .prove {
+  border-top: 1px solid var(--surf-bd);
+  margin-top: 30px;
+}
+.ms .forge .prova {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--surf-bd);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--dur) var(--ease);
+}
+@media (min-width: 1000px) {
+  .ms .forge .prova {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 0 34px;
+    align-items: center;
+  }
+}
+.ms .forge .prova .meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  margin-bottom: 8px;
+}
+.ms .forge .prova .q {
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 600;
+  line-height: 1.36;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.ms .forge .prova .who {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+  margin: 0;
+}
+.ms .forge .prova .who b {
+  color: var(--firma);
+  font-weight: 700;
+}
+.ms .forge .prova .coda {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+@media (min-width: 1000px) {
+  .ms .forge .prova .coda {
+    justify-content: flex-end;
+  }
+}
+/* il timbro: lo stesso "Confermato" dei casi */
+.ms .forge .prova .timbro {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ok);
+  border: 1px solid rgba(30, 158, 90, 0.4);
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+.ms .forge .prova .freccia {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--firma);
+  white-space: nowrap;
+}
+.ms .forge .prova:hover {
+  background: rgba(83, 61, 252, 0.03);
+}
+.ms .forge .prova:hover .freccia {
+  text-decoration: underline;
+}
+
+/* ---------- PULL-QUOTE · la riga che chiude una sezione ----------
+   Per le frasi che tirano le somme (il filtro, la nota del percorso).
+   Un filetto a sinistra e corpo piu' grande: si legge come una battuta
+   detta a voce, non come un paragrafo in piu'. */
+.ms .forge .tira-somme {
+  border-left: 2px solid var(--firma);
+  padding-left: 18px;
+  font-size: clamp(18px, 1.8vw, 21px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  max-width: 56ch;
+}
+.ms .band.ink.forge .tira-somme {
+  border-left-color: var(--lilla);
+}
+
+/* ---------- griglie di servizio ---------- */
+.ms .forge .tre {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+@media (min-width: 900px) {
+  .ms .forge .tre {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.ms .forge .due {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+@media (min-width: 900px) {
+  .ms .forge .due {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}

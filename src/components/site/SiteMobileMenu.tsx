@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -70,6 +71,32 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
   const base = `/${locale}`;
   const altra = locale === "it" ? "en" : "it";
   const [aperto, setAperto] = useState(false);
+
+  /* ---------- IL PANNELLO ESCE DALLA BARRA ----------
+     La barra ha `backdrop-filter: blur(14px)`, e un antenato con
+     backdrop-filter diventa il CONTAINING BLOCK dei discendenti
+     `position: fixed`. Il pannello, che stava dentro la barra, non si
+     ancorava piu' allo schermo ma alla barra: `inset: 0` gli dava
+     l'altezza della barra, 68px invece di tutto lo schermo. Si apriva
+     davvero -- opacity 1, top 0 -- ma era una striscia nascosta sotto
+     la barra stessa, quindi sembrava che il menu non funzionasse.
+     Su iOS la stessa cosa succede anche con un antenato che ha solo
+     l'overflow nascosto.
+     Rimedio: il pannello va in fondo al body, fuori da qualunque
+     antenato. L'host porta le classi del contenitore `.ms` perche' le
+     regole del pannello sono scritte sotto quel prefisso (e da li'
+     arrivano anche le variabili dei font): fuori, sarebbe un div nudo. */
+  const [host, setHost] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    const div = document.createElement("div");
+    const wrapper = document.querySelector(".ms");
+    div.className = wrapper ? wrapper.className : "ms";
+    document.body.appendChild(div);
+    setHost(div);
+    return () => {
+      div.remove();
+    };
+  }, []);
   const pathname = usePathname() ?? base;
 
   /* Il pannello copre lo schermo: se sotto continua a scorrere la pagina,
@@ -113,6 +140,8 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
         {aperto ? t.chiudi : t.apri}
       </button>
 
+      {host &&
+        createPortal(
       <div
         id="smm-pannello"
         className="smm-pannello 2xl:hidden"
@@ -217,7 +246,9 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
             </div>
           </div>
         </div>
-      </div>
+      </div>,
+          host,
+        )}
     </>
   );
 }
