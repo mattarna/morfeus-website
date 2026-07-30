@@ -3,6 +3,7 @@ import { clashDisplay, jetbrainsMono, playfair, plusJakarta } from "./fonts";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
 import { LoaderSito } from "./loader/LoaderSito";
+import { InCimaAlCambioPagina } from "./InCimaAlCambioPagina";
 import "./site.css";
 
 /**
@@ -19,6 +20,7 @@ import "./site.css";
 export function SiteShell({ locale, children }: { locale: "it" | "en"; children: ReactNode }) {
   return (
     <div className={`ms ${clashDisplay.variable} ${plusJakarta.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
+      <InCimaAlCambioPagina />
       <LoaderSito />
       <SiteHeader locale={locale} />
       <main>{children}</main>

@@ -2377,6 +2377,24 @@
 
 /* z-index sopra l'header (50): il pannello lo copre, e il bottone CHIUDI
    vive dentro l'header che resta visibile sopra il pannello. */
+/* L'ANTIDOTO PER L'INVOLUCRO DEL PORTAL.
+   Il pannello vive in fondo al body (fuori dalla barra, che con il suo
+   backdrop-filter gli rompeva il position:fixed). L'involucro porta le
+   classi di .ms, altrimenti le regole qui sotto -- scritte tutte sotto
+   quel prefisso -- non lo raggiungerebbero, e con loro sparirebbero i
+   font. Ma .ms e' il contenitore della PAGINA: si porta dietro
+   min-height:100vh, il fondo scuro e overflow-x:hidden. Su un div
+   vuoto in coda al documento quelle tre cose diventano una schermata
+   intera di nero sotto il piede, con lo scroll che continua nel vuoto.
+   Qui si spengono. Il div deve pesare zero: e' solo un appiglio. */
+.ms.smm-host {
+  min-height: 0;
+  height: 0;
+  background: none;
+  overflow: visible;
+  position: static;
+}
+
 .ms .smm-pannello {
   position: fixed;
   inset: 0;

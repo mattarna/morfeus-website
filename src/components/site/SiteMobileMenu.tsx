@@ -90,7 +90,14 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
   useEffect(() => {
     const div = document.createElement("div");
     const wrapper = document.querySelector(".ms");
-    div.className = wrapper ? wrapper.className : "ms";
+    /* Le classi del contenitore servono per due cose sole: il prefisso
+       .ms sotto cui sono scritte le regole del pannello, e le variabili
+       dei font. Ma .ms porta con se' anche min-height:100vh, il fondo
+       scuro e overflow-x:hidden, e su un div in fondo al body quelle
+       diventano UNA SCHERMATA VUOTA di nero sotto il piede della
+       pagina, con tanto di scroll in piu'. Si annullano qui: la classe
+       smm-host e' l'antidoto (vedi site.css). */
+    div.className = `${wrapper ? wrapper.className : "ms"} smm-host`;
     document.body.appendChild(div);
     setHost(div);
     return () => {
