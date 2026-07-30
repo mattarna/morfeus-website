@@ -46,6 +46,21 @@ export const PROBLEMI = {
 export type ChiaveProblema = keyof typeof PROBLEMI;
 export type Area = "Vendite" | "Operations" | "Margine" | "Reporting";
 
+/* Le etichette delle aree, tradotte come quelle dei problemi.
+   I nomi dentro il tipo Area restano in italiano perche' sono CHIAVI:
+   le usano gli otto casi e le classi del colore, e cambiarle vorrebbe
+   dire toccare tutto per una ragione di sola lingua. A schermo, pero',
+   non si mostra piu' la chiave: sulla pagina inglese i filtri dicevano
+   VENDITE e MARGINE in mezzo a un testo tutto inglese, e Operations e
+   Reporting sembravano tradotti solo perche' si scrivono uguale nelle
+   due lingue. */
+export const AREE_ETICHETTE: Record<Area, { it: string; en: string }> = {
+  Vendite: { it: "Vendite", en: "Sales" },
+  Operations: { it: "Operations", en: "Operations" },
+  Margine: { it: "Margine", en: "Margin" },
+  Reporting: { it: "Reporting", en: "Reporting" },
+};
+
 export type Caso = {
   slug: string;
   /** area aziendale, dal data-cat delle schede approvate */

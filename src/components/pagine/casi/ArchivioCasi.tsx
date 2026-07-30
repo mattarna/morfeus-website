@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { CASI, PROBLEMI, type ChiaveProblema, type Area } from "@/lib/casi";
+import { AREE_ETICHETTE, CASI, PROBLEMI, type ChiaveProblema, type Area } from "@/lib/casi";
 
 /* ============================================================
    ARCHIVIO DEI CASI.
@@ -103,7 +103,7 @@ export function ArchivioCasi({ locale, problemaIniziale = null, etichette }: Pro
             aria-pressed={area === a}
             onClick={() => setArea(area === a ? null : a)}
           >
-            {a}
+            {AREE_ETICHETTE[a][locale]}
           </button>
         ))}
       </div>
@@ -126,7 +126,7 @@ export function ArchivioCasi({ locale, problemaIniziale = null, etichette }: Pro
               <span className="barra" aria-hidden="true" />
               <div className="corpo">
                 <div className="testata">
-                  <span className="area">{c.area}</span>
+                  <span className="area">{AREE_ETICHETTE[c.area][locale]}</span>
                   <span className="chi">
                     {c.chi[locale]}
                     {c.taglia ? (
