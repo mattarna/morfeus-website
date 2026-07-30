@@ -297,10 +297,19 @@
   overflow: hidden;
 } /* la cornice di testo "Morfeus Playground ///" attorno al campo è RITIRATA
    da questa pagina (decisione Matt 2026-07-24): il campo respira senza recinzione. */
+/* I 46px di lato sono gli stessi del .wrap di tutta la pagina, e ci
+   vogliono per due motivi. Il primo e' l'allineamento: azzerandoli, il
+   testo della hero partiva 46px piu' a sinistra di ogni altra sezione,
+   difetto invisibile sul monitor largo perche' li' a distanziare ci
+   pensa il contenitore centrato. Il secondo si vede appena la finestra
+   scende sotto i ~1230px (schermo verticale, tablet sdraiato, due
+   finestre affiancate): sotto quella soglia il .wrap non e' piu'
+   centrato, si stende, e senza padding la headline va a sbattere sul
+   bordo della card. */
 .pg26 .cover .inner {
   position: relative;
   z-index: 3;
-  padding: 90px 0;
+  padding: 90px 46px;
   width: 100%;
 }
 .pg26 .cover-grid {
@@ -2597,8 +2606,13 @@
   margin: clamp(54px, 7vh, 62px) 16px clamp(12px, 1.6vh, 16px);
   min-height: calc(100vh - clamp(70px, 9vh, 78px));
 } /* il respiro interno segue l'altezza dello schermo */
+/* Il verticale segue l'altezza dello schermo, l'orizzontale no: 46px
+   fissi come il .wrap di tutta la pagina. Azzerandoli, la headline
+   partiva 46px piu' a sinistra di ogni altra sezione, e sotto i
+   ~1230px di finestra (schermo verticale, tablet sdraiato, due
+   finestre affiancate) andava proprio a sbattere sul bordo. */
 .pg26 .cover .inner {
-  padding: clamp(30px, 6vh, 90px) 0;
+  padding: clamp(30px, 6vh, 90px) 46px;
 }
 
 /* SUL TELEFONO (rev.2, Matt 2026-07-29).
@@ -2679,7 +2693,10 @@
 } /* portatili bassi (MacBook Air e simili) */
 @media (max-height: 880px) {
   .pg26 .cover .inner {
-    padding: clamp(24px, 4vh, 56px) 0;
+    /* qui si accorcia solo il verticale per i portatili bassi: il
+       lato resta 46px, se no il disallineamento della hero tornava su
+       un laptop corto ma largo, dove la card del telefono non e' attiva */
+    padding: clamp(24px, 4vh, 56px) 46px;
   }
   .pg26 .cover .trophy {
     max-width: min(290px, 34vh);
