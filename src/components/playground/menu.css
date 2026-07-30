@@ -1,0 +1,213 @@
+/* ============================================================
+   PLAYGROUND · il menu del telefono
+   ------------------------------------------------------------
+   Compare solo sotto i 900px, cioe' esattamente dove l'isola
+   nasconde le quattro voci. Sopra quella soglia il tasto non
+   esiste proprio: niente doppio comando per la stessa cosa.
+   ============================================================ */
+
+/* ---- il tasto nell'isola ---- */
+.pg26 .mnu-tasto {
+  display: none; /* acceso solo dal media query in fondo */
+  flex: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line-hi);
+  border-radius: 999px;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+
+/* L'involucro del portal.
+   Porta la classe .pg26 perche' tutte le regole del menu sono scritte
+   sotto quel prefisso e fuori di li' il pannello resterebbe un div
+   nudo. Ma .pg26 porta con se' anche overflow-x: hidden, che e'
+   ESATTAMENTE il difetto da cui stiamo scappando (su iOS rompe il
+   position:fixed dei discendenti), piu' fondo e grana che qui
+   sarebbero doppi. Si annullano tutti e tre. */
+.mnu-host {
+  overflow: visible;
+  background: none;
+}
+.mnu-host::after {
+  display: none;
+}
+
+/* ---- il pannello ---- */
+.pg26 .mnu-pannello {
+  position: fixed;
+  inset: 0;
+  z-index: 90; /* sotto l'isola (100): la testata resta sopra e si puo' chiudere */
+  background: var(--notte);
+  padding: 92px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pg26 .mnu-voci {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.pg26 .mnu-voci a,
+.pg26 .mnu-voci .mnu-cta {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  padding: 11px 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font);
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--body);
+  cursor: pointer;
+  /* entrano una dopo l'altra: il ritardo lo mette il componente,
+     cosi' l'elenco si apre invece di comparire tutto insieme */
+  animation: mnu-entra 0.34s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+.pg26 .mnu-voci a:active {
+  color: var(--text);
+}
+.pg26 .mnu-voci i {
+  flex: none;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--viola-hi);
+  width: 22px;
+}
+/* l'ultima voce e' la porta: gialla come ogni stato in questa pelle */
+.pg26 .mnu-voci .mnu-cta {
+  color: var(--stato);
+  margin-top: 6px;
+}
+.pg26 .mnu-voci .mnu-cta i {
+  color: var(--stato);
+  opacity: 0.75;
+}
+
+@keyframes mnu-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg26 .mnu-voci a,
+  .pg26 .mnu-voci .mnu-cta {
+    animation: none;
+  }
+}
+
+/* ---- il piede ---- */
+.pg26 .mnu-piede {
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.pg26 .mnu-lab {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 10px;
+}
+.pg26 .mnu-piede a {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+.pg26 .mnu-nota {
+  margin: 14px 0 0;
+}
+
+/* ============================================================
+   L'ACCENSIONE. Sotto i 900px l'isola nasconde le sue voci: da li'
+   in giu' il tasto Menu e' l'unico modo per raggiungere le sezioni.
+   ============================================================ */
+@media (max-width: 900px) {
+  .pg26 .mnu-tasto {
+    display: inline-flex;
+  }
+  /* l'isola si stringe e distribuisce: logo a sinistra, i due
+     comandi a destra */
+  /* la pastiglia si prende la riga anche con dentro poche cose: con
+     tre elementi stretti al centro sembrava un residuo, larga sembra
+     una testata */
+  .pg26 .island {
+    gap: 10px;
+    padding: 7px 8px 7px 16px;
+    width: calc(100vw - 24px);
+  }
+  .pg26 .island .sep {
+    display: none;
+  }
+  .pg26 .island .brand {
+    margin-right: auto;
+  }
+  .pg26 .island .mcta {
+    font-size: 15px;
+    padding: 9px 15px;
+  }
+}
+/* Sul telefono stretto tre pastiglie non ci stanno con la CTA per
+   esteso: "Fai il collaudo" diventa "Collaudo". La parola lunga e'
+   nel markup e sparisce qui, cosi' il testo resta uno solo. */
+@media (max-width: 560px) {
+  /* A 375px logo, CTA e Menu non ci stanno alle misure da desktop:
+     la somma faceva 340px in 303 disponibili e il tasto usciva fuori
+     dalla pastiglia. Qui si stringe tutto quanto basta, senza togliere
+     il marchio: in una testata il nome ci deve stare. */
+  /* Resta il solo marchio: la parola "Playground" costava 90px in una
+     testata che ne ha 375, e il nome e' gia' nel titolo sotto. Senza,
+     la pastiglia torna stretta e centrata invece di occupare la riga. */
+  .pg26 .island {
+    padding: 6px 6px 6px 12px;
+    gap: 8px;
+  }
+  .pg26 .island .wm {
+    display: none;
+  }
+  .pg26 .island .brand svg {
+    width: 26px;
+  }
+  .pg26 .island .mcta {
+    font-size: 13.5px;
+    padding: 9px 14px;
+  }
+  .pg26 .island .mcta .lungo {
+    display: none;
+  }
+  .pg26 .mnu-tasto {
+    padding: 9px 11px;
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+  }
+  .pg26 .mnu-voci a,
+  .pg26 .mnu-voci .mnu-cta {
+    font-size: 23px;
+    padding: 10px 0;
+  }
+}
+@media (min-width: 561px) {
+  .pg26 .island .mcta .corto {
+    display: none;
+  }
+}

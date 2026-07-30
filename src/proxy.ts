@@ -35,31 +35,81 @@ function isNonIndexableLocalePath(segments: string[]): boolean {
   );
 }
 
+/* ============================================================
+   IL SOTTODOMINIO DEL PLAYGROUND
+   ------------------------------------------------------------
+   playground.morfeushub.com e' agganciato allo STESSO progetto
+   Vercel del sito. Senza una regola qui servirebbe la home B2B:
+   stesso contenuto su due host, che per Google e' un duplicato.
+
+   Quindi: su quell'host tutto viene riscritto sotto /playground, e
+   sul dominio principale /playground non risponde. Un contenuto, un
+   indirizzo. E' lo stesso patto che il sito applica gia' ai funnel,
+   che vivono su /<slug> e internamente stanno in /funnel-internal.
+
+   L'host va letto da x-forwarded-host prima che da host: dietro il
+   proxy di Vercel e' li' che arriva il nome vero.
+   ============================================================ */
+const HOST_PLAYGROUND = "playground.morfeushub.com";
+const RADICE_PLAYGROUND = "/playground";
+
+/* I domini pubblici del sito: solo da qui /playground viene rimandato
+   al sottodominio. Le anteprime (*.vercel.app) e localhost non ci sono
+   apposta, cosi' li' la pagina si puo' provare. */
+const HOST_PUBBLICI = ["morfeushub.com", "www.morfeushub.com"];
+
+function hostRichiesta(request: NextRequest): string {
+  const raw = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  return raw.split(":")[0].toLowerCase();
+}
+
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const host = hostRichiesta(request);
 
-  // AI Playground (staging). Sotto-brand su sottodominio playground.morfeushub.com.
-  // Sull'host del sottodominio, ogni path e` servito dal ramo /playground/*.
-  // Sempre noindex: e` materiale in anteprima, non deve finire in produzione/indice.
-  const host = request.headers.get("host") ?? "";
-  if (host.startsWith("playground.")) {
-    const url = request.nextUrl.clone();
-    if (!url.pathname.startsWith("/playground")) {
-      url.pathname = url.pathname === "/" ? "/playground" : `/playground${url.pathname}`;
+  if (host === HOST_PLAYGROUND) {
+    // gia' dentro: lascia passare, o si riscrive all'infinito
+    if (pathname === RADICE_PLAYGROUND || pathname.startsWith(`${RADICE_PLAYGROUND}/`)) {
+      return NextResponse.next();
     }
-    const response = NextResponse.rewrite(url);
-    response.headers.set("x-next-intl-locale", routing.defaultLocale);
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
-    return response;
+    const url = request.nextUrl.clone();
+    url.pathname = pathname === "/" ? RADICE_PLAYGROUND : `${RADICE_PLAYGROUND}${pathname}`;
+    return NextResponse.rewrite(url);
   }
-  // Accesso diretto via path (preview Vercel: /playground/...): bypassa next-intl
-  // (pagine IT-only, fuori dall'albero [locale]) e resta comunque noindex.
-  if (pathname === "/playground" || pathname.startsWith("/playground/")) {
-    const response = NextResponse.next();
-    response.headers.set("x-next-intl-locale", routing.defaultLocale);
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
-    return response;
+
+  /* Sul dominio principale la rotta interna non esiste: chi ci arriva
+     va mandato all'indirizzo vero, che e' il sottodominio. 308 e non
+     307 perche' lo spostamento e' definitivo e va detto ai motori.
+
+     La condizione guarda l'HOST e non NODE_ENV. Con NODE_ENV anche le
+     ANTEPRIME di Vercel (dove NODE_ENV vale "production") mandavano
+     /playground al dominio pubblico: si finiva sul sito vero invece
+     che sulla copia in prova, cioe' il playground non era testabile
+     prima di pubblicarlo, che e' esattamente a cosa serve un'anteprima.
+     Ora il redirect scatta solo sui domini pubblici del sito; su
+     un'anteprima e in locale la pagina si serve. */
+  if (pathname === RADICE_PLAYGROUND || pathname.startsWith(`${RADICE_PLAYGROUND}/`)) {
+    if (HOST_PUBBLICI.includes(host)) {
+      const url = new URL(
+        pathname.slice(RADICE_PLAYGROUND.length) || "/",
+        `https://${HOST_PLAYGROUND}`
+      );
+      return NextResponse.redirect(url, 308);
+    }
+    /* In sviluppo il sottodominio non esiste: la rotta si serve com'e',
+       saltando next-intl. Senza questo salto il middleware della lingua
+       tratta "playground" come un locale sconosciuto e risponde 404,
+       cioe' la pagina resta invisibile proprio a chi la sta facendo. */
+    return NextResponse.next();
   }
+
+  /* Qui stava il vecchio governo del sottodominio, arrivato dal ramo
+     delle pagine e sopravvissuto all'unione: ridichiarava `host` (che
+     da solo non compila) e soprattutto metteva noindex su tutto il
+     Playground, quando la decisione presa e' l'opposto -- va
+     indicizzato. Il blocco in cima a questa funzione fa gia' lo stesso
+     lavoro, meglio: legge x-forwarded-host e distingue i domini
+     pubblici dalle anteprime. Rimosso il 2026-07-30, all'unione. */
 
   // Path senza locale (come funnel): mockup per design review
   if (pathname.startsWith("/mockup")) {

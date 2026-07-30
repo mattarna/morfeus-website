@@ -61,5 +61,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  return [...localizedSitemapEntries, ...funnelSitemapEntries];
+  /* Il Playground vive sul sottodominio e si serve alla radice
+     (playground.morfeushub.com, rewrite per host in next.config). Va
+     nella sitemap perche' e' pubblico e va indicizzato; l'host diverso
+     e' voluto, Google tratta il sottodominio come sito a se'. */
+  const playgroundEntry: MetadataRoute.Sitemap = [
+    {
+      url: "https://playground.morfeushub.com",
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+  ];
+
+  return [...localizedSitemapEntries, ...funnelSitemapEntries, ...playgroundEntry];
 }

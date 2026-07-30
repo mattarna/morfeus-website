@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
 
 const SECTION_IDS = [
   "hero",
@@ -35,16 +34,33 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
     onClose();
   };
 
+  /* ANIMATO IN CSS, NON IN JAVASCRIPT, e sempre montato.
+     Prima era un motion.div dentro AnimatePresence, con initial
+     opacity 0 e translateY(-100%). Il difetto di quell'impianto e' il
+     modo in cui FALLISCE: se l'animazione non parte -- per qualunque
+     ragione, da una libreria che non si inizializza a un tab che non
+     compone frame -- l'elemento resta allo stato iniziale, cioe'
+     invisibile e fuori schermo, e il menu non si apre. E' quello che
+     succedeva su /forge e /lab, dove il bottone diventava ✕ ma non
+     compariva niente.
+     In CSS il fallimento e' grazioso: se la transizione non parte,
+     l'elemento e' comunque nello stato finale, quindi si vede. Per un
+     menu di navigazione questa differenza non e' un dettaglio.
+     E' lo stesso impianto di HomeHeader, il menu della home, che
+     funziona. */
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: "-100%" }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: "-100%" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-150 bg-black md:hidden flex flex-col pt-24 pb-8 px-6"
-        >
+    <div
+      aria-hidden={!isOpen}
+      /* `inert` e non solo pointer-events: il pannello ora resta sempre
+         nel documento, e senza questo i suoi tredici bottoni sarebbero
+         raggiungibili col tasto Tab anche a menu chiuso -- il fuoco
+         sparirebbe dentro una cosa invisibile. `inert` spegne tutto il
+         sottoalbero: clic, fuoco, lettori di schermo. */
+      inert={!isOpen}
+      className={`fixed inset-0 z-150 bg-black md:hidden flex flex-col pt-24 pb-8 px-6 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
+      }`}
+    >
           {/* Subtle grid lines background */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <div className="absolute left-1/4 top-0 bottom-0 w-px bg-white" />
@@ -56,13 +72,16 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
             {/* Nav Links */}
             <div className="flex flex-col gap-1">
               {SECTION_IDS.map((id, i) => (
-                <motion.button
+                <button
                   key={id}
                   onClick={() => handleLinkClick(id)}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.03 }}
-                  className="flex items-center gap-4 py-3 text-left group"
+                  /* entrano una dopo l'altra: il ritardo e' inline
+                     perche' dipende dall'indice, e Tailwind non genera
+                     classi da valori calcolati */
+                  style={{ transitionDelay: isOpen ? `${120 + i * 30}ms` : "0ms" }}
+                  className={`flex items-center gap-4 py-3 text-left group transition-all duration-500 ${
+                    isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"
+                  }`}
                 >
                   <span className="text-[10px] font-mono text-indigo-500/50 w-5">
                     {String(i + 1).padStart(2, '0')}
@@ -70,7 +89,7 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
                   <span className="text-xl font-bold uppercase tracking-tight text-white group-hover:text-indigo-400 transition-colors">
                     {t(id)}
                   </span>
-                </motion.button>
+                </button>
               ))}
             </div>
 
@@ -110,8 +129,6 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </div>
   );
 }

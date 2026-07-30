@@ -1,0 +1,483 @@
+/* ============================================================
+   IL COLLAUDO · il flusso
+   ------------------------------------------------------------
+   Tutto sotto .cl-, dentro .pg26 da cui eredita palette e font.
+   Il referto ha il suo file (referto.css): qui c'e' solo la parte
+   delle domande.
+
+   Le classi .cd-* che stanno in playground.css sono del prototipo
+   V1 e non c'entrano: verranno tolte quando il vecchio collaudo
+   sparisce dal prototipo HTML.
+
+   UNA DOMANDA PER SCHERMATA, centrata verticalmente, corpo grande.
+   La regola di leggibilita' e' la stessa del referto: questa non e'
+   una landing da scorrere, e' una cosa da leggere mentre si decide.
+   ============================================================ */
+
+.pg26 .cl-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--notte);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---- la testata ---- */
+.pg26 .cl-testa {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 26px;
+  padding: 16px 26px;
+  background: rgba(6, 5, 12, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 620px) {
+  .pg26 .cl-testa {
+    gap: 14px;
+    padding: 13px 16px;
+  }
+}
+.pg26 .cl-marchio {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.pg26 .cl-marchio svg {
+  width: 17px;
+  height: auto;
+  color: var(--uv);
+}
+@media (max-width: 620px) {
+  .pg26 .cl-marchio {
+    font-size: 0;
+    gap: 0;
+  }
+}
+
+/* la barra: una sola, continua. I due segni dicono dove finisce un
+   blocco, ma il riempimento non si spezza. */
+.pg26 .cl-barra {
+  position: relative;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--n3);
+  overflow: hidden;
+}
+.pg26 .cl-barra i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--stato);
+  transition: width 0.45s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.pg26 .cl-barra b {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--notte);
+  opacity: 0.55;
+}
+.pg26 .cl-chiudi {
+  background: none;
+  border: 1px solid var(--line-hi);
+  color: var(--body);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.pg26 .cl-chiudi:hover {
+  color: var(--text);
+  border-color: var(--uv);
+}
+
+/* ---- il palco ---- */
+.pg26 .cl-palco {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 26px 72px;
+}
+/* il referto si prende tutta la larghezza e parte dall'alto */
+.pg26 .cl-palco:has(.rf) {
+  display: block;
+  padding: 0;
+}
+
+.pg26 .cl-dentro {
+  width: 100%;
+  max-width: 720px;
+  animation: cl-entra 0.32s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+@keyframes cl-entra {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg26 .cl-dentro {
+    animation: none;
+  }
+  .pg26 .cl-barra i {
+    transition: none;
+  }
+}
+
+.pg26 .cl-occhio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 26px;
+}
+.pg26 .cl-conta {
+  color: var(--mute);
+}
+
+/* Il titolo della schermata. Il tracking stretto va bene su un display
+   di poche parole, non su una frase da leggere: a -0.035em le parole si
+   attaccavano e "Come parti con l'AI?" diventava un blocco unico.
+   Qui si legge, quindi si respira. */
+.pg26 .cl-dentro h2 {
+  font-size: clamp(26px, 2.9vw, 31px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--text);
+  max-width: 30ch;
+}
+/* La consegna. Non e' una sottoriga: e' la domanda vera, e la scena e'
+   solo il contesto. Quindi sta piu' in basso della scena ma pesa quasi
+   uguale, e prende il lilla per staccarsi invece di rimpicciolirsi. */
+.pg26 .cl-consegna {
+  margin-top: 18px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: var(--uv);
+}
+/* senza scena la domanda e' l'unico titolo, e puo' prendersi piu' spazio */
+.pg26 .cl-dentro h2:last-of-type:not(:has(~ .cl-consegna)) {
+  max-width: 24ch;
+}
+.pg26 .cl-aiuto {
+  margin-top: 12px;
+  font-size: 17px;
+  color: var(--mute);
+  max-width: 54ch;
+}
+.pg26 .cl-lead {
+  margin-top: 16px;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 58ch;
+}
+
+/* ---- le opzioni ---- */
+.pg26 .cl-opzioni {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+}
+.pg26 .cl-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  text-align: left;
+  padding: 19px 22px;
+  border-radius: 13px;
+  border: 1px solid var(--line-hi);
+  background: var(--n1);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 18.5px;
+  line-height: 1.45;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.15s;
+}
+.pg26 .cl-opt:hover:not(:disabled) {
+  border-color: var(--viola-hi);
+  background: var(--n2);
+  transform: translateX(3px);
+}
+/* la scelta si accende in giallo: e' lo stesso codice del referto,
+   il giallo dichiara sempre uno stato */
+.pg26 .cl-opt.presa {
+  background: var(--stato);
+  border-color: var(--stato);
+  color: var(--ink);
+  font-weight: 700;
+}
+.pg26 .cl-opt.spenta {
+  opacity: 0.32;
+}
+.pg26 .cl-opt:disabled {
+  cursor: default;
+}
+
+/* il verdetto: due-quattro parole, si legge in mezzo secondo */
+.pg26 .cl-verdetto {
+  flex: none;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(23, 21, 42, 0.72);
+  white-space: nowrap;
+}
+@media (max-width: 620px) {
+  .pg26 .cl-opt {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 17.5px;
+    /* Una scena con quattro opzioni chiedeva 885px su uno schermo da
+       812: la quarta restava sotto la piega, e con l'avanzamento
+       automatico si rischia di scegliere senza averle viste tutte.
+       Qui si recupera quel tanto che basta stringendo i margini, non
+       il corpo del testo. */
+    padding: 15px 18px;
+  }
+  .pg26 .cl-verdetto {
+    white-space: normal;
+  }
+  .pg26 .cl-palco {
+    padding: 26px 20px 48px;
+  }
+  .pg26 .cl-occhio {
+    margin-bottom: 18px;
+  }
+  .pg26 .cl-opzioni {
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .pg26 .cl-consegna {
+    margin-top: 14px;
+    font-size: 21px;
+  }
+  .pg26 .cl-indietro {
+    margin-top: 18px;
+  }
+}
+
+/* ---- lo slider ---- */
+.pg26 .cl-slider {
+  margin-top: 34px;
+  max-width: 560px;
+}
+.pg26 .cl-ore {
+  font-size: 20px;
+  color: var(--body);
+}
+.pg26 .cl-ore b {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--stato);
+  margin-right: 10px;
+}
+.pg26 .cl-slider input[type="range"] {
+  width: 100%;
+  height: 6px;
+  margin: 22px 0 10px;
+  border-radius: 99px;
+  appearance: none;
+  background: var(--n3);
+  outline: none;
+}
+.pg26 .cl-slider input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--stato);
+  border: 4px solid var(--notte);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+.pg26 .cl-slider input[type="range"]::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--stato);
+  border: 4px solid var(--notte);
+  cursor: pointer;
+}
+.pg26 .cl-nota {
+  min-height: 26px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+}
+
+/* ---- bottoni ---- */
+.pg26 .cl-via {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 11px;
+  padding: 18px 30px;
+  cursor: pointer;
+  background: var(--stato);
+  color: var(--ink);
+  box-shadow: 0 14px 34px rgba(255, 225, 77, 0.16);
+}
+.pg26 .cl-indietro {
+  display: block;
+  margin-top: 26px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+  cursor: pointer;
+}
+.pg26 .cl-indietro:hover {
+  color: var(--body);
+}
+
+/* ---- il calcolo ---- */
+.pg26 .cl-log {
+  list-style: none;
+  margin-top: 34px;
+  padding: 0;
+}
+.pg26 .cl-log li {
+  font-family: var(--mono);
+  font-size: 15.5px;
+  line-height: 2.2;
+  color: var(--mute);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.34s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.pg26 .cl-log li.on {
+  opacity: 1;
+  transform: none;
+  color: var(--body);
+}
+.pg26 .cl-log li::before {
+  content: "› ";
+  color: var(--viola-hi);
+}
+
+/* ---- il gate ---- */
+/* form classico: campi incolonnati. Tre campi affiancati a due a due
+   lasciavano un buco a destra e facevano saltare l'occhio avanti e
+   indietro; in colonna si compila senza pensarci. */
+.pg26 .cl-campi {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 30px;
+  max-width: 460px;
+}
+.pg26 .cl-campi label {
+  display: block;
+}
+.pg26 .cl-campi span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 8px;
+}
+.pg26 .cl-campi span i {
+  font-style: normal;
+  opacity: 0.7;
+}
+.pg26 .cl-campi input {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 11px;
+  border: 1px solid var(--line-hi);
+  background: var(--n1);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 17px;
+}
+.pg26 .cl-campi input:focus {
+  outline: none;
+  border-color: var(--stato);
+}
+/* La casella del consenso. Sta sotto i campi, con la spunta
+   allineata alla prima riga del testo (align-items:flex-start), non
+   centrata, se no su due righe la spunta galleggia in mezzo. */
+.pg26 .cl-consenso {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.pg26 .cl-consenso input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--stato);
+  cursor: pointer;
+}
+.pg26 .cl-consenso span {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--body);
+}
+.pg26 .cl-consenso a {
+  color: var(--stato);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pg26 .cl-errore {
+  margin-top: 16px;
+  font-size: 16px;
+  color: var(--ko);
+}
