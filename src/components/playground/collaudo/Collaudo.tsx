@@ -36,19 +36,11 @@ import {
 import type { Dimensione, Intento, Punti } from "./motore";
 import { calcolaConto, collauda } from "./motore";
 import { DICHIARATI } from "./copy";
+import { BOOTCAMP_APERTO } from "../collegamenti";
 import { Referto } from "./Referto";
 import "./collaudo.css";
 
 const ATTESA = 420; /* ms fra il clic e la schermata dopo */
-
-/* L'INTERRUTTORE DEL BOOTCAMP (spec §6).
-   Quando e' false, il referto non propone mai il Bootcamp, nemmeno ai
-   profili a cui altrimenti lo proporrebbe: si tiene la seconda porta
-   migliore (la call, o il corso). Si mette true SOLO nella finestra in
-   cui le iscrizioni al Bootcamp sono davvero aperte, e si rimette false
-   quando chiudono. E' l'unica riga da toccare per accendere/spegnere.
-   Stato al 2026-07-30: CHIUSO. */
-const BOOTCAMP_APERTO = false;
 
 type Fase = "intro" | "domande" | "calcolo" | "gate" | "referto";
 

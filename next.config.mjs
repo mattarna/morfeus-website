@@ -148,34 +148,14 @@ const nextConfig = {
     ];
   },
 
-  // ============================================
-  // REWRITES — il sottodominio del Playground
-  // --------------------------------------------
-  // playground.morfeushub.com deve mostrare la landing del Playground
-  // alla RADICE, non a /playground. La radice del sito Morfeus fa
-  // redirect('/en'), quindi senza questa regola il sottodominio finiva
-  // sulla home di Morfeus.
-  //
-  // La condizione e' sull'HOST: tocca solo il Playground, morfeushub.com
-  // resta intatto. E' un rewrite, non un redirect: l'URL nella barra
-  // resta pulito (playground.morfeushub.com), la pagina servita e'
-  // /playground. Solo la radice: gli asset (/_next, /playground/*.png)
-  // devono continuare a passare inalterati.
-  //
-  // ATTENZIONE deploy: funziona solo se il dominio
-  // playground.morfeushub.com e' agganciato A QUESTO progetto Vercel.
-  // ============================================
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/',
-          has: [{ type: 'host', value: 'playground.morfeushub.com' }],
-          destination: '/playground',
-        },
-      ],
-    };
-  },
+  // Il sottodominio del Playground NON si governa da qui: lo fa
+  // `src/proxy.ts` (il middleware), che gira prima dei rewrites e ha due
+  // cose che una regola in questo file non puo' avere: legge
+  // x-forwarded-host (l'unico host affidabile dietro il proxy di Vercel)
+  // e riscrive TUTTI i path del sottodominio, non solo la radice. Qui
+  // c'era una rewrite che duplicava quel lavoro senza mai entrare in
+  // gioco: rimossa il 2026-07-30 per non lasciare due posti che dicono
+  // la stessa cosa.
 };
 
 export default withNextIntl(nextConfig);

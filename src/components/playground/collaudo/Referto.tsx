@@ -1,5 +1,12 @@
+"use client";
+
 /* ============================================================
    IL COLLAUDO · il referto
+   ------------------------------------------------------------
+   CLIENT perche' le porte hanno un onClick (il tracciamento del
+   clic). Senza questa riga il referto funziona dentro il collaudo
+   (che e' gia' client) ma esplode nella pagina d'anteprima, che e'
+   un server component: React non lascia passare gli handler.
    ------------------------------------------------------------
    Componente di sola presentazione: non ha stato, quindi resta un
    server component. Il flusso del collaudo (che invece lo stato ce
@@ -39,7 +46,7 @@ import {
   nemicoPer,
   verdettoConfronto,
 } from "./copy";
-import { COMMUNITY, DOVE } from "../collegamenti";
+import { COMMUNITY, DESTINAZIONI, DOVE } from "../collegamenti";
 import "./referto.css";
 
 export type DatiReferto = {
@@ -482,7 +489,13 @@ export function Referto(d: DatiReferto) {
               <span className="ico"><Icona g="conversazione" /></span>
               <h3>{CONVERSAZIONE_COPY.titolo}</h3>
               <p>{CONVERSAZIONE_COPY.testo}</p>
-              <button className="btn btn-linea">{CONVERSAZIONE_COPY.cta} →</button>
+              <a
+                className="btn btn-linea"
+                href={DESTINAZIONI.parliamone}
+                onClick={() => d.onCta?.("parliamone")}
+              >
+                {CONVERSAZIONE_COPY.cta} →
+              </a>
             </div>
           ) : null}
         </div>
@@ -496,10 +509,12 @@ export function Referto(d: DatiReferto) {
             costruito qualcosa: il livello si aggiorna.
           </p>
           <div className="rf-hero-cta" style={{ marginTop: 0 }}>
+            {/* "Condividi il livello" stava qui: la card condivisibile e'
+                stata scartata da Matt (2026-07-30), quindi il bottone e'
+                sparito invece di restare morto. */}
             <a className="rf-entra" href={COMMUNITY} onClick={() => d.onCta?.("community")}>
               Entra nella community →
             </a>
-            <button className="rf-entra linea">Condividi il livello →</button>
           </div>
         </div>
       </div>

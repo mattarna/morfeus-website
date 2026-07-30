@@ -14,6 +14,22 @@
    componente. Se serve un link nuovo, si aggiunge qui.
    ============================================================ */
 
+/* ------------------------------------------------------------
+   L'INTERRUTTORE DEL BOOTCAMP
+   Vive qui, con le destinazioni, perche' e' la stessa domanda:
+   questa porta e' aperta o no. Sta in un posto SOLO perche' lo
+   leggono in due (il collaudo e l'anteprima del referto), e una
+   copia scollegata farebbe dire all'anteprima il contrario della
+   verita'.
+
+   Quando e' false il referto non propone mai il Bootcamp, nemmeno
+   ai profili a cui altrimenti lo proporrebbe: tiene la seconda
+   porta migliore e aggiunge la nota che le iscrizioni sono chiuse.
+   Si mette true SOLO nella finestra di iscrizioni aperte.
+   Stato al 2026-07-30: CHIUSO.
+   ------------------------------------------------------------ */
+export const BOOTCAMP_APERTO = false;
+
 /** Il nome con cui questo funnel si presenta ovunque: nel campo
  *  form_name che va a Brevo, nel registro, nei conti dei KPI.
  *  La sorgente e' UNA per funnel, non una per bottone: tutti i
@@ -68,6 +84,13 @@ export const DESTINAZIONI = {
    *  indirizzo, campagna diversa: e' l'unico modo per sapere
    *  quante ne arrivano da questo ramo. */
   callB2b: PRENOTAZIONE + utm("call-b2b"),
+
+  /** "Facciamo due chiacchiere": la mezz'ora a chi sta in alto e a cui
+   *  non vendiamo niente (richiesta di Mattia). NON e' una call
+   *  commerciale e la campagna deve restare separata, se no i conti
+   *  delle call vendute si gonfiano con conversazioni che vendita non
+   *  erano. */
+  parliamone: PRENOTAZIONE + utm("parliamone"),
 } as const;
 
 /** Il gradino che esce dal motore, tradotto in un indirizzo.

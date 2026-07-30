@@ -18,6 +18,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Referto, type DatiReferto } from "@/components/playground/collaudo/Referto";
+import { BOOTCAMP_APERTO } from "@/components/playground/collegamenti";
 import "@/components/playground/playground.css";
 
 export const metadata: Metadata = {
@@ -44,7 +45,7 @@ const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
       personeNelTeam: 7,
       profilo: { tasca: "mia", leva: "struttura", intento: "team" },
       radiografia: { contesto: 3, ripetibilita: 3, correzione: 3, controllo: 3, diffusione: 3 },
-      opzioni: { bootcampAperto: true },
+      opzioni: { bootcampAperto: BOOTCAMP_APERTO },
     },
   },
   {
@@ -62,7 +63,7 @@ const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
       personeNelTeam: 7,
       profilo: { tasca: "mia", leva: "struttura", intento: "applicare" },
       radiografia: { contesto: 3, ripetibilita: 3, correzione: 3, controllo: 3, diffusione: 1 },
-      opzioni: { bootcampAperto: true },
+      opzioni: { bootcampAperto: BOOTCAMP_APERTO },
     },
   },
   {
@@ -79,7 +80,7 @@ const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
       valoreOra: 90,
       profilo: { tasca: "mia", leva: "solo", intento: "applicare" },
       radiografia: { contesto: 2, ripetibilita: 2, correzione: 2, controllo: 2, diffusione: 1 },
-      opzioni: { bootcampAperto: true },
+      opzioni: { bootcampAperto: BOOTCAMP_APERTO },
     },
   },
   {
@@ -95,7 +96,7 @@ const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
       valoreOra: 45,
       profilo: { tasca: "azienda", leva: "nessuna", intento: "applicare" },
       radiografia: { contesto: 3, ripetibilita: 3, correzione: 3, controllo: 3, diffusione: 2 },
-      opzioni: { bootcampAperto: true },
+      opzioni: { bootcampAperto: BOOTCAMP_APERTO },
     },
   },
   {
@@ -112,7 +113,7 @@ const CASI: { id: string; etichetta: string; dati: DatiReferto }[] = [
       valoreOra: 45,
       profilo: { tasca: "mia", leva: "solo", intento: "imparare" },
       radiografia: { contesto: 1, ripetibilita: 0, correzione: 1, controllo: 1, diffusione: 0 },
-      opzioni: { bootcampAperto: true },
+      opzioni: { bootcampAperto: BOOTCAMP_APERTO },
     },
   },
 ];
