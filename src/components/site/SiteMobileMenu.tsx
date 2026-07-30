@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BOOKING_URL } from "./booking";
 
 /**
  * Menu mobile del sito B2B.
@@ -103,7 +104,7 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
     <>
       <button
         type="button"
-        className="smm-toggle lg:hidden"
+        className="smm-toggle 2xl:hidden"
         aria-expanded={aperto}
         aria-controls="smm-pannello"
         aria-label={aperto ? t.etichettaChiudi : t.etichettaApri}
@@ -114,7 +115,7 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
 
       <div
         id="smm-pannello"
-        className="smm-pannello lg:hidden"
+        className="smm-pannello 2xl:hidden"
         data-aperto={aperto ? "1" : "0"}
         /* inert quando e' chiuso: senza, le voci restano raggiungibili col
            tab anche se non si vedono. In React 19 e' un booleano vero, non
@@ -157,10 +158,17 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
           {t.nav.map(([slug, label], i) => {
             const attiva = pathname === `${base}/${slug}`;
             const isPrenota = slug === "roiometro";
+            /* "Prenota" e' l'unica voce che non porta a una pagina del
+               sito ma al calendario esterno, come la CTA della barra.
+               La freccia in salita gia' lo diceva; adesso ci porta. */
+            const href = isPrenota ? BOOKING_URL : `${base}/${slug}`;
+            const esterno = isPrenota;
             return (
               <Link
                 key={slug}
-                href={`${base}/${slug}`}
+                href={href}
+                target={esterno ? "_blank" : undefined}
+                rel={esterno ? "noopener noreferrer" : undefined}
                 onClick={() => setAperto(false)}
                 data-attiva={attiva ? "1" : "0"}
                 data-cta={isPrenota ? "1" : "0"}

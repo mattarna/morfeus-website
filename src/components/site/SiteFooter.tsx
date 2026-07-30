@@ -9,7 +9,10 @@ const GRID_BG = {
   backgroundColor: "var(--footer-bg, #0B0B0C)",
   backgroundImage:
     "linear-gradient(var(--footer-grid, rgba(140,165,247,.055)) 1px,transparent 1px),linear-gradient(90deg,var(--footer-grid, rgba(140,165,247,.055)) 1px,transparent 1px)",
-  backgroundSize: "36px 36px",
+  /* Legge il token invece di un 36 scritto a mano: cosi' quando la
+     griglia del sito cambia larghezza (--grid) il footer segue da solo.
+     Il fallback 44px serve solo se il footer finisse fuori da .ms. */
+  backgroundSize: "var(--grid, 44px) var(--grid, 44px)",
 } as const;
 
 /* Gli stessi tre della home, nello stesso ordine. Prima qui c'era
@@ -94,6 +97,18 @@ export function SiteFooter({ locale }: { locale: "it" | "en" }) {
       className="relative flex min-h-screen flex-col justify-center overflow-hidden text-carta"
       style={GRID_BG}
     >
+      {/* Sfumatura viola che sale dal basso, IDENTICA a quella del footer
+          della home (`.d26 .foot-panel::after` in demo.css): il piede del
+          sito vira al viola come li'. Sta sopra la griglia (background del
+          footer) e sotto il contenuto (z-10) e lo stacco in cima (z-[1]). */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          background:
+            "linear-gradient(to top, #110d33 0%, rgba(17,13,51,0.8) 25%, rgba(17,13,51,0.4) 50%, transparent 75%)",
+        }}
+      />
+
       {/* Gradiente di stacco in cima */}
       <div
         className="absolute inset-x-0 top-0 h-[120px] pointer-events-none z-[1]"

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LangSwitch } from "./LangSwitch";
 import { SiteMobileMenu } from "./SiteMobileMenu";
+import { BOOKING_URL } from "./booking";
 
 /**
  * La voce MARF punta a /marf, non piu' a /forge. Erano due pagine
@@ -85,29 +86,48 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
             vero, che vive in public/images/brand/morfeus-mark.png ed
             e' gia' quello usato da home, footer e header dei funnel.
             Un logo non si ricompone a mano, si usa. */}
-        <Link href={`${base}/home-2026`} className="flex items-center" aria-label={t.home}>
-          <Image
-            src="/images/brand/morfeus-mark.png"
-            alt="Morfeus"
-            width={2064}
-            height={267}
-            priority
-            /* Appiglio per il loader C: e' qui che la M composta va ad
-               atterrare. Il loader MISURA questo rettangolo invece di
-               tenersi coordinate scritte a mano, che sarebbero giuste
-               su un solo schermo. Se sparisce, il loader rinuncia al
-               volo e chiude in dissolvenza. */
-            data-marchio="testata"
-            /* Il lockup e' largo 7,7 volte la sua altezza: a 20px occupa
-               155px, che su uno schermo da 375 sono il 41% della barra e
-               non lasciano spazio a CTA e menu. A 15px sta sui 116, la
-               misura che ha sulla barra del sito vecchio. */
-            className="h-[15px] w-auto sm:h-[20px]"
-          />
-        </Link>
+        {/* Gruppo sinistro: marchio + (sotto xl) lo switcher lingua.
+            Su schermi piccoli la lingua vive qui, a sinistra accanto al
+            logo, invece di stare a destra appiccicata alla CTA dove si
+            accavallava. Sopra xl la nav piena c'e' e la lingua torna a
+            destra (vedi sotto). */}
+        <div className="flex items-center gap-[clamp(12px,2vw,20px)]">
+          <Link href={base} className="flex items-center" aria-label={t.home}>
+            <Image
+              src="/images/brand/morfeus-mark.png"
+              alt="Morfeus"
+              width={2064}
+              height={267}
+              priority
+              /* Appiglio per il loader C: e' qui che la M composta va ad
+                 atterrare. Il loader MISURA questo rettangolo invece di
+                 tenersi coordinate scritte a mano, che sarebbero giuste
+                 su un solo schermo. Se sparisce, il loader rinuncia al
+                 volo e chiude in dissolvenza. */
+              data-marchio="testata"
+              /* Il lockup e' largo 7,7 volte la sua altezza: a 20px occupa
+                 155px, che su uno schermo da 375 sono il 41% della barra e
+                 non lasciano spazio a CTA e menu. A 15px sta sui 116, la
+                 misura che ha sulla barra del sito vecchio. */
+              className="h-[15px] w-auto sm:h-[20px]"
+            />
+          </Link>
 
-        {/* Nav reale cross-pagina */}
-        <div className="hidden items-center gap-[clamp(22px,2.2vw,34px)] text-[16px] uppercase tracking-[0.06em] text-carta/75 lg:flex">
+          {/* Lingua sempre a sinistra accanto al logo, da sm (640) in su,
+              a ogni larghezza (scelta di Matt 2026-07-30): non salta piu'
+              a destra con la nav piena, dove si incastrava tra INSIGHTS e
+              la CTA. Sul telefono (<640) NO: la barra e' stretta e la
+              lingua resta nel pannello del burger. */}
+          <span className="hidden sm:inline-flex">
+            <LangSwitch locale={locale} label={t.langLabel} />
+          </span>
+        </div>
+
+        {/* Nav reale cross-pagina. Compare da 2xl (1536): sotto, barra
+            compatta col burger. Era xl (1280), ma il MacBook Air (1440) la
+            mostrava e va tenuta a burger fin lassu'; la nav piena resta ai
+            display grandi. */}
+        <div className="hidden items-center gap-[clamp(22px,2.2vw,34px)] text-[16px] uppercase tracking-[0.06em] text-carta/75 2xl:flex">
           {t.nav.map(([slug, label]) => (
             <Link
               key={label}
@@ -120,22 +140,22 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
         </div>
 
         <div className="flex items-center gap-[clamp(10px,1.6vw,22px)]">
-          {/* Toggle lingua: stessa forma e stessa posizione della home,
-              accanto alla CTA. E' un'isola client perche' deve sapere su
-              quale pagina sei, per portarti alla stessa nell'altra lingua.
-              Sotto `lg` sparisce di qui e ricompare in fondo al pannello
-              del menu: nella barra stretta era uno dei tre oggetti che si
-              accavallavano. */}
-          <span className="hidden lg:inline-flex">
-            <LangSwitch locale={locale} label={t.langLabel} />
-          </span>
-
+          {/* La lingua NON sta piu' qui a destra: e' sempre a sinistra,
+              accanto al logo. A destra restano solo CTA e (sotto xl) burger. */}
           {/* CTA firma. `btn-bar` la rimpicciolisce: il .btn del sistema e'
               tarato sui bottoni dentro le sezioni, dove deve pesare; in una
               barra alta 68px lo stesso bottone diventa il primo oggetto che
               vedi, prima del logo. La classe sta in site.css perche' le
               utility Tailwind (0,1,0) perdono contro `.ms .btn` (0,2,0). */}
-          <a href={`${base}/roiometro`} className="btn btn-1 btn-bar whitespace-nowrap">
+          {/* "Prenota una chiamata" porta alla prenotazione, non al
+              ROIometro: era l'unica CTA del sito che finiva sul
+              calcolatore invece che sul calendario. */}
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-1 btn-bar whitespace-nowrap"
+          >
             <span className="hidden sm:inline">{t.cta}</span>
             <span className="sm:hidden">{t.ctaBreve}</span>
             {/* freccia in salita: la stessa della barra del sito vecchio */}

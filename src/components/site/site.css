@@ -36,7 +36,8 @@
   --ok: #1e9e5a; /* stato: ok — fuori palette, resta */
   --grid-chiaro: rgba(83, 61, 252, 0.05);
   --grid-scuro: rgba(140, 165, 247, 0.06);
-  --grid: 36px;
+  --grid: 44px; /* era 36px · allargata il 2026-07-30. Un token solo:
+                   header, fasce, home-2026 e loader la leggono da qui. */
   --testo-carta-2: #3a3b45; /* DERIVATO: secondario su ghost-white */
   --testo-ink-2: #c2c6d4; /* DERIVATO: secondario su night */
   --testo-ink-3: #aeb2c2; /* DERIVATO: terziario su night */
@@ -1780,7 +1781,13 @@
   bottom: 0;
   transform: translate(-50%, 32%);
   width: min(1100px, 86vw);
-  aspect-ratio: 4 / 1;
+  /* NIENTE aspect-ratio: il lockup e' 2064x267 (7,73:1), non 4:1. Un
+     <img> con width + aspect-ratio e senza object-fit stira il raster
+     dentro la scatola sbagliata, e la parola "Morfeus" usciva
+     schiacciata. height:auto lascia il rapporto vero dell'immagine.
+     La home non aveva il problema perche' li' e' <Image fill> con
+     object-fit:contain. */
+  height: auto;
   opacity: 0.13;
   pointer-events: none;
   mix-blend-mode: lighten;
@@ -2355,15 +2362,13 @@
   color: var(--carta);
 }
 
-/* Da 1024px in su il menu mobile NON esiste: le voci sono in barra.
-   Le classi `lg:hidden` sul bottone e sul pannello non bastavano: sono
-   utility Tailwind (0,1,0) e perdono contro `.ms .smm-toggle` (0,2,0), che
-   imposta `display: inline-flex`. Risultato, il bottone MENU restava
-   visibile accanto alla nav su ogni pagina.
-   E' la stessa gara di specificita' che il repo documenta per `.btn-bar`:
-   contro le regole del design system le utility non vincono, e la soluzione
-   e' una regola pari, non una classe in piu'. */
-@media (min-width: 1024px) {
+/* Da 1536px (2xl) in su il menu mobile NON esiste: le voci sono in barra.
+   Era 1024, poi 1280; ora 1536 perche' il MacBook Air (1440) va tenuto a
+   burger. Sotto 1536 barra compatta col burger; sopra, nav piena.
+   Le classi `2xl:hidden` sul bottone e sul pannello non bastano da sole:
+   sono utility Tailwind (0,1,0) e perdono contro `.ms .smm-toggle` (0,2,0)
+   che impone display:inline-flex. Serve una regola pari, non una classe. */
+@media (min-width: 1536px) {
   .ms .smm-toggle,
   .ms .smm-pannello {
     display: none;
@@ -2551,11 +2556,13 @@
   z-index: 65;
 }
 
-/* La home nasconde la nav sotto i 1024px (`.topnav { display: none }`) e
-   sotto `lg` il toggle lingua esce dalla barra: sta in fondo al pannello,
-   come sulle altre pagine. */
+/* Sotto i 1024px nascondi SOLO la lingua di destra (quella accanto alla
+   CTA). La lingua di sinistra (.langswitch-left, nel gruppo del logo) deve
+   restare visibile anche sul telefono: e' la barra compatta decisa il
+   2026-07-30, con la lingua a sinistra invece che sepolta nel pannello.
+   Prima qui c'era `.langswitch` liscio, che spegneva ANCHE quella sinistra. */
 @media (max-width: 1023px) {
-  .ms.d26 .top-header .langswitch {
+  .ms.d26 .top-header .topright .langswitch {
     display: none;
   }
   /* E la barra prende un fondo. Da desktop e' trasparente e si ricolora
@@ -2583,19 +2590,22 @@
    qualcosa esce, ed e' esattamente cosi' che il bottone finiva sopra il
    toggle lingua. Qui si stringe quel tanto che basta. */
 @media (max-width: 640px) {
-  /* 16px e non meno: la soglia della CTA e' scritta sopra, su `.ms .btn`,
-     e vale anche qui. Lo spazio si recupera dall'imbottitura e dal logo. */
+  /* 13px: PRENOTA e MENU alla misura del marchio "Morfeus" accanto (il
+     logo reso e' alto ~13px), scelta di Matt 2026-07-30. Prima erano 16 e
+     pesavano piu' del logo. Restano uguali fra loro; la spaziatura e' in
+     em, quindi scende col corpo da sola. */
   .ms .btn.btn-bar {
-    font-size: 16px;
+    font-size: 13px;
     padding: 8px 14px;
   }
-  /* Solo l'imbottitura si stringe: corpo, peso e spaziatura restano quelli
-     della CTA accanto, o i due testi tornano a essere diversi. */
   .ms .smm-toggle {
+    font-size: 13px;
     padding: 8px 13px;
   }
-  /* Stessa stretta sulla barra della home, che ha una regola sua. */
+  /* La barra della HOME ha una CTA sua (.top-header .btn, non .btn-bar):
+     stessa misura, o su quella barra i due testi tornano diversi. */
   .ms.d26 .top-header .btn {
+    font-size: 13px;
     padding: 8px 14px;
   }
   .ms.d26 .top-header .wordmark img {

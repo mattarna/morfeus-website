@@ -99,7 +99,14 @@ export function HomeHeader() {
               }} 
               className="relative select-none focus:outline-hidden focus:ring-0"
             >
-              <div className="h-3 md:h-4 w-[100px] md:w-[130px] relative">
+              {/* L'appiglio sta sul riquadro e non sull'immagine: con
+                  `fill` + object-contain il marchio e' piu' piccolo del
+                  riquadro e ci sta centrato dentro, e il loader rifa'
+                  quel conto per sapere dove atterrare davvero. */}
+              <div
+                className="h-3 md:h-4 w-[100px] md:w-[130px] relative"
+                data-marchio="testata"
+              >
                 <Image
                   src="/images/brand/morfeus-mark.png"
                   alt="Morfeus Logo"
