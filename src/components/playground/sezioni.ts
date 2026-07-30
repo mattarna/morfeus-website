@@ -37,8 +37,13 @@ export const CONTATTI = {
   instagram: "https://www.instagram.com/morfeushub.ai/",
 } as const;
 
+/* Le pagine legali sono quelle di Morfeus, non copie del Playground:
+   stesso ecosistema, stesso titolare del trattamento. Indirizzi
+   ASSOLUTI, verificati 200 online il 2026-07-30 (morfeushub.com/it/...):
+   un link relativo qui punterebbe a playground.morfeushub.com, dove
+   quelle pagine non esistono. */
 export const LEGALE = {
   piva: "14209210963",
-  privacy: "/it/privacy",
-  cookie: "/it/cookies",
+  privacy: "https://morfeushub.com/it/privacy",
+  cookie: "https://morfeushub.com/it/cookies",
 } as const;

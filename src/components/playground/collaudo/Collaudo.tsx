@@ -91,7 +91,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
   const [r, setR] = useState<Risposte>(VUOTE);
   const [scelta, setScelta] = useState<number | null>(null);
   const [verdetto, setVerdetto] = useState<string | null>(null);
-  const [gate, setGate] = useState({ nome: "", email: "", telefono: "" });
+  const [gate, setGate] = useState({ nome: "", email: "", telefono: "", consenso: false });
   const [erroreGate, setErroreGate] = useState(false);
 
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -211,7 +211,9 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
 
   function inviaGate() {
     const mailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(gate.email.trim());
-    if (!gate.nome.trim() || !mailOk) {
+    /* Il consenso e' bloccante come il nome e la mail: senza, non
+       abbiamo una base per trattare il dato e non si prosegue. */
+    if (!gate.nome.trim() || !mailOk || !gate.consenso) {
       setErroreGate(true);
       return;
     }
@@ -363,7 +365,28 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
                 <input type="tel" value={gate.telefono} onChange={(e) => setGate({ ...gate, telefono: e.target.value })} autoComplete="tel" />
               </label>
             </div>
-            {erroreGate ? <p className="cl-errore">Servono il nome e una mail valida.</p> : null}
+            <label className="cl-consenso">
+              <input
+                type="checkbox"
+                checked={gate.consenso}
+                onChange={(e) => setGate({ ...gate, consenso: e.target.checked })}
+              />
+              <span>
+                Ho letto la{" "}
+                <a href="https://morfeushub.com/it/privacy" target="_blank" rel="noreferrer">
+                  privacy policy
+                </a>{" "}
+                e acconsento al trattamento dei dati per ricevere il referto e i contenuti del
+                Playground.
+              </span>
+            </label>
+            {erroreGate ? (
+              <p className="cl-errore">
+                {!gate.consenso && gate.nome.trim() && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(gate.email.trim())
+                  ? "Manca la spunta sul consenso."
+                  : "Servono il nome, una mail valida e il consenso."}
+              </p>
+            ) : null}
             <button className="cl-via" onClick={inviaGate}>Mostrami il referto →</button>
           </div>
         ) : null}

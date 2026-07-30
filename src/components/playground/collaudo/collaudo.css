@@ -448,6 +448,34 @@
   outline: none;
   border-color: var(--stato);
 }
+/* La casella del consenso. Sta sotto i campi, con la spunta
+   allineata alla prima riga del testo (align-items:flex-start), non
+   centrata, se no su due righe la spunta galleggia in mezzo. */
+.pg26 .cl-consenso {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.pg26 .cl-consenso input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--stato);
+  cursor: pointer;
+}
+.pg26 .cl-consenso span {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--body);
+}
+.pg26 .cl-consenso a {
+  color: var(--stato);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .pg26 .cl-errore {
   margin-top: 16px;
   font-size: 16px;

@@ -31,10 +31,10 @@ export const metadata: Metadata = {
     locale: "it_IT",
   },
   twitter: { card: "summary_large_image", title: TITOLO, description: DESCRIZIONE },
-  /* Finche' la pagina non e' finita (manca il collaudo) resta fuori
-     dall'indice: una landing la cui unica porta non funziona non deve
-     entrare nei risultati. Si toglie quando il collaudo e' attaccato. */
-  robots: { index: false, follow: false },
+  /* Indicizzabile: il collaudo e' attaccato e la landing e' la casa
+     pubblica del Playground (Matt, 2026-07-30). Il canonical del layout
+     punta alla radice del sottodominio, non a /playground. */
+  alternates: { canonical: "https://playground.morfeushub.com" },
 };
 
 export default function PlaygroundPage() {
