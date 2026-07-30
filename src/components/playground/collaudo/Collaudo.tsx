@@ -34,6 +34,8 @@ import {
   pagaLAzienda,
 } from "./domande";
 import type { Dimensione, Intento, Punti } from "./motore";
+import { calcolaConto, collauda } from "./motore";
+import { DICHIARATI } from "./copy";
 import { Referto } from "./Referto";
 import "./collaudo.css";
 
@@ -93,6 +95,16 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
   const [verdetto, setVerdetto] = useState<string | null>(null);
   const [gate, setGate] = useState({ nome: "", email: "", telefono: "", consenso: false });
   const [erroreGate, setErroreGate] = useState(false);
+  /* Un id per collaudo e l'orario d'apertura: servono a legare la riga
+     del foglio agli eventi e a misurare quanto ci mette una persona.
+     Nascono alla prima resa e non cambiano piu'. */
+  const sessione = useRef<{ id: string; inizio: number }>({
+    id:
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Math.round(performance.now())),
+    inizio: performance.now(),
+  });
 
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
@@ -217,8 +229,81 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
       setErroreGate(true);
       return;
     }
-    /* TODO Brevo: qui il contatto con tutti i campi della spec §7 */
+    salvaCollaudo();
     setFase("referto");
+  }
+
+  /* Manda il contatto a Brevo e la riga al foglio. NON blocca il
+     referto: parte e basta, e se la rete fallisce il referto si vede
+     lo stesso. keepalive tiene viva la richiesta anche se la pagina
+     cambia sotto (qui non cambia, ma e' la stessa spesa e non fa male).
+     Il calcolo di livello e conto e' lo stesso del referto, dalle
+     stesse funzioni pure: due conti separati divergerebbero. */
+  function salvaCollaudo() {
+    const ruolo = RUOLI_OPZIONI.find((x) => x.id === r.ruolo);
+    const radiografia = {
+      contesto: r.punti.contesto ?? 0,
+      ripetibilita: r.punti.ripetibilita ?? 0,
+      correzione: r.punti.correzione ?? 0,
+      controllo: r.punti.controllo ?? 0,
+      diffusione: r.punti.diffusione ?? 0,
+    };
+    const profilo = {
+      tasca: ruolo?.tasca ?? "mia",
+      leva: ruolo?.leva ?? "solo",
+      intento: r.intento,
+    };
+    const esito = collauda(radiografia, profilo, { bootcampAperto: BOOTCAMP_APERTO });
+    const conto = calcolaConto(esito.livello.numero, r.ore, r.valoreOra, ruolo?.team ?? 0);
+
+    const payload = {
+      id: sessione.current.id,
+      dispositivo: window.matchMedia("(max-width: 760px)").matches ? "telefono" : "computer",
+      durata_sec: Math.round((performance.now() - sessione.current.inizio) / 1000),
+
+      nome: gate.nome.trim(),
+      email: gate.email.trim(),
+      telefono: gate.telefono.trim(),
+      consenso: gate.consenso,
+
+      mestiere: r.mestiere,
+      ruolo: r.ruolo,
+      tasca: profilo.tasca,
+      leva: profilo.leva,
+      intento: r.intento,
+      urgenza: r.urgenza,
+
+      dichiarato: r.dichiarato,
+      atteso: DICHIARATI[r.dichiarato]?.atteso,
+      voto: esito.livello.voto,
+      livello: esito.livello.numero,
+      livello_nome: esito.livello.nome,
+      bloccato_da: esito.livello.bloccatoDa ?? "",
+      punto_debole: esito.puntoDebole,
+
+      p_contesto: radiografia.contesto,
+      p_ripetibilita: radiografia.ripetibilita,
+      p_correzione: radiografia.correzione,
+      p_controllo: radiografia.controllo,
+      p_diffusione: radiografia.diffusione,
+
+      ore_settimana: r.ore,
+      valore_ora: r.valoreOra,
+      risparmio_annuo: conto.euroMese * 12,
+
+      gradino: esito.proposta.gradino,
+      bootcamp_aperto: BOOTCAMP_APERTO,
+    };
+
+    void fetch("/api/playground/collaudo", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch(() => {
+      /* Nessun errore a schermo: il salvataggio e' un fatto nostro,
+         non un problema della persona che ha appena finito il test. */
+    });
   }
 
   const avanzamento = fase === "domande" ? PROGRESSO[passo] : fase === "intro" ? 0 : 100;
