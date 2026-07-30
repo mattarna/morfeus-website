@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import { StructuredData } from "@/components/shared/SEO/StructuredData";
 import { HtmlLang } from "@/components/shared/HtmlLang";
+import { PageTransitionProvider } from "@/components/shared/PageTransition";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -113,7 +114,7 @@ export default async function LocaleLayout(props: {
       <HtmlLang locale={locale} />
       <StructuredData locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
-        {children}
+        <PageTransitionProvider>{children}</PageTransitionProvider>
       </NextIntlClientProvider>
     </>
   );
