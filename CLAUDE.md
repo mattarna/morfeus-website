@@ -21,7 +21,64 @@ npm run check:public-assets[:strict]  # policy asset in public/
 
 **La CI (`.github/workflows/quality-gates.yml`) gira `npm ci → check:public-assets → lint → typecheck → test → build` su ogni push/PR.** Prima di pushare, gira la sequenza in locale.
 
-## Mappa del repo
+## Le due metà del repo
+
+Il repo contiene **due sistemi diversi** che condividono solo il dominio. Capire in quale ti trovi è la prima cosa da fare:
+
+|                    | **Sito madre**                        | **Funnel**                               |
+| ------------------ | ------------------------------------- | ---------------------------------------- |
+| URL                | `/{it,en}/<pagina>`                   | `/<slug>` (senza lingua)                 |
+| Dove               | `src/app/[locale]/…`                  | `src/funnels/<nome>/config.json`         |
+| Come si costruisce | componenti React scritti a mano       | **config-driven**: JSON → `componentMap` |
+| Guscio             | `SiteShell` (header + footer + `.ms`) | `funnel-internal` + preset               |
+| Aggiungerne uno    | 6 registri da toccare (sotto)         | runbook freebie (sotto)                  |
+
+**Mappa completa delle pagine: [`docs/site-tree.md`](docs/site-tree.md). Messa in produzione: [`docs/go-live.md`](docs/go-live.md).**
+
+## Sito madre — pagine 2026
+
+Il restyle 2026 (chi-siamo, metodo, marf, casi, insights, glossario, impara-ai, faq, roiometro) vive sotto `src/app/[locale]/`. Ogni pagina è un **server component** avvolto in `SiteShell`.
+
+| Percorso                                 | Cosa                                                                                                                |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `src/components/site/SiteShell.tsx`      | Guscio: `.ms` + font + header + footer + loader. **Tutto ciò che è "del sito" si monta qui**, non pagina per pagina |
+| `src/components/site/SiteHeader.tsx`     | Barra. Nav piena da **1536px** (`2xl`), sotto barra compatta col burger                                             |
+| `src/components/site/SiteMobileMenu.tsx` | Burger + pannello, visibile sotto 1536                                                                              |
+| `src/components/site/SiteFooter.tsx`     | Footer con griglia, filigrana M e sfumatura viola                                                                   |
+| `src/components/site/site.css`           | **Design system**: token `.ms`, fasce `.band.ink` / `.band.carta`, bottoni, header, footer                          |
+| `src/components/pagine/kit.css`          | Dispositivi delle pagine: `quadro`, `readout`, `quota`, `scheda`                                                    |
+| `src/components/site/loader/`            | Loader d'ingresso (una volta per sessione, chiave `morfeus_loaded`)                                                 |
+| `src/components/site/booking.ts`         | `BOOKING_URL` — **unica fonte** per "Prenota una chiamata"                                                          |
+| `src/components/home2026/`               | Home 2026: scroll a scatti (deck) + `demo.css`, skin `.d26`                                                         |
+
+### Convenzioni che non si negoziano
+
+- **Fasce, non pagine bianche.** Ogni sezione è `<section className="band ink pg">` o `band carta pg`. Il colore dei token cambia dentro la fascia: un valore tarato su `ink` non regge su `carta`.
+- **Il marchio non si ridisegna.** Si usano i file: `/images/brand/morfeus-mark.png` (lockup 2064×267) e `/logo/m-w.png` (sola M). Mai ricomporlo con font + SVG.
+- **Griglia di fondo: un token solo.** `--grid` in `site.css` (oggi 44px). Chi disegna una griglia legge `var(--grid)`, non un numero.
+- **Prenotare = `BOOKING_URL`.** Nessuna CTA "prenota" deve puntare a una pagina interna.
+
+### Aggiungere una pagina al sito madre — i 6 registri
+
+Toccarne uno solo lascia il sito disallineato. In ordine:
+
+1. `src/app/[locale]/<slug>/page.tsx` — la pagina, dentro `SiteShell`, con `buildLocaleAlternates(<slug>, locale)` nei metadata (canonical + hreflang).
+2. `src/lib/seo/public-indexing.ts` → `INDEXABLE_LOCALE_PATHS`. **Se non è qui, non entra in sitemap.**
+3. `src/lib/reserved-slugs.ts` — così nessun funnel può rubare lo slug.
+4. `public/llms.txt` — se va offerta agli agenti AI.
+5. `SiteHeader` / `SiteMobileMenu` / `SiteFooter` — se va in navigazione.
+6. `docs/site-tree.md` — l'albero.
+
+Se **sostituisce** una pagina esistente, aggiungi anche il redirect in `next.config.mjs` (`permanent: true`): il 308 passa il posizionamento, cancellare e basta lo brucia.
+
+## Worktree
+
+Il repo lavora a **worktree paralleli**, uno per filone. `git worktree list` per vederli.
+`mf-pages` (`exp/pagine-2026`) = pagine 2026 · `mf-playground` = sotto-brand Playground · `mf-clash`, `pd2026` = prove font.
+
+⚠️ **Più sessioni possono scrivere sullo stesso worktree.** Prima di committare, `git status`: se vedi file che non hai toccato, sono di un'altra sessione. **Stagia solo i tuoi path** (`git add <path>`), mai `git add -A`, o ti porti dentro il lavoro in corso di qualcun altro. È già successo.
+
+## Mappa del repo — funnel
 
 | Percorso                                              | Cosa                                                                                                              |
 | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -79,9 +136,11 @@ I componenti freebie condivisi (`FreebieHero`, `FreebieThankYou`, `FreebieWebina
 
 ## Altri doc
 
+- **`docs/site-tree.md`** — mappa completa delle pagine, redirect, cosa è live e cosa no
+- **`docs/go-live.md`** — checklist di messa in produzione, decisioni aperte, audit
 - `.cursor/rules/styling-standards.mdc` — CSS vs Tailwind, specificità, font, leggibilità
 - `.cursor/rules/verification-standards.mdc` — come verificare davvero una modifica
 - `.cursor/rules/*.mdc` — regole dettagliate (architettura, componenti, SEO, visual identity) per Cursor
 - `docs/brevo.md` — integrazione Brevo (liste, attributi, API key)
-- `docs/site-tree.md` — mappa pagine; `src/funnels/README.md` — pattern funnel
+- `src/funnels/README.md` — pattern funnel
 - `.planning/` — stato GSD (PROJECT, ROADMAP, STATE, task)
