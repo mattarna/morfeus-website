@@ -6,17 +6,59 @@
  */
 
 import Image from "next/image";
-import { Icon } from "@iconify/react";
 import { useLocale, useTranslations } from "next-intl";
 import { jumpToIndex } from "../engine/useDemoScroll";
 
 /* ============ [3] SERVICES · CARTA ============ */
 
-/* Le icone sono le stesse della home di produzione: lucide:network per
-   MARF (il Context Hub e' una rete di nodi) e lucide:library per Morf Lab. */
+/* Le icone sono INLINE, non piu' via @iconify/react.
+   -----------------------------------------------------------------
+   Iconify scarica il disegno da api.iconify.design al primo render:
+   dove quella richiesta non passa (blocco privacy, rete d'ufficio,
+   offline) la casella resta vuota. E' successo, ed e' il motivo per
+   cui qui le due icone mancavano pur essendo giuste nel codice.
+   I due path sono quelli veri di lucide (network per MARF, la rete di
+   nodi del Context Hub; library per Morf Lab), copiati dal disegno
+   che Iconify serviva: stesso segno, ma dentro il bundle e sempre
+   presente. Il resto del sito usa ancora Iconify a runtime: e' un
+   rischio da chiudere a parte. */
+const ICONE = {
+  network: (
+    <>
+      <rect width="6" height="6" x="16" y="16" rx="1" />
+      <rect width="6" height="6" x="2" y="16" rx="1" />
+      <rect width="6" height="6" x="9" y="2" rx="1" />
+      <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3m-7-4V8" />
+    </>
+  ),
+  library: <path d="m16 6l4 14M12 6v14M8 8v12M4 4v16" />,
+} as const;
+
+function IconaLucide({ nome }: { nome: keyof typeof ICONE }) {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {ICONE[nome]}
+    </svg>
+  );
+}
+
+/* La card MARF porta a /marf, non a /forge. Erano due pagine che parlano
+   entrambe di MARF (il metaTitle di /forge dice ancora "MARF · Operating
+   Partner AI") e la home ne linkava una mentre il menu ne linkava l'altra:
+   la stessa card diceva "Esplora MARF" e portava alla pagina vecchia. */
 const SERVICE_KEYS = [
-  { key: "forge", href: "/forge", icon: "lucide:network" },
-  { key: "lab", href: "/lab", icon: "lucide:library" },
+  { key: "forge", href: "/marf", icon: "network" },
+  { key: "lab", href: "/lab", icon: "library" },
 ] as const;
 
 export function ServicesPanel({ active }: { active: boolean }) {
@@ -40,7 +82,7 @@ export function ServicesPanel({ active }: { active: boolean }) {
             <div className={`svc-card fx d${3 + i}`} key={key}>
               <div className="ck-row">
                 <span className="ck-icon" aria-hidden="true">
-                  <Icon icon={icon} width={22} />
+                  <IconaLucide nome={icon} />
                 </span>
                 <span className="ck">{t(`items.${key}.name`)}</span>
               </div>

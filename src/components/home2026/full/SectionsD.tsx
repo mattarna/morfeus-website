@@ -8,7 +8,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { jumpToIndex } from "../engine/useDemoScroll";
 
 const BOOKING_URL =
   "https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website";
@@ -120,17 +119,22 @@ export function FooterPanel({ active }: { active: boolean }) {
   const locale = useLocale();
   const year = new Date().getFullYear();
 
-  const navItems = [
-    { label: t("links.start"), index: 0 },
-    { label: t("links.vision"), index: 1 },
-    { label: t("links.problem"), index: 2 },
-    { label: t("links.services"), index: 3 },
-    { label: t("links.method"), index: 5 },
-    { label: t("links.roi"), index: 9 },
-    { label: t("links.roiometer"), index: 10 },
-    { label: t("links.cases"), index: 11 },
-    { label: t("links.faq"), index: 12 },
-    { label: t("links.book"), index: 13 },
+  /* La colonna "Navigazione" elenca le PAGINE del sito, come il menu in
+     testata, non le sezioni di questa pagina. Prima erano salti interni
+     (jumpToIndex) alle fasce dello scroll-deck: utile mentre sei sulla
+     home, inutile come mappa del sito. Stesse voci e stessi slug del
+     menu; "Prenota" e' l'unica che esce, verso il calendario. */
+  const pagine: { label: string; href: string; esterno?: boolean }[] = [
+    { label: locale === "it" ? "Chi siamo" : "About", href: `/${locale}/chi-siamo` },
+    { label: locale === "it" ? "Metodo" : "Method", href: `/${locale}/metodo` },
+    { label: "MARF", href: `/${locale}/marf` },
+    { label: "LAB", href: `/${locale}/lab` },
+    { label: locale === "it" ? "Casi" : "Cases", href: `/${locale}/casi` },
+    { label: "Insights", href: `/${locale}/insights` },
+    { label: locale === "it" ? "Glossario" : "Glossary", href: `/${locale}/glossario` },
+    { label: locale === "it" ? "Impara l'AI" : "Learn AI", href: `/${locale}/impara-ai` },
+    { label: "FAQ", href: `/${locale}/faq` },
+    { label: locale === "it" ? "Prenota" : "Book", href: BOOKING_URL, esterno: true },
   ];
 
   return (
@@ -141,15 +145,16 @@ export function FooterPanel({ active }: { active: boolean }) {
         {/* Col 1: navigazione */}
         <div>
           <h4>{t("nav")}</h4>
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
+          {pagine.map((p) => (
+            <a
+              key={p.label}
               className="flink"
-              onClick={() => jumpToIndex(item.index)}
+              href={p.href}
+              target={p.esterno ? "_blank" : undefined}
+              rel={p.esterno ? "noopener noreferrer" : undefined}
             >
-              {item.label}
-            </button>
+              {p.label}
+            </a>
           ))}
         </div>
 

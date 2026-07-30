@@ -20,7 +20,7 @@
 /* min-height allineata a DESKTOP_MIN_HEIGHT in useDemoScroll.ts: sotto
    quella soglia i pannelli NON vanno ad altezza fissa, o lo zoom al 200%
    taglia il contenuto senza modo di raggiungerlo (WCAG 1.4.4). */
-@media (min-width: 1280px) and (min-height: 660px) {
+@media (min-width: 1280px) and (min-height: 780px) {
   .d26 section.panel {
     height: 100vh;
     min-height: 0;
@@ -219,9 +219,30 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-@media (min-width: 1024px) {
+/* Nav piena solo da 1536 (2xl). Era 1280, ma il MacBook Air (1440) la
+   mostrava e Matt la vuole a burger su quegli schermi: la nav completa
+   torna solo sui display grandi, dove ha spazio davvero. Sotto 1536
+   vince la barra compatta (logo · lingua · … · CTA · burger). */
+@media (min-width: 1536px) {
   .d26 .top-header .topnav {
     display: flex;
+  }
+}
+
+/* Gruppo sinistro: marchio + lingua accostati, come cluster unico.
+   La lingua-sinistra sta qui a ogni larghezza da 640 in su (scelta di
+   Matt 2026-07-30): non salta piu' a destra con la nav piena. */
+.d26 .top-header .hleft {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+}
+/* Sul telefono (<640) la lingua esce dalla barra e torna nel pannello del
+   burger: la barra stretta (logo + IT/EN + PRENOTA + MENU) si toccava.
+   Due classi per battere la base `.langswitch` (0,3,0) che sta piu' sotto. */
+@media (max-width: 639px) {
+  .d26 .top-header .hleft .langswitch-left {
+    display: none;
   }
 }
 .d26 .top-header .topnav a {
@@ -292,7 +313,10 @@
   flex-direction: column;
   gap: 13px;
 }
-@media (min-width: 1280px) {
+/* La rail (i pallini di navigazione del deck) compare solo quando il
+   deck e' attivo: stesse condizioni della soglia sopra (>=1280 e >=780).
+   In scroll nativo, senza pinning, i pallini non avrebbero cosa pilotare. */
+@media (min-width: 1280px) and (min-height: 780px) {
   .d26 .demo-rail {
     display: flex;
   }
@@ -710,6 +734,45 @@
   font-size: clamp(17px, 1.4vw, 19px);
   line-height: 1.6;
   color: var(--testo-ink-2);
+}
+
+/* ---------- VALUE LEAK · compressione per laptop bassi ----------
+   E' l'UNICO pannello che, col deck attivo, non ci sta in altezza sul
+   MacBook Air (contenuto ~785px, box utile ~670 dopo l'imbottitura
+   .tight). Sotto i 900px d'altezza lo stringo quel tanto che basta per
+   entrare intero, senza rimpicciolire gli altri 12 (ci stanno gia').
+   Le leve, in ordine di resa: l'imbottitura verticale delle 3 righe (il
+   grosso), i margini fra i blocchi, un filo sul titolo. Sta DOPO la
+   regola .tight del deck, cosi' a pari specificita' vince qui.
+   Sotto i 780px non serve: li' il deck e' spento e si scorre. */
+@media (min-width: 1280px) and (max-height: 899px) {
+  /* meno aria sopra e sotto al pannello: 140px di imbottitura -> 96 */
+  .d26 section.panel.tight {
+    padding-top: 78px;
+    padding-bottom: 24px;
+  }
+  .d26 .prob-head h2 {
+    font-size: clamp(26px, 2.6vw, 38px);
+  }
+  .d26 .leaks {
+    margin-top: 14px;
+  }
+  /* il grosso del recupero: 3 righe x ~28px di padding risparmiato */
+  .d26 .leak-row {
+    padding: 12px 0;
+  }
+  .d26 .leak-row h3 {
+    font-size: clamp(16px, 1.7vw, 21px);
+    line-height: 1.28;
+  }
+  .d26 .leak-row p {
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.48;
+  }
+  .d26 .leak-closing {
+    margin-top: 14px;
+    font-size: clamp(15px, 1.3vw, 17px);
+  }
 }
 
 /* ---------- SERVICES ---------- */
@@ -2057,8 +2120,19 @@
     transparent 75%
   );
 }
-.d26 section.panel.foot-panel > * {
+/* Solo la griglia va portata sopra il gradiente `::after` col trucco
+   position:relative. La filigrana M e lo stato sistema NON: sono
+   decorazioni position:absolute, e un `> *` cieco le riportava a
+   `relative`, buttandole IN FLUSSO come fratelli flex della griglia.
+   Il risultato: i tre si spartivano la riga, la M si rimpiccioliva a
+   274px e sbordava a destra, la griglia si stringeva a 691. Bastava
+   non toccargli la posizione: lo z-index funziona anche sull'absolute. */
+.d26 section.panel.foot-panel > .foot-grid {
   position: relative;
+  z-index: 1;
+}
+.d26 section.panel.foot-panel > .foot-mark,
+.d26 section.panel.foot-panel > .foot-status {
   z-index: 1;
 }
 

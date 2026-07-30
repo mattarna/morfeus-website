@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
+import { BOOKING_URL } from "@/components/site/booking";
 import { HomeBackground } from "@/components/fixed/HomeBackground";
 import { SiteMobileMenu } from "@/components/site/SiteMobileMenu";
 import { DemoStage, type RailPoint } from "../engine/DemoStage";
@@ -98,14 +99,28 @@ export function Home2026() {
       {/* Logo ufficiale: e' un'immagine (mark + wordmark gia' disegnati),
           non un SVG piu' la parola "Morfeus" scritta in Clash Display. Il
           wordmark del brand ha un lettering proprio, non e' un font. */}
-      <button
-        className="wordmark"
-        type="button"
-        onClick={() => jumpToIndex(0)}
-        aria-label="Morfeus, torna all'inizio"
-      >
-        <Image src="/images/brand/morfeus-mark.png" alt="Morfeus" width={130} height={16} priority />
-      </button>
+      {/* Gruppo sinistro: marchio + (sotto xl) lo switcher lingua, come
+          sulle altre pagine. Su schermi piccoli la lingua vive qui a
+          sinistra invece che a destra appiccicata alla CTA. */}
+      <div className="hleft">
+        <button
+          className="wordmark"
+          type="button"
+          onClick={() => jumpToIndex(0)}
+          aria-label="Morfeus, torna all'inizio"
+        >
+          <Image src="/images/brand/morfeus-mark.png" alt="Morfeus" width={130} height={16} priority />
+        </button>
+
+        <a
+          className="langswitch langswitch-left"
+          href={`/${locale === "it" ? "en" : "it"}/home-2026`}
+        >
+          <span data-on={locale === "it"}>IT</span>
+          <span aria-hidden="true">/</span>
+          <span data-on={locale === "en"}>EN</span>
+        </a>
+      </div>
 
       <nav className="topnav" aria-label="Pagine del sito">
         {navItems.map(([slug, label]) => (
@@ -116,14 +131,18 @@ export function Home2026() {
       </nav>
 
       <div className="topright">
-        {/* Toggle lingua: mancava del tutto. Sta accanto alla CTA, dove
-            l'utente lo cerca. */}
-        <a className="langswitch" href={`/${locale === "it" ? "en" : "it"}/home-2026`}>
-          <span data-on={locale === "it"}>IT</span>
-          <span aria-hidden="true">/</span>
-          <span data-on={locale === "en"}>EN</span>
-        </a>
-        <button className="btn btn-1" type="button" onClick={() => jumpToIndex(13)}>
+        {/* La lingua non sta piu' qui: e' sempre a sinistra, nel gruppo
+            del logo (.hleft). A destra solo CTA e (sotto xl) burger. */}
+        {/* Porta DIRETTAMENTE al calendario esterno, come la CTA delle
+            altre pagine. Prima faceva jumpToIndex(13), cioe' scorreva al
+            pannello "prenota" della home invece di aprire la prenotazione:
+            un passaggio in piu' per chi vuole solo prendere la call. */}
+        <a
+          className="btn btn-1"
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {/* Da telefono l'etichetta piena manda il bottone su due righe e
               da li' nasce l'accavallamento con logo e toggle. Stessa
               soluzione della barra delle altre pagine. */}
@@ -139,7 +158,7 @@ export function Home2026() {
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </a>
 
         {/* Sotto `lg` la nav della barra e' `display:none` e non c'era
             nessun rimpiazzo: da telefono la home non portava a nessuna

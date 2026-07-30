@@ -66,8 +66,15 @@ export function getDemoProcessStep(index: number): 0 | 1 | 2 | 3 {
    sia altezza in pixel CSS: su schermi molto larghi la larghezza resta
    sopra 1280 e il ramo desktop non scattava indietro da solo.
    Sotto questa soglia si passa al comportamento mobile — pannelli che
-   crescono e scroll nativo — invece di nascondere contenuto. */
-const DESKTOP_MIN_HEIGHT = 660;
+   crescono e scroll nativo — invece di nascondere contenuto.
+   Tarata a 780 il 2026-07-30: il MacBook Air (~810-866 utili con la barra
+   del browser) resta cosi' in modalita' deck a scatti, e il pannello piu'
+   alto (il "Value Leak", l'unico che sforava) viene COMPRESSO via CSS
+   sotto i 900px di altezza per starci intero. Sotto 780 — schermi molto
+   bassi, zoom al 200% (WCAG 1.4.4) — si passa comunque a scroll nativo:
+   li' la compressione non basterebbe e il testo diventerebbe illeggibile.
+   Il valore e' gemello della soglia CSS in demo.css. */
+const DESKTOP_MIN_HEIGHT = 780;
 
 export function isDesktopMode(): boolean {
   if (typeof window === "undefined") return false;

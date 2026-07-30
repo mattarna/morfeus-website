@@ -134,6 +134,19 @@ const nextConfig = {
   // ============================================
   async redirects() {
     return [
+      // La home 2026 e' diventata la home vera il 2026-07-30. La route di
+      // anteprima /home-2026 non esiste piu': chi l'ha nei preferiti (o nella
+      // cronologia) finisce sulla home invece che su un 404.
+      {
+        source: '/:locale(en|it)/home-2026',
+        destination: '/:locale',
+        permanent: true,
+      },
+      {
+        source: '/home-2026',
+        destination: '/',
+        permanent: true,
+      },
       {
         source: '/playbook',
         destination: '/playbook-imprenditore-milionario',
