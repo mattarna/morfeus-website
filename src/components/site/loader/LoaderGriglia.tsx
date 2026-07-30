@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import "./loader.css";
 
 /* ============================================================
-   C · LA GRIGLIA CHE COMPONE IL MARCHIO
+   IL LOADER DEL SITO · la griglia che compone il marchio
    ------------------------------------------------------------
    Quattro battute:
      celle    le celle si accendono dal centro verso fuori dentro
@@ -29,9 +29,14 @@ import "./loader.css";
    Le due M combaciano da sole, e non per fortuna: dentro il lockup
    la M occupa 562x267 px (misurati sull'alfa del PNG), rapporto
    2,10, ed e' esattamente il rapporto di m-w.png (1000x476). Basta
-   quindi portare la M all'altezza della testata e al suo bordo
-   sinistro: la larghezza torna da se'. Se un domani il lockup
+   quindi portare la M all'altezza del marchio in testata e al suo
+   bordo sinistro: la larghezza torna da se'. Se un domani il lockup
    cambia file, questa coincidenza va rimisurata.
+
+   CHI LO MONTA. Le pagine passano da SiteShell, che monta LoaderSito
+   (il cancello: una volta per sessione). La home ha un cancello suo,
+   piu' vecchio, e monta direttamente questo componente: la chiave di
+   sessione pero' e' la stessa, `morfeus_loaded`.
 
    L'ATTESA STA IN MEZZO, NON IN FONDO. Se la pagina non e' ancora
    pronta quando la M e' composta, si aspetta li' e poi si vola.
@@ -43,6 +48,9 @@ const COLONNE = 20;
 const RIGHE = 10;
 
 type Props = {
+  /** Le classi delle variabili font. Qui dentro non c'e' testo,
+   *  quindi non serve: resta per chi montasse il loader in un albero
+   *  che un domani ne avesse bisogno. */
   classiFont?: string;
   minimo?: number;
   massimo?: number;
@@ -165,10 +173,21 @@ export function LoaderGriglia({
          gia' scrollata): niente volo, si chiude con una dissolvenza.
          Un atterraggio a vuoto e' peggio di nessun atterraggio. */
       if (el && r && b && b.height > 0 && b.top >= 0) {
-        const scala = b.height / r.height;
-        const dx = b.left - r.left;
-        const dy = b.top - r.top;
-        el.style.transform = `translate(${dx}px, ${dy}px) scale(${scala})`;
+        /* Il rettangolo del bersaglio non e' sempre il marchio. Nella
+           testata delle pagine il lockup e' un'immagine a misura e i
+           due coincidono; su quella della home sta dentro un riquadro
+           fisso con object-contain, quindi il marchio e' piu' piccolo
+           del suo riquadro e ci sta centrato dentro. Senza questo
+           conto la M atterrerebbe fuori posto proprio sulla pagina
+           piu' vista. LOCKUP e' il rapporto del file: 2064/267. */
+        const LOCKUP = 2064 / 267;
+        const altaDisegnata = Math.min(b.height, b.width / LOCKUP);
+        const largaDisegnata = altaDisegnata * LOCKUP;
+        const sinistra = b.left + (b.width - largaDisegnata) / 2;
+        const alto = b.top + (b.height - altaDisegnata) / 2;
+
+        const scala = altaDisegnata / r.height;
+        el.style.transform = `translate(${sinistra - r.left}px, ${alto - r.top}px) scale(${scala})`;
       }
       setFase("volo");
 
@@ -199,9 +218,9 @@ export function LoaderGriglia({
   if (!montato || fase === "finito") return null;
 
   return createPortal(
-    <div className={`ms ldr-host ${classiFont}`}>
+    <div className={`ms ldg-host ${classiFont}`}>
       <div className="ldg" data-fase={fase} role="status" aria-label="Caricamento">
-        <div className="ldr-griglia" aria-hidden="true" />
+        <div className="ldg-fondo" aria-hidden="true" />
 
         <div className="ldg-campo">
           <div
