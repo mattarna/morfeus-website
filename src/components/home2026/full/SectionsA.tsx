@@ -214,10 +214,15 @@ export function Problem({ active }: { active: boolean }) {
                 scende a 38px e il difetto spariva, per questo non si vedeva
                 dal portatile. 960 copre entrambe le lingue con ~7% di
                 margine e resta dentro i 1120px del .wrap, quindi la lead
-                sotto e le righe dei leak non si spostano. */}
+                sotto e le righe dei leak non si spostano.
+                Portato poi a 1040 per stare largo: 895 richiesti su 1040
+                sono il 16% di margine, che regge un fallback di font piu'
+                largo di clashDisplay o una copy inglese leggermente piu'
+                lunga senza tornare a tre righe. Oltre i 1040 non ha senso
+                salire: il .wrap si ferma a 1120. */}
             <h2
               className="h-sect fx d2"
-              style={{ maxWidth: "min(100%, 960px)", margin: "10px 0 0" }}
+              style={{ maxWidth: "min(100%, 1040px)", margin: "10px 0 0" }}
             >
               {t("headline_1")}
               <br />
