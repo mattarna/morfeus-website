@@ -1,0 +1,203 @@
+/* ================================================================
+   Transizione fra pagine — "le squadre"
+
+   Contratto: 180ms di uscita, copertura (la navigazione vera, durata
+   variabile), 220ms di entrata. Nessun loop, niente da leggere, nessun
+   logo. E' punteggiatura fra due pagine, non un caricatore: un
+   caricatore racconterebbe un'attesa che non c'e', visto che le pagine
+   sono statiche e prefetchate.
+
+   Gli angoli sono quelli del pannello d'avvio Morfeus, portati a tutto
+   schermo: arrivano da fuori, inquadrano, e alla pagina nuova riaprono.
+   Non attraversa niente lo schermo, ed e' quello il punto.
+
+   Le due durate arrivano da PageTransitionProvider.tsx come custom
+   properties inline: la' stanno le cifre, qui solo il disegno.
+   ================================================================ */
+
+:root {
+  --pt-squadre: #533dfc; /* majorelle */
+}
+
+/* ---------- il contenuto ----------
+   Si anima SOLO l'opacita'. Un transform qui creerebbe un blocco
+   contenitore e staccherebbe tutti gli header in position:fixed. Il
+   movimento sta nella scena, che vive fuori dal guscio.
+
+   Curve simmetriche e misurate: a meta' durata il contenuto e' a meta'
+   strada. Un espo-out sembrava piu' elegante ma consumava il 96%
+   dell'opacita' nella prima meta': i 220ms dichiarati ne valevano 110. */
+
+.pt-shell {
+  opacity: 1;
+}
+
+.pt-shell[data-phase="exiting"] {
+  animation: pt-content-out var(--pt-exit) cubic-bezier(0.4, 0, 0.6, 1) both;
+  pointer-events: none;
+}
+
+.pt-shell[data-phase="entering"] {
+  animation: pt-content-in var(--pt-enter) cubic-bezier(0.33, 0, 0.3, 1) both;
+  pointer-events: none;
+}
+
+@keyframes pt-content-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pt-content-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- la scena ---------- */
+
+.pt-scena {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pt-scena[data-phase="idle"] {
+  display: none;
+}
+
+/* ---------- le squadre ----------
+   --dx/--dy sono il verso VERSO L'ESTERNO di ciascun angolo: una sola
+   coppia di keyframes serve tutti e quattro. */
+
+.pt-squadra {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--pt-squadre);
+  opacity: 0;
+}
+
+.pt-squadra[data-angolo="no"] {
+  top: 40px;
+  left: 40px;
+  border-right: 0;
+  border-bottom: 0;
+  --dx: -1;
+  --dy: -1;
+}
+
+.pt-squadra[data-angolo="ne"] {
+  top: 40px;
+  right: 40px;
+  border-left: 0;
+  border-bottom: 0;
+  --dx: 1;
+  --dy: -1;
+}
+
+.pt-squadra[data-angolo="so"] {
+  bottom: 40px;
+  left: 40px;
+  border-right: 0;
+  border-top: 0;
+  --dx: -1;
+  --dy: 1;
+}
+
+.pt-squadra[data-angolo="se"] {
+  bottom: 40px;
+  right: 40px;
+  border-left: 0;
+  border-top: 0;
+  --dx: 1;
+  --dy: 1;
+}
+
+/* Stesse curve del contenuto, apposta: la cornice si chiude mentre la
+   pagina si dissolve, e riapre mentre la nuova arriva. Con una curva piu'
+   scattante le squadre erano gia' al 95% a meta' durata e poi restavano
+   ferme ad aspettare, che si legge come uno stallo. */
+[data-phase="exiting"] .pt-squadra {
+  animation: pt-squadre-stringono var(--pt-exit) cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+[data-phase="entering"] .pt-squadra {
+  animation: pt-squadre-riaprono var(--pt-enter) cubic-bezier(0.33, 0, 0.3, 1) both;
+}
+
+@keyframes pt-squadre-stringono {
+  from {
+    opacity: 0;
+    transform: translate3d(calc(var(--dx) * 40px), calc(var(--dy) * 40px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pt-squadre-riaprono {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(calc(var(--dx) * 40px), calc(var(--dy) * 40px), 0);
+  }
+}
+
+/* Su schermo piccolo gli angoli stanno piu' stretti, altrimenti
+   occupano mezza finestra. */
+@media (max-width: 640px) {
+  .pt-squadra {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pt-squadra[data-angolo="no"],
+  .pt-squadra[data-angolo="ne"] {
+    top: 22px;
+  }
+
+  .pt-squadra[data-angolo="so"],
+  .pt-squadra[data-angolo="se"] {
+    bottom: 22px;
+  }
+
+  .pt-squadra[data-angolo="no"],
+  .pt-squadra[data-angolo="so"] {
+    left: 22px;
+  }
+
+  .pt-squadra[data-angolo="ne"],
+  .pt-squadra[data-angolo="se"] {
+    right: 22px;
+  }
+}
+
+/* ---------- accessibilita' ----------
+   Chi ha chiesto meno movimento cambia pagina di netto: e' il
+   comportamento corretto, non una versione degradata. Il provider in JS
+   smette anche di intercettare i click. */
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-shell[data-phase] {
+    animation: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .pt-scena {
+    display: none;
+  }
+}
