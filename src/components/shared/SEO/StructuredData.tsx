@@ -39,21 +39,30 @@ export function StructuredData({ locale }: StructuredDataProps) {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: "Morfeus",
-    alternateName: "Morfeus Hub",
+    // "Morf" e' la linea prodotti (Morf Lab, Morf Forge): va dichiarata,
+    // o chi cerca "Morf Forge" non arriva all'azienda. entity-data.md
+    alternateName: ["Morfeus Hub", "Morf"],
     legalName: "Numanity S.r.l.",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
       url: `${SITE_URL}/images/brand/morfeus-mark.png`,
-      width: 400,
-      height: 100,
+      // Misure lette dal file: erano dichiarate 400x100, un rapporto
+      // che quel logo non ha mai avuto.
+      width: 2064,
+      height: 267,
     },
     description: isIt
       ? "Integriamo l'AI nel DNA delle organizzazioni. Ripensiamo struttura, processi e decisioni per rendere l'AI parte integrante del modo di operare."
       : "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions to make AI a core part of how organizations operate.",
+    /* La prima frase e' lockata dal 2026-06-26 (docs/geo/entity-data.md)
+       e non si tocca: dice cosa fa Morfeus. La seconda e' la coda di
+       separazione, aggiunta il 2026-07-31, e serve perche' "Morfeus" e'
+       un nome affollato: senza gli omonimi scritti per esteso, un
+       motore generativo non ha come capire quale entita' sei. */
     disambiguatingDescription: isIt
-      ? "Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro."
-      : "Morfeus (Numanity S.r.l.) is the Italian AI consulting and training company that embeds into scaling businesses as an Operating Partner: it finds where they lose margin and builds AI systems — agents, automations and internal skills — that recover it, measured in euros.",
+      ? "Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro. Non ha alcun rapporto con NVIDIA Morpheus, con morpheusbusiness.ai, né con il progetto open source morfeus.dev."
+      : "Morfeus (Numanity S.r.l.) is the Italian AI consulting and training company that embeds into scaling businesses as an Operating Partner: it finds where they lose margin and builds AI systems — agents, automations and internal skills — that recover it, measured in euros. It is unrelated to NVIDIA Morpheus, morpheusbusiness.ai, or the morfeus.dev open source project.",
     foundingDate: "2023",
     email: "hello@morfeushub.com",
     address: {
@@ -64,6 +73,9 @@ export function StructuredData({ locale }: StructuredDataProps) {
       addressRegion: "MI",
       addressCountry: "IT",
     },
+    // Stesso numero per i due campi (S.r.l. italiana): `vatID` e' quello
+    // che i motori leggono per agganciare l'azienda ai registri.
+    vatID: "14209210963",
     taxID: "14209210963",
     founder: FOUNDER_SLUGS.map((slug) => ({ "@id": personId(slug) })),
     sameAs: [
@@ -78,7 +90,12 @@ export function StructuredData({ locale }: StructuredDataProps) {
       availableLanguage: ["English", "Italian"],
     },
     // Sede/identità italiana (legalName + address), ma servizio internazionale.
-    areaServed: "Worldwide",
+    // L'Italia dichiarata come Country, non solo "Worldwide": il mercato
+    // primario e' quello, e "Worldwide" da solo non lo dice a nessuno.
+    areaServed: [
+      { "@type": "Country", name: "Italy" },
+      "Worldwide",
+    ],
     knowsAbout: [
       "Artificial Intelligence",
       "AI Consulting",
@@ -87,6 +104,13 @@ export function StructuredData({ locale }: StructuredDataProps) {
       "AI Adoption",
       "AI Training",
       "Operating Partner",
+      // Termini proprietari, set B2B must-own di docs/geo/proprietary-terms.md:
+      // sono le parole su cui vogliamo essere citati per primi.
+      "MARF",
+      "ROIometro",
+      "Margin Recovery",
+      "Value Leak",
+      "AI Champion",
     ],
   };
 

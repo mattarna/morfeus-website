@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import { buildLocalizedUrl, getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import { SITE_URL } from "@/lib/seo/entity-ids";
 import { funnelRegistry, getRegisteredFunnelConfig } from "@/funnels/registry";
 
 /**
@@ -7,7 +8,7 @@ import { funnelRegistry, getRegisteredFunnelConfig } from "@/funnels/registry";
  * Only includes explicitly whitelisted public pages.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://morfeushub.com";
+  const baseUrl = SITE_URL;
   const lastModified = new Date();
 
   const localizedEntries = [
@@ -16,8 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const localizedSitemapEntries: MetadataRoute.Sitemap = localizedEntries.map(({ locale, path, url }) => {
     const counterpartLocale = locale === "en" ? "it" : "en";
-    const counterpart =
-      path.length === 0 ? `${baseUrl}/${counterpartLocale}` : `${baseUrl}/${counterpartLocale}/${path}`;
+    /* L'indirizzo dell'altra lingua passa dallo stesso helper della
+       pagina: costruito a mano tornava sempre con /en davanti, cioe'
+       un hreflang che redirige. */
+    const counterpart = buildLocalizedUrl(baseUrl, counterpartLocale, path);
 
     return {
       url,

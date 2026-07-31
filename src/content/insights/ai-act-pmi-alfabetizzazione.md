@@ -2,7 +2,7 @@
 title: "AI Act e PMI: la 'alfabetizzazione AI' che sei obbligato ad avere (dal 2025)"
 slug: "ai-act-pmi-alfabetizzazione"
 metaTitle: "AI Act e PMI: obbligo di alfabetizzazione AI | Morfeus"
-metaDescription: "Dal 2 febbraio 2025 l'articolo 4 dell'AI Act impone un livello adeguato di alfabetizzazione AI anche alle PMI che usano l'AI. Cosa significa e cosa fare in pratica."
+metaDescription: "Dal 2 febbraio 2025 l'articolo 4 dell'AI Act impone un livello adeguato di alfabetizzazione AI anche alle PMI. Cosa significa e cosa fare in pratica."
 category: "Formazione"
 tags: ["AI Act", "compliance AI", "alfabetizzazione AI", "PMI"]
 topicTags: ["AI Act","Compliance","PMI","Formazione"]

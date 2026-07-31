@@ -270,10 +270,10 @@ function MobileMenu({
               <div className="flex flex-col gap-0.5">
                 <p className="text-[9px] uppercase tracking-widest text-slate-600 font-bold">{h("contact")}</p>
                 <a 
-                  href="mailto:info@morfeushub.com" 
+                  href="mailto:hello@morfeushub.com" 
                   className="text-white text-sm font-light hover:text-[#4D39EB] transition-colors"
                 >
-                  info@morfeushub.com
+                  hello@morfeushub.com
                 </a>
               </div>
               <div className="flex gap-4">

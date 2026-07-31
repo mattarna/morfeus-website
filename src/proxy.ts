@@ -23,15 +23,24 @@ function buildInternalFunnelPath(slug: string, restSegments: string[]): string {
   return `/funnel-internal/${slug}${suffix}`;
 }
 
+/* Le aree private (portal, call-confirmed) non devono essere
+   indicizzate in NESSUNA delle due lingue. Qui si guardava solo il
+   primo segmento come lingua, e con `localePrefix: 'as-needed'`
+   l'inglese non ha prefisso: /portal/... e /call-confirmed passavano
+   senza X-Robots-Tag, cioe' erano crawlabili. Solo le versioni
+   italiane erano protette. */
 function isNonIndexableLocalePath(segments: string[]): boolean {
-  if (segments.length < 2) {
+  if (segments.length === 0) {
     return false;
   }
-  const locale = segments[0];
-  const section = segments[1];
-  return (
-    SUPPORTED_LOCALES.includes(locale as (typeof SUPPORTED_LOCALES)[number]) &&
-    NON_INDEXABLE_LOCALE_PREFIXES.includes(section as (typeof NON_INDEXABLE_LOCALE_PREFIXES)[number])
+  const primo = segments[0];
+  const conPrefisso = SUPPORTED_LOCALES.includes(primo as (typeof SUPPORTED_LOCALES)[number]);
+  const sezione = conPrefisso ? segments[1] : primo;
+  if (!sezione) {
+    return false;
+  }
+  return NON_INDEXABLE_LOCALE_PREFIXES.includes(
+    sezione as (typeof NON_INDEXABLE_LOCALE_PREFIXES)[number]
   );
 }
 

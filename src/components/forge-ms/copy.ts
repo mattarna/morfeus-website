@@ -17,7 +17,7 @@ export const COPY = {
        installa — ma il soggetto della pagina e' Forge. */
     metaTitle: "Morf Forge · Operating Partner AI · Morfeus",
     metaDesc:
-      "Morf Forge è l'Operating Partner AI di Morfeus: installiamo il sistema in azienda in circa 30 giorni e lo facciamo migliorare ogni mese. Non sviluppo a giornate, ma un prodotto che resta.",
+      "Morf Forge è l'Operating Partner AI di Morfeus: installiamo il sistema in azienda in circa 30 giorni e lo miglioriamo ogni mese. Non sviluppo a giornate.",
     hero: {
       eye: "Morf Forge · Operating Partner",
       h1a: "Il sistema operativo AI per chi vende ",
@@ -228,7 +228,7 @@ export const COPY = {
   en: {
     metaTitle: "Morf Forge · AI Operating Partner · Morfeus",
     metaDesc:
-      "Morf Forge is Morfeus' AI Operating Partner: we install the system inside your company in about 30 days and keep it improving every month. Not custom dev by the day, but a product that stays.",
+      "Morf Forge is Morfeus' AI Operating Partner: we install the system inside your company in about 30 days and keep improving it every month.",
     hero: {
       eye: "Morf Forge · Operating Partner",
       h1a: "The AI operating system for businesses that sell ",
