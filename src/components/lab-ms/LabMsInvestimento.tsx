@@ -45,8 +45,20 @@ export function LabMsInvestimento() {
 
           <div className="corpo-modulo">
             <div className="quota">Investimento</div>
+            {/* Qui stava la cifra ("A partire da €4.500"), e la scala era
+                tarata su quella: 42px, interlinea zero, tre parole. Ora la
+                voce e' una frase, e a 42px andava a capo occupando il
+                doppio dell'altezza. A 30px sta su una riga in italiano e
+                in inglese, e resta comunque la voce piu' grande della
+                scheda: sopra ha una quota da 13px, sotto voci da 16,5px.
+                Il tetto e' 26 e non 30: nel modulo la riga ha 663px, e a
+                30px la frase italiana ne chiede 668, cioe' va a capo per
+                cinque pixel. A 26 ne chiede 579 e il margine e' del 14%,
+                che regge una copy un po' piu' lunga o un font di ripiego.
+                L'interlinea non e' piu' `none` perche' una frase, se un
+                giorno va a capo su schermo stretto, non deve impastarsi. */}
             <p
-              className="mt-4 text-[clamp(26px,4vw,42px)] leading-none tracking-[-0.03em]"
+              className="mt-4 text-[clamp(20px,2.1vw,26px)] leading-[1.2] tracking-[-0.02em]"
               style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
             >
               {t("card.price")}
