@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="it" data-lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.8.6 · Reverse engineering del budget · Marketing Mastery</title>
+<script>try{if((localStorage.getItem('sp-theme')||'light')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
+<link rel="stylesheet" href="../_engine/fonts.css">
+<link rel="stylesheet" href="../_engine/skin.css">
+<link rel="stylesheet" href="../_engine/stile-core.css">
+<style>
+  .mf-legal{max-width:920px;margin:28px auto 0;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3);background:var(--bg-2)}
+  .mf-legal p{margin:0 0 8px}.mf-legal p:last-child{margin:0}
+  .pbox{max-width:920px;margin:22px auto 0;padding:20px 22px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:var(--bg-2)}
+  .pbox .pk{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+  .pbox pre{white-space:pre-wrap;font-family:var(--mono,monospace);font-size:12.5px;line-height:1.6;color:var(--ink-2);margin:0;background:var(--bg-1);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <span class="mk" role="img" aria-label="Marketing Mastery"></span>
+    <span class="sep"></span>
+    <span class="atto-badge" data-i="badge">Lente teorica · costruire · 14 min</span>
+  </div>
+  <div class="tools">
+    <div class="lang" role="group" aria-label="Lingua">
+      <button data-l="it" class="on" onclick="setLang('it')">IT</button>
+      <button data-l="en" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="pdf-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      <span data-i="pdf">PDF</span>
+    </button>
+    <button class="ic-btn" onclick="toggleTheme()" aria-label="Tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow rv" data-i="eyebrow">Fase 6 · M5.8 · lezione 6 di 10</div>
+  <h1 class="rv" data-i-html="h1">Senza storico non stai prevedendo. Stai costruendo un <span class="hl">modello da validare</span>.</h1>
+  <p class="tesi rv" data-i="tesi">Il conto a ritroso parte dal fatturato che vuoi e arriva all'euro che devi spendere, passando per vendite, tassi di conversione, lead e visitatori. Con dati storici è una stima; senza dati storici sono ipotesi, e allora si costruiscono tre scenari invece di un numero. Lo facciamo su un caso reale con una lista vera in mano, e il primo insegnamento arriva prima del calcolo: verificare i numeri di partenza.</p>
+
+  <div class="prosa rv" style="margin-top:22px">
+    <p data-i="p1">La domanda che ogni cliente fa, e che quasi nessuno sa rispondere con metodo, è: quanto devo spendere per fare tanto? Il modo per rispondere è il conto a ritroso, e ha una catena fissa. Parti dal fatturato obiettivo. Lo dividi per il prezzo medio, e hai le vendite necessarie. Le dividi per il tasso di conversione atteso, e hai i lead necessari. Li dividi per il tasso di opt-in, e hai i visitatori necessari. Li moltiplichi per il costo per clic stimato, e hai il budget. Cinque passaggi, in un ordine che non cambia.</p>
+    <p data-i="p2">Ma prima del calcolo c'è un passo che questa lezione mette davanti a tutto, perché è quello che ha morso davvero. In un progetto reale di Scalers, sui numeri di una lista da lavorare, nel documento di partenza girava una dimensione sbagliata: si parlava di centoquarantacinquemila contatti con quattordicimila recapitabili. La lista vera era un'altra: trentacinquemilaquattrocentosedici contatti, di cui circa tredicimila recapitabili e circa millenovecentotrentatré caldi. Chi avesse fatto il conto a ritroso sul numero sbagliato avrebbe costruito un piano quattro volte più ottimista del possibile, con la matematica perfetta.</p>
+    <p data-i="p3">Tienilo come regola: i numeri non mentono solo in fase di attribuzione, come hai visto nella lezione quattro. Mentono anche nel documento da cui parti. Il primo passo del reverse engineering è verificare l'input.</p>
+  </div>
+
+  <div class="figure rv">
+    <svg viewBox="0 0 1080 300" role="img" aria-label="La catena del conto a ritroso: dal fatturato obiettivo al budget necessario">
+      <text class="svg-sub" x="42" y="24" fill="var(--ink-3)">IL CONTO A RITROSO · SI LEGGE DA DESTRA A SINISTRA</text>
+      <g class="pop" data-delay="100"><rect class="k-node k-glow" style="--c:var(--good)" x="42" y="52" width="180" height="70" rx="12"/><text class="svg-sub" x="132" y="80" text-anchor="middle" fill="var(--good)">FATTURATO</text><text class="svg-sub" x="132" y="104" text-anchor="middle" fill="var(--ink-4)">obiettivo</text></g>
+      <text class="svg-sub" x="232" y="92" fill="var(--ink-4)">÷ prezzo</text>
+      <g class="pop" data-delay="200"><rect class="k-node" style="--c:var(--accent)" x="320" y="52" width="170" height="70" rx="12"/><text class="svg-sub" x="405" y="80" text-anchor="middle" fill="var(--accent)">VENDITE</text><text class="svg-sub" x="405" y="104" text-anchor="middle" fill="var(--ink-4)">necessarie</text></g>
+      <text class="svg-sub" x="500" y="92" fill="var(--ink-4)">÷ conv.</text>
+      <g class="pop" data-delay="300"><rect class="k-node" style="--c:var(--accent)" x="580" y="52" width="170" height="70" rx="12"/><text class="svg-sub" x="665" y="80" text-anchor="middle" fill="var(--accent)">LEAD</text><text class="svg-sub" x="665" y="104" text-anchor="middle" fill="var(--ink-4)">necessari</text></g>
+      <text class="svg-sub" x="760" y="92" fill="var(--ink-4)">÷ optin</text>
+      <g class="pop" data-delay="400"><rect class="k-node" style="--c:var(--steel)" x="840" y="52" width="195" height="70" rx="12"/><text class="svg-sub" x="937" y="80" text-anchor="middle" fill="var(--steel)">VISITATORI</text><text class="svg-sub" x="937" y="104" text-anchor="middle" fill="var(--ink-4)">necessari</text></g>
+      <path class="k-edge draw" style="--c:var(--accent)" d="M937 122 V158 H538" fill="none" marker-end="url(#a6b)"/>
+      <defs><marker id="a6b" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto"><path d="M1,1 L9,5.5 L1,10" fill="none" stroke="var(--accent)" stroke-width="2"/></marker></defs>
+      <g class="pop" data-delay="520"><rect class="k-node k-glow" style="--c:var(--accent)" x="42" y="176" width="470" height="76" rx="12"/><text class="svg-lbl" x="277" y="212" text-anchor="middle" fill="var(--accent)">× CPC = BUDGET</text><text class="svg-sub" x="277" y="238" text-anchor="middle" fill="var(--ink-4)">l'euro che devi mettere</text></g>
+      <g class="pop" data-delay="620"><rect class="k-node" style="--c:var(--steel)" x="532" y="176" width="503" height="76" rx="12"/><text class="svg-sub" x="783" y="206" text-anchor="middle" fill="var(--ink-3)">PRIMA DI TUTTO: verifica i numeri di partenza</text><text class="svg-sub" x="783" y="232" text-anchor="middle" fill="var(--ink-4)">un input sbagliato dà un piano perfetto e inutile</text></g>
+    </svg>
+    <div class="cap" data-i="figcap">La catena del conto a ritroso, dal fatturato obiettivo fino al budget. Ogni divisione richiede un tasso: se il tasso è un'ipotesi, il risultato è un'ipotesi. E se l'input di partenza è sbagliato, tutta la catena resta aritmeticamente corretta e completamente inutile.</div>
+  </div>
+
+  <div class="sh rv"><span class="no">01</span><span data-i="sh1">Con storico e senza storico: due mestieri diversi</span></div>
+  <div class="prosa rv">
+    <p data-i="p4">Se hai dati storici, il conto a ritroso è una stima e usi i tuoi numeri veri: la spesa passata, il costo per lead medio, il tasso di conversione da lead a cliente, lo show-up rate se c'è un evento, il close rate se c'è una call, il valore medio del cliente, il margine. In quel caso il risultato ha un'affidabilità decente, perché ogni tasso viene dalla tua esperienza e non dalla speranza.</p>
+    <p data-i="p5">Se non hai storico, cambia la natura dell'esercizio, e questa è la frase da tenere: senza storico non stai prevedendo, stai costruendo un modello decisionale da validare. Le ipotesi da mettere sono cinque, opt-in rate, costo per lead, conversione da lead a cliente, prezzo medio, margine. E siccome sono ipotesi, non produci un numero ma tre scenari: conservativo, realistico, aggressivo. Il valore del modello non è indovinare: è renderti visibile quale ipotesi, se sbagliata, fa crollare il piano. Se il piano regge solo nello scenario aggressivo, quella è già una risposta.</p>
+  </div>
+  <div class="lab rv" data-bet="b1"></div>
+
+  <div class="sh rv"><span class="no">02</span><span data-i="sh2">L'esercizio: lista vera, obiettivo vero</span></div>
+  <div class="prosa rv">
+    <p data-i="p6">Facciamolo su un caso concreto, con i numeri veri della lista di cui parlavamo, e con un prodotto da quattromila euro più IVA. La lista ha trentacinquemilaquattrocentosedici contatti, ma i numeri utili sono gli altri due: circa tredicimila recapitabili e circa millenovecentotrentatré caldi. È già una lezione di per sé: la dimensione dichiarata di una lista è quasi sempre la meno utile delle tre.</p>
+    <p data-i="p7">Ora prendi un obiettivo, diciamo centomila euro. A quattromila euro di prezzo servono venticinque vendite. Da qui in poi ogni passaggio è un'ipotesi, e la dichiaro come tale: se dalla parte calda della lista arriva un due per cento di clic, sono circa quaranta clic; se il dieci per cento di quei clic prenota una call, sono quattro call; con un close rate del trenta per cento fa poco più di una vendita. Cioè circa cinquemila euro su centomila di obiettivo. La lista, da sola, copre una frazione minima del piano, e il resto deve arrivare da advertising.</p>
+    <p data-i="p8">Nota cosa ha fatto il modello, che è il suo vero mestiere: non ha predetto il futuro, ha reso visibile un buco. E ha anche confermato dove è il collo di bottiglia in quel progetto, che era proprio nei clic. Cambia il tasso di clic dal due al sei per cento e il contributo della lista si triplica; cambia il close rate dal trenta al quaranta e cambia poco. Il modello ti dice su quale numero conviene lavorare, prima ancora di spendere.</p>
+  </div>
+
+  <div class="pbox rv">
+    <div class="pk" data-i="pbk">Il conto a ritroso · la procedura, in ordine</div>
+    <pre data-i="pbt">PASSO 0 · VERIFICA L'INPUT
+  → la dimensione della lista è quella vera? recapitabili e caldi, non il totale
+  → un input sbagliato produce un piano aritmeticamente perfetto e inutile
+
+PASSO 1 · fatturato obiettivo        ÷ prezzo medio      = vendite necessarie
+PASSO 2 · vendite necessarie         ÷ conv. lead→cliente = lead necessari
+PASSO 3 · lead necessari             ÷ tasso di optin     = visitatori necessari
+PASSO 4 · visitatori necessari       × CPC stimato        = BUDGET NECESSARIO
+
+PASSO 5 · IL CAC MASSIMO SOSTENIBILE
+  → margine per cliente ÷ 3 (per tenere il rapporto LTV/CAC ≥ 3:1)
+  → se il CAC stimato al passo 4 lo supera, il piano non regge: si torna indietro
+
+SENZA STORICO: ogni tasso è un'IPOTESI → costruisci 3 scenari
+  conservativo · realistico · aggressivo
+  e guarda QUALE ipotesi, se sbagliata, fa crollare il piano
+
+INFINE, il controllo di sanità (→ 6.8.3 e 6.8.4)
+  → il funnel a monte è già in perdita? allora nessun budget lo salva</pre>
+  </div>
+
+  <div class="sh rv"><span class="no">03</span><span data-i="sh3">Il CAC massimo, e il controllo di sanità</span></div>
+  <div class="prosa rv">
+    <p data-i="p9">C'è un numero che il conto a ritroso deve produrre sempre, ed è il costo di acquisizione massimo che ti puoi permettere. Si ricava dal margine per cliente: se vuoi tenere il rapporto tra valore del cliente e costo di acquisizione a tre a uno, come hai visto in M5.6, il tuo tetto è circa un terzo del margine. Sul prodotto da quattromila euro, con un margine generoso, parliamo di diverse centinaia di euro per cliente: è un tetto alto, che rende l'advertising sostenibile. Su un corso da centocinquanta euro il tetto è di poche decine, e questo cambia completamente quali canali puoi permetterti.</p>
+    <p data-i="p10">E l'ultimo controllo, quello che chiude il cerchio col resto del modulo: il piano regge solo se il funnel a monte non è già in perdita. Se il break-even del front-end non c'è, come hai visto in M5.3, nessun budget più grande sistema la situazione, la peggiora più in fretta. Ecco perché questa lezione arriva dopo la dashboard e dopo il MER: il conto a ritroso è utile solo su una macchina che sai leggere. Senza quello, è aritmetica applicata a un'illusione.</p>
+  </div>
+
+  <div class="key rv"><p data-i="key">Il conto a ritroso: fatturato obiettivo ÷ prezzo medio = vendite necessarie ÷ conversione = lead necessari ÷ optin rate = visitatori necessari × CPC = budget. Passo 0, prima di tutto: verifica l'input (in un progetto reale il documento di partenza dichiarava 145k contatti/14k recapitabili, la lista vera era 35.416 con ~13.000 recapitabili e ~1.933 caldi: chi avesse calcolato sul numero sbagliato avrebbe fatto un piano perfetto e quattro volte troppo ottimista). Con storico è una stima (spesa passata, CPL, conversione, show-up, close rate, valore cliente, margine); senza storico non stai prevedendo, stai costruendo un modello decisionale da validare → 3 scenari (conservativo/realistico/aggressivo) e la domanda vera è quale ipotesi, se sbagliata, fa crollare il piano. Esercizio reale: obiettivo €100k a €4.000 = 25 vendite; dalla parte calda della lista, con ipotesi 2% clic → 10% call → 30% close, arriva circa una vendita: il modello non predice, rende visibile il buco (e conferma che il collo di bottiglia erano i clic). Sempre calcolare il CAC massimo sostenibile (margine ÷ 3 per tenere LTV/CAC ≥ 3:1). Controllo finale: se il funnel a monte è già in perdita, nessun budget lo salva.</p></div>
+
+  <div class="journal-c rv">
+    <span class="lab-k" data-i="jk">Fai il tuo conto a ritroso</span>
+    <p data-i-html="jp"><strong>Mettilo alla prova su qualcosa di tuo.</strong> Prendi un obiettivo di fatturato reale e percorri la catena: prezzo, vendite, conversione, lead, visitatori, budget. Segna con un asterisco ogni tasso che è un'ipotesi e non un dato tuo. Poi due domande: qual è il tuo CAC massimo sostenibile, e quale singola ipotesi, se sbagliata del doppio, fa crollare il piano?</p>
+    <textarea data-journal="j1" data-saved="salvato sul tuo dispositivo" placeholder="Obiettivo → prezzo → vendite → conversione* → lead → optin* → visitatori → CPC* → budget: ...&#10;Il mio CAC massimo sostenibile (margine ÷ 3): ...&#10;L'ipotesi che, se sbagliata, fa crollare tutto: ..."></textarea>
+    <span class="saved"></span>
+  </div>
+
+  <div class="xref rv">
+    <span class="x-tag" data-i="xt">Cross-reference · prossima lezione</span>
+    <p data-i-html="xp">Hai il budget diviso e calcolato. Ora serve poterlo verificare a posteriori. <strong>6.8.7 · Tracciabilità: dall'euro speso al risultato</strong> è il workshop che monta la catena euro→canale→campagna→conversione, senza la quale ogni decisione di budget resta un'opinione travestita da numero.</p>
+  </div>
+
+  <div class="closing rv">
+    <div class="ct" data-i-html="ct">Guardando il tuo prossimo piano: <span class="a-w">i numeri di partenza li hai verificati, o li hai ereditati da un documento</span>?</div>
+    <div class="cs" data-i="cs">Allenamento: entro 48 ore fai il conto a ritroso del tuo prossimo obiettivo in tre scenari, e scrivi accanto a ogni tasso se è un dato tuo o un'ipotesi. Se il piano regge solo nello scenario aggressivo, hai già la risposta.</div>
+  </div>
+
+  <nav class="nav rv">
+    <a href="SCO-5-allocazione-budget.html"><span class="nc" data-i="navp">Torna</span><span class="nt" data-i="navpt">6.8.5 · Strategia di allocazione del budget</span></a>
+    <a class="next" href="SCO-7-tracciabilita-euro-risultato.html"><span class="nc" data-i="navn">Prossima</span><span class="nt" data-i="navnt">6.8.7 · Tracciabilità: dall'euro al risultato</span></a>
+  </nav>
+
+  <div class="foot" data-i-html="foot">Marketing Mastery · Fase 6 · La macchina · costruito sullo <span class="mono">Spiegatore Standard</span></div>
+  <div class="mf-legal rv">
+    <p>&copy; Matteo Arnaboldi &mdash; Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p>
+    <p>&copy; Matteo Arnaboldi &mdash; All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p>
+  </div>
+</div>
+
+<script>
+window.PAGE={id:'mm-sco-6'};
+window.DICT={
+  it:{
+    badge:"Lente teorica · costruire · 14 min", pdf:"PDF",
+    eyebrow:"Fase 6 · M5.8 · lezione 6 di 10",
+    h1:"Senza storico non stai prevedendo. Stai costruendo un <span class=\"hl\">modello da validare</span>.",
+    tesi:"Il conto a ritroso parte dal fatturato che vuoi e arriva all'euro che devi spendere, passando per vendite, tassi di conversione, lead e visitatori. Con dati storici è una stima; senza dati storici sono ipotesi, e allora si costruiscono tre scenari invece di un numero. Lo facciamo su un caso reale con una lista vera in mano, e il primo insegnamento arriva prima del calcolo: verificare i numeri di partenza.",
+    p1:"La domanda che ogni cliente fa, e che quasi nessuno sa rispondere con metodo, è: quanto devo spendere per fare tanto? Il modo per rispondere è il conto a ritroso, e ha una catena fissa. Parti dal fatturato obiettivo. Lo dividi per il prezzo medio, e hai le vendite necessarie. Le dividi per il tasso di conversione atteso, e hai i lead necessari. Li dividi per il tasso di opt-in, e hai i visitatori necessari. Li moltiplichi per il costo per clic stimato, e hai il budget. Cinque passaggi, in un ordine che non cambia.",
+    p2:"Ma prima del calcolo c'è un passo che questa lezione mette davanti a tutto, perché è quello che ha morso davvero. In un progetto reale di Scalers, sui numeri di una lista da lavorare, nel documento di partenza girava una dimensione sbagliata: si parlava di centoquarantacinquemila contatti con quattordicimila recapitabili. La lista vera era un'altra: trentacinquemilaquattrocentosedici contatti, di cui circa tredicimila recapitabili e circa millenovecentotrentatré caldi. Chi avesse fatto il conto a ritroso sul numero sbagliato avrebbe costruito un piano quattro volte più ottimista del possibile, con la matematica perfetta.",
+    p3:"Tienilo come regola: i numeri non mentono solo in fase di attribuzione, come hai visto nella lezione quattro. Mentono anche nel documento da cui parti. Il primo passo del reverse engineering è verificare l'input.",
+    figcap:"La catena del conto a ritroso, dal fatturato obiettivo fino al budget. Ogni divisione richiede un tasso: se il tasso è un'ipotesi, il risultato è un'ipotesi. E se l'input di partenza è sbagliato, tutta la catena resta aritmeticamente corretta e completamente inutile.",
+    sh1:"Con storico e senza storico: due mestieri diversi",
+    p4:"Se hai dati storici, il conto a ritroso è una stima e usi i tuoi numeri veri: la spesa passata, il costo per lead medio, il tasso di conversione da lead a cliente, lo show-up rate se c'è un evento, il close rate se c'è una call, il valore medio del cliente, il margine. In quel caso il risultato ha un'affidabilità decente, perché ogni tasso viene dalla tua esperienza e non dalla speranza.",
+    p5:"Se non hai storico, cambia la natura dell'esercizio, e questa è la frase da tenere: senza storico non stai prevedendo, stai costruendo un modello decisionale da validare. Le ipotesi da mettere sono cinque, opt-in rate, costo per lead, conversione da lead a cliente, prezzo medio, margine. E siccome sono ipotesi, non produci un numero ma tre scenari: conservativo, realistico, aggressivo. Il valore del modello non è indovinare: è renderti visibile quale ipotesi, se sbagliata, fa crollare il piano. Se il piano regge solo nello scenario aggressivo, quella è già una risposta.",
+    sh2:"L'esercizio: lista vera, obiettivo vero",
+    p6:"Facciamolo su un caso concreto, con i numeri veri della lista di cui parlavamo, e con un prodotto da quattromila euro più IVA. La lista ha trentacinquemilaquattrocentosedici contatti, ma i numeri utili sono gli altri due: circa tredicimila recapitabili e circa millenovecentotrentatré caldi. È già una lezione di per sé: la dimensione dichiarata di una lista è quasi sempre la meno utile delle tre.",
+    p7:"Ora prendi un obiettivo, diciamo centomila euro. A quattromila euro di prezzo servono venticinque vendite. Da qui in poi ogni passaggio è un'ipotesi, e la dichiaro come tale: se dalla parte calda della lista arriva un due per cento di clic, sono circa quaranta clic; se il dieci per cento di quei clic prenota una call, sono quattro call; con un close rate del trenta per cento fa poco più di una vendita. Cioè circa cinquemila euro su centomila di obiettivo. La lista, da sola, copre una frazione minima del piano, e il resto deve arrivare da advertising.",
+    p8:"Nota cosa ha fatto il modello, che è il suo vero mestiere: non ha predetto il futuro, ha reso visibile un buco. E ha anche confermato dove è il collo di bottiglia in quel progetto, che era proprio nei clic. Cambia il tasso di clic dal due al sei per cento e il contributo della lista si triplica; cambia il close rate dal trenta al quaranta e cambia poco. Il modello ti dice su quale numero conviene lavorare, prima ancora di spendere.",
+    pbk:"Il conto a ritroso · la procedura, in ordine",
+    pbt:"PASSO 0 · VERIFICA L'INPUT\n  → la dimensione della lista è quella vera? recapitabili e caldi, non il totale\n  → un input sbagliato produce un piano aritmeticamente perfetto e inutile\n\nPASSO 1 · fatturato obiettivo        ÷ prezzo medio      = vendite necessarie\nPASSO 2 · vendite necessarie         ÷ conv. lead→cliente = lead necessari\nPASSO 3 · lead necessari             ÷ tasso di optin     = visitatori necessari\nPASSO 4 · visitatori necessari       × CPC stimato        = BUDGET NECESSARIO\n\nPASSO 5 · IL CAC MASSIMO SOSTENIBILE\n  → margine per cliente ÷ 3 (per tenere il rapporto LTV/CAC ≥ 3:1)\n  → se il CAC stimato al passo 4 lo supera, il piano non regge: si torna indietro\n\nSENZA STORICO: ogni tasso è un'IPOTESI → costruisci 3 scenari\n  conservativo · realistico · aggressivo\n  e guarda QUALE ipotesi, se sbagliata, fa crollare il piano\n\nINFINE, il controllo di sanità (→ 6.8.3 e 6.8.4)\n  → il funnel a monte è già in perdita? allora nessun budget lo salva",
+    sh3:"Il CAC massimo, e il controllo di sanità",
+    p9:"C'è un numero che il conto a ritroso deve produrre sempre, ed è il costo di acquisizione massimo che ti puoi permettere. Si ricava dal margine per cliente: se vuoi tenere il rapporto tra valore del cliente e costo di acquisizione a tre a uno, come hai visto in M5.6, il tuo tetto è circa un terzo del margine. Sul prodotto da quattromila euro, con un margine generoso, parliamo di diverse centinaia di euro per cliente: è un tetto alto, che rende l'advertising sostenibile. Su un corso da centocinquanta euro il tetto è di poche decine, e questo cambia completamente quali canali puoi permetterti.",
+    p10:"E l'ultimo controllo, quello che chiude il cerchio col resto del modulo: il piano regge solo se il funnel a monte non è già in perdita. Se il break-even del front-end non c'è, come hai visto in M5.3, nessun budget più grande sistema la situazione, la peggiora più in fretta. Ecco perché questa lezione arriva dopo la dashboard e dopo il MER: il conto a ritroso è utile solo su una macchina che sai leggere. Senza quello, è aritmetica applicata a un'illusione.",
+    key:"Il conto a ritroso: fatturato obiettivo ÷ prezzo medio = vendite necessarie ÷ conversione = lead necessari ÷ optin rate = visitatori necessari × CPC = budget. Passo 0, prima di tutto: verifica l'input (in un progetto reale il documento di partenza dichiarava 145k contatti/14k recapitabili, la lista vera era 35.416 con ~13.000 recapitabili e ~1.933 caldi: chi avesse calcolato sul numero sbagliato avrebbe fatto un piano perfetto e quattro volte troppo ottimista). Con storico è una stima (spesa passata, CPL, conversione, show-up, close rate, valore cliente, margine); senza storico non stai prevedendo, stai costruendo un modello decisionale da validare → 3 scenari (conservativo/realistico/aggressivo) e la domanda vera è quale ipotesi, se sbagliata, fa crollare il piano. Esercizio reale: obiettivo €100k a €4.000 = 25 vendite; dalla parte calda della lista, con ipotesi 2% clic → 10% call → 30% close, arriva circa una vendita: il modello non predice, rende visibile il buco (e conferma che il collo di bottiglia erano i clic). Sempre calcolare il CAC massimo sostenibile (margine ÷ 3 per tenere LTV/CAC ≥ 3:1). Controllo finale: se il funnel a monte è già in perdita, nessun budget lo salva.",
+    jk:"Fai il tuo conto a ritroso",
+    jp:"<strong>Mettilo alla prova su qualcosa di tuo.</strong> Prendi un obiettivo di fatturato reale e percorri la catena: prezzo, vendite, conversione, lead, visitatori, budget. Segna con un asterisco ogni tasso che è un'ipotesi e non un dato tuo. Poi due domande: qual è il tuo CAC massimo sostenibile, e quale singola ipotesi, se sbagliata del doppio, fa crollare il piano?",
+    xt:"Cross-reference · prossima lezione",
+    xp:"Hai il budget diviso e calcolato. Ora serve poterlo verificare a posteriori. <strong>6.8.7 · Tracciabilità: dall'euro speso al risultato</strong> è il workshop che monta la catena euro→canale→campagna→conversione, senza la quale ogni decisione di budget resta un'opinione travestita da numero.",
+    ct:"Guardando il tuo prossimo piano: <span class=\"a-w\">i numeri di partenza li hai verificati, o li hai ereditati da un documento</span>?",
+    cs:"Allenamento: entro 48 ore fai il conto a ritroso del tuo prossimo obiettivo in tre scenari, e scrivi accanto a ogni tasso se è un dato tuo o un'ipotesi. Se il piano regge solo nello scenario aggressivo, hai già la risposta.",
+    navp:"Torna", navpt:"6.8.5 · Strategia di allocazione del budget",
+    navn:"Prossima", navnt:"6.8.7 · Tracciabilità: dall'euro al risultato",
+    foot:"Marketing Mastery · Fase 6 · La macchina · costruito sullo <span class=\"mono\">Spiegatore Standard</span>"
+  },
+  en:{
+    badge:"Theory lens · build · 14 min", pdf:"PDF",
+    eyebrow:"Phase 6 · M5.8 · lesson 6 of 10",
+    h1:"Without history you're not forecasting. You're building a <span class=\"hl\">model to validate</span>.",
+    tesi:"The backward math starts from the revenue you want and arrives at the euro you must spend, passing through sales, conversion rates, leads and visitors. With historical data it's an estimate; without historical data they're hypotheses, and then you build three scenarios instead of one number. We do it on a real case with a real list in hand, and the first lesson arrives before the calculation: verify the starting numbers.",
+    p1:"The question every client asks, and which almost no one can answer methodically, is: how much must I spend to make this much? The way to answer is the backward math, and it has a fixed chain. You start from target revenue. You divide it by the average price, and you have the sales needed. You divide those by the expected conversion rate, and you have the leads needed. You divide those by the opt-in rate, and you have the visitors needed. You multiply those by the estimated cost per click, and you have the budget. Five steps, in an order that doesn't change.",
+    p2:"But before the calculation there's a step this lesson puts before everything, because it's the one that really bit. In a real Scalers project, on the numbers of a list to work, the starting document carried a wrong size: it spoke of one hundred forty-five thousand contacts with fourteen thousand deliverable. The real list was another: thirty-five thousand four hundred sixteen contacts, of which about thirteen thousand deliverable and about one thousand nine hundred thirty-three warm. Whoever had done the backward math on the wrong number would have built a plan four times more optimistic than possible, with perfect arithmetic.",
+    p3:"Keep it as a rule: numbers don't only lie at the attribution stage, as you saw in lesson four. They also lie in the document you start from. The first step of reverse engineering is verifying the input.",
+    figcap:"The chain of the backward math, from target revenue to budget. Every division requires a rate: if the rate is a hypothesis, the result is a hypothesis. And if the starting input is wrong, the whole chain stays arithmetically correct and completely useless.",
+    sh1:"With history and without: two different crafts",
+    p4:"If you have historical data, the backward math is an estimate and you use your real numbers: past spend, average cost per lead, lead-to-customer conversion rate, show-up rate if there's an event, close rate if there's a call, average customer value, margin. In that case the result has decent reliability, because every rate comes from your experience and not from hope.",
+    p5:"If you have no history, the nature of the exercise changes, and this is the sentence to keep: without history you're not forecasting, you're building a decision model to validate. The hypotheses to put in are five: opt-in rate, cost per lead, lead-to-customer conversion, average price, margin. And since they're hypotheses, you don't produce a number but three scenarios: conservative, realistic, aggressive. The model's value isn't guessing: it's making visible which hypothesis, if wrong, collapses the plan. If the plan only holds in the aggressive scenario, that's already an answer.",
+    sh2:"The exercise: real list, real objective",
+    p6:"Let's do it on a concrete case, with the real numbers of the list we mentioned, and with a four-thousand-euro-plus-VAT product. The list has thirty-five thousand four hundred sixteen contacts, but the useful numbers are the other two: about thirteen thousand deliverable and about one thousand nine hundred thirty-three warm. It's already a lesson in itself: a list's declared size is almost always the least useful of the three.",
+    p7:"Now take an objective, say one hundred thousand euros. At four thousand euros of price you need twenty-five sales. From here on every step is a hypothesis, and I declare it as such: if from the warm part of the list a two percent click rate comes, that's about forty clicks; if ten percent of those clicks book a call, that's four calls; with a thirty percent close rate that's a little more than one sale. That is about five thousand euros against a one-hundred-thousand objective. The list, alone, covers a minimal fraction of the plan, and the rest must come from advertising.",
+    p8:"Notice what the model did, which is its real job: it didn't predict the future, it made a gap visible. And it also confirmed where the bottleneck is in that project, which was precisely in the clicks. Change the click rate from two to six percent and the list's contribution triples; change the close rate from thirty to forty and little changes. The model tells you which number is worth working on, before you even spend.",
+    pbk:"The backward math · the procedure, in order",
+    pbt:"STEP 0 · VERIFY THE INPUT\n  → is the list size the real one? deliverable and warm, not the total\n  → a wrong input produces an arithmetically perfect and useless plan\n\nSTEP 1 · target revenue          ÷ average price      = sales needed\nSTEP 2 · sales needed            ÷ lead→customer conv. = leads needed\nSTEP 3 · leads needed            ÷ optin rate          = visitors needed\nSTEP 4 · visitors needed         × estimated CPC       = BUDGET NEEDED\n\nSTEP 5 · THE MAXIMUM SUSTAINABLE CAC\n  → margin per customer ÷ 3 (to keep the LTV/CAC ratio ≥ 3:1)\n  → if the CAC estimated at step 4 exceeds it, the plan doesn't hold: go back\n\nWITHOUT HISTORY: every rate is a HYPOTHESIS → build 3 scenarios\n  conservative · realistic · aggressive\n  and look at WHICH hypothesis, if wrong, collapses the plan\n\nFINALLY, the sanity check (→ 6.8.3 and 6.8.4)\n  → is the upstream funnel already losing? then no budget saves it",
+    sh3:"The maximum CAC, and the sanity check",
+    p9:"There's a number the backward math must always produce, and it's the maximum acquisition cost you can afford. It's derived from the margin per customer: if you want to keep the ratio between customer value and acquisition cost at three to one, as you saw in M5.6, your ceiling is about a third of the margin. On the four-thousand-euro product, with a generous margin, we're talking several hundred euros per customer: it's a high ceiling, which makes advertising sustainable. On a one-hundred-fifty-euro course the ceiling is a few tens, and this completely changes which channels you can afford.",
+    p10:"And the last check, the one that closes the loop with the rest of the module: the plan holds only if the upstream funnel isn't already losing. If the front-end break-even isn't there, as you saw in M5.3, no bigger budget fixes the situation, it worsens it faster. That's why this lesson comes after the dashboard and after the MER: the backward math is useful only on a machine you know how to read. Without that, it's arithmetic applied to an illusion.",
+    key:"The backward math: target revenue ÷ average price = sales needed ÷ conversion = leads needed ÷ optin rate = visitors needed × CPC = budget. Step 0, before everything: verify the input (in a real project the starting document declared 145k contacts/14k deliverable, the real list was 35,416 with ~13,000 deliverable and ~1,933 warm: whoever had calculated on the wrong number would have made a perfect plan four times too optimistic). With history it's an estimate (past spend, CPL, conversion, show-up, close rate, customer value, margin); without history you're not forecasting, you're building a decision model to validate → 3 scenarios (conservative/realistic/aggressive) and the real question is which hypothesis, if wrong, collapses the plan. Real exercise: €100k objective at €4,000 = 25 sales; from the warm part of the list, with hypotheses 2% clicks → 10% calls → 30% close, about one sale arrives: the model doesn't predict, it makes the gap visible (and confirms the bottleneck was the clicks). Always calculate the maximum sustainable CAC (margin ÷ 3 to keep LTV/CAC ≥ 3:1). Final check: if the upstream funnel is already losing, no budget saves it.",
+    jk:"Do your backward math",
+    jp:"<strong>Put it to the test on something of yours.</strong> Take a real revenue objective and walk the chain: price, sales, conversion, leads, visitors, budget. Mark with an asterisk every rate that's a hypothesis and not your own data. Then two questions: what's your maximum sustainable CAC, and which single hypothesis, if wrong by double, collapses the plan?",
+    xt:"Cross-reference · next lesson",
+    xp:"You have the budget divided and calculated. Now you need to be able to verify it afterwards. <strong>6.8.7 · Traceability: from the euro spent to the result</strong> is the workshop that builds the chain euro→channel→campaign→conversion, without which every budget decision stays an opinion disguised as a number.",
+    ct:"Looking at your next plan: <span class=\"a-w\">did you verify the starting numbers, or did you inherit them from a document</span>?",
+    cs:"Training: within 48 hours do the backward math for your next objective in three scenarios, and write next to each rate whether it's your own data or a hypothesis. If the plan only holds in the aggressive scenario, you already have the answer.",
+    navp:"Back", navpt:"6.8.5 · Budget allocation strategy",
+    navn:"Next", navnt:"6.8.7 · Traceability: from euro to result",
+    foot:"Marketing Mastery · Phase 6 · The machine · built on the <span class=\"mono\">Spiegatore Standard</span>"
+  }
+};
+window.LAB={
+  it:{bet:{b1:{k:"Scommetti prima di sapere", q:"Non hai dati storici e devi dire al cliente quanto budget serve per fare 100.000 euro. Cosa gli consegni?", opts:[
+    {t:"Un numero preciso: prendi i benchmark di settore, fai la catena e dai la cifra. Un numero solo è più credibile e decidibile.", ok:false, fb:"No: un numero solo su ipotesi non tue dà una falsa precisione. Senza storico non stai prevedendo, stai costruendo un modello decisionale da validare, e spacciarlo per previsione è il modo più elegante di sbagliare."},
+    {t:"Tre scenari (conservativo, realistico, aggressivo) con ogni ipotesi dichiarata come tale, più l'indicazione di quale ipotesi fa crollare il piano se sbagliata.", ok:true, fb:"Esatto. Il valore del modello non è indovinare, è rendere visibile la fragilità: se il piano regge solo nello scenario aggressivo, quella è già una risposta. E se un'ipotesi sbagliata del doppio fa crollare tutto, sai su cosa raccogliere dati per primo."},
+    {t:"Niente: senza storico qualunque stima è inutile, meglio partire a spendere piccolo e vedere cosa succede.", ok:false, fb:"Parzialmente saggio (la validazione serve), ma rinunciare al modello è un errore: il conto a ritroso senza storico è proprio ciò che ti dice DOVE guardare durante la validazione e qual è il CAC massimo che puoi permetterti."}
+  ]}}},
+  en:{bet:{b1:{k:"Bet before you know", q:"You have no historical data and must tell the client how much budget is needed to make 100,000 euros. What do you deliver?", opts:[
+    {t:"A precise number: take industry benchmarks, do the chain and give the figure. A single number is more credible and decidable.", ok:false, fb:"No: a single number on hypotheses that aren't yours gives false precision. Without history you're not forecasting, you're building a decision model to validate, and passing it off as a forecast is the most elegant way to be wrong."},
+    {t:"Three scenarios (conservative, realistic, aggressive) with every hypothesis declared as such, plus which hypothesis collapses the plan if wrong.", ok:true, fb:"Correct. The model's value isn't guessing, it's making fragility visible: if the plan only holds in the aggressive scenario, that's already an answer. And if a hypothesis wrong by double collapses everything, you know what to collect data on first."},
+    {t:"Nothing: without history any estimate is useless, better to start spending small and see what happens.", ok:false, fb:"Partly wise (validation is needed), but giving up the model is an error: the backward math without history is precisely what tells you WHERE to look during validation and what maximum CAC you can afford."}
+  ]}}}
+};
+</script>
+<script src="../_engine/motore.js"></script>
+</body>
+</html>
