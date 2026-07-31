@@ -55,9 +55,14 @@ export function StructuredData({ locale }: StructuredDataProps) {
     description: isIt
       ? "Integriamo l'AI nel DNA delle organizzazioni. Ripensiamo struttura, processi e decisioni per rendere l'AI parte integrante del modo di operare."
       : "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions to make AI a core part of how organizations operate.",
+    /* La prima frase e' lockata dal 2026-06-26 (docs/geo/entity-data.md)
+       e non si tocca: dice cosa fa Morfeus. La seconda e' la coda di
+       separazione, aggiunta il 2026-07-31, e serve perche' "Morfeus" e'
+       un nome affollato: senza gli omonimi scritti per esteso, un
+       motore generativo non ha come capire quale entita' sei. */
     disambiguatingDescription: isIt
-      ? "Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro."
-      : "Morfeus (Numanity S.r.l.) is the Italian AI consulting and training company that embeds into scaling businesses as an Operating Partner: it finds where they lose margin and builds AI systems — agents, automations and internal skills — that recover it, measured in euros.",
+      ? "Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro. Non ha alcun rapporto con NVIDIA Morpheus, con morpheusbusiness.ai, né con il progetto open source morfeus.dev."
+      : "Morfeus (Numanity S.r.l.) is the Italian AI consulting and training company that embeds into scaling businesses as an Operating Partner: it finds where they lose margin and builds AI systems — agents, automations and internal skills — that recover it, measured in euros. It is unrelated to NVIDIA Morpheus, morpheusbusiness.ai, or the morfeus.dev open source project.",
     foundingDate: "2023",
     email: "hello@morfeushub.com",
     address: {

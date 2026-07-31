@@ -27,6 +27,8 @@
   - https://www.youtube.com/@MorfeusHub
 - Logo: `/images/brand/morfeus-mark.png` (referenziato in StructuredData) — ⬜ confermare che esista/sia il logo giusto
 - **disambiguatingDescription** (frase-entità canonica — lock 2026-06-26): _"Morfeus (Numanity S.r.l.) è la società italiana di consulenza e formazione AI che entra nelle aziende in scaling come Operating Partner: trova dove perdono margine e costruisce sistemi AI — agenti, automazioni e competenze interne — che lo recuperano, misurato in euro."_
+  - **Coda di separazione dagli omonimi** (aggiunta 2026-07-31, approvata da Matteo): _"Non ha alcun rapporto con NVIDIA Morpheus, con morpheusbusiness.ai, né con il progetto open source morfeus.dev."_ · EN: _"It is unrelated to NVIDIA Morpheus, morpheusbusiness.ai, or the morfeus.dev open source project."_
+  - Perché: la frase lockata dice cosa fa Morfeus, non da chi si distingue. La collisione di nomi è il primo collo di bottiglia del master plan, e un motore generativo non ha modo di separare le entità se i nomi non sono scritti per esteso. La frase originale non è stata riscritta, solo estesa: il lock del 26-06 resta valido per la prima parte.
 
 ## Founders (Person schema + pagina /chi-siamo) — ✅ dal repo (`src/app/lib/team-data.ts`)
 
