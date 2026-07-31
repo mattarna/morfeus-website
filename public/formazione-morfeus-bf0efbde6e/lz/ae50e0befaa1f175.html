@@ -798,7 +798,7 @@ function applyI18n(){
   if(chartInst){rebuildChart();}
   updAuto();
 }
-function setLang(l){LANG=l;document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
+function setLang(l){LANG=l;try{localStorage.setItem('mf-lang',l)}catch(e){}document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});applyI18n()}
 
 var ob=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}})},{threshold:.1});
 document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(Math.min(i,6)*55)+'ms';ob.observe(el)});
@@ -809,6 +809,7 @@ window.addEventListener('load',function(){
   upd();
   updAuto();
 });
+(function(){try{var p=new URLSearchParams(location.search).get('lang'),s=localStorage.getItem('mf-lang'),l=(p==='en'||p==='it')?p:s;if((l==='en'||l==='it')&&l!==LANG)setLang(l)}catch(e){}})();
 </script>
 </body>
 </html>
