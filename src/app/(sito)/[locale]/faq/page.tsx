@@ -13,7 +13,7 @@ const COPY = {
   it: {
     metaTitle: "Domande frequenti | Morfeus",
     metaDesc:
-      "Domande frequenti su Morfeus: chi siamo, il metodo (Value Leak, MARF, ROIometro, Value Report), il modello Pilot to Retainer, prezzi, dati e sicurezza, formazione e AI Champion.",
+      "Domande frequenti su Morfeus: il metodo (Value Leak, MARF, ROIometro, Value Report), il modello Pilot to Retainer, prezzi, dati e sicurezza, formazione.",
     hero: {
       eye: "Domande frequenti",
       h1a: "Le risposte, ",
@@ -227,7 +227,7 @@ const COPY = {
   en: {
     metaTitle: "FAQ | Morfeus",
     metaDesc:
-      "Frequently asked questions about Morfeus: who we are, the method (Value Leak, MARF, ROIometer, Value Report), the Pilot to Retainer model, pricing, data and security, training and AI Champion.",
+      "Frequently asked questions about Morfeus: the method (Value Leak, MARF, ROIometer, Value Report), the Pilot to Retainer model, pricing, data and training.",
     hero: {
       eye: "Frequently asked questions",
       h1a: "The answers, ",

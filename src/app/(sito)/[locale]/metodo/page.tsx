@@ -31,9 +31,9 @@ type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
-    metaTitle: "Il Metodo Morfeus · Come portiamo l'AI nei processi",
+    metaTitle: "Metodo Morfeus · Come portiamo l'AI nei processi",
     metaDesc:
-      "Il Metodo Morfeus parte da dove perdi valore, non da un tool: mappatura del Value Leak, AI Champion, Context Hub, agenti in produzione e valore verificato nel Value Report.",
+      "Il Metodo Morfeus parte da dove perdi valore, non da un tool: Value Leak, AI Champion, Context Hub, agenti in produzione e valore nel Value Report.",
     hero: {
       eye: "Il metodo di lavoro Morfeus",
       h1a: "L'AI non crea valore da sola. Lo crea quando cambia il modo in cui ",
@@ -219,9 +219,9 @@ const COPY = {
     },
   },
   en: {
-    metaTitle: "The Morfeus Method · How we bring AI into workflows",
+    metaTitle: "Morfeus Method · How we bring AI into workflows",
     metaDesc:
-      "The Morfeus Method starts where you are losing value, not with a tool: Value Leak mapping, AI Champions, Context Hub, agents in production and value verified in the Value Report.",
+      "The Morfeus Method starts where you lose value, not with a tool: Value Leak, AI Champions, Context Hub, agents in production, value in the Value Report.",
     hero: {
       eye: "The Morfeus way of working",
       h1a: "AI does not create value on its own. It creates value when it changes ",

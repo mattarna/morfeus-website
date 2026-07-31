@@ -52,7 +52,7 @@ const COPY = {
   en: {
     metaTitle: "Learn AI · Free paths for teams and companies | Morfeus",
     metaDesc:
-      "Free learning paths for founders, managers and teams: understand where AI creates value, apply it to real work and make it a capability that stays in the company.",
+      "Free learning paths for founders, managers and teams: understand where AI creates value, apply it to real work and make it a capability that stays.",
     hero: {
       eye: "Learn AI",
       h1a: "You do not need to learn everything about AI. You need to learn where to ",

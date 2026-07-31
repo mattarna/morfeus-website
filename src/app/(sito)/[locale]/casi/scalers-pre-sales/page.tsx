@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -8,7 +10,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 const COPY = {
   it: {
-    metaTitle: "Entravano in call senza sapere con chi stavano parlando · Caso Morfeus",
+    metaTitle: "In call senza sapere con chi parli · Caso Morfeus",
     metaDesc:
       "Caso #067: Scalers, consulenza B2B. Il tempo di prep per call passa da 20 minuti a zero, la chiusura sulle call programmate sale di 11 punti in un trimestre.",
     crumbs: { casi: "Casi", sep: " · ", client: "Scalers", n: "Caso #067" },
@@ -98,7 +100,7 @@ const COPY = {
     },
   },
   en: {
-    metaTitle: "They walked into calls not knowing who they were talking to · Morfeus Case",
+    metaTitle: "They joined calls not knowing who they'd meet · Morfeus case",
     metaDesc:
       "Case #067: Scalers, B2B consulting. Call prep time drops from 20 minutes to zero; close rate on booked calls climbs 11 points in a quarter.",
     crumbs: { casi: "Cases", sep: " · ", client: "Scalers", n: "Case #067" },
@@ -238,6 +240,13 @@ export default async function ScalersPreSalesCasePage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["scalers-pre-sales"][safeLocale], percorso: "casi/scalers-pre-sales" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -9,9 +11,9 @@ type Props = { params: Promise<{ locale: string }> };
 const COPY = {
   it: {
     metaTitle:
-      "Cyberangels Sales Advisor · I tuoi commerciali vendono di tutto, tranne l'unica cosa con il margine più alto | Caso Morfeus",
+      "Vendono tutto tranne ciò che rende di più · Caso Morfeus",
     metaDesc:
-      "Caso #016: un MSP aveva l'assessment di sicurezza più redditizio del listino e i commerciali lo evitavano perché non lo capivano. Ora lo aprono in un clic: sicurezza in oltre il 70% delle call, ticket medio +30%.",
+      "Caso #016: un MSP aveva l'assessment più redditizio del listino e i commerciali lo evitavano. Ora sicurezza in oltre il 70% delle call, ticket medio +30%.",
     crumbs: { casi: "Casi", sep: " · ", title: "Cyberangels Sales Advisor", num: " · Caso #016" },
     tags: ["MSP / reseller IT", "Micro-PMI 5-30 persone"],
     h1a: "I tuoi commerciali vendono di tutto. Tranne l'unica cosa con il ",
@@ -107,9 +109,9 @@ const COPY = {
   },
   en: {
     metaTitle:
-      "Cyberangels Sales Advisor · Your reps sell everything except the one thing with the highest margin | Morfeus Case",
+      "They sell all but the highest-margin service · Morfeus case",
     metaDesc:
-      "Case #016: an MSP had the most profitable security assessment in the catalog and reps avoided it because they didn't understand it. Now they open it in one click: security in over 70% of calls, avg ticket +30%.",
+      "Case #016: an MSP had the most profitable assessment in its catalog and reps avoided it. Now security is in over 70% of calls, average ticket +30%.",
     crumbs: { casi: "Cases", sep: " · ", title: "Cyberangels Sales Advisor", num: " · Case #016" },
     tags: ["MSP / IT reseller", "Micro-SMB 5-30 people"],
     h1a: "Your sales reps sell everything. Except the one thing with the ",
@@ -456,6 +458,13 @@ export default async function CyberangelsSalesAdvisorPage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["cyberangels-sales-advisor"][safeLocale], percorso: "casi/cyberangels-sales-advisor" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

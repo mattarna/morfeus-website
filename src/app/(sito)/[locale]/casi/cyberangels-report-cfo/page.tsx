@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -9,9 +11,9 @@ type Props = { params: Promise<{ locale: string }> };
 const COPY = {
   it: {
     metaTitle:
-      "Cyberangels Report CFO · Il report tecnico che finisce nel cassetto, e con lui il rinnovo | Caso Morfeus",
+      "Il report che finisce nel cassetto del CFO · Caso Morfeus",
     metaDesc:
-      "Caso #027 Cyberangels Report Engine. In un'azienda moda strutturata il report di sicurezza arrivava pieno di CVE e severità, il CFO non lo capiva e il rinnovo restava appeso. Ora arriva integro fino al tavolo che firma.",
+      "Caso #027: in un'azienda moda il report di sicurezza arrivava pieno di CVE, il CFO non lo capiva e il rinnovo restava appeso. Ora arriva al tavolo che firma.",
     crumbCasi: "Casi",
     crumbTail: "Cyberangels Report Engine · Caso #027",
     tags: ["Moda / fashion strutturata", "Media impresa / quotata (50-250 addetti)"],
@@ -150,9 +152,9 @@ const COPY = {
   },
   en: {
     metaTitle:
-      "Cyberangels CFO Report · The tech report that ends up in the drawer, and the renewal with it | Morfeus Case",
+      "The report that ends up in the CFO's drawer · Morfeus case",
     metaDesc:
-      "Case #027 Cyberangels Report Engine. In a structured fashion company the security report arrived full of CVEs and severity ratings, the CFO didn't understand it and renewal stayed on hold. Now it reaches the table that signs, intact.",
+      "Case #027: in a fashion company the security report arrived full of CVEs, the CFO didn't understand it and renewal stalled. Now it reaches the desk that signs.",
     crumbCasi: "Cases",
     crumbTail: "Cyberangels Report Engine · Case #027",
     tags: ["Fashion / structured brand", "Mid-market / listed (50-250 employees)"],
@@ -351,6 +353,13 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["cyberangels-report-cfo"][safeLocale], percorso: "casi/cyberangels-report-cfo" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

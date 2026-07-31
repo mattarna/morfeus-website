@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -11,9 +13,9 @@ const SLUG = "casi/globia-scoring-deterministico";
 const COPY = {
   it: {
     metaTitle:
-      "Il numero cambiava a ogni click, e loro dovevano metterci la firma · Caso Morfeus",
+      "Il numero cambiava a ogni click · Caso Morfeus",
     metaDesc:
-      "Caso #068: GLOBIA, boutique di consulenza e due diligence, aveva uno scoring AI che dava un voto diverso allo stesso input. Ora il punteggio è deterministico, riproducibile al 100%, tempo di valutazione ridotto del 60%.",
+      "Caso #068: GLOBIA aveva uno scoring AI che dava un voto diverso allo stesso input. Ora il punteggio è deterministico e il tempo di valutazione cala del 60%.",
     crumbsCasi: "Casi",
     crumbsSep: " · GLOBIA · Caso #068",
     tags: [
@@ -167,9 +169,9 @@ const COPY = {
   },
   en: {
     metaTitle:
-      "The number changed with every click, and they had to sign it · Morfeus case",
+      "The number changed with every click · Morfeus case",
     metaDesc:
-      "Case #068: GLOBIA, a boutique consulting and due diligence firm, had an AI scoring tool that returned a different grade for the same input. The score is now deterministic, 100% reproducible, and evaluation time is cut by 60%.",
+      "Case #068: GLOBIA had an AI scoring tool that gave a different grade for the same input. The score is now deterministic and evaluation time drops 60%.",
     crumbsCasi: "Cases",
     crumbsSep: " · GLOBIA · Case #068",
     tags: [
@@ -374,6 +376,13 @@ export default async function CasoGlobiaScoringPage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["globia-scoring-deterministico"][safeLocale], percorso: "casi/globia-scoring-deterministico" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

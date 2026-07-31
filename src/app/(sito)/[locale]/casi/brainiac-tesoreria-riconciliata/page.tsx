@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -10,9 +12,9 @@ const SLUG = "casi/brainiac-tesoreria-riconciliata";
 
 const COPY = {
   it: {
-    metaTitle: "Le fatture le emetti tu. Chi le incassa? · Caso Brainiac · Morfeus",
+    metaTitle: "Le fatture le emetti tu. Chi le incassa? · Caso Morfeus",
     metaDesc:
-      "Caso #049 Brainiac: una PMI con due societa scopriva i buchi di cassa quando ce li aveva davanti. Cassa riconciliata sul telefono, 65.000 euro di crediti recuperati nel primo trimestre.",
+      "Caso #049: una PMI con due società scopriva i buchi di cassa troppo tardi. Cassa riconciliata sul telefono, 65.000 euro recuperati nel primo trimestre.",
     articleHeadline:
       "Le fatture le emetti tu. Chi le incassa? · Brainiac, tesoreria riconciliata",
     articleDesc:
@@ -125,9 +127,9 @@ const COPY = {
     relatedOpen: "Dossier in arrivo",
   },
   en: {
-    metaTitle: "You issue the invoices. Who collects them? · Brainiac case · Morfeus",
+    metaTitle: "You issue the invoices. Who collects them? · Morfeus case",
     metaDesc:
-      "Case #049 Brainiac: an SMB with two companies discovered its cash gaps only when they were already in front of it. Cash reconciled on the phone, 65,000 euro of receivables recovered in the first quarter.",
+      "Case #049: an SMB with two companies found its cash gaps too late. Cash reconciled on the phone, 65,000 euro of receivables recovered in one quarter.",
     articleHeadline:
       "You issue the invoices. Who collects them? · Brainiac, reconciled treasury",
     articleDesc:
@@ -301,6 +303,13 @@ export default async function BrainiacCasePage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["brainiac-tesoreria-riconciliata"][safeLocale], percorso: "casi/brainiac-tesoreria-riconciliata" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

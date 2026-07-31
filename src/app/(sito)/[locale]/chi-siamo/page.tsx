@@ -34,7 +34,7 @@ const COPY = {
   it: {
     metaTitle: "Chi siamo · AI Operating Partner | Morfeus",
     metaDesc:
-      "Morfeus è un AI Operating Partner: entriamo nei processi dove valore, tempo e sapere si disperdono, costruiamo i sistemi che li rendono utilizzabili e lavoriamo col team finché diventano operatività.",
+      "Morfeus è un AI Operating Partner: entriamo dove valore, tempo e sapere si disperdono, costruiamo i sistemi che li rendono utilizzabili e restiamo col team.",
     hero: {
       eye: "Chi siamo",
       h1a: "Non ci interessa parlare di AI. Ci interessa ",
@@ -155,7 +155,7 @@ const COPY = {
   en: {
     metaTitle: "About us · AI Operating Partner | Morfeus",
     metaDesc:
-      "Morfeus is an AI Operating Partner: we go into the workflows where value, time and know-how leak away, build the systems that make them usable and work with the team until they become operations.",
+      "Morfeus is an AI Operating Partner: we go where value, time and know-how leak away, build the systems that make them usable and stay with the team.",
     hero: {
       eye: "About us",
       h1a: "We are not interested in talking about AI. We are interested in ",

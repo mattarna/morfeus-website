@@ -44,7 +44,7 @@ const COPY = {
   it: {
     metaTitle: "Insights · Guide operative sull'AI in azienda | Morfeus",
     metaDesc:
-      "Guide operative per capire dove intervenire con l'AI, come costruire sistemi utili e come verificarne il valore nel tempo. Processi, persone e margine, non tool.",
+      "Guide operative per capire dove intervenire con l'AI, come costruire sistemi utili e come verificarne il valore. Processi, persone e margine, non tool.",
     hero: {
       eye: "Insights",
       h1a: "L'AI in azienda non è una questione di tool. È una questione di processi, persone e ",
@@ -94,7 +94,7 @@ const COPY = {
   en: {
     metaTitle: "Insights · Practical guides on AI in business | Morfeus",
     metaDesc:
-      "Practical guides to understand where to intervene with AI, how to build useful systems and how to verify their value over time. Workflows, people and margin, not tools.",
+      "Practical guides on where to intervene with AI, how to build useful systems and how to verify their value. Workflows, people and margin, not tools.",
     hero: {
       eye: "Insights",
       h1a: "AI in business is not a tool question. It is a question of workflows, people and ",

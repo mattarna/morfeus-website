@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -10,7 +12,7 @@ const COPY = {
   it: {
     metaTitle: "MARF · Lead caldo · Caso Morfeus",
     metaDesc:
-      "Caso MARF #001: un call center vendita energia perdeva metà dei lead pagati perché nessuno sapeva chi richiamare adesso. Secondo contatto sui lead caldi dal 50% a oltre il 90%.",
+      "Caso #001: un call center energia perdeva metà dei lead pagati perché nessuno sapeva chi richiamare adesso. Secondo contatto dal 50% a oltre il 90%.",
     crumbs: { casi: "Casi", label: "MARF · Caso #001" },
     tags: ["Call center energia", "Micro-PMI 12 persone", "Action Board"],
     h1a: "Ogni lead caldo che non richiami stasera, domani è ",
@@ -99,7 +101,7 @@ const COPY = {
   en: {
     metaTitle: "MARF · Hot lead · Morfeus case",
     metaDesc:
-      "MARF case #001: an energy sales call center was losing half of its paid leads because no one knew who to call now. Second contact on hot leads from 50% to over 90%.",
+      "Case #001: an energy call center lost half its paid leads because no one knew who to call now. Second contact on hot leads from 50% to over 90%.",
     crumbs: { casi: "Cases", label: "MARF · Case #001" },
     tags: ["Energy call center", "Micro-SMB, 12 people", "Action Board"],
     h1a: "Every hot lead you don't call back tonight is ",
@@ -248,6 +250,13 @@ export default async function CasoMarfLeadCaldoPage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["marf-lead-caldo"][safeLocale], percorso: "casi/marf-lead-caldo" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

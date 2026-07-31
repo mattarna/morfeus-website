@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -12,7 +14,7 @@ const COPY = {
   it: {
     metaTitle: "Il best-seller che ti stava mangiando vivo · Caso Morfeus",
     metaDesc:
-      "Caso #032: un e-commerce DTC scalava in ads il suo prodotto più venduto senza sapere che ogni unità lasciava il conto più vuoto di prima. Tre SKU in rosso scoperti, recupero margine a doppia cifra in un trimestre.",
+      "Caso #032: un e-commerce DTC spingeva in ads il prodotto più venduto senza sapere che ogni unità svuotava il conto. Tre SKU in rosso, margine recuperato.",
     crumbsCasi: "Casi",
     crumbsCase: "Valueize · Caso #032",
     tags: ["E-commerce / DTC omnicanale", "PMI digitale 5-50 persone", "Margine per SKU"],
@@ -119,7 +121,7 @@ const COPY = {
   en: {
     metaTitle: "The best-seller that was eating you alive · Morfeus Case",
     metaDesc:
-      "Case #032: a DTC e-commerce was scaling its top-selling product in ads without knowing every unit left the bank account emptier than before. Three SKUs in the red uncovered, double-digit margin recovery in one quarter.",
+      "Case #032: a DTC e-commerce scaled ads on its top seller without knowing every unit drained the account. Three SKUs in the red, margin recovered.",
     crumbsCasi: "Cases",
     crumbsCase: "Valueize · Case #032",
     tags: ["E-commerce / omnichannel DTC", "Digital SMB 5-50 people", "Margin per SKU"],
@@ -340,6 +342,13 @@ export default async function CasoValueizePage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["valueize-best-seller"][safeLocale], percorso: "casi/valueize-best-seller" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

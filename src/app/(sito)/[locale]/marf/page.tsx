@@ -38,7 +38,7 @@ const COPY = {
   it: {
     metaTitle: "MARF · Il cruscotto operativo aziendale | Morfeus",
     metaDesc:
-      "MARF collega marketing, vendite, amministrazione, delivery e customer care in un unico cruscotto operativo. Trasforma informazioni disperse in processi, decisioni e azioni verificabili.",
+      "MARF collega marketing, vendite, amministrazione, delivery e customer care in un unico cruscotto operativo, e trasforma informazioni disperse in azioni.",
     hero: {
       eye: "MARF · Cruscotto operativo aziendale",
       h1a: "Tutto ciò che muove l'azienda. In un solo ",
@@ -158,7 +158,7 @@ const COPY = {
   en: {
     metaTitle: "MARF · The company operating cockpit | Morfeus",
     metaDesc:
-      "MARF connects marketing, sales, administration, delivery and customer care in one company operating cockpit. It turns scattered information into verifiable workflows, decisions and actions.",
+      "MARF connects marketing, sales, administration, delivery and customer care in one operating cockpit, turning scattered information into verifiable actions.",
     hero: {
       eye: "MARF · The company's operating cockpit",
       h1a: "Everything that moves your company. One ",

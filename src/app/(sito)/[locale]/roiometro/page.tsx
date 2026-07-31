@@ -10,7 +10,7 @@ const COPY = {
   it: {
     metaTitle: "ROIometro | Morfeus",
     metaDesc:
-      "Stima in euro quanto valore la tua azienda perde ogni mese nel lavoro manuale, e quanto puoi recuperare. Uno strumento, non un preventivo: il primo passo del metodo Morfeus.",
+      "Stima in euro quanto valore la tua azienda perde ogni mese nel lavoro manuale e quanto puoi recuperare. Uno strumento, non un preventivo.",
     eye: "Lo strumento della misura",
     h1a: "Metti un numero sul problema che non ",
     h1emph: "vedi",
@@ -20,7 +20,7 @@ const COPY = {
   en: {
     metaTitle: "ROIometro | Morfeus",
     metaDesc:
-      "Estimate in euros how much value your company loses every month in manual work, and how much you can recover. A tool, not a quote: the first step of the Morfeus method.",
+      "Estimate in euros how much value your company loses every month in manual work and how much you can recover. A tool, not a quote.",
     eye: "The measurement tool",
     h1a: "Put a number on the problem you don't ",
     h1emph: "see",

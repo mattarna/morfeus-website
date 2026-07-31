@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
+import { Briciole } from "@/components/shared/SEO/Briciole";
+import { NOME_CASO, NOME_INDICE_CASI } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
@@ -10,7 +12,7 @@ const COPY = {
   it: {
     metaTitle: "AG Academy · Onboarding studenti · Caso #013 | Morfeus",
     metaDesc:
-      "Caso #013: un'academy high-ticket perdeva un quarto dei ricavi nei primi 14 giorni post-vendita. Rimborsi dal 25% al 6%, primo accesso da due giorni a poche ore.",
+      "Caso #013: un'academy high-ticket perdeva un quarto dei ricavi nei primi 14 giorni post-vendita. Rimborsi dal 25% al 6%, primo accesso in poche ore.",
     crumbsCasi: "Casi",
     crumbsMid: "Onboarding studenti",
     crumbsN: "Caso #013",
@@ -104,7 +106,7 @@ const COPY = {
   en: {
     metaTitle: "AG Academy · Student onboarding · Case #013 | Morfeus",
     metaDesc:
-      "Case #013: a high-ticket academy was losing a quarter of its revenue in the first 14 days after the sale. Refunds from 25% to 6%, first login from two days to a few hours.",
+      "Case #013: a high-ticket academy lost a quarter of its revenue in the first 14 days after the sale. Refunds from 25% to 6%, first login in a few hours.",
     crumbsCasi: "Cases",
     crumbsMid: "Student onboarding",
     crumbsN: "Case #013",
@@ -303,6 +305,13 @@ export default async function CaseAgAcademyPage({ params }: Props) {
 
   return (
     <SiteShell locale={safeLocale}>
+      <Briciole
+        locale={safeLocale}
+        voci={[
+          { nome: NOME_INDICE_CASI[safeLocale], percorso: "casi" },
+          { nome: NOME_CASO["ag-academy-onboarding"][safeLocale], percorso: "casi/ag-academy-onboarding" },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
