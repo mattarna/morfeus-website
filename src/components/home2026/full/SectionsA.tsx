@@ -204,10 +204,20 @@ export function Problem({ active }: { active: boolean }) {
             {/* 20ch spezzava "Il margine non sparisce in un giorno." (36
                 caratteri) in due righe. Allargato quanto basta perche' ogni
                 frase stia su una riga sola: la headline passa da tre righe
-                a due, e la riga risparmiata va ai contenuti sotto. */}
+                a due, e la riga risparmiata va ai contenuti sotto.
+                820px era tarato sulla sola versione italiana: la riga piu'
+                lunga in italiano ne chiede 779 a corpo pieno (48px), quella
+                inglese "It leaks out of your workflows, every day." ne chiede
+                895, e sopra gli 820 andava a capo. In inglese la headline
+                tornava quindi a tre righe su ogni schermo alto almeno 900px,
+                dove il clamp del corpo arriva a 48px; sotto i 900 il corpo
+                scende a 38px e il difetto spariva, per questo non si vedeva
+                dal portatile. 960 copre entrambe le lingue con ~7% di
+                margine e resta dentro i 1120px del .wrap, quindi la lead
+                sotto e le righe dei leak non si spostano. */}
             <h2
               className="h-sect fx d2"
-              style={{ maxWidth: "min(100%, 820px)", margin: "10px 0 0" }}
+              style={{ maxWidth: "min(100%, 960px)", margin: "10px 0 0" }}
             >
               {t("headline_1")}
               <br />
