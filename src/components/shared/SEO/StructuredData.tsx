@@ -39,14 +39,18 @@ export function StructuredData({ locale }: StructuredDataProps) {
     "@type": "Organization",
     "@id": ORGANIZATION_ID,
     name: "Morfeus",
-    alternateName: "Morfeus Hub",
+    // "Morf" e' la linea prodotti (Morf Lab, Morf Forge): va dichiarata,
+    // o chi cerca "Morf Forge" non arriva all'azienda. entity-data.md
+    alternateName: ["Morfeus Hub", "Morf"],
     legalName: "Numanity S.r.l.",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
       url: `${SITE_URL}/images/brand/morfeus-mark.png`,
-      width: 400,
-      height: 100,
+      // Misure lette dal file: erano dichiarate 400x100, un rapporto
+      // che quel logo non ha mai avuto.
+      width: 2064,
+      height: 267,
     },
     description: isIt
       ? "Integriamo l'AI nel DNA delle organizzazioni. Ripensiamo struttura, processi e decisioni per rendere l'AI parte integrante del modo di operare."
@@ -64,6 +68,9 @@ export function StructuredData({ locale }: StructuredDataProps) {
       addressRegion: "MI",
       addressCountry: "IT",
     },
+    // Stesso numero per i due campi (S.r.l. italiana): `vatID` e' quello
+    // che i motori leggono per agganciare l'azienda ai registri.
+    vatID: "14209210963",
     taxID: "14209210963",
     founder: FOUNDER_SLUGS.map((slug) => ({ "@id": personId(slug) })),
     sameAs: [
@@ -78,7 +85,12 @@ export function StructuredData({ locale }: StructuredDataProps) {
       availableLanguage: ["English", "Italian"],
     },
     // Sede/identità italiana (legalName + address), ma servizio internazionale.
-    areaServed: "Worldwide",
+    // L'Italia dichiarata come Country, non solo "Worldwide": il mercato
+    // primario e' quello, e "Worldwide" da solo non lo dice a nessuno.
+    areaServed: [
+      { "@type": "Country", name: "Italy" },
+      "Worldwide",
+    ],
     knowsAbout: [
       "Artificial Intelligence",
       "AI Consulting",
@@ -87,6 +99,13 @@ export function StructuredData({ locale }: StructuredDataProps) {
       "AI Adoption",
       "AI Training",
       "Operating Partner",
+      // Termini proprietari, set B2B must-own di docs/geo/proprietary-terms.md:
+      // sono le parole su cui vogliamo essere citati per primi.
+      "MARF",
+      "ROIometro",
+      "Margin Recovery",
+      "Value Leak",
+      "AI Champion",
     ],
   };
 

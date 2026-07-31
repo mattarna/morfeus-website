@@ -23,6 +23,12 @@ export async function generateMetadata(props: {
   const baseUrl = SITE_URL;
   const safeLocale: SupportedLocale = locale === "it" ? "it" : "en";
 
+  /* Il titolo nel messaggio non porta piu' il prefisso "Morfeus - ":
+     ci pensa il template, e prima il marchio finiva scritto due volte
+     ("Morfeus - ... | Morfeus"). Nelle anteprime social il template non
+     si applica, quindi li' il marchio va aggiunto a mano. */
+  const titoloConMarchio = `${t("title")} | Morfeus`;
+
   return {
     title: {
       default: t("title"),
@@ -46,7 +52,7 @@ export async function generateMetadata(props: {
     alternates: buildLocaleAlternates("", safeLocale),
 
     openGraph: {
-      title: t("title"),
+      title: titoloConMarchio,
       description: t("description"),
       url: `${baseUrl}${buildLocaleAlternates("", safeLocale).canonical}`,
       siteName: "Morfeus",
@@ -55,7 +61,7 @@ export async function generateMetadata(props: {
           url: `${baseUrl}/opengraph-image.png`,
           width: 1200,
           height: 630,
-          alt: t("title"),
+          alt: titoloConMarchio,
         },
       ],
       locale: locale === "en" ? "en_US" : "it_IT",
@@ -64,7 +70,7 @@ export async function generateMetadata(props: {
     
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
+      title: titoloConMarchio,
       description: t("description"),
       images: [`${baseUrl}/opengraph-image.png`],
       creator: "@morfeushub",
