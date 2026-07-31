@@ -1,4 +1,5 @@
 import { Home2026 } from "@/components/home2026/full/Home2026";
+import { LoaderSito } from "@/components/site/loader/LoaderSito";
 
 /**
  * HOME UFFICIALE — brand 2026.
@@ -20,5 +21,17 @@ import { Home2026 } from "@/components/home2026/full/Home2026";
  * quel file è stato rimosso e sostituito da un redirect in `next.config.mjs`.
  */
 export default function Home() {
-  return <Home2026 />;
+  return (
+    <>
+      {/* IL SIPARIO CON LA M ANCHE QUI. Le altre pagine lo prendono da
+       * SiteShell, ma la home non ci passa: ha un impianto suo. Senza questa
+       * riga chi atterrava sulla home non vedeva il sipario, e soprattutto non
+       * consumava il cancello di sessione: al primo click interno il sipario si
+       * apriva SOPRA la transizione a squadre. Il loader esce in un portal su
+       * document.body e si porta dietro la sua classe `.ms`, quindi qui fuori
+       * si comporta esattamente come dentro SiteShell. */}
+      <LoaderSito />
+      <Home2026 />
+    </>
+  );
 }

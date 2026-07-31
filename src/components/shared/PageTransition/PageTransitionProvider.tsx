@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { segnaNavigazioneInterna } from "@/components/site/loader/ingresso";
 import "./page-transition.css";
 
 /* Le cifre del contratto stanno qui, e solo qui: passano al CSS come
@@ -100,6 +101,9 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
      arrivata, quindi i timer dell'uscita hanno finito il loro lavoro. */
   useEffect(() => {
     if (phase !== "entering") return;
+    /* Seconda cintura: copre le navigazioni che non passano dal nostro
+       click (avanti/indietro del browser, router.push di altri componenti). */
+    segnaNavigazioneInterna();
     destinazione.current = null;
     azzeraTimer();
     const id = window.setTimeout(() => setPhase("idle"), ENTER_MS);
@@ -141,6 +145,12 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       if (!passaDalRouter(url.pathname)) return;
 
       const href = url.pathname + url.search + url.hash;
+
+      /* Prima di ogni altra cosa: da qui in poi siamo dentro al sito, e il
+         sipario con la M non deve piu' aprirsi. Va alzata ADESSO e non dopo
+         la navigazione, altrimenti la pagina nuova monta il suo loader prima
+         che noi si faccia in tempo, e le due animazioni si sovrappongono. */
+      segnaNavigazioneInterna();
 
       event.preventDefault();
       destinazione.current = href;

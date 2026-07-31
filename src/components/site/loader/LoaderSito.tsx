@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { LoaderGriglia } from "./LoaderGriglia";
+import { eUnIngressoDaFuori } from "./ingresso";
 
 /* ============================================================
    Il loader del sito: dove si decide SE mostrarlo.
@@ -36,19 +37,27 @@ const useSulClient = () =>
 
 export function LoaderSito() {
   const sulClient = useSulClient();
-  const [giaVisto] = useState(() => {
+  /* Letta una volta sola al montaggio, non a ogni render: se una
+     navigazione parte mentre il sipario e' ancora in scena, deve poter
+     finire il suo giro invece di sparire a meta'. */
+  const [daMostrare] = useState(() => {
     if (typeof window === "undefined") return false;
+    /* Ci siamo arrivati navigando dentro il sito: qui comandano le
+       squadre, il sipario e' roba d'ingresso e resta chiuso. Vale
+       anche quando lo storage e' negato, che e' il caso in cui il
+       cancello di sessione non protegge nulla. */
+    if (!eUnIngressoDaFuori()) return false;
     try {
-      return sessionStorage.getItem(CHIAVE_SESSIONE) === "true";
+      return sessionStorage.getItem(CHIAVE_SESSIONE) !== "true";
     } catch {
       /* navigazione privata con storage negato: meglio mostrarlo una
          volta di troppo che rompere la pagina */
-      return false;
+      return true;
     }
   });
   const [finito, setFinito] = useState(false);
 
-  if (!sulClient || giaVisto || finito) return null;
+  if (!sulClient || !daMostrare || finito) return null;
 
   return (
     <LoaderGriglia
