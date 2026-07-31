@@ -4,9 +4,17 @@ import { LabMsCore } from "./LabMsCore";
 /* ============================================================
    01 · HERO
    ------------------------------------------------------------
-   WIREFRAME dell'originale, invariato: occhiello → titolo su tre
-   righe → sottotitolo → IL DISEGNO ANIMATO → riga di spinta → due
-   CTA → barra delle prove. Tutto centrato, com'era.
+   WIREFRAME dell'originale: occhiello → titolo su tre righe →
+   sottotitolo → IL DISEGNO ANIMATO → riga di spinta → due CTA.
+   Tutto centrato, com'era.
+
+   La barra "Rilevazioni" che chiudeva l'hero non c'e' piu'. Non
+   aggiungeva niente: tre delle quattro voci sono gia' i numeri della
+   sezione "Rilevazioni sul campo" poco sotto, e la quarta (AI Act)
+   torna in altri sei punti della pagina, ognuno con il suo contesto.
+   Letta di fila la riga si leggeva anche male, perche' i punti medi
+   interni a "Ore recuperate · settimana · team medio" si confondevano
+   con quelli che separano le voci. L'hero chiude sulle CTA.
 
    DISEGNO tutto nuovo:
    · il titolo non e' piu' un blocco maiuscolo in font-black con tre
@@ -17,13 +25,10 @@ import { LabMsCore } from "./LabMsCore";
    · l'occhiello e' .eye: mono, lettere spaziate, lilla. Niente pill
      col pallino che pulsa.
    · le CTA sono .btn squadrate, raggio 8px. Niente pillole con alone.
-   · la barra delle prove diventa .proofline: una riga sola in mono
-     con i numeri in lilla, preceduta da una quota.
    ============================================================ */
 
 export function LabMsHero() {
   const t = useTranslations("Lab.hero");
-  const prove = Object.values(t.raw("proof_items") as Record<string, string>);
 
   /* L'accento cade sull'ULTIMA parola della seconda riga, "DNA".
      La prendo dalla copy invece di scriverla nel codice: se domani la
@@ -63,33 +68,6 @@ export function LabMsHero() {
           <a className="btn btn-2-carta" href="#how-it-works">
             {t("cta_secondary")}
           </a>
-        </div>
-
-        <div className="mt-14 text-left">
-          <div className="quota">Rilevazioni</div>
-          <p className="proofline" style={{ marginTop: 14, borderTop: "none", paddingTop: 0 }}>
-            {prove.map((voce, i) => {
-              /* la copy tiene numero ed etichetta in una stringa sola
-                 ("2.000+ Persone formate"): isolo il numero solo quando
-                 la voce comincia con una cifra, altrimenti su "AI Act
-                 Compliance inclusa" finirebbe in evidenza "AI". */
-              const cifra = /^\d/.test(voce);
-              const sp = voce.indexOf(" ");
-              return (
-                <span key={voce}>
-                  {i > 0 && "   ·   "}
-                  {cifra && sp > 0 ? (
-                    <>
-                      <b>{voce.slice(0, sp)}</b>
-                      {voce.slice(sp)}
-                    </>
-                  ) : (
-                    voce
-                  )}
-                </span>
-              );
-            })}
-          </p>
         </div>
       </div>
     </section>
