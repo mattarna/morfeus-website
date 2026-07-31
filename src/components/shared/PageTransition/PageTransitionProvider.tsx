@@ -13,13 +13,13 @@ const ENTER_MS = 220;
 /* Rete di sicurezza: se dopo questo tempo la rotta non e' cambiata, la
    navigazione non stava passando dal router. Si torna visibili e si va col
    browser: meglio un cambio secco che una pagina rimasta invisibile.
-   Misurato in sviluppo: copertura 76-109ms su rotte gia' compilate, fino a
-   ~1.4s quando Turbopack compila la rotta al primo ingresso. In produzione
-   le pagine sono statiche e prefetchate, quindi siamo sempre nel primo caso.
-   La soglia sta larga apposta: deve scattare solo per un vero blocco. */
+   Misurato sul build di produzione: copertura 34-83ms. La soglia sta larga
+   apposta, deve scattare solo per un vero blocco. */
 const SAFETY_MS = 3000;
 
 type Phase = "idle" | "exiting" | "entering";
+
+const ANGOLI = ["no", "ne", "so", "se"] as const;
 
 /* Non tutto quello che ha un href e' una pagina del sito.
    - sotto /public vivono i pacchetti statici (corsi, lezioni, playbook):
@@ -168,8 +168,11 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       <div className="pt-shell" data-phase={phase} style={durate}>
         {children}
       </div>
-      <div className="pt-line" data-phase={phase} style={durate} aria-hidden="true">
-        <span className="pt-line__head" />
+
+      <div className="pt-scena" data-phase={phase} style={durate} aria-hidden="true">
+        {ANGOLI.map((angolo) => (
+          <span key={angolo} className="pt-squadra" data-angolo={angolo} />
+        ))}
       </div>
     </>
   );

@@ -1,31 +1,37 @@
 /* ================================================================
-   Transizione fra pagine — "riga di misura"
+   Transizione fra pagine — "le squadre"
 
-   Contratto: 180ms di uscita · copertura (la navigazione vera, durata
-   variabile) · 220ms di entrata. Non e' un caricatore: non c'e' barra,
-   non c'e' contatore, non c'e' loop. E' punteggiatura fra due pagine.
+   Contratto: 180ms di uscita, copertura (la navigazione vera, durata
+   variabile), 220ms di entrata. Nessun loop, niente da leggere, nessun
+   logo. E' punteggiatura fra due pagine, non un caricatore: un
+   caricatore racconterebbe un'attesa che non c'e', visto che le pagine
+   sono statiche e prefetchate.
+
+   Gli angoli sono quelli del pannello d'avvio Morfeus, portati a tutto
+   schermo: arrivano da fuori, inquadrano, e alla pagina nuova riaprono.
+   Non attraversa niente lo schermo, ed e' quello il punto.
 
    Le due durate arrivano da PageTransitionProvider.tsx come custom
    properties inline: la' stanno le cifre, qui solo il disegno.
    ================================================================ */
 
 :root {
-  --pt-riga: #533dfc; /* majorelle */
-  --pt-testa: #8ca5f7; /* vista */
+  --pt-squadre: #533dfc; /* majorelle */
 }
 
+/* ---------- il contenuto ----------
+   Si anima SOLO l'opacita'. Un transform qui creerebbe un blocco
+   contenitore e staccherebbe tutti gli header in position:fixed. Il
+   movimento sta nella scena, che vive fuori dal guscio.
+
+   Curve simmetriche e misurate: a meta' durata il contenuto e' a meta'
+   strada. Un espo-out sembrava piu' elegante ma consumava il 96%
+   dell'opacita' nella prima meta': i 220ms dichiarati ne valevano 110. */
+
 .pt-shell {
-  /* Da fermo nessuna animazione e nessun contesto di impilamento:
-     a riposo questo wrapper e' trasparente per il resto del sito. */
   opacity: 1;
 }
 
-/* Si anima SOLO l'opacita'. Un transform qui dentro creerebbe un blocco
-   contenitore e staccherebbe tutti gli header in position:fixed. Il
-   movimento lo mette la riga, che vive fuori dal wrapper. */
-/* Curve simmetriche e misurate: a meta' durata il contenuto e' a meta'
-   strada. Un espo-out qui sembrava piu' elegante ma consumava il 96%
-   dell'opacita' nella prima meta': i 220ms dichiarati ne valevano 110. */
 .pt-shell[data-phase="exiting"] {
   animation: pt-content-out var(--pt-exit) cubic-bezier(0.4, 0, 0.6, 1) both;
   pointer-events: none;
@@ -54,94 +60,136 @@
   }
 }
 
-/* ---------- la riga ---------- */
+/* ---------- la scena ---------- */
 
-.pt-line {
+.pt-scena {
   position: fixed;
-  top: 50%;
-  right: 0;
-  left: 0;
+  inset: 0;
   z-index: 2147483000;
-  height: 1px;
-  margin-top: -0.5px;
-  background: var(--pt-riga);
-  opacity: 0;
   pointer-events: none;
-  /* clip-path invece di scaleX: la testa luminosa non si deforma */
-  clip-path: inset(0 100% 0 0);
+  overflow: hidden;
 }
 
-/* Uscita: la riga si scrive da sinistra a destra */
-.pt-line[data-phase="exiting"] {
-  animation: pt-line-draw var(--pt-exit) cubic-bezier(0.4, 0, 0.2, 1) both;
+.pt-scena[data-phase="idle"] {
+  display: none;
 }
 
-/* Entrata: si ritira verso destra, e la pagina nuova resta */
-.pt-line[data-phase="entering"] {
-  animation: pt-line-clear var(--pt-enter) cubic-bezier(0.4, 0, 1, 1) both;
-}
+/* ---------- le squadre ----------
+   --dx/--dy sono il verso VERSO L'ESTERNO di ciascun angolo: una sola
+   coppia di keyframes serve tutti e quattro. */
 
-@keyframes pt-line-draw {
-  from {
-    opacity: 1;
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes pt-line-clear {
-  from {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 100%);
-  }
-}
-
-/* La testa: il punto luminoso che corre davanti alla riga.
-   E' quello che si guarda, ed e' l'unico "gesto" che teniamo
-   dal pannello di avvio. */
-.pt-line__head {
+.pt-squadra {
   position: absolute;
-  top: 50%;
-  left: 0;
-  width: 140px;
-  height: 3px;
-  margin-top: -1.5px;
-  background: linear-gradient(90deg, transparent, var(--pt-testa));
-  transform: translate3d(-140px, 0, 0);
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--pt-squadre);
   opacity: 0;
 }
 
-.pt-line[data-phase="exiting"] .pt-line__head {
-  animation: pt-head-run var(--pt-exit) cubic-bezier(0.4, 0, 0.2, 1) both;
+.pt-squadra[data-angolo="no"] {
+  top: 40px;
+  left: 40px;
+  border-right: 0;
+  border-bottom: 0;
+  --dx: -1;
+  --dy: -1;
 }
 
-.pt-line[data-phase="entering"] .pt-line__head {
-  animation: pt-head-run var(--pt-enter) cubic-bezier(0.4, 0, 1, 1) both;
+.pt-squadra[data-angolo="ne"] {
+  top: 40px;
+  right: 40px;
+  border-left: 0;
+  border-bottom: 0;
+  --dx: 1;
+  --dy: -1;
 }
 
-@keyframes pt-head-run {
+.pt-squadra[data-angolo="so"] {
+  bottom: 40px;
+  left: 40px;
+  border-right: 0;
+  border-top: 0;
+  --dx: -1;
+  --dy: 1;
+}
+
+.pt-squadra[data-angolo="se"] {
+  bottom: 40px;
+  right: 40px;
+  border-left: 0;
+  border-top: 0;
+  --dx: 1;
+  --dy: 1;
+}
+
+/* Stesse curve del contenuto, apposta: la cornice si chiude mentre la
+   pagina si dissolve, e riapre mentre la nuova arriva. Con una curva piu'
+   scattante le squadre erano gia' al 95% a meta' durata e poi restavano
+   ferme ad aspettare, che si legge come uno stallo. */
+[data-phase="exiting"] .pt-squadra {
+  animation: pt-squadre-stringono var(--pt-exit) cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+[data-phase="entering"] .pt-squadra {
+  animation: pt-squadre-riaprono var(--pt-enter) cubic-bezier(0.33, 0, 0.3, 1) both;
+}
+
+@keyframes pt-squadre-stringono {
   from {
-    opacity: 1;
-    transform: translate3d(-140px, 0, 0);
+    opacity: 0;
+    transform: translate3d(calc(var(--dx) * 40px), calc(var(--dy) * 40px), 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(100vw, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-/* ---------- accessibilita' ---------- */
+@keyframes pt-squadre-riaprono {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(calc(var(--dx) * 40px), calc(var(--dy) * 40px), 0);
+  }
+}
 
-/* Chi ha chiesto meno movimento cambia pagina di netto: e' il
-   comportamento corretto, non una versione degradata. Il provider
-   in JS smette anche di intercettare i click. */
+/* Su schermo piccolo gli angoli stanno piu' stretti, altrimenti
+   occupano mezza finestra. */
+@media (max-width: 640px) {
+  .pt-squadra {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pt-squadra[data-angolo="no"],
+  .pt-squadra[data-angolo="ne"] {
+    top: 22px;
+  }
+
+  .pt-squadra[data-angolo="so"],
+  .pt-squadra[data-angolo="se"] {
+    bottom: 22px;
+  }
+
+  .pt-squadra[data-angolo="no"],
+  .pt-squadra[data-angolo="so"] {
+    left: 22px;
+  }
+
+  .pt-squadra[data-angolo="ne"],
+  .pt-squadra[data-angolo="se"] {
+    right: 22px;
+  }
+}
+
+/* ---------- accessibilita' ----------
+   Chi ha chiesto meno movimento cambia pagina di netto: e' il
+   comportamento corretto, non una versione degradata. Il provider in JS
+   smette anche di intercettare i click. */
+
 @media (prefers-reduced-motion: reduce) {
   .pt-shell[data-phase] {
     animation: none;
@@ -149,7 +197,7 @@
     pointer-events: auto;
   }
 
-  .pt-line {
+  .pt-scena {
     display: none;
   }
 }
