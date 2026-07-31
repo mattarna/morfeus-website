@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -305,7 +305,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "article",
-      url: `${SITE_URL}/${safeLocale}/casi/cyberangels-report-cfo`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/casi/cyberangels-report-cfo`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -319,7 +319,7 @@ export default async function CasoCyberangelsReportCfoPage({ params }: Props) {
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
-  const pageUrl = `${SITE_URL}/${safeLocale}/casi/cyberangels-report-cfo`;
+  const pageUrl = `${SITE_URL}${localePrefix(safeLocale)}/casi/cyberangels-report-cfo`;
   const clientOrgId = `${SITE_URL}/#org-cyberangels`;
 
   const jsonLd = {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -211,7 +211,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "article",
-      url: `${SITE_URL}/${safeLocale}/casi/ag-academy-onboarding`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/casi/ag-academy-onboarding`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -289,8 +289,8 @@ export default async function CaseAgAcademyPage({ params }: Props) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "@id": `${SITE_URL}/${safeLocale}/casi/ag-academy-onboarding#article`,
-    url: `${SITE_URL}/${safeLocale}/casi/ag-academy-onboarding`,
+    "@id": `${SITE_URL}${localePrefix(safeLocale)}/casi/ag-academy-onboarding#article`,
+    url: `${SITE_URL}${localePrefix(safeLocale)}/casi/ag-academy-onboarding`,
     headline: t.metaTitle,
     description: t.metaDesc,
     inLanguage: isIt ? "it-IT" : "en-US",

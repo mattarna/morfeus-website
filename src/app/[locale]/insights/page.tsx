@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site";
 import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
 import { InsightsBrowser, type BrowserArticle } from "@/components/site/InsightsBrowser";
 import "@/components/pagine/kit.css";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { getAllArticles } from "@/lib/insights";
 import { PILASTRI, pilastroDi, ARTICOLO_IN_EVIDENZA, type ChiavePilastro } from "@/lib/pilastri";
@@ -157,7 +157,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/insights`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/insights`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -200,8 +200,8 @@ export default async function InsightsPage({ params }: Props) {
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": `${SITE_URL}/${safeLocale}/insights#collectionpage`,
-        url: `${SITE_URL}/${safeLocale}/insights`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/insights#collectionpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/insights`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -214,7 +214,7 @@ export default async function InsightsPage({ params }: Props) {
             "@type": "ListItem",
             position: i + 1,
             name: a.title,
-            url: `${SITE_URL}/${safeLocale}/insights/${a.slug}`,
+            url: `${SITE_URL}${localePrefix(safeLocale)}/insights/${a.slug}`,
           })),
         },
       },

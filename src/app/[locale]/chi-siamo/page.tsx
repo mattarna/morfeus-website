@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SiteShell } from "@/components/site";
 import "@/components/pagine/kit.css";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { ORGANIZATION_ID, WEBSITE_ID, SITE_URL } from "@/lib/seo/entity-ids";
 
 /* ============================================================
@@ -328,7 +328,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/chi-siamo`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/chi-siamo`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -348,8 +348,8 @@ export default async function ChiSiamoPage({ params }: Props) {
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": `${SITE_URL}/${safeLocale}/chi-siamo#aboutpage`,
-        url: `${SITE_URL}/${safeLocale}/chi-siamo`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/chi-siamo#aboutpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/chi-siamo`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -365,7 +365,7 @@ export default async function ChiSiamoPage({ params }: Props) {
       })),
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/${safeLocale}/chi-siamo#faq`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/chi-siamo#faq`,
         mainEntity: t.faq.voci.map((v) => ({
           "@type": "Question",
           name: v.q,

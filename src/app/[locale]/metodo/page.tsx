@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteShell } from "@/components/site";
 import { MappaLavoro } from "@/components/pagine/metodo/MappaLavoro";
 import "@/components/pagine/kit.css";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 /* ============================================================
@@ -422,7 +422,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/metodo`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/metodo`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -442,8 +442,8 @@ export default async function MetodoPage({ params }: Props) {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/${safeLocale}/metodo#webpage`,
-        url: `${SITE_URL}/${safeLocale}/metodo`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/metodo#webpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/metodo`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -452,7 +452,7 @@ export default async function MetodoPage({ params }: Props) {
       },
       {
         "@type": "HowTo",
-        "@id": `${SITE_URL}/${safeLocale}/metodo#howto`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/metodo#howto`,
         name: t.metodo.h2a + t.metodo.h2emph,
         description: t.metodo.lead,
         step: t.lavoro.tappe.map((tp, i) => ({
@@ -460,12 +460,12 @@ export default async function MetodoPage({ params }: Props) {
           position: i + 1,
           name: tp.titolo,
           text: tp.testo,
-          url: `${SITE_URL}/${safeLocale}/metodo#${tp.id}`,
+          url: `${SITE_URL}${localePrefix(safeLocale)}/metodo#${tp.id}`,
         })),
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/${safeLocale}/metodo#faq`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/metodo#faq`,
         mainEntity: t.faq.voci.map((v) => ({
           "@type": "Question",
           name: v.q,

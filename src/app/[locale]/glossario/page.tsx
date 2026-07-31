@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
 import { GlossarioFiltri } from "@/components/site/GlossarioFiltri";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { GLOSSARIO, LETTERE, TUTTE_LE_VOCI } from "@/lib/glossario-voci";
 
@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/glossario`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/glossario`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -129,8 +129,8 @@ export default async function GlossarioPage({ params }: Props) {
     "@graph": [
       {
         "@type": "DefinedTermSet",
-        "@id": `${SITE_URL}/${safeLocale}/glossario#glossario`,
-        url: `${SITE_URL}/${safeLocale}/glossario`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/glossario#glossario`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/glossario`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -140,7 +140,7 @@ export default async function GlossarioPage({ params }: Props) {
           "@type": "DefinedTerm",
           name: v.n,
           description: v.d,
-          url: `${SITE_URL}/${safeLocale}/glossario#${v.id}`,
+          url: `${SITE_URL}${localePrefix(safeLocale)}/glossario#${v.id}`,
         })),
       },
     ],

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { getArticleBySlug, getArticleSlugs, getAllArticles } from "@/lib/insights";
 import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: "article",
-      url: `${SITE_URL}/${safeLocale}/insights/${slug}`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/insights/${slug}`,
       siteName: "Morfeus",
       locale: safeLocale === "it" ? "it_IT" : "en_US",
       publishedTime: article.datePublished || undefined,
@@ -104,7 +104,7 @@ export default async function InsightArticlePage({ params }: Props) {
   const knownInsightSlugs = getKnownInsightSlugs();
   const otherArticles = getAllArticles().filter((a) => a.slug !== slug).slice(0, 3);
 
-  const canonicalUrl = `${SITE_URL}/${safeLocale}/insights/${slug}`;
+  const canonicalUrl = `${SITE_URL}${localePrefix(safeLocale)}/insights/${slug}`;
 
   const articleLd = {
     "@type": "Article",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
 import { ImparaPercorsi } from "@/components/site/ImparaPercorsi";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { PERCORSI, TUTTE_LE_LEZIONI } from "@/lib/impara-percorsi";
 
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/impara-ai`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/impara-ai`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -113,8 +113,8 @@ export default async function ImparaAiPage({ params }: Props) {
     "@graph": [
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/${safeLocale}/impara-ai#faq`,
-        url: `${SITE_URL}/${safeLocale}/impara-ai`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/impara-ai#faq`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/impara-ai`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -123,7 +123,7 @@ export default async function ImparaAiPage({ params }: Props) {
         mainEntity: TUTTE_LE_LEZIONI.map((l) => ({
           "@type": "Question",
           name: l.q,
-          url: `${SITE_URL}/${safeLocale}/impara-ai#${l.anchor}`,
+          url: `${SITE_URL}${localePrefix(safeLocale)}/impara-ai#${l.anchor}`,
           acceptedAnswer: { "@type": "Answer", text: l.a },
         })),
       },

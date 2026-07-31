@@ -678,7 +678,7 @@ export function FinanziataLandingSection({ accentColor, step }: Props) {
   const vslYoutubeId = content?.vslYoutubeId ?? "";
   const optinEndpoint = content?.optinEndpoint ?? "/api/funnels/formazione-finanziata/optin";
   const deadline = content?.deadline ?? "31 luglio";
-  const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
+  const supportEmail = content?.supportEmail ?? "hello@morfeushub.com";
 
   const [videoOn, setVideoOn] = useState(false);
   const [openModule, setOpenModule] = useState<number | null>(0);
@@ -1545,7 +1545,7 @@ interface ThankYouProps {
 export function FinanziataThankYouSection({ accentColor, step }: ThankYouProps) {
   const content = step.content.FinanziataThankYou;
   const calendarUrl = content?.calendarUrl ?? "#";
-  const supportEmail = content?.supportEmail ?? "info@morfeushub.it";
+  const supportEmail = content?.supportEmail ?? "hello@morfeushub.com";
 
   return (
     <div className="ff-root" style={{ ["--accent" as string]: accentColor }}>

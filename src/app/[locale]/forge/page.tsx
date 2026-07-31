@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 import { COPY } from "@/components/forge-ms/copy";
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/forge`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/forge`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -73,8 +73,8 @@ export default async function ForgePage({ params }: Props) {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/${safeLocale}/forge#webpage`,
-        url: `${SITE_URL}/${safeLocale}/forge`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/forge#webpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/forge`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteShell } from "@/components/site";
 import { ArchivioCasi } from "@/components/pagine/casi/ArchivioCasi";
 import "@/components/pagine/kit.css";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { CASI, PROBLEMI, type ChiaveProblema } from "@/lib/casi";
 
@@ -184,7 +184,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/casi`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/casi`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -212,8 +212,8 @@ export default async function CasiPage({ params, searchParams }: Props) {
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": `${SITE_URL}/${safeLocale}/casi#collectionpage`,
-        url: `${SITE_URL}/${safeLocale}/casi`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/casi#collectionpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/casi`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -226,7 +226,7 @@ export default async function CasiPage({ params, searchParams }: Props) {
             "@type": "ListItem",
             position: i + 1,
             name: c.titolo[safeLocale],
-            url: `${SITE_URL}/${safeLocale}/casi/${c.slug}`,
+            url: `${SITE_URL}${localePrefix(safeLocale)}/casi/${c.slug}`,
           })),
         },
       },

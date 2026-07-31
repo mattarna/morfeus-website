@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL } from "@/lib/seo/entity-ids";
 import "@/components/lab-ms/lab-ms.css";
 import { LabMsHero } from "@/components/lab-ms/LabMsHero";
@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.title,
       description: t.desc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/lab`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/lab`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },

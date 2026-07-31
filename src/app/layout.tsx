@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { SITE_URL } from "@/lib/seo/entity-ids";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -11,7 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://morfeushub.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Morfeus – AI-Native Organization Design",
     template: `%s | Morfeus`,
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Morfeus – AI-Native Organization Design",
     description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
-    url: "https://morfeushub.com",
+    url: SITE_URL,
     siteName: "Morfeus",
     locale: "en_US",
     type: "website",

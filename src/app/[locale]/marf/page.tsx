@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site";
 import { MappaLavoro } from "@/components/pagine/metodo/MappaLavoro";
 import { SchemaCentrale, Convergenza } from "@/components/pagine/marf/Diagrammi";
 import "@/components/pagine/kit.css";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 /* ============================================================
@@ -291,7 +291,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/marf`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/marf`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -311,8 +311,8 @@ export default async function MarfPage({ params }: Props) {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/${safeLocale}/marf#webpage`,
-        url: `${SITE_URL}/${safeLocale}/marf`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/marf#webpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/marf`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
@@ -321,7 +321,7 @@ export default async function MarfPage({ params }: Props) {
       },
       {
         "@type": "SoftwareApplication",
-        "@id": `${SITE_URL}/${safeLocale}/marf#software`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/marf#software`,
         name: "MARF",
         applicationCategory: "BusinessApplication",
         description: t.metaDesc,
@@ -329,7 +329,7 @@ export default async function MarfPage({ params }: Props) {
       },
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/${safeLocale}/marf#faq`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/marf#faq`,
         mainEntity: t.faq.voci.map((v) => ({
           "@type": "Question",
           name: v.q,

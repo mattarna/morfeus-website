@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { routing } from "../../i18n/routing";
 import { StructuredData } from "@/components/shared/SEO/StructuredData";
 import { HtmlLang } from "@/components/shared/HtmlLang";
+import { buildLocaleAlternates, type SupportedLocale } from "@/lib/seo/public-indexing";
+import { SITE_URL } from "@/lib/seo/entity-ids";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -15,7 +17,11 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const { locale } = await props.params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const baseUrl = "https://morfeushub.com";
+  /* Host e prefissi passano dagli helper come nel resto del sito:
+     qui erano scritti a mano, e la home restava l'unica pagina con
+     canonical sul dominio nudo e con /en davanti. */
+  const baseUrl = SITE_URL;
+  const safeLocale: SupportedLocale = locale === "it" ? "it" : "en";
 
   return {
     title: {
@@ -37,19 +43,12 @@ export async function generateMetadata(props: {
       },
     },
     
-    alternates: {
-      canonical: `${baseUrl}/${locale}`,
-      languages: {
-        "en": `${baseUrl}/en`,
-        "it": `${baseUrl}/it`,
-        "x-default": `${baseUrl}/en`,
-      },
-    },
-    
+    alternates: buildLocaleAlternates("", safeLocale),
+
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${baseUrl}/${locale}`,
+      url: `${baseUrl}${buildLocaleAlternates("", safeLocale).canonical}`,
       siteName: "Morfeus",
       images: [
         {

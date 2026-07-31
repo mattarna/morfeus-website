@@ -120,7 +120,7 @@ export function ServiceMobileMenu({ isOpen, onClose, scrollToSection }: ServiceM
               <div className="flex justify-between items-end">
                 <div className="flex flex-col gap-1">
                   <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Contact</span>
-                  <a href="mailto:info@morfeushub.com" className="text-sm text-white font-medium">info@morfeushub.com</a>
+                  <a href="mailto:hello@morfeushub.com" className="text-sm text-white font-medium">hello@morfeushub.com</a>
                 </div>
                 <div className="flex gap-4">
                   <a href="https://linkedin.com" target="_blank" rel="noopener" className="text-[10px] font-bold text-slate-400 uppercase tracking-widest hover:text-white transition-colors">LI</a>

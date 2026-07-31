@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SiteShell } from "@/components/site";
 import { SiteROIMeter } from "@/components/site/SiteROIMeter";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/roiometro`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/roiometro`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -62,8 +62,8 @@ export default async function RoiometroPage({ params }: Props) {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": `${SITE_URL}/${safeLocale}/roiometro#webpage`,
-        url: `${SITE_URL}/${safeLocale}/roiometro`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/roiometro#webpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/roiometro`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",

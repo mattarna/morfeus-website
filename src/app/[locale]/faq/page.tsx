@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteShell } from "@/components/site";
-import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
+import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -454,7 +454,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t.metaTitle,
       description: t.metaDesc,
       type: "website",
-      url: `${SITE_URL}/${safeLocale}/faq`,
+      url: `${SITE_URL}${localePrefix(safeLocale)}/faq`,
       siteName: "Morfeus",
       locale: isIt ? "it_IT" : "en_US",
     },
@@ -476,8 +476,8 @@ export default async function FaqPage({ params }: Props) {
     "@graph": [
       {
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/${safeLocale}/faq#faqpage`,
-        url: `${SITE_URL}/${safeLocale}/faq`,
+        "@id": `${SITE_URL}${localePrefix(safeLocale)}/faq#faqpage`,
+        url: `${SITE_URL}${localePrefix(safeLocale)}/faq`,
         name: t.metaTitle,
         description: t.metaDesc,
         inLanguage: isIt ? "it-IT" : "en-US",
