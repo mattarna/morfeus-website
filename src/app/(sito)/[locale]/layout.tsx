@@ -1,12 +1,24 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "../../i18n/routing";
+import { routing } from "@/i18n/routing";
 import { StructuredData } from "@/components/shared/SEO/StructuredData";
-import { HtmlLang } from "@/components/shared/HtmlLang";
+import { Documento } from "@/components/shared/Documento";
 import { buildLocaleAlternates, type SupportedLocale } from "@/lib/seo/public-indexing";
 import { SITE_URL } from "@/lib/seo/entity-ids";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import "../../globals.css";
+
+/* Il viewport stava nel vecchio layout radice, che non esiste piu':
+   ogni gruppo se lo porta. Identico all'altro, per non avere due siti
+   che si comportano diversamente sul telefono. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0B0B0C", // Night
+  colorScheme: "dark",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,8 +42,16 @@ export async function generateMetadata(props: {
   const titoloConMarchio = `${t("title")} | Morfeus`;
 
   return {
+    /* Lo dichiarava il vecchio layout radice per tutto il sito. Senza,
+       i canonical e gli hreflang restano percorsi relativi e non
+       diventano indirizzi assoluti. */
+    metadataBase: new URL(SITE_URL),
     title: {
-      default: t("title"),
+      /* Il marchio va scritto qui dentro: il template vale per le
+         pagine figlie, non per questo titolo. Finche' esisteva un
+         layout radice sopra, era il SUO template ad aggiungerlo, ed e'
+         anche il motivo per cui usciva doppio. */
+      default: titoloConMarchio,
       template: `%s | Morfeus`,
     },
     description: t("description"),
@@ -113,13 +133,18 @@ export default async function LocaleLayout(props: {
   // Explicitly pass locale to getMessages to ensure correct language file is loaded
   const messages = await getMessages({ locale });
 
+  /* Questo e' il layout RADICE delle pagine con la lingua: <html> lo
+     apre Documento, e `lang` arriva dal segmento dell'indirizzo, non
+     dagli header. Per questo la lingua e' giusta gia' nell'HTML servito
+     e le pagine restano prerenderizzate. Il vecchio componente HtmlLang,
+     che correggeva l'attributo dopo il primo render lato client, non
+     serve piu' e non c'e' piu'. */
   return (
-    <>
-      <HtmlLang locale={locale} />
+    <Documento lang={locale}>
       <StructuredData locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
         {children}
       </NextIntlClientProvider>
-    </>
+    </Documento>
   );
 }

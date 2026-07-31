@@ -1,66 +1,37 @@
-import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { SITE_URL } from "@/lib/seo/entity-ids";
-import "./globals.css";
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#0B0B0C", // Night
-  colorScheme: "dark",
-};
+/* ============================================================
+   IL DOCUMENTO HTML, UNO SOLO PER TUTTO IL SITO
+   ------------------------------------------------------------
+   Next vuole <html> e <body> nel layout radice, e il layout
+   radice non sa in che lingua sta rispondendo: sta sopra il
+   segmento /[locale]. Per questo la lingua era scritta fissa a
+   "it" e un componente client la correggeva dopo, cioe' i
+   crawler leggevano "italiano" anche sulle pagine inglesi.
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Morfeus – AI-Native Organization Design",
-    template: `%s | Morfeus`,
-  },
-  description: "Integriamo l'Intelligenza Artificiale nel DNA delle organizzazioni. Ripensiamo strutture, processi e decisioni per l'era AI-Native.",
-  keywords: ["AI Organization Design", "Intelligenza Artificiale Aziendale", "Automazione Processi", "Digital Transformation", "Morfeus Hub"],
-  authors: [{ name: "Morfeus Team" }],
-  creator: "Morfeus",
-  publisher: "Morfeus",
-  openGraph: {
-    title: "Morfeus – AI-Native Organization Design",
-    description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
-    url: SITE_URL,
-    siteName: "Morfeus",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 800,
-        height: 800,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Morfeus – AI-Native Organization Design",
-    description: "We integrate AI into the DNA of organizations. Rethinking structure, processes, and decisions.",
-    images: ["/twitter-image.png"],
-  },
-  icons: {
-    icon: [
-      { url: "/icon.png", type: "image/png" },
-      { url: "/icon.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
-};
+   La soluzione e' avere DUE layout radice (route group `(sito)`
+   e `(fuori-lingua)`), ognuno col suo <html>. Ma due layout
+   vogliono dire due copie di GTM, Meta Pixel, Consent Mode e
+   delle classi del body: il giorno che qualcuno ne tocca una
+   sola, meta' sito perde il tracciamento e nessuno se ne
+   accorge.
 
-export default function RootLayout({
+   Quindi la copia non esiste: la testa e il corpo del documento
+   stanno qui, e i due layout passano solo la lingua.
+   ============================================================ */
+
+const GTM_ID = "GTM-WPT8RFKZ";
+const META_PIXEL_ID = "978948495077175";
+
+export function Documento({
+  lang,
   children,
 }: {
+  lang: string;
   children: React.ReactNode;
 }) {
   return (
-    <html lang="it" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <meta
           name="facebook-domain-verification"
@@ -117,7 +88,7 @@ export default function RootLayout({
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-WPT8RFKZ');
+              })(window,document,'script','dataLayer','${GTM_ID}');
             `,
           }}
         />
@@ -135,7 +106,7 @@ export default function RootLayout({
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '978948495077175');
+              fbq('init', '${META_PIXEL_ID}');
               fbq('track', 'PageView');
             `,
           }}
@@ -145,7 +116,7 @@ export default function RootLayout({
         {/* GTM Noscript */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WPT8RFKZ"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
@@ -158,7 +129,7 @@ export default function RootLayout({
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=978948495077175&ev=PageView&noscript=1"
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
             alt=""
           />
         </noscript>

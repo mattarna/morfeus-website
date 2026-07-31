@@ -84,6 +84,10 @@ const nextConfig = {
   // Optimize package imports
   experimental: {
     optimizePackageImports: ['@iconify/react', 'lucide-react', 'framer-motion'],
+    // Serve ad app/global-not-found.tsx: con due layout radice, un
+    // indirizzo che non appartiene a nessuno dei due gruppi finirebbe
+    // nel guscio spoglio di Next, senza CSS ne' tracciamento.
+    globalNotFound: true,
   },
 
   // ============================================
