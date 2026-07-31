@@ -314,7 +314,9 @@
 }
 .pg26 .cover-grid {
   display: grid;
-  grid-template-columns: 1.34fr 0.66fr;
+  /* colonna testo piu' larga cosi' la prima riga dell'H1 sta intera
+     su schermi da ~1440px in su; sotto va comunque a capo con grazia */
+  grid-template-columns: 1.55fr 0.45fr;
   gap: 44px;
   align-items: center;
 }
@@ -345,7 +347,9 @@
   background: #fff;
 }
 .pg26 .cover h1 {
-  font-size: clamp(34px, 4.9vw, 62px);
+  /* clamp max abbassato a 58 per garantire la prima riga intera anche
+     su schermi 1440-1600, non solo 1920+; effetto visivo minimo */
+  font-size: clamp(34px, 4.6vw, 58px);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.04;
@@ -408,8 +412,10 @@
 .pg26 .cover .trophy {
   width: 100%;
   max-width: 360px;
-  justify-self: center;
-  transform: rotate(-8deg);
+  /* coppa allineata al bordo destro della sua colonna, con una micro
+     translazione per bilanciare l'inclinazione a -8deg */
+  justify-self: end;
+  transform: rotate(-8deg) translateX(12px);
   z-index: 2;
   pointer-events: none;
 }
