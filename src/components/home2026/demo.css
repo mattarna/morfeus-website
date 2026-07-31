@@ -654,8 +654,16 @@
 .d26 .prob-head h2 {
   font-size: clamp(30px, 3.2vw, 48px);
 }
+/* 40ch valeva 527px e mandava la lead su TRE righe: sia l'intro inglese
+   sia quella italiana sono lunghe 141-142 caratteri, e a quella larghezza
+   ne entrano una sessantina per riga. A 54ch (circa 712px) ne entrano
+   una ottantina, quindi due righe piene in entrambe le lingue.
+   Resta piu' stretta degli 895px della headline, cosi' la gerarchia
+   fra titolo e occhiello non si appiattisce, e la somma con la headline
+   supera comunque i 1120px del .wrap: la lead continua ad andare a capo
+   sotto il titolo, non si affianca. */
 .d26 .prob-head .lead {
-  max-width: 40ch;
+  max-width: 54ch;
   font-size: clamp(16px, 1.35vw, 18px);
 }
 

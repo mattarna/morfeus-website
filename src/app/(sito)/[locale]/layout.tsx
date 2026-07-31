@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { StructuredData } from "@/components/shared/SEO/StructuredData";
 import { Documento } from "@/components/shared/Documento";
+import { PageTransitionProvider } from "@/components/shared/PageTransition";
 import { buildLocaleAlternates, type SupportedLocale } from "@/lib/seo/public-indexing";
 import { SITE_URL } from "@/lib/seo/entity-ids";
 import type { Metadata, Viewport } from "next";
@@ -143,7 +144,7 @@ export default async function LocaleLayout(props: {
     <Documento lang={locale}>
       <StructuredData locale={locale} />
       <NextIntlClientProvider locale={locale} messages={messages}>
-        {children}
+        <PageTransitionProvider>{children}</PageTransitionProvider>
       </NextIntlClientProvider>
     </Documento>
   );
