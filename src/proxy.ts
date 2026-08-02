@@ -154,6 +154,20 @@ export default function proxy(request: NextRequest) {
     return response;
   }
 
+  // Founder Mastery: stesso pattern del Corso Claude. Slug hashato non
+  // indicizzato, hub statico servito da /public. Le lezioni sotto /lz/*.html
+  // hanno il punto nel path e sono gia` escluse dal matcher.
+  if (
+    pathname === "/founder-mastery-453eb9d7f8" ||
+    pathname === "/founder-mastery-453eb9d7f8/"
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/founder-mastery-453eb9d7f8/index.html";
+    const response = NextResponse.rewrite(url);
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    return response;
+  }
+
   // Destinazione interna del rewrite dei funnel: mai indicizzabile in accesso
   // diretto (la URL canonica e` /<slug>, non /funnel-internal/<slug>).
   if (pathname.startsWith("/funnel-internal")) {
