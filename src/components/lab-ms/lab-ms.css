@@ -16,24 +16,31 @@
 /* ---------- AURA · alone ambientale su OGNI fascia nera ----------
    La forge respira perche' il suo visual centrale (l'esagono MARF) emette
    luce e alleggerisce il nero attorno. Sul lab lo schema e' tutto linee a
-   filo, e il nero resta piatto: qui un alone firma soffuso dietro OGNI
-   fascia inchiostro da' la stessa aria a tutta la pagina, non solo
-   all'hero. E' un ::before a z-index -1: sta sopra la griglia blueprint e
-   sotto il contenuto, quindi non tocca ne' i pannelli (opachi) ne' il testo.
+   filo, e il nero resta piatto: qui un alone firma soffuso su OGNI fascia
+   inchiostro da' la stessa aria a tutta la pagina, non solo all'hero.
+
+   Sta nel BACKGROUND stesso della fascia, non in un pseudo-layer: cosi'
+   e' per costruzione dietro a tutto (pannelli opachi e testo restano
+   sopra) e non puo' essere coperto. Un ::before a z-index negativo, con
+   lo sfondo opaco della fascia e senza stacking context, finirebbe DIETRO
+   il nero e sparirebbe (era il bug del "tutto nero"). Riscrivo l'intera
+   background-image: prima le due griglie blueprint (in cima), poi le tre
+   radiali dell'alone, tutte sopra il --inchiostro di .band.ink.
    Le fasce carta non sono toccate. */
 .ms .band.ink.lab {
-  position: relative;
-}
-.ms .band.ink.lab::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
+  background-image:
+    linear-gradient(var(--grid-scuro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-scuro) 1px, transparent 1px),
     radial-gradient(56% 44% at 50% 14%, rgba(83, 61, 252, 0.16), transparent 66%),
     radial-gradient(46% 40% at 86% 4%, rgba(140, 165, 247, 0.1), transparent 70%),
     radial-gradient(50% 44% at 10% 92%, rgba(83, 61, 252, 0.08), transparent 72%);
+  background-size:
+    var(--grid) var(--grid),
+    var(--grid) var(--grid),
+    auto,
+    auto,
+    auto;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
 }
 
 /* ---------- QUADRO · l'area di disegno con le quote d'angolo ----------
