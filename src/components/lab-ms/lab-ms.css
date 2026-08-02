@@ -13,6 +13,34 @@
    neon: linee nette e quote, come un disegno tecnico.
    =========================================================== */
 
+/* ---------- AURA · alone ambientale su OGNI fascia nera ----------
+   La forge respira perche' il suo visual centrale (l'esagono MARF) emette
+   luce e alleggerisce il nero attorno. Sul lab lo schema e' tutto linee a
+   filo, e il nero resta piatto: qui un alone firma soffuso su OGNI fascia
+   inchiostro da' la stessa aria a tutta la pagina.
+
+   Sta nel BACKGROUND stesso della fascia (non in un pseudo-layer): cosi'
+   e' per costruzione dietro a tutto (pannelli opachi e testo restano
+   sopra) e non puo' essere coperto. Riscrivo l'intera background-image:
+   prima le due griglie blueprint (con le variabili del DS, quindi i valori
+   di questo albero), poi le tre radiali dell'alone, tutte sopra il
+   --inchiostro di .band.ink. Le fasce carta non sono toccate. */
+.ms .band.ink.lab {
+  background-image:
+    linear-gradient(var(--grid-scuro) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-scuro) 1px, transparent 1px),
+    radial-gradient(110% 75% at 50% -8%, rgba(83, 61, 252, 0.32), transparent 68%),
+    radial-gradient(65% 55% at 88% 6%, rgba(140, 165, 247, 0.2), transparent 66%),
+    radial-gradient(70% 60% at 4% 100%, rgba(83, 61, 252, 0.18), transparent 70%);
+  background-size:
+    var(--grid) var(--grid),
+    var(--grid) var(--grid),
+    auto,
+    auto,
+    auto;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+}
+
 /* ---------- QUADRO · l'area di disegno con le quote d'angolo ----------
    Il riquadro tecnico che incornicia un disegno. Gli angoli non sono un
    bordo continuo: sono quattro squadrette, come le crocette di registro
