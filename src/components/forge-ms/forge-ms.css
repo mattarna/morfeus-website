@@ -5,26 +5,31 @@
    e tutto quello che serve solo a questa pagina vive qui sotto
    `.ms .forge`, per non calpestare la libreria.
 
+   DA DOVE VIENE. La pagina era un'isola: fondo #030508 fisso, nessuna
+   fascia del DS, e la palette scritta a mano in esadecimale (#4D39EB
+   trentadue volte, #8B7BFF, #0a111a). Due viola diversi a occhio nudo
+   nella stessa pagina, perche' #4D39EB non e' il #533DFC del brand.
+   Qui non si ridipinge: si passa ai token, e i colori tornano uno.
+
    L'IDEA. Il Lab e' uno strumento di misura. Forge e' la cosa che
-   quello strumento installa: un IMPIANTO. Quindi non schede di
-   rilevamento ma STAZIONI, non quote sparse ma una LINEA che le
-   attraversa e le tiene insieme — il filo dell'impianto. Il lilla
-   e' il segnale che corre lungo la linea; il forge (arancio) e' il
-   punto in cui qualcosa si perde, e compare pochissimo apposta.
+   quello strumento installa: un IMPIANTO che entra in azienda. Quindi
+   STAZIONI invece di card, una LINEA che le attraversa dove il discorso
+   e' una progressione, e il segnale (lilla su ink, firma su carta) che
+   corre lungo quella linea. L'arancio compare pochissimo, e solo dove
+   qualcosa si sta perdendo.
 
-   Il WIREFRAME della pagina non cambia: stesse otto sezioni, stesso
-   ordine, stessa copy. Cambia il modo in cui ogni blocco e' disegnato.
-   =========================================================== */
+   IL WIREFRAME NON CAMBIA: stesse sezioni, stesso ordine, stessa copy
+   (le chiavi i18n del namespace `Offerta` restano quelle).
 
-/* ATTENZIONE ai selettori di fascia: la sezione porta le classi tutte
+   ATTENZIONE ai selettori di fascia: la sezione porta le classi tutte
    insieme — `<section class="band carta forge">` — quindi `.band.carta`
    e `.forge` sono lo STESSO elemento. Va scritto `.band.carta.forge`
-   (senza spazio): con lo spazio si chiede un discendente e la regola non
-   matcha mai. Costato un testo a contrasto 1.7:1 su fondo bianco. */
+   (senza spazio): con lo spazio si chiede un discendente e la regola
+   non matcha mai. Costato un testo a contrasto 1.7:1 su fondo bianco.
+   =========================================================== */
 
 /* ---------- QUADRO · l'area di disegno con le crocette d'angolo ----------
-   Identico a quello del Lab e del kit: e' il segno di casa, non una
-   variante. Dice "qui dentro si misura". */
+   Il segno di casa, identico a Lab e kit: "qui dentro si misura". */
 .ms .forge .quadro {
   position: relative;
   border: 1px solid var(--surf-bd);
@@ -53,16 +58,12 @@
   border-bottom: 1px solid;
   border-right: 1px solid;
 }
-/* su carta il segnale non e' il lilla ma la firma: sul chiaro il lilla
-   non regge il contrasto */
 .ms .band.carta.forge .quadro::before,
 .ms .band.carta.forge .quadro::after {
   border-color: rgba(83, 61, 252, 0.45);
 }
 
-/* ---------- READOUT · la striscia di stato in mono ----------
-   Una riga di strumento in cima al pannello: a sinistra cosa sta
-   misurando, a destra lo stato. */
+/* ---------- READOUT · la striscia di stato in mono ---------- */
 .ms .forge .readout {
   display: flex;
   align-items: center;
@@ -89,13 +90,11 @@
   background: var(--lilla);
   animation: forge-batte 2.4s infinite;
 }
-.ms .band.carta.forge .readout .on,
-.ms .band.carta.forge .readout .on i {
-  color: var(--firma);
-  background: var(--firma);
-}
 .ms .band.carta.forge .readout .on {
-  background: none;
+  color: var(--firma);
+}
+.ms .band.carta.forge .readout .on i {
+  background: var(--firma);
 }
 @keyframes forge-batte {
   0%,
@@ -112,9 +111,7 @@
   }
 }
 
-/* ---------- QUOTA · la riga di misura con le tacche ----------
-   Come le quote di una tavola tecnica: due barrette e una linea, con
-   l'etichetta in mono. Marca una distanza dichiarata. */
+/* ---------- QUOTA · la riga di misura con le tacche ---------- */
 .ms .forge .quota {
   display: flex;
   align-items: center;
@@ -137,16 +134,15 @@
   background: rgba(83, 61, 252, 0.2);
 }
 
-/* ---------- STAZIONE · il blocco base dei tre movimenti ----------
-   Sostituisce la `.card` generica. Ha un codice progressivo, la cifra
-   fantasma dietro e un filo che si accende sul bordo alto al passaggio:
-   e' l'impianto che si illumina dove lo tocchi. */
+/* ---------- STAZIONE · il blocco base ----------
+   Sostituisce la `.card` generica: codice progressivo, cifra fantasma
+   dietro, filo che si accende sul bordo alto al passaggio. */
 .ms .forge .stazione {
   position: relative;
   border: 1px solid var(--surf-bd);
   background: var(--surf-bg);
   border-radius: var(--r-m);
-  padding: 30px;
+  padding: 28px;
   overflow: hidden;
   transition:
     border-color var(--dur) var(--ease),
@@ -154,7 +150,7 @@
 }
 @media (min-width: 1100px) {
   .ms .forge .stazione {
-    padding: 36px;
+    padding: 34px;
   }
 }
 .ms .forge .stazione .filo {
@@ -177,15 +173,36 @@
 .ms .band.carta.forge .stazione .filo {
   background: linear-gradient(90deg, transparent, var(--firma), transparent);
 }
+.ms .forge .stazione h3 {
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
+  margin: 12px 0 8px;
+}
+.ms .forge .stazione p {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  margin: 0;
+}
+.ms .band.carta.forge .stazione p {
+  color: var(--testo-carta-2);
+}
+.ms .forge .stazione .glifo {
+  color: var(--lilla);
+}
+.ms .band.carta.forge .stazione .glifo {
+  color: var(--firma);
+}
 
-/* la cifra fantasma: grande, dietro, quasi spenta. Da' profondita' senza
-   aggiungere un oggetto in piu' da leggere */
+/* la cifra fantasma dietro */
 .ms .forge .ghost {
   position: absolute;
-  right: -6px;
-  top: -18px;
+  right: -4px;
+  top: -16px;
   font-family: var(--font-display);
-  font-size: 92px;
+  font-size: 84px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -199,7 +216,7 @@
   opacity: 0.06;
 }
 
-/* il codice della stazione, in mono */
+/* il codice in mono */
 .ms .forge .cod {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -212,35 +229,89 @@
   color: var(--firma);
 }
 
-.ms .forge .stazione h3 {
-  font-size: clamp(19px, 1.9vw, 23px);
+/* ---------- IL DATO · un numero grande con la sua unita' ----------
+   Per i tre risultati (240k, 85%, +1.500) e per il 95% del MIT. Il
+   numero e' la cosa che convince: prende il corpo del display, non
+   quello di un paragrafo. */
+.ms .forge .dato .cifra {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.4vw, 66px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--carta);
+}
+.ms .band.carta.forge .dato .cifra {
+  color: var(--inchiostro);
+}
+.ms .forge .dato .eti {
+  display: block;
+  margin-top: 14px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.28;
-  margin: 14px 0 8px;
+  letter-spacing: -0.01em;
 }
-.ms .forge .stazione p {
-  font-size: 16.5px;
-  line-height: 1.6;
+.ms .forge .dato p {
+  margin: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.58;
   color: var(--testo-ink-2);
-  margin: 0;
 }
-.ms .band.carta.forge .stazione p {
+.ms .band.carta.forge .dato p {
   color: var(--testo-carta-2);
 }
-/* il glifo in cima alla stazione */
-.ms .forge .stazione .glifo {
-  color: var(--lilla);
-}
-.ms .band.carta.forge .stazione .glifo {
-  color: var(--firma);
+/* la fonte sotto un dato citato: piccola, mono, mai in grassetto */
+.ms .forge .fonte {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: var(--ombra);
+  margin-top: 12px;
 }
 
-/* ---------- LA SCALA · le quattro tappe del percorso ----------
-   Era una fila di quattro riquadri uguali, e non si capiva che fossero
-   consecutivi. Ora e' una scala: una linea li attraversa, ogni tappa ha
-   il suo perno sulla linea, e la quota fra un gradino e l'altro dice che
-   si sale. Sotto i 900px la linea diventa verticale a sinistra. */
+/* ---------- L'ALLARME · l'unico punto arancio della pagina ----------
+   Il dato del MIT ("il 95% dei tentativi non produce risultati") e'
+   l'unica cosa che deve fermare la lettura. Campitura a righe come i
+   cartelli di pericolo, e il forge che compare qui e basta. */
+.ms .forge .allarme {
+  position: relative;
+  border: 1px solid rgba(232, 101, 10, 0.35);
+  border-radius: var(--r-l);
+  padding: 28px 30px;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(232, 101, 10, 0.05) 0 10px,
+    transparent 10px 20px
+  );
+}
+.ms .forge .allarme .segno {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 101, 10, 0.5);
+  color: #e8650a;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  flex: none;
+}
+.ms .forge .allarme .testo {
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* ---------- LA SCALA · le tappe di un percorso ----------
+   Dove il discorso e' una progressione (come funziona, i piani), le
+   tappe stanno su una linea sola: una fila di riquadri identici non
+   dice che sono consecutive. Sotto i 900px la linea si raddrizza. */
 .ms .forge .scala {
   position: relative;
   display: grid;
@@ -248,10 +319,9 @@
 }
 @media (min-width: 900px) {
   .ms .forge .scala {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--tappe, 4), 1fr);
     gap: 0;
   }
-  /* la linea che attraversa: sta all'altezza dei perni */
   .ms .forge .scala::before {
     content: "";
     position: absolute;
@@ -267,23 +337,33 @@
       transparent
     );
   }
+  .ms .band.ink.forge .scala::before {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(140, 165, 247, 0.3) 12%,
+      rgba(140, 165, 247, 0.3) 88%,
+      transparent
+    );
+  }
 }
 .ms .forge .gradino {
   position: relative;
-  padding: 0 20px 0 0;
+  padding: 0 22px 0 0;
 }
 @media (max-width: 899px) {
   .ms .forge .gradino {
-    padding: 0 0 0 26px;
+    padding: 0 0 22px 26px;
     border-left: 1px solid rgba(83, 61, 252, 0.22);
-    padding-bottom: 22px;
+  }
+  .ms .band.ink.forge .gradino {
+    border-left-color: rgba(140, 165, 247, 0.22);
   }
   .ms .forge .gradino:last-child {
     border-left-color: transparent;
     padding-bottom: 0;
   }
 }
-/* il perno: il punto della tappa sulla linea */
 .ms .forge .gradino .perno {
   position: relative;
   display: block;
@@ -294,6 +374,10 @@
   border: 1px solid var(--firma);
   margin-bottom: 20px;
 }
+.ms .band.ink.forge .gradino .perno {
+  background: var(--inchiostro);
+  border-color: var(--lilla);
+}
 @media (max-width: 899px) {
   .ms .forge .gradino .perno {
     position: absolute;
@@ -302,9 +386,11 @@
     margin: 0;
   }
 }
-/* la tappa raggiunta e' piena: il gradino zero e' gratis, si parte da li' */
 .ms .forge .gradino:first-child .perno {
   background: var(--firma);
+}
+.ms .band.ink.forge .gradino:first-child .perno {
+  background: var(--lilla);
 }
 .ms .forge .gradino .tappa {
   font-family: var(--font-mono);
@@ -313,6 +399,9 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--firma);
+}
+.ms .band.ink.forge .gradino .tappa {
+  color: var(--lilla);
 }
 .ms .forge .gradino h3 {
   font-size: clamp(18px, 1.8vw, 21px);
@@ -326,143 +415,58 @@
   font-size: 16px;
   line-height: 1.58;
   color: var(--testo-carta-2);
-  margin: 0;
+  margin: 0 0 10px;
   padding-right: 12px;
 }
-
-/* ---------- LE DUE CURVE · valore che decade vs valore che compone ----- */
-.ms .forge .curve {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 30px;
+.ms .band.ink.forge .gradino p {
+  color: var(--testo-ink-2);
 }
-@media (min-width: 900px) {
-  .ms .forge .curve {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-.ms .forge .curva {
-  position: relative;
-  border: 1px solid var(--surf-bd);
-  background: var(--surf-bg);
-  border-radius: var(--r-l);
-  padding: 26px;
-  overflow: hidden;
-}
-.ms .forge .curva .chead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-.ms .forge .curva .ctit {
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-.ms .forge .curva .csub {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--ombra);
-  margin-top: 4px;
-}
-.ms .forge .curva .ctag {
-  flex: none;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-radius: 999px;
-  padding: 5px 11px;
-}
-.ms .forge .curva.perdita .ctag {
-  color: var(--anomalia);
-  background: rgba(255, 92, 92, 0.1);
-  border: 1px solid rgba(255, 92, 92, 0.28);
-}
-.ms .forge .curva.compone .ctag {
-  color: var(--firma);
-  background: rgba(83, 61, 252, 0.1);
-  border: 1px solid rgba(83, 61, 252, 0.28);
-}
-.ms .forge .curva .plot {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.ms .forge .curva .grid-l {
-  stroke: rgba(11, 11, 12, 0.08);
-  stroke-width: 1;
-}
-.ms .forge .curva.perdita .line {
-  stroke: var(--anomalia);
-  stroke-width: 2;
-}
-.ms .forge .curva.perdita .area {
-  fill: rgba(255, 92, 92, 0.09);
-}
-.ms .forge .curva.perdita .end {
-  fill: var(--anomalia);
-}
-.ms .forge .curva.compone .line {
-  stroke: var(--firma);
-  stroke-width: 2;
-}
-.ms .forge .curva.compone .area {
-  fill: rgba(83, 61, 252, 0.09);
-}
-.ms .forge .curva.compone .end {
-  fill: var(--firma);
-}
-.ms .forge .curva .axis {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--ombra);
-  text-align: right;
-  margin-top: 4px;
-}
-.ms .forge .curva ul {
+.ms .forge .gradino ul {
   list-style: none;
-  margin: 16px 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 12px 0 0;
 }
-.ms .forge .curva li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
+.ms .forge .gradino li {
+  position: relative;
+  padding-left: 16px;
   font-size: 15.5px;
   line-height: 1.5;
   color: var(--testo-carta-2);
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
-.ms .forge .curva li .dot {
-  flex: none;
+.ms .band.ink.forge .gradino li {
+  color: var(--testo-ink-2);
+}
+.ms .forge .gradino li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  margin-top: 0.62em;
-  background: var(--ombra);
-}
-.ms .forge .curva.compone li .dot {
   background: var(--firma);
+  opacity: 0.6;
+}
+.ms .band.ink.forge .gradino li::before {
+  background: var(--lilla);
 }
 
-/* ---------- IL CONFRONTO · convinzione vs realta' / si' vs no --------
-   Due colonne affiancate. La differenza non la fa il colore del testo ma
-   il SEGNO davanti: una croce spenta contro una freccia che va avanti. */
+/* ---------- IL CONFRONTO · due colonne a contrasto ----------
+   La differenza non la fa il colore del testo ma il SEGNO davanti: una
+   croce spenta contro una freccia che va avanti. Niente semaforo. */
 .ms .forge .confronto {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0,...) e non 1fr secco: i figli di una griglia non scendono
+     sotto la larghezza del loro contenuto, e su 375px la colonna usciva
+     di 25px dallo schermo (clippata da overflow-x, quindi invisibile
+     come bug ma con il testo tagliato). */
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 @media (min-width: 900px) {
   .ms .forge .confronto {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 20px;
   }
 }
@@ -479,7 +483,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ombra);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .ms .forge .colonna.buona .t {
   color: var(--firma);
@@ -494,11 +498,12 @@
 }
 .ms .forge .colonna li {
   display: flex;
+  overflow-wrap: anywhere;
   gap: 11px;
   align-items: flex-start;
   font-size: 16px;
   line-height: 1.55;
-  margin-bottom: 11px;
+  margin-bottom: 12px;
   color: var(--testo-carta-2);
 }
 .ms .band.ink.forge .colonna li {
@@ -520,98 +525,18 @@
 .ms .band.ink.forge .colonna.buona li .m {
   color: var(--lilla);
 }
-
-/* ---------- LE PROVE · righe editoriali, come l'archivio dei Casi ------
-   Erano tre card affiancate. Ora sono righe separate da filetti: e' il
-   modo in cui /casi mostra le stesse cose, e due pagine che mostrano un
-   caso devono mostrarlo allo stesso modo. */
-.ms .forge .prove {
-  border-top: 1px solid var(--surf-bd);
-  margin-top: 30px;
-}
-.ms .forge .prova {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 26px 0;
-  border-bottom: 1px solid var(--surf-bd);
-  text-decoration: none;
-  color: inherit;
-  transition: background var(--dur) var(--ease);
-}
-@media (min-width: 1000px) {
-  .ms .forge .prova {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-    gap: 0 34px;
-    align-items: center;
-  }
-}
-.ms .forge .prova .meta {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+/* la coppia sbagliato/giusto del belief shift: il titolo di ogni voce */
+.ms .forge .colonna li b {
+  display: block;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ombra);
-  margin-bottom: 8px;
+  color: var(--inchiostro);
+  margin-bottom: 2px;
 }
-.ms .forge .prova .q {
-  font-size: clamp(17px, 1.7vw, 20px);
-  font-weight: 600;
-  line-height: 1.36;
-  letter-spacing: -0.015em;
-  margin: 0;
-}
-.ms .forge .prova .who {
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: var(--testo-carta-2);
-  margin: 0;
-}
-.ms .forge .prova .who b {
-  color: var(--firma);
-  font-weight: 700;
-}
-.ms .forge .prova .coda {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-@media (min-width: 1000px) {
-  .ms .forge .prova .coda {
-    justify-content: flex-end;
-  }
-}
-/* il timbro: lo stesso "Confermato" dei casi */
-.ms .forge .prova .timbro {
-  flex: none;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ok);
-  border: 1px solid rgba(30, 158, 90, 0.4);
-  border-radius: 999px;
-  padding: 5px 11px;
-}
-.ms .forge .prova .freccia {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--firma);
-  white-space: nowrap;
-}
-.ms .forge .prova:hover {
-  background: rgba(83, 61, 252, 0.03);
-}
-.ms .forge .prova:hover .freccia {
-  text-decoration: underline;
+.ms .band.ink.forge .colonna li b {
+  color: var(--carta);
 }
 
-/* ---------- PULL-QUOTE · la riga che chiude una sezione ----------
-   Per le frasi che tirano le somme (il filtro, la nota del percorso).
-   Un filetto a sinistra e corpo piu' grande: si legge come una battuta
-   detta a voce, non come un paragrafo in piu'. */
+/* ---------- PULL-QUOTE · la riga che tira le somme ---------- */
 .ms .forge .tira-somme {
   border-left: 2px solid var(--firma);
   padding-left: 18px;
@@ -619,16 +544,92 @@
   font-weight: 600;
   line-height: 1.45;
   letter-spacing: -0.015em;
-  max-width: 56ch;
+  max-width: 62ch;
 }
 .ms .band.ink.forge .tira-somme {
   border-left-color: var(--lilla);
 }
 
+/* ---------- ACCORDION · le FAQ ----------
+   Righe separate da filetti, non scatole: una domanda e' una riga di
+   un elenco, non una card. */
+.ms .forge .faq {
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .forge .faq details {
+  border-bottom: 1px solid var(--surf-bd);
+}
+.ms .forge .faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(17px, 1.7vw, 20px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  transition: color var(--dur) var(--ease);
+}
+.ms .forge .faq summary::-webkit-details-marker {
+  display: none;
+}
+.ms .forge .faq summary:hover {
+  color: var(--lilla);
+}
+.ms .band.carta.forge .faq summary:hover {
+  color: var(--firma);
+}
+/* il segno + che diventa − quando si apre */
+.ms .forge .faq .segno {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.ms .forge .faq .segno::before,
+.ms .forge .faq .segno::after {
+  content: "";
+  position: absolute;
+  background: var(--lilla);
+  transition: transform var(--dur) var(--ease);
+}
+.ms .band.carta.forge .faq .segno::before,
+.ms .band.carta.forge .faq .segno::after {
+  background: var(--firma);
+}
+.ms .forge .faq .segno::before {
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 1.5px;
+}
+.ms .forge .faq .segno::after {
+  top: 0;
+  bottom: 0;
+  left: 8px;
+  width: 1.5px;
+}
+.ms .forge .faq details[open] .segno::after {
+  transform: scaleY(0);
+}
+.ms .forge .faq .risposta {
+  padding: 0 0 24px;
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--testo-ink-2);
+  max-width: 76ch;
+}
+.ms .band.carta.forge .faq .risposta {
+  color: var(--testo-carta-2);
+}
+
 /* ---------- griglie di servizio ---------- */
 .ms .forge .tre {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
 }
 @media (min-width: 900px) {
@@ -638,12 +639,1539 @@
 }
 .ms .forge .due {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
 }
 @media (min-width: 900px) {
   .ms .forge .due {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+  }
+}
+/* i nove asset: tre per riga da desktop, due da tablet */
+.ms .forge .nove {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+@media (min-width: 700px) {
+  .ms .forge .nove {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1100px) {
+  .ms .forge .nove {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- il visual dei nodi, sul telefono ----------
+   MARFVisualCore e' il componente legacy tenuto com'era: ha misure
+   pensate per il desktop e su 375px sbordava di 31px (clippato da
+   overflow-x, quindi il taglio non si vedeva come scroll ma i nodi ai
+   bordi sparivano). Qui si limita alla larghezza disponibile. */
+.ms .forge .visual-nodi {
+  max-width: 100%;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .ms .forge .visual-nodi > * {
+    transform: scale(0.86);
+    transform-origin: top center;
+  }
+}
+/* ===========================================================
+   PROFONDITÀ · aggiunti il 2026-07-30 dopo il primo giro.
+   -----------------------------------------------------------
+   Primo tentativo sbagliato: avevo letto "allineare al design system"
+   come "togliere tutto quello che non e' un token", e la pagina e'
+   uscita PIATTA, piu' povera dell'originale. Ma il Lab non e' piatto:
+   ha piastre, glifi, cifre fantasma, colore. Allineare vuol dire
+   parlare la stessa lingua, non parlare a voce bassa.
+   Questi dispositivi restituiscono rilievo restando sui token.
+   =========================================================== */
+
+/* ---------- FASE · il blocco della timeline ----------
+   Struttura della pagina vecchia, che funzionava: blocchi ampi in
+   colonna alternati destra/sinistra, cifra gigante dietro, nodo sulla
+   linea centrale. Le quattro colonne strette del primo tentativo
+   comprimevano il testo e uccidevano il ritmo. */
+.ms .forge .fasi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+@media (min-width: 1000px) {
+  .ms .forge .fasi {
+    gap: 116px;
+  }
+  .ms .forge .fasi::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(83, 61, 252, 0.28) 8%,
+      rgba(83, 61, 252, 0.28) 92%,
+      transparent
+    );
+  }
+}
+.ms .band.ink.forge .fasi::before {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(140, 165, 247, 0.24) 8%,
+    rgba(140, 165, 247, 0.24) 92%,
+    transparent
+  );
+}
+.ms .forge .fase {
+  position: relative;
+}
+@media (min-width: 1000px) {
+  .ms .forge .fase {
+    width: calc(50% - 56px);
+  }
+  /* le pari a destra: il testo scende a zig-zag invece che dritto */
+  .ms .forge .fase:nth-child(even) {
+    margin-left: auto;
+  }
+  .ms .forge .fase:nth-child(odd) {
+    text-align: right;
+  }
+  .ms .forge .fase::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--firma);
+    box-shadow: 0 0 0 5px var(--carta);
+  }
+  .ms .forge .fase:nth-child(odd)::after {
+    right: -62px;
+  }
+  .ms .forge .fase:nth-child(even)::after {
+    left: -62px;
+  }
+  .ms .band.ink.forge .fase::after {
+    background: var(--lilla);
+    box-shadow: 0 0 0 5px var(--inchiostro);
+  }
+}
+/* la cifra gigante dietro: la profondita' che mancava */
+.ms .forge .fase .cifra {
+  position: absolute;
+  top: -46px;
+  font-family: var(--font-mono);
+  font-size: clamp(84px, 11vw, 156px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--inchiostro);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.ms .band.ink.forge .fase .cifra {
+  color: var(--carta);
+  opacity: 0.055;
+}
+.ms .forge .fase:nth-child(odd) .cifra {
+  right: 0;
+}
+.ms .forge .fase:nth-child(even) .cifra {
+  left: 0;
+}
+.ms .forge .fase > * {
+  position: relative;
+  z-index: 1;
+}
+/* il tag della fase: pastiglia col pallino che batte */
+.ms .forge .fase .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 13px;
+  border-radius: 6px;
+  border: 1px solid rgba(83, 61, 252, 0.3);
+  background: rgba(83, 61, 252, 0.06);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--firma);
+}
+.ms .band.ink.forge .fase .tag {
+  border-color: rgba(140, 165, 247, 0.3);
+  background: rgba(140, 165, 247, 0.07);
+  color: var(--lilla);
+}
+.ms .forge .fase .tag i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: forge-batte 2.4s infinite;
+}
+.ms .forge .fase h3 {
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 20px 0 10px;
+}
+.ms .forge .fase .sotto {
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--firma);
+  margin: 0 0 22px;
+}
+.ms .band.ink.forge .fase .sotto {
+  color: var(--lilla);
+}
+.ms .forge .fase ul {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+.ms .forge .fase li {
+  position: relative;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+  margin-bottom: 10px;
+  padding-left: 18px;
+}
+.ms .band.ink.forge .fase li {
+  color: var(--testo-ink-2);
+}
+.ms .forge .fase li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--firma);
+}
+.ms .band.ink.forge .fase li::before {
+  background: var(--lilla);
+}
+@media (min-width: 1000px) {
+  .ms .forge .fase:nth-child(odd) li {
+    padding-left: 0;
+    padding-right: 18px;
+  }
+  .ms .forge .fase:nth-child(odd) li::before {
+    left: auto;
+    right: 0;
+  }
+}
+/* il messaggio chiave che chiude la fase */
+.ms .forge .fase .chiave {
+  display: inline-block;
+  border-left: 2px solid var(--firma);
+  padding-left: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  max-width: 46ch;
+  text-align: left;
+}
+.ms .band.ink.forge .fase .chiave {
+  border-left-color: var(--lilla);
+}
+@media (min-width: 1000px) {
+  .ms .forge .fase:nth-child(odd) .chiave {
+    border-left: 0;
+    border-right: 2px solid var(--firma);
+    padding-left: 0;
+    padding-right: 14px;
+    text-align: right;
+  }
+  .ms .band.ink.forge .fase:nth-child(odd) .chiave {
+    border-right-color: var(--lilla);
+  }
+}
+
+/* ---------- SCHEDA CON ICONA · gli asset ----------
+   Riprende la forma della pagina vecchia, che era buona: quadrato
+   dell'icona con bordo e fondo scuro, puntino arancio in alto a
+   destra, alone viola dietro l'angolo, filetto che cresce sul fondo.
+   Era colore usato bene, e toglierlo e' stato un errore. */
+.ms .forge .scheda-icona {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  border-radius: var(--r-l);
+  padding: 30px;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.035), transparent 60%);
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.ms .band.carta.forge .scheda-icona {
+  background: linear-gradient(160deg, rgba(83, 61, 252, 0.05), transparent 60%);
+}
+.ms .forge .scheda-icona::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: rgba(140, 165, 247, 0.07);
+  filter: blur(28px);
+  transition: background var(--dur) var(--ease);
+  pointer-events: none;
+}
+.ms .band.carta.forge .scheda-icona::before {
+  background: rgba(83, 61, 252, 0.09);
+}
+.ms .forge .scheda-icona:hover::before {
+  background: rgba(140, 165, 247, 0.14);
+}
+.ms .forge .scheda-icona:hover {
+  border-color: rgba(140, 165, 247, 0.35);
+}
+.ms .band.carta.forge .scheda-icona:hover {
+  border-color: rgba(83, 61, 252, 0.32);
+}
+.ms .forge .scheda-icona::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: rgba(232, 101, 10, 0.6);
+  transition: width 0.7s var(--ease);
+}
+.ms .forge .scheda-icona:hover::after {
+  width: 100%;
+}
+/* il contenitore dell'icona */
+.ms .forge .cassetta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 15px;
+  border: 1px solid rgba(140, 165, 247, 0.28);
+  /* fondo che vira al viola invece del nero piatto: l'icona a riposo
+     era grigio spento su nero, e la griglia dei nove usciva senza
+     colore. Il segnale c'e' subito, non solo al passaggio. */
+  background: linear-gradient(160deg, rgba(140, 165, 247, 0.14), rgba(11, 11, 12, 0.9));
+  color: var(--lilla);
+  margin-bottom: 22px;
+  transition:
+    transform var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.ms .band.carta.forge .cassetta {
+  color: var(--lilla);
+}
+.ms .forge .scheda-icona:hover .cassetta {
+  transform: scale(1.08);
+  border-color: rgba(140, 165, 247, 0.4);
+  color: var(--lilla);
+}
+/* il puntino arancio: il segno che qualcosa e' acceso */
+.ms .forge .cassetta .spia {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e8650a;
+  box-shadow: 0 0 10px rgba(232, 101, 10, 0.8);
+  opacity: 0.75;
+  transition: opacity var(--dur) var(--ease);
+}
+.ms .forge .scheda-icona:hover .cassetta .spia {
+  opacity: 1;
+}
+.ms .forge .scheda-icona h3 {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.ms .forge .scheda-icona p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--testo-ink-2);
+  margin: 0;
+}
+.ms .band.carta.forge .scheda-icona p {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- IL LIVELLO · le tre configurazioni ----------
+   Tre card bianche identiche non dicevano quale fosse quale. Ora il
+   livello consigliato si alza: fondo che vira, bordo in firma, un filo
+   acceso in cima e un'ombra che lo stacca. Gli altri due restano sobri:
+   e' il contrasto a creare la gerarchia, non il decoro su tutti e tre. */
+.ms .forge .livello {
+  position: relative;
+  border: 1px solid var(--surf-bd);
+  border-radius: var(--r-l);
+  padding: 30px;
+  background: var(--surf-bg);
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease);
+}
+.ms .forge .livello:hover {
+  border-color: rgba(83, 61, 252, 0.3);
+}
+.ms .forge .livello.scelto {
+  border-color: rgba(83, 61, 252, 0.45);
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.07), var(--surf-bg) 42%);
+  box-shadow: 0 18px 50px -28px rgba(83, 61, 252, 0.55);
+}
+.ms .forge .livello.scelto::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--firma), transparent);
+}
+.ms .forge .livello .testa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ms .forge .livello .nome {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 16px 0 0;
+}
+.ms .forge .livello .capacita {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--firma);
+  margin-top: 10px;
+}
+.ms .forge .livello .distintivo {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--firma);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.ms .forge .livello .gruppo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ombra);
+  margin: 24px 0 12px;
+}
+.ms .forge .livello ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ms .forge .livello li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+  margin-bottom: 9px;
+}
+.ms .forge .livello li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--firma);
+  opacity: 0.55;
+}
+.ms .forge .livello .perchi {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+  margin: 0;
+}
+/* ===========================================================
+   COLORE · secondo passaggio, 2026-07-30.
+   -----------------------------------------------------------
+   Feedback: "tutto davvero troppo bianco e nero, non camaleonte ma
+   nemmeno piatto". Giusto. Il DS ha una palette — firma, lilla,
+   forge — e usarla solo per i filetti da 1px la spreca.
+
+   REGOLA che mi do, per non finire nel camaleonte: il colore NON e'
+   decorazione distribuita ovunque, e' un SEGNALE che marca il ruolo
+   del blocco. Le fasce restano due (carta e ink), i fondi restano
+   sobri, ma dove c'e' un dato, un accento o un punto d'ingresso il
+   viola si vede davvero. L'arancio resta l'eccezione: solo dove
+   qualcosa si perde.
+   =========================================================== */
+
+/* ---------- la cassetta piccola, per i punti dentro un quadro ---------- */
+.ms .forge .cassetta.piccola {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+.ms .forge .cassetta.piccola svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* ---------- IL FONDO DELLE FASCE E' QUELLO DEL SITO ----------
+   Qui stavano tre regole che mettevano un "velo" di sfumature radiali
+   sul fondo di ogni fascia (carta, ink, e una piu' decisa sulla hero).
+   Sono state tolte il 2026-07-31, per due motivi.
+
+   1. `background-image` SOSTITUISCE, non si somma. La griglia blueprint
+      del sito e' due linear-gradient dichiarati in `.band.ink` e
+      `.band.carta` (site.css): riscrivendo la proprieta' qui, la griglia
+      spariva da tutte e tredici le sezioni. Forge era l'unica pagina del
+      sito senza reticolo, e si vedeva.
+
+   2. `background-size` restava pero' quello della griglia
+      (`var(--grid)`, 44px): le sfumature venivano quindi PIASTRELLATE
+      ogni 44px invece di coprire la fascia. Non era un velo, era una
+      texture a macchie ripetute.
+
+   Se un giorno il velo dovesse tornare, non va rimesso qui: va aggiunto
+   in site.css dentro `.band.ink`/`.band.carta`, nella stessa
+   dichiarazione della griglia e con il suo `background-size` esplicito
+   (`var(--grid) var(--grid), cover, cover`), cosi' vale per tutte le
+   pagine e non se ne perde una per strada. */
+
+/* ---------- IL ROIOMETRO montato dentro la fascia ----------
+   `SiteROIMeter` e' il calcolatore del kit, lo stesso di `/roiometro`.
+   Li' e' solo in pagina e la sua card apre con titolo e sottotitolo;
+   qui sopra c'e' gia' l'intestazione di fascia, che legge le STESSE
+   due chiavi (`Offerta.roi_meter.headline` e `.subtitle`). Senza questa
+   regola la frase comparirebbe due volte a undici righe di distanza.
+
+   Si nasconde il doppione qui, non nel componente: la regola vive
+   dentro `.forge .roiometro`, quindi `/roiometro` e la home restano
+   quelli che sono. Se un giorno il titolo interno servisse anche qui,
+   si toglie questo blocco e si toglie l'`h-sect` dalla sezione. */
+.ms .forge .roiometro .ck,
+.ms .forge .roiometro .ck + p {
+  display: none;
+}
+/* il calcolatore respira sotto l'intestazione della fascia */
+.ms .forge .roiometro {
+  margin-top: 38px;
+}
+
+/* ---------- L'OCCHIELLO diventa una pastiglia ----------
+   Era una riga di testo colorata e basta. Con la pastiglia il colore
+   ha una superficie su cui posarsi, e l'inizio di sezione si vede
+   prima ancora di leggerlo. */
+.ms .forge .eye {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(83, 61, 252, 0.28);
+  background: rgba(83, 61, 252, 0.07);
+  color: var(--firma);
+}
+.ms .band.ink.forge .eye {
+  border-color: rgba(140, 165, 247, 0.28);
+  background: rgba(140, 165, 247, 0.08);
+  color: var(--lilla);
+}
+.ms .forge .eye::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+/* ---------- LE STAZIONI prendono corpo ----------
+   Erano riquadri con un bordo e basta. Un fondo che vira e un alone
+   nell'angolo bastano a staccarle dal piano, senza ombre pesanti. */
+.ms .forge .stazione {
+  background: linear-gradient(158deg, rgba(140, 165, 247, 0.06), transparent 55%), var(--surf-bg);
+}
+.ms .band.carta.forge .stazione {
+  background: linear-gradient(158deg, rgba(83, 61, 252, 0.055), transparent 55%), var(--surf-bg);
+}
+.ms .forge .stazione::after {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(140, 165, 247, 0.06);
+  filter: blur(30px);
+  pointer-events: none;
+  transition: background var(--dur) var(--ease);
+}
+.ms .band.carta.forge .stazione::after {
+  background: rgba(83, 61, 252, 0.07);
+}
+.ms .forge .stazione:hover::after {
+  background: rgba(140, 165, 247, 0.13);
+}
+/* la cifra fantasma si vede di piu': era 0.07, praticamente invisibile */
+.ms .forge .ghost {
+  opacity: 0.11;
+}
+.ms .band.carta.forge .ghost {
+  opacity: 0.09;
+}
+
+/* ---------- IL DATO si accende ----------
+   I tre numeri (240k, 85%, +1.500) erano neri su bianco: la cosa che
+   convince trattata come testo normale. Ora prendono il viola del
+   brand, che e' esattamente il ruolo dell'accento. */
+.ms .forge .dato .cifra {
+  background: linear-gradient(135deg, var(--firma), #7b63ff 60%, var(--lilla));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ms .band.ink.forge .dato .cifra {
+  background: linear-gradient(135deg, var(--lilla), #b9c6ff 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* il filetto sotto il numero: chiude il dato e lo lega alla sua unita' */
+.ms .forge .dato .eti::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--firma);
+  margin-bottom: 14px;
+}
+.ms .band.ink.forge .dato .eti::before {
+  background: var(--lilla);
+}
+
+/* ---------- LE COLONNE del confronto ----------
+   Due riquadri identici non dicevano quale fosse quale. Quella buona
+   prende un velo e un bordo in firma; l'altra resta neutra. */
+.ms .forge .colonna.buona {
+  border-color: rgba(83, 61, 252, 0.32);
+  background: linear-gradient(170deg, rgba(83, 61, 252, 0.06), var(--surf-bg) 55%);
+}
+.ms .band.ink.forge .colonna.buona {
+  border-color: rgba(140, 165, 247, 0.3);
+  background: linear-gradient(170deg, rgba(140, 165, 247, 0.07), var(--surf-bg) 55%);
+}
+
+/* ---------- IL QUADRO si stacca dal fondo ---------- */
+.ms .forge .quadro {
+  box-shadow: 0 22px 60px -34px rgba(83, 61, 252, 0.45);
+}
+.ms .band.ink.forge .quadro {
+  box-shadow: 0 22px 60px -34px rgba(0, 0, 0, 0.8);
+}
+.ms .forge .readout {
+  background: linear-gradient(90deg, rgba(83, 61, 252, 0.06), transparent 70%);
+}
+.ms .band.ink.forge .readout {
+  background: linear-gradient(90deg, rgba(140, 165, 247, 0.07), transparent 70%);
+}
+
+/* ---------- IL PULL-QUOTE ----------
+   Il filetto da 2px era l'unico segno. Un velo dietro lo rende un
+   blocco, non una riga con una stanghetta. */
+.ms .forge .tira-somme {
+  padding: 16px 20px 16px 18px;
+  border-radius: 0 var(--r-m) var(--r-m) 0;
+  background: linear-gradient(90deg, rgba(83, 61, 252, 0.07), transparent 80%);
+}
+.ms .band.ink.forge .tira-somme {
+  background: linear-gradient(90deg, rgba(140, 165, 247, 0.08), transparent 80%);
+}
+
+/* ---------- IL GRADINO della scala ---------- */
+.ms .forge .gradino .tappa {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(83, 61, 252, 0.26);
+  background: rgba(83, 61, 252, 0.07);
+}
+.ms .band.ink.forge .gradino .tappa {
+  border-color: rgba(140, 165, 247, 0.26);
+  background: rgba(140, 165, 247, 0.08);
+}
+
+/* ---------- soglia di contrasto sulle pastiglie chiare ----------
+   L'occhiello e la tappa su fondo CARTA misuravano 4.47:1 contro il
+   minimo di 4.5 richiesto per il testo: il viola --firma su un velo
+   chiaro non ce la fa per un soffio. Sul chiaro passano al persian
+   (--firma-hover, piu' scuro), che porta il rapporto sopra soglia
+   senza cambiare la famiglia di colore. Misurato, non stimato. */
+.ms .band.carta.forge .eye,
+.ms .band.carta.forge .gradino .tappa {
+  color: var(--firma-hover);
+}
+.ms .band.carta.forge .eye {
+  border-color: rgba(57, 44, 184, 0.3);
+}
+.ms .band.carta.forge .gradino .tappa {
+  border-color: rgba(57, 44, 184, 0.28);
+}
+
+/* ===========================================================
+   TERZO GIRO · 2026-07-31 · CORPO E COLORE
+   -----------------------------------------------------------
+   Due difetti veri, non di gusto, che questo blocco corregge in
+   un punto solo invece che in ventitre' regole sparse.
+
+   1. TUTTO TROPPO PICCOLO. site.css fissa la soglia del sistema:
+      "18/29 su desktop, 16 il minimo assoluto per un testo che porta
+      significato. Piuttosto un pixel in piu' che uno in meno."
+      Questa pagina aveva VENTITRE' dichiarazioni sotto i 18px, e
+      undici erano corpi di lettura veri (elenchi, descrizioni,
+      risposte delle FAQ) fermi a 15.5-16.5px. Ogni blocco singolo
+      sembrava a posto, ma tredici sezioni tutte un grado sotto
+      danno esattamente la sensazione di pagina compressa.
+
+   2. MONOCROMATICO. La palette ha otto colori e questa pagina ne
+      usava uno. I marcatori degli elenchi, le etichette e le icone
+      stavano su `--ombra`, che e' il GRIGIO di servizio: nato per i
+      testi attenuati, non per i segni che devono distinguere. Sulle
+      fasce chiare le icone prendevano `--lilla`, un periwinkle
+      chiaro che su bianco si spegne e si legge grigio.
+
+   La regola resta quella di sempre: il colore NON e' decorazione
+   distribuita, e' il SEGNALE che marca il ruolo del blocco. Quindi
+   sta sui segni, sulle etichette e sui filetti, mai sul corpo del
+   testo: un paragrafo rosso non e' piu' chiaro, e' solo piu' faticoso.
+   =========================================================== */
+
+/* ---------- 1 · I CORPI DI LETTURA vanno a 18px ---------- */
+.ms .forge .stazione p,
+.ms .forge .dato p,
+.ms .forge .gradino p,
+.ms .forge .gradino li,
+.ms .forge .colonna li,
+.ms .forge .faq .risposta,
+.ms .forge .fase li,
+.ms .forge .fase .chiave,
+.ms .forge .scheda-icona p,
+.ms .forge .livello li,
+.ms .forge .livello .perchi {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* le etichette in mono: erano 10.5-12px, cioe' meta' del corpo.
+   A 14px restano etichette ma si leggono senza avvicinarsi. */
+.ms .forge .cod,
+.ms .forge .gradino .tappa,
+.ms .forge .colonna .t,
+.ms .forge .fase .tag,
+.ms .forge .livello .gruppo,
+.ms .forge .livello .distintivo,
+.ms .forge .readout,
+.ms .forge .quota {
+  font-size: 14px;
+}
+.ms .forge .livello .capacita {
+  font-size: 16px;
+}
+.ms .forge .fonte {
+  font-size: 13px;
+}
+
+/* ---------- 2 · ROSSO E VERDE sui confronti ----------
+   `--anomalia` e `--ok` sono i token di stato del sistema. Sul fondo
+   ink fanno 6.5:1 e 5.7:1; su carta site.css ne ridefinisce da solo la
+   variante scura, quindi il colore segue la fascia senza altre regole.
+
+   Il lato sbagliato prende il rosso, quello giusto il verde: e' la
+   lettura piu' rapida che esista, e su un confronto a due colonne
+   toglie il lavoro di capire quale colonna e' quale. */
+/* ATTENZIONE ALLO SCOPO: rosso e verde valgono solo dentro `.confronto`,
+   cioe' dove due colonne si contrappongono davvero. `.colonna` da sola e'
+   un contenitore generico usato anche per blocchi neutri (Enterprise,
+   Nota finale): con la regola non scopata si ritrovavano una barra rossa
+   e un'etichetta rossa addosso, come se fossero un errore. */
+.ms .forge .confronto .colonna .t {
+  color: var(--anomalia);
+}
+.ms .forge .confronto .colonna.buona .t {
+  color: var(--ok);
+}
+.ms .forge .confronto .colonna li .m,
+.ms .band.ink.forge .confronto .colonna li .m {
+  color: var(--anomalia);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.ms .forge .confronto .colonna.buona li .m,
+.ms .band.ink.forge .confronto .colonna.buona li .m {
+  color: var(--ok);
+}
+/* un filetto di stato sul bordo alto della colonna: si vede prima
+   ancora di leggere l'etichetta */
+.ms .forge .confronto .colonna {
+  position: relative;
+  overflow: hidden;
+}
+.ms .forge .confronto .colonna::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--anomalia);
+}
+.ms .forge .confronto .colonna.buona::before {
+  background: var(--ok);
+}
+/* le voci respirano: 12px di stacco fra righe da tre capoversi era
+   troppo poco per distinguerle a colpo d'occhio */
+.ms .forge .colonna li {
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+/* ---------- 3 · LE ICONE NON SONO GRIGIE ----------
+   Su fascia CARTA la cassetta prendeva `--lilla` (#8ca5f7): su un
+   pannello bianco quel periwinkle fa 2.1:1 e si legge grigio. Passa al
+   viola del brand, con il fondo e il bordo intonati. Il chip cresce da
+   42 a 56px: a 42 con un'icona da 21 era un francobollo. */
+.ms .band.carta.forge .cassetta {
+  color: var(--firma);
+  border-color: rgba(83, 61, 252, 0.32);
+  background: linear-gradient(160deg, rgba(83, 61, 252, 0.16), rgba(255, 255, 255, 0.9));
+}
+.ms .band.carta.forge .scheda-icona:hover .cassetta {
+  color: var(--firma);
+  border-color: rgba(83, 61, 252, 0.5);
+}
+.ms .forge .cassetta.piccola {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  margin-bottom: 14px;
+}
+.ms .forge .cassetta.piccola svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---------- 4 · LE COPPIE DELLA SEZIONE CREDENZE ----------
+   Erano due contenitori unici, uno per lato, con dentro due voci
+   ciascuno: quattro paragrafi lunghi in due scatole, senza un confine
+   fra la prima e la seconda coppia. Ora ogni coppia e' una riga della
+   griglia — credenza a sinistra, realta' a destra — e ogni blocco e'
+   una `.stazione` per conto suo.
+
+   L'ordine nel markup e' credenza-01, realta'-01, credenza-02,
+   realta'-02: cosi' quando la griglia collassa a una colonna sul
+   telefono, l'accoppiamento regge invece di diventare due elenchi
+   separati da scorrere avanti e indietro. */
+.ms .forge .coppie {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 22px;
+}
+@media (max-width: 900px) {
+  .ms .forge .coppie {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .forge .lato {
+  position: relative;
+  overflow: hidden;
+}
+.ms .forge .lato::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+}
+.ms .forge .lato.male::before {
+  background: var(--anomalia);
+}
+.ms .forge .lato.bene::before {
+  background: var(--ok);
+}
+.ms .forge .lato-testa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ms .forge .lato .segno {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  line-height: 1;
+}
+.ms .forge .lato.male .segno {
+  color: var(--anomalia);
+  border: 1px solid currentColor;
+  background: rgba(255, 92, 92, 0.1);
+}
+.ms .forge .lato.bene .segno {
+  color: var(--ok);
+  border: 1px solid currentColor;
+  background: rgba(30, 158, 90, 0.12);
+}
+.ms .forge .lato .eti {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ms .forge .lato.male .eti {
+  color: var(--anomalia);
+}
+.ms .forge .lato.bene .eti {
+  color: var(--ok);
+}
+.ms .forge .lato h3 {
+  margin: 18px 0 10px;
+}
+.ms .forge .lato p {
+  margin: 0;
+  color: var(--testo-ink-2);
+}
+.ms .band.carta.forge .lato p {
+  color: var(--testo-carta-2);
+}
+
+/* ---------- 5 · LE SCHEDE DI TIER ----------
+   Vedi la testata di ForgeMsPrezzi.tsx per il perche' di ognuna di
+   queste scelte: qui c'e' solo il come. */
+.ms .forge .livelli {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  /* stretch, non start: tre tier a tre altezze diverse non si
+     confrontano, si guardano uno per volta */
+  align-items: stretch;
+}
+@media (max-width: 1000px) {
+  .ms .forge .livelli {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .forge .livelli .livello {
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* il padding passa a .testa e .corpo, che sono separati */
+  border-radius: var(--r-l);
+  /* UN SOLO NUMERO per l'imbottitura laterale della scheda. Il piede va
+     da bordo a bordo con margini NEGATIVI pari a questo padding: se i
+     due valori si scrivono a mano in due punti, al primo ritocco per il
+     mobile il piede sborda o lascia una fessura. Con la variabile non
+     possono divergere. */
+  --pad-livello: 28px;
+}
+/* il consigliato sporge sopra la riga, come nella vecchia pagina:
+   i margini negativi lo alzano senza rompere l'altezza della griglia.
+   Sotto i 1000px la griglia e' a una colonna e lo scarto non serve. */
+@media (min-width: 1001px) {
+  .ms .forge .livelli .livello.scelto {
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+}
+.ms .forge .livello .testa {
+  display: block;
+  padding: 30px var(--pad-livello) 26px;
+  border-bottom: 1px solid var(--surf-bd);
+}
+.ms .forge .livello.scelto .testa {
+  border-bottom-color: rgba(83, 61, 252, 0.28);
+}
+.ms .forge .livello .testa .riga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 26px;
+}
+.ms .forge .livello .nome {
+  font-size: clamp(34px, 4vw, 46px);
+  margin: 14px 0 0;
+}
+.ms .forge .livello .distintivo {
+  font-size: 12px;
+  padding: 6px 13px;
+}
+.ms .forge .livello .corpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 4px var(--pad-livello) var(--pad-livello);
+}
+/* il primo gruppo non deve staccarsi due volte dal filetto della testata */
+.ms .forge .livello .corpo .gruppo:first-child {
+  margin-top: 20px;
+}
+/* le spunte: capacita' incluse, non voci di un elenco qualsiasi */
+.ms .forge .livello li {
+  padding-left: 28px;
+  margin-bottom: 13px;
+}
+.ms .forge .livello li::before {
+  content: "✓";
+  width: auto;
+  height: auto;
+  top: 0;
+  border-radius: 0;
+  background: none;
+  opacity: 1;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--ok);
+}
+.ms .forge .livello.scelto li::before {
+  color: var(--firma);
+}
+/* l'elenco tiene il suo stacco minimo dal piede anche quando il corpo
+   e' pieno e `margin-top: auto` non ha spazio da distribuire */
+.ms .forge .livello .corpo ul {
+  margin-bottom: 26px;
+}
+
+/* ---------- 6 · LE SCHEDE NON SONO BIANCHE ----------
+   Erano tre rettangoli bianchi su fondo quasi bianco: il bordo da 1px
+   era l'unica cosa che diceva dove finiva una scheda e cominciava il
+   piano. In una sezione che deve far confrontare, la scheda deve
+   essere un OGGETTO, non un'area delimitata da una riga sottile.
+
+   Tre superfici distinte, non una: testata in tinta, corpo piu' chiaro,
+   piede in tinta. Cosi' la scheda ha una struttura leggibile anche
+   prima di leggerla, e il nome del tier sta su una fascia sua. */
+.ms .band.carta.forge .livello {
+  background: #f4f5fa;
+  border-color: rgba(83, 61, 252, 0.2);
+  box-shadow: 0 12px 34px -26px rgba(11, 11, 12, 0.5);
+}
+.ms .band.carta.forge .livello .testa {
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.13), rgba(83, 61, 252, 0.05));
+  border-bottom-color: rgba(83, 61, 252, 0.22);
+}
+.ms .band.carta.forge .livello .corpo {
+  background: #ffffff;
+}
+/* il consigliato resta il piu' carico: stessa struttura, tinta piu' densa */
+.ms .band.carta.forge .livello.scelto {
+  border-color: rgba(83, 61, 252, 0.5);
+}
+.ms .band.carta.forge .livello.scelto .testa {
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.26), rgba(83, 61, 252, 0.1));
+}
+
+/* IL NOME IN VIOLA. E' la parola che si cerca scorrendo le tre schede:
+   in nero pesava come un titolo qualsiasi. A 46px il minimo di
+   contrasto e' 3:1 e il viola del brand su questa testata ne fa 5.6,
+   quindi passa senza scendere al persian. */
+.ms .band.carta.forge .livello .nome {
+  color: var(--firma);
+}
+.ms .band.carta.forge .livello .capacita {
+  color: var(--firma-hover);
+}
+
+/* ---------- il piede della scheda ---------- */
+.ms .forge .livello .piede {
+  margin-top: auto;
+  /* da bordo a bordo: annulla il padding laterale e inferiore del corpo.
+     I tre margini leggono la STESSA variabile del padding, quindi non
+     possono scollarsi quando cambia sul mobile. */
+  margin-left: calc(var(--pad-livello) * -1);
+  margin-right: calc(var(--pad-livello) * -1);
+  margin-bottom: calc(var(--pad-livello) * -1);
+  padding: 22px var(--pad-livello);
+  border-top: 1px solid rgba(83, 61, 252, 0.18);
+}
+.ms .band.carta.forge .livello .piede {
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.05), rgba(83, 61, 252, 0.12));
+}
+.ms .band.carta.forge .livello.scelto .piede {
+  background: linear-gradient(180deg, rgba(83, 61, 252, 0.1), rgba(83, 61, 252, 0.2));
+  border-top-color: rgba(83, 61, 252, 0.3);
+}
+.ms .forge .livello .tier-cta {
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+  text-align: center;
+  padding: 15px 20px;
+  width: 100%;
+}
+/* IL BOTTONE NON E' PIU' BIANCO E NERO. `btn-2-ink` era un contorno
+   nero: leggibile, ma su tre schede diventava l'unico segno acromatico
+   di una sezione tutta viola. Questa e' la variante in firma, e vive
+   qui perche' serve solo alla pagina (site.css non si tocca). */
+.ms .forge .btn-2-firma {
+  background: rgba(83, 61, 252, 0.09);
+  color: var(--firma-hover);
+  border-color: rgba(83, 61, 252, 0.45);
+}
+.ms .forge .btn-2-firma:hover {
+  background: rgba(83, 61, 252, 0.16);
+  border-color: var(--firma);
+}
+
+/* ---------- 7 · LA SEZIONE CHE CHIEDE LA CALL ----------
+   E' passata a fascia CARTA (vedi ForgeMsContatto.tsx), e il blocco CTA
+   e' rifatto sul modello della home: centrato, headline a pennarello,
+   bottone grande con freccia, rassicurazione col pallino verde. */
+
+/* il blocco si centra come la hero della home: e' l'unica sezione
+   centrata della pagina, ed e' voluto — un invito ad agire non e' un
+   paragrafo di contenuto, e la simmetria dice "fermati qui". */
+.ms .forge.contatto .cta-hero {
+  text-align: center;
+}
+.ms .forge.contatto .cta-hero .h-sect,
+.ms .forge.contatto .cta-hero .lead {
+  margin-inline: auto;
+}
+.ms .forge.contatto .cta-hero .lead {
+  max-width: 60ch;
+}
+.ms .forge.contatto .cta-hero .cta-row {
+  justify-content: center;
+}
+
+/* LA PAROLA A PENNARELLO. Come `.marker-hl` della home: un box pieno
+   dietro il testo, non un corsivo. Il colore e' `--marker` (l'arancio di
+   "qualcosa si perde"), e qui la frase parla proprio di perdita. Il testo
+   sopra resta near-black: su arancio fa ~7:1, ben oltre soglia.
+   box-decoration-break: clone tiene il box intero anche se va a capo. */
+.ms .forge.contatto .marca {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.02em 0.22em;
+  border-radius: 3px;
+  background: var(--marker);
+  color: var(--inchiostro);
+  font-style: normal; /* annulla il corsivo che .emph porterebbe */
+}
+
+.ms .forge.contatto .cta-row .btn-1 {
+  font-size: 18px;
+  padding: 19px 34px;
+  box-shadow: 0 16px 40px -18px rgba(83, 61, 252, 0.6);
+}
+/* la freccia entra in riga col testo e scivola avanti al passaggio */
+.ms .forge.contatto .cta-row .btn-1 svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  transition: transform var(--dur) var(--ease);
+}
+.ms .forge.contatto .cta-row .btn-1:hover svg {
+  transform: translateX(4px);
+}
+/* la rassicurazione: pallino verde + i tre "non e'", come il chip della
+   home. Verde perche' e' un via libera ("nessun impegno"), non un dato. */
+.ms .forge.contatto .rassicura {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(23, 119, 68, 0.28);
+  background: rgba(23, 119, 68, 0.06);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ok);
+}
+.ms .forge.contatto .rassicura .pallino {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--ok);
+  box-shadow: 0 0 0 4px rgba(23, 119, 68, 0.14);
+}
+@media (max-width: 640px) {
+  .ms .forge.contatto .rassicura {
+    display: flex;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ---------- 8 · IL BOX MARF, PIU' LEGGIBILE ----------
+   Feedback: "icone piu' belle e tutto piu' leggibile". Le icone sono
+   ridisegnate in duotone (vedi icone.tsx); qui si lavora sul resto.
+   I quattro punti erano testo che galleggiava nel bianco, con la
+   descrizione a 15.5px sotto la soglia. Ora ognuno e' un pannello con
+   la sua superficie, il chip piu' grande e in tinta, i corpi a 18px. */
+.ms .forge .marf-griglia {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+/* variante montata direttamente dentro un .quadro: li' l'imbottitura
+   se la deve dare da sola. Era uno `style={{padding:30}}` inline, che
+   pero' non si puo' cambiare da media query senza `!important`. */
+.ms .forge .marf-griglia.dentro-quadro {
+  padding: 30px;
+}
+
+/* IL CORPO DI UN .quadro. Era imbottitura scritta inline (30 e 32px in
+   due componenti diversi): un numero che le media query non possono
+   toccare, e due valori dove ne serviva uno. Su telefono restavano 32px
+   per lato su 350 di schermo. */
+.ms .forge .quadro-corpo {
+  padding: 30px;
+}
+@media (max-width: 720px) {
+  .ms .forge .marf-griglia {
+    grid-template-columns: 1fr;
+  }
+}
+.ms .forge .marf-punto {
+  border: 1px solid var(--surf-bd);
+  border-radius: var(--r-m);
+  padding: 24px 24px 26px;
+  background: linear-gradient(160deg, rgba(83, 61, 252, 0.05), transparent 62%);
+  transition: border-color var(--dur) var(--ease);
+}
+.ms .band.ink.forge .marf-punto {
+  background: linear-gradient(160deg, rgba(140, 165, 247, 0.06), transparent 62%);
+}
+.ms .forge .marf-punto:hover {
+  border-color: rgba(83, 61, 252, 0.3);
+}
+.ms .forge .marf-punto .cassetta {
+  color: var(--firma);
+  margin-bottom: 14px;
+}
+.ms .forge .marf-punto h4 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+.ms .forge .marf-punto p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--testo-carta-2);
+}
+.ms .band.ink.forge .marf-punto p {
+  color: var(--testo-ink-2);
+}
+/* il codice 01-04 in tinta, non nel grigio di servizio */
+.ms .forge .marf-punto .cod {
+  color: var(--firma);
+}
+.ms .band.ink.forge .marf-punto .cod {
+  color: var(--lilla);
+}
+
+/* ---------- 9 · I RIQUADRI DI CODA (Enterprise, Nota finale) ----------
+   Sono note, non offerte: prendono un segno piu' piccolo, in riga con
+   l'etichetta invece che un chip sopra come gli "incluso". */
+.ms .forge .coda .colonna .t {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ombra);
+}
+.ms .forge .coda .segnetto {
+  display: inline-flex;
+  flex: none;
+  color: var(--firma);
+}
+.ms .forge .coda .segnetto svg {
+  width: 19px;
+  height: 19px;
+}
+.ms .band.ink.forge .coda .segnetto {
+  color: var(--lilla);
+}
+.ms .forge .coda .colonna p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--testo-carta-2);
+}
+.ms .band.ink.forge .coda .colonna p {
+  color: var(--testo-ink-2);
+}
+
+/* ===========================================================
+   10 · IL MURO NERO NON E' PIATTO
+   -----------------------------------------------------------
+   Undici fasce ink di fila sono la scelta giusta per il ritmo (e' il
+   ritmo del Lab), ma scorrendole diventano una parete unica: stesso
+   nero, stessa griglia, per migliaia di pixel.
+
+   ATTENZIONE, QUI C'E' UNA TRAPPOLA GIA' PRESA UNA VOLTA. A inizio
+   sessione questa pagina aveva un "velo" di sfumature scritto come
+   `background-image` sulla fascia. Due danni: `background-image`
+   SOSTITUISCE, quindi cancellava la griglia blueprint del sito; e il
+   `background-size: var(--grid)` ereditato piastrellava le sfumature
+   ogni 44px, trasformando il velo in una texture a macchie.
+
+   Percio' qui NON si tocca `background-image` della fascia. Le
+   sfumature stanno su uno PSEUDO-ELEMENTO sovrapposto, che ha il suo
+   dimensionamento e non c'entra niente con la griglia: la griglia resta
+   esattamente quella di tutte le altre pagine, e il velo ci galleggia
+   sopra. Restano scopate a `.forge`: site.css non si tocca.
+   =========================================================== */
+.ms .band.ink.forge {
+  position: relative;
+}
+.ms .band.ink.forge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* niente background-size: le radiali coprono la fascia una volta sola */
+  background:
+    radial-gradient(ellipse 62% 48% at 88% 6%, rgba(140, 165, 247, 0.11), transparent 68%),
+    radial-gradient(ellipse 54% 42% at 6% 92%, rgba(83, 61, 252, 0.13), transparent 70%);
+}
+/* alternate: se stanno tutte nello stesso angolo, scorrendo si legge
+   come un motivo che si ripete, che e' il problema di partenza */
+.ms .band.ink.forge:nth-of-type(even)::before {
+  background:
+    radial-gradient(ellipse 58% 46% at 10% 8%, rgba(140, 165, 247, 0.1), transparent 68%),
+    radial-gradient(ellipse 56% 44% at 92% 90%, rgba(83, 61, 252, 0.12), transparent 70%);
+}
+/* la hero apre piu' carica: e' la prima cosa che si vede */
+.ms .band.ink.hero.forge::before {
+  background:
+    radial-gradient(ellipse 78% 55% at 50% -8%, rgba(83, 61, 252, 0.2), transparent 66%),
+    radial-gradient(ellipse 48% 40% at 8% 96%, rgba(140, 165, 247, 0.12), transparent 70%);
+}
+/* IL FILO ALL'ATTACCO. Fra due fasce ink consecutive non c'e' nessuno
+   stacco: il bordo si perde. Una riga di luce che sfuma ai lati dice
+   dove finisce una sezione e comincia l'altra, senza disegnare un
+   separatore vero. Non sulla hero, che e' la prima. */
+.ms .band.ink.forge::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 165, 247, 0.28) 22%,
+    rgba(83, 61, 252, 0.34) 50%,
+    rgba(140, 165, 247, 0.28) 78%,
+    transparent
+  );
+}
+.ms .band.ink.hero.forge::after {
+  display: none;
+}
+/* il contenuto sta SOPRA il velo: senza questo il .wrap resta nel flusso
+   e lo pseudo-elemento assoluto gli finisce davanti */
+.ms .band.ink.forge > .wrap,
+.ms .band.ink.forge > .roiometro {
+  position: relative;
+  z-index: 1;
+}
+/* Il velo e' FERMO, di proposito: un fondo che respira ripetuto su
+   undici fasce diventa rumore, non alleggerimento. Non e' una
+   dimenticanza. */
+
+/* ---------- 11 · LA HERO E' CENTRATA ----------
+   Era allineata a sinistra, con il visual dei nodi che invece e' un
+   oggetto simmetrico e stava al centro per conto suo: il blocco di
+   testo e l'immagine tiravano da due parti diverse.
+
+   I titoli e i paragrafi portano gia' una `max-width` (19ch l'H1, 56ch
+   il sottotitolo): con `text-align: center` da solo il testo si centra
+   DENTRO la scatola, ma la scatola resta appoggiata a sinistra e il
+   blocco continua a sembrare storto. Serve anche `margin-inline: auto`
+   su ognuno. E' la stessa trappola annotata in site.css per `.h-sect`,
+   e vale identica qui. */
+.ms .band.ink.hero.forge .wrap {
+  text-align: center;
+}
+.ms .band.ink.hero.forge h1,
+.ms .band.ink.hero.forge .copy,
+.ms .band.ink.hero.forge .proofline {
+  margin-inline: auto;
+}
+/* la .cta-row e' flex: il text-align non la tocca, va centrata sull'asse */
+.ms .band.ink.hero.forge .cta-row {
+  justify-content: center;
+}
+
+/* IL RITMO DELLA HERO, dichiarato invece che ereditato.
+   Gli stacchi arrivavano da tre fonti diverse: il margine di default
+   del browser sull'H1, un `margin-top` inline sul visual, e niente
+   sotto l'occhiello. Risultato: la pastiglia quasi incollata al titolo
+   e un vuoto sproporzionato piu' sotto. Qui i quattro stacchi si
+   scrivono uno accanto all'altro, cosi' si leggono come una scala. */
+.ms .band.ink.hero.forge .eye {
+  margin-bottom: clamp(18px, 2.4vw, 26px);
+}
+.ms .band.ink.hero.forge h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ms .band.ink.hero.forge .copy {
+  margin-top: clamp(18px, 2.2vw, 24px);
+}
+.ms .band.ink.hero.forge .visual-nodi {
+  margin-top: clamp(30px, 4.4vw, 46px) !important; /* batte l'inline */
+}
+.ms .band.ink.hero.forge .proofline {
+  margin-top: clamp(26px, 3.4vw, 40px) !important;
+}
+
+/* ===========================================================
+   12 · MOBILE
+   -----------------------------------------------------------
+   Le griglie erano gia' a punto di rottura (una colonna sotto la
+   soglia), quindi il layout non si rompeva. Quello che non tornava era
+   la MISURA: imbottiture da 28-32px per lato pensate su una pagina da
+   1120px, lasciate identiche su uno schermo da 340. Sessanta pixel di
+   margine su 340 sono un sesto della larghezza buttato, e il testo
+   dentro finisce in colonne da quattro parole.
+
+   Qui non si rimpicciolisce il TESTO — i corpi restano a 18px, che e'
+   la soglia del sistema e su telefono conta il doppio. Si stringe solo
+   lo spazio intorno.
+   =========================================================== */
+@media (max-width: 720px) {
+  .ms .forge .stazione {
+    padding: 22px 20px;
+  }
+  .ms .forge .marf-punto {
+    padding: 20px 18px 22px;
+  }
+  .ms .forge .colonna {
+    padding: 22px 20px;
+  }
+  .ms .forge .allarme {
+    padding: 22px 20px;
+  }
+  /* un solo numero, e testa/corpo/piede della scheda si adeguano insieme */
+  .ms .forge .livelli .livello {
+    --pad-livello: 20px;
+  }
+  .ms .forge .livello .testa {
+    padding-top: 24px;
+    padding-bottom: 20px;
+  }
+  /* SOLO la griglia montata dentro un .quadro ha imbottitura propria.
+     Quella del riquadro MARF vive gia' dentro un contenitore imbottito:
+     dandogliela anche qui il contenuto rientrava due volte. */
+  .ms .forge .marf-griglia.dentro-quadro,
+  .ms .forge .quadro-corpo {
+    padding: 20px;
+  }
+
+  /* le etichette in mono hanno 0.16-0.2em di spaziatura: su schermo
+     stretto una riga di sei parole diventa tre righe. La spaziatura
+     scende, il corpo no. */
+  .ms .forge .eye,
+  .ms .forge .readout,
+  .ms .forge .quota,
+  .ms .forge .cod,
+  .ms .forge .lato .eti {
+    letter-spacing: 0.1em;
+  }
+  /* il readout e' space-between: se non puo' andare a capo, le due voci
+     si schiacciano una contro l'altra */
+  .ms .forge .readout {
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  /* la quota ha due filetti che si prendono il flex: sotto i 400px
+     restava una riga di trattini con tre parole in mezzo */
+  .ms .forge .quota::before,
+  .ms .forge .quota::after {
+    display: none;
+  }
+  .ms .forge .quota {
+    justify-content: flex-start;
+  }
+
+  /* le cifre fantasma dietro le schede: a 84px su una card da 300
+     coprivano meta' del titolo */
+  .ms .forge .ghost {
+    font-size: 58px;
+  }
+
+  /* i bottoni a piena larghezza: su telefono un bottone a misura di
+     testo e' un bersaglio piccolo, e in colonna sembrano scarti */
+  .ms .forge .cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ms .forge .cta-row .btn {
+    justify-content: center;
+    width: 100%;
+  }
+  /* la CTA della sezione contatto e' gia' centrata: li' il blocco resta
+     centrato anche impilato */
+  .ms .forge.contatto .cta-hero .cta-row .btn {
+    width: 100%;
   }
 }

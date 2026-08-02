@@ -1,127 +1,99 @@
-import type { ForgeCopy } from "./copy";
+"use client";
+
+import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import { ICONE_SINTOMI, ICONE_TRAPPOLE } from "./icone";
 
 /* ============================================================
-   02 · PERCHÉ L'AI NON TI HA ANCORA DATO ROI
+   03 · STAI CRESCENDO, MA PIÙ CRESCI MENO HAI CONTROLLO
    ------------------------------------------------------------
-   WIREFRAME invariato: occhiello, titolo, lead, tre schede (A01, A02,
-   A03), le due curve a confronto, la frase che ribalta. Stessa copy,
-   stesso ordine.
+   WIREFRAME invariato, tutto intero: occhiello, titolo, sottotitolo,
+   i QUATTRO sintomi in griglia, poi il secondo movimento (la trappola
+   della tecnologia) con il suo titolo, il dato del MIT con la fonte,
+   le TRE carte e la frase di chiusura. Stesse chiavi i18n
+   (`Offerta.problem_analysis`), stesso ordine.
 
-   DISEGNO nuovo. Le tre schede avevano gia' un codice (A01/A02/A03) ma
-   era un'etichetta muta sopra al titolo. Diventa il codice della
-   STAZIONE, con la sua cifra fantasma dietro: la sezione elenca tre
-   modi di perdere valore, e ognuno e' un punto identificato, non un
-   generico "problema".
+   DISEGNO nuovo, e qui c'e' l'idea che tiene la sezione: il tema e'
+   "sta gia' succedendo e non lo vedi". I quattro sintomi diventano
+   STAZIONI con codice progressivo (S01…S04) e cifra fantasma dietro:
+   non quattro osservazioni generiche, quattro punti rilevati.
 
-   Le due curve stavano in due riquadri qualsiasi. Restano affiancate
-   — il confronto e' il senso del blocco — ma prendono la testata con
-   il tag di stato, e il rosso compare SOLO nella curva che decade:
-   e' l'unico punto della sezione dove entra l'allarme.
+   Il dato del MIT cambia registro perche' cambia natura: non e' una
+   nostra osservazione, e' una ricerca esterna che ci da' ragione.
+   Diventa l'ALLARME — l'unico blocco arancio della pagina, con la
+   campitura a righe dei cartelli di pericolo — e la fonte sta sotto in
+   mono, piccola: un dato citato senza fonte visibile non vale niente.
    ============================================================ */
 
-/* Curva "valore che decade": sale a un picco, poi crolla verso lo zero. */
-const PlotPerdita = (
-  <svg className="plot" viewBox="0 0 320 140" fill="none" aria-hidden="true">
-    <line className="grid-l" x1="8" y1="42" x2="312" y2="42" />
-    <line className="grid-l" x1="8" y1="82" x2="312" y2="82" />
-    <line className="grid-l" x1="8" y1="122" x2="312" y2="122" />
-    <path
-      className="area"
-      d="M8,120 C30,120 52,36 88,42 C128,47 152,98 200,110 C250,122 286,120 312,120 L312,130 L8,130 Z"
-    />
-    <path className="line" d="M8,120 C30,120 52,36 88,42 C128,47 152,98 200,110 C250,122 286,120 312,120" />
-    <circle className="end" cx="312" cy="120" r="3.5" />
-  </svg>
-);
+const SINTOMI = ["1", "2", "3", "4"] as const;
+const TRAPPOLE = ["1", "2", "3"] as const;
 
-/* Curva "valore che compone": piatta all'inizio, poi accelera verso l'alto. */
-const PlotCompone = (
-  <svg className="plot" viewBox="0 0 320 140" fill="none" aria-hidden="true">
-    <line className="grid-l" x1="8" y1="42" x2="312" y2="42" />
-    <line className="grid-l" x1="8" y1="82" x2="312" y2="82" />
-    <line className="grid-l" x1="8" y1="122" x2="312" y2="122" />
-    <path className="area" d="M8,120 C86,118 142,108 200,90 C250,74 286,50 312,20 L312,130 L8,130 Z" />
-    <path className="line" d="M8,120 C86,118 142,108 200,90 C250,74 286,50 312,20" />
-    <circle className="end" cx="312" cy="20" r="3.5" />
-  </svg>
-);
+export function ForgeMsProblema() {
+  const t = useTranslations("Offerta.problem_analysis");
 
-export function ForgeMsProblema({ t }: { t: ForgeCopy }) {
-  const c = t.problema;
+  const rich = {
+    br: () => <br />,
+    spanSub: (chunks: ReactNode) => <span className="emph">{chunks}</span>,
+  };
 
   return (
-    <section className="band carta forge" id="problema">
+    <section className="band ink forge" id="problem-analysis">
       <div className="wrap">
-        <div className="eye">{c.eye}</div>
-        <h2 className="h-sect">
-          {c.h2a}
-          <span className="emph">{c.h2emph}</span>
-          {c.h2b}
-        </h2>
-        <p className="lead">{c.lead}</p>
+        {/* --- i quattro sintomi --- */}
+        <div className="eye">{t("label")}</div>
+        <h2 className="h-sect">{t.rich("headline", rich)}</h2>
+        <p className="lead">{t("subtitle")}</p>
 
-        {/* i tre modi di perdere valore, come punti identificati */}
-        <div className="tre" style={{ marginTop: 30 }}>
-          {c.cards.map((card) => (
-            <article className="stazione" key={card.ck}>
+        <div className="due" style={{ marginTop: 34 }}>
+          {SINTOMI.map((k, i) => (
+            <article className="stazione" key={k}>
               <span className="filo" />
               <span className="ghost" aria-hidden="true">
-                {card.ck.replace(/^A/, "")}
+                {`0${i + 1}`}
               </span>
-              <div className="cod">{card.ck}</div>
-              <h3>{card.ct}</h3>
-              <p>{card.p}</p>
+              <span className="cassetta piccola">{ICONE_SINTOMI[i]}</span>
+              <div className="cod">{`Rilevato · S0${i + 1}`}</div>
+              <h3>{t(`symptoms.${k}.title`)}</h3>
+              <p>{t(`symptoms.${k}.desc`)}</p>
             </article>
           ))}
         </div>
 
-        {/* il confronto fra le due curve */}
-        <div className="curve">
-          <div className="curva perdita">
-            <div className="chead">
-              <div>
-                <div className="ctit">{c.curve.loss.title}</div>
-                <div className="csub">{c.curve.loss.sub}</div>
-              </div>
-              <span className="ctag">{c.curve.loss.tag}</span>
-            </div>
-            {PlotPerdita}
-            <div className="axis">{c.curve.axisT}</div>
-            <ul>
-              {c.curve.loss.bullets.map((b) => (
-                <li key={b}>
-                  <span className="dot" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* --- la trappola della tecnologia --- */}
+        <div className="eye" style={{ marginTop: 74 }}>
+          {t("trap_label")}
+        </div>
+        <h2 className="h-sect">{t.rich("trap_headline", rich)}</h2>
+        <p className="lead">{t("trap_subtitle")}</p>
 
-          <div className="curva compone">
-            <div className="chead">
-              <div>
-                <div className="ctit">{c.curve.gain.title}</div>
-                <div className="csub">{c.curve.gain.sub}</div>
-              </div>
-              <span className="ctag">{c.curve.gain.tag}</span>
-            </div>
-            {PlotCompone}
-            <div className="axis">{c.curve.axisT}</div>
-            <ul>
-              {c.curve.gain.bullets.map((b) => (
-                <li key={b}>
-                  <span className="dot" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
+        {/* il dato esterno: l'unico allarme della pagina */}
+        <div className="allarme" style={{ marginTop: 32 }}>
+          <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+            <span className="segno" aria-hidden="true">
+              !
+            </span>
+            <p className="testo">{t("trap_stat")}</p>
           </div>
+          <div className="fonte">{t("trap_source")}</div>
         </div>
 
-        <p className="tira-somme" style={{ marginTop: 32 }}>
-          {c.pivota}
-          <b>{c.pivotb}</b>
-          {c.pivotc}
+        <div className="tre" style={{ marginTop: 30 }}>
+          {TRAPPOLE.map((k, i) => (
+            <article className="stazione" key={k}>
+              <span className="filo" />
+              <span className="ghost" aria-hidden="true">
+                {`0${i + 1}`}
+              </span>
+              <span className="cassetta piccola">{ICONE_TRAPPOLE[i]}</span>
+              <div className="cod">{`Trappola · T0${i + 1}`}</div>
+              <h3>{t(`trap_cards.${k}.title`)}</h3>
+              <p>{t(`trap_cards.${k}.desc`)}</p>
+            </article>
+          ))}
+        </div>
+
+        <p className="tira-somme" style={{ marginTop: 40 }}>
+          {t("trap_closing")}
         </p>
       </div>
     </section>

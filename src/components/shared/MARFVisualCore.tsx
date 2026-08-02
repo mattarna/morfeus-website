@@ -4,11 +4,21 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useEffect } from "react";
 
+/* Le posizioni sono in PERCENTUALE del riquadro, non in pixel.
+   Erano `x: -180 / +180` px, messe in `left: calc(50% + Xpx)`. Su
+   desktop tornava, ma il riquadro e' fluido: su un telefono da ~340px
+   il centro sta a 170 e un nodo a +180 finisce a 350, cioe' FUORI. E il
+   contenitore ha `overflow-hidden`, quindi i nodi di destra venivano
+   tagliati a meta' (FINANCE e DATA) invece di stringersi.
+
+   In percentuale l'offset e' sempre proporzionato al riquadro, a
+   qualsiasi larghezza, e il taglio non puo' piu' succedere. I valori
+   sono gli stessi rapporti del disegno originale. */
 const NODES = [
-  { id: "crm", label: "CRM", icon: "solar:users-group-rounded-bold-duotone", x: -180, y: -100, delay: 0 },
-  { id: "finance", label: "FINANCE", icon: "solar:wallet-money-bold-duotone", x: 180, y: -80, delay: 0.5 },
-  { id: "ops", label: "OPS", icon: "solar:settings-minimalistic-bold-duotone", x: -160, y: 100, delay: 1 },
-  { id: "data", label: "DATA", icon: "solar:database-bold-duotone", x: 160, y: 90, delay: 1.5 },
+  { id: "crm", label: "CRM", icon: "solar:users-group-rounded-bold-duotone", x: -17.3, y: -22.4, delay: 0 },
+  { id: "finance", label: "FINANCE", icon: "solar:wallet-money-bold-duotone", x: 17.3, y: -18, delay: 0.5 },
+  { id: "ops", label: "OPS", icon: "solar:settings-minimalistic-bold-duotone", x: -15.4, y: 22.4, delay: 1 },
+  { id: "data", label: "DATA", icon: "solar:database-bold-duotone", x: 15.4, y: 20.2, delay: 1.5 },
 ];
 
 export function MARFVisualCore() {
@@ -35,10 +45,16 @@ export function MARFVisualCore() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
+  /* PROPORZIONE DEL RIQUADRO. Era `aspect-video` fino a md: 16:9 su un
+     telefono da 350px vuol dire un riquadro alto 197px, dentro il quale
+     devono stare un esagono da 112px PIU' quattro nodi con etichetta.
+     Non ci stanno, e i nodi finivano addosso al centro. Su schermo
+     stretto il riquadro diventa QUADRATO, che e' lo spazio verticale
+     che serve; da sm in su torna panoramico come prima. */
   return (
-    <div 
+    <div
       id="marf-core-container"
-      className="relative w-full aspect-video md:aspect-21/9 flex items-center justify-center overflow-hidden rounded-[2.5rem] bg-[#030508]/40 border border-white/5 backdrop-blur-xs group/core perspective-[1000px]"
+      className="relative w-full aspect-square sm:aspect-video md:aspect-21/9 flex items-center justify-center overflow-hidden rounded-[2.5rem] bg-[#030508]/40 border border-white/5 backdrop-blur-xs group/core perspective-[1000px]"
     >
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(77,57,235,0.1),transparent_70%)] opacity-50 group-hover/core:opacity-100 transition-opacity duration-1000" />
@@ -156,10 +172,15 @@ export function MARFVisualCore() {
           <motion.div
             key={node.id}
             className="absolute z-20 flex flex-col items-center gap-2"
-            style={{ 
-              left: `calc(50% + ${node.x}px)`, 
-              top: `calc(50% + ${node.y}px)`,
-              transform: 'translate(-50%, -50%) translateZ(30px)'
+            /* Gli scarti sono moltiplicati per --sx/--sy, che valgono 1
+               su desktop e crescono su mobile: la percentuale da sola non
+               basta, perche' l'esagono centrale ha una misura FISSA
+               (112px) e su un riquadro piccolo occupa una quota molto
+               maggiore. Se i nodi non si allargano, ci finiscono sopra. */
+            style={{
+              left: `calc(50% + ${node.x}% * var(--sx, 1))`,
+              top: `calc(50% + ${node.y}% * var(--sy, 1))`,
+              transform: "translate(-50%, -50%) translateZ(30px)",
             }}
           >
             <motion.div 
@@ -169,7 +190,10 @@ export function MARFVisualCore() {
             >
               <Icon icon={node.icon} className="w-5 h-5 md:w-6 md:h-6 text-indigo-400" />
             </motion.div>
-            <span className="text-[10px] md:text-xs font-mono font-bold tracking-[0.3em] text-white/20 uppercase group-hover/core:text-indigo-400/60 transition-colors">
+            {/* whitespace-nowrap: senza, su schermo stretto "FINANCE" andava
+                a capo lettera per lettera. E la spaziatura scende su
+                mobile, dove 0.3em allargava l'etichetta piu' del nodo. */}
+            <span className="whitespace-nowrap text-[10px] md:text-xs font-mono font-bold tracking-[0.14em] md:tracking-[0.3em] text-white/20 uppercase group-hover/core:text-indigo-400/60 transition-colors">
               {node.label}
             </span>
           </motion.div>
@@ -184,6 +208,21 @@ export function MARFVisualCore() {
       <style jsx>{`
         .clip-hex {
           clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        /* Quanto stanno larghi i nodi rispetto al centro. Su desktop il
+           riquadro e' panoramico e l'esagono e' una frazione piccola:
+           gli scarti del disegno originale bastano. Su telefono il
+           riquadro e' quadrato e l'esagono pesa molto di piu', quindi i
+           nodi vanno spinti in fuori o si sovrappongono al centro. */
+        #marf-core-container {
+          --sx: 1;
+          --sy: 1;
+        }
+        @media (max-width: 767px) {
+          #marf-core-container {
+            --sx: 1.5;
+            --sy: 1.35;
+          }
         }
       `}</style>
     </div>

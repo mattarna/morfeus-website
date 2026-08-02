@@ -3,50 +3,71 @@ import { SiteShell } from "@/components/site";
 import { buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 
-import { COPY } from "@/components/forge-ms/copy";
 import "@/components/forge-ms/forge-ms.css";
 import { ForgeMsHero } from "@/components/forge-ms/ForgeMsHero";
+import { ForgeMsProof } from "@/components/forge-ms/ForgeMsProof";
 import { ForgeMsProblema } from "@/components/forge-ms/ForgeMsProblema";
-import { ForgeMsProdotto } from "@/components/forge-ms/ForgeMsProdotto";
-import { ForgeMsPercorso } from "@/components/forge-ms/ForgeMsPercorso";
+import { ForgeMsBelief } from "@/components/forge-ms/ForgeMsBelief";
+import { ForgeMsConfronto } from "@/components/forge-ms/ForgeMsConfronto";
+import { ForgeMsComeFunziona } from "@/components/forge-ms/ForgeMsComeFunziona";
+import { ForgeMsAssets } from "@/components/forge-ms/ForgeMsAssets";
 import { ForgeMsFiltro } from "@/components/forge-ms/ForgeMsFiltro";
-import { ForgeMsProva } from "@/components/forge-ms/ForgeMsProva";
-import { ForgeMsPonte } from "@/components/forge-ms/ForgeMsPonte";
-import { ForgeMsChiusa } from "@/components/forge-ms/ForgeMsChiusa";
+import { ForgeMsRoi } from "@/components/forge-ms/ForgeMsRoi";
+import { ForgeMsPrezzi } from "@/components/forge-ms/ForgeMsPrezzi";
+import { ForgeMsWayOut } from "@/components/forge-ms/ForgeMsWayOut";
+import { ForgeMsContatto } from "@/components/forge-ms/ForgeMsContatto";
+import { ForgeMsFaq } from "@/components/forge-ms/ForgeMsFaq";
 
 /* ============================================================
-   MORF FORGE · Operating Partner AI
+   MORF FORGE · AI Operating Partner
    ------------------------------------------------------------
-   Rifatta il 2026-07-30 con lo stesso metodo del Lab: la pagina non
-   e' piu' un file solo da 866 righe, ma otto componenti in
-   `components/forge-ms/` con una pelle propria (`forge-ms.css`),
-   gemella di `lab-ms.css`.
+   Rifatta il 2026-07-30 con lo stesso metodo del Lab: tredici
+   componenti in `components/forge-ms/` con una pelle propria
+   (`forge-ms.css`), gemella di `lab-ms.css`.
 
-   COPY E STRUTTURA NON CAMBIANO: stesse otto sezioni, stesso ordine,
-   stesso testo, stessi link. Cambia il disegno, allineato al
-   linguaggio 2026 (quadro, readout, quota, stazioni). Il razionale di
-   ogni scelta sta nella testata del componente che la porta.
+   COSA CAMBIA. La pagina era un'isola: fondo #030508 fisso, header e
+   footer suoi, nessuna fascia del design system e la palette scritta a
+   mano in esadecimale (#4D39EB trentadue volte — che NON e' il #533DFC
+   del brand: due viola diversi nella stessa pagina). Ora e' una pagina
+   del sito: SiteShell, fasce ink/carta alternate, token, e la stessa
+   testata e lo stesso piede di tutte le altre.
 
-   Il testo vive in `forge-ms/copy.ts`, spostato li' verbatim: con la
-   pagina spezzata, ogni componente legge la sua fetta invece di
-   ricevere dieci prop.
+   COSA NON CAMBIA. Copy, ordine e destinazioni: ogni componente legge
+   le STESSE chiavi i18n del namespace `Offerta`, quindi il testo resta
+   quello — in italiano e in inglese — senza toccare i file di
+   traduzione. Il razionale di ogni scelta visiva sta nella testata del
+   componente che la porta.
+
+   I VECCHI COMPONENTI in `components/sections/` NON sono stati toccati:
+   li usa anche la home precedente, e modificarli avrebbe rotto altro.
    ============================================================ */
 
 type Props = { params: Promise<{ locale: string }> };
 
+const META = {
+  it: {
+    title: "Morf Forge · AI Operating Partner · Morfeus",
+    desc: "Entriamo nella tua azienda come team operativo: costruiamo sistemi AI che trovano le perdite invisibili, le chiudono e ogni mese misurano il valore recuperato in euro.",
+  },
+  en: {
+    title: "Morf Forge · AI Operating Partner · Morfeus",
+    desc: "We join your company as an operating team: we build AI systems that find the invisible losses, close them, and every month measure the value recovered in euros.",
+  },
+} as const;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isIt = locale === "it";
-  const t = isIt ? COPY.it : COPY.en;
   const safeLocale = isIt ? "it" : "en";
+  const m = isIt ? META.it : META.en;
   return {
-    title: { absolute: t.metaTitle },
-    description: t.metaDesc,
+    title: { absolute: m.title },
+    description: m.desc,
     alternates: buildLocaleAlternates("forge", safeLocale),
     openGraph: {
       images: [`${SITE_URL}/opengraph-image.png`],
-      title: t.metaTitle,
-      description: t.metaDesc,
+      title: m.title,
+      description: m.desc,
       type: "website",
       url: `${SITE_URL}/${safeLocale}/forge`,
       siteName: "Morfeus",
@@ -54,8 +75,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: t.metaTitle,
-      description: t.metaDesc,
+      title: m.title,
+      description: m.desc,
       images: [`${SITE_URL}/opengraph-image.png`],
     },
   };
@@ -64,9 +85,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ForgePage({ params }: Props) {
   const { locale } = await params;
   const isIt = locale === "it";
-  const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
-  const base = `/${safeLocale}`;
+  const m = isIt ? META.it : META.en;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -75,20 +95,18 @@ export default async function ForgePage({ params }: Props) {
         "@type": "WebPage",
         "@id": `${SITE_URL}/${safeLocale}/forge#webpage`,
         url: `${SITE_URL}/${safeLocale}/forge`,
-        name: t.metaTitle,
-        description: t.metaDesc,
+        name: m.title,
+        description: m.desc,
         inLanguage: isIt ? "it-IT" : "en-US",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": ORGANIZATION_ID },
       },
       {
-        /* Il servizio si chiama Morf Forge; MARF e' il sistema che
-           installa, ed e' nominato nella descrizione, non nel nome. */
         "@type": "Service",
         name: "Morf Forge · AI Operating Partner",
         serviceType: "AI Operating Partner",
         provider: { "@id": ORGANIZATION_ID },
-        description: t.metaDesc,
+        description: m.desc,
         areaServed: "IT",
       },
     ],
@@ -102,14 +120,19 @@ export default async function ForgePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <ForgeMsHero t={t} />
-      <ForgeMsProblema t={t} />
-      <ForgeMsProdotto t={t} base={base} isIt={isIt} />
-      <ForgeMsPercorso t={t} isIt={isIt} />
-      <ForgeMsFiltro t={t} />
-      <ForgeMsProva t={t} base={base} />
-      <ForgeMsPonte t={t} isIt={isIt} />
-      <ForgeMsChiusa t={t} />
+      <ForgeMsHero />
+      <ForgeMsProof />
+      <ForgeMsProblema />
+      <ForgeMsBelief />
+      <ForgeMsConfronto />
+      <ForgeMsComeFunziona />
+      <ForgeMsAssets />
+      <ForgeMsFiltro />
+      <ForgeMsRoi />
+      <ForgeMsPrezzi />
+      <ForgeMsWayOut />
+      <ForgeMsContatto />
+      <ForgeMsFaq />
     </SiteShell>
   );
 }
