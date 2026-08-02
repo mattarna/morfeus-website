@@ -13,29 +13,27 @@
    neon: linee nette e quote, come un disegno tecnico.
    =========================================================== */
 
-/* ---------- AURA · alone ambientale che alleggerisce il nero (hero) ----------
+/* ---------- AURA · alone ambientale su OGNI fascia nera ----------
    La forge respira perche' il suo visual centrale (l'esagono MARF) emette
-   luce e alleggerisce il nero attorno. Lo schema del lab e' tutto linee a
-   filo, quindi resta piatto. Qui un alone firma soffuso dietro l'hero da'
-   la stessa aria, senza toccare il disegno: il .quadro e' opaco e ci si
-   appoggia sopra, l'alone lavora solo nel nero intorno. */
-.ms .hero.lab {
+   luce e alleggerisce il nero attorno. Sul lab lo schema e' tutto linee a
+   filo, e il nero resta piatto: qui un alone firma soffuso dietro OGNI
+   fascia inchiostro da' la stessa aria a tutta la pagina, non solo
+   all'hero. E' un ::before a z-index -1: sta sopra la griglia blueprint e
+   sotto il contenuto, quindi non tocca ne' i pannelli (opachi) ne' il testo.
+   Le fasce carta non sono toccate. */
+.ms .band.ink.lab {
   position: relative;
-  overflow: hidden;
 }
-.ms .hero.lab > .wrap {
-  position: relative;
-  z-index: 1;
-}
-.ms .hero.lab > .lab-aura {
+.ms .band.ink.lab::before {
+  content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(58% 46% at 50% 20%, rgba(83, 61, 252, 0.17), transparent 68%),
-    radial-gradient(46% 42% at 85% 6%, rgba(140, 165, 247, 0.1), transparent 70%),
-    radial-gradient(52% 46% at 12% 90%, rgba(83, 61, 252, 0.09), transparent 72%);
+    radial-gradient(56% 44% at 50% 14%, rgba(83, 61, 252, 0.16), transparent 66%),
+    radial-gradient(46% 40% at 86% 4%, rgba(140, 165, 247, 0.1), transparent 70%),
+    radial-gradient(50% 44% at 10% 92%, rgba(83, 61, 252, 0.08), transparent 72%);
 }
 
 /* ---------- QUADRO · l'area di disegno con le quote d'angolo ----------
