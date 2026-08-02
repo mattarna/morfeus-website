@@ -88,6 +88,8 @@ Astrolize non va venduta in anticipo dentro il messaggio di MARF. Compare solo a
 | “Sistema operativo AI”                | utile come descrizione di MARF, troppo generico come categoria Morfeus |
 | “Facciamo AI”                         | non dice quale perdita viene chiusa né quale risultato è atteso        |
 
+> ⚠️ **Aggiornamento 2026-08-02.** La riga «Forge — nome commerciale superato» nella tabella qui sopra è **superata**: con Matt, **Forge (Morf Forge) è il nome client-facing dell'offerta Operating Partner a retainer** (pagina pubblica e indicizzata, ma back-end; l'ingresso resta MARF o LAB). Il resto del vocabolario disciplinato resta valido. Vedi `decisions_log.md` (CLAUDE) 2026-08-02.
+
 ## Decisioni confermate
 
 1. “AI Operating Partner” è l'unica categoria pubblica di Morfeus B2B.

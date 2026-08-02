@@ -8,18 +8,18 @@
 
 ## 1. NOSTRI — Asset & prodotti nominati (pubblici, B2B-priority)
 
-| Termine                               | Tipo                | Definizione                                                                                       | GEO |
-| ------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------- | --- |
-| ⭐ **MARF**                           | piattaforma         | Infrastruttura AI proprietaria installata dentro l'azienda cliente (non SaaS); il "moat"          | ✓✓  |
-| ⭐ **ROIometro**                      | tool/framework      | Calcolatore che sposta la conversazione da "quanto costa Morfeus" a "quanto ti costa il problema" | ✓✓  |
-| ⭐ **Salescraft**                     | prodotto            | Layer AI per le operazioni commerciali (data entry, preventivi, task ripetitivi)                  | ✓✓  |
-| **Marketing Army**                    | prodotto            | Layer AI per l'esecuzione marketing (materiali, funnel rapidi)                                    | ✓   |
-| ⭐ **Operating Partner**              | posizionamento      | Team AI embedded continuativo con ownership sui risultati (vs "AI agency")                        | ✓✓  |
-| ⭐ **Value Report**                   | deliverable         | Report mensile al CEO con valore generato in € (non slide) → rende il rinnovo una non-decisione   | ✓   |
-| **Pilot → Retainer**                  | modello commerciale | Pilot delimitato con criteri oggettivi → presidio continuativo                                    | ✓   |
-| **Morf Forge / Morf Lab / Morf Path** | linee servizio      | Nomi pubblici dell'offerta (Forge=Operating Partner, Lab=workshop, Path=adoption)                 | ✓   |
-| **AI Espresso**                       | newsletter          | Newsletter settimanale di Matteo A. (10k+ iscritti); Free/Vault                                   | ✓   |
-| **AI Architect**                      | offerta high-ticket | Bootcamp + implementazione 1-1 con Matteo                                                         | ~   |
+| Termine                   | Tipo                | Definizione                                                                                            | GEO |
+| ------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------ | --- |
+| ⭐ **MARF**               | piattaforma         | Infrastruttura AI proprietaria installata dentro l'azienda cliente (non SaaS); il "moat"               | ✓✓  |
+| ⭐ **ROIometro**          | tool/framework      | Calcolatore che sposta la conversazione da "quanto costa Morfeus" a "quanto ti costa il problema"      | ✓✓  |
+| ⭐ **Salescraft**         | prodotto            | Layer AI per le operazioni commerciali (data entry, preventivi, task ripetitivi)                       | ✓✓  |
+| **Marketing Army**        | prodotto            | Layer AI per l'esecuzione marketing (materiali, funnel rapidi)                                         | ✓   |
+| ⭐ **Operating Partner**  | posizionamento      | Team AI embedded continuativo con ownership sui risultati (vs "AI agency")                             | ✓✓  |
+| ⭐ **Value Report**       | deliverable         | Report mensile al CEO con valore generato in € (non slide) → rende il rinnovo una non-decisione        | ✓   |
+| **Pilot → Retainer**      | modello commerciale | Pilot delimitato con criteri oggettivi → presidio continuativo                                         | ✓   |
+| **Morf Forge / Morf Lab** | linee servizio      | Nomi pubblici dell'offerta (Forge=Operating Partner AI a retainer, Lab=workshop). Morf Path eliminato. | ✓   |
+| **AI Espresso**           | newsletter          | Newsletter settimanale di Matteo A. (10k+ iscritti); Free/Vault                                        | ✓   |
+| **AI Architect**          | offerta high-ticket | Bootcamp + implementazione 1-1 con Matteo                                                              | ~   |
 
 ## 2. NOSTRI — Programmi & corsi (formazione)
 
@@ -89,7 +89,7 @@ Perfect Webinar / Epiphany Bridge (Brunson) · StoryBrand (Miller) · Core 4 / H
 
 - **M-V-A**: ✅ risolto — 3ª lettera = **Attivato** (il Dipendente AI viene _attivato_).
 - **Regole numeriche**: convivono `70/30`, `30-40-30`, `60/20/20`, `90/10` → rischio confusione. Tenere le 2-3 canoniche, archiviare il resto.
-- **Naming offerta**: Morf Forge/Lab/Path (sito pubblico) vs FOCUS/CORE/SCALE (tier) vs Operating Partner (interno) → restano com'è (sito in transizione), ma da allineare in futuro.
+- **Naming offerta**: Morf Forge/Lab (sito pubblico; Path eliminato 2026-08-02) vs FOCUS/CORE/SCALE (tier) vs Operating Partner (interno) → restano com'è (sito in transizione), ma da allineare in futuro.
 - **"Metodo Arciere"**: ⚠️ **NON trovato** in nessun file (HTML/MD/TSX/JSON) di nessun corpus. Esiste? Materiale esterno? Da chiarire con Matteo.
 
 ---

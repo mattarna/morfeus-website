@@ -13,6 +13,8 @@ Morfeus ha due offerte B2B, non tre:
 
 **Forge non è un prodotto né un nome commerciale.** Se serve, “Operating Partner” descrive il modello con cui Morfeus opera attorno a MARF; non è una terza offerta.
 
+> ⚠️ **Aggiornamento 2026-08-02 — la riga «Forge non è un prodotto né un nome commerciale» è superata.** Con Matt: **Forge (Morf Forge) è il nome client-facing dell'offerta Operating Partner a retainer**, con pagina pubblica e indicizzata sul sito ma back-end (fuori dal menu, non è l'ingresso — si entra da MARF o LAB). Il resto di questo documento resta valido. Vedi `decisions_log.md` (CLAUDE) 2026-08-02.
+
 Astrolize non è un'alternativa commerciale a MARF: è la destinazione per contesti in cui la complessità organizzativa supera il perimetro di Morfeus.
 
 ## MARF

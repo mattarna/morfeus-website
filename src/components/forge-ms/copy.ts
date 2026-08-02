@@ -5,6 +5,12 @@
    e' un rifacimento visivo, non di contenuto. Sta in un file suo
    perche' la pagina ora e' spezzata in componenti, e ognuno legge
    la sua fetta invece di ricevere dieci prop.
+
+   Agg. 2026-08-02: la copy NON e' piu' invariata. Cambi: "Sprint MARF ·
+   30 giorni" -> "Pilot · 30-60 giorni"; le CTA non offrono piu'
+   l'assessment gratuito self-serve ma la call di diagnosi gratuita
+   (l'assessment resta una leva a circolazione controllata, non si
+   sventola sul sito). Vedi decisions_log 2026-08-02.
    ============================================================ */
 
 export const COPY = {
@@ -25,7 +31,7 @@ export const COPY = {
       h1b: ".",
       copy: "Non un team che sviluppa a giornate: un prodotto. MARF si installa dentro la tua azienda in circa 30 giorni e migliora ogni mese. L'AI smette di essere un progetto e diventa infrastruttura che resta.",
       lame: "«Paghi lo sviluppo una volta. Il sistema lo tieni per sempre.»",
-      cta1: "Richiedi l'assessment gratuito",
+      cta1: "Prenota la call di diagnosi",
       cta2: "Cos'è MARF",
       proof: {
         pre: "▸ PROVA · ",
@@ -111,17 +117,17 @@ export const COPY = {
       steps: [
         {
           n: "0",
-          t: "Assessment gratuito",
-          p: "Il License Check: ti diciamo, con un numero concreto, dove stai lasciando valore sul tavolo.",
+          t: "Call di diagnosi gratuita",
+          p: "In una call troviamo, con un numero concreto, dove stai lasciando valore sul tavolo.",
         },
         {
           n: "1",
-          t: "Assessment a pagamento",
-          p: "La diagnosi completa: dove si perde margine, cosa si recupera, con quali priorità.",
+          t: "Assessment",
+          p: "La diagnosi completa dei tuoi processi reali: dove si perde margine, cosa si recupera, con quali priorità.",
         },
         {
           n: "2",
-          t: "Sprint MARF · 30 giorni",
+          t: "Pilot · 30–60 giorni",
           p: "Un primo progetto reale, mai un trial. Tocchi con mano il sistema prima di impegnarti.",
         },
         {
@@ -130,7 +136,7 @@ export const COPY = {
           p: "MARF vive in azienda e migliora ogni mese. Ogni mese un report: valore generato, in euro.",
         },
       ],
-      cta: "Richiedi l'assessment gratuito",
+      cta: "Prenota la call di diagnosi",
       belief: {
         eye: "Perché adesso",
         noTitle: "La convinzione",
@@ -220,8 +226,8 @@ export const COPY = {
       h2a: "Il primo passo è un numero, ed è ",
       h2emph: "gratis",
       h2b: ".",
-      p: "Richiedi il License Check: in poco tempo ti diciamo dove la tua azienda lascia valore sul tavolo. Senza impegno, senza preventivo.",
-      cta1: "Richiedi l'assessment gratuito",
+      p: "Prenota una call di diagnosi: in poco tempo ti diciamo dove la tua azienda lascia valore sul tavolo. Senza impegno, senza preventivo.",
+      cta1: "Prenota la call di diagnosi",
       cta2: "Scrivici",
     },
   },
@@ -236,7 +242,7 @@ export const COPY = {
       h1b: ".",
       copy: "Not a team that develops by the day: a product. MARF installs inside your company in about 30 days and improves every month. AI stops being a project and becomes infrastructure that stays.",
       lame: "«You pay for the build once. The system, you keep for good.»",
-      cta1: "Request the free assessment",
+      cta1: "Book the diagnostic call",
       cta2: "What is MARF",
       proof: {
         pre: "▸ PROOF · ",
@@ -322,17 +328,17 @@ export const COPY = {
       steps: [
         {
           n: "0",
-          t: "Free assessment",
-          p: "The License Check: with a concrete number, we tell you where you're leaving value on the table.",
+          t: "Free diagnostic call",
+          p: "In a call, with a concrete number, we find where you're leaving value on the table.",
         },
         {
           n: "1",
-          t: "Paid assessment",
-          p: "The full diagnosis: where margin leaks, what can be recovered, in what priority.",
+          t: "Assessment",
+          p: "The full diagnosis of your real processes: where margin leaks, what can be recovered, in what priority.",
         },
         {
           n: "2",
-          t: "MARF Sprint · 30 days",
+          t: "Pilot · 30–60 days",
           p: "A first real project, never a trial. You feel the system before you commit.",
         },
         {
@@ -341,7 +347,7 @@ export const COPY = {
           p: "MARF lives in the company and improves monthly. Every month, a report: value generated, in euros.",
         },
       ],
-      cta: "Request the free assessment",
+      cta: "Book the diagnostic call",
       belief: {
         eye: "Why now",
         noTitle: "The belief",
@@ -431,8 +437,8 @@ export const COPY = {
       h2a: "The first step is a number, and it's ",
       h2emph: "free",
       h2b: ".",
-      p: "Request the License Check: in a short time we tell you where your company leaves value on the table. No commitment, no quote.",
-      cta1: "Request the free assessment",
+      p: "Book a diagnostic call: in a short time we tell you where your company leaves value on the table. No commitment, no quote.",
+      cta1: "Book the diagnostic call",
       cta2: "Write to us",
     },
   },

@@ -107,8 +107,7 @@ const ROLES = [
 
 const SERVICES = [
   { id: "lab", en: "Morf Lab – AI Workshops & Training", it: "Morf Lab – Workshop e formazione AI" },
-  { id: "path", en: "Morf Path – AI Adoption & Governance", it: "Morf Path – AI Adoption & Governance" },
-  { id: "forge", en: "Morf Forge – Rapid Development & MVP", it: "Morf Forge – Sviluppo rapido & MVP" },
+  { id: "forge", en: "Morf Forge – AI Operating Partner", it: "Morf Forge – Operating Partner AI" },
   { id: "unsure", en: "Not sure, I need guidance", it: "Non sono sicuro, ho bisogno di orientamento" },
 ];
 
