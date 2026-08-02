@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it" data-lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.6 · Proof over promise · Operatore-Fondatore</title>
+<script>try{if((localStorage.getItem('sp-theme')||'light')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
+<link rel="stylesheet" href="../_engine/fonts.css">
+<link rel="stylesheet" href="../_engine/skin.css">
+<link rel="stylesheet" href="../_engine/stile-core.css">
+<style>
+  :root{ --atto:var(--accent); } html.dark{ --atto:var(--accent); }
+  /* scala figure: viewBox largo 700 = un'unita' vale un pixel nella colonna di lettura */
+  .figure svg text{font-family:var(--sans)}
+  .lbl{font-size:17px;font-weight:700}
+  .sub{font-size:14px}
+  .micro{font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+  .mf-legal{max-width:920px;margin:28px auto 0;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:11px;line-height:1.55;color:var(--ink-3);background:var(--bg-2)}
+  .mf-legal p{margin:0 0 8px}.mf-legal p:last-child{margin:0}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand">
+    <span class="mk" role="img" aria-label="Operatore-Fondatore"></span>
+    <span class="sep"></span>
+    <span class="atto-badge" data-i="badge">Lente · capire</span>
+  </div>
+  <div class="tools">
+    <div class="lang" role="group" aria-label="Lingua">
+      <button data-l="it" class="on" onclick="setLang('it')">IT</button>
+      <button data-l="en" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="pdf-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      <span data-i="pdf">PDF</span>
+    </button>
+    <button class="ic-btn" onclick="toggleTheme()" aria-label="Tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="eyebrow rv" data-i="eyebrow">Atto 1 · Sopravvivere · M1 · lezione 6 di 8</div>
+  <h1 class="rv" data-i-html="h1">Chi ha le prove <span class="hl">smette di dover promettere</span>.</h1>
+  <p class="tesi rv" data-i="tesi">Chi comincia impila garanzie, bonus e acrobazie, e vende poco. Chi ha centinaia di prove vende con un'offerta semplice. La prova è la parte che il compratore guarda per prima, e spesso l'unica che guarda davvero.</p>
+
+  <div class="prosa rv" style="margin-top:22px">
+    <p data-i-html="p1">Metti a confronto due offerte per la stessa cosa. La prima è un capolavoro di costruzione: quattro bonus, due garanzie, un rimborso doppio, una scadenza che incalza. La seconda dice una cosa sola e la accompagna con, mettiamo, novanta persone che raccontano com'è andata a loro. Vince la seconda, quasi sempre, e il distacco cresce man mano che sale il prezzo.</p>
+    <p data-i-html="p2">La ragione è semplice. Le acrobazie sull'offerta raccontano quanto sei bravo a costruire offerte. La prova racconta cosa succede dopo aver comprato, ed è esattamente la cosa che il compratore sta cercando di indovinare mentre ti legge.</p>
+  </div>
+
+  <div class="sh rv"><span class="no">01</span><span data-i="sh1">Le quattro qualità di una prova che funziona</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p3"><strong>Recente.</strong> Una testimonianza di tre anni fa parla di un'azienda che forse non esiste più, con persone che se ne sono andate e un metodo che è cambiato. Il lettore lo sa, e sconta la prova senza dirtelo.</p>
+    <p data-i-html="p4"><strong>Visiva.</strong> Quaranta secondi di video in cui la persona parla valgono più di un paragrafo scritto benissimo, perché il paragrafo potresti averlo scritto tu. Vale la scala: video, poi immagine, poi parole.</p>
+    <p data-i-html="p5"><strong>In volume.</strong> Una prova convince, cento dimostrano una regolarità. Il muro di recensioni funziona proprio perché nessuno le legge tutte: la quantità dice che il caso mostrato non è stato scelto con cura fra mille delusioni.</p>
+    <p data-i-html="p6"><strong>Che cattura il dolore di partenza.</strong> La prova più forte comincia da dov'era la persona prima, con la frase che userebbe un amico. Chi legge si riconosce nel punto di partenza, e da lì il resto del lavoro lo fa da solo.</p>
+  </div>
+
+  <div class="compare rv">
+    <div class="compare-col old"><h4 data-i="c1t">Prova debole</h4><p data-i="c1p">Vecchia, di un periodo che il lettore non riconosce. Scritta da te e approvata da loro. Una sola, quindi potrebbe essere un caso fortunato. Comincia dal risultato, senza dire da dove si partiva.</p></div>
+    <div class="compare-col new"><h4 data-i="c2t">Prova forte</h4><p data-i="c2p">Recente, con una data verificabile. Mostrata con la voce e la faccia di chi l'ha vissuta. In quantità, così la regolarità si vede a colpo d'occhio. Comincia dal dolore, e chi legge si riconosce prima ancora di arrivare al numero.</p></div>
+  </div>
+
+  <div class="sh rv"><span class="no">02</span><span data-i="sh2">Due momenti opposti nella stessa relazione</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p7">Vendi al picco del bisogno e raccogli la testimonianza al picco della soddisfazione. Detta con l'analogia della bistecca: la seconda bistecca la vendi prima che il cliente abbia finito la prima, cioè quando il desiderio è al massimo; la testimonianza gliela chiedi dopo, quando è sazio e contento.</p>
+    <p data-i-html="p8">Il contrario è la norma, e non per cattiva strategia: per abitudine amministrativa. La richiesta di testimonianza parte a fine mese, a fine contratto, quando la soddisfazione è già rientrata nella normalità e il ricordo si è appiattito. Quel picco dura pochi giorni e non si ripresenta.</p>
+  </div>
+
+  <div class="figure rv">
+    <svg viewBox="0 0 700 280" role="img" data-i-aria="aria1" aria-label="La linea del tempo del cliente con i due momenti opposti segnati agli estremi: la vendita al picco del bisogno e la testimonianza al picco della soddisfazione">
+      <text class="micro" x="16" y="18" fill="var(--ink-3)" data-i="fh">LA LINEA DEL TEMPO DEL CLIENTE</text>
+
+      <rect x="30" y="44" width="216" height="56" rx="8" fill="var(--accent-soft)" stroke="var(--accent-line)" stroke-width="2"/>
+      <text class="micro" x="46" y="68" fill="var(--accent)" data-i="fk1">QUI VENDI</text>
+      <text class="sub" x="46" y="90" fill="var(--accent)" style="font-weight:700" data-i="fa1">al picco del bisogno</text>
+
+      <rect x="440" y="44" width="230" height="56" rx="8" fill="var(--good-soft)" stroke="var(--good)" stroke-width="2"/>
+      <text class="micro" x="456" y="68" fill="var(--good)" data-i="fk2">QUI CHIEDI LA PROVA</text>
+      <text class="sub" x="456" y="90" fill="var(--good)" style="font-weight:700" data-i="fa2">al picco della soddisfazione</text>
+
+      <path d="M104 100 L 92 150" stroke="var(--accent-line)" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+      <path d="M576 100 L 618 150" stroke="var(--good)" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+
+      <line x1="40" y1="160" x2="662" y2="160" stroke="var(--ink-3)" stroke-width="2"/>
+      <line x1="230" y1="152" x2="230" y2="168" stroke="var(--ink-3)" stroke-width="2"/>
+      <line x1="370" y1="152" x2="370" y2="168" stroke="var(--ink-3)" stroke-width="2"/>
+      <line x1="510" y1="152" x2="510" y2="168" stroke="var(--ink-3)" stroke-width="2"/>
+      <circle cx="92" cy="160" r="9" fill="var(--accent)"/>
+      <circle cx="618" cy="160" r="9" fill="var(--good)"/>
+
+      <text class="sub" x="92" y="190" text-anchor="middle" fill="var(--ink)" data-i="ft1">il problema brucia</text>
+      <text class="sub" x="230" y="190" text-anchor="middle" fill="var(--ink-2)" data-i="ft2">acquisto</text>
+      <text class="sub" x="370" y="190" text-anchor="middle" fill="var(--ink-2)" data-i="ft3">consegna</text>
+      <text class="sub" x="510" y="190" text-anchor="middle" fill="var(--ink-2)" data-i="ft4">primo risultato</text>
+      <text class="sub" x="618" y="190" text-anchor="middle" fill="var(--ink)" data-i="ft5">risultato pieno</text>
+
+      <rect x="230" y="206" width="280" height="28" rx="6" fill="var(--steel-soft)" stroke="var(--steel-line)" stroke-width="2"/>
+      <text class="micro" x="370" y="224" text-anchor="middle" fill="var(--steel)" data-i="fz">la zona in cui quasi tutti la chiedono</text>
+      <text class="sub" x="370" y="256" text-anchor="middle" fill="var(--ink-3)" data-i="fz2">e ottengono cortesia</text>
+    </svg>
+    <div class="cap" data-i="cap1">I due momenti stanno agli estremi opposti della stessa relazione. La zona grigia nel mezzo è comoda da gestire per te e povera per lui: nel mezzo il cliente sta ancora lavorando, e non ha niente da raccontare.</div>
+  </div>
+
+  <div class="sh rv"><span class="no">03</span><span data-i="sh3">Come si legge una prova, e perché va ordinata</span></div>
+
+  <div class="prosa rv">
+    <p data-i-html="p9">Il compratore non calcola la media delle recensioni: cerca quella di qualcuno che gli assomiglia. Se trova tre casi con il suo stesso problema e la sua stessa dimensione, il rischio percepito crolla, e tutte le altre non le apre nemmeno. Per questo le prove vanno ordinate per caso d'uso e mostrate a chi ha quel caso, invece di essere impilate in fondo alla pagina.</p>
+    <p data-i-html="p10">La buona notizia arriva alla fine, ed è quella che si trascura più spesso: <strong>hai molta più prova di quanta credi</strong>. I messaggi di ringraziamento, gli screenshot delle conversazioni, i numeri di prima e di dopo, la frase detta a fine progetto, la persona che ti ha presentato a un'altra. È materiale già prodotto e mai raccolto, e raccoglierlo costa un pomeriggio.</p>
+  </div>
+
+  <div class="note rv"><p data-i-html="note1"><strong>Storico, non promessa.</strong> La prova va presentata per quello che è: questo è ciò che è successo a loro, non so se succederà a te, e se sei disposto a scommetterci eccolo qui. Dichiarare i fatti e dire la verità tiene la prova solida anche quando un caso va male, perché non hai mai promesso che sarebbe successo a tutti.</p></div>
+
+  <div class="stats rv two">
+    <div class="stat"><div class="sv">4</div><div class="sl" data-i="st1l">Le qualità che rendono una prova convincente</div><div class="sd" data-i="st1d">Recente, visiva, in volume, e capace di catturare il dolore di partenza. Una prova che ne ha tre su quattro batte qualunque bonus.</div><div class="src" data-i="st1s">Alex Hormozi · 13 Years of No BS Business Advice</div></div>
+    <div class="stat"><div class="sv">1.000</div><div class="sl" data-i="st2l">Le testimonianze che battono l'offerta acrobatica</div><div class="sd" data-i="st2d">Chi ne ha raccolte a migliaia vende senza garanzie speciali. Chi comincia impila garanzie proprio perché non ha ancora niente da mostrare.</div><div class="src" data-i="st2s">Alex Hormozi · 13 Years of No BS Business Advice</div></div>
+  </div>
+
+  <div class="lab rv" data-sort="s1"></div>
+
+  <div class="key rv"><p data-i="key1">La prova si raccoglie quando è calda e si mostra a chi ci si riconosce. Tutto il resto dell'offerta viene dopo.</p></div>
+
+  <div class="xref rv">
+    <span class="x-tag" data-i="xt">Collegamento · prossima lezione</span>
+    <p data-i-html="xp">Offerta, prezzo e prova stanno in piedi. Resta la domanda che tiene in piedi te quando i primi due anni si fanno duri: <strong>1.7 · Trovare il purpose</strong> mostra i tre passi per arrivarci, la regola del tre per cento e il confine oltre il quale il purpose diventa una scusa.</p>
+  </div>
+
+  <div class="closing rv">
+    <div class="ct" data-i-html="closet">Rispondi di getto, senza costruire la risposta giusta: quante prove hai già in casa <span class="a-w">senza averle mai raccolte</span>?</div>
+    <div class="cs" data-i="closes">E subito dietro, quella scomoda: dell'ultimo cliente contento, in che giorno preciso avresti dovuto chiedergli di raccontarlo?</div>
+  </div>
+
+  <nav class="nav rv">
+    <a href="33c024ca1890a2e8.html"><span class="nc" data-i="navp">Precedente</span><span class="nt" data-i="navpt">1.5 · Il prezzo dei primi clienti</span></a>
+    <a class="next" href="74e362369d96153a.html"><span class="nc" data-i="navn">Prossima</span><span class="nt" data-i="navnt">1.7 · Trovare il purpose</span></a>
+  </nav>
+
+  <div class="foot" data-i-html="foot">Operatore-Fondatore · Atto 1 · Sopravvivere · costruito sullo <span class="mono">Spiegatore Standard</span></div>
+  <div class="mf-legal rv">
+    <p>&copy; Matteo Arnaboldi. Tutti i diritti riservati. Materiale didattico concesso in licenza d'uso personale. Ne sono vietati la riproduzione, la copia, la distribuzione, la condivisione e la pubblicazione, totale o parziale, con qualsiasi mezzo. Ogni violazione sar&agrave; perseguita a norma di legge (L. 633/1941 sul diritto d'autore).</p>
+    <p>&copy; Matteo Arnaboldi. All rights reserved. Educational material licensed for personal use only. Reproduction, copying, distribution, sharing or publication, in whole or in part, by any means, is strictly prohibited. Violations will be prosecuted under applicable copyright law.</p>
+  </div>
+</div>
+
+<script>
+window.PAGE={id:'of-1-6'};
+window.DICT={
+  it:{
+    badge:"Lente · capire",
+    pdf:"PDF",
+    eyebrow:"Atto 1 · Sopravvivere · M1 · lezione 6 di 8",
+    h1:"Chi ha le prove <span class=\"hl\">smette di dover promettere</span>.",
+    tesi:"Chi comincia impila garanzie, bonus e acrobazie, e vende poco. Chi ha centinaia di prove vende con un'offerta semplice. La prova è la parte che il compratore guarda per prima, e spesso l'unica che guarda davvero.",
+    p1:"Metti a confronto due offerte per la stessa cosa. La prima è un capolavoro di costruzione: quattro bonus, due garanzie, un rimborso doppio, una scadenza che incalza. La seconda dice una cosa sola e la accompagna con, mettiamo, novanta persone che raccontano com'è andata a loro. Vince la seconda, quasi sempre, e il distacco cresce man mano che sale il prezzo.",
+    p2:"La ragione è semplice. Le acrobazie sull'offerta raccontano quanto sei bravo a costruire offerte. La prova racconta cosa succede dopo aver comprato, ed è esattamente la cosa che il compratore sta cercando di indovinare mentre ti legge.",
+    sh1:"Le quattro qualità di una prova che funziona",
+    p3:"<strong>Recente.</strong> Una testimonianza di tre anni fa parla di un'azienda che forse non esiste più, con persone che se ne sono andate e un metodo che è cambiato. Il lettore lo sa, e sconta la prova senza dirtelo.",
+    p4:"<strong>Visiva.</strong> Quaranta secondi di video in cui la persona parla valgono più di un paragrafo scritto benissimo, perché il paragrafo potresti averlo scritto tu. Vale la scala: video, poi immagine, poi parole.",
+    p5:"<strong>In volume.</strong> Una prova convince, cento dimostrano una regolarità. Il muro di recensioni funziona proprio perché nessuno le legge tutte: la quantità dice che il caso mostrato non è stato scelto con cura fra mille delusioni.",
+    p6:"<strong>Che cattura il dolore di partenza.</strong> La prova più forte comincia da dov'era la persona prima, con la frase che userebbe un amico. Chi legge si riconosce nel punto di partenza, e da lì il resto del lavoro lo fa da solo.",
+    c1t:"Prova debole",
+    c1p:"Vecchia, di un periodo che il lettore non riconosce. Scritta da te e approvata da loro. Una sola, quindi potrebbe essere un caso fortunato. Comincia dal risultato, senza dire da dove si partiva.",
+    c2t:"Prova forte",
+    c2p:"Recente, con una data verificabile. Mostrata con la voce e la faccia di chi l'ha vissuta. In quantità, così la regolarità si vede a colpo d'occhio. Comincia dal dolore, e chi legge si riconosce prima ancora di arrivare al numero.",
+    sh2:"Due momenti opposti nella stessa relazione",
+    p7:"Vendi al picco del bisogno e raccogli la testimonianza al picco della soddisfazione. Detta con l'analogia della bistecca: la seconda bistecca la vendi prima che il cliente abbia finito la prima, cioè quando il desiderio è al massimo; la testimonianza gliela chiedi dopo, quando è sazio e contento.",
+    p8:"Il contrario è la norma, e non per cattiva strategia: per abitudine amministrativa. La richiesta di testimonianza parte a fine mese, a fine contratto, quando la soddisfazione è già rientrata nella normalità e il ricordo si è appiattito. Quel picco dura pochi giorni e non si ripresenta.",
+    aria1:"La linea del tempo del cliente con i due momenti opposti segnati agli estremi: la vendita al picco del bisogno e la testimonianza al picco della soddisfazione",
+    fh:"LA LINEA DEL TEMPO DEL CLIENTE",
+    fk1:"QUI VENDI",
+    fa1:"al picco del bisogno",
+    fk2:"QUI CHIEDI LA PROVA",
+    fa2:"al picco della soddisfazione",
+    ft1:"il problema brucia",
+    ft2:"acquisto",
+    ft3:"consegna",
+    ft4:"primo risultato",
+    ft5:"risultato pieno",
+    fz:"la zona in cui quasi tutti la chiedono",
+    fz2:"e ottengono cortesia",
+    cap1:"I due momenti stanno agli estremi opposti della stessa relazione. La zona grigia nel mezzo è comoda da gestire per te e povera per lui: nel mezzo il cliente sta ancora lavorando, e non ha niente da raccontare.",
+    sh3:"Come si legge una prova, e perché va ordinata",
+    p9:"Il compratore non calcola la media delle recensioni: cerca quella di qualcuno che gli assomiglia. Se trova tre casi con il suo stesso problema e la sua stessa dimensione, il rischio percepito crolla, e tutte le altre non le apre nemmeno. Per questo le prove vanno ordinate per caso d'uso e mostrate a chi ha quel caso, invece di essere impilate in fondo alla pagina.",
+    p10:"La buona notizia arriva alla fine, ed è quella che si trascura più spesso: <strong>hai molta più prova di quanta credi</strong>. I messaggi di ringraziamento, gli screenshot delle conversazioni, i numeri di prima e di dopo, la frase detta a fine progetto, la persona che ti ha presentato a un'altra. È materiale già prodotto e mai raccolto, e raccoglierlo costa un pomeriggio.",
+    note1:"<strong>Storico, non promessa.</strong> La prova va presentata per quello che è: questo è ciò che è successo a loro, non so se succederà a te, e se sei disposto a scommetterci eccolo qui. Dichiarare i fatti e dire la verità tiene la prova solida anche quando un caso va male, perché non hai mai promesso che sarebbe successo a tutti.",
+    st1l:"Le qualità che rendono una prova convincente",
+    st1d:"Recente, visiva, in volume, e capace di catturare il dolore di partenza. Una prova che ne ha tre su quattro batte qualunque bonus.",
+    st1s:"Alex Hormozi · 13 Years of No BS Business Advice",
+    st2l:"Le testimonianze che battono l'offerta acrobatica",
+    st2d:"Chi ne ha raccolte a migliaia vende senza garanzie speciali. Chi comincia impila garanzie proprio perché non ha ancora niente da mostrare.",
+    st2s:"Alex Hormozi · 13 Years of No BS Business Advice",
+    key1:"La prova si raccoglie quando è calda e si mostra a chi ci si riconosce. Tutto il resto dell'offerta viene dopo.",
+    xt:"Collegamento · prossima lezione",
+    xp:"Offerta, prezzo e prova stanno in piedi. Resta la domanda che tiene in piedi te quando i primi due anni si fanno duri: <strong>1.7 · Trovare il purpose</strong> mostra i tre passi per arrivarci, la regola del tre per cento e il confine oltre il quale il purpose diventa una scusa.",
+    closet:"Rispondi di getto, senza costruire la risposta giusta: quante prove hai già in casa <span class=\"a-w\">senza averle mai raccolte</span>?",
+    closes:"E subito dietro, quella scomoda: dell'ultimo cliente contento, in che giorno preciso avresti dovuto chiedergli di raccontarlo?",
+    navp:"Precedente",
+    navpt:"1.5 · Il prezzo dei primi clienti",
+    navn:"Prossima",
+    navnt:"1.7 · Trovare il purpose",
+    foot:"Operatore-Fondatore · Atto 1 · Sopravvivere · costruito sullo <span class=\"mono\">Spiegatore Standard</span>"
+  },
+  en:{
+    badge:"Lens · understand",
+    pdf:"PDF",
+    eyebrow:"Act 1 · Survive · M1 · lesson 6 of 8",
+    h1:"People with proof <span class=\"hl\">stop having to promise</span>.",
+    tesi:"Beginners pile up guarantees, bonuses and acrobatics, and sell little. People with hundreds of proofs sell with a plain offer. Proof is the part buyers look at first, and often the only part they really look at.",
+    p1:"Put two offers for the same thing side by side. The first is a masterpiece of construction: four bonuses, two guarantees, a double refund, a deadline pressing down. The second says one thing and brings, say, ninety people telling how it went for them. The second wins, almost always, and the gap widens as the price goes up.",
+    p2:"The reason is simple. Acrobatics on the offer tell people how good you are at building offers. Proof tells them what happens after buying, which is exactly what the buyer is trying to guess while reading you.",
+    sh1:"The four qualities of proof that works",
+    p3:"<strong>Recent.</strong> A testimonial from three years ago talks about a company that may no longer exist, with people who have left and a method that has changed. The reader knows it, and discounts the proof without telling you.",
+    p4:"<strong>Visual.</strong> Forty seconds of video with the person speaking are worth more than a beautifully written paragraph, because you could have written the paragraph yourself. The ladder holds: video, then image, then words.",
+    p5:"<strong>In volume.</strong> One proof convinces, a hundred demonstrate a regularity. The wall of reviews works precisely because nobody reads them all: the quantity says the case on show was not carefully picked out of a thousand disappointments.",
+    p6:"<strong>Capturing the starting pain.</strong> The strongest proof begins where the person was before, in the words they would use with a friend. The reader recognises themselves in the starting point, and from there does the rest of the work alone.",
+    c1t:"Weak proof",
+    c1p:"Old, from a period the reader does not recognise. Written by you and approved by them. Just one, so it could be a lucky case. It starts from the result, without saying where things started.",
+    c2t:"Strong proof",
+    c2p:"Recent, with a date that can be checked. Shown with the voice and the face of whoever lived it. In quantity, so the regularity is visible at a glance. It starts from the pain, and the reader recognises themselves before reaching any number.",
+    sh2:"Two opposite moments in the same relationship",
+    p7:"You sell at the peak of need and collect the testimonial at the peak of satisfaction. Put with the steak analogy: you sell the second steak before the customer has finished the first, when desire is at its highest; you ask for the testimonial afterwards, when they are full and happy.",
+    p8:"The opposite is the norm, and not out of bad strategy: out of administrative habit. The testimonial request goes out at the end of the month, at the end of the contract, when satisfaction has already settled back into normality and the memory has flattened. That peak lasts a few days and does not come back.",
+    aria1:"The customer timeline with the two opposite moments marked at the ends: the sale at the peak of need and the testimonial at the peak of satisfaction",
+    fh:"THE CUSTOMER TIMELINE",
+    fk1:"SELL HERE",
+    fa1:"at the peak of need",
+    fk2:"ASK FOR PROOF HERE",
+    fa2:"at the peak of satisfaction",
+    ft1:"the problem burns",
+    ft2:"purchase",
+    ft3:"delivery",
+    ft4:"first result",
+    ft5:"full result",
+    fz:"the zone where almost everyone asks",
+    fz2:"and receives politeness",
+    cap1:"The two moments sit at opposite ends of the same relationship. The grey zone in the middle is convenient for you and poor for them: in the middle the customer is still working, and has nothing to tell yet.",
+    sh3:"How proof is read, and why it has to be sorted",
+    p9:"The buyer does not compute the average of the reviews: they look for the one written by someone like them. If they find three cases with their same problem and their same size, perceived risk collapses, and they never even open the rest. That is why proof has to be sorted by use case and shown to the people with that case, instead of being piled up at the bottom of the page.",
+    p10:"The good news comes last, and it is the one most often overlooked: <strong>you have far more proof than you think</strong>. The thank you messages, the screenshots of conversations, the numbers before and after, the sentence said at the end of a project, the person who introduced you to another. It is material already produced and never collected, and collecting it costs one afternoon.",
+    note1:"<strong>Historic, not a promise.</strong> Proof should be presented for what it is: this is what happened to them, I do not know whether it will happen to you, and if you are willing to bet on it, here it is. Stating facts and telling the truth keeps the proof solid even when one case goes badly, because you never promised it would happen to everyone.",
+    st1l:"The qualities that make proof convincing",
+    st1d:"Recent, visual, in volume, and able to capture the starting pain. Proof with three out of four beats any bonus.",
+    st1s:"Alex Hormozi · 13 Years of No BS Business Advice",
+    st2l:"The testimonials that beat the acrobatic offer",
+    st2d:"People who have collected them by the thousand sell with no special guarantees. Beginners pile up guarantees precisely because they have nothing to show yet.",
+    st2s:"Alex Hormozi · 13 Years of No BS Business Advice",
+    key1:"Proof is collected while it is warm and shown to the people who recognise themselves in it. The rest of the offer comes afterwards.",
+    xt:"Link · next lesson",
+    xp:"Offer, price and proof are standing. What is left is the question that keeps you standing when the first two years get hard: <strong>1.7 · Finding your purpose</strong> shows the three steps to get there, the three per cent rule and the boundary beyond which purpose becomes an excuse.",
+    closet:"Answer off the top of your head, without building the right answer: how much proof do you already have at home <span class=\"a-w\">and have never collected</span>?",
+    closes:"And right behind it, the uncomfortable one: for your last happy customer, on which exact day should you have asked them to tell the story?",
+    navp:"Previous",
+    navpt:"1.5 · The price for your first customers",
+    navn:"Next",
+    navnt:"1.7 · Finding your purpose",
+    foot:"Operator-Founder · Act 1 · Survive · built on the <span class=\"mono\">Spiegatore Standard</span>"
+  }
+};
+window.LAB={
+  it:{
+    sort:{ s1:{ k:"Smista la prova", q:"Sei pezzi di prova per la stessa offerta. Per ognuno: sposta davvero chi sta decidendo, oppure occupa spazio e basta?",
+      labels:["Forte","Debole"], scoreLabel:"Punteggio",
+      win:"· Hai il criterio: recente, visiva, in volume, e capace di catturare il dolore di partenza.",
+      lose:"· Rileggi le quattro qualità. Non conta quanto la prova è entusiasta: conta quante delle quattro qualità porta con sé.",
+      items:[
+        {t:"Un video di quaranta secondi girato la settimana scorsa, in cui il cliente racconta com'era la sua settimana prima.", a:true,
+         fb:"Forte. Tre qualità su quattro in quaranta secondi: recente, visiva, e con il dolore di partenza dentro. La quarta, il volume, la costruisci mettendone in fila altri trenta uguali."},
+        {t:"Una testimonianza entusiasta di tre anni fa: esperienza fantastica, super consigliato, persona squisita.", a:false,
+         fb:"È la trappola di questa serie. L'entusiasmo la fa sembrare la prova migliore che hai, e invece ne fallisce due su quattro: non è recente, e non dice da dove partiva quella persona. Senza il punto di partenza chi legge non ha modo di riconoscersi, quindi l'entusiasmo resta il tuo."},
+        {t:"Lo screenshot della conversazione di ieri, in cui un cliente scrive che è la prima settimana da mesi in cui non ha lavorato di sabato.", a:true,
+         fb:"Forte, ed è del tipo che quasi tutti buttano. È recente, si vede invece di essere riassunta, e comincia dal dolore: il sabato perso è il punto di partenza detto con le parole di chi lo viveva."},
+        {t:"Il logo di un'azienda molto conosciuta, messo in una fila di loghi in fondo alla pagina.", a:false,
+         fb:"Dice che qualcuno di importante ti ha scelto, e si ferma lì. Alza la credibilità e lascia intatto il rischio percepito, che è la cosa che sta davvero bloccando la decisione: cosa succede dopo che ho pagato."},
+        {t:"Quaranta schede uguali, una per cliente, con il numero di partenza, il numero di arrivo e la data, ordinate per tipo di problema.", a:true,
+         fb:"Forte per la qualità che quasi nessuno costruisce, cioè il volume: una prova convince, quaranta dimostrano una regolarità. L'ordinamento per tipo di problema fa il resto, perché chi legge cerca il caso che gli somiglia e non la media."},
+        {t:"Una testimonianza scritta da te e approvata dal cliente via email, pubblicata senza il suo nome per non esporlo.", a:false,
+         fb:"Debole in tre modi insieme: la voce non è la sua, non c'è niente da vedere, e senza un nome non c'è nessuno in cui riconoscersi. Resta una tua promessa firmata da un anonimo, cioè il contrario di storico invece che promessa."}
+      ]}}
+  },
+  en:{
+    sort:{ s1:{ k:"Sort the proof", q:"Six pieces of proof for the same offer. For each one: does it actually move the person deciding, or does it just take up space?",
+      labels:["Strong","Weak"], scoreLabel:"Score",
+      win:"· You have the criterion: recent, visual, in volume, and able to capture the starting pain.",
+      lose:"· Reread the four qualities. It is not about how enthusiastic the proof is: it is about how many of the four qualities it carries.",
+      items:[
+        {t:"A forty second video filmed last week, where the customer describes what their week used to look like.", a:true,
+         fb:"Strong. Three qualities out of four in forty seconds: recent, visual, and with the starting pain inside. The fourth, volume, you build by lining up thirty more just like it."},
+        {t:"An enthusiastic testimonial from three years ago: fantastic experience, highly recommended, lovely people.", a:false,
+         fb:"This is the trap in this set. The enthusiasm makes it look like the best proof you own, and instead it fails two of the four: it is not recent, and it does not say where that person started. Without the starting point the reader has no way to recognise themselves, so the enthusiasm stays yours."},
+        {t:"A screenshot of yesterday's conversation, where a customer writes that it is the first week in months they have not worked on a Saturday.", a:true,
+         fb:"Strong, and of the kind almost everybody throws away. It is recent, it is seen rather than summarised, and it starts from the pain: the lost Saturday is the starting point said in the words of the person who lived it."},
+        {t:"The logo of a well known company, placed in a row of logos at the bottom of the page.", a:false,
+         fb:"It says somebody important picked you, and stops there. It raises credibility and leaves perceived risk untouched, which is what is actually blocking the decision: what happens after I have paid."},
+        {t:"Forty identical cards, one per customer, with the starting number, the ending number and the date, sorted by type of problem.", a:true,
+         fb:"Strong on the quality almost nobody builds, which is volume: one proof convinces, forty demonstrate a regularity. Sorting by type of problem does the rest, because the reader looks for the case that resembles theirs, not for the average."},
+        {t:"A testimonial written by you and approved by the customer over email, published without their name so as not to expose them.", a:false,
+         fb:"Weak in three ways at once: the voice is not theirs, there is nothing to see, and with no name there is nobody to recognise yourself in. It stays your own promise signed by an anonymous person, which is the opposite of track record rather than promise."}
+      ]}}
+  }
+};
+</script>
+<script src="../_engine/motore.js"></script>
+</body>
+</html>
