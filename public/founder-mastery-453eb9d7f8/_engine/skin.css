@@ -1,0 +1,101 @@
+/* =========================================================================
+   SKIN · OPERATORE-FONDATORE  ·  implementa il CONTRATTO.md
+   Percorso: 05_FORMAZIONE/OPERATORE_FONDATORE (leadership, interno Matt + soci).
+   Concetto: LA PLANCIA. Non la tavola tecnica di marketing-mastery (carta e marker),
+   ma il banco di comando di chi guida: superfici fredde e pulite, un solo colore
+   che tiene la barra, e il calore riservato allo strumento.
+
+   MAPPATURA SEMANTICA (contratto, step 2):
+   - --accent = PETROL/TEAL. E' l'hue dell'inchiostro di questa skin (#10222A) sollevato:
+     freddo, lucido, "la barra tenuta ferma". Verificato nel doppio senso richiesto dal
+     contratto (regola 6): legge come TESTO su carta chiara (4.8:1) e regge TESTO BIANCO
+     quando riempie badge e bottoni (5.4:1). E' l'errore che il giallo fece altrove.
+   - --agent = RAME/AMBRA. Il cugino caldo che sta all'opposto del petrol sulla ruota:
+     lo strumento (AI, agenti, automazioni) si distingue a colpo d'occhio da chi comanda.
+     Scelta non decorativa: in questo percorso la distinzione cervello/strumento E' il
+     contenuto (lente rombo), quindi deve essere visibile prima di essere letta.
+   - --steel = grigio freddo: il vecchio modello, l'inerte, l'organico che si somma.
+   - good/bad = verde/rosso di giudizio, invariati nel significato.
+
+   DIFFERENZIAZIONE dalle skin sorelle: morfeus = viola su carta calda ·
+   marketing-mastery = indaco su carta con marker giallo · operatore-fondatore = petrol
+   su superficie fredda con gesto ambra. Stesso motore, stessa struttura, colore diverso:
+   i percorsi si riconoscono dall'accento.
+
+   FONT: nessun override. Si eredita il core (Inter + JetBrains Mono, EMBEDDATI in
+   fonts.css). Nessun @import da CDN: il contratto lo vieta (regola 7) e le lezioni
+   devono aprirsi offline.
+   ========================================================================= */
+
+:root{
+  /* superfici LIGHT · banco pulito, neutro freddo (si accorda col petrol, non col caldo) */
+  --bg:#F2F4F4; --bg-2:#E9ECEC; --bg-3:#DFE3E3; --card:#FBFCFC;
+  /* --ink-3 scurito dopo misura nel browser: a #7A8A91 didascalie e fonti stavano
+     a 3,2:1 (sotto AA). A #5D6E76 salgono a 4,8:1 su --bg e 5,2:1 su --card,
+     restando comunque il terzo livello di grigio. La superficie chiara e fredda
+     perdona meno di una carta calda: qui il muto va tenuto piu' basso. */
+  --ink:#10222A; --ink-2:#44575F; --ink-3:#5D6E76;
+  --line:rgba(16,34,42,.12); --line-2:rgba(16,34,42,.20);
+  /* griglia blueprint: il petrol tenue, il reticolo del banco */
+  --grid:rgba(14,116,144,.06);
+
+  /* ruoli semantici · tripla declinazione */
+  --accent:#0E7490; --accent-soft:#DCEFF4; --accent-line:#A5D3E0;
+  --agent:#B0611A;  --agent-soft:#F7ECE0;  --agent-line:#E6C3A0;
+  --good:#1E8E5A; --good-soft:#E1F1E9; --bad:#CE3B31; --bad-soft:#F9E7E5;
+  --steel:#7C8B91; --steel-soft:#E9EDEE; --steel-line:#C6CFD2;
+
+  /* materiale · gradiente misurato (badge, fire-btn, filo dei numeri, icona note) */
+  --grad:linear-gradient(135deg,#0A5A70 0%,#0E7490 55%,#1594B4 100%);
+  --grad-agent:linear-gradient(135deg,#8E4A12 0%,#B0611A 60%,#D2853C 100%);
+  --sh:0 1px 2px rgba(16,34,42,.05),0 6px 20px rgba(16,34,42,.05);
+  --sh-l:0 10px 40px -14px rgba(16,34,42,.22);
+  --deep-1:#E4F0F4; --deep-2:#EFF5F7;
+
+  /* geometria: angoli netti, da strumento */
+  --r:8px; --r-l:12px; --r-xl:16px;
+
+  /* il gesto-firma, isolato in un token proprio (vedi in coda) */
+  --of-mark:#F2C078;
+}
+
+html.dark{
+  /* superfici NOTTE · plancia illuminata dal basso */
+  --bg:#0D1F27; --bg-2:#142C36; --bg-3:#1C3A45; --card:#122932;
+  --ink:#EFF4F4; --ink-2:#B4C6CC; --ink-3:#7E939B;
+  --line:rgba(122,205,224,.13); --line-2:rgba(122,205,224,.24);
+  --grid:rgba(122,205,224,.07);
+
+  --accent:#4CC5E0; --accent-soft:#0E323D; --accent-line:#2A6B7E;
+  --agent:#E0A45A;  --agent-soft:#33240F;  --agent-line:#7E5A24;
+  --good:#4CC486; --good-soft:#123020; --bad:#F0736F; --bad-soft:#3A1613;
+  --steel:#7A8D94; --steel-soft:#1B2E36; --steel-line:#33505A;
+
+  --grad:linear-gradient(135deg,#1E8FAD 0%,#38B4D0 55%,#5AD2E8 100%);
+  --grad-agent:linear-gradient(135deg,#C2842E 0%,#E0A45A 60%,#EFC286 100%);
+  --sh:0 1px 2px rgba(0,0,0,.45); --sh-l:0 20px 60px -20px rgba(0,0,0,.7);
+  --deep-1:#081821; --deep-2:#0F242D;
+}
+
+/* ---------- GESTI-FIRMA (oltre i token, ammesso dal contratto) ---------- */
+
+/* 1. L'evidenziatura AMBRA: il segno di chi rilegge il proprio documento.
+      Caldo contro il petrol freddo, e deliberatamente diverso dal giallo-limone
+      delle skin sorelle. Ink scuro sopra: leggibile in light E dark. */
+.hl{
+  background:linear-gradient(180deg,transparent 12%,var(--of-mark) 12%,var(--of-mark) 88%,transparent 88%);
+  color:#10222A; padding:0 .1em;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+}
+html.dark .hl{ color:#10222A; }
+
+/* 2. Il filo dei numeri = accento pieno (non ambra): i dati sono materia di chi guida.
+      Prefisso html per vincere sul core, che definisce .stat::before dopo la skin. */
+html .stat::before{ background:var(--grad); }
+
+/* 3. Titoli: tracking stretto, da strumento di precisione. Inter regge bene la stretta. */
+h1{ letter-spacing:-.028em; }
+.tesi{ letter-spacing:-.012em; }
+
+/* 4. Eyebrow su scuro: accento, non ambra. Su fondo notte il petrol chiaro è il segnale. */
+html.dark .eyebrow{ color:var(--accent); }
