@@ -35,6 +35,10 @@ export function LabMsHero() {
 
   return (
     <section className="band ink hero lab" id="hero">
+      {/* alone ambientale: alleggerisce il nero dell'hero come sulla forge,
+          dove la luce la dava il visual centrale. Sta dietro, non tocca il
+          disegno (il .quadro e' opaco e ci si appoggia sopra). */}
+      <div className="lab-aura" aria-hidden="true" />
       <div className="wrap text-center">
         <div className="eye justify-center">{t("eyebrow")}</div>
 
