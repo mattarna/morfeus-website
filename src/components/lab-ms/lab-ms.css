@@ -46,6 +46,154 @@
   border-right: 1px solid;
 }
 
+/* ---------- SCHEMA PLANO · disegno + testi, sovrapposti ----------
+   Il disegno (curve, nodi, nucleo) resta un <svg> che scala col viewBox.
+   Le etichette invece sono HTML, impilate sopra in un layer assoluto:
+   un <text> DENTRO l'svg scala con lui, e sotto ai ~450px di larghezza
+   reale il corpo crolla a 5-6px, illeggibile su mobile. L'HTML ha un
+   font-size fisso in px veri, quindi resta leggibile a qualsiasi
+   larghezza. Le % di posizione replicano le stesse coordinate del
+   viewBox (x/800, y/392), cosi' il testo segue il disegno sotto. */
+.ms .lab .schema-plano {
+  position: relative;
+}
+.ms .lab .schema-testi {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ms .lab .nodo-testo {
+  position: absolute;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+.ms .lab .nodo-testo.sx {
+  transform: translate(-100%, -50%);
+  text-align: right;
+}
+.ms .lab .nodo-testo.dx {
+  text-align: left;
+}
+.ms .lab .nodo-testo .et {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #e4e7f0;
+}
+.ms .lab .nodo-testo .sg {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: #7e8091;
+}
+.ms .lab .nucleo-testo {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: #7e8091;
+  white-space: nowrap;
+}
+
+/* ---------- SCHEMA MOBILE · la lista verticale che converge ----------
+   Sotto i 600px lo schema 2D largo non entra: quattro etichette laterali
+   in ~330px o si tagliano o crollano a 5px. Qui i quattro innesti sono
+   una colonna su una rotaia, e la rotaia finisce nel nucleo: stesso
+   "4 -> 1", corpo fisso e leggibile. */
+.ms .lab .schema-mobile {
+  display: none;
+}
+@media (max-width: 600px) {
+  .ms .lab .schema-plano {
+    display: none;
+  }
+  .ms .lab .schema-mobile {
+    display: block;
+    padding: 22px 24px 6px;
+  }
+}
+.ms .lab .im-lista {
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 32px;
+}
+.ms .lab .im-lista::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 16px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(140, 165, 247, 0.3);
+}
+.ms .lab .im-nodo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+}
+.ms .lab .im-box {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  background: #111113;
+  border: 1px solid #8ca5f7;
+}
+.ms .lab .im-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5px;
+  height: 5px;
+  background:
+    linear-gradient(#8ca5f7, #8ca5f7) center / 5px 1px no-repeat,
+    linear-gradient(#8ca5f7, #8ca5f7) center / 1px 5px no-repeat;
+}
+.ms .lab .im-et {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  color: #e4e7f0;
+}
+.ms .lab .im-sg {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #7e8091;
+}
+.ms .lab .im-nucleo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px 0 0 32px;
+  border-top: 1px solid var(--surf-bd);
+}
+.ms .lab .im-nucleo .im-box,
+.ms .lab .im-nucleo .im-dia {
+  position: absolute;
+  left: 1px;
+  top: calc(50% + 8px);
+  transform: translateY(-50%) rotate(45deg);
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--lilla);
+}
+.ms .lab .im-nucleo .im-et {
+  color: var(--lilla);
+}
+
 /* ---------- READOUT · la striscia di stato in mono ----------
    Una riga di strumento: a sinistra cosa sta misurando, a destra lo
    stato. Ricorre in cima ai pannelli e da' il registro "macchina". */

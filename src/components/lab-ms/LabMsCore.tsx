@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /* ============================================================
    SCHEMA D'INNESTO, il disegno animato dell'hero.
@@ -48,7 +48,25 @@ export function LabMsCore() {
   const rotateX = useTransform(sy, [-260, 260], [5, -5]);
   const rotateY = useTransform(sx, [-460, 460], [-5, 5]);
 
+  /* L'inclinazione 3D reagisce al mouse: su touch "mousemove" non parte
+     mai, quindi il tilt non fa niente. In compenso `perspective` +
+     `transform-style: preserve-3d` su un <svg> e' un accoppiamento con
+     bug di clipping/compositing noti su WebKit/iOS. Niente mouse reale
+     -> niente gabbia 3D: si spegne alla radice, non si tara l'overflow.
+     Doppio cancello: pointer fine E schermo abbastanza largo, cosi'
+     anche un desktop con finestra stretta resta sul disegno piatto. */
+  const [haTilt, setHaTilt] = useState(false);
+
   useEffect(() => {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 860px)");
+    const setDa = () => setHaTilt(fine.matches);
+    setDa();
+    fine.addEventListener("change", setDa);
+    return () => fine.removeEventListener("change", setDa);
+  }, []);
+
+  useEffect(() => {
+    if (!haTilt) return;
     const q = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (q.matches) return;
 
@@ -60,26 +78,17 @@ export function LabMsCore() {
     };
     window.addEventListener("mousemove", suMovimento, { passive: true });
     return () => window.removeEventListener("mousemove", suMovimento);
-  }, [px, py]);
+  }, [haTilt, px, py]);
 
-  return (
-    <div className="quadro" id="lab-schema">
-      <div className="readout">
-        <span>Schema · innesto</span>
-        <span className="on">
-          <i />
-          Rilevamento attivo
-        </span>
-      </div>
-
-      <div style={{ perspective: "1200px" }}>
-        <motion.svg
-          viewBox="0 0 800 392"
-          className="block w-full"
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-          role="img"
-          aria-label="Schema: quattro innesti, Champions, Compliance, Processes, Autonomy, collegati a un nucleo comune"
-        >
+  const svgStyle = haTilt ? { rotateX, rotateY, transformStyle: "preserve-3d" as const } : undefined;
+  const svg = (
+    <motion.svg
+      viewBox="0 0 800 392"
+      className="block w-full"
+      style={svgStyle}
+      role="img"
+      aria-label="Schema: quattro innesti, Champions, Compliance, Processes, Autonomy, collegati a un nucleo comune"
+    >
           {/* reticolo di fondo del disegno */}
           <defs>
             <pattern id="lab-reticolo" width="36" height="36" patternUnits="userSpaceOnUse">
@@ -148,76 +157,90 @@ export function LabMsCore() {
             <line x1={CX} y1={CY - 60} x2={CX} y2={CY - 52} />
             <line x1={CX} y1={CY + 52} x2={CX} y2={CY + 60} />
           </g>
-          <text
-            x={CX}
-            y={CY + 78}
-            textAnchor="middle"
-            fill="#7E8091"
-            style={{ fontFamily: "var(--font-mono)", fontSize: 11.5, letterSpacing: "0.18em" }}
-          >
-            NUCLEO
-          </text>
 
-          {/* i quattro nodi quotati */}
+          {/* i quattro nodi quotati (solo grafica: crocetta e riquadro.
+              Le etichette NON sono qui dentro, vedi <div className="schema-testi">
+              sotto: un <text> in un <svg> scala col viewBox, e sotto gli ~450px
+              di larghezza reale il corpo crolla a 5-6px, illeggibile. */}
+          {NODI.map((n) => (
+            <g key={n.id}>
+              <rect
+                x={n.x - 9}
+                y={n.y - 9}
+                width="18"
+                height="18"
+                fill="#111113"
+                stroke="#8CA5F7"
+                strokeWidth="1"
+              />
+              <line x1={n.x - 4} y1={n.y} x2={n.x + 4} y2={n.y} stroke="#8CA5F7" strokeWidth="1" />
+              <line x1={n.x} y1={n.y - 4} x2={n.x} y2={n.y + 4} stroke="#8CA5F7" strokeWidth="1" />
+            </g>
+          ))}
+    </motion.svg>
+  );
+
+  return (
+    <div className="quadro" id="lab-schema">
+      <div className="readout">
+        <span>Schema · innesto</span>
+        <span className="on">
+          <i />
+          Rilevamento attivo
+        </span>
+      </div>
+
+      <div className="schema-plano">
+        {haTilt ? <div style={{ perspective: "1200px" }}>{svg}</div> : svg}
+
+        {/* le etichette, in HTML sopra il disegno: dimensione fissa in px
+            reali, non legata alla scala del viewBox. Posizionate in % sulle
+            stesse coordinate dei nodi (x/800, y/392), cosi' seguono il
+            disegno ma restano sempre leggibili. Solo da tablet in su: sotto
+            i 600px lo schema largo non ci sta e si passa alla lista. */}
+        <div className="schema-testi" aria-hidden="true">
           {NODI.map((n) => {
             const aSinistra = n.x < CX;
             return (
-              <g key={n.id}>
-                <rect
-                  x={n.x - 9}
-                  y={n.y - 9}
-                  width="18"
-                  height="18"
-                  fill="#111113"
-                  stroke="#8CA5F7"
-                  strokeWidth="1"
-                />
-                <line
-                  x1={n.x - 4}
-                  y1={n.y}
-                  x2={n.x + 4}
-                  y2={n.y}
-                  stroke="#8CA5F7"
-                  strokeWidth="1"
-                />
-                <line
-                  x1={n.x}
-                  y1={n.y - 4}
-                  x2={n.x}
-                  y2={n.y + 4}
-                  stroke="#8CA5F7"
-                  strokeWidth="1"
-                />
-                <text
-                  x={aSinistra ? n.x - 16 : n.x + 16}
-                  y={n.y - 14}
-                  textAnchor={aSinistra ? "end" : "start"}
-                  fill="#E4E7F0"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 12.5,
-                    letterSpacing: "0.14em",
-                  }}
-                >
-                  {n.label}
-                </text>
-                <text
-                  x={aSinistra ? n.x - 16 : n.x + 16}
-                  y={n.y + 4}
-                  textAnchor={aSinistra ? "end" : "start"}
-                  fill="#7E8091"
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 11,
-                    letterSpacing: "0.18em",
-                  }}
-                >
-                  {n.sigla}
-                </text>
-              </g>
+              <div
+                key={n.id}
+                className={`nodo-testo ${aSinistra ? "sx" : "dx"}`}
+                style={{ left: `${(n.x / 800) * 100}%`, top: `${(n.y / 392) * 100}%` }}
+              >
+                <div className="et">{n.label}</div>
+                <div className="sg">{n.sigla}</div>
+              </div>
             );
           })}
-        </motion.svg>
+          <div
+            className="nucleo-testo"
+            style={{ left: `${(CX / 800) * 100}%`, top: `${((CY + 78) / 392) * 100}%` }}
+          >
+            NUCLEO
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE · sotto i 600px lo schema 2D largo non e' leggibile: quattro
+          nodi con etichetta laterale non entrano in ~330px senza rimpicciolire
+          il testo a 5px. Qui diventa una lista verticale: i quattro innesti
+          incolonnati su una rotaia che converge nel nucleo. Stesso significato
+          (4 -> 1), corpo fisso e leggibile, nessuno scaling. */}
+      <div className="schema-mobile" aria-hidden="true">
+        <ul className="im-lista">
+          {NODI.map((n) => (
+            <li className="im-nodo" key={n.id}>
+              <span className="im-box" />
+              <span className="im-et">{n.label}</span>
+              <span className="im-sg">{n.sigla}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="im-nucleo">
+          <span className="im-dia" />
+          <span className="im-et">NUCLEO</span>
+          <span className="im-sg">·</span>
+        </div>
       </div>
 
       <div className="px-[18px] pb-[14px]">
