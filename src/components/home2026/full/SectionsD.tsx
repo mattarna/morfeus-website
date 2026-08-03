@@ -167,7 +167,7 @@ export function FooterPanel({ active }: { active: boolean }) {
           <a href="https://x.com" target="_blank" rel="noopener noreferrer">
             X (Twitter)
           </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.youtube.com/@MorfeusHub" target="_blank" rel="noopener noreferrer">
             Youtube
           </a>
         </div>

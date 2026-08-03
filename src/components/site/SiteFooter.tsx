@@ -21,7 +21,7 @@ const GRID_BG = {
 const SOCIAL = [
   ["LinkedIn", "https://www.linkedin.com/company/morfeus-hub-ai/"],
   ["X (Twitter)", "https://x.com"],
-  ["Youtube", "https://youtube.com"],
+  ["Youtube", "https://www.youtube.com/@MorfeusHub"],
 ] as const;
 
 const COPY = {

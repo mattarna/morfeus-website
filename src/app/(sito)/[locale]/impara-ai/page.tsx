@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site";
 import { ImparaPercorsi } from "@/components/site/ImparaPercorsi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
-import { PERCORSI, TUTTE_LE_LEZIONI } from "@/lib/impara-percorsi";
+import { getPercorsi, getTutteLeLezioni } from "@/lib/impara-percorsi";
 
 /* ============================================================
    IMPARA L'AI. Pagina unica, i quattro percorsi dentro.
@@ -107,6 +107,11 @@ export default async function ImparaAiPage({ params }: Props) {
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
   const base = `/${safeLocale}`;
+  /* Le lezioni seguono la lingua della pagina: prima ne esisteva una
+     lista sola, in italiano, e /impara-ai (inglese) mostrava hero e CTA
+     tradotti sopra diciotto domande in italiano. */
+  const percorsi = getPercorsi(safeLocale);
+  const lezioni = getTutteLeLezioni(safeLocale);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -120,7 +125,7 @@ export default async function ImparaAiPage({ params }: Props) {
         inLanguage: isIt ? "it-IT" : "en-US",
         isPartOf: { "@id": WEBSITE_ID },
         publisher: { "@id": ORGANIZATION_ID },
-        mainEntity: TUTTE_LE_LEZIONI.map((l) => ({
+        mainEntity: lezioni.map((l) => ({
           "@type": "Question",
           name: l.q,
           url: `${SITE_URL}${localePrefix(safeLocale)}/impara-ai#${l.anchor}`,
@@ -155,7 +160,7 @@ export default async function ImparaAiPage({ params }: Props) {
       <nav className="ia-nav" aria-label={t.nav}>
         <div className="row">
           <span className="k">{t.nav}</span>
-          {PERCORSI.map((p) => (
+          {percorsi.map((p) => (
             <a key={p.id} href={`#${p.id}`}>
               {p.titolo}
             </a>
@@ -166,7 +171,7 @@ export default async function ImparaAiPage({ params }: Props) {
       {/* 03 · I QUATTRO PERCORSI · carta, una fascia sola */}
       <section className="band carta" aria-label={t.elenco}>
         <div className="wrap">
-          <ImparaPercorsi percorsi={PERCORSI} locale={safeLocale} />
+          <ImparaPercorsi percorsi={percorsi} locale={safeLocale} />
         </div>
       </section>
 

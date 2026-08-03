@@ -1,5 +1,5 @@
 /* Percorsi e lezioni di "Impara l'AI", estratti dal prototipo
-   design-v2/impara-ai.html. 4 percorsi, 18 lezioni.
+   design-v2/impara-ai.html. 4 percorsi, 18 lezioni, in due lingue.
 
    Stanno in un file loro: la stessa lista alimenta il JSON-LD (FAQPage) e
    dentro la pagina renderebbe illeggibile tutto il resto.
@@ -8,7 +8,24 @@
    impara-ai puntava a slug italiani (#agente-ai, #ai-generativa,
    #allucinazioni) mentre il glossario usa quelli inglesi (#ai-agents,
    #generative-ai, #hallucination): i tre link non avrebbero portato da
-   nessuna parte. */
+   nessuna parte.
+
+   INGLESE (2026-08-03). La pagina esisteva gia' in due lingue, ma solo
+   l'involucro (hero, CTA, metadati) era tradotto: le 18 lezioni, cioe' il
+   contenuto vero, arrivavano da una lista sola in italiano. Su
+   /impara-ai (senza prefisso, quindi inglese) si leggeva un titolo
+   inglese e sotto diciotto domande in italiano. Ora le liste sono due e
+   la pagina sceglie in base al locale.
+
+   Restano identici fra le due lingue, apposta:
+   - gli `id`: sono le chiavi del progresso in localStorage, e chi ha
+     aperto una lezione in italiano non deve ritrovarla "da leggere" in
+     inglese;
+   - gli `anchor`: l'URL della pagina inglese e' gia' /impara-ai (slug
+     italiano), e ancore diverse per lingua romperebbero i link esistenti;
+   - gli `href` dei rimandi: glossario e insights esistono in una sola
+     versione, servita sotto entrambi i prefissi. Cambia solo l'etichetta
+     del link. */
 
 export type ImparaLezione = {
   /** chiave stabile: e' quella salvata nel progresso locale */
@@ -35,7 +52,7 @@ export type ImparaPercorso = {
   lezioni: ImparaLezione[];
 };
 
-export const PERCORSI: ImparaPercorso[] = [
+export const PERCORSI_IT: ImparaPercorso[] = [
   {
     id: "basi",
     eye: "Percorso 01",
@@ -211,4 +228,186 @@ export const PERCORSI: ImparaPercorso[] = [
   },
 ];
 
-export const TUTTE_LE_LEZIONI: ImparaLezione[] = PERCORSI.flatMap((p) => p.lezioni);
+export const PERCORSI_EN: ImparaPercorso[] = [
+  {
+    id: "basi",
+    eye: "Path 01",
+    titolo: "AI fundamentals",
+    intro: "What is actually behind the words you hear every day. For anyone starting from zero who wants to understand before using.",
+    livello: "Beginner",
+    durata: "5 lessons · ~8 min",
+    lezioni: [
+      {
+        id: "b1",
+        anchor: "cos-e-intelligenza-artificiale",
+        n: "01",
+        q: "What is artificial intelligence, in plain words?",
+        a: "It is software that learns from data instead of following hand-written rules. You show it examples and it learns to recognise patterns and produce answers. It does not \"understand\" the way we do: it recognises and predicts, but it does so well enough to be useful.",
+      },
+      {
+        id: "b2",
+        anchor: "cos-e-ai-generativa",
+        n: "02",
+        q: "What is generative AI and what makes it different?",
+        a: "It is the AI that creates new content: text, images, code. While \"classic\" AI classifies or predicts, generative AI produces. It is the technology behind ChatGPT and Claude.",
+        gloss: { href: "/glossario#generative-ai", label: "See in the glossary" },
+      },
+      {
+        id: "b3",
+        anchor: "cos-e-un-llm",
+        n: "03",
+        q: "What is an LLM and how does it \"reason\"?",
+        a: "A Large Language Model is trained on enormous amounts of text. It does not think: it predicts, word after word, which one is most likely. It looks like reasoning because it does it with very high precision.",
+        gloss: { href: "/glossario#llm", label: "See in the glossary" },
+      },
+      {
+        id: "b4",
+        anchor: "cosa-sono-i-prompt",
+        n: "04",
+        q: "What are prompts and why do they matter?",
+        a: "The prompt is the instruction you give the AI. It is not a question, it is a delegation: the clearer and better framed it is, the better the result. Writing good prompts is the first practical skill to build.",
+      },
+      {
+        id: "b5",
+        anchor: "allucinazioni-fidarsi",
+        n: "05",
+        q: "What can you trust? The hallucination problem",
+        a: "AI can produce false answers with great confidence: these are called hallucinations. It is not a rare defect, it is a behaviour you need to know about. That is why reliable data and human review remain essential.",
+        gloss: { href: "/glossario#hallucination", label: "See in the glossary" },
+      },
+    ],
+  },
+  {
+    id: "lavoro",
+    eye: "Path 02",
+    titolo: "Using AI at work",
+    intro: "From theory to practice: how AI really enters a company's processes. For anyone who wants to become operational.",
+    livello: "Beginner",
+    durata: "5 lessons · ~10 min",
+    lezioni: [
+      {
+        id: "l1",
+        anchor: "da-dove-si-parte-ai-azienda",
+        n: "01",
+        q: "Where do you start with AI in a company?",
+        a: "Not from the tools, from the problems. You look at where time is lost, where mistakes cost money, where data does not flow: that is where AI pays off. Starting from \"which tool do I buy\" is the fastest way to waste budget.",
+      },
+      {
+        id: "l2",
+        anchor: "cos-e-un-agente-ai",
+        n: "02",
+        q: "What is an AI agent, and how is it different from a chatbot?",
+        a: "A chatbot answers. An AI agent acts: it has a goal, uses tools and completes a task (preparing a quote, updating the CRM). It is the jump from \"it talks\" to \"it does\".",
+        gloss: { href: "/glossario#ai-agents", label: "See in the glossary" },
+      },
+      {
+        id: "l3",
+        anchor: "cosa-automatizzare-oggi",
+        n: "03",
+        q: "What can actually be automated today?",
+        a: "Repetitive, rule-based work: data entry, first drafts, document summaries, routing. Complex decisions stay human, but AI prepares them and speeds them up.",
+      },
+      {
+        id: "l4",
+        anchor: "come-tenere-dati-al-sicuro",
+        n: "04",
+        q: "How do you keep data safe?",
+        a: "By choosing where the data lives and who accesses it. Embedded solutions, which work inside the company infrastructure, keep control in-house instead of moving it outside.",
+      },
+      {
+        id: "l5",
+        anchor: "cos-e-ai-champion",
+        n: "05",
+        q: "What is an \"AI Champion\" and why do you need one?",
+        a: "It is one person per department who becomes the internal AI reference: they experiment, work out what works and spread it. Without one, AI stays an isolated experiment; with one, it becomes a company capability.",
+        gloss: { href: "/insights/competenze-ai-azienda-ai-champion", label: "Go deeper" },
+      },
+    ],
+  },
+  {
+    id: "costi",
+    eye: "Path 03",
+    titolo: "AI, cost and ROI",
+    intro: "The questions asked by whoever has to decide and put the money in. No promises, just criteria.",
+    livello: "For decision makers",
+    durata: "4 lessons · ~8 min",
+    lezioni: [
+      {
+        id: "r1",
+        anchor: "quanto-costa-integrare-ai",
+        n: "01",
+        q: "How much does it cost to bring AI into a company?",
+        a: "It depends on the problem, not on a price list. A sensible cost is judged against what the problem costs you today: if a process loses X per month, the investment is measured against that loss.",
+      },
+      {
+        id: "r2",
+        anchor: "come-misurare-roi-ai",
+        n: "02",
+        q: "How do you measure the ROI of AI?",
+        a: "By defining objective value criteria up front and checking them over time. ROI is not \"how many hours of work\", it is \"how much value generated in euros\", measured month by month.",
+        gloss: { href: "/insights/come-misurare-il-roi-dell-ai", label: "Go deeper" },
+      },
+      {
+        id: "r3",
+        anchor: "dove-azienda-perde-valore",
+        n: "03",
+        q: "Where does a company lose value without noticing?",
+        a: "In its processes: mistakes that multiply, time spent on repetitive tasks, fragmented data. These are Value Leaks, invisible losses that erode your margin while you grow.",
+        gloss: { href: "/insights/value-leak", label: "Read the article" },
+      },
+      {
+        id: "r4",
+        anchor: "ai-tagliare-posti-lavoro",
+        n: "04",
+        q: "Does AI mean cutting jobs?",
+        a: "No, not necessarily. The most sensible use removes the waste and gives hours back to work that creates value: people do less repetitive work and more of the work that counts.",
+      },
+    ],
+  },
+  {
+    id: "pmi",
+    eye: "Path 04",
+    titolo: "AI for small and medium businesses",
+    intro: "You run a small or medium business and you wonder whether AI is for you. Concrete answers, no hype.",
+    livello: "SMBs",
+    durata: "4 lessons · ~7 min",
+    lezioni: [
+      {
+        id: "p1",
+        anchor: "ai-serve-a-una-pmi",
+        n: "01",
+        q: "Is AI really useful for a small business?",
+        a: "Yes, but not for the sake of \"doing AI\". It is useful when it solves a concrete problem: fewer mistakes, faster quoting, time freed up. A small business has less room for waste than a large one, so what you recover weighs more.",
+      },
+      {
+        id: "p2",
+        anchor: "quali-processi-attaccare-primi",
+        n: "02",
+        q: "Which processes should you tackle first?",
+        a: "The high-volume, highly repetitive ones where a mistake costs: quotes, data entry, customer support, reporting. You start where the loss is large and measurable.",
+      },
+      {
+        id: "p3",
+        anchor: "saas-o-sistema-su-misura",
+        n: "03",
+        q: "SaaS or a tailored system: which one?",
+        a: "SaaS is fast but identical for everyone and lives outside. An embedded system works on your data and improves over time, but it needs a partner. The choice depends on how strategic that process is for you.",
+      },
+      {
+        id: "p4",
+        anchor: "come-partire-senza-team-tecnico",
+        n: "04",
+        q: "How do you start without a technical team?",
+        a: "With a small perimeter and a partner who installs and runs it, while one internal person grows into the reference point. You do not need to hire engineers to begin.",
+      },
+    ],
+  },
+];
+
+export function getPercorsi(locale: "it" | "en"): ImparaPercorso[] {
+  return locale === "en" ? PERCORSI_EN : PERCORSI_IT;
+}
+
+export function getTutteLeLezioni(locale: "it" | "en"): ImparaLezione[] {
+  return getPercorsi(locale).flatMap((p) => p.lezioni);
+}

@@ -105,7 +105,7 @@ export function HomeFooter({ forceActive = false }: { forceActive?: boolean }) {
           <div className="flex flex-col gap-2 md:gap-3 items-start">
             <a href="https://www.linkedin.com/company/morfeus-hub-ai/" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors text-[17px] font-light">LinkedIn</a>
             <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors text-[17px] font-light">X (Twitter)</a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors text-[17px] font-light">Youtube</a>
+            <a href="https://www.youtube.com/@MorfeusHub" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors text-[17px] font-light">Youtube</a>
           </div>
         </div>
 
