@@ -33,6 +33,21 @@ export function Documento({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        {/* Preconnessioni per lo sfondo animato (UnicornStudio). Lo script
+            arriva da jsDelivr, la scena da un'origine AWS: aprire in
+            anticipo la connessione a jsDelivr toglie un giro di handshake
+            quando lo sfondo si carica. Sull'origine AWS solo dns-prefetch,
+            non preconnect: e' un sottodominio con hash d'infrastruttura che
+            non controlliamo (puo' cambiare lato UnicornStudio), quindi ci
+            fermiamo alla risoluzione DNS, l'unico costo sempre sicuro.
+            jsDelivr senza crossOrigin: lo script si scarica in no-cors, e un
+            preconnect con crossOrigin diverso aprirebbe una seconda
+            connessione a vuoto. */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link
+          rel="dns-prefetch"
+          href="https://sl-11a463aaedf44600a99367660fd6fa70.ecs.us-east-1.on.aws"
+        />
         <meta
           name="facebook-domain-verification"
           content="241durpovws57gda4slstym71fhjnf"
