@@ -154,18 +154,23 @@ export default function proxy(request: NextRequest) {
     return response;
   }
 
-  // Founder Mastery: stesso pattern del Corso Claude. Slug hashato non
-  // indicizzato, hub statico servito da /public. Le lezioni sotto /lz/*.html
-  // hanno il punto nel path e sono gia` escluse dal matcher.
-  if (
-    pathname === "/founder-mastery-453eb9d7f8" ||
-    pathname === "/founder-mastery-453eb9d7f8/"
-  ) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/founder-mastery-453eb9d7f8/index.html";
-    const response = NextResponse.rewrite(url);
-    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
-    return response;
+  // Percorsi formativi: hub statici in /public con slug hashato. Il matcher
+  // esclude i path con estensione (le lezioni .html sono gia` servite come
+  // statici), ma l'URL "pulito" della cartella hub cadrebbe qui e finirebbe
+  // 404. Rewrite esplicito su index.html + noindex.
+  const HUB_STATICI: readonly string[] = [
+    "founder-mastery-453eb9d7f8",
+    "formazione-morfeus-bf0efbde6e",
+    "marketing-mastery-f254dcab0c",
+  ];
+  for (const slug of HUB_STATICI) {
+    if (pathname === `/${slug}` || pathname === `/${slug}/`) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${slug}/index.html`;
+      const response = NextResponse.rewrite(url);
+      response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+      return response;
+    }
   }
 
   // Destinazione interna del rewrite dei funnel: mai indicizzabile in accesso
