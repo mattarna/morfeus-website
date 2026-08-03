@@ -72,9 +72,39 @@ function hostRichiesta(request: NextRequest): string {
   return raw.split(":")[0].toLowerCase();
 }
 
+/* ============================================================
+   Formazione: gate a codice.
+   Il cookie mf_formazione contiene direttamente il valore atteso
+   (env FORMAZIONE_CODICE). Cambiando la env var, tutti i cookie
+   esistenti si invalidano da soli.
+   ============================================================ */
+const NOME_COOKIE_FORMAZIONE = "mf_formazione";
+const RE_FORMAZIONE = /^\/(it|en)\/formazione(?:\/|$)/;
+const RE_FORMAZIONE_ACCEDI = /^\/(it|en)\/formazione\/accedi(?:\/|$)/;
+
+function localeFormazione(pathname: string): "it" | "en" {
+  return pathname.startsWith("/en/") ? "en" : "it";
+}
+
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const host = hostRichiesta(request);
+
+  // Gate /formazione: qualsiasi path sotto /{locale}/formazione, ECCETTO
+  // la pagina di accesso stessa, richiede il cookie con il codice.
+  if (RE_FORMAZIONE.test(pathname) && !RE_FORMAZIONE_ACCEDI.test(pathname)) {
+    const atteso = process.env.FORMAZIONE_CODICE ?? "";
+    const cookie = request.cookies.get(NOME_COOKIE_FORMAZIONE)?.value ?? "";
+    const ok = atteso.length > 0 && cookie === atteso;
+    if (!ok) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${localeFormazione(pathname)}/formazione/accedi`;
+      url.search = "";
+      const res = NextResponse.redirect(url, 307);
+      res.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+      return res;
+    }
+  }
 
   if (host === HOST_PLAYGROUND) {
     // gia' dentro: lascia passare, o si riscrive all'infinito
