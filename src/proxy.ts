@@ -86,9 +86,48 @@ function localeFormazione(pathname: string): "it" | "en" {
   return pathname.startsWith("/en/") ? "en" : "it";
 }
 
+/* ============================================================
+   LE PAGINE CHE ESISTONO SOLO IN ITALIANO
+   ------------------------------------------------------------
+   I termini contrattuali dei corsi e l'area formazione non si
+   traducono: l'offerta e' venduta in Italia, in italiano, e un
+   testo legale tradotto "per completezza" e' un testo legale che
+   dice una cosa diversa dall'originale in un contenzioso.
+
+   Vivono pero' sotto [locale], quindi Next le costruisce anche in
+   inglese, e agli indirizzi senza prefisso (che sono gli indirizzi
+   INGLESI) rispondevano con pagine interamente italiane dentro il
+   sito inglese.
+
+   Qui si tolgono dal sito inglese. Non con un 404: sono documenti
+   che chi ha comprato deve poter riaprire, e sono linkati dai
+   funnel. Con un 308 verso /it, che e' dove quelle pagine vivono
+   davvero. Nessuna delle tre e' in INDEXABLE_LOCALE_PATHS, quindi
+   non c'e' niente da togliere da sitemap.
+
+   EFFETTO COLLATERALE VOLUTO sul gate di /formazione. Il gate qui
+   sotto guarda `^/(it|en)/formazione`: la richiesta senza prefisso
+   non lo attivava e la pagina si serviva lo stesso, cioe' il codice
+   si aggirava chiedendo /formazione invece di /it/formazione.
+   Passando prima di qui, il 308 riporta la richiesta sotto /it e il
+   gate torna a valere.
+   ============================================================ */
+const SOLO_ITALIANO = ["/termini-bootcamp", "/termini-corso", "/formazione"];
+
+function soloItaliano(pathname: string): boolean {
+  return SOLO_ITALIANO.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+}
+
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const host = hostRichiesta(request);
+
+  // Prima di tutto il resto: vedi SOLO_ITALIANO qui sopra.
+  if (soloItaliano(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/it${pathname}`;
+    return NextResponse.redirect(url, 308);
+  }
 
   // Gate /formazione: qualsiasi path sotto /{locale}/formazione, ECCETTO
   // la pagina di accesso stessa, richiede il cookie con il codice.

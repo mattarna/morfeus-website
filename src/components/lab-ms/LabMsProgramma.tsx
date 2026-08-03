@@ -41,10 +41,12 @@ export function LabMsProgramma() {
 
         <div className="quadro mt-12">
           <div className="readout">
-            <span>Programma · erogato</span>
+            {/* Erano due stringhe italiane scritte a mano in un componente
+                che per tutto il resto passa da useTranslations. */}
+            <span>{t("readout")}</span>
             <span className="on">
               <i />
-              Dal 2023
+              {t("since")}
             </span>
           </div>
 

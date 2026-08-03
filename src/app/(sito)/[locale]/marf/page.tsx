@@ -74,6 +74,7 @@ const COPY = {
       stato: "Un solo quadro",
       ingressi: ["Dati", "Processi", "Persone"],
       uscite: ["Decisioni", "Azioni"],
+      legenda: "DATI · PROCESSI · PERSONE",
     },
     catena: {
       eye: "Dall'acquisizione al valore erogato",
@@ -194,6 +195,7 @@ const COPY = {
       stato: "One view",
       ingressi: ["Data", "Processes", "People"],
       uscite: ["Decisions", "Actions"],
+      legenda: "DATA · PROCESSES · PEOPLE",
     },
     catena: {
       eye: "From acquisition to value delivered",
@@ -438,6 +440,7 @@ export default async function MarfPage({ params }: Props) {
               ingressi={[...t.cose.ingressi]}
               centro="MARF"
               uscite={[...t.cose.uscite]}
+              legenda={t.cose.legenda}
             />
           </div>
         </div>

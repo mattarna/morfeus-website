@@ -18,22 +18,21 @@
    Si lancia DOPO `next build`:
      npm run build && npm run check:en-copy
 
-   ESCLUSIONI. Le pagine legali (termini-*) e /formazione sono
-   italiane per scelta: l'offerta e' italiana e il testo legale non
-   si traduce a cuor leggero. Stanno in ESCLUSE, con il motivo. Se
-   un giorno vengono tradotte, si tolgono da li'.
+   NESSUNA ECCEZIONE, ed e' voluto. Le tre pagine che non si
+   traducono (i termini contrattuali dei corsi e l'area formazione)
+   prima stavano in una lista di esclusioni qui dentro: comodo, ma
+   una lista di eccezioni cresce, e ogni riga aggiunta e' una pagina
+   italiana che il sito inglese continua a servire con la
+   benedizione del controllo. Ora quelle pagine in inglese NON
+   ESISTONO (src/lib/solo-italiano.ts), quindi non c'e' niente da
+   escludere: se un file e' qui dentro, e' una pagina inglese, e
+   dev'essere in inglese.
    ============================================================ */
 
 import fs from "node:fs";
 import path from "node:path";
 
 const RADICE = path.join(process.cwd(), ".next", "server", "app", "en");
-
-const ESCLUSE = new Map([
-  ["/termini-bootcamp.html", "testo legale, offerta solo italiana"],
-  ["/termini-corso.html", "testo legale, offerta solo italiana"],
-  ["/formazione.html", "pagina gated, offerta solo italiana"],
-]);
 
 /* Parole funzione italiane che in inglese non esistono. Niente
    sostantivi (`azienda`, `dati`) e niente parole che l'inglese usa
@@ -88,7 +87,6 @@ if (pagine.length === 0) {
 let problemi = 0;
 for (const file of pagine) {
   const rel = file.slice(RADICE.length).replace(/\\/g, "/");
-  if (ESCLUSE.has(rel)) continue;
   const sospette = frasiVisibili(fs.readFileSync(file, "utf8")).filter((f) => RE_SPIA.test(f));
   if (sospette.length === 0) continue;
   problemi += sospette.length;
@@ -99,17 +97,15 @@ for (const file of pagine) {
   if (sospette.length > 5) console.error(`    … e altre ${sospette.length - 5}`);
 }
 
-const controllate = pagine.length - [...ESCLUSE.keys()].length;
 if (problemi > 0) {
   console.error(
-    `\n[check-en-copy] ${problemi} frasi italiane su pagine inglesi. ` +
-      "Se una e' un falso positivo (una parola inglese che assomiglia a una italiana), " +
-      "riscrivi la frase o togli la parola da SPIA in scripts/check-en-copy.mjs."
+    `\n[check-en-copy] ${problemi} frasi italiane su pagine inglesi.\n` +
+      "Tre strade, in quest'ordine: traduci la stringa; oppure, se la pagina non si\n" +
+      "traduce, toglila dal sito inglese (src/lib/solo-italiano.ts + SOLO_ITALIANO in\n" +
+      "src/proxy.ts); oppure, se e' un falso positivo (una parola inglese che\n" +
+      "assomiglia a una italiana), riscrivi la frase. Aggiungere eccezioni qui no."
   );
   process.exit(1);
 }
 
-console.log(
-  `[check-en-copy] OK: ${controllate} pagine inglesi senza testo italiano ` +
-    `(${ESCLUSE.size} escluse per scelta).`
-);
+console.log(`[check-en-copy] OK: ${pagine.length} pagine inglesi, nessun testo italiano.`);

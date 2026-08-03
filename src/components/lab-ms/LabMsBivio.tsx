@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
    una lista nuova, esisteva.
    ============================================================ */
 
-function Curva({ tipo }: { tipo: "perde" | "accumula" }) {
+function Curva({ tipo, asse }: { tipo: "perde" | "accumula"; asse: string }) {
   const perde = tipo === "perde";
   // due tracciati sulla stessa gabbia: partono dallo stesso punto e si
   // separano. E' il confronto a rendere leggibile il bivio.
@@ -70,7 +70,7 @@ function Curva({ tipo }: { tipo: "perde" | "accumula" }) {
         telefono da 360px rendeva a 10.6px reali. Come testo HTML non
         scala e resta leggibile a ogni larghezza. Il viewBox e' sceso da
         168 a 152 perche' quelle 16 unita' servivano solo a ospitarla. */}
-    <div className="curva-cap">18 MESI</div>
+    <div className="curva-cap">{asse}</div>
     </>
   );
 }
@@ -111,7 +111,7 @@ export function LabMsBivio() {
                 </span>
               </div>
 
-              <Curva tipo="perde" />
+              <Curva tipo="perde" asse={t("axis")} />
 
               <ul className="blist loss">
                 {vociA.map((v) => (
@@ -138,7 +138,7 @@ export function LabMsBivio() {
                 <span className="cod shrink-0">{t("chart_b.badge")}</span>
               </div>
 
-              <Curva tipo="accumula" />
+              <Curva tipo="accumula" asse={t("axis")} />
 
               <ul className="blist gain">
                 {vociB.map((v) => (

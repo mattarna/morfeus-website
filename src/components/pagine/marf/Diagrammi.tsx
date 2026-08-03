@@ -21,10 +21,16 @@ export function SchemaCentrale({
   ingressi,
   centro,
   uscite,
+  /* La legenda sotto al riquadro era scritta a mano in italiano dentro
+     l'SVG: su /marf in inglese si leggeva "DATI · PROCESSI · PERSONE" in
+     mezzo a una pagina inglese. Arriva dalla pagina, come tutto il resto
+     del testo di questo diagramma. */
+  legenda,
 }: {
   ingressi: string[];
   centro: string;
   uscite: string[];
+  legenda: string;
 }) {
   return (
     /* Il contenitore che scorre: il disegno ha un viewBox largo 900 e su
@@ -75,7 +81,7 @@ export function SchemaCentrale({
         {centro}
       </text>
       <text x="450" y="220" textAnchor="middle" fill="var(--ombra)" style={{ ...MONO, fontSize: 11 }}>
-        DATI · PROCESSI · PERSONE
+        {legenda}
       </text>
 
       {/* le due uscite */}

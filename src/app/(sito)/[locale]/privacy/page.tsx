@@ -47,9 +47,12 @@ export default async function PrivacyPolicy({
             <p>
               <strong>NUMANITY S.R.L.</strong>
             </p>
-            <p>P.IVA: 14209210963</p>
-            <p>Via Jacopo Dal Verme 7, CAP 20159</p>
-            <p>Milano (MI), Italia</p>
+            {/* L'indirizzo e' un indirizzo italiano e la via non si
+                traduce, ma le etichette intorno si': in inglese si
+                leggeva "P.IVA", "CAP" e "Milano (MI), Italia". */}
+            <p>{isIT ? "P.IVA: 14209210963" : "VAT no.: 14209210963"}</p>
+            <p>Via Jacopo Dal Verme 7, 20159</p>
+            <p>{isIT ? "Milano (MI), Italia" : "Milan (MI), Italy"}</p>
             <p>
               Email: <a href="mailto:hello@morfeushub.com">hello@morfeushub.com</a>
             </p>
