@@ -7,6 +7,7 @@ import { NOME_INDICE_INSIGHTS } from "@/lib/seo/briciole-casi";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { getArticleBySlug, getArticleSlugs, getAllArticles } from "@/lib/insights";
+import { coppiaSlugArticolo, traduciPercorsoInterno } from "@/lib/insights-slugs";
 import { InsightCover, coverKindFromCategory, type CoverKind } from "@/components/site/InsightCover";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -23,9 +24,9 @@ const NAVIGABLE_ROUTES = new Set([
   "/roiometro",
 ]);
 
-/** Slug articolo esistenti (per link `/insights/<slug>`). Calcolato al build. */
-function getKnownInsightSlugs(): Set<string> {
-  return new Set(getArticleSlugs());
+/** Slug articolo esistenti NELLA LINGUA della pagina (per link `/insights/<slug>`). Calcolato al build. */
+function getKnownInsightSlugs(locale: "it" | "en"): Set<string> {
+  return new Set(getArticleSlugs(locale));
 }
 
 function isInternalLinkNavigable(href: string, knownInsightSlugs: Set<string>): boolean {
@@ -40,12 +41,37 @@ function initials(name: string): string {
   return name.split(" ").slice(0, 2).map((w) => w[0]?.toUpperCase() ?? "").join("");
 }
 
-function formatDateIt(iso: string): string {
+/* La data seguiva sempre i mesi italiani: sulla pagina inglese si
+   leggeva "12 giugno 2026" sotto un titolo in inglese. I nomi restano
+   scritti a mano, non `toLocaleDateString`: il formato di quel metodo
+   dipende dai dati di locale del runtime, che fra Node in build e la
+   funzione su Vercel non e' detto siano gli stessi, e una data che
+   cambia forma fra prerender e runtime e' un mismatch di idratazione. */
+const MESI = {
+  it: ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+} as const;
+
+function formatDate(iso: string, locale: "it" | "en"): string {
   if (!iso) return "";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  const months = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  const mese = MESI[locale][d.getMonth()];
+  return locale === "it"
+    ? `${d.getDate()} ${mese} ${d.getFullYear()}`
+    : `${mese} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+/* I due percorsi di un articolo, per hreflang e canonical. Se lo slug
+   non e' in mappa si ricade su se stesso in entrambe le lingue: non
+   succede (il loader di `insights.ts` fa cadere il build se una coppia
+   manca), ma qui il tipo di ritorno non deve essere nullable. */
+function percorsiArticolo(slug: string): Record<"it" | "en", string> {
+  const coppia = coppiaSlugArticolo(slug);
+  return {
+    it: `insights/${coppia?.it ?? slug}`,
+    en: `insights/${coppia?.en ?? slug}`,
+  };
 }
 
 function kebab(s: string): string {
@@ -58,14 +84,21 @@ function kebab(s: string): string {
     .slice(0, 60);
 }
 
-export function generateStaticParams() {
-  return getArticleSlugs().map((slug) => ({ slug }));
+/* Gli slug ora dipendono dalla lingua, quindi i parametri non si possono
+   piu' generare una volta sola: `/insights/how-to-measure-ai-roi` esiste
+   in inglese e non in italiano, e il suo gemello italiano vale solo sotto
+   /it. Next passa qui i params generati dal segmento padre ([locale], che
+   ha il suo generateStaticParams): si prerenderizza la coppia giusta e
+   basta, senza inventare 26 combinazioni di cui meta' 404. */
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  const locale: "it" | "en" = params.locale === "en" ? "en" : "it";
+  return getArticleSlugs(locale).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const safeLocale: "it" | "en" = locale === "en" ? "en" : "it";
-  const article = getArticleBySlug(slug);
+  const article = getArticleBySlug(slug, safeLocale);
   if (!article) {
     return {
       title: "Insight non trovato · Morfeus",
@@ -78,7 +111,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: title },
     description,
-    alternates: buildLocaleAlternates(`insights/${slug}`, safeLocale),
+    /* La coppia, non lo slug singolo: passando `insights/${slug}` la
+       pagina inglese dichiarava come alternativa italiana il proprio
+       slug inglese, cioe' un indirizzo che non esiste sotto /it. */
+    alternates: buildLocaleAlternates(percorsiArticolo(slug), safeLocale),
     openGraph: {
       images: [`${SITE_URL}/opengraph-image.png`],
       title,
@@ -98,13 +134,18 @@ export default async function InsightArticlePage({ params }: Props) {
   const { locale, slug } = await params;
   const safeLocale: "it" | "en" = locale === "en" ? "en" : "it";
   const isIt = safeLocale === "it";
-  const base = `/${safeLocale}`;
+  /* `/${safeLocale}` mandava ogni link interno inglese su /en/..., che
+     con `localePrefix: 'as-needed'` risponde 307 verso lo stesso
+     indirizzo senza prefisso: un salto in piu' per il lettore e un link
+     che i motori seguono a vuoto. `localePrefix` da' "" per l'inglese e
+     "/it" per l'italiano, quindi cambia solo il lato inglese. */
+  const base = localePrefix(safeLocale);
 
-  const article = getArticleBySlug(slug);
+  const article = getArticleBySlug(slug, safeLocale);
   if (!article) notFound();
 
-  const knownInsightSlugs = getKnownInsightSlugs();
-  const otherArticles = getAllArticles().filter((a) => a.slug !== slug).slice(0, 3);
+  const knownInsightSlugs = getKnownInsightSlugs(safeLocale);
+  const otherArticles = getAllArticles(safeLocale).filter((a) => a.slug !== slug).slice(0, 3);
 
   const canonicalUrl = `${SITE_URL}${localePrefix(safeLocale)}/insights/${slug}`;
 
@@ -170,7 +211,7 @@ export default async function InsightArticlePage({ params }: Props) {
             {article.category}
             <span className="text-ombra">
               {" · "}
-              {formatDateIt(article.datePublished)}
+              {formatDate(article.datePublished, safeLocale)}
               {article.readingTime ? ` · ${article.readingTime}` : ""}
             </span>
           </div>
@@ -205,7 +246,7 @@ export default async function InsightArticlePage({ params }: Props) {
           </div>
           {article.dateModified && article.dateModified !== article.datePublished ? (
             <p className="mt-3 font-plex text-[13px] text-ombra">
-              ▸ {isIt ? "Aggiornato il" : "Updated on"} {formatDateIt(article.dateModified)}
+              ▸ {isIt ? "Aggiornato il" : "Updated on"} {formatDate(article.dateModified, safeLocale)}
             </p>
           ) : null}
 
@@ -441,7 +482,11 @@ export default async function InsightArticlePage({ params }: Props) {
                 {isIt ? "Continua nel percorso" : "Continue the path"}
               </div>
               <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
-                {article.internalLinks.map((href, i) => {
+                {article.internalLinks.map((href0, i) => {
+                  /* Rete di sicurezza: se in un frontmatter inglese
+                     resta un rimando allo slug italiano, qui diventa
+                     quello inglese invece di finire su un 404. */
+                  const href = traduciPercorsoInterno(href0, safeLocale);
                   const navigable = isInternalLinkNavigable(href, knownInsightSlugs);
                   const label = href;
                   if (navigable) {

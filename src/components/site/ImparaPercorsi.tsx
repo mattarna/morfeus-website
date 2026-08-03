@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { ImparaPercorso } from "@/lib/impara-percorsi";
+/* `/${locale}` mandava i rimandi inglesi su /en/..., che risponde 307:
+   con `localePrefix: 'as-needed'` l'inglese vive senza prefisso. */
+import { localePrefix } from "@/lib/seo/public-indexing";
 
 /**
  * I quattro percorsi con le lezioni a fisarmonica.
@@ -137,7 +140,7 @@ export function ImparaPercorsi({
                         <div className="pad">
                           <p>{l.a}</p>
                           {l.gloss ? (
-                            <Link className="appro" href={`/${locale}${l.gloss.href}`}>
+                            <Link className="appro" href={`${localePrefix(locale)}${l.gloss.href}`}>
                               {l.gloss.label} &rarr;
                             </Link>
                           ) : null}

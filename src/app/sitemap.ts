@@ -1,5 +1,9 @@
 import { MetadataRoute } from "next";
-import { buildLocalizedUrl, getIndexableLocalizedEntries } from "@/lib/seo/public-indexing";
+import {
+  buildLocalizedUrl,
+  getIndexableLocalizedEntries,
+  percorsoPerLingua,
+} from "@/lib/seo/public-indexing";
 import { SITE_URL } from "@/lib/seo/entity-ids";
 import { funnelRegistry, getRegisteredFunnelConfig } from "@/funnels/registry";
 
@@ -15,12 +19,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getIndexableLocalizedEntries(baseUrl),
   ];
 
-  const localizedSitemapEntries: MetadataRoute.Sitemap = localizedEntries.map(({ locale, path, url }) => {
+  const localizedSitemapEntries: MetadataRoute.Sitemap = localizedEntries.map(({ locale, percorso, path, url }) => {
     const counterpartLocale = locale === "en" ? "it" : "en";
     /* L'indirizzo dell'altra lingua passa dallo stesso helper della
        pagina: costruito a mano tornava sempre con /en davanti, cioe'
-       un hreflang che redirige. */
-    const counterpart = buildLocalizedUrl(baseUrl, counterpartLocale, path);
+       un hreflang che redirige.
+       E parte da `percorso`, non da `path`: sugli articoli le due lingue
+       hanno slug diversi, e riusare il percorso gia' risolto avrebbe
+       dichiarato come alternativa italiana lo slug inglese. */
+    const counterpart = buildLocalizedUrl(
+      baseUrl,
+      counterpartLocale,
+      percorsoPerLingua(percorso, counterpartLocale)
+    );
 
     return {
       url,

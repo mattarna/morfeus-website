@@ -31,14 +31,18 @@ export function LabMsProof() {
   return (
     <section className="band ink lab" id="proof">
       <div className="wrap">
-        <div className="eye">Rilevazioni sul campo</div>
+        {/* Erano tre stringhe italiane scritte a mano dentro un componente
+            che per tutto il resto passa da useTranslations: su /lab in
+            inglese si leggevano cosi' come sono. */}
+        <div className="eye">{t("eyebrow")}</div>
         <h2 className="h-sect max-w-[18ch]">{t("title")}</h2>
 
         <div className="quadro mt-10">
           <div className="readout">
-            <span>Misurazioni · aziende clienti</span>
+            <span>{t("readout")}</span>
             <span className="on">
-              <i />3 letture
+              <i />
+              {t("readings")}
             </span>
           </div>
 

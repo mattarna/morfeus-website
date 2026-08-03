@@ -1,12 +1,29 @@
+import { COPPIE_SLUG_ARTICOLI } from "../insights-slugs";
+
 export const SUPPORTED_LOCALES = ["en", "it"] as const;
 
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
+/* UN PERCORSO, O UNO PER LINGUA.
+   Quasi tutte le pagine vivono sullo stesso percorso nelle due lingue
+   (`/forge` e `/it/forge`) e restano una stringa. Gli articoli no: da
+   quando l'inglese ha slug suoi (src/lib/insights-slugs.ts) la coppia
+   va portata fin qui, perche' e' questa lista a generare la sitemap e
+   gli hreflang. Chi legge un percorso passa da `percorsoPerLingua`. */
+export type PercorsoIndicizzabile = string | Readonly<Record<SupportedLocale, string>>;
+
+export function percorsoPerLingua(
+  percorso: PercorsoIndicizzabile,
+  locale: SupportedLocale
+): string {
+  return typeof percorso === "string" ? percorso : percorso[locale];
+}
 
 /**
  * Locale routes that are intentionally indexable/discoverable.
  * Keep this list explicit so sitemap/LLM docs never expose internal routes.
  */
-export const INDEXABLE_LOCALE_PATHS = [
+export const INDEXABLE_LOCALE_PATHS: readonly PercorsoIndicizzabile[] = [
   "",
   "forge",
   "lab",
@@ -30,21 +47,15 @@ export const INDEXABLE_LOCALE_PATHS = [
   "casi/scalers-pre-sales",
   "casi/valueize-best-seller",
   "casi/ag-academy-onboarding",
-  // Insights: articoli (13)
-  "insights/value-leak",
-  "insights/agenti-ai-in-azienda",
-  "insights/ai-act-pmi-alfabetizzazione",
-  "insights/ai-intelligenza-artificiale-posti-di-lavoro",
-  "insights/ai-per-le-pmi-da-dove-iniziare",
-  "insights/automazione-preventivi-documenti-ai",
-  "insights/come-integrare-ai-nei-processi",
-  "insights/come-misurare-il-roi-dell-ai",
-  "insights/come-scegliere-consulenza-ai",
-  "insights/competenze-ai-azienda-ai-champion",
-  "insights/perche-progetti-ai-falliscono",
-  "insights/quanto-costa-l-ai-in-azienda",
-  "insights/saas-o-sistema-ai-su-misura",
-] as const;
+  /* Insights: articoli (13), un percorso per lingua. Presi dalla mappa
+     invece che riscritti qui: due elenchi degli stessi slug divergono
+     al primo articolo nuovo, e a divergere sarebbero sitemap e
+     hreflang, cioe' esattamente le due cose che nessuno rilegge. */
+  ...COPPIE_SLUG_ARTICOLI.map((c) => ({
+    it: `insights/${c.it}`,
+    en: `insights/${c.en}`,
+  })),
+];
 
 export const INDEXABLE_CASE_STUDY_SLUGS = [
   "sales",
@@ -94,23 +105,33 @@ export function buildLocalizedUrl(baseUrl: string, locale: SupportedLocale, path
   return `${baseUrl}${buildLocalizedPath(locale, path)}`;
 }
 
-export function buildLocaleAlternates(path: string, locale: SupportedLocale) {
+/* `path` accetta anche la coppia: per gli articoli il canonical e i due
+   hreflang stanno su slug diversi, e passando una stringa sola la pagina
+   inglese dichiarerebbe come alternativa italiana un indirizzo che non
+   esiste. Le pagine a percorso unico continuano a passare una stringa e
+   non cambiano di una virgola. */
+export function buildLocaleAlternates(path: PercorsoIndicizzabile, locale: SupportedLocale) {
+  const perLingua = (l: SupportedLocale) => buildLocalizedPath(l, percorsoPerLingua(path, l));
   return {
-    canonical: buildLocalizedPath(locale, path),
+    canonical: perLingua(locale),
     languages: {
-      en: buildLocalizedPath("en", path),
-      it: buildLocalizedPath("it", path),
-      "x-default": buildLocalizedPath("en", path),
+      en: perLingua("en"),
+      it: perLingua("it"),
+      "x-default": perLingua("en"),
     },
   };
 }
 
 export function getIndexableLocalizedEntries(baseUrl: string) {
   return SUPPORTED_LOCALES.flatMap((locale) =>
-    INDEXABLE_LOCALE_PATHS.map((path) => ({
+    INDEXABLE_LOCALE_PATHS.map((percorso) => ({
       locale,
-      path,
-      url: buildLocalizedUrl(baseUrl, locale, path),
+      /* `percorso` e' la voce grezza (stringa o coppia): serve alla
+         sitemap per costruire l'indirizzo dell'ALTRA lingua, che sugli
+         articoli non si ottiene piu' riusando `path`. */
+      percorso,
+      path: percorsoPerLingua(percorso, locale),
+      url: buildLocalizedUrl(baseUrl, locale, percorsoPerLingua(percorso, locale)),
     }))
   );
 }

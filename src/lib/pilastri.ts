@@ -1,3 +1,5 @@
+import { slugArticolo } from "./insights-slugs";
+
 /* ============================================================
    I PILASTRI EDITORIALI
    ------------------------------------------------------------
@@ -90,9 +92,26 @@ export const PILASTRO_DI: Record<string, ChiavePilastro> = {
   "ai-per-le-pmi-da-dove-iniziare": "scelte",
 };
 
+/* La tabella qui sopra e' indicizzata sugli slug ITALIANI, e resta cosi':
+   il pilastro e' una proprieta' dell'articolo, non della sua traduzione,
+   e tenerne due copie vuol dire vederle divergere. Da quando l'inglese
+   ha slug suoi, quello che arriva puo' essere l'uno o l'altro, quindi si
+   normalizza prima di leggere. Senza questo passaggio ogni articolo
+   inglese cadeva sul default "margine" e i filtri per pilastro sulla
+   pagina indice inglese mostravano quattro categorie con dentro tutto
+   nella prima. */
+function slugCanonico(slug: string): string {
+  return slugArticolo(slug, "it") ?? slug;
+}
+
 export function pilastroDi(slug: string): ChiavePilastro {
-  return PILASTRO_DI[slug] ?? "margine";
+  return PILASTRO_DI[slugCanonico(slug)] ?? "margine";
 }
 
 /** L'articolo da cui parte tutto. Dichiarato qui, non scelto in pagina. */
 export const ARTICOLO_IN_EVIDENZA = "value-leak";
+
+/** Vale per lo slug italiano e per quello inglese: la pagina non deve saperlo. */
+export function eInEvidenza(slug: string): boolean {
+  return slugCanonico(slug) === ARTICOLO_IN_EVIDENZA;
+}

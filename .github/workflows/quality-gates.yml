@@ -36,3 +36,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Gira DOPO il build perche' legge l'HTML costruito: e' l'unico
+      # punto in cui si vede cosa arriva davvero al lettore inglese.
+      # Intercetta il caso in cui il guscio della pagina e' tradotto ma
+      # i contenuti no, che non fa fallire ne' build ne' typecheck.
+      - name: Copy inglese senza italiano
+        run: npm run check:en-copy

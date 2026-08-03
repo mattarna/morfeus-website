@@ -4,7 +4,7 @@ import { SiteShell } from "@/components/site";
 import { GlossarioFiltri } from "@/components/site/GlossarioFiltri";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
-import { GLOSSARIO, LETTERE, TUTTE_LE_VOCI } from "@/lib/glossario-voci";
+import { getGlossario, lettereDi, tutteLeVociDi } from "@/lib/glossario-voci";
 
 /* ============================================================
    GLOSSARIO. Pagina unica, tutti i termini dentro.
@@ -122,7 +122,7 @@ export default async function GlossarioPage({ params }: Props) {
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
-  const base = `/${safeLocale}`;
+  const base = localePrefix(safeLocale);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -136,7 +136,7 @@ export default async function GlossarioPage({ params }: Props) {
         inLanguage: isIt ? "it-IT" : "en-US",
         isPartOf: { "@id": WEBSITE_ID },
         publisher: { "@id": ORGANIZATION_ID },
-        hasDefinedTerm: TUTTE_LE_VOCI.map((v) => ({
+        hasDefinedTerm: tutteLeVociDi(safeLocale).map((v) => ({
           "@type": "DefinedTerm",
           name: v.n,
           description: v.d,
@@ -171,7 +171,7 @@ export default async function GlossarioPage({ params }: Props) {
       {/* 02 · BARRA A-Z · sta fuori dalle fasce, si aggancia sotto l'header */}
       <nav className="gl-az" aria-label={t.az}>
         <div className="row">
-          {LETTERE.map((l) => (
+          {lettereDi(safeLocale).map((l) => (
             <a key={l} href={`#gl-${l}`}>
               {l}
             </a>
@@ -182,7 +182,7 @@ export default async function GlossarioPage({ params }: Props) {
       {/* 03 · TUTTI I TERMINI · carta, una fascia sola */}
       <section className="band carta" aria-label={t.elenco}>
         <div className="wrap gl-list">
-          {GLOSSARIO.map((g) => (
+          {getGlossario(safeLocale).map((g) => (
             <div className="gl-grp" id={`gl-${g.l}`} key={g.l} data-gl-grp="">
               <h2 className="gl-letter">{g.l}</h2>
               <div className="gl-terms">

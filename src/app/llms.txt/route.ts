@@ -3,6 +3,7 @@ import {
   NON_INDEXABLE_LOCALE_PREFIXES,
   SUPPORTED_LOCALES,
   buildLocalizedUrl,
+  percorsoPerLingua,
 } from "@/lib/seo/public-indexing";
 import { SITE_URL } from "@/lib/seo/entity-ids";
 
@@ -27,7 +28,9 @@ export const dynamic = "force-static";
 
 function elenco(): string {
   return SUPPORTED_LOCALES.flatMap((locale) =>
-    INDEXABLE_LOCALE_PATHS.map((path) => `- ${buildLocalizedUrl(SITE_URL, locale, path)}`)
+    INDEXABLE_LOCALE_PATHS.map(
+      (percorso) => `- ${buildLocalizedUrl(SITE_URL, locale, percorsoPerLingua(percorso, locale))}`
+    )
   ).join("\n");
 }
 

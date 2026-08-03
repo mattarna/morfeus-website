@@ -138,6 +138,31 @@ const nextConfig = {
   // ============================================
   async redirects() {
     return [
+      /* GLI ARTICOLI IN INGLESE HANNO CAMBIATO INDIRIZZO (2026-08-03).
+         Fino a ieri l'inglese viveva sugli slug italiani e ci serviva
+         contenuto italiano: /insights/quanto-costa-l-ai-in-azienda in
+         inglese era una pagina che non poteva farsi trovare da nessuno
+         che cercasse in inglese. Ora ha uno slug suo.
+         Questi 301 tengono in vita i vecchi indirizzi: valgono SOLO
+         senza prefisso, cioe' solo per l'inglese. Sotto /it gli stessi
+         slug sono gli indirizzi buoni degli articoli italiani e non
+         devono redirigere da nessuna parte, per questo non c'e' il
+         `:locale(en|it)` che usano gli altri redirect di questo file.
+         La mappa vera sta in src/lib/insights-slugs.ts: se cambia uno
+         slug la', qui va aggiunta la riga. */
+      { source: '/insights/agenti-ai-in-azienda', destination: '/insights/ai-agents-in-business', permanent: true },
+      { source: '/insights/ai-act-pmi-alfabetizzazione', destination: '/insights/ai-act-ai-literacy-obligation', permanent: true },
+      { source: '/insights/ai-intelligenza-artificiale-posti-di-lavoro', destination: '/insights/will-ai-replace-jobs', permanent: true },
+      { source: '/insights/ai-per-le-pmi-da-dove-iniziare', destination: '/insights/ai-for-small-business-where-to-start', permanent: true },
+      { source: '/insights/automazione-preventivi-documenti-ai', destination: '/insights/automating-quotes-and-documents-with-ai', permanent: true },
+      { source: '/insights/come-integrare-ai-nei-processi', destination: '/insights/how-to-integrate-ai-into-workflows', permanent: true },
+      { source: '/insights/come-misurare-il-roi-dell-ai', destination: '/insights/how-to-measure-ai-roi', permanent: true },
+      { source: '/insights/come-scegliere-consulenza-ai', destination: '/insights/how-to-choose-an-ai-consultancy', permanent: true },
+      { source: '/insights/competenze-ai-azienda-ai-champion', destination: '/insights/ai-skills-and-the-ai-champion', permanent: true },
+      { source: '/insights/perche-progetti-ai-falliscono', destination: '/insights/why-ai-projects-fail', permanent: true },
+      { source: '/insights/quanto-costa-l-ai-in-azienda', destination: '/insights/how-much-does-ai-cost-in-business', permanent: true },
+      { source: '/insights/saas-o-sistema-ai-su-misura', destination: '/insights/saas-or-custom-ai-system', permanent: true },
+
       // La home 2026 e' diventata la home vera il 2026-07-30. La route di
       // anteprima /home-2026 non esiste piu': chi l'ha nei preferiti (o nella
       // cronologia) finisce sulla home invece che su un 404.

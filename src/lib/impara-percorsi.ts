@@ -23,9 +23,12 @@
      inglese;
    - gli `anchor`: l'URL della pagina inglese e' gia' /impara-ai (slug
      italiano), e ancore diverse per lingua romperebbero i link esistenti;
-   - gli `href` dei rimandi: glossario e insights esistono in una sola
-     versione, servita sotto entrambi i prefissi. Cambia solo l'etichetta
-     del link. */
+   - gli `href` verso il glossario: le ancore delle voci sono le stesse
+     nelle due lingue.
+
+   Gli `href` verso gli articoli invece NO: da quando gli insights hanno
+   slug inglesi propri (src/lib/insights-slugs.ts), il lato EN punta agli
+   slug inglesi. Se cambia uno slug la' , va cambiato anche qui. */
 
 export type ImparaLezione = {
   /** chiave stabile: e' quella salvata nel progresso locale */
@@ -320,7 +323,7 @@ export const PERCORSI_EN: ImparaPercorso[] = [
         n: "05",
         q: "What is an \"AI Champion\" and why do you need one?",
         a: "It is one person per department who becomes the internal AI reference: they experiment, work out what works and spread it. Without one, AI stays an isolated experiment; with one, it becomes a company capability.",
-        gloss: { href: "/insights/competenze-ai-azienda-ai-champion", label: "Go deeper" },
+        gloss: { href: "/insights/ai-skills-and-the-ai-champion", label: "Go deeper" },
       },
     ],
   },
@@ -345,7 +348,7 @@ export const PERCORSI_EN: ImparaPercorso[] = [
         n: "02",
         q: "How do you measure the ROI of AI?",
         a: "By defining objective value criteria up front and checking them over time. ROI is not \"how many hours of work\", it is \"how much value generated in euros\", measured month by month.",
-        gloss: { href: "/insights/come-misurare-il-roi-dell-ai", label: "Go deeper" },
+        gloss: { href: "/insights/how-to-measure-ai-roi", label: "Go deeper" },
       },
       {
         id: "r3",

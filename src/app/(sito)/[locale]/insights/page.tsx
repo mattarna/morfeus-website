@@ -7,7 +7,7 @@ import "@/components/pagine/kit.css";
 import { localePrefix, buildLocaleAlternates } from "@/lib/seo/public-indexing";
 import { SITE_URL, WEBSITE_ID, ORGANIZATION_ID } from "@/lib/seo/entity-ids";
 import { getAllArticles } from "@/lib/insights";
-import { PILASTRI, pilastroDi, ARTICOLO_IN_EVIDENZA, type ChiavePilastro } from "@/lib/pilastri";
+import { PILASTRI, pilastroDi, eInEvidenza, type ChiavePilastro } from "@/lib/pilastri";
 
 /* ============================================================
    INSIGHTS, pagina hub.
@@ -170,11 +170,11 @@ export default async function InsightsPage({ params }: Props) {
   const isIt = locale === "it";
   const t = isIt ? COPY.it : COPY.en;
   const safeLocale: "it" | "en" = isIt ? "it" : "en";
-  const base = `/${safeLocale}`;
+  const base = localePrefix(safeLocale);
 
-  const articoli = getAllArticles();
+  const articoli = getAllArticles(safeLocale);
   const evidenza =
-    articoli.find((a) => a.slug === ARTICOLO_IN_EVIDENZA) ?? articoli[0] ?? null;
+    articoli.find((a) => eInEvidenza(a.slug)) ?? articoli[0] ?? null;
   const resto = articoli.filter((a) => a.slug !== evidenza?.slug);
 
   /* Al browser il pilastro arriva come `category`: il componente non
