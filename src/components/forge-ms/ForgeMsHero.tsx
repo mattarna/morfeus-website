@@ -1,60 +1,73 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { MARFVisualCore } from "../shared/MARFVisualCore";
 import { BOOKING_URL } from "@/components/site/booking";
-import type { ForgeCopy } from "./copy";
 
 /* ============================================================
    01 · HERO
    ------------------------------------------------------------
-   WIREFRAME invariato: occhiello, titolo con l'enfasi su "expertise",
-   paragrafo, la battuta fra virgolette, due CTA, la riga di prova.
-   Stessa copy, stesso ordine.
+   WIREFRAME invariato: occhiello, titolo su tre righe (la terza in
+   evidenza), sottotitolo, il visual dei nodi, due CTA con la riga di
+   spinta sopra, i quattro dati di prova. Stessa copy: legge le stesse
+   chiavi i18n di prima (`Offerta.hero`).
 
-   DISEGNO nuovo. La riga di prova era un paragrafo grigio in fondo,
-   e conteneva i numeri che dimostrano tutto ("60+ sistemi", "dal
-   2023"): il dato piu' forte della sezione trattato come una nota a
-   pie' di pagina. Ora e' una QUOTA — la riga di misura con le tacche
-   — perche' e' esattamente quello che fa: dichiara una misura.
+   DISEGNO nuovo. Prima era una schermata piena a se' stante, con fondo
+   #0a111a scritto a mano e i titoli in gradiente. Ora e' la fascia
+   `ink` del sito: stesso nero, stessa griglia, stessa tipografia delle
+   altre pagine, e l'accento e' la parola in `emph` invece di un
+   gradiente su tre colori.
 
-   La battuta resta dov'era ma prende il filetto del pull-quote: e'
-   una frase detta, non un paragrafo.
+   I quattro dati di prova erano una barra di numeri sotto una riga
+   sottile. Diventano una QUOTA piu' quattro voci: e' una misura
+   dichiarata, e la riga di quota lo dice prima ancora di leggerli.
+
+   IL VISUAL RESTA com'e' (`MARFVisualCore`): i nodi CRM/OPS/DATA/
+   FINANCE che convergono sono il pezzo migliore della pagina, e
+   ridisegnarli sarebbe stato cambiare per cambiare.
    ============================================================ */
 
-export function ForgeMsHero({ t }: { t: ForgeCopy }) {
+export function ForgeMsHero() {
+  const t = useTranslations("Offerta.hero");
+
   return (
     <section className="band ink hero forge" id="hero">
       <div className="wrap">
-        <div className="eye">{t.hero.eye}</div>
+        <div className="eye">{t("eyebrow")}</div>
+
         <h1>
-          {t.hero.h1a}
-          <span className="emph">{t.hero.h1emph}</span>
-          {t.hero.h1b}
+          {t("headline.line1")} {t("headline.line2")}
+          <br />
+          <span className="emph">{t("headline.line3")}</span>
         </h1>
-        <p className="copy">{t.hero.copy}</p>
 
-        <p className="tira-somme" style={{ marginTop: 26 }}>
-          {t.hero.lame}
+        <p className="copy">{t("subtitle")}</p>
+
+        {/* il visual dei nodi: invariato */}
+        <div className="visual-nodi" style={{ marginTop: 46 }}>
+          <MARFVisualCore />
+        </div>
+
+        <p className="proofline" style={{ marginTop: 40 }}>
+          {t("cta_nudge")}
         </p>
 
-        <div className="cta-row" style={{ marginTop: 32 }}>
+        <div className="cta-row" style={{ marginTop: 18 }}>
           <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
-            {t.hero.cta1}
+            {t("cta_primary")}
           </a>
-          <a className="btn btn-2-carta" href="#prodotto">
-            {t.hero.cta2}
+          <a className="btn btn-2-carta" href="#come-funziona">
+            {t("cta_secondary")}
           </a>
         </div>
 
-        {/* La prova come misura, non come nota a pie' di pagina. La quota
-            fa da intestazione (una parola), la riga sotto porta i numeri:
-            non si ripetono, si presentano. */}
-        <div className="quota" style={{ marginTop: 44 }}>
-          <span>{t.hero.proof.pre.replace(/[▸·\s]+$/, "").replace(/^[▸\s]+/, "")}</span>
-        </div>
-        <p className="proofline" style={{ marginTop: 14 }}>
-          <b>{t.hero.proof.b1}</b>
-          {t.hero.proof.mid}
-          <b>{t.hero.proof.b2}</b>
-          {t.hero.proof.post}
-        </p>
+        {/* RIMOSSA la striscia "SISTEMA: OPERATIVO" con i quattro dati
+            (Scaling / Pilot / Accesso / Ogni), su richiesta 2026-07-31.
+            Era una riga di quota + quattro voci spezzate a meta' (la copy
+            "ATTIVO FATTURATO TARGET / Scaling" veniva tagliata sul primo
+            spazio, e a schermo si leggeva come due frasi mozze). Le chiavi
+            `system_tag` e `proof_items` restano nel file di traduzione:
+            non le usa piu' nessuno qui, ma non le tocco. */}
       </div>
     </section>
   );

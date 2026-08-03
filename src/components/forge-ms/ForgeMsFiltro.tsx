@@ -1,66 +1,70 @@
-import type { ForgeCopy } from "./copy";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { BOOKING_URL } from "@/components/site/booking";
+import { conGrassetto } from "./grassetto";
 
 /* ============================================================
-   05 · IL FILTRO
+   08 · PER CHI SÌ, PER CHI NO
    ------------------------------------------------------------
-   WIREFRAME invariato: occhiello, titolo, lead, le due liste (sei nel
-   posto giusto se / meglio più avanti se), la nota finale. Stessa copy,
-   stesso ordine.
+   WIREFRAME invariato: titolo, le due liste da cinque voci, la chiusa,
+   la CTA. Stesse chiavi (`Offerta.filter`).
 
-   DISEGNO nuovo. Prima le due colonne erano due `.card` con dentro
-   utility Tailwind e le spunte colorate a mano (verde e rosso inline).
-   Un semaforo: e questa non è una sezione da semaforo, è una sezione
-   che dice "non tutti, e va bene così". Ora usa lo stesso confronto a
-   due colonne del "perché adesso", con lo stesso segno: chi è nel posto
-   giusto ha la freccia, chi no ha la croce spenta. Nessun rosso: non
-   essere il cliente giusto non è un errore.
+   DISEGNO nuovo. Prima erano due card con spunte verdi e croci rosse:
+   un semaforo. Ma non essere il cliente giusto non e' un errore, e il
+   rosso lo fa sembrare tale — per giunta a chi sta ancora leggendo.
 
-   La nota finale — «la domanda che conta non è quanto fatturi, è quanti
-   siete» — è la frase che chiude il ragionamento. Prende il pull-quote.
+   Stesso confronto a due colonne del resto della pagina: freccia da una
+   parte, croce spenta dall'altra, nessun colore d'allarme. La chiusa
+   prende il pull-quote perche' e' la frase che decide.
    ============================================================ */
 
-export function ForgeMsFiltro({ t }: { t: ForgeCopy }) {
-  const c = t.filtro;
+export function ForgeMsFiltro() {
+  const t = useTranslations("Offerta.filter");
+  const si = t.raw("for_you.bullets") as Record<string, string>;
+  const no = t.raw("not_for_you.bullets") as Record<string, string>;
 
   return (
-    <section className="band ink forge" id="filtro">
+    <section className="band ink forge" id="filter">
       <div className="wrap">
-        <div className="eye">{c.eye}</div>
-        <h2 className="h-sect">
-          {c.h2a}
-          <span className="emph">{c.h2emph}</span>
-          {c.h2b}
-        </h2>
-        <p className="lead">{c.lead}</p>
+        <div className="eye">{t("tag")}</div>
+        <h2 className="h-sect">{t("headline")}</h2>
 
-        <div className="confronto" style={{ marginTop: 30 }}>
+        <div className="confronto" style={{ marginTop: 34 }}>
           <div className="colonna buona">
-            <div className="t">{c.yesTitle}</div>
+            <div className="t">{t("for_you.title")}</div>
             <ul>
-              {c.yes.map((x) => (
-                <li key={x}>
+              {Object.values(si).map((v) => (
+                <li key={v}>
                   <span className="m">→</span>
-                  <span>{x}</span>
+                  <span>{conGrassetto(v)}</span>
                 </li>
               ))}
             </ul>
           </div>
+
           <div className="colonna">
-            <div className="t">{c.noTitle}</div>
+            <div className="t">{t("not_for_you.title")}</div>
             <ul>
-              {c.no.map((x) => (
-                <li key={x}>
+              {Object.values(no).map((v) => (
+                <li key={v}>
                   <span className="m">✕</span>
-                  <span>{x}</span>
+                  <span>{conGrassetto(v)}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <p className="tira-somme" style={{ marginTop: 30 }}>
-          {c.note}
+        <p className="tira-somme" style={{ marginTop: 34 }}>
+          {t("closing")}
         </p>
+
+        <div className="cta-row" style={{ marginTop: 30 }}>
+          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            {t("cta")}
+          </a>
+        </div>
       </div>
     </section>
   );
