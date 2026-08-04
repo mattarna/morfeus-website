@@ -8,9 +8,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-
-const BOOKING_URL =
-  "https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website";
+/* Una copia a mano dell'URL viveva qui: non sapeva la lingua, quindi
+   anche dalle pagine inglesi mandava al calendario italiano. */
+import { bookingUrl } from "@/components/site/booking";
 
 /* ============ [12] FAQ · INCHIOSTRO ============ */
 
@@ -59,6 +59,7 @@ export function FaqPanel({ active }: { active: boolean }) {
 
 export function CtaPanel({ active }: { active: boolean }) {
   const t = useTranslations("CTA");
+  const locale = useLocale();
 
   return (
     <section className="panel band carta" data-active={active}>
@@ -93,7 +94,7 @@ export function CtaPanel({ active }: { active: boolean }) {
             alignItems: "center",
           }}
         >
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {t("primary")}
           </a>
           <a className="btn btn-3" href="mailto:hello@morfeushub.com">
@@ -134,7 +135,7 @@ export function FooterPanel({ active }: { active: boolean }) {
     { label: locale === "it" ? "Glossario" : "Glossary", href: `/${locale}/glossario` },
     { label: locale === "it" ? "Impara l'AI" : "Learn AI", href: `/${locale}/impara-ai` },
     { label: "FAQ", href: `/${locale}/faq` },
-    { label: locale === "it" ? "Prenota" : "Book", href: BOOKING_URL, esterno: true },
+    { label: locale === "it" ? "Prenota" : "Book", href: bookingUrl(locale), esterno: true },
   ];
 
   return (

@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { siteFontVars } from "@/components/site/fonts";
-import { BOOKING_URL } from "@/components/site/booking";
+import { bookingUrl } from "@/components/site/booking";
 import { HomeBackground } from "@/components/fixed/HomeBackground";
 import { SiteMobileMenu } from "@/components/site/SiteMobileMenu";
 import { DemoStage, type RailPoint } from "../engine/DemoStage";
@@ -139,7 +139,7 @@ export function Home2026() {
             un passaggio in piu' per chi vuole solo prendere la call. */}
         <a
           className="btn btn-1"
-          href={BOOKING_URL}
+          href={bookingUrl(locale)}
           target="_blank"
           rel="noopener noreferrer"
         >

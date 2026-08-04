@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { MARFVisualCore } from "../shared/MARFVisualCore";
-import { BOOKING_URL } from "@/components/site/booking";
+import { bookingUrl } from "@/components/site/booking";
 
 /* ============================================================
    01 · HERO
@@ -29,6 +29,7 @@ import { BOOKING_URL } from "@/components/site/booking";
 
 export function ForgeMsHero() {
   const t = useTranslations("Offerta.hero");
+  const locale = useLocale();
 
   return (
     <section className="band ink hero forge" id="hero">
@@ -53,7 +54,7 @@ export function ForgeMsHero() {
         </p>
 
         <div className="cta-row" style={{ marginTop: 18 }}>
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {t("cta_primary")}
           </a>
           <a className="btn btn-2-carta" href="#come-funziona">

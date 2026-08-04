@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import { BOOKING_URL } from "@/components/site/booking";
+import { useLocale, useTranslations } from "next-intl";
+import { bookingUrl } from "@/components/site/booking";
 import { ICONE_INCLUSO, ICONE_CODA } from "./icone";
 
 /* ============================================================
@@ -55,6 +55,7 @@ const GOV = ["1", "2", "3", "4", "5", "6", "7"] as const;
 
 export function ForgeMsPrezzi() {
   const t = useTranslations("Offerta.pricing");
+  const locale = useLocale();
   /* L'etichetta del bottone sta in `Offerta.ctas`. Prima qui c'era
      `sectionTitle`, che e' il titolo della sezione ("Tiers & Capacita'"):
      sul bottone si leggeva un titolo, non un invito. */
@@ -122,7 +123,7 @@ export function ForgeMsPrezzi() {
                   <div className="piede">
                     <a
                       className={`btn ${scelto ? "btn-1" : "btn-2-firma"} tier-cta`}
-                      href={BOOKING_URL}
+                      href={bookingUrl(locale)}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -180,7 +181,7 @@ export function ForgeMsPrezzi() {
         </div>
 
         <div className="cta-row" style={{ marginTop: 36 }}>
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {tc("pricing")}
           </a>
         </div>

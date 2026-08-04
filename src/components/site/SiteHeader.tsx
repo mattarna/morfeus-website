@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LangSwitch } from "./LangSwitch";
 import { SiteMobileMenu } from "./SiteMobileMenu";
-import { BOOKING_URL } from "./booking";
+import { bookingUrl } from "./booking";
 
 /**
  * La voce MARF punta a /marf, non piu' a /forge. Erano due pagine
@@ -151,7 +151,7 @@ export function SiteHeader({ locale }: { locale: "it" | "en" }) {
               ROIometro: era l'unica CTA del sito che finiva sul
               calcolatore invece che sul calendario. */}
           <a
-            href={BOOKING_URL}
+            href={bookingUrl(locale)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-1 btn-bar whitespace-nowrap"

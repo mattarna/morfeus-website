@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { BOOKING_URL } from "@/components/site/booking";
+import { useLocale, useTranslations } from "next-intl";
+import { bookingUrl } from "@/components/site/booking";
 import { conGrassetto } from "./grassetto";
 
 /* ============================================================
@@ -21,6 +21,7 @@ import { conGrassetto } from "./grassetto";
 
 export function ForgeMsFiltro() {
   const t = useTranslations("Offerta.filter");
+  const locale = useLocale();
   const si = t.raw("for_you.bullets") as Record<string, string>;
   const no = t.raw("not_for_you.bullets") as Record<string, string>;
 
@@ -61,7 +62,7 @@ export function ForgeMsFiltro() {
         </p>
 
         <div className="cta-row" style={{ marginTop: 30 }}>
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {t("cta")}
           </a>
         </div>

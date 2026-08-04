@@ -10,9 +10,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-
-const BOOKING_URL =
-  "https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website";
+/* Una copia a mano dell'URL viveva qui: non sapeva la lingua, quindi
+   anche dalle pagine inglesi mandava al calendario italiano. */
+import { bookingUrl } from "@/components/site/booking";
 
 const DEFAULT_VALUES = { people: 10, cost: 3500, manualPct: 35 } as const;
 
@@ -221,7 +221,7 @@ export function RoiCalc() {
 
           <div className="rc-actions">
             <div className="rc-cta-row">
-              <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
                 {t("ctas.book")}
               </a>
               <button type="button" className="btn btn-2-carta" onClick={reset}>

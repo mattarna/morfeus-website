@@ -1,10 +1,10 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+/* Una copia a mano dell'URL viveva qui: non sapeva la lingua, quindi
+   anche dalle pagine inglesi mandava al calendario italiano. */
+import { bookingUrl } from "@/components/site/booking";
 import { useEffect, useRef, useState } from "react";
-
-const BOOKING_URL =
-  "https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website";
 
 const DEFAULT_VALUES = {
   people: 10,
@@ -300,7 +300,7 @@ export function SiteROIMeter() {
           </div>
 
           <div className="mt-5 flex flex-wrap gap-3">
-            <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
               {t("ctas.book")}
             </a>
             <button type="button" onClick={reset} className="btn btn-2-carta">

@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import { BOOKING_URL } from "@/components/site/booking";
+import { useLocale, useTranslations } from "next-intl";
+import { bookingUrl } from "@/components/site/booking";
 
 /* ============================================================
    12 · IL PRIMO PASSO
@@ -32,6 +32,7 @@ const PASSI = ["1", "2", "3"] as const;
 
 export function ForgeMsContatto() {
   const t = useTranslations("Offerta.contact");
+  const locale = useLocale();
   const badges = t.raw("badges") as Record<string, string>;
 
   /* Il titolo usa `<spanIndigo>` sulla parola da evidenziare. Qui NON lo
@@ -62,7 +63,7 @@ export function ForgeMsContatto() {
           <p className="lead">{t("subtitle")}</p>
 
           <div className="cta-row" style={{ marginTop: 32 }}>
-            <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
               {t("cta")}
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path

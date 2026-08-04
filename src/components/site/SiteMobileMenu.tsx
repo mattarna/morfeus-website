@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BOOKING_URL } from "./booking";
+import { bookingUrl } from "./booking";
 
 /**
  * Menu mobile del sito B2B.
@@ -197,7 +197,7 @@ export function SiteMobileMenu({ locale }: { locale: "it" | "en" }) {
             /* "Prenota" e' l'unica voce che non porta a una pagina del
                sito ma al calendario esterno, come la CTA della barra.
                La freccia in salita gia' lo diceva; adesso ci porta. */
-            const href = isPrenota ? BOOKING_URL : `${base}/${slug}`;
+            const href = isPrenota ? bookingUrl(locale) : `${base}/${slug}`;
             const esterno = isPrenota;
             return (
               <Link

@@ -6,14 +6,15 @@
  * Problem è l'unica sezione RIDISEGNATA (da dashboard SaaS a scheda di rilievo).
  */
 
-import { useTranslations } from "next-intl";
-import { BOOKING_URL } from "@/components/site/booking";
+import { useLocale, useTranslations } from "next-intl";
+import { bookingUrl } from "@/components/site/booking";
 import { jumpToIndex } from "../engine/useDemoScroll";
 
 /* ============ [0] HERO · INCHIOSTRO ============ */
 
 export function Hero({ active }: { active: boolean }) {
   const t = useTranslations("Hero");
+  const locale = useLocale();
 
   /* Spezza l'ultima parola della riga enfatizzata: e' quella che porta
      la sottolineatura. Calcolata, non scritta a mano, cosi' regge anche
@@ -80,7 +81,7 @@ export function Hero({ active }: { active: boolean }) {
         <div className="hero-ctas fx d6">
           {/* Diretto al calendario, come il bottone della barra: la CTA
               principale porta a prenotare, non scorre al pannello. */}
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {t("cta_primary")}
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path

@@ -1,4 +1,7 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+/* L'URL era scritto a mano nel bottone: non sapeva la lingua, quindi
+   anche da /lab in inglese mandava al calendario italiano. */
+import { bookingUrl } from "@/components/site/booking";
 
 /* ============================================================
    11 · CONTATTO, fascia INCHIOSTRO
@@ -30,6 +33,7 @@ const PASSI = [
 
 export function LabMsContatto() {
   const t = useTranslations("Lab.contact");
+  const locale = useLocale();
   const pills = t.raw("footer_pills") as string[];
 
   return (
@@ -48,7 +52,7 @@ export function LabMsContatto() {
           <div className="cta-row">
             <a
               className="btn btn-1"
-              href="https://marf.alexcarofiglio.com/book/morfeushub?utm_source=website&utm_medium=organic&utm_campaign=website"
+              href={bookingUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"
             >

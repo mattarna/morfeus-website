@@ -1,4 +1,4 @@
-import { BOOKING_URL } from "@/components/site/booking";
+import { bookingUrl } from "@/components/site/booking";
 import type { ForgeCopy } from "./copy";
 
 /* ============================================================
@@ -23,7 +23,7 @@ import type { ForgeCopy } from "./copy";
    spenta contro una freccia che va avanti.
    ============================================================ */
 
-export function ForgeMsPercorso({ t, isIt }: { t: ForgeCopy; isIt: boolean }) {
+export function ForgeMsPercorso({ t, isIt, locale }: { t: ForgeCopy; isIt: boolean; locale: string }) {
   const c = t.scala;
 
   return (
@@ -85,7 +85,7 @@ export function ForgeMsPercorso({ t, isIt }: { t: ForgeCopy; isIt: boolean }) {
         </p>
 
         <div className="cta-row" style={{ marginTop: 32 }}>
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {c.cta}
           </a>
         </div>

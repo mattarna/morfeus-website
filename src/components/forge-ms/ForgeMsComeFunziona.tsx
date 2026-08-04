@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useTranslations } from "next-intl";
-import { BOOKING_URL } from "@/components/site/booking";
+import { useLocale, useTranslations } from "next-intl";
+import { bookingUrl } from "@/components/site/booking";
 import { ICONE_MARF } from "./icone";
 
 /* ============================================================
@@ -35,6 +35,7 @@ const PUNTI_MARF = ["1", "2", "3", "4"] as const;
 
 export function ForgeMsComeFunziona() {
   const t = useTranslations("Offerta.how_it_works");
+  const locale = useLocale();
 
   const rich = {
     br: () => <br />,
@@ -126,7 +127,7 @@ export function ForgeMsComeFunziona() {
         </div>
 
         <div className="cta-row" style={{ marginTop: 38 }}>
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {t("cta")}
           </a>
         </div>

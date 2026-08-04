@@ -1,4 +1,4 @@
-import { BOOKING_URL } from "@/components/site/booking";
+import { bookingUrl } from "@/components/site/booking";
 import type { ForgeCopy } from "./copy";
 
 /* ============================================================
@@ -13,7 +13,7 @@ import type { ForgeCopy } from "./copy";
    un bottone. Aggiungere un quadro qui sarebbe rumore.
    ============================================================ */
 
-export function ForgeMsChiusa({ t }: { t: ForgeCopy }) {
+export function ForgeMsChiusa({ t, locale }: { t: ForgeCopy; locale: string }) {
   const c = t.cta;
 
   return (
@@ -27,7 +27,7 @@ export function ForgeMsChiusa({ t }: { t: ForgeCopy }) {
         </h2>
         <p>{c.p}</p>
         <div className="cta-row">
-          <a className="btn btn-1" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn-1" href={bookingUrl(locale)} target="_blank" rel="noopener noreferrer">
             {c.cta1}
           </a>
           <a className="btn btn-2-ink" href="mailto:hello@morfeushub.com">
