@@ -93,10 +93,15 @@ export function Documento({
             `,
           }}
         />
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager. lazyOnload invece di afterInteractive: GTM
+            (~129 KiB, ~300ms di CPU) e' il maggior peso di terze parti sul
+            thread principale. Caricarlo nell'idle dopo il load taglia il TBT.
+            Nessun evento perso: gli eventi finiscono in dataLayer, che GTM
+            svuota al caricamento. Consent Mode resta afterInteractive, quindi
+            i default di consenso sono gia' in dataLayer quando GTM parte. */}
         <Script
           id="gtm-script"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -107,10 +112,14 @@ export function Documento({
             `,
           }}
         />
-        {/* Meta Pixel */}
+        {/* Meta Pixel. lazyOnload: sulle pagine del sito (gruppo (sito))
+            l'unico uso di fbq e' il PageView qui sotto, quindi ritardarlo
+            all'idle non perde eventi. I funnel hanno un pixel a parte
+            (funnel-internal layout), NON toccato: li' il tracking dei Lead
+            resta immediato. */}
         <Script
           id="meta-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
