@@ -191,7 +191,24 @@ export const PIANO_VERTICE: Mossa[] = [
 
 /* ---------- i gradini ----------
    Nessun prezzo, mai: l'high-ticket si vende in call (decisione Matt
-   2026-07-29). Qui c'e' cosa e', non quanto costa. */
+   2026-07-29). Qui c'e' cosa e', non quanto costa.
+
+   LE DUE CALL SI CHIEDONO COME ANALISI, NON COME APPUNTAMENTO
+   (decisione Matt 2026-08-07). "Prenota la call" faceva cambiare
+   genere alla pagina: fino a un rigo prima il Collaudo misura e
+   spiega, e all'ultimo passo diventava un appuntamento commerciale.
+   Ora il gradino continua lo stesso filo: hai una misura su cinque
+   assi, il passo dopo e' guardarla sui tuoi dati veri.
+
+   ATTENZIONE, e' una promessa: se in call si vende prima di aver
+   guardato, questo copy diventa un'esca e costa piu' fiducia di
+   quanta ne porti. Per lo stesso motivo qui NON c'e' scritto "non e'
+   una call di vendita", che sarebbe falso: c'e' l'ordine delle cose
+   ("da li' si decide se e come lavorarci insieme"), che e' vero.
+
+   La "conversazione" (CONVERSAZIONE_COPY) resta com'e': dice gia'
+   "non abbiamo niente da venderti", che e' un frame piu' forte di
+   questo. Trasformarla in analisi la renderebbe piu' commerciale. */
 
 export const GRADINI_COPY: Record<
   Gradino,
@@ -219,18 +236,18 @@ export const GRADINI_COPY: Record<
     cta: "Candidati al Bootcamp",
   },
   call: {
-    occhiello: "Per accorciare i tempi",
-    titolo: "Una call sul tuo sistema",
+    occhiello: "Dal test al tuo caso vero",
+    titolo: "Vuoi analizzare la tua situazione specifica?",
     testo:
-      "Mezz'ora sui tuoi processi e i tuoi numeri, per capire cosa ha senso costruire e soprattutto in che ordine. Da lì si decide se e come lavorarci insieme.",
-    cta: "Prenota la call",
+      "Mezz'ora sui tuoi processi e i tuoi numeri. Il Collaudo ti ha misurato su cinque assi con dodici domande: qui si guarda la stessa cosa sul tuo caso vero, per capire cosa ha senso costruire e soprattutto in che ordine. Da lì si decide se e come lavorarci insieme.",
+    cta: "Prenota l'analisi",
   },
   "call-b2b": {
-    occhiello: "Il passo che conta per te",
-    titolo: "Una call sull'azienda",
+    occhiello: "Dal tuo caso all'azienda",
+    titolo: "Vuoi analizzare la situazione della tua azienda?",
     testo:
-      "Prepariamo insieme la proposta da portare a chi decide: cosa cambia, per chi, e con quali numeri. Sei tu a portarla, con qualcosa di solido in mano.",
-    cta: "Prenota la call",
+      "Mezz'ora sull'azienda: dove si perde tempo davvero, cosa conviene spostare per primo e con quali numeri. Ne esce la proposta da portare a chi decide, e sei tu a portarla, con qualcosa di solido in mano.",
+    cta: "Prenota l'analisi",
   },
 };
 
