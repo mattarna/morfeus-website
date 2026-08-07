@@ -30,12 +30,55 @@
    ------------------------------------------------------------ */
 export const BOOTCAMP_APERTO = false;
 
-/** Il nome con cui questo funnel si presenta ovunque: nel campo
- *  form_name che va a Brevo, nel registro, nei conti dei KPI.
- *  La sorgente e' UNA per funnel, non una per bottone: tutti i
- *  punti d'ingresso alla community stanno dentro il referto,
- *  quindi chi passa di li' ha gia' compilato il collaudo. */
-export const SORGENTE = "pg.collaudo";
+/* ------------------------------------------------------------
+   LE SORGENTI · da quale porta e' entrato
+
+   Il valore finisce in due posti: l'attributo form_name del
+   contatto Brevo e la colonna form_name del foglio RISPOSTE. Lo
+   script del foglio cerca le colonne PER NOME, quindi un valore
+   nuovo cade nella colonna che gia' esiste: per distinguere le
+   porte non serve toccare ne' il foglio ne' lo script, basta
+   filtrare quella colonna.
+
+   Una sorgente per PORTA, non per bottone: dentro una stessa
+   pagina tutti i bottoni aprono lo stesso collaudo e valgono
+   uguale. Chi arriva alla community e' comunque passato dal
+   referto, quindi ha sempre una sorgente.
+
+   Se si aggiunge una porta, si aggiunge QUI: la rotta che salva
+   accetta solo i valori di questo elenco, cosi' nessuno puo'
+   riempire il foglio di nomi inventati.
+   ------------------------------------------------------------ */
+export const SORGENTI = {
+  /** La landing lunga, playground.morfeushub.com */
+  landing: "pg.collaudo",
+  /** La porta corta per i social, /gate */
+  gate: "pg.gate",
+} as const;
+
+export type Sorgente = (typeof SORGENTI)[keyof typeof SORGENTI];
+
+/** La sorgente di chi non ne dichiara una: e' la landing, che
+ *  esisteva prima che le porte fossero due. Cambiarla spezzerebbe
+ *  la continuita' dello storico nel foglio. */
+export const SORGENTE: Sorgente = SORGENTI.landing;
+
+const VALIDE = new Set<string>(Object.values(SORGENTI));
+
+/**
+ * Riporta una sorgente dichiarata dal client a una di quelle note.
+ *
+ * La rotta che salva e' pubblica: chiunque puo' chiamarla con la
+ * sorgente che vuole. Senza elenco chiuso il foglio si riempirebbe di
+ * form_name inventati, che e' peggio che non distinguere le porte: i
+ * conti per sorgente diventerebbero sbagliati senza che si veda.
+ * Un valore sconosciuto non fa fallire il salvataggio (il referto
+ * viene prima di tutto): ricade sulla landing.
+ */
+export function normalizzaSorgente(dichiarata?: string): Sorgente {
+  const pulita = dichiarata?.trim() ?? "";
+  return VALIDE.has(pulita) ? (pulita as Sorgente) : SORGENTE;
+}
 
 /** Invito Circle. Su Circle si chiama "Collaudo | Pagina Principale
  *  Playground". Lo usano tutti i punti d'ingresso alla community.

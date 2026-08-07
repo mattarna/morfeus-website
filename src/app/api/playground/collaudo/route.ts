@@ -19,11 +19,14 @@ import { NextResponse } from "next/server";
 import { BREVO_ATTR } from "@/lib/brevo/attributes";
 import { getBrevoListId } from "@/lib/brevo/lists";
 import { getSheetWebhook } from "@/lib/sheets/webhooks";
+import { normalizzaSorgente } from "@/components/playground/collegamenti";
 
 /** Quello che il gate manda. I nomi sono gli stessi delle colonne del
  *  foglio (RISPOSTE): cosi' il mapping piu' sotto e' una riga sola. */
 interface CollaudoPayload {
   id?: string;
+  /** Da quale porta e' entrato: la landing o /gate. Vedi SORGENTI. */
+  sorgente?: string;
   dispositivo?: string;
   durata_sec?: number;
 
@@ -61,11 +64,13 @@ interface CollaudoPayload {
   bootcamp_aperto?: boolean;
 }
 
-const SORGENTE = "pg.collaudo";
-
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
+/* L'elenco chiuso delle sorgenti valide e la ricaduta sulla landing
+   stanno in collegamenti.ts, accanto al registro: cosi' chi aggiunge
+   una porta trova la regola dove aggiunge il valore. */
 
 /* ---- Brevo: solo il contatto ---- */
 async function salvaSuBrevo(p: CollaudoPayload, email: string): Promise<void> {
@@ -90,7 +95,7 @@ async function salvaSuBrevo(p: CollaudoPayload, email: string): Promise<void> {
         // TELEFONO_ e' testo libero: non fa mai fallire l'optin (vedi
         // REGOLA TELEFONO in lib/brevo/attributes.ts)
         ...(p.telefono?.trim() ? { [BREVO_ATTR.TELEFONO]: p.telefono.trim() } : {}),
-        [BREVO_ATTR.FORM_NAME]: SORGENTE,
+        [BREVO_ATTR.FORM_NAME]: normalizzaSorgente(p.sorgente),
         [BREVO_ATTR.OPT_IN]: Boolean(p.consenso),
       },
       ...(listId ? { listIds: [listId] } : {}),
@@ -119,7 +124,7 @@ async function salvaSuFoglio(p: CollaudoPayload): Promise<void> {
   const riga = {
     id: p.id ?? "",
     data_ora: new Date().toISOString(),
-    form_name: SORGENTE,
+    form_name: normalizzaSorgente(p.sorgente),
     dispositivo: p.dispositivo ?? "",
     durata_sec: p.durata_sec ?? "",
     nome: p.nome?.trim() ?? "",

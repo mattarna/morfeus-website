@@ -36,7 +36,7 @@ import {
 import type { Dimensione, Intento, Punti } from "./motore";
 import { calcolaConto, collauda } from "./motore";
 import { DICHIARATI } from "./copy";
-import { BOOTCAMP_APERTO } from "../collegamenti";
+import { BOOTCAMP_APERTO, SORGENTE, type Sorgente } from "../collegamenti";
 import { Referto } from "./Referto";
 import "./collaudo.css";
 
@@ -87,7 +87,17 @@ function mescola<T>(a: T[]): T[] {
   return b;
 }
 
-export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
+/** `sorgente` dice da quale porta e' entrata la persona: finisce nel
+ *  form_name di Brevo e nella colonna omonima del foglio. Ha un
+ *  default perche' la landing lo apriva senza passarlo, e un
+ *  parametro obbligatorio l'avrebbe rotta. */
+export function Collaudo({
+  onChiudi,
+  sorgente = SORGENTE,
+}: {
+  onChiudi: () => void;
+  sorgente?: Sorgente;
+}) {
   const [fase, setFase] = useState<Fase>("intro");
   const [passo, setPasso] = useState(0);
   const [r, setR] = useState<Risposte>(VUOTE);
@@ -336,6 +346,7 @@ export function Collaudo({ onChiudi }: { onChiudi: () => void }) {
 
     const payload = {
       id: sessione.current.id,
+      sorgente,
       dispositivo: window.matchMedia("(max-width: 760px)").matches ? "telefono" : "computer",
       durata_sec: Math.round((performance.now() - sessione.current.inizio) / 1000),
 
