@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Referto } from "@/components/playground/collaudo/Referto";
-import { Simulatore } from "@/components/playground/collaudo/Simulatore";
+import { Cruscotto } from "@/components/playground/collaudo/Cruscotto";
 import { decodificaReferto } from "@/components/playground/collaudo/permalink";
-import { RUOLI_OPZIONI } from "@/components/playground/collaudo/domande";
-import { BOOTCAMP_APERTO } from "@/components/playground/collegamenti";
 import "@/components/playground/playground.css";
 import "@/components/playground/referto-perso.css";
 
@@ -35,11 +32,6 @@ import "@/components/playground/referto-perso.css";
 const TITOLO = "Il tuo referto · Il Collaudo";
 const DESCRIZIONE =
   "Il referto del Collaudo: il tuo livello, la radiografia sui cinque assi e la prima cosa da sistemare.";
-
-/** Chi apre un link condiviso non e' chi ha fatto il collaudo, e noi
- *  non sappiamo chi sia. "Ospite" e' la parola onesta, e sul pass del
- *  referto suona come quello che e': un lasciapassare in prestito. */
-const SENZA_NOME = "Ospite";
 
 export const metadata: Metadata = {
   title: TITOLO,
@@ -79,43 +71,12 @@ export default async function RefertoPage({
     );
   }
 
-  /* Tasca, leva e persone nel team non stanno nel link: si ricavano
-     dal ruolo, che e' l'unico posto dove sono definite. Tenerle nel
-     codice vorrebbe dire poterle contraddire. */
-  const ruolo = RUOLI_OPZIONI.find((x) => x.id === risposte.ruolo);
-
-  return (
-    <div className="pg26">
-      <Referto
-        nome={SENZA_NOME}
-        mestiere={risposte.mestiere}
-        struttura={risposte.ruolo}
-        dichiarato={risposte.dichiarato}
-        urgenza={risposte.urgenza}
-        oreSettimana={risposte.ore}
-        valoreOra={risposte.valoreOra}
-        personeNelTeam={ruolo?.team ?? 0}
-        profilo={{
-          tasca: ruolo?.tasca ?? "mia",
-          leva: ruolo?.leva ?? "solo",
-          intento: risposte.intento,
-        }}
-        radiografia={risposte.punti}
-        opzioni={{ bootcampAperto: BOOTCAMP_APERTO }}
-      />
-
-      {/* Il simulatore sta QUI e non nell'overlay del collaudo, ed e' una
-          scelta. Il referto in pagina deve far prendere una decisione
-          adesso: allungarlo diluisce l'unica cosa che gli si chiede. Il
-          report esteso ha un altro mestiere, e' quello che si riapre dal
-          link nell'email, si rilegge con calma e si inoltra a chi decide.
-          Le due CTA vivono qui dentro. */}
-      <Simulatore
-        radiografia={risposte.punti}
-        ore={risposte.ore}
-        valoreOra={risposte.valoreOra}
-        personeNelTeam={ruolo?.team ?? 0}
-      />
-    </div>
-  );
+  /* QUI IL CRUSCOTTO, NON IL REFERTO EDITORIALE, ed e' una scelta di
+     mestiere. Il referto scuro dentro l'overlay deve far prendere UNA
+     decisione subito, e per quello e' largo e racconta. Questo indirizzo
+     invece si riapre dal link nell'email, si rilegge con calma, si
+     stampa e si inoltra a chi decide: li' serve uno strumento che mostri
+     tutto insieme, chiaro e denso, non una pagina da scorrere.
+     Il referto editoriale resta dov'era, nel collaudo. */
+  return <Cruscotto risposte={risposte} />;
 }

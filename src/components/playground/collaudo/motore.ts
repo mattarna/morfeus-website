@@ -117,6 +117,20 @@ const MINIMI_CANCELLO: Record<NumeroLivello, Partial<Record<Dimensione, number>>
   8: { contesto: 2, ripetibilita: 2, diffusione: 3, controllo: 2 },
 };
 
+/** La scala come la vede chi deve disegnarla: numero, nome, soglia di
+ *  voto e i minimi che il cancello pretende.
+ *
+ *  E' DERIVATA da LIVELLI e da MINIMI_CANCELLO, non ricopiata: un
+ *  cruscotto che disegnasse una scala diversa da quella che il motore
+ *  calcola sarebbe il difetto peggiore possibile, perche' la persona
+ *  leggerebbe cosa le manca, lo farebbe, e non salirebbe. */
+export const SCALA = LIVELLI.map((l) => ({
+  numero: l.numero,
+  nome: l.nome,
+  sogliaMin: l.sogliaMin,
+  minimi: MINIMI_CANCELLO[l.numero],
+}));
+
 export type Livello = {
   numero: NumeroLivello;
   nome: string;
