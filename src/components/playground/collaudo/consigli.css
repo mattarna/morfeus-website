@@ -1,0 +1,123 @@
+/* ============================================================
+   GLI ALTRI FRONTI · pelle
+   ------------------------------------------------------------
+   Vive dentro .pg26, sotto il referto, e ne usa i token: deve
+   sembrare l'ultima fascia dello stesso documento, non un pezzo
+   attaccato dopo. Per questo niente cornice e niente card: solo
+   una fascia con i filetti, come il resto del referto.
+   ============================================================ */
+
+.pg26 .cs {
+  background: var(--n1);
+  border-top: 1px solid var(--line);
+  padding: clamp(48px, 8vh, 80px) 22px clamp(56px, 9vh, 92px);
+}
+
+.pg26 .cs-in {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pg26 .cs-k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--viola-hi);
+  margin-bottom: 12px;
+}
+
+.pg26 .cs-in h2 {
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.pg26 .cs-lead {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--body);
+}
+
+.pg26 .cs-lista {
+  list-style: none;
+  margin-top: clamp(26px, 4vh, 40px);
+}
+
+.pg26 .cs-lista li {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.pg26 .cs-testa {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pg26 .cs-nome {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.pg26 .cs-punti {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+
+.pg26 .cs-punti i {
+  width: 26px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--line-hi);
+}
+
+.pg26 .cs-punti i.on {
+  background: var(--uv);
+}
+
+.pg26 .cs-stato {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--mute);
+}
+
+/* La mossa e' la sola riga che serve DAVVERO portarsi via: filetto a
+   sinistra e inchiostro pieno, il resto attorno resta di contorno. */
+.pg26 .cs-mossa {
+  margin-top: 12px;
+  border-left: 2px solid var(--viola);
+  padding-left: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--body);
+}
+
+.pg26 .cs-mossa b {
+  color: var(--text);
+}
+
+.pg26 .cs-chiusa {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--mute);
+}
+
+@media (max-width: 620px) {
+  .pg26 .cs-testa {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

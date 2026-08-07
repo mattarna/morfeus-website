@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { Cruscotto } from "@/components/playground/collaudo/Cruscotto";
+import { Referto } from "@/components/playground/collaudo/Referto";
+import { Consigli } from "@/components/playground/collaudo/Consigli";
 import { decodificaReferto } from "@/components/playground/collaudo/permalink";
+import { RUOLI_OPZIONI } from "@/components/playground/collaudo/domande";
+import { collauda } from "@/components/playground/collaudo/motore";
+import { BOOTCAMP_APERTO } from "@/components/playground/collegamenti";
 import "@/components/playground/playground.css";
 import "@/components/playground/referto-perso.css";
 
@@ -15,23 +19,40 @@ import "@/components/playground/referto-perso.css";
    dati li avevamo noi, in Brevo e nel foglio; la sola persona che
    non poteva piu' vedere il suo referto era chi lo aveva fatto.
 
-   Qui il referto si ricostruisce dalle risposte cifrate nel codice.
-   Nessuna lettura da database: Referto() e' una funzione pura, e le
-   risposte bastano. Quindi il link non scade, non dipende da un
-   servizio acceso, e si puo' mandare per email.
+   Qui si ricostruisce dalle risposte cifrate nel codice. Nessuna
+   lettura da database: Referto() e' una funzione pura, e le risposte
+   bastano. Quindi il link non scade, non dipende da un servizio
+   acceso, e si puo' mandare per email.
 
-   SENZA NOME, per scelta. Il codice non porta dati personali (vedi
-   permalink.ts), quindi qui non sappiamo chi sia: il referto e' lo
-   stesso, l'intestazione no. Il referto col nome resta sul
-   dispositivo di chi l'ha fatto, dove il nome sta gia'.
+   E' LO STESSO REFERTO DEL COLLAUDO, non una seconda versione. Ci
+   abbiamo provato, con un cruscotto a fondo chiaro pieno di
+   indicatori: sbagliato due volte. Duplicava un componente gia'
+   completo e approvato, e metteva in prima pagina la scala a otto
+   livelli, che e' l'ingranaggio del punteggio, mentre il metodo che
+   la persona deve capire ne ha TRE (tu 90%/AI 10% → AI 90%/tu 10%
+   → automazione). Resta in git, al commit 7e750f5, se un giorno
+   servisse il materiale.
+
+   L'unica aggiunta e' in coda: gli altri fronti. PIANO ha tre mosse
+   per tutti e cinque gli assi e il referto ne mostra uno solo; qui,
+   dove si legge con calma, compare la prima mossa anche degli altri.
+
+   SENZA NOME, per scelta: il codice non porta dati personali (vedi
+   permalink.ts), quindi qui non sappiamo chi sia. Il referto col
+   nome resta sul dispositivo di chi l'ha fatto.
 
    FUORI DALL'INDICE: e' il risultato di una persona, non una pagina
-   del sito. Non c'e' niente da cercare qui.
+   del sito.
    ============================================================ */
 
 const TITOLO = "Il tuo referto · Il Collaudo";
 const DESCRIZIONE =
   "Il referto del Collaudo: il tuo livello, la radiografia sui cinque assi e la prima cosa da sistemare.";
+
+/** Chi apre un link condiviso non e' chi ha fatto il collaudo, e noi
+ *  non sappiamo chi sia. "Ospite" e' la parola onesta, e sul pass del
+ *  referto suona come quello che e': un lasciapassare in prestito. */
+const SENZA_NOME = "Ospite";
 
 export const metadata: Metadata = {
   title: TITOLO,
@@ -71,12 +92,39 @@ export default async function RefertoPage({
     );
   }
 
-  /* QUI IL CRUSCOTTO, NON IL REFERTO EDITORIALE, ed e' una scelta di
-     mestiere. Il referto scuro dentro l'overlay deve far prendere UNA
-     decisione subito, e per quello e' largo e racconta. Questo indirizzo
-     invece si riapre dal link nell'email, si rilegge con calma, si
-     stampa e si inoltra a chi decide: li' serve uno strumento che mostri
-     tutto insieme, chiaro e denso, non una pagina da scorrere.
-     Il referto editoriale resta dov'era, nel collaudo. */
-  return <Cruscotto risposte={risposte} />;
+  /* Tasca, leva e persone nel team non stanno nel link: si ricavano dal
+     ruolo, che e' l'unico posto dove sono definite. */
+  const ruolo = RUOLI_OPZIONI.find((x) => x.id === risposte.ruolo);
+  const profilo = {
+    tasca: ruolo?.tasca ?? ("mia" as const),
+    leva: ruolo?.leva ?? ("solo" as const),
+    intento: risposte.intento,
+  };
+
+  /* Serve solo a non ripetere in coda l'asse su cui il referto ha gia'
+     dato il piano. Stessa funzione del referto, quindi stessa risposta:
+     due calcoli separati potrebbero indicare due assi diversi nello
+     stesso documento. */
+  const { puntoDebole } = collauda(risposte.punti, profilo, {
+    bootcampAperto: BOOTCAMP_APERTO,
+  });
+
+  return (
+    <div className="pg26">
+      <Referto
+        nome={SENZA_NOME}
+        mestiere={risposte.mestiere}
+        struttura={risposte.ruolo}
+        dichiarato={risposte.dichiarato}
+        urgenza={risposte.urgenza}
+        oreSettimana={risposte.ore}
+        valoreOra={risposte.valoreOra}
+        personeNelTeam={ruolo?.team ?? 0}
+        profilo={profilo}
+        radiografia={risposte.punti}
+        opzioni={{ bootcampAperto: BOOTCAMP_APERTO }}
+      />
+      <Consigli radiografia={risposte.punti} giaCoperto={puntoDebole} />
+    </div>
+  );
 }
