@@ -11,9 +11,16 @@ import Script from "next/script";
 export function HomeBackground() {
   return (
     <>
-      <Script 
+      {/* lazyOnload, non afterInteractive: lo sfondo e' decorativo (fixed,
+          z-index:-1, mascherato) e non e' mai l'elemento LCP. Caricarlo
+          nell'idle DOPO il load, invece che subito dopo l'hydration, lo
+          toglie dal percorso critico: su desktop era tra i responsabili
+          dei 450ms di TBT e dei ~270KiB di JS inutilizzato al primo
+          rendering (script jsDelivr + scena da AWS). Il contenuto sotto
+          resta dark (banda ink), quindi non si vede alcun "buco". */}
+      <Script
         src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         onLoad={() => {
           if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
             window.UnicornStudio.init();

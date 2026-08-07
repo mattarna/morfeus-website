@@ -26,10 +26,17 @@ import { SITE_URL } from "@/lib/seo/entity-ids";
 
 export const dynamic = "force-static";
 
+/* Link Markdown veri [testo](url), non URL nudi: il check "agentic
+   navigation" di Lighthouse considera llms.txt valido solo se contiene
+   link in forma Markdown. L'etichetta e' il percorso (o "/" per la home). */
+function comeLink(url: string): string {
+  return `- [${url.replace(SITE_URL, "") || "/"}](${url})`;
+}
+
 function elenco(): string {
   return SUPPORTED_LOCALES.flatMap((locale) =>
-    INDEXABLE_LOCALE_PATHS.map(
-      (percorso) => `- ${buildLocalizedUrl(SITE_URL, locale, percorsoPerLingua(percorso, locale))}`
+    INDEXABLE_LOCALE_PATHS.map((percorso) =>
+      comeLink(buildLocalizedUrl(SITE_URL, locale, percorsoPerLingua(percorso, locale)))
     )
   ).join("\n");
 }
@@ -38,14 +45,15 @@ function escluse(): string {
   return [
     ...SUPPORTED_LOCALES.flatMap((locale) =>
       NON_INDEXABLE_LOCALE_PREFIXES.map(
-        (sezione) => `- ${buildLocalizedUrl(SITE_URL, locale, sezione)}/`
+        (sezione) => `${buildLocalizedUrl(SITE_URL, locale, sezione)}/`
       )
     ),
-    `- ${SITE_URL}/api/`,
-    `- ${SITE_URL}/__funnels/`,
+    `${SITE_URL}/api/`,
+    `${SITE_URL}/__funnels/`,
   ]
     .filter((v, i, a) => a.indexOf(v) === i)
     .sort()
+    .map(comeLink)
     .join("\n");
 }
 
@@ -56,7 +64,7 @@ export function GET() {
 > Generated from the site's indexing source of truth, not maintained by hand.
 
 ## Canonical domain
-- ${SITE_URL}
+- [Morfeus](${SITE_URL})
 
 ## What Morfeus is
 Morfeus (Numanity S.r.l.) is an Italian AI consulting and training company
@@ -72,8 +80,8 @@ open source project.
 - Any ${SITE_URL}/en/... address redirects; do not cite it.
 
 ## Read first
-- ${buildLocalizedUrl(SITE_URL, "en", "")}
-- ${buildLocalizedUrl(SITE_URL, "it", "")}
+- [English homepage](${buildLocalizedUrl(SITE_URL, "en", "")})
+- [Italian homepage](${buildLocalizedUrl(SITE_URL, "it", "")})
 
 ## Public pages approved for indexing and retrieval
 ${elenco()}
