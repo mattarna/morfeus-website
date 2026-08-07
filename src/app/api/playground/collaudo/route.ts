@@ -27,6 +27,10 @@ interface CollaudoPayload {
   id?: string;
   /** Da quale porta e' entrato: la landing o /gate. Vedi SORGENTI. */
   sorgente?: string;
+  /** L'indirizzo permanente del suo referto. Lo calcola il client, che
+   *  e' l'unico posto dove le risposte esistono tutte insieme. Va in
+   *  Brevo per l'email e nel foglio per il setter. */
+  permalink?: string;
   dispositivo?: string;
   durata_sec?: number;
 
@@ -81,27 +85,61 @@ async function salvaSuBrevo(p: CollaudoPayload, email: string): Promise<void> {
   }
   const listId = getBrevoListId("PLAYGROUND_COLLAUDO");
 
-  const res = await fetch("https://api.brevo.com/v3/contacts", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      "api-key": brevoApiKey,
-    },
-    body: JSON.stringify({
-      email,
-      attributes: {
-        [BREVO_ATTR.NOME]: p.nome?.trim() ?? "",
-        // TELEFONO_ e' testo libero: non fa mai fallire l'optin (vedi
-        // REGOLA TELEFONO in lib/brevo/attributes.ts)
-        ...(p.telefono?.trim() ? { [BREVO_ATTR.TELEFONO]: p.telefono.trim() } : {}),
-        [BREVO_ATTR.FORM_NAME]: normalizzaSorgente(p.sorgente),
-        [BREVO_ATTR.OPT_IN]: Boolean(p.consenso),
+  /* Quello senza cui il contatto non serve a niente. */
+  const essenziali = {
+    [BREVO_ATTR.NOME]: p.nome?.trim() ?? "",
+    // TELEFONO_ e' testo libero: non fa mai fallire l'optin (vedi
+    // REGOLA TELEFONO in lib/brevo/attributes.ts)
+    ...(p.telefono?.trim() ? { [BREVO_ATTR.TELEFONO]: p.telefono.trim() } : {}),
+    [BREVO_ATTR.FORM_NAME]: normalizzaSorgente(p.sorgente),
+    [BREVO_ATTR.OPT_IN]: Boolean(p.consenso),
+  };
+
+  /* Il link del referto: comodo, non vitale. Serve all'email per dire
+     "riapri il tuo referto", ma un contatto senza link vale comunque,
+     e un contatto perso no. */
+  const comodi = {
+    ...(p.permalink?.trim()
+      ? { [BREVO_ATTR.LINK_COLLAUDO_COMPLETO]: p.permalink.trim() }
+      : {}),
+    /* Come TESTO, perche' il campo in Brevo e' di tipo testo: mandarci un
+       numero lo farebbe rifiutare, e con lui l'intero contatto. */
+    ...(typeof p.livello === "number" ? { [BREVO_ATTR.LIVELLO_AI]: String(p.livello) } : {}),
+  };
+
+  const manda = (attributes: Record<string, unknown>) =>
+    fetch("https://api.brevo.com/v3/contacts", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        "api-key": brevoApiKey,
       },
-      ...(listId ? { listIds: [listId] } : {}),
-      updateEnabled: true,
-    }),
-  });
+      body: JSON.stringify({
+        email,
+        attributes,
+        ...(listId ? { listIds: [listId] } : {}),
+        updateEnabled: true,
+      }),
+    });
+
+  let res = await manda({ ...essenziali, ...comodi });
+
+  /* SECONDO TENTATIVO SENZA I COMODI.
+     Brevo rifiuta l'INTERO contatto se un attributo non esiste o non
+     accetta il valore: basta che LINK_COLLAUDO_COMPLETO non sia ancora
+     stato creato nel pannello, o che qualcuno lo rinomini, e da quel
+     momento ogni optin del collaudo smette di salvare. Il lead si
+     perderebbe per un campo di comodo, che e' il modo peggiore di
+     perderlo. E' la stessa lezione dei campi telefono nativi.
+
+     Quindi al primo rifiuto si riprova con i soli essenziali: il
+     contatto entra comunque, e il guasto resta nei log per noi. */
+  if (!res.ok && Object.keys(comodi).length > 0) {
+    const primo = await res.text();
+    console.error(`collaudo: brevo ha rifiutato gli attributi comodi, riprovo senza. ${primo}`);
+    res = await manda(essenziali);
+  }
 
   if (!res.ok) {
     const details = await res.text();
@@ -155,6 +193,12 @@ async function salvaSuFoglio(p: CollaudoPayload): Promise<void> {
     gradino: p.gradino ?? "",
     bootcamp_aperto: p.bootcamp_aperto ? "si" : "no",
     cta_cliccata: "",
+    /* Lo script del foglio ignora le colonne che non conosce, quindi
+       questo non rompe niente finche' la colonna non esiste. Creando in
+       RISPOSTE una colonna chiamata esattamente "permalink", si riempie
+       da sola: utile al setter, che apre il referto della persona prima
+       di scriverle. */
+    permalink: p.permalink ?? "",
   };
 
   const res = await fetch(url, {

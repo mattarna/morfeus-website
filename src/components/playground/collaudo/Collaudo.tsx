@@ -391,6 +391,11 @@ export function Collaudo({
     const payload = {
       id: sessione.current.id,
       sorgente,
+      /* L'indirizzo permanente del referto. Si calcola QUI perche' qui le
+         risposte esistono tutte insieme: il server riceve gia' i campi
+         sparsi e ricomporlo di la' vorrebbe dire due codifiche da tenere
+         d'accordo. Va in Brevo, che lo mette nell'email. */
+      permalink: indirizzoReferto(daRicordare(r)),
       dispositivo: window.matchMedia("(max-width: 760px)").matches ? "telefono" : "computer",
       durata_sec: Math.round((performance.now() - sessione.current.inizio) / 1000),
 

@@ -35,6 +35,16 @@ export const BREVO_ATTR = {
   P_IVA_LOMBARDIA: "P_IVA_LOMBARDIA", // boolean: ha P.IVA / azienda con sede in Lombardia
   SEI_AZIENDA: "SEI_AZIENDA", // boolean: true = azienda, false = libero professionista
 
+  // Playground · Collaudo
+  /** Indirizzo permanente del referto, da mettere nell'email con
+   *  {{ contact.LINK_COLLAUDO_COMPLETO }}. Campo TESTO, non URL: un tipo
+   *  che valida rifiuterebbe il valore e con esso l'intero contatto,
+   *  esattamente come i campi telefono nativi (vedi REGOLA TELEFONO). */
+  LINK_COLLAUDO_COMPLETO: "LINK_COLLAUDO_COMPLETO",
+  /** Il livello misurato, da 1 a 8, come testo. Serve a segmentare le
+   *  email: chi e' a 2 e chi e' a 7 non vanno chiamati allo stesso modo. */
+  LIVELLO_AI: "LIVELLO_AI",
+
   // Acquisition / lifecycle
   FORM_NAME: "FORM_NAME",
   REFERRAL_NAME: "REFERRAL_NAME",
