@@ -33,7 +33,9 @@ import {
   famigliaDi,
   pagaLAzienda,
 } from "./domande";
-import type { Dimensione, Intento, Punti } from "./motore";
+import type { Dimensione, Intento, Punti, Radiografia } from "./motore";
+import { indirizzoReferto, type RisposteReferto } from "./permalink";
+import { leggiRefertoRicordato, ricordaReferto, type RefertoRicordato } from "./memoria";
 import { calcolaConto, collauda } from "./motore";
 import { DICHIARATI } from "./copy";
 import { BOOTCAMP_APERTO, SORGENTE, type Sorgente } from "../collegamenti";
@@ -63,6 +65,34 @@ type Opzione = { label: string; verdetto?: string; applica: (x: Risposte) => Ris
 type Passo =
   | { tipo: "scelta"; apertura?: string; domanda: string; aiuto?: string; mescola?: boolean; opzioni: Opzione[] }
   | { tipo: "slider"; domanda: string; aiuto?: string };
+
+/* I cinque assi con gli zeri al posto dei buchi. Serviva identico in
+   tre punti (il salvataggio, il referto, il link): con tre copie a mano
+   sarebbe bastato aggiungere un asse e vederne due su tre aggiornati. */
+function radiografiaDi(r: Risposte): Radiografia {
+  return {
+    contesto: r.punti.contesto ?? 0,
+    ripetibilita: r.punti.ripetibilita ?? 0,
+    correzione: r.punti.correzione ?? 0,
+    controllo: r.punti.controllo ?? 0,
+    diffusione: r.punti.diffusione ?? 0,
+  };
+}
+
+/** Le risposte nella forma che sa viaggiare: nel link e nella memoria
+ *  locale. Fuori restano quelle interne, che hanno i buchi. */
+function daRicordare(r: Risposte): RisposteReferto {
+  return {
+    mestiere: r.mestiere,
+    ruolo: r.ruolo,
+    dichiarato: r.dichiarato,
+    intento: r.intento,
+    urgenza: r.urgenza,
+    punti: radiografiaDi(r),
+    ore: r.ore,
+    valoreOra: r.valoreOra,
+  };
+}
 
 const VUOTE: Risposte = {
   mestiere: "",
@@ -105,6 +135,16 @@ export function Collaudo({
   const [verdetto, setVerdetto] = useState<string | null>(null);
   const [gate, setGate] = useState({ nome: "", email: "", telefono: "", consenso: false });
   const [erroreGate, setErroreGate] = useState(false);
+  /* Il referto gia' fatto su questo dispositivo, letto una volta sola
+     alla prima resa.
+
+     Si puo' leggere qui, e non in un effetto, perche' questo componente
+     non esiste mai sul server: chi lo monta lo tiene dietro a uno stato
+     che parte chiuso (`collaudoAperto ? <Collaudo/> : null`), quindi la
+     prima resa avviene sempre nel browser, dopo un clic. Nessun HTML
+     del server da far combaciare, nessuna idratazione da sfasare. */
+  const [ricordo] = useState<RefertoRicordato | null>(leggiRefertoRicordato);
+  const [copiato, setCopiato] = useState(false);
   /* Un id per collaudo e l'orario d'apertura: servono a legare la riga
      del foglio agli eventi e a misurare quanto ci mette una persona.
      Nascono alla prima resa e non cambiano piu'. */
@@ -318,6 +358,10 @@ export function Collaudo({
       return;
     }
     salvaCollaudo();
+    /* Da qui in poi il referto sopravvive alla chiusura della pagina.
+       Dopo il gate e non prima: a meta' collaudo la radiografia e'
+       incompleta e ricordarla darebbe un livello piu' basso del vero. */
+    ricordaReferto(daRicordare(r), gate.nome.trim());
     setFase("referto");
   }
 
@@ -445,6 +489,23 @@ export function Collaudo({
               cosa da sistemare.
             </p>
             <button className="cl-via" onClick={() => setFase("domande")}>Inizia il collaudo →</button>
+
+            {/* Chi l'ha gia' fatto su questo dispositivo non deve
+                rifarlo per rivederlo. Resta un'uscita secondaria: la
+                porta principale e' sempre iniziare. */}
+            {ricordo ? (
+              <button
+                className="cl-rivedi"
+                type="button"
+                onClick={() => {
+                  setR({ ...VUOTE, ...ricordo.risposte });
+                  setGate((g) => ({ ...g, nome: ricordo.nome }));
+                  setFase("referto");
+                }}
+              >
+                L&apos;hai già fatto: rivedi il tuo referto
+              </button>
+            ) : null}
           </div>
         ) : null}
 
@@ -566,6 +627,7 @@ export function Collaudo({
         ) : null}
 
         {fase === "referto" ? (
+          <>
           <Referto
             nome={gate.nome}
             mestiere={r.mestiere}
@@ -580,16 +642,51 @@ export function Collaudo({
               leva: RUOLI_OPZIONI.find((x) => x.id === r.ruolo)?.leva ?? "solo",
               intento: r.intento,
             }}
-            radiografia={{
-              contesto: r.punti.contesto ?? 0,
-              ripetibilita: r.punti.ripetibilita ?? 0,
-              correzione: r.punti.correzione ?? 0,
-              controllo: r.punti.controllo ?? 0,
-              diffusione: r.punti.diffusione ?? 0,
-            }}
+            radiografia={radiografiaDi(r)}
             opzioni={{ bootcampAperto: BOOTCAMP_APERTO }}
             onCta={(dove) => tracciaEvento("cta", dove)}
           />
+
+          {/* Il referto e' lungo e la gente lo legge una volta sola. Il
+              link sta in fondo, dopo le porte: prima si sceglie, poi si
+              archivia. */}
+          <div className="cl-link">
+            <p className="cl-link-k">Tienilo</p>
+            <p className="cl-link-t">
+              Su questo dispositivo lo ritrovi da solo. Il link serve a riaprirlo altrove, o a
+              mandartelo.
+            </p>
+            <div className="cl-link-riga">
+              <input
+                readOnly
+                value={indirizzoReferto(daRicordare(r))}
+                aria-label="Link del tuo referto"
+                onFocus={(e) => e.currentTarget.select()}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const link = indirizzoReferto(daRicordare(r));
+                  /* La scrittura negli appunti puo' essere negata (contesto
+                     non sicuro, permesso rifiutato). Se fallisce non si dice
+                     "copiato" a vuoto: il campo resta li' da selezionare. */
+                  navigator.clipboard
+                    ?.writeText(link)
+                    .then(() => {
+                      setCopiato(true);
+                      tracciaEvento("cta", "link-referto");
+                    })
+                    .catch(() => setCopiato(false));
+                }}
+              >
+                {copiato ? "Copiato" : "Copia"}
+              </button>
+            </div>
+            <p className="cl-link-nota">
+              Nel link non c&apos;è il tuo nome: puoi condividerlo senza dare via niente di tuo.
+            </p>
+          </div>
+          </>
         ) : null}
       </div>
     </div>

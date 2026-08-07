@@ -481,3 +481,109 @@
   font-size: 16px;
   color: var(--ko);
 }
+
+/* ============================================================
+   IL REFERTO CHE NON SI PERDE
+   ------------------------------------------------------------
+   Due pezzi aggiunti quando il referto ha smesso di vivere solo
+   nella memoria del browser: l'uscita "rivedi" nell'intro e il
+   link in fondo al referto.
+   ============================================================ */
+
+/* Uscita secondaria sotto il bottone d'ingresso: si vede, ma non
+   compete col "Inizia il collaudo". Chi non l'ha mai fatto non la
+   incontra proprio, perche' compare solo con un referto in memoria. */
+.cl-rivedi {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  padding: 6px 2px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--mute);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cl-rivedi:hover {
+  color: var(--text);
+}
+
+.cl-link {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 34px 22px 64px;
+  text-align: left;
+}
+
+.cl-link-k {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stato);
+  margin-bottom: 10px;
+}
+
+.cl-link-t {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--body);
+  margin-bottom: 16px;
+}
+
+.cl-link-riga {
+  display: flex;
+  gap: 8px;
+}
+
+/* Il campo e' in sola lettura ma resta un campo, non un blocco di
+   testo: su telefono e' l'unico modo per selezionare un indirizzo
+   lungo senza prendere dentro mezzo referto. */
+.cl-link-riga input {
+  flex: 1;
+  min-width: 0;
+  background: var(--n1);
+  border: 1px solid var(--line-hi);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--body);
+}
+
+.cl-link-riga button {
+  flex: none;
+  background: var(--stato);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cl-link-riga button:hover {
+  filter: brightness(1.06);
+}
+
+.cl-link-nota {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--mute);
+}
+
+@media (max-width: 560px) {
+  .cl-link-riga {
+    flex-direction: column;
+  }
+
+  .cl-link-riga button {
+    width: 100%;
+  }
+}
