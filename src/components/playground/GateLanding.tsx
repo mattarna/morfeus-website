@@ -81,10 +81,21 @@ export function GateLanding() {
     <div className="pg26 gate">
       <header className="gate-testa">
         <div className="wrap">
-          <span className="gate-marchio">
-            Morfeus <strong>AI Playground</strong>
+          {/* Il lockup ufficiale: il marchio Morfeus piu' la parola
+              Playground, lo stesso della nav e del piede della landing.
+              I tracciati sono ricopiati invece che importati perche' li'
+              vivono in un <symbol> dentro PlaygroundLanding, il cui corpo
+              e' GENERATO dal prototipo HTML: un import da quel file si
+              perderebbe al primo rigenero. */}
+          <span className="gate-marca">
+            <svg viewBox="0 0 1000 476" fill="currentColor" aria-hidden="true">
+              <path d="M272.687 475.431H39.6926C13.2842 319.502 0 160.771 0 0H229.433C229.433 161.011 243.877 319.782 272.687 475.431Z" />
+              <path d="M661.455 475.431H384.888C304.862 331.666 262.289 169.094 262.289 0H491.721C491.721 175.416 551.5 341.669 661.415 475.431H661.455Z" />
+              <path d="M1000 245.798V475.231C737.917 475.231 524.769 262.043 524.769 0H754.202C754.202 135.523 864.477 245.798 1000 245.798Z" />
+            </svg>
+            <span className="gate-marca-nome">Playground</span>
           </span>
-          <span className="gate-marchio-stato">
+          <span className="gate-marca-stato">
             Community <span className="chipst">aperta</span>
           </span>
         </div>

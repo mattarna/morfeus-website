@@ -42,8 +42,33 @@
   gap: 16px;
 }
 
-.pg26 .gate-marchio,
-.pg26 .gate-marchio-stato {
+/* Il lockup: stesse misure della nav della landing (marchio 17px,
+   parola 17px, 9px di respiro in mezzo), cosi' le due pagine portano
+   la stessa firma. Le regole non si possono riusare: quelle sono
+   agganciate a .island, che qui non c'e' perche' questa testata non
+   e' una barra flottante. */
+.pg26 .gate-marca {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+}
+
+.pg26 .gate-marca svg {
+  height: 17px;
+  width: auto;
+  color: var(--text);
+}
+
+.pg26 .gate-marca-nome {
+  font-family: var(--title);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.pg26 .gate-marca-stato {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.16em;
@@ -52,11 +77,6 @@
   display: flex;
   align-items: center;
   gap: 9px;
-}
-
-.pg26 .gate-marchio strong {
-  color: var(--text);
-  font-weight: 600;
 }
 
 /* ============================================================
@@ -478,7 +498,7 @@
     padding: 20px 18px;
   }
 
-  .pg26 .gate-marchio-stato {
+  .pg26 .gate-marca-stato {
     display: none;
   }
 
