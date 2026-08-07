@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Referto } from "@/components/playground/collaudo/Referto";
+import { Simulatore } from "@/components/playground/collaudo/Simulatore";
 import { decodificaReferto } from "@/components/playground/collaudo/permalink";
 import { RUOLI_OPZIONI } from "@/components/playground/collaudo/domande";
 import { BOOTCAMP_APERTO } from "@/components/playground/collegamenti";
@@ -101,6 +102,19 @@ export default async function RefertoPage({
         }}
         radiografia={risposte.punti}
         opzioni={{ bootcampAperto: BOOTCAMP_APERTO }}
+      />
+
+      {/* Il simulatore sta QUI e non nell'overlay del collaudo, ed e' una
+          scelta. Il referto in pagina deve far prendere una decisione
+          adesso: allungarlo diluisce l'unica cosa che gli si chiede. Il
+          report esteso ha un altro mestiere, e' quello che si riapre dal
+          link nell'email, si rilegge con calma e si inoltra a chi decide.
+          Le due CTA vivono qui dentro. */}
+      <Simulatore
+        radiografia={risposte.punti}
+        ore={risposte.ore}
+        valoreOra={risposte.valoreOra}
+        personeNelTeam={ruolo?.team ?? 0}
       />
     </div>
   );
